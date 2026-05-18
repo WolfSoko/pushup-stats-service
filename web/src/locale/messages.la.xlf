@@ -8412,13 +8412,13 @@
       <unit id="exercise.variant.situps.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.decline">
       <segment state="translated">
         <source>Decline</source>
-        <target>Decline</target>
+        <target>Declivis</target>
       </segment>
     </unit>
     <unit id="exercise.variant.situps.weighted">
@@ -8430,19 +8430,19 @@
     <unit id="exercise.variant.crunches.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.reverse">
       <segment state="translated">
         <source>Reverse Crunches</source>
-        <target>Reverse Crunches</target>
+        <target>Crunches inversa</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.bicycle">
       <segment state="translated">
         <source>Bicycle Crunches</source>
-        <target>Bicycle Crunches</target>
+        <target>Crunches birotalis</target>
       </segment>
     </unit>
     <unit id="exercise.variant.crunches.oblique">
@@ -8484,19 +8484,19 @@
     <unit id="exercise.variant.mountainclimbers.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.mountainclimbers.cross-body">
       <segment state="translated">
         <source>Cross-Body</source>
-        <target>Cross-Body</target>
+        <target>Trans corpus</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.plank.forearm">
@@ -8550,7 +8550,7 @@
     <unit id="exercise.variant.calfraises.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.calfraises.single-leg">
@@ -8568,7 +8568,7 @@
     <unit id="exercise.variant.glutebridge.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.single-leg">
@@ -8580,13 +8580,13 @@
     <unit id="exercise.variant.glutebridge.hip-thrust">
       <segment state="translated">
         <source>Hip Thrust</source>
-        <target>Hip Thrust</target>
+        <target>Pulsus coxae</target>
       </segment>
     </unit>
     <unit id="exercise.variant.glutebridge.march">
       <segment state="translated">
         <source>Marching</source>
-        <target>Marching</target>
+        <target>Gradiens</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.forward">
@@ -8604,7 +8604,7 @@
     <unit id="exercise.variant.lunges.walking">
       <segment state="translated">
         <source>Walking</source>
-        <target>Walking</target>
+        <target>Ambulans</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.lateral">
@@ -8616,19 +8616,19 @@
     <unit id="exercise.variant.lunges.curtsy">
       <segment state="translated">
         <source>Curtsy</source>
-        <target>Curtsy</target>
+        <target>Reverentia</target>
       </segment>
     </unit>
     <unit id="exercise.variant.lunges.jumping">
       <segment state="translated">
         <source>Jumping</source>
-        <target>Jumping</target>
+        <target>Saliens</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.standard">
       <segment state="translated">
         <source>Standard</source>
-        <target>Standard</target>
+        <target>Ordinaria</target>
       </segment>
     </unit>
     <unit id="exercise.variant.pullups.chin-up">
@@ -8670,7 +8670,7 @@
     <unit id="exercise.variant.rows.inverted">
       <segment state="translated">
         <source>Inverted Row</source>
-        <target>Inverted Row</target>
+        <target>Remi inversi</target>
       </segment>
     </unit>
     <unit id="exercise.variant.rows.australian">

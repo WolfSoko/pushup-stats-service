@@ -57,6 +57,13 @@ function targets() {
       out.push(join(wikiRoot, file));
     }
   }
+  const exerciseRoot = resolve(ROOT, 'content/wiki/exercises');
+  for (const file of listMd(exerciseRoot)) {
+    const m = /\.([a-z-]+)\.md$/.exec(file);
+    if (m && NON_SOURCE_LANGS.includes(m[1])) {
+      out.push(join(exerciseRoot, file));
+    }
+  }
   return out;
 }
 
