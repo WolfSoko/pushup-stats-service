@@ -32,11 +32,11 @@ type LiveDataState = {
    */
   exerciseEntries: ExerciseEntry[];
   /**
-   * User-defined exercise definitions — exposed as an empty signal
-   * until the storage layer (Firestore collection + rules + UI) lands.
-   * Consumers like the analysis page already thread this through
-   * `unifiedEntryCategoryId` so that a custom exercise's category
-   * resolves the moment definitions start flowing in. See issue #319.
+   * User-defined exercise definitions. Currently always empty: the
+   * Firestore collection is not yet provisioned (rules forbid client
+   * writes), so the signal is plumbing for the eventual storage layer.
+   * The shape is fixed now so category-resolution chains can rely on
+   * `id`/`categoryId` without a follow-up type change.
    */
   exerciseDefinitions: ExerciseDefinition[];
   connected: boolean;

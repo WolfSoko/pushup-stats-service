@@ -82,6 +82,7 @@ describe('AnalysisGroupViewComponent', () => {
     connected: signal(true),
     entries: signal([] as never[]),
     exerciseEntries: liveExerciseEntries,
+    exerciseDefinitions: signal([]),
     updateTick: signal(0),
   };
 

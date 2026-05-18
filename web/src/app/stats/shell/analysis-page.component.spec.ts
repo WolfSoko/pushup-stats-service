@@ -92,9 +92,10 @@ describe('AnalysisPageComponent', () => {
   // Mutable mirror of the LiveDataStore so tests can seed exercise
   // entries that the analysis store reads via `unifiedRows`.
   const liveExerciseEntries = signal<ExerciseEntry[]>([]);
-  // Mutable mirror of user-defined exercise definitions, threaded into
-  // `AnalysisStore.resolveDefinition` so custom-exercise rows can be
-  // bucketed into the right category tab without a catalog entry.
+  // Mutable mirror of user-defined exercise definitions. The analysis
+  // store passes these to `unifiedEntryCategoryId` when bucketing rows
+  // into per-category tabs, so seeding them here lets a test exercise
+  // the custom-id branch that the standard catalog cannot reach.
   const liveExerciseDefinitions = signal<ExerciseDefinition[]>([]);
   const liveMock = {
     connected: signal(true),
@@ -916,18 +917,21 @@ describe('AnalysisPageComponent', () => {
       expect(
         entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
       ).toBe(true);
+    });
+
     describe('custom-exercise resolver', () => {
-      // `carry` has no catalog exercises in the current restructure, so
-      // it doubles as a clean target for a user-defined definition.
+      // `mobility` is in the picker but the parent `beforeEach` seeds
+      // no mobility rows, so it isolates the contribution of the
+      // custom definition from the catalog rows already in scope.
       const customDef: ExerciseDefinition = {
-        id: 'custom.kettlebell',
-        categoryId: 'carry',
+        id: 'custom.foam-roll',
+        categoryId: 'mobility',
         ownerId: 'u1',
         measurement: 'reps',
         min: 1,
         max: 500,
         unit: 'reps',
-        customName: 'Kettlebell Carries',
+        customName: 'Foam Rolling',
       };
 
       beforeEach(() => {
@@ -936,7 +940,7 @@ describe('AnalysisPageComponent', () => {
           {
             _id: 'ex-custom',
             userId: 'u1',
-            exerciseId: 'custom.kettlebell',
+            exerciseId: 'custom.foam-roll',
             timestamp: '2026-02-14T08:00:00.000Z',
             reps: 50,
             source: 'web',
@@ -946,13 +950,13 @@ describe('AnalysisPageComponent', () => {
 
       it('drops custom-exercise rows from per-category tabs without a resolver', () => {
         const { store } = fixture.componentInstance;
-        store.setActiveView('carry');
+        store.setActiveView('mobility');
         expect(
           store
             .viewFilteredRows()
             .some(
               (r) =>
-                r.kind === 'exercise' && r.exerciseId === 'custom.kettlebell'
+                r.kind === 'exercise' && r.exerciseId === 'custom.foam-roll'
             )
         ).toBe(false);
       });
@@ -960,13 +964,13 @@ describe('AnalysisPageComponent', () => {
       it('routes custom-exercise rows into the user-defined category when the definition is exposed', () => {
         liveExerciseDefinitions.set([customDef]);
         const { store } = fixture.componentInstance;
-        store.setActiveView('carry');
+        store.setActiveView('mobility');
         expect(
           store
             .viewFilteredRows()
             .some(
               (r) =>
-                r.kind === 'exercise' && r.exerciseId === 'custom.kettlebell'
+                r.kind === 'exercise' && r.exerciseId === 'custom.foam-roll'
             )
         ).toBe(true);
       });
@@ -974,11 +978,11 @@ describe('AnalysisPageComponent', () => {
       it('feeds custom-exercise reps into categorySummaries via the resolver', () => {
         liveExerciseDefinitions.set([customDef]);
         const { store } = fixture.componentInstance;
-        const carry = store
+        const mobility = store
           .categorySummaries()
-          .find((s) => s.categoryId === 'carry');
-        expect(carry?.entries).toBe(1);
-        expect(carry?.volume).toMatchObject({
+          .find((s) => s.categoryId === 'mobility');
+        expect(mobility?.entries).toBe(1);
+        expect(mobility?.volume).toMatchObject({
           kind: 'reps',
           totalReps: 50,
         });
@@ -987,7 +991,7 @@ describe('AnalysisPageComponent', () => {
       it('extends the per-category week trend to include custom-exercise reps', () => {
         liveExerciseDefinitions.set([customDef]);
         const { store } = fixture.componentInstance;
-        store.setActiveView('carry');
+        store.setActiveView('mobility');
         const week = store.weekTrend().find((w) => w.label === '2026-W07');
         expect(week?.total).toBe(50);
       });
@@ -1000,11 +1004,11 @@ describe('AnalysisPageComponent', () => {
           {
             ...customDef,
             id: 'legs.squats',
-            categoryId: 'carry',
+            categoryId: 'mobility',
           },
         ]);
         const { store } = fixture.componentInstance;
-        store.setActiveView('carry');
+        store.setActiveView('mobility');
         expect(
           store
             .viewFilteredRows()
