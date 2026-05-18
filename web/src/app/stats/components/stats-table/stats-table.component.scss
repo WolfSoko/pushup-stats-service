@@ -48,6 +48,19 @@ mat-table {
   gap: 8px;
 }
 
+.exercise-wiki-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 1px;
+}
+
+.exercise-wiki-link:hover,
+.exercise-wiki-link:focus-visible {
+  color: var(--mat-sys-primary);
+  border-bottom-style: solid;
+}
+
 .sets-detail {
   margin-inline-start: 4px;
   font-size: 0.85em;

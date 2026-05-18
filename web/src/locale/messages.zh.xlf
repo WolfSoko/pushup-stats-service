@@ -7248,6 +7248,84 @@
         <target>总览</target>
       </segment>
     </unit>
+    <unit id="wiki.exercises.pushupHub.tocLink">
+      <segment state="translated">
+        <source>Liegestütze (alle Varianten)</source>
+        <target>俯卧撑（所有变体）</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.summary">
+      <segment state="translated">
+        <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
+        <target> — 专属 Wiki，涵盖从标准到 Planche 的所有俯卧撑变体。</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.title">
+      <segment state="translated">
+        <source> Liegestütze (alle Varianten) </source>
+        <target> 俯卧撑（所有变体） </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.subtitle">
+      <segment state="translated">
+        <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
+        <target> 专属 Wiki，超过 20 种俯卧撑变体 </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.body">
+      <segment state="translated">
+        <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
+        <target> 从标准俯卧撑到 Planche 和 Archer——在专属俯卧撑 Wiki 中查看每种变体的动作要领、技巧和难度。 </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.cta">
+      <segment state="translated">
+        <source>Zum Liegestütz-Wiki</source>
+        <target>打开俯卧撑 Wiki</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>打开练习指南</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Übungen öffnen</source>
+        <target>打开练习指南</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>打开指南</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>打开练习指南</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.pushup">
+      <segment state="translated">
+        <source>Liegestützvarianten ansehen</source>
+        <target>查看俯卧撑变体</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.exercise">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>打开练习指南</target>
+      </segment>
+    </unit>
+    <unit id="statsTable.exercise.wikiTooltip">
+      <segment state="translated">
+        <source>Wiki-Eintrag öffnen</source>
+        <target>打开 Wiki 条目</target>
+      </segment>
+    </unit>
     <unit id="wiki.exercises.viewDetail">
       <segment state="translated">
         <source>Detailseite öffnen</source>

@@ -1,5 +1,6 @@
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
@@ -29,6 +30,7 @@ describe('StatsTableComponent', () => {
     await TestBed.configureTestingModule({
       imports: [StatsTableComponent],
       providers: [
+        provideRouter([]),
         { provide: UserContextService, useValue: userMock },
         { provide: UserConfigApiService, useValue: userConfigApiMock },
       ],
@@ -702,6 +704,69 @@ describe('StatsTableComponent', () => {
       const component = fixture.componentInstance;
       const result = component.formatSets([20]);
       expect(result).toBe('1×20');
+    });
+  });
+
+  describe('exerciseWikiLink', () => {
+    it('routes a pushup entry with a known variant to the pushup wiki detail', () => {
+      const component = fixture.componentInstance;
+      const entry: UnifiedEntry = {
+        kind: 'pushup',
+        _id: 'p1',
+        timestamp: '2026-02-10T10:00:00',
+        reps: 10,
+        source: 'web',
+        variantType: 'diamond',
+      } as UnifiedEntry;
+      // 'diamond' resolves via findPushupTypeByStoredValue to a typed slug;
+      // the link must drill into the matching detail page.
+      const link = component.exerciseWikiLink(entry);
+      expect(link?.[0]).toBe('/wiki/liegestuetz-typen');
+      expect(link?.length).toBe(2);
+    });
+
+    it('falls back to the pushup wiki list when the variant is unknown', () => {
+      const component = fixture.componentInstance;
+      const entry: UnifiedEntry = {
+        kind: 'pushup',
+        _id: 'p2',
+        timestamp: '2026-02-10T10:00:00',
+        reps: 10,
+        source: 'web',
+        variantType: null,
+      } as UnifiedEntry;
+      expect(component.exerciseWikiLink(entry)).toEqual([
+        '/wiki/liegestuetz-typen',
+      ]);
+    });
+
+    it('routes a catalog exercise entry to the matching /wiki/uebungen detail', () => {
+      const component = fixture.componentInstance;
+      const entry: UnifiedEntry = {
+        kind: 'exercise',
+        _id: 'e1',
+        timestamp: '2026-02-10T10:00:00',
+        exerciseId: 'abs.situps',
+        reps: 20,
+        source: 'web',
+      } as UnifiedEntry;
+      expect(component.exerciseWikiLink(entry)).toEqual([
+        '/wiki/uebungen',
+        'sit-ups',
+      ]);
+    });
+
+    it('falls back to the /wiki/uebungen list for an unknown catalog id', () => {
+      const component = fixture.componentInstance;
+      const entry: UnifiedEntry = {
+        kind: 'exercise',
+        _id: 'e2',
+        timestamp: '2026-02-10T10:00:00',
+        exerciseId: 'made.up.exercise',
+        reps: 20,
+        source: 'web',
+      } as UnifiedEntry;
+      expect(component.exerciseWikiLink(entry)).toEqual(['/wiki/uebungen']);
     });
   });
 

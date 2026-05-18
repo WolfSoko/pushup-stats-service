@@ -6753,6 +6753,84 @@
         <target>Conspectus</target>
       </segment>
     </unit>
+    <unit id="wiki.exercises.pushupHub.tocLink">
+      <segment state="translated">
+        <source>Liegestütze (alle Varianten)</source>
+        <target>Flexiones (omnes variantes)</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.summary">
+      <segment state="translated">
+        <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
+        <target> — Wiki proprium cum omnibus variantibus a vulgari ad Planche.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.title">
+      <segment state="translated">
+        <source> Liegestütze (alle Varianten) </source>
+        <target> Flexiones (omnes variantes) </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.subtitle">
+      <segment state="translated">
+        <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
+        <target> Wiki proprium cum 20+ variantibus flexionum </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.body">
+      <segment state="translated">
+        <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
+        <target> A flexione vulgari ad Planche et Archer — omnes variantes cum executione, monitis et difficultate in wiki proprio invenies. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.cta">
+      <segment state="translated">
+        <source>Zum Liegestütz-Wiki</source>
+        <target>Aperire wiki flexionum</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Aperire ducem exercitationis</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Übungen öffnen</source>
+        <target>Aperire ducem exercitationum</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Aperire ducem</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Aperire ducem exercitationis</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.pushup">
+      <segment state="translated">
+        <source>Liegestützvarianten ansehen</source>
+        <target>Variantes flexionum videre</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.exercise">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Aperire ducem exercitationis</target>
+      </segment>
+    </unit>
+    <unit id="statsTable.exercise.wikiTooltip">
+      <segment state="translated">
+        <source>Wiki-Eintrag öffnen</source>
+        <target>Aperire commentarium wiki</target>
+      </segment>
+    </unit>
     <unit id="wiki.exercises.viewDetail">
       <segment state="translated">
         <source>Detailseite öffnen</source>

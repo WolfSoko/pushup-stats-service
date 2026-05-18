@@ -39,6 +39,14 @@ interface CategoryGroup {
   entries: ReadonlyArray<LocalizedExercise>;
 }
 
+/**
+ * Hub-card slug for the Liegestütz cross-link. Uses a reserved
+ * `pushup-hub` form that no catalog exercise slug would ever take so
+ * the TOC anchor can never collide with `EXERCISE_WIKI_CATALOG`
+ * entries, current or future.
+ */
+const PUSHUP_HUB_SLUG = 'pushup-hub';
+
 @Component({
   selector: 'app-exercises-wiki-page',
   imports: [
@@ -73,6 +81,27 @@ interface CategoryGroup {
         <h2 id="wiki-exercises-toc-heading" i18n="@@wiki.exercises.tocTitle">
           Übersicht
         </h2>
+        <section class="toc-group toc-group--pushup">
+          <h3>{{ pushupCategoryLabel }}</h3>
+          <ul>
+            <li>
+              <a
+                class="toc-link"
+                href="#{{ pushupHubSlug }}"
+                (click)="scrollTo($event, pushupHubSlug)"
+                i18n="@@wiki.exercises.pushupHub.tocLink"
+                >Liegestütze (alle Varianten)</a
+              >
+              <span
+                class="muted toc-summary"
+                i18n="@@wiki.exercises.pushupHub.summary"
+              >
+                — Eigenes Wiki mit allen Liegestützvarianten von Standard bis
+                Planche.</span
+              >
+            </li>
+          </ul>
+        </section>
         @for (group of categories(); track group.id) {
           <section class="toc-group">
             <h3>{{ group.label }}</h3>
@@ -94,6 +123,41 @@ interface CategoryGroup {
       </nav>
 
       <div class="type-list">
+        <h2 class="category-heading">{{ pushupCategoryLabel }}</h2>
+        <section
+          [id]="pushupHubSlug"
+          class="type-section pushup-hub-section"
+          data-testid="wiki-exercises-pushup-hub"
+        >
+          <mat-card>
+            <mat-card-header class="type-card-header">
+              <mat-card-title>
+                <h3 i18n="@@wiki.exercises.pushupHub.title">
+                  Liegestütze (alle Varianten)
+                </h3>
+              </mat-card-title>
+              <mat-card-subtitle i18n="@@wiki.exercises.pushupHub.subtitle">
+                Eigenes Wiki mit über 20 Liegestützvarianten
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="type-summary" i18n="@@wiki.exercises.pushupHub.body">
+                Vom Standard-Liegestütz bis Planche und Archer — alle Varianten
+                mit Ausführung, Tipps und Schwierigkeitsgrad findest du im
+                dedizierten Liegestütz-Wiki.
+              </p>
+              <a
+                mat-flat-button
+                color="primary"
+                class="detail-link"
+                routerLink="/wiki/liegestuetz-typen"
+                data-testid="wiki-exercises-pushup-hub-link"
+                i18n="@@wiki.exercises.pushupHub.cta"
+                >Zum Liegestütz-Wiki</a
+              >
+            </mat-card-content>
+          </mat-card>
+        </section>
         @for (group of categories(); track group.id) {
           <h2 class="category-heading">{{ group.label }}</h2>
           @for (entry of group.entries; track entry.id) {
@@ -317,6 +381,16 @@ export class ExercisesWikiPageComponent {
   private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
+
+  readonly pushupHubSlug = PUSHUP_HUB_SLUG;
+
+  /**
+   * Heading label for the dedicated Liegestütze category section.
+   * Reuses the existing `@@exercise.category.pushup` id so the value
+   * stays in sync with the same label used in the entry dialog and
+   * the stats table — no separate translation needed.
+   */
+  readonly pushupCategoryLabel = $localize`:@@exercise.category.pushup:Liegestütze`;
 
   readonly categories = computed<ReadonlyArray<CategoryGroup>>(() => {
     const labels = this.categoryLabels();

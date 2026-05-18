@@ -6749,6 +6749,84 @@
         <target>Resumen</target>
       </segment>
     </unit>
+    <unit id="wiki.exercises.pushupHub.tocLink">
+      <segment state="translated">
+        <source>Liegestütze (alle Varianten)</source>
+        <target>Flexiones (todas las variantes)</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.summary">
+      <segment state="translated">
+        <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
+        <target> — Wiki dedicado con todas las variantes de flexión desde la estándar hasta Planche.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.title">
+      <segment state="translated">
+        <source> Liegestütze (alle Varianten) </source>
+        <target> Flexiones (todas las variantes) </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.subtitle">
+      <segment state="translated">
+        <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
+        <target> Wiki dedicado con más de 20 variantes de flexión </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.body">
+      <segment state="translated">
+        <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
+        <target> Desde la flexión estándar hasta Planche y Archer: todas las variantes con ejecución, consejos y dificultad están en el wiki dedicado. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.cta">
+      <segment state="translated">
+        <source>Zum Liegestütz-Wiki</source>
+        <target>Abrir wiki de flexiones</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Abrir guía del ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Übungen öffnen</source>
+        <target>Abrir guía de ejercicios</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Abrir guía</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Abrir guía del ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.pushup">
+      <segment state="translated">
+        <source>Liegestützvarianten ansehen</source>
+        <target>Ver variantes de flexión</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.exercise">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Abrir guía del ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="statsTable.exercise.wikiTooltip">
+      <segment state="translated">
+        <source>Wiki-Eintrag öffnen</source>
+        <target>Abrir entrada del wiki</target>
+      </segment>
+    </unit>
     <unit id="wiki.exercises.viewDetail">
       <segment state="translated">
         <source>Detailseite öffnen</source>

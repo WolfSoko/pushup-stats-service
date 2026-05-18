@@ -95,9 +95,16 @@
         [attr.aria-label]="exerciseColumnLabel"
         >{{ exerciseColumnLabel }}</mat-header-cell
       >
-      <mat-cell *matCellDef="let entry"
-        ><span>{{ exerciseLabel(entry) }}</span></mat-cell
-      >
+      <mat-cell *matCellDef="let entry">
+        <a
+          class="exercise-wiki-link"
+          [routerLink]="exerciseWikiLink(entry)"
+          matTooltip="Wiki-Eintrag öffnen"
+          i18n-matTooltip="@@statsTable.exercise.wikiTooltip"
+          data-testid="stats-table-exercise-link"
+          >{{ exerciseLabel(entry) }}</a
+        >
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="type">

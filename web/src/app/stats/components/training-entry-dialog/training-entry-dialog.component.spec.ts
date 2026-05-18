@@ -296,6 +296,27 @@ describe('TrainingEntryDialogComponent', () => {
       expect(component.sets()[0]).toBe(500);
       expect(component.overCap()).toBe(false);
     });
+
+    it('computes a /wiki/uebungen detail link for the currently selected exercise', () => {
+      const { component } = createDialog(null);
+
+      component.onCategoryChange('core');
+      // abs.situps maps to slug 'sit-ups' in EXERCISE_WIKI_CATALOG.
+      expect(component.exerciseId()).toBe('abs.situps');
+      expect(component.exerciseWikiLink()).toEqual([
+        '/wiki/uebungen',
+        'sit-ups',
+      ]);
+    });
+
+    it('falls back to the /wiki/uebungen list when the picker is on the synthetic pushup row', () => {
+      const { component } = createDialog(null);
+
+      // Default category is `pushup`; the synthetic exerciseId has no
+      // wiki entry — make sure the link never becomes a dead 404 by
+      // pointing to the list page instead.
+      expect(component.exerciseWikiLink()).toEqual(['/wiki/uebungen']);
+    });
   });
 
   describe('edit mode', () => {

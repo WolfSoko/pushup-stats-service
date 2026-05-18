@@ -7133,6 +7133,84 @@ Deine Position: # ·  Reps        </source>
         <target>Overview</target>
       </segment>
     </unit>
+    <unit id="wiki.exercises.pushupHub.tocLink">
+      <segment state="translated">
+        <source>Liegestütze (alle Varianten)</source>
+        <target>Push-ups (all variants)</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.summary">
+      <segment state="translated">
+        <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
+        <target> — Dedicated wiki covering every push-up variant from standard to Planche.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.title">
+      <segment state="translated">
+        <source> Liegestütze (alle Varianten) </source>
+        <target> Push-ups (all variants) </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.subtitle">
+      <segment state="translated">
+        <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
+        <target> Dedicated wiki with 20+ push-up variants </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.body">
+      <segment state="translated">
+        <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
+        <target> From the standard push-up to Planche and Archer — every variant with execution, tips, and difficulty lives in the dedicated push-up wiki. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.cta">
+      <segment state="translated">
+        <source>Zum Liegestütz-Wiki</source>
+        <target>Open push-up wiki</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Open exercise guide</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Übungen öffnen</source>
+        <target>Open exercise guide</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Open guide</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Open exercise guide</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.pushup">
+      <segment state="translated">
+        <source>Liegestützvarianten ansehen</source>
+        <target>View push-up variants</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.exercise">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Open exercise guide</target>
+      </segment>
+    </unit>
+    <unit id="statsTable.exercise.wikiTooltip">
+      <segment state="translated">
+        <source>Wiki-Eintrag öffnen</source>
+        <target>Open wiki entry</target>
+      </segment>
+    </unit>
     <unit id="wiki.exercises.viewDetail">
       <segment state="translated">
         <source>Detailseite öffnen</source>

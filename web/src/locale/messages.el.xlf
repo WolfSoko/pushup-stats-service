@@ -6753,6 +6753,84 @@
         <target>Επισκόπηση</target>
       </segment>
     </unit>
+    <unit id="wiki.exercises.pushupHub.tocLink">
+      <segment state="translated">
+        <source>Liegestütze (alle Varianten)</source>
+        <target>Κάμψεις (όλες οι παραλλαγές)</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.summary">
+      <segment state="translated">
+        <source> — Eigenes Wiki mit allen Liegestützvarianten von Standard bis Planche.</source>
+        <target> — Αφιερωμένο wiki με όλες τις παραλλαγές από κανονική έως Planche.</target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.title">
+      <segment state="translated">
+        <source> Liegestütze (alle Varianten) </source>
+        <target> Κάμψεις (όλες οι παραλλαγές) </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.subtitle">
+      <segment state="translated">
+        <source> Eigenes Wiki mit über 20 Liegestützvarianten </source>
+        <target> Αφιερωμένο wiki με 20+ παραλλαγές κάμψεων </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.body">
+      <segment state="translated">
+        <source> Vom Standard-Liegestütz bis Planche und Archer — alle Varianten mit Ausführung, Tipps und Schwierigkeitsgrad findest du im dedizierten Liegestütz-Wiki. </source>
+        <target> Από την κανονική κάμψη έως Planche και Archer — όλες οι παραλλαγές με εκτέλεση, συμβουλές και επίπεδο δυσκολίας στο αφιερωμένο wiki. </target>
+      </segment>
+    </unit>
+    <unit id="wiki.exercises.pushupHub.cta">
+      <segment state="translated">
+        <source>Zum Liegestütz-Wiki</source>
+        <target>Άνοιγμα wiki κάμψεων</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Άνοιγμα οδηγού άσκησης</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.generic">
+      <segment state="translated">
+        <source>Anleitung zu Übungen öffnen</source>
+        <target>Άνοιγμα οδηγού ασκήσεων</target>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkTooltip.specific">
+      <segment state="translated">
+        <source>Anleitung öffnen</source>
+        <target>Άνοιγμα οδηγού</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiAria">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Άνοιγμα οδηγού άσκησης</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.pushup">
+      <segment state="translated">
+        <source>Liegestützvarianten ansehen</source>
+        <target>Δείτε παραλλαγές κάμψεων</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.wikiTooltip.exercise">
+      <segment state="translated">
+        <source>Anleitung zur Übung öffnen</source>
+        <target>Άνοιγμα οδηγού άσκησης</target>
+      </segment>
+    </unit>
+    <unit id="statsTable.exercise.wikiTooltip">
+      <segment state="translated">
+        <source>Wiki-Eintrag öffnen</source>
+        <target>Άνοιγμα καταχώρισης wiki</target>
+      </segment>
+    </unit>
     <unit id="wiki.exercises.viewDetail">
       <segment state="translated">
         <source>Detailseite öffnen</source>

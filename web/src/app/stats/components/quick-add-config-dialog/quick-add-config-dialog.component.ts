@@ -13,8 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 import {
   EXERCISE_CATALOG,
+  findExerciseWikiEntry,
   isAutoCountQuickAddExerciseId,
   MAX_QUICK_ADDS,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
@@ -47,6 +50,8 @@ interface ExerciseOption {
     MatIconModule,
     MatInputModule,
     MatSelectModule,
+    MatTooltipModule,
+    RouterLink,
   ],
   template: `
     <h2 mat-dialog-title i18n="@@quickAddConfig.title">
@@ -72,6 +77,19 @@ interface ExerciseOption {
               }
             </mat-select>
           </mat-form-field>
+          <a
+            mat-icon-button
+            class="wiki-help"
+            [routerLink]="wikiLinkFor(row.exerciseId)"
+            mat-dialog-close
+            [matTooltip]="wikiTooltipFor(row.exerciseId)"
+            matTooltipPosition="left"
+            [attr.data-testid]="'quick-add-wiki-' + $index"
+            i18n-aria-label="@@quickAddConfig.wikiAria"
+            aria-label="Anleitung zur Übung öffnen"
+          >
+            <mat-icon>help_outline</mat-icon>
+          </a>
 
           @if (row.mode === 'reps') {
             <mat-form-field appearance="outline" class="reps-field">
@@ -199,6 +217,28 @@ export class QuickAddConfigDialogComponent {
 
   protected isAutoCountCapable(exerciseId: string): boolean {
     return isAutoCountQuickAddExerciseId(exerciseId);
+  }
+
+  /**
+   * Wiki link target for the picker row. Pushup rows route to the
+   * dedicated `/wiki/liegestuetz-typen` wiki since the pushup variant
+   * picker has no slug here; everything else resolves to the matching
+   * `/wiki/uebungen/<slug>` detail page or falls back to the list when
+   * no wiki entry exists yet for the catalog id.
+   */
+  protected wikiLinkFor(exerciseId: string): string[] {
+    if (exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+      return ['/wiki/liegestuetz-typen'];
+    }
+    const entry = findExerciseWikiEntry(exerciseId);
+    return entry ? ['/wiki/uebungen', entry.slug] : ['/wiki/uebungen'];
+  }
+
+  protected wikiTooltipFor(exerciseId: string): string {
+    if (exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+      return $localize`:@@quickAddConfig.wikiTooltip.pushup:Liegestützvarianten ansehen`;
+    }
+    return $localize`:@@quickAddConfig.wikiTooltip.exercise:Anleitung zur Übung öffnen`;
   }
 
   private readonly initialRows: DraftRow[] = ((): DraftRow[] => {

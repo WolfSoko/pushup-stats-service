@@ -33,6 +33,7 @@ import {
   ExerciseDefinition,
   ExerciseVariant,
   findExerciseDefinition,
+  findExerciseWikiEntry,
   findPushupTypeByLocalizedName,
   findPushupTypeByStoredValue,
   formatExerciseValue,
@@ -308,19 +309,36 @@ interface PushupTypeOption {
       </mat-form-field>
 
       @if (showExercisePicker()) {
-        <mat-form-field appearance="outline">
-          <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
-          <mat-select
-            [value]="exerciseId()"
-            (valueChange)="onExerciseChange($event)"
-            [disabled]="isEditMode"
-            data-testid="training-entry-exercise"
+        <div class="type-row">
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
+            <mat-select
+              [value]="exerciseId()"
+              (valueChange)="onExerciseChange($event)"
+              [disabled]="isEditMode"
+              data-testid="training-entry-exercise"
+            >
+              @for (option of exerciseOptions(); track option.value) {
+                <mat-option [value]="option.value">{{
+                  option.label
+                }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <a
+            mat-icon-button
+            class="type-help"
+            [routerLink]="exerciseWikiLink()"
+            [matTooltip]="exerciseWikiTooltip()"
+            matTooltipPosition="left"
+            mat-dialog-close
+            data-testid="training-entry-exercise-wiki"
+            i18n-aria-label="@@exerciseWikiLinkAria"
+            aria-label="Anleitung zur Übung öffnen"
           >
-            @for (option of exerciseOptions(); track option.value) {
-              <mat-option [value]="option.value">{{ option.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+            <mat-icon>help_outline</mat-icon>
+          </a>
+        </div>
       }
 
       <mat-form-field appearance="outline">
@@ -863,6 +881,26 @@ export class TrainingEntryDialogComponent {
   readonly pushupWikiQueryParams = computed(() => {
     const match = this.resolvePushupType(this.pushupTypeValue());
     return match ? { type: match.slug } : {};
+  });
+
+  /**
+   * Wiki-link target for the currently selected exercise. Returns the
+   * detail-page route if the exercise has a wiki entry, else the list
+   * page so the icon never becomes a dead-end. Mirrors the pushup help
+   * icon's behaviour for non-pushup categories.
+   */
+  readonly exerciseWikiLink = computed<string[]>(() => {
+    const entry = findExerciseWikiEntry(this.exerciseId());
+    return entry ? ['/wiki/uebungen', entry.slug] : ['/wiki/uebungen'];
+  });
+
+  readonly exerciseWikiTooltip = computed(() => {
+    const entry = findExerciseWikiEntry(this.exerciseId());
+    if (!entry) {
+      return $localize`:@@exerciseWikiLinkTooltip.generic:Anleitung zu Übungen öffnen`;
+    }
+    const template = $localize`:@@exerciseWikiLinkTooltip.specific:Anleitung öffnen`;
+    return `${template}: ${this.exerciseLabel(entry.id)}`;
   });
 
   readonly pushupWikiTooltip = computed(() => {
