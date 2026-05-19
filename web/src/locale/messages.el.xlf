@@ -9609,5 +9609,41 @@
         <target>Δύο εβδομάδες ενεργητικής αποκατάστασης: καθημερινές συνεδρίες κινητικότητας, γιόγκα και διατάσεων με ελαφρύ όγκο κάμψεων. Ιδανικό ως αποφόρτιση μεταξύ δύο απαιτητικών προγραμμάτων ή για επιστροφή μετά από διάλειμμα.</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> Τουλάχιστον 2 χαρακτήρες. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> Το πολύ 30 χαρακτήρες. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Επιτρέπονται μόνο γράμματα, ψηφία, κενά και _ . - </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
+        <target>Οι επαναλήψεις πρέπει να είναι μεταξύ <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> και <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/>.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Οι επαναλήψεις πρέπει να είναι ακέραιος αριθμός.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>Δεν ήταν δυνατή η αποθήκευση της καταχώρησης.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

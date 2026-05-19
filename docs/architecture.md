@@ -36,6 +36,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - `scope:cloud-functions` -> `scope:models` only
 - `scope:push` -> `scope:models`, `scope:data-access` (no auth, no reminders!)
 - `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push` (no auth!)
+- `scope:sw-push` -> nothing (standalone service-worker bundle; bundling anything else would bloat the SW)
 - `scope:app` -> everything
 
 ## Nx Project Names

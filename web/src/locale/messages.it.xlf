@@ -9609,5 +9609,41 @@
         <target>Due settimane di recupero attivo: sessioni quotidiane di mobilità, yoga e stretching con un volume leggero di piegamenti. Ideale come scarico tra due piani intensi o per riprendere dopo una pausa.</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> Almeno 2 caratteri. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> Al massimo 30 caratteri. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Solo lettere, cifre, spazi e _ . - sono ammessi. </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
+        <target>Le ripetizioni devono essere tra <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> e <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/>.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Le ripetizioni devono essere un numero intero.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>Impossibile salvare la voce.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

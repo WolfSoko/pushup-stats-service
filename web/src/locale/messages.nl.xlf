@@ -9609,5 +9609,41 @@
         <target>Twee weken actieve recuperatie: dagelijkse mobiliteits-, yoga- en stretching-sessies met een licht push-up-volume. Ideaal als deload tussen twee zware plannen of om weer in te stappen na een pauze.</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> Minstens 2 tekens. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> Maximaal 30 tekens. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Alleen letters, cijfers, spaties en _ . - zijn toegestaan. </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
+        <target>Herhalingen moeten tussen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> en <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liggen.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Herhalingen moeten een geheel getal zijn.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>De invoer kon niet worden opgeslagen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

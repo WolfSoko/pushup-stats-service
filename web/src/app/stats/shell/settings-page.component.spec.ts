@@ -250,4 +250,66 @@ describe('SettingsPageComponent — auto-save', () => {
     expect(saveSpy).not.toHaveBeenCalled();
     expect(component.saveStatus()).toBe('idle');
   });
+
+  describe('displayName validation', () => {
+    it('Given an invalid displayName, When the debounce elapses, Then no save fires and the error message is rendered', async () => {
+      setup({ userId: 'u1', dailyGoal: 10, displayName: 'Alex' });
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      await flushMicrotasks();
+
+      component.displayNameDraft.set('Wolf🚀');
+      fixture.detectChanges();
+
+      expect(component.displayNameViolation()).toBe('invalid-characters');
+      expect(component.saveStatus()).toBe('pending');
+
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await flushMicrotasks();
+
+      expect(saveSpy).not.toHaveBeenCalled();
+
+      const error = fixture.nativeElement.querySelector(
+        '[data-testid="settings-displayname-error"]'
+      ) as HTMLElement | null;
+      expect(error).not.toBeNull();
+    });
+
+    it('Given a too-short displayName Then save is blocked', async () => {
+      setup({ userId: 'u1', dailyGoal: 10, displayName: 'Alex' });
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      await flushMicrotasks();
+
+      component.displayNameDraft.set('A');
+      fixture.detectChanges();
+
+      expect(component.displayNameViolation()).toBe('too-short');
+
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await flushMicrotasks();
+
+      expect(saveSpy).not.toHaveBeenCalled();
+    });
+
+    it('Given an invalid displayName edited to a valid one Then save fires', async () => {
+      setup({ userId: 'u1', dailyGoal: 10, displayName: 'Alex' });
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      await flushMicrotasks();
+
+      component.displayNameDraft.set('Wolf🚀');
+      fixture.detectChanges();
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await flushMicrotasks();
+      expect(saveSpy).not.toHaveBeenCalled();
+
+      component.displayNameDraft.set('Wolf');
+      fixture.detectChanges();
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await flushMicrotasks();
+
+      expect(saveSpy).toHaveBeenCalledTimes(1);
+      expect(saveSpy.mock.calls[0][0]).toEqual(
+        expect.objectContaining({ displayName: 'Wolf' })
+      );
+    });
+  });
 });

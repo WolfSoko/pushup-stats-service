@@ -68,6 +68,12 @@ mat-checkbox {
   margin-bottom: 16px;
 }
 
+.field-error {
+  margin: -16px 0 16px;
+  color: #f44336;
+  font-size: 0.85rem;
+}
+
 .plan-banner {
   display: flex;
   gap: 12px;

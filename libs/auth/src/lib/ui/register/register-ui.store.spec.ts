@@ -130,6 +130,46 @@ describe('RegisterUiStore', () => {
     expect(store.registerSuccess()).toBe(false);
   });
 
+  describe('displayName validation', () => {
+    it('Given a too-short displayName Then violation is "too-short" and submission is blocked', async () => {
+      const store = await setup();
+      store.setDisplayName('A');
+      store.setDailyGoal(10);
+      store.setConsentAccepted(true);
+
+      expect(store.displayNameViolation()).toBe('too-short');
+      expect(store.isProfileStepValid()).toBe(false);
+      expect(store.canSubmit(false, false, 'Secret#123', 'Secret#123')).toBe(
+        false
+      );
+    });
+
+    it('Given an over-long displayName Then violation is "too-long"', async () => {
+      const store = await setup();
+      store.setDisplayName('A'.repeat(31));
+
+      expect(store.displayNameViolation()).toBe('too-long');
+      expect(store.isProfileStepValid()).toBe(false);
+    });
+
+    it('Given an emoji in the displayName Then violation is "invalid-characters"', async () => {
+      const store = await setup();
+      store.setDisplayName('Wolf🚀');
+
+      expect(store.displayNameViolation()).toBe('invalid-characters');
+      expect(store.isProfileStepValid()).toBe(false);
+    });
+
+    it('Given a valid displayName Then violation is null and isProfileStepValid is true', async () => {
+      const store = await setup();
+      store.setDisplayName('Alex');
+      store.setDailyGoal(10);
+
+      expect(store.displayNameViolation()).toBeNull();
+      expect(store.isProfileStepValid()).toBe(true);
+    });
+  });
+
   describe('training plan preselection', () => {
     it('Given a known plan id When setSelectedPlanId Then exposes the plan and a return URL with autoStart', async () => {
       const store = await setup();

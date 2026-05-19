@@ -36,6 +36,25 @@ export class PushupValidationError extends Error {
 }
 
 /**
+ * Map a failed `createPushup`/`updatePushup` rejection to a human-readable,
+ * localized snack-bar message. Surfacing the specific cap/violation reason
+ * is more actionable than the generic "konnte nicht gespeichert werden" —
+ * users hitting the 500-rep cap get a clear hint instead of a silent retry
+ * loop.
+ */
+export function pushupValidationMessage(err: unknown): string {
+  if (err instanceof PushupValidationError && err.field === 'reps') {
+    if (err.violation === 'out-of-range') {
+      return $localize`:@@pushup.validation.reps.outOfRange:Reps müssen zwischen ${PUSHUP_REPS_MIN}:min: und ${PUSHUP_REPS_MAX}:max: liegen.`;
+    }
+    if (err.violation === 'not-integer') {
+      return $localize`:@@pushup.validation.reps.notInteger:Reps muss eine ganze Zahl sein.`;
+    }
+  }
+  return $localize`:@@pushup.validation.generic:Eintrag konnte nicht gespeichert werden.`;
+}
+
+/**
  * Returns an Observable that errors with `PushupValidationError` if the
  * reps fail validation, otherwise null. Wrapping the throw in a cold
  * Observable lets RxJS subscribers see the error via their `error`
