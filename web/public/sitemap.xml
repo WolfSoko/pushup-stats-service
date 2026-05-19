@@ -18,7 +18,295 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/blog"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/blog"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/blog"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/blog"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog"/>
@@ -50,7 +338,295 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/en/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/training-plans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/training-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/training-plans"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/wiki/liegestuetz-typen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/liegestuetz-typen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/wiki/liegestuetz-typen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen"/>
@@ -82,7 +658,295 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/en/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/wiki/uebungen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/wiki/uebungen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/uebungen"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/leaderboard</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/leaderboard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/leaderboard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/leaderboard</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/leaderboard"/>
@@ -114,7 +978,295 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/en/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/impressum"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/impressum"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/impressum"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/impressum"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/impressum"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/impressum"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/impressum"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/impressum"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/en/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/fr/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/es/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/it/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/nl/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/el/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/la/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/no/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pushup-stats.com/fr/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pushup-stats.com/es/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://pushup-stats.com/it/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://pushup-stats.com/nl/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://pushup-stats.com/el/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="la" href="https://pushup-stats.com/la/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/datenschutz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/datenschutz"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/zh/datenschutz</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/datenschutz"/>
