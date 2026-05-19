@@ -8,7 +8,12 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { findPlanById, TrainingPlan } from '@pu-stats/models';
+import {
+  DisplayNameViolation,
+  findPlanById,
+  TrainingPlan,
+  validateDisplayName,
+} from '@pu-stats/models';
 import { AuthStore } from '../../core/state/auth.store';
 import { RegisterOnboardingStore } from '../../core/state/register-onboarding.store';
 import { hasStrongPasswordPolicy } from '../password-policy';
@@ -60,6 +65,9 @@ export const RegisterUiStore = signalStore(
       const id = store.selectedPlanId();
       return id ? findPlanById(id) : null;
     }),
+    displayNameViolation: computed<DisplayNameViolation | null>(() =>
+      validateDisplayName(store.displayName())
+    ),
   })),
   withMethods(({ authStore, onboardingStore, auth, ...store }) => ({
     toggleHidePassword: () =>
@@ -103,7 +111,8 @@ export const RegisterUiStore = signalStore(
       hasStrongPasswordPolicy(password) &&
       password === repeatPassword,
     isProfileStepValid: () =>
-      store.displayName().trim().length >= 2 && store.dailyGoal() >= 1,
+      validateDisplayName(store.displayName()) === null &&
+      store.dailyGoal() >= 1,
     canSubmit: (
       emailInvalid: boolean,
       passwordInvalid: boolean,
@@ -111,7 +120,7 @@ export const RegisterUiStore = signalStore(
       repeatPassword: string
     ) =>
       store.consentAccepted() &&
-      store.displayName().trim().length >= 2 &&
+      validateDisplayName(store.displayName()) === null &&
       store.dailyGoal() >= 1 &&
       (store.isGoogleRegistration() ||
         (!emailInvalid &&

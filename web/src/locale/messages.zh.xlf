@@ -9067,5 +9067,41 @@
         <target>2周主动恢复：每日活动度、瑜伽和拉伸训练，配合轻量俯卧撑。理想用于两个高强度计划之间的减载，或训练间歇后的回归。</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> 至少 2 个字符。 </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> 最多 30 个字符。 </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> 只允许字母、数字、空格以及 _ . - 。 </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen 1 und 500 liegen.</source>
+        <target>次数必须在 1 到 500 之间。</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>次数必须是整数。</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>无法保存条目。</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

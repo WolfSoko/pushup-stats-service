@@ -84,6 +84,11 @@ export default [
               sourceTag: 'scope:ads',
               onlyDependOnLibsWithTags: ['scope:models'],
             },
+            // sw-push is a standalone service-worker bundle — must stay isolated
+            {
+              sourceTag: 'scope:sw-push',
+              onlyDependOnLibsWithTags: [],
+            },
             // testing can depend on anything (test utilities)
             {
               sourceTag: 'scope:testing',

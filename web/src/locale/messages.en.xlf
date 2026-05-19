@@ -1589,19 +1589,55 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:75</note>
 
-        
+
             </notes>
       <segment state="translated">
         <source>Wolf</source>
         <target>Wolf</target>
 
-        
-        
+
+
             </segment>
 
-      
-      
+
+
         </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> At least 2 characters. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> At most 30 characters. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Only letters, digits, spaces, plus _ . - are allowed. </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen 1 und 500 liegen.</source>
+        <target>Reps must be between 1 and 500.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Reps must be a whole number.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>Could not save the entry.</target>
+      </segment>
+    </unit>
     <unit id="editAria">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:108,109</note>

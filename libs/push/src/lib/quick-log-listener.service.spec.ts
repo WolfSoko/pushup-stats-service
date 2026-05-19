@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { StatsApiService } from '@pu-stats/data-access';
+import { PushupValidationError, StatsApiService } from '@pu-stats/data-access';
 import { of, throwError } from 'rxjs';
 import { QuickLogListenerService } from './quick-log-listener.service';
 
@@ -137,5 +137,31 @@ describe('QuickLogListenerService', () => {
     const service = TestBed.inject(QuickLogListenerService);
     await service.logEntry(10);
     expect(snackOpen).toHaveBeenCalled();
+  });
+
+  it('Given a PushupValidationError When logEntry fails Then snack-bar shows the localized cap message', async () => {
+    createPushup.mockReturnValue(
+      throwError(() => new PushupValidationError('reps', 'out-of-range'))
+    );
+    const service = TestBed.inject(QuickLogListenerService);
+
+    await service.logEntry(10);
+
+    expect(snackOpen).toHaveBeenCalled();
+    const message = snackOpen.mock.calls[0][0];
+    expect(message).toMatch(/zwischen 1 und 500/);
+  });
+
+  it('Given a non-integer PushupValidationError When logEntry fails Then snack-bar surfaces the integer hint', async () => {
+    createPushup.mockReturnValue(
+      throwError(() => new PushupValidationError('reps', 'not-integer'))
+    );
+    const service = TestBed.inject(QuickLogListenerService);
+
+    await service.logEntry(10);
+
+    expect(snackOpen).toHaveBeenCalled();
+    const message = snackOpen.mock.calls[0][0];
+    expect(message).toMatch(/ganze Zahl/);
   });
 });

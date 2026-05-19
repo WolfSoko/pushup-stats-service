@@ -7,6 +7,7 @@ import { of, Subject, throwError } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
+  PushupValidationError,
   StatsApiService,
 } from '@pu-stats/data-access';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
@@ -117,6 +118,18 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     const message = snackBarMock.open.mock.calls[0][0] as string;
     expect(message).toContain('konnte nicht');
     expect(reloadAfterMutation).not.toHaveBeenCalled();
+  });
+
+  it('Given PushupValidationError out-of-range When fillToGoal() is called Then snackbar surfaces the 1..500 cap', () => {
+    const service = setup();
+    statsApiMock.createPushup.mockReturnValue(
+      throwError(() => new PushupValidationError('reps', 'out-of-range'))
+    );
+
+    service.fillToGoal();
+
+    const message = snackBarMock.open.mock.calls[0][0] as string;
+    expect(message).toMatch(/zwischen 1 und 500/);
   });
 
   it('Given a previous fillToGoal() is still in flight, When called again, Then createPushup is called only once', () => {

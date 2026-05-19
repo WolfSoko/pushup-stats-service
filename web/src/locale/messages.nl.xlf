@@ -9573,5 +9573,41 @@
         <target>Twee weken actieve recuperatie: dagelijkse mobiliteits-, yoga- en stretching-sessies met een licht push-up-volume. Ideaal als deload tussen twee zware plannen of om weer in te stappen na een pauze.</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> Minstens 2 tekens. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> Maximaal 30 tekens. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Alleen letters, cijfers, spaties en _ . - zijn toegestaan. </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen 1 und 500 liegen.</source>
+        <target>Herhalingen moeten tussen 1 en 500 liggen.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Herhalingen moeten een geheel getal zijn.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>De invoer kon niet worden opgeslagen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

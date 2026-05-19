@@ -9569,5 +9569,41 @@
         <target>Dos semanas de recuperación activa: sesiones diarias de movilidad, yoga y estiramientos con un volumen ligero de flexiones. Ideal como descarga entre dos planes exigentes o para retomar el entrenamiento tras una pausa.</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> Al menos 2 caracteres. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> Como máximo 30 caracteres. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Solo se permiten letras, dígitos, espacios y _ . - </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen 1 und 500 liegen.</source>
+        <target>Las repeticiones deben estar entre 1 y 500.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Las repeticiones deben ser un número entero.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>No se pudo guardar la entrada.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

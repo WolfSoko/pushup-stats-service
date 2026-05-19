@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
+  pushupValidationMessage,
   StatsApiService,
 } from '@pu-stats/data-access';
 import {
@@ -120,16 +121,7 @@ export class QuickAddOrchestrationService {
           );
           this.appData.reloadAfterMutation();
         },
-        error: () =>
-          this.snackBar.open(
-            $localize`:@@quickAdd.error.create:Eintrag konnte nicht gespeichert werden.`,
-            '',
-            {
-              duration: 4000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-            }
-          ),
+        error: (err) => this.openErrorSnackbar(err),
       });
   }
 
@@ -159,16 +151,8 @@ export class QuickAddOrchestrationService {
           this.appData.reloadAfterMutation();
           this._fillToGoalInFlight.set(false);
         },
-        error: () => {
-          this.snackBar.open(
-            $localize`:@@quickAdd.error.create:Eintrag konnte nicht gespeichert werden.`,
-            '',
-            {
-              duration: 4000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-            }
-          );
+        error: (err) => {
+          this.openErrorSnackbar(err);
           this._fillToGoalInFlight.set(false);
         },
       });
@@ -364,21 +348,17 @@ export class QuickAddOrchestrationService {
         }
       );
       this.appData.reloadAfterMutation();
-    } catch {
-      this.openErrorSnackbar();
+    } catch (err) {
+      this.openErrorSnackbar(err);
     }
   }
 
-  private openErrorSnackbar(): void {
-    this.snackBar.open(
-      $localize`:@@quickAdd.error.create:Eintrag konnte nicht gespeichert werden.`,
-      '',
-      {
-        duration: 4000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom',
-      }
-    );
+  private openErrorSnackbar(err?: unknown): void {
+    this.snackBar.open(pushupValidationMessage(err), '', {
+      duration: 4000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
   }
 }
 

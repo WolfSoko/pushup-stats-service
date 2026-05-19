@@ -9573,5 +9573,41 @@
         <target>Duae hebdomades recuperationis activae: cotidianae sessiones mobilitatis, yoga et extensionum cum levi volumine pectorum. Optimum ut recuperatio inter duo consilia gravia aut ad reditum post intermissionem.</target>
       </segment>
     </unit>
+    <unit id="displayName.violation.tooShort">
+      <segment state="translated">
+        <source> Mindestens 2 Zeichen. </source>
+        <target> Saltem duo characteres. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.tooLong">
+      <segment state="translated">
+        <source> Höchstens 30 Zeichen. </source>
+        <target> Maxime triginta characteres. </target>
+      </segment>
+    </unit>
+    <unit id="displayName.violation.invalidCharacters">
+      <segment state="translated">
+        <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
+        <target> Solum litterae, numeri, spatia, et _ . - permittuntur. </target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.outOfRange">
+      <segment state="translated">
+        <source>Reps müssen zwischen 1 und 500 liegen.</source>
+        <target>Numerus iterationum inter unum et quingentos esse debet.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.reps.notInteger">
+      <segment state="translated">
+        <source>Reps muss eine ganze Zahl sein.</source>
+        <target>Numerus iterationum integer esse debet.</target>
+      </segment>
+    </unit>
+    <unit id="pushup.validation.generic">
+      <segment state="translated">
+        <source>Eintrag konnte nicht gespeichert werden.</source>
+        <target>Viscus salvus esse non potuit.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

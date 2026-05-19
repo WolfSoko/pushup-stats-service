@@ -1,7 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { StatsApiService } from '@pu-stats/data-access';
+import {
+  pushupValidationMessage,
+  StatsApiService,
+} from '@pu-stats/data-access';
 import {
   appendLocalOffset,
   QUICK_LOG_REPS_MAX,
@@ -67,9 +70,9 @@ export class QuickLogListenerService {
         $localize`:@@snackbar.close:Schließen`,
         { duration: 3000 }
       );
-    } catch {
+    } catch (err) {
       this.snackBar.open(
-        $localize`:@@reminder.quickLog.error:Eintrag konnte nicht gespeichert werden.`,
+        pushupValidationMessage(err),
         $localize`:@@snackbar.close:Schließen`,
         { duration: 5000 }
       );

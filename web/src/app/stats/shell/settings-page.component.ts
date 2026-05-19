@@ -26,7 +26,12 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { Router } from '@angular/router';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { PushSubscriptionService } from '@pu-push/push';
-import { DEFAULT_SNAP_QUALITY, SnapQuality } from '@pu-stats/models';
+import {
+  DEFAULT_SNAP_QUALITY,
+  DisplayNameViolation,
+  SnapQuality,
+  validateDisplayName,
+} from '@pu-stats/models';
 import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';
 import { buildProfileShareUrl } from '../../core/profile-share-url';
@@ -168,6 +173,38 @@ interface ResolvedConfig {
               >Kann in der Bestenliste angezeigt werden.</mat-hint
             >
           </mat-form-field>
+          @switch (displayNameViolation()) {
+            @case ('too-short') {
+              <p
+                class="field-error"
+                role="alert"
+                data-testid="settings-displayname-error"
+                i18n="@@displayName.violation.tooShort"
+              >
+                Mindestens 2 Zeichen.
+              </p>
+            }
+            @case ('too-long') {
+              <p
+                class="field-error"
+                role="alert"
+                data-testid="settings-displayname-error"
+                i18n="@@displayName.violation.tooLong"
+              >
+                Höchstens 30 Zeichen.
+              </p>
+            }
+            @case ('invalid-characters') {
+              <p
+                class="field-error"
+                role="alert"
+                data-testid="settings-displayname-error"
+                i18n="@@displayName.violation.invalidCharacters"
+              >
+                Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt.
+              </p>
+            }
+          }
           <p class="muted profile-hint-row">
             <a
               routerLink="/leaderboard"
@@ -640,6 +677,11 @@ interface ResolvedConfig {
     .error {
       color: #ffd8d8;
     }
+    .field-error {
+      margin: -8px 0 4px;
+      color: #ff8b8b;
+      font-size: 0.85rem;
+    }
     .guest-banner {
       display: flex;
       align-items: center;
@@ -713,6 +755,9 @@ export class SettingsPageComponent implements OnDestroy {
   );
 
   readonly displayNameDraft = signal('');
+  readonly displayNameViolation = computed<DisplayNameViolation | null>(() =>
+    validateDisplayName(this.displayNameDraft())
+  );
   readonly dailyGoalDraft = signal<number>(10);
   readonly weeklyGoalDraft = signal<number>(50);
   readonly monthlyGoalDraft = signal<number>(200);
@@ -820,11 +865,25 @@ export class SettingsPageComponent implements OnDestroy {
     effect(() => {
       const draft = this.draftSnapshot();
       const baseline = this.lastPersisted();
+      const violation = this.displayNameViolation();
       untracked(() => {
         if (baseline === null) return;
         if (this.snapshotsEqual(draft, baseline)) {
           this.cancelAutoSaveTimer();
           if (this.saveStatus() === 'pending') this.saveStatus.set('idle');
+          return;
+        }
+        // Block save only when the user actively edited displayName to an
+        // invalid value. If displayName came from storage already invalid
+        // (legacy/migrated data), the user editing OTHER fields should still
+        // succeed — Firestore's rule will reject if the persisted name is
+        // actually rejected. Surface the violation in the inline error and
+        // keep the pill in "pending" so it's obvious the round trip hasn't
+        // happened yet.
+        const displayNameDirty = draft.displayName !== baseline.displayName;
+        if (violation !== null && displayNameDirty) {
+          this.cancelAutoSaveTimer();
+          this.saveStatus.set('pending');
           return;
         }
         this.scheduleAutoSave();
