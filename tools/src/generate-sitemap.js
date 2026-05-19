@@ -409,6 +409,33 @@ function buildTrainingPlanRoutes(slugs) {
   return routes;
 }
 
+/**
+ * Static public routes are prerendered for every supported locale,
+ * so emit one `<loc>` per (route × locale) with a full hreflang
+ * alternates set — the same shape the dynamic builders use. The `/`
+ * landing page is a special case: `buildUrl` strips the path to `''`
+ * for its primary `<loc>` (so URLs render as `/de`, not `/de/`), and
+ * the alternates must mirror that — otherwise hreflang would point
+ * at `/de/`, which the runtime redirects.
+ */
+function buildStaticRoutes() {
+  const routes = [];
+  for (const route of staticRoutes) {
+    const altPath = route.path === '/' ? '' : route.path;
+    const alternates = LOCALES.map((lang) => ({ lang, path: altPath }));
+    for (const lang of LOCALES) {
+      routes.push({
+        path: route.path,
+        changefreq: route.changefreq,
+        priority: route.priority,
+        locale: lang,
+        alternates,
+      });
+    }
+  }
+  return routes;
+}
+
 function buildBlogRoutes(posts) {
   return posts.map((post) => {
     // `alternateSlugs` is populated by `scanMarkdownBlogPosts` with
@@ -447,7 +474,7 @@ function generateSitemap(
   const pushupTypeRoutes = buildPushupTypeRoutes(pushupTypes);
   const exerciseWikiRoutes = buildExerciseWikiRoutes(exerciseWikiSlugs);
   const allRoutes = [
-    ...staticRoutes,
+    ...buildStaticRoutes(),
     ...planRoutes,
     ...pushupTypeRoutes,
     ...exerciseWikiRoutes,
@@ -470,12 +497,20 @@ function main() {
   const outPath = resolve(ROOT, 'web/public/sitemap.xml');
   writeFileSync(outPath, xml, 'utf-8');
   const total =
-    staticRoutes.length +
+    staticRoutes.length * LOCALES.length +
     planSlugs.length * LOCALES.length +
     pushupTypes.length * LOCALES.length +
     exerciseWikiSlugs.length * LOCALES.length +
     posts.length;
   console.log(`sitemap.xml written (${total} URLs)`);
+  const coverage = Object.fromEntries(LOCALES.map((lang) => [lang, 0]));
+  for (const post of posts) {
+    if (post.lang in coverage) coverage[post.lang] += 1;
+  }
+  const coverageLine = LOCALES.map((lang) => `${lang}=${coverage[lang]}`).join(
+    ' | '
+  );
+  console.log(`blog coverage | ${coverageLine}`);
 }
 
 if (require.main === module) {
@@ -492,6 +527,7 @@ module.exports = {
   extractExerciseWikiSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
+  buildStaticRoutes,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
   buildPushupTypeRoutes,

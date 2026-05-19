@@ -1,5 +1,11 @@
-const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = require('node:fs');
-const { join } = require('node:path');
+const {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  rmSync,
+  readFileSync,
+} = require('node:fs');
+const { join, resolve } = require('node:path');
 const { tmpdir } = require('node:os');
 const {
   staticRoutes,
@@ -10,6 +16,7 @@ const {
   extractExerciseWikiSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
+  buildStaticRoutes,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
   buildPushupTypeRoutes,
@@ -206,6 +213,30 @@ describe('generate-sitemap', () => {
       expect(route.alternates).toEqual(
         LOCALES.map((lang) => ({ lang, path: '/wiki/uebungen/plank' }))
       );
+    });
+  });
+
+  describe('buildStaticRoutes', () => {
+    const { LOCALES } = require('./generate-sitemap');
+
+    it('emits one route per (static-route × locale)', () => {
+      const routes = buildStaticRoutes();
+      expect(routes).toHaveLength(staticRoutes.length * LOCALES.length);
+    });
+
+    it('attaches a full hreflang alternates set to every variant', () => {
+      const routes = buildStaticRoutes();
+      for (const route of routes) {
+        expect(route.alternates).toHaveLength(LOCALES.length);
+        const langs = route.alternates.map((a) => a.lang);
+        expect(new Set(langs)).toEqual(new Set(LOCALES));
+      }
+    });
+
+    it('uses empty path for `/` alternates so URLs render without trailing slash', () => {
+      const routes = buildStaticRoutes();
+      const rootRoute = routes.find((r) => r.path === '/');
+      expect(rootRoute.alternates.every((a) => a.path === '')).toBe(true);
     });
   });
 
@@ -617,6 +648,16 @@ describe('generate-sitemap', () => {
       expect(xml).toContain('<lastmod>2025-01-15</lastmod>');
     });
 
+    it('emits a per-locale <loc> for every static route (fan-out)', () => {
+      const { LOCALES } = require('./generate-sitemap');
+      const xml = generateSitemap([]);
+      for (const lang of LOCALES) {
+        expect(xml).toContain(
+          `<loc>https://pushup-stats.com/${lang}/blog</loc>`
+        );
+      }
+    });
+
     it('does not emit /login or /register entries', () => {
       const xml = generateSitemap([]);
       expect(xml).not.toContain('/de/login');
@@ -688,5 +729,74 @@ describe('generate-sitemap', () => {
         '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant"/>'
       );
     });
+  });
+});
+
+// Google silently ignores "broken hreflang clusters" where a hreflang target
+// is not itself listed as a <loc> in the same sitemap. There is no other CI
+// signal for this drift, so we assert reciprocity directly against the
+// deployed artifact (web/public/sitemap.xml).
+describe('sitemap reciprocity invariants', () => {
+  const sitemapPath = resolve(__dirname, '../../web/public/sitemap.xml');
+  const xml = readFileSync(sitemapPath, 'utf-8');
+
+  it('every hreflang href (except x-default) appears as a <loc>', () => {
+    const locs = new Set();
+    for (const match of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      locs.add(match[1]);
+    }
+    const hreflangRe =
+      /<xhtml:link rel="alternate" hreflang="([^"]+)" href="([^"]+)"\/>/g;
+    const missing = [];
+    for (const match of xml.matchAll(hreflangRe)) {
+      const [, lang, href] = match;
+      if (lang === 'x-default') continue;
+      if (!locs.has(href)) missing.push(href);
+    }
+    expect(missing).toEqual([]);
+  });
+
+  it('every <loc> lists itself as a hreflang alternate', () => {
+    const blockRe = /<url>([\s\S]*?)<\/url>/g;
+    const violations = [];
+    for (const blockMatch of xml.matchAll(blockRe)) {
+      const block = blockMatch[1];
+      const locMatch = block.match(/<loc>([^<]+)<\/loc>/);
+      if (!locMatch) continue;
+      const loc = locMatch[1];
+      const hrefs = new Set();
+      const hreflangRe =
+        /<xhtml:link rel="alternate" hreflang="([^"]+)" href="([^"]+)"\/>/g;
+      for (const m of block.matchAll(hreflangRe)) {
+        const [, lang, href] = m;
+        if (lang === 'x-default') continue;
+        hrefs.add(href);
+      }
+      if (!hrefs.has(loc)) violations.push(loc);
+    }
+    expect(violations).toEqual([]);
+  });
+
+  it('every <url> block has an x-default that points at the DE variant', () => {
+    const blockRe = /<url>([\s\S]*?)<\/url>/g;
+    const violations = [];
+    for (const blockMatch of xml.matchAll(blockRe)) {
+      const block = blockMatch[1];
+      const locMatch = block.match(/<loc>([^<]+)<\/loc>/);
+      const loc = locMatch ? locMatch[1] : '(no <loc>)';
+      const xDefaultMatch = block.match(
+        /<xhtml:link rel="alternate" hreflang="x-default" href="([^"]+)"\/>/
+      );
+      if (!xDefaultMatch) {
+        violations.push({ loc, reason: 'missing x-default' });
+        continue;
+      }
+      const href = xDefaultMatch[1];
+      if (!href.startsWith('https://pushup-stats.com/de/') &&
+          href !== 'https://pushup-stats.com/de') {
+        violations.push({ loc, reason: `x-default not DE: ${href}` });
+      }
+    }
+    expect(violations).toEqual([]);
   });
 });

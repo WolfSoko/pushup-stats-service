@@ -52,6 +52,16 @@ All generated modules are checked in so reviewers see the diff and the build is 
 
 7. **YAML quoting gotchas.** Single-quoted YAML scalars require `''` to escape an apostrophe (`s'entraîner` → `'s''entraîner'`) or use double quotes. The fixer at `tools/src/fix-translated-yaml.mjs` repairs the most common error class but it is safer to write the YAML correctly the first time.
 
+## Blog Translation Policy
+
+Locale coverage rules for `content/blog/<folder>/<lang>.md` files.
+
+- **Required for every post:** `de.md` (source) and `en.md` (canonical). A post that ships only one of these must not merge — the sitemap would emit a hreflang cluster of one and Google treats it as a thin locale graph.
+- **Recommended:** every other supported locale (`fr`, `es`, `it`, `nl`, `el`, `la`, `no`, `zh`). Full 10-locale coverage is the target; short-term gaps are tolerated but should be tracked as follow-up issues, not left silent.
+- **Current state:** all blog folders ship in all 10 supported locales. Adopting a new post means matching that invariant — drop in all 10 `<lang>.md` files in the same PR, or open a tracking issue for the missing translations before merge.
+- **Intentionally-untranslated posts** (e.g. a DE-only local event recap) have no formal mechanism today. If the need arises we will add a `localesIntentionallyAbsent: ['it', 'no']` frontmatter field so the sitemap can skip those locales without flagging them as gaps. Until then: don't ship such posts. If you must, call it out in the PR description so reviewers know the partial coverage is deliberate.
+- **Sitemap consequence:** `scanMarkdownBlogPosts` in `tools/src/generate-sitemap.js` emits a per-locale `<loc>` only for `.md` files that actually exist on disk. Missing locales are silently omitted from the post's hreflang cluster — Google reads that as "this post only exists in these locales". That behaviour is intentional: emitting a hreflang to a locale where the runtime would 404 is worse than a smaller cluster.
+
 ## How to add a new wiki push-up type
 
 The wiki catalog has two parts: **structural metadata** (referenced by code) lives in TypeScript, **translatable copy** (name, summary, instructions, tips) lives in markdown. Keep them in sync.
