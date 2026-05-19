@@ -31,6 +31,10 @@
       "inputs": [
         "{workspaceRoot}/web/src/app/blog/blog-posts.data.ts",
         "{workspaceRoot}/content/blog/**/*.md",
+        "{workspaceRoot}/libs/stats/src/lib/models/training-plan.catalog.ts",
+        "{workspaceRoot}/libs/stats/src/lib/models/pushup-type.models.ts",
+        "{workspaceRoot}/libs/stats/src/lib/models/exercise-wiki.models.ts",
+        "{workspaceRoot}/web/src/server-locale-redirect.ts",
         "{workspaceRoot}/tools/src/generate-sitemap.js"
       ],
       "outputs": ["{workspaceRoot}/web/public/sitemap.xml"],

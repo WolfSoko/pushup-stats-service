@@ -320,12 +320,30 @@ function readExerciseWikiSlugs() {
   return slugs;
 }
 
+/**
+ * Exercise-wiki detail pages — same rationale as
+ * `buildTrainingPlanRoutes`: one slug, one prerendered HTML per
+ * locale, so one sitemap entry per (slug × locale) with full
+ * cross-locale hreflang alternates.
+ */
 function buildExerciseWikiRoutes(slugs) {
-  return slugs.map((slug) => ({
-    path: `/wiki/uebungen/${slug}`,
-    changefreq: 'monthly',
-    priority: '0.6',
-  }));
+  const routes = [];
+  for (const slug of slugs) {
+    const alternates = LOCALES.map((lang) => ({
+      lang,
+      path: `/wiki/uebungen/${slug}`,
+    }));
+    for (const lang of LOCALES) {
+      routes.push({
+        path: `/wiki/uebungen/${slug}`,
+        changefreq: 'monthly',
+        priority: '0.6',
+        locale: lang,
+        alternates,
+      });
+    }
+  }
+  return routes;
 }
 
 function extractTrainingPlanSlugs(source) {
@@ -362,12 +380,33 @@ function readTrainingPlanSlugs() {
   return slugs;
 }
 
+/**
+ * Training-plan detail pages prerender for every supported locale
+ * (Angular i18n builds one bundle per locale and `getPrerenderParams`
+ * returns the same slug for all of them — see
+ * `web/src/app/app.routes.server.ts`). Emit one `<loc>` per
+ * (slug × locale) so each prerendered HTML has its own sitemap entry,
+ * and pair every variant via hreflang. Without per-locale `<loc>`
+ * entries the hreflang reciprocity Google requires would be broken.
+ */
 function buildTrainingPlanRoutes(slugs) {
-  return slugs.map((slug) => ({
-    path: `/training-plans/${slug}`,
-    changefreq: 'monthly',
-    priority: '0.8',
-  }));
+  const routes = [];
+  for (const slug of slugs) {
+    const alternates = LOCALES.map((lang) => ({
+      lang,
+      path: `/training-plans/${slug}`,
+    }));
+    for (const lang of LOCALES) {
+      routes.push({
+        path: `/training-plans/${slug}`,
+        changefreq: 'monthly',
+        priority: '0.8',
+        locale: lang,
+        alternates,
+      });
+    }
+  }
+  return routes;
 }
 
 function buildBlogRoutes(posts) {
@@ -432,9 +471,9 @@ function main() {
   writeFileSync(outPath, xml, 'utf-8');
   const total =
     staticRoutes.length +
-    planSlugs.length +
-    pushupTypes.length +
-    exerciseWikiSlugs.length +
+    planSlugs.length * LOCALES.length +
+    pushupTypes.length * LOCALES.length +
+    exerciseWikiSlugs.length * LOCALES.length +
     posts.length;
   console.log(`sitemap.xml written (${total} URLs)`);
 }
