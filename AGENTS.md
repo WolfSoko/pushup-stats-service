@@ -18,6 +18,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Issue work → feature branch + PR.** When implementing a tracked issue (e.g. `claude/implement-NNN-*` branches), open a PR proactively once the change is pushed and CI-ready, without waiting for an explicit ask. Link the issue with `Closes #ID`.
 - **Ad-hoc trunk changes still go straight to `main`.** Only open a PR when there is an issue, when the change is risky/large, or when the user requests one.
 - **After opening the PR, subscribe to its activity** via `subscribe_pr_activity` so review comments and CI failures are addressed in the same session without prompting.
+- **Merge proactively once CI is green and review threads are resolved** — no need to wait for an explicit "merge it" from the user. Squash by default; preserve the issue link in the squash body. Stop only on an unresolvable review comment or a CI failure outside the change's scope, in which case report and wait.
 
 ## Development Flow (Project Board)
 

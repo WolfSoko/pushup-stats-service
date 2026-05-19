@@ -29,16 +29,20 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = join(__dirname, '..', '..');
-const LOCALE_DIR = join(REPO_ROOT, 'web', 'src', 'locale');
-const BLOG_DIR = join(REPO_ROOT, 'content', 'blog');
-const WIKI_DIR = join(REPO_ROOT, 'content', 'wiki', 'pushup-types');
-const LOCALE_CONST_FILE = join(
-  REPO_ROOT,
-  'web',
-  'src',
-  'server-locale-redirect.ts'
-);
+const DEFAULT_REPO_ROOT = join(__dirname, '..', '..');
+// Tests drive the detector against a sandbox tree via these env vars;
+// production runs leave them unset and fall back to repo-relative paths.
+const REPO_ROOT = process.env.DETECT_GAPS_REPO_ROOT || DEFAULT_REPO_ROOT;
+const LOCALE_DIR =
+  process.env.DETECT_GAPS_LOCALE_DIR || join(REPO_ROOT, 'web', 'src', 'locale');
+const BLOG_DIR =
+  process.env.DETECT_GAPS_BLOG_DIR || join(REPO_ROOT, 'content', 'blog');
+const WIKI_DIR =
+  process.env.DETECT_GAPS_WIKI_DIR ||
+  join(REPO_ROOT, 'content', 'wiki', 'pushup-types');
+const LOCALE_CONST_FILE =
+  process.env.DETECT_GAPS_LOCALE_CONST_FILE ||
+  join(REPO_ROOT, 'web', 'src', 'server-locale-redirect.ts');
 const SOURCE_LOCALE = 'de';
 
 function parseArgs(argv) {
@@ -278,6 +282,7 @@ function renderReport(allGaps, locales) {
       lines.push('| --- | --- |');
       for (const g of items.slice(0, 200)) {
         const src = g.source
+          .replace(/\\/g, '\\\\')
           .replace(/\|/g, '\\|')
           .replace(/\n/g, ' ')
           .slice(0, 200);
@@ -359,11 +364,18 @@ function renderSummaryEnv(allGaps) {
 
 export async function detectGaps({ locales } = {}) {
   const supported = await readSupportedLocales();
-  const targets = (
-    locales && locales.length > 0
-      ? locales
-      : supported.filter((l) => l !== SOURCE_LOCALE)
-  ).filter((l) => l !== SOURCE_LOCALE);
+  const requested = [...new Set(locales ?? [])].filter(Boolean);
+  const unknown = requested.filter(
+    (locale) => locale !== SOURCE_LOCALE && !supported.includes(locale)
+  );
+  if (unknown.length > 0) {
+    throw new Error(
+      `Unsupported locale(s): ${unknown.join(', ')}. Known: ${supported.join(', ')}.`
+    );
+  }
+  const targets = (requested.length > 0 ? requested : supported).filter(
+    (locale) => locale !== SOURCE_LOCALE
+  );
 
   const [xliffGaps, blogGaps, wikiGaps] = await Promise.all([
     detectXliffGaps(targets),

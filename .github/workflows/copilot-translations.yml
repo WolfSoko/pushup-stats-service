@@ -31,7 +31,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
   pull-requests: write
 
 concurrency:
@@ -48,6 +47,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          # Detection is read-only; no step in this job needs to push.
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -151,9 +152,12 @@ jobs:
           NAME="${REPO##*/}"
 
           # Resolve the repository node id once; the mutation requires it.
+          # `jq -er` exits non-zero on null/missing so we fail fast
+          # instead of carrying a literal "null" forward as REPO_ID.
           REPO_ID="$(gh api graphql \
             -f query='query($owner:String!,$name:String!){repository(owner:$owner,name:$name){id}}' \
-            -f owner="$OWNER" -f name="$NAME" --jq '.data.repository.id')"
+            -f owner="$OWNER" -f name="$NAME" \
+            --jq '.data.repository.id // error("repository id missing")')"
 
           # Create the Copilot SWE PR. The mutation name has been
           # stable since the agent reached GA in 2025; if GitHub renames
@@ -166,8 +170,16 @@ jobs:
             -f body="$BODY" \
             -f base=main)"
 
-          NUMBER="$(echo "$RESPONSE" | jq -r '.data.createPullRequestWithCopilot.pullRequest.number')"
-          URL="$(echo "$RESPONSE" | jq -r '.data.createPullRequestWithCopilot.pullRequest.url')"
+          # `gh api graphql` already exits non-zero on transport
+          # errors, but a partial GraphQL response (data + errors) can
+          # still produce exit 0; guard against that explicitly.
+          if ! echo "$RESPONSE" | jq -e '(.errors // []) | length == 0' >/dev/null; then
+            echo "GraphQL errors:" >&2
+            echo "$RESPONSE" | jq -r '.errors' >&2
+            exit 1
+          fi
+          NUMBER="$(echo "$RESPONSE" | jq -er '.data.createPullRequestWithCopilot.pullRequest.number')"
+          URL="$(echo "$RESPONSE" | jq -er '.data.createPullRequestWithCopilot.pullRequest.url')"
           echo "Copilot PR #${NUMBER} dispatched: ${URL}"
           {
             echo "## Copilot dispatched"
