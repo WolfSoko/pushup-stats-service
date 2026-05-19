@@ -5225,6 +5225,42 @@
         <source>Im SpeedDial</source>
       <target>在快速操作中</target></segment>
     </unit>
+    <unit id="quickAddConfig.autoCount.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Verwendet die Kamera, um Wiederholungen automatisch zu zählen. Nur für unterstützte Übungen verfügbar.</source>
+        <target>使用相机自动计数重复次数。仅适用于支持的练习。</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.inSpeedDial.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Zeigt diese Schnellaktion im schwebenden Plus-Button (SpeedDial) zur Schnellerfassung an.</source>
+        <target>在浮动加号按钮（SpeedDial）中显示此快捷操作以便快速记录。</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseRepAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
+        <target>添加 <ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/></target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.pushupRepsLabel">
+      <notes>
+        <note category="location">web/src/app/core/app-data.facade.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
+        <target>+<ph id="0" equiv="REPS" disp="reps"/> 次</target>
+      </segment>
+    </unit>
     <unit id="save">
       <notes>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:84,85</note>

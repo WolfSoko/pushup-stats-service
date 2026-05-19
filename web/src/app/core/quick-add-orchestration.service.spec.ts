@@ -9,7 +9,10 @@ import {
   ExerciseFirestoreService,
   StatsApiService,
 } from '@pu-stats/data-access';
-import { QuickAddBridgeService } from '@pu-stats/quick-add';
+import {
+  QuickAddBridgeService,
+  type QuickAddSuggestion,
+} from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from './quick-add-orchestration.service';
 import { AppDataFacade } from './app-data.facade';
 
@@ -145,6 +148,96 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
 
     const payload = statsApiMock.createPushup.mock.calls[0][0];
     expect(payload.reps).toBe(42);
+  });
+});
+
+describe('QuickAddOrchestrationService.addSuggestion', () => {
+  const reloadAfterMutation = vitest.fn();
+  const statsApiMock = { createPushup: vitest.fn() };
+  const exerciseApiMock = { createEntry: vitest.fn() };
+  const snackBarMock = { open: vitest.fn() };
+  const routerMock = { url: '/app', navigate: vitest.fn() };
+  const bridgeMock = { requestOpenDialog: vitest.fn() };
+  const appDataMock: Partial<AppDataFacade> = {
+    remainingToGoal: signal(0).asReadonly(),
+    reloadAfterMutation,
+  };
+
+  function setup(opts: { userId?: string } = {}): QuickAddOrchestrationService {
+    vitest.clearAllMocks();
+    statsApiMock.createPushup.mockReturnValue(of({ _id: '1' }));
+    exerciseApiMock.createEntry.mockReturnValue(of({ _id: 'e1' }));
+
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: baseProviders({
+        statsApiMock,
+        exerciseApiMock,
+        snackBarMock,
+        routerMock,
+        bridgeMock,
+        appDataMock,
+        userId: opts.userId,
+      }),
+    });
+    return TestBed.inject(QuickAddOrchestrationService);
+  }
+
+  const pushupSuggestion: QuickAddSuggestion = {
+    key: 'slot:0',
+    reps: 10,
+    icon: 'bolt',
+    label: '+10 Reps',
+    ariaLabel: '10 Liegestütze hinzufügen',
+    exerciseId: 'pushup',
+  };
+  const situpsSuggestion: QuickAddSuggestion = {
+    key: 'slot:1',
+    reps: 12,
+    icon: 'self_improvement',
+    label: '+12 Sit-ups',
+    ariaLabel: '12 Sit-ups hinzufügen',
+    exerciseId: 'abs.situps',
+  };
+
+  it('Given a pushup suggestion, Then createPushup is called with the suggestion reps and quick-add source', () => {
+    const service = setup();
+
+    service.addSuggestion(pushupSuggestion);
+
+    expect(statsApiMock.createPushup).toHaveBeenCalledTimes(1);
+    const payload = statsApiMock.createPushup.mock.calls[0][0];
+    expect(payload.reps).toBe(10);
+    expect(payload.source).toBe('quick-add');
+    expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
+  });
+
+  it('Given a non-pushup suggestion, Then exerciseApi.createEntry is called with that exerciseId', async () => {
+    const service = setup();
+
+    service.addSuggestion(situpsSuggestion);
+    await vitest.waitFor(() =>
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1)
+    );
+
+    const [userId, payload] = exerciseApiMock.createEntry.mock.calls[0];
+    expect(userId).toBe('u1');
+    expect(payload.exerciseId).toBe('abs.situps');
+    expect(payload.reps).toBe(12);
+    expect(payload.source).toBe('quick-add');
+    expect(statsApiMock.createPushup).not.toHaveBeenCalled();
+  });
+
+  it('Given a non-pushup suggestion without a logged-in user, Then an error snackbar opens and nothing is created', async () => {
+    const service = setup({ userId: '' });
+
+    service.addSuggestion(situpsSuggestion);
+    await vitest.waitFor(() =>
+      expect(snackBarMock.open).toHaveBeenCalledTimes(1)
+    );
+
+    expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
+    expect(snackBarMock.open.mock.calls[0][0]).toContain('konnte nicht');
   });
 });
 

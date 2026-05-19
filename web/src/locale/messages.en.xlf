@@ -3063,6 +3063,42 @@ Deine Position: # ·  Reps        </source>
         <target>In SpeedDial</target>
       </segment>
     </unit>
+    <unit id="quickAddConfig.autoCount.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Verwendet die Kamera, um Wiederholungen automatisch zu zählen. Nur für unterstützte Übungen verfügbar.</source>
+        <target>Uses the camera to count reps automatically. Available only for supported exercises.</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.inSpeedDial.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Zeigt diese Schnellaktion im schwebenden Plus-Button (SpeedDial) zur Schnellerfassung an.</source>
+        <target>Shows this quick action in the floating plus button (SpeedDial) for fast logging.</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseRepAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
+        <target>Add <ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/></target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.pushupRepsLabel">
+      <notes>
+        <note category="location">web/src/app/core/app-data.facade.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
+        <target>+<ph id="0" equiv="REPS" disp="reps"/> Reps</target>
+      </segment>
+    </unit>
     <unit id="quickAddConfig.hintV2">
       <notes>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>

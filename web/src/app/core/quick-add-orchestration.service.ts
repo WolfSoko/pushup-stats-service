@@ -12,7 +12,10 @@ import {
   nowLocalIsoTimestamp,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
 } from '@pu-stats/models';
-import { QuickAddBridgeService } from '@pu-stats/quick-add';
+import {
+  QuickAddBridgeService,
+  type QuickAddSuggestion,
+} from '@pu-stats/quick-add';
 import { firstValueFrom } from 'rxjs';
 
 import { AppDataFacade } from './app-data.facade';
@@ -99,6 +102,53 @@ export class QuickAddOrchestrationService {
 
   private readonly _fillToGoalInFlight = signal(false);
   readonly fillToGoalInFlight = this._fillToGoalInFlight.asReadonly();
+
+  /**
+   * SpeedDial entry point — dispatches by `exerciseId`. Pushup rows flow
+   * through the legacy `pushups` collection; every other catalog id is
+   * written to `exerciseEntries` via `ExerciseFirestoreService`, mirroring
+   * the dashboard's `addQuickEntryFromConfig` so both surfaces stay in
+   * sync.
+   */
+  addSuggestion(suggestion: QuickAddSuggestion): void {
+    if (suggestion.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+      this.add(suggestion.reps);
+      return;
+    }
+    void this.addExerciseQuickEntry(suggestion);
+  }
+
+  private async addExerciseQuickEntry(
+    suggestion: QuickAddSuggestion
+  ): Promise<void> {
+    const userId = this.userContext.userIdSafe();
+    if (!userId || !this.exerciseApi) {
+      this.openErrorSnackbar();
+      return;
+    }
+    try {
+      await firstValueFrom(
+        this.exerciseApi.createEntry(userId, {
+          exerciseId: suggestion.exerciseId,
+          timestamp: nowLocalIsoTimestamp(),
+          reps: suggestion.reps,
+          source: 'quick-add',
+        })
+      );
+      this.snackBar.open(
+        $localize`:@@quickAdd.success.create:Eintrag gespeichert.`,
+        '',
+        {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        }
+      );
+      this.appData.reloadAfterMutation();
+    } catch {
+      this.openErrorSnackbar();
+    }
+  }
 
   add(reps: number): void {
     this.statsApi

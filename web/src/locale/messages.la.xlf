@@ -4641,6 +4641,42 @@
         <target>in SpeedDial</target>
       </segment>
     </unit>
+    <unit id="quickAddConfig.autoCount.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Verwendet die Kamera, um Wiederholungen automatisch zu zählen. Nur für unterstützte Übungen verfügbar.</source>
+        <target>Camera utitur ad repetitiones automatice numerandas. Solum pro exercitiis sustentatis disponibile.</target>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.inSpeedDial.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>Zeigt diese Schnellaktion im schwebenden Plus-Button (SpeedDial) zur Schnellerfassung an.</source>
+        <target>Hanc actionem celerem in pulsabulo plus volante (SpeedDial) ad celerem registrationem ostendit.</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseRepAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
+      </notes>
+      <segment state="translated">
+        <source><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
+        <target><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> addere</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.pushupRepsLabel">
+      <notes>
+        <note category="location">web/src/app/core/app-data.facade.ts</note>
+      </notes>
+      <segment state="translated">
+        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
+        <target>+<ph id="0" equiv="REPS" disp="reps"/> Rep.</target>
+      </segment>
+    </unit>
     <unit id="save">
       <notes>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:84,85</note>

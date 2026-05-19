@@ -42,7 +42,10 @@ import {
   QuickLogListenerService,
 } from '@pu-push/push';
 import { CookieConsentBannerComponent } from '@pu-stats/ads';
-import { QuickAddFabComponent } from '@pu-stats/quick-add';
+import {
+  QuickAddFabComponent,
+  type QuickAddSuggestion,
+} from '@pu-stats/quick-add';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
@@ -341,8 +344,8 @@ export class App {
     }
   }
 
-  handleQuickAdd(reps: number): void {
-    this.quickAdd.add(reps);
+  handleQuickAdd(suggestion: QuickAddSuggestion): void {
+    this.quickAdd.addSuggestion(suggestion);
   }
 
   handleOpenDialog(): void {

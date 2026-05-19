@@ -10,10 +10,53 @@ import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import { StatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { toBerlinIsoDate } from '@pu-stats/models';
-import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
+import {
+  findExerciseDefinition,
+  PUSHUP_QUICK_ADD_EXERCISE_ID,
+  type QuickAddConfig,
+  toBerlinIsoDate,
+} from '@pu-stats/models';
+import {
+  AdaptiveQuickAddService,
+  type QuickAddSuggestion,
+} from '@pu-stats/quick-add';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';
+import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+
+const FALLBACK_QUICK_ICONS = ['bolt', 'flash_on', 'whatshot'] as const;
+
+function pushupSuggestion(reps: number, slot: number): QuickAddSuggestion {
+  return {
+    key: `slot:${slot}`,
+    reps,
+    icon: FALLBACK_QUICK_ICONS[slot] ?? 'bolt',
+    label: $localize`:@@quickAdd.fab.pushupRepsLabel:+${reps}:REPS: Reps`,
+    ariaLabel: $localize`:@@quickAdd.fab.repAria:${reps}:REPS: Liegestütze hinzufügen`,
+    exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+  };
+}
+
+function configuredSuggestion(
+  cfg: QuickAddConfig,
+  slot: number
+): QuickAddSuggestion {
+  const exerciseId = cfg.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
+  if (exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+    return pushupSuggestion(cfg.reps, slot);
+  }
+  const def = findExerciseDefinition(exerciseId);
+  const exerciseLabel = exerciseDisplayName(exerciseId);
+  const icon = def?.icon ?? 'fitness_center';
+  return {
+    key: `slot:${slot}`,
+    reps: cfg.reps,
+    icon,
+    label: `+${cfg.reps} ${exerciseLabel}`,
+    ariaLabel: $localize`:@@quickAdd.fab.exerciseRepAria:${cfg.reps}:REPS: ${exerciseLabel}:EXERCISE: hinzufügen`,
+    exerciseId,
+  };
+}
 
 /**
  * Facade that consolidates app-level data resources.
@@ -58,7 +101,7 @@ export class AppDataFacade {
     return this.recentEntriesResource.value() ?? [];
   });
 
-  readonly quickAddSuggestions = computed(() => {
+  readonly quickAddSuggestions = computed<QuickAddSuggestion[]>(() => {
     const configured = this.userConfig.quickAdds();
     if (configured.length > 0) {
       // SpeedDial FAB only knows fixed-reps `quickAdd(n)` so we must
@@ -68,10 +111,12 @@ export class AppDataFacade {
       // alongside `mode: 'auto-count'`.
       return configured
         .filter((q) => q.inSpeedDial && q.mode !== 'auto-count' && q.reps > 0)
-        .map((q) => q.reps)
-        .slice(0, 3);
+        .slice(0, 3)
+        .map((cfg, i) => configuredSuggestion(cfg, i));
     }
-    return this.adaptiveQuickAdd.compute(this.recentEntries());
+    return this.adaptiveQuickAdd
+      .compute(this.recentEntries())
+      .map((reps, i) => pushupSuggestion(reps, i));
   });
 
   /**
