@@ -70,18 +70,16 @@
               >
             }
           </button>
-        } @else {
+        } @else if (item.suggestion) {
           <button
             mat-fab
             extended
             class="quick-fab"
-            [attr.aria-label]="repAriaLabel(item.value)"
-            (click)="onQuickAdd(item.value)"
+            [attr.aria-label]="item.ariaLabel"
+            (click)="onQuickAdd(item.suggestion)"
           >
             <mat-icon>{{ item.icon }}</mat-icon>
-            <span i18n="@@quickAdd.fab.quickAddReps"
-              >+{{ item.value }} Reps</span
-            >
+            <span>{{ item.label }}</span>
           </button>
         }
       }

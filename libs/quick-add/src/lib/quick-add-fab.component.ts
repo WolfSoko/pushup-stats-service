@@ -3,6 +3,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { patchState, signalState } from '@ngrx/signals';
 
+/**
+ * Pre-resolved quick-add the speed dial should render. Producers
+ * (e.g. `AppDataFacade.quickAddSuggestions`) localise the label and
+ * resolve the exercise's icon so the FAB stays presentation-only.
+ * `exerciseId` is opaque to the FAB — it round-trips back through the
+ * `quickAdd` output so the dispatcher can pick the right write target.
+ */
+export interface QuickAddSuggestion {
+  readonly key: string;
+  readonly reps: number;
+  readonly icon: string;
+  readonly label: string;
+  readonly ariaLabel: string;
+  readonly exerciseId: string;
+}
+
 interface DialItem {
   readonly value: number;
   readonly type:
@@ -13,9 +29,10 @@ interface DialItem {
     | 'auto-count'
     | 'exercise-timer';
   readonly icon: string;
+  readonly label?: string;
+  readonly ariaLabel?: string;
+  readonly suggestion?: QuickAddSuggestion;
 }
-
-const QUICK_ICONS = ['bolt', 'flash_on', 'whatshot'] as const;
 
 @Component({
   selector: 'lib-quick-add-fab',
@@ -25,13 +42,13 @@ const QUICK_ICONS = ['bolt', 'flash_on', 'whatshot'] as const;
   styleUrl: './quick-add-fab.component.scss',
 })
 export class QuickAddFabComponent {
-  readonly suggestions = input<number[]>([1, 5, 10]);
+  readonly suggestions = input<QuickAddSuggestion[]>([]);
   readonly remainingToGoal = input<number>(0);
   readonly goalReached = input<boolean>(false);
   readonly fillToGoalInFlight = input<boolean>(false);
   readonly autoCountEnabled = input<boolean>(false);
 
-  readonly quickAdd = output<number>();
+  readonly quickAdd = output<QuickAddSuggestion>();
   readonly openDialog = output<void>();
   readonly openFeedback = output<void>();
   readonly fillToGoal = output<void>();
@@ -46,10 +63,13 @@ export class QuickAddFabComponent {
     const quickItems: DialItem[] = this.suggestions()
       .slice(0, 3)
       .map(
-        (s, i): DialItem => ({
-          value: s,
+        (s): DialItem => ({
+          value: s.reps,
           type: 'quick',
-          icon: QUICK_ICONS[i] ?? 'bolt',
+          icon: s.icon,
+          label: s.label,
+          ariaLabel: s.ariaLabel,
+          suggestion: s,
         })
       );
 
@@ -80,10 +100,6 @@ export class QuickAddFabComponent {
   protected readonly goalReachedLabel = $localize`:@@quickAdd.fab.goalReached:Ziel erreicht ✓`;
   protected readonly goalReachedAria = $localize`:@@quickAdd.fab.goalReachedAria:Tagesziel bereits erreicht`;
 
-  protected repAriaLabel(reps: number): string {
-    return $localize`:@@quickAdd.fab.repAria:${reps}:REPS: Liegestütze hinzufügen`;
-  }
-
   protected fillToGoalAria(gap: number): string {
     return $localize`:@@quickAdd.fab.fillToGoalAria:${gap}:GAP: Liegestütze bis zum Tagesziel hinzufügen`;
   }
@@ -98,9 +114,9 @@ export class QuickAddFabComponent {
     if (nextOpen) this.opened.emit();
   }
 
-  protected onQuickAdd(reps: number): void {
+  protected onQuickAdd(suggestion: QuickAddSuggestion): void {
     patchState(this.fabState, { open: false });
-    this.quickAdd.emit(reps);
+    this.quickAdd.emit(suggestion);
   }
 
   protected onOpenDialog(): void {

@@ -1,11 +1,25 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { PointerEventsCheckLevel } from '@testing-library/user-event';
-import { QuickAddFabComponent } from './quick-add-fab.component';
+import {
+  QuickAddFabComponent,
+  type QuickAddSuggestion,
+} from './quick-add-fab.component';
+
+function pushupSuggestion(reps: number): QuickAddSuggestion {
+  return {
+    key: `pushup:${reps}`,
+    reps,
+    icon: 'bolt',
+    label: `+${reps} Reps`,
+    ariaLabel: `${reps} Liegestütze hinzufügen`,
+    exerciseId: 'pushup',
+  };
+}
 
 describe('QuickAddFabComponent — goal dial item', () => {
   async function renderFab(inputs: {
-    suggestions?: number[];
+    suggestions?: QuickAddSuggestion[];
     remainingToGoal?: number;
     goalReached?: boolean;
     fillToGoalInFlight?: boolean;
@@ -27,7 +41,8 @@ describe('QuickAddFabComponent — goal dial item', () => {
 
     const view = await render(QuickAddFabComponent, {
       inputs: {
-        suggestions: inputs.suggestions ?? [5, 10, 15],
+        suggestions:
+          inputs.suggestions ?? [5, 10, 15].map((r) => pushupSuggestion(r)),
         remainingToGoal: inputs.remainingToGoal ?? 0,
         goalReached: inputs.goalReached ?? false,
         fillToGoalInFlight: inputs.fillToGoalInFlight ?? false,
@@ -117,13 +132,54 @@ describe('QuickAddFabComponent — goal dial item', () => {
 
   it('Given suggestions, Then the three quick-rep items still render', async () => {
     await renderFab({
-      suggestions: [5, 10, 15],
+      suggestions: [5, 10, 15].map((r) => pushupSuggestion(r)),
       remainingToGoal: 42,
     });
 
     expect(screen.getByText('+5 Reps')).toBeTruthy();
     expect(screen.getByText('+10 Reps')).toBeTruthy();
     expect(screen.getByText('+15 Reps')).toBeTruthy();
+  });
+
+  it('Given a non-pushup suggestion, Then its localised label and icon render', async () => {
+    const situps: QuickAddSuggestion = {
+      key: 'abs.situps:10',
+      reps: 10,
+      icon: 'self_improvement',
+      label: '+10 Sit-ups',
+      ariaLabel: '10 Sit-ups hinzufügen',
+      exerciseId: 'abs.situps',
+    };
+    await renderFab({ suggestions: [situps] });
+
+    expect(screen.getByText('+10 Sit-ups')).toBeTruthy();
+    const button = screen.getByRole('button', {
+      name: /10 Sit-ups hinzufügen/i,
+    });
+    expect(button).toBeTruthy();
+    expect(button.querySelector('mat-icon')?.textContent).toContain(
+      'self_improvement'
+    );
+  });
+
+  it('When a quick item is clicked, Then the full suggestion is emitted', async () => {
+    const situps: QuickAddSuggestion = {
+      key: 'abs.situps:10',
+      reps: 10,
+      icon: 'self_improvement',
+      label: '+10 Sit-ups',
+      ariaLabel: '10 Sit-ups hinzufügen',
+      exerciseId: 'abs.situps',
+    };
+    const { user, quickAdd } = await renderFab({ suggestions: [situps] });
+
+    const button = screen.getByRole('button', {
+      name: /10 Sit-ups hinzufügen/i,
+    });
+    await user.click(button);
+
+    expect(quickAdd).toHaveBeenCalledTimes(1);
+    expect(quickAdd).toHaveBeenCalledWith(situps);
   });
 
   it('When the main FAB opens the dial, Then opened is emitted once', async () => {

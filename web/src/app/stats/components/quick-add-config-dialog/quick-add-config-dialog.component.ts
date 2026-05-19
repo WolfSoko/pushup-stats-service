@@ -119,6 +119,8 @@ interface ExerciseOption {
               [checked]="row.mode === 'auto-count'"
               (change)="setAutoCount($index, $event.checked)"
               [attr.data-testid]="'quick-add-autocount-' + $index"
+              [matTooltip]="autoCountTooltip"
+              matTooltipPosition="above"
               i18n="@@quickAddConfig.autoCount"
               >Auto-Messung</mat-checkbox
             >
@@ -129,6 +131,8 @@ interface ExerciseOption {
               [checked]="row.inSpeedDial"
               (change)="setInSpeedDial($index, $event.checked)"
               [attr.data-testid]="'quick-add-speeddial-' + $index"
+              [matTooltip]="inSpeedDialTooltip"
+              matTooltipPosition="above"
               i18n="@@quickAddConfig.inSpeedDial"
               >Im SpeedDial</mat-checkbox
             >
@@ -210,6 +214,8 @@ export class QuickAddConfigDialogComponent {
   // Clears the whole slot (exercise, mode, reps) — not just the reps field —
   // since the picker landed. Keeps the assistive-tech announcement honest.
   protected readonly clearRowAria = $localize`:@@quickAddConfig.clearRowAria:Schnellaktion löschen`;
+  protected readonly autoCountTooltip = $localize`:@@quickAddConfig.autoCount.tooltip:Verwendet die Kamera, um Wiederholungen automatisch zu zählen. Nur für unterstützte Übungen verfügbar.`;
+  protected readonly inSpeedDialTooltip = $localize`:@@quickAddConfig.inSpeedDial.tooltip:Zeigt diese Schnellaktion im schwebenden Plus-Button (SpeedDial) zur Schnellerfassung an.`;
   protected readonly saving = signal(false);
 
   protected readonly exerciseOptions: ReadonlyArray<ExerciseOption> =

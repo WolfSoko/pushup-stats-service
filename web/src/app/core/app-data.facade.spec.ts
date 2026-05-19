@@ -161,14 +161,21 @@ describe('AppDataFacade', () => {
   });
 
   describe('quickAddSuggestions', () => {
-    it('Given no configured quickAdds, Then adaptive suggestions are used', async () => {
+    function reps(facade: AppDataFacade): number[] {
+      return facade.quickAddSuggestions().map((s) => s.reps);
+    }
+
+    it('Given no configured quickAdds, Then adaptive suggestions are used (as pushup suggestions)', async () => {
       userConfigApiMock.getConfig.mockReturnValue(
         of({ userId: 'u1', dailyGoal: 100 })
       );
       const facade = setup();
       await flushResources();
 
-      expect(facade.quickAddSuggestions()).toEqual([1, 5, 10]);
+      expect(reps(facade)).toEqual([1, 5, 10]);
+      expect(
+        facade.quickAddSuggestions().every((s) => s.exerciseId === 'pushup')
+      ).toBe(true);
     });
 
     it('Given configured quickAdds, Then only entries with inSpeedDial=true are returned', async () => {
@@ -188,7 +195,35 @@ describe('AppDataFacade', () => {
       const facade = setup();
       await flushResources();
 
-      expect(facade.quickAddSuggestions()).toEqual([15, 50]);
+      expect(reps(facade)).toEqual([15, 50]);
+    });
+
+    it('Given a configured exercise quick-add, Then the suggestion carries the catalog icon and a localised label', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({
+          userId: 'u1',
+          dailyGoal: 100,
+          ui: {
+            quickAdds: [
+              {
+                reps: 10,
+                inSpeedDial: true,
+                exerciseId: 'abs.situps',
+                mode: 'reps',
+              },
+            ],
+          },
+        })
+      );
+      const facade = setup();
+      await flushResources();
+
+      const [s] = facade.quickAddSuggestions();
+      expect(s.exerciseId).toBe('abs.situps');
+      expect(s.reps).toBe(10);
+      expect(s.icon).toBe('self_improvement');
+      expect(s.label).toContain('Sit-ups');
+      expect(s.label).toContain('10');
     });
 
     it('Given configured quickAdds with none in SpeedDial, Then returns empty array (no adaptive fallback)', async () => {
@@ -234,7 +269,7 @@ describe('AppDataFacade', () => {
       const facade = setup();
       await flushResources();
 
-      expect(facade.quickAddSuggestions()).toEqual([15, 30]);
+      expect(reps(facade)).toEqual([15, 30]);
     });
 
     it('Given a SpeedDial entry with reps<=0 (legacy/corrupt), Then it is filtered out defensively', async () => {
@@ -254,7 +289,7 @@ describe('AppDataFacade', () => {
       const facade = setup();
       await flushResources();
 
-      expect(facade.quickAddSuggestions()).toEqual([20]);
+      expect(reps(facade)).toEqual([20]);
     });
   });
 
@@ -365,7 +400,9 @@ describe('AppDataFacade', () => {
       const facade = TestBed.inject(AppDataFacade);
       await flushResources();
 
-      expect(facade.quickAddSuggestions()).toEqual([0, 0, 0]);
+      expect(facade.quickAddSuggestions().map((s) => s.reps)).toEqual([
+        0, 0, 0,
+      ]);
 
       // When live data arrives
       liveEntries.set([
@@ -379,7 +416,9 @@ describe('AppDataFacade', () => {
       ]);
 
       // Then suggestions recompute
-      expect(facade.quickAddSuggestions()).toEqual([1, 2, 3]);
+      expect(facade.quickAddSuggestions().map((s) => s.reps)).toEqual([
+        1, 2, 3,
+      ]);
     });
   });
 
