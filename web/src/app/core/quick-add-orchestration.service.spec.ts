@@ -129,7 +129,7 @@ describe('QuickAddOrchestrationService.fillToGoal', () => {
     service.fillToGoal();
 
     const message = snackBarMock.open.mock.calls[0][0] as string;
-    expect(message).toMatch(/zwischen 1 und 500/);
+    expect(message).toMatch(/zwischen 1.*und 500.*liegen/);
   });
 
   it('Given a previous fillToGoal() is still in flight, When called again, Then createPushup is called only once', () => {

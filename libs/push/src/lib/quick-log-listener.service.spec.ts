@@ -149,7 +149,7 @@ describe('QuickLogListenerService', () => {
 
     expect(snackOpen).toHaveBeenCalled();
     const message = snackOpen.mock.calls[0][0];
-    expect(message).toMatch(/zwischen 1 und 500/);
+    expect(message).toMatch(/zwischen 1.*und 500.*liegen/);
   });
 
   it('Given a non-integer PushupValidationError When logEntry fails Then snack-bar surfaces the integer hint', async () => {

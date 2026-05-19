@@ -8853,8 +8853,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="pushup.validation.reps.outOfRange">
       <segment state="translated">
-        <source>Reps müssen zwischen 1 und 500 liegen.</source>
-        <target>Antall reps må være mellom 1 og 500.</target>
+        <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
+        <target>Antall reps må være mellom <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> og <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/>.</target>
       </segment>
     </unit>
     <unit id="pushup.validation.reps.notInteger">

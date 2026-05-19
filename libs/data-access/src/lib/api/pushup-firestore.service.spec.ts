@@ -499,7 +499,7 @@ describe('PushupFirestoreService', () => {
         pushupValidationMessage(
           new PushupValidationError('reps', 'out-of-range')
         )
-      ).toMatch(/zwischen 1 und 500/);
+      ).toMatch(/zwischen 1.*und 500.*liegen/);
     });
 
     it('Given not-integer Then surfaces the integer hint', () => {

@@ -9087,8 +9087,8 @@
     </unit>
     <unit id="pushup.validation.reps.outOfRange">
       <segment state="translated">
-        <source>Reps müssen zwischen 1 und 500 liegen.</source>
-        <target>次数必须在 1 到 500 之间。</target>
+        <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
+        <target>次数必须在 <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> 到 <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> 之间。</target>
       </segment>
     </unit>
     <unit id="pushup.validation.reps.notInteger">

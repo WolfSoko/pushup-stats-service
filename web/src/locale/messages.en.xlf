@@ -1622,8 +1622,8 @@ Active:         </target>
     </unit>
     <unit id="pushup.validation.reps.outOfRange">
       <segment state="translated">
-        <source>Reps müssen zwischen 1 und 500 liegen.</source>
-        <target>Reps must be between 1 and 500.</target>
+        <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
+        <target>Reps must be between <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> and <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/>.</target>
       </segment>
     </unit>
     <unit id="pushup.validation.reps.notInteger">

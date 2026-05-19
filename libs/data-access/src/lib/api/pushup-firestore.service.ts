@@ -45,7 +45,7 @@ export class PushupValidationError extends Error {
 export function pushupValidationMessage(err: unknown): string {
   if (err instanceof PushupValidationError && err.field === 'reps') {
     if (err.violation === 'out-of-range') {
-      return $localize`:@@pushup.validation.reps.outOfRange:Reps müssen zwischen 1 und 500 liegen.`;
+      return $localize`:@@pushup.validation.reps.outOfRange:Reps müssen zwischen ${PUSHUP_REPS_MIN}:min: und ${PUSHUP_REPS_MAX}:max: liegen.`;
     }
     if (err.violation === 'not-integer') {
       return $localize`:@@pushup.validation.reps.notInteger:Reps muss eine ganze Zahl sein.`;
