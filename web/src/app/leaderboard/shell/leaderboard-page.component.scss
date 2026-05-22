@@ -10,6 +10,41 @@
   gap: 16px;
 }
 
+.exercise-switch {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(123, 159, 255, 0.18);
+
+  .exercise-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      opacity: 0.85;
+    }
+  }
+
+  .active {
+    border-color: #8fb4ff;
+    background: rgba(83, 130, 220, 0.22);
+  }
+
+  .exercise-more.active {
+    // Distinguish an overflow-menu selection from a chip selection:
+    // a faint outline accent so users still spot which chip is "live"
+    // when the actual entry sits behind the menu.
+    border-style: dashed;
+  }
+}
+
 .period-switch {
   display: flex;
   gap: 8px;
@@ -20,6 +55,12 @@
     border-color: #8fb4ff;
     background: rgba(83, 130, 220, 0.22);
   }
+}
+
+.unit {
+  margin-left: 4px;
+  font-weight: 500;
+  opacity: 0.75;
 }
 
 ol {
@@ -148,9 +189,14 @@ li {
     color: #047857;
   }
 
-  .period-switch .active {
+  .period-switch .active,
+  .exercise-switch .active {
     border-color: #2563eb;
     background: rgba(59, 130, 246, 0.15);
+  }
+
+  .exercise-switch {
+    border-bottom-color: rgba(37, 99, 235, 0.22);
   }
 
   // Dark-theme link colours (`#cfe0ff` etc.) are unreadable against the

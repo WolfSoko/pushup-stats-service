@@ -235,7 +235,7 @@
         <note category="location">libs/auth/src/lib/ui/login/google-onboarding-dialog/google-onboarding-dialog.component.html:67,69</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:385,386</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:148,149</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:152,153</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:639,640</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:556,557</note>
       </notes>
@@ -756,17 +756,9 @@
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.quickAddReps">
-      <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:83,84</note>
-      </notes>
-      <segment>
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
-      </segment>
-    </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:78</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:98</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -774,7 +766,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:79</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:99</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -782,7 +774,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:80</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:100</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -790,23 +782,15 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:81</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:101</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.repAria">
-      <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:84</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
-      </segment>
-    </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:88</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:104</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -3553,7 +3537,7 @@
     </unit>
     <unit id="earlyAccess.text">
       <notes>
-        <note category="location">web/src/app/app.ts:173</note>
+        <note category="location">web/src/app/app.ts:176</note>
       </notes>
       <segment>
         <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
@@ -3561,7 +3545,7 @@
     </unit>
     <unit id="earlyAccess.feedback">
       <notes>
-        <note category="location">web/src/app/app.ts:174</note>
+        <note category="location">web/src/app/app.ts:177</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -3569,7 +3553,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:290</note>
+        <note category="location">web/src/app/app.ts:293</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -3577,7 +3561,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:293</note>
+        <note category="location">web/src/app/app.ts:296</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -3585,7 +3569,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:314</note>
+        <note category="location">web/src/app/app.ts:317</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -3593,7 +3577,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:315</note>
+        <note category="location">web/src/app/app.ts:318</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -3601,7 +3585,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:390</note>
+        <note category="location">web/src/app/app.ts:393</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -3609,7 +3593,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:419</note>
+        <note category="location">web/src/app/app.ts:422</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -3617,7 +3601,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:426</note>
+        <note category="location">web/src/app/app.ts:429</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4017,6 +4001,30 @@
         <source>Artikel lesen</source>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.pushupRepsLabel">
+      <notes>
+        <note category="location">web/src/app/core/app-data.facade.ts:34</note>
+      </notes>
+      <segment>
+        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.repAria">
+      <notes>
+        <note category="location">web/src/app/core/app-data.facade.ts:35</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.exerciseRepAria">
+      <notes>
+        <note category="location">web/src/app/core/app-data.facade.ts:56</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
+      </segment>
+    </unit>
     <unit id="feedback.dialog.title">
       <notes>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:44,47</note>
@@ -4076,8 +4084,9 @@
     </unit>
     <unit id="quickAdd.success.create">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:114</note>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:342</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:140</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:164</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:392</note>
       </notes>
       <segment>
         <source>Eintrag gespeichert.</source>
@@ -4085,7 +4094,7 @@
     </unit>
     <unit id="quickAdd.success.goalReached">
       <notes>
-        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:143</note>
+        <note category="location">web/src/app/core/quick-add-orchestration.service.ts:193</note>
       </notes>
       <segment>
         <source>Tagesziel erreicht 🎉</source>
@@ -4148,9 +4157,25 @@
         <source> Heute, letzte 7 Tage und letzte 30 Tage – wer schiebt die meisten Reps? </source>
       </segment>
     </unit>
+    <unit id="leaderboard.exercise.ariaLabel">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:13,14</note>
+      </notes>
+      <segment>
+        <source>Leaderboard Übung</source>
+      </segment>
+    </unit>
+    <unit id="leaderboard.exercise.more">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,45</note>
+      </notes>
+      <segment>
+        <source>Mehr</source>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.daily">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:22,24</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:86,88</note>
       </notes>
       <segment>
         <source> Tag </source>
@@ -4158,7 +4183,7 @@
     </unit>
     <unit id="landing.leaderboard.last7">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:31,33</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:95,97</note>
       </notes>
       <segment>
         <source> Letzte 7 Tage </source>
@@ -4166,32 +4191,24 @@
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:40,43</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:104,107</note>
       </notes>
       <segment>
         <source> Letzte 30 Tage </source>
       </segment>
     </unit>
-    <unit id="landing.leaderboard.reps">
+    <unit id="leaderboard.ownPosition.prefix">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:66,68</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:147,149</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:159,161</note>
       </notes>
       <segment>
-        <source>Reps</source>
-      </segment>
-    </unit>
-    <unit id="landing.leaderboard.ownPosition">
-      <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:80,81</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:86,88</note>
-      </notes>
-      <segment>
-        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
+        <source>Deine Position:</source>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:96,98</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:174,176</note>
       </notes>
       <segment>
         <source> Sichtbarkeit oder Anzeigename anpassen? </source>
@@ -4199,7 +4216,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:102,105</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:180,183</note>
       </notes>
       <segment>
         <source>Einstellungen öffnen</source>
@@ -4207,7 +4224,7 @@
     </unit>
     <unit id="leaderboard.loginHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:109,111</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:187,189</note>
       </notes>
       <segment>
         <source> Mitmachen und auftauchen? </source>
@@ -4215,10 +4232,36 @@
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:112,115</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:190,193</note>
       </notes>
       <segment>
         <source>Anmelden</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.pushup">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:43</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1288</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:79</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:197</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:221</note>
+        <note category="location">web/src/app/stats/shell/entries-page.component.ts:289</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:393</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="landing.leaderboard.reps">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:153</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:156</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
       </segment>
     </unit>
     <unit id="reminder.feature.eyebrow">
@@ -5651,22 +5694,6 @@
         <source>Alle Übungen</source>
       </segment>
     </unit>
-    <unit id="exercise.category.pushup">
-      <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:379</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1288</note>
-        <note category="location">web/src/app/stats/dashboard.store.ts:79</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:197</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:221</note>
-        <note category="location">web/src/app/stats/shell/entries-page.component.ts:289</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:393</note>
-      </notes>
-      <segment>
-        <source>Liegestütze</source>
-      </segment>
-    </unit>
     <unit id="analysis.overview.comparison.title">
       <notes>
         <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:30,32</note>
@@ -6238,7 +6265,7 @@
     </unit>
     <unit id="quickAddConfig.autoCount">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:123,125</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:125,127</note>
       </notes>
       <segment>
         <source>Auto-Messung</source>
@@ -6246,47 +6273,15 @@
     </unit>
     <unit id="quickAddConfig.inSpeedDial">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:133,136</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:137,140</note>
       </notes>
       <segment>
         <source>Im SpeedDial</source>
       </segment>
     </unit>
-    <unit id="quickAddConfig.autoCount.tooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Verwendet die Kamera, um Wiederholungen automatisch zu zählen. Nur für unterstützte Übungen verfügbar.</source>
-      </segment>
-    </unit>
-    <unit id="quickAddConfig.inSpeedDial.tooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source>Zeigt diese Schnellaktion im schwebenden Plus-Button (SpeedDial) zur Schnellerfassung an.</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.exerciseRepAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.pushupRepsLabel">
-      <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts</note>
-      </notes>
-      <segment>
-        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
-      </segment>
-    </unit>
     <unit id="save">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:157,158</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:161,162</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -6294,15 +6289,31 @@
     </unit>
     <unit id="quickAddConfig.clearRowAria">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:212</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:216</note>
       </notes>
       <segment>
         <source>Schnellaktion löschen</source>
       </segment>
     </unit>
+    <unit id="quickAddConfig.autoCount.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:217</note>
+      </notes>
+      <segment>
+        <source>Verwendet die Kamera, um Wiederholungen automatisch zu zählen. Nur für unterstützte Übungen verfügbar.</source>
+      </segment>
+    </unit>
+    <unit id="quickAddConfig.inSpeedDial.tooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:218</note>
+      </notes>
+      <segment>
+        <source>Zeigt diese Schnellaktion im schwebenden Plus-Button (SpeedDial) zur Schnellerfassung an.</source>
+      </segment>
+    </unit>
     <unit id="quickAddConfig.wikiTooltip.pushup">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:239</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:245</note>
       </notes>
       <segment>
         <source>Liegestützvarianten ansehen</source>
@@ -6310,7 +6321,7 @@
     </unit>
     <unit id="quickAddConfig.wikiTooltip.exercise">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:241</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:247</note>
       </notes>
       <segment>
         <source>Anleitung zur Übung öffnen</source>
@@ -6318,7 +6329,7 @@
     </unit>
     <unit id="quickAddConfig.saveError">
       <notes>
-        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:361</note>
+        <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:367</note>
       </notes>
       <segment>
         <source>Speichern fehlgeschlagen</source>

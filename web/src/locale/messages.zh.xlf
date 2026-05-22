@@ -9139,5 +9139,23 @@
         <target>无法保存条目。</target>
       </segment>
     </unit>
+    <unit id="leaderboard.exercise.ariaLabel">
+      <segment state="initial">
+        <source>Leaderboard Übung</source>
+        <target>Leaderboard Übung</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.exercise.more">
+      <segment state="initial">
+        <source>Mehr</source>
+        <target>Mehr</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.ownPosition.prefix">
+      <segment state="initial">
+        <source>Deine Position:</source>
+        <target>Deine Position:</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

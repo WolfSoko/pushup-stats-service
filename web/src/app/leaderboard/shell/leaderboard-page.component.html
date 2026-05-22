@@ -8,6 +8,72 @@
   <mat-card>
     <mat-card-content>
       <div
+        class="exercise-switch"
+        role="tablist"
+        aria-label="Leaderboard Übung"
+        i18n-aria-label="@@leaderboard.exercise.ariaLabel"
+      >
+        @for (chip of popularExercises(); track chip.id) {
+          <button
+            mat-stroked-button
+            type="button"
+            class="exercise-chip"
+            [class.active]="isActiveExercise(chip.id)"
+            [attr.aria-pressed]="isActiveExercise(chip.id)"
+            [attr.data-testid]="'leaderboard-exercise-chip-' + chip.id"
+            (click)="selectExercise(chip.id)"
+          >
+            <mat-icon aria-hidden="true">{{ chip.icon }}</mat-icon>
+            <span>{{ chip.label }}</span>
+          </button>
+        }
+        <button
+          mat-stroked-button
+          type="button"
+          class="exercise-chip exercise-more"
+          [class.active]="isOverflowSelection()"
+          [matMenuTriggerFor]="exerciseMenu"
+          data-testid="leaderboard-exercise-more"
+        >
+          <mat-icon aria-hidden="true">expand_more</mat-icon>
+          @if (isOverflowSelection()) {
+            <span>{{ selectedLabel() }}</span>
+          } @else {
+            <span i18n="@@leaderboard.exercise.more">Mehr</span>
+          }
+        </button>
+        <mat-menu #exerciseMenu="matMenu" class="exercise-menu">
+          @for (section of categorySections(); track section.category.id) {
+            <div
+              class="exercise-menu-header"
+              mat-menu-item
+              disabled
+              [attr.data-testid]="
+                'leaderboard-exercise-menu-header-' + section.category.id
+              "
+            >
+              <mat-icon aria-hidden="true">{{
+                section.category.icon
+              }}</mat-icon>
+              <span>{{ categoryDisplayName(section.category.id) }}</span>
+            </div>
+            @for (def of section.exercises; track def.id) {
+              <button
+                mat-menu-item
+                type="button"
+                class="exercise-menu-item"
+                [class.active]="isActiveExercise(def.id)"
+                [attr.data-testid]="'leaderboard-exercise-menu-item-' + def.id"
+                (click)="selectExercise(def.id)"
+              >
+                {{ def.label }}
+              </button>
+            }
+          }
+        </mat-menu>
+      </div>
+
+      <div
         class="period-switch"
         role="tablist"
         aria-label="Leaderboard Zeitraum"
@@ -41,7 +107,7 @@
         </button>
       </div>
 
-      <ol>
+      <ol data-testid="leaderboard-list">
         @for (entry of leaderboardSlots(); track entry.rank) {
           <li>
             <span class="rank">#{{ entry.rank }}</span>
@@ -61,10 +127,12 @@
             } @else {
               <span class="alias">{{ entry.alias }}</span>
             }
-            <strong
-              >{{ entry.reps }}
-              <span i18n="@@landing.leaderboard.reps">Reps</span></strong
-            >
+            <strong>
+              {{ formatValue(entry.reps) }}
+              @if (unitLabel(); as label) {
+                <span class="unit">{{ label }}</span>
+              }
+            </strong>
           </li>
         }
       </ol>
@@ -76,14 +144,26 @@
             [routerLink]="['/u', me.uid]"
             data-testid="leaderboard-own-rank-link"
           >
-            <span i18n="@@landing.leaderboard.ownPosition">
-              Deine Position: #{{ me.rank }} · {{ me.reps }} Reps
+            <span>
+              <ng-container i18n="@@leaderboard.ownPosition.prefix"
+                >Deine Position:</ng-container
+              >
+              #{{ me.rank }} · {{ formatValue(me.reps) }}
+              @if (unitLabel(); as label) {
+                <span>{{ label }}</span>
+              }
             </span>
             <mat-icon aria-hidden="true">chevron_right</mat-icon>
           </a>
         } @else {
-          <p class="own-rank" i18n="@@landing.leaderboard.ownPosition">
-            Deine Position: #{{ me.rank }} · {{ me.reps }} Reps
+          <p class="own-rank" data-testid="leaderboard-own-rank">
+            <ng-container i18n="@@leaderboard.ownPosition.prefix"
+              >Deine Position:</ng-container
+            >
+            #{{ me.rank }} · {{ formatValue(me.reps) }}
+            @if (unitLabel(); as label) {
+              <span>{{ label }}</span>
+            }
           </p>
         }
       }
