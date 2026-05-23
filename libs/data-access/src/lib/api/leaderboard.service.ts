@@ -61,12 +61,21 @@ const TOP_N = 10;
 const TZ = 'Europe/Berlin';
 const PUSHUPS_COLLECTION = 'pushups';
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
-const EMPTY_BUCKET: LeaderboardBucket = { top: [], current: null };
-const EMPTY_DATA: LeaderboardData = {
-  daily: EMPTY_BUCKET,
-  last7: EMPTY_BUCKET,
-  last30: EMPTY_BUCKET,
-};
+
+/**
+ * Factory for an empty leaderboard payload. A factory (not a shared
+ * frozen constant) keeps each call independent: a caller that ever
+ * mutates `.top` (e.g. accidentally splicing in a new entry) only
+ * touches its own snapshot instead of the singleton that every other
+ * bucket would also point at.
+ */
+function emptyLeaderboardData(): LeaderboardData {
+  return {
+    daily: { top: [], current: null },
+    last7: { top: [], current: null },
+    last30: { top: [], current: null },
+  };
+}
 
 type AggregationRow = {
   userId: string;
@@ -146,8 +155,8 @@ export class LeaderboardService {
     // Unknown exercise → empty leaderboard. The store treats this as a
     // successful load so the UI shows the empty list rather than
     // wedging on a perpetual loading state.
-    if (!def) return EMPTY_DATA;
-    if (!supportsLeaderboard(def.measurement)) return EMPTY_DATA;
+    if (!def) return emptyLeaderboardData();
+    if (!supportsLeaderboard(def.measurement)) return emptyLeaderboardData();
 
     const currentUserId = this.auth?.currentUser?.uid ?? null;
     const start = this.last30StartDateKey();

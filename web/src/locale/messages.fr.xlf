@@ -9529,12 +9529,6 @@
         <target>Mehr</target>
       </segment>
     </unit>
-    <unit id="leaderboard.ownPosition.prefix">
-      <segment state="initial">
-        <source>Deine Position:</source>
-        <target>Deine Position:</target>
-      </segment>
-    </unit>
     <unit id="leaderboard.period.ariaLabel">
       <segment state="initial">
         <source>Leaderboard Zeitraum</source>
