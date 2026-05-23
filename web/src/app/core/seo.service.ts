@@ -48,6 +48,14 @@ export class SeoService {
        * (e.g. a German blog slug under `/fr/blog/…`).
        */
       alternates?: Partial<Record<LocalePrefix, string>>;
+      /**
+       * When true, emits `<meta name="robots" content="noindex,follow">`
+       * so search engines skip the page (e.g. auth pages that have no
+       * SEO value and would otherwise pollute the index with
+       * `returnUrl`-parameterised duplicates). Tag is removed on the
+       * next `update()` that omits the flag.
+       */
+      noindex?: boolean;
     } = {}
   ): void {
     this.title.setTitle(seoTitle);
@@ -63,7 +71,13 @@ export class SeoService {
     const locale = this.detectLocale(path);
     this.setTag('property', 'og:locale', this.ogLocaleFor(locale));
 
-    const strippedPath = this.stripLocalePrefix(path);
+    // Drop query string + hash from the canonical. URLs only differing
+    // in tracking / `returnUrl` params point at the same content, so
+    // canonicalising them under the parameter-less URL prevents Google
+    // from picking its own canonical and flagging the variants as
+    // duplicates in Search Console.
+    const pathWithoutQuery = path.split(/[?#]/)[0] ?? path;
+    const strippedPath = this.stripLocalePrefix(pathWithoutQuery);
     const url = (lang: LocalePrefix, p: string): string =>
       `${BASE_URL}/${lang}${p.startsWith('/') ? p : `/${p}`}`;
 
@@ -109,6 +123,15 @@ export class SeoService {
 
     this.applyImage(options.imageUrl, options.imageAlt ?? seoTitle);
     this.applyArticleTimes(options.publishedTime, options.modifiedTime);
+    this.applyRobots(options.noindex === true);
+  }
+
+  private applyRobots(noindex: boolean): void {
+    if (noindex) {
+      this.setTag('name', 'robots', 'noindex,follow');
+    } else {
+      this.removeTag('name', 'robots');
+    }
   }
 
   private applyImage(imageUrl: string | undefined, alt: string): void {

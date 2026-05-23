@@ -43,6 +43,7 @@ export const appRoutes: Routes = [
     data: {
       seoTitle: $localize`:@@seo.login.title:Login – Pushup Tracker`,
       seoDescription: $localize`:@@seo.login.description:Melde dich an und tracke dein Pushup-Training über alle Geräte.`,
+      noindex: true,
     },
     component: LoginComponent,
   },
@@ -52,6 +53,7 @@ export const appRoutes: Routes = [
     data: {
       seoTitle: $localize`:@@seo.register.title:Registrierung – Pushup Tracker`,
       seoDescription: $localize`:@@seo.register.description:Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.`,
+      noindex: true,
     },
     component: RegisterComponent,
   },
