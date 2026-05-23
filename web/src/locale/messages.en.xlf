@@ -9811,10 +9811,10 @@ Deine Position: # ·  Reps        </source>
         <target>Two weeks of active recovery: daily mobility, yoga, and stretching sessions with light push-up volume. Ideal as a deload between two hard plans or to ease back in after a training break.</target>
       </segment>
     </unit>
-    <unit id="leaderboard.exercise.ariaLabel">
+        <unit id="leaderboard.exercise.ariaLabel">
       <segment state="initial">
-        <source>Leaderboard Übung</source>
-        <target>Leaderboard Übung</target>
+        <source>Bestenlisten-Übung auswählen</source>
+        <target>Bestenlisten-Übung auswählen</target>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">

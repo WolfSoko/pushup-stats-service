@@ -4159,15 +4159,15 @@
     </unit>
     <unit id="leaderboard.exercise.ariaLabel">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:13,14</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:17,18</note>
       </notes>
       <segment>
-        <source>Leaderboard Übung</source>
+        <source>Bestenlisten-Übung auswählen</source>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:42,45</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:46,49</note>
       </notes>
       <segment>
         <source>Mehr</source>
@@ -4175,7 +4175,7 @@
     </unit>
     <unit id="landing.leaderboard.daily">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:86,88</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:92,94</note>
       </notes>
       <segment>
         <source> Tag </source>
@@ -4183,7 +4183,7 @@
     </unit>
     <unit id="landing.leaderboard.last7">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:95,97</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:101,103</note>
       </notes>
       <segment>
         <source> Letzte 7 Tage </source>
@@ -4191,24 +4191,24 @@
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:104,107</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:110,113</note>
       </notes>
       <segment>
         <source> Letzte 30 Tage </source>
       </segment>
     </unit>
-    <unit id="leaderboard.ownPosition.prefix">
+    <unit id="landing.leaderboard.ownPosition">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:147,149</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:159,161</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:152,153</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:162,164</note>
       </notes>
       <segment>
-        <source>Deine Position:</source>
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:174,176</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:172,174</note>
       </notes>
       <segment>
         <source> Sichtbarkeit oder Anzeigename anpassen? </source>
@@ -4216,7 +4216,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:180,183</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:178,181</note>
       </notes>
       <segment>
         <source>Einstellungen öffnen</source>
@@ -4224,7 +4224,7 @@
     </unit>
     <unit id="leaderboard.loginHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:187,189</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:185,187</note>
       </notes>
       <segment>
         <source> Mitmachen und auftauchen? </source>
@@ -4232,7 +4232,7 @@
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:190,193</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:188,191</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -4240,7 +4240,7 @@
     </unit>
     <unit id="exercise.category.pushup">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:43</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:42</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
@@ -4257,8 +4257,7 @@
     </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:153</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:156</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:185</note>
       </notes>
       <segment>
         <source>Reps</source>

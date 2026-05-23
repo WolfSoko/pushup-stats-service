@@ -9645,10 +9645,10 @@
         <target>Viscus salvus esse non potuit.</target>
       </segment>
     </unit>
-    <unit id="leaderboard.exercise.ariaLabel">
+        <unit id="leaderboard.exercise.ariaLabel">
       <segment state="initial">
-        <source>Leaderboard Übung</source>
-        <target>Leaderboard Übung</target>
+        <source>Bestenlisten-Übung auswählen</source>
+        <target>Bestenlisten-Übung auswählen</target>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">

@@ -314,7 +314,19 @@ export class LeaderboardService {
           timestamp: d['timestamp'],
           value: Number(d[valueField]),
         }));
-    } catch {
+    } catch (err) {
+      // Surface the underlying Firestore error to the dev console.
+      // The composite index for (`exerciseId` ASC, `timestamp` DESC) on
+      // `exerciseEntries` MUST be deployed alongside this code (see
+      // `data-store/firestore.indexes.json`); without it the query
+      // fails with `failed-precondition` and the empty fallback would
+      // silently mask the misconfiguration. Keep the empty return so a
+      // transient network blip doesn't lock the UI on a loading state.
+
+      console.warn(
+        `[LeaderboardService] exerciseEntries query failed for ${exerciseId}:`,
+        err
+      );
       return [];
     }
   }

@@ -1,7 +1,6 @@
 import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
@@ -57,7 +56,6 @@ const POPULAR_EXERCISE_IDS: ReadonlyArray<string> = [
   imports: [
     MatCardModule,
     MatButtonModule,
-    MatChipsModule,
     MatIconModule,
     MatMenuModule,
     RouterLink,
@@ -140,23 +138,6 @@ export class LeaderboardPageComponent {
     return exerciseDisplayName(id);
   });
 
-  /**
-   * Unit label that lives next to the rank value. For rep-counted
-   * exercises ("Reps") it carries the unit explicitly; for time and
-   * distance the formatted value (`1:30`, `5.00 km`) already includes
-   * its unit, so the trailing label collapses to an empty string.
-   */
-  readonly unitLabel = computed(() => {
-    const def = this.selectedDefinition();
-    if (!def) return $localize`:@@landing.leaderboard.reps:Reps`;
-    switch (def.unit) {
-      case 'reps':
-        return $localize`:@@landing.leaderboard.reps:Reps`;
-      default:
-        return '';
-    }
-  });
-
   readonly leaderboardEntries = this.store.entriesForPeriod(
     this.selectedExerciseId,
     this.period
@@ -182,18 +163,31 @@ export class LeaderboardPageComponent {
 
   /**
    * Renders the aggregated value for a row using the selected exercise's
-   * unit. Rep counts stay bare numbers (the i18n "Reps" label is appended
-   * in the template); seconds become `m:ss`; meters become `<n> m` or
-   * `<n.nn> km` for ≥1 km. Empty slot placeholders (`reps === 0` from
-   * `leaderboardSlots`) still render as `0` so the alignment stays stable.
+   * unit, INCLUDING the unit suffix. Rep counts get the localized "Reps"
+   * label appended (`"30 Reps"`); seconds render as `m:ss` (`"1:30"`);
+   * meters render as `<n> m` or `<n.nn> km` (the unit is already part of
+   * the formatExerciseValue output). Returning the complete display
+   * string here lets templates use a single i18n message with
+   * placeholders instead of splitting unit/label/value into separate
+   * bindings — which would prevent translators from re-ordering the
+   * pieces in target languages.
+   *
+   * Empty-slot placeholders (`reps === 0` from `leaderboardSlots`)
+   * still render as `0` (no unit) so the alignment stays stable.
    */
   readonly formatValue = (value: number): string => {
     const def = this.selectedDefinition();
-    if (!def) return String(value);
+    if (value === 0) return '0';
+    // Pushup default (`def === null`) and any other reps-unit exercise
+    // both need the explicit "Reps" suffix, since formatExerciseValue
+    // renders rep counts as bare numbers.
+    if (!def || def.unit === 'reps') {
+      const repsLabel = $localize`:@@landing.leaderboard.reps:Reps`;
+      return `${value} ${repsLabel}`;
+    }
     // formatExerciseValue returns '' for negative numbers — bucket the
     // placeholder zero through as a literal "0" so the empty-slot row
     // doesn't render an invisible value column.
-    if (value === 0) return '0';
     return formatExerciseValue(value, def.unit);
   };
 

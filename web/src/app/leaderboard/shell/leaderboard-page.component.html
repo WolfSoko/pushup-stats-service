@@ -7,10 +7,14 @@
   </app-page-header>
   <mat-card>
     <mat-card-content>
+      <!-- role="group" instead of "tablist": children are toggle buttons
+           + a menu trigger, not real tabs with `role="tab"` + tabpanel
+           linkage. Tablist semantics confuse screen-reader navigation
+           when there's no tab/panel relationship behind it. -->
       <div
         class="exercise-switch"
-        role="tablist"
-        aria-label="Leaderboard Übung"
+        role="group"
+        aria-label="Bestenlisten-Übung auswählen"
         i18n-aria-label="@@leaderboard.exercise.ariaLabel"
       >
         @for (chip of popularExercises(); track chip.id) {
@@ -73,11 +77,7 @@
         </mat-menu>
       </div>
 
-      <div
-        class="period-switch"
-        role="tablist"
-        aria-label="Leaderboard Zeitraum"
-      >
+      <div class="period-switch" role="group" aria-label="Leaderboard Zeitraum">
         <button
           mat-stroked-button
           type="button"
@@ -127,12 +127,7 @@
             } @else {
               <span class="alias">{{ entry.alias }}</span>
             }
-            <strong>
-              {{ formatValue(entry.reps) }}
-              @if (unitLabel(); as label) {
-                <span class="unit">{{ label }}</span>
-              }
-            </strong>
+            <strong>{{ formatValue(entry.reps) }}</strong>
           </li>
         }
       </ol>
@@ -144,26 +139,23 @@
             [routerLink]="['/u', me.uid]"
             data-testid="leaderboard-own-rank-link"
           >
-            <span>
-              <ng-container i18n="@@leaderboard.ownPosition.prefix"
-                >Deine Position:</ng-container
-              >
-              #{{ me.rank }} · {{ formatValue(me.reps) }}
-              @if (unitLabel(); as label) {
-                <span>{{ label }}</span>
-              }
+            <!-- Single i18n message with two ICU-style placeholders so
+                 translators can re-order rank vs. value freely. The
+                 value placeholder already carries its own unit suffix
+                 (`"30 Reps"`, `"1:30"`, `"5.00 km"`) — see
+                 `formatValue` for the unit-resolution logic. -->
+            <span i18n="@@landing.leaderboard.ownPosition">
+              Deine Position: #{{ me.rank }} · {{ formatValue(me.reps) }}
             </span>
             <mat-icon aria-hidden="true">chevron_right</mat-icon>
           </a>
         } @else {
-          <p class="own-rank" data-testid="leaderboard-own-rank">
-            <ng-container i18n="@@leaderboard.ownPosition.prefix"
-              >Deine Position:</ng-container
-            >
-            #{{ me.rank }} · {{ formatValue(me.reps) }}
-            @if (unitLabel(); as label) {
-              <span>{{ label }}</span>
-            }
+          <p
+            class="own-rank"
+            data-testid="leaderboard-own-rank"
+            i18n="@@landing.leaderboard.ownPosition"
+          >
+            Deine Position: #{{ me.rank }} · {{ formatValue(me.reps) }}
           </p>
         }
       }
