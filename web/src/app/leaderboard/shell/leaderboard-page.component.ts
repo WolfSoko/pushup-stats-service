@@ -162,32 +162,20 @@ export class LeaderboardPageComponent {
   });
 
   /**
-   * Renders the aggregated value for a row using the selected exercise's
-   * unit, INCLUDING the unit suffix. Rep counts get the localized "Reps"
-   * label appended (`"30 Reps"`); seconds render as `m:ss` (`"1:30"`);
-   * meters render as `<n> m` or `<n.nn> km` (the unit is already part of
-   * the formatExerciseValue output). Returning the complete display
-   * string here lets templates use a single i18n message with
-   * placeholders instead of splitting unit/label/value into separate
-   * bindings — which would prevent translators from re-ordering the
-   * pieces in target languages.
-   *
-   * Empty-slot placeholders (`reps === 0` from `leaderboardSlots`)
-   * still render as `0` (no unit) so the alignment stays stable.
+   * Returns the row's display value with the unit baked in
+   * (`"30 Reps"` / `"1:30"` / `"5.00 km"`). Keeping value+unit in one
+   * string lets the template use a single i18n message with
+   * placeholders — splitting them would block translators from
+   * re-ordering the pieces. Empty-slot placeholders (`reps === 0`)
+   * stay unitless so the column alignment doesn't jitter.
    */
   readonly formatValue = (value: number): string => {
     const def = this.selectedDefinition();
     if (value === 0) return '0';
-    // Pushup default (`def === null`) and any other reps-unit exercise
-    // both need the explicit "Reps" suffix, since formatExerciseValue
-    // renders rep counts as bare numbers.
     if (!def || def.unit === 'reps') {
       const repsLabel = $localize`:@@landing.leaderboard.reps:Reps`;
       return `${value} ${repsLabel}`;
     }
-    // formatExerciseValue returns '' for negative numbers — bucket the
-    // placeholder zero through as a literal "0" so the empty-slot row
-    // doesn't render an invisible value column.
     return formatExerciseValue(value, def.unit);
   };
 

@@ -4173,9 +4173,17 @@
         <source>Mehr</source>
       </segment>
     </unit>
+    <unit id="leaderboard.period.ariaLabel">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:83,84</note>
+      </notes>
+      <segment>
+        <source>Leaderboard Zeitraum</source>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.daily">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:92,94</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:93,95</note>
       </notes>
       <segment>
         <source> Tag </source>
@@ -4183,7 +4191,7 @@
     </unit>
     <unit id="landing.leaderboard.last7">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:101,103</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:102,104</note>
       </notes>
       <segment>
         <source> Letzte 7 Tage </source>
@@ -4191,7 +4199,7 @@
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:110,113</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:111,114</note>
       </notes>
       <segment>
         <source> Letzte 30 Tage </source>
@@ -4199,8 +4207,8 @@
     </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:152,153</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:162,164</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:153,154</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:163,165</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
@@ -4208,7 +4216,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:172,174</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:173,175</note>
       </notes>
       <segment>
         <source> Sichtbarkeit oder Anzeigename anpassen? </source>
@@ -4216,7 +4224,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:178,181</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:179,182</note>
       </notes>
       <segment>
         <source>Einstellungen öffnen</source>
@@ -4224,7 +4232,7 @@
     </unit>
     <unit id="leaderboard.loginHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:185,187</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:186,188</note>
       </notes>
       <segment>
         <source> Mitmachen und auftauchen? </source>
@@ -4232,7 +4240,7 @@
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:188,191</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:189,192</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -4257,7 +4265,7 @@
     </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:185</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:176</note>
       </notes>
       <segment>
         <source>Reps</source>

@@ -9829,5 +9829,11 @@ Deine Position: # ·  Reps        </source>
         <target>Deine Position:</target>
       </segment>
     </unit>
+    <unit id="leaderboard.period.ariaLabel">
+      <segment state="initial">
+        <source>Leaderboard Zeitraum</source>
+        <target>Leaderboard Zeitraum</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
