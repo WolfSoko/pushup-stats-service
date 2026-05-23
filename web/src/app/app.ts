@@ -287,6 +287,7 @@ export class App {
         const data = leaf.snapshot.data as {
           seoTitle?: string;
           seoDescription?: string;
+          noindex?: boolean;
         };
 
         const title =
@@ -296,7 +297,7 @@ export class App {
           $localize`:@@seo.default.description:Tracke Reps, Trends und Streaks mit Pushup Tracker.`;
 
         const path = nav.urlAfterRedirects || nav.url;
-        this.seo.update(title, description, path);
+        this.seo.update(title, description, path, { noindex: data.noindex });
         this.trackAnalytics('page_view', { page_path: path });
       });
 

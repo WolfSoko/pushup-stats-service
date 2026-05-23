@@ -17,7 +17,7 @@ describe('SeoService', () => {
     // Remove image meta tags so each test starts from a clean slate.
     document.head
       .querySelectorAll(
-        'meta[property="og:image"], meta[property="og:image:alt"], meta[name="twitter:image"], meta[name="twitter:image:alt"]'
+        'meta[property="og:image"], meta[property="og:image:alt"], meta[name="twitter:image"], meta[name="twitter:image:alt"], meta[name="robots"]'
       )
       .forEach((node) => node.remove());
     return TestBed.inject(SeoService);
@@ -68,6 +68,52 @@ describe('SeoService', () => {
       seo.update('Title', 'Description', '/de/blog/hello');
 
       expect(getCanonicalHref()).toBe(`${BASE_URL}/de/blog/hello`);
+    });
+
+    it('strips query strings so `?returnUrl=…` variants share one canonical', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/login?returnUrl=/analysis');
+
+      expect(getCanonicalHref()).toBe(`${BASE_URL}/de/login`);
+    });
+
+    it('strips URL fragments from the canonical', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/blog/hello#section');
+
+      expect(getCanonicalHref()).toBe(`${BASE_URL}/de/blog/hello`);
+    });
+  });
+
+  describe('robots meta', () => {
+    function getRobotsContent(): string | null {
+      return (
+        document.head
+          .querySelector<HTMLMetaElement>('meta[name="robots"]')
+          ?.getAttribute('content') ?? null
+      );
+    }
+
+    it('emits <meta name="robots" content="noindex,follow"> when noindex is true', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/login', { noindex: true });
+
+      expect(getRobotsContent()).toBe('noindex,follow');
+    });
+
+    it('omits the robots meta by default', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/blog/hello');
+
+      expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
+    });
+
+    it('removes a stale robots meta when a subsequent update omits noindex', () => {
+      const seo = setup('de');
+      seo.update('Title', 'Description', '/login', { noindex: true });
+      seo.update('Title', 'Description', '/blog/hello');
+
+      expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
     });
   });
 
