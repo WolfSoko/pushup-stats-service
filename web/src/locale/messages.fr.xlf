@@ -9517,5 +9517,23 @@
         <target>Impossible d&apos;enregistrer l&apos;entrée.</target>
       </segment>
     </unit>
+        <unit id="leaderboard.exercise.ariaLabel">
+      <segment state="initial">
+        <source>Bestenlisten-Übung auswählen</source>
+        <target>Bestenlisten-Übung auswählen</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.exercise.more">
+      <segment state="initial">
+        <source>Mehr</source>
+        <target>Mehr</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.period.ariaLabel">
+      <segment state="initial">
+        <source>Leaderboard Zeitraum</source>
+        <target>Leaderboard Zeitraum</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

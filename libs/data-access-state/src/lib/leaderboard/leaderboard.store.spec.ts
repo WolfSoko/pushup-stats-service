@@ -15,10 +15,14 @@ jest.mock('@angular/fire/firestore', () => ({
 }));
 jest.mock('@angular/fire/auth', () => ({ Auth: jest.fn() }));
 
-import { PLATFORM_ID } from '@angular/core';
+import { PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
-import { LeaderboardData, LeaderboardService } from '@pu-stats/data-access';
+import {
+  LEADERBOARD_PUSHUP_ID,
+  LeaderboardData,
+  LeaderboardService,
+} from '@pu-stats/data-access';
 import { LeaderboardStore } from './leaderboard.store';
 
 const emptyLeaderboard: LeaderboardData = {
@@ -28,7 +32,7 @@ const emptyLeaderboard: LeaderboardData = {
 };
 
 function makeApiMock(): {
-  load: jest.Mock<Promise<LeaderboardData>, []>;
+  load: jest.Mock<Promise<LeaderboardData>, [string?]>;
   observeSnapshot: jest.Mock<Subject<unknown>, []>;
   snapshot$: Subject<unknown>;
 } {
@@ -64,12 +68,18 @@ describe('LeaderboardStore — live snapshot reload', () => {
       await Promise.resolve();
       await Promise.resolve();
 
-      // Then — the API was hit at least once per emission. With the in-flight
-      // queueing in `load()` the second emission may collapse with the first
-      // but is never dropped: the final fetch always reflects the latest doc.
+      // Then — the API was hit at least once per emission, always
+      // targeted at the pushup leaderboard (the only one the Cloud
+      // Function ranker writes a snapshot for). With the in-flight
+      // queueing in `load()` the second emission may collapse with the
+      // first but is never dropped: the final fetch always reflects
+      // the latest doc.
       expect(api.load).toHaveBeenCalled();
+      expect(api.load).toHaveBeenCalledWith(LEADERBOARD_PUSHUP_ID);
       expect(store.loading()).toBe(false);
-      expect(store.data()).toEqual(emptyLeaderboard);
+      expect(store.data()).toEqual({
+        [LEADERBOARD_PUSHUP_ID]: emptyLeaderboard,
+      });
     });
 
     it('Then it unsubscribes from observeSnapshot when the injector is destroyed', () => {
@@ -143,7 +153,7 @@ describe('LeaderboardStore — live snapshot reload', () => {
 
       // Then — both loads ran and the store reflects the LATER snapshot.
       expect(api.load).toHaveBeenCalledTimes(2);
-      expect(store.data()).toEqual(dataB);
+      expect(store.data()).toEqual({ [LEADERBOARD_PUSHUP_ID]: dataB });
       expect(store.loading()).toBe(false);
     });
   });
@@ -165,5 +175,99 @@ describe('LeaderboardStore — live snapshot reload', () => {
       // Then
       expect(api.observeSnapshot).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('LeaderboardStore — per-exercise caching', () => {
+  function setup(api: ReturnType<typeof makeApiMock>): {
+    store: ReturnType<typeof TestBed.inject<typeof LeaderboardStore>>;
+  } {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: LeaderboardService, useValue: api },
+      ],
+    });
+    const store = TestBed.inject(LeaderboardStore);
+    return { store };
+  }
+
+  it('Loads a different exercise into its own cache slot without evicting the pushup bucket', async () => {
+    // Given — `_api.load(id)` returns a distinct dataset per exerciseId.
+    const api = makeApiMock();
+    const pushupData: LeaderboardData = {
+      ...emptyLeaderboard,
+      daily: { top: [{ alias: 'P', reps: 10, rank: 1 }], current: null },
+    };
+    const squatData: LeaderboardData = {
+      ...emptyLeaderboard,
+      daily: { top: [{ alias: 'S', reps: 20, rank: 1 }], current: null },
+    };
+    api.load.mockImplementation((id?: string) =>
+      Promise.resolve(id === 'legs.squats' ? squatData : pushupData)
+    );
+
+    const { store } = setup(api);
+
+    // When — load pushup, then load squats.
+    await store.load(LEADERBOARD_PUSHUP_ID);
+    await store.load('legs.squats');
+
+    // Then — both buckets coexist in the cache, keyed by exerciseId.
+    expect(store.data()).toEqual({
+      [LEADERBOARD_PUSHUP_ID]: pushupData,
+      'legs.squats': squatData,
+    });
+
+    // And — entriesForPeriod resolves from the right bucket per selection.
+    const exerciseSig = signal<string>(LEADERBOARD_PUSHUP_ID);
+    const periodSig = signal<'daily' | 'last7' | 'last30'>('daily');
+    const entries = store.entriesForPeriod(exerciseSig, periodSig);
+    expect(entries()).toEqual(pushupData.daily.top);
+
+    exerciseSig.set('legs.squats');
+    expect(entries()).toEqual(squatData.daily.top);
+  });
+
+  it('Skips the API when the requested exercise is already cached (no force flag)', async () => {
+    // Given
+    const api = makeApiMock();
+    const { store } = setup(api);
+
+    // When — same exerciseId loaded twice in a row.
+    await store.load('plank.standard');
+    await store.load('plank.standard');
+
+    // Then — only one fetch. Caching is the whole point of per-exercise
+    // entries; refetching on every tab switch would be wasteful.
+    expect(api.load).toHaveBeenCalledTimes(1);
+    expect(api.load).toHaveBeenCalledWith('plank.standard');
+  });
+
+  it('Respects `force: true` even when the exercise is already cached', async () => {
+    // Given
+    const api = makeApiMock();
+    const { store } = setup(api);
+
+    // When
+    await store.load('pull.pullups');
+    await store.load('pull.pullups', { force: true });
+
+    // Then — force reloads bypass the cache check, mirroring the
+    // snapshot-driven invalidation for pushup.
+    expect(api.load).toHaveBeenCalledTimes(2);
+  });
+
+  it('Defaults to the pushup sentinel when called without an exerciseId', async () => {
+    // Given
+    const api = makeApiMock();
+    const { store } = setup(api);
+
+    // When
+    await store.load();
+
+    // Then
+    expect(api.load).toHaveBeenCalledWith(LEADERBOARD_PUSHUP_ID);
+    expect(store.data()[LEADERBOARD_PUSHUP_ID]).toEqual(emptyLeaderboard);
   });
 });

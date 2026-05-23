@@ -10,6 +10,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
+  LEADERBOARD_PUSHUP_ID,
   LeaderboardData,
   LeaderboardEntry,
   LeaderboardPeriod,
@@ -17,18 +18,31 @@ import {
 } from '@pu-stats/data-access';
 
 type LeaderboardState = {
-  data: LeaderboardData | null;
+  /**
+   * Per-exercise cache of ranked buckets. Keys are exerciseIds
+   * (`LEADERBOARD_PUSHUP_ID` for the legacy pushup leaderboard, every
+   * other catalog id for `exerciseEntries`-backed rankings).
+   * Switching between exercises is cheap once their entry is populated;
+   * the live-snapshot reload only invalidates the pushup entry because
+   * that's the only one the Cloud Function ranker writes.
+   */
+  data: Record<string, LeaderboardData>;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: LeaderboardState = {
-  data: null,
+  data: {},
   loading: false,
   error: null,
 };
 
 const EMPTY_ENTRIES: LeaderboardEntry[] = [];
+const EMPTY_DATA: LeaderboardData = {
+  daily: { top: [], current: null },
+  last7: { top: [], current: null },
+  last30: { top: [], current: null },
+};
 
 export const LeaderboardStore = signalStore(
   { providedIn: 'root' },
@@ -39,81 +53,92 @@ export const LeaderboardStore = signalStore(
     _destroyRef: inject(DestroyRef),
   })),
   withComputed((store) => ({
-    loaded: computed(() => store.data() !== null),
+    loaded: computed(() => Object.keys(store.data()).length > 0),
   })),
   withMethods(({ _api, ...store }) => {
-    // Tracks whether a `load()` is currently awaiting `_api.load()`. The
-    // `loading` signal flips synchronously inside the same tick, but using a
-    // dedicated closure flag makes the "did another caller try to force a
-    // reload while we were busy?" check explicit and decoupled from the
-    // public state.
-    let inFlight = false;
-    let reloadPending = false;
+    // Tracks loads currently awaiting `_api.load(exerciseId)`, keyed by
+    // exerciseId. The `loading` signal reflects "any load in flight" —
+    // simpler than a per-exerciseId loading map and matches the
+    // visible UI state (one global spinner per page).
+    const inFlight = new Set<string>();
+    // Exercises that should be re-fetched as soon as their current load
+    // finishes — e.g. a snapshot live-reload fired while a slow load
+    // was already running. Dropping these would silently lose updates.
+    const reloadPending = new Set<string>();
 
-    async function performLoad(): Promise<void> {
-      inFlight = true;
+    async function performLoad(exerciseId: string): Promise<void> {
+      inFlight.add(exerciseId);
       patchState(store, { loading: true, error: null });
       try {
         if (!_api) {
           patchState(store, {
-            data: {
-              daily: { top: [], current: null },
-              last7: { top: [], current: null },
-              last30: { top: [], current: null },
-            },
-            loading: false,
+            data: { ...store.data(), [exerciseId]: EMPTY_DATA },
+            loading: inFlight.size > 1,
           });
           return;
         }
-        const data = await _api.load();
-        patchState(store, { data, loading: false });
+        const data = await _api.load(exerciseId);
+        patchState(store, {
+          data: { ...store.data(), [exerciseId]: data },
+          loading: inFlight.size > 1,
+        });
       } catch (err) {
         patchState(store, {
           error: err instanceof Error ? err.message : String(err),
-          loading: false,
+          loading: inFlight.size > 1,
         });
       } finally {
-        inFlight = false;
+        inFlight.delete(exerciseId);
       }
     }
 
     return {
-      async load(options?: { force?: boolean }): Promise<void> {
-        // A previous load is mid-flight. If the caller insists on freshness
-        // (snapshot live-reload, manual user refresh), remember that we owe
-        // them another run after the current one finishes — otherwise live
-        // updates that arrive during a slow load would be silently dropped.
-        if (inFlight) {
-          if (options?.force) reloadPending = true;
+      /**
+       * Ensures the per-exercise leaderboard is loaded. No-op when the
+       * exerciseId already has cached data unless `force: true`. The
+       * live-snapshot subscription uses `force` to invalidate stale
+       * caches; UI navigation between exercises typically doesn't.
+       */
+      async load(
+        exerciseId: string = LEADERBOARD_PUSHUP_ID,
+        options?: { force?: boolean }
+      ): Promise<void> {
+        // A previous load for this exerciseId is mid-flight. If the
+        // caller insists on freshness, queue a follow-up — otherwise
+        // collapsing into the in-flight call is fine.
+        if (inFlight.has(exerciseId)) {
+          if (options?.force) reloadPending.add(exerciseId);
           return;
         }
-        if (store.loaded() && !options?.force) return;
+        if (store.data()[exerciseId] && !options?.force) return;
 
-        await performLoad();
+        await performLoad(exerciseId);
 
-        if (reloadPending) {
-          reloadPending = false;
-          await performLoad();
+        if (reloadPending.has(exerciseId)) {
+          reloadPending.delete(exerciseId);
+          await performLoad(exerciseId);
         }
       },
 
       entriesForPeriod(
+        exerciseId: () => string,
         period: () => LeaderboardPeriod
       ): () => LeaderboardEntry[] {
         return computed(() => {
-          const data = store.data();
-          if (!data) return EMPTY_ENTRIES;
-          return data[period()].top;
+          const bucket = store.data()[exerciseId()];
+          if (!bucket) return EMPTY_ENTRIES;
+          return bucket[period()].top;
         });
       },
 
       currentUserForPeriod(
+        exerciseId: () => string,
         period: () => LeaderboardPeriod
       ): () => LeaderboardEntry | null {
         return computed(() => {
-          const data = store.data();
-          if (!data) return null;
-          return data[period()].current;
+          const bucket = store.data()[exerciseId()];
+          if (!bucket) return null;
+          return bucket[period()].current;
         });
       },
     };
@@ -125,6 +150,10 @@ export const LeaderboardStore = signalStore(
       // (typically minutes), so re-running `load({ force: true })` is cheap
       // and avoids a stale leaderboard between manual refreshes.
       //
+      // The Cloud Function only writes the pushup snapshot — per-exercise
+      // leaderboards run client-side and don't need an invalidation
+      // signal, so only the pushup entry is force-refreshed here.
+      //
       // We subscribe directly (not via `effect`) so the listener attaches
       // synchronously at construction — tests can assert behaviour without
       // having to flush effects, and the cleanup is hooked into `DestroyRef`
@@ -132,7 +161,7 @@ export const LeaderboardStore = signalStore(
       if (!store._isBrowser || !store._api) return;
       const sub = store._api.observeSnapshot().subscribe({
         next: () => {
-          void store.load({ force: true });
+          void store.load(LEADERBOARD_PUSHUP_ID, { force: true });
         },
         error: () => {
           /* swallow — leaderboard is non-critical, fall back to one-shot load */

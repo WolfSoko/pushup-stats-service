@@ -11,12 +11,24 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
+import {
+  findExerciseDefinition,
+  measurementValueField,
+  type MeasurementType,
+} from '@pu-stats/models';
 import { EMPTY, Observable } from 'rxjs';
 
 export type LeaderboardPeriod = 'daily' | 'last7' | 'last30';
 
 export type LeaderboardEntry = {
   alias: string;
+  /**
+   * Primary measurement aggregate over the period. Field is named `reps`
+   * because the precomputed Firestore snapshot writes it under that
+   * key — semantically it carries the aggregated value of whatever
+   * measurement field the selected exercise uses (`reps`, `durationSec`,
+   * `distanceM`).
+   */
   reps: number;
   rank: number;
   isCurrent?: boolean;
@@ -37,12 +49,37 @@ export type LeaderboardBucket = {
 
 export type LeaderboardData = Record<LeaderboardPeriod, LeaderboardBucket>;
 
+/**
+ * Sentinel exerciseId for the legacy `pushups` collection. The Cloud
+ * Function ranker writes the precomputed snapshot at
+ * `leaderboards/current` only for this leaderboard; every other
+ * exerciseId runs the client-side aggregation against `exerciseEntries`.
+ */
+export const LEADERBOARD_PUSHUP_ID = 'pushup';
+
 const TOP_N = 10;
 const TZ = 'Europe/Berlin';
+const PUSHUPS_COLLECTION = 'pushups';
+const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
 
-type PushupRow = {
+/**
+ * Factory for an empty leaderboard payload. A factory (not a shared
+ * frozen constant) keeps each call independent: a caller that ever
+ * mutates `.top` (e.g. accidentally splicing in a new entry) only
+ * touches its own snapshot instead of the singleton that every other
+ * bucket would also point at.
+ */
+function emptyLeaderboardData(): LeaderboardData {
+  return {
+    daily: { top: [], current: null },
+    last7: { top: [], current: null },
+    last30: { top: [], current: null },
+  };
+}
+
+type AggregationRow = {
   userId: string;
-  reps: number;
+  value: number;
   timestamp: string;
 };
 
@@ -58,20 +95,34 @@ export class LeaderboardService {
    *
    * Used by `LeaderboardStore` to reload aggregates whenever the Cloud
    * Function rewrites the snapshot, giving the leaderboard live updates
-   * without a manual refresh. The store only cares about *change*
-   * notifications, not payload shape — so we forward whatever `docData`
-   * emits (the doc data, or `undefined` when the doc does not exist), and
-   * fall back to `EMPTY` (no emissions) when Firestore is unavailable.
+   * without a manual refresh. The snapshot only covers the legacy
+   * pushup leaderboard — per-exercise rankings are computed client-side
+   * from `exerciseEntries` and don't need a snapshot subscription.
    */
   observeSnapshot(): Observable<unknown> {
     if (!this.firestore) return EMPTY;
     return docData(doc(this.firestore, 'leaderboards', 'current'));
   }
 
-  async load(): Promise<LeaderboardData> {
+  /**
+   * Loads ranked buckets (daily / last7 / last30) for the requested
+   * exercise. The default — and the `LEADERBOARD_PUSHUP_ID` sentinel —
+   * routes through the legacy `pushups` collection and merges in the
+   * precomputed snapshot at `leaderboards/current`. Every other
+   * exerciseId queries `exerciseEntries` and aggregates client-side;
+   * the snapshot doesn't carry per-exercise rankings yet.
+   */
+  async load(
+    exerciseId: string = LEADERBOARD_PUSHUP_ID
+  ): Promise<LeaderboardData> {
+    if (exerciseId === LEADERBOARD_PUSHUP_ID) return this.loadPushup();
+    return this.loadExercise(exerciseId);
+  }
+
+  private async loadPushup(): Promise<LeaderboardData> {
     const currentUserId = this.auth?.currentUser?.uid ?? null;
     const start = this.last30StartDateKey();
-    const rows = await this.fetchRows(start);
+    const rows = await this.fetchPushupRows(start);
 
     const fallback: LeaderboardData = {
       daily: this.aggregate(rows, 'daily', currentUserId),
@@ -88,6 +139,37 @@ export class LeaderboardService {
       daily: this.mergeBucket(cached.daily, fallback.daily),
       last7: this.mergeBucket(cached.last7, fallback.last7),
       last30: this.mergeBucket(cached.last30, fallback.last30),
+    };
+  }
+
+  /**
+   * Per-exercise leaderboard. The Cloud Function ranker doesn't write
+   * per-exercise snapshots yet, so rows here always come from the
+   * client-side aggregation against `exerciseEntries` — and aliases stay
+   * obfuscated via {@link toAlias} regardless of the user's
+   * publicProfile opt-in. Once the ranker grows per-exercise snapshots
+   * the merge path can mirror {@link loadPushup}.
+   */
+  private async loadExercise(exerciseId: string): Promise<LeaderboardData> {
+    const def = findExerciseDefinition(exerciseId);
+    // Unknown exercise → empty leaderboard. The store treats this as a
+    // successful load so the UI shows the empty list rather than
+    // wedging on a perpetual loading state.
+    if (!def) return emptyLeaderboardData();
+    if (!supportsLeaderboard(def.measurement)) return emptyLeaderboardData();
+
+    const currentUserId = this.auth?.currentUser?.uid ?? null;
+    const start = this.last30StartDateKey();
+    const rows = await this.fetchExerciseRows(
+      exerciseId,
+      def.measurement,
+      start
+    );
+
+    return {
+      daily: this.aggregate(rows, 'daily', currentUserId),
+      last7: this.aggregate(rows, 'last7', currentUserId),
+      last30: this.aggregate(rows, 'last30', currentUserId),
     };
   }
 
@@ -160,11 +242,11 @@ export class LeaderboardService {
     return result;
   }
 
-  private async fetchRows(startKey: string): Promise<PushupRow[]> {
+  private async fetchPushupRows(startKey: string): Promise<AggregationRow[]> {
     if (!this.firestore) return [];
 
     try {
-      const ref = collection(this.firestore, 'pushups');
+      const ref = collection(this.firestore, PUSHUPS_COLLECTION);
       const q = query(
         ref,
         where('timestamp', '>=', startKey),
@@ -173,23 +255,93 @@ export class LeaderboardService {
       const snap = await getDocs(q);
 
       return snap.docs
-        .map((d) => d.data() as Partial<PushupRow>)
+        .map(
+          (d) =>
+            d.data() as Partial<{
+              userId: string;
+              reps: number;
+              timestamp: string;
+            }>
+        )
         .filter(
-          (d): d is PushupRow =>
+          (d): d is { userId: string; reps: number; timestamp: string } =>
             !!d.userId && !!d.timestamp && Number.isFinite(d.reps)
         )
         .map((d) => ({
           userId: d.userId,
           timestamp: d.timestamp,
-          reps: Number(d.reps),
+          value: Number(d.reps),
         }));
     } catch {
       return [];
     }
   }
 
+  private async fetchExerciseRows(
+    exerciseId: string,
+    measurement: MeasurementType,
+    startKey: string
+  ): Promise<AggregationRow[]> {
+    if (!this.firestore) return [];
+
+    // Measurement type drives which field carries the primary value
+    // (`reps` for rep counts, `durationSec` for time, `distanceM` for
+    // distance + distance-time). The catalog `min`/`max` already bound
+    // that field, so summing it across rows is safe and unit-stable.
+    const valueField = measurementValueField(measurement);
+
+    try {
+      const ref = collection(this.firestore, EXERCISE_ENTRIES_COLLECTION);
+      const q = query(
+        ref,
+        where('exerciseId', '==', exerciseId),
+        where('timestamp', '>=', startKey),
+        orderBy('timestamp', 'desc')
+      );
+      const snap = await getDocs(q);
+
+      return snap.docs
+        .map((d) => d.data() as Record<string, unknown>)
+        .filter(
+          (
+            d
+          ): d is { userId: string; timestamp: string } & Record<
+            string,
+            number
+          > => {
+            const value = d[valueField];
+            return (
+              typeof d['userId'] === 'string' &&
+              typeof d['timestamp'] === 'string' &&
+              typeof value === 'number' &&
+              Number.isFinite(value)
+            );
+          }
+        )
+        .map((d) => ({
+          userId: d['userId'],
+          timestamp: d['timestamp'],
+          value: Number(d[valueField]),
+        }));
+    } catch (err) {
+      // Surface the underlying Firestore error to the dev console.
+      // The composite index for (`exerciseId` ASC, `timestamp` DESC) on
+      // `exerciseEntries` MUST be deployed alongside this code (see
+      // `data-store/firestore.indexes.json`); without it the query
+      // fails with `failed-precondition` and the empty fallback would
+      // silently mask the misconfiguration. Keep the empty return so a
+      // transient network blip doesn't lock the UI on a loading state.
+
+      console.warn(
+        `[LeaderboardService] exerciseEntries query failed for ${exerciseId}:`,
+        err
+      );
+      return [];
+    }
+  }
+
   private aggregate(
-    rows: PushupRow[],
+    rows: AggregationRow[],
     period: LeaderboardPeriod,
     currentUserId: string | null
   ): LeaderboardBucket {
@@ -207,14 +359,14 @@ export class LeaderboardService {
     for (const row of rows) {
       const key = this.berlinDateKey(new Date(row.timestamp));
       if (key < windowStart || key > today) continue;
-      totals.set(row.userId, (totals.get(row.userId) ?? 0) + row.reps);
+      totals.set(row.userId, (totals.get(row.userId) ?? 0) + row.value);
     }
 
     const ranked = [...totals.entries()]
-      .map(([userId, reps]) => ({
+      .map(([userId, value]) => ({
         userId,
         alias: this.toAlias(userId),
-        reps,
+        reps: value,
       }))
       .sort((a, b) => b.reps - a.reps)
       .map((entry, index) => ({
@@ -267,4 +419,15 @@ export class LeaderboardService {
     const anchor = Date.UTC(y, m - 1, d, 10, 0, 0);
     return this.berlinDateKey(new Date(anchor + deltaDays * 86_400_000));
   }
+}
+
+/**
+ * Returns `true` for measurement types we can aggregate into a meaningful
+ * per-period sum: rep counts, hold durations, and distances. `weight`
+ * is excluded because a sum of raw reps across mixed loads isn't a
+ * useful leaderboard metric — the right aggregation is `Σ(weightKg × reps)`,
+ * which requires a dedicated path the catalog doesn't yet ship.
+ */
+function supportsLeaderboard(measurement: MeasurementType): boolean {
+  return measurement !== 'weight';
 }

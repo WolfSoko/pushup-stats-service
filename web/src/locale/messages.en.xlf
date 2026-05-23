@@ -9811,5 +9811,23 @@ Deine Position: # ·  Reps        </source>
         <target>Two weeks of active recovery: daily mobility, yoga, and stretching sessions with light push-up volume. Ideal as a deload between two hard plans or to ease back in after a training break.</target>
       </segment>
     </unit>
+        <unit id="leaderboard.exercise.ariaLabel">
+      <segment state="initial">
+        <source>Bestenlisten-Übung auswählen</source>
+        <target>Bestenlisten-Übung auswählen</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.exercise.more">
+      <segment state="initial">
+        <source>Mehr</source>
+        <target>Mehr</target>
+      </segment>
+    </unit>
+    <unit id="leaderboard.period.ariaLabel">
+      <segment state="initial">
+        <source>Leaderboard Zeitraum</source>
+        <target>Leaderboard Zeitraum</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
