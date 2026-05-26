@@ -136,7 +136,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 | Tests (mocks, spies, `resource.reload`, Jest/Vitest quirks)  | [`docs/gotchas/testing.md`](docs/gotchas/testing.md)                                   |
 | Cloud Functions (secrets IAM, delta aggregation, versioning) | [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md)                   |
 | Push notifications & Service Workers                         | [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md) |
-| i18n (XLIFF, locale switching, `LOCALE_ID`)                  | [`docs/gotchas/i18n.md`](docs/gotchas/i18n.md)                                         |
+| i18n (XLIFF, locale switching, `LOCALE_ID`)                  | [`docs/gotchas/i18n.md`](./docs/gotchas/i18n.md)                                       |
 | Build & tooling (font flakes, pnpm dlx, Nx Cloud agents)     | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md)               |
 | Precomputed data (period-key staleness, timestamp formats)   | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md)                 |
 | Firestore client (`setDoc({merge:true})` nested-map clobber) | [`docs/gotchas/firestore.md`](docs/gotchas/firestore.md)                               |
@@ -155,6 +155,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 - For navigating/exploring the workspace, invoke the `nx-workspace` skill first - it has patterns for querying projects, targets, and dependencies
 - When running tasks (for example build, lint, test, e2e, etc.), always prefer running the task through `nx` (i.e. `nx run`, `nx run-many`, `nx affected`) instead of using the underlying tooling directly
 - Prefix nx commands with the workspace's package manager (e.g., `pnpm nx build`, `npm exec nx test`) - avoids using globally installed CLI
+- In non-interactive shells (agents/CI), run Nx with `--tui=false --tuiAutoExit=true` so tasks always terminate cleanly and do not wait on Terminal UI state
 - You have access to the Nx MCP server and its tools, use them to help the user
 - For Nx plugin best practices, check `node_modules/@nx/<plugin>/PLUGIN.md`. Not all plugins have this file - proceed without it if unavailable.
 - NEVER guess CLI flags - always check nx_docs or `--help` first when unsure

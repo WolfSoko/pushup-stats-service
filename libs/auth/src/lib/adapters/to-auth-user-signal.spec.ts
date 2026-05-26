@@ -1,7 +1,7 @@
 import { computed } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '@firebase/auth';
+import { User } from '@angular/fire/auth';
 import { toAuthUserSignal } from './to-auth-user-signal';
 
 describe('toAuthUserSignal', () => {

@@ -1,5 +1,7 @@
 import nx from '@nx/eslint-plugin';
 
+const bannedFirebaseImports = ['@firebase/*'];
+
 export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
@@ -27,22 +29,26 @@ export default [
             {
               sourceTag: 'scope:auth',
               onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // motivation must NOT depend on auth (userId passed as param)
             {
               sourceTag: 'scope:motivation',
               onlyDependOnLibsWithTags: ['scope:models'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // data-access depends only on models
             {
               sourceTag: 'scope:data-access',
               onlyDependOnLibsWithTags: ['scope:models'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // data-access-state owns reactive read-models (signal stores) layered
             // on top of the stateless data-access API services.
             {
               sourceTag: 'scope:data-access-state',
               onlyDependOnLibsWithTags: ['scope:models', 'scope:data-access'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // reminders depends on data-access, data-access-state, motivation,
             // and push (NOT auth). Runtime coupling to push state is via
@@ -57,6 +63,7 @@ export default [
                 'scope:push',
                 'scope:testing',
               ],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // push owns Web Push subscription state + /push/ service worker.
             // Depends on data-access for QuickLogListener (logs a pushup
@@ -68,26 +75,31 @@ export default [
                 'scope:data-access',
                 'scope:testing',
               ],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // quick-add depends on models (+ testing for specs)
             {
               sourceTag: 'scope:quick-add',
               onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // auto-count depends on models only (port-only lib, no UI)
             {
               sourceTag: 'scope:auto-count',
               onlyDependOnLibsWithTags: ['scope:models'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // ads is isolated
             {
               sourceTag: 'scope:ads',
               onlyDependOnLibsWithTags: ['scope:models'],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // sw-push is a standalone service-worker bundle — must stay isolated
             {
               sourceTag: 'scope:sw-push',
               onlyDependOnLibsWithTags: [],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // testing can depend on anything (test utilities)
             {
@@ -97,6 +109,7 @@ export default [
                 'scope:data-access',
                 'scope:auth',
               ],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // cloud-functions depends on models only
             {
@@ -107,6 +120,7 @@ export default [
             {
               sourceTag: 'scope:models',
               onlyDependOnLibsWithTags: [],
+              bannedExternalImports: bannedFirebaseImports,
             },
             // app can depend on everything
             {
@@ -124,6 +138,7 @@ export default [
                 'scope:auto-count',
                 'scope:testing',
               ],
+              bannedExternalImports: bannedFirebaseImports,
             },
           ],
         },

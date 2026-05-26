@@ -1,4 +1,4 @@
-import { User as FbUser } from '@firebase/auth';
+import { User as FbUser } from '@angular/fire/auth';
 import { AuthProvider, User } from './core/model/user.type';
 
 export function mapAuthUserToPUSUser(

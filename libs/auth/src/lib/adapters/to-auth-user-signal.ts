@@ -1,7 +1,7 @@
 import { Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
-import { User } from '@firebase/auth';
+import { User } from '@angular/fire/auth';
 
 /**
  * Firebase mutates the same `User` object in place after `linkWithCredential`

@@ -1,4 +1,4 @@
-import type { User as FbUser } from '@firebase/auth';
+import type { User as FbUser } from '@angular/fire/auth';
 import { mapAuthUserToPUSUser } from './map-auth-user-to-user';
 
 describe('mapAuthUserToPUSUser', () => {
