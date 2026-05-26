@@ -38,6 +38,11 @@ concurrency:
   group: copilot-translations
   cancel-in-progress: false
 
+env:
+  # Für PRs nur Read-Token, für main Pushes Write-Token.
+  # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN_WRITE }}
+
 jobs:
   dispatch-copilot:
     runs-on: ubuntu-latest
@@ -105,7 +110,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload detection artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: copilot-translation-prompt
           path: .copilot-translations/
