@@ -57,9 +57,12 @@ jobs:
       # from this dir, so node_modules must exist here before deploy.
       # --ignore-workspace keeps pnpm scoped to the generated lockfile instead
       # of treating functions-dist as part of the root workspace.
+      # --ignore-scripts skips postinstalls (e.g. @firebase/util, protobufjs)
+      # which under CI=true would otherwise fail with ERR_PNPM_IGNORED_BUILDS;
+      # we only need module resolution here — Cloud Build reinstalls in GCF.
       - name: Install Cloud Functions runtime dependencies
         working-directory: data-store/functions-dist
-        run: pnpm install --frozen-lockfile --ignore-workspace
+        run: pnpm install --frozen-lockfile --ignore-workspace --ignore-scripts
       - name: Upload source maps to Sentry
         # Scope the secret to this step only — script no-ops if the env is empty,
         # so we don't need an explicit `if:` guard.
