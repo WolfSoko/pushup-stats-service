@@ -52,6 +52,14 @@ jobs:
         run: pnpm nx run web:build -c production
       - name: Build Cloud Functions
         run: pnpm nx run cloud-functions:build
+      # Nx esbuild emits package.json + pnpm-lock.yaml into functions-dist with
+      # firebase-functions etc. left external. firebase-tools resolves the SDK
+      # from this dir, so node_modules must exist here before deploy.
+      # --ignore-workspace keeps pnpm scoped to the generated lockfile instead
+      # of treating functions-dist as part of the root workspace.
+      - name: Install Cloud Functions runtime dependencies
+        working-directory: data-store/functions-dist
+        run: pnpm install --frozen-lockfile --ignore-workspace
       - name: Upload source maps to Sentry
         # Scope the secret to this step only — script no-ops if the env is empty,
         # so we don't need an explicit `if:` guard.
