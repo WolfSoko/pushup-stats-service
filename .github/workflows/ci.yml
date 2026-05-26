@@ -78,14 +78,14 @@ jobs:
         # heavy targets (Angular SSR build, Vitest with Firebase/Material)
         # would GC-thrash or OOM only on the agent side.
         # Docs: https://nx.dev/docs/reference/nx-cloud/launch-templates
-        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="build" --with-env-vars="NODE_OPTIONS"
+        run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="build" --with-env-vars="NODE_OPTIONS"
 
       - name: Nx affected (lint + test + build)
-        run: pnpm nx affected -t=lint,test,build -c=production
+        run: pnpm exec nx affected -t=lint,test,build -c=production
 
       - name: Nx fix-ci (always)
         if: always()
-        run: pnpm nx fix-ci
+        run: pnpm exec nx fix-ci
 
   # Runs in parallel to lint-test-build. Shares the Angular SSR build via
   # Nx Cloud's remote cache: the e2e job triggers `build` as a `dependsOn`
@@ -142,14 +142,14 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v5
       - name: Nx Cloud distributed run starten
-        run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
+        run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
 
       - name: Nx affected (e2e)
-        run: pnpm nx affected -t=e2e-ci -c=production
+        run: pnpm exec nx affected -t=e2e-ci -c=production
 
       - name: Nx fix-ci (always)
         if: always()
-        run: pnpm nx fix-ci
+        run: pnpm exec nx fix-ci
 
   # After successful CI on main, fast-forward the deploy branch.
   # Firebase App Hosting watches this branch instead of main,
