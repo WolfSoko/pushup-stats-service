@@ -9140,21 +9140,21 @@
       </segment>
     </unit>
         <unit id="leaderboard.exercise.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestenlisten-Übung auswählen</source>
-        <target>Bestenlisten-Übung auswählen</target>
+        <target>选择排行榜运动</target>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>更多</target>
       </segment>
     </unit>
     <unit id="leaderboard.period.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leaderboard Zeitraum</source>
-        <target>Leaderboard Zeitraum</target>
+        <target>排行榜时间段</target>
       </segment>
     </unit>
 </file>

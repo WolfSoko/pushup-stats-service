@@ -9518,21 +9518,21 @@
       </segment>
     </unit>
         <unit id="leaderboard.exercise.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestenlisten-Übung auswählen</source>
-        <target>Bestenlisten-Übung auswählen</target>
+        <target>Sélectionner l'exercice du classement</target>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>Plus</target>
       </segment>
     </unit>
     <unit id="leaderboard.period.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leaderboard Zeitraum</source>
-        <target>Leaderboard Zeitraum</target>
+        <target>Période du classement</target>
       </segment>
     </unit>
 </file>

@@ -9812,21 +9812,21 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
         <unit id="leaderboard.exercise.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestenlisten-Übung auswählen</source>
-        <target>Bestenlisten-Übung auswählen</target>
+        <target>Select leaderboard exercise</target>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>More</target>
       </segment>
     </unit>
     <unit id="leaderboard.period.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leaderboard Zeitraum</source>
-        <target>Leaderboard Zeitraum</target>
+        <target>Leaderboard period</target>
       </segment>
     </unit>
 </file>
