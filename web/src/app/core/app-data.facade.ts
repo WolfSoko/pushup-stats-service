@@ -11,6 +11,8 @@ import { UserContextService } from '@pu-auth/auth';
 import { StatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
+  type ComplexGoalEntry,
+  complexGoalAppliesOnWeekday,
   findExerciseDefinition,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
@@ -171,8 +173,144 @@ export class AppDataFacade {
   );
 
   readonly goalReached = computed(() => {
+    // For users on the new goals page, "reached" means every applicable
+    // exercise has hit its individual target — comparing the rep-sum to
+    // the pushup-only `todayProgress` would let the snap fire after just
+    // doing pushups even if Squats/Plank/Running were never touched.
+    if (this.userConfig.goalsConfigured()) {
+      return this.dailyGoalsAllReached();
+    }
     const goal = this.effectiveDailyGoal();
     return goal > 0 && this.todayProgress() >= goal;
+  });
+
+  /**
+   * Today's complex goal entries, filtered by the current weekday. A plan
+   * day target keeps superseding the user's complex goals — we synthesise
+   * a single pushup-reps entry so the toolbar stays focused on the
+   * prescribed plan workout.
+   */
+  readonly todayGoalEntries = computed<ComplexGoalEntry[]>(() => {
+    const planTarget = this.planTodayTarget();
+    if (planTarget > 0) {
+      return [
+        {
+          id: 'plan-today',
+          exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+          target: planTarget,
+          measurement: 'reps',
+          unit: 'reps',
+        },
+      ];
+    }
+    // Use the Berlin date for the weekday, matching `todayProgress` and the
+    // rest of the facade. `new Date().getDay()` would read the user's local
+    // timezone — for clients west of Berlin, a Saturday-night entry would
+    // be aggregated against Sunday's goal list (or vice versa) and the
+    // wrong weekday filter would apply on the day boundary.
+    const berlinToday = toBerlinIsoDate(new Date());
+    const weekday = new Date(`${berlinToday}T00:00:00Z`).getUTCDay();
+    return this.userConfig
+      .dailyGoalEntries()
+      .filter((entry) => complexGoalAppliesOnWeekday(entry, weekday));
+  });
+
+  /**
+   * Per-entry progress in the entry's native unit. Reps come from the live
+   * pushup feed for the pushup sentinel, and from `exerciseEntries` for
+   * everything else. Time and distance goals aggregate the matching
+   * companion field. Falls back to 0 outside the browser (SSR has no live
+   * exerciseEntries feed and the pre-fetched stats only cover pushups).
+   */
+  readonly todayGoalProgress = computed<readonly number[]>(() => {
+    const entries = this.todayGoalEntries();
+    if (entries.length === 0) return [];
+    const berlinToday = toBerlinIsoDate(new Date());
+    const pushupRepsToday = this.todayProgress();
+    if (!this.isBrowser || !this.live.connected()) {
+      // SSR / no-live fallback: only the pushup-sentinel goal can be
+      // resolved (`todayProgress` is the pushup total). Other measurement
+      // types stay at 0 until the live feed mounts in the browser.
+      return entries.map((e) =>
+        e.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID ? pushupRepsToday : 0
+      );
+    }
+    const exerciseEntries = this.live
+      .exerciseEntries()
+      .filter((e) => e.timestamp.slice(0, 10) === berlinToday);
+    return entries.map((entry) => {
+      if (entry.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
+        return pushupRepsToday;
+      }
+      // When the goal pins a specific variant, count only entries of that
+      // variant. Otherwise match every entry for the exercise across all
+      // its variants — the goals page deliberately does not expose a
+      // variant picker yet (so most entries here will have no
+      // `variantId`), and a user logging "decline sit-ups" against a
+      // generic "Sit-ups" goal should still increment the progress.
+      const matching = exerciseEntries.filter((e) => {
+        if (e.exerciseId !== entry.exerciseId) return false;
+        if (!entry.variantId) return true;
+        return e.variantId === entry.variantId;
+      });
+      switch (entry.measurement) {
+        case 'reps':
+        case 'weight':
+          return matching.reduce((sum, e) => sum + (e.reps ?? 0), 0);
+        case 'time':
+          return matching.reduce((sum, e) => sum + (e.durationSec ?? 0), 0);
+        case 'distance':
+        case 'distance-time':
+          return matching.reduce((sum, e) => sum + (e.distanceM ?? 0), 0);
+      }
+    });
+  });
+
+  /**
+   * True when the user explicitly opted into the new goals page (the
+   * Firestore doc carries the `goals` field). Drives the toolbar's
+   * choice between the legacy `X / Y` rep display and the aggregated
+   * `X%` view — legacy users keep their familiar pill until they
+   * configure complex goals themselves.
+   */
+  readonly complexGoalsEnabled = this.userConfig.goalsConfigured;
+
+  /**
+   * Aggregated 0–100 daily-goal completion percentage across all
+   * configured exercises (averaged, capped per-entry at 100% so a
+   * blown-out single goal can't mask the others). Returns 0 when no
+   * goals apply today.
+   */
+  readonly dailyGoalAggregatedPercent = computed(() => {
+    const entries = this.todayGoalEntries();
+    if (entries.length === 0) return 0;
+    const progress = this.todayGoalProgress();
+    let pctSum = 0;
+    let counted = 0;
+    for (let i = 0; i < entries.length; i++) {
+      const target = entries[i].target;
+      if (!target || target <= 0) continue;
+      const ratio = Math.min(1, progress[i] / target);
+      pctSum += ratio * 100;
+      counted += 1;
+    }
+    if (counted === 0) return 0;
+    return Math.round(pctSum / counted);
+  });
+
+  /**
+   * True iff every configured exercise reached its target today. Used by
+   * the toolbar pill to flag "click to replay snap animation".
+   */
+  readonly dailyGoalsAllReached = computed(() => {
+    const entries = this.todayGoalEntries();
+    if (entries.length === 0) return false;
+    const progress = this.todayGoalProgress();
+    for (let i = 0; i < entries.length; i++) {
+      if (entries[i].target <= 0) continue;
+      if (progress[i] < entries[i].target) return false;
+    }
+    return true;
   });
 
   /**

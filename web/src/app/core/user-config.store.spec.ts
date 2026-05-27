@@ -4,7 +4,12 @@ import { BehaviorSubject, of } from 'rxjs';
 import { UserConfigStore } from './user-config.store';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
-import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
+import {
+  type ComplexGoals,
+  PUSHUP_QUICK_ADD_EXERCISE_ID,
+  UserConfig,
+  UserConfigUpdate,
+} from '@pu-stats/models';
 
 describe('UserConfigStore', () => {
   const userId = signal<string>('u1');
@@ -78,6 +83,145 @@ describe('UserConfigStore', () => {
     expect(store.dailyGoal()).toBe(0);
 
     userId.set('u1'); // restore for other tests
+  });
+
+  it('Given only legacy numeric goals on the doc, Then goals() migrates them to single pushup-reps entries', async () => {
+    const stream = new BehaviorSubject<UserConfig>({
+      userId: 'u1',
+      dailyGoal: 30,
+      weeklyGoal: 150,
+      monthlyGoal: 600,
+    });
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: UserConfigApiService,
+          useValue: {
+            getConfig: vitest.fn(() => stream.asObservable()),
+            updateConfig: vitest.fn(),
+          },
+        },
+        {
+          provide: UserContextService,
+          useValue: { userIdSafe: () => 'u1' },
+        },
+      ],
+    });
+    const store = TestBed.inject(UserConfigStore);
+    await flush();
+
+    const goals = store.goals();
+    expect(goals.daily).toEqual([
+      {
+        id: 'legacy-daily',
+        exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+        target: 30,
+        measurement: 'reps',
+        unit: 'reps',
+      },
+    ]);
+    expect(goals.weekly?.[0].target).toBe(150);
+    expect(goals.monthly?.[0].target).toBe(600);
+    // Legacy derived single-numbers still match the rep-sum.
+    expect(store.dailyGoal()).toBe(30);
+    expect(store.weeklyGoal()).toBe(150);
+    expect(store.monthlyGoal()).toBe(600);
+  });
+
+  it('Given complex goals on the doc, Then they take precedence over the legacy numeric fields', async () => {
+    const stream = new BehaviorSubject<UserConfig>({
+      userId: 'u1',
+      // Stale legacy field that no longer matches the new structure.
+      dailyGoal: 10,
+      goals: {
+        daily: [
+          {
+            id: 'a',
+            exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+            target: 50,
+            measurement: 'reps',
+            unit: 'reps',
+            weekdays: [1, 3, 5],
+          },
+          {
+            id: 'b',
+            exerciseId: 'legs.squats',
+            target: 30,
+            measurement: 'reps',
+            unit: 'reps',
+          },
+          {
+            id: 'c',
+            exerciseId: 'plank.standard',
+            target: 60,
+            measurement: 'time',
+            unit: 's',
+          },
+        ],
+      },
+    });
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: UserConfigApiService,
+          useValue: {
+            getConfig: vitest.fn(() => stream.asObservable()),
+            updateConfig: vitest.fn(),
+          },
+        },
+        {
+          provide: UserContextService,
+          useValue: { userIdSafe: () => 'u1' },
+        },
+      ],
+    });
+    const store = TestBed.inject(UserConfigStore);
+    await flush();
+
+    expect(store.dailyGoalEntries()).toHaveLength(3);
+    // Sum of rep-based targets only — the 60s plank is excluded.
+    expect(store.dailyGoal()).toBe(80);
+  });
+
+  it('Given saveGoals(...), Then it writes goals plus the derived legacy single-numbers in a single patch', async () => {
+    const { store, apiMock } = setup();
+    await flush();
+
+    const complex: ComplexGoals = {
+      daily: [
+        {
+          id: 'a',
+          exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+          target: 40,
+          measurement: 'reps',
+          unit: 'reps',
+        },
+        {
+          id: 'b',
+          exerciseId: 'legs.squats',
+          target: 20,
+          measurement: 'reps',
+          unit: 'reps',
+        },
+      ],
+      weekly: [],
+      monthly: [],
+    };
+    await store.saveGoals(complex);
+    await flush();
+
+    expect(apiMock.updateConfig).toHaveBeenCalledTimes(1);
+    const patch = apiMock.updateConfig.mock.calls[0][1];
+    expect(patch.goals).toEqual({
+      daily: complex.daily,
+      weekly: [],
+      monthly: [],
+    });
+    expect(patch.dailyGoal).toBe(60);
+    expect(patch.weeklyGoal).toBe(0);
+    expect(patch.monthlyGoal).toBe(0);
   });
 
   it('Given the API observable emits a new config, When no manual reload is called, Then the store reflects the update (live Firestore listener)', async () => {

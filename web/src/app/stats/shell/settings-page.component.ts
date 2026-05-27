@@ -45,9 +45,6 @@ const SAVED_INDICATOR_MS = 1800;
 
 interface DraftSnapshot {
   displayName: string;
-  dailyGoal: number;
-  weeklyGoal: number;
-  monthlyGoal: number;
   hideFromLeaderboard: boolean;
   publicProfile: boolean;
   adsConsent: boolean;
@@ -56,9 +53,6 @@ interface DraftSnapshot {
 
 interface ResolvedConfig {
   displayName: string;
-  dailyGoal: number;
-  weeklyGoal: number;
-  monthlyGoal: number;
   hideFromLeaderboard: boolean;
   publicProfile: boolean;
   consent: { targetedAds?: boolean } & Record<string, unknown>;
@@ -305,14 +299,19 @@ interface ResolvedConfig {
         </mat-card-content>
       </mat-card>
 
-      <mat-card id="targets" class="section-card">
+      <mat-card
+        id="targets"
+        class="section-card"
+        data-testid="settings-goals-link-card"
+      >
         <mat-card-header>
           <mat-icon mat-card-avatar>flag</mat-icon>
           <mat-card-title i18n="@@settings.section.goals.title"
             >Ziele</mat-card-title
           >
-          <mat-card-subtitle i18n="@@settings.section.goals.subtitle">
-            Tägliche, wöchentliche und monatliche Ziele.
+          <mat-card-subtitle i18n="@@settings.section.goals.linkSubtitle">
+            Tägliche, wöchentliche und monatliche Ziele mit verschiedenen
+            Übungen werden jetzt auf der eigenen Seite verwaltet.
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
@@ -334,62 +333,18 @@ interface ResolvedConfig {
               >
             </div>
           }
-          <div class="grid">
-            <mat-form-field appearance="outline">
-              <mat-label i18n="@@dailyGoalLabel">Tagesziel (Reps)</mat-label>
-              <input
-                matInput
-                type="number"
-                min="1"
-                [value]="dailyGoalDraft()"
-                (input)="
-                  dailyGoalDraft.set(asNumberOr($event, dailyGoalDraft()))
-                "
-                placeholder="10"
-                i18n-placeholder="@@dailyGoalPlaceholder"
-              />
-              <mat-hint i18n="@@settings.goalHint"
-                >Wird prominent in der Toolbar angezeigt.</mat-hint
-              >
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label i18n="@@weeklyGoalLabel">Wochenziel (Reps)</mat-label>
-              <input
-                matInput
-                type="number"
-                min="1"
-                [value]="weeklyGoalDraft()"
-                (input)="
-                  weeklyGoalDraft.set(asNumberOr($event, weeklyGoalDraft()))
-                "
-                placeholder="50"
-                i18n-placeholder="@@weeklyGoalPlaceholder"
-              />
-              <mat-hint i18n="@@settings.weeklyGoalHint"
-                >Gesamtziel pro Woche (Mo–So).</mat-hint
-              >
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label i18n="@@monthlyGoalLabel">Monatsziel (Reps)</mat-label>
-              <input
-                matInput
-                type="number"
-                min="1"
-                [value]="monthlyGoalDraft()"
-                (input)="
-                  monthlyGoalDraft.set(asNumberOr($event, monthlyGoalDraft()))
-                "
-                placeholder="200"
-                i18n-placeholder="@@monthlyGoalPlaceholder"
-              />
-              <mat-hint i18n="@@settings.monthlyGoalHint"
-                >Gesamtziel pro Monat.</mat-hint
-              >
-            </mat-form-field>
-          </div>
         </mat-card-content>
+        <mat-card-actions>
+          <a
+            mat-stroked-button
+            routerLink="/goals"
+            data-testid="settings-goals-link"
+            i18n="@@settings.goals.openPageCta"
+          >
+            <mat-icon>flag</mat-icon>
+            Tagesziele öffnen
+          </a>
+        </mat-card-actions>
       </mat-card>
 
       <mat-card id="display" class="section-card">
@@ -758,9 +713,6 @@ export class SettingsPageComponent implements OnDestroy {
   readonly displayNameViolation = computed<DisplayNameViolation | null>(() =>
     validateDisplayName(this.displayNameDraft())
   );
-  readonly dailyGoalDraft = signal<number>(10);
-  readonly weeklyGoalDraft = signal<number>(50);
-  readonly monthlyGoalDraft = signal<number>(200);
   readonly leaderboardOptOutDraft = signal(false);
   readonly publicProfileDraft = signal(false);
   readonly adsConsentDraft = signal(false);
@@ -794,9 +746,6 @@ export class SettingsPageComponent implements OnDestroy {
     if (!val || typeof val !== 'object')
       return {
         displayName: '',
-        dailyGoal: 10,
-        weeklyGoal: 50,
-        monthlyGoal: 200,
         hideFromLeaderboard: false,
         publicProfile: false,
         consent: { targetedAds: true },
@@ -804,18 +753,6 @@ export class SettingsPageComponent implements OnDestroy {
       };
     return {
       displayName: (val as { displayName?: string }).displayName ?? '',
-      dailyGoal: Math.max(
-        1,
-        Math.trunc((val as { dailyGoal?: number }).dailyGoal || 10)
-      ),
-      weeklyGoal: Math.max(
-        1,
-        Math.trunc((val as { weeklyGoal?: number }).weeklyGoal || 50)
-      ),
-      monthlyGoal: Math.max(
-        1,
-        Math.trunc((val as { monthlyGoal?: number }).monthlyGoal || 200)
-      ),
       hideFromLeaderboard:
         (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
           ?.hideFromLeaderboard ?? false,
@@ -966,9 +903,6 @@ export class SettingsPageComponent implements OnDestroy {
   private draftSnapshot(): DraftSnapshot {
     return {
       displayName: this.displayNameDraft().trim(),
-      dailyGoal: Math.max(1, Math.trunc(this.dailyGoalDraft())),
-      weeklyGoal: Math.max(1, Math.trunc(this.weeklyGoalDraft())),
-      monthlyGoal: Math.max(1, Math.trunc(this.monthlyGoalDraft())),
       hideFromLeaderboard: this.leaderboardOptOutDraft(),
       publicProfile: this.publicProfileDraft(),
       adsConsent: this.adsConsentDraft(),
@@ -979,9 +913,6 @@ export class SettingsPageComponent implements OnDestroy {
   private snapshotFromConfig(cfg: ResolvedConfig): DraftSnapshot {
     return {
       displayName: cfg.displayName.trim(),
-      dailyGoal: cfg.dailyGoal,
-      weeklyGoal: cfg.weeklyGoal,
-      monthlyGoal: cfg.monthlyGoal,
       hideFromLeaderboard: cfg.hideFromLeaderboard,
       publicProfile: cfg.publicProfile,
       adsConsent: cfg.consent?.targetedAds ?? true,
@@ -992,9 +923,6 @@ export class SettingsPageComponent implements OnDestroy {
   private snapshotsEqual(a: DraftSnapshot, b: DraftSnapshot): boolean {
     return (
       a.displayName === b.displayName &&
-      a.dailyGoal === b.dailyGoal &&
-      a.weeklyGoal === b.weeklyGoal &&
-      a.monthlyGoal === b.monthlyGoal &&
       a.hideFromLeaderboard === b.hideFromLeaderboard &&
       a.publicProfile === b.publicProfile &&
       a.adsConsent === b.adsConsent &&
@@ -1004,9 +932,6 @@ export class SettingsPageComponent implements OnDestroy {
 
   private applyConfigToDrafts(cfg: ResolvedConfig): void {
     this.displayNameDraft.set(cfg.displayName);
-    this.dailyGoalDraft.set(cfg.dailyGoal);
-    this.weeklyGoalDraft.set(cfg.weeklyGoal);
-    this.monthlyGoalDraft.set(cfg.monthlyGoal);
     this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
     this.publicProfileDraft.set(cfg.publicProfile);
     this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
@@ -1060,9 +985,6 @@ export class SettingsPageComponent implements OnDestroy {
       const current = this.config();
       await this.userConfigStore.save({
         displayName: draft.displayName,
-        dailyGoal: draft.dailyGoal,
-        weeklyGoal: draft.weeklyGoal,
-        monthlyGoal: draft.monthlyGoal,
         consent: {
           ...(current.consent ?? {}),
           targetedAds: draft.adsConsent,
@@ -1078,9 +1000,6 @@ export class SettingsPageComponent implements OnDestroy {
       this.trackAnalytics('settings_saved', {
         hideFromLeaderboard: draft.hideFromLeaderboard,
         publicProfile: draft.publicProfile,
-        dailyGoal: draft.dailyGoal,
-        weeklyGoal: draft.weeklyGoal,
-        monthlyGoal: draft.monthlyGoal,
         adsConsent: draft.adsConsent,
       });
       if (this.savedTimer !== null) clearTimeout(this.savedTimer);

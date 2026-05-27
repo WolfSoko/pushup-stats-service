@@ -166,7 +166,13 @@
         (keydown.enter)="handleGoalPillKeydown($event)"
         (keydown.space)="handleGoalPillKeydown($event); $event.preventDefault()"
         ><small i18n="@@toolbarDailyGoal">Tagesziel</small>
-        <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong></span
+        @if (hasComplexDailyGoals()) {
+        <strong data-testid="toolbar-goal-pill-percent"
+          >{{ dailyGoalAggregatedPercent() }}%</strong
+        >
+        } @else {
+        <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong>
+        }</span
       >
       <app-theme-toggle />
       @if (isAdmin()) {

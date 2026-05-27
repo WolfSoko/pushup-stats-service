@@ -234,6 +234,18 @@ export class App {
   readonly todayProgress = this.appData.todayProgress;
   readonly remainingToGoal = this.appData.remainingToGoal;
   readonly goalReached = this.appData.goalReached;
+  /**
+   * Aggregated daily-goal completion (0–100). Drives the toolbar pill
+   * label when the user has configured complex goals — falls back to
+   * the legacy `progress / target` reps display when no complex goals
+   * apply today.
+   */
+  readonly dailyGoalAggregatedPercent = this.appData.dailyGoalAggregatedPercent;
+  readonly hasComplexDailyGoals = computed(
+    () =>
+      this.appData.complexGoalsEnabled() &&
+      this.appData.todayGoalEntries().length > 0
+  );
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
 
   private readonly consentBanner =

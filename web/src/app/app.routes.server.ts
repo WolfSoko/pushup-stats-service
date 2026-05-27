@@ -125,6 +125,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
+    path: 'goals',
+    renderMode: RenderMode.Server,
+  },
+  {
     path: 'reminders',
     renderMode: RenderMode.Server,
   },

@@ -51,6 +51,7 @@ describe('serverRoutes', () => {
       'history',
       'analysis',
       'settings',
+      'goals',
       'reminders',
     ];
     for (const path of serverPaths) {

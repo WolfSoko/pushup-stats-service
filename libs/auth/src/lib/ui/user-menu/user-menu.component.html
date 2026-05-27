@@ -24,6 +24,10 @@
       <mat-icon>list</mat-icon>
       <span i18n="@@user.menu.history">Historie</span>
     </button>
+    <button mat-menu-item (click)="goToGoals()" data-testid="user-menu-goals">
+      <mat-icon>flag</mat-icon>
+      <span i18n="@@user.menu.goals">Tagesziele</span>
+    </button>
     <button mat-menu-item (click)="goToReminders()">
       <mat-icon>notifications</mat-icon>
       <span i18n="@@user.menu.reminders">Erinnerungen</span>
