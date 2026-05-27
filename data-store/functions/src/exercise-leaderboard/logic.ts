@@ -50,9 +50,28 @@ export interface ExerciseLeaderboardPeriods {
   daily: ExerciseLeaderboardEntry[];
   last7: ExerciseLeaderboardEntry[];
   last30: ExerciseLeaderboardEntry[];
+  allTime: ExerciseLeaderboardEntry[];
 }
 
-export type ExerciseLeaderboardPeriodKind = 'daily' | 'last7' | 'last30';
+export type ExerciseLeaderboardPeriodKind =
+  | 'daily'
+  | 'last7'
+  | 'last30'
+  | 'allTime';
+
+/**
+ * Subset of {@link ExerciseLeaderboardPeriodKind} that
+ * {@link rankExerciseEntries} actually supports — the windowed periods.
+ * `'allTime'` is sourced from a different aggregate
+ * (`userStats/{uid}/perExercise/{exerciseId}.total` via
+ * {@link rankExerciseAllTime}) and must not flow into the windowed ranker
+ * where it would silently drop every row. Mirrors
+ * `WindowedLeaderboardPeriodKind` for the pushup leaderboard.
+ */
+export type WindowedExerciseLeaderboardPeriodKind = Exclude<
+  ExerciseLeaderboardPeriodKind,
+  'allTime'
+>;
 
 /**
  * Value field on `ExerciseEntryRow` that carries the primary measurement
@@ -121,7 +140,7 @@ export function isoDateNDaysBefore(
 export function rankExerciseEntries(
   rows: ExerciseEntryRow[],
   valueField: ExerciseValueField,
-  periodKey: ExerciseLeaderboardPeriodKind,
+  periodKey: WindowedExerciseLeaderboardPeriodKind,
   targetKey: string,
   userProfiles: Map<string, UserProfile>
 ): ExerciseLeaderboardEntry[] {
@@ -199,4 +218,43 @@ export function getExerciseLeaderboardQueryStartDate(
   today: BerlinDateParts
 ): string {
   return isoDateNDaysBefore(today, 30);
+}
+
+/**
+ * Per-(user, exercise) lifetime cumulative measurement, sourced from
+ * `userStats/{userId}/perExercise/{exerciseId}.total`. The slot is
+ * exercise-scoped, so `total` carries reps for rep-measured exercises,
+ * seconds for time-measured ones, and meters for distance-measured ones
+ * — the unit is implied by the exercise the row belongs to. Mirrors
+ * `UserTotalRow` from the pushup ranker.
+ */
+export interface ExerciseUserTotalRow {
+  userId: string;
+  total: number;
+}
+
+/**
+ * Ranks lifetime cumulative measurements for a single exercise. Sibling
+ * of `rankAllTime` for the pushup leaderboard. No per-day cap is applied
+ * — the cumulative total already encompasses arbitrarily many days, and
+ * the windowed cap is meant to defend against single-day outliers. The
+ * privacy contract matches the windowed ranker: admin shadow-ban is
+ * respected and the full publicProfile opt-in is required.
+ */
+export function rankExerciseAllTime(
+  rows: ExerciseUserTotalRow[],
+  userProfiles: Map<string, UserProfile>
+): ExerciseLeaderboardEntry[] {
+  return rows
+    .flatMap(({ userId, total }): ExerciseLeaderboardEntry[] => {
+      if (!userId) return [];
+      if (!Number.isFinite(total) || total <= 0) return [];
+      const profile = userProfiles.get(userId);
+      if (isLeaderboardExcluded(profile)) return [];
+      if (!isPublicProfileLinkAllowed(profile)) return [];
+      const alias = String(profile?.displayName || '').trim();
+      return [{ alias, reps: Math.round(total), uid: userId }];
+    })
+    .sort((a, b) => b.reps - a.reps)
+    .slice(0, TOP_N);
 }

@@ -1,5 +1,7 @@
 import { describe, it, expect } from '@jest/globals';
 import {
+  ExerciseUserTotalRow,
+  rankExerciseAllTime,
   rankExerciseEntries,
   getExerciseLeaderboardQueryStartDate,
   isoDateNDaysBefore,
@@ -455,6 +457,136 @@ describe('exercise-leaderboard/logic', () => {
         1
       );
       expect(result).toBe('2024-02-29');
+    });
+  });
+
+  describe('rankExerciseAllTime', () => {
+    it('Given lifetime totals, When ranking, Then sorts desc and rounds to ints', () => {
+      const rows: ExerciseUserTotalRow[] = [
+        { userId: 'alice', total: 12_345.7 },
+        { userId: 'bob', total: 50_000 },
+        { userId: 'carol', total: 12_345.2 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['alice', publicProfile('Alice')],
+        ['bob', publicProfile('Bob')],
+        ['carol', publicProfile('Carol')],
+      ]);
+
+      const result = rankExerciseAllTime(rows, profiles);
+
+      expect(result).toEqual([
+        { alias: 'Bob', reps: 50_000, uid: 'bob' },
+        { alias: 'Alice', reps: 12_346, uid: 'alice' },
+        { alias: 'Carol', reps: 12_345, uid: 'carol' },
+      ]);
+    });
+
+    it('Given a user without the full publicProfile opt-in, When ranking, Then drops them', () => {
+      const rows: ExerciseUserTotalRow[] = [
+        { userId: 'optedIn', total: 500 },
+        { userId: 'leaderOnly', total: 9000 },
+        { userId: 'profileOnly', total: 8000 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['optedIn', publicProfile('Alice')],
+        [
+          'leaderOnly',
+          {
+            displayName: 'Bob',
+            ui: { hideFromLeaderboard: false, publicProfile: false },
+          },
+        ],
+        [
+          'profileOnly',
+          {
+            displayName: 'Carol',
+            ui: { hideFromLeaderboard: true, publicProfile: true },
+          },
+        ],
+      ]);
+
+      const result = rankExerciseAllTime(rows, profiles);
+
+      expect(result).toEqual([{ alias: 'Alice', reps: 500, uid: 'optedIn' }]);
+    });
+
+    it('Given a shadow-banned user with the highest total, When ranking, Then they are excluded', () => {
+      const rows: ExerciseUserTotalRow[] = [
+        { userId: 'good', total: 500 },
+        { userId: 'cheater', total: 99_999 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['good', publicProfile('Alice')],
+        [
+          'cheater',
+          {
+            displayName: 'Mallory',
+            ui: { hideFromLeaderboard: false, publicProfile: true },
+            leaderboardExcluded: true,
+          },
+        ],
+      ]);
+
+      const result = rankExerciseAllTime(rows, profiles);
+
+      expect(result).toEqual([{ alias: 'Alice', reps: 500, uid: 'good' }]);
+    });
+
+    it('Given a zero or negative total, When ranking, Then drops the row', () => {
+      const rows: ExerciseUserTotalRow[] = [
+        { userId: 'alice', total: 0 },
+        { userId: 'bob', total: -50 },
+        { userId: 'carol', total: 10 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['alice', publicProfile('Alice')],
+        ['bob', publicProfile('Bob')],
+        ['carol', publicProfile('Carol')],
+      ]);
+
+      const result = rankExerciseAllTime(rows, profiles);
+
+      expect(result).toEqual([{ alias: 'Carol', reps: 10, uid: 'carol' }]);
+    });
+
+    it('Given a non-finite total, When ranking, Then drops the row', () => {
+      const rows: ExerciseUserTotalRow[] = [
+        { userId: 'alice', total: Number.NaN },
+        { userId: 'bob', total: Number.POSITIVE_INFINITY },
+        { userId: 'carol', total: 42 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['alice', publicProfile('Alice')],
+        ['bob', publicProfile('Bob')],
+        ['carol', publicProfile('Carol')],
+      ]);
+
+      const result = rankExerciseAllTime(rows, profiles);
+
+      expect(result).toEqual([{ alias: 'Carol', reps: 42, uid: 'carol' }]);
+    });
+
+    it('Given more than 10 eligible rows, When ranking, Then truncates to top 10', () => {
+      const rows: ExerciseUserTotalRow[] = Array.from(
+        { length: 20 },
+        (_, i) => ({
+          userId: `user${i}`,
+          total: 100 - i,
+        })
+      );
+      const profiles = new Map<string, UserProfile>(
+        rows.map((r) => [r.userId, publicProfile(`User${r.userId}`)])
+      );
+
+      const result = rankExerciseAllTime(rows, profiles);
+
+      expect(result).toHaveLength(10);
+      expect(result[0]).toEqual({
+        alias: 'Useruser0',
+        reps: 100,
+        uid: 'user0',
+      });
     });
   });
 });
