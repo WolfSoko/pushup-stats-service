@@ -25,21 +25,7 @@ const makeCounter = (
   frame: WritableSignal<FormCheckFrame | null> = signal<FormCheckFrame | null>(
     null
   )
-): Pick<
-  PoseRepCounterService,
-  | 'snapshot'
-  | 'isActive'
-  | 'formCheckFrame'
-  | 'bindVideoElement'
-  | 'start'
-  | 'stop'
-  | 'reset'
-> & {
-  startSpy: ReturnType<typeof vi.fn>;
-  stopSpy: ReturnType<typeof vi.fn>;
-  bindSpy: ReturnType<typeof vi.fn>;
-  frame: WritableSignal<FormCheckFrame | null>;
-} => {
+) => {
   const isActive = signal(false);
   const start = vi.fn(async () => {
     isActive.set(true);
