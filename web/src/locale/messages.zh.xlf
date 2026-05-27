@@ -9174,249 +9174,249 @@
       </segment>
     </unit>
     <unit id="user.menu.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>每日目标</target>
       </segment>
     </unit>
     <unit id="seo.goals.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele – Pushup Tracker</source>
-        <target>Tagesziele – Pushup Tracker</target>
+        <target>每日目标 – 俯卧撑追踪器</target>
       </segment>
     </unit>
     <unit id="seo.goals.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</target>
+        <target>按日、按周、按月规划各种练习 – 含工作日筛选器。</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>周一</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>周二</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>周三</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>周四</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>周五</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>周六</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>周日</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>每日目标</target>
       </segment>
     </unit>
     <unit id="goalsHeaderSubtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
-        <target> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </target>
+        <target> 每日、每周、每月的各种练习。 </target>
       </segment>
     </unit>
     <unit id="goals.status.saving">
-      <segment state="initial">
+      <segment state="translated">
         <source>Speichert…</source>
-        <target>Speichert…</target>
+        <target>保存中…</target>
       </segment>
     </unit>
     <unit id="goals.status.saved">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gespeichert</source>
-        <target>Gespeichert</target>
+        <target>已保存</target>
       </segment>
     </unit>
     <unit id="goals.status.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fehler beim Speichern</source>
-        <target>Fehler beim Speichern</target>
+        <target>保存时出错</target>
       </segment>
     </unit>
     <unit id="goals.status.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Erneut versuchen </target>
+        <target> 重试 </target>
       </segment>
     </unit>
     <unit id="goals.status.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungespeicherte Änderungen…</source>
-        <target>Ungespeicherte Änderungen…</target>
+        <target>未保存的更改…</target>
       </segment>
     </unit>
     <unit id="goals.status.synced">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Ziele gespeichert</source>
-        <target>Alle Ziele gespeichert</target>
+        <target>所有目标已保存</target>
       </segment>
     </unit>
     <unit id="goals.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </target>
+        <target> 为每日、每周和每月创建带有目标值的练习列表。对于每日目标，您还可以指定该目标适用的星期几 — 非常适合推/拉/腿分组训练计划。 </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </target>
+        <target> 尚未创建任何目标。请在下方添加您的第一个目标。 </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>练习</target>
       </segment>
     </unit>
     <unit id="goals.weekdayLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktiv an:</source>
-        <target>Aktiv an:</target>
+        <target>有效于：</target>
       </segment>
     </unit>
     <unit id="goals.weekdayEveryDayHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Auswahl = gilt jeden Tag.</source>
-        <target>Keine Auswahl = gilt jeden Tag.</target>
+        <target>无选择 = 每天适用。</target>
       </segment>
     </unit>
     <unit id="goals.addEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel hinzufügen</source>
-        <target>Ziel hinzufügen</target>
+        <target>添加目标</target>
       </segment>
     </unit>
     <unit id="goals.limitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Maximal <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> Ziele pro Bereich. </source>
-        <target> Maximal <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> Ziele pro Bereich. </target>
+        <target> 每个部分最多 <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> 个目标。 </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Andere Einstellungen</source>
-        <target>Andere Einstellungen</target>
+        <target>其他设置</target>
       </segment>
     </unit>
     <unit id="goals.linkBack.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
-        <target> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </target>
+        <target> 管理个人资料、可见性、提醒和广告。 </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> 打开设置 </target>
       </segment>
     </unit>
     <unit id="goals.removeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel entfernen</source>
-        <target>Ziel entfernen</target>
+        <target>删除目标</target>
       </segment>
     </unit>
     <unit id="goals.weekdayAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>工作日</target>
       </segment>
     </unit>
     <unit id="goals.section.daily.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>每日目标</target>
       </segment>
     </unit>
     <unit id="goals.section.daily.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>Was du an einzelnen Wochentagen schaffen willst.</target>
+        <target>您希望在特定工作日完成的内容。</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochenziele</source>
-        <target>Wochenziele</target>
+        <target>每周目标</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Summen pro Übung über die ganze Woche.</source>
-        <target>Summen pro Übung über die ganze Woche.</target>
+        <target>整周每个练习的总计。</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Monatsziele</source>
-        <target>Monatsziele</target>
+        <target>每月目标</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>Größere Ziele über den ganzen Monat verteilt.</target>
+        <target>分布在整个月份的更大目标。</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Ziel (Sekunden)</target>
+        <target>目标（秒）</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Ziel (Meter)</target>
+        <target>目标（米）</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel</source>
-        <target>Ziel</target>
+        <target>目标</target>
       </segment>
     </unit>
     <unit id="settings.section.goals.linkSubtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </target>
+        <target> 各种练习的每日、每周和每月目标现在在其专属页面上进行管理。 </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Tagesziele öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Tagesziele öffnen </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> 打开每日目标 </target>
       </segment>
     </unit>
 </file>
