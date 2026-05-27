@@ -18,11 +18,10 @@ allowBuilds:
 
 peerDependencyRules:
   allowedVersions:
-    '@wolsok/thanos>@angular/core': '21'
-    '@wolsok/thanos>@angular/common': '21'
-    '@wolsok/thanos>@angular/platform-browser': '21'
-    '@wolsok/thanos>@angular/platform-browser-dynamic': '21'
-    '@wolsok/thanos>rxjs': '7.8.0'
-    '@wolsok/thanos>zone.js': '*'
+    '@angular/core': '21'
+    '@angular/common': '21'
+    '@angular/platform-browser': '21'
+    '@angular/platform-browser-dynamic': '21'
+    'rxjs': '7.8.0'
   ignoreMissing:
     - 'zone.js'
