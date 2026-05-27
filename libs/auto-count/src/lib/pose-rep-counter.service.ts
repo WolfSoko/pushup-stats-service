@@ -8,7 +8,11 @@ import {
   type PoseFrameSource,
 } from './pose-frame-source.port';
 import { poseToAngleSample } from './pose-to-sample';
-import type { RepCounter, RepCounterStartOptions } from './rep-counter.port';
+import {
+  type FormCheckFrame,
+  type RepCounter,
+  type RepCounterStartOptions,
+} from './rep-counter.port';
 import { type RepCountSnapshot, RepStateMachine } from './rep-state-machine';
 
 const INITIAL_SNAPSHOT: RepCountSnapshot = {
@@ -21,23 +25,10 @@ const snapshotEqual = (a: RepCountSnapshot, b: RepCountSnapshot): boolean =>
   a.count === b.count && a.phase === b.phase && a.lastRepAtMs === b.lastRepAtMs;
 
 /**
- * Per-frame raw values surfaced for the Form-Check overlay. Updates on
- * every accepted frame (regardless of state-machine phase change), so
- * downstream consumers see live angle and confidence ticks at camera
- * rate. Separate from `snapshot` because `snapshot` uses value-equality
- * to keep stat displays from re-rendering 60×/s — we explicitly DO
- * want that high frequency here.
- */
-export interface FormCheckFrame {
-  readonly angleDeg: number;
-  readonly confidence: number;
-  readonly timestampMs: number;
-}
-
-/**
- * Pose-based rep counter. Browser-only — on the server it stays in
- * `isActive=false` and `start()` resolves immediately as a no-op so SSR
- * prerender doesn't pull MediaPipe/camera code into the server bundle.
+ * Pose-based rep counter. Implements {@link RepCounter} port.
+ * Browser-only — on the server it stays in `isActive=false` and `start()`
+ * resolves immediately as a no-op so SSR prerender doesn't pull
+ * MediaPipe/camera code into the server bundle.
  *
  * The service is not `providedIn: 'root'`: callers wire it through the
  * concrete adapter providers (POSE_DETECTOR_FACTORY, POSE_FRAME_SOURCE)

@@ -6,6 +6,11 @@ import {
   holdProfileFor,
 } from './exercise-hold-profile';
 import { HoldStateMachine, type HoldSnapshot } from './hold-state-machine';
+import {
+  type HoldFormCheckFrame,
+  type HoldTimer,
+  type HoldTimerStartOptions,
+} from './hold-timer.port';
 import { POSE_DETECTOR_FACTORY, type PoseDetector } from './pose-detector.port';
 import {
   POSE_FRAME_SOURCE,
@@ -24,31 +29,17 @@ const snapshotEqual = (a: HoldSnapshot, b: HoldSnapshot): boolean =>
   a.phase === b.phase &&
   a.segmentStartMs === b.segmentStartMs;
 
-export interface HoldTimerStartOptions {
-  /** Hold catalog id, e.g. `'plank'`, `'hollowhold'`. */
-  readonly exerciseId: string;
-}
-
 /**
- * Per-frame raw values surfaced for the Form-Check overlay during a
- * hold session. Updates on every accepted frame regardless of phase
- * change so the overlay can show live angle + confidence, the same
- * pattern as {@link PoseRepCounterService}.
- */
-export interface HoldFormCheckFrame {
-  readonly angleDeg: number;
-  readonly confidence: number;
-  readonly timestampMs: number;
-}
-
-/**
- * Pose-based isometric hold timer. Mirrors {@link PoseRepCounterService}
- * but accumulates time-in-pose instead of counting reps, driven by a
- * {@link HoldStateMachine}. Browser-only; on the server it stays idle
- * so SSR doesn't try to load MediaPipe/camera code.
+ * Pose-based isometric hold timer. Implements {@link HoldTimer} port.
+ * Browser-only; on the server it stays idle so SSR doesn't try to load
+ * MediaPipe/camera code.
+ *
+ * The service is not `providedIn: 'root'`: callers wire it through the
+ * concrete adapter providers (POSE_DETECTOR_FACTORY, POSE_FRAME_SOURCE)
+ * at the app config level. Tests substitute in DI fakes.
  */
 @Injectable()
-export class PoseHoldTimerService {
+export class PoseHoldTimerService implements HoldTimer {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly detectorFactory = inject(POSE_DETECTOR_FACTORY);
   private readonly frameSource = inject<PoseFrameSource>(POSE_FRAME_SOURCE);

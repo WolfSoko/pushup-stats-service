@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import {
   type HoldFormCheckFrame,
   type HoldSnapshot,
-  PoseHoldTimerService,
+  HOLD_TIMER,
 } from '@pu-stats/auto-count';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -25,22 +25,7 @@ const makeTimer = (
   frame: WritableSignal<HoldFormCheckFrame | null> = signal<HoldFormCheckFrame | null>(
     null
   )
-): Pick<
-  PoseHoldTimerService,
-  | 'snapshot'
-  | 'isActive'
-  | 'formCheckFrame'
-  | 'bindVideoElement'
-  | 'start'
-  | 'stop'
-  | 'reset'
-> & {
-  startSpy: ReturnType<typeof vi.fn>;
-  stopSpy: ReturnType<typeof vi.fn>;
-  resetSpy: ReturnType<typeof vi.fn>;
-  bindSpy: ReturnType<typeof vi.fn>;
-  state: WritableSignal<HoldSnapshot>;
-} => {
+) => {
   const isActive = signal(false);
   const start = vi.fn(async () => {
     isActive.set(true);
@@ -91,11 +76,8 @@ describe('ExerciseTimerDialogComponent', () => {
           useValue: { open: cameraOpen, close: cameraClose },
         },
         { provide: MatDialogRef, useValue: { close: dialogClose } },
+        { provide: HOLD_TIMER, useValue: timer },
       ],
-    }).overrideComponent(ExerciseTimerDialogComponent, {
-      set: {
-        providers: [{ provide: PoseHoldTimerService, useValue: timer }],
-      },
     });
   });
 

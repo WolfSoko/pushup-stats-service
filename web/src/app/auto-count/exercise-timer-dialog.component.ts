@@ -16,7 +16,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { PoseHoldTimerService } from '@pu-stats/auto-count';
+import { HOLD_TIMER } from '@pu-stats/auto-count';
 
 import { CameraService } from './camera.service';
 
@@ -49,14 +49,13 @@ const STOPWATCH_TICK_MS = 100;
     MatProgressSpinnerModule,
     MatSlideToggleModule,
   ],
-  providers: [PoseHoldTimerService],
   templateUrl: './exercise-timer-dialog.component.html',
   styleUrl: './exercise-timer-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExerciseTimerDialogComponent {
   private readonly camera = inject(CameraService);
-  protected readonly timer = inject(PoseHoldTimerService);
+  protected readonly timer = inject(HOLD_TIMER);
   private readonly dialogRef = inject(
     MatDialogRef<ExerciseTimerDialogComponent, ExerciseTimerResult | null>
   );

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   type FormCheckFrame,
-  PoseRepCounterService,
+  REP_COUNTER,
   type RepCountSnapshot,
 } from '@pu-stats/auto-count';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -88,11 +88,8 @@ describe('AutoCountDialogComponent', () => {
           provide: MatDialogRef,
           useValue: { close: dialogClose },
         },
+        { provide: REP_COUNTER, useValue: counter },
       ],
-    }).overrideComponent(AutoCountDialogComponent, {
-      set: {
-        providers: [{ provide: PoseRepCounterService, useValue: counter }],
-      },
     });
   });
 
@@ -125,11 +122,8 @@ describe('AutoCountDialogComponent', () => {
           provide: MAT_DIALOG_DATA,
           useValue: { initialExerciseId: 'situp' },
         },
+        { provide: REP_COUNTER, useValue: counter },
       ],
-    }).overrideComponent(AutoCountDialogComponent, {
-      set: {
-        providers: [{ provide: PoseRepCounterService, useValue: counter }],
-      },
     });
 
     const fixture = TestBed.createComponent(AutoCountDialogComponent);
