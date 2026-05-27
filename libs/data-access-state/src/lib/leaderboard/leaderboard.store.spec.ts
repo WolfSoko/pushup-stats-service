@@ -34,13 +34,20 @@ const emptyLeaderboard: LeaderboardData = {
 function makeApiMock(): {
   load: jest.Mock<Promise<LeaderboardData>, [string?]>;
   observeSnapshot: jest.Mock<Subject<unknown>, []>;
+  observeExerciseSnapshot: jest.Mock<Subject<unknown>, []>;
   snapshot$: Subject<unknown>;
+  exerciseSnapshot$: Subject<unknown>;
 } {
   const snapshot$ = new Subject<unknown>();
+  const exerciseSnapshot$ = new Subject<unknown>();
   return {
     load: jest.fn().mockResolvedValue(emptyLeaderboard),
     observeSnapshot: jest.fn().mockReturnValue(snapshot$.asObservable()),
+    observeExerciseSnapshot: jest
+      .fn()
+      .mockReturnValue(exerciseSnapshot$.asObservable()),
     snapshot$,
+    exerciseSnapshot$,
   };
 }
 
@@ -175,6 +182,59 @@ describe('LeaderboardStore — live snapshot reload', () => {
       // Then
       expect(api.observeSnapshot).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('LeaderboardStore — exercise snapshot reload', () => {
+  it('Force-reloads every cached non-pushup exerciseId when the exercise snapshot doc emits', async () => {
+    // Given — the store has the pushup bucket and two exercise buckets
+    // already cached from earlier user navigation.
+    const api = makeApiMock();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: LeaderboardService, useValue: api },
+      ],
+    });
+    const store = TestBed.inject(LeaderboardStore);
+    await store.load(LEADERBOARD_PUSHUP_ID);
+    await store.load('legs.squats');
+    await store.load('plank.standard');
+    expect(api.load).toHaveBeenCalledTimes(3);
+
+    // When — the Cloud Function rewrites `leaderboards/exercises`.
+    api.exerciseSnapshot$.next({ rev: 1 });
+    await Promise.resolve();
+    await Promise.resolve();
+
+    // Then — the pushup bucket is untouched by the exercise sub
+    // (its own sub on `leaderboards/current` owns invalidation), and
+    // both cached exercise buckets get refetched so the user sees the
+    // newly rebuilt rankings without manually re-selecting.
+    expect(api.load).toHaveBeenCalledWith('legs.squats');
+    expect(api.load).toHaveBeenCalledWith('plank.standard');
+    const pushupForceReloads = api.load.mock.calls.filter(
+      ([id]) => id === LEADERBOARD_PUSHUP_ID
+    ).length;
+    expect(pushupForceReloads).toBe(1); // only the initial load
+  });
+
+  it('Tears down both subscriptions on injector destroy', () => {
+    const api = makeApiMock();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: LeaderboardService, useValue: api },
+      ],
+    });
+    TestBed.inject(LeaderboardStore);
+    expect(api.snapshot$.observed).toBe(true);
+    expect(api.exerciseSnapshot$.observed).toBe(true);
+
+    TestBed.resetTestingModule();
+
+    expect(api.snapshot$.observed).toBe(false);
+    expect(api.exerciseSnapshot$.observed).toBe(false);
   });
 });
 

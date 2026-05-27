@@ -11,11 +11,7 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
-import {
-  findExerciseDefinition,
-  measurementValueField,
-  type MeasurementType,
-} from '@pu-stats/models';
+import { findExerciseDefinition, type MeasurementType } from '@pu-stats/models';
 import { EMPTY, Observable } from 'rxjs';
 
 export type LeaderboardPeriod = 'daily' | 'last7' | 'last30';
@@ -60,7 +56,6 @@ export const LEADERBOARD_PUSHUP_ID = 'pushup';
 const TOP_N = 10;
 const TZ = 'Europe/Berlin';
 const PUSHUPS_COLLECTION = 'pushups';
-const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
 
 /**
  * Factory for an empty leaderboard payload. A factory (not a shared
@@ -91,17 +86,25 @@ export class LeaderboardService {
   private readonly auth = inject(Auth, { optional: true });
 
   /**
-   * Real-time stream of the precomputed `leaderboards/current` document.
-   *
-   * Used by `LeaderboardStore` to reload aggregates whenever the Cloud
-   * Function rewrites the snapshot, giving the leaderboard live updates
-   * without a manual refresh. The snapshot only covers the legacy
-   * pushup leaderboard — per-exercise rankings are computed client-side
-   * from `exerciseEntries` and don't need a snapshot subscription.
+   * Real-time stream of the precomputed `leaderboards/current` document
+   * (pushup leaderboard). Emits on every Cloud Function rebuild so the
+   * store can invalidate its cached pushup bucket.
    */
   observeSnapshot(): Observable<unknown> {
     if (!this.firestore) return EMPTY;
     return docData(doc(this.firestore, 'leaderboards', 'current'));
+  }
+
+  /**
+   * Real-time stream of the precomputed `leaderboards/exercises`
+   * document (per-exercise leaderboards). Emits on every Cloud Function
+   * rebuild so the store can invalidate cached non-pushup buckets —
+   * without this the first post-deploy rebuild never reaches a user
+   * who opened the page before the snapshot existed.
+   */
+  observeExerciseSnapshot(): Observable<unknown> {
+    if (!this.firestore) return EMPTY;
+    return docData(doc(this.firestore, 'leaderboards', 'exercises'));
   }
 
   /**
@@ -143,34 +146,24 @@ export class LeaderboardService {
   }
 
   /**
-   * Per-exercise leaderboard. The Cloud Function ranker doesn't write
-   * per-exercise snapshots yet, so rows here always come from the
-   * client-side aggregation against `exerciseEntries` — and aliases stay
-   * obfuscated via {@link toAlias} regardless of the user's
-   * publicProfile opt-in. Once the ranker grows per-exercise snapshots
-   * the merge path can mirror {@link loadPushup}.
+   * Per-exercise leaderboard. Reads the precomputed snapshot at
+   * `leaderboards/exercises`, which the Cloud Function
+   * `rebuildExerciseLeaderboards` rewrites every 15 min (and on every
+   * `exerciseEntries` write). The doc is publicly readable; querying
+   * `exerciseEntries` directly is blocked by the Firestore rule's
+   * `userId == request.auth.uid` filter, so the snapshot is the only
+   * way to surface cross-user rankings.
+   *
+   * Returns an empty leaderboard when the snapshot doesn't exist yet
+   * (first run after deploy), the exerciseId isn't in the snapshot
+   * (no recent activity), or the exercise's measurement type isn't
+   * rankable (`weight`).
    */
   private async loadExercise(exerciseId: string): Promise<LeaderboardData> {
     const def = findExerciseDefinition(exerciseId);
-    // Unknown exercise → empty leaderboard. The store treats this as a
-    // successful load so the UI shows the empty list rather than
-    // wedging on a perpetual loading state.
     if (!def) return emptyLeaderboardData();
     if (!supportsLeaderboard(def.measurement)) return emptyLeaderboardData();
-
-    const currentUserId = this.auth?.currentUser?.uid ?? null;
-    const start = this.last30StartDateKey();
-    const rows = await this.fetchExerciseRows(
-      exerciseId,
-      def.measurement,
-      start
-    );
-
-    return {
-      daily: this.aggregate(rows, 'daily', currentUserId),
-      last7: this.aggregate(rows, 'last7', currentUserId),
-      last30: this.aggregate(rows, 'last30', currentUserId),
-    };
+    return this.loadExerciseSnapshot(exerciseId);
   }
 
   private mergeBucket(
@@ -277,67 +270,101 @@ export class LeaderboardService {
     }
   }
 
-  private async fetchExerciseRows(
-    exerciseId: string,
-    measurement: MeasurementType,
-    startKey: string
-  ): Promise<AggregationRow[]> {
-    if (!this.firestore) return [];
+  /**
+   * Reads the per-exercise snapshot doc at `leaderboards/exercises`
+   * and projects the requested exerciseId's pre-ranked buckets into
+   * the page's `LeaderboardData` shape. Rank, isCurrent, and uid-link
+   * resolution all happen here so the snapshot doc stays compact.
+   *
+   * The doc is structured as
+   *   { keys, timezone, updatedAt,
+   *     byExercise: { [exerciseId]: { measurement, unit, periods } } }
+   * — see `rebuildExerciseLeaderboardsCore` in
+   * `data-store/functions/src/index.ts` for the writer side.
+   */
+  private async loadExerciseSnapshot(
+    exerciseId: string
+  ): Promise<LeaderboardData> {
+    if (!this.firestore) return emptyLeaderboardData();
 
-    // Measurement type drives which field carries the primary value
-    // (`reps` for rep counts, `durationSec` for time, `distanceM` for
-    // distance + distance-time). The catalog `min`/`max` already bound
-    // that field, so summing it across rows is safe and unit-stable.
-    const valueField = measurementValueField(measurement);
+    const currentUserId = this.auth?.currentUser?.uid ?? null;
 
     try {
-      const ref = collection(this.firestore, EXERCISE_ENTRIES_COLLECTION);
-      const q = query(
-        ref,
-        where('exerciseId', '==', exerciseId),
-        where('timestamp', '>=', startKey),
-        orderBy('timestamp', 'desc')
+      const snap = await getDoc(
+        doc(this.firestore, 'leaderboards', 'exercises')
       );
-      const snap = await getDocs(q);
+      if (!snap.exists()) return emptyLeaderboardData();
 
-      return snap.docs
-        .map((d) => d.data() as Record<string, unknown>)
-        .filter(
-          (
-            d
-          ): d is { userId: string; timestamp: string } & Record<
-            string,
-            number
-          > => {
-            const value = d[valueField];
-            return (
-              typeof d['userId'] === 'string' &&
-              typeof d['timestamp'] === 'string' &&
-              typeof value === 'number' &&
-              Number.isFinite(value)
-            );
+      const data = snap.data() as {
+        byExercise?: Record<
+          string,
+          {
+            periods?: Partial<
+              Record<
+                LeaderboardPeriod,
+                Array<{ alias: string; reps: number; uid?: string }>
+              >
+            >;
           }
-        )
-        .map((d) => ({
-          userId: d['userId'],
-          timestamp: d['timestamp'],
-          value: Number(d[valueField]),
-        }));
+        >;
+      };
+
+      const exerciseSnap = data?.byExercise?.[exerciseId];
+      if (!exerciseSnap?.periods) return emptyLeaderboardData();
+
+      return {
+        daily: this.buildSnapshotBucket(
+          exerciseSnap.periods.daily,
+          currentUserId
+        ),
+        last7: this.buildSnapshotBucket(
+          exerciseSnap.periods.last7,
+          currentUserId
+        ),
+        last30: this.buildSnapshotBucket(
+          exerciseSnap.periods.last30,
+          currentUserId
+        ),
+      };
     } catch (err) {
-      // Surface the underlying Firestore error to the dev console.
-      // The composite index for (`exerciseId` ASC, `timestamp` DESC) on
-      // `exerciseEntries` MUST be deployed alongside this code (see
-      // `data-store/firestore.indexes.json`); without it the query
-      // fails with `failed-precondition` and the empty fallback would
-      // silently mask the misconfiguration. Keep the empty return so a
-      // transient network blip doesn't lock the UI on a loading state.
+      // Non-critical: leaderboard surface degrades to empty list on a
+      // transient read failure instead of wedging the UI. Surface to
+      // dev console for diagnostics.
 
       console.warn(
-        `[LeaderboardService] exerciseEntries query failed for ${exerciseId}:`,
+        `[LeaderboardService] leaderboards/exercises read failed for ${exerciseId}:`,
         err
       );
-      return [];
+      return emptyLeaderboardData();
     }
+  }
+
+  /**
+   * Projects a snapshot period array into a `LeaderboardBucket`,
+   * assigning sequential ranks and flagging the current user's row
+   * by `uid` match. Symmetric to the pushup snapshot reader's
+   * `mapTop` — kept separate because that one also needs the
+   * legacy uid-less alias fallback path which is irrelevant here
+   * (per-exercise snapshots always carry `uid`).
+   */
+  private buildSnapshotBucket(
+    rows: Array<{ alias: string; reps: number; uid?: string }> | undefined,
+    currentUserId: string | null
+  ): LeaderboardBucket {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return { top: [], current: null };
+    }
+    const top = rows.slice(0, TOP_N).map((entry, i) => ({
+      alias: entry.alias,
+      reps: entry.reps,
+      rank: i + 1,
+      isCurrent: !!currentUserId && entry.uid === currentUserId,
+      ...(entry.uid ? { uid: entry.uid } : {}),
+    }));
+    return {
+      top,
+      current: top.find((entry) => entry.isCurrent) ?? null,
+    };
   }
 
   private aggregate(

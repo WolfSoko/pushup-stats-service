@@ -145,21 +145,16 @@ export const LeaderboardStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      // Live-refresh whenever the precomputed `leaderboards/current` doc
-      // changes. The snapshot only mutates after a Cloud Function rewrite
-      // (typically minutes), so re-running `load({ force: true })` is cheap
-      // and avoids a stale leaderboard between manual refreshes.
-      //
-      // The Cloud Function only writes the pushup snapshot — per-exercise
-      // leaderboards run client-side and don't need an invalidation
-      // signal, so only the pushup entry is force-refreshed here.
-      //
-      // We subscribe directly (not via `effect`) so the listener attaches
-      // synchronously at construction — tests can assert behaviour without
-      // having to flush effects, and the cleanup is hooked into `DestroyRef`
-      // for symmetric tear-down.
+      // Live-refresh whenever either precomputed leaderboard doc
+      // changes. We subscribe directly (not via `effect`) so the
+      // listeners attach synchronously at construction — tests can
+      // assert behaviour without flushing effects, and cleanup is
+      // hooked into `DestroyRef` for symmetric tear-down.
       if (!store._isBrowser || !store._api) return;
-      const sub = store._api.observeSnapshot().subscribe({
+
+      // `leaderboards/current` mutates only after the pushup ranker
+      // rewrites it (every 15 min + on every pushups write).
+      const pushupSub = store._api.observeSnapshot().subscribe({
         next: () => {
           void store.load(LEADERBOARD_PUSHUP_ID, { force: true });
         },
@@ -167,7 +162,30 @@ export const LeaderboardStore = signalStore(
           /* swallow — leaderboard is non-critical, fall back to one-shot load */
         },
       });
-      store._destroyRef.onDestroy(() => sub.unsubscribe());
+      store._destroyRef.onDestroy(() => pushupSub.unsubscribe());
+
+      // `leaderboards/exercises` mutates after the per-exercise ranker
+      // rewrites it. Without this subscription a user who opens the
+      // page before the first post-deploy snapshot exists would cache
+      // an empty bucket and never see it refill, because
+      // `load(exerciseId)` short-circuits on cache hits. Force-reload
+      // every already-cached non-pushup exerciseId on each emission so
+      // the visible leaderboard stays fresh; the pushup sub above
+      // owns the pushup bucket's invalidation.
+      const exerciseSub = store._api.observeExerciseSnapshot().subscribe({
+        next: () => {
+          const cachedExerciseIds = Object.keys(store.data()).filter(
+            (id) => id !== LEADERBOARD_PUSHUP_ID
+          );
+          for (const exerciseId of cachedExerciseIds) {
+            void store.load(exerciseId, { force: true });
+          }
+        },
+        error: () => {
+          /* swallow — same rationale as the pushup sub */
+        },
+      });
+      store._destroyRef.onDestroy(() => exerciseSub.unsubscribe());
     },
   })
 );

@@ -1,6 +1,13 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { UserStats } from '@pu-stats/models';
-import { normalizeReminderLocale, USERSTATS_VERSION } from '@pu-stats/models';
+import {
+  EXERCISE_CATALOG,
+  type ExerciseDefinition,
+  type MeasurementType,
+  measurementValueField,
+  normalizeReminderLocale,
+  USERSTATS_VERSION,
+} from '@pu-stats/models';
 import * as Sentry from '@sentry/node';
 import * as admin from 'firebase-admin';
 import { logger } from 'firebase-functions';
@@ -20,6 +27,12 @@ import {
 
 // Module imports
 import { berlinDateParts } from './datetime';
+import {
+  type ExerciseEntryRow,
+  type ExerciseValueField,
+  getExerciseLeaderboardQueryStartDate,
+  rankExerciseEntries,
+} from './exercise-leaderboard';
 import { getLeaderboardQueryStartDate, rankEntries } from './leaderboard';
 import {
   flattenTiers,
@@ -142,6 +155,146 @@ async function rebuildLeaderboardsCore() {
     daily: daily.length,
     last7: last7.length,
     last30: last30.length,
+  });
+}
+
+/**
+ * Catalog measurement types we rank — same gate the client uses in
+ * `LeaderboardService.supportsLeaderboard`. `weight`-measured
+ * exercises ship without a sensible Σ-metric, so we don't aggregate
+ * them; the leaderboard doc just omits those exerciseIds.
+ */
+function supportsLeaderboard(measurement: MeasurementType): boolean {
+  return measurement !== 'weight';
+}
+
+/**
+ * Maps `MeasurementType` to the `ExerciseEntryRow` value-field — same
+ * mapping the client does via `measurementValueField()` from
+ * `@pu-stats/models`. Re-exposed locally to keep the ranker decoupled
+ * from the catalog dependency.
+ */
+function valueFieldForMeasurement(
+  measurement: MeasurementType
+): ExerciseValueField {
+  const field = measurementValueField(measurement);
+  // `weight` would map to `reps` per `measurementValueField`, but we
+  // filter weight out via `supportsLeaderboard` before getting here.
+  // `distance` and `distance-time` both map to `distanceM`.
+  if (field === 'weightKg') return 'reps';
+  return field;
+}
+
+interface ExerciseLeaderboardSnapshot {
+  measurement: MeasurementType;
+  unit: string;
+  periods: {
+    daily: ReturnType<typeof rankExerciseEntries>;
+    last7: ReturnType<typeof rankExerciseEntries>;
+    last30: ReturnType<typeof rankExerciseEntries>;
+  };
+}
+
+async function rebuildExerciseLeaderboardsCore() {
+  const now = new Date();
+  const today = berlinDateParts(now);
+  const queryStart = getExerciseLeaderboardQueryStartDate(today);
+
+  // Single Firestore query over the trailing 30-day window across all
+  // exercises. Per-exercise filtering happens in-memory afterwards —
+  // cheaper than 40+ separate queries and small enough to fit in a
+  // single function invocation (Phase-0 catalog × active users).
+  const snap = await db
+    .collection('exerciseEntries')
+    .where('timestamp', '>=', queryStart)
+    .orderBy('timestamp', 'desc')
+    .get();
+
+  const rows = snap.docs
+    .map((d) => d.data() as ExerciseEntryRow)
+    .filter((r) => r.userId !== DEMO_USER_ID);
+
+  const userIds = [
+    ...new Set(rows.map((r) => r.userId).filter(Boolean)),
+  ] as string[];
+  const userProfiles = new Map<string, UserProfile>();
+  if (userIds.length > 0) {
+    const cfgSnaps = await Promise.all(
+      userIds.map((userId) => db.collection('userConfigs').doc(userId).get())
+    );
+    for (const cfg of cfgSnaps) {
+      userProfiles.set(
+        cfg.id,
+        cfg.exists ? (cfg.data() as UserProfile) || {} : {}
+      );
+    }
+  }
+
+  const rowsByExercise = new Map<string, ExerciseEntryRow[]>();
+  for (const row of rows) {
+    if (!row.exerciseId) continue;
+    let bucket = rowsByExercise.get(row.exerciseId);
+    if (!bucket) {
+      bucket = [];
+      rowsByExercise.set(row.exerciseId, bucket);
+    }
+    bucket.push(row);
+  }
+
+  const todayKey = today.isoDate;
+  const byExercise: Record<string, ExerciseLeaderboardSnapshot> = {};
+
+  for (const def of EXERCISE_CATALOG as readonly ExerciseDefinition[]) {
+    if (!supportsLeaderboard(def.measurement)) continue;
+    const exerciseRows = rowsByExercise.get(def.id) ?? [];
+    if (exerciseRows.length === 0) continue;
+    const valueField = valueFieldForMeasurement(def.measurement);
+
+    byExercise[def.id] = {
+      measurement: def.measurement,
+      unit: def.unit,
+      periods: {
+        daily: rankExerciseEntries(
+          exerciseRows,
+          valueField,
+          'daily',
+          todayKey,
+          userProfiles
+        ),
+        last7: rankExerciseEntries(
+          exerciseRows,
+          valueField,
+          'last7',
+          todayKey,
+          userProfiles
+        ),
+        last30: rankExerciseEntries(
+          exerciseRows,
+          valueField,
+          'last30',
+          todayKey,
+          userProfiles
+        ),
+      },
+    };
+  }
+
+  // Overwrite (no merge) so an exercise that loses all its eligible
+  // entries (every user opted out, or no recent activity) drops out
+  // of the snapshot instead of lingering as a stale top.
+  await db
+    .collection('leaderboards')
+    .doc('exercises')
+    .set({
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      timezone: TZ,
+      keys: { daily: todayKey, last7: todayKey, last30: todayKey },
+      byExercise,
+    });
+
+  logger.info('Exercise leaderboards rebuilt', {
+    exercises: Object.keys(byExercise).length,
+    totalRows: rows.length,
   });
 }
 
@@ -586,6 +739,33 @@ export const refreshLeaderboardsOnPushupWrite = onDocumentWritten(
   },
   async () => {
     await rebuildLeaderboardsCore();
+  }
+);
+
+// Same shape as the pushup pair above: scheduled rebuild every 15 min +
+// a write-driven refresh so the snapshot stays fresh between scheduled
+// runs. The `exerciseEntries` write rate is comparable to `pushups`
+// (per-user writes, not bulk) so the cost shape is the same.
+export const rebuildExerciseLeaderboards = onSchedule(
+  {
+    schedule: 'every 15 minutes',
+    timeZone: TZ,
+    region: 'europe-west3',
+    retryCount: 1,
+  },
+  async () => {
+    await rebuildExerciseLeaderboardsCore();
+  }
+);
+
+export const refreshExerciseLeaderboardsOnEntryWrite = onDocumentWritten(
+  {
+    document: 'exerciseEntries/{entryId}',
+    region: 'europe-west3',
+    retry: false,
+  },
+  async () => {
+    await rebuildExerciseLeaderboardsCore();
   }
 );
 
