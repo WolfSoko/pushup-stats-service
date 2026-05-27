@@ -486,9 +486,12 @@ describe('LeaderboardService — load() merging', () => {
   });
 
   describe('Given the snapshot has no `updatedAt` (legacy or in-flight write)', () => {
-    it('Falls back to a client-side `new Date()` so the UI still has a timestamp', async () => {
-      // Given
-      const before = Date.now();
+    it('Surfaces `updatedAt: null` so the UI hides the freshness line instead of mislabelling stale data', async () => {
+      // Given — a snapshot doc exists (so we render server-computed
+      // buckets) but lacks the timestamp field. Filling in the browser
+      // clock here would falsely claim "fresh now" for ranks that may
+      // have been computed hours earlier — the legacy snapshot has no
+      // way to tell us when it was written.
       getDoc.mockResolvedValueOnce(
         makeSnapshot({ daily: [], last7: [], last30: [] })
       );
@@ -496,16 +499,28 @@ describe('LeaderboardService — load() merging', () => {
       // When
       const result = await service.load();
 
-      // Then — the client fallback is "right now". Asserting a window
-      // (not an exact instant) keeps the test deterministic without
-      // mocking the clock.
+      // Then — null so the UI's `@if (lastUpdated())` hides the line
+      // rather than lying.
+      expect(result.updatedAt).toBeNull();
+    });
+
+    it('Uses the client clock only when no snapshot doc exists at all (purely client-side buckets)', async () => {
+      // Given — `loadSnapshot` returns null (no doc). The displayed
+      // buckets are entirely the client-aggregated fallback, so "now"
+      // truly describes when they were computed.
+      const before = Date.now();
+      getDoc.mockResolvedValueOnce({ exists: () => false, data: () => ({}) });
+
+      // When
+      const result = await service.load();
+
+      // Then
       const { updatedAt } = result;
       expect(updatedAt).not.toBeNull();
       if (!updatedAt) return;
       const after = Date.now();
-      const fallbackMs = updatedAt.getTime();
-      expect(fallbackMs).toBeGreaterThanOrEqual(before);
-      expect(fallbackMs).toBeLessThanOrEqual(after);
+      expect(updatedAt.getTime()).toBeGreaterThanOrEqual(before);
+      expect(updatedAt.getTime()).toBeLessThanOrEqual(after);
     });
   });
 

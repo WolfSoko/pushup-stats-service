@@ -155,7 +155,7 @@
         >
           Zuletzt aktualisiert:
           <time [attr.datetime]="updatedAt.toISOString()">{{
-            updatedAt | date: 'dd.MM.yyyy, HH:mm'
+            updatedAt | date: 'short'
           }}</time>
         </p>
       }

@@ -346,11 +346,15 @@ describe('LeaderboardPageComponent', () => {
       const time = line?.querySelector('time') as HTMLTimeElement | null;
       expect(time).not.toBeNull();
       expect(time?.getAttribute('datetime')).toBe(updatedAt.toISOString());
-      // The DatePipe output stays locale-stable enough for a simple
-      // shape assertion — dd.MM.yyyy, HH:mm.
-      expect(time?.textContent ?? '').toMatch(
-        /\d{2}\.\d{2}\.\d{4},\s*\d{2}:\d{2}/
-      );
+      // The visible body is produced by Angular's locale-aware `date:
+      // 'short'` preset, so we don't pin a specific pattern (en-US:
+      // "5/27/26, 12:34 PM"; de-DE: "27.05.26, 12:34"). A non-empty
+      // textContent + the date and time digits is enough to prove the
+      // pipe ran without locking the test to one locale.
+      const visible = (time?.textContent ?? '').trim();
+      expect(visible.length).toBeGreaterThan(0);
+      expect(visible).toMatch(/\d/);
+      expect(visible).toMatch(/\d{1,2}:\d{2}/);
     });
 
     it('Hides the line entirely when no timestamp is available yet', async () => {

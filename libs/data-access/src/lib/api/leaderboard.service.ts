@@ -177,12 +177,13 @@ export class LeaderboardService {
       last7: this.mergeBucket(cached?.last7, fallback.last7),
       last30: this.mergeBucket(cached?.last30, fallback.last30),
       allTime: this.mergeBucket(cached?.allTime, fallback.allTime),
-      // Prefer the server timestamp — that's the wall-clock time at which
-      // the ranks were actually computed by the Cloud Function. Only when
-      // the snapshot doesn't carry one (legacy doc, first run after the
-      // schema bump) do we surface the client fetch time so the UI still
-      // has *something* to anchor "fresh data" against.
-      updatedAt: cached?.updatedAt ?? fallback.updatedAt,
+      // When a snapshot exists, its `updatedAt` is the only honest answer
+      // — the server-computed rows may be hours old, so the client fetch
+      // time would mislabel stale data as fresh. We deliberately surface
+      // `null` (UI hides the line) rather than the client clock in that
+      // case. Only when no snapshot exists at all does the fallback time
+      // describe the buckets we actually display (entirely client-side).
+      updatedAt: cached ? cached.updatedAt : fallback.updatedAt,
     };
   }
 
