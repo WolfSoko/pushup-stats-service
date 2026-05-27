@@ -137,6 +137,19 @@
         }
       </ol>
 
+      @if (lastUpdated(); as updatedAt) {
+        <p
+          class="last-updated"
+          data-testid="leaderboard-last-updated"
+          i18n="@@leaderboard.lastUpdated"
+        >
+          Zuletzt aktualisiert:
+          <time [attr.datetime]="updatedAt.toISOString()">{{
+            updatedAt | date: 'dd.MM.yyyy, HH:mm'
+          }}</time>
+        </p>
+      }
+
       @if (currentUserEntry(); as me) {
         @if (me.uid) {
           <a

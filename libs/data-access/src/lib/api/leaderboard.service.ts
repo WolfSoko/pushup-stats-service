@@ -43,7 +43,19 @@ export type LeaderboardBucket = {
   current: LeaderboardEntry | null;
 };
 
-export type LeaderboardData = Record<LeaderboardPeriod, LeaderboardBucket>;
+export type LeaderboardData = {
+  daily: LeaderboardBucket;
+  last7: LeaderboardBucket;
+  last30: LeaderboardBucket;
+  /**
+   * Wall-clock time at which the displayed aggregates were produced.
+   * Sourced from the precomputed `leaderboards/current` snapshot's
+   * server-side `updatedAt` for the pushup leaderboard, and from the
+   * client-side fetch time for every other exercise (which is computed
+   * locally on each load). `null` only when no data is available yet.
+   */
+  updatedAt: Date | null;
+};
 
 /**
  * Sentinel exerciseId for the legacy `pushups` collection. The Cloud
@@ -69,6 +81,7 @@ function emptyLeaderboardData(): LeaderboardData {
     daily: { top: [], current: null },
     last7: { top: [], current: null },
     last30: { top: [], current: null },
+    updatedAt: null,
   };
 }
 
@@ -78,7 +91,12 @@ type AggregationRow = {
   timestamp: string;
 };
 
-type CachedBuckets = Partial<LeaderboardData>;
+type CachedBuckets = {
+  daily?: LeaderboardBucket;
+  last7?: LeaderboardBucket;
+  last30?: LeaderboardBucket;
+  updatedAt: Date | null;
+};
 
 @Injectable({ providedIn: 'root' })
 export class LeaderboardService {
@@ -131,17 +149,24 @@ export class LeaderboardService {
       daily: this.aggregate(rows, 'daily', currentUserId),
       last7: this.aggregate(rows, 'last7', currentUserId),
       last30: this.aggregate(rows, 'last30', currentUserId),
+      updatedAt: new Date(),
     };
 
-    const cached = (await this.loadSnapshot(currentUserId)) ?? {};
+    const cached = await this.loadSnapshot(currentUserId);
 
     // Per-bucket merge: during the rollout from the old weekly/monthly schema
     // the snapshot may still lack the new fields. In that case use the
     // client-computed fallback instead of an empty array.
     return {
-      daily: this.mergeBucket(cached.daily, fallback.daily),
-      last7: this.mergeBucket(cached.last7, fallback.last7),
-      last30: this.mergeBucket(cached.last30, fallback.last30),
+      daily: this.mergeBucket(cached?.daily, fallback.daily),
+      last7: this.mergeBucket(cached?.last7, fallback.last7),
+      last30: this.mergeBucket(cached?.last30, fallback.last30),
+      // Prefer the server timestamp — that's the wall-clock time at which
+      // the ranks were actually computed by the Cloud Function. Only when
+      // the snapshot doesn't carry one (legacy doc, first run after the
+      // schema bump) do we surface the client fetch time so the UI still
+      // has *something* to anchor "fresh data" against.
+      updatedAt: cached?.updatedAt ?? fallback.updatedAt,
     };
   }
 
@@ -186,6 +211,7 @@ export class LeaderboardService {
     if (!snap.exists()) return null;
 
     const data = snap.data() as {
+      updatedAt?: unknown;
       periods?: Partial<
         Record<
           LeaderboardPeriod,
@@ -194,8 +220,10 @@ export class LeaderboardService {
       >;
     };
 
+    const updatedAt = toDateOrNull(data?.updatedAt);
+
     const periods = data?.periods;
-    if (!periods) return null;
+    if (!periods) return updatedAt ? { updatedAt } : null;
 
     const mapTop = (
       arr: Array<{ alias: string; reps: number; uid?: string }>
@@ -222,7 +250,7 @@ export class LeaderboardService {
     // Only include keys that are actually present on the snapshot. An
     // explicit empty array is preserved (server says "no entries"); a
     // missing key drops out so the merger uses the client-side fallback.
-    const result: CachedBuckets = {};
+    const result: CachedBuckets = { updatedAt };
     if (Array.isArray(periods.daily)) {
       result.daily = { top: mapTop(periods.daily), current: null };
     }
@@ -296,6 +324,7 @@ export class LeaderboardService {
       if (!snap.exists()) return emptyLeaderboardData();
 
       const data = snap.data() as {
+        updatedAt?: unknown;
         byExercise?: Record<
           string,
           {
@@ -309,8 +338,11 @@ export class LeaderboardService {
         >;
       };
 
+      const updatedAt = toDateOrNull(data?.updatedAt);
       const exerciseSnap = data?.byExercise?.[exerciseId];
-      if (!exerciseSnap?.periods) return emptyLeaderboardData();
+      if (!exerciseSnap?.periods) {
+        return { ...emptyLeaderboardData(), updatedAt };
+      }
 
       return {
         daily: this.buildSnapshotBucket(
@@ -325,6 +357,7 @@ export class LeaderboardService {
           exerciseSnap.periods.last30,
           currentUserId
         ),
+        updatedAt,
       };
     } catch (err) {
       // Non-critical: leaderboard surface degrades to empty list on a
@@ -457,4 +490,48 @@ export class LeaderboardService {
  */
 function supportsLeaderboard(measurement: MeasurementType): boolean {
   return measurement !== 'weight';
+}
+
+/**
+ * Coerces whatever the Firestore client decoded into a `Date` — typically a
+ * `Timestamp` instance (`.toDate()`), but the wire format may also surface
+ * as `{seconds, nanoseconds}`, a number of millis, an ISO string, or
+ * `Date` already. Anything unrecognised becomes `null` so the UI can hide
+ * the freshness line rather than rendering "Invalid Date".
+ */
+function toDateOrNull(value: unknown): Date | null {
+  if (!value) return null;
+  if (value instanceof Date)
+    return Number.isNaN(value.getTime()) ? null : value;
+  if (typeof value === 'number') {
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  if (typeof value === 'string') {
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  if (typeof value === 'object') {
+    const candidate = value as {
+      toDate?: () => Date;
+      seconds?: number;
+      nanoseconds?: number;
+    };
+    if (typeof candidate.toDate === 'function') {
+      try {
+        const d = candidate.toDate();
+        return d instanceof Date && !Number.isNaN(d.getTime()) ? d : null;
+      } catch {
+        return null;
+      }
+    }
+    if (typeof candidate.seconds === 'number') {
+      const millis =
+        candidate.seconds * 1000 +
+        Math.floor((candidate.nanoseconds ?? 0) / 1_000_000);
+      const d = new Date(millis);
+      return Number.isNaN(d.getTime()) ? null : d;
+    }
+  }
+  return null;
 }

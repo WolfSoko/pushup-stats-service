@@ -33,13 +33,16 @@ const getDoc = firestoreFns.getDoc as unknown as jest.Mock;
 const getDocs = firestoreFns.getDocs as unknown as jest.Mock;
 const where = firestoreFns.where as unknown as jest.Mock;
 
-function makeSnapshot(periods: Record<string, unknown> | null): {
+function makeSnapshot(
+  periods: Record<string, unknown> | null,
+  extra: Record<string, unknown> = {}
+): {
   exists: () => boolean;
   data: () => unknown;
 } {
   return {
     exists: () => periods !== null,
-    data: () => (periods ? { periods } : {}),
+    data: () => (periods ? { periods, ...extra } : { ...extra }),
   };
 }
 
@@ -249,11 +252,13 @@ describe('LeaderboardService — load() merging', () => {
       // When
       const result = await service.load('legs.squats');
 
-      // Then — empty buckets, not a wedged loading state.
+      // Then — empty buckets, not a wedged loading state. `updatedAt`
+      // stays null because there's no doc to read a timestamp from.
       expect(result).toEqual({
         daily: { top: [], current: null },
         last7: { top: [], current: null },
         last30: { top: [], current: null },
+        updatedAt: null,
       });
     });
 
@@ -288,6 +293,7 @@ describe('LeaderboardService — load() merging', () => {
         daily: { top: [], current: null },
         last7: { top: [], current: null },
         last30: { top: [], current: null },
+        updatedAt: null,
       });
     });
 
@@ -324,6 +330,120 @@ describe('LeaderboardService — load() merging', () => {
       const bobRow = result.daily.top.find((e) => e.uid === 'bob');
       expect(bobRow?.isCurrent).toBe(true);
       expect(result.daily.current?.uid).toBe('bob');
+    });
+  });
+
+  describe('Given the snapshot carries a Firestore Timestamp `updatedAt`', () => {
+    it('Surfaces it as a JS Date on the merged result so the UI can render "Zuletzt aktualisiert"', async () => {
+      // Given — Firestore client decodes server timestamps as objects with
+      // a `.toDate()` accessor; the service must coerce them, not pass
+      // them through raw (the template can't format a Timestamp).
+      const serverInstant = new Date('2026-05-27T12:34:00Z');
+      getDoc.mockResolvedValueOnce(
+        makeSnapshot(
+          { daily: [], last7: [], last30: [] },
+          { updatedAt: { toDate: () => serverInstant } }
+        )
+      );
+
+      // When
+      const result = await service.load();
+
+      // Then
+      expect(result.updatedAt).toEqual(serverInstant);
+    });
+
+    it('Accepts the `{seconds, nanoseconds}` wire shape (admin SDK / cached emissions)', async () => {
+      // Given — same instant, expressed as the raw wire encoding.
+      const serverInstant = new Date('2026-05-27T12:34:00Z');
+      getDoc.mockResolvedValueOnce(
+        makeSnapshot(
+          { daily: [], last7: [], last30: [] },
+          {
+            updatedAt: {
+              seconds: Math.floor(serverInstant.getTime() / 1000),
+              nanoseconds: 0,
+            },
+          }
+        )
+      );
+
+      // When
+      const result = await service.load();
+
+      // Then
+      expect(result.updatedAt).toEqual(serverInstant);
+    });
+  });
+
+  describe('Given the snapshot has no `updatedAt` (legacy or in-flight write)', () => {
+    it('Falls back to a client-side `new Date()` so the UI still has a timestamp', async () => {
+      // Given
+      const before = Date.now();
+      getDoc.mockResolvedValueOnce(
+        makeSnapshot({ daily: [], last7: [], last30: [] })
+      );
+
+      // When
+      const result = await service.load();
+
+      // Then — the client fallback is "right now". Asserting a window
+      // (not an exact instant) keeps the test deterministic without
+      // mocking the clock.
+      const { updatedAt } = result;
+      expect(updatedAt).not.toBeNull();
+      if (!updatedAt) return;
+      const after = Date.now();
+      const fallbackMs = updatedAt.getTime();
+      expect(fallbackMs).toBeGreaterThanOrEqual(before);
+      expect(fallbackMs).toBeLessThanOrEqual(after);
+    });
+  });
+
+  describe('Given a per-exercise leaderboard', () => {
+    it('Surfaces the per-exercise snapshot `updatedAt` so the UI freshness line matches the actual rebuild time', async () => {
+      // Given — per-exercise snapshot doc with a known timestamp and
+      // one ranked exercise.
+      const serverInstant = new Date('2026-05-27T12:34:00Z');
+      getDoc.mockResolvedValueOnce({
+        exists: () => true,
+        data: () => ({
+          updatedAt: { toDate: () => serverInstant },
+          byExercise: {
+            'legs.squats': {
+              periods: { daily: [], last7: [], last30: [] },
+            },
+          },
+        }),
+      });
+
+      // When
+      const result = await service.load('legs.squats');
+
+      // Then — the doc-level `updatedAt` propagates through
+      // `loadExerciseSnapshot`, not a client-time stamp.
+      expect(result.updatedAt).toEqual(serverInstant);
+    });
+
+    it('Surfaces `updatedAt` even when the requested exercise has no snapshot entry yet', async () => {
+      // Given — snapshot exists with a timestamp but no entry for the
+      // requested exerciseId (e.g. nobody has logged that exercise yet).
+      const serverInstant = new Date('2026-05-27T12:34:00Z');
+      getDoc.mockResolvedValueOnce({
+        exists: () => true,
+        data: () => ({
+          updatedAt: { toDate: () => serverInstant },
+          byExercise: {},
+        }),
+      });
+
+      // When
+      const result = await service.load('legs.squats');
+
+      // Then — buckets are empty, but the freshness line still reflects
+      // when the snapshot was last rebuilt.
+      expect(result.daily.top).toEqual([]);
+      expect(result.updatedAt).toEqual(serverInstant);
     });
   });
 

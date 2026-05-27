@@ -28,6 +28,7 @@ describe('LeaderboardPageComponent', () => {
     string,
     Record<LeaderboardPeriod, LeaderboardEntry[]>
   > = {};
+  const lastUpdatedByExercise: Record<string, Date | null> = {};
   const loadMock = vitest.fn();
 
   function setEntries(exerciseId: string, entries: LeaderboardEntry[]): void {
@@ -51,15 +52,18 @@ describe('LeaderboardPageComponent', () => {
       ),
     currentUserForPeriod: (): (() => LeaderboardEntry | null) =>
       signal<LeaderboardEntry | null>(null).asReadonly(),
+    lastUpdatedFor: (exerciseId: () => string): (() => Date | null) =>
+      computed(() => lastUpdatedByExercise[exerciseId()] ?? null),
     load: loadMock,
   };
 
   async function setup(
     entries: LeaderboardEntry[],
-    options?: { exerciseId?: string }
+    options?: { exerciseId?: string; updatedAt?: Date | null }
   ): Promise<void> {
     const exerciseId = options?.exerciseId ?? LEADERBOARD_PUSHUP_ID;
     setEntries(exerciseId, entries);
+    lastUpdatedByExercise[exerciseId] = options?.updatedAt ?? null;
 
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
@@ -88,6 +92,9 @@ describe('LeaderboardPageComponent', () => {
     loadMock.mockClear();
     for (const key of Object.keys(entriesByExerciseAndPeriod)) {
       delete entriesByExerciseAndPeriod[key];
+    }
+    for (const key of Object.keys(lastUpdatedByExercise)) {
+      delete lastUpdatedByExercise[key];
     }
   });
 
@@ -275,6 +282,47 @@ describe('LeaderboardPageComponent', () => {
         'ol[data-testid="leaderboard-list"] li:first-child strong'
       ) as HTMLElement | null;
       expect(row?.textContent?.replace(/\s+/g, ' ').trim()).toBe('25 Reps');
+    });
+  });
+
+  describe('Given the leaderboard carries an updatedAt timestamp', () => {
+    it('Renders the "Zuletzt aktualisiert" line with a machine-readable <time>', async () => {
+      // Given — server snapshot was rebuilt at a known instant.
+      const updatedAt = new Date('2026-05-27T12:34:00Z');
+      await setup([{ rank: 1, alias: 'Pia', reps: 25, uid: 'pia1' }], {
+        updatedAt,
+      });
+
+      // Then — the freshness line is visible…
+      const root = fixture.nativeElement as HTMLElement;
+      const line = root.querySelector(
+        '[data-testid="leaderboard-last-updated"]'
+      ) as HTMLElement | null;
+      expect(line).not.toBeNull();
+      expect(line?.textContent ?? '').toContain('Zuletzt aktualisiert');
+
+      // …and the embedded <time> uses ISO for machine reading so
+      // assistive tech / scrapers don't rely on the localized
+      // display string.
+      const time = line?.querySelector('time') as HTMLTimeElement | null;
+      expect(time).not.toBeNull();
+      expect(time?.getAttribute('datetime')).toBe(updatedAt.toISOString());
+      // The DatePipe output stays locale-stable enough for a simple
+      // shape assertion — dd.MM.yyyy, HH:mm.
+      expect(time?.textContent ?? '').toMatch(
+        /\d{2}\.\d{2}\.\d{4},\s*\d{2}:\d{2}/
+      );
+    });
+
+    it('Hides the line entirely when no timestamp is available yet', async () => {
+      // Given — fresh load, no updatedAt cached (e.g. cold SSR).
+      await setup([{ rank: 1, alias: 'Pia', reps: 25, uid: 'pia1' }]);
+
+      // Then — the template must not surface "Zuletzt aktualisiert: —".
+      const root = fixture.nativeElement as HTMLElement;
+      expect(
+        root.querySelector('[data-testid="leaderboard-last-updated"]')
+      ).toBeNull();
     });
   });
 });
