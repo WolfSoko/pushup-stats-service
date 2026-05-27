@@ -32,7 +32,6 @@ import {
 const getDoc = firestoreFns.getDoc as unknown as jest.Mock;
 const getDocs = firestoreFns.getDocs as unknown as jest.Mock;
 const where = firestoreFns.where as unknown as jest.Mock;
-const collection = firestoreFns.collection as unknown as jest.Mock;
 
 function makeSnapshot(periods: Record<string, unknown> | null): {
   exists: () => boolean;
@@ -179,158 +178,152 @@ describe('LeaderboardService — load() merging', () => {
   });
 
   describe('Given an exerciseId other than the legacy pushup sentinel', () => {
-    it('Reads from the exerciseEntries collection filtered by exerciseId, and skips the snapshot', async () => {
-      // When
-      await service.load('legs.squats');
+    function makeExerciseSnapshot(
+      byExercise: Record<
+        string,
+        {
+          periods: Partial<
+            Record<
+              'daily' | 'last7' | 'last30',
+              Array<{ alias: string; reps: number; uid?: string }>
+            >
+          >;
+        }
+      > | null
+    ): { exists: () => boolean; data: () => unknown } {
+      return {
+        exists: () => byExercise !== null,
+        data: () => (byExercise ? { byExercise } : {}),
+      };
+    }
 
-      // Then — `getDoc` (snapshot reader) must NOT fire for non-pushup
-      // exerciseIds; the snapshot at `leaderboards/current` doesn't carry
-      // per-exercise rankings.
-      expect(getDoc).not.toHaveBeenCalled();
-
-      // And — the collection that was queried is `exerciseEntries`.
-      const collArg = collection.mock.results
-        .map((r) => r.value as { __collection?: string })
-        .find((v) => v.__collection === 'exerciseEntries');
-      expect(collArg).toBeDefined();
-
-      // And — there's a `where('exerciseId', '==', 'legs.squats')` clause.
-      const exerciseFilter = where.mock.calls.find(
-        ([field, op, value]) =>
-          field === 'exerciseId' && op === '==' && value === 'legs.squats'
+    it('Reads `leaderboards/exercises` snapshot (not `exerciseEntries`) and surfaces ranks', async () => {
+      // Given — snapshot contains a ranked top for legs.squats.
+      getDoc.mockResolvedValueOnce(
+        makeExerciseSnapshot({
+          'legs.squats': {
+            periods: {
+              daily: [
+                { alias: 'Alice', reps: 50, uid: 'alice' },
+                { alias: 'Bob', reps: 40, uid: 'bob' },
+              ],
+              last7: [],
+              last30: [],
+            },
+          },
+        })
       );
-      expect(exerciseFilter).toBeDefined();
-    });
-
-    it('Aggregates by the measurement-specific value field — reps for `reps` exercises', async () => {
-      // Given — three docs from the exerciseEntries collection for two users.
-      const isoToday = new Date().toISOString();
-      getDocs.mockResolvedValueOnce({
-        docs: [
-          {
-            data: () => ({
-              userId: 'alice',
-              exerciseId: 'legs.squats',
-              reps: 20,
-              timestamp: isoToday,
-            }),
-          },
-          {
-            data: () => ({
-              userId: 'alice',
-              exerciseId: 'legs.squats',
-              reps: 30,
-              timestamp: isoToday,
-            }),
-          },
-          {
-            data: () => ({
-              userId: 'bob',
-              exerciseId: 'legs.squats',
-              reps: 40,
-              timestamp: isoToday,
-            }),
-          },
-        ],
-      });
 
       // When
       const result = await service.load('legs.squats');
 
-      // Then — Alice's two entries are summed (50), Bob's one (40); Alice is
-      // ranked first. Aliases come from the privacy-preserving `toAlias`
-      // helper (uppercase first/last letter) — no snapshot to upgrade them.
+      // Then — the client never touches `exerciseEntries` directly
+      // (Firestore rule would block cross-user reads). It only reads
+      // the precomputed snapshot the Cloud Function writes.
+      expect(getDocs).not.toHaveBeenCalled();
+
+      // And — ranks come from the snapshot order, isCurrent stays
+      // false because no auth user matches.
       expect(result.daily.top).toEqual([
-        expect.objectContaining({ alias: 'A...E', reps: 50, rank: 1 }),
-        expect.objectContaining({ alias: 'B...B', reps: 40, rank: 2 }),
+        expect.objectContaining({
+          alias: 'Alice',
+          reps: 50,
+          rank: 1,
+          uid: 'alice',
+          isCurrent: false,
+        }),
+        expect.objectContaining({
+          alias: 'Bob',
+          reps: 40,
+          rank: 2,
+          uid: 'bob',
+          isCurrent: false,
+        }),
       ]);
     });
 
-    it('Reads `durationSec` for time-measured exercises like plank', async () => {
-      // Given
-      const isoToday = new Date().toISOString();
-      getDocs.mockResolvedValueOnce({
-        docs: [
-          {
-            data: () => ({
-              userId: 'alice',
-              exerciseId: 'plank.standard',
-              durationSec: 90,
-              timestamp: isoToday,
-            }),
-          },
-          {
-            data: () => ({
-              userId: 'bob',
-              exerciseId: 'plank.standard',
-              durationSec: 120,
-              timestamp: isoToday,
-            }),
-          },
-        ],
-      });
+    it('Returns empty buckets when the snapshot doc does not exist yet', async () => {
+      // Given — the Cloud Function hasn't run since deploy.
+      getDoc.mockResolvedValueOnce(makeExerciseSnapshot(null));
 
       // When
-      const result = await service.load('plank.standard');
+      const result = await service.load('legs.squats');
 
-      // Then — Bob (120 s) outranks Alice (90 s). The `reps` field on the
-      // entry semantically carries seconds for time-measured exercises —
-      // wire-format compat with the pushup snapshot doc shape.
-      expect(result.daily.top).toEqual([
-        expect.objectContaining({ alias: 'B...B', reps: 120, rank: 1 }),
-        expect.objectContaining({ alias: 'A...E', reps: 90, rank: 2 }),
-      ]);
+      // Then — empty buckets, not a wedged loading state.
+      expect(result).toEqual({
+        daily: { top: [], current: null },
+        last7: { top: [], current: null },
+        last30: { top: [], current: null },
+      });
     });
 
-    it('Reads `distanceM` for distance-time exercises like running', async () => {
-      // Given
-      const isoToday = new Date().toISOString();
-      getDocs.mockResolvedValueOnce({
-        docs: [
-          {
-            data: () => ({
-              userId: 'alice',
-              exerciseId: 'cardio.running',
-              distanceM: 5000,
-              durationSec: 1800,
-              timestamp: isoToday,
-            }),
+    it('Returns empty buckets when the exerciseId is missing from byExercise', async () => {
+      // Given — snapshot exists but has no entry for this exercise
+      // (no recent activity, or all users opted out of publicProfile).
+      getDoc.mockResolvedValueOnce(
+        makeExerciseSnapshot({
+          'plank.standard': {
+            periods: { daily: [{ alias: 'X', reps: 1, uid: 'x' }] },
           },
-          {
-            data: () => ({
-              userId: 'alice',
-              exerciseId: 'cardio.running',
-              distanceM: 3000,
-              durationSec: 1100,
-              timestamp: isoToday,
-            }),
-          },
-        ],
-      });
+        })
+      );
 
       // When
-      const result = await service.load('cardio.running');
+      const result = await service.load('legs.squats');
 
-      // Then — Alice's two runs (5000 + 3000) sum to 8000 m. Distance is
-      // the primary value for `distance-time`; the duration companion is
-      // ignored for the leaderboard ranking (it'd be a different metric).
-      expect(result.daily.top).toEqual([
-        expect.objectContaining({ alias: 'A...E', reps: 8000, rank: 1 }),
-      ]);
+      // Then
+      expect(result.daily.top).toEqual([]);
+      expect(result.last7.top).toEqual([]);
+      expect(result.last30.top).toEqual([]);
     });
 
     it('Returns empty buckets when the exerciseId is not in the catalog', async () => {
       // When
       const result = await service.load('does.not.exist');
 
-      // Then — no Firestore query, just three empty buckets so the store
-      // can settle into a non-loading state.
+      // Then — no Firestore read at all; the catalog gate short-circuits.
+      expect(getDoc).not.toHaveBeenCalled();
       expect(getDocs).not.toHaveBeenCalled();
       expect(result).toEqual({
         daily: { top: [], current: null },
         last7: { top: [], current: null },
         last30: { top: [], current: null },
       });
+    });
+
+    it('Flags isCurrent + populates currentUserEntry when the snapshot row matches the auth uid', async () => {
+      // Given — Bob is the currently signed-in user.
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          LeaderboardService,
+          { provide: Firestore, useValue: {} },
+          { provide: Auth, useValue: { currentUser: { uid: 'bob' } } },
+        ],
+      });
+      const userScopedService = TestBed.inject(LeaderboardService);
+
+      getDoc.mockResolvedValueOnce(
+        makeExerciseSnapshot({
+          'legs.squats': {
+            periods: {
+              daily: [
+                { alias: 'Alice', reps: 50, uid: 'alice' },
+                { alias: 'Bob', reps: 40, uid: 'bob' },
+              ],
+            },
+          },
+        })
+      );
+
+      // When
+      const result = await userScopedService.load('legs.squats');
+
+      // Then — Bob's row carries isCurrent, and `current` resolves
+      // to the same entry for the "Deine Position" badge.
+      const bobRow = result.daily.top.find((e) => e.uid === 'bob');
+      expect(bobRow?.isCurrent).toBe(true);
+      expect(result.daily.current?.uid).toBe('bob');
     });
   });
 
