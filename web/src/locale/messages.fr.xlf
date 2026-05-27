@@ -9536,19 +9536,19 @@
       </segment>
     </unit>
         <unit id="leaderboard.lastUpdated">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
             updatedAt | date: &apos;short&apos;
           }}"/></pc></source>
-        <target> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
+        <target> Dernière mise à jour : <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
             updatedAt | date: &apos;short&apos;
           }}"/></pc></target>
       </segment>
     </unit>
     <unit id="landing.leaderboard.allTime">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Zeit </source>
-        <target> Alle Zeit </target>
+        <target> Depuis toujours </target>
       </segment>
     </unit>
 </file>
