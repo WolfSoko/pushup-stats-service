@@ -29,6 +29,7 @@ import {
 import { berlinDateParts } from './datetime';
 import {
   type ExerciseEntryRow,
+  type ExerciseLeaderboardEntry,
   type ExerciseUserTotalRow,
   type ExerciseValueField,
   getExerciseLeaderboardQueryStartDate,
@@ -233,7 +234,27 @@ interface ExerciseLeaderboardSnapshot {
   };
 }
 
-async function rebuildExerciseLeaderboardsCore() {
+async function rebuildExerciseLeaderboardsCore(opts: {
+  /**
+   * `true` only on the scheduled rebuild — recomputes `allTime` from
+   * the lifetime `userStats/{uid}/perExercise/{exerciseId}.total`
+   * aggregates. `false` for the entry-write trigger, which carries
+   * forward the previous snapshot's `allTime` instead. Two reasons:
+   *
+   * 1. Race-safety: the write-driven trigger fires in parallel with
+   *    `updateExerciseStatsOnEntryWrite`. Reading `perExercise.total`
+   *    on every entry write can land on the pre-write value and
+   *    publish a stale allTime that never self-corrects (no rebuild
+   *    is scheduled in response to the later aggregate write). Letting
+   *    the schedule own allTime moves the read to a point where the
+   *    aggregate is guaranteed-consistent and matches the existing
+   *    freshness contract (≤15 min lag).
+   * 2. Read amplification: a collection-group scan over all lifetime
+   *    aggregates is unbounded in the user base; we don't want to pay
+   *    it on every `exerciseEntries` write.
+   */
+  includeAllTime: boolean;
+}) {
   const now = new Date();
   const today = berlinDateParts(now);
   const queryStart = getExerciseLeaderboardQueryStartDate(today);
@@ -252,32 +273,63 @@ async function rebuildExerciseLeaderboardsCore() {
     .map((d) => d.data() as ExerciseEntryRow)
     .filter((r) => r.userId !== DEMO_USER_ID);
 
-  // Pull lifetime cumulative totals per (user, exercise) from the
-  // `userStats/{userId}/perExercise/{exerciseId}` subcollection for the
-  // allTime ranking. Mirrors the pushup path that sources `allTime` from
-  // `userStats.total`. A 30-day `exerciseEntries` query can't power this
-  // bucket — users whose last entry is older than 30 days would silently
-  // drop off an "all time" leaderboard. The collection-group read is
-  // unfiltered (no orderBy) so it works against the default single-field
-  // index; per-exercise ranking and top-N truncation happen in-memory.
-  const allTimeSnap = await db.collectionGroup('perExercise').get();
-  const allTimeByExercise = new Map<string, ExerciseUserTotalRow[]>();
+  // Lifetime cumulative totals per (user, exercise), sourced from the
+  // `userStats/{userId}/perExercise/{exerciseId}` subcollection. Only
+  // populated on the scheduled rebuild; the on-write path carries the
+  // existing snapshot's allTime forward instead — see the `opts` doc
+  // above for why. The collection-group read is unfiltered (no
+  // orderBy) so it works against the default single-field index;
+  // per-exercise ranking and top-N truncation happen in-memory.
+  let allTimeByExercise: Map<string, ExerciseUserTotalRow[]> | null = null;
   const allTimeUserIds = new Set<string>();
-  for (const docSnap of allTimeSnap.docs) {
-    const userId = docSnap.ref.parent.parent?.id;
-    const exerciseId = docSnap.id;
-    if (!userId || !exerciseId) continue;
-    if (userId === DEMO_USER_ID) continue;
-    const data = docSnap.data() as { total?: unknown };
-    const total = Number(data?.total ?? 0);
-    if (!Number.isFinite(total) || total <= 0) continue;
-    let bucket = allTimeByExercise.get(exerciseId);
-    if (!bucket) {
-      bucket = [];
-      allTimeByExercise.set(exerciseId, bucket);
+  let totalAllTimeDocs = 0;
+  if (opts.includeAllTime) {
+    const allTimeSnap = await db.collectionGroup('perExercise').get();
+    totalAllTimeDocs = allTimeSnap.size;
+    allTimeByExercise = new Map<string, ExerciseUserTotalRow[]>();
+    for (const docSnap of allTimeSnap.docs) {
+      const userId = docSnap.ref.parent.parent?.id;
+      const exerciseId = docSnap.id;
+      if (!userId || !exerciseId) continue;
+      if (userId === DEMO_USER_ID) continue;
+      const data = docSnap.data() as { total?: unknown };
+      const total = Number(data?.total ?? 0);
+      if (!Number.isFinite(total) || total <= 0) continue;
+      let bucket = allTimeByExercise.get(exerciseId);
+      if (!bucket) {
+        bucket = [];
+        allTimeByExercise.set(exerciseId, bucket);
+      }
+      bucket.push({ userId, total });
+      allTimeUserIds.add(userId);
     }
-    bucket.push({ userId, total });
-    allTimeUserIds.add(userId);
+  }
+
+  // On the write-driven path, carry forward the previous snapshot's
+  // ranked allTime arrays per exercise. The scheduled rebuild will
+  // refresh them at the next 15-min tick. Reads `byExercise[*].periods
+  // .allTime` straight off the doc — no profile resolution needed
+  // because the ranks were already filtered and aliased the last time
+  // the schedule wrote them.
+  const carryForwardAllTime: Record<string, ExerciseLeaderboardEntry[]> = {};
+  if (!opts.includeAllTime) {
+    const existing = await db.collection('leaderboards').doc('exercises').get();
+    if (existing.exists) {
+      const data = existing.data() as {
+        byExercise?: Record<
+          string,
+          { periods?: { allTime?: ExerciseLeaderboardEntry[] } }
+        >;
+      };
+      for (const [exerciseId, exSnap] of Object.entries(
+        data.byExercise ?? {}
+      )) {
+        const allTime = exSnap?.periods?.allTime;
+        if (Array.isArray(allTime) && allTime.length > 0) {
+          carryForwardAllTime[exerciseId] = allTime;
+        }
+      }
+    }
   }
 
   const userIds = [
@@ -316,12 +368,14 @@ async function rebuildExerciseLeaderboardsCore() {
   for (const def of EXERCISE_CATALOG as readonly ExerciseDefinition[]) {
     if (!supportsLeaderboard(def.measurement)) continue;
     const exerciseRows = rowsByExercise.get(def.id) ?? [];
-    const allTimeRows = allTimeByExercise.get(def.id) ?? [];
+    const allTimeBucket: ExerciseLeaderboardEntry[] = opts.includeAllTime
+      ? rankExerciseAllTime(allTimeByExercise?.get(def.id) ?? [], userProfiles)
+      : (carryForwardAllTime[def.id] ?? []);
     // Drop the exercise from the snapshot only when neither the 30-day
     // window nor the lifetime aggregates carry anything for it. An
     // exercise with only old activity should still surface a populated
     // allTime bucket (with empty daily/last7/last30).
-    if (exerciseRows.length === 0 && allTimeRows.length === 0) continue;
+    if (exerciseRows.length === 0 && allTimeBucket.length === 0) continue;
     const valueField = valueFieldForMeasurement(def.measurement);
 
     byExercise[def.id] = {
@@ -349,7 +403,7 @@ async function rebuildExerciseLeaderboardsCore() {
           todayKey,
           userProfiles
         ),
-        allTime: rankExerciseAllTime(allTimeRows, userProfiles),
+        allTime: allTimeBucket,
       },
     };
   }
@@ -375,7 +429,8 @@ async function rebuildExerciseLeaderboardsCore() {
   logger.info('Exercise leaderboards rebuilt', {
     exercises: Object.keys(byExercise).length,
     totalRows: rows.length,
-    allTimeRows: allTimeSnap.size,
+    allTimeRows: totalAllTimeDocs,
+    includeAllTime: opts.includeAllTime,
   });
 }
 
@@ -835,7 +890,7 @@ export const rebuildExerciseLeaderboards = onSchedule(
     retryCount: 1,
   },
   async () => {
-    await rebuildExerciseLeaderboardsCore();
+    await rebuildExerciseLeaderboardsCore({ includeAllTime: true });
   }
 );
 
@@ -846,7 +901,10 @@ export const refreshExerciseLeaderboardsOnEntryWrite = onDocumentWritten(
     retry: false,
   },
   async () => {
-    await rebuildExerciseLeaderboardsCore();
+    // Carry the previous snapshot's allTime forward and let the
+    // scheduled rebuild refresh it. See `rebuildExerciseLeaderboardsCore`
+    // for the race-safety + cost rationale.
+    await rebuildExerciseLeaderboardsCore({ includeAllTime: false });
   }
 );
 
