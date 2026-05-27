@@ -56,6 +56,18 @@ export interface LeaderboardDocument {
 
 export type LeaderboardPeriodKind = 'daily' | 'last7' | 'last30' | 'allTime';
 
+/**
+ * Subset of `LeaderboardPeriodKind` that {@link rankEntries} actually
+ * supports — the windowed periods. `'allTime'` is sourced from a
+ * different aggregate (`userStats.total` via {@link rankAllTime}) and
+ * must not flow into `rankEntries`, where it would silently drop every
+ * row.
+ */
+export type WindowedLeaderboardPeriodKind = Exclude<
+  LeaderboardPeriodKind,
+  'allTime'
+>;
+
 const TOP_N = 10;
 
 /**
@@ -101,7 +113,7 @@ export function isoDateNDaysBefore(
  */
 export function rankEntries(
   rows: PushupRow[],
-  periodKey: LeaderboardPeriodKind,
+  periodKey: WindowedLeaderboardPeriodKind,
   targetKey: string,
   userProfiles: Map<string, UserProfile>
 ): LeaderboardEntry[] {

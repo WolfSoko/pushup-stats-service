@@ -483,6 +483,22 @@ describe('LeaderboardService — load() merging', () => {
       // Then
       expect(result.updatedAt).toEqual(serverInstant);
     });
+
+    it('Preserves epoch 0 — the Unix epoch is a valid timestamp, not "absent"', async () => {
+      // Given — a snapshot whose `updatedAt` is the Unix epoch (millis = 0).
+      // Naïve `if (!value) return null` would treat that as missing and
+      // drop a perfectly valid timestamp.
+      getDoc.mockResolvedValueOnce(
+        makeSnapshot({ daily: [], last7: [], last30: [] }, { updatedAt: 0 })
+      );
+
+      // When
+      const result = await service.load();
+
+      // Then — the epoch survives coercion and reaches the UI as a real
+      // Date instance.
+      expect(result.updatedAt).toEqual(new Date(0));
+    });
   });
 
   describe('Given the snapshot has no `updatedAt` (legacy or in-flight write)', () => {

@@ -537,7 +537,10 @@ function supportsLeaderboard(measurement: MeasurementType): boolean {
  * the freshness line rather than rendering "Invalid Date".
  */
 function toDateOrNull(value: unknown): Date | null {
-  if (!value) return null;
+  // Nullish check (not falsy) so epoch-0 millis / empty-but-valid Date
+  // instances aren't silently dropped. The downstream `getTime()` /
+  // `Number.isNaN` guards still reject genuine "Invalid Date" values.
+  if (value === null || value === undefined) return null;
   if (value instanceof Date)
     return Number.isNaN(value.getTime()) ? null : value;
   if (typeof value === 'number') {
