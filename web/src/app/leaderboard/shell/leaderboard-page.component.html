@@ -110,6 +110,16 @@
         >
           Letzte 30 Tage
         </button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="period.set('allTime')"
+          [class.active]="period() === 'allTime'"
+          data-testid="leaderboard-period-allTime"
+          i18n="@@landing.leaderboard.allTime"
+        >
+          Alle Zeit
+        </button>
       </div>
 
       <ol data-testid="leaderboard-list">

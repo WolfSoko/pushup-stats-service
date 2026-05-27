@@ -104,6 +104,51 @@ describe('LeaderboardService — load() merging', () => {
     });
   });
 
+  describe('Given the snapshot carries an allTime bucket', () => {
+    it('Surfaces the cumulative ranking from the snapshot (no client fallback)', async () => {
+      // Given — snapshot has a cumulative top from `userStats.total`.
+      getDoc.mockResolvedValueOnce(
+        makeSnapshot({
+          daily: [],
+          last7: [],
+          last30: [],
+          allTime: [{ alias: 'A...M', reps: 99999, uid: 'allTimer' }],
+        })
+      );
+
+      // When
+      const result = await service.load();
+
+      // Then — allTime mirrors the snapshot row (rank backfilled,
+      // current-user flag false because no auth).
+      expect(result.allTime.top).toEqual([
+        expect.objectContaining({
+          alias: 'A...M',
+          reps: 99999,
+          rank: 1,
+          uid: 'allTimer',
+        }),
+      ]);
+    });
+
+    it('Falls back to an empty bucket when the snapshot lacks allTime (pre-deploy rollout)', async () => {
+      // Given — legacy snapshot without allTime. The client can't
+      // synthesise lifetime totals from the 30-day pushups query, so the
+      // expected behaviour is "empty" until the next rebuild rather than
+      // a misleading last30 stand-in.
+      getDoc.mockResolvedValueOnce(
+        makeSnapshot({ daily: [], last7: [], last30: [] })
+      );
+
+      // When
+      const result = await service.load();
+
+      // Then
+      expect(result.allTime.top).toEqual([]);
+      expect(result.allTime.current).toBeNull();
+    });
+  });
+
   describe('Given the snapshot has the new last7/last30 shape', () => {
     it('Then top entries come from the snapshot, not the client fallback', async () => {
       // Given
@@ -187,7 +232,7 @@ describe('LeaderboardService — load() merging', () => {
         {
           periods: Partial<
             Record<
-              'daily' | 'last7' | 'last30',
+              'daily' | 'last7' | 'last30' | 'allTime',
               Array<{ alias: string; reps: number; uid?: string }>
             >
           >;
@@ -258,6 +303,7 @@ describe('LeaderboardService — load() merging', () => {
         daily: { top: [], current: null },
         last7: { top: [], current: null },
         last30: { top: [], current: null },
+        allTime: { top: [], current: null },
         updatedAt: null,
       });
     });
@@ -282,6 +328,68 @@ describe('LeaderboardService — load() merging', () => {
       expect(result.last30.top).toEqual([]);
     });
 
+    it('Surfaces the allTime bucket from the snapshot when present', async () => {
+      // Given — snapshot carries an allTime ranking for legs.squats
+      // (top contributors by lifetime totals).
+      getDoc.mockResolvedValueOnce(
+        makeExerciseSnapshot({
+          'legs.squats': {
+            periods: {
+              daily: [],
+              last7: [],
+              last30: [],
+              allTime: [
+                { alias: 'Carol', reps: 12000, uid: 'carol' },
+                { alias: 'Dave', reps: 8000, uid: 'dave' },
+              ],
+            },
+          },
+        })
+      );
+
+      // When
+      const result = await service.load('legs.squats');
+
+      // Then — ranks come from the snapshot order, mirroring the
+      // windowed buckets. No client-side cumulative computation
+      // happens because the Firestore rule blocks cross-user reads.
+      expect(result.allTime.top).toEqual([
+        expect.objectContaining({
+          alias: 'Carol',
+          reps: 12000,
+          rank: 1,
+          uid: 'carol',
+        }),
+        expect.objectContaining({
+          alias: 'Dave',
+          reps: 8000,
+          rank: 2,
+          uid: 'dave',
+        }),
+      ]);
+    });
+
+    it('Falls back to an empty allTime bucket when the snapshot omits it (legacy doc)', async () => {
+      // Given — a writer that hasn't shipped allTime yet still produces
+      // a valid snapshot. The empty fallback is the only honest
+      // surface (no client cross-user query is available to synthesise
+      // lifetime totals).
+      getDoc.mockResolvedValueOnce(
+        makeExerciseSnapshot({
+          'legs.squats': {
+            periods: { daily: [], last7: [], last30: [] },
+          },
+        })
+      );
+
+      // When
+      const result = await service.load('legs.squats');
+
+      // Then
+      expect(result.allTime.top).toEqual([]);
+      expect(result.allTime.current).toBeNull();
+    });
+
     it('Returns empty buckets when the exerciseId is not in the catalog', async () => {
       // When
       const result = await service.load('does.not.exist');
@@ -293,6 +401,7 @@ describe('LeaderboardService — load() merging', () => {
         daily: { top: [], current: null },
         last7: { top: [], current: null },
         last30: { top: [], current: null },
+        allTime: { top: [], current: null },
         updatedAt: null,
       });
     });

@@ -9669,5 +9669,11 @@
           }}"/></pc></target>
       </segment>
     </unit>
+    <unit id="landing.leaderboard.allTime">
+      <segment state="initial">
+        <source> Alle Zeit </source>
+        <target> Alle Zeit </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

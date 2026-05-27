@@ -4199,15 +4199,23 @@
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:111,114</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:111,113</note>
       </notes>
       <segment>
         <source> Letzte 30 Tage </source>
       </segment>
     </unit>
+    <unit id="landing.leaderboard.allTime">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:121,125</note>
+      </notes>
+      <segment>
+        <source> Alle Zeit </source>
+      </segment>
+    </unit>
     <unit id="leaderboard.lastUpdated">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:146,151</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:156,161</note>
       </notes>
       <segment>
         <source> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
@@ -4217,8 +4225,8 @@
     </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:166,167</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:176,178</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:176,177</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:186,188</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
@@ -4226,7 +4234,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:186,188</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:196,198</note>
       </notes>
       <segment>
         <source> Sichtbarkeit oder Anzeigename anpassen? </source>
@@ -4234,7 +4242,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:192,195</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:202,205</note>
       </notes>
       <segment>
         <source>Einstellungen öffnen</source>
@@ -4242,7 +4250,7 @@
     </unit>
     <unit id="leaderboard.loginHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:199,201</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:209,211</note>
       </notes>
       <segment>
         <source> Mitmachen und auftauchen? </source>
@@ -4250,7 +4258,7 @@
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:202,205</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:212,215</note>
       </notes>
       <segment>
         <source>Anmelden</source>

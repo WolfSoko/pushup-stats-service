@@ -29,6 +29,7 @@ const emptyLeaderboard: LeaderboardData = {
   daily: { top: [], current: null },
   last7: { top: [], current: null },
   last30: { top: [], current: null },
+  allTime: { top: [], current: null },
   updatedAt: null,
 };
 

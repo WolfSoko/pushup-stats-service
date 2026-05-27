@@ -36,6 +36,10 @@ describe('LeaderboardPageComponent', () => {
       daily: entries,
       last7: entries,
       last30: entries,
+      // Default the cumulative bucket to the same fixtures so existing
+      // assertions that don't care about allTime keep passing. Tests that
+      // need a distinct allTime bucket override the slot directly.
+      allTime: entries,
     };
   }
 
@@ -282,6 +286,41 @@ describe('LeaderboardPageComponent', () => {
         'ol[data-testid="leaderboard-list"] li:first-child strong'
       ) as HTMLElement | null;
       expect(row?.textContent?.replace(/\s+/g, ' ').trim()).toBe('25 Reps');
+    });
+  });
+
+  describe('Given the allTime period button', () => {
+    it('Switches the bound entries to the allTime bucket when clicked', async () => {
+      // Given — daily bucket has Alice, allTime bucket has Bob who
+      // hasn't trained in the last 30 days but tops the cumulative list.
+      const exerciseId = LEADERBOARD_PUSHUP_ID;
+      await setup([{ rank: 1, alias: 'Alice', reps: 30, uid: 'aaa' }], {
+        exerciseId,
+      });
+      // setEntries fills all four periods with the same fixtures; replace
+      // the allTime slot so we can prove the bind actually switches.
+      entriesByExerciseAndPeriod[exerciseId].allTime = [
+        { rank: 1, alias: 'Bob', reps: 9999, uid: 'bbb' },
+      ];
+
+      // When — user taps the allTime period button.
+      const root = fixture.nativeElement as HTMLElement;
+      const btn = root.querySelector(
+        '[data-testid="leaderboard-period-allTime"]'
+      ) as HTMLButtonElement | null;
+      expect(btn).not.toBeNull();
+      btn?.click();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // Then — the active class flips to allTime…
+      expect(btn?.classList.contains('active')).toBe(true);
+      // …and rank 1 now reflects Bob from the cumulative bucket.
+      const link = root.querySelector(
+        '[data-testid="leaderboard-link-1"]'
+      ) as HTMLAnchorElement | null;
+      expect(link?.textContent?.trim()).toBe('Bob');
     });
   });
 

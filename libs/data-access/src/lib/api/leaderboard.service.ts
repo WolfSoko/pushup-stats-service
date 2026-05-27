@@ -14,7 +14,7 @@ import {
 import { findExerciseDefinition, type MeasurementType } from '@pu-stats/models';
 import { EMPTY, Observable } from 'rxjs';
 
-export type LeaderboardPeriod = 'daily' | 'last7' | 'last30';
+export type LeaderboardPeriod = 'daily' | 'last7' | 'last30' | 'allTime';
 
 export type LeaderboardEntry = {
   alias: string;
@@ -47,6 +47,13 @@ export type LeaderboardData = {
   daily: LeaderboardBucket;
   last7: LeaderboardBucket;
   last30: LeaderboardBucket;
+  /**
+   * Cumulative ranking with no time window. For the pushup leaderboard
+   * it's sourced from the Cloud Function ranker reading `userStats.total`;
+   * for per-exercise leaderboards it's computed client-side from the
+   * unbounded `exerciseEntries` query.
+   */
+  allTime: LeaderboardBucket;
   /**
    * Wall-clock time at which the displayed aggregates were produced.
    * Sourced from the precomputed `leaderboards/current` snapshot's
@@ -81,6 +88,7 @@ function emptyLeaderboardData(): LeaderboardData {
     daily: { top: [], current: null },
     last7: { top: [], current: null },
     last30: { top: [], current: null },
+    allTime: { top: [], current: null },
     updatedAt: null,
   };
 }
@@ -95,6 +103,7 @@ type CachedBuckets = {
   daily?: LeaderboardBucket;
   last7?: LeaderboardBucket;
   last30?: LeaderboardBucket;
+  allTime?: LeaderboardBucket;
   updatedAt: Date | null;
 };
 
@@ -145,10 +154,16 @@ export class LeaderboardService {
     const start = this.last30StartDateKey();
     const rows = await this.fetchPushupRows(start);
 
+    // The 30-day pushups query can't compute a cumulative ranking — a
+    // user whose last entry is older than 30 days would silently drop
+    // off the list. The Cloud Function ranker fills `allTime` from
+    // `userStats.total`; until the next snapshot rebuild lands we
+    // surface an empty bucket rather than a stale 30-day approximation.
     const fallback: LeaderboardData = {
       daily: this.aggregate(rows, 'daily', currentUserId),
       last7: this.aggregate(rows, 'last7', currentUserId),
       last30: this.aggregate(rows, 'last30', currentUserId),
+      allTime: { top: [], current: null },
       updatedAt: new Date(),
     };
 
@@ -161,6 +176,7 @@ export class LeaderboardService {
       daily: this.mergeBucket(cached?.daily, fallback.daily),
       last7: this.mergeBucket(cached?.last7, fallback.last7),
       last30: this.mergeBucket(cached?.last30, fallback.last30),
+      allTime: this.mergeBucket(cached?.allTime, fallback.allTime),
       // Prefer the server timestamp — that's the wall-clock time at which
       // the ranks were actually computed by the Cloud Function. Only when
       // the snapshot doesn't carry one (legacy doc, first run after the
@@ -260,6 +276,9 @@ export class LeaderboardService {
     if (Array.isArray(periods.last30)) {
       result.last30 = { top: mapTop(periods.last30), current: null };
     }
+    if (Array.isArray(periods.allTime)) {
+      result.allTime = { top: mapTop(periods.allTime), current: null };
+    }
     return result;
   }
 
@@ -309,6 +328,12 @@ export class LeaderboardService {
    *     byExercise: { [exerciseId]: { measurement, unit, periods } } }
    * — see `rebuildExerciseLeaderboardsCore` in
    * `data-store/functions/src/index.ts` for the writer side.
+   *
+   * The `allTime` bucket is populated when the writer includes it; the
+   * client never recomputes lifetime totals from `exerciseEntries`
+   * because the Firestore rule blocks cross-user reads. When the
+   * snapshot doesn't carry `allTime` yet (legacy doc) the bucket
+   * surfaces empty rather than mis-labelling last30 data as cumulative.
    */
   private async loadExerciseSnapshot(
     exerciseId: string
@@ -355,6 +380,10 @@ export class LeaderboardService {
         ),
         last30: this.buildSnapshotBucket(
           exerciseSnap.periods.last30,
+          currentUserId
+        ),
+        allTime: this.buildSnapshotBucket(
+          exerciseSnap.periods.allTime,
           currentUserId
         ),
         updatedAt,
@@ -409,16 +438,23 @@ export class LeaderboardService {
     // bucketing (`berlinDateParts`). Comparing with UTC days would shift
     // entries logged near local midnight by ±1 day vs the snapshot.
     const today = this.berlinDateKey(new Date());
-    const windowStart =
-      period === 'daily'
-        ? today
-        : this.shiftBerlinDate(today, period === 'last7' ? -6 : -29);
+    // `allTime` keeps every row — no upper or lower date bound. The
+    // other periods anchor on today's Berlin date and reach back the
+    // matching number of days.
+    const windowStart: string | null =
+      period === 'allTime'
+        ? null
+        : period === 'daily'
+          ? today
+          : this.shiftBerlinDate(today, period === 'last7' ? -6 : -29);
 
     const totals = new Map<string, number>();
 
     for (const row of rows) {
-      const key = this.berlinDateKey(new Date(row.timestamp));
-      if (key < windowStart || key > today) continue;
+      if (windowStart !== null) {
+        const key = this.berlinDateKey(new Date(row.timestamp));
+        if (key < windowStart || key > today) continue;
+      }
       totals.set(row.userId, (totals.get(row.userId) ?? 0) + row.value);
     }
 
