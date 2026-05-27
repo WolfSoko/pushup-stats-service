@@ -48,10 +48,14 @@ export type LeaderboardData = {
   last7: LeaderboardBucket;
   last30: LeaderboardBucket;
   /**
-   * Cumulative ranking with no time window. For the pushup leaderboard
-   * it's sourced from the Cloud Function ranker reading `userStats.total`;
-   * for per-exercise leaderboards it's computed client-side from the
-   * unbounded `exerciseEntries` query.
+   * Cumulative ranking with no time window. Pushup is sourced from the
+   * Cloud Function ranker reading `userStats.total`; per-exercise is
+   * sourced from `byExercise[id].periods.allTime` in the same writer's
+   * snapshot, which reads
+   * `userStats/{userId}/perExercise/{exerciseId}.total` across users.
+   * The Firestore rule blocks cross-user `exerciseEntries` reads, so a
+   * client-side fallback isn't possible — when the snapshot is missing
+   * the bucket the UI shows empty.
    */
   allTime: LeaderboardBucket;
   /**

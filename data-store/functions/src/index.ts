@@ -29,8 +29,10 @@ import {
 import { berlinDateParts } from './datetime';
 import {
   type ExerciseEntryRow,
+  type ExerciseUserTotalRow,
   type ExerciseValueField,
   getExerciseLeaderboardQueryStartDate,
+  rankExerciseAllTime,
   rankExerciseEntries,
 } from './exercise-leaderboard';
 import {
@@ -227,6 +229,7 @@ interface ExerciseLeaderboardSnapshot {
     daily: ReturnType<typeof rankExerciseEntries>;
     last7: ReturnType<typeof rankExerciseEntries>;
     last30: ReturnType<typeof rankExerciseEntries>;
+    allTime: ReturnType<typeof rankExerciseAllTime>;
   };
 }
 
@@ -249,9 +252,40 @@ async function rebuildExerciseLeaderboardsCore() {
     .map((d) => d.data() as ExerciseEntryRow)
     .filter((r) => r.userId !== DEMO_USER_ID);
 
+  // Pull lifetime cumulative totals per (user, exercise) from the
+  // `userStats/{userId}/perExercise/{exerciseId}` subcollection for the
+  // allTime ranking. Mirrors the pushup path that sources `allTime` from
+  // `userStats.total`. A 30-day `exerciseEntries` query can't power this
+  // bucket — users whose last entry is older than 30 days would silently
+  // drop off an "all time" leaderboard. The collection-group read is
+  // unfiltered (no orderBy) so it works against the default single-field
+  // index; per-exercise ranking and top-N truncation happen in-memory.
+  const allTimeSnap = await db.collectionGroup('perExercise').get();
+  const allTimeByExercise = new Map<string, ExerciseUserTotalRow[]>();
+  const allTimeUserIds = new Set<string>();
+  for (const docSnap of allTimeSnap.docs) {
+    const userId = docSnap.ref.parent.parent?.id;
+    const exerciseId = docSnap.id;
+    if (!userId || !exerciseId) continue;
+    if (userId === DEMO_USER_ID) continue;
+    const data = docSnap.data() as { total?: unknown };
+    const total = Number(data?.total ?? 0);
+    if (!Number.isFinite(total) || total <= 0) continue;
+    let bucket = allTimeByExercise.get(exerciseId);
+    if (!bucket) {
+      bucket = [];
+      allTimeByExercise.set(exerciseId, bucket);
+    }
+    bucket.push({ userId, total });
+    allTimeUserIds.add(userId);
+  }
+
   const userIds = [
-    ...new Set(rows.map((r) => r.userId).filter(Boolean)),
-  ] as string[];
+    ...new Set([
+      ...(rows.map((r) => r.userId).filter(Boolean) as string[]),
+      ...allTimeUserIds,
+    ]),
+  ];
   const userProfiles = new Map<string, UserProfile>();
   if (userIds.length > 0) {
     const cfgSnaps = await Promise.all(
@@ -282,7 +316,12 @@ async function rebuildExerciseLeaderboardsCore() {
   for (const def of EXERCISE_CATALOG as readonly ExerciseDefinition[]) {
     if (!supportsLeaderboard(def.measurement)) continue;
     const exerciseRows = rowsByExercise.get(def.id) ?? [];
-    if (exerciseRows.length === 0) continue;
+    const allTimeRows = allTimeByExercise.get(def.id) ?? [];
+    // Drop the exercise from the snapshot only when neither the 30-day
+    // window nor the lifetime aggregates carry anything for it. An
+    // exercise with only old activity should still surface a populated
+    // allTime bucket (with empty daily/last7/last30).
+    if (exerciseRows.length === 0 && allTimeRows.length === 0) continue;
     const valueField = valueFieldForMeasurement(def.measurement);
 
     byExercise[def.id] = {
@@ -310,6 +349,7 @@ async function rebuildExerciseLeaderboardsCore() {
           todayKey,
           userProfiles
         ),
+        allTime: rankExerciseAllTime(allTimeRows, userProfiles),
       },
     };
   }
@@ -323,13 +363,19 @@ async function rebuildExerciseLeaderboardsCore() {
     .set({
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       timezone: TZ,
-      keys: { daily: todayKey, last7: todayKey, last30: todayKey },
+      keys: {
+        daily: todayKey,
+        last7: todayKey,
+        last30: todayKey,
+        allTime: todayKey,
+      },
       byExercise,
     });
 
   logger.info('Exercise leaderboards rebuilt', {
     exercises: Object.keys(byExercise).length,
     totalRows: rows.length,
+    allTimeRows: allTimeSnap.size,
   });
 }
 
