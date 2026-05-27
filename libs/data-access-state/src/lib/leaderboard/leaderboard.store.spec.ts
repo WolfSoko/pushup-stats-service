@@ -29,6 +29,8 @@ const emptyLeaderboard: LeaderboardData = {
   daily: { top: [], current: null },
   last7: { top: [], current: null },
   last30: { top: [], current: null },
+  allTime: { top: [], current: null },
+  updatedAt: null,
 };
 
 function makeApiMock(): {
@@ -329,5 +331,51 @@ describe('LeaderboardStore — per-exercise caching', () => {
     // Then
     expect(api.load).toHaveBeenCalledWith(LEADERBOARD_PUSHUP_ID);
     expect(store.data()[LEADERBOARD_PUSHUP_ID]).toEqual(emptyLeaderboard);
+  });
+
+  describe('lastUpdatedFor', () => {
+    it('Returns null until the exercise has been loaded', () => {
+      // Given — no load has happened yet, so the cache has no entry for
+      // this exerciseId.
+      const api = makeApiMock();
+      const { store } = setup(api);
+
+      // When
+      const exerciseSig = signal<string>(LEADERBOARD_PUSHUP_ID);
+      const lastUpdated = store.lastUpdatedFor(exerciseSig);
+
+      // Then — the freshness signal stays null so the UI can hide the
+      // "Zuletzt aktualisiert" line instead of rendering a meaningless
+      // placeholder.
+      expect(lastUpdated()).toBeNull();
+    });
+
+    it('Surfaces the loaded updatedAt and re-tracks when the selected exercise changes', async () => {
+      // Given — pushup data is fresher than squat data.
+      const api = makeApiMock();
+      const pushupUpdatedAt = new Date('2026-05-27T12:34:00Z');
+      const squatUpdatedAt = new Date('2026-05-27T08:15:00Z');
+      api.load.mockImplementation((id?: string) =>
+        Promise.resolve(
+          id === 'legs.squats'
+            ? { ...emptyLeaderboard, updatedAt: squatUpdatedAt }
+            : { ...emptyLeaderboard, updatedAt: pushupUpdatedAt }
+        )
+      );
+
+      const { store } = setup(api);
+      await store.load(LEADERBOARD_PUSHUP_ID);
+      await store.load('legs.squats');
+
+      // When — the selector is bound to a reactive exerciseId signal.
+      const exerciseSig = signal<string>(LEADERBOARD_PUSHUP_ID);
+      const lastUpdated = store.lastUpdatedFor(exerciseSig);
+
+      // Then — flipping the exercise flips the freshness, proving the
+      // selector is reactive (not snapshotted at construction).
+      expect(lastUpdated()).toEqual(pushupUpdatedAt);
+      exerciseSig.set('legs.squats');
+      expect(lastUpdated()).toEqual(squatUpdatedAt);
+    });
   });
 });

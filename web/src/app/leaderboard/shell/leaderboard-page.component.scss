@@ -98,6 +98,16 @@ li {
   }
 }
 
+.last-updated {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  opacity: 0.75;
+
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
 .own-rank {
   margin-top: 10px;
   color: #9bd8c3;

@@ -28,6 +28,7 @@ describe('LeaderboardPageComponent', () => {
     string,
     Record<LeaderboardPeriod, LeaderboardEntry[]>
   > = {};
+  const lastUpdatedByExercise: Record<string, Date | null> = {};
   const loadMock = vitest.fn();
 
   function setEntries(exerciseId: string, entries: LeaderboardEntry[]): void {
@@ -35,6 +36,10 @@ describe('LeaderboardPageComponent', () => {
       daily: entries,
       last7: entries,
       last30: entries,
+      // Default the cumulative bucket to the same fixtures so existing
+      // assertions that don't care about allTime keep passing. Tests that
+      // need a distinct allTime bucket override the slot directly.
+      allTime: entries,
     };
   }
 
@@ -51,15 +56,18 @@ describe('LeaderboardPageComponent', () => {
       ),
     currentUserForPeriod: (): (() => LeaderboardEntry | null) =>
       signal<LeaderboardEntry | null>(null).asReadonly(),
+    lastUpdatedFor: (exerciseId: () => string): (() => Date | null) =>
+      computed(() => lastUpdatedByExercise[exerciseId()] ?? null),
     load: loadMock,
   };
 
   async function setup(
     entries: LeaderboardEntry[],
-    options?: { exerciseId?: string }
+    options?: { exerciseId?: string; updatedAt?: Date | null }
   ): Promise<void> {
     const exerciseId = options?.exerciseId ?? LEADERBOARD_PUSHUP_ID;
     setEntries(exerciseId, entries);
+    lastUpdatedByExercise[exerciseId] = options?.updatedAt ?? null;
 
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
@@ -88,6 +96,9 @@ describe('LeaderboardPageComponent', () => {
     loadMock.mockClear();
     for (const key of Object.keys(entriesByExerciseAndPeriod)) {
       delete entriesByExerciseAndPeriod[key];
+    }
+    for (const key of Object.keys(lastUpdatedByExercise)) {
+      delete lastUpdatedByExercise[key];
     }
   });
 
@@ -275,6 +286,86 @@ describe('LeaderboardPageComponent', () => {
         'ol[data-testid="leaderboard-list"] li:first-child strong'
       ) as HTMLElement | null;
       expect(row?.textContent?.replace(/\s+/g, ' ').trim()).toBe('25 Reps');
+    });
+  });
+
+  describe('Given the allTime period button', () => {
+    it('Switches the bound entries to the allTime bucket when clicked', async () => {
+      // Given — daily bucket has Alice, allTime bucket has Bob who
+      // hasn't trained in the last 30 days but tops the cumulative list.
+      const exerciseId = LEADERBOARD_PUSHUP_ID;
+      await setup([{ rank: 1, alias: 'Alice', reps: 30, uid: 'aaa' }], {
+        exerciseId,
+      });
+      // setEntries fills all four periods with the same fixtures; replace
+      // the allTime slot so we can prove the bind actually switches.
+      entriesByExerciseAndPeriod[exerciseId].allTime = [
+        { rank: 1, alias: 'Bob', reps: 9999, uid: 'bbb' },
+      ];
+
+      // When — user taps the allTime period button.
+      const root = fixture.nativeElement as HTMLElement;
+      const btn = root.querySelector(
+        '[data-testid="leaderboard-period-allTime"]'
+      ) as HTMLButtonElement | null;
+      expect(btn).not.toBeNull();
+      btn?.click();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // Then — the active class flips to allTime…
+      expect(btn?.classList.contains('active')).toBe(true);
+      // …and rank 1 now reflects Bob from the cumulative bucket.
+      const link = root.querySelector(
+        '[data-testid="leaderboard-link-1"]'
+      ) as HTMLAnchorElement | null;
+      expect(link?.textContent?.trim()).toBe('Bob');
+    });
+  });
+
+  describe('Given the leaderboard carries an updatedAt timestamp', () => {
+    it('Renders the "Zuletzt aktualisiert" line with a machine-readable <time>', async () => {
+      // Given — server snapshot was rebuilt at a known instant.
+      const updatedAt = new Date('2026-05-27T12:34:00Z');
+      await setup([{ rank: 1, alias: 'Pia', reps: 25, uid: 'pia1' }], {
+        updatedAt,
+      });
+
+      // Then — the freshness line is visible…
+      const root = fixture.nativeElement as HTMLElement;
+      const line = root.querySelector(
+        '[data-testid="leaderboard-last-updated"]'
+      ) as HTMLElement | null;
+      expect(line).not.toBeNull();
+      expect(line?.textContent ?? '').toContain('Zuletzt aktualisiert');
+
+      // …and the embedded <time> uses ISO for machine reading so
+      // assistive tech / scrapers don't rely on the localized
+      // display string.
+      const time = line?.querySelector('time') as HTMLTimeElement | null;
+      expect(time).not.toBeNull();
+      expect(time?.getAttribute('datetime')).toBe(updatedAt.toISOString());
+      // The visible body is produced by Angular's locale-aware `date:
+      // 'short'` preset, so we don't pin a specific pattern (en-US:
+      // "5/27/26, 12:34 PM"; de-DE: "27.05.26, 12:34"). A non-empty
+      // textContent + the date and time digits is enough to prove the
+      // pipe ran without locking the test to one locale.
+      const visible = (time?.textContent ?? '').trim();
+      expect(visible.length).toBeGreaterThan(0);
+      expect(visible).toMatch(/\d/);
+      expect(visible).toMatch(/\d{1,2}:\d{2}/);
+    });
+
+    it('Hides the line entirely when no timestamp is available yet', async () => {
+      // Given — fresh load, no updatedAt cached (e.g. cold SSR).
+      await setup([{ rank: 1, alias: 'Pia', reps: 25, uid: 'pia1' }]);
+
+      // Then — the template must not surface "Zuletzt aktualisiert: —".
+      const root = fixture.nativeElement as HTMLElement;
+      expect(
+        root.querySelector('[data-testid="leaderboard-last-updated"]')
+      ).toBeNull();
     });
   });
 });

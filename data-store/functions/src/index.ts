@@ -33,7 +33,12 @@ import {
   getExerciseLeaderboardQueryStartDate,
   rankExerciseEntries,
 } from './exercise-leaderboard';
-import { getLeaderboardQueryStartDate, rankEntries } from './leaderboard';
+import {
+  getLeaderboardQueryStartDate,
+  rankAllTime,
+  rankEntries,
+  type UserTotalRow,
+} from './leaderboard';
 import {
   flattenTiers,
   getFallbackTieredQuotes,
@@ -115,8 +120,31 @@ async function rebuildLeaderboardsCore() {
     .map((d) => d.data())
     .filter((r) => r.userId !== DEMO_USER_ID);
 
+  // Pull the lifetime cumulative totals from `userStats` for the allTime
+  // ranking. The 30-day pushups query above can't power this bucket — a
+  // user whose last entry is older than 30 days would silently drop off
+  // an "all time" leaderboard otherwise. `total` is a single-field
+  // index that Firestore creates automatically; `limit(50)` over-fetches
+  // so we can still produce TOP_N=10 after filtering opt-outs and the
+  // demo user.
+  const allTimeSnap = await db
+    .collection('userStats')
+    .orderBy('total', 'desc')
+    .limit(50)
+    .get();
+  const allTimeRows: UserTotalRow[] = allTimeSnap.docs
+    .map((d) => {
+      const data = d.data() as { total?: unknown };
+      const total = Number(data?.total ?? 0);
+      return { userId: d.id, total: Number.isFinite(total) ? total : 0 };
+    })
+    .filter((r) => r.userId !== DEMO_USER_ID);
+
   const userIds = [
-    ...new Set(rows.map((r) => r.userId).filter(Boolean)),
+    ...new Set([
+      ...rows.map((r) => r.userId).filter(Boolean),
+      ...allTimeRows.map((r) => r.userId),
+    ]),
   ] as string[];
   const userProfiles = new Map<string, UserProfile>();
   if (userIds.length > 0) {
@@ -132,12 +160,13 @@ async function rebuildLeaderboardsCore() {
   }
 
   // Rolling windows always end on today's Berlin date, so the same isoDate
-  // serves as the cache key for daily, last7, and last30.
+  // serves as the cache key for daily, last7, last30, and allTime.
   const todayKey = today.isoDate;
 
   const daily = rankEntries(rows, 'daily', todayKey, userProfiles);
   const last7 = rankEntries(rows, 'last7', todayKey, userProfiles);
   const last30 = rankEntries(rows, 'last30', todayKey, userProfiles);
+  const allTime = rankAllTime(allTimeRows, userProfiles);
 
   // Overwrite (no merge) so stale weekly/monthly fields from the previous
   // schema get evicted instead of lingering in the document.
@@ -147,14 +176,20 @@ async function rebuildLeaderboardsCore() {
     .set({
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       timezone: TZ,
-      keys: { daily: todayKey, last7: todayKey, last30: todayKey },
-      periods: { daily, last7, last30 },
+      keys: {
+        daily: todayKey,
+        last7: todayKey,
+        last30: todayKey,
+        allTime: todayKey,
+      },
+      periods: { daily, last7, last30, allTime },
     });
 
   logger.info('Leaderboards rebuilt', {
     daily: daily.length,
     last7: last7.length,
     last30: last30.length,
+    allTime: allTime.length,
   });
 }
 

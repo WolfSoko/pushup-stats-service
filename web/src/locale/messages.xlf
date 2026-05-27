@@ -3329,7 +3329,7 @@
     </unit>
     <unit id="seo.register.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:53</note>
+        <note category="location">web/src/app/app.routes.ts:54</note>
       </notes>
       <segment>
         <source>Registrierung – Pushup Tracker</source>
@@ -3337,7 +3337,7 @@
     </unit>
     <unit id="seo.register.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:54</note>
+        <note category="location">web/src/app/app.routes.ts:55</note>
       </notes>
       <segment>
         <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
@@ -3345,7 +3345,7 @@
     </unit>
     <unit id="seo.history.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:62</note>
+        <note category="location">web/src/app/app.routes.ts:64</note>
       </notes>
       <segment>
         <source>Historie – Pushup Tracker</source>
@@ -3353,7 +3353,7 @@
     </unit>
     <unit id="seo.history.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:63</note>
+        <note category="location">web/src/app/app.routes.ts:65</note>
       </notes>
       <segment>
         <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
@@ -3361,7 +3361,7 @@
     </unit>
     <unit id="seo.analysis.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:74</note>
+        <note category="location">web/src/app/app.routes.ts:76</note>
       </notes>
       <segment>
         <source>Analyse – Pushup Tracker</source>
@@ -3369,7 +3369,7 @@
     </unit>
     <unit id="seo.analysis.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:75</note>
+        <note category="location">web/src/app/app.routes.ts:77</note>
       </notes>
       <segment>
         <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
@@ -3377,7 +3377,7 @@
     </unit>
     <unit id="seo.settings.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:86</note>
+        <note category="location">web/src/app/app.routes.ts:88</note>
       </notes>
       <segment>
         <source>Einstellungen – Pushup Tracker</source>
@@ -3385,7 +3385,7 @@
     </unit>
     <unit id="seo.settings.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:87</note>
+        <note category="location">web/src/app/app.routes.ts:89</note>
       </notes>
       <segment>
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
@@ -3393,7 +3393,7 @@
     </unit>
     <unit id="seo.trainingPlans.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:97</note>
+        <note category="location">web/src/app/app.routes.ts:99</note>
       </notes>
       <segment>
         <source>Trainingspläne – Pushup Tracker</source>
@@ -3401,7 +3401,7 @@
     </unit>
     <unit id="seo.trainingPlans.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:98</note>
+        <note category="location">web/src/app/app.routes.ts:100</note>
       </notes>
       <segment>
         <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
@@ -3409,7 +3409,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:119</note>
+        <note category="location">web/src/app/app.routes.ts:121</note>
       </notes>
       <segment>
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
@@ -3417,7 +3417,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:120</note>
+        <note category="location">web/src/app/app.routes.ts:122</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
@@ -3425,7 +3425,7 @@
     </unit>
     <unit id="seo.wiki.exercises.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:143</note>
+        <note category="location">web/src/app/app.routes.ts:145</note>
       </notes>
       <segment>
         <source>Übungen erklärt – Pushup Tracker</source>
@@ -3433,7 +3433,7 @@
     </unit>
     <unit id="seo.wiki.exercises.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:144</note>
+        <note category="location">web/src/app/app.routes.ts:146</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
@@ -3441,7 +3441,7 @@
     </unit>
     <unit id="seo.reminders.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:164</note>
+        <note category="location">web/src/app/app.routes.ts:166</note>
       </notes>
       <segment>
         <source>Erinnerungen – Pushup Tracker</source>
@@ -3449,7 +3449,7 @@
     </unit>
     <unit id="seo.reminders.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:165</note>
+        <note category="location">web/src/app/app.routes.ts:167</note>
       </notes>
       <segment>
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
@@ -3457,7 +3457,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:175</note>
+        <note category="location">web/src/app/app.routes.ts:177</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -3465,7 +3465,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:176</note>
+        <note category="location">web/src/app/app.routes.ts:178</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -3473,7 +3473,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:186</note>
+        <note category="location">web/src/app/app.routes.ts:188</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -3481,7 +3481,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:187</note>
+        <note category="location">web/src/app/app.routes.ts:189</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -3489,7 +3489,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:201</note>
+        <note category="location">web/src/app/app.routes.ts:203</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -3497,7 +3497,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:202</note>
+        <note category="location">web/src/app/app.routes.ts:204</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -3505,7 +3505,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:219</note>
+        <note category="location">web/src/app/app.routes.ts:221</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -3513,7 +3513,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:220</note>
+        <note category="location">web/src/app/app.routes.ts:222</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -3521,7 +3521,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:230</note>
+        <note category="location">web/src/app/app.routes.ts:232</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -3529,7 +3529,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:231</note>
+        <note category="location">web/src/app/app.routes.ts:233</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -3553,7 +3553,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:293</note>
+        <note category="location">web/src/app/app.ts:294</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -3561,7 +3561,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:296</note>
+        <note category="location">web/src/app/app.ts:297</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -3569,7 +3569,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:317</note>
+        <note category="location">web/src/app/app.ts:318</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -3577,7 +3577,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:318</note>
+        <note category="location">web/src/app/app.ts:319</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -3585,7 +3585,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:393</note>
+        <note category="location">web/src/app/app.ts:394</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -3593,7 +3593,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:422</note>
+        <note category="location">web/src/app/app.ts:423</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -3601,7 +3601,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:429</note>
+        <note category="location">web/src/app/app.ts:430</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -3721,7 +3721,7 @@
     </unit>
     <unit id="autoCount.formCheck.phase.up">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:93</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:92</note>
       </notes>
       <segment>
         <source>Oben</source>
@@ -3729,7 +3729,7 @@
     </unit>
     <unit id="autoCount.formCheck.phase.down">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:95</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:94</note>
       </notes>
       <segment>
         <source>Unten</source>
@@ -3737,7 +3737,7 @@
     </unit>
     <unit id="autoCount.formCheck.phase.waiting">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:97</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:96</note>
       </notes>
       <segment>
         <source>Bereit</source>
@@ -3745,7 +3745,7 @@
     </unit>
     <unit id="autoCount.exercise.pushup">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:105</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:104</note>
       </notes>
       <segment>
         <source>Liegestütze</source>
@@ -3753,7 +3753,7 @@
     </unit>
     <unit id="autoCount.exercise.squat">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:110</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:109</note>
       </notes>
       <segment>
         <source>Kniebeugen</source>
@@ -3761,7 +3761,7 @@
     </unit>
     <unit id="autoCount.exercise.pullup">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:115</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:114</note>
       </notes>
       <segment>
         <source>Klimmzüge</source>
@@ -3769,7 +3769,7 @@
     </unit>
     <unit id="autoCount.exercise.situp">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:120</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.ts:119</note>
       </notes>
       <segment>
         <source>Sit-ups</source>
@@ -3889,8 +3889,8 @@
     </unit>
     <unit id="exerciseTimer.phase.holding">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:109</note>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:117</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:108</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:116</note>
       </notes>
       <segment>
         <source>Halten</source>
@@ -3898,7 +3898,7 @@
     </unit>
     <unit id="exerciseTimer.phase.paused">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:111</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:110</note>
       </notes>
       <segment>
         <source>Pause</source>
@@ -3906,8 +3906,8 @@
     </unit>
     <unit id="exerciseTimer.phase.ready">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:113</note>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:118</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:112</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:117</note>
       </notes>
       <segment>
         <source>Bereit</source>
@@ -3915,7 +3915,7 @@
     </unit>
     <unit id="exerciseTimer.exercise.plank">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:126</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:125</note>
       </notes>
       <segment>
         <source>Plank</source>
@@ -3923,7 +3923,7 @@
     </unit>
     <unit id="exerciseTimer.exercise.hollowhold">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:131</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:130</note>
       </notes>
       <segment>
         <source>Hollow Hold</source>
@@ -4199,16 +4199,34 @@
     </unit>
     <unit id="landing.leaderboard.last30">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:111,114</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:111,113</note>
       </notes>
       <segment>
         <source> Letzte 30 Tage </source>
       </segment>
     </unit>
+    <unit id="landing.leaderboard.allTime">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:121,125</note>
+      </notes>
+      <segment>
+        <source> Alle Zeit </source>
+      </segment>
+    </unit>
+    <unit id="leaderboard.lastUpdated">
+      <notes>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:156,161</note>
+      </notes>
+      <segment>
+        <source> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
+            updatedAt | date: &apos;dd.MM.yyyy, HH:mm&apos;
+          }}"/></pc></source>
+      </segment>
+    </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:153,154</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:163,165</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:176,177</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:186,188</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
@@ -4216,7 +4234,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:173,175</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:196,198</note>
       </notes>
       <segment>
         <source> Sichtbarkeit oder Anzeigename anpassen? </source>
@@ -4224,7 +4242,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:179,182</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:202,205</note>
       </notes>
       <segment>
         <source>Einstellungen öffnen</source>
@@ -4232,7 +4250,7 @@
     </unit>
     <unit id="leaderboard.loginHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:186,188</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:209,211</note>
       </notes>
       <segment>
         <source> Mitmachen und auftauchen? </source>
@@ -4240,7 +4258,7 @@
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:189,192</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:212,215</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -4248,7 +4266,7 @@
     </unit>
     <unit id="exercise.category.pushup">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:42</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:43</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
@@ -4265,7 +4283,7 @@
     </unit>
     <unit id="landing.leaderboard.reps">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:176</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:179</note>
       </notes>
       <segment>
         <source>Reps</source>

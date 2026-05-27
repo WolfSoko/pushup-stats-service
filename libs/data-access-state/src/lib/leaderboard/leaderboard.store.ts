@@ -42,6 +42,8 @@ const EMPTY_DATA: LeaderboardData = {
   daily: { top: [], current: null },
   last7: { top: [], current: null },
   last30: { top: [], current: null },
+  allTime: { top: [], current: null },
+  updatedAt: null,
 };
 
 export const LeaderboardStore = signalStore(
@@ -140,6 +142,17 @@ export const LeaderboardStore = signalStore(
           if (!bucket) return null;
           return bucket[period()].current;
         });
+      },
+
+      /**
+       * Reactive selector for the wall-clock timestamp at which the
+       * currently displayed buckets were produced. `null` until the
+       * exercise has been loaded at least once — the template hides the
+       * freshness line in that case so an empty cache doesn't surface
+       * "Zuletzt aktualisiert: —".
+       */
+      lastUpdatedFor(exerciseId: () => string): () => Date | null {
+        return computed(() => store.data()[exerciseId()]?.updatedAt ?? null);
       },
     };
   }),

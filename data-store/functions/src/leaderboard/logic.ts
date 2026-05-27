@@ -32,12 +32,19 @@ export interface LeaderboardPeriods {
   daily: LeaderboardEntry[];
   last7: LeaderboardEntry[];
   last30: LeaderboardEntry[];
+  allTime: LeaderboardEntry[];
 }
 
 export interface LeaderboardKeys {
   daily: string;
   last7: string;
   last30: string;
+  /**
+   * The `allTime` bucket is unbounded, but the key still tracks the
+   * snapshot's anchor day so consumers can tell when the cumulative
+   * ranking was last rebuilt. Mirrors `daily` for that reason.
+   */
+  allTime: string;
 }
 
 export interface LeaderboardDocument {
@@ -47,7 +54,19 @@ export interface LeaderboardDocument {
   periods: LeaderboardPeriods;
 }
 
-export type LeaderboardPeriodKind = 'daily' | 'last7' | 'last30';
+export type LeaderboardPeriodKind = 'daily' | 'last7' | 'last30' | 'allTime';
+
+/**
+ * Subset of `LeaderboardPeriodKind` that {@link rankEntries} actually
+ * supports — the windowed periods. `'allTime'` is sourced from a
+ * different aggregate (`userStats.total` via {@link rankAllTime}) and
+ * must not flow into `rankEntries`, where it would silently drop every
+ * row.
+ */
+export type WindowedLeaderboardPeriodKind = Exclude<
+  LeaderboardPeriodKind,
+  'allTime'
+>;
 
 const TOP_N = 10;
 
@@ -94,7 +113,7 @@ export function isoDateNDaysBefore(
  */
 export function rankEntries(
   rows: PushupRow[],
-  periodKey: LeaderboardPeriodKind,
+  periodKey: WindowedLeaderboardPeriodKind,
   targetKey: string,
   userProfiles: Map<string, UserProfile>
 ): LeaderboardEntry[] {
@@ -166,8 +185,9 @@ export function rankEntries(
 
 /**
  * Calculates the current period keys for today.
- * All three buckets are anchored on today's ISO date — `last7` / `last30`
- * are rolling windows that always end on the current Berlin day.
+ * All four buckets are anchored on today's ISO date — `last7` / `last30`
+ * are rolling windows that always end on the current Berlin day, and
+ * `allTime` records the day the cumulative ranking was last rebuilt.
  */
 export function calculateCurrentPeriodKeys(now = new Date()): LeaderboardKeys {
   const today = berlinDateParts(now);
@@ -175,7 +195,43 @@ export function calculateCurrentPeriodKeys(now = new Date()): LeaderboardKeys {
     daily: today.isoDate,
     last7: today.isoDate,
     last30: today.isoDate,
+    allTime: today.isoDate,
   };
+}
+
+/**
+ * Per-user lifetime totals taken from `userStats/{userId}.total`. Keyed
+ * by userId so callers can join with the userConfigs profile map without
+ * re-querying.
+ */
+export interface UserTotalRow {
+  userId: string;
+  total: number;
+}
+
+/**
+ * Ranks lifetime totals from the precomputed `userStats` aggregates.
+ * Unlike {@link rankEntries} there's no per-day cap to apply — the
+ * cumulative total already encompasses arbitrarily many days. We still
+ * gate on the full public-profile opt-in and admin exclusion so the
+ * privacy contract matches the windowed leaderboards.
+ */
+export function rankAllTime(
+  rows: UserTotalRow[],
+  userProfiles: Map<string, UserProfile>
+): LeaderboardEntry[] {
+  return rows
+    .flatMap(({ userId, total }): LeaderboardEntry[] => {
+      if (!userId) return [];
+      if (!Number.isFinite(total) || total <= 0) return [];
+      const profile = userProfiles.get(userId);
+      if (isLeaderboardExcluded(profile)) return [];
+      if (!isPublicProfileLinkAllowed(profile)) return [];
+      const alias = String(profile?.displayName || '').trim();
+      return [{ alias, reps: total, uid: userId }];
+    })
+    .sort((a, b) => b.reps - a.reps)
+    .slice(0, TOP_N);
 }
 
 /**

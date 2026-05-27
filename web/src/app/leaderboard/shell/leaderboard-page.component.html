@@ -110,6 +110,16 @@
         >
           Letzte 30 Tage
         </button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="period.set('allTime')"
+          [class.active]="period() === 'allTime'"
+          data-testid="leaderboard-period-allTime"
+          i18n="@@landing.leaderboard.allTime"
+        >
+          Alle Zeit
+        </button>
       </div>
 
       <ol data-testid="leaderboard-list">
@@ -136,6 +146,19 @@
           </li>
         }
       </ol>
+
+      @if (lastUpdated(); as updatedAt) {
+        <p
+          class="last-updated"
+          data-testid="leaderboard-last-updated"
+          i18n="@@leaderboard.lastUpdated"
+        >
+          Zuletzt aktualisiert:
+          <time [attr.datetime]="updatedAt.toISOString()">{{
+            updatedAt | date: 'short'
+          }}</time>
+        </p>
+      }
 
       @if (currentUserEntry(); as me) {
         @if (me.uid) {

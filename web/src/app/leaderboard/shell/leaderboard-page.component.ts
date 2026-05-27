@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, computed, inject, linkedSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -54,6 +55,7 @@ const POPULAR_EXERCISE_IDS: ReadonlyArray<string> = [
 @Component({
   selector: 'app-leaderboard-page',
   imports: [
+    DatePipe,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -146,6 +148,7 @@ export class LeaderboardPageComponent {
     this.selectedExerciseId,
     this.period
   );
+  readonly lastUpdated = this.store.lastUpdatedFor(this.selectedExerciseId);
 
   readonly leaderboardSlots = computed(() => {
     const top = this.leaderboardEntries();

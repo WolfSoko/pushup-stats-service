@@ -127,6 +127,8 @@ const makeEmptyLeaderboard = (): LeaderboardData => ({
   daily: makeEmptyBucket(),
   last7: makeEmptyBucket(),
   last30: makeEmptyBucket(),
+  allTime: makeEmptyBucket(),
+  updatedAt: null,
 });
 
 /**

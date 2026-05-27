@@ -1,11 +1,13 @@
 import { describe, it, expect } from '@jest/globals';
 import {
+  rankAllTime,
   rankEntries,
   calculateCurrentPeriodKeys,
   getLeaderboardQueryStartDate,
   isoDateNDaysBefore,
   filterOutDemoUser,
   PushupRow,
+  UserTotalRow,
 } from './logic';
 import { UserProfile } from '../profile';
 
@@ -479,13 +481,14 @@ describe('leaderboard/logic', () => {
   });
 
   describe('calculateCurrentPeriodKeys', () => {
-    it('returns todays ISO date for all three buckets', () => {
+    it('returns todays ISO date for all four buckets', () => {
       const now = new Date('2024-03-15T10:00:00Z');
       const keys = calculateCurrentPeriodKeys(now);
 
       expect(keys.daily).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(keys.last7).toBe(keys.daily);
       expect(keys.last30).toBe(keys.daily);
+      expect(keys.allTime).toBe(keys.daily);
     });
 
     it('uses current date when not provided', () => {
@@ -494,6 +497,119 @@ describe('leaderboard/logic', () => {
       expect(keys.daily).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(keys.last7).toBe(keys.daily);
       expect(keys.last30).toBe(keys.daily);
+      expect(keys.allTime).toBe(keys.daily);
+    });
+  });
+
+  describe('rankAllTime', () => {
+    const opted = (displayName: string, excluded = false): UserProfile => ({
+      displayName,
+      ui: { hideFromLeaderboard: false, publicProfile: true },
+      ...(excluded ? { leaderboardExcluded: true } : {}),
+    });
+
+    it('ranks users by their lifetime total descending and projects displayName + uid', () => {
+      // Given — three opted-in users with distinct cumulative totals.
+      const rows: UserTotalRow[] = [
+        { userId: 'u1', total: 500 },
+        { userId: 'u2', total: 2000 },
+        { userId: 'u3', total: 1200 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['u1', opted('Alice')],
+        ['u2', opted('Bob')],
+        ['u3', opted('Carol')],
+      ]);
+
+      // When
+      const result = rankAllTime(rows, profiles);
+
+      // Then
+      expect(result).toEqual([
+        { alias: 'Bob', reps: 2000, uid: 'u2' },
+        { alias: 'Carol', reps: 1200, uid: 'u3' },
+        { alias: 'Alice', reps: 500, uid: 'u1' },
+      ]);
+    });
+
+    it('drops users without the full publicProfile opt-in (mirrors the windowed gate)', () => {
+      // Given — Alice opted in, Bob did not.
+      const rows: UserTotalRow[] = [
+        { userId: 'u1', total: 500 },
+        { userId: 'u2', total: 2000 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['u1', opted('Alice')],
+        // No `ui.publicProfile`, so the gate keeps Bob out even though
+        // he has the higher total — same contract as `rankEntries`.
+        ['u2', { displayName: 'Bob' }],
+      ]);
+
+      // When
+      const result = rankAllTime(rows, profiles);
+
+      // Then
+      expect(result).toEqual([{ alias: 'Alice', reps: 500, uid: 'u1' }]);
+    });
+
+    it('drops admin-shadowbanned users (leaderboardExcluded=true)', () => {
+      // Given
+      const rows: UserTotalRow[] = [
+        { userId: 'u1', total: 500 },
+        { userId: 'cheater', total: 99999 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['u1', opted('Alice')],
+        ['cheater', opted('Mallory', true)],
+      ]);
+
+      // When
+      const result = rankAllTime(rows, profiles);
+
+      // Then — Mallory would top the list by total but the shadow ban
+      // strips her out entirely. No "1: anonym" placeholder either.
+      expect(result).toEqual([{ alias: 'Alice', reps: 500, uid: 'u1' }]);
+    });
+
+    it('ignores rows with non-finite, negative, zero, or missing totals', () => {
+      // Given — only u1 has a usable cumulative total.
+      const rows: UserTotalRow[] = [
+        { userId: 'u1', total: 500 },
+        { userId: 'u2', total: 0 },
+        { userId: 'u3', total: -10 },
+        { userId: 'u4', total: Number.NaN },
+        { userId: '', total: 9999 },
+      ];
+      const profiles = new Map<string, UserProfile>([
+        ['u1', opted('Alice')],
+        ['u2', opted('Bob')],
+        ['u3', opted('Carol')],
+        ['u4', opted('Dan')],
+      ]);
+
+      // When
+      const result = rankAllTime(rows, profiles);
+
+      // Then
+      expect(result).toEqual([{ alias: 'Alice', reps: 500, uid: 'u1' }]);
+    });
+
+    it('limits results to TOP_N=10', () => {
+      // Given
+      const rows: UserTotalRow[] = Array.from({ length: 20 }, (_, i) => ({
+        userId: `u${i}`,
+        total: (20 - i) * 100,
+      }));
+      const profiles = new Map<string, UserProfile>();
+      for (let i = 0; i < 20; i++) profiles.set(`u${i}`, opted(`User${i}`));
+
+      // When
+      const result = rankAllTime(rows, profiles);
+
+      // Then
+      expect(result).toHaveLength(10);
+      expect(result[0].reps).toBe(2000);
+      expect(result[9].reps).toBe(1100);
     });
   });
 
