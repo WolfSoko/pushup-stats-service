@@ -1,3 +1,4 @@
+import type { MeasurementType } from './exercise.models';
 import { ReminderConfig } from './reminder-config.models';
 import type { ReminderLocale } from './reminder-i18n.models';
 
@@ -73,6 +74,110 @@ export interface QuickAddConfig {
 
 export const MAX_QUICK_ADDS = 6;
 
+/**
+ * Single entry in a complex daily/weekly/monthly goal — one exercise with
+ * a target value in the exercise's native measurement (reps, seconds for
+ * `time`, meters for `distance`, etc.). The store derives legacy
+ * `dailyGoal`/`weeklyGoal`/`monthlyGoal` numbers from the rep-based
+ * entries here, so older consumers keep working without code changes.
+ */
+export interface ComplexGoalEntry {
+  /** Stable identifier within the user's goal list (uuid or `legacy-*`). */
+  id: string;
+  /**
+   * Catalog id (e.g. `'legs.squats'`, `'plank.standard'`) or the
+   * `'pushup'` sentinel for legacy pushup-collection targets.
+   */
+  exerciseId: string;
+  variantId?: string;
+  /** Target value in `measurement`/`unit`. Integer. */
+  target: number;
+  measurement: MeasurementType;
+  unit: string;
+  /**
+   * Optional weekday filter (0 = Sunday, 1 = Monday, …, 6 = Saturday).
+   * Only meaningful for daily goals — `undefined` or `[]` means the goal
+   * applies every weekday. Out-of-range numbers are ignored at read time.
+   */
+  weekdays?: number[];
+}
+
+export type GoalScope = 'daily' | 'weekly' | 'monthly';
+
+/**
+ * Per-scope complex goal lists. Replaces the single
+ * `dailyGoal`/`weeklyGoal`/`monthlyGoal` numeric fields. Legacy fields
+ * stay in {@link UserConfig} for backwards compatibility with consumers
+ * that haven't migrated yet — the store keeps them in sync.
+ */
+export interface ComplexGoals {
+  daily?: ComplexGoalEntry[];
+  weekly?: ComplexGoalEntry[];
+  monthly?: ComplexGoalEntry[];
+}
+
+export const COMPLEX_GOALS_MAX_PER_SCOPE = 12;
+
+/**
+ * Returns true when `weekday` is in the entry's filter, or the entry has
+ * no filter set (applies every day). Defensive against legacy numbers
+ * outside the 0–6 range.
+ */
+export function complexGoalAppliesOnWeekday(
+  entry: Pick<ComplexGoalEntry, 'weekdays'>,
+  weekday: number
+): boolean {
+  const wds = entry.weekdays;
+  if (!Array.isArray(wds) || wds.length === 0) return true;
+  return wds.some(
+    (w) => Number.isInteger(w) && w >= 0 && w <= 6 && w === weekday
+  );
+}
+
+/**
+ * Sums the `target` of all rep-based entries in a scope. Used to derive
+ * the legacy `dailyGoal`/`weeklyGoal`/`monthlyGoal` numbers from the new
+ * structure so existing consumers (Cloud Functions, dashboard cards,
+ * goal-reached notifier) keep working without per-call migration.
+ *
+ * Time/distance/weight goals are intentionally excluded — they don't add
+ * to a "rep total" any meaningfully and would inflate the legacy goal
+ * numbers if mixed in.
+ */
+export function sumRepsTarget(entries: readonly ComplexGoalEntry[]): number {
+  let sum = 0;
+  for (const e of entries) {
+    if (e.measurement === 'reps' && Number.isFinite(e.target) && e.target > 0) {
+      sum += Math.trunc(e.target);
+    }
+  }
+  return sum;
+}
+
+/**
+ * Migrates a legacy single-number goal into a one-entry complex goal list.
+ * Returns an empty list when the legacy number is missing or non-positive.
+ * Used by the store to present a unified `goals` shape regardless of
+ * which schema the underlying Firestore doc still uses.
+ */
+export function legacyNumericGoalToEntries(
+  legacy: number | undefined,
+  legacyId: string
+): ComplexGoalEntry[] {
+  if (typeof legacy !== 'number' || !Number.isFinite(legacy) || legacy <= 0) {
+    return [];
+  }
+  return [
+    {
+      id: legacyId,
+      exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+      target: Math.max(1, Math.trunc(legacy)),
+      measurement: 'reps',
+      unit: 'reps',
+    },
+  ];
+}
+
 export interface UserConfig {
   userId: string;
   email?: string | null;
@@ -88,9 +193,20 @@ export interface UserConfig {
    * `normalizeReminderLocale` defensively when reading legacy docs.
    */
   locale?: ReminderLocale;
+  /**
+   * Legacy single-number goals. Kept for backwards compatibility with
+   * consumers that haven't migrated to {@link ComplexGoals}. New writes
+   * via the goals page populate {@link goals} and keep these in sync
+   * with `sumRepsTarget(goals.daily/weekly/monthly)`.
+   */
   dailyGoal?: number;
   weeklyGoal?: number;
   monthlyGoal?: number;
+  /**
+   * Per-scope complex goals (different exercises per day, weekday
+   * filters for daily). Supersedes the legacy numeric fields above.
+   */
+  goals?: ComplexGoals;
   consent?: {
     dataProcessing?: boolean;
     statistics?: boolean;
@@ -124,6 +240,7 @@ export type UserConfigUpdate = Partial<
     | 'dailyGoal'
     | 'weeklyGoal'
     | 'monthlyGoal'
+    | 'goals'
     | 'consent'
     | 'ui'
     | 'reminder'

@@ -94,6 +94,18 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'goals',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.goals.title:Tagesziele – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.goals.description:Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.`,
+    },
+    loadComponent: () =>
+      import('./goals/shell/goals-page.component').then(
+        (m) => m.GoalsPageComponent
+      ),
+  },
+  {
     path: 'training-plans',
     data: {
       seoTitle: $localize`:@@seo.trainingPlans.title:Trainingspläne – Pushup Tracker`,

@@ -58,6 +58,10 @@ export class UserMenuComponent {
     await this.router.navigate(['/settings']);
   }
 
+  async goToGoals(): Promise<void> {
+    await this.router.navigate(['/goals']);
+  }
+
   async tryAsGuest(): Promise<void> {
     const success = await this.state.tryAsGuest();
     if (success) {

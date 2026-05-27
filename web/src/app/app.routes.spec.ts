@@ -26,6 +26,7 @@ describe('appRoutes', () => {
       'history',
       'analysis',
       'settings',
+      'goals',
       'training-plans',
       'training-plans/:slug',
       'wiki/liegestuetz-typen',
@@ -110,8 +111,16 @@ describe('appRoutes', () => {
     expect(settings?.data?.['seoDescription']).toContain('Tagesziel');
   });
 
+  it('lazy-loads the goals page on /goals', async () => {
+    const route = appRoutes.find((r) => r.path === 'goals');
+    const component = await route?.loadComponent?.();
+    const { GoalsPageComponent } =
+      await import('./goals/shell/goals-page.component');
+    expect(component).toBe(GoalsPageComponent);
+  });
+
   it('protects app routes and keeps landing/login/register public-only', () => {
-    const protectedPaths = ['app', 'history', 'analysis', 'settings'];
+    const protectedPaths = ['app', 'history', 'analysis', 'settings', 'goals'];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
       expect(route?.canActivate).toEqual([authGuard]);
