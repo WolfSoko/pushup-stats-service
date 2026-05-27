@@ -22,6 +22,6 @@ peerDependencyRules:
     '@angular/common': '21'
     '@angular/platform-browser': '21'
     '@angular/platform-browser-dynamic': '21'
-    'rxjs': '7.8.0'
+    'rxjs': '7.8'
   ignoreMissing:
     - 'zone.js'
