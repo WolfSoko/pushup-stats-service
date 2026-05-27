@@ -179,27 +179,49 @@ jobs:
             exit 1
           fi
 
-          # Create an issue assigned to Copilot with an agentAssignment
-          # block — Copilot picks it up and opens a PR back against main.
-          RESPONSE="$(gh api graphql \
+          # Step 1: Create the issue. `createIssue` doesn't accept bot
+          # actors in `assigneeIds` (it silently drops them), so we
+          # leave assignees empty here and use `replaceActorsForAssignable`
+          # in step 2 to attach Copilot.
+          CREATE="$(gh api graphql \
             -H "GraphQL-Features: issues_copilot_assignment_api_support,coding_agent_model_selection" \
-            -f query='mutation($repoId:ID!,$title:String!,$body:String!,$botId:ID!,$base:String!){createIssue(input:{repositoryId:$repoId,title:$title,body:$body,assigneeIds:[$botId],agentAssignment:{targetRepositoryId:$repoId,baseRef:$base}}){issue{number url}}}' \
+            -f query='mutation($repoId:ID!,$title:String!,$body:String!){createIssue(input:{repositoryId:$repoId,title:$title,body:$body}){issue{id number url}}}' \
             -f repoId="$REPO_ID" \
             -f title="$TITLE" \
-            -f body="$BODY" \
-            -f botId="$BOT_ID" \
-            -f base=main)"
+            -f body="$BODY")"
 
-          # `gh api graphql` already exits non-zero on transport
-          # errors, but a partial response (data + errors) can still
-          # produce exit 0; guard against that explicitly.
-          if ! echo "$RESPONSE" | jq -e '(.errors // []) | length == 0' >/dev/null; then
-            echo "GraphQL errors:" >&2
-            echo "$RESPONSE" | jq -r '.errors' >&2
+          if ! echo "$CREATE" | jq -e '(.errors // []) | length == 0' >/dev/null; then
+            echo "createIssue GraphQL errors:" >&2
+            echo "$CREATE" | jq -r '.errors' >&2
             exit 1
           fi
-          NUMBER="$(echo "$RESPONSE" | jq -er '.data.createIssue.issue.number')"
-          URL="$(echo "$RESPONSE" | jq -er '.data.createIssue.issue.url')"
+          ISSUE_ID="$(echo "$CREATE" | jq -er '.data.createIssue.issue.id')"
+          NUMBER="$(echo "$CREATE" | jq -er '.data.createIssue.issue.number')"
+          URL="$(echo "$CREATE" | jq -er '.data.createIssue.issue.url')"
+
+          # Step 2: Attach the Copilot bot via the actor-assignment API.
+          # This is the only path that accepts bot IDs and triggers the
+          # coding agent session. Verify the bot ended up in the
+          # assignee list — silent drops have bitten us twice already.
+          ASSIGN="$(gh api graphql \
+            -H "GraphQL-Features: issues_copilot_assignment_api_support,coding_agent_model_selection" \
+            -f query='mutation($issueId:ID!,$botId:ID!){replaceActorsForAssignable(input:{assignableId:$issueId,actorIds:[$botId]}){assignable{... on Issue{assignees(first:10){nodes{login}}}}}}' \
+            -f issueId="$ISSUE_ID" \
+            -f botId="$BOT_ID")"
+
+          if ! echo "$ASSIGN" | jq -e '(.errors // []) | length == 0' >/dev/null; then
+            echo "replaceActorsForAssignable GraphQL errors:" >&2
+            echo "$ASSIGN" | jq -r '.errors' >&2
+            exit 1
+          fi
+          if ! echo "$ASSIGN" | jq -e '
+            .data.replaceActorsForAssignable.assignable.assignees.nodes
+            | map(.login) | index("Copilot") != null' >/dev/null; then
+            echo "Copilot was not added to the assignee list after dispatch." >&2
+            echo "Assign response:" >&2
+            echo "$ASSIGN" | jq . >&2
+            exit 1
+          fi
           echo "Copilot issue #${NUMBER} dispatched: ${URL}"
           {
             echo "## Copilot dispatched"
