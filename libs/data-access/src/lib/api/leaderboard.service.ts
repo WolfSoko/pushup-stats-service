@@ -86,17 +86,25 @@ export class LeaderboardService {
   private readonly auth = inject(Auth, { optional: true });
 
   /**
-   * Real-time stream of the precomputed `leaderboards/current` document.
-   *
-   * Used by `LeaderboardStore` to reload aggregates whenever the Cloud
-   * Function rewrites the snapshot, giving the leaderboard live updates
-   * without a manual refresh. The snapshot only covers the legacy
-   * pushup leaderboard — per-exercise rankings are computed client-side
-   * from `exerciseEntries` and don't need a snapshot subscription.
+   * Real-time stream of the precomputed `leaderboards/current` document
+   * (pushup leaderboard). Emits on every Cloud Function rebuild so the
+   * store can invalidate its cached pushup bucket.
    */
   observeSnapshot(): Observable<unknown> {
     if (!this.firestore) return EMPTY;
     return docData(doc(this.firestore, 'leaderboards', 'current'));
+  }
+
+  /**
+   * Real-time stream of the precomputed `leaderboards/exercises`
+   * document (per-exercise leaderboards). Emits on every Cloud Function
+   * rebuild so the store can invalidate cached non-pushup buckets —
+   * without this the first post-deploy rebuild never reaches a user
+   * who opened the page before the snapshot existed.
+   */
+  observeExerciseSnapshot(): Observable<unknown> {
+    if (!this.firestore) return EMPTY;
+    return docData(doc(this.firestore, 'leaderboards', 'exercises'));
   }
 
   /**
