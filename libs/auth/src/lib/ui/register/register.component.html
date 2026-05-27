@@ -48,6 +48,7 @@
           class="register-stepper"
           #registerStepper
           [orientation]="(stepperOrientation | async) ?? 'horizontal'"
+          (selectionChange)="onStepperSelectionChange($event)"
         >
           <mat-step
             [completed]="

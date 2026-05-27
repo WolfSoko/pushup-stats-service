@@ -7,13 +7,15 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { of } from 'rxjs';
 import { AuthStore } from '../../core/state/auth.store';
 import { RegisterOnboardingStore } from '../../core/state/register-onboarding.store';
+import { RegistrationAnalyticsService } from '../../core/registration-analytics.service';
 import { RegisterComponent } from './register.component';
+import { RegisterUiStore } from './register-ui.store';
 
 const authStoreMock = {
   loading: signal(false),
   error: signal<Error | null>(null),
   isAuthenticated: signal(false),
-  user: signal(null),
+  user: signal<{ uid: string } | null>(null),
   signUpWithEmail: jest.fn(),
   upgradeWithGoogle: jest.fn(),
   logout: jest.fn(),
@@ -22,12 +24,21 @@ const authStoreMock = {
 const onboardingStoreMock = {
   saving: signal(false),
   error: signal<string | null>(null),
-  registerSuccess: signal(false),
   saveProfile: jest.fn(),
 };
 
 const breakpointObserverMock = {
   observe: jest.fn().mockReturnValue(of({ matches: true } as BreakpointState)),
+};
+
+const analyticsMock = {
+  trackStarted: jest.fn(),
+  trackStepView: jest.fn(),
+  trackStepCompleted: jest.fn(),
+  trackSubmitted: jest.fn(),
+  trackSucceeded: jest.fn(),
+  trackFailed: jest.fn(),
+  trackAbandoned: jest.fn(),
 };
 
 async function renderRegister(queryParams: Record<string, string> = {}) {
@@ -47,6 +58,7 @@ async function renderRegister(queryParams: Record<string, string> = {}) {
       { provide: RegisterOnboardingStore, useValue: onboardingStoreMock },
       { provide: Auth, useValue: null },
       { provide: BreakpointObserver, useValue: breakpointObserverMock },
+      { provide: RegistrationAnalyticsService, useValue: analyticsMock },
     ],
   });
 }
@@ -55,6 +67,11 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     authStoreMock.error.set(null);
     onboardingStoreMock.error.set(null);
+    authStoreMock.user.set(null);
+    onboardingStoreMock.saveProfile.mockReset().mockResolvedValue(undefined);
+    authStoreMock.signUpWithEmail.mockReset().mockResolvedValue(true);
+    authStoreMock.upgradeWithGoogle.mockReset().mockResolvedValue(true);
+    Object.values(analyticsMock).forEach((spy) => spy.mockReset());
   });
 
   it('renders registration title', async () => {
@@ -123,6 +140,90 @@ describe('RegisterComponent', () => {
         '[data-testid="register-plan-banner"]'
       );
       expect(banner).toBeNull();
+    });
+  });
+
+  describe('analytics tracking', () => {
+    it('Given the register page is opened Then register_started and the email step view are tracked', async () => {
+      await renderRegister();
+
+      expect(analyticsMock.trackStarted).toHaveBeenCalledWith({
+        plan_preselected: false,
+      });
+      expect(analyticsMock.trackStepView).toHaveBeenCalledWith('email', {
+        is_google: false,
+      });
+    });
+
+    it('Given a preselected plan When opening the register page Then plan_preselected is true', async () => {
+      await renderRegister({ planId: 'recruit-6w-v1' });
+
+      expect(analyticsMock.trackStarted).toHaveBeenCalledWith({
+        plan_preselected: true,
+      });
+    });
+
+    it('Given the user destroys the page before success Then register_abandoned is tracked with the last step', async () => {
+      const view = await renderRegister();
+      analyticsMock.trackAbandoned.mockClear();
+
+      view.fixture.destroy();
+
+      expect(analyticsMock.trackAbandoned).toHaveBeenCalledWith({
+        last_step: 'email',
+        is_google: false,
+      });
+    });
+
+    it('Given the registration succeeded When the page is destroyed Then no abandoned event is tracked', async () => {
+      authStoreMock.user.set({ uid: 'uid-1' });
+      const view = await renderRegister();
+      const uiStore = view.fixture.debugElement.injector.get(RegisterUiStore);
+      uiStore.setDisplayName('Alex');
+      uiStore.setDailyGoal(10);
+      await uiStore.persistProfile();
+      expect(uiStore.registerSuccess()).toBe(true);
+      analyticsMock.trackAbandoned.mockClear();
+
+      view.fixture.destroy();
+
+      expect(analyticsMock.trackAbandoned).not.toHaveBeenCalled();
+    });
+
+    it('Given the user moves forward in the stepper Then step_completed for the previous and step_view for the next are tracked', async () => {
+      const view = await renderRegister();
+      const component = view.fixture.componentInstance;
+      analyticsMock.trackStepCompleted.mockClear();
+      analyticsMock.trackStepView.mockClear();
+
+      component.onStepperSelectionChange({
+        previouslySelectedIndex: 0,
+        selectedIndex: 1,
+      } as never);
+
+      expect(analyticsMock.trackStepCompleted).toHaveBeenCalledWith('email', {
+        is_google: false,
+      });
+      expect(analyticsMock.trackStepView).toHaveBeenCalledWith('password', {
+        is_google: false,
+      });
+    });
+
+    it('Given the user navigates back in the stepper Then only step_view fires, not step_completed', async () => {
+      const view = await renderRegister();
+      const component = view.fixture.componentInstance;
+      analyticsMock.trackStepCompleted.mockClear();
+      analyticsMock.trackStepView.mockClear();
+
+      component.onStepperSelectionChange({
+        previouslySelectedIndex: 2,
+        selectedIndex: 1,
+      } as never);
+
+      expect(analyticsMock.trackStepCompleted).not.toHaveBeenCalled();
+      expect(analyticsMock.trackStepView).toHaveBeenCalledWith('password', {
+        is_google: false,
+      });
     });
   });
 });
