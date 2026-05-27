@@ -186,9 +186,19 @@ This file is the prompt only. To wire it up:
    point of replacing the workflow).
 6. **Connectors:** keep only the GitHub connector. Remove the rest — the
    routine should not need Slack, Drive, Calendar, etc.
-7. **Trigger:** Schedule → daily at **06:00 UTC** (matches the old cron
-   `0 6 * * *`). Use `/schedule update` afterwards if a finer cron is
-   needed; one-hour minimum applies.
+7. **Trigger:** combined — _both_ of the following so the routine fires
+   on schedule **and** reacts to fresh source strings:
+   - **Schedule:** daily at **06:00 UTC** (matches the old cron
+     `0 6 * * *`). Use `/schedule update` afterwards if a finer cron is
+     needed; one-hour minimum applies.
+   - **GitHub event:** push to `main` when any of these paths change —
+     `web/src/locale/messages.xlf`, `content/blog/**`,
+     `content/wiki/pushup-types/**`. This catches new German source
+     content within minutes instead of waiting up to a day.
+
+   The routine is idempotent (it exits without a PR when the detector
+   reports zero gaps), so back-to-back runs on the same green state cost
+   nothing.
 8. **Run now** once after saving to confirm a green session against a
    known-empty gap state (should exit without opening a PR).
 
