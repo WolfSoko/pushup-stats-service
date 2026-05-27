@@ -6,7 +6,6 @@ export const REGISTRATION_STEPS = [
   'password',
   'username',
   'daily_goal',
-  'consent',
 ] as const;
 
 export type RegistrationStep = (typeof REGISTRATION_STEPS)[number];

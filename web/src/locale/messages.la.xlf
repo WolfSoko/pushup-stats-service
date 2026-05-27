@@ -9663,13 +9663,13 @@
         <target>Tempus tabulae principum</target>
       </segment>
     </unit>
-    <unit id="leaderboard.lastUpdated">
+        <unit id="leaderboard.lastUpdated">
       <segment state="initial">
         <source> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
-            updatedAt | date: &apos;dd.MM.yyyy, HH:mm&apos;
+            updatedAt | date: &apos;short&apos;
           }}"/></pc></source>
         <target> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
-            updatedAt | date: &apos;dd.MM.yyyy, HH:mm&apos;
+            updatedAt | date: &apos;short&apos;
           }}"/></pc></target>
       </segment>
     </unit>
