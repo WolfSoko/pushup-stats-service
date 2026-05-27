@@ -63,11 +63,10 @@ describe('RegisterUiStore', () => {
     expect(store.displayName()).toBe('Tester');
   });
 
-  it('Given profile and consent When submitting via email Then sign up and persist profile are executed', async () => {
+  it('Given a complete profile When submitting via email Then sign up and persist profile are executed', async () => {
     const store = await setup();
     store.setDisplayName('Alex');
     store.setDailyGoal(120);
-    store.setConsentAccepted(true);
 
     const canSubmit = store.canSubmit(false, false, 'Secret#123', 'Secret#123');
     const signedUp = await store.signUpWithEmail('mail@test.de', 'Secret#123');
@@ -135,7 +134,6 @@ describe('RegisterUiStore', () => {
       const store = await setup();
       store.setDisplayName('A');
       store.setDailyGoal(10);
-      store.setConsentAccepted(true);
 
       expect(store.displayNameViolation()).toBe('too-short');
       expect(store.isProfileStepValid()).toBe(false);

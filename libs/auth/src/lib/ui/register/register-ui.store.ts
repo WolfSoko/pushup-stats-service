@@ -22,7 +22,6 @@ type RegisterUiState = {
   hidePassword: boolean;
   displayName: string;
   dailyGoal: number;
-  consentAccepted: boolean;
   isGoogleRegistration: boolean;
   registeringCredentials: boolean;
   registerSuccess: boolean;
@@ -39,7 +38,6 @@ const initialState: RegisterUiState = {
   hidePassword: true,
   displayName: '',
   dailyGoal: 10,
-  consentAccepted: false,
   isGoogleRegistration: false,
   registeringCredentials: false,
   registerSuccess: false,
@@ -75,8 +73,6 @@ export const RegisterUiStore = signalStore(
     setDisplayName: (value: string) =>
       patchState(store, { displayName: value }),
     setDailyGoal: (value: number) => patchState(store, { dailyGoal: value }),
-    setConsentAccepted: (value: boolean) =>
-      patchState(store, { consentAccepted: value }),
     setSelectedPlanId: (planId: string | null) => {
       // Only accept ids that resolve to a real plan; ignore stale or
       // malformed query-param values silently — better than redirecting
@@ -119,7 +115,6 @@ export const RegisterUiStore = signalStore(
       password: string,
       repeatPassword: string
     ) =>
-      store.consentAccepted() &&
       validateDisplayName(store.displayName()) === null &&
       store.dailyGoal() >= 1 &&
       (store.isGoogleRegistration() ||
