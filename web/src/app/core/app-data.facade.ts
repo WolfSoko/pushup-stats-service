@@ -173,6 +173,13 @@ export class AppDataFacade {
   );
 
   readonly goalReached = computed(() => {
+    // For users on the new goals page, "reached" means every applicable
+    // exercise has hit its individual target — comparing the rep-sum to
+    // the pushup-only `todayProgress` would let the snap fire after just
+    // doing pushups even if Squats/Plank/Running were never touched.
+    if (this.userConfig.goalsConfigured()) {
+      return this.dailyGoalsAllReached();
+    }
     const goal = this.effectiveDailyGoal();
     return goal > 0 && this.todayProgress() >= goal;
   });
@@ -196,7 +203,13 @@ export class AppDataFacade {
         },
       ];
     }
-    const weekday = new Date().getDay();
+    // Use the Berlin date for the weekday, matching `todayProgress` and the
+    // rest of the facade. `new Date().getDay()` would read the user's local
+    // timezone — for clients west of Berlin, a Saturday-night entry would
+    // be aggregated against Sunday's goal list (or vice versa) and the
+    // wrong weekday filter would apply on the day boundary.
+    const berlinToday = toBerlinIsoDate(new Date());
+    const weekday = new Date(`${berlinToday}T00:00:00Z`).getUTCDay();
     return this.userConfig
       .dailyGoalEntries()
       .filter((entry) => complexGoalAppliesOnWeekday(entry, weekday));
@@ -229,9 +242,17 @@ export class AppDataFacade {
       if (entry.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
         return pushupRepsToday;
       }
-      const matching = exerciseEntries.filter(
-        (e) => e.exerciseId === entry.exerciseId
-      );
+      // When the goal pins a specific variant, count only entries of that
+      // variant. Otherwise match every entry for the exercise across all
+      // its variants — the goals page deliberately does not expose a
+      // variant picker yet (so most entries here will have no
+      // `variantId`), and a user logging "decline sit-ups" against a
+      // generic "Sit-ups" goal should still increment the progress.
+      const matching = exerciseEntries.filter((e) => {
+        if (e.exerciseId !== entry.exerciseId) return false;
+        if (!entry.variantId) return true;
+        return e.variantId === entry.variantId;
+      });
       switch (entry.measurement) {
         case 'reps':
         case 'weight':

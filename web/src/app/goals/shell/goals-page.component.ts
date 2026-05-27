@@ -225,7 +225,8 @@ const WEEKDAYS = [
                   <input
                     matInput
                     type="number"
-                    [min]="1"
+                    [min]="targetMin(entry)"
+                    [max]="targetMax(entry)"
                     [value]="entry.target"
                     [attr.aria-label]="targetLabel(entry)"
                     (input)="
@@ -604,10 +605,29 @@ export class GoalsPageComponent {
   updateTarget(scope: GoalScope, entryId: string, target: number): void {
     if (!Number.isFinite(target)) return;
     this.entriesFor(scope).update((list) =>
-      list.map((e) =>
-        e.id === entryId ? { ...e, target: Math.max(1, Math.trunc(target)) } : e
-      )
+      list.map((e) => {
+        if (e.id !== entryId) return e;
+        const opt = this.findOption(e.exerciseId);
+        const min = opt?.min ?? 1;
+        const max = opt?.max ?? Number.MAX_SAFE_INTEGER;
+        const clamped = Math.min(max, Math.max(min, Math.trunc(target)));
+        return { ...e, target: clamped };
+      })
     );
+  }
+
+  /** Catalog `min` for the entry's exercise (defaults to 1). */
+  targetMin(entry: ComplexGoalEntry): number {
+    return this.findOption(entry.exerciseId)?.min ?? 1;
+  }
+
+  /** Catalog `max` for the entry's exercise — used for the `<input>` cap. */
+  targetMax(entry: ComplexGoalEntry): number {
+    return this.findOption(entry.exerciseId)?.max ?? Number.MAX_SAFE_INTEGER;
+  }
+
+  private findOption(exerciseId: string): ExercisePickerEntry | undefined {
+    return this.exerciseOptions.find((o) => o.id === exerciseId);
   }
 
   updateWeekdays(scope: GoalScope, entryId: string, weekdays: number[]): void {
