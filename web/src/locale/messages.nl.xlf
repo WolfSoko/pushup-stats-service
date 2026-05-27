@@ -9790,13 +9790,13 @@
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Maak een lijst van oefeningen met doelwaarden per dag, week en maand. Voor dagelijkse doelen kun je ook aangeven op welke weekdagen het doel geldt — perfect voor een Push/Pull/Benen-splitroutine. </target>
+        <target> Maak een lijst van oefeningen met doelwaarden per dag, week en maand. Voor dagelijkse doelen kun je ook opgeven op welke weekdagen elk doel van toepassing is — perfect voor een push/pull/benen splitplan. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Nog geen doelen aangemaakt. Voeg hieronder je eerste doel toe. </target>
+        <target> Nog geen doelen ingesteld. Voeg hieronder je eerste doel toe. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
@@ -9892,19 +9892,19 @@
     <unit id="goals.section.monthly.subtitle">
       <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>Grotere doelen verdeeld over de hele maand.</target>
+        <target>Grotere doelen verspreid over de hele maand.</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
       <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Doel (seconden)</target>
+        <target>Doel (Seconden)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
       <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Doel (meter)</target>
+        <target>Doel (Meter)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">

@@ -9682,73 +9682,73 @@
     <unit id="user.menu.goals">
       <segment state="translated">
         <source>Tagesziele</source>
-        <target>Ημερήσιοι στόχοι</target>
+        <target>Καθημερινοί στόχοι</target>
       </segment>
     </unit>
     <unit id="seo.goals.title">
       <segment state="translated">
         <source>Tagesziele – Pushup Tracker</source>
-        <target>Ημερήσιοι στόχοι – Pushup Tracker</target>
+        <target>Καθημερινοί στόχοι – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.goals.description">
       <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Σχεδιάστε διάφορες ασκήσεις ανά ημέρα, ανά εβδομάδα και ανά μήνα – με φίλτρο ημέρας εβδομάδας.</target>
+        <target>Σχεδιάστε διάφορες ασκήσεις ανά ημέρα, εβδομάδα και μήνα – με φίλτρο ημέρας εβδομάδας.</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
       <segment state="translated">
         <source>Mo</source>
-        <target>Δε</target>
+        <target>Δευ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
       <segment state="translated">
         <source>Di</source>
-        <target>Τρ</target>
+        <target>Τρί</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
       <segment state="translated">
         <source>Mi</source>
-        <target>Τε</target>
+        <target>Τετ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
       <segment state="translated">
         <source>Do</source>
-        <target>Πε</target>
+        <target>Πέμ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
       <segment state="translated">
         <source>Fr</source>
-        <target>Πα</target>
+        <target>Παρ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
       <segment state="translated">
         <source>Sa</source>
-        <target>Σα</target>
+        <target>Σάβ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
       <segment state="translated">
         <source>So</source>
-        <target>Κυ</target>
+        <target>Κυρ</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
       <segment state="translated">
         <source>Tagesziele</source>
-        <target>Ημερήσιοι στόχοι</target>
+        <target>Καθημερινοί στόχοι</target>
       </segment>
     </unit>
     <unit id="goalsHeaderSubtitle">
       <segment state="translated">
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
-        <target> Διάφορες ασκήσεις ανά ημέρα, ανά εβδομάδα, ανά μήνα. </target>
+        <target> Διάφορες ασκήσεις ανά ημέρα, εβδομάδα, μήνα. </target>
       </segment>
     </unit>
     <unit id="goals.status.saving">
@@ -9766,13 +9766,13 @@
     <unit id="goals.status.error">
       <segment state="translated">
         <source>Fehler beim Speichern</source>
-        <target>Σφάλμα κατά την αποθήκευση</target>
+        <target>Σφάλμα αποθήκευσης</target>
       </segment>
     </unit>
     <unit id="goals.status.retry">
       <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Επανάληψη </target>
+        <target> Δοκιμή ξανά </target>
       </segment>
     </unit>
     <unit id="goals.status.pending">
@@ -9790,13 +9790,13 @@
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Δημιουργήστε μια λίστα ασκήσεων με τιμές στόχους ανά ημέρα, εβδομάδα και μήνα. Για τους ημερήσιους στόχους μπορείτε επίσης να ορίσετε σε ποιες ημέρες της εβδομάδας ισχύει ο στόχος — ιδανικό για ένα πρόγραμμα Push/Pull/Πόδια. </target>
+        <target> Δημιουργήστε μια λίστα ασκήσεων με τιμές στόχου ανά ημέρα, εβδομάδα και μήνα. Για τους καθημερινούς στόχους, μπορείτε επίσης να καθορίσετε σε ποιες ημέρες της εβδομάδας ισχύει κάθε στόχος — ιδανικό για ένα πρόγραμμα push/pull/πόδια. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Δεν έχουν δημιουργηθεί ακόμα στόχοι. Προσθέστε τον πρώτο σας στόχο παρακάτω. </target>
+        <target> Δεν υπάρχουν ακόμα στόχοι. Προσθέστε τον πρώτο σας στόχο παρακάτω. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
@@ -9808,7 +9808,7 @@
     <unit id="goals.weekdayLabel">
       <segment state="translated">
         <source>Aktiv an:</source>
-        <target>Ενεργό τις:</target>
+        <target>Ενεργό:</target>
       </segment>
     </unit>
     <unit id="goals.weekdayEveryDayHint">
@@ -9838,7 +9838,7 @@
     <unit id="goals.linkBack.subtitle">
       <segment state="translated">
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
-        <target> Διαχείριση προφίλ, ορατότητας, υπενθυμίσεων και διαφημίσεων. </target>
+        <target> Διαχείριση προφίλ, ορατότητας, υπενθυμίσεων και διαφήμισης. </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.cta">
@@ -9862,13 +9862,13 @@
     <unit id="goals.section.daily.title">
       <segment state="translated">
         <source>Tagesziele</source>
-        <target>Ημερήσιοι στόχοι</target>
+        <target>Καθημερινοί στόχοι</target>
       </segment>
     </unit>
     <unit id="goals.section.daily.subtitle">
       <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>Τι θέλετε να επιτύχετε σε συγκεκριμένες ημέρες της εβδομάδας.</target>
+        <target>Τι θέλετε να επιτύχετε σε μεμονωμένες ημέρες της εβδομάδας.</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
@@ -9898,13 +9898,13 @@
     <unit id="goals.field.target.time">
       <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Στόχος (δευτερόλεπτα)</target>
+        <target>Στόχος (Δευτερόλεπτα)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
       <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Στόχος (μέτρα)</target>
+        <target>Στόχος (Μέτρα)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">
@@ -9916,13 +9916,13 @@
     <unit id="settings.section.goals.linkSubtitle">
       <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> Οι ημερήσιοι, εβδομαδιαίοι και μηνιαίοι στόχοι με διάφορες ασκήσεις διαχειρίζονται πλέον στη δική τους σελίδα. </target>
+        <target> Οι καθημερινοί, εβδομαδιαίοι και μηνιαίοι στόχοι με διάφορες ασκήσεις διαχειρίζονται τώρα στη δική τους σελίδα. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Tagesziele öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Άνοιγμα ημερήσιων στόχων </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Άνοιγμα καθημερινών στόχων </target>
       </segment>
     </unit>
 </file>

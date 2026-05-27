@@ -9694,49 +9694,49 @@
     <unit id="seo.goals.description">
       <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Pianifica vari esercizi al giorno, alla settimana e al mese – con filtro per giorno della settimana.</target>
+        <target>Pianifica diversi esercizi al giorno, alla settimana e al mese – con filtro per giorno della settimana.</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
       <segment state="translated">
         <source>Mo</source>
-        <target>Lu</target>
+        <target>Lun</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
       <segment state="translated">
         <source>Di</source>
-        <target>Ma</target>
+        <target>Mar</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
       <segment state="translated">
         <source>Mi</source>
-        <target>Me</target>
+        <target>Mer</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
       <segment state="translated">
         <source>Do</source>
-        <target>Gi</target>
+        <target>Gio</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
       <segment state="translated">
         <source>Fr</source>
-        <target>Ve</target>
+        <target>Ven</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
       <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Sab</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
       <segment state="translated">
         <source>So</source>
-        <target>Do</target>
+        <target>Dom</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
@@ -9748,7 +9748,7 @@
     <unit id="goalsHeaderSubtitle">
       <segment state="translated">
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
-        <target> Vari esercizi al giorno, alla settimana, al mese. </target>
+        <target> Diversi esercizi al giorno, alla settimana, al mese. </target>
       </segment>
     </unit>
     <unit id="goals.status.saving">
@@ -9790,13 +9790,13 @@
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Crea un elenco di esercizi con valori target per giorno, settimana e mese. Per gli obiettivi giornalieri puoi anche specificare in quali giorni della settimana si applica l'obiettivo — perfetto per una routine Push/Pull/Gambe. </target>
+        <target> Crea un elenco di esercizi con valori target al giorno, alla settimana e al mese. Per gli obiettivi giornalieri, puoi anche specificare in quali giorni della settimana si applica ogni obiettivo — perfetto per un piano push/pull/gambe. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Nessun obiettivo ancora creato. Aggiungi il tuo primo obiettivo qui sotto. </target>
+        <target> Nessun obiettivo ancora. Aggiungi il tuo primo obiettivo qui sotto. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
@@ -9814,7 +9814,7 @@
     <unit id="goals.weekdayEveryDayHint">
       <segment state="translated">
         <source>Keine Auswahl = gilt jeden Tag.</source>
-        <target>Nessuna selezione = vale ogni giorno.</target>
+        <target>Nessuna selezione = valido ogni giorno.</target>
       </segment>
     </unit>
     <unit id="goals.addEntry">
@@ -9868,7 +9868,7 @@
     <unit id="goals.section.daily.subtitle">
       <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>Ciò che vuoi raggiungere in determinati giorni della settimana.</target>
+        <target>Cosa vuoi raggiungere in singoli giorni della settimana.</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
@@ -9880,7 +9880,7 @@
     <unit id="goals.section.weekly.subtitle">
       <segment state="translated">
         <source>Summen pro Übung über die ganze Woche.</source>
-        <target>Totali per esercizio nell'intera settimana.</target>
+        <target>Totali per esercizio nell'arco di tutta la settimana.</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.title">
@@ -9892,19 +9892,19 @@
     <unit id="goals.section.monthly.subtitle">
       <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>Obiettivi più grandi distribuiti nell'intero mese.</target>
+        <target>Obiettivi più grandi distribuiti nell'arco di tutto il mese.</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
       <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Obiettivo (secondi)</target>
+        <target>Obiettivo (Secondi)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
       <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Obiettivo (metri)</target>
+        <target>Obiettivo (Metri)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">
@@ -9916,7 +9916,7 @@
     <unit id="settings.section.goals.linkSubtitle">
       <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> Gli obiettivi giornalieri, settimanali e mensili con vari esercizi vengono ora gestiti nella propria pagina. </target>
+        <target> Gli obiettivi giornalieri, settimanali e mensili con diversi esercizi vengono ora gestiti nella loro pagina dedicata. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">

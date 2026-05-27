@@ -8954,49 +8954,49 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.goals.description">
       <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Planlegg ulike øvelser per dag, per uke og per måned – med ukedag-filter.</target>
+        <target>Planlegg ulike øvelser per dag, per uke og per måned – med ukedagfilter.</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
       <segment state="translated">
         <source>Mo</source>
-        <target>Ma</target>
+        <target>Man</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
       <segment state="translated">
         <source>Di</source>
-        <target>Ti</target>
+        <target>Tir</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
       <segment state="translated">
         <source>Mi</source>
-        <target>On</target>
+        <target>Ons</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
       <segment state="translated">
         <source>Do</source>
-        <target>To</target>
+        <target>Tor</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
       <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Fre</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
       <segment state="translated">
         <source>Sa</source>
-        <target>Lø</target>
+        <target>Lør</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
       <segment state="translated">
         <source>So</source>
-        <target>Sø</target>
+        <target>Søn</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
@@ -9032,7 +9032,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.status.retry">
       <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Prøv på nytt </target>
+        <target> Prøv igjen </target>
       </segment>
     </unit>
     <unit id="goals.status.pending">
@@ -9050,13 +9050,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Opprett en liste over øvelser med målverdier per dag, uke og måned. For daglige mål kan du også angi hvilke ukedager målet gjelder — perfekt for en Push/Pull/Bein-delt rutine. </target>
+        <target> Opprett en liste over øvelser med målverdier per dag, uke og måned. For daglige mål kan du også angi hvilke ukedager hvert mål gjelder for — perfekt for et push/pull/bein-splitprogram. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Ingen mål opprettet ennå. Legg til ditt første mål nedenfor. </target>
+        <target> Ingen mål ennå. Legg til ditt første mål nedenfor. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
@@ -9068,13 +9068,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.weekdayLabel">
       <segment state="translated">
         <source>Aktiv an:</source>
-        <target>Aktiv på:</target>
+        <target>Aktiv:</target>
       </segment>
     </unit>
     <unit id="goals.weekdayEveryDayHint">
       <segment state="translated">
         <source>Keine Auswahl = gilt jeden Tag.</source>
-        <target>Ingen valg = gjelder hver dag.</target>
+        <target>Intet valg = gjelder hver dag.</target>
       </segment>
     </unit>
     <unit id="goals.addEntry">
@@ -9098,7 +9098,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.linkBack.subtitle">
       <segment state="translated">
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
-        <target> Administrer profil, synlighet, påminnelser og annonser. </target>
+        <target> Administrer profil, synlighet, påminnelser og reklame. </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.cta">
@@ -9128,7 +9128,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.section.daily.subtitle">
       <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>Hva du vil oppnå på individuelle ukedager.</target>
+        <target>Hva du vil oppnå på enkeltlige ukedager.</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
@@ -9140,7 +9140,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.section.weekly.subtitle">
       <segment state="translated">
         <source>Summen pro Übung über die ganze Woche.</source>
-        <target>Totaler per øvelse over hele uken.</target>
+        <target>Summer per øvelse gjennom hele uken.</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.title">
@@ -9152,19 +9152,19 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.section.monthly.subtitle">
       <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>Større mål fordelt over hele måneden.</target>
+        <target>Større mål fordelt gjennom hele måneden.</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
       <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Mål (sekunder)</target>
+        <target>Mål (Sekunder)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
       <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Mål (meter)</target>
+        <target>Mål (Meter)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">

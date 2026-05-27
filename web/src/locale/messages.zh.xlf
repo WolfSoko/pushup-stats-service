@@ -9182,13 +9182,13 @@
     <unit id="seo.goals.title">
       <segment state="translated">
         <source>Tagesziele – Pushup Tracker</source>
-        <target>每日目标 – 俯卧撑追踪器</target>
+        <target>每日目标 – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.goals.description">
       <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>按日、按周、按月规划各种练习 – 含工作日筛选器。</target>
+        <target>按天、周和月规划不同的锻炼项目 – 带星期过滤器。</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
@@ -9242,7 +9242,7 @@
     <unit id="goalsHeaderSubtitle">
       <segment state="translated">
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
-        <target> 每日、每周、每月的各种练习。 </target>
+        <target> 每天、每周、每月不同的锻炼项目。 </target>
       </segment>
     </unit>
     <unit id="goals.status.saving">
@@ -9260,7 +9260,7 @@
     <unit id="goals.status.error">
       <segment state="translated">
         <source>Fehler beim Speichern</source>
-        <target>保存时出错</target>
+        <target>保存失败</target>
       </segment>
     </unit>
     <unit id="goals.status.retry">
@@ -9284,31 +9284,31 @@
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> 为每日、每周和每月创建带有目标值的练习列表。对于每日目标，您还可以指定该目标适用的星期几 — 非常适合推/拉/腿分组训练计划。 </target>
+        <target> 按天、周和月创建锻炼项目列表并设置目标值。对于每日目标，您还可以指定每个目标适用于哪些工作日 — 非常适合推/拉/腿分化训练计划。 </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> 尚未创建任何目标。请在下方添加您的第一个目标。 </target>
+        <target> 尚未设置目标。请在下方添加您的第一个目标。 </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
       <segment state="translated">
         <source>Übung</source>
-        <target>练习</target>
+        <target>锻炼项目</target>
       </segment>
     </unit>
     <unit id="goals.weekdayLabel">
       <segment state="translated">
         <source>Aktiv an:</source>
-        <target>有效于：</target>
+        <target>生效于：</target>
       </segment>
     </unit>
     <unit id="goals.weekdayEveryDayHint">
       <segment state="translated">
         <source>Keine Auswahl = gilt jeden Tag.</source>
-        <target>无选择 = 每天适用。</target>
+        <target>未选择 = 每天生效。</target>
       </segment>
     </unit>
     <unit id="goals.addEntry">
@@ -9350,7 +9350,7 @@
     <unit id="goals.weekdayAria">
       <segment state="translated">
         <source>Wochentage</source>
-        <target>工作日</target>
+        <target>星期</target>
       </segment>
     </unit>
     <unit id="goals.section.daily.title">
@@ -9374,7 +9374,7 @@
     <unit id="goals.section.weekly.subtitle">
       <segment state="translated">
         <source>Summen pro Übung über die ganze Woche.</source>
-        <target>整周每个练习的总计。</target>
+        <target>整周内各锻炼项目的总计。</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.title">
@@ -9386,7 +9386,7 @@
     <unit id="goals.section.monthly.subtitle">
       <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>分布在整个月份的更大目标。</target>
+        <target>分布在整个月的较大目标。</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
@@ -9410,7 +9410,7 @@
     <unit id="settings.section.goals.linkSubtitle">
       <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> 各种练习的每日、每周和每月目标现在在其专属页面上进行管理。 </target>
+        <target> 每日、每周和每月目标现在可以在专属页面上管理不同的锻炼项目。 </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">

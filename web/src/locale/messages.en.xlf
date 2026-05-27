@@ -9860,49 +9860,49 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.goals.description">
       <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Plan various exercises per day, per week and per month – with weekday filter.</target>
+        <target>Plan various exercises per day, per week, and per month – with a weekday filter.</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
       <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>Mon</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
       <segment state="translated">
         <source>Di</source>
-        <target>Tu</target>
+        <target>Tue</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
       <segment state="translated">
         <source>Mi</source>
-        <target>We</target>
+        <target>Wed</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
       <segment state="translated">
         <source>Do</source>
-        <target>Th</target>
+        <target>Thu</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
       <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Fri</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
       <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Sat</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
       <segment state="translated">
         <source>So</source>
-        <target>Su</target>
+        <target>Sun</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
@@ -9938,7 +9938,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.status.retry">
       <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Retry </target>
+        <target> Try again </target>
       </segment>
     </unit>
     <unit id="goals.status.pending">
@@ -9956,13 +9956,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Create a list of exercises with target values per day, week and month. For daily goals you can also specify on which weekdays the goal applies — perfect for a Push/Pull/Legs split routine. </target>
+        <target> Set up a list of exercises with target values per day, week, and month. For daily goals, you can also specify which weekdays each goal applies to — perfect for a push/pull/legs split plan. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> No goals yet. Add your first goal below. </target>
+        <target> No goals set yet. Add your first goal below. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
@@ -10004,7 +10004,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.linkBack.subtitle">
       <segment state="translated">
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
-        <target> Manage profile, visibility, reminders and ads. </target>
+        <target> Manage profile, visibility, reminders and advertising. </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.cta">
@@ -10058,19 +10058,19 @@ Deine Position: # ·  Reps        </source>
     <unit id="goals.section.monthly.subtitle">
       <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>Larger goals spread over the entire month.</target>
+        <target>Larger goals spread over the whole month.</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
       <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Goal (seconds)</target>
+        <target>Goal (Seconds)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
       <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Goal (meters)</target>
+        <target>Goal (Meters)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">
@@ -10082,13 +10082,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="settings.section.goals.linkSubtitle">
       <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> Daily, weekly and monthly goals with various exercises are now managed on their own page. </target>
+        <target> Daily, weekly, and monthly goals with various exercises are now managed on their own page. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Tagesziele öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Open daily goals </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Open Daily Goals </target>
       </segment>
     </unit>
 </file>

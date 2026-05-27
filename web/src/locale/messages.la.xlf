@@ -9694,49 +9694,49 @@
     <unit id="seo.goals.description">
       <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Varia exercitia per diem, per hebdomadam et per mensem plana — cum filtro diei hebdomadis.</target>
+        <target>Diversa exercitia per diem, per hebdomadem et per mensem planifica – cum selectione diei hebdomadis.</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
       <segment state="translated">
         <source>Mo</source>
-        <target>Lu</target>
+        <target>Lun</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
       <segment state="translated">
         <source>Di</source>
-        <target>Ma</target>
+        <target>Mar</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
       <segment state="translated">
         <source>Mi</source>
-        <target>Me</target>
+        <target>Mer</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
       <segment state="translated">
         <source>Do</source>
-        <target>Io</target>
+        <target>Iov</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
       <segment state="translated">
         <source>Fr</source>
-        <target>Ve</target>
+        <target>Ven</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
       <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Sab</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
       <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>Sol</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
@@ -9748,7 +9748,7 @@
     <unit id="goalsHeaderSubtitle">
       <segment state="translated">
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
-        <target> Varia exercitia per diem, per hebdomadam, per mensem. </target>
+        <target> Diversa exercitia per diem, per hebdomadem, per mensem. </target>
       </segment>
     </unit>
     <unit id="goals.status.saving">
@@ -9766,13 +9766,13 @@
     <unit id="goals.status.error">
       <segment state="translated">
         <source>Fehler beim Speichern</source>
-        <target>Error in servando</target>
+        <target>Error servationis</target>
       </segment>
     </unit>
     <unit id="goals.status.retry">
       <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Iterum conare </target>
+        <target> Iterum tempta </target>
       </segment>
     </unit>
     <unit id="goals.status.pending">
@@ -9790,13 +9790,13 @@
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Crea indicem exercitiorum cum valoribus propositis per diem, hebdomadam et mensem. Pro propositis diurnis etiam definire potes quibus diebus hebdomadis propositum valeat — perfectum pro schemate Push/Pull/Crura. </target>
+        <target> Confice indicem exercitiorum cum valoribus propositis per diem, hebdomadem et mensem. Pro propositis diurnis etiam statuere potes, quibus diebus hebdomadis propositum singulum valeat — optimum pro programmate push/pull/crura. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
       <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Nulla proposita adhuc creata. Adde propositum primum infra. </target>
+        <target> Nulla proposita adhuc constituta. Primum propositum tuum infra adde. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
@@ -9808,7 +9808,7 @@
     <unit id="goals.weekdayLabel">
       <segment state="translated">
         <source>Aktiv an:</source>
-        <target>Activum die:</target>
+        <target>Activum:</target>
       </segment>
     </unit>
     <unit id="goals.weekdayEveryDayHint">
@@ -9820,7 +9820,7 @@
     <unit id="goals.addEntry">
       <segment state="translated">
         <source>Ziel hinzufügen</source>
-        <target>Adde propositum</target>
+        <target>Propositum addere</target>
       </segment>
     </unit>
     <unit id="goals.limitHint">
@@ -9832,19 +9832,19 @@
     <unit id="goals.linkBack.title">
       <segment state="translated">
         <source>Andere Einstellungen</source>
-        <target>Aliae configurationes</target>
+        <target>Aliae ordinationes</target>
       </segment>
     </unit>
     <unit id="goals.linkBack.subtitle">
       <segment state="translated">
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
-        <target> Profilo, visibilitati, admonitionibus et nuntiis commercialibus administrandis. </target>
+        <target> Procura effigiem, visionitatem, admonitiones et publicationem. </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.cta">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Configurationes aperire </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Ordinationes aperire </target>
       </segment>
     </unit>
     <unit id="goals.removeAria">
@@ -9868,7 +9868,7 @@
     <unit id="goals.section.daily.subtitle">
       <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>Quid singulis diebus hebdomadis efficere vis.</target>
+        <target>Quid singulis diebus hebdomadis perficere velis.</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
@@ -9880,13 +9880,13 @@
     <unit id="goals.section.weekly.subtitle">
       <segment state="translated">
         <source>Summen pro Übung über die ganze Woche.</source>
-        <target>Summae per exercitium per totam hebdomadam.</target>
+        <target>Summae exercitiorum per totam hebdomadem.</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.title">
       <segment state="translated">
         <source>Monatsziele</source>
-        <target>Proposita mensalia</target>
+        <target>Proposita menstrua</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.subtitle">
@@ -9898,13 +9898,13 @@
     <unit id="goals.field.target.time">
       <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Propositum (secundis)</target>
+        <target>Propositum (Secundae)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
       <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Propositum (metris)</target>
+        <target>Propositum (Metra)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">
@@ -9916,7 +9916,7 @@
     <unit id="settings.section.goals.linkSubtitle">
       <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> Proposita diurna, hebdomadalia et mensalia cum variis exercitiis iam in propria pagina administrantur. </target>
+        <target> Proposita diurna, hebdomadalia et menstrua cum diversis exercitiis nunc in propria pagina administrantur. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">
