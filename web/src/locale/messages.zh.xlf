@@ -9284,7 +9284,7 @@
     <unit id="goals.intro">
       <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> 按天、周和月创建锻炼项目列表并设置目标值。对于每日目标，您还可以指定每个目标适用于哪些工作日 — 非常适合推/拉/腿分化训练计划。 </target>
+        <target> 按天、周和月创建锻炼项目列表并设置目标值。对于每日目标，您还可以指定每个目标适用于哪些星期几 — 非常适合推/拉/腿分化训练计划。 </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
@@ -9362,7 +9362,7 @@
     <unit id="goals.section.daily.subtitle">
       <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>您希望在特定工作日完成的内容。</target>
+        <target>您希望在特定星期几完成的内容。</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
