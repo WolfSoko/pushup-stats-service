@@ -21,6 +21,7 @@ export {
   REP_COUNTER,
   type RepCounter,
   type RepCounterStartOptions,
+  type FormCheckFrame,
 } from './lib/rep-counter.port';
 export { angleAtJointDeg, type Point2D } from './lib/joint-angle';
 export {
@@ -36,10 +37,6 @@ export {
   type PoseFrameSource,
 } from './lib/pose-frame-source.port';
 export { poseToAngleSample } from './lib/pose-to-sample';
-export {
-  PoseRepCounterService,
-  type FormCheckFrame,
-} from './lib/pose-rep-counter.service';
 export type { ExerciseHoldProfile } from './lib/exercise-hold-profile';
 export {
   PLANK_HOLD_PROFILE,
@@ -53,7 +50,9 @@ export {
   type HoldSnapshot,
 } from './lib/hold-state-machine';
 export {
-  PoseHoldTimerService,
-  type HoldFormCheckFrame,
+  HOLD_TIMER,
+  type HoldTimer,
   type HoldTimerStartOptions,
-} from './lib/pose-hold-timer.service';
+  type HoldFormCheckFrame,
+} from './lib/hold-timer.port';
+export { provideAutoCount } from './lib/provide-auto-count';

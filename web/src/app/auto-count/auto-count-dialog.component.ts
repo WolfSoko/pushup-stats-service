@@ -19,7 +19,7 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PoseRepCounterService } from '@pu-stats/auto-count';
+import { REP_COUNTER } from '@pu-stats/auto-count';
 
 import { CameraService } from './camera.service';
 
@@ -56,14 +56,13 @@ interface ExerciseOption {
     MatIconModule,
     MatProgressSpinnerModule,
   ],
-  providers: [PoseRepCounterService],
   templateUrl: './auto-count-dialog.component.html',
   styleUrl: './auto-count-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoCountDialogComponent {
   private readonly camera = inject(CameraService);
-  protected readonly counter = inject(PoseRepCounterService);
+  protected readonly counter = inject(REP_COUNTER);
   private readonly dialogRef = inject(
     MatDialogRef<AutoCountDialogComponent, AutoCountResult | null>
   );

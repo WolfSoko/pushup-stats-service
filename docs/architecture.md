@@ -74,6 +74,15 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 - App wires it in `app.config.ts` to read `PushSubscriptionService.status() === 'subscribed'`
 - Reminders has ZERO compile-time knowledge of push subscription state — the dep on `@pu-push/push` is only for `PushSwRegistrationService` (the SW used for both in-app `showNotification` and server-side push delivery)
 
+### Ports & Adapters (Auto-Count)
+
+- `@pu-stats/auto-count` defines port tokens (`REP_COUNTER`, `HOLD_TIMER`, `POSE_DETECTOR_FACTORY`, `POSE_FRAME_SOURCE`) and interfaces
+- Concrete implementations (`PoseRepCounterService`, `PoseHoldTimerService`) live in the lib but are hidden behind `provideAutoCount()`
+- Browser-specific adapters (MediaPipe detector, camera frame source) live at app level in `web/src/app/auto-count/`
+- Wired in `app.browser.config.ts` via `provideAutoCount()` which combines lib-level service bindings with app-level MediaPipe/camera providers
+- Lib stays platform-agnostic: no browser-only or WASM dependencies, only pure pose detection logic + state machines
+- Tests substitute fakes via DI at the port token level
+
 ### State Management Conventions
 
 - **Global state:** `@ngrx/signals` signalStore with `providedIn: 'root'`
