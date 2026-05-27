@@ -9642,21 +9642,21 @@
       </segment>
     </unit>
         <unit id="leaderboard.exercise.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestenlisten-Übung auswählen</source>
-        <target>Bestenlisten-Übung auswählen</target>
+        <target>Seleccionar ejercicio del marcador</target>
       </segment>
     </unit>
     <unit id="leaderboard.exercise.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>Más</target>
       </segment>
     </unit>
     <unit id="leaderboard.period.ariaLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leaderboard Zeitraum</source>
-        <target>Leaderboard Zeitraum</target>
+        <target>Período del marcador</target>
       </segment>
     </unit>
 </file>
