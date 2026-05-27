@@ -320,44 +320,6 @@
                 type="button"
                 i18n="@@auth.register.back"
               >
-                Zurück</button
-              ><button
-                mat-raised-button
-                color="primary"
-                matStepperNext
-                type="button"
-                [disabled]="registerUiStore.dailyGoal() < 1"
-                i18n="@@auth.next"
-              >
-                Weiter
-              </button>
-            </div>
-          </mat-step>
-
-          <mat-step>
-            <ng-template
-              matStepLabel
-              i18n="@@auth.onboarding.google.consent.checkbox"
-              >Einwilligung erteilen</ng-template
-            >
-            <p i18n="@@auth.onboarding.google.consent.text">
-              Ich willige in die Datenverarbeitung zum Erheben technisch
-              notwendiger Daten, statistischer Auswertungen und zum Ausspielen
-              gezielter Werbung ein.
-            </p>
-            <mat-checkbox
-              [checked]="registerUiStore.consentAccepted()"
-              (change)="registerUiStore.setConsentAccepted($event.checked)"
-              i18n="@@auth.onboarding.google.consent.checkbox"
-              >Einwilligung erteilen</mat-checkbox
-            >
-            <div class="form-actions">
-              <button
-                mat-stroked-button
-                matStepperPrevious
-                type="button"
-                i18n="@@auth.register.back"
-              >
                 Zurück
               </button>
               <button
