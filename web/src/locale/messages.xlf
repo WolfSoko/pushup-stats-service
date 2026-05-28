@@ -4335,7 +4335,7 @@
     </unit>
     <unit id="goals.weekdayLabel">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:252,254</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:253,255</note>
       </notes>
       <segment>
         <source>Aktiv an:</source>
@@ -4343,7 +4343,7 @@
     </unit>
     <unit id="goals.weekdayEveryDayHint">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:273,275</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:274,276</note>
       </notes>
       <segment>
         <source>Keine Auswahl = gilt jeden Tag.</source>
@@ -4351,7 +4351,7 @@
     </unit>
     <unit id="goals.addEntry">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:288,289</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:289,290</note>
       </notes>
       <segment>
         <source>Ziel hinzufügen</source>
@@ -4359,7 +4359,7 @@
     </unit>
     <unit id="goals.limitHint">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:292,293</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:293,294</note>
       </notes>
       <segment>
         <source> Maximal <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> Ziele pro Bereich. </source>
@@ -4367,7 +4367,7 @@
     </unit>
     <unit id="goals.linkBack.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:303,305</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:304,306</note>
       </notes>
       <segment>
         <source>Andere Einstellungen</source>
@@ -4375,7 +4375,7 @@
     </unit>
     <unit id="goals.linkBack.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:306,307</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:307,308</note>
       </notes>
       <segment>
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
@@ -4383,7 +4383,7 @@
     </unit>
     <unit id="goals.linkBack.cta">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:315,317</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:316,318</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </source>
@@ -4391,7 +4391,7 @@
     </unit>
     <unit id="goals.removeAria">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:460</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:461</note>
       </notes>
       <segment>
         <source>Ziel entfernen</source>
@@ -4399,7 +4399,7 @@
     </unit>
     <unit id="goals.weekdayAria">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:461</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:462</note>
       </notes>
       <segment>
         <source>Wochentage</source>
@@ -4407,7 +4407,7 @@
     </unit>
     <unit id="goals.section.daily.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:472</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:473</note>
       </notes>
       <segment>
         <source>Tagesziele</source>
@@ -4415,7 +4415,7 @@
     </unit>
     <unit id="goals.section.daily.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:473</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:474</note>
       </notes>
       <segment>
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
@@ -4423,7 +4423,7 @@
     </unit>
     <unit id="goals.section.weekly.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:478</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:479</note>
       </notes>
       <segment>
         <source>Wochenziele</source>
@@ -4431,7 +4431,7 @@
     </unit>
     <unit id="goals.section.weekly.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:479</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:480</note>
       </notes>
       <segment>
         <source>Summen pro Übung über die ganze Woche.</source>
@@ -4439,7 +4439,7 @@
     </unit>
     <unit id="goals.section.monthly.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:484</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:485</note>
       </notes>
       <segment>
         <source>Monatsziele</source>
@@ -4447,7 +4447,7 @@
     </unit>
     <unit id="goals.section.monthly.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:485</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:486</note>
       </notes>
       <segment>
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
@@ -4455,7 +4455,7 @@
     </unit>
     <unit id="goals.field.target.time">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:630</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:650</note>
       </notes>
       <segment>
         <source>Ziel (Sekunden)</source>
@@ -4463,7 +4463,7 @@
     </unit>
     <unit id="goals.field.target.distance">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:633</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:653</note>
       </notes>
       <segment>
         <source>Ziel (Meter)</source>
@@ -4471,7 +4471,7 @@
     </unit>
     <unit id="goals.field.target.reps">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:637</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:657</note>
       </notes>
       <segment>
         <source>Ziel</source>
@@ -4551,7 +4551,7 @@
     </unit>
     <unit id="leaderboard.lastUpdated">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:156,161</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:131,136</note>
       </notes>
       <segment>
         <source> Zuletzt aktualisiert: <pc id="0" equivStart="START_TAG_TIME" equivEnd="CLOSE_TAG_TIME" type="other" dispStart="&lt;time [attr.datetime]=&quot;updatedAt.toISOString()&quot;&gt;" dispEnd="&lt;/time&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
@@ -4561,8 +4561,8 @@
     </unit>
     <unit id="landing.leaderboard.ownPosition">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:176,177</note>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:186,188</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:178,179</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:188,190</note>
       </notes>
       <segment>
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
@@ -4570,7 +4570,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:196,198</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:198,200</note>
       </notes>
       <segment>
         <source> Sichtbarkeit oder Anzeigename anpassen? </source>
@@ -4578,7 +4578,7 @@
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:202,205</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:204,207</note>
       </notes>
       <segment>
         <source>Einstellungen öffnen</source>
@@ -4586,7 +4586,7 @@
     </unit>
     <unit id="leaderboard.loginHint">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:209,211</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:211,213</note>
       </notes>
       <segment>
         <source> Mitmachen und auftauchen? </source>
@@ -4594,7 +4594,7 @@
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <notes>
-        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:212,215</note>
+        <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:214,217</note>
       </notes>
       <segment>
         <source>Anmelden</source>

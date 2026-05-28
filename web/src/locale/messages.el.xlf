@@ -9680,249 +9680,249 @@
       </segment>
     </unit>
     <unit id="user.menu.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>Ημερήσιοι στόχοι</target>
       </segment>
     </unit>
     <unit id="seo.goals.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele – Pushup Tracker</source>
-        <target>Tagesziele – Pushup Tracker</target>
+        <target>Ημερήσιοι στόχοι – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.goals.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
-        <target>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</target>
+        <target>Σχεδίασε διάφορες ασκήσεις ανά ημέρα, εβδομάδα και μήνα – με φίλτρο ημέρας εβδομάδας.</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>Δευ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>Τρί</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>Τετ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>Πέμ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Παρ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Σάβ</target>
       </segment>
     </unit>
     <unit id="goals.weekday.short.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>Κυρ</target>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>Ημερήσιοι στόχοι</target>
       </segment>
     </unit>
     <unit id="goalsHeaderSubtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
-        <target> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </target>
+        <target> Διάφορες ασκήσεις ανά ημέρα, εβδομάδα, μήνα. </target>
       </segment>
     </unit>
     <unit id="goals.status.saving">
-      <segment state="initial">
+      <segment state="translated">
         <source>Speichert…</source>
-        <target>Speichert…</target>
+        <target>Αποθήκευση…</target>
       </segment>
     </unit>
     <unit id="goals.status.saved">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gespeichert</source>
-        <target>Gespeichert</target>
+        <target>Αποθηκεύτηκε</target>
       </segment>
     </unit>
     <unit id="goals.status.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fehler beim Speichern</source>
-        <target>Fehler beim Speichern</target>
+        <target>Σφάλμα αποθήκευσης</target>
       </segment>
     </unit>
     <unit id="goals.status.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Erneut versuchen </target>
+        <target> Επανάληψη </target>
       </segment>
     </unit>
     <unit id="goals.status.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ungespeicherte Änderungen…</source>
-        <target>Ungespeicherte Änderungen…</target>
+        <target>Μη αποθηκευμένες αλλαγές…</target>
       </segment>
     </unit>
     <unit id="goals.status.synced">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Ziele gespeichert</source>
-        <target>Alle Ziele gespeichert</target>
+        <target>Όλοι οι στόχοι αποθηκεύτηκαν</target>
       </segment>
     </unit>
     <unit id="goals.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
-        <target> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </target>
+        <target> Δημιούργησε μια λίστα ασκήσεων με τιμές στόχους για κάθε ημέρα, εβδομάδα και μήνα. Για τους ημερήσιους στόχους, μπορείς επίσης να ορίσεις ποιες μέρες της εβδομάδας ισχύει ο στόχος — ιδανικό για ένα πρόγραμμα push/pull/πόδια. </target>
       </segment>
     </unit>
     <unit id="goals.section.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
-        <target> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </target>
+        <target> Δεν υπάρχουν ακόμα στόχοι. Πρόσθεσε τον πρώτο σου στόχο παρακάτω. </target>
       </segment>
     </unit>
     <unit id="goals.field.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Άσκηση</target>
       </segment>
     </unit>
     <unit id="goals.weekdayLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktiv an:</source>
-        <target>Aktiv an:</target>
+        <target>Ενεργό την:</target>
       </segment>
     </unit>
     <unit id="goals.weekdayEveryDayHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Auswahl = gilt jeden Tag.</source>
-        <target>Keine Auswahl = gilt jeden Tag.</target>
+        <target>Χωρίς επιλογή = ισχύει κάθε μέρα.</target>
       </segment>
     </unit>
     <unit id="goals.addEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel hinzufügen</source>
-        <target>Ziel hinzufügen</target>
+        <target>Προσθήκη στόχου</target>
       </segment>
     </unit>
     <unit id="goals.limitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Maximal <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> Ziele pro Bereich. </source>
-        <target> Maximal <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> Ziele pro Bereich. </target>
+        <target> Μέγιστο <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> στόχοι ανά ενότητα. </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Andere Einstellungen</source>
-        <target>Andere Einstellungen</target>
+        <target>Άλλες ρυθμίσεις</target>
       </segment>
     </unit>
     <unit id="goals.linkBack.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
-        <target> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </target>
+        <target> Διαχείριση προφίλ, ορατότητας, υπενθυμίσεων και διαφημίσεων. </target>
       </segment>
     </unit>
     <unit id="goals.linkBack.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Άνοιγμα ρυθμίσεων </target>
       </segment>
     </unit>
     <unit id="goals.removeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel entfernen</source>
-        <target>Ziel entfernen</target>
+        <target>Αφαίρεση στόχου</target>
       </segment>
     </unit>
     <unit id="goals.weekdayAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>Ημέρες εβδομάδας</target>
       </segment>
     </unit>
     <unit id="goals.section.daily.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>Ημερήσιοι στόχοι</target>
       </segment>
     </unit>
     <unit id="goals.section.daily.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
-        <target>Was du an einzelnen Wochentagen schaffen willst.</target>
+        <target>Τι θέλεις να επιτύχεις μεμονωμένες ημέρες της εβδομάδας.</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochenziele</source>
-        <target>Wochenziele</target>
+        <target>Εβδομαδιαίοι στόχοι</target>
       </segment>
     </unit>
     <unit id="goals.section.weekly.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Summen pro Übung über die ganze Woche.</source>
-        <target>Summen pro Übung über die ganze Woche.</target>
+        <target>Σύνολα ανά άσκηση σε όλη την εβδομάδα.</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Monatsziele</source>
-        <target>Monatsziele</target>
+        <target>Μηνιαίοι στόχοι</target>
       </segment>
     </unit>
     <unit id="goals.section.monthly.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
-        <target>Größere Ziele über den ganzen Monat verteilt.</target>
+        <target>Μεγαλύτεροι στόχοι κατανεμημένοι σε όλο τον μήνα.</target>
       </segment>
     </unit>
     <unit id="goals.field.target.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Sekunden)</source>
-        <target>Ziel (Sekunden)</target>
+        <target>Στόχος (δευτερόλεπτα)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Meter)</source>
-        <target>Ziel (Meter)</target>
+        <target>Στόχος (μέτρα)</target>
       </segment>
     </unit>
     <unit id="goals.field.target.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel</source>
-        <target>Ziel</target>
+        <target>Στόχος</target>
       </segment>
     </unit>
     <unit id="settings.section.goals.linkSubtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </source>
-        <target> Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen werden jetzt auf der eigenen Seite verwaltet. </target>
+        <target> Οι ημερήσιοι, εβδομαδιαίοι και μηνιαίοι στόχοι με διάφορες ασκήσεις διαχειρίζονται πλέον στη δική τους σελίδα. </target>
       </segment>
     </unit>
     <unit id="settings.goals.openPageCta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Tagesziele öffnen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Tagesziele öffnen </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Άνοιγμα ημερήσιων στόχων </target>
       </segment>
     </unit>
 </file>
