@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { of } from 'rxjs';
@@ -37,6 +37,7 @@ const analyticsMock = {
   trackStepCompleted: jest.fn(),
   trackSubmitted: jest.fn(),
   trackSucceeded: jest.fn(),
+  trackSuccessCta: jest.fn(),
   trackFailed: jest.fn(),
   trackAbandoned: jest.fn(),
 };
@@ -180,7 +181,6 @@ describe('RegisterComponent', () => {
       const view = await renderRegister();
       const uiStore = view.fixture.debugElement.injector.get(RegisterUiStore);
       uiStore.setDisplayName('Alex');
-      uiStore.setDailyGoal(10);
       await uiStore.persistProfile();
       expect(uiStore.registerSuccess()).toBe(true);
       analyticsMock.trackAbandoned.mockClear();
@@ -224,6 +224,52 @@ describe('RegisterComponent', () => {
       expect(analyticsMock.trackStepView).toHaveBeenCalledWith('password', {
         is_google: false,
       });
+    });
+  });
+
+  describe('success-screen onboarding CTAs', () => {
+    async function renderSucceeded() {
+      authStoreMock.user.set({ uid: 'uid-1' });
+      const view = await renderRegister();
+      const uiStore = view.fixture.debugElement.injector.get(RegisterUiStore);
+      uiStore.setDisplayName('Alex');
+      await uiStore.persistProfile();
+      view.fixture.detectChanges();
+      const router = view.fixture.debugElement.injector.get(Router);
+      jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+      return { router };
+    }
+
+    it('Given success When "Trainingsplan wählen" is clicked Then tracks the CTA and navigates to /training-plans', async () => {
+      const user = userEvent.setup();
+      const { router } = await renderSucceeded();
+
+      await user.click(screen.getByTestId('register-success-training-plans'));
+
+      expect(analyticsMock.trackSuccessCta).toHaveBeenCalledWith(
+        'training_plans'
+      );
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/training-plans');
+    });
+
+    it('Given success When "Tagesziel festlegen" is clicked Then tracks the CTA and navigates to /goals', async () => {
+      const user = userEvent.setup();
+      const { router } = await renderSucceeded();
+
+      await user.click(screen.getByTestId('register-success-daily-goal'));
+
+      expect(analyticsMock.trackSuccessCta).toHaveBeenCalledWith('daily_goal');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/goals');
+    });
+
+    it('Given success When "Zum Dashboard" is clicked Then tracks the CTA and navigates to /app', async () => {
+      const user = userEvent.setup();
+      const { router } = await renderSucceeded();
+
+      await user.click(screen.getByTestId('register-success-dashboard'));
+
+      expect(analyticsMock.trackSuccessCta).toHaveBeenCalledWith('dashboard');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/app');
     });
   });
 });

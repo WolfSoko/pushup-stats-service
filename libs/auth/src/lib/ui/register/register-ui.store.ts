@@ -21,6 +21,11 @@ import { hasStrongPasswordPolicy } from '../password-policy';
 type RegisterUiState = {
   hidePassword: boolean;
   displayName: string;
+  /**
+   * Onboarding no longer asks for a daily goal — registration completes after
+   * the username step. This default is persisted so the new account has
+   * sensible goals; the success screen links to `/goals` to fine-tune it.
+   */
   dailyGoal: number;
   isGoogleRegistration: boolean;
   registeringCredentials: boolean;
@@ -72,7 +77,6 @@ export const RegisterUiStore = signalStore(
       patchState(store, { hidePassword: !store.hidePassword() }),
     setDisplayName: (value: string) =>
       patchState(store, { displayName: value }),
-    setDailyGoal: (value: number) => patchState(store, { dailyGoal: value }),
     setSelectedPlanId: (planId: string | null) => {
       // Only accept ids that resolve to a real plan; ignore stale or
       // malformed query-param values silently — better than redirecting
@@ -106,9 +110,7 @@ export const RegisterUiStore = signalStore(
       !emailInvalid &&
       hasStrongPasswordPolicy(password) &&
       password === repeatPassword,
-    isProfileStepValid: () =>
-      validateDisplayName(store.displayName()) === null &&
-      store.dailyGoal() >= 1,
+    isProfileStepValid: () => validateDisplayName(store.displayName()) === null,
     canSubmit: (
       emailInvalid: boolean,
       passwordInvalid: boolean,
@@ -116,7 +118,6 @@ export const RegisterUiStore = signalStore(
       repeatPassword: string
     ) =>
       validateDisplayName(store.displayName()) === null &&
-      store.dailyGoal() >= 1 &&
       (store.isGoogleRegistration() ||
         (!emailInvalid &&
           !passwordInvalid &&

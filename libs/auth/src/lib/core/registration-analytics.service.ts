@@ -1,18 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 
-export const REGISTRATION_STEPS = [
-  'email',
-  'password',
-  'username',
-  'daily_goal',
-] as const;
+export const REGISTRATION_STEPS = ['email', 'password', 'username'] as const;
 
 export type RegistrationStep = (typeof REGISTRATION_STEPS)[number];
 
 type RegistrationVariant = { is_google: boolean };
 
 type RegistrationFailureReason = 'sign_up' | 'persist_profile';
+
+export type RegistrationSuccessCta =
+  | 'dashboard'
+  | 'training_plans'
+  | 'daily_goal';
 
 @Injectable({ providedIn: 'root' })
 export class RegistrationAnalyticsService {
@@ -47,6 +47,10 @@ export class RegistrationAnalyticsService {
 
   trackSucceeded(variant: RegistrationVariant): void {
     this.track('register_succeeded', variant);
+  }
+
+  trackSuccessCta(target: RegistrationSuccessCta): void {
+    this.track('register_success_cta', { target });
   }
 
   trackFailed(
