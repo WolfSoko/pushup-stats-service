@@ -110,4 +110,30 @@ describe('TrainingPlansPageComponent', () => {
     const planLinks = screen.getAllByRole('link', { name: 'Plan ansehen' });
     expect(planLinks.length).toBe(TRAINING_PLANS.length);
   });
+
+  it('renders a topical hero image for every plan card', async () => {
+    const { container } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: makeStoreMock() },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: false,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    const images =
+      container.querySelectorAll<HTMLImageElement>('.card-media img');
+    expect(images.length).toBe(TRAINING_PLANS.length);
+
+    const [firstPlan] = TRAINING_PLANS;
+    const firstImg = images[0];
+    expect(firstImg.getAttribute('src')).toBe(firstPlan.heroImage);
+    // Localized title doubles as the alt text.
+    expect(firstImg.getAttribute('alt')).toBe(firstPlan.title);
+  });
 });

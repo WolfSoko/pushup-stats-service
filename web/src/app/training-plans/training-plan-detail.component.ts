@@ -66,6 +66,22 @@ interface DayRow {
   template: `
     @if (plan(); as p) {
       <main class="page-wrap">
+        @if (p.heroImage && !heroImageFailed) {
+          <figure class="plan-hero">
+            <img
+              [src]="p.heroImage"
+              [alt]="p.title"
+              loading="eager"
+              decoding="async"
+              width="1200"
+              height="675"
+              (error)="heroImageFailed = true"
+            />
+            @if (p.heroImageCredit) {
+              <figcaption [innerHTML]="p.heroImageCredit"></figcaption>
+            }
+          </figure>
+        }
         <app-page-header icon="fitness_center" variant="training">
           <h1 page-title>{{ p.title }}</h1>
           <p page-subtitle>{{ p.summary }}</p>
@@ -406,6 +422,29 @@ interface DayRow {
         display: block;
         margin-bottom: 16px;
       }
+      .plan-hero {
+        margin: 0 0 16px;
+      }
+      .plan-hero img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+        background: rgba(0, 0, 0, 0.06);
+      }
+      .plan-hero figcaption {
+        margin-top: 6px;
+        font-size: 0.78rem;
+        color: rgba(0, 0, 0, 0.55);
+      }
+      :host-context(.dark-theme) .plan-hero figcaption {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .plan-hero figcaption a {
+        color: inherit;
+      }
       .muted {
         color: rgba(0, 0, 0, 0.6);
       }
@@ -594,6 +633,9 @@ export class TrainingPlanDetailComponent {
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
   protected readonly authResolved = this.authStore.authResolved;
+
+  /** Hides the hero `<figure>` when the Unsplash image fails to load. */
+  protected heroImageFailed = false;
 
   private readonly slugSignal = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,

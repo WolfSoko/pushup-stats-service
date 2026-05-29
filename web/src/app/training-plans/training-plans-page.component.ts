@@ -171,6 +171,21 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
       <section class="plan-grid">
         @for (plan of localizedPlans(); track plan.id) {
           <mat-card class="plan-card">
+            @if (plan.heroImage && !failedImages.has(plan.id)) {
+              <a
+                [routerLink]="['/training-plans', plan.slug]"
+                class="card-media"
+                [attr.aria-label]="plan.title"
+              >
+                <img
+                  [src]="plan.heroImage"
+                  [alt]="plan.title"
+                  loading="lazy"
+                  decoding="async"
+                  (error)="onImageError(plan.id)"
+                />
+              </a>
+            }
             <mat-card-header>
               <mat-card-title>{{ plan.title }}</mat-card-title>
               <mat-card-subtitle>
@@ -269,8 +284,28 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
         gap: 16px;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       }
+      .plan-card {
+        overflow: hidden;
+      }
       .plan-card mat-card-content {
         min-height: 64px;
+      }
+      .card-media {
+        display: block;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.06);
+      }
+      .card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 200ms ease;
+      }
+      .card-media:hover img,
+      .card-media:focus-visible img {
+        transform: scale(1.03);
       }
       .signup-banner {
         margin-bottom: 24px;
@@ -311,8 +346,16 @@ export class TrainingPlansPageComponent {
       totalDays: p.totalDays,
       title: p.title,
       summary: p.summary,
+      heroImage: p.heroImage,
     }))
   );
+
+  /** Plan ids whose hero image failed to load — hides the broken `<img>`. */
+  readonly failedImages = new Set<string>();
+
+  onImageError(id: string): void {
+    this.failedImages.add(id);
+  }
 
   /** Active plan card view-model — null when no plan is active. */
   readonly activeView = computed(() => {

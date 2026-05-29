@@ -2472,9 +2472,17 @@
         <source>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</source>
       </segment>
     </unit>
+    <unit id="plan.heroImageCredit">
+      <notes>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1733</note>
+      </notes>
+      <segment>
+        <source>Foto: &lt;a href=&quot;https://unsplash.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Unsplash&lt;/a&gt;</source>
+      </segment>
+    </unit>
     <unit id="plan.recruit-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1737</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1739</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
@@ -2482,7 +2490,7 @@
     </unit>
     <unit id="plan.recruit-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1738</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1740</note>
       </notes>
       <segment>
         <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
@@ -2490,7 +2498,7 @@
     </unit>
     <unit id="plan.recruit-6w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1741</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1746</note>
       </notes>
       <segment>
         <source>liegestuetze-steigern</source>
@@ -2498,7 +2506,7 @@
     </unit>
     <unit id="plan.challenge-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1747</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1752</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -2506,7 +2514,7 @@
     </unit>
     <unit id="plan.challenge-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1748</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1753</note>
       </notes>
       <segment>
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
@@ -2514,7 +2522,7 @@
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1751</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1759</note>
       </notes>
       <segment>
         <source>30-tage-liegestuetze-challenge</source>
@@ -2522,7 +2530,7 @@
     </unit>
     <unit id="plan.over-40-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1757</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1765</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
@@ -2530,7 +2538,7 @@
     </unit>
     <unit id="plan.over-40-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1758</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1766</note>
       </notes>
       <segment>
         <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
@@ -2538,7 +2546,7 @@
     </unit>
     <unit id="plan.over-40-4w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1761</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1772</note>
       </notes>
       <segment>
         <source>liegestuetze-ab-40</source>
@@ -2546,7 +2554,7 @@
     </unit>
     <unit id="plan.daily-100-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1767</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1778</note>
       </notes>
       <segment>
         <source>Daily 100 — 30 Tage zur 100er-Marke</source>
@@ -2554,7 +2562,7 @@
     </unit>
     <unit id="plan.daily-100-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1768</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1779</note>
       </notes>
       <segment>
         <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
@@ -2562,7 +2570,7 @@
     </unit>
     <unit id="plan.one-arm-12w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1776</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1790</note>
       </notes>
       <segment>
         <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
@@ -2570,7 +2578,7 @@
     </unit>
     <unit id="plan.one-arm-12w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1777</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1791</note>
       </notes>
       <segment>
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
@@ -2578,7 +2586,7 @@
     </unit>
     <unit id="plan.push-pull-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1785</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1802</note>
       </notes>
       <segment>
         <source>Push &amp; Pull Balance — 6-Wochen-Plan</source>
@@ -2586,7 +2594,7 @@
     </unit>
     <unit id="plan.push-pull-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1786</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1803</note>
       </notes>
       <segment>
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
@@ -2594,7 +2602,7 @@
     </unit>
     <unit id="plan.full-body-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1794</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1814</note>
       </notes>
       <segment>
         <source>Full Body Strong — 6-Wochen-Ganzkörperplan</source>
@@ -2602,7 +2610,7 @@
     </unit>
     <unit id="plan.full-body-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1795</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1815</note>
       </notes>
       <segment>
         <source>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</source>
@@ -2610,7 +2618,7 @@
     </unit>
     <unit id="plan.core-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1803</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1826</note>
       </notes>
       <segment>
         <source>Core Foundations — 4-Wochen-Rumpfplan</source>
@@ -2618,7 +2626,7 @@
     </unit>
     <unit id="plan.core-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1804</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1827</note>
       </notes>
       <segment>
         <source>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</source>
@@ -2626,7 +2634,7 @@
     </unit>
     <unit id="plan.hiit-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1812</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1838</note>
       </notes>
       <segment>
         <source>HIIT Burner — 4-Wochen-Konditionsplan</source>
@@ -2634,7 +2642,7 @@
     </unit>
     <unit id="plan.hiit-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1813</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1839</note>
       </notes>
       <segment>
         <source>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</source>
@@ -2642,7 +2650,7 @@
     </unit>
     <unit id="plan.mobility-2w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1821</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1850</note>
       </notes>
       <segment>
         <source>Mobility &amp; Recovery — 2-Wochen-Deload</source>
@@ -2650,7 +2658,7 @@
     </unit>
     <unit id="plan.mobility-2w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1822</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1851</note>
       </notes>
       <segment>
         <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
@@ -9134,7 +9142,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:77,78</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:254,256</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:241,242</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:257,258</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:107,108</note>
       </notes>
       <segment>
@@ -9144,7 +9152,7 @@
     <unit id="trainingPlans.kind.light">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:248,250</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:264,266</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:110,111</note>
       </notes>
       <segment>
@@ -9154,7 +9162,7 @@
     <unit id="trainingPlans.kind.test">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:82,84</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:244,246</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:260,262</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:113,115</note>
       </notes>
       <segment>
@@ -9165,8 +9173,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:267,269</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:254,255</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:260,261</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:270,271</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:276,277</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:125,127</note>
       </notes>
       <segment>
@@ -9444,8 +9452,8 @@
     </unit>
     <unit id="trainingPlans.back">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:77</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:393,395</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:93</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:409,411</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -9453,8 +9461,8 @@
     </unit>
     <unit id="trainingPlans.daysSuffix">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:86,88</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:180,182</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:102,104</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:195,197</note>
       </notes>
       <segment>
         <source>Tage</source>
@@ -9462,8 +9470,8 @@
     </unit>
     <unit id="trainingPlans.level.beginner">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:90,91</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:185,187</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:106,107</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:200,202</note>
       </notes>
       <segment>
         <source>Einsteiger</source>
@@ -9471,8 +9479,8 @@
     </unit>
     <unit id="trainingPlans.level.intermediate">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:92,94</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:189,191</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:108,110</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:204,206</note>
       </notes>
       <segment>
         <source>Mittelstufe</source>
@@ -9480,8 +9488,8 @@
     </unit>
     <unit id="trainingPlans.level.advanced">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:94,96</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:193,195</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:110,112</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:208,210</note>
       </notes>
       <segment>
         <source>Fortgeschritten</source>
@@ -9489,7 +9497,7 @@
     </unit>
     <unit id="trainingPlans.progress">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:103,104</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:119,120</note>
       </notes>
       <segment>
         <source>Fortschritt</source>
@@ -9497,7 +9505,7 @@
     </unit>
     <unit id="trainingPlans.currentDay">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:112,113</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:128,129</note>
       </notes>
       <segment>
         <source>Aktueller Tag:</source>
@@ -9505,7 +9513,7 @@
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:119,121</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:135,137</note>
       </notes>
       <segment>
         <source> Tagesziel wird vom Plan gesetzt. </source>
@@ -9513,7 +9521,7 @@
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:125,128</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:141,144</note>
       </notes>
       <segment>
         <source>Manuelle Ziele anpassen</source>
@@ -9521,7 +9529,7 @@
     </unit>
     <unit id="trainingPlans.abandon">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:136,138</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:152,154</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:140,142</note>
       </notes>
       <segment>
@@ -9530,7 +9538,7 @@
     </unit>
     <unit id="trainingPlans.startCta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:146,148</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:162,164</note>
       </notes>
       <segment>
         <source> Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt. </source>
@@ -9538,7 +9546,7 @@
     </unit>
     <unit id="trainingPlans.signupCta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:151,153</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:167,169</note>
       </notes>
       <segment>
         <source> Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir tracken deinen Fortschritt automatisch und setzen dein Tagesziel passend zum Plan. </source>
@@ -9546,7 +9554,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.tracking">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:157,159</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:173,175</note>
       </notes>
       <segment>
         <source> Automatische Fortschrittsverfolgung </source>
@@ -9554,7 +9562,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.goal">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:160,162</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:176,178</note>
       </notes>
       <segment>
         <source> Tagesziel passt sich täglich an deinen Plan an </source>
@@ -9562,7 +9570,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.streak">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:163,165</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:179,181</note>
       </notes>
       <segment>
         <source> Streaks, Statistiken und Bestenliste </source>
@@ -9570,7 +9578,7 @@
     </unit>
     <unit id="trainingPlans.replaceWarn">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:175,176</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:191,192</note>
       </notes>
       <segment>
         <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
@@ -9578,7 +9586,7 @@
     </unit>
     <unit id="trainingPlans.start">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:180,182</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:196,198</note>
       </notes>
       <segment>
         <source>Plan starten</source>
@@ -9586,7 +9594,7 @@
     </unit>
     <unit id="trainingPlans.signupAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:191,193</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:207,209</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -9594,7 +9602,7 @@
     </unit>
     <unit id="trainingPlans.loginAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:199,202</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:215,218</note>
       </notes>
       <segment>
         <source>Schon Konto? Einloggen</source>
@@ -9602,7 +9610,7 @@
     </unit>
     <unit id="trainingPlans.week">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:209,210</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:225,226</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -9610,7 +9618,7 @@
     </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:301,302</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:317,318</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -9618,7 +9626,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:321,323</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:337,339</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -9626,7 +9634,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:331,333</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:347,349</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
@@ -9634,7 +9642,7 @@
     </unit>
     <unit id="trainingPlans.menu.logDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:344,346</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:360,362</note>
       </notes>
       <segment>
         <source>Plan-Sätze eintragen &amp; abhaken</source>
@@ -9642,7 +9650,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:354,356</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:370,372</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -9650,7 +9658,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:363,364</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:379,380</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -9658,7 +9666,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:375,377</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:391,393</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -9666,7 +9674,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:390,391</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:406,407</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -9674,7 +9682,7 @@
     </unit>
     <unit id="trainingPlans.autoStartFailed">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:684</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:726</note>
       </notes>
       <segment>
         <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
@@ -9682,7 +9690,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:767</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:809</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -9690,7 +9698,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:784</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:826</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -9698,7 +9706,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:802</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:844</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -9706,7 +9714,7 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:815</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:857</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
@@ -9714,8 +9722,8 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:832</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:348</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:874</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:391</note>
       </notes>
       <segment>
         <source>Plan-Sätze wurden eingetragen.</source>
@@ -9723,8 +9731,8 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:834</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:350</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:876</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:393</note>
       </notes>
       <segment>
         <source>Tag war schon eingetragen — als erledigt markiert.</source>
@@ -9732,8 +9740,8 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:836</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:352</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:878</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:395</note>
       </notes>
       <segment>
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
@@ -9821,7 +9829,7 @@
     </unit>
     <unit id="trainingPlans.viewPlan">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:209,211</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:224,226</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>
