@@ -1730,8 +1730,6 @@ const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
   ),
 ];
 
-const UNSPLASH_CREDIT = $localize`:@@plan.heroImageCredit:Foto: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>`;
-
 export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
   {
     id: 'recruit-6w-v1',
@@ -1742,7 +1740,11 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     totalDays: 42,
     heroImage:
       'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+    heroImagePhotographer: {
+      name: 'Gordon Cowie',
+      profileUrl:
+        'https://unsplash.com/@gcowie?utm_source=pushup_stats&utm_medium=referral',
+    },
     blogSlug: $localize`:@@plan.recruit-6w.blogSlug:liegestuetze-steigern`,
     days: RECRUIT_DAYS,
   },
@@ -1754,8 +1756,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'intermediate',
     totalDays: 30,
     heroImage:
-      'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'bruce mars',
+      profileUrl:
+        'https://unsplash.com/@brucemars?utm_source=pushup_stats&utm_medium=referral',
+    },
     blogSlug: $localize`:@@plan.challenge-30d.blogSlug:30-tage-liegestuetze-challenge`,
     days: CHALLENGE_30_DAYS,
   },
@@ -1767,8 +1773,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'beginner',
     totalDays: 28,
     heroImage:
-      'https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1706806594828-318b9185ad0e?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Centre for Ageing Better',
+      profileUrl:
+        'https://unsplash.com/@ageing_better?utm_source=pushup_stats&utm_medium=referral',
+    },
     blogSlug: $localize`:@@plan.over-40-4w.blogSlug:liegestuetze-ab-40`,
     days: OVER_40_DAYS,
   },
@@ -1780,8 +1790,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'intermediate',
     totalDays: 30,
     heroImage:
-      'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1760084081757-6f918c08403b?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Rahul Gupta',
+      profileUrl:
+        'https://unsplash.com/@rahulguptafit4soul?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: DAILY_100_DAYS,
   },
   {
@@ -1792,8 +1806,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'advanced',
     totalDays: 84,
     heroImage:
-      'https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1714646442347-5588041f9cc9?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Vitaly Gariev',
+      profileUrl:
+        'https://unsplash.com/@silverkblack?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: ONE_ARM_DAYS,
   },
   {
@@ -1804,8 +1822,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'intermediate',
     totalDays: 42,
     heroImage:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1598575468023-85b93d887c3f?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Gordon Cowie',
+      profileUrl:
+        'https://unsplash.com/@gcowie?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: PUSH_PULL_BALANCE_DAYS,
   },
   {
@@ -1816,8 +1838,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'intermediate',
     totalDays: 42,
     heroImage:
-      'https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Lawrence Crayton',
+      profileUrl:
+        'https://unsplash.com/@lawrencecrayton?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: FULL_BODY_DAYS,
   },
   {
@@ -1828,8 +1854,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'beginner',
     totalDays: 28,
     heroImage:
-      'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1592334628151-36869c12ad0e?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Minna Hamalainen',
+      profileUrl:
+        'https://unsplash.com/@yogaminna8?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: CORE_FOUNDATIONS_DAYS,
   },
   {
@@ -1840,8 +1870,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'intermediate',
     totalDays: 28,
     heroImage:
-      'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Scott Webb',
+      profileUrl:
+        'https://unsplash.com/@scottwebb?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: HIIT_BURNER_DAYS,
   },
   {
@@ -1852,8 +1886,12 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'beginner',
     totalDays: 14,
     heroImage:
-      'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80',
-    heroImageCredit: UNSPLASH_CREDIT,
+      'https://images.unsplash.com/photo-1597586594276-456f8c50b82d?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Alex Shaw',
+      profileUrl:
+        'https://unsplash.com/@matt909?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: MOBILITY_RECOVERY_DAYS,
   },
 ];

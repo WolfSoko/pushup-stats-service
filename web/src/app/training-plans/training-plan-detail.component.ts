@@ -78,8 +78,23 @@ interface DayRow {
               height="675"
               (error)="heroImageFailed.set(true)"
             />
-            @if (p.heroImageCredit) {
-              <figcaption [innerHTML]="p.heroImageCredit"></figcaption>
+            @if (p.heroImagePhotographer; as photographer) {
+              <figcaption>
+                <span i18n="@@trainingPlans.photoCreditPrefix">Foto:</span>
+                <a
+                  [href]="photographer.profileUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >{{ photographer.name }}</a
+                >
+                /
+                <a
+                  href="https://unsplash.com/?utm_source=pushup_stats&utm_medium=referral"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Unsplash</a
+                >
+              </figcaption>
             }
           </figure>
         }

@@ -62,10 +62,11 @@ export interface TrainingPlan {
    */
   heroImage?: string;
   /**
-   * Small credit line rendered under the hero on the detail page —
-   * HTML allowed. Localized (the "Foto:" label varies per locale).
+   * Photographer attribution for the hero photo, rendered as a credit
+   * line under the hero on the detail page. Locale-independent — the
+   * "Foto:" label is the only localized part and lives in the template.
    */
-  heroImageCredit?: string;
+  heroImagePhotographer?: { name: string; profileUrl: string };
   /**
    * Optional locale-aware blog slug for the "Read the article" CTA.
    * The German source value is the DE blog slug; translators replace

@@ -9203,10 +9203,10 @@ Deine Position: # ·  Reps        </source>
         <target>Tagesziel festlegen</target>
       </segment>
     </unit>
-    <unit id="plan.heroImageCredit">
+    <unit id="trainingPlans.photoCreditPrefix">
       <segment state="initial">
-        <source>Foto: &lt;a href=&quot;https://unsplash.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Unsplash&lt;/a&gt;</source>
-        <target>Foto: &lt;a href=&quot;https://unsplash.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Unsplash&lt;/a&gt;</target>
+        <source>Foto:</source>
+        <target>Foto:</target>
       </segment>
     </unit>
 </file>

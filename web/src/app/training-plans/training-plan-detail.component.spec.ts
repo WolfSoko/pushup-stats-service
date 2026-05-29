@@ -523,6 +523,11 @@ describe('TrainingPlanDetailComponent', () => {
       expect(img?.getAttribute('alt')).toBe(plan?.title);
 
       const caption = container.querySelector('.plan-hero figcaption');
+      expect(caption?.textContent).toContain(plan?.heroImagePhotographer?.name);
+      const photographerLink = caption?.querySelector<HTMLAnchorElement>(
+        `a[href="${plan?.heroImagePhotographer?.profileUrl}"]`
+      );
+      expect(photographerLink).not.toBeNull();
       expect(caption?.innerHTML).toContain('unsplash.com');
     });
 
