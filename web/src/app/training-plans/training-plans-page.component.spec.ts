@@ -137,7 +137,8 @@ describe('TrainingPlansPageComponent', () => {
     expect(firstImg.getAttribute('alt')).toBe(firstPlan.title);
   });
 
-  it('hides a card image when it fails to load (OnPush + zoneless)', async () => {
+  it('should hide a card image given an image load failure (OnPush + zoneless)', async () => {
+    // Given: a rendered component with a hero image on every plan card
     const { container, fixture } = await render(TrainingPlansPageComponent, {
       providers: [
         provideRouter([]),
@@ -156,10 +157,12 @@ describe('TrainingPlansPageComponent', () => {
       container.querySelector<HTMLImageElement>('.card-media img');
     expect(firstImg).not.toBeNull();
 
+    // When: the first image fails to load
     firstImg?.dispatchEvent(new Event('error'));
     fixture.detectChanges();
     await fixture.whenStable();
 
+    // Then: that image is removed from the DOM
     const images =
       container.querySelectorAll<HTMLImageElement>('.card-media img');
     expect(images.length).toBe(TRAINING_PLANS.length - 1);
