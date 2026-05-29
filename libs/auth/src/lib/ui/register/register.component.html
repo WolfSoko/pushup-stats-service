@@ -41,7 +41,11 @@
       }
 
       @if (registerUiStore.registerSuccess()) {
-        <pus-register-success (dashboard)="goToDashboard()" />
+        <pus-register-success
+          (dashboard)="goToDashboard()"
+          (trainingPlans)="goToTrainingPlans()"
+          (dailyGoal)="goToDailyGoalSettings()"
+        />
       } @else {
         <mat-stepper
           linear
@@ -276,43 +280,6 @@
                 </p>
               }
             }
-            <div class="form-actions">
-              <button
-                mat-stroked-button
-                matStepperPrevious
-                type="button"
-                i18n="@@auth.register.back"
-              >
-                Zurück</button
-              ><button
-                mat-raised-button
-                color="primary"
-                matStepperNext
-                type="button"
-                [disabled]="registerUiStore.displayNameViolation() !== null"
-                i18n="@@auth.next"
-              >
-                Weiter
-              </button>
-            </div>
-          </mat-step>
-
-          <mat-step [completed]="registerUiStore.dailyGoal() >= 1">
-            <ng-template matStepLabel i18n="@@auth.onboarding.google.goal"
-              >Tagesziel</ng-template
-            >
-            <mat-form-field appearance="outline" class="full-width step-field"
-              ><mat-label i18n="@@auth.onboarding.google.goal"
-                >Tagesziel</mat-label
-              ><input
-                matInput
-                type="number"
-                min="1"
-                [value]="registerUiStore.dailyGoal()"
-                (input)="
-                  registerUiStore.setDailyGoal(+$any($event.target).value || 1)
-                "
-            /></mat-form-field>
             <div class="form-actions">
               <button
                 mat-stroked-button

@@ -225,8 +225,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   async goToDashboard(): Promise<void> {
+    this.analytics.trackSuccessCta('dashboard');
     const planReturnUrl = this.registerUiStore.selectedPlanReturnUrl();
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     await this.router.navigateByUrl(planReturnUrl ?? returnUrl ?? '/app');
+  }
+
+  async goToTrainingPlans(): Promise<void> {
+    this.analytics.trackSuccessCta('training_plans');
+    await this.router.navigateByUrl('/training-plans');
+  }
+
+  async goToDailyGoalSettings(): Promise<void> {
+    this.analytics.trackSuccessCta('daily_goal');
+    await this.router.navigateByUrl('/goals');
   }
 }

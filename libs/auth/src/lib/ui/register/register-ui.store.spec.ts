@@ -63,10 +63,9 @@ describe('RegisterUiStore', () => {
     expect(store.displayName()).toBe('Tester');
   });
 
-  it('Given a complete profile When submitting via email Then sign up and persist profile are executed', async () => {
+  it('Given a complete profile When submitting via email Then sign up and persist profile with the default daily goal', async () => {
     const store = await setup();
     store.setDisplayName('Alex');
-    store.setDailyGoal(120);
 
     const canSubmit = store.canSubmit(false, false, 'Secret#123', 'Secret#123');
     const signedUp = await store.signUpWithEmail('mail@test.de', 'Secret#123');
@@ -83,10 +82,19 @@ describe('RegisterUiStore', () => {
       expect.objectContaining({
         uid: 'uid-1',
         displayName: 'Alex',
-        dailyGoal: 120,
-        weeklyGoal: 600,
-        monthlyGoal: 2400,
+        dailyGoal: 10,
+        weeklyGoal: 50,
+        monthlyGoal: 200,
       })
+    );
+  });
+
+  it('Given only a valid username (no daily goal step) Then canSubmit is true', async () => {
+    const store = await setup();
+    store.setDisplayName('Alex');
+
+    expect(store.canSubmit(false, false, 'Secret#123', 'Secret#123')).toBe(
+      true
     );
   });
 
@@ -121,7 +129,6 @@ describe('RegisterUiStore', () => {
     onboardingMock.saveProfile.mockRejectedValueOnce(new Error('api-failed'));
     const store = await setup();
     store.setDisplayName('Alex');
-    store.setDailyGoal(120);
 
     const persisted = await store.persistProfile();
 
@@ -133,7 +140,6 @@ describe('RegisterUiStore', () => {
     it('Given a too-short displayName Then violation is "too-short" and submission is blocked', async () => {
       const store = await setup();
       store.setDisplayName('A');
-      store.setDailyGoal(10);
 
       expect(store.displayNameViolation()).toBe('too-short');
       expect(store.isProfileStepValid()).toBe(false);
@@ -161,7 +167,6 @@ describe('RegisterUiStore', () => {
     it('Given a valid displayName Then violation is null and isProfileStepValid is true', async () => {
       const store = await setup();
       store.setDisplayName('Alex');
-      store.setDailyGoal(10);
 
       expect(store.displayNameViolation()).toBeNull();
       expect(store.isProfileStepValid()).toBe(true);
