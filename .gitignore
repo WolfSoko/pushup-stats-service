@@ -80,3 +80,4 @@ mobile/android-twa/build/
 mobile/android-twa/app/build/
 mobile/android-twa/.gradle/
 mobile/android-twa/local.properties
+.claude-translations/
