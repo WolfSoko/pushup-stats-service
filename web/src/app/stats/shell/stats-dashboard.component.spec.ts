@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -1585,5 +1587,51 @@ describe('StatsDashboardComponent', () => {
       expect(href).toContain('/training-plans/recruit-6w');
       expect(href).toContain('day=1');
     });
+  });
+});
+
+describe('StatsDashboardComponent latest-entries light theme styling', () => {
+  // jsdom does not resolve `:host-context()` / the SCSS cascade, so we guard
+  // the regression at the source level instead. Regression: the dark gradient
+  // is painted on `.recent-exercise-tile mat-card` (the opaque card), but the
+  // light-theme override used to set its light background on the
+  // `.recent-exercise-tile` wrapper link. The opaque card stayed dark in light
+  // mode and the dark text overrides became unreadable on it.
+  // The test runner executes with the Nx workspace root as cwd; read the
+  // component stylesheet from there (the esbuild-based unit-test pipeline
+  // does not support Vite's `?raw` import suffix).
+  const scss = readFileSync(
+    join(
+      process.cwd(),
+      'web/src/app/stats/shell/stats-dashboard.component.scss'
+    ),
+    'utf8'
+  );
+
+  const lightThemeBlock = (() => {
+    const start = scss.indexOf(':host-context(html.light-theme)');
+    expect(start).toBeGreaterThanOrEqual(0);
+    return scss.slice(start);
+  })();
+
+  it('Given light mode, Then the recent-exercise card background is overridden on the mat-card, not the wrapper link', () => {
+    const latestStart = lightThemeBlock.indexOf('.latest-entries');
+    expect(latestStart).toBeGreaterThanOrEqual(0);
+    const latestBlock = lightThemeBlock.slice(latestStart);
+
+    // The override must reach the opaque card element that carries the dark
+    // gradient in dark mode — otherwise the tile never adopts light mode.
+    expect(latestBlock).toContain('.recent-exercise-tile mat-card {');
+  });
+
+  it('Given dark mode, Then the recent-exercise gradient is defined on the mat-card so the light override has a matching target', () => {
+    const darkStart = scss.indexOf('.recent-exercise-tile {');
+    expect(darkStart).toBeGreaterThanOrEqual(0);
+    const darkTile = scss.slice(
+      darkStart,
+      scss.indexOf('}', scss.indexOf('mat-card {', darkStart))
+    );
+    expect(darkTile).toContain('mat-card {');
+    expect(darkTile).toContain('background: linear-gradient(');
   });
 });
