@@ -9186,21 +9186,21 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="auth.register.success.next">
-      <segment state="initial">
+      <segment state="translated">
         <source> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </source>
-        <target> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </target>
+        <target> Velg en treningsplan eller sett ditt daglige mål: </target>
       </segment>
     </unit>
     <unit id="auth.register.success.trainingPlans">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan wählen</source>
-        <target>Trainingsplan wählen</target>
+        <target>Velg treningsplan</target>
       </segment>
     </unit>
     <unit id="auth.register.success.dailyGoal">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel festlegen</source>
-        <target>Tagesziel festlegen</target>
+        <target>Sett daglig mål</target>
       </segment>
     </unit>
 </file>

@@ -9420,21 +9420,21 @@
       </segment>
     </unit>
     <unit id="auth.register.success.next">
-      <segment state="initial">
+      <segment state="translated">
         <source> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </source>
-        <target> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </target>
+        <target> 选择训练计划或设置每日目标： </target>
       </segment>
     </unit>
     <unit id="auth.register.success.trainingPlans">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan wählen</source>
-        <target>Trainingsplan wählen</target>
+        <target>选择训练计划</target>
       </segment>
     </unit>
     <unit id="auth.register.success.dailyGoal">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel festlegen</source>
-        <target>Tagesziel festlegen</target>
+        <target>设置每日目标</target>
       </segment>
     </unit>
 </file>
