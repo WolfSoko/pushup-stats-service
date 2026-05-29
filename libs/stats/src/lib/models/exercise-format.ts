@@ -6,7 +6,11 @@ import { measurementValueField } from './exercise.models';
  * driven by `ExerciseDefinition.unit`. The shape is:
  *
  *   - `'reps'`  → bare number (`"30"`)
- *   - `'s'`     → `m:ss` so a 90 s plank reads `"1:30"`
+ *   - `'s'`     → `m:ss` so a 90 s plank reads `"1:30"`; once the
+ *                 duration reaches an hour it grows an hours field
+ *                 (`h:mm:ss`) so aggregated time-exercise totals don't
+ *                 read as a runaway minute count (28 h → `"28:00:00"`,
+ *                 not `"1680:00"`)
  *   - `'kg'`    → `"<n> kg"`
  *   - `'m'`     → `"<n> m"` for short distances; ≥1000 m render as
  *                 `"<n.nn> km"` so a 5 km run reads cleanly
@@ -43,8 +47,12 @@ export function formatExerciseValue(value: number, unit: string): string {
 
 function formatSecondsAsMmSs(totalSec: number): string {
   if (!Number.isFinite(totalSec) || totalSec < 0) return '';
-  const m = Math.floor(totalSec / 60);
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
   const s = Math.floor(totalSec % 60);
+  if (h > 0) {
+    return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
@@ -118,10 +126,7 @@ export function formatDistanceTime(
  * themselves — keeps the composite/single switch in one place.
  */
 export function formatEntryDisplay(
-  entry: Pick<
-    ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg'
-  >,
+  entry: Pick<ExerciseEntry, 'reps' | 'durationSec' | 'distanceM' | 'weightKg'>,
   def: Pick<ExerciseDefinition, 'measurement' | 'unit'>
 ): string {
   if (def.measurement === 'distance-time') {
@@ -147,4 +152,3 @@ export function formatEntryTotal(
   }
   return formatExerciseValue(totals.primary, def.unit);
 }
-
