@@ -251,6 +251,28 @@ describe('LeaderboardPageComponent', () => {
       expect(row).not.toBeNull();
       expect(row?.textContent?.replace(/\s+/g, ' ').trim()).toBe('1:30');
     });
+
+    it('Grows an hours field once the aggregated total passes an hour', async () => {
+      // Given — a last-30 plank total of 9000 s (2.5 h). Aggregated
+      // time totals routinely exceed an hour (the ranker caps a single
+      // day at 4 h and sums up to 30 of them), so the bare m:ss form
+      // would render an unreadable "150:00" minute count here.
+      await setup([{ rank: 1, alias: 'Tom', reps: 9000, uid: 'tom1' }], {
+        exerciseId: 'plank.standard',
+      });
+
+      fixture.componentInstance.selectExercise('plank.standard');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // Then — 9000 s → "2:30:00", not "150:00".
+      const root = fixture.nativeElement as HTMLElement;
+      const row = root.querySelector(
+        'ol[data-testid="leaderboard-list"] li:first-child strong'
+      ) as HTMLElement | null;
+      expect(row?.textContent?.replace(/\s+/g, ' ').trim()).toBe('2:30:00');
+    });
   });
 
   describe('Given a distance-time exercise like running', () => {

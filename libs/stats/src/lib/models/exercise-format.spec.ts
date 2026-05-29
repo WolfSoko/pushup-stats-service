@@ -26,8 +26,11 @@ describe('formatExerciseValue', () => {
       [60, '1:00'],
       [90, '1:30'],
       [125, '2:05'],
-      [3600, '60:00'],
-      [7200, '120:00'],
+      [3599, '59:59'],
+      [3600, '1:00:00'],
+      [3661, '1:01:01'],
+      [7200, '2:00:00'],
+      [100_800, '28:00:00'],
     ])('renders %i s as %s', (value, expected) => {
       expect(formatExerciseValue(value, 's')).toBe(expected);
     });
@@ -139,9 +142,9 @@ describe('formatEntryDisplay', () => {
   });
 
   it('reads durationSec for time-only exercises', () => {
-    expect(
-      formatEntryDisplay({ durationSec: 90 }, def('time', 's'))
-    ).toBe('1:30');
+    expect(formatEntryDisplay({ durationSec: 90 }, def('time', 's'))).toBe(
+      '1:30'
+    );
   });
 
   it('reads reps for rep-based exercises', () => {
@@ -149,9 +152,9 @@ describe('formatEntryDisplay', () => {
   });
 
   it('reads reps for weight exercises (the rep count is the primary)', () => {
-    expect(formatEntryDisplay({ reps: 5, weightKg: 80 }, def('weight', 'reps'))).toBe(
-      '5'
-    );
+    expect(
+      formatEntryDisplay({ reps: 5, weightKg: 80 }, def('weight', 'reps'))
+    ).toBe('5');
   });
 
   it('reads distanceM for plain distance exercises', () => {
@@ -174,7 +177,7 @@ describe('formatEntryTotal', () => {
         { primary: 42_000, companion: 12_600 },
         def('distance-time', 'm')
       )
-    ).toBe('42.00 km · 210:00 (5:00 /km)');
+    ).toBe('42.00 km · 3:30:00 (5:00 /km)');
   });
 
   it('falls back to single-value formatting for other measurements', () => {
@@ -183,8 +186,8 @@ describe('formatEntryTotal', () => {
   });
 
   it('handles distance-time without a companion total (cardio with 0 s)', () => {
-    expect(
-      formatEntryTotal({ primary: 5000 }, def('distance-time', 'm'))
-    ).toBe('5.00 km');
+    expect(formatEntryTotal({ primary: 5000 }, def('distance-time', 'm'))).toBe(
+      '5.00 km'
+    );
   });
 });
