@@ -136,4 +136,32 @@ describe('TrainingPlansPageComponent', () => {
     // Localized title doubles as the alt text.
     expect(firstImg.getAttribute('alt')).toBe(firstPlan.title);
   });
+
+  it('hides a card image when it fails to load (OnPush + zoneless)', async () => {
+    const { container, fixture } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: makeStoreMock() },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: false,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    const firstImg =
+      container.querySelector<HTMLImageElement>('.card-media img');
+    expect(firstImg).not.toBeNull();
+
+    firstImg?.dispatchEvent(new Event('error'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const images =
+      container.querySelectorAll<HTMLImageElement>('.card-media img');
+    expect(images.length).toBe(TRAINING_PLANS.length - 1);
+  });
 });

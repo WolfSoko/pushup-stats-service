@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  signal,
 } from '@angular/core';
 import { TrainingPlanDay } from '@pu-stats/models';
 import { MatButtonModule } from '@angular/material/button';
@@ -171,7 +172,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
       <section class="plan-grid">
         @for (plan of localizedPlans(); track plan.id) {
           <mat-card class="plan-card">
-            @if (plan.heroImage && !failedImages.has(plan.id)) {
+            @if (plan.heroImage && !failedImages().has(plan.id)) {
               <a
                 [routerLink]="['/training-plans', plan.slug]"
                 class="card-media"
@@ -351,10 +352,10 @@ export class TrainingPlansPageComponent {
   );
 
   /** Plan ids whose hero image failed to load — hides the broken `<img>`. */
-  readonly failedImages = new Set<string>();
+  readonly failedImages = signal(new Set<string>());
 
   onImageError(id: string): void {
-    this.failedImages.add(id);
+    this.failedImages.update((set) => new Set(set).add(id));
   }
 
   /** Active plan card view-model — null when no plan is active. */

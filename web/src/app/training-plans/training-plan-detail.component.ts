@@ -9,6 +9,7 @@ import {
   inject,
   LOCALE_ID,
   PLATFORM_ID,
+  signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -66,7 +67,7 @@ interface DayRow {
   template: `
     @if (plan(); as p) {
       <main class="page-wrap">
-        @if (p.heroImage && !heroImageFailed) {
+        @if (p.heroImage && !heroImageFailed()) {
           <figure class="plan-hero">
             <img
               [src]="p.heroImage"
@@ -75,7 +76,7 @@ interface DayRow {
               decoding="async"
               width="1200"
               height="675"
-              (error)="heroImageFailed = true"
+              (error)="heroImageFailed.set(true)"
             />
             @if (p.heroImageCredit) {
               <figcaption [innerHTML]="p.heroImageCredit"></figcaption>
@@ -635,7 +636,7 @@ export class TrainingPlanDetailComponent {
   protected readonly authResolved = this.authStore.authResolved;
 
   /** Hides the hero `<figure>` when the Unsplash image fails to load. */
-  protected heroImageFailed = false;
+  protected readonly heroImageFailed = signal(false);
 
   private readonly slugSignal = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,

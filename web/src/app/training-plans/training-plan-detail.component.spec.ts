@@ -525,5 +525,31 @@ describe('TrainingPlanDetailComponent', () => {
       const caption = container.querySelector('.plan-hero figcaption');
       expect(caption?.innerHTML).toContain('unsplash.com');
     });
+
+    it('hides the hero figure when the image fails to load (OnPush + zoneless)', async () => {
+      const { container, fixture } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      const img = container.querySelector<HTMLImageElement>('.plan-hero img');
+      expect(img).not.toBeNull();
+
+      img?.dispatchEvent(new Event('error'));
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(container.querySelector('.plan-hero')).toBeNull();
+    });
   });
 });
