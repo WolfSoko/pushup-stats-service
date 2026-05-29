@@ -3,10 +3,36 @@
   <p i18n="@@auth.register.success.text">
     Dein Account ist bereit. Zeit für die ersten Liegestütze 💪
   </p>
+  <p class="register-success-next" i18n="@@auth.register.success.next">
+    Such dir einen Trainingsplan aus oder leg dein Tagesziel fest:
+  </p>
+  <div class="register-success-actions">
+    <button
+      mat-stroked-button
+      type="button"
+      data-testid="register-success-training-plans"
+      (click)="trainingPlans.emit()"
+    >
+      <mat-icon>fitness_center</mat-icon>
+      <span i18n="@@auth.register.success.trainingPlans"
+        >Trainingsplan wählen</span
+      >
+    </button>
+    <button
+      mat-stroked-button
+      type="button"
+      data-testid="register-success-daily-goal"
+      (click)="dailyGoal.emit()"
+    >
+      <mat-icon>flag</mat-icon>
+      <span i18n="@@auth.register.success.dailyGoal">Tagesziel festlegen</span>
+    </button>
+  </div>
   <button
     mat-raised-button
     color="primary"
     type="button"
+    data-testid="register-success-dashboard"
     (click)="dashboard.emit()"
     i18n="@@auth.register.success.dashboard"
   >

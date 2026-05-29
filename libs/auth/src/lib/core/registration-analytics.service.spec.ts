@@ -144,17 +144,30 @@ describe('RegistrationAnalyticsService', () => {
     });
 
     it('trackAbandoned includes last_step and its index', () => {
-      service.trackAbandoned({ last_step: 'daily_goal', is_google: true });
+      service.trackAbandoned({ last_step: 'username', is_google: true });
 
       expect(logEvent).toHaveBeenCalledWith(
         analyticsToken,
         'register_abandoned',
         {
-          last_step: 'daily_goal',
-          last_step_index: REGISTRATION_STEPS.indexOf('daily_goal'),
+          last_step: 'username',
+          last_step_index: REGISTRATION_STEPS.indexOf('username'),
           is_google: true,
         }
       );
     });
+
+    it.each(['dashboard', 'training_plans', 'daily_goal'] as const)(
+      'trackSuccessCta sends register_success_cta with target "%s"',
+      (target) => {
+        service.trackSuccessCta(target);
+
+        expect(logEvent).toHaveBeenCalledWith(
+          analyticsToken,
+          'register_success_cta',
+          { target }
+        );
+      }
+    );
   });
 });

@@ -10091,5 +10091,23 @@ Deine Position: # ·  Reps        </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">flag</pc> Open daily goals </target>
       </segment>
     </unit>
+    <unit id="auth.register.success.next">
+      <segment state="initial">
+        <source> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </source>
+        <target> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </target>
+      </segment>
+    </unit>
+    <unit id="auth.register.success.trainingPlans">
+      <segment state="initial">
+        <source>Trainingsplan wählen</source>
+        <target>Trainingsplan wählen</target>
+      </segment>
+    </unit>
+    <unit id="auth.register.success.dailyGoal">
+      <segment state="initial">
+        <source>Tagesziel festlegen</source>
+        <target>Tagesziel festlegen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
