@@ -9926,21 +9926,21 @@
       </segment>
     </unit>
     <unit id="auth.register.success.next">
-      <segment state="initial">
+      <segment state="translated">
         <source> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </source>
-        <target> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </target>
+        <target> Scegli un piano di allenamento o imposta il tuo obiettivo quotidiano: </target>
       </segment>
     </unit>
     <unit id="auth.register.success.trainingPlans">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan wählen</source>
-        <target>Trainingsplan wählen</target>
+        <target>Scegli piano di allenamento</target>
       </segment>
     </unit>
     <unit id="auth.register.success.dailyGoal">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel festlegen</source>
-        <target>Tagesziel festlegen</target>
+        <target>Imposta obiettivo quotidiano</target>
       </segment>
     </unit>
 </file>

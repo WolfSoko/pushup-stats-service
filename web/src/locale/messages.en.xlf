@@ -10092,21 +10092,21 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="auth.register.success.next">
-      <segment state="initial">
+      <segment state="translated">
         <source> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </source>
-        <target> Such dir einen Trainingsplan aus oder leg dein Tagesziel fest: </target>
+        <target> Choose a training plan or set your daily goal: </target>
       </segment>
     </unit>
     <unit id="auth.register.success.trainingPlans">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan wählen</source>
-        <target>Trainingsplan wählen</target>
+        <target>Choose training plan</target>
       </segment>
     </unit>
     <unit id="auth.register.success.dailyGoal">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel festlegen</source>
-        <target>Tagesziel festlegen</target>
+        <target>Set daily goal</target>
       </segment>
     </unit>
 </file>
