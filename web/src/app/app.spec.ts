@@ -189,8 +189,67 @@ describe('App (testing-library)', () => {
 
     expect(screen.getByText('Tagesziel')).toBeTruthy();
     expect(
-      await screen.findByText((content) => content.includes('42 / 137'))
+      await screen.findAllByText((content) => content.includes('42 / 137'))
     ).toBeTruthy();
+  });
+
+  it('expands the goal pill into a per-exercise breakdown dropdown', async () => {
+    userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 137 }));
+    statsApiMock.load.mockReturnValue(
+      of({
+        meta: {
+          from: null,
+          to: null,
+          entries: 2,
+          days: 1,
+          total: 42,
+          granularity: 'daily',
+        },
+        series: [],
+      })
+    );
+
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+      ],
+    });
+
+    // Wait for the daily progress resource to resolve so the breakdown is
+    // populated and the dropdown markup is wired into the DOM.
+    await screen.findAllByText((content) => content.includes('42 / 137'));
+
+    const toggle = document.querySelector(
+      '[data-testid="toolbar-goal-pill-toggle"]'
+    );
+    expect(toggle).toBeTruthy();
+
+    const items = document.querySelectorAll(
+      '[data-testid="toolbar-goal-dropdown-item"]'
+    );
+    expect(items.length).toBe(1);
+    const dropdown = document.querySelector(
+      '[data-testid="toolbar-goal-dropdown"]'
+    );
+    expect(dropdown?.textContent).toContain('Liegestütze');
+    expect(dropdown?.textContent).toContain('42 / 137');
   });
 
   describe('toolbar goal-pill replay', () => {
@@ -258,7 +317,7 @@ describe('App (testing-library)', () => {
       });
       // Wait for the dailyProgressResource to resolve so goalReached() flips
       // to true and the pill is wired into the DOM.
-      await screen.findByText((content) => content.includes('80 / 50'));
+      await screen.findAllByText((content) => content.includes('80 / 50'));
 
       // When
       await user.click(screen.getByTestId('toolbar-goal-pill'));
@@ -289,7 +348,7 @@ describe('App (testing-library)', () => {
       await render(App, {
         providers: commonProviders(notifierMock),
       });
-      await screen.findByText((content) => content.includes('10 / 100'));
+      await screen.findAllByText((content) => content.includes('10 / 100'));
 
       // When
       await user.click(screen.getByTestId('toolbar-goal-pill'));
@@ -317,7 +376,7 @@ describe('App (testing-library)', () => {
       );
       const notifierMock = makeNotifierMock();
       await render(App, { providers: commonProviders(notifierMock) });
-      await screen.findByText((content) => content.includes('80 / 50'));
+      await screen.findAllByText((content) => content.includes('80 / 50'));
 
       // Then — the source-locale (de) build serves the German aria copy.
       const pill = document.querySelector<HTMLElement>(
@@ -350,7 +409,7 @@ describe('App (testing-library)', () => {
       );
       const notifierMock = makeNotifierMock();
       await render(App, { providers: commonProviders(notifierMock) });
-      await screen.findByText((content) => content.includes('10 / 100'));
+      await screen.findAllByText((content) => content.includes('10 / 100'));
 
       // Then
       const pill = document.querySelector<HTMLElement>(
@@ -381,7 +440,7 @@ describe('App (testing-library)', () => {
       );
       const notifierMock = makeNotifierMock();
       await render(App, { providers: commonProviders(notifierMock) });
-      await screen.findByText((content) => content.includes('80 / 50'));
+      await screen.findAllByText((content) => content.includes('80 / 50'));
       const pill = document.querySelector<HTMLElement>(
         '[data-testid="toolbar-goal-pill"]'
       );
@@ -414,7 +473,7 @@ describe('App (testing-library)', () => {
       );
       const notifierMock = makeNotifierMock();
       await render(App, { providers: commonProviders(notifierMock) });
-      await screen.findByText((content) => content.includes('80 / 50'));
+      await screen.findAllByText((content) => content.includes('80 / 50'));
       const pill = document.querySelector<HTMLElement>(
         '[data-testid="toolbar-goal-pill"]'
       );
@@ -452,7 +511,7 @@ describe('App (testing-library)', () => {
       );
       const notifierMock = makeNotifierMock();
       await render(App, { providers: commonProviders(notifierMock) });
-      await screen.findByText((content) => content.includes('80 / 50'));
+      await screen.findAllByText((content) => content.includes('80 / 50'));
       const pill = document.querySelector<HTMLElement>(
         '[data-testid="toolbar-goal-pill"]'
       );

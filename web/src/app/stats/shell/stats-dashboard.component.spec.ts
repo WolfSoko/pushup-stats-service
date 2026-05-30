@@ -22,7 +22,10 @@ import {
   provideRouter,
 } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
-import { AppDataFacade } from '../../core/app-data.facade';
+import {
+  AppDataFacade,
+  type DailyGoalItemView,
+} from '../../core/app-data.facade';
 import { ShareService } from '../../core/share.service';
 import { UserConfigStore } from '../../core/user-config.store';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
@@ -123,7 +126,11 @@ describe('StatsDashboardComponent', () => {
   };
 
   const reloadAfterMutationSpy = vitest.fn();
-  const appDataMock = { reloadAfterMutation: reloadAfterMutationSpy };
+  const dailyGoalBreakdown = signal<readonly DailyGoalItemView[]>([]);
+  const appDataMock = {
+    reloadAfterMutation: reloadAfterMutationSpy,
+    dailyGoalBreakdown: dailyGoalBreakdown.asReadonly(),
+  };
 
   const exerciseCreateSpy = vitest.fn().mockReturnValue(of({ _id: 'ex-1' }));
   const exerciseFirestoreMock = {
@@ -163,6 +170,7 @@ describe('StatsDashboardComponent', () => {
     liveConnected.set(false);
     liveEntries.set([]);
     liveExerciseEntries.set([]);
+    dailyGoalBreakdown.set([]);
     window.history.replaceState({}, '', '/');
 
     dialogOpenSpy.mockClear();
@@ -260,6 +268,43 @@ describe('StatsDashboardComponent', () => {
         expect(text).toContain('Gesamt');
         expect(text).toContain('Zielfortschritt');
         expect(text).toContain('Letzter Eintrag');
+      });
+
+      it('Then it renders each daily goal with exercise, progress/target and percent', async () => {
+        // Given a multi-exercise daily goal breakdown
+        dailyGoalBreakdown.set([
+          {
+            id: 'g1',
+            exerciseName: 'Liegestütze',
+            progressDisplay: '40',
+            targetDisplay: '100',
+            percent: 40,
+            reached: false,
+          },
+          {
+            id: 'g2',
+            exerciseName: 'Plank',
+            progressDisplay: '1:00',
+            targetDisplay: '2:00',
+            percent: 50,
+            reached: false,
+          },
+        ]);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        // Then one row per goal renders with its exercise + progress/target + share
+        const root = fixture.nativeElement as HTMLElement;
+        const items = root.querySelectorAll(
+          '[data-testid="dashboard-daily-goal-item"]'
+        );
+        expect(items.length).toBe(2);
+        const text = root.textContent ?? '';
+        expect(text).toContain('Liegestütze');
+        expect(text).toContain('40 / 100');
+        expect(text).toContain('40%');
+        expect(text).toContain('Plank');
+        expect(text).toContain('1:00 / 2:00');
       });
 
       it('Then it should offer quick add buttons for 10, 20 and 30 reps', () => {

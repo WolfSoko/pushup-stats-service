@@ -528,4 +528,58 @@ describe('AppDataFacade', () => {
       expect(facade.dailyGoal()).toBe(60);
     });
   });
+
+  describe('dailyGoalBreakdown', () => {
+    const mainDay: TrainingPlanDay = {
+      dayIndex: 1,
+      kind: 'main',
+      targetReps: 60,
+      description: 'Tag 1',
+    };
+
+    it('Given a legacy pushup goal, Then exposes one item with progress, target and percent', async () => {
+      const facade = setup({ dailyGoal: 100, todayTotal: 40 });
+      await flushResources();
+
+      const breakdown = facade.dailyGoalBreakdown();
+      expect(breakdown).toHaveLength(1);
+      expect(breakdown[0].exerciseName).toBe('Liegestütze');
+      expect(breakdown[0].progressDisplay).toBe('40');
+      expect(breakdown[0].targetDisplay).toBe('100');
+      expect(breakdown[0].percent).toBe(40);
+      expect(breakdown[0].reached).toBe(false);
+    });
+
+    it('Given progress meets the target, Then the item is flagged reached and capped at 100%', async () => {
+      const facade = setup({ dailyGoal: 50, todayTotal: 80 });
+      await flushResources();
+
+      const [item] = facade.dailyGoalBreakdown();
+      expect(item.percent).toBe(100);
+      expect(item.reached).toBe(true);
+    });
+
+    it('Given an active plan, Then the breakdown lists the prescribed plan reps', async () => {
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 30,
+        planTodayDay: mainDay,
+      });
+      await flushResources();
+
+      const breakdown = facade.dailyGoalBreakdown();
+      expect(breakdown).toHaveLength(1);
+      expect(breakdown[0].targetDisplay).toBe('60');
+      expect(breakdown[0].progressDisplay).toBe('30');
+      expect(breakdown[0].percent).toBe(50);
+    });
+
+    it('Given no goal is configured, Then the breakdown is empty', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(of({ userId: 'u1' }));
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.dailyGoalBreakdown()).toEqual([]);
+    });
+  });
 });

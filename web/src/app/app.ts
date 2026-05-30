@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -120,6 +121,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     CookieConsentBannerComponent,
     MatDialogModule,
     MatFormFieldModule,
+    MatProgressBarModule,
     MatSelectModule,
   ],
   templateUrl: './app.html',
@@ -246,6 +248,13 @@ export class App {
       this.appData.complexGoalsEnabled() &&
       this.appData.todayGoalEntries().length > 0
   );
+  /**
+   * Per-exercise breakdown for the toolbar pill's hover/touch dropdown.
+   * Lists every daily goal (or the active plan's prescribed reps) with its
+   * target, progress and completion share.
+   */
+  readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
+  protected readonly goalDetailsAriaLabel = $localize`:@@toolbarDailyGoal.detailsAria:Tagesziel-Einzelpositionen anzeigen`;
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
 
   private readonly consentBanner =

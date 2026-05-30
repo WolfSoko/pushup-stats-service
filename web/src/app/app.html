@@ -155,25 +155,65 @@
       </a>
       <span class="app-title" i18n="@@app.title">Pushups</span>
       <span class="spacer"></span>
-      <span
-        class="goal-pill"
-        [class.is-clickable]="goalReached()"
-        [attr.role]="goalReached() ? 'button' : null"
-        [attr.tabindex]="goalReached() ? 0 : null"
-        [attr.aria-label]="goalReached() ? reopenDailyAriaLabel : null"
-        data-testid="toolbar-goal-pill"
-        (click)="handleGoalPillClick()"
-        (keydown.enter)="handleGoalPillKeydown($event)"
-        (keydown.space)="handleGoalPillKeydown($event); $event.preventDefault()"
-        ><small i18n="@@toolbarDailyGoal">Tagesziel</small>
-        @if (hasComplexDailyGoals()) {
-        <strong data-testid="toolbar-goal-pill-percent"
-          >{{ dailyGoalAggregatedPercent() }}%</strong
+      <div class="goal-pill-wrap">
+        <span
+          class="goal-pill"
+          [class.is-clickable]="goalReached()"
+          [attr.role]="goalReached() ? 'button' : null"
+          [attr.tabindex]="goalReached() ? 0 : null"
+          [attr.aria-label]="goalReached() ? reopenDailyAriaLabel : null"
+          data-testid="toolbar-goal-pill"
+          (click)="handleGoalPillClick()"
+          (keydown.enter)="handleGoalPillKeydown($event)"
+          (keydown.space)="handleGoalPillKeydown($event); $event.preventDefault()"
+          ><small i18n="@@toolbarDailyGoal">Tagesziel</small>
+          @if (hasComplexDailyGoals()) {
+          <strong data-testid="toolbar-goal-pill-percent"
+            >{{ dailyGoalAggregatedPercent() }}%</strong
+          >
+          } @else {
+          <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong>
+          }</span
         >
-        } @else {
-        <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong>
-        }</span
-      >
+        @if (dailyGoalBreakdown().length > 0) {
+        <button
+          mat-icon-button
+          type="button"
+          class="goal-pill-toggle"
+          data-testid="toolbar-goal-pill-toggle"
+          aria-haspopup="true"
+          [attr.aria-label]="goalDetailsAriaLabel"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-icon>expand_more</mat-icon>
+        </button>
+        <div
+          class="goal-dropdown"
+          role="region"
+          [attr.aria-label]="goalDetailsAriaLabel"
+          data-testid="toolbar-goal-dropdown"
+        >
+          @for (item of dailyGoalBreakdown(); track item.id) {
+          <div
+            class="goal-dropdown-item"
+            data-testid="toolbar-goal-dropdown-item"
+          >
+            <div class="goal-dropdown-line">
+              <span class="goal-dropdown-name">{{ item.exerciseName }}</span>
+              <span class="goal-dropdown-val"
+                >{{ item.progressDisplay }} / {{ item.targetDisplay }} · {{
+                item.percent }}%</span
+              >
+            </div>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="item.percent"
+            ></mat-progress-bar>
+          </div>
+          }
+        </div>
+        }
+      </div>
       <app-theme-toggle />
       @if (isAdmin()) {
       <a
