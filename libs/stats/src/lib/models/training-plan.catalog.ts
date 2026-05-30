@@ -1773,11 +1773,11 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     level: 'beginner',
     totalDays: 28,
     heroImage:
-      'https://images.unsplash.com/photo-1706806594828-318b9185ad0e?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1750698544727-ffc439ade2ba?auto=format&fit=crop&w=1600&q=80',
     heroImagePhotographer: {
-      name: 'Centre for Ageing Better',
+      name: 'Asso Myron',
       profileUrl:
-        'https://unsplash.com/@ageing_better?utm_source=pushup_stats&utm_medium=referral',
+        'https://unsplash.com/@assomyron?utm_source=pushup_stats&utm_medium=referral',
     },
     blogSlug: $localize`:@@plan.over-40-4w.blogSlug:liegestuetze-ab-40`,
     days: OVER_40_DAYS,
