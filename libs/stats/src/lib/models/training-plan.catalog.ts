@@ -1738,6 +1738,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.recruit-6w.summary:Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.`,
     level: 'beginner',
     totalDays: 42,
+    heroImage:
+      'https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Gordon Cowie',
+      profileUrl:
+        'https://unsplash.com/@gcowie?utm_source=pushup_stats&utm_medium=referral',
+    },
     blogSlug: $localize`:@@plan.recruit-6w.blogSlug:liegestuetze-steigern`,
     days: RECRUIT_DAYS,
   },
@@ -1748,6 +1755,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.challenge-30d.summary:Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.`,
     level: 'intermediate',
     totalDays: 30,
+    heroImage:
+      'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'bruce mars',
+      profileUrl:
+        'https://unsplash.com/@brucemars?utm_source=pushup_stats&utm_medium=referral',
+    },
     blogSlug: $localize`:@@plan.challenge-30d.blogSlug:30-tage-liegestuetze-challenge`,
     days: CHALLENGE_30_DAYS,
   },
@@ -1758,6 +1772,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.over-40-4w.summary:Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.`,
     level: 'beginner',
     totalDays: 28,
+    heroImage:
+      'https://images.unsplash.com/photo-1750698544727-ffc439ade2ba?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Asso Myron',
+      profileUrl:
+        'https://unsplash.com/@assomyron?utm_source=pushup_stats&utm_medium=referral',
+    },
     blogSlug: $localize`:@@plan.over-40-4w.blogSlug:liegestuetze-ab-40`,
     days: OVER_40_DAYS,
   },
@@ -1768,6 +1789,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.daily-100-30d.summary:30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.`,
     level: 'intermediate',
     totalDays: 30,
+    heroImage:
+      'https://images.unsplash.com/photo-1760084081757-6f918c08403b?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Rahul Gupta',
+      profileUrl:
+        'https://unsplash.com/@rahulguptafit4soul?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: DAILY_100_DAYS,
   },
   {
@@ -1777,6 +1805,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.one-arm-12w.summary:Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.`,
     level: 'advanced',
     totalDays: 84,
+    heroImage:
+      'https://images.unsplash.com/photo-1714646442347-5588041f9cc9?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Vitaly Gariev',
+      profileUrl:
+        'https://unsplash.com/@silverkblack?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: ONE_ARM_DAYS,
   },
   {
@@ -1786,6 +1821,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.push-pull-6w.summary:Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.`,
     level: 'intermediate',
     totalDays: 42,
+    heroImage:
+      'https://images.unsplash.com/photo-1598575468023-85b93d887c3f?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Gordon Cowie',
+      profileUrl:
+        'https://unsplash.com/@gcowie?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: PUSH_PULL_BALANCE_DAYS,
   },
   {
@@ -1795,6 +1837,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.full-body-6w.summary:Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.`,
     level: 'intermediate',
     totalDays: 42,
+    heroImage:
+      'https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Lawrence Crayton',
+      profileUrl:
+        'https://unsplash.com/@lawrencecrayton?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: FULL_BODY_DAYS,
   },
   {
@@ -1804,6 +1853,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.core-4w.summary:Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.`,
     level: 'beginner',
     totalDays: 28,
+    heroImage:
+      'https://images.unsplash.com/photo-1592334628151-36869c12ad0e?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Minna Hamalainen',
+      profileUrl:
+        'https://unsplash.com/@yogaminna8?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: CORE_FOUNDATIONS_DAYS,
   },
   {
@@ -1813,6 +1869,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.hiit-4w.summary:Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.`,
     level: 'intermediate',
     totalDays: 28,
+    heroImage:
+      'https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Scott Webb',
+      profileUrl:
+        'https://unsplash.com/@scottwebb?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: HIIT_BURNER_DAYS,
   },
   {
@@ -1822,6 +1885,13 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     summary: $localize`:@@plan.mobility-2w.summary:Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.`,
     level: 'beginner',
     totalDays: 14,
+    heroImage:
+      'https://images.unsplash.com/photo-1597586594276-456f8c50b82d?auto=format&fit=crop&w=1600&q=80',
+    heroImagePhotographer: {
+      name: 'Alex Shaw',
+      profileUrl:
+        'https://unsplash.com/@matt909?utm_source=pushup_stats&utm_medium=referral',
+    },
     days: MOBILITY_RECOVERY_DAYS,
   },
 ];

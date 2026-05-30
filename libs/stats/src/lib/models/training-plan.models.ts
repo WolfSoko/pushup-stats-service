@@ -56,6 +56,18 @@ export interface TrainingPlan {
   level: TrainingPlanLevel;
   totalDays: number;
   /**
+   * Absolute URL of the topical hero photo (Unsplash CDN) shown in the
+   * plan preview card and on the detail page. Locale-independent — the
+   * localized `title` doubles as its `alt` text in the UI.
+   */
+  heroImage?: string;
+  /**
+   * Photographer attribution for the hero photo, rendered as a credit
+   * line under the hero on the detail page. Locale-independent — the
+   * "Foto:" label is the only localized part and lives in the template.
+   */
+  heroImagePhotographer?: { name: string; profileUrl: string };
+  /**
    * Optional locale-aware blog slug for the "Read the article" CTA.
    * The German source value is the DE blog slug; translators replace
    * it with the EN slug per locale.

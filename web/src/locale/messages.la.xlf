@@ -9943,5 +9943,11 @@
         <target>Propositum cotidianum statuere</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.photoCreditPrefix">
+      <segment state="initial">
+        <source>Foto:</source>
+        <target>Foto:</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

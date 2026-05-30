@@ -9939,5 +9939,11 @@
         <target>Establecer objetivo diario</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.photoCreditPrefix">
+      <segment state="initial">
+        <source>Foto:</source>
+        <target>Foto:</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

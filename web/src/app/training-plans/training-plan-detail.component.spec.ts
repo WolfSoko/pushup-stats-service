@@ -8,6 +8,7 @@ import { render, screen } from '@testing-library/angular';
 import { of } from 'rxjs';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
+import { findPlanBySlug } from '@pu-stats/models';
 import { TrainingPlanDetailComponent } from './training-plan-detail.component';
 import { TrainingPlanStore } from './training-plan.store';
 
@@ -495,6 +496,65 @@ describe('TrainingPlanDetailComponent', () => {
 
       await new Promise((resolve) => setTimeout(resolve, 0));
       expect(store.start).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('hero image', () => {
+    it('renders the plan hero photo with the title as alt text and a credit line', async () => {
+      const { container } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      const plan = findPlanBySlug('recruit-6w');
+      const img = container.querySelector<HTMLImageElement>('.plan-hero img');
+      expect(img).not.toBeNull();
+      expect(img?.getAttribute('src')).toBe(plan?.heroImage);
+      expect(img?.getAttribute('alt')).toBe(plan?.title);
+
+      const caption = container.querySelector('.plan-hero figcaption');
+      expect(caption?.textContent).toContain(plan?.heroImagePhotographer?.name);
+      const photographerLink = caption?.querySelector<HTMLAnchorElement>(
+        `a[href="${plan?.heroImagePhotographer?.profileUrl}"]`
+      );
+      expect(photographerLink).not.toBeNull();
+      expect(caption?.innerHTML).toContain('unsplash.com');
+    });
+
+    it('hides the hero figure when the image fails to load (OnPush + zoneless)', async () => {
+      const { container, fixture } = await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+
+      const img = container.querySelector<HTMLImageElement>('.plan-hero img');
+      expect(img).not.toBeNull();
+
+      img?.dispatchEvent(new Event('error'));
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(container.querySelector('.plan-hero')).toBeNull();
     });
   });
 });

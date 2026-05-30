@@ -9437,5 +9437,11 @@
         <target>设置每日目标</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.photoCreditPrefix">
+      <segment state="initial">
+        <source>Foto:</source>
+        <target>Foto:</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -110,4 +110,61 @@ describe('TrainingPlansPageComponent', () => {
     const planLinks = screen.getAllByRole('link', { name: 'Plan ansehen' });
     expect(planLinks.length).toBe(TRAINING_PLANS.length);
   });
+
+  it('renders a topical hero image for every plan card', async () => {
+    const { container } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: makeStoreMock() },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: false,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    const images =
+      container.querySelectorAll<HTMLImageElement>('.card-media img');
+    expect(images.length).toBe(TRAINING_PLANS.length);
+
+    const [firstPlan] = TRAINING_PLANS;
+    const firstImg = images[0];
+    expect(firstImg.getAttribute('src')).toBe(firstPlan.heroImage);
+    // Localized title doubles as the alt text.
+    expect(firstImg.getAttribute('alt')).toBe(firstPlan.title);
+  });
+
+  it('should hide a card image given an image load failure (OnPush + zoneless)', async () => {
+    // Given: a rendered component with a hero image on every plan card
+    const { container, fixture } = await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: TrainingPlanStore, useValue: makeStoreMock() },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: false,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    const firstImg =
+      container.querySelector<HTMLImageElement>('.card-media img');
+    expect(firstImg).not.toBeNull();
+
+    // When: the first image fails to load
+    firstImg?.dispatchEvent(new Event('error'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // Then: that image is removed from the DOM
+    const images =
+      container.querySelectorAll<HTMLImageElement>('.card-media img');
+    expect(images.length).toBe(TRAINING_PLANS.length - 1);
+  });
 });

@@ -10109,5 +10109,11 @@ Deine Position: # ·  Reps        </source>
         <target>Set daily goal</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.photoCreditPrefix">
+      <segment state="initial">
+        <source>Foto:</source>
+        <target>Foto:</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
