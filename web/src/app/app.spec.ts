@@ -193,7 +193,7 @@ describe('App (testing-library)', () => {
     ).toBeTruthy();
   });
 
-  it('expands the goal pill into a per-exercise breakdown dropdown', async () => {
+  it('given a configured daily goal, when the pill chevron is activated, then it expands into a per-exercise breakdown dropdown', async () => {
     userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 137 }));
     statsApiMock.load.mockReturnValue(
       of({
