@@ -124,19 +124,13 @@ mat-sidenav-content {
     font-weight: 700;
   }
 
+  // The breakdown panel itself renders through a body-level CDK overlay
+  // (escapes the toolbar's mask-image), so its styles live in the global
+  // stylesheet — see `.goal-dropdown` in styles.scss.
   .goal-pill-wrap {
-    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 2px;
-
-    // Reveal the breakdown on pointer hover (desktop) and whenever any
-    // child is focused — tapping the chevron focuses it on touch devices,
-    // so the same CSS drives both interactions without extra state.
-    &:hover .goal-dropdown,
-    &:focus-within .goal-dropdown {
-      display: flex;
-    }
   }
 
   .goal-pill-toggle {
@@ -150,42 +144,6 @@ mat-sidenav-content {
       font-size: 20px;
       width: 20px;
       height: 20px;
-    }
-  }
-
-  .goal-dropdown {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    z-index: 1200;
-    min-width: 240px;
-    max-width: min(86vw, 320px);
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(129, 161, 232, 0.35);
-    background: var(--mat-toolbar-container-background-color, #1e2f54);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-
-    .goal-dropdown-line {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 4px;
-      font-size: 0.82rem;
-    }
-
-    .goal-dropdown-name {
-      font-weight: 600;
-    }
-
-    .goal-dropdown-val {
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      opacity: 0.85;
     }
   }
 
@@ -402,13 +360,6 @@ html.light-theme {
           box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.6);
         }
       }
-    }
-
-    .goal-dropdown {
-      background: #ffffff;
-      border-color: rgba(59, 130, 246, 0.35);
-      color: #1e293b;
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
     }
   }
 

@@ -155,7 +155,15 @@
       </a>
       <span class="app-title" i18n="@@app.title">Pushups</span>
       <span class="spacer"></span>
-      <div class="goal-pill-wrap">
+      <div
+        class="goal-pill-wrap"
+        cdkOverlayOrigin
+        #goalOrigin="cdkOverlayOrigin"
+        (mouseenter)="openGoalDetails()"
+        (mouseleave)="scheduleCloseGoalDetails()"
+        (focusin)="openGoalDetails()"
+        (focusout)="scheduleCloseGoalDetails()"
+      >
         <span
           class="goal-pill"
           [class.is-clickable]="goalReached()"
@@ -182,16 +190,31 @@
           class="goal-pill-toggle"
           data-testid="toolbar-goal-pill-toggle"
           aria-haspopup="true"
+          [attr.aria-expanded]="goalDetailsOpen()"
           [attr.aria-label]="goalDetailsAriaLabel"
-          (click)="$event.stopPropagation()"
+          (click)="openGoalDetails()"
         >
           <mat-icon>expand_more</mat-icon>
         </button>
+        }
+      </div>
+      <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="goalOrigin"
+        [cdkConnectedOverlayOpen]="
+          goalDetailsOpen() && dailyGoalBreakdown().length > 0
+        "
+        [cdkConnectedOverlayPositions]="goalOverlayPositions"
+        (overlayKeydown)="$event.key === 'Escape' && closeGoalDetails()"
+        (detach)="closeGoalDetails()"
+      >
         <div
           class="goal-dropdown"
           role="region"
           [attr.aria-label]="goalDetailsAriaLabel"
           data-testid="toolbar-goal-dropdown"
+          (mouseenter)="openGoalDetails()"
+          (mouseleave)="scheduleCloseGoalDetails()"
         >
           @for (item of dailyGoalBreakdown(); track item.id) {
           <div
@@ -212,8 +235,7 @@
           </div>
           }
         </div>
-        }
-      </div>
+      </ng-template>
       <app-theme-toggle />
       @if (isAdmin()) {
       <a

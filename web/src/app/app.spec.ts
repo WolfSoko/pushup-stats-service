@@ -233,23 +233,26 @@ describe('App (testing-library)', () => {
     });
 
     // Wait for the daily progress resource to resolve so the breakdown is
-    // populated and the dropdown markup is wired into the DOM.
+    // populated and the toggle is wired into the DOM.
     await screen.findAllByText((content) => content.includes('42 / 137'));
 
-    const toggle = document.querySelector(
-      '[data-testid="toolbar-goal-pill-toggle"]'
-    );
-    expect(toggle).toBeTruthy();
+    const toggle = screen.getByTestId('toolbar-goal-pill-toggle');
+    // Panel renders through a body-level CDK overlay only once opened, so it
+    // is absent until the chevron is activated.
+    expect(
+      document.querySelector('[data-testid="toolbar-goal-dropdown"]')
+    ).toBeNull();
 
-    const items = document.querySelectorAll(
+    const user = userEvent.setup();
+    await user.click(toggle);
+
+    const dropdown = await screen.findByTestId('toolbar-goal-dropdown');
+    const items = dropdown.querySelectorAll(
       '[data-testid="toolbar-goal-dropdown-item"]'
     );
     expect(items.length).toBe(1);
-    const dropdown = document.querySelector(
-      '[data-testid="toolbar-goal-dropdown"]'
-    );
-    expect(dropdown?.textContent).toContain('Liegestütze');
-    expect(dropdown?.textContent).toContain('42 / 137');
+    expect(dropdown.textContent).toContain('Liegestütze');
+    expect(dropdown.textContent).toContain('42 / 137');
   });
 
   describe('toolbar goal-pill replay', () => {
