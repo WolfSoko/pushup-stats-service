@@ -341,6 +341,43 @@ h1 {
   }
 }
 
+.goal-subhead {
+  margin: 12px 0 0;
+  color: #9fb3de;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.goal-item {
+  margin-top: 4px;
+
+  .goal-row {
+    margin-top: 6px;
+    justify-content: space-between;
+  }
+
+  .goal-item-exercise {
+    color: var(--mat-sys-on-surface, rgba(255, 255, 255, 0.87));
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .goal-item-value {
+    font-size: 0.85rem;
+  }
+
+  .goal-item-percent {
+    color: #9fb3de;
+  }
+}
+
 .motivational-quote {
   display: flex;
   align-items: center;

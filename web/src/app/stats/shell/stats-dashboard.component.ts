@@ -164,6 +164,8 @@ export class StatsDashboardComponent {
   readonly planTotalDays = this.store.planTotalDays;
   readonly isPlanRestDay = this.store.isPlanRestDay;
   readonly userConfiguredDailyGoal = this.store.userConfiguredDailyGoal;
+  /** Per-exercise daily goal breakdown shared with the toolbar pill. */
+  readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
   private readonly trainingPlans = inject(TrainingPlanStore);
   /**
    * Only render the "no active plan" banner once the plan resource has

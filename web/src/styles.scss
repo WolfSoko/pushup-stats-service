@@ -278,3 +278,46 @@ mat-card-header + mat-card-footer {
     flex-direction: column;
   }
 }
+
+// Toolbar "Tagesziel" breakdown panel. Rendered through a body-level CDK
+// overlay (the toolbar's mask-image would otherwise clip an in-toolbar
+// panel), so its styles must be global rather than component-scoped.
+.goal-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 240px;
+  max-width: min(86vw, 320px);
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(129, 161, 232, 0.35);
+  background: var(--mat-toolbar-container-background-color, #1e2f54);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  color: var(--mat-sys-on-surface, rgba(255, 255, 255, 0.92));
+
+  .goal-dropdown-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+    font-size: 0.82rem;
+  }
+
+  .goal-dropdown-name {
+    font-weight: 600;
+  }
+
+  .goal-dropdown-val {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+}
+
+html.light-theme .goal-dropdown {
+  background: #ffffff;
+  border-color: rgba(59, 130, 246, 0.35);
+  color: #1e293b;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+}

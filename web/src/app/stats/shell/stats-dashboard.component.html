@@ -268,6 +268,25 @@
               >
             </p>
           }
+        } @else if (dailyGoalBreakdown().length > 0) {
+          <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
+          @for (item of dailyGoalBreakdown(); track item.id) {
+            <div class="goal-item" data-testid="dashboard-daily-goal-item">
+              <div class="goal-row">
+                <small class="goal-item-exercise">{{
+                  item.exerciseName
+                }}</small>
+                <span class="goal-item-value">
+                  {{ item.progressDisplay }} / {{ item.targetDisplay }}
+                  <span class="goal-item-percent">· {{ item.percent }}%</span>
+                </span>
+              </div>
+              <mat-progress-bar
+                mode="determinate"
+                [value]="item.percent"
+              ></mat-progress-bar>
+            </div>
+          }
         } @else {
           <div class="goal-row">
             <small i18n="@@dashboard.dailyGoalLabel">Tag</small>

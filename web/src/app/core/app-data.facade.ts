@@ -14,6 +14,7 @@ import {
   type ComplexGoalEntry,
   complexGoalAppliesOnWeekday,
   findExerciseDefinition,
+  formatExerciseValue,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
   toBerlinIsoDate,
@@ -27,6 +28,21 @@ import { UserConfigStore } from './user-config.store';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 
 const FALLBACK_QUICK_ICONS = ['bolt', 'flash_on', 'whatshot'] as const;
+
+/**
+ * Per-exercise view of a single daily goal — exercise name, formatted
+ * target and progress in the goal's native unit, and the completion share.
+ * Shared by the dashboard goal card and the toolbar pill dropdown so both
+ * surfaces render "Anzahl/Zeitziel + Übung + Anteil geschafft" identically.
+ */
+export interface DailyGoalItemView {
+  readonly id: string;
+  readonly exerciseName: string;
+  readonly targetDisplay: string;
+  readonly progressDisplay: string;
+  readonly percent: number;
+  readonly reached: boolean;
+}
 
 function pushupSuggestion(reps: number, slot: number): QuickAddSuggestion {
   return {
@@ -311,6 +327,43 @@ export class AppDataFacade {
       if (progress[i] < entries[i].target) return false;
     }
     return true;
+  });
+
+  /**
+   * Per-exercise breakdown of today's daily goals for the dashboard card
+   * and the toolbar pill dropdown: exercise name, formatted progress and
+   * target in the goal's native unit, and the per-entry completion share
+   * (capped at 100%). When a plan is active this lists the single
+   * synthesised plan-reps goal, so the plan's daily target renders the
+   * same way as a manually configured goal. Empty when no goal applies
+   * today (callers fall back to their legacy single-line display).
+   */
+  readonly dailyGoalBreakdown = computed<readonly DailyGoalItemView[]>(() => {
+    const entries = this.todayGoalEntries();
+    if (entries.length === 0) return [];
+    const progress = this.todayGoalProgress();
+    return entries.map((entry, i) => {
+      const value = progress[i] ?? 0;
+      const target = entry.target;
+      const hasTarget = target > 0;
+      // The pushup sentinel isn't in the exercise-name catalog (legacy
+      // pushups live in their own collection) — resolve it to the same
+      // "Liegestütze" label the analysis page uses.
+      const exerciseName =
+        entry.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
+          ? $localize`:@@exercise.category.pushup:Liegestütze`
+          : exerciseDisplayName(entry.exerciseId);
+      return {
+        id: entry.id,
+        exerciseName,
+        targetDisplay: formatExerciseValue(target, entry.unit),
+        progressDisplay: formatExerciseValue(value, entry.unit),
+        percent: hasTarget
+          ? Math.min(100, Math.round((value / target) * 100))
+          : 0,
+        reached: hasTarget && value >= target,
+      };
+    });
   });
 
   /**
