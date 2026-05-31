@@ -193,7 +193,7 @@ describe('App (testing-library)', () => {
     ).toBeTruthy();
   });
 
-  it('given a configured daily goal, when the pill chevron is activated, then it expands into a per-exercise breakdown dropdown', async () => {
+  it('given a configured daily goal, when the goal pill is hovered, then it expands into a per-exercise breakdown dropdown', async () => {
     userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 137 }));
     statsApiMock.load.mockReturnValue(
       of({
@@ -233,18 +233,18 @@ describe('App (testing-library)', () => {
     });
 
     // Wait for the daily progress resource to resolve so the breakdown is
-    // populated and the toggle is wired into the DOM.
+    // populated.
     await screen.findAllByText((content) => content.includes('42 / 137'));
 
-    const toggle = screen.getByTestId('toolbar-goal-pill-toggle');
+    const pillWrap = screen.getByTestId('toolbar-goal-pill-wrap');
     // Panel renders through a body-level CDK overlay only once opened, so it
-    // is absent until the chevron is activated.
+    // is absent until the pill is hovered.
     expect(
       document.querySelector('[data-testid="toolbar-goal-dropdown"]')
     ).toBeNull();
 
     const user = userEvent.setup();
-    await user.click(toggle);
+    await user.hover(pillWrap);
 
     const dropdown = await screen.findByTestId('toolbar-goal-dropdown');
     const items = dropdown.querySelectorAll(

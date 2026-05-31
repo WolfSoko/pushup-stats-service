@@ -133,20 +133,6 @@ mat-sidenav-content {
     gap: 2px;
   }
 
-  .goal-pill-toggle {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    color: inherit;
-    opacity: 0.85;
-
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-    }
-  }
-
   .goal-pill {
     display: inline-flex;
     align-items: baseline;

@@ -157,6 +157,7 @@
       <span class="spacer"></span>
       <div
         class="goal-pill-wrap"
+        data-testid="toolbar-goal-pill-wrap"
         cdkOverlayOrigin
         #goalOrigin="cdkOverlayOrigin"
         (mouseenter)="openGoalDetails()"
@@ -183,20 +184,6 @@
           <strong>{{ todayProgress() }} / {{ dailyGoal() }}</strong>
           }</span
         >
-        @if (dailyGoalBreakdown().length > 0) {
-        <button
-          mat-icon-button
-          type="button"
-          class="goal-pill-toggle"
-          data-testid="toolbar-goal-pill-toggle"
-          aria-haspopup="true"
-          [attr.aria-expanded]="goalDetailsOpen()"
-          [attr.aria-label]="goalDetailsAriaLabel"
-          (click)="openGoalDetails()"
-        >
-          <mat-icon>expand_more</mat-icon>
-        </button>
-        }
       </div>
       <ng-template
         cdkConnectedOverlay
