@@ -9944,15 +9944,15 @@
       </segment>
     </unit>
     <unit id="trainingPlans.photoCreditPrefix">
-      <segment state="initial">
+      <segment state="translated">
         <source>Foto:</source>
-        <target>Foto:</target>
+        <target>Imago:</target>
       </segment>
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel-Einzelpositionen anzeigen</source>
-        <target>Tagesziel-Einzelpositionen anzeigen</target>
+        <target>Proposita diurna singula monstrare</target>
       </segment>
     </unit>
 </file>

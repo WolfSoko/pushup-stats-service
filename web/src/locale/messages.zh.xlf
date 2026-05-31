@@ -9438,15 +9438,15 @@
       </segment>
     </unit>
     <unit id="trainingPlans.photoCreditPrefix">
-      <segment state="initial">
+      <segment state="translated">
         <source>Foto:</source>
-        <target>Foto:</target>
+        <target>图片：</target>
       </segment>
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel-Einzelpositionen anzeigen</source>
-        <target>Tagesziel-Einzelpositionen anzeigen</target>
+        <target>显示每日目标详情</target>
       </segment>
     </unit>
 </file>
