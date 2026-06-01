@@ -678,7 +678,7 @@
     </unit>
     <unit id="reminder.quickLog.success">
       <notes>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:69</note>
+        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:66</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
@@ -686,8 +686,8 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:70</note>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:76</note>
+        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:67</note>
+        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:73</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:484</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:512</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:528</note>
@@ -4070,11 +4070,11 @@
         <note category="location">web/src/app/core/app-data.facade.ts:354</note>
         <note category="location">web/src/app/goals/shell/goals-page.component.ts:54</note>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:43</note>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:148</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:145</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1288</note>
-        <note category="location">web/src/app/stats/dashboard.store.ts:79</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:78</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:197</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:221</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:289</note>
@@ -6005,7 +6005,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:45,46</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:42,43</note>
       </notes>
       <segment>
         <source>Analyse öffnen</source>
@@ -6013,7 +6013,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:50,52</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:47,49</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -6021,7 +6021,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserStreak">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:54,55</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:51,52</note>
       </notes>
       <segment>
         <source>Streak: <ph id="0" equiv="INTERPOLATION" disp="{{ streak() }}"/> Tage</source>
@@ -6029,7 +6029,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserWeekReps">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:58,60</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:55,57</note>
       </notes>
       <segment>
         <source>Diese Woche: <ph id="0" equiv="INTERPOLATION" disp="{{ weekReps() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ weeklyGoal() }}"/> Reps</source>
@@ -6037,7 +6037,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserError">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:66,68</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:63,65</note>
       </notes>
       <segment>
         <source> Daten konnten nicht geladen werden. </source>
@@ -6045,7 +6045,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:84,85</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:81,82</note>
       </notes>
       <segment>
         <source>Zur Analyse navigieren</source>
@@ -6053,7 +6053,7 @@
     </unit>
     <unit id="dashboard.analysisTeaserCta">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:88,90</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:85,87</note>
       </notes>
       <segment>
         <source>Zur Analyse</source>
@@ -6061,7 +6061,7 @@
     </unit>
     <unit id="chart.kindLabel.all">
       <notes>
-        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:142</note>
+        <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:139</note>
       </notes>
       <segment>
         <source>Alle Übungen</source>
@@ -7420,7 +7420,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:540</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:539</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
@@ -7428,7 +7428,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:541</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:540</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
@@ -7436,7 +7436,7 @@
     </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:545</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:544</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -7444,7 +7444,7 @@
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:546</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:545</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
@@ -7452,7 +7452,7 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:550</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:549</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -8479,7 +8479,7 @@
     </unit>
     <unit id="analysisHeaderTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:61,62</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:58,59</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -8487,7 +8487,7 @@
     </unit>
     <unit id="analysisHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:63,65</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:60,62</note>
       </notes>
       <segment>
         <source> Trends, Verteilungen und Streaks deines Trainings auf einen Blick. </source>
@@ -8495,7 +8495,7 @@
     </unit>
     <unit id="analysis.empty.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:79,81</note>
       </notes>
       <segment>
         <source>Noch keine Daten zum Analysieren.</source>
@@ -8503,7 +8503,7 @@
     </unit>
     <unit id="analysis.empty.body">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:85,87</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
       </notes>
       <segment>
         <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
@@ -8511,7 +8511,7 @@
     </unit>
     <unit id="analysis.empty.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:96,98</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:93,95</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
@@ -8519,7 +8519,7 @@
     </unit>
     <unit id="analysis.tabs.overview">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:112,114</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:109,111</note>
       </notes>
       <segment>
         <source>Übersicht</source>

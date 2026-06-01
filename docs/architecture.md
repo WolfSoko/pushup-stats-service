@@ -6,6 +6,7 @@ Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps th
 
 ```
 @pu-stats/models                (pure types, zero dependencies)
+@pu-stats/date                  (date/time helpers, standalone leaf — zero dependencies)
     ^
     |--- @pu-stats/data-access        (stateless Firestore API services)
     |        ^
@@ -28,14 +29,15 @@ Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps th
 
 Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 
-- `scope:auth` -> `scope:models` only (no data-access!)
-- `scope:motivation` -> `scope:models` only (no auth!)
-- `scope:data-access` -> `scope:models` only
-- `scope:data-access-state` -> `scope:models`, `scope:data-access`
-- `scope:auto-count` -> `scope:models` only
-- `scope:cloud-functions` -> `scope:models` only
-- `scope:push` -> `scope:models`, `scope:data-access` (no auth, no reminders!)
-- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push` (no auth!)
+- `scope:date` -> nothing (standalone leaf — pure date/time helpers, no library deps)
+- `scope:auth` -> `scope:models`, `scope:date` only (no data-access!)
+- `scope:motivation` -> `scope:models`, `scope:date` only (no auth!)
+- `scope:data-access` -> `scope:models`, `scope:date` only
+- `scope:data-access-state` -> `scope:models`, `scope:data-access`, `scope:date`
+- `scope:auto-count` -> `scope:models`, `scope:date` only
+- `scope:cloud-functions` -> `scope:models`, `scope:date` only
+- `scope:push` -> `scope:models`, `scope:data-access`, `scope:date` (no auth, no reminders!)
+- `scope:reminders` -> `scope:models`, `scope:data-access`, `scope:data-access-state`, `scope:motivation`, `scope:push`, `scope:date` (no auth!)
 - `scope:sw-push` -> nothing (standalone service-worker bundle; bundling anything else would bloat the SW)
 - `scope:app` -> everything
 
@@ -47,6 +49,7 @@ Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
 | data-access       | `stats-data-access`       |
 | data-access-state | `stats-data-access-state` |
 | models/stats      | `stats-models`            |
+| date              | `stats-date`              |
 | motivation        | `pus-motivation`          |
 | reminders         | `pus-reminders`           |
 | push              | `pus-push`                |
