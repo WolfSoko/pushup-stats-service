@@ -17,8 +17,8 @@ import {
   formatExerciseValue,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
-  toBerlinIsoDate,
 } from '@pu-stats/models';
+import { toBerlinIsoDate } from '@pu-stats/date';
 import {
   AdaptiveQuickAddService,
   type QuickAddSuggestion,

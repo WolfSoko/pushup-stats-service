@@ -5,11 +5,8 @@ import {
   pushupValidationMessage,
   StatsApiService,
 } from '@pu-stats/data-access';
-import {
-  appendLocalOffset,
-  QUICK_LOG_REPS_MAX,
-  QUICK_LOG_REPS_MIN,
-} from '@pu-stats/models';
+import { QUICK_LOG_REPS_MAX, QUICK_LOG_REPS_MIN } from '@pu-stats/models';
+import { appendLocalOffset } from '@pu-stats/date';
 import { firstValueFrom } from 'rxjs';
 
 /**

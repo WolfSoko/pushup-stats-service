@@ -25,11 +25,10 @@ import {
   QuickAddConfig,
   QuickAddMode,
   StatsResponse,
-  toBerlinIsoDate,
-  toLocalIsoDate,
   UnifiedEntry,
   UserStats,
 } from '@pu-stats/models';
+import { toBerlinIsoDate, toLocalIsoDate } from '@pu-stats/date';
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';

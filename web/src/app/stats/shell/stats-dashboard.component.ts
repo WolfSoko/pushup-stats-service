@@ -28,12 +28,12 @@ import {
   displayPushupType,
   findExerciseDefinition,
   formatEntryDisplay,
-  nowLocalIsoTimestamp,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
   UnifiedEntry,
 } from '@pu-stats/models';
+import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';

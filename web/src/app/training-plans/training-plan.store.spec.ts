@@ -10,10 +10,10 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   PushupCreate,
   PushupRecord,
-  toBerlinIsoDate,
   TRAINING_PLANS,
   UserTrainingPlan,
 } from '@pu-stats/models';
+import { toBerlinIsoDate } from '@pu-stats/date';
 import { TrainingPlanStore } from './training-plan.store';
 
 const PLAN = TRAINING_PLANS.find(

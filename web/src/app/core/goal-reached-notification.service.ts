@@ -10,11 +10,8 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import {
-  PushupRecord,
-  SNAP_QUALITY_PARTICLES,
-  toBerlinIsoDate,
-} from '@pu-stats/models';
+import { PushupRecord, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { toBerlinIsoDate } from '@pu-stats/date';
 import type { GoalKind } from '../stats/components/goal-reached-dialog/goal-reached-dialog.component';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';

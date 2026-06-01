@@ -23,11 +23,8 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
-import {
-  ExerciseDefinition,
-  ExerciseEntry,
-  RangeModes,
-} from '@pu-stats/models';
+import { ExerciseDefinition, ExerciseEntry } from '@pu-stats/models';
+import { RangeModes } from '@pu-stats/date';
 
 @Component({
   selector: 'app-filter-bar',
