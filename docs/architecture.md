@@ -170,3 +170,24 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - For everything else: reads the field that `measurementValueField(measurement)` returns and pipes it through `formatExerciseValue(value, def.unit)`.
 
 `measurementCompanionValueField(measurement)` returns the secondary display field for composite measurements (currently only `'durationSec'` for `'distance-time'`). Aggregation paths use it to sum a second total alongside the primary, so a 30-day card for a tracked run can show `"42.00 km · 3:30:00 (5:00 /km)"`. The first composite catalog entry is `cardio.running`; later cardio types (cycling, swimming, …) and tighter per-exercise companion bounds plug into the same path without further infrastructure work.
+
+### Single source of truth: exercises & categories
+
+`@pu-stats/models` owns the **only** list of available exercises and categories — `EXERCISE_CATALOG` and `EXERCISE_CATEGORIES` in `exercise.catalog.ts`, typed by `exercise.models.ts`. Everything that needs to know "which exercises/categories exist" reads from here:
+
+- **Goals** — `ComplexGoalEntry.exerciseId` (`user-config.models.ts`).
+- **User entries** — `exerciseEntries` docs carry a catalog `exerciseId`; pushups stay on the legacy `pushups` collection behind the `'pushup'` sentinel until the Phase-7 merge (see `plans/multi-exercise-roadmap.md`).
+- **Analysis & statistics** — the client resolves categories via `unifiedEntryCategoryId`; the Cloud Function leaderboard rebuild iterates `EXERCISE_CATALOG` and derives each exercise's value field from `measurementValueField` (`exercise-leaderboard/logic.ts` → `exerciseValueFieldFor`).
+- **Training plans** — `TrainingPlanDay.exerciseId` (defaults to `'pushup'`), resolved via `trainingPlanDayExerciseId`.
+
+A few consumers **cannot** import the catalog at runtime, so they keep a shadow copy. Each is pinned to the catalog by a **guard test** rather than a "keep in sync" comment:
+
+| Shadow copy                                             | Why it can't just derive             | Guard                                                    |
+| ------------------------------------------------------- | ------------------------------------ | -------------------------------------------------------- |
+| `data-store/firestore.rules` exercise allowlists        | Firestore rules can't import TS      | `data-store/functions/src/exercise-rules-sync.spec.ts`   |
+| `exercise-display-names.ts` (`$localize` name registry) | `$localize` needs literal call sites | `exercise-display-names.spec.ts`                         |
+| `AUTO_COUNT_QUICK_ADD_EXERCISE_IDS` + web profile maps  | profile unions are type-only in web  | `exercise.catalog.spec.ts` + derivation from the catalog |
+
+The web auto-count/hold-timer mapping derives from each catalog entry's `autoCountProfileId` / `holdTimerProfileId` (opaque profile-id strings the web adapter resolves to its typed unions) — no hardcoded catalog ids in the feature layer.
+
+**When you add or change a catalog exercise:** the guard tests tell you exactly what to touch. Only `firestore.rules` needs a manual edit (the test fails until it matches); the display-name registry needs a new `$localize` entry (its test fails until the key set matches); everything else derives.
