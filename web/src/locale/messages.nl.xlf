@@ -9950,9 +9950,9 @@
       </segment>
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel-Einzelpositionen anzeigen</source>
-        <target>Tagesziel-Einzelpositionen anzeigen</target>
+        <target>Dagelijkse doeldetails weergeven</target>
       </segment>
     </unit>
 </file>
