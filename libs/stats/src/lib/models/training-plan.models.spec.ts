@@ -4,7 +4,9 @@ import {
   planDayByIndex,
   startDateForTargetDay,
   TrainingPlan,
+  trainingPlanDayExerciseId,
 } from './training-plan.models';
+import { findExerciseDefinition } from './exercise.catalog';
 import { findPlanById, TRAINING_PLANS } from './training-plan.catalog';
 
 describe('training-plan models', () => {
@@ -203,6 +205,53 @@ describe('training-plan models', () => {
     it('findPlanById returns the matching plan', () => {
       expect(findPlanById('challenge-30d-v1')?.totalDays).toBe(30);
       expect(findPlanById('does-not-exist')).toBeNull();
+    });
+
+    it('should reference only catalog exercises or the pushup sentinel', () => {
+      // given — binds plans to the exercise SSOT: any day naming an exercise
+      // must name a real catalog entry. 'pushup' is the legacy-collection
+      // sentinel (no catalog entry by design).
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          // when
+          const id = trainingPlanDayExerciseId(day);
+          // then
+          if (id === 'pushup') continue;
+          expect(findExerciseDefinition(id)).not.toBeNull();
+        }
+      }
+    });
+
+    it('should ship only pushup days the store can log idempotently today', () => {
+      // given — logPlanDay reasons about reps through LiveDataStore, which is
+      // pushup-only, so a non-pushup plan day would be silently skipped;
+      // guard against shipping one the store can't honor.
+      // when / then
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          expect(trainingPlanDayExerciseId(day)).toBe('pushup');
+        }
+      }
+    });
+  });
+
+  describe('trainingPlanDayExerciseId', () => {
+    it('should default to the pushup sentinel when a day names no exercise', () => {
+      // given
+      const day = { exerciseId: undefined };
+      // when
+      const resolved = trainingPlanDayExerciseId(day);
+      // then
+      expect(resolved).toBe('pushup');
+    });
+
+    it('should pass through an explicit catalog exercise id', () => {
+      // given
+      const day = { exerciseId: 'legs.squats' };
+      // when
+      const resolved = trainingPlanDayExerciseId(day);
+      // then
+      expect(resolved).toBe('legs.squats');
     });
   });
 });

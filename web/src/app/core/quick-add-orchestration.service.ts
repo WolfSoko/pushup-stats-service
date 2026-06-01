@@ -9,7 +9,9 @@ import {
   StatsApiService,
 } from '@pu-stats/data-access';
 import {
+  EXERCISE_CATALOG,
   type ExerciseEntryCreate,
+  findExerciseDefinition,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
 } from '@pu-stats/models';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
@@ -41,48 +43,72 @@ import type {
 } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
 
 /**
- * Maps the auto-count profile id to the catalog `exerciseId` used by
- * the training-entry dialog and `ExerciseFirestoreService`. `pushup`
- * is special because it lives in the legacy `pushups` collection and
- * is the only auto-count target that flows through `StatsApiService`.
+ * Resolves an auto-count pose-detector profile id to the catalog
+ * `exerciseId` used by the training-entry dialog and
+ * `ExerciseFirestoreService`. Derived from each catalog entry's
+ * `autoCountProfileId`, so the profile↔catalog mapping has a single
+ * source (the catalog) instead of a hardcoded id list duplicated here.
+ * `'pushup'` is special: it has no catalog entry (it lives in the legacy
+ * `pushups` collection), so it maps to the `PUSHUP_QUICK_ADD_EXERCISE_ID`
+ * sentinel.
  */
-const EXERCISE_CATALOG_ID: Record<
-  Exclude<AutoCountExerciseId, 'pushup'>,
-  string
-> = {
-  squat: 'legs.squats',
-  pullup: 'pull.pullups',
-  situp: 'abs.situps',
-};
+function catalogIdForAutoCountProfile(
+  profile: AutoCountExerciseId
+): string | null {
+  if (profile === 'pushup') return PUSHUP_QUICK_ADD_EXERCISE_ID;
+  // Fail closed (null) on a profile with no catalog entry rather than
+  // emitting the raw profile string as an exerciseId — a non-catalog id
+  // would only fail later at save time. Callers guard before persisting.
+  return (
+    EXERCISE_CATALOG.find((d) => d.autoCountProfileId === profile)?.id ?? null
+  );
+}
 
 /**
- * Inverse of {@link EXERCISE_CATALOG_ID} — resolves a catalog exerciseId
- * (or the `'pushup'` sentinel) to the auto-count profile id understood by
- * the camera dialog. Returns `null` for catalog ids without a detector
- * profile so the dashboard can fail closed instead of opening the wrong
- * detector. Kept colocated with `EXERCISE_CATALOG_ID` so the two stay in
- * sync when a new pose profile lands.
+ * Runtime allowlist for the `AutoCountExerciseId` union (type-only in the
+ * dialog component) — validates a catalog `autoCountProfileId` string before
+ * it is treated as a detector profile, so an unexpected catalog value can't
+ * slip through an unchecked cast and open the dialog with an invalid id.
+ */
+function isAutoCountProfile(
+  value: string | undefined
+): value is AutoCountExerciseId {
+  return (
+    value === 'pushup' ||
+    value === 'squat' ||
+    value === 'pullup' ||
+    value === 'situp'
+  );
+}
+
+/**
+ * Inverse of {@link catalogIdForAutoCountProfile} — resolves a catalog
+ * exerciseId (or the `'pushup'` sentinel) to the auto-count profile the
+ * camera dialog understands, reading `autoCountProfileId` straight off the
+ * catalog. Returns `null` for catalog ids without a valid detector profile
+ * so the dashboard fails closed instead of opening the wrong detector.
  */
 export function autoCountProfileForCatalogId(
   catalogId: string
 ): AutoCountExerciseId | null {
   if (catalogId === PUSHUP_QUICK_ADD_EXERCISE_ID) return 'pushup';
-  if (catalogId === 'legs.squats') return 'squat';
-  if (catalogId === 'pull.pullups') return 'pullup';
-  if (catalogId === 'abs.situps') return 'situp';
-  return null;
+  const profile = findExerciseDefinition(catalogId)?.autoCountProfileId;
+  return isAutoCountProfile(profile) ? profile : null;
 }
 
 /**
- * Maps the hold-timer profile id (lives in `libs/auto-count`) to the
- * catalog `exerciseId` used by `ExerciseFirestoreService`. Plank uses
- * the legacy id that was migrated into the `core` category; hollow
- * hold lives there too.
+ * Resolves a hold-timer profile id (defined in `libs/auto-count`) to the
+ * catalog `exerciseId` used by `ExerciseFirestoreService`, derived from
+ * each catalog entry's `holdTimerProfileId`.
  */
-const HOLD_TIMER_CATALOG_ID: Record<ExerciseTimerExerciseId, string> = {
-  plank: 'plank.standard',
-  hollowhold: 'core.hollowhold',
-};
+function catalogIdForHoldTimerProfile(
+  profile: ExerciseTimerExerciseId
+): string | null {
+  // Same fail-closed contract as catalogIdForAutoCountProfile.
+  return (
+    EXERCISE_CATALOG.find((d) => d.holdTimerProfileId === profile)?.id ?? null
+  );
+}
 
 @Injectable({ providedIn: 'root' })
 export class QuickAddOrchestrationService {
@@ -288,12 +314,17 @@ export class QuickAddOrchestrationService {
   private async confirmExerciseTimer(
     result: ExerciseTimerResult
   ): Promise<void> {
+    const exerciseId = catalogIdForHoldTimerProfile(result.exerciseId);
+    if (!exerciseId) {
+      this.openErrorSnackbar();
+      return;
+    }
     const { TrainingEntryDialogComponent } =
       await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
     const data: ExerciseEntryDialogData = {
       kind: 'exercise',
       timestamp: nowLocalIsoTimestamp(),
-      exerciseId: HOLD_TIMER_CATALOG_ID[result.exerciseId],
+      exerciseId,
       durationSec: result.durationSec,
     };
     this.dialog
@@ -314,9 +345,13 @@ export class QuickAddOrchestrationService {
   }
 
   private async confirmAutoCount(result: AutoCountResult): Promise<void> {
+    const data = this.buildPrefill(result);
+    if (!data) {
+      this.openErrorSnackbar();
+      return;
+    }
     const { TrainingEntryDialogComponent } =
       await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
-    const data = this.buildPrefill(result);
 
     this.dialog
       .open<
@@ -335,7 +370,9 @@ export class QuickAddOrchestrationService {
       });
   }
 
-  private buildPrefill(result: AutoCountResult): TrainingEntryDialogData {
+  private buildPrefill(
+    result: AutoCountResult
+  ): TrainingEntryDialogData | null {
     if (result.exerciseId === 'pushup') {
       return {
         kind: 'pushup',
@@ -346,10 +383,12 @@ export class QuickAddOrchestrationService {
         type: 'standard',
       } satisfies PushupEntryDialogData;
     }
+    const exerciseId = catalogIdForAutoCountProfile(result.exerciseId);
+    if (!exerciseId) return null;
     return {
       kind: 'exercise',
       timestamp: nowLocalIsoTimestamp(),
-      exerciseId: EXERCISE_CATALOG_ID[result.exerciseId],
+      exerciseId,
       reps: result.reps,
       sets: [result.reps],
     } satisfies ExerciseEntryDialogData;

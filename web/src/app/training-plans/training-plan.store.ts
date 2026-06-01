@@ -29,6 +29,7 @@ import {
   startDateForTargetDay,
   TrainingPlan,
   TrainingPlanDay,
+  trainingPlanDayExerciseId,
   TRAINING_PLANS,
   UserTrainingPlan,
 } from '@pu-stats/models';
@@ -376,6 +377,11 @@ export const TrainingPlanStore = signalStore(
       if (!a || !c || a.status !== 'active') return 'noop';
       const day = planDayByIndex(c, dayIndex);
       if (!day || day.kind === 'rest' || day.targetReps <= 0) return 'noop';
+      // LiveDataStore streams only the legacy pushup `pushups` collection,
+      // so the already-logged check below and the auto-mark effect can
+      // reason only about pushup reps. Fail closed on any other exercise
+      // rather than logging its reps as pushups.
+      if (trainingPlanDayExerciseId(day) !== 'pushup') return 'noop';
 
       const currentIdx = store.currentDayIndex();
       if (currentIdx === null || dayIndex > currentIdx) return 'noop';
@@ -561,6 +567,9 @@ export const TrainingPlanStore = signalStore(
         // status-based banner state in the UI).
         if (a.status !== 'active') return;
         if (day.kind === 'rest' || day.targetReps <= 0) return;
+        // Pushup-only, matching logPlanDay: don't auto-mark a non-pushup
+        // day off pushup reps streamed from LiveDataStore.
+        if (trainingPlanDayExerciseId(day) !== 'pushup') return;
         if (a.completedDays.includes(idx)) return;
         // Same readiness guard as `logPlanDay` — without this, a
         // pre-sync `_live.entries()` could appear to satisfy the

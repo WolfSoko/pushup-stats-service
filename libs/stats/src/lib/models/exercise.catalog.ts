@@ -105,6 +105,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     // the `categoryId` moves them from `abs` → `core`.
     id: 'abs.situps',
     categoryId: 'core',
+    autoCountProfileId: 'situp',
     measurement: 'reps',
     min: 1,
     max: 500,
@@ -245,6 +246,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   {
     id: 'core.hollowhold',
     categoryId: 'core',
+    holdTimerProfileId: 'hollowhold',
     measurement: 'time',
     min: 1,
     max: 1200,
@@ -258,6 +260,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     // them under "Plank" inside the core picker.
     id: 'plank.standard',
     categoryId: 'core',
+    holdTimerProfileId: 'plank',
     measurement: 'time',
     min: 1,
     max: 7200,
@@ -291,6 +294,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   {
     id: 'legs.squats',
     categoryId: 'squat',
+    autoCountProfileId: 'squat',
     measurement: 'reps',
     min: 1,
     max: 500,
@@ -540,6 +544,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   {
     id: 'pull.pullups',
     categoryId: 'pull',
+    autoCountProfileId: 'pullup',
     measurement: 'reps',
     min: 1,
     max: 200,

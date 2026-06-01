@@ -37,6 +37,18 @@ export interface TrainingPlanDay {
    * the UI shows just the total target.
    */
   sets?: number[];
+  /**
+   * Catalog exercise this day prescribes. Absent ⇒ the `'pushup'`
+   * sentinel: every existing plan is a pushup plan, and Liegestütze live
+   * in the legacy `pushups` collection with no catalog entry. A present
+   * value MUST be a real `ExerciseDefinition.id` — the catalog is the
+   * single source of valid exercises and the plan spec guards this — so
+   * plans reference the same exercise catalog as goals, entries, and
+   * analysis. Resolve via {@link trainingPlanDayExerciseId}.
+   */
+  exerciseId?: string;
+  /** Optional catalog variant id (e.g. a specific plank/pushup variant). */
+  variantId?: string;
   /** Localized short description shown in the day card. */
   description: string;
 }
@@ -145,6 +157,19 @@ export function planDayByIndex(
   dayIndex: number
 ): TrainingPlanDay | null {
   return plan.days.find((d) => d.dayIndex === dayIndex) ?? null;
+}
+
+/**
+ * Catalog exercise id a plan day prescribes. Defaults to the `'pushup'`
+ * sentinel (matching `PUSHUP_QUICK_ADD_EXERCISE_ID`) when the day names no
+ * exercise, so every existing pushup plan keeps working unchanged while
+ * new plans can target any catalog exercise. The returned id is guaranteed
+ * by the plan spec to be either `'pushup'` or a real `ExerciseDefinition.id`.
+ */
+export function trainingPlanDayExerciseId(
+  day: Pick<TrainingPlanDay, 'exerciseId'>
+): string {
+  return day.exerciseId ?? 'pushup';
 }
 
 /**

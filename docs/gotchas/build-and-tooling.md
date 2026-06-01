@@ -29,6 +29,10 @@ pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.ya
 
 To scale further (bigger agents for e2e specifically, or higher ceilings), edit the YAML — the CI workflow doesn't need to change.
 
+## Generated `*.generated.ts` files rewrite on `nx build web`
+
+`pnpm nx build web` runs the `generate-content` target first, which rewrites the build-time content files (`libs/stats/src/lib/models/*-content.generated.ts`) and the sitemap from `content/**`. After a local build your working tree may show a large diff in those files — a stale committed copy or a non-deterministic generation order, **not** part of your change. Revert it (`git checkout -- libs/stats/src/lib/models/exercise-wiki-content.generated.ts`) instead of committing the churn; CI regenerates them from the committed sources. Never hand-edit a file whose header says `AUTO-GENERATED`.
+
 ## Angular SSR `NG_ALLOWED_HOSTS` must include `*.run.app`
 
 Angular SSR (`@angular/ssr` v19+) rejects requests whose `Host` header isn't in `NG_ALLOWED_HOSTS` as an SSRF guard. Firebase App Hosting forwards traffic through Cloud Run, so during rolling deploys traffic-tag URLs like `t-<id>---<service>-<hash>-<region>.a.run.app` reach the SSR with that internal hostname — Angular returns `400: Header "host" with value "..." is not allowed`, and the affected page (most visibly `/u/:uid`, which is `RenderMode.Server`) refuses to render.

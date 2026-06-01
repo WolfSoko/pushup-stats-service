@@ -11,6 +11,8 @@
  * public snapshot at `leaderboards/exercises` that the client can read.
  */
 
+import { measurementValueField, type MeasurementType } from '@pu-stats/models';
+
 import { berlinDateParts, BerlinDateParts } from '../datetime';
 import {
   isLeaderboardExcluded,
@@ -75,10 +77,12 @@ export type WindowedExerciseLeaderboardPeriodKind = Exclude<
 
 /**
  * Value field on `ExerciseEntryRow` that carries the primary measurement
- * value for a given exercise. Mirrors `measurementValueField()` from
- * `@pu-stats/models`, which the client uses for the same routing; the
- * value isn't shared between the two because the Cloud Functions
- * package can't depend on the Angular workspace lib.
+ * value for a given exercise — the leaderboard-eligible subset of the
+ * model's measurement value fields (`weightKg` is excluded; see
+ * {@link supportsExerciseLeaderboard}). The measurement → field routing
+ * itself is NOT duplicated here: {@link exerciseValueFieldFor} derives it
+ * from `measurementValueField()` in `@pu-stats/models` — the same source
+ * the client uses — so the server ranker can never drift from the catalog.
  */
 export type ExerciseValueField = 'reps' | 'durationSec' | 'distanceM';
 
@@ -101,6 +105,35 @@ const DAILY_CAP_BY_FIELD: Readonly<Record<ExerciseValueField, number>> = {
   durationSec: 14_400,
   distanceM: 100_000,
 };
+
+/**
+ * Catalog measurement types we rank — same gate the client uses in
+ * `LeaderboardService.supportsLeaderboard`. `weight`-measured exercises
+ * ship without a sensible Σ-metric (load-per-rep isn't a volume to rank),
+ * so we don't aggregate them; the leaderboard doc just omits those
+ * exerciseIds.
+ */
+export function supportsExerciseLeaderboard(
+  measurement: MeasurementType
+): boolean {
+  return measurement !== 'weight';
+}
+
+/**
+ * Maps a catalog `MeasurementType` to the `ExerciseEntryRow` value-field
+ * the ranker reads. Derived from `measurementValueField()` in
+ * `@pu-stats/models` so it can never drift from how the client routes the
+ * same value. `weight` maps to `reps` there, but it's filtered out by
+ * {@link supportsExerciseLeaderboard} before reaching this function — the
+ * `weightKg` fold below only keeps the return type total.
+ */
+export function exerciseValueFieldFor(
+  measurement: MeasurementType
+): ExerciseValueField {
+  const field = measurementValueField(measurement);
+  if (field === 'weightKg') return 'reps';
+  return field;
+}
 
 /**
  * Returns the ISO date `daysBack` days before the given Berlin date.
