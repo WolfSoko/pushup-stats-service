@@ -11,11 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { StatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import {
-  StatsResponse,
-  StatsSeriesEntry,
-  toLocalIsoDate,
-} from '@pu-stats/models';
+import { StatsResponse, StatsSeriesEntry } from '@pu-stats/models';
+import { toLocalIsoDate } from '@pu-stats/date';
 import { firstValueFrom } from 'rxjs';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
 

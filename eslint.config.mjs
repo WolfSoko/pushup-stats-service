@@ -28,26 +28,34 @@ export default [
             // auth must NOT depend on data-access (decoupled via ports)
             {
               sourceTag: 'scope:auth',
-              onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
+              onlyDependOnLibsWithTags: [
+                'scope:models',
+                'scope:date',
+                'scope:testing',
+              ],
               bannedExternalImports: bannedFirebaseImports,
             },
             // motivation must NOT depend on auth (userId passed as param)
             {
               sourceTag: 'scope:motivation',
-              onlyDependOnLibsWithTags: ['scope:models'],
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:date'],
               bannedExternalImports: bannedFirebaseImports,
             },
             // data-access depends only on models
             {
               sourceTag: 'scope:data-access',
-              onlyDependOnLibsWithTags: ['scope:models'],
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:date'],
               bannedExternalImports: bannedFirebaseImports,
             },
             // data-access-state owns reactive read-models (signal stores) layered
             // on top of the stateless data-access API services.
             {
               sourceTag: 'scope:data-access-state',
-              onlyDependOnLibsWithTags: ['scope:models', 'scope:data-access'],
+              onlyDependOnLibsWithTags: [
+                'scope:models',
+                'scope:date',
+                'scope:data-access',
+              ],
               bannedExternalImports: bannedFirebaseImports,
             },
             // reminders depends on data-access, data-access-state, motivation,
@@ -57,6 +65,7 @@ export default [
               sourceTag: 'scope:reminders',
               onlyDependOnLibsWithTags: [
                 'scope:models',
+                'scope:date',
                 'scope:data-access',
                 'scope:data-access-state',
                 'scope:motivation',
@@ -72,6 +81,7 @@ export default [
               sourceTag: 'scope:push',
               onlyDependOnLibsWithTags: [
                 'scope:models',
+                'scope:date',
                 'scope:data-access',
                 'scope:testing',
               ],
@@ -80,19 +90,23 @@ export default [
             // quick-add depends on models (+ testing for specs)
             {
               sourceTag: 'scope:quick-add',
-              onlyDependOnLibsWithTags: ['scope:models', 'scope:testing'],
+              onlyDependOnLibsWithTags: [
+                'scope:models',
+                'scope:date',
+                'scope:testing',
+              ],
               bannedExternalImports: bannedFirebaseImports,
             },
             // auto-count depends on models only (port-only lib, no UI)
             {
               sourceTag: 'scope:auto-count',
-              onlyDependOnLibsWithTags: ['scope:models'],
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:date'],
               bannedExternalImports: bannedFirebaseImports,
             },
             // ads is isolated
             {
               sourceTag: 'scope:ads',
-              onlyDependOnLibsWithTags: ['scope:models'],
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:date'],
               bannedExternalImports: bannedFirebaseImports,
             },
             // sw-push is a standalone service-worker bundle — must stay isolated
@@ -106,6 +120,7 @@ export default [
               sourceTag: 'scope:testing',
               onlyDependOnLibsWithTags: [
                 'scope:models',
+                'scope:date',
                 'scope:data-access',
                 'scope:auth',
               ],
@@ -114,11 +129,17 @@ export default [
             // cloud-functions depends on models only
             {
               sourceTag: 'scope:cloud-functions',
-              onlyDependOnLibsWithTags: ['scope:models'],
+              onlyDependOnLibsWithTags: ['scope:models', 'scope:date'],
             },
             // models has no dependencies
             {
               sourceTag: 'scope:models',
+              onlyDependOnLibsWithTags: [],
+              bannedExternalImports: bannedFirebaseImports,
+            },
+            // date utilities are a standalone leaf lib with no dependencies
+            {
+              sourceTag: 'scope:date',
               onlyDependOnLibsWithTags: [],
               bannedExternalImports: bannedFirebaseImports,
             },
@@ -130,6 +151,7 @@ export default [
                 'scope:data-access',
                 'scope:data-access-state',
                 'scope:models',
+                'scope:date',
                 'scope:reminders',
                 'scope:push',
                 'scope:quick-add',

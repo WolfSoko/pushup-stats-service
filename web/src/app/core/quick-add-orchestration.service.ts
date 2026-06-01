@@ -10,9 +10,9 @@ import {
 } from '@pu-stats/data-access';
 import {
   type ExerciseEntryCreate,
-  nowLocalIsoTimestamp,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
 } from '@pu-stats/models';
+import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import {
   QuickAddBridgeService,
   type QuickAddSuggestion,

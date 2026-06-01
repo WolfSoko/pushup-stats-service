@@ -6,7 +6,8 @@ import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { ExerciseEntry, RangeModes } from '@pu-stats/models';
+import { ExerciseEntry } from '@pu-stats/models';
+import { RangeModes } from '@pu-stats/date';
 
 import { AnalysisStore } from '../analysis.store';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
