@@ -4,7 +4,9 @@ import {
   planDayByIndex,
   startDateForTargetDay,
   TrainingPlan,
+  trainingPlanDayExerciseId,
 } from './training-plan.models';
+import { findExerciseDefinition } from './exercise.catalog';
 import { findPlanById, TRAINING_PLANS } from './training-plan.catalog';
 
 describe('training-plan models', () => {
@@ -203,6 +205,45 @@ describe('training-plan models', () => {
     it('findPlanById returns the matching plan', () => {
       expect(findPlanById('challenge-30d-v1')?.totalDays).toBe(30);
       expect(findPlanById('does-not-exist')).toBeNull();
+    });
+
+    it('references only catalog exercises (or the pushup sentinel)', () => {
+      // Binds plans to the exercise SSOT: any day naming an exercise must
+      // name a real catalog entry. 'pushup' is the legacy-collection
+      // sentinel (no catalog entry by design).
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          const id = trainingPlanDayExerciseId(day);
+          if (id === 'pushup') continue;
+          expect(findExerciseDefinition(id)).not.toBeNull();
+        }
+      }
+    });
+
+    it('ships only pushup days until per-exercise logging lands', () => {
+      // TrainingPlanStore.logPlanDay can only log pushup days idempotently
+      // today (LiveDataStore is pushup-only); a non-pushup day would be
+      // skipped. Guard against shipping one before the "history for all
+      // exercises" track wires the per-exercise write/idempotency path.
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          expect(trainingPlanDayExerciseId(day)).toBe('pushup');
+        }
+      }
+    });
+  });
+
+  describe('trainingPlanDayExerciseId', () => {
+    it('defaults to the pushup sentinel when a day names no exercise', () => {
+      expect(trainingPlanDayExerciseId({ exerciseId: undefined })).toBe(
+        'pushup'
+      );
+    });
+
+    it('passes through an explicit catalog exercise id', () => {
+      expect(trainingPlanDayExerciseId({ exerciseId: 'legs.squats' })).toBe(
+        'legs.squats'
+      );
     });
   });
 });
