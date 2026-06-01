@@ -4,7 +4,6 @@ import {
   EXERCISE_CATALOG,
   type ExerciseDefinition,
   type MeasurementType,
-  measurementValueField,
   normalizeReminderLocale,
   USERSTATS_VERSION,
 } from '@pu-stats/models';
@@ -31,10 +30,11 @@ import {
   type ExerciseEntryRow,
   type ExerciseLeaderboardEntry,
   type ExerciseUserTotalRow,
-  type ExerciseValueField,
+  exerciseValueFieldFor,
   getExerciseLeaderboardQueryStartDate,
   rankExerciseAllTime,
   rankExerciseEntries,
+  supportsExerciseLeaderboard,
 } from './exercise-leaderboard';
 import {
   getLeaderboardQueryStartDate,
@@ -196,33 +196,6 @@ async function rebuildLeaderboardsCore() {
   });
 }
 
-/**
- * Catalog measurement types we rank — same gate the client uses in
- * `LeaderboardService.supportsLeaderboard`. `weight`-measured
- * exercises ship without a sensible Σ-metric, so we don't aggregate
- * them; the leaderboard doc just omits those exerciseIds.
- */
-function supportsLeaderboard(measurement: MeasurementType): boolean {
-  return measurement !== 'weight';
-}
-
-/**
- * Maps `MeasurementType` to the `ExerciseEntryRow` value-field — same
- * mapping the client does via `measurementValueField()` from
- * `@pu-stats/models`. Re-exposed locally to keep the ranker decoupled
- * from the catalog dependency.
- */
-function valueFieldForMeasurement(
-  measurement: MeasurementType
-): ExerciseValueField {
-  const field = measurementValueField(measurement);
-  // `weight` would map to `reps` per `measurementValueField`, but we
-  // filter weight out via `supportsLeaderboard` before getting here.
-  // `distance` and `distance-time` both map to `distanceM`.
-  if (field === 'weightKg') return 'reps';
-  return field;
-}
-
 interface ExerciseLeaderboardSnapshot {
   measurement: MeasurementType;
   unit: string;
@@ -366,7 +339,7 @@ async function rebuildExerciseLeaderboardsCore(opts: {
   const byExercise: Record<string, ExerciseLeaderboardSnapshot> = {};
 
   for (const def of EXERCISE_CATALOG as readonly ExerciseDefinition[]) {
-    if (!supportsLeaderboard(def.measurement)) continue;
+    if (!supportsExerciseLeaderboard(def.measurement)) continue;
     const exerciseRows = rowsByExercise.get(def.id) ?? [];
     const allTimeBucket: ExerciseLeaderboardEntry[] = opts.includeAllTime
       ? rankExerciseAllTime(allTimeByExercise?.get(def.id) ?? [], userProfiles)
@@ -376,7 +349,7 @@ async function rebuildExerciseLeaderboardsCore(opts: {
     // exercise with only old activity should still surface a populated
     // allTime bucket (with empty daily/last7/last30).
     if (exerciseRows.length === 0 && allTimeBucket.length === 0) continue;
-    const valueField = valueFieldForMeasurement(def.measurement);
+    const valueField = exerciseValueFieldFor(def.measurement);
 
     byExercise[def.id] = {
       measurement: def.measurement,
