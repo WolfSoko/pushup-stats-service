@@ -65,21 +65,35 @@ function catalogIdForAutoCountProfile(
 }
 
 /**
+ * Runtime allowlist for the `AutoCountExerciseId` union (type-only in the
+ * dialog component) — validates a catalog `autoCountProfileId` string before
+ * it is treated as a detector profile, so an unexpected catalog value can't
+ * slip through an unchecked cast and open the dialog with an invalid id.
+ */
+function isAutoCountProfile(
+  value: string | undefined
+): value is AutoCountExerciseId {
+  return (
+    value === 'pushup' ||
+    value === 'squat' ||
+    value === 'pullup' ||
+    value === 'situp'
+  );
+}
+
+/**
  * Inverse of {@link catalogIdForAutoCountProfile} — resolves a catalog
  * exerciseId (or the `'pushup'` sentinel) to the auto-count profile the
  * camera dialog understands, reading `autoCountProfileId` straight off the
- * catalog. Returns `null` for catalog ids without a detector profile so
- * the dashboard fails closed instead of opening the wrong detector.
+ * catalog. Returns `null` for catalog ids without a valid detector profile
+ * so the dashboard fails closed instead of opening the wrong detector.
  */
 export function autoCountProfileForCatalogId(
   catalogId: string
 ): AutoCountExerciseId | null {
   if (catalogId === PUSHUP_QUICK_ADD_EXERCISE_ID) return 'pushup';
-  return (
-    (findExerciseDefinition(catalogId)?.autoCountProfileId as
-      | AutoCountExerciseId
-      | undefined) ?? null
-  );
+  const profile = findExerciseDefinition(catalogId)?.autoCountProfileId;
+  return isAutoCountProfile(profile) ? profile : null;
 }
 
 /**

@@ -17,7 +17,7 @@ import {
  * against the catalog instead (every catalog id present; no orphan ids
  * for exercises the catalog doesn't ship). Exported only for that guard.
  */
-export const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
+export const EXERCISE_DISPLAY_NAMES: Readonly<Record<string, string>> = {
   // core (legacy `abs.*` ids kept for data stability)
   'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
   'abs.crunches': $localize`:@@exercise.abs.crunches.name:Crunches`,
