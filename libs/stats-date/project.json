@@ -1,0 +1,21 @@
+{
+  "name": "stats-date",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/stats-date/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:date"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/stats-date/jest.config.cts",
+        "tsConfig": "libs/stats-date/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

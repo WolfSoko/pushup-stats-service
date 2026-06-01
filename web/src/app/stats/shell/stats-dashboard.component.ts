@@ -28,12 +28,12 @@ import {
   displayPushupType,
   findExerciseDefinition,
   formatEntryDisplay,
-  nowLocalIsoTimestamp,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   QUICK_LOG_REPS_MAX,
   QUICK_LOG_REPS_MIN,
   UnifiedEntry,
 } from '@pu-stats/models';
+import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
@@ -164,6 +164,8 @@ export class StatsDashboardComponent {
   readonly planTotalDays = this.store.planTotalDays;
   readonly isPlanRestDay = this.store.isPlanRestDay;
   readonly userConfiguredDailyGoal = this.store.userConfiguredDailyGoal;
+  /** Per-exercise daily goal breakdown shared with the toolbar pill. */
+  readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
   private readonly trainingPlans = inject(TrainingPlanStore);
   /**
    * Only render the "no active plan" banner once the plan resource has

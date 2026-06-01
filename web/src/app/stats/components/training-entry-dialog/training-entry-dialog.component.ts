@@ -24,7 +24,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import {
-  appendLocalOffset,
   COMPANION_BOUNDS,
   entryBreakdownField,
   EXERCISE_CATEGORIES,
@@ -42,6 +41,7 @@ import {
   PUSHUP_TYPES,
   PushupTypeInfo,
 } from '@pu-stats/models';
+import { appendLocalOffset } from '@pu-stats/date';
 import {
   exerciseDisplayName,
   variantDisplayName,

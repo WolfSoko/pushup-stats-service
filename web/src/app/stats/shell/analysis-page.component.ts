@@ -13,11 +13,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
-import {
-  createWeekRange,
-  type ExerciseCategoryId,
-  EXERCISE_CATEGORIES,
-} from '@pu-stats/models';
+import { type ExerciseCategoryId, EXERCISE_CATEGORIES } from '@pu-stats/models';
+import { createWeekRange } from '@pu-stats/date';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { FilterBarComponent } from '../components/filter-bar/filter-bar.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';

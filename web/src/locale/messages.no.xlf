@@ -9209,5 +9209,11 @@ Deine Position: # ·  Reps        </source>
         <target>Foto:</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.detailsAria">
+      <segment state="translated">
+        <source>Tagesziel-Einzelpositionen anzeigen</source>
+        <target>Vis detaljer for daglig mål</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

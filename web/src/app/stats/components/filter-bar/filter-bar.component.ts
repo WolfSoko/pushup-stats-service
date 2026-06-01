@@ -23,7 +23,7 @@ import {
   parseIsoDate,
   RangeModes,
   toLocalIsoDate,
-} from '@pu-stats/models';
+} from '@pu-stats/date';
 
 @Component({
   selector: 'app-filter-bar',

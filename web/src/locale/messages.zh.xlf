@@ -9443,5 +9443,11 @@
         <target>照片：</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.detailsAria">
+      <segment state="translated">
+        <source>Tagesziel-Einzelpositionen anzeigen</source>
+        <target>显示每日目标详情</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

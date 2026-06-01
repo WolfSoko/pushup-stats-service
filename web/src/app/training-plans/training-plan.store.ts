@@ -22,19 +22,21 @@ import {
 } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
-  appendLocalOffset,
   currentPlanDayIndex,
   findPlanById,
   isPlanCompleted,
   planDayByIndex,
   startDateForTargetDay,
-  toBerlinIsoDate,
-  toLocalIsoDate,
   TrainingPlan,
   TrainingPlanDay,
   TRAINING_PLANS,
   UserTrainingPlan,
 } from '@pu-stats/models';
+import {
+  appendLocalOffset,
+  toBerlinIsoDate,
+  toLocalIsoDate,
+} from '@pu-stats/date';
 import { firstValueFrom, of } from 'rxjs';
 
 /**

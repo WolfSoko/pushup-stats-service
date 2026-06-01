@@ -28,15 +28,3 @@ export interface StatsFilter {
   to?: string;
   dayChartMode?: '24h' | '14h';
 }
-
-// Re-export all domain models for backward compatibility
-export * from './pushup.models';
-export * from './user-config.models';
-export * from './reminder-config.models';
-export * from './reminder-i18n.models';
-export * from './user-stats.models';
-export * from './public-profile.models';
-export * from './exercise.models';
-export * from './exercise.catalog';
-export * from './exercise-format';
-export * from './unified-entry.models';

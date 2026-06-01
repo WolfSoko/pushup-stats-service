@@ -9949,5 +9949,11 @@
         <target>Foto:</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.detailsAria">
+      <segment state="translated">
+        <source>Tagesziel-Einzelpositionen anzeigen</source>
+        <target>Dagelijkse doeldetails weergeven</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -9949,5 +9949,11 @@
         <target>Imago:</target>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.detailsAria">
+      <segment state="translated">
+        <source>Tagesziel-Einzelpositionen anzeigen</source>
+        <target>Singulas partes propositi diurni ostendere</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

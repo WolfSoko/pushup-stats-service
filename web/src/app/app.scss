@@ -124,6 +124,15 @@ mat-sidenav-content {
     font-weight: 700;
   }
 
+  // The breakdown panel itself renders through a body-level CDK overlay
+  // (escapes the toolbar's mask-image), so its styles live in the global
+  // stylesheet — see `.goal-dropdown` in styles.scss.
+  .goal-pill-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
   .goal-pill {
     display: inline-flex;
     align-items: baseline;

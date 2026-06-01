@@ -10,6 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { type ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { Auth } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -120,7 +122,9 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     CookieConsentBannerComponent,
     MatDialogModule,
     MatFormFieldModule,
+    MatProgressBarModule,
     MatSelectModule,
+    OverlayModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -246,6 +250,66 @@ export class App {
       this.appData.complexGoalsEnabled() &&
       this.appData.todayGoalEntries().length > 0
   );
+  /**
+   * Per-exercise breakdown for the toolbar pill's hover/touch dropdown.
+   * Lists every daily goal (or the active plan's prescribed reps) with its
+   * target, progress and completion share.
+   */
+  readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
+  protected readonly goalDetailsAriaLabel = $localize`:@@toolbarDailyGoal.detailsAria:Tagesziel-Einzelpositionen anzeigen`;
+
+  // The dropdown renders through a CDK overlay (body-level) instead of as a
+  // toolbar descendant: `.top-nav` carries a `mask-image` edge-fade, and a
+  // CSS mask clips descendant painting to the toolbar box, so an in-toolbar
+  // panel below the bar would be masked away.
+  protected readonly goalDetailsOpen = signal(false);
+  protected readonly goalOverlayPositions: ConnectedPosition[] = [
+    {
+      originX: 'end',
+      originY: 'bottom',
+      overlayX: 'end',
+      overlayY: 'top',
+      offsetY: 6,
+    },
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'end',
+      overlayY: 'bottom',
+      offsetY: -6,
+    },
+  ];
+  // Bridges the gap between the pill and the detached panel so moving the
+  // pointer across it (or a focus bounce between origin and overlay) doesn't
+  // flicker the menu closed.
+  private goalDetailsCloseTimer: ReturnType<typeof setTimeout> | null = null;
+  private readonly _clearGoalTimerOnDestroy = this.destroyRef.onDestroy(() => {
+    if (this.goalDetailsCloseTimer) clearTimeout(this.goalDetailsCloseTimer);
+  });
+
+  openGoalDetails(): void {
+    if (this.goalDetailsCloseTimer) {
+      clearTimeout(this.goalDetailsCloseTimer);
+      this.goalDetailsCloseTimer = null;
+    }
+    if (this.dailyGoalBreakdown().length > 0) this.goalDetailsOpen.set(true);
+  }
+
+  scheduleCloseGoalDetails(): void {
+    if (this.goalDetailsCloseTimer) clearTimeout(this.goalDetailsCloseTimer);
+    this.goalDetailsCloseTimer = setTimeout(
+      () => this.goalDetailsOpen.set(false),
+      120
+    );
+  }
+
+  closeGoalDetails(): void {
+    if (this.goalDetailsCloseTimer) {
+      clearTimeout(this.goalDetailsCloseTimer);
+      this.goalDetailsCloseTimer = null;
+    }
+    this.goalDetailsOpen.set(false);
+  }
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
 
   private readonly consentBanner =
