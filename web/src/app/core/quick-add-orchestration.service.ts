@@ -52,11 +52,15 @@ import type {
  * `pushups` collection), so it maps to the `PUSHUP_QUICK_ADD_EXERCISE_ID`
  * sentinel.
  */
-function catalogIdForAutoCountProfile(profile: AutoCountExerciseId): string {
+function catalogIdForAutoCountProfile(
+  profile: AutoCountExerciseId
+): string | null {
   if (profile === 'pushup') return PUSHUP_QUICK_ADD_EXERCISE_ID;
+  // Fail closed (null) on a profile with no catalog entry rather than
+  // emitting the raw profile string as an exerciseId — a non-catalog id
+  // would only fail later at save time. Callers guard before persisting.
   return (
-    EXERCISE_CATALOG.find((d) => d.autoCountProfileId === profile)?.id ??
-    profile
+    EXERCISE_CATALOG.find((d) => d.autoCountProfileId === profile)?.id ?? null
   );
 }
 
@@ -85,10 +89,10 @@ export function autoCountProfileForCatalogId(
  */
 function catalogIdForHoldTimerProfile(
   profile: ExerciseTimerExerciseId
-): string {
+): string | null {
+  // Same fail-closed contract as catalogIdForAutoCountProfile.
   return (
-    EXERCISE_CATALOG.find((d) => d.holdTimerProfileId === profile)?.id ??
-    profile
+    EXERCISE_CATALOG.find((d) => d.holdTimerProfileId === profile)?.id ?? null
   );
 }
 
@@ -296,12 +300,17 @@ export class QuickAddOrchestrationService {
   private async confirmExerciseTimer(
     result: ExerciseTimerResult
   ): Promise<void> {
+    const exerciseId = catalogIdForHoldTimerProfile(result.exerciseId);
+    if (!exerciseId) {
+      this.openErrorSnackbar();
+      return;
+    }
     const { TrainingEntryDialogComponent } =
       await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
     const data: ExerciseEntryDialogData = {
       kind: 'exercise',
       timestamp: nowLocalIsoTimestamp(),
-      exerciseId: catalogIdForHoldTimerProfile(result.exerciseId),
+      exerciseId,
       durationSec: result.durationSec,
     };
     this.dialog
@@ -322,9 +331,13 @@ export class QuickAddOrchestrationService {
   }
 
   private async confirmAutoCount(result: AutoCountResult): Promise<void> {
+    const data = this.buildPrefill(result);
+    if (!data) {
+      this.openErrorSnackbar();
+      return;
+    }
     const { TrainingEntryDialogComponent } =
       await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
-    const data = this.buildPrefill(result);
 
     this.dialog
       .open<
@@ -343,7 +356,9 @@ export class QuickAddOrchestrationService {
       });
   }
 
-  private buildPrefill(result: AutoCountResult): TrainingEntryDialogData {
+  private buildPrefill(
+    result: AutoCountResult
+  ): TrainingEntryDialogData | null {
     if (result.exerciseId === 'pushup') {
       return {
         kind: 'pushup',
@@ -354,10 +369,12 @@ export class QuickAddOrchestrationService {
         type: 'standard',
       } satisfies PushupEntryDialogData;
     }
+    const exerciseId = catalogIdForAutoCountProfile(result.exerciseId);
+    if (!exerciseId) return null;
     return {
       kind: 'exercise',
       timestamp: nowLocalIsoTimestamp(),
-      exerciseId: catalogIdForAutoCountProfile(result.exerciseId),
+      exerciseId,
       reps: result.reps,
       sets: [result.reps],
     } satisfies ExerciseEntryDialogData;
