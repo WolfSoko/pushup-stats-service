@@ -88,6 +88,21 @@ export interface ExerciseDefinition {
   customName?: string;
   /** Optional Material icon name. */
   icon?: string;
+  /**
+   * Pose-detector profile id for camera-based auto-count (e.g. `'squat'`).
+   * Opaque to the model — the web auto-count adapter maps it to its typed
+   * profile union. Absent ⇒ the exercise has no camera rep-counter. This
+   * is the single source for which catalog exercises are auto-countable;
+   * the quick-add subset and the web profile↔catalog mapping derive from
+   * it instead of hardcoding ids.
+   */
+  autoCountProfileId?: string;
+  /**
+   * Stopwatch/hold-timer profile id for time-measured exercises
+   * (e.g. `'plank'`). Opaque to the model; mapped by the web timer
+   * adapter. Absent ⇒ no guided hold-timer entry path.
+   */
+  holdTimerProfileId?: string;
   variants?: readonly ExerciseVariant[];
 }
 

@@ -5,6 +5,10 @@ import {
   findExerciseCategory,
   findExerciseDefinition,
 } from './exercise.catalog';
+import {
+  AUTO_COUNT_QUICK_ADD_EXERCISE_IDS,
+  PUSHUP_QUICK_ADD_EXERCISE_ID,
+} from './user-config.models';
 
 describe('EXERCISE_CATEGORIES', () => {
   it('declares each category id at most once', () => {
@@ -215,5 +219,55 @@ describe('exercisesByCategory', () => {
     for (const cat of EXERCISE_CATEGORIES) {
       expect(map.has(cat.id)).toBe(true);
     }
+  });
+});
+
+describe('auto-count / hold-timer catalog capabilities', () => {
+  it('marks exactly the camera-countable exercises with an autoCountProfileId', () => {
+    const profiles = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId);
+    expect(profiles.map((d) => [d.id, d.autoCountProfileId]).sort()).toEqual([
+      ['abs.situps', 'situp'],
+      ['legs.squats', 'squat'],
+      ['pull.pullups', 'pullup'],
+    ]);
+  });
+
+  it('uses only auto-count profile ids the web AutoCountExerciseId union supports', () => {
+    // The union is type-only in web/auto-count, so this bounded set is the
+    // catalog-side half of the contract; the orchestration spec covers the
+    // round-trip through autoCountProfileForCatalogId.
+    const allowed = new Set(['squat', 'pullup', 'situp']);
+    for (const def of EXERCISE_CATALOG) {
+      if (def.autoCountProfileId) {
+        expect(allowed.has(def.autoCountProfileId)).toBe(true);
+      }
+    }
+  });
+
+  it('marks the hold-timer exercises with a time-measured holdTimerProfileId', () => {
+    expect(findExerciseDefinition('plank.standard')?.holdTimerProfileId).toBe(
+      'plank'
+    );
+    expect(findExerciseDefinition('core.hollowhold')?.holdTimerProfileId).toBe(
+      'hollowhold'
+    );
+    const allowed = new Set(['plank', 'hollowhold']);
+    for (const def of EXERCISE_CATALOG) {
+      if (def.holdTimerProfileId) {
+        expect(def.measurement).toBe('time');
+        expect(allowed.has(def.holdTimerProfileId)).toBe(true);
+      }
+    }
+  });
+
+  it('keeps AUTO_COUNT_QUICK_ADD_EXERCISE_IDS derivable from the catalog', () => {
+    // The quick-add subset must equal the pushup sentinel plus every
+    // catalog exercise that declares a camera profile — no hand-maintained
+    // drift from the catalog's autoCountProfileId flags.
+    const derived = [
+      PUSHUP_QUICK_ADD_EXERCISE_ID,
+      ...EXERCISE_CATALOG.filter((d) => d.autoCountProfileId).map((d) => d.id),
+    ].sort();
+    expect([...AUTO_COUNT_QUICK_ADD_EXERCISE_IDS].sort()).toEqual(derived);
   });
 });
