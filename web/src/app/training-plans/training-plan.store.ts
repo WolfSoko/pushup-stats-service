@@ -377,13 +377,10 @@ export const TrainingPlanStore = signalStore(
       if (!a || !c || a.status !== 'active') return 'noop';
       const day = planDayByIndex(c, dayIndex);
       if (!day || day.kind === 'rest' || day.targetReps <= 0) return 'noop';
-      // Only pushup plan days can be logged idempotently today: the
-      // already-logged check below and the auto-mark effect read
-      // LiveDataStore, which streams the pushup-only `pushups` collection.
-      // A non-pushup day would route reps to the wrong place, so fail
-      // closed. The plan catalog ships none yet (guarded by the plan spec);
-      // wiring per-exercise writes belongs to the multi-exercise history
-      // track.
+      // LiveDataStore streams only the legacy pushup `pushups` collection,
+      // so the already-logged check below and the auto-mark effect can
+      // reason only about pushup reps. Fail closed on any other exercise
+      // rather than logging its reps as pushups.
       if (trainingPlanDayExerciseId(day) !== 'pushup') return 'noop';
 
       const currentIdx = store.currentDayIndex();

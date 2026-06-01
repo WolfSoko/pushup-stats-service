@@ -220,11 +220,10 @@ describe('training-plan models', () => {
       }
     });
 
-    it('ships only pushup days until per-exercise logging lands', () => {
-      // TrainingPlanStore.logPlanDay can only log pushup days idempotently
-      // today (LiveDataStore is pushup-only); a non-pushup day would be
-      // skipped. Guard against shipping one before the "history for all
-      // exercises" track wires the per-exercise write/idempotency path.
+    it('ships only pushup days the store can log idempotently', () => {
+      // logPlanDay reasons about reps through LiveDataStore, which is
+      // pushup-only, so a non-pushup plan day would be silently skipped.
+      // Guard against shipping one the store can't honor.
       for (const plan of TRAINING_PLANS) {
         for (const day of plan.days) {
           expect(trainingPlanDayExerciseId(day)).toBe('pushup');
