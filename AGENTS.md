@@ -46,7 +46,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **Mock providers via Angular DI** (`{ provide: ..., useValue: ... }`), not by patching `inject()` directly.
 - **External functions** (e.g. `deleteUser` from Firebase) are mocked on the imported module — never with dynamic `import()` or `require()`. Use `import * as ns from '@angular/fire/firestore'` and reference `ns.doc`/`ns.docData` after `jest.mock(...)`.
 - **`PLATFORM_ID: 'server'`** in tests for stores that start a `setInterval` / browser-only timer in `withHooks`. Otherwise the timer leaks across `TestBed.resetTestingModule()`.
-- **Given-When-Then** style tests are preferred.
+- **Given-When-Then** style tests are preferred — new tests follow it (`it('Given …, When …, Then …')`) even in files whose older tests predate the convention; don't match the legacy plain-descriptive style.
 
 More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 
@@ -56,6 +56,7 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 - **Prefer Angular Material components** (`mat-button`, `mat-icon`, `mat-form-field`, `mat-dialog`, etc.) over plain HTML for buttons, inputs, dialogs, and other interactive controls.
 - **No `@angular/animations`** — it is deprecated and not a project dependency. Use CSS animations/transitions instead.
 - **State management:** see [`docs/architecture.md`](docs/architecture.md) for the signal-store / API-service split and where state belongs. Short version: stores own state, components only bind, services are stateless.
+- **Exercises & categories — one source:** `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES` in `@pu-stats/models` are the only list of available exercises/categories. Goals, entries, analysis, the Cloud Function leaderboard rebuild, and training plans (`TrainingPlanDay.exerciseId`, default `'pushup'`) all read from it. Consumers that can't import it — the `firestore.rules` allowlists and the `$localize` display-name registry — are pinned to the catalog by guard tests, so adding/renaming an exercise fails CI until they match. Only `firestore.rules` needs a manual edit; everything else derives. Details: [`docs/architecture.md`](docs/architecture.md) → "Single source of truth: exercises & categories".
 - **No RxJS for state** — RxJS is allowed only inside the data-access layer for Firestore Observables, then bridged via `toSignal()`.
 - **Don't introduce backwards-compatibility shims** for code paths you are certain are unused — delete instead. No `// removed`, no re-exports of removed types, no renamed `_unused` vars.
 
