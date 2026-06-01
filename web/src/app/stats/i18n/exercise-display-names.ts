@@ -10,8 +10,14 @@ import {
  * `$localize` calls live in this module so the angular build extractor
  * picks them up; consumers (stats table, history page filter) call
  * {@link exerciseDisplayName} to avoid duplicating the lookup table.
+ *
+ * Keys must mirror `EXERCISE_CATALOG` ids exactly. The `$localize`
+ * extraction constraint forces a literal-per-exercise registry that can't
+ * be derived from the catalog at runtime, so a spec guards this map
+ * against the catalog instead (every catalog id present; no orphan ids
+ * for exercises the catalog doesn't ship). Exported only for that guard.
  */
-const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
+export const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
   // core (legacy `abs.*` ids kept for data stability)
   'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
   'abs.crunches': $localize`:@@exercise.abs.crunches.name:Crunches`,
@@ -46,11 +52,6 @@ const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
   'pull.deadhang': $localize`:@@exercise.pull.deadhang.name:Dead Hang`,
   'pull.facepull': $localize`:@@exercise.pull.facepull.name:Face Pull`,
 
-  // carry
-  'carry.farmer': $localize`:@@exercise.carry.farmer.name:Farmer's Walk`,
-  'carry.suitcase': $localize`:@@exercise.carry.suitcase.name:Suitcase Carry`,
-  'carry.overhead': $localize`:@@exercise.carry.overhead.name:Overhead Carry`,
-
   // cardio
   'cardio.running': $localize`:@@exercise.cardio.running.name:Laufen`,
   'cardio.walking': $localize`:@@exercise.cardio.walking.name:Gehen`,
@@ -69,14 +70,6 @@ const EXERCISE_DISPLAY_NAMES: Record<string, string> = {
   'mobility.dynamicwarmup': $localize`:@@exercise.mobility.dynamicwarmup.name:Dynamisches Aufwärmen`,
   'mobility.catcow': $localize`:@@exercise.mobility.catcow.name:Katze-Kuh`,
   'mobility.hipopener': $localize`:@@exercise.mobility.hipopener.name:Hüftöffner`,
-
-  // strength
-  'strength.benchpress': $localize`:@@exercise.strength.benchpress.name:Bankdrücken`,
-  'strength.overheadpress': $localize`:@@exercise.strength.overheadpress.name:Schulterdrücken`,
-  'strength.deadlift': $localize`:@@exercise.strength.deadlift.name:Kreuzheben`,
-  'strength.barbellsquat': $localize`:@@exercise.strength.barbellsquat.name:Langhantel-Kniebeuge`,
-  'strength.barbellrow': $localize`:@@exercise.strength.barbellrow.name:Langhantelrudern`,
-  'strength.kettlebellswing': $localize`:@@exercise.strength.kettlebellswing.name:Kettlebell Swing`,
 };
 
 export function exerciseDisplayName(id: string): string {

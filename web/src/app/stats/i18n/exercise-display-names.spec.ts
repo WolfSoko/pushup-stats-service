@@ -1,7 +1,8 @@
-import type { ExerciseVariant } from '@pu-stats/models';
+import { EXERCISE_CATALOG, type ExerciseVariant } from '@pu-stats/models';
 
 import {
   categoryDisplayName,
+  EXERCISE_DISPLAY_NAMES,
   exerciseDisplayName,
   kindDisplayName,
   variantDisplayName,
@@ -83,5 +84,26 @@ describe('categoryDisplayName', () => {
     // entries to one of those categories before the labels ship.
     expect(categoryDisplayName('carry')).toBe('carry');
     expect(categoryDisplayName('strength')).toBe('strength');
+  });
+});
+
+describe('EXERCISE_DISPLAY_NAMES ⇄ EXERCISE_CATALOG', () => {
+  it('has a localized display name for every catalog exercise', () => {
+    // A catalog id without an entry silently renders its raw id
+    // (e.g. "abs.situps") in the stats table and history filter.
+    for (const def of EXERCISE_CATALOG) {
+      expect(EXERCISE_DISPLAY_NAMES[def.id]).toBeTruthy();
+    }
+  });
+
+  it('carries no display name for ids the catalog does not ship', () => {
+    // Orphan entries (e.g. the old forward-compat carry/strength labels)
+    // drift from the catalog and emit dead `$localize` units. The catalog
+    // is the single source of which exercises exist.
+    const catalogIds = new Set(EXERCISE_CATALOG.map((d) => d.id));
+    const orphans = Object.keys(EXERCISE_DISPLAY_NAMES).filter(
+      (id) => !catalogIds.has(id)
+    );
+    expect(orphans).toEqual([]);
   });
 });
