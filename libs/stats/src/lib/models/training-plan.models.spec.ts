@@ -207,7 +207,7 @@ describe('training-plan models', () => {
       expect(findPlanById('does-not-exist')).toBeNull();
     });
 
-    it('references only catalog exercises (or the pushup sentinel)', () => {
+    it('Given every plan day, When its exercise is resolved, Then it is pushup or a real catalog id', () => {
       // Binds plans to the exercise SSOT: any day naming an exercise must
       // name a real catalog entry. 'pushup' is the legacy-collection
       // sentinel (no catalog entry by design).
@@ -220,7 +220,7 @@ describe('training-plan models', () => {
       }
     });
 
-    it('ships only pushup days the store can log idempotently', () => {
+    it('Given every plan day, When its exercise is resolved, Then it is the pushup the store can log today', () => {
       // logPlanDay reasons about reps through LiveDataStore, which is
       // pushup-only, so a non-pushup plan day would be silently skipped.
       // Guard against shipping one the store can't honor.
@@ -233,13 +233,13 @@ describe('training-plan models', () => {
   });
 
   describe('trainingPlanDayExerciseId', () => {
-    it('defaults to the pushup sentinel when a day names no exercise', () => {
+    it('Given a day with no exerciseId, When trainingPlanDayExerciseId is called, Then it returns the pushup sentinel', () => {
       expect(trainingPlanDayExerciseId({ exerciseId: undefined })).toBe(
         'pushup'
       );
     });
 
-    it('passes through an explicit catalog exercise id', () => {
+    it('Given a day with an explicit exerciseId, When trainingPlanDayExerciseId is called, Then it returns that id', () => {
       expect(trainingPlanDayExerciseId({ exerciseId: 'legs.squats' })).toBe(
         'legs.squats'
       );

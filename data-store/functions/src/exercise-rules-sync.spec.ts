@@ -33,6 +33,8 @@ function ruleAllowlist(rules: string, fnName: string): Set<string> {
   const start = rules.indexOf(`function ${fnName}`);
   if (start < 0) throw new Error(`rule function "${fnName}" not found`);
   const open = rules.indexOf('{', start);
+  if (open < 0)
+    throw new Error(`no opening brace for rule function "${fnName}"`);
   let depth = 0;
   let end = -1;
   for (let i = open; i < rules.length; i++) {
@@ -60,25 +62,25 @@ function catalogIds(measurement: MeasurementType): string[] {
 describe('firestore.rules exercise allowlists ⇄ EXERCISE_CATALOG', () => {
   const rules = readFileSync(RULES_PATH, 'utf8');
 
-  it('isRepsExerciseId lists exactly the catalog reps exercises', () => {
+  it('Given the catalog reps exercises, When isRepsExerciseId is parsed from the rules, Then the id sets match', () => {
     expect([...ruleAllowlist(rules, 'isRepsExerciseId')].sort()).toEqual(
       catalogIds('reps')
     );
   });
 
-  it('isTimeExerciseId lists exactly the catalog time exercises', () => {
+  it('Given the catalog time exercises, When isTimeExerciseId is parsed from the rules, Then the id sets match', () => {
     expect([...ruleAllowlist(rules, 'isTimeExerciseId')].sort()).toEqual(
       catalogIds('time')
     );
   });
 
-  it('isDistanceTimeExerciseId lists exactly the catalog distance-time exercises', () => {
+  it('Given the catalog distance-time exercises, When isDistanceTimeExerciseId is parsed from the rules, Then the id sets match', () => {
     expect(
       [...ruleAllowlist(rules, 'isDistanceTimeExerciseId')].sort()
     ).toEqual(catalogIds('distance-time'));
   });
 
-  it('ships no catalog measurement the rules would silently reject', () => {
+  it('Given a measurement with no rule allowlist, When the catalog is scanned, Then no exercise uses it', () => {
     // `distance` (carry) and `weight` (strength) have no rule allowlist
     // yet, so the catalog must not surface them — a saved entry would hit
     // no matching rule branch and be denied. This is the rules-coverage

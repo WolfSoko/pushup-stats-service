@@ -223,7 +223,7 @@ describe('exercisesByCategory', () => {
 });
 
 describe('auto-count / hold-timer catalog capabilities', () => {
-  it('marks exactly the camera-countable exercises with an autoCountProfileId', () => {
+  it('Given EXERCISE_CATALOG, When filtering by autoCountProfileId, Then exactly situps, squats and pullups are marked', () => {
     const profiles = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId);
     expect(profiles.map((d) => [d.id, d.autoCountProfileId]).sort()).toEqual([
       ['abs.situps', 'situp'],
@@ -232,7 +232,7 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     ]);
   });
 
-  it('uses only auto-count profile ids the web AutoCountExerciseId union supports', () => {
+  it('Given a catalog autoCountProfileId, When checked against the web union, Then it is squat, pullup or situp', () => {
     // The union is type-only in web/auto-count, so this bounded set is the
     // catalog-side half of the contract; the orchestration spec covers the
     // round-trip through autoCountProfileForCatalogId.
@@ -244,7 +244,7 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     }
   });
 
-  it('marks the hold-timer exercises with a time-measured holdTimerProfileId', () => {
+  it('Given the hold-timer exercises, When inspected, Then plank and hollowhold carry a time-measured holdTimerProfileId', () => {
     expect(findExerciseDefinition('plank.standard')?.holdTimerProfileId).toBe(
       'plank'
     );
@@ -260,7 +260,7 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     }
   });
 
-  it('keeps AUTO_COUNT_QUICK_ADD_EXERCISE_IDS derivable from the catalog', () => {
+  it('Given the catalog auto-count flags, When the quick-add subset is derived, Then it equals AUTO_COUNT_QUICK_ADD_EXERCISE_IDS', () => {
     // The quick-add subset must equal the pushup sentinel plus every
     // catalog exercise that declares a camera profile — no hand-maintained
     // drift from the catalog's autoCountProfileId flags.

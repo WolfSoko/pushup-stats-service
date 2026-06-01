@@ -88,7 +88,7 @@ describe('categoryDisplayName', () => {
 });
 
 describe('EXERCISE_DISPLAY_NAMES ⇄ EXERCISE_CATALOG', () => {
-  it('has a localized display name for every catalog exercise', () => {
+  it('Given a catalog exercise, When looked up in EXERCISE_DISPLAY_NAMES, Then it has a localized name', () => {
     // A catalog id without an entry silently renders its raw id
     // (e.g. "abs.situps") in the stats table and history filter.
     for (const def of EXERCISE_CATALOG) {
@@ -96,7 +96,7 @@ describe('EXERCISE_DISPLAY_NAMES ⇄ EXERCISE_CATALOG', () => {
     }
   });
 
-  it('carries no display name for ids the catalog does not ship', () => {
+  it('Given an EXERCISE_DISPLAY_NAMES key, When checked against the catalog, Then no orphan ids remain', () => {
     // Orphan entries (e.g. the old forward-compat carry/strength labels)
     // drift from the catalog and emit dead `$localize` units. The catalog
     // is the single source of which exercises exist.

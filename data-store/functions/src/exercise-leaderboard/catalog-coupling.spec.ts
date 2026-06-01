@@ -22,7 +22,7 @@ describe('exercise leaderboard ⇄ catalog measurement coupling', () => {
     'distanceM',
   ]);
 
-  it('routes every leaderboard-eligible catalog exercise to a ranked value field', () => {
+  it('Given a leaderboard-eligible catalog exercise, When exerciseValueFieldFor maps its measurement, Then the value field is one the ranker caps', () => {
     for (const def of EXERCISE_CATALOG) {
       if (!supportsExerciseLeaderboard(def.measurement)) continue;
       expect(VALUE_FIELDS.has(exerciseValueFieldFor(def.measurement))).toBe(
@@ -31,7 +31,7 @@ describe('exercise leaderboard ⇄ catalog measurement coupling', () => {
     }
   });
 
-  it('excludes only weight-measured exercises from leaderboards', () => {
+  it('Given each measurement type, When supportsExerciseLeaderboard is checked, Then only weight is excluded', () => {
     const measurements: MeasurementType[] = [
       'reps',
       'time',
@@ -44,7 +44,7 @@ describe('exercise leaderboard ⇄ catalog measurement coupling', () => {
     }
   });
 
-  it('derives the value field the same way the client does', () => {
+  it('Given each measurement type, When exerciseValueFieldFor maps it, Then it matches the client value-field routing', () => {
     expect(exerciseValueFieldFor('reps')).toBe('reps');
     expect(exerciseValueFieldFor('time')).toBe('durationSec');
     expect(exerciseValueFieldFor('distance')).toBe('distanceM');
