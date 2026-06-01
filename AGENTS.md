@@ -46,7 +46,7 @@ When making changes, always write or update relevant tests as part of the same c
 - **Mock providers via Angular DI** (`{ provide: ..., useValue: ... }`), not by patching `inject()` directly.
 - **External functions** (e.g. `deleteUser` from Firebase) are mocked on the imported module — never with dynamic `import()` or `require()`. Use `import * as ns from '@angular/fire/firestore'` and reference `ns.doc`/`ns.docData` after `jest.mock(...)`.
 - **`PLATFORM_ID: 'server'`** in tests for stores that start a `setInterval` / browser-only timer in `withHooks`. Otherwise the timer leaks across `TestBed.resetTestingModule()`.
-- **Given-When-Then** style tests are preferred — new tests follow it (`it('Given …, When …, Then …')`) even in files whose older tests predate the convention; don't match the legacy plain-descriptive style.
+- **Given-When-Then** style tests are preferred — the test title is a `should …` sentence (`it('should …')`); `// given` / `// when` / `// then` are marker comments inside the body that flag where each phase starts, **not** part of the title. New tests follow this even in files whose older tests predate the convention.
 
 More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 

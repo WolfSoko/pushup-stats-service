@@ -223,20 +223,25 @@ describe('exercisesByCategory', () => {
 });
 
 describe('auto-count / hold-timer catalog capabilities', () => {
-  it('Given EXERCISE_CATALOG, When filtering by autoCountProfileId, Then exactly situps, squats and pullups are marked', () => {
-    const profiles = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId);
-    expect(profiles.map((d) => [d.id, d.autoCountProfileId]).sort()).toEqual([
+  it('should mark exactly situps, squats and pullups with an autoCountProfileId', () => {
+    // given / when
+    const profiles = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId).map(
+      (d) => [d.id, d.autoCountProfileId]
+    );
+    // then
+    expect(profiles.sort()).toEqual([
       ['abs.situps', 'situp'],
       ['legs.squats', 'squat'],
       ['pull.pullups', 'pullup'],
     ]);
   });
 
-  it('Given a catalog autoCountProfileId, When checked against the web union, Then it is squat, pullup or situp', () => {
-    // The union is type-only in web/auto-count, so this bounded set is the
-    // catalog-side half of the contract; the orchestration spec covers the
-    // round-trip through autoCountProfileForCatalogId.
+  it('should use only auto-count profile ids the web AutoCountExerciseId union supports', () => {
+    // given — the union is type-only in web/auto-count, so this bounded set
+    // is the catalog-side half of the contract; the orchestration spec
+    // covers the round-trip through autoCountProfileForCatalogId.
     const allowed = new Set(['squat', 'pullup', 'situp']);
+    // when / then
     for (const def of EXERCISE_CATALOG) {
       if (def.autoCountProfileId) {
         expect(allowed.has(def.autoCountProfileId)).toBe(true);
@@ -244,7 +249,8 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     }
   });
 
-  it('Given the hold-timer exercises, When inspected, Then plank and hollowhold carry a time-measured holdTimerProfileId', () => {
+  it('should mark plank and hollow hold with a time-measured holdTimerProfileId', () => {
+    // given / when / then
     expect(findExerciseDefinition('plank.standard')?.holdTimerProfileId).toBe(
       'plank'
     );
@@ -260,10 +266,10 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     }
   });
 
-  it('Given the catalog auto-count flags, When the quick-add subset is derived, Then it equals AUTO_COUNT_QUICK_ADD_EXERCISE_IDS', () => {
-    // The quick-add subset must equal the pushup sentinel plus every
-    // catalog exercise that declares a camera profile — no hand-maintained
-    // drift from the catalog's autoCountProfileId flags.
+  it('should keep AUTO_COUNT_QUICK_ADD_EXERCISE_IDS derivable from the catalog flags', () => {
+    // given the catalog auto-count flags, when the quick-add subset is
+    // derived, then it equals the pushup sentinel plus every catalog
+    // exercise that declares a camera profile — no hand-maintained drift.
     const derived = [
       PUSHUP_QUICK_ADD_EXERCISE_ID,
       ...EXERCISE_CATALOG.filter((d) => d.autoCountProfileId).map((d) => d.id),

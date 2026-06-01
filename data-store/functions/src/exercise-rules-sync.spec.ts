@@ -62,38 +62,48 @@ function catalogIds(measurement: MeasurementType): string[] {
 describe('firestore.rules exercise allowlists ⇄ EXERCISE_CATALOG', () => {
   const rules = readFileSync(RULES_PATH, 'utf8');
 
-  it('Given the catalog reps exercises, When isRepsExerciseId is parsed from the rules, Then the id sets match', () => {
-    expect([...ruleAllowlist(rules, 'isRepsExerciseId')].sort()).toEqual(
-      catalogIds('reps')
-    );
+  it('should list exactly the catalog reps exercises in isRepsExerciseId', () => {
+    // given
+    const catalog = catalogIds('reps');
+    // when
+    const rule = [...ruleAllowlist(rules, 'isRepsExerciseId')].sort();
+    // then
+    expect(rule).toEqual(catalog);
   });
 
-  it('Given the catalog time exercises, When isTimeExerciseId is parsed from the rules, Then the id sets match', () => {
-    expect([...ruleAllowlist(rules, 'isTimeExerciseId')].sort()).toEqual(
-      catalogIds('time')
-    );
+  it('should list exactly the catalog time exercises in isTimeExerciseId', () => {
+    // given
+    const catalog = catalogIds('time');
+    // when
+    const rule = [...ruleAllowlist(rules, 'isTimeExerciseId')].sort();
+    // then
+    expect(rule).toEqual(catalog);
   });
 
-  it('Given the catalog distance-time exercises, When isDistanceTimeExerciseId is parsed from the rules, Then the id sets match', () => {
-    expect(
-      [...ruleAllowlist(rules, 'isDistanceTimeExerciseId')].sort()
-    ).toEqual(catalogIds('distance-time'));
+  it('should list exactly the catalog distance-time exercises in isDistanceTimeExerciseId', () => {
+    // given
+    const catalog = catalogIds('distance-time');
+    // when
+    const rule = [...ruleAllowlist(rules, 'isDistanceTimeExerciseId')].sort();
+    // then
+    expect(rule).toEqual(catalog);
   });
 
-  it('Given a measurement with no rule allowlist, When the catalog is scanned, Then no exercise uses it', () => {
-    // `distance` (carry) and `weight` (strength) have no rule allowlist
-    // yet, so the catalog must not surface them — a saved entry would hit
-    // no matching rule branch and be denied. This is the rules-coverage
-    // mirror of the EXERCISE_CATALOG spec's "does not yet ship
-    // distance/weight" guard.
+  it('should not ship a catalog measurement the rules have no allowlist for', () => {
+    // given — `distance` (carry) and `weight` (strength) have no rule
+    // allowlist yet, so a saved entry would hit no matching rule branch and
+    // be denied. Mirrors the EXERCISE_CATALOG spec's "does not yet ship
+    // distance/weight" guard from the rules-coverage side.
     const ruleCovered = new Set<MeasurementType>([
       'reps',
       'time',
       'distance-time',
     ]);
+    // when
     const uncovered = EXERCISE_CATALOG.filter(
       (d) => !ruleCovered.has(d.measurement)
     ).map((d) => d.id);
+    // then
     expect(uncovered).toEqual([]);
   });
 });

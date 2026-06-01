@@ -22,16 +22,19 @@ describe('exercise leaderboard ⇄ catalog measurement coupling', () => {
     'distanceM',
   ]);
 
-  it('Given a leaderboard-eligible catalog exercise, When exerciseValueFieldFor maps its measurement, Then the value field is one the ranker caps', () => {
+  it('should route every leaderboard-eligible catalog exercise to a ranked value field', () => {
+    // given each catalog exercise
     for (const def of EXERCISE_CATALOG) {
       if (!supportsExerciseLeaderboard(def.measurement)) continue;
-      expect(VALUE_FIELDS.has(exerciseValueFieldFor(def.measurement))).toBe(
-        true
-      );
+      // when
+      const field = exerciseValueFieldFor(def.measurement);
+      // then
+      expect(VALUE_FIELDS.has(field)).toBe(true);
     }
   });
 
-  it('Given each measurement type, When supportsExerciseLeaderboard is checked, Then only weight is excluded', () => {
+  it('should exclude only weight-measured exercises from leaderboards', () => {
+    // given
     const measurements: MeasurementType[] = [
       'reps',
       'time',
@@ -39,18 +42,20 @@ describe('exercise leaderboard ⇄ catalog measurement coupling', () => {
       'distance-time',
       'weight',
     ];
+    // when / then
     for (const m of measurements) {
       expect(supportsExerciseLeaderboard(m)).toBe(m !== 'weight');
     }
   });
 
-  it('Given each measurement type, When exerciseValueFieldFor maps it, Then it matches the client value-field routing', () => {
+  it('should derive the value field the same way the client does', () => {
+    // given each measurement type / when mapped / then it matches the client
+    // routing. `weight` is filtered out upstream by
+    // supportsExerciseLeaderboard; the fold only keeps the return type total.
     expect(exerciseValueFieldFor('reps')).toBe('reps');
     expect(exerciseValueFieldFor('time')).toBe('durationSec');
     expect(exerciseValueFieldFor('distance')).toBe('distanceM');
     expect(exerciseValueFieldFor('distance-time')).toBe('distanceM');
-    // `weight` is filtered out upstream by supportsExerciseLeaderboard;
-    // the fold only keeps the return type total.
     expect(exerciseValueFieldFor('weight')).toBe('reps');
   });
 });

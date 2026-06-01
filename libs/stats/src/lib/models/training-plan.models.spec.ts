@@ -207,23 +207,26 @@ describe('training-plan models', () => {
       expect(findPlanById('does-not-exist')).toBeNull();
     });
 
-    it('Given every plan day, When its exercise is resolved, Then it is pushup or a real catalog id', () => {
-      // Binds plans to the exercise SSOT: any day naming an exercise must
-      // name a real catalog entry. 'pushup' is the legacy-collection
+    it('should reference only catalog exercises or the pushup sentinel', () => {
+      // given — binds plans to the exercise SSOT: any day naming an exercise
+      // must name a real catalog entry. 'pushup' is the legacy-collection
       // sentinel (no catalog entry by design).
       for (const plan of TRAINING_PLANS) {
         for (const day of plan.days) {
+          // when
           const id = trainingPlanDayExerciseId(day);
+          // then
           if (id === 'pushup') continue;
           expect(findExerciseDefinition(id)).not.toBeNull();
         }
       }
     });
 
-    it('Given every plan day, When its exercise is resolved, Then it is the pushup the store can log today', () => {
-      // logPlanDay reasons about reps through LiveDataStore, which is
-      // pushup-only, so a non-pushup plan day would be silently skipped.
-      // Guard against shipping one the store can't honor.
+    it('should ship only pushup days the store can log idempotently today', () => {
+      // given — logPlanDay reasons about reps through LiveDataStore, which is
+      // pushup-only, so a non-pushup plan day would be silently skipped;
+      // guard against shipping one the store can't honor.
+      // when / then
       for (const plan of TRAINING_PLANS) {
         for (const day of plan.days) {
           expect(trainingPlanDayExerciseId(day)).toBe('pushup');
@@ -233,16 +236,22 @@ describe('training-plan models', () => {
   });
 
   describe('trainingPlanDayExerciseId', () => {
-    it('Given a day with no exerciseId, When trainingPlanDayExerciseId is called, Then it returns the pushup sentinel', () => {
-      expect(trainingPlanDayExerciseId({ exerciseId: undefined })).toBe(
-        'pushup'
-      );
+    it('should default to the pushup sentinel when a day names no exercise', () => {
+      // given
+      const day = { exerciseId: undefined };
+      // when
+      const resolved = trainingPlanDayExerciseId(day);
+      // then
+      expect(resolved).toBe('pushup');
     });
 
-    it('Given a day with an explicit exerciseId, When trainingPlanDayExerciseId is called, Then it returns that id', () => {
-      expect(trainingPlanDayExerciseId({ exerciseId: 'legs.squats' })).toBe(
-        'legs.squats'
-      );
+    it('should pass through an explicit catalog exercise id', () => {
+      // given
+      const day = { exerciseId: 'legs.squats' };
+      // when
+      const resolved = trainingPlanDayExerciseId(day);
+      // then
+      expect(resolved).toBe('legs.squats');
     });
   });
 });
