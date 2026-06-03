@@ -83,3 +83,6 @@ mobile/android-twa/local.properties
 
 # Translation routine artefacts (throwaway, not committed)
 .claude-translations/
+
+# Ephemeral agent-orchestration coordination state (process, not product)
+.orchestration/
