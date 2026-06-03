@@ -222,6 +222,20 @@ describe('pushup-unification/logic', () => {
       expect(pushupToExerciseEntry(negative, NOW)).toEqual({ skip: 'invalid' });
     });
 
+    it('should skip a doc with a non-integer reps value', () => {
+      // given a source doc whose reps is fractional
+      const src: PushupSourceDoc = {
+        id: 'doc-9d',
+        userId: 'user-9d',
+        timestamp: '2026-01-09T12:00:00.000Z',
+        reps: 5.5,
+      };
+
+      // when mapped
+      // then it is classified invalid — the dest schema expects integer reps
+      expect(pushupToExerciseEntry(src, NOW)).toEqual({ skip: 'invalid' });
+    });
+
     it('should drop the legacy pushup variant type', () => {
       // given a source doc carrying a legacy variant type
       const src: PushupSourceDoc = {

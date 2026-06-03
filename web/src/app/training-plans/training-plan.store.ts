@@ -440,11 +440,18 @@ export const TrainingPlanStore = signalStore(
       const currentIdx = store.currentDayIndex();
       if (currentIdx === null || dayIndex > currentIdx) return 'noop';
 
-      // `_live.entries()` is empty until the Firestore listener has
-      // emitted at least once. Don't make a write decision off
-      // pre-sync data — it would top-up a day that's already
-      // covered as soon as the listener catches up.
-      if (store._isBrowser && !store._live.connected()) return 'not-ready';
+      // `_live` mirrors are empty until the Firestore listeners have
+      // emitted at least once. Don't make a write decision off pre-sync
+      // data — it would top-up a day that's already covered as soon as
+      // the listener catches up. Pushup days gate on `connected` (their
+      // stream); non-pushup days gate on `exerciseEntriesLoaded` —
+      // `connected` is pushup-only, so trusting it for a non-pushup day
+      // could read empty exerciseEntries and duplicate-write.
+      const synced =
+        exerciseId === 'pushup'
+          ? store._live.connected()
+          : store._live.exerciseEntriesLoaded();
+      if (store._isBrowser && !synced) return 'not-ready';
 
       if (!store._acquireWriteLock(dayIndex)) return 'in-flight';
 
@@ -645,10 +652,15 @@ export const TrainingPlanStore = signalStore(
           if (!def || def.measurement !== 'reps') return;
         }
         if (a.completedDays.includes(idx)) return;
-        // Same readiness guard as `logPlanDay` — without this, a
-        // pre-sync `_live.entries()` could appear to satisfy the
-        // target on stale state and trigger a false auto-mark.
-        if (!store._live.connected()) return;
+        // Same readiness guard as `logPlanDay` — without this, a pre-sync
+        // mirror could appear to satisfy the target on stale state and
+        // trigger a false auto-mark. Pushup days gate on `connected`;
+        // non-pushup days gate on `exerciseEntriesLoaded`.
+        const synced =
+          exerciseId === 'pushup'
+            ? store._live.connected()
+            : store._live.exerciseEntriesLoaded();
+        if (!synced) return;
         // The same in-flight lock guards manual logPlanDay calls,
         // so a fast Quick-Add + auto-mark can't double-write.
         if (store._writingDays().has(idx)) return;

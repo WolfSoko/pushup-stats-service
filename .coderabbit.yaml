@@ -1,13 +1,11 @@
 # yaml-language-server: $schema=https://storage.googleapis.com/coderabbit_public_assets/schema.v2.json
 reviews:
-  # Test files are excluded from review so trivial spec helpers never need
-  # docstrings — AGENTS.md mandates "default to no comments".
-  path_filters:
-    - '!**/*.spec.ts'
-    - '!**/*.test.ts'
   pre_merge_checks:
     docstrings:
+      # AGENTS.md mandates comment-light code ("default to no comments"), so a
+      # high docstring-coverage gate blocks valid PRs that intentionally omit
+      # docstrings on self-explanatory code (incl. trivial spec helpers). Keep
+      # the check informational (warning) at a low threshold instead of
+      # excluding test files from review entirely.
       mode: warning
-      # Repo convention is comment-light by design; 80% would block valid
-      # PRs that intentionally omit docstrings on self-explanatory code.
       threshold: 50

@@ -15,6 +15,11 @@ issue #432. Phase-7 follow-up of the [multi-exercise roadmap](../../plans/multi-
 - **No legacy deletion.** The source collection is left intact.
 - **Idempotent.** Re-running re-uses the source id under `set()`, so a
   second run writes nothing new (everything classifies as skip-existing).
+- **Dest id = source id, by design.** Reusing the `pushups/{id}` id as the
+  `exerciseEntries/{id}` id is what makes the copy idempotent and rollback
+  exact. Firestore auto-ids are unique per collection, and no client write
+  path creates `exerciseId:'pushup'` entries, so a copy can never collide
+  with — and overwrite — a natively-created `exerciseEntries` doc.
 - **The legacy pushup variant (`type`) is dropped.** The unified
   `ExerciseEntry` schema has no pushup-variant field, so `type` (e.g.
   `diamond`, `wide`) is intentionally NOT copied. Variant history remains
@@ -29,8 +34,9 @@ positive integers and omitted when empty.
 - Caller has the `admin` custom claim (both callables go through
   `validateAdminAccess`).
 - The Cloud Functions bundle is deployed with:
-  - `PUSHUP_DEFINITION` present in `EXERCISE_CATALOG` (so `'pushup'` is a
-    known exercise id),
+  - `PUSHUP_DEFINITION` resolvable via `findExerciseDefinition` (it is
+    deliberately folded into the by-id lookup only, NOT the iterable
+    `EXERCISE_CATALOG`),
   - the two callables `migratePushupsToExerciseEntries` and
     `rollbackPushupUnification`,
   - the two trigger guards (`updateExerciseStatsOnEntryWrite` and

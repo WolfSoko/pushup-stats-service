@@ -84,6 +84,7 @@ export function pushupToExerciseEntry(
     !src.timestamp ||
     typeof src.reps !== 'number' ||
     !Number.isFinite(src.reps) ||
+    !Number.isInteger(src.reps) ||
     src.reps <= 0
   ) {
     return { skip: 'invalid' };

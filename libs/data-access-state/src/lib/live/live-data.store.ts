@@ -39,6 +39,14 @@ type LiveDataState = {
    * `id`/`categoryId` without a follow-up type change.
    */
   exerciseDefinitions: ExerciseDefinition[];
+  /**
+   * True once the `exerciseEntries` subscription has delivered its first
+   * snapshot. Distinct from `connected` (pushup-stream only) so consumers
+   * reasoning about non-pushup history — the training-plan store's
+   * idempotent logging — can tell "no exercise entries yet" from "haven't
+   * loaded exercise entries yet" and avoid a duplicate write.
+   */
+  exerciseEntriesLoaded: boolean;
   connected: boolean;
   updateTick: number;
 };
@@ -49,6 +57,7 @@ export const LiveDataStore = signalStore(
     entries: [],
     exerciseEntries: [],
     exerciseDefinitions: [],
+    exerciseEntriesLoaded: false,
     connected: false,
     updateTick: 0,
   }),
@@ -78,6 +87,7 @@ export const LiveDataStore = signalStore(
             entries: [],
             exerciseEntries: [],
             exerciseDefinitions: [],
+            exerciseEntriesLoaded: false,
             updateTick: 0,
           });
           return;
@@ -118,6 +128,7 @@ export const LiveDataStore = signalStore(
               exerciseEntries: snapshot.docs.map(
                 (d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry
               ),
+              exerciseEntriesLoaded: true,
               updateTick: store.updateTick() + 1,
             });
           },

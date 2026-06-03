@@ -143,6 +143,7 @@ interface Mocks {
     entries: ReturnType<typeof signal<PushupRecord[]>>;
     exerciseEntries: ReturnType<typeof signal<ExerciseEntry[]>>;
     connected: ReturnType<typeof signal<boolean>>;
+    exerciseEntriesLoaded: ReturnType<typeof signal<boolean>>;
     updateTick: ReturnType<typeof signal<number>>;
   };
   stream: BehaviorSubject<UserTrainingPlan | null>;
@@ -305,6 +306,7 @@ describe('TrainingPlanStore', () => {
         entries: liveEntries,
         exerciseEntries: liveExerciseEntries,
         connected: signal(true),
+        exerciseEntriesLoaded: signal(true),
         updateTick: signal(0),
       },
     };
@@ -665,6 +667,7 @@ describe('TrainingPlanStore', () => {
               entries: liveEntries,
               exerciseEntries: signal<ExerciseEntry[]>([]),
               connected: signal(false),
+              exerciseEntriesLoaded: signal(true),
               updateTick: signal(0),
             },
           },
@@ -678,6 +681,59 @@ describe('TrainingPlanStore', () => {
       await flush();
 
       expect(result).toBe('not-ready');
+      expect(statsApiMock.createPushup).not.toHaveBeenCalled();
+      expect(apiMock.addCompletedDay).not.toHaveBeenCalled();
+      TestBed.resetTestingModule();
+    });
+
+    it("should return 'not-ready' for a non-pushup day when exerciseEntries haven't loaded (no writes)", async () => {
+      // given — a browser-context squats plan whose day 2 maps to today.
+      // `connected` (pushup-only) is true, but the exerciseEntries mirror
+      // hasn't delivered its first snapshot yet, so trusting it would
+      // read empty history and duplicate-write.
+      const stream = new BehaviorSubject<UserTrainingPlan | null>(
+        squatsUserPlan
+      );
+      const apiMock = {
+        getActivePlan: vitest.fn(() => stream.asObservable()),
+        setPlan: vitest.fn(),
+        updatePlan: vitest.fn(),
+        addCompletedDay: vitest.fn(() => of(void 0)),
+        removeCompletedDay: vitest.fn(() => of(void 0)),
+      };
+      const statsApiMock = { createPushup: vitest.fn() };
+      const exerciseApiMock = { createEntry: vitest.fn() };
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: UserTrainingPlanApiService, useValue: apiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: ExerciseFirestoreService, useValue: exerciseApiMock },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              entries: signal<PushupRecord[]>([]),
+              exerciseEntries: signal<ExerciseEntry[]>([]),
+              connected: signal(true),
+              exerciseEntriesLoaded: signal(false),
+              updateTick: signal(0),
+            },
+          },
+          { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+          { provide: TRAINING_PLAN_LOOKUP, useValue: squatsLookup },
+        ],
+      });
+      const store = TestBed.inject(TrainingPlanStore);
+      await flush();
+
+      // when
+      const result = await store.logPlanDay(2);
+      await flush();
+
+      // then — the non-pushup readiness guard rejects the write
+      expect(result).toBe('not-ready');
+      expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
       expect(statsApiMock.createPushup).not.toHaveBeenCalled();
       expect(apiMock.addCompletedDay).not.toHaveBeenCalled();
       TestBed.resetTestingModule();
@@ -726,6 +782,7 @@ describe('TrainingPlanStore', () => {
               entries: liveEntries,
               exerciseEntries: signal<ExerciseEntry[]>([]),
               connected: signal(true),
+              exerciseEntriesLoaded: signal(true),
               updateTick: signal(0),
             },
           },
@@ -951,6 +1008,7 @@ describe('TrainingPlanStore', () => {
               entries: liveEntries,
               exerciseEntries: signal<ExerciseEntry[]>([]),
               connected: signal(true),
+              exerciseEntriesLoaded: signal(true),
               updateTick: signal(0),
             },
           },
@@ -1025,6 +1083,7 @@ describe('TrainingPlanStore', () => {
               entries: signal<PushupRecord[]>([]),
               exerciseEntries: liveExerciseEntries,
               connected: signal(true),
+              exerciseEntriesLoaded: signal(true),
               updateTick: signal(0),
             },
           },
