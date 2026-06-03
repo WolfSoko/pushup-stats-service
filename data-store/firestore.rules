@@ -13,46 +13,52 @@ service cloud.firestore {
     // get rejected here, but every legitimate catalog entry passes.
     function isRepsExerciseId(id) {
       return [
-        // Legacy `abs.*` / `legs.*` ids predate the movement-pattern
-        // restructure and live across `core` / `squat` / `hinge` / `lunge`.
-        'abs.situps', 'abs.crunches', 'abs.legraises',
-        'abs.russiantwist', 'abs.mountainclimbers',
-        'legs.squats', 'legs.lunges', 'legs.glutebridge',
-        'legs.calfraises', 'legs.jumpsquats',
-        // core / squat / hinge / lunge — new reps exercises
-        'core.deadbug',
-        'squat.boxjump',
-        'hinge.singlelegRdl', 'hinge.goodmorning',
-        'lunge.stepup',
-        // push — non-pushup pressing (pushup variants stay on the
-        // legacy `pushups` collection with their own rule above)
-        'push.dips', 'push.benchdips',
-        // pull — bodyweight pulling
-        'pull.pullups', 'pull.rows', 'pull.facepull',
-        // cardio reps-counted conditioning
-        'cardio.jumprope', 'cardio.burpees', 'cardio.jumpingjacks',
-        // mobility (only catcow is reps-counted; the others are time)
+        // BEGIN GENERATED isRepsExerciseId (source: EXERCISE_CATALOG; run: nx run cloud-functions:generate-exercise-rules)
+        // push
+        'push.benchdips', 'push.dips',
+        // pull
+        'pull.facepull', 'pull.pullups', 'pull.rows',
+        // squat
+        'legs.calfraises', 'legs.jumpsquats', 'legs.squats', 'squat.boxjump',
+        // hinge
+        'hinge.goodmorning', 'hinge.singlelegRdl', 'legs.glutebridge',
+        // lunge
+        'legs.lunges', 'lunge.stepup',
+        // core
+        'abs.crunches', 'abs.legraises', 'abs.mountainclimbers', 'abs.russiantwist', 'abs.situps', 'core.deadbug',
+        // cardio
+        'cardio.burpees', 'cardio.jumpingjacks', 'cardio.jumprope',
+        // mobility
         'mobility.catcow'
+        // END GENERATED isRepsExerciseId
       ].hasAny([id]);
     }
 
     function isTimeExerciseId(id) {
       return [
-        'plank.standard',
-        'core.hollowhold',
-        'squat.wallsit',
+        // BEGIN GENERATED isTimeExerciseId (source: EXERCISE_CATALOG; run: nx run cloud-functions:generate-exercise-rules)
+        // push
         'push.handstandhold',
+        // pull
         'pull.deadhang',
+        // squat
+        'squat.wallsit',
+        // core
+        'core.hollowhold', 'plank.standard',
+        // cardio
         'cardio.highknees',
-        'mobility.stretching', 'mobility.yoga', 'mobility.foamrolling',
-        'mobility.dynamicwarmup', 'mobility.hipopener'
+        // mobility
+        'mobility.dynamicwarmup', 'mobility.foamrolling', 'mobility.hipopener', 'mobility.stretching', 'mobility.yoga'
+        // END GENERATED isTimeExerciseId
       ].hasAny([id]);
     }
 
     function isDistanceTimeExerciseId(id) {
       return [
-        'cardio.running', 'cardio.walking', 'cardio.cycling',
-        'cardio.rowing', 'cardio.swimming'
+        // BEGIN GENERATED isDistanceTimeExerciseId (source: EXERCISE_CATALOG; run: nx run cloud-functions:generate-exercise-rules)
+        // cardio
+        'cardio.cycling', 'cardio.rowing', 'cardio.running', 'cardio.swimming', 'cardio.walking'
+        // END GENERATED isDistanceTimeExerciseId
       ].hasAny([id]);
     }
 
