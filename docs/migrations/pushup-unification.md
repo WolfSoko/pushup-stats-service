@@ -134,6 +134,12 @@ in Phase 7 of the [multi-exercise roadmap](../../plans/multi-exercise-roadmap.md
   cut-off).
 - Removing the trigger guards (`shouldAggregateExerciseEntry`) so
   `exerciseId:'pushup'` starts aggregating into `perExercise/pushup` and
-  the pushup leaderboard.
+  the pushup leaderboard. **Note:** removing the guard alone is not
+  sufficient for the scheduled leaderboard rebuild —
+  `rebuildExerciseLeaderboardsCore()` iterates `EXERCISE_CATALOG`, which
+  intentionally excludes `PUSHUP_DEFINITION`. Phase 7 must also either
+  add `PUSHUP_DEFINITION` back into `EXERCISE_CATALOG` or extend the
+  rebuild function to explicitly include the pushup exercise so
+  `perExercise/pushup` is populated by the scheduled rebuild job.
 - Removing the `kind:'pushup'` union special-casing in
   `libs/stats/.../unified-entry.models.ts`.
