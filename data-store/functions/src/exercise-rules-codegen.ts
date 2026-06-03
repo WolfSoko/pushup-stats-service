@@ -69,7 +69,8 @@ export function groupedCatalogIdsForMeasurement(
 function renderGeneratedBody(
   fnName: string,
   measurement: 'reps' | 'time' | 'distance-time',
-  indent: string
+  indent: string,
+  eol: string
 ): string {
   const groups = groupedCatalogIdsForMeasurement(measurement);
   const lines: string[] = [
@@ -86,7 +87,7 @@ function renderGeneratedBody(
     );
   });
   lines.push(`${indent}// END GENERATED ${fnName}`);
-  return lines.join('\n');
+  return lines.join(eol);
 }
 
 /**
@@ -100,10 +101,10 @@ function renderGeneratedBody(
  */
 function ruleFunctionRegExp(fnName: string): RegExp {
   return new RegExp(
-    `(function ${fnName}\\(id\\) \\{\\s*\\n\\s*return \\[\\n)` +
+    `(function ${fnName}\\(id\\) \\{\\s*\\r?\\n\\s*return \\[\\r?\\n)` +
       `([ \\t]*)` +
       `([\\s\\S]*?)` +
-      `(\\n\\s*\\]\\.hasAny\\(\\[id\\]\\);)`,
+      `(\\r?\\n\\s*\\]\\.hasAny\\(\\[id\\]\\);)`,
     'm'
   );
 }
@@ -114,6 +115,7 @@ function ruleFunctionRegExp(fnName: string): RegExp {
  * header, other rules, `.hasAny` scaffold — byte-for-byte intact. Idempotent.
  */
 export function renderRulesAllowlists(currentRules: string): string {
+  const eol = currentRules.includes('\r\n') ? '\r\n' : '\n';
   let next = currentRules;
   for (const [measurement, fnName] of Object.entries(
     RULE_FUNCTION_BY_MEASUREMENT
@@ -126,7 +128,7 @@ export function renderRulesAllowlists(currentRules: string): string {
       );
     }
     const indent = match[2];
-    const body = renderGeneratedBody(fnName, measurement, indent);
+    const body = renderGeneratedBody(fnName, measurement, indent, eol);
     next = next.replace(
       regExp,
       (

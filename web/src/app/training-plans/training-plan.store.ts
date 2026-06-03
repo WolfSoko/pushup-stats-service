@@ -294,15 +294,12 @@ export const TrainingPlanStore = signalStore(
         .reduce((sum, e) => sum + (e.reps ?? 0), 0);
     },
 
-    /** Lazily resolve the Firestore-bound exercise API. Returns null when it
-     *  can't be constructed (e.g. no `Firestore` provider in a test harness),
-     *  so the non-pushup write path can fail closed instead of throwing. */
+    /** Lazily resolve the Firestore-bound exercise API. Returns null when no
+     *  provider is registered (e.g. a test harness without `Firestore`); a
+     *  genuine instantiation error is allowed to propagate rather than
+     *  silently no-op the write. */
     _resolveExerciseApi(): ExerciseFirestoreService | null {
-      try {
-        return store._injector.get(ExerciseFirestoreService, null);
-      } catch {
-        return null;
-      }
+      return store._injector.get(ExerciseFirestoreService, null);
     },
 
     /** Acquire an in-flight lock for a day. Returns false if already held. */

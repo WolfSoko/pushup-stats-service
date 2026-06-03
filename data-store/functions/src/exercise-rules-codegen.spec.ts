@@ -107,4 +107,18 @@ describe('exercise-rules-codegen', () => {
     // then grouping is a lossless partition of the catalog ids
     expect(grouped).toEqual(flat);
   });
+
+  it('should regenerate rules with CRLF line endings preserved', () => {
+    // given the committed rules converted to a CRLF checkout
+    const crlf = committed.replace(/\n/g, '\r\n');
+    // when regenerating against the CRLF rules
+    const out = renderRulesAllowlists(crlf);
+    // then it doesn't throw, every generated block survives, and the
+    // output stays CRLF (no lone LF leaks in from the '\n'-hardcoded body)
+    for (const fnName of Object.values(RULE_FUNCTION_BY_MEASUREMENT)) {
+      expect(out).toContain(`BEGIN GENERATED ${fnName}`);
+    }
+    expect(out.includes('\r\n')).toBe(true);
+    expect(out).not.toMatch(/[^\r]\n/);
+  });
 });

@@ -35,6 +35,7 @@
     "generate-exercise-rules": {
       "executor": "nx:run-commands",
       "inputs": [
+        "{workspaceRoot}/data-store/firestore.rules",
         "{workspaceRoot}/libs/stats/src/lib/models/exercise.catalog.ts",
         "{projectRoot}/src/exercise-rules-codegen.ts",
         "{projectRoot}/src/exercise-rules-codegen.run.cjs"

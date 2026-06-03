@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { Auth, authState } from '@angular/fire/auth';
 import { Firestore, onSnapshot } from '@angular/fire/firestore';
 import { LiveDataStore } from './live-data.store';
@@ -154,6 +154,52 @@ describe('LiveDataStore', () => {
         store.exerciseEntries().some((e) => e.exerciseId === 'pushup')
       ).toBe(false);
       expect(store.exerciseEntriesLoaded()).toBe(true);
+    });
+  });
+
+  describe('uid change', () => {
+    it('should reset live mirrors when the authenticated uid changes', () => {
+      // given a browser-platform store subscribed to user u1, whose
+      // exerciseEntries mirror holds one of u1's entries
+      const authSubject = new BehaviorSubject<{ uid: string } | null>({
+        uid: 'u1',
+      });
+      jest.mocked(authState).mockReturnValue(authSubject as never);
+      const callbacks = captureSnapshotCallbacks();
+      TestBed.configureTestingModule({
+        providers: [
+          LiveDataStore,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: Auth, useValue: {} },
+          { provide: Firestore, useValue: {} },
+        ],
+      });
+      const store = TestBed.inject(LiveDataStore);
+      TestBed.tick();
+      callbacks.exercises()({
+        docs: [
+          {
+            id: 'squats-1',
+            data: () => ({
+              userId: 'u1',
+              exerciseId: 'legs.squats',
+              timestamp: '2026-05-01T08:00:00.000Z',
+              reps: 20,
+            }),
+          },
+        ],
+      });
+      expect(store.exerciseEntries()).toHaveLength(1);
+      expect(store.exerciseEntriesLoaded()).toBe(true);
+
+      // when the authenticated uid switches to u2 without a sign-out
+      authSubject.next({ uid: 'u2' });
+      TestBed.tick();
+
+      // then u1's mirrors are dropped before u2's snapshots arrive
+      expect(store.entries()).toEqual([]);
+      expect(store.exerciseEntries()).toEqual([]);
+      expect(store.exerciseEntriesLoaded()).toBe(false);
     });
   });
 });

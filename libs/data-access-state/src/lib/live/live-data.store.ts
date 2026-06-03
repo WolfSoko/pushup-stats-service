@@ -81,6 +81,11 @@ export const LiveDataStore = signalStore(
       const fs = store._firestore;
       const user = toSignal(authState(store._auth));
 
+      // Tracks which uid the live subscriptions are currently mirroring.
+      // A closure var, not a state signal: reading + patching a state field
+      // inside this same effect would retrigger it and loop forever.
+      let subscribedUid: string | null = null;
+
       effect((onCleanup) => {
         const u = user();
         if (!u) {
@@ -92,7 +97,22 @@ export const LiveDataStore = signalStore(
             exerciseEntriesLoaded: false,
             updateTick: 0,
           });
+          subscribedUid = null;
           return;
+        }
+        // Switching signed-in users (uid A → uid B without an intervening
+        // sign-out) must drop the previous account's mirrors so consumers
+        // never read another uid's history before B's snapshots arrive.
+        if (u.uid !== subscribedUid) {
+          patchState(store, {
+            connected: false,
+            entries: [],
+            exerciseEntries: [],
+            exerciseDefinitions: [],
+            exerciseEntriesLoaded: false,
+            updateTick: 0,
+          });
+          subscribedUid = u.uid;
         }
         const pushupQuery = query(
           collection(fs, 'pushups'),
