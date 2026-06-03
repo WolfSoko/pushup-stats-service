@@ -6,22 +6,25 @@ issue #432. Phase-7 follow-up of the [multi-exercise roadmap](../../plans/multi-
 
 ## Scope
 
-- **Copy only.** Each `pushups/{id}` is written to `exerciseEntries/{id}`
-  (same doc id, deterministic) carrying `exerciseId:'pushup'` and a
-  provenance marker `migratedFrom:'pushups'`.
+- **Copy only.** Each `pushups/{id}` is written to
+  `exerciseEntries/pushup__{id}` (deterministic `pushup__`-prefixed id)
+  carrying `exerciseId:'pushup'` and a provenance marker
+  `migratedFrom:'pushups'`.
 - **No write-path flip.** New pushups still land in `pushups`, and the web
   app still reads pushups from the legacy `pushups` collection + its
   `userStats/{userId}` doc. This PR adds the unification foundation and the
   migration code (in `web/**` and `libs/**`), but does not change the pushup
   runtime read/write path — that flip is Phase 7.
 - **No legacy deletion.** The source collection is left intact.
-- **Idempotent.** Re-running re-uses the source id under `set()`, so a
-  second run writes nothing new (everything classifies as skip-existing).
-- **Dest id = source id, by design.** Reusing the `pushups/{id}` id as the
-  `exerciseEntries/{id}` id is what makes the copy idempotent and rollback
-  exact. Firestore auto-ids are unique per collection, and no client write
-  path creates `exerciseId:'pushup'` entries, so a copy can never collide
-  with — and overwrite — a natively-created `exerciseEntries` doc.
+- **Idempotent.** Re-running re-uses the same prefixed id `pushup__{id}`
+  under `set()`, so a second run writes nothing new (everything classifies
+  as skip-existing).
+- **Dest id = `pushup__{source-id}`, by design.** The `pushup__` prefix
+  makes the migrated id deterministic (enabling idempotency and exact
+  rollback) while guaranteeing it can never collide with a
+  natively-created `exerciseEntries` doc (Firestore auto-ids never start
+  with `pushup__`, and no client write path produces `exerciseId:'pushup'`
+  entries).
 - **The legacy pushup variant (`type`) is dropped.** The unified
   `ExerciseEntry` schema has no pushup-variant field, so `type` (e.g.
   `diamond`, `wide`) is intentionally NOT copied. Variant history remains
@@ -77,7 +80,7 @@ await firebase.functions('europe-west3').httpsCallable('migratePushupsToExercise
 ## Verify
 
 - **Spot-check dest docs.** Pick a handful of source `pushups/{id}` and
-  read `exerciseEntries/{id}`; confirm each carries:
+  read `exerciseEntries/pushup__{id}`; confirm each carries:
   - `exerciseId: 'pushup'`,
   - `migratedFrom: 'pushups'`,
   - matching `reps`, `timestamp`, `source`, and `sets` (sanitised) from
