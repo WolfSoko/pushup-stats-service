@@ -222,14 +222,16 @@ describe('training-plan models', () => {
       }
     });
 
-    it('should ship only pushup days the store can log idempotently today', () => {
-      // given — logPlanDay reasons about reps through LiveDataStore, which is
-      // pushup-only, so a non-pushup plan day would be silently skipped;
-      // guard against shipping one the store can't honor.
-      // when / then
+    it('should prescribe only reps-measured exercises the store can log', () => {
+      // given — logPlanDay maps targetReps/sets onto an exerciseEntries reps
+      // payload; a time- or distance-measured day can't be honored
       for (const plan of TRAINING_PLANS) {
         for (const day of plan.days) {
-          expect(trainingPlanDayExerciseId(day)).toBe('pushup');
+          // when
+          const id = trainingPlanDayExerciseId(day);
+          if (id === 'pushup') continue;
+          // then
+          expect(findExerciseDefinition(id)?.measurement).toBe('reps');
         }
       }
     });
