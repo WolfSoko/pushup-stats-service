@@ -182,12 +182,14 @@ Split into focused files under `libs/stats/src/lib/models/`:
 
 A few consumers **cannot** import the catalog at runtime, so they keep a shadow copy. Each is pinned to the catalog by a **guard test** rather than a "keep in sync" comment:
 
-| Shadow copy                                             | Why it can't just derive             | Guard                                                    |
-| ------------------------------------------------------- | ------------------------------------ | -------------------------------------------------------- |
-| `data-store/firestore.rules` exercise allowlists        | Firestore rules can't import TS      | `data-store/functions/src/exercise-rules-sync.spec.ts`   |
-| `exercise-display-names.ts` (`$localize` name registry) | `$localize` needs literal call sites | `exercise-display-names.spec.ts`                         |
-| `AUTO_COUNT_QUICK_ADD_EXERCISE_IDS` + web profile maps  | profile unions are type-only in web  | `exercise.catalog.spec.ts` + derivation from the catalog |
+| Shadow copy                                             | Why it can't just derive             | Guard                                                             |
+| ------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------- |
+| `data-store/firestore.rules` exercise allowlists        | Firestore rules can't import TS      | `data-store/functions/src/exercise-rules-codegen.spec.ts` (drift) |
+| `exercise-display-names.ts` (`$localize` name registry) | `$localize` needs literal call sites | `exercise-display-names.spec.ts`                                  |
+| `AUTO_COUNT_QUICK_ADD_EXERCISE_IDS` + web profile maps  | profile unions are type-only in web  | `exercise.catalog.spec.ts` + derivation from the catalog          |
 
 The web auto-count/hold-timer mapping derives from each catalog entry's `autoCountProfileId` / `holdTimerProfileId` (opaque profile-id strings the web adapter resolves to its typed unions) — no hardcoded catalog ids in the feature layer.
 
-**When you add or change a catalog exercise:** the guard tests tell you exactly what to touch. Only `firestore.rules` needs a manual edit (the test fails until it matches); the display-name registry needs a new `$localize` entry (its test fails until the key set matches); everything else derives.
+**`PUSHUP_DEFINITION`** is a first-class `ExerciseDefinition` that makes `'pushup'` resolvable via `findExerciseDefinition`, but it is deliberately **not** a member of the iterable `EXERCISE_CATALOG` array — it is folded only into the by-id lookup map. This keeps the legacy `pushups` collection sentinel out of catalog-iterating paths (leaderboard rebuild, goals, analysis) until the Phase-7 merge.
+
+**When you add or change a catalog exercise:** the guard tests tell you exactly what to touch. The `firestore.rules` allowlists are **generated** from the catalog — run `pnpm nx run cloud-functions:generate-exercise-rules` after changing the catalog (the drift-guard test fails CI until the generated output matches). The display-name registry needs a new `$localize` entry (its test fails until the key set matches); everything else derives.

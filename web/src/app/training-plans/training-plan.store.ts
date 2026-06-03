@@ -3,6 +3,8 @@ import {
   DestroyRef,
   effect,
   inject,
+  Injector,
+  InjectionToken,
   PLATFORM_ID,
   signal,
 } from '@angular/core';
@@ -17,12 +19,14 @@ import {
 } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
 import {
+  ExerciseFirestoreService,
   StatsApiService,
   UserTrainingPlanApiService,
 } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   currentPlanDayIndex,
+  findExerciseDefinition,
   findPlanById,
   isPlanCompleted,
   planDayByIndex,
@@ -53,6 +57,15 @@ export type LogPlanDayResult =
   | 'not-ready'; // LiveDataStore hasn't finished its first sync yet
 
 /**
+ * Seam for resolving a curated plan by id so tests can drive a plan the
+ * shipped catalog doesn't contain (e.g. a non-pushup day). Defaults to the
+ * static `findPlanById`; production never overrides it.
+ */
+export const TRAINING_PLAN_LOOKUP = new InjectionToken<
+  (planId: string) => TrainingPlan | null
+>('TRAINING_PLAN_LOOKUP', { providedIn: 'root', factory: () => findPlanById });
+
+/**
  * Active-plan store. Keeps the live `UserTrainingPlan` doc in sync
  * via a Firestore real-time listener and exposes derived state for
  * the dashboard goal pill, the plan detail page and the training
@@ -67,6 +80,17 @@ export const TrainingPlanStore = signalStore(
   withProps(() => ({
     _api: inject(UserTrainingPlanApiService),
     _statsApi: inject(StatsApiService),
+    _findPlanById: inject(TRAINING_PLAN_LOOKUP),
+    // Resolved lazily (only when a non-pushup day is logged) rather than as a
+    // construction-time field. `ExerciseFirestoreService` injects `Firestore`
+    // non-optionally, and this root store is pulled by `AppDataFacade` and
+    // `QuickAddOrchestrationService` — both also reach the service — so an
+    // eager `inject()` here forces every app-level test harness to provide
+    // Firestore and trips an NG0200 resolution cycle when two of those
+    // consumers request the singleton at once. A lazy `Injector.get` keeps it
+    // off the construction stack; the non-pushup write path fails closed when
+    // the service can't be resolved.
+    _injector: inject(Injector),
     _live: inject(LiveDataStore),
     _user: inject(UserContextService),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
@@ -104,7 +128,7 @@ export const TrainingPlanStore = signalStore(
 
     const activeCatalog = computed<TrainingPlan | null>(() => {
       const a = activePlan();
-      return a ? findPlanById(a.planId) : null;
+      return a ? store._findPlanById(a.planId) : null;
     });
 
     const today = computed(() => {
@@ -251,12 +275,31 @@ export const TrainingPlanStore = signalStore(
       return toLocalIsoDate(target);
     },
 
-    /** Sum of reps already logged on a given local date. */
-    _repsLoggedOn(dateIso: string): number {
+    /** Sum of reps already logged on a given local date for one exercise.
+     *  Pushup days read the legacy `pushups` mirror (`entries()`); every other
+     *  exercise reads the `exerciseEntries` mirror filtered by id. */
+    _repsLoggedOn(dateIso: string, exerciseId: string): number {
+      if (exerciseId === 'pushup') {
+        return store._live
+          .entries()
+          .filter((e) => e.timestamp.slice(0, 10) === dateIso)
+          .reduce((sum, e) => sum + e.reps, 0);
+      }
       return store._live
-        .entries()
-        .filter((e) => e.timestamp.slice(0, 10) === dateIso)
-        .reduce((sum, e) => sum + e.reps, 0);
+        .exerciseEntries()
+        .filter(
+          (e) =>
+            e.exerciseId === exerciseId && e.timestamp.slice(0, 10) === dateIso
+        )
+        .reduce((sum, e) => sum + (e.reps ?? 0), 0);
+    },
+
+    /** Lazily resolve the Firestore-bound exercise API. Returns null when no
+     *  provider is registered (e.g. a test harness without `Firestore`); a
+     *  genuine instantiation error is allowed to propagate rather than
+     *  silently no-op the write. */
+    _resolveExerciseApi(): ExerciseFirestoreService | null {
+      return store._injector.get(ExerciseFirestoreService, null);
     },
 
     /** Acquire an in-flight lock for a day. Returns false if already held. */
@@ -291,7 +334,7 @@ export const TrainingPlanStore = signalStore(
     async start(planId: string): Promise<void> {
       const userId = store._user.userIdSafe();
       if (!userId) return;
-      const plan = findPlanById(planId);
+      const plan = store._findPlanById(planId);
       if (!plan) return;
       await firstValueFrom(
         store._api.setPlan(userId, {
@@ -377,26 +420,41 @@ export const TrainingPlanStore = signalStore(
       if (!a || !c || a.status !== 'active') return 'noop';
       const day = planDayByIndex(c, dayIndex);
       if (!day || day.kind === 'rest' || day.targetReps <= 0) return 'noop';
-      // LiveDataStore streams only the legacy pushup `pushups` collection,
-      // so the already-logged check below and the auto-mark effect can
-      // reason only about pushup reps. Fail closed on any other exercise
-      // rather than logging its reps as pushups.
-      if (trainingPlanDayExerciseId(day) !== 'pushup') return 'noop';
+      const exerciseId = trainingPlanDayExerciseId(day);
+      // Non-pushup days route through exerciseEntries; only reps-measured catalog
+      // exercises map onto a plan day's targetReps/sets. A time- or distance-
+      // measured day can't be honored with a reps payload, and createEntry needs
+      // a resolved user plus the lazily-resolved Firestore-backed exercise API —
+      // fail closed on any of these.
+      let exerciseApi: ExerciseFirestoreService | null = null;
+      if (exerciseId !== 'pushup') {
+        const def = findExerciseDefinition(exerciseId);
+        if (!def || def.measurement !== 'reps') return 'noop';
+        exerciseApi = store._resolveExerciseApi();
+        if (!store._user.userIdSafe() || !exerciseApi) return 'noop';
+      }
 
       const currentIdx = store.currentDayIndex();
       if (currentIdx === null || dayIndex > currentIdx) return 'noop';
 
-      // `_live.entries()` is empty until the Firestore listener has
-      // emitted at least once. Don't make a write decision off
-      // pre-sync data — it would top-up a day that's already
-      // covered as soon as the listener catches up.
-      if (store._isBrowser && !store._live.connected()) return 'not-ready';
+      // `_live` mirrors are empty until the Firestore listeners have
+      // emitted at least once. Don't make a write decision off pre-sync
+      // data — it would top-up a day that's already covered as soon as
+      // the listener catches up. Pushup days gate on `connected` (their
+      // stream); non-pushup days gate on `exerciseEntriesLoaded` —
+      // `connected` is pushup-only, so trusting it for a non-pushup day
+      // could read empty exerciseEntries and duplicate-write.
+      const synced =
+        exerciseId === 'pushup'
+          ? store._live.connected()
+          : store._live.exerciseEntriesLoaded();
+      if (store._isBrowser && !synced) return 'not-ready';
 
       if (!store._acquireWriteLock(dayIndex)) return 'in-flight';
 
       try {
         const dateIso = store._planDayDate(dayIndex);
-        const alreadyLogged = store._repsLoggedOn(dateIso);
+        const alreadyLogged = store._repsLoggedOn(dateIso, exerciseId);
         let result: LogPlanDayResult;
 
         if (alreadyLogged < day.targetReps) {
@@ -408,15 +466,30 @@ export const TrainingPlanStore = signalStore(
           const sets =
             alreadyLogged === 0 ? (day.sets ?? [day.targetReps]) : [remaining];
           const reps = alreadyLogged === 0 ? day.targetReps : remaining;
-          await firstValueFrom(
-            store._statsApi.createPushup({
-              timestamp: appendLocalOffset(`${dateIso}T12:00`),
-              reps,
-              sets,
-              source: 'plan',
-              type: 'standard',
-            })
-          );
+          const timestamp = appendLocalOffset(`${dateIso}T12:00`);
+          if (exerciseId === 'pushup') {
+            await firstValueFrom(
+              store._statsApi.createPushup({
+                timestamp,
+                reps,
+                sets,
+                source: 'plan',
+                type: 'standard',
+              })
+            );
+          } else if (exerciseApi) {
+            // `exerciseApi` is non-null here: the non-pushup guard above
+            // returns 'noop' when it can't be resolved, so this always runs.
+            await firstValueFrom(
+              exerciseApi.createEntry(store._user.userIdSafe(), {
+                exerciseId,
+                timestamp,
+                reps,
+                sets,
+                source: 'plan',
+              })
+            );
+          }
           result = 'logged';
         } else {
           result = 'already-logged';
@@ -567,14 +640,24 @@ export const TrainingPlanStore = signalStore(
         // status-based banner state in the UI).
         if (a.status !== 'active') return;
         if (day.kind === 'rest' || day.targetReps <= 0) return;
-        // Pushup-only, matching logPlanDay: don't auto-mark a non-pushup
-        // day off pushup reps streamed from LiveDataStore.
-        if (trainingPlanDayExerciseId(day) !== 'pushup') return;
+        // Matching logPlanDay: only reps-measured days can be honored off the
+        // exerciseEntries reps mirror. Auto-mark only flips the done flag (no
+        // write), so the resolved-user check isn't needed here.
+        const exerciseId = trainingPlanDayExerciseId(day);
+        if (exerciseId !== 'pushup') {
+          const def = findExerciseDefinition(exerciseId);
+          if (!def || def.measurement !== 'reps') return;
+        }
         if (a.completedDays.includes(idx)) return;
-        // Same readiness guard as `logPlanDay` — without this, a
-        // pre-sync `_live.entries()` could appear to satisfy the
-        // target on stale state and trigger a false auto-mark.
-        if (!store._live.connected()) return;
+        // Same readiness guard as `logPlanDay` — without this, a pre-sync
+        // mirror could appear to satisfy the target on stale state and
+        // trigger a false auto-mark. Pushup days gate on `connected`;
+        // non-pushup days gate on `exerciseEntriesLoaded`.
+        const synced =
+          exerciseId === 'pushup'
+            ? store._live.connected()
+            : store._live.exerciseEntriesLoaded();
+        if (!synced) return;
         // The same in-flight lock guards manual logPlanDay calls,
         // so a fast Quick-Add + auto-mark can't double-write.
         if (store._writingDays().has(idx)) return;
@@ -584,7 +667,7 @@ export const TrainingPlanStore = signalStore(
         const todayIso = toBerlinIsoDate(new Date());
         // Establish a tick dependency so this re-runs at midnight.
         store._dayTick();
-        const todayReps = store._repsLoggedOn(todayIso);
+        const todayReps = store._repsLoggedOn(todayIso, exerciseId);
         if (todayReps >= day.targetReps) {
           if (!store._acquireWriteLock(idx)) return;
           const userId = store._user.userIdSafe();

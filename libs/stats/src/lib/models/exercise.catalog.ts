@@ -2,6 +2,7 @@ import type {
   ExerciseCategoryInfo,
   ExerciseDefinition,
 } from './exercise.models';
+import { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN } from './pushup.models';
 
 /**
  * Curated catalog of exercise categories shown in the dashboard and
@@ -807,8 +808,34 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   // per-exercise stats trigger work to surface PRs in load × reps.
 ];
 
+/**
+ * First-class definition for the `'pushup'` sentinel so it resolves through
+ * {@link findExerciseDefinition} like any other exercise (goals, entries,
+ * analysis, and training plans stop special-casing the literal).
+ *
+ * Deliberately NOT a member of {@link EXERCISE_CATALOG}: that array is the
+ * "available exercises" list iterated by the dashboard, the goal picker, the
+ * exercise-leaderboard rebuild, the `firestore.rules` allowlist guard, and the
+ * display-name registry. Pushups live in the legacy `pushups` collection with
+ * their own dedicated UI and own no camera `autoCountProfileId`, so listing it
+ * in the array would double-list it across those surfaces and break their
+ * guard tests. Folding it into the by-id lookup only is the
+ * resolvable-but-not-listed base the multi-exercise roadmap's Phase-7
+ * pushup→exerciseEntries migration builds on.
+ */
+export const PUSHUP_DEFINITION: ExerciseDefinition = {
+  id: 'pushup',
+  categoryId: 'pushup',
+  measurement: 'reps',
+  min: PUSHUP_REPS_MIN,
+  max: PUSHUP_REPS_MAX,
+  unit: 'reps',
+  nameKey: '@@exercise.category.pushup',
+  icon: 'fitness_center',
+};
+
 const CATALOG_BY_ID: ReadonlyMap<string, ExerciseDefinition> = new Map(
-  EXERCISE_CATALOG.map((d) => [d.id, d])
+  [...EXERCISE_CATALOG, PUSHUP_DEFINITION].map((d) => [d.id, d])
 );
 
 const CATEGORIES_BY_ID: ReadonlyMap<string, ExerciseCategoryInfo> = new Map(

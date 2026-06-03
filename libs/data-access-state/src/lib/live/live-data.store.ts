@@ -28,7 +28,9 @@ type LiveDataState = {
   /**
    * Live mirror of `exerciseEntries` (sit-ups, squats, …) for the
    * current user. Pushups stay on `entries` for backwards compat with
-   * every existing consumer; new code reads `exerciseEntries`.
+   * every existing consumer; new code reads `exerciseEntries`. The staged
+   * pushup→exerciseEntries migration's sentinel copies (`exerciseId:'pushup'`)
+   * are filtered out of this feed until the Phase-7 cutover.
    */
   exerciseEntries: ExerciseEntry[];
   /**
@@ -39,6 +41,14 @@ type LiveDataState = {
    * `id`/`categoryId` without a follow-up type change.
    */
   exerciseDefinitions: ExerciseDefinition[];
+  /**
+   * True once the `exerciseEntries` subscription has delivered its first
+   * snapshot. Distinct from `connected` (pushup-stream only) so consumers
+   * reasoning about non-pushup history — the training-plan store's
+   * idempotent logging — can tell "no exercise entries yet" from "haven't
+   * loaded exercise entries yet" and avoid a duplicate write.
+   */
+  exerciseEntriesLoaded: boolean;
   connected: boolean;
   updateTick: number;
 };
@@ -49,6 +59,7 @@ export const LiveDataStore = signalStore(
     entries: [],
     exerciseEntries: [],
     exerciseDefinitions: [],
+    exerciseEntriesLoaded: false,
     connected: false,
     updateTick: 0,
   }),
@@ -70,6 +81,11 @@ export const LiveDataStore = signalStore(
       const fs = store._firestore;
       const user = toSignal(authState(store._auth));
 
+      // Tracks which uid the live subscriptions are currently mirroring.
+      // A closure var, not a state signal: reading + patching a state field
+      // inside this same effect would retrigger it and loop forever.
+      let subscribedUid: string | null = null;
+
       effect((onCleanup) => {
         const u = user();
         if (!u) {
@@ -78,9 +94,25 @@ export const LiveDataStore = signalStore(
             entries: [],
             exerciseEntries: [],
             exerciseDefinitions: [],
+            exerciseEntriesLoaded: false,
             updateTick: 0,
           });
+          subscribedUid = null;
           return;
+        }
+        // Switching signed-in users (uid A → uid B without an intervening
+        // sign-out) must drop the previous account's mirrors so consumers
+        // never read another uid's history before B's snapshots arrive.
+        if (u.uid !== subscribedUid) {
+          patchState(store, {
+            connected: false,
+            entries: [],
+            exerciseEntries: [],
+            exerciseDefinitions: [],
+            exerciseEntriesLoaded: false,
+            updateTick: 0,
+          });
+          subscribedUid = u.uid;
         }
         const pushupQuery = query(
           collection(fs, 'pushups'),
@@ -115,9 +147,16 @@ export const LiveDataStore = signalStore(
             // subscription failure (the error handler on the pushup
             // stream sets `connected: false`).
             patchState(store, {
-              exerciseEntries: snapshot.docs.map(
-                (d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry
-              ),
+              // Staged pushup→exerciseEntries migration copies carry
+              // `exerciseId:'pushup'` and must stay invisible to the live
+              // feed until the Phase-7 cutover, so browser consumers that
+              // union `entries()` + `exerciseEntries()` don't double-count
+              // pushups. The server-side trigger guards only cover
+              // aggregates/leaderboards, not browser reads.
+              exerciseEntries: snapshot.docs
+                .map((d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry)
+                .filter((e) => e.exerciseId !== 'pushup'),
+              exerciseEntriesLoaded: true,
               updateTick: store.updateTick() + 1,
             });
           },

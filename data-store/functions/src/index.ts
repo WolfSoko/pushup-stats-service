@@ -17,6 +17,7 @@ import { onRequest } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import webpush from 'web-push';
 import {
+  batchArray,
   buildGithubIssueBody,
   validateAdminAccess,
   validateFeedbackId,
@@ -49,6 +50,13 @@ import {
   QUOTE_TIERS,
   type TieredQuotes,
 } from './motivation';
+import {
+  type MigratedEntryDoc,
+  planMigration,
+  type PushupSourceDoc,
+  rollbackTargets,
+  shouldAggregateExerciseEntry,
+} from './pushup-unification';
 import {
   buildPublicProfile,
   isValidUid,
@@ -873,7 +881,17 @@ export const refreshExerciseLeaderboardsOnEntryWrite = onDocumentWritten(
     region: 'europe-west3',
     retry: false,
   },
-  async () => {
+  async (event) => {
+    // Staged-migration guard: the pushup→exerciseEntries copies carry
+    // `exerciseId:'pushup'` and must NOT refresh a pushup leaderboard
+    // row before the Phase-7 cutover (the Pushup leaderboard is still
+    // driven by `rebuildLeaderboardsCore` off the legacy `pushups`
+    // collection). Derive the id from after-or-before so create, update
+    // and delete are all covered.
+    const exerciseId = (event.data?.after?.data()?.exerciseId ??
+      event.data?.before?.data()?.exerciseId) as string | undefined;
+    if (!shouldAggregateExerciseEntry(exerciseId)) return;
+
     // Carry the previous snapshot's allTime forward and let the
     // scheduled rebuild refresh it. See `rebuildExerciseLeaderboardsCore`
     // for the race-safety + cost rationale.
@@ -1973,6 +1991,15 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       return;
     }
 
+    // Staged-migration guard: the pushup→exerciseEntries copies carry
+    // `exerciseId:'pushup'` and must NOT create a `perExercise/pushup`
+    // aggregate before the Phase-7 cutover (the Pushup dashboard is still
+    // served by `userStats/{userId}` off the legacy `pushups` collection).
+    // `exerciseId` is already resolved from after-or-before above, so this
+    // covers create, update and delete. Removing this guard at cutover
+    // re-enables aggregation.
+    if (!shouldAggregateExerciseEntry(exerciseId)) return;
+
     // The aggregation slot stays named `reps` for backwards
     // compatibility with the existing UserStats schema, but for
     // non-rep exercises we feed the primary measurement field
@@ -2170,5 +2197,122 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       timestampChanged,
       entryId: event.params?.entryId,
     });
+  }
+);
+
+// ─── Pushup unification (staged, reversible) ──────────────────────────────────
+//
+// Admin-only one-shot copy of `pushups/*` → `exerciseEntries/*` with
+// `exerciseId:'pushup'`. STAGED: no write-path flip, no legacy deletion —
+// the dashboard keeps reading `pushups`. The trigger guards above keep the
+// copies out of per-exercise stats + leaderboards until Phase-7 cutover.
+// All classification lives in the pure `pushup-unification` planners; these
+// wrappers only do auth, Firestore IO and batched writes. Runbook:
+// `docs/migrations/pushup-unification.md`.
+
+const MIGRATION_BATCH_SIZE = 500;
+
+export const migratePushupsToExerciseEntries = onCall(
+  { region: 'europe-west3', timeoutSeconds: 540 },
+  async (request) => {
+    assertAdmin(request);
+
+    // Fail-safe: default to a dry-run so an accidental call never writes.
+    const dryRun = Boolean(request.data?.dryRun ?? true);
+
+    const [pushupSnap, existingSnap] = await Promise.all([
+      db.collection('pushups').get(),
+      db
+        .collection('exerciseEntries')
+        .where('migratedFrom', '==', 'pushups')
+        .get(),
+    ]);
+
+    const sources: PushupSourceDoc[] = pushupSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as Omit<PushupSourceDoc, 'id'>),
+    }));
+    const existingDestIds = new Set(existingSnap.docs.map((doc) => doc.id));
+
+    const { toWrite, skippedExisting, skippedInvalid } = planMigration(
+      sources,
+      existingDestIds,
+      new Date().toISOString()
+    );
+
+    if (dryRun) {
+      return {
+        dryRun: true,
+        wouldCopy: toWrite.length,
+        wouldSkipExisting: skippedExisting.length,
+        wouldSkipInvalid: skippedInvalid.length,
+      };
+    }
+
+    for (const chunk of batchArray(toWrite, MIGRATION_BATCH_SIZE)) {
+      const batch = db.batch();
+      for (const { destId, data } of chunk) {
+        batch.set(
+          db.collection('exerciseEntries').doc(destId),
+          data as MigratedEntryDoc
+        );
+      }
+      await batch.commit();
+    }
+
+    logger.info('migratePushupsToExerciseEntries', {
+      copied: toWrite.length,
+      skippedExisting: skippedExisting.length,
+      skippedInvalid: skippedInvalid.length,
+      by: request.auth?.uid,
+    });
+
+    return {
+      copied: toWrite.length,
+      skippedExisting: skippedExisting.length,
+      skippedInvalid: skippedInvalid.length,
+    };
+  }
+);
+
+export const rollbackPushupUnification = onCall(
+  { region: 'europe-west3', timeoutSeconds: 540 },
+  async (request) => {
+    assertAdmin(request);
+
+    const dryRun = Boolean(request.data?.dryRun ?? true);
+
+    const migratedSnap = await db
+      .collection('exerciseEntries')
+      .where('migratedFrom', '==', 'pushups')
+      .get();
+
+    // Defense-in-depth: re-check the provenance marker before deleting so
+    // a stray query result can never remove a natively-created entry.
+    const ids = rollbackTargets(
+      migratedSnap.docs.map((doc) => ({
+        id: doc.id,
+        migratedFrom: doc.data().migratedFrom as string | undefined,
+      }))
+    );
+
+    if (dryRun) {
+      return { dryRun: true, wouldDelete: ids.length };
+    }
+
+    for (const chunk of batchArray(ids, MIGRATION_BATCH_SIZE)) {
+      const batch = db.batch();
+      for (const id of chunk) {
+        batch.delete(db.collection('exerciseEntries').doc(id));
+      }
+      await batch.commit();
+    }
+
+    logger.info('rollbackPushupUnification', {
+      deleted: ids.length,
+      by: request.auth?.uid,
+    });
+
+    return { deleted: ids.length };
   }
 );
