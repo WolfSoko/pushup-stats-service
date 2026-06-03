@@ -28,7 +28,9 @@ type LiveDataState = {
   /**
    * Live mirror of `exerciseEntries` (sit-ups, squats, …) for the
    * current user. Pushups stay on `entries` for backwards compat with
-   * every existing consumer; new code reads `exerciseEntries`.
+   * every existing consumer; new code reads `exerciseEntries`. The staged
+   * pushup→exerciseEntries migration's sentinel copies (`exerciseId:'pushup'`)
+   * are filtered out of this feed until the Phase-7 cutover.
    */
   exerciseEntries: ExerciseEntry[];
   /**
@@ -125,9 +127,15 @@ export const LiveDataStore = signalStore(
             // subscription failure (the error handler on the pushup
             // stream sets `connected: false`).
             patchState(store, {
-              exerciseEntries: snapshot.docs.map(
-                (d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry
-              ),
+              // Staged pushup→exerciseEntries migration copies carry
+              // `exerciseId:'pushup'` and must stay invisible to the live
+              // feed until the Phase-7 cutover, so browser consumers that
+              // union `entries()` + `exerciseEntries()` don't double-count
+              // pushups. The server-side trigger guards only cover
+              // aggregates/leaderboards, not browser reads.
+              exerciseEntries: snapshot.docs
+                .map((d) => ({ _id: d.id, ...d.data() }) as ExerciseEntry)
+                .filter((e) => e.exerciseId !== 'pushup'),
               exerciseEntriesLoaded: true,
               updateTick: store.updateTick() + 1,
             });

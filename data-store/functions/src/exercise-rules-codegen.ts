@@ -25,7 +25,8 @@ export const RULE_FUNCTION_BY_MEASUREMENT: Record<
   'distance-time': 'isDistanceTimeExerciseId',
 };
 
-const REGENERATE_COMMAND = 'nx run cloud-functions:generate-exercise-rules';
+const REGENERATE_COMMAND =
+  'pnpm nx run cloud-functions:generate-exercise-rules';
 
 /**
  * Catalog ids for one measurement, sorted — identical ordering to the

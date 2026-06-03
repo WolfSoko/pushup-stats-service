@@ -106,5 +106,54 @@ describe('LiveDataStore', () => {
       expect(store.exerciseEntriesLoaded()).toBe(true);
       expect(store.connected()).toBe(false);
     });
+
+    it('should hide staged pushup-sentinel copies from the live exerciseEntries feed', () => {
+      // given a browser-platform store wired to a signed-in user, with both
+      // Firestore subscriptions captured but not yet fired
+      jest.mocked(authState).mockReturnValue(of({ uid: 'u1' }) as never);
+      const callbacks = captureSnapshotCallbacks();
+      TestBed.configureTestingModule({
+        providers: [
+          LiveDataStore,
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: Auth, useValue: {} },
+          { provide: Firestore, useValue: {} },
+        ],
+      });
+      const store = TestBed.inject(LiveDataStore);
+      TestBed.tick();
+
+      // when the exerciseEntries snapshot delivers a native squats entry
+      // alongside a migrated pushup-sentinel copy
+      callbacks.exercises()({
+        docs: [
+          {
+            id: 'squats-1',
+            data: () => ({
+              userId: 'u1',
+              exerciseId: 'legs.squats',
+              timestamp: '2026-05-01T08:00:00.000Z',
+              reps: 20,
+            }),
+          },
+          {
+            id: 'pushup-1',
+            data: () => ({
+              userId: 'u1',
+              exerciseId: 'pushup',
+              timestamp: '2026-05-01T08:00:00.000Z',
+              reps: 25,
+            }),
+          },
+        ],
+      });
+
+      // then only the non-pushup entry surfaces and the feed is marked loaded
+      expect(store.exerciseEntries().map((e) => e._id)).toEqual(['squats-1']);
+      expect(
+        store.exerciseEntries().some((e) => e.exerciseId === 'pushup')
+      ).toBe(false);
+      expect(store.exerciseEntriesLoaded()).toBe(true);
+    });
   });
 });

@@ -8,6 +8,7 @@
 
 const PUSHUP_EXERCISE_ID = 'pushup';
 const MIGRATED_FROM = 'pushups';
+const MIGRATED_ID_PREFIX = 'pushup__';
 const DEFAULT_SOURCE = 'web';
 
 /**
@@ -90,9 +91,11 @@ export function pushupToExerciseEntry(
     return { skip: 'invalid' };
   }
 
-  // Reusing the source id makes the copy idempotent under `set()` and
-  // makes rollback exact (delete the same ids we wrote).
-  const destId = src.id;
+  // Namespacing the source id keeps the copy idempotent under `set()` and
+  // rollback exact, AND guarantees the dest id can never collide with a
+  // native `exerciseEntries` auto-id (20-char, no underscores), so the
+  // migration can't overwrite a user's real entry.
+  const destId = `${MIGRATED_ID_PREFIX}${src.id}`;
   const sets = sanitizeSets(src.sets);
 
   const data: MigratedEntryDoc = {

@@ -50,10 +50,10 @@ describe('pushup-unification/logic', () => {
       // when mapped
       const result = pushupToExerciseEntry(src, NOW);
 
-      // then the dest id reuses the source id and the payload carries
+      // then the dest id namespaces the source id and the payload carries
       // exerciseId:'pushup' + migratedFrom:'pushups' with source values intact
       expect(result).toEqual({
-        destId: 'doc-1',
+        destId: 'pushup__doc-1',
         data: {
           userId: 'user-1',
           exerciseId: 'pushup',
@@ -84,7 +84,7 @@ describe('pushup-unification/logic', () => {
 
       // then the carried-over fields equal the source
       if ('skip' in result) throw new Error('expected a mapped entry');
-      expect(result.destId).toBe('doc-2');
+      expect(result.destId).toBe('pushup__doc-2');
       expect(result.data.timestamp).toBe('2026-04-02T09:30:00.000Z');
       expect(result.data.reps).toBe(42);
       expect(result.data.sets).toEqual([21, 21]);
@@ -274,14 +274,14 @@ describe('pushup-unification/logic', () => {
         },
         { id: 'invalid-1', userId: 'u3', reps: 30 },
       ];
-      const existing = new Set(['existing-1']);
+      const existing = new Set(['pushup__existing-1']);
 
       // when planned
       const plan = planMigration(sources, existing, NOW);
 
       // then each source lands in exactly one bucket
-      expect(plan.toWrite.map((w) => w.destId)).toEqual(['new-1']);
-      expect(plan.skippedExisting).toEqual(['existing-1']);
+      expect(plan.toWrite.map((w) => w.destId)).toEqual(['pushup__new-1']);
+      expect(plan.skippedExisting).toEqual(['pushup__existing-1']);
       expect(plan.skippedInvalid).toEqual(['invalid-1']);
     });
 
@@ -301,14 +301,14 @@ describe('pushup-unification/logic', () => {
           reps: 20,
         },
       ];
-      const existing = new Set(['a', 'b']);
+      const existing = new Set(['pushup__a', 'pushup__b']);
 
       // when planned (idempotent re-run)
       const plan = planMigration(sources, existing, NOW);
 
       // then nothing new is written
       expect(plan.toWrite).toEqual([]);
-      expect(plan.skippedExisting).toEqual(['a', 'b']);
+      expect(plan.skippedExisting).toEqual(['pushup__a', 'pushup__b']);
       expect(plan.skippedInvalid).toEqual([]);
     });
   });

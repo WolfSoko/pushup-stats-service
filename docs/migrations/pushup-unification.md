@@ -9,9 +9,11 @@ issue #432. Phase-7 follow-up of the [multi-exercise roadmap](../../plans/multi-
 - **Copy only.** Each `pushups/{id}` is written to `exerciseEntries/{id}`
   (same doc id, deterministic) carrying `exerciseId:'pushup'` and a
   provenance marker `migratedFrom:'pushups'`.
-- **No write-path flip.** New pushups still land in `pushups`. The web
-  app continues to read pushups from the legacy `pushups` collection and
-  its `userStats/{userId}` doc — nothing in `web/**` or `libs/**` changes.
+- **No write-path flip.** New pushups still land in `pushups`, and the web
+  app still reads pushups from the legacy `pushups` collection + its
+  `userStats/{userId}` doc. This PR adds the unification foundation and the
+  migration code (in `web/**` and `libs/**`), but does not change the pushup
+  runtime read/write path — that flip is Phase 7.
 - **No legacy deletion.** The source collection is left intact.
 - **Idempotent.** Re-running re-uses the source id under `set()`, so a
   second run writes nothing new (everything classifies as skip-existing).

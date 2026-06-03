@@ -13,7 +13,7 @@ service cloud.firestore {
     // get rejected here, but every legitimate catalog entry passes.
     function isRepsExerciseId(id) {
       return [
-        // BEGIN GENERATED isRepsExerciseId (source: EXERCISE_CATALOG; run: nx run cloud-functions:generate-exercise-rules)
+        // BEGIN GENERATED isRepsExerciseId (source: EXERCISE_CATALOG; run: pnpm nx run cloud-functions:generate-exercise-rules)
         // push
         'push.benchdips', 'push.dips',
         // pull
@@ -36,7 +36,7 @@ service cloud.firestore {
 
     function isTimeExerciseId(id) {
       return [
-        // BEGIN GENERATED isTimeExerciseId (source: EXERCISE_CATALOG; run: nx run cloud-functions:generate-exercise-rules)
+        // BEGIN GENERATED isTimeExerciseId (source: EXERCISE_CATALOG; run: pnpm nx run cloud-functions:generate-exercise-rules)
         // push
         'push.handstandhold',
         // pull
@@ -55,7 +55,7 @@ service cloud.firestore {
 
     function isDistanceTimeExerciseId(id) {
       return [
-        // BEGIN GENERATED isDistanceTimeExerciseId (source: EXERCISE_CATALOG; run: nx run cloud-functions:generate-exercise-rules)
+        // BEGIN GENERATED isDistanceTimeExerciseId (source: EXERCISE_CATALOG; run: pnpm nx run cloud-functions:generate-exercise-rules)
         // cardio
         'cardio.cycling', 'cardio.rowing', 'cardio.running', 'cardio.swimming', 'cardio.walking'
         // END GENERATED isDistanceTimeExerciseId
