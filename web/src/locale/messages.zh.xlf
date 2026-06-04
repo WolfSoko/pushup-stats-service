@@ -9528,15 +9528,15 @@
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+        <target>回填俯卧撑聚合数据 (perExercise/pushup)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="initial">
-        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
+      <segment state="translated">
+        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>从已迁移的俯卧撑条目重建«userStats/{uid}/perExercise/pushup»，使仪表板在切换后立即显示正确的俯卧撑总数和连续记录。在统一迁移后运行。幂等操作。</target>
       </segment>
     </unit>
 </file>

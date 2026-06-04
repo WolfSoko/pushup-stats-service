@@ -9906,15 +9906,15 @@
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+        <target>Remplissage rétroactif de l'agrégat de pompes (perExercise/pushup)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="initial">
-        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
+      <segment state="translated">
+        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>Reconstruit « userStats/{uid}/perExercise/pushup » à partir des entrées de pompes migrées pour que le tableau de bord affiche immédiatement les totaux et séries de pompes corrects après le basculement. À exécuter après la migration d'unification. Idempotent.</target>
       </segment>
     </unit>
 </file>
