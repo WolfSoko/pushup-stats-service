@@ -328,17 +328,18 @@ export const DashboardStore = signalStore(
       () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
-    // Browser: the live feed already carries pushups alongside every other
-    // exercise, so the unified history is a single map over
-    // `exerciseEntries()`. SSR has no exerciseEntries REST endpoint, so it
-    // falls back to the pushup REST resource. Goal / streak / total metrics
-    // stay on the pushup-only `entryRows()`; only history surfaces consume
-    // `unifiedRows`.
+    // Once the live feed has connected it already carries pushups alongside
+    // every other exercise, so the unified history is a single map over
+    // `exerciseEntries()`. SSR and the cold-start browser window (before the
+    // listener connects) fall back to the pushup REST resource (pushup-only —
+    // exerciseEntries have no REST endpoint) so history renders instead of
+    // flickering empty. Goal / streak / total metrics stay on the pushup-only
+    // `entryRows()`; only history surfaces consume `unifiedRows`.
     const unifiedRows = computed<UnifiedEntry[]>(() => {
-      if (!store._isBrowser) {
-        return (store.entriesResource.value() ?? []).map(pushupRecordToUnified);
+      if (store._isBrowser && store._live.connected()) {
+        return store._live.exerciseEntries().map(exerciseEntryToUnified);
       }
-      return store._live.exerciseEntries().map(exerciseEntryToUnified);
+      return (store.entriesResource.value() ?? []).map(pushupRecordToUnified);
     });
 
     const lastEntry = computed<UnifiedEntry | null>(() => {

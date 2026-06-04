@@ -14,7 +14,7 @@ import {
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import {
   ActivatedRoute,
@@ -111,8 +111,13 @@ describe('StatsDashboardComponent', () => {
   const liveMock = {
     updateTick: liveTick.asReadonly(),
     connected: liveConnected.asReadonly(),
-    entries: liveEntries.asReadonly(),
-    exerciseEntries: liveExerciseEntries.asReadonly(),
+    exerciseEntriesLoaded: liveConnected.asReadonly(),
+    // Post-cutover the live feed carries pushups (`exerciseId:'pushup'`)
+    // alongside other exercises; tests still seed `liveEntries` for pushups.
+    exerciseEntries: computed(() => [
+      ...liveEntries().map((r) => ({ ...r, exerciseId: 'pushup' })),
+      ...liveExerciseEntries(),
+    ]),
   };
 
   const adsConfigMock = {
@@ -196,6 +201,7 @@ describe('StatsDashboardComponent', () => {
           provide: UserStatsApiService,
           useValue: {
             getUserStats: vitest.fn().mockReturnValue(of(null)),
+            getPerExerciseStats: vitest.fn().mockReturnValue(of(null)),
           },
         },
         { provide: LiveDataStore, useValue: liveMock },
@@ -924,7 +930,10 @@ describe('StatsDashboardComponent', () => {
           { provide: StatsApiService, useValue: serviceMock },
           {
             provide: UserStatsApiService,
-            useValue: { getUserStats: vitest.fn().mockReturnValue(of(null)) },
+            useValue: {
+              getUserStats: vitest.fn().mockReturnValue(of(null)),
+              getPerExerciseStats: vitest.fn().mockReturnValue(of(null)),
+            },
           },
           { provide: LiveDataStore, useValue: liveMock },
           { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
