@@ -651,12 +651,18 @@ export const AnalysisStore = signalStore(
     // canonical model — no parallel field list to drift.
     type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
 
-    // Pushup rows come from the REST resource (so SSR + variant history keep
-    // working); other exercises come from the live snapshot. Post-cutover the
-    // live feed ALSO carries pushups (`exerciseId:'pushup'`), so those are
-    // filtered out here to avoid double-counting the REST pushups. (New
-    // post-cutover pushups therefore surface on analysis only after the legacy
-    // collection is retired in step 6 — acceptable for this secondary view.)
+    // Pushup history has two sources during the transitional window (until
+    // the legacy `pushups` collection is retired in step 6):
+    //   - pre-cutover pushups live in the legacy `pushups` collection, read
+    //     via the REST resource (keeps their variant/`type` history); the
+    //     migration also copied each into `exerciseEntries` under a
+    //     `pushup__`-prefixed id, which we EXCLUDE below so they aren't
+    //     double-counted.
+    //   - post-cutover pushups are written straight to `exerciseEntries`
+    //     (`exerciseId:'pushup'`, native auto-id) and only appear on the live
+    //     feed — so they MUST be merged in here or the analysis page misses
+    //     them (every other surface already reads them live).
+    // Non-pushup exercises come from the live feed as before.
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
       const to = store.to();
@@ -666,14 +672,20 @@ export const AnalysisStore = signalStore(
         if (to && date > to) return false;
         return true;
       };
-      const pushups = rows()
+      const pushupsRest = rows()
         .filter((r) => inRange(r.timestamp))
         .map(pushupRecordToUnified);
-      const exercises = store._live
+      const live = store._live
         .exerciseEntries()
-        .filter((e) => e.exerciseId !== 'pushup' && inRange(e.timestamp))
+        .filter((e) =>
+          e.exerciseId === 'pushup'
+            ? // post-cutover pushups only — skip the migrated `pushup__` copies
+              // already represented by the REST rows above.
+              !e._id.startsWith('pushup__') && inRange(e.timestamp)
+            : inRange(e.timestamp)
+        )
         .map(exerciseEntryToUnified);
-      return [...pushups, ...exercises];
+      return [...pushupsRest, ...live];
     });
 
     /** Distinct kind keys with at least one entry in the visible range. */
@@ -1011,16 +1023,21 @@ export const AnalysisStore = signalStore(
       window: { from: string; to: string }
     ): UnifiedEntry[] => {
       const inRange = inRangeFn(window.from, window.to);
-      // Pushups from REST; other exercises from the live feed (pushup copies
-      // filtered out to avoid double-count). Mirrors `unifiedRows`.
-      const pushups = pushupRows
+      // Pre-cutover pushups from REST (variant history); post-cutover pushups
+      // (native id) from the live feed; migrated copies (`pushup__` id) skipped
+      // to avoid double-count. Mirrors `unifiedRows`.
+      const pushupsRest = pushupRows
         .filter((r) => inRange(r.timestamp))
         .map(pushupRecordToUnified);
-      const exercises = store._live
+      const live = store._live
         .exerciseEntries()
-        .filter((e) => e.exerciseId !== 'pushup' && inRange(e.timestamp))
+        .filter((e) =>
+          e.exerciseId === 'pushup'
+            ? !e._id.startsWith('pushup__') && inRange(e.timestamp)
+            : inRange(e.timestamp)
+        )
         .map(exerciseEntryToUnified);
-      return [...pushups, ...exercises];
+      return [...pushupsRest, ...live];
     };
 
     const applyViewFilter = (rows: UnifiedEntry[]): UnifiedEntry[] => {
