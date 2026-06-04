@@ -141,12 +141,8 @@ export class LeaderboardService {
   /**
    * Loads ranked buckets (daily / last7 / last30 / allTime) for the
    * requested exercise from the precomputed `leaderboards/exercises`
-   * snapshot. Post Phase-7 cutover pushups (`LEADERBOARD_PUSHUP_ID`) are a
-   * first-class catalog exercise ranked there like every other exercise.
-   *
-   * The legacy `loadPushup`/`leaderboards/current` path is now unreachable;
-   * it (and the `pushups`-collection reads it depends on) is deleted in
-   * step 6 alongside the legacy ranker — see #452.
+   * snapshot. Pushups (`LEADERBOARD_PUSHUP_ID`) are a first-class catalog
+   * exercise ranked there like every other exercise.
    */
   async load(
     exerciseId: string = LEADERBOARD_PUSHUP_ID

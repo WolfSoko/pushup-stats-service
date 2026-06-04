@@ -357,11 +357,6 @@ describe('LeaderboardService — load() merging', () => {
       // rather than lying.
       expect(result.updatedAt).toBeNull();
     });
-
-    // (Removed) The legacy client-clock fallback when no snapshot doc exists
-    // was specific to the retired `loadPushup` client-aggregation path. Post
-    // Phase-7 cutover pushups read the precomputed `leaderboards/exercises`
-    // snapshot like every other exercise (no client-side compute).
   });
 
   describe('Given a per-exercise leaderboard', () => {
