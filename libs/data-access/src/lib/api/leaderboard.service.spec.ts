@@ -31,7 +31,6 @@ import {
 
 const getDoc = firestoreFns.getDoc as unknown as jest.Mock;
 const getDocs = firestoreFns.getDocs as unknown as jest.Mock;
-const where = firestoreFns.where as unknown as jest.Mock;
 
 function makeSnapshot(
   periods: Record<string, unknown> | null,
@@ -62,167 +61,6 @@ describe('LeaderboardService — load() merging', () => {
 
     // Default: no rows from Firestore
     getDocs.mockResolvedValue({ docs: [] });
-  });
-
-  describe('Given the snapshot still has the legacy weekly/monthly shape', () => {
-    it('Then last7/last30 fall back to the client-computed top instead of empty arrays', async () => {
-      // Given — legacy snapshot has only `daily` of the new keys; weekly/monthly
-      // are what the old Cloud Function wrote.
-      getDoc.mockResolvedValueOnce(
-        makeSnapshot({
-          daily: [{ alias: 'D...Y', reps: 5 }],
-          weekly: [{ alias: 'W...Y', reps: 50 }],
-          monthly: [{ alias: 'M...Y', reps: 500 }],
-        })
-      );
-
-      // And — the client fetches some recent rows it can aggregate locally.
-      const today = new Date();
-      const isoToday = today.toISOString();
-      getDocs.mockResolvedValueOnce({
-        docs: [
-          { data: () => ({ userId: 'alice', reps: 12, timestamp: isoToday }) },
-        ],
-      });
-
-      // When
-      const result = await service.load();
-
-      // Then — daily comes from the cached snapshot (server is authoritative).
-      expect(result.daily.top).toEqual([
-        expect.objectContaining({ alias: 'D...Y', reps: 5 }),
-      ]);
-
-      // And — last7/last30 use the client fallback because the snapshot
-      // doesn't carry those fields yet.
-      expect(result.last7.top).toEqual([
-        expect.objectContaining({ alias: 'A...E', reps: 12 }),
-      ]);
-      expect(result.last30.top).toEqual([
-        expect.objectContaining({ alias: 'A...E', reps: 12 }),
-      ]);
-    });
-  });
-
-  describe('Given the snapshot carries an allTime bucket', () => {
-    it('Surfaces the cumulative ranking from the snapshot (no client fallback)', async () => {
-      // Given — snapshot has a cumulative top from `userStats.total`.
-      getDoc.mockResolvedValueOnce(
-        makeSnapshot({
-          daily: [],
-          last7: [],
-          last30: [],
-          allTime: [{ alias: 'A...M', reps: 99999, uid: 'allTimer' }],
-        })
-      );
-
-      // When
-      const result = await service.load();
-
-      // Then — allTime mirrors the snapshot row (rank backfilled,
-      // current-user flag false because no auth).
-      expect(result.allTime.top).toEqual([
-        expect.objectContaining({
-          alias: 'A...M',
-          reps: 99999,
-          rank: 1,
-          uid: 'allTimer',
-        }),
-      ]);
-    });
-
-    it('Falls back to an empty bucket when the snapshot lacks allTime (pre-deploy rollout)', async () => {
-      // Given — legacy snapshot without allTime. The client can't
-      // synthesise lifetime totals from the 30-day pushups query, so the
-      // expected behaviour is "empty" until the next rebuild rather than
-      // a misleading last30 stand-in.
-      getDoc.mockResolvedValueOnce(
-        makeSnapshot({ daily: [], last7: [], last30: [] })
-      );
-
-      // When
-      const result = await service.load();
-
-      // Then
-      expect(result.allTime.top).toEqual([]);
-      expect(result.allTime.current).toBeNull();
-    });
-  });
-
-  describe('Given the snapshot has the new last7/last30 shape', () => {
-    it('Then top entries come from the snapshot, not the client fallback', async () => {
-      // Given
-      getDoc.mockResolvedValueOnce(
-        makeSnapshot({
-          daily: [],
-          last7: [{ alias: 'S...R', reps: 100 }],
-          last30: [{ alias: 'S...R', reps: 100 }],
-        })
-      );
-
-      const isoToday = new Date().toISOString();
-      getDocs.mockResolvedValueOnce({
-        docs: [
-          { data: () => ({ userId: 'alice', reps: 1, timestamp: isoToday }) },
-        ],
-      });
-
-      // When
-      const result = await service.load();
-
-      // Then — server values win, even though client could compute its own.
-      expect(result.last7.top).toEqual([
-        expect.objectContaining({ alias: 'S...R', reps: 100 }),
-      ]);
-      expect(result.last30.top).toEqual([
-        expect.objectContaining({ alias: 'S...R', reps: 100 }),
-      ]);
-    });
-
-    it('Then an explicit empty array is preserved (not replaced by fallback)', async () => {
-      // Given — server says "no entries" for last7 (e.g. nobody trained).
-      getDoc.mockResolvedValueOnce(
-        makeSnapshot({
-          daily: [],
-          last7: [],
-          last30: [],
-        })
-      );
-
-      const isoToday = new Date().toISOString();
-      getDocs.mockResolvedValueOnce({
-        docs: [
-          { data: () => ({ userId: 'alice', reps: 99, timestamp: isoToday }) },
-        ],
-      });
-
-      // When
-      const result = await service.load();
-
-      // Then — we trust the server's empty list; we don't override with stale
-      // client computation.
-      expect(result.last7.top).toEqual([]);
-      expect(result.last30.top).toEqual([]);
-    });
-  });
-
-  describe('Firestore query bound', () => {
-    it('Uses a date-only YYYY-MM-DD lower bound for the timestamp filter', async () => {
-      // Given — no snapshot, so `load()` triggers `fetchRows`.
-      getDoc.mockResolvedValueOnce(makeSnapshot(null));
-
-      // When
-      await service.load();
-
-      // Then — the `where` clause is called with a YYYY-MM-DD string, NOT a
-      // full ISO datetime. This makes the query robust to whatever timestamp
-      // format the entries carry (Z-suffix, +01:00 offset, ms or no ms).
-      const lowerBoundCall = where.mock.calls.find(
-        ([field, op]) => field === 'timestamp' && op === '>='
-      );
-      expect(lowerBoundCall).toBeDefined();
-      expect(lowerBoundCall?.[2]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    });
   });
 
   describe('Given an exerciseId other than the legacy pushup sentinel', () => {
@@ -518,25 +356,6 @@ describe('LeaderboardService — load() merging', () => {
       // Then — null so the UI's `@if (lastUpdated())` hides the line
       // rather than lying.
       expect(result.updatedAt).toBeNull();
-    });
-
-    it('Uses the client clock only when no snapshot doc exists at all (purely client-side buckets)', async () => {
-      // Given — `loadSnapshot` returns null (no doc). The displayed
-      // buckets are entirely the client-aggregated fallback, so "now"
-      // truly describes when they were computed.
-      const before = Date.now();
-      getDoc.mockResolvedValueOnce({ exists: () => false, data: () => ({}) });
-
-      // When
-      const result = await service.load();
-
-      // Then
-      const { updatedAt } = result;
-      expect(updatedAt).not.toBeNull();
-      if (!updatedAt) return;
-      const after = Date.now();
-      expect(updatedAt.getTime()).toBeGreaterThanOrEqual(before);
-      expect(updatedAt.getTime()).toBeLessThanOrEqual(after);
     });
   });
 

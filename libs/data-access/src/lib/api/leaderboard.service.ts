@@ -139,17 +139,14 @@ export class LeaderboardService {
   }
 
   /**
-   * Loads ranked buckets (daily / last7 / last30) for the requested
-   * exercise. The default — and the `LEADERBOARD_PUSHUP_ID` sentinel —
-   * routes through the legacy `pushups` collection and merges in the
-   * precomputed snapshot at `leaderboards/current`. Every other
-   * exerciseId queries `exerciseEntries` and aggregates client-side;
-   * the snapshot doesn't carry per-exercise rankings yet.
+   * Loads ranked buckets (daily / last7 / last30 / allTime) for the
+   * requested exercise from the precomputed `leaderboards/exercises`
+   * snapshot. Pushups (`LEADERBOARD_PUSHUP_ID`) are a first-class catalog
+   * exercise ranked there like every other exercise.
    */
   async load(
     exerciseId: string = LEADERBOARD_PUSHUP_ID
   ): Promise<LeaderboardData> {
-    if (exerciseId === LEADERBOARD_PUSHUP_ID) return this.loadPushup();
     return this.loadExercise(exerciseId);
   }
 
