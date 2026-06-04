@@ -10151,5 +10151,17 @@ Deine Position: # ·  Reps        </source>
         <target>Rückgängig</target>
       </segment>
     </unit>
+    <unit id="admin.migrations.pushupUnification.title">
+      <segment state="initial">
+        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
+        <target>Liegestütze vereinheitlichen (pushups → exerciseEntries)</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupUnification.description">
+      <segment state="initial">
+        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
+        <target>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

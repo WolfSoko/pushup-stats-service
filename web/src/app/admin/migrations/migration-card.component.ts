@@ -13,7 +13,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MigrationActionKind,
   MigrationDescriptor,
+  MigrationResult,
 } from './migration-descriptors';
+
+/**
+ * Migration callables can read the whole source collection and write in
+ * batches; the server functions allow up to 540s. The Functions SDK default
+ * (70s) would abort a real run client-side, so match the server budget.
+ */
+const MIGRATION_CALLABLE_TIMEOUT_MS = 540_000;
 
 interface ActionState {
   busy: boolean;
@@ -23,7 +31,7 @@ interface ActionState {
    * the UI enforces it rather than relying on the operator to remember.
    */
   dryRunDone: boolean;
-  result: Record<string, unknown> | null;
+  result: MigrationResult | null;
   error: string | null;
 }
 
@@ -184,7 +192,9 @@ export class MigrationCardComponent {
     return this.state()[kind];
   }
 
-  resultEntries(kind: MigrationActionKind): { key: string; value: unknown }[] {
+  resultEntries(
+    kind: MigrationActionKind
+  ): { key: string; value: number | boolean }[] {
     const result = this.state()[kind].result;
     if (!result) return [];
     return Object.entries(result).map(([key, value]) => ({ key, value }));
@@ -197,9 +207,10 @@ export class MigrationCardComponent {
 
     this.patch(kind, { busy: true, error: null, result: null });
     try {
-      const fn = httpsCallable<{ dryRun: boolean }, Record<string, unknown>>(
+      const fn = httpsCallable<{ dryRun: boolean }, MigrationResult>(
         this.functions,
-        action.callable
+        action.callable,
+        { timeout: MIGRATION_CALLABLE_TIMEOUT_MS }
       );
       const response = await fn({ dryRun });
       this.patch(kind, {

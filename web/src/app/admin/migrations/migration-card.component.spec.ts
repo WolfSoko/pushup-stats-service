@@ -96,7 +96,8 @@ describe('MigrationCardComponent', () => {
     // then the callable is invoked with dryRun:true and counters render
     expect(httpsCallable).toHaveBeenCalledWith(
       expect.anything(),
-      'migratePushupsToExerciseEntries'
+      'migratePushupsToExerciseEntries',
+      expect.objectContaining({ timeout: expect.any(Number) })
     );
     const text = fixture.nativeElement.textContent ?? '';
     expect(text).toContain('wouldCopy');
@@ -171,7 +172,8 @@ describe('MigrationCardComponent', () => {
     // then the rollback callable is invoked and its counter renders
     expect(httpsCallable).toHaveBeenCalledWith(
       expect.anything(),
-      'rollbackPushupUnification'
+      'rollbackPushupUnification',
+      expect.objectContaining({ timeout: expect.any(Number) })
     );
     expect(fixture.nativeElement.textContent).toContain('wouldDelete');
   });

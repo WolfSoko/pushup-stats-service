@@ -3006,7 +3006,7 @@
     </unit>
     <unit id="admin.migrations.action.migrate">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:55,56</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:63,64</note>
       </notes>
       <segment>
         <source>Migrieren</source>
@@ -3014,8 +3014,8 @@
     </unit>
     <unit id="admin.migrations.dryRun">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:64,66</note>
-        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:104,106</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:72,74</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:115,117</note>
       </notes>
       <segment>
         <source>Probelauf</source>
@@ -3023,8 +3023,8 @@
     </unit>
     <unit id="admin.migrations.run">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:73,75</note>
-        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:113,115</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:81,83</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:124,126</note>
       </notes>
       <segment>
         <source>Ausführen</source>
@@ -3032,10 +3032,26 @@
     </unit>
     <unit id="admin.migrations.action.rollback">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:95,96</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:106,107</note>
       </notes>
       <segment>
         <source>Rückgängig</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupUnification.title">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:49</note>
+      </notes>
+      <segment>
+        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupUnification.description">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:50</note>
+      </notes>
+      <segment>
+        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
       </segment>
     </unit>
     <unit id="admin.details.title">
