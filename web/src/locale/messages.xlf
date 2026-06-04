@@ -3089,15 +3089,15 @@
     </unit>
     <unit id="admin.migrations.subtitle">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:30,33</note>
+        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:29,32</note>
       </notes>
       <segment>
-        <source> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </source>
+        <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
       </segment>
     </unit>
     <unit id="admin.migrations.backToAdmin">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:38,42</note>
+        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:35,39</note>
       </notes>
       <segment>
         <source>Zurück zum Admin-Bereich</source>
