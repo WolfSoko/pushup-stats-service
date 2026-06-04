@@ -18,14 +18,6 @@ env:
     availability:
       - RUNTIME
 
-  # Optional: tag staging events with the same commit-based release as prod so
-  # both share source maps. Falls through harmlessly if the staging project
-  # doesn't have the secret bound (script no-ops without the token).
-  - variable: SENTRY_AUTH_TOKEN
-    secret: SENTRY_AUTH_TOKEN
-    availability:
-      - BUILD
-
   # Match prod's heap bump — staging builds the same web bundle and
   # OOMs at the same point without it.
   - variable: NODE_OPTIONS
@@ -34,5 +26,9 @@ env:
       - BUILD
 
 scripts:
-  buildCommand: pnpm nx run web:build -c staging && pnpm sentry:sourcemaps
+  # No Sentry source-map upload here (unlike apphosting.yaml): the staging GCP
+  # project has no SENTRY_AUTH_TOKEN secret, and a `secret:` reference to a
+  # missing secret fails the rollout at bind time — before the build even runs —
+  # so it can't be guarded by the upload script's no-op-when-unset check.
+  buildCommand: pnpm nx run web:build -c staging
   runCommand: node dist/web/server/server.mjs
