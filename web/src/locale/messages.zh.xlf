@@ -9492,39 +9492,39 @@
       </segment>
     </unit>
     <unit id="admin.migrations.status.completed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgeschlossen</source>
-        <target>Abgeschlossen</target>
+        <target>已完成</target>
       </segment>
     </unit>
         <unit id="admin.migrations.status.reopen">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wieder öffnen</source>
-        <target>Wieder öffnen</target>
+        <target>重新打开</target>
       </segment>
     </unit>
     <unit id="admin.migrations.status.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Offen</source>
-        <target>Offen</target>
+        <target>开放</target>
       </segment>
     </unit>
     <unit id="admin.migrations.status.markComplete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als abgeschlossen markieren</source>
-        <target>Als abgeschlossen markieren</target>
+        <target>标记为已完成</target>
       </segment>
     </unit>
         <unit id="admin.migrations.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
-        <target>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</target>
+        <target>执行、检查并将一次性数据迁移标记为已完成。</target>
       </segment>
     </unit>
     <unit id="admin.migrations.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>返回管理区域</target>
       </segment>
     </unit>
 </file>
