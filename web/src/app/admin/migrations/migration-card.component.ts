@@ -1,19 +1,23 @@
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
   input,
+  output,
   signal,
 } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MigrationActionKind,
   MigrationDescriptor,
   MigrationResult,
+  MigrationStatus,
 } from './migration-descriptors';
 
 /**
@@ -46,8 +50,10 @@ const IDLE: ActionState = {
   selector: 'app-migration-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    DatePipe,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatIconModule,
     MatProgressSpinnerModule,
   ],
@@ -58,6 +64,49 @@ const IDLE: ActionState = {
       </mat-card-header>
       <mat-card-content>
         <p class="migration-description">{{ migration().description }}</p>
+
+        <div class="migration-status">
+          @if (status()?.completed) {
+            <mat-chip-set>
+              <mat-chip highlighted color="primary">
+                <mat-icon matChipAvatar>check_circle</mat-icon>
+                <span i18n="@@admin.migrations.status.completed"
+                  >Abgeschlossen</span
+                >
+                @if (status()?.completedAt; as completedAt) {
+                  · {{ completedAt | date: 'short' }}
+                }
+              </mat-chip>
+            </mat-chip-set>
+            <button
+              mat-stroked-button
+              [disabled]="statusBusy()"
+              (click)="statusChange.emit(false)"
+            >
+              <span i18n="@@admin.migrations.status.reopen">Wieder öffnen</span>
+            </button>
+          } @else {
+            <mat-chip-set>
+              <mat-chip>
+                <span i18n="@@admin.migrations.status.open">Offen</span>
+              </mat-chip>
+            </mat-chip-set>
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="statusBusy()"
+              (click)="statusChange.emit(true)"
+            >
+              <mat-icon>check</mat-icon>
+              <span i18n="@@admin.migrations.status.markComplete"
+                >Als abgeschlossen markieren</span
+              >
+            </button>
+          }
+          @if (statusBusy()) {
+            <mat-spinner diameter="20" />
+          }
+        </div>
 
         <div class="migration-action">
           <h4 i18n="@@admin.migrations.action.migrate">Migrieren</h4>
@@ -155,6 +204,13 @@ const IDLE: ActionState = {
       .migration-description {
         color: var(--mat-sys-on-surface-variant);
       }
+      .migration-status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin: 0.75rem 0;
+      }
       .migration-action {
         margin-top: 1rem;
       }
@@ -181,6 +237,12 @@ export class MigrationCardComponent {
   private readonly functions = inject(Functions);
 
   readonly migration = input.required<MigrationDescriptor>();
+  /** Persisted completion status; undefined until the page loads it. */
+  readonly status = input<MigrationStatus | undefined>(undefined);
+  /** True while the parent is persisting a status toggle. */
+  readonly statusBusy = input(false);
+  /** Emits the desired `completed` value when the operator toggles status. */
+  readonly statusChange = output<boolean>();
 
   private readonly state = signal<Record<MigrationActionKind, ActionState>>({
     migrate: { ...IDLE },

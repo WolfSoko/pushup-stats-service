@@ -9491,5 +9491,41 @@
         <target>将旧版“pushups”集合复制到“exerciseEntries”（exerciseId:&quot;pushup&quot;，migratedFrom:&quot;pushups&quot;）。幂等操作，不会更改源数据，可通过“撤销”回滚。始终先执行试运行，并对照运行手册检查数字。</target>
       </segment>
     </unit>
+    <unit id="admin.migrations.status.completed">
+      <segment state="initial">
+        <source>Abgeschlossen</source>
+        <target>Abgeschlossen</target>
+      </segment>
+    </unit>
+        <unit id="admin.migrations.status.reopen">
+      <segment state="initial">
+        <source>Wieder öffnen</source>
+        <target>Wieder öffnen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.status.open">
+      <segment state="initial">
+        <source>Offen</source>
+        <target>Offen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.status.markComplete">
+      <segment state="initial">
+        <source>Als abgeschlossen markieren</source>
+        <target>Als abgeschlossen markieren</target>
+      </segment>
+    </unit>
+        <unit id="admin.migrations.subtitle">
+      <segment state="initial">
+        <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
+        <target>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.backToAdmin">
+      <segment state="initial">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Zurück zum Admin-Bereich</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

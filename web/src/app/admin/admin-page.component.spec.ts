@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
   MatDialog,
@@ -81,7 +82,7 @@ describe('AdminPageComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [AdminPageComponent, MatDialogModule],
-      providers: [{ provide: Functions, useValue: {} }],
+      providers: [{ provide: Functions, useValue: {} }, provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdminPageComponent);
@@ -238,7 +239,7 @@ describe('AdminPageComponent', () => {
       ]);
       await TestBed.configureTestingModule({
         imports: [AdminPageComponent, MatDialogModule],
-        providers: [{ provide: Functions, useValue: {} }],
+        providers: [{ provide: Functions, useValue: {} }, provideRouter([])],
       }).compileComponents();
       fixture = TestBed.createComponent(AdminPageComponent);
       component = fixture.componentInstance;
@@ -276,7 +277,7 @@ describe('AdminPageComponent', () => {
       ]);
       await TestBed.configureTestingModule({
         imports: [AdminPageComponent, MatDialogModule],
-        providers: [{ provide: Functions, useValue: {} }],
+        providers: [{ provide: Functions, useValue: {} }, provideRouter([])],
       }).compileComponents();
       fixture = TestBed.createComponent(AdminPageComponent);
       component = fixture.componentInstance;
