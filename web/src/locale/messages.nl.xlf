@@ -9956,45 +9956,45 @@
       </segment>
     </unit>
     <unit id="admin.migrations.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Daten-Migrationen</source>
-        <target>Daten-Migrationen</target>
+        <target>Datamigraties</target>
       </segment>
     </unit>
     <unit id="admin.migrations.action.migrate">
-      <segment state="initial">
+      <segment state="translated">
         <source>Migrieren</source>
-        <target>Migrieren</target>
+        <target>Migreren</target>
       </segment>
     </unit>
     <unit id="admin.migrations.dryRun">
-      <segment state="initial">
+      <segment state="translated">
         <source>Probelauf</source>
-        <target>Probelauf</target>
+        <target>Droogloop</target>
       </segment>
     </unit>
     <unit id="admin.migrations.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausführen</source>
-        <target>Ausführen</target>
+        <target>Uitvoeren</target>
       </segment>
     </unit>
     <unit id="admin.migrations.action.rollback">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rückgängig</source>
-        <target>Rückgängig</target>
+        <target>Ongedaan maken</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupUnification.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
-        <target>Liegestütze vereinheitlichen (pushups → exerciseEntries)</target>
+        <target>Push-ups samenvoegen (pushups → exerciseEntries)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupUnification.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
-        <target>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</target>
+        <target>Kopieert de verouderde «pushups»-collectie naar «exerciseEntries» (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, laat de bron onaangeroerd en is omkeerbaar via «Ongedaan maken». Voer altijd eerst de droogloop uit en controleer de getallen aan de hand van het runbook.</target>
       </segment>
     </unit>
 </file>
