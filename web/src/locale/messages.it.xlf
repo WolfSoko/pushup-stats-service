@@ -9955,5 +9955,35 @@
         <target>Mostra i dettagli dell'obiettivo giornaliero</target>
       </segment>
     </unit>
+    <unit id="admin.migrations.title">
+      <segment state="initial">
+        <source>Daten-Migrationen</source>
+        <target>Daten-Migrationen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.action.migrate">
+      <segment state="initial">
+        <source>Migrieren</source>
+        <target>Migrieren</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.dryRun">
+      <segment state="initial">
+        <source>Probelauf</source>
+        <target>Probelauf</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.run">
+      <segment state="initial">
+        <source>Ausführen</source>
+        <target>Ausführen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.action.rollback">
+      <segment state="initial">
+        <source>Rückgängig</source>
+        <target>Rückgängig</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -2678,7 +2678,7 @@
     </unit>
     <unit id="adminHeaderTitle">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:77,78</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:80,81</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -2686,15 +2686,23 @@
     </unit>
     <unit id="adminHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:79,81</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:82,84</note>
       </notes>
       <segment>
         <source> Nutzerverwaltung, Feedback und Bereinigungen. </source>
       </segment>
     </unit>
+    <unit id="admin.migrations.title">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:88,89</note>
+      </notes>
+      <segment>
+        <source>Daten-Migrationen</source>
+      </segment>
+    </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:87,89</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:98,100</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -2702,7 +2710,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:93,95</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:104,106</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -2710,7 +2718,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:104,107</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:115,118</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -2718,7 +2726,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:120,121</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:131,132</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -2726,7 +2734,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:128,129</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:139,140</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -2734,7 +2742,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:130,131</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:141,142</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -2742,7 +2750,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:149,150</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:160,161</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -2750,7 +2758,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:176,177</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:187,188</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -2758,7 +2766,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:191,192</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:202,203</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -2766,7 +2774,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:204,205</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:215,216</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -2774,7 +2782,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:215,216</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:226,227</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -2782,7 +2790,7 @@
     </unit>
     <unit id="admin.col.pushups">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:232,233</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:243,244</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -2790,7 +2798,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:243,245</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:254,256</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -2798,7 +2806,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:256,258</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:267,269</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -2806,7 +2814,7 @@
     </unit>
     <unit id="admin.feedback.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:294,296</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:305,307</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -2814,7 +2822,7 @@
     </unit>
     <unit id="admin.feedback.empty">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:313,315</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:324,326</note>
       </notes>
       <segment>
         <source>Noch kein Feedback vorhanden.</source>
@@ -2822,7 +2830,7 @@
     </unit>
     <unit id="admin.feedback.col.date">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:329,331</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:340,342</note>
       </notes>
       <segment>
         <source>Datum</source>
@@ -2830,7 +2838,7 @@
     </unit>
     <unit id="admin.feedback.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:341,343</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:352,354</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -2838,7 +2846,7 @@
     </unit>
     <unit id="admin.feedback.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:351,353</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:362,364</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -2846,7 +2854,7 @@
     </unit>
     <unit id="admin.feedback.col.message">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:360,362</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:371,373</note>
       </notes>
       <segment>
         <source>Nachricht</source>
@@ -2854,7 +2862,7 @@
     </unit>
     <unit id="admin.feedback.col.userId">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:371,373</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:382,384</note>
       </notes>
       <segment>
         <source>User</source>
@@ -2862,7 +2870,7 @@
     </unit>
     <unit id="admin.refresh">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:545</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:556</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -2870,7 +2878,7 @@
     </unit>
     <unit id="admin.feedback.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:546</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:557</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -2878,7 +2886,7 @@
     </unit>
     <unit id="admin.feedback.markRead">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:547</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:558</note>
       </notes>
       <segment>
         <source>Als gelesen markieren</source>
@@ -2886,7 +2894,7 @@
     </unit>
     <unit id="admin.feedback.markUnread">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:548</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:559</note>
       </notes>
       <segment>
         <source>Als ungelesen markieren</source>
@@ -2894,7 +2902,7 @@
     </unit>
     <unit id="admin.feedback.createIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:549</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:560</note>
       </notes>
       <segment>
         <source>GitHub-Issue erstellen</source>
@@ -2902,7 +2910,7 @@
     </unit>
     <unit id="admin.feedback.openIssue">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:550</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:561</note>
       </notes>
       <segment>
         <source>GitHub-Issue öffnen</source>
@@ -2910,7 +2918,7 @@
     </unit>
     <unit id="admin.feedback.delete">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:551</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:562</note>
       </notes>
       <segment>
         <source>Feedback löschen</source>
@@ -2918,7 +2926,7 @@
     </unit>
     <unit id="admin.row.detailsAria">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:777</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:789</note>
       </notes>
       <segment>
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
@@ -2994,6 +3002,40 @@
       </notes>
       <segment>
         <source> Löschen </source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.action.migrate">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:55,56</note>
+      </notes>
+      <segment>
+        <source>Migrieren</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.dryRun">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:64,66</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:104,106</note>
+      </notes>
+      <segment>
+        <source>Probelauf</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.run">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:73,75</note>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:113,115</note>
+      </notes>
+      <segment>
+        <source>Ausführen</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.action.rollback">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-card.component.ts:95,96</note>
+      </notes>
+      <segment>
+        <source>Rückgängig</source>
       </segment>
     </unit>
     <unit id="admin.details.title">
