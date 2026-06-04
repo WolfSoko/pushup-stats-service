@@ -70,7 +70,7 @@ export class MigrationsPageComponent {
   private readonly functions = inject(Functions);
 
   readonly migrations = DATA_MIGRATIONS;
-  readonly statuses = signal<Record<string, MigrationStatus>>({});
+  readonly statuses = signal<Record<string, MigrationStatus | undefined>>({});
   /** Id of the migration whose status is currently being persisted. */
   readonly busyId = signal<string | null>(null);
   readonly error = signal<string | null>(null);

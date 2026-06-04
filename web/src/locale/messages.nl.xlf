@@ -10003,10 +10003,10 @@
         <target>Abgeschlossen</target>
       </segment>
     </unit>
-    <unit id="admin.migrations.status.reopen">
+        <unit id="admin.migrations.status.reopen">
       <segment state="initial">
-        <source> Wieder öffnen </source>
-        <target> Wieder öffnen </target>
+        <source>Wieder öffnen</source>
+        <target>Wieder öffnen</target>
       </segment>
     </unit>
     <unit id="admin.migrations.status.open">
@@ -10021,10 +10021,10 @@
         <target>Als abgeschlossen markieren</target>
       </segment>
     </unit>
-    <unit id="admin.migrations.subtitle">
+        <unit id="admin.migrations.subtitle">
       <segment state="initial">
-        <source> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </source>
-        <target> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </target>
+        <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
+        <target>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</target>
       </segment>
     </unit>
     <unit id="admin.migrations.backToAdmin">

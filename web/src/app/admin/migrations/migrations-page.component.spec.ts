@@ -69,7 +69,7 @@ describe('MigrationsPageComponent', () => {
     ]);
 
     // then the page exposes it to the cards
-    expect(component.statuses()['pushup-unification'].completed).toBe(true);
+    expect(component.statuses()['pushup-unification']?.completed).toBe(true);
     expect(httpsCallable).toHaveBeenCalledWith(
       expect.anything(),
       'getMigrationStatuses'
@@ -106,7 +106,7 @@ describe('MigrationsPageComponent', () => {
 
     // then the callable is invoked and local state updates
     expect(setArg).toEqual({ id: 'pushup-unification', completed: true });
-    expect(component.statuses()['pushup-unification'].completed).toBe(true);
+    expect(component.statuses()['pushup-unification']?.completed).toBe(true);
     expect(component.busyId()).toBeNull();
   });
 });

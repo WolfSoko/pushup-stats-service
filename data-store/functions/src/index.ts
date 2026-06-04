@@ -725,12 +725,6 @@ export const adminMarkFeedbackRead = onCall(
 );
 
 // ─── Migration status tracking ────────────────────────────────────────────────
-//
-// Lets an admin record that a data migration (e.g. the pushup→exerciseEntries
-// cutover) has been run + verified in this environment. Status lives in
-// `migrationStatus/{id}` and is surfaced by the admin migrations page so the
-// team can see, at a glance, which migrations are done. Admin-only; the docs
-// carry no user data.
 
 const MIGRATION_STATUS_COLLECTION = 'migrationStatus';
 

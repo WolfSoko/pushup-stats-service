@@ -82,9 +82,8 @@ const IDLE: ActionState = {
               mat-stroked-button
               [disabled]="statusBusy()"
               (click)="statusChange.emit(false)"
-              i18n="@@admin.migrations.status.reopen"
             >
-              Wieder öffnen
+              <span i18n="@@admin.migrations.status.reopen">Wieder öffnen</span>
             </button>
           } @else {
             <mat-chip-set>
