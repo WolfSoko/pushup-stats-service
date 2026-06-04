@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { PushupRecord, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
 import type { GoalKind } from '../stats/components/goal-reached-dialog/goal-reached-dialog.component';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
@@ -45,8 +45,14 @@ export class GoalReachedNotificationService {
   private readonly live = inject(LiveDataStore);
   private readonly trainingPlan = inject(TrainingPlanStore);
 
-  private readonly entries = computed<PushupRecord[]>(() =>
-    this.live.entries()
+  // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`).
+  // Only the legacy daily/weekly/monthly goals tracked here are pushup-reps.
+  private readonly entries = computed<{ timestamp: string; reps: number }[]>(
+    () =>
+      this.live
+        .exerciseEntries()
+        .filter((e) => e.exerciseId === 'pushup')
+        .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }))
   );
 
   /**

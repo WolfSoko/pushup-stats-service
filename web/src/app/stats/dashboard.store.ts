@@ -20,7 +20,6 @@ import {
   findExerciseDefinition,
   isAutoCountQuickAddExerciseId,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
-  PushupRecord,
   pushupRecordToUnified,
   QuickAddConfig,
   QuickAddMode,
@@ -109,7 +108,7 @@ const EMPTY_STATS: StatsResponse = {
   series: [],
 };
 
-function sortedUniqueDates(rows: PushupRecord[]): string[] {
+function sortedUniqueDates(rows: { timestamp: string }[]): string[] {
   return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
     a.localeCompare(b)
   );
@@ -175,14 +174,18 @@ export const DashboardStore = signalStore(
     allTimeResource: resource({
       loader: async () => firstValueFrom(store._api.load({})),
     }),
-    // Real-time listener on `userStats/{userId}`. The Cloud Function
-    // aggregator rewrites this doc after each pushup write — `rxResource`
-    // ensures the dashboard re-renders without polling or manual reload.
+    // Real-time listener on the per-exercise pushup aggregate
+    // `userStats/{userId}/perExercise/pushup`. Post-cutover this is the
+    // source for pushup totals/streak/heatmap (the
+    // `updateExerciseStatsOnEntryWrite` trigger rewrites it after each
+    // pushup `exerciseEntries` write); `rxResource` re-renders without
+    // polling. Same `UserStats` shape as the legacy `userStats/{userId}`
+    // doc, so downstream bindings are unchanged.
     userStatsResource: rxResource({
       params: () => ({ userId: store._user.userIdSafe() }),
       stream: ({ params }) =>
         params.userId
-          ? store._userStatsApi.getUserStats(params.userId)
+          ? store._userStatsApi.getPerExerciseStats(params.userId, 'pushup')
           : of(null),
     }),
   })),
@@ -195,11 +198,17 @@ export const DashboardStore = signalStore(
     // has connected (reactive, real-time). Until then we fall back to the
     // REST resource so SSR and the cold-start hydration window still render
     // data instead of an empty state.
-    const entryRows = computed<PushupRecord[]>(() => {
+    const entryRows = computed<{ timestamp: string; reps: number }[]>(() => {
       if (store._isBrowser && store._live.connected()) {
-        return store._live.entries();
+        return store._live
+          .exerciseEntries()
+          .filter((e) => e.exerciseId === 'pushup')
+          .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }));
       }
-      return store.entriesResource.value() ?? [];
+      return (store.entriesResource.value() ?? []).map((r) => ({
+        timestamp: r.timestamp,
+        reps: r.reps,
+      }));
     });
 
     /** Precomputed server-side stats (null if not yet available). */
@@ -319,16 +328,17 @@ export const DashboardStore = signalStore(
       () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
-    // SSR only sees pushups (no exerciseEntries REST endpoint). Goal /
-    // streak / total metrics stay on the pushup-only `entryRows()` —
-    // only the history surfaces consume `unifiedRows`.
+    // Browser: the live feed already carries pushups alongside every other
+    // exercise, so the unified history is a single map over
+    // `exerciseEntries()`. SSR has no exerciseEntries REST endpoint, so it
+    // falls back to the pushup REST resource. Goal / streak / total metrics
+    // stay on the pushup-only `entryRows()`; only history surfaces consume
+    // `unifiedRows`.
     const unifiedRows = computed<UnifiedEntry[]>(() => {
-      const pushups = entryRows().map(pushupRecordToUnified);
-      if (!store._isBrowser) return pushups;
-      const exercises = store._live
-        .exerciseEntries()
-        .map(exerciseEntryToUnified);
-      return [...pushups, ...exercises];
+      if (!store._isBrowser) {
+        return (store.entriesResource.value() ?? []).map(pushupRecordToUnified);
+      }
+      return store._live.exerciseEntries().map(exerciseEntryToUnified);
     });
 
     const lastEntry = computed<UnifiedEntry | null>(() => {
