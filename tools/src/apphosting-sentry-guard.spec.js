@@ -10,10 +10,18 @@ function load(path) {
   return parse(readFileSync(path, 'utf-8'));
 }
 
+function isMapping(value) {
+  return typeof value === 'object' && value !== null;
+}
+
 function secretVariables(config) {
   return (config.env ?? [])
-    .filter((entry) => entry && 'secret' in entry)
+    .filter((entry) => isMapping(entry) && 'secret' in entry)
     .map((entry) => entry.variable);
+}
+
+function buildCommand(config) {
+  return config.scripts?.buildCommand ?? '';
 }
 
 /**
@@ -43,7 +51,7 @@ describe('App Hosting Sentry configuration', () => {
       // given staging is an ephemeral preview surface with no Sentry token
       // when App Hosting runs scripts.buildCommand
       // then it must build the web bundle without invoking sentry:sourcemaps
-      expect(staging.scripts.buildCommand).not.toMatch(/sentry:sourcemaps/);
+      expect(buildCommand(staging)).not.toMatch(/sentry:sourcemaps/);
     });
   });
 
@@ -67,7 +75,7 @@ describe('App Hosting Sentry configuration', () => {
       // given uploaded source maps are what make prod stack traces readable
       // when App Hosting runs scripts.buildCommand
       // then it must invoke sentry:sourcemaps after the web build
-      expect(prod.scripts.buildCommand).toMatch(/sentry:sourcemaps/);
+      expect(buildCommand(prod)).toMatch(/sentry:sourcemaps/);
     });
   });
 });
