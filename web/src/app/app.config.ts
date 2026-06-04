@@ -30,7 +30,7 @@ import {
   withI18nSupport,
   withIncrementalHydration,
 } from '@angular/platform-browser';
-import { provideRouter, Router, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import {
   provideAuth,
@@ -52,18 +52,13 @@ import { DEMO_USER_ID } from '@pu-stats/data-access';
 import { PushSubscriptionService, VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { SHOULD_SKIP_IN_APP_REMINDER } from '@pu-reminders/reminders';
 import { appRoutes } from './app.routes';
+import { appRouterFeatures } from './app.router-features';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
-    provideRouter(
-      appRoutes,
-      withInMemoryScrolling({
-        anchorScrolling: 'enabled',
-        scrollPositionRestoration: 'enabled',
-      })
-    ),
+    provideRouter(appRoutes, ...appRouterFeatures),
     // Sentry error monitoring – production only (not in dev mode or emulator)
     ...(!firebaseRuntime.useEmulators && !isDevMode()
       ? [
