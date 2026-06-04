@@ -203,6 +203,30 @@ export function validateLeaderboardExclusionPayload(
 }
 
 /**
+ * Validates the payload for `setMigrationStatus`. Requires a non-empty
+ * string `id` (the migration descriptor id) and a boolean `completed`.
+ * Returns { valid: true, id, completed } on success.
+ */
+export function validateSetMigrationStatusPayload(data: unknown): {
+  valid: boolean;
+  id?: string;
+  completed?: boolean;
+  error?: string;
+} {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'payload must be an object' };
+  }
+  const obj = data as Record<string, unknown>;
+  if (typeof obj.id !== 'string' || obj.id.trim().length === 0) {
+    return { valid: false, error: 'id missing or empty' };
+  }
+  if (typeof obj.completed !== 'boolean') {
+    return { valid: false, error: 'completed must be boolean' };
+  }
+  return { valid: true, id: obj.id.trim(), completed: obj.completed };
+}
+
+/**
  * Batches array into chunks for processing
  * @param array Array to batch
  * @param size Batch size

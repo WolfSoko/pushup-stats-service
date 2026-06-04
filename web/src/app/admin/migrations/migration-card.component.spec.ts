@@ -200,4 +200,39 @@ describe('MigrationCardComponent', () => {
     expect(dryRunButtons.length).toBe(1);
     expect(component.migration().rollback).toBeUndefined();
   });
+
+  it('should emit statusChange(true) when marking an open migration complete', async () => {
+    // given an open (not-completed) migration
+    await createComponent(WITH_ROLLBACK, []);
+    const emitted: boolean[] = [];
+    component.statusChange.subscribe((v) => emitted.push(v));
+
+    // when the operator clicks "Als abgeschlossen markieren"
+    await clickButton('Als abgeschlossen markieren');
+
+    // then it requests completion
+    expect(emitted).toEqual([true]);
+  });
+
+  it('should show a completed chip and emit statusChange(false) on reopen', async () => {
+    // given a completed migration
+    await createComponent(WITH_ROLLBACK, []);
+    fixture.componentRef.setInput('status', {
+      completed: true,
+      completedAt: '2026-06-04T10:00:00.000Z',
+      completedBy: 'admin-uid',
+    });
+    fixture.detectChanges();
+    const emitted: boolean[] = [];
+    component.statusChange.subscribe((v) => emitted.push(v));
+
+    // then the completed chip is shown
+    expect(fixture.nativeElement.textContent).toContain('Abgeschlossen');
+
+    // when the operator reopens it
+    await clickButton('Wieder öffnen');
+
+    // then it requests reopening
+    expect(emitted).toEqual([false]);
+  });
 });

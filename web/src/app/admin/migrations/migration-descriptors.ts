@@ -21,6 +21,19 @@ export type MigrationActionKind = 'migrate' | 'rollback';
  */
 export type MigrationResult = Record<string, number | boolean>;
 
+/**
+ * Persisted completion status of a migration (Firestore `migrationStatus/{id}`,
+ * written by the `setMigrationStatus` admin callable). Lets the team mark a
+ * migration as run + verified in this environment.
+ */
+export interface MigrationStatus {
+  completed: boolean;
+  /** ISO timestamp of the last completion, or null when not completed. */
+  completedAt: string | null;
+  /** Admin uid that marked it completed. */
+  completedBy: string;
+}
+
 export interface MigrationAction {
   /**
    * Name of the deployed `onCall` Cloud Function. Invoked as

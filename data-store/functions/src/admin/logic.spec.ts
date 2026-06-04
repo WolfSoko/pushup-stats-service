@@ -7,6 +7,7 @@ import {
   batchArray,
   validateFeedbackId,
   validateMarkFeedbackReadPayload,
+  validateSetMigrationStatusPayload,
   buildGithubIssueBody,
   escapeMarkdown,
 } from './logic';
@@ -405,6 +406,64 @@ describe('admin/logic', () => {
       expect(validateLeaderboardExclusionPayload({ uid: 'abc' })).toMatchObject(
         { valid: false }
       );
+    });
+  });
+
+  describe('validateSetMigrationStatusPayload', () => {
+    it('should accept a valid {id, completed} payload', () => {
+      // given / when
+      const result = validateSetMigrationStatusPayload({
+        id: 'pushup-unification',
+        completed: true,
+      });
+      // then
+      expect(result).toEqual({
+        valid: true,
+        id: 'pushup-unification',
+        completed: true,
+      });
+    });
+
+    it('should accept completed=false (reopening)', () => {
+      // given / when / then
+      expect(
+        validateSetMigrationStatusPayload({ id: 'x', completed: false })
+      ).toEqual({ valid: true, id: 'x', completed: false });
+    });
+
+    it('should trim surrounding whitespace from id', () => {
+      // given / when / then
+      expect(
+        validateSetMigrationStatusPayload({ id: '  x  ', completed: true })
+      ).toEqual({ valid: true, id: 'x', completed: true });
+    });
+
+    it('should reject a non-object payload', () => {
+      // given / when / then
+      expect(validateSetMigrationStatusPayload(null)).toEqual({
+        valid: false,
+        error: 'payload must be an object',
+      });
+    });
+
+    it('should reject a missing or empty id', () => {
+      // given / when / then
+      expect(
+        validateSetMigrationStatusPayload({ completed: true })
+      ).toMatchObject({ valid: false });
+      expect(
+        validateSetMigrationStatusPayload({ id: '   ', completed: true })
+      ).toMatchObject({ valid: false });
+    });
+
+    it('should reject a non-boolean completed', () => {
+      // given / when / then
+      expect(
+        validateSetMigrationStatusPayload({ id: 'x', completed: 'yes' })
+      ).toMatchObject({ valid: false });
+      expect(validateSetMigrationStatusPayload({ id: 'x' })).toMatchObject({
+        valid: false,
+      });
     });
   });
 });

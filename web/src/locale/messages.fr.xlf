@@ -9869,5 +9869,41 @@
         <target>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</target>
       </segment>
     </unit>
+    <unit id="admin.migrations.status.completed">
+      <segment state="initial">
+        <source>Abgeschlossen</source>
+        <target>Abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.status.reopen">
+      <segment state="initial">
+        <source> Wieder öffnen </source>
+        <target> Wieder öffnen </target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.status.open">
+      <segment state="initial">
+        <source>Offen</source>
+        <target>Offen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.status.markComplete">
+      <segment state="initial">
+        <source>Als abgeschlossen markieren</source>
+        <target>Als abgeschlossen markieren</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.subtitle">
+      <segment state="initial">
+        <source> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </source>
+        <target> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.backToAdmin">
+      <segment state="initial">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Zurück zum Admin-Bereich</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

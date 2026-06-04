@@ -38,6 +38,7 @@ describe('appRoutes', () => {
       'impressum',
       'datenschutz',
       'admin',
+      'admin/migrations',
       '**',
     ]);
   });

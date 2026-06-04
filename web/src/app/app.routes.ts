@@ -255,5 +255,13 @@ export const appRoutes: Routes = [
     loadComponent: () =>
       import('./admin/admin-page.component').then((m) => m.AdminPageComponent),
   },
+  {
+    path: 'admin/migrations',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/migrations/migrations-page.component').then(
+        (m) => m.MigrationsPageComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];

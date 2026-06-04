@@ -10,6 +10,7 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -27,8 +28,6 @@ import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
-import { MigrationCardComponent } from './migrations/migration-card.component';
-import { DATA_MIGRATIONS } from './migrations/migration-descriptors';
 
 export interface AdminUser {
   uid: string;
@@ -72,7 +71,7 @@ interface AdminFeedback {
     MatTooltipModule,
     MatSlideToggleModule,
     PageHeaderComponent,
-    MigrationCardComponent,
+    RouterLink,
   ],
   template: `
     <div class="admin-page">
@@ -83,13 +82,15 @@ interface AdminFeedback {
         </p>
       </app-page-header>
 
-      <!-- Data migrations -->
-      <section class="migrations-section">
-        <h2 i18n="@@admin.migrations.title">Daten-Migrationen</h2>
-        @for (migration of dataMigrations; track migration.id) {
-          <app-migration-card [migration]="migration" />
-        }
-      </section>
+      <!-- Data migrations (own page) -->
+      <a
+        mat-stroked-button
+        routerLink="/admin/migrations"
+        class="migrations-link"
+      >
+        <mat-icon>sync_alt</mat-icon>
+        <span i18n="@@admin.migrations.title">Daten-Migrationen</span>
+      </a>
 
       <!-- Bulk action card -->
       <mat-card class="bulk-card">
@@ -560,7 +561,6 @@ export class AdminPageComponent {
   readonly createIssueTooltip = $localize`:@@admin.feedback.createIssue:GitHub-Issue erstellen`;
   readonly openIssueTooltip = $localize`:@@admin.feedback.openIssue:GitHub-Issue öffnen`;
   readonly deleteFeedbackTooltip = $localize`:@@admin.feedback.delete:Feedback löschen`;
-  readonly dataMigrations = DATA_MIGRATIONS;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
