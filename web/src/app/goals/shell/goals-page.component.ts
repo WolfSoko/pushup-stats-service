@@ -29,7 +29,7 @@ import {
   type ExerciseDefinition,
   type GoalScope,
   type MeasurementType,
-  PUSHUP_QUICK_ADD_EXERCISE_ID,
+  PUSHUP_DEFINITION,
 } from '@pu-stats/models';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { UserConfigStore } from '../../core/user-config.store';
@@ -49,15 +49,6 @@ interface ExercisePickerEntry {
   max: number;
 }
 
-const PUSHUP_PICKER_ENTRY: ExercisePickerEntry = {
-  id: PUSHUP_QUICK_ADD_EXERCISE_ID,
-  label: $localize`:@@exercise.category.pushup:Liegestütze`,
-  measurement: 'reps',
-  unit: 'reps',
-  min: 1,
-  max: 1000,
-};
-
 function pickerFromDefinition(def: ExerciseDefinition): ExercisePickerEntry {
   return {
     id: def.id,
@@ -70,7 +61,7 @@ function pickerFromDefinition(def: ExerciseDefinition): ExercisePickerEntry {
 }
 
 function buildExerciseOptions(): ExercisePickerEntry[] {
-  return [PUSHUP_PICKER_ENTRY, ...EXERCISE_CATALOG.map(pickerFromDefinition)];
+  return EXERCISE_CATALOG.map(pickerFromDefinition);
 }
 
 function makeEntryId(): string {
@@ -568,10 +559,10 @@ export class GoalsPageComponent {
     if (list.length >= this.maxPerScope) return;
     const next: ComplexGoalEntry = {
       id: makeEntryId(),
-      exerciseId: PUSHUP_PICKER_ENTRY.id,
+      exerciseId: PUSHUP_DEFINITION.id,
       target: 10,
-      measurement: PUSHUP_PICKER_ENTRY.measurement,
-      unit: PUSHUP_PICKER_ENTRY.unit,
+      measurement: PUSHUP_DEFINITION.measurement,
+      unit: PUSHUP_DEFINITION.unit,
     };
     this.entriesFor(scope).set([...list, next]);
   }

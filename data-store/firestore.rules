@@ -14,6 +14,8 @@ service cloud.firestore {
     function isRepsExerciseId(id) {
       return [
         // BEGIN GENERATED isRepsExerciseId (source: EXERCISE_CATALOG; run: pnpm nx run cloud-functions:generate-exercise-rules)
+        // pushup
+        'pushup',
         // push
         'push.benchdips', 'push.dips',
         // pull

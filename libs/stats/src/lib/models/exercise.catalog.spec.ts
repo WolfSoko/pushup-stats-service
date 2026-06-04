@@ -6,10 +6,7 @@ import {
   findExerciseCategory,
   findExerciseDefinition,
 } from './exercise.catalog';
-import {
-  AUTO_COUNT_QUICK_ADD_EXERCISE_IDS,
-  PUSHUP_QUICK_ADD_EXERCISE_ID,
-} from './user-config.models';
+import { AUTO_COUNT_QUICK_ADD_EXERCISE_IDS } from './user-config.models';
 import { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN } from './pushup.models';
 
 describe('EXERCISE_CATEGORIES', () => {
@@ -225,7 +222,7 @@ describe('exercisesByCategory', () => {
 });
 
 describe('auto-count / hold-timer catalog capabilities', () => {
-  it('should mark exactly situps, squats and pullups with an autoCountProfileId', () => {
+  it('should mark exactly pushups, situps, squats and pullups with an autoCountProfileId', () => {
     // given / when
     const profiles = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId).map(
       (d) => [d.id, d.autoCountProfileId]
@@ -235,6 +232,7 @@ describe('auto-count / hold-timer catalog capabilities', () => {
       ['abs.situps', 'situp'],
       ['legs.squats', 'squat'],
       ['pull.pullups', 'pullup'],
+      ['pushup', 'pushup'],
     ]);
   });
 
@@ -242,7 +240,7 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     // given — the union is type-only in web/auto-count, so this bounded set
     // is the catalog-side half of the contract; the orchestration spec
     // covers the round-trip through autoCountProfileForCatalogId.
-    const allowed = new Set(['squat', 'pullup', 'situp']);
+    const allowed = new Set(['pushup', 'squat', 'pullup', 'situp']);
     // when / then
     for (const def of EXERCISE_CATALOG) {
       if (def.autoCountProfileId) {
@@ -270,19 +268,18 @@ describe('auto-count / hold-timer catalog capabilities', () => {
 
   it('should keep AUTO_COUNT_QUICK_ADD_EXERCISE_IDS derivable from the catalog flags', () => {
     // given the catalog auto-count flags, when the quick-add subset is
-    // derived, then it equals the pushup sentinel plus every catalog
-    // exercise that declares a camera profile — no hand-maintained drift.
-    const derived = [
-      PUSHUP_QUICK_ADD_EXERCISE_ID,
-      ...EXERCISE_CATALOG.filter((d) => d.autoCountProfileId).map((d) => d.id),
-    ].sort();
+    // derived, then it equals every catalog exercise that declares a camera
+    // profile — pushup is now one of them, so no hand-maintained drift.
+    const derived = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId)
+      .map((d) => d.id)
+      .sort();
     expect([...AUTO_COUNT_QUICK_ADD_EXERCISE_IDS].sort()).toEqual(derived);
   });
 });
 
 describe('PUSHUP_DEFINITION', () => {
-  it('should resolve the pushup sentinel through the catalog lookup', () => {
-    // given the legacy pushup sentinel id
+  it('should resolve the pushup id through the catalog lookup', () => {
+    // given the pushup exercise id
     // when resolved through the shared catalog lookup
     const def = findExerciseDefinition('pushup');
     // then it returns the first-class pushup definition, so consumers can
@@ -296,22 +293,21 @@ describe('PUSHUP_DEFINITION', () => {
     expect(def?.nameKey).toMatch(/^@@/);
   });
 
-  it('should keep the pushup sentinel out of the iterable EXERCISE_CATALOG', () => {
+  it('should list pushup as a first-class member of EXERCISE_CATALOG', () => {
     // given the "available exercises" array iterated by the dashboard, goal
-    // picker, leaderboard rebuild, rules-allowlist guard, and display-name
+    // picker, leaderboard rebuild, rules-allowlist codegen, and display-name
     // registry
-    // when scanning it for the pushup sentinel
-    // then it is absent — pushups live in the legacy collection and must not
-    // double-list, or those surfaces and their guard tests break
-    expect(EXERCISE_CATALOG.some((d) => d.id === 'pushup')).toBe(false);
+    // when scanning it for the pushup exercise
+    // then it is present exactly once — post-cutover pushups live in
+    // exerciseEntries and surface like every other exercise
+    expect(EXERCISE_CATALOG.filter((d) => d.id === 'pushup')).toHaveLength(1);
   });
 
-  it('should not give the pushup sentinel a camera autoCountProfileId', () => {
-    // given the camera 'pushup' profile is a separate concern from the catalog
-    // definition (the auto-count maps stay keyed off the sentinel)
+  it('should give pushup the camera "pushup" autoCountProfileId', () => {
+    // given the camera 'pushup' profile the original app shipped
     // when inspecting the definition
-    // then it carries no autoCountProfileId, so the auto-count derivation guard
-    // keeps treating pushup as a prepended sentinel
-    expect(PUSHUP_DEFINITION.autoCountProfileId).toBeUndefined();
+    // then it carries the matching autoCountProfileId, so the auto-count
+    // derivation treats pushup as a normal catalog auto-count exercise
+    expect(PUSHUP_DEFINITION.autoCountProfileId).toBe('pushup');
   });
 });
