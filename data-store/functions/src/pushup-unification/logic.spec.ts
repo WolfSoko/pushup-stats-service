@@ -1,6 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
 import {
-  shouldAggregateExerciseEntry,
   pushupToExerciseEntry,
   planMigration,
   rollbackTargets,
@@ -10,30 +9,6 @@ import {
 const NOW = '2026-06-03T10:00:00.000Z';
 
 describe('pushup-unification/logic', () => {
-  describe('shouldAggregateExerciseEntry', () => {
-    it('should skip aggregation for the pushup sentinel', () => {
-      // given the pushup sentinel exerciseId
-      // when asked whether to aggregate
-      // then aggregation is skipped
-      expect(shouldAggregateExerciseEntry('pushup')).toBe(false);
-    });
-
-    it('should aggregate every other exercise', () => {
-      // given a non-pushup exerciseId
-      // when asked whether to aggregate
-      // then aggregation proceeds
-      expect(shouldAggregateExerciseEntry('situp')).toBe(true);
-    });
-
-    it('should aggregate when exerciseId is undefined or null', () => {
-      // given a missing exerciseId
-      // when asked whether to aggregate
-      // then it is not the pushup sentinel, so aggregation proceeds
-      expect(shouldAggregateExerciseEntry(undefined)).toBe(true);
-      expect(shouldAggregateExerciseEntry(null)).toBe(true);
-    });
-  });
-
   describe('pushupToExerciseEntry', () => {
     it('should map a full pushup doc to a pushup exerciseEntries payload', () => {
       // given a complete source pushup doc

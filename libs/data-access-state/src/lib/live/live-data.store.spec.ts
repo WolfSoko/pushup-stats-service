@@ -24,14 +24,11 @@ type SnapshotCallback = (snapshot: {
 }) => void;
 
 /**
- * Captures the success callbacks the store passes to `onSnapshot` so a
- * test can drive each subscription. The store subscribes pushups first,
- * then exerciseEntries (the call order in `onInit`).
+ * Captures the success callback the store passes to `onSnapshot`. Post
+ * Phase-7 cutover there is a single subscription — `exerciseEntries`
+ * (pushups included) — so the first captured callback is that feed.
  */
-function captureSnapshotCallbacks(): {
-  pushups: () => SnapshotCallback;
-  exercises: () => SnapshotCallback;
-} {
+function captureExercisesCallback(): () => SnapshotCallback {
   const onNext: SnapshotCallback[] = [];
   jest
     .mocked(onSnapshot)
@@ -39,10 +36,7 @@ function captureSnapshotCallbacks(): {
       onNext.push(next);
       return jest.fn();
     });
-  return {
-    pushups: () => onNext[0],
-    exercises: () => onNext[1],
-  };
+  return () => onNext[0];
 }
 
 describe('LiveDataStore', () => {
@@ -58,7 +52,7 @@ describe('LiveDataStore', () => {
       const store = TestBed.inject(LiveDataStore);
 
       expect(store.connected()).toBe(false);
-      expect(store.entries()).toEqual([]);
+      expect(store.exerciseEntries()).toEqual([]);
       expect(store.updateTick()).toBe(0);
     });
   });
@@ -74,17 +68,17 @@ describe('LiveDataStore', () => {
       const store = TestBed.inject(LiveDataStore);
 
       expect(store.connected()).toBe(false);
-      expect(store.entries()).toEqual([]);
+      expect(store.exerciseEntries()).toEqual([]);
       expect(store.updateTick()).toBe(0);
     });
   });
 
   describe('exerciseEntries loading', () => {
-    it('should mark exerciseEntries loaded after the first exercise snapshot', () => {
-      // given a browser-platform store wired to a signed-in user, with both
-      // Firestore subscriptions captured but not yet fired
+    it('should connect and mark loaded after the first exercise snapshot', () => {
+      // given a browser-platform store wired to a signed-in user, with the
+      // Firestore subscription captured but not yet fired
       jest.mocked(authState).mockReturnValue(of({ uid: 'u1' }) as never);
-      const callbacks = captureSnapshotCallbacks();
+      const exercises = captureExercisesCallback();
       TestBed.configureTestingModule({
         providers: [
           LiveDataStore,
@@ -96,22 +90,22 @@ describe('LiveDataStore', () => {
       const store = TestBed.inject(LiveDataStore);
       TestBed.tick();
 
-      // then it starts unloaded — no exercise snapshot has arrived
+      // then it starts unloaded — no snapshot has arrived
       expect(store.exerciseEntriesLoaded()).toBe(false);
+      expect(store.connected()).toBe(false);
 
       // when the exerciseEntries subscription delivers its first snapshot
-      callbacks.exercises()({ docs: [] });
+      exercises()({ docs: [] });
 
-      // then the loaded flag flips, independent of the pushup stream
+      // then both the loaded flag and the canonical liveness signal flip
       expect(store.exerciseEntriesLoaded()).toBe(true);
-      expect(store.connected()).toBe(false);
+      expect(store.connected()).toBe(true);
     });
 
-    it('should hide staged pushup-sentinel copies from the live exerciseEntries feed', () => {
-      // given a browser-platform store wired to a signed-in user, with both
-      // Firestore subscriptions captured but not yet fired
+    it('should surface pushups (exerciseId:"pushup") on the live feed post-cutover', () => {
+      // given a browser-platform store wired to a signed-in user
       jest.mocked(authState).mockReturnValue(of({ uid: 'u1' }) as never);
-      const callbacks = captureSnapshotCallbacks();
+      const exercises = captureExercisesCallback();
       TestBed.configureTestingModule({
         providers: [
           LiveDataStore,
@@ -123,9 +117,8 @@ describe('LiveDataStore', () => {
       const store = TestBed.inject(LiveDataStore);
       TestBed.tick();
 
-      // when the exerciseEntries snapshot delivers a native squats entry
-      // alongside a migrated pushup-sentinel copy
-      callbacks.exercises()({
+      // when the snapshot delivers a squats entry alongside a pushup entry
+      exercises()({
         docs: [
           {
             id: 'squats-1',
@@ -148,11 +141,14 @@ describe('LiveDataStore', () => {
         ],
       });
 
-      // then only the non-pushup entry surfaces and the feed is marked loaded
-      expect(store.exerciseEntries().map((e) => e._id)).toEqual(['squats-1']);
+      // then both surface — pushups are no longer filtered out
+      expect(store.exerciseEntries().map((e) => e._id)).toEqual([
+        'squats-1',
+        'pushup-1',
+      ]);
       expect(
         store.exerciseEntries().some((e) => e.exerciseId === 'pushup')
-      ).toBe(false);
+      ).toBe(true);
       expect(store.exerciseEntriesLoaded()).toBe(true);
     });
   });
@@ -165,7 +161,7 @@ describe('LiveDataStore', () => {
         uid: 'u1',
       });
       jest.mocked(authState).mockReturnValue(authSubject as never);
-      const callbacks = captureSnapshotCallbacks();
+      const exercises = captureExercisesCallback();
       TestBed.configureTestingModule({
         providers: [
           LiveDataStore,
@@ -176,7 +172,7 @@ describe('LiveDataStore', () => {
       });
       const store = TestBed.inject(LiveDataStore);
       TestBed.tick();
-      callbacks.exercises()({
+      exercises()({
         docs: [
           {
             id: 'squats-1',
@@ -197,9 +193,9 @@ describe('LiveDataStore', () => {
       TestBed.tick();
 
       // then u1's mirrors are dropped before u2's snapshots arrive
-      expect(store.entries()).toEqual([]);
       expect(store.exerciseEntries()).toEqual([]);
       expect(store.exerciseEntriesLoaded()).toBe(false);
+      expect(store.connected()).toBe(false);
     });
   });
 });

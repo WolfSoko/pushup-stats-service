@@ -11,21 +11,6 @@ const MIGRATED_FROM = 'pushups';
 const MIGRATED_ID_PREFIX = 'pushup__';
 const DEFAULT_SOURCE = 'web';
 
-/**
- * The staged migration copies pushups into `exerciseEntries` with
- * `exerciseId:'pushup'`. Until the Phase-7 write-path flip, the
- * per-exercise stats and leaderboard triggers must ignore those copies
- * so they don't create a `perExercise/pushup` aggregate or a pushup
- * leaderboard row (the Pushup dashboard still reads the legacy `pushups`
- * collection + its own `userStats` doc). Reversible: deleting this guard
- * at cutover re-enables aggregation for `exerciseId:'pushup'`.
- */
-export function shouldAggregateExerciseEntry(
-  exerciseId: string | undefined | null
-): boolean {
-  return exerciseId !== PUSHUP_EXERCISE_ID;
-}
-
 export interface PushupSourceDoc {
   id: string;
   userId?: string;

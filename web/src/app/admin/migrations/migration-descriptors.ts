@@ -64,4 +64,10 @@ export const DATA_MIGRATIONS: readonly MigrationDescriptor[] = [
     migrate: { callable: 'migratePushupsToExerciseEntries' },
     rollback: { callable: 'rollbackPushupUnification' },
   },
+  {
+    id: 'pushup-perexercise-backfill',
+    title: $localize`:@@admin.migrations.pushupBackfill.title:Pushup-Aggregat backfillen (perExercise/pushup)`,
+    description: $localize`:@@admin.migrations.pushupBackfill.description:Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.`,
+    migrate: { callable: 'backfillPushupPerExerciseStats' },
+  },
 ];

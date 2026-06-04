@@ -56,7 +56,6 @@ import {
   planMigration,
   type PushupSourceDoc,
   rollbackTargets,
-  shouldAggregateExerciseEntry,
 } from './pushup-unification';
 import {
   buildPublicProfile,
@@ -939,15 +938,8 @@ export const refreshExerciseLeaderboardsOnEntryWrite = onDocumentWritten(
     retry: false,
   },
   async (event) => {
-    // Staged-migration guard: the pushup→exerciseEntries copies carry
-    // `exerciseId:'pushup'` and must NOT refresh a pushup leaderboard
-    // row before the Phase-7 cutover (the Pushup leaderboard is still
-    // driven by `rebuildLeaderboardsCore` off the legacy `pushups`
-    // collection). Derive the id from after-or-before so create, update
-    // and delete are all covered.
-    const exerciseId = (event.data?.after?.data()?.exerciseId ??
-      event.data?.before?.data()?.exerciseId) as string | undefined;
-    if (!shouldAggregateExerciseEntry(exerciseId)) return;
+    // Post-cutover pushups (`exerciseId:'pushup'`) aggregate + rank like
+    // every other exercise, so there is no exercise-id guard here.
 
     // Carry the previous snapshot's allTime forward and let the
     // scheduled rebuild refresh it. See `rebuildExerciseLeaderboardsCore`
@@ -2048,14 +2040,8 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
       return;
     }
 
-    // Staged-migration guard: the pushup→exerciseEntries copies carry
-    // `exerciseId:'pushup'` and must NOT create a `perExercise/pushup`
-    // aggregate before the Phase-7 cutover (the Pushup dashboard is still
-    // served by `userStats/{userId}` off the legacy `pushups` collection).
-    // `exerciseId` is already resolved from after-or-before above, so this
-    // covers create, update and delete. Removing this guard at cutover
-    // re-enables aggregation.
-    if (!shouldAggregateExerciseEntry(exerciseId)) return;
+    // Post-cutover pushups (`exerciseId:'pushup'`) aggregate into
+    // `perExercise/pushup` like every other exercise — no guard.
 
     // The aggregation slot stays named `reps` for backwards
     // compatibility with the existing UserStats schema, but for
@@ -2371,5 +2357,78 @@ export const rollbackPushupUnification = onCall(
     });
 
     return { deleted: ids.length };
+  }
+);
+
+// Backfills `userStats/{userId}/perExercise/pushup` for every user with
+// pushup `exerciseEntries`. The write-path flip + guard removal make new
+// pushups aggregate going forward, but the per-exercise aggregate doesn't
+// exist for a user until their first post-cutover write — so the dashboard
+// (re-pointed to `perExercise/pushup`) would read empty until then. This
+// one-shot rebuild (same `rebuildFromEntries` the live trigger uses) seeds
+// the aggregate from the migrated history. Idempotent: re-running recomputes
+// the same doc.
+export const backfillPushupPerExerciseStats = onCall(
+  { region: 'europe-west3', timeoutSeconds: 540 },
+  async (request) => {
+    assertAdmin(request);
+
+    const dryRun = Boolean(request.data?.dryRun ?? true);
+
+    const snap = await db
+      .collection('exerciseEntries')
+      .where('exerciseId', '==', 'pushup')
+      .get();
+
+    const byUser = new Map<
+      string,
+      { timestamp: string; reps: number; sets?: number[] }[]
+    >();
+    for (const doc of snap.docs) {
+      const data = doc.data();
+      const userId = data.userId as string | undefined;
+      const timestamp = data.timestamp as string | undefined;
+      if (!userId || !timestamp) continue;
+      const list = byUser.get(userId) ?? [];
+      list.push({
+        timestamp,
+        reps: Number(data.reps ?? 0),
+        ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
+      });
+      byUser.set(userId, list);
+    }
+
+    if (dryRun) {
+      return {
+        dryRun: true,
+        wouldRebuildUsers: byUser.size,
+        entries: snap.size,
+      };
+    }
+
+    const nowIso = new Date().toISOString();
+    let rebuiltUsers = 0;
+    for (const chunk of batchArray([...byUser.entries()], MIGRATION_BATCH_SIZE)) {
+      const batch = db.batch();
+      for (const [userId, entries] of chunk) {
+        const stats = rebuildFromEntries(userId, entries, nowIso);
+        const ref = db
+          .collection('userStats')
+          .doc(userId)
+          .collection('perExercise')
+          .doc('pushup');
+        batch.set(ref, stats);
+        rebuiltUsers += 1;
+      }
+      await batch.commit();
+    }
+
+    logger.info('backfillPushupPerExerciseStats', {
+      rebuiltUsers,
+      entries: snap.size,
+      by: request.auth?.uid,
+    });
+
+    return { rebuiltUsers, entries: snap.size };
   }
 );
