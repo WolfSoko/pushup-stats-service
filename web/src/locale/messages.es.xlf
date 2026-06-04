@@ -9952,45 +9952,45 @@
       </segment>
     </unit>
     <unit id="admin.migrations.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Daten-Migrationen</source>
-        <target>Daten-Migrationen</target>
+        <target>Migraciones de datos</target>
       </segment>
     </unit>
     <unit id="admin.migrations.action.migrate">
-      <segment state="initial">
+      <segment state="translated">
         <source>Migrieren</source>
-        <target>Migrieren</target>
+        <target>Migrar</target>
       </segment>
     </unit>
     <unit id="admin.migrations.dryRun">
-      <segment state="initial">
+      <segment state="translated">
         <source>Probelauf</source>
-        <target>Probelauf</target>
+        <target>Simulacro</target>
       </segment>
     </unit>
     <unit id="admin.migrations.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausführen</source>
-        <target>Ausführen</target>
+        <target>Ejecutar</target>
       </segment>
     </unit>
     <unit id="admin.migrations.action.rollback">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rückgängig</source>
-        <target>Rückgängig</target>
+        <target>Deshacer</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupUnification.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
-        <target>Liegestütze vereinheitlichen (pushups → exerciseEntries)</target>
+        <target>Unificar flexiones (pushups → exerciseEntries)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupUnification.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
-        <target>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</target>
+        <target>Copia la colección heredada «pushups» en «exerciseEntries» (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotente, deja la fuente intacta y es reversible mediante «Deshacer». Ejecutar siempre primero la simulación y verificar los números con el runbook.</target>
       </segment>
     </unit>
 </file>
