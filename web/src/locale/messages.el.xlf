@@ -9955,5 +9955,47 @@
         <target>Εμφάνιση λεπτομερειών ημερήσιου στόχου</target>
       </segment>
     </unit>
+    <unit id="admin.migrations.title">
+      <segment state="initial">
+        <source>Daten-Migrationen</source>
+        <target>Daten-Migrationen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.action.migrate">
+      <segment state="initial">
+        <source>Migrieren</source>
+        <target>Migrieren</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.dryRun">
+      <segment state="initial">
+        <source>Probelauf</source>
+        <target>Probelauf</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.run">
+      <segment state="initial">
+        <source>Ausführen</source>
+        <target>Ausführen</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.action.rollback">
+      <segment state="initial">
+        <source>Rückgängig</source>
+        <target>Rückgängig</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupUnification.title">
+      <segment state="initial">
+        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
+        <target>Liegestütze vereinheitlichen (pushups → exerciseEntries)</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupUnification.description">
+      <segment state="initial">
+        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
+        <target>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
