@@ -158,6 +158,14 @@ service cloud.firestore {
     match /userStats/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
       allow write: if false; // Only Cloud Functions (Admin SDK) write here
+
+      // Per-exercise aggregates (`perExercise/{exerciseId}`). Rules do NOT
+      // cascade to subcollections, so the owner-read must be repeated here —
+      // the dashboard reads `perExercise/pushup` directly post-cutover.
+      match /perExercise/{exerciseId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false; // Only Cloud Functions (Admin SDK) write here
+      }
     }
 
     // Reminder dispatch state — internal only, no client access.
