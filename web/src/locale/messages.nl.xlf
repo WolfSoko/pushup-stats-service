@@ -9998,39 +9998,39 @@
       </segment>
     </unit>
     <unit id="admin.migrations.status.completed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgeschlossen</source>
-        <target>Abgeschlossen</target>
+        <target>Voltooid</target>
       </segment>
     </unit>
         <unit id="admin.migrations.status.reopen">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wieder öffnen</source>
-        <target>Wieder öffnen</target>
+        <target>Opnieuw openen</target>
       </segment>
     </unit>
     <unit id="admin.migrations.status.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Offen</source>
-        <target>Offen</target>
+        <target>Open</target>
       </segment>
     </unit>
     <unit id="admin.migrations.status.markComplete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als abgeschlossen markieren</source>
-        <target>Als abgeschlossen markieren</target>
+        <target>Markeer als voltooid</target>
       </segment>
     </unit>
-            <unit id="admin.migrations.subtitle">
-      <segment state="initial">
-        <source> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </source>
-        <target> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </target>
+        <unit id="admin.migrations.subtitle">
+      <segment state="translated">
+        <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
+        <target>Voer eenmalige datamigraties uit, controleer ze en markeer ze als voltooid.</target>
       </segment>
     </unit>
     <unit id="admin.migrations.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>Terug naar beheergebied</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.title">
