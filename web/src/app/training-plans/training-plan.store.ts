@@ -276,15 +276,9 @@ export const TrainingPlanStore = signalStore(
     },
 
     /** Sum of reps already logged on a given local date for one exercise.
-     *  Pushup days read the legacy `pushups` mirror (`entries()`); every other
-     *  exercise reads the `exerciseEntries` mirror filtered by id. */
+     *  Reads the `exerciseEntries` mirror filtered by id — post-cutover
+     *  pushups live there too (`exerciseId:'pushup'`), so no special case. */
     _repsLoggedOn(dateIso: string, exerciseId: string): number {
-      if (exerciseId === 'pushup') {
-        return store._live
-          .entries()
-          .filter((e) => e.timestamp.slice(0, 10) === dateIso)
-          .reduce((sum, e) => sum + e.reps, 0);
-      }
       return store._live
         .exerciseEntries()
         .filter(
@@ -437,18 +431,13 @@ export const TrainingPlanStore = signalStore(
       const currentIdx = store.currentDayIndex();
       if (currentIdx === null || dayIndex > currentIdx) return 'noop';
 
-      // `_live` mirrors are empty until the Firestore listeners have
-      // emitted at least once. Don't make a write decision off pre-sync
-      // data — it would top-up a day that's already covered as soon as
-      // the listener catches up. Pushup days gate on `connected` (their
-      // stream); non-pushup days gate on `exerciseEntriesLoaded` —
-      // `connected` is pushup-only, so trusting it for a non-pushup day
-      // could read empty exerciseEntries and duplicate-write.
-      const synced =
-        exerciseId === 'pushup'
-          ? store._live.connected()
-          : store._live.exerciseEntriesLoaded();
-      if (store._isBrowser && !synced) return 'not-ready';
+      // The `exerciseEntries` mirror is empty until its Firestore listener
+      // has emitted at least once. Don't make a write decision off pre-sync
+      // data — it would top-up a day that's already covered as soon as the
+      // listener catches up. Post-cutover pushups live in that same mirror,
+      // so every exercise gates on `exerciseEntriesLoaded`.
+      if (store._isBrowser && !store._live.exerciseEntriesLoaded())
+        return 'not-ready';
 
       if (!store._acquireWriteLock(dayIndex)) return 'in-flight';
 
@@ -651,19 +640,15 @@ export const TrainingPlanStore = signalStore(
         if (a.completedDays.includes(idx)) return;
         // Same readiness guard as `logPlanDay` — without this, a pre-sync
         // mirror could appear to satisfy the target on stale state and
-        // trigger a false auto-mark. Pushup days gate on `connected`;
-        // non-pushup days gate on `exerciseEntriesLoaded`.
-        const synced =
-          exerciseId === 'pushup'
-            ? store._live.connected()
-            : store._live.exerciseEntriesLoaded();
-        if (!synced) return;
+        // trigger a false auto-mark. Post-cutover pushups live in the
+        // `exerciseEntries` feed too, so every exercise gates on
+        // `exerciseEntriesLoaded`.
+        if (!store._live.exerciseEntriesLoaded()) return;
         // The same in-flight lock guards manual logPlanDay calls,
         // so a fast Quick-Add + auto-mark can't double-write.
         if (store._writingDays().has(idx)) return;
-        // `_live.entries()` is the same source the dashboard uses;
-        // it streams from Firestore in real time so manual logs
-        // propagate here without polling.
+        // Reps come from the `exerciseEntries` mirror (real-time Firestore),
+        // so manual logs propagate here without polling.
         const todayIso = toBerlinIsoDate(new Date());
         // Establish a tick dependency so this re-runs at midnight.
         store._dayTick();

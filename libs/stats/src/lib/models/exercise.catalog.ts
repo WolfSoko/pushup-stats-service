@@ -99,7 +99,30 @@ export const EXERCISE_CATEGORIES: ReadonlyArray<ExerciseCategoryInfo> = [
  * Caps mirror the `exerciseEntries` Firestore rule. Any change here MUST
  * be reflected in `data-store/firestore.rules` and vice versa.
  */
+
+/**
+ * Pushups (`id: 'pushup'`) are a first-class catalog exercise: post Phase-7
+ * cutover they live in `exerciseEntries` with `exerciseId:'pushup'` and
+ * aggregate into `perExercise/pushup` like any other exercise. Exported as a
+ * named const (legacy callers reference it directly) and listed in
+ * {@link EXERCISE_CATALOG} below so the dashboard, goal picker,
+ * leaderboard rebuild, `firestore.rules` allowlist codegen, display-name
+ * registry, and camera auto-count all pick it up automatically.
+ */
+export const PUSHUP_DEFINITION: ExerciseDefinition = {
+  id: 'pushup',
+  categoryId: 'pushup',
+  autoCountProfileId: 'pushup',
+  measurement: 'reps',
+  min: PUSHUP_REPS_MIN,
+  max: PUSHUP_REPS_MAX,
+  unit: 'reps',
+  nameKey: '@@exercise.category.pushup',
+  icon: 'fitness_center',
+};
+
 export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
+  PUSHUP_DEFINITION,
   {
     // Legacy id `abs.situps` predates the movement-pattern restructure.
     // Kept as-is so existing Firestore docs continue to resolve; only
@@ -808,34 +831,8 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   // per-exercise stats trigger work to surface PRs in load × reps.
 ];
 
-/**
- * First-class definition for the `'pushup'` sentinel so it resolves through
- * {@link findExerciseDefinition} like any other exercise (goals, entries,
- * analysis, and training plans stop special-casing the literal).
- *
- * Deliberately NOT a member of {@link EXERCISE_CATALOG}: that array is the
- * "available exercises" list iterated by the dashboard, the goal picker, the
- * exercise-leaderboard rebuild, the `firestore.rules` allowlist guard, and the
- * display-name registry. Pushups live in the legacy `pushups` collection with
- * their own dedicated UI and own no camera `autoCountProfileId`, so listing it
- * in the array would double-list it across those surfaces and break their
- * guard tests. Folding it into the by-id lookup only is the
- * resolvable-but-not-listed base the multi-exercise roadmap's Phase-7
- * pushup→exerciseEntries migration builds on.
- */
-export const PUSHUP_DEFINITION: ExerciseDefinition = {
-  id: 'pushup',
-  categoryId: 'pushup',
-  measurement: 'reps',
-  min: PUSHUP_REPS_MIN,
-  max: PUSHUP_REPS_MAX,
-  unit: 'reps',
-  nameKey: '@@exercise.category.pushup',
-  icon: 'fitness_center',
-};
-
 const CATALOG_BY_ID: ReadonlyMap<string, ExerciseDefinition> = new Map(
-  [...EXERCISE_CATALOG, PUSHUP_DEFINITION].map((d) => [d.id, d])
+  EXERCISE_CATALOG.map((d) => [d.id, d])
 );
 
 const CATEGORIES_BY_ID: ReadonlyMap<string, ExerciseCategoryInfo> = new Map(

@@ -21,4 +21,27 @@ export class UserStatsApiService {
       map((data) => (data ? (data as UserStats) : null))
     );
   }
+
+  /**
+   * Subscribe to the per-exercise aggregate at
+   * `userStats/{userId}/perExercise/{exerciseId}`. Same {@link UserStats}
+   * shape as {@link getUserStats}; the `updateExerciseStatsOnEntryWrite`
+   * trigger rewrites it after each matching `exerciseEntries` write. Emits
+   * null while the doc is missing (no entries / backfill not run yet).
+   */
+  getPerExerciseStats(
+    userId: string,
+    exerciseId: string
+  ): Observable<UserStats | null> {
+    const docRef = doc(
+      this.firestore,
+      USER_STATS_COLLECTION,
+      userId,
+      'perExercise',
+      exerciseId
+    );
+    return docData(docRef).pipe(
+      map((data) => (data ? (data as UserStats) : null))
+    );
+  }
 }

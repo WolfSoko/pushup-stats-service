@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { AppDataFacade } from './app-data.facade';
 import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
@@ -102,7 +102,12 @@ describe('AppDataFacade', () => {
           provide: LiveDataStore,
           useValue: {
             connected: liveConnected.asReadonly(),
-            entries: liveEntries.asReadonly(),
+            // Post-cutover pushups live on the exerciseEntries feed
+            // (`exerciseId:'pushup'`); tests still seed `liveEntries`.
+            exerciseEntries: computed(() =>
+              liveEntries().map((r) => ({ ...r, exerciseId: 'pushup' }))
+            ),
+            exerciseEntriesLoaded: liveConnected.asReadonly(),
             updateTick: signal(0).asReadonly(),
           },
         },
@@ -390,7 +395,10 @@ describe('AppDataFacade', () => {
             provide: LiveDataStore,
             useValue: {
               connected: liveConnected.asReadonly(),
-              entries: liveEntries.asReadonly(),
+              exerciseEntries: computed(() =>
+                liveEntries().map((r) => ({ ...r, exerciseId: 'pushup' }))
+              ),
+              exerciseEntriesLoaded: liveConnected.asReadonly(),
               updateTick: signal(0).asReadonly(),
             },
           },

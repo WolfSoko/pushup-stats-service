@@ -651,9 +651,12 @@ export const AnalysisStore = signalStore(
     // canonical model — no parallel field list to drift.
     type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
 
-    // Pushup rows come from the REST resource (works on SSR); exercise
-    // entries come from the live Firestore snapshot, so SSR yields
-    // pushups only.
+    // Pushup rows come from the REST resource (so SSR + variant history keep
+    // working); other exercises come from the live snapshot. Post-cutover the
+    // live feed ALSO carries pushups (`exerciseId:'pushup'`), so those are
+    // filtered out here to avoid double-counting the REST pushups. (New
+    // post-cutover pushups therefore surface on analysis only after the legacy
+    // collection is retired in step 6 — acceptable for this secondary view.)
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
       const to = store.to();
@@ -668,7 +671,7 @@ export const AnalysisStore = signalStore(
         .map(pushupRecordToUnified);
       const exercises = store._live
         .exerciseEntries()
-        .filter((e) => inRange(e.timestamp))
+        .filter((e) => e.exerciseId !== 'pushup' && inRange(e.timestamp))
         .map(exerciseEntryToUnified);
       return [...pushups, ...exercises];
     });
@@ -1008,12 +1011,14 @@ export const AnalysisStore = signalStore(
       window: { from: string; to: string }
     ): UnifiedEntry[] => {
       const inRange = inRangeFn(window.from, window.to);
+      // Pushups from REST; other exercises from the live feed (pushup copies
+      // filtered out to avoid double-count). Mirrors `unifiedRows`.
       const pushups = pushupRows
         .filter((r) => inRange(r.timestamp))
         .map(pushupRecordToUnified);
       const exercises = store._live
         .exerciseEntries()
-        .filter((e) => inRange(e.timestamp))
+        .filter((e) => e.exerciseId !== 'pushup' && inRange(e.timestamp))
         .map(exerciseEntryToUnified);
       return [...pushups, ...exercises];
     };

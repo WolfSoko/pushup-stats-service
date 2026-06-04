@@ -10033,5 +10033,17 @@
         <target>Torna all'area amministrativa</target>
       </segment>
     </unit>
+    <unit id="admin.migrations.pushupBackfill.title">
+      <segment state="initial">
+        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
+        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupBackfill.description">
+      <segment state="initial">
+        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

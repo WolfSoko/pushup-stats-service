@@ -32,10 +32,16 @@ function makeLiveStoreMock(
     exerciseEntries?: unknown[];
   } = {}
 ) {
+  // Post-cutover pushups live on the exerciseEntries feed
+  // (`exerciseId:'pushup'`); tests still pass them via `entries`, merged here.
+  const pushups = (overrides.entries ?? []).map((r) => ({
+    ...(r as Record<string, unknown>),
+    exerciseId: 'pushup',
+  }));
   return {
     connected: signal(overrides.connected ?? false),
-    entries: signal(overrides.entries ?? []),
-    exerciseEntries: signal(overrides.exerciseEntries ?? []),
+    exerciseEntries: signal([...pushups, ...(overrides.exerciseEntries ?? [])]),
+    exerciseEntriesLoaded: signal(overrides.connected ?? false),
     updateTick: signal(0),
   };
 }

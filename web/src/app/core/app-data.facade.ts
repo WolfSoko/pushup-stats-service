@@ -107,17 +107,22 @@ export class AppDataFacade {
   });
 
   /** Last 7 days of entries — derived live from Firestore in the browser. */
-  private readonly recentEntries = computed(() => {
-    if (this.isBrowser && this.live.connected()) {
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const cutoff = sevenDaysAgo.toISOString().slice(0, 10);
-      return this.live
-        .entries()
-        .filter((e) => e.timestamp.slice(0, 10) >= cutoff);
+  private readonly recentEntries = computed<{ timestamp: string; reps: number }[]>(
+    () => {
+      if (this.isBrowser && this.live.connected()) {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const cutoff = sevenDaysAgo.toISOString().slice(0, 10);
+        return this.live
+          .exerciseEntries()
+          .filter(
+            (e) => e.exerciseId === 'pushup' && e.timestamp.slice(0, 10) >= cutoff
+          )
+          .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }));
+      }
+      return this.recentEntriesResource.value() ?? [];
     }
-    return this.recentEntriesResource.value() ?? [];
-  });
+  );
 
   readonly quickAddSuggestions = computed<QuickAddSuggestion[]>(() => {
     const configured = this.userConfig.quickAdds();
@@ -177,9 +182,13 @@ export class AppDataFacade {
     if (this.isBrowser && this.live.connected()) {
       const berlinToday = toBerlinIsoDate(new Date());
       return this.live
-        .entries()
-        .filter((e) => e.timestamp.slice(0, 10) === berlinToday)
-        .reduce((sum, e) => sum + e.reps, 0);
+        .exerciseEntries()
+        .filter(
+          (e) =>
+            e.exerciseId === 'pushup' &&
+            e.timestamp.slice(0, 10) === berlinToday
+        )
+        .reduce((sum, e) => sum + (e.reps ?? 0), 0);
     }
     return this.dailyProgressResource.value() ?? 0;
   });
@@ -255,9 +264,10 @@ export class AppDataFacade {
       .exerciseEntries()
       .filter((e) => e.timestamp.slice(0, 10) === berlinToday);
     return entries.map((entry) => {
-      if (entry.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
-        return pushupRepsToday;
-      }
+      // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`)
+      // like every other exercise, so the generic matching below handles
+      // them — no pushup short-circuit needed.
+      //
       // When the goal pins a specific variant, count only entries of that
       // variant. Otherwise match every entry for the exercise across all
       // its variants — the goals page deliberately does not expose a

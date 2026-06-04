@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
@@ -23,8 +23,12 @@ describe('GoalReachedNotificationService', () => {
   const liveEntries = signal<PushupRecord[]>([]);
   const liveTick = signal(0);
   const liveConnected = signal(true);
+  // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`);
+  // tests still seed `liveEntries`, the mock surfaces them on that feed.
   const liveStoreMock = {
-    entries: liveEntries.asReadonly(),
+    exerciseEntries: computed(() =>
+      liveEntries().map((r) => ({ ...r, exerciseId: 'pushup' }))
+    ),
     updateTick: liveTick.asReadonly(),
     connected: liveConnected.asReadonly(),
   };

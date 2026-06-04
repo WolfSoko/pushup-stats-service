@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { PLATFORM_ID, signal } from '@angular/core';
+import { computed, PLATFORM_ID, signal, type Signal } from '@angular/core';
 import { BehaviorSubject, from, map, of } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import {
@@ -140,8 +140,7 @@ interface Mocks {
     createEntry: ReturnType<typeof vitest.fn>;
   };
   liveMock: {
-    entries: ReturnType<typeof signal<PushupRecord[]>>;
-    exerciseEntries: ReturnType<typeof signal<ExerciseEntry[]>>;
+    exerciseEntries: Signal<ExerciseEntry[]>;
     connected: ReturnType<typeof signal<boolean>>;
     exerciseEntriesLoaded: ReturnType<typeof signal<boolean>>;
     updateTick: ReturnType<typeof signal<number>>;
@@ -303,8 +302,14 @@ describe('TrainingPlanStore', () => {
         ),
       },
       liveMock: {
-        entries: liveEntries,
-        exerciseEntries: liveExerciseEntries,
+        // Post-cutover pushups are exerciseEntries (`exerciseId:'pushup'`);
+        // tests still seed `initialEntries` as pushups, merged here.
+        exerciseEntries: computed<ExerciseEntry[]>(() => [
+          ...liveEntries().map(
+            (r) => ({ ...r, exerciseId: 'pushup' }) as ExerciseEntry
+          ),
+          ...liveExerciseEntries(),
+        ]),
         connected: signal(true),
         exerciseEntriesLoaded: signal(true),
         updateTick: signal(0),
@@ -644,15 +649,16 @@ describe('TrainingPlanStore', () => {
       };
       const statsApiMock = { createPushup: vitest.fn() };
       const exerciseApiMock = { createEntry: vitest.fn() };
-      // Pre-existing entry that DOES cover the target — but
-      // `connected: false` means we shouldn't trust it.
-      const liveEntries = signal<PushupRecord[]>([
+      // Pre-existing pushup entry that DOES cover the target — but the
+      // exerciseEntries feed hasn't loaded yet, so we shouldn't trust it.
+      const liveExerciseEntries = signal<ExerciseEntry[]>([
         {
           _id: 'existing',
+          exerciseId: 'pushup',
           timestamp: `${today}T08:00:00.000+02:00`,
           reps: target,
           source: 'web',
-        },
+        } as ExerciseEntry,
       ]);
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
@@ -664,10 +670,9 @@ describe('TrainingPlanStore', () => {
           {
             provide: LiveDataStore,
             useValue: {
-              entries: liveEntries,
-              exerciseEntries: signal<ExerciseEntry[]>([]),
-              connected: signal(false),
-              exerciseEntriesLoaded: signal(true),
+              exerciseEntries: liveExerciseEntries,
+              connected: signal(true),
+              exerciseEntriesLoaded: signal(false),
               updateTick: signal(0),
             },
           },
@@ -713,7 +718,6 @@ describe('TrainingPlanStore', () => {
           {
             provide: LiveDataStore,
             useValue: {
-              entries: signal<PushupRecord[]>([]),
               exerciseEntries: signal<ExerciseEntry[]>([]),
               connected: signal(true),
               exerciseEntriesLoaded: signal(false),
@@ -764,7 +768,6 @@ describe('TrainingPlanStore', () => {
         createPushup: vitest.fn(() => from(firstWrite).pipe(map(() => ({})))),
       };
       const exerciseApiMock = { createEntry: vitest.fn() };
-      const liveEntries = signal<PushupRecord[]>([]);
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
         providers: [
@@ -779,7 +782,6 @@ describe('TrainingPlanStore', () => {
           {
             provide: LiveDataStore,
             useValue: {
-              entries: liveEntries,
               exerciseEntries: signal<ExerciseEntry[]>([]),
               connected: signal(true),
               exerciseEntriesLoaded: signal(true),
@@ -1005,8 +1007,12 @@ describe('TrainingPlanStore', () => {
           {
             provide: LiveDataStore,
             useValue: {
-              entries: liveEntries,
-              exerciseEntries: signal<ExerciseEntry[]>([]),
+              // Pushups are surfaced on the exerciseEntries feed post-cutover.
+              exerciseEntries: computed<ExerciseEntry[]>(() =>
+                liveEntries().map(
+                  (r) => ({ ...r, exerciseId: 'pushup' }) as ExerciseEntry
+                )
+              ),
               connected: signal(true),
               exerciseEntriesLoaded: signal(true),
               updateTick: signal(0),

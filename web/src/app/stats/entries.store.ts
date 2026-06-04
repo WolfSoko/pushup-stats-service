@@ -107,13 +107,14 @@ export const EntriesStore = signalStore(
      */
     rows: computed<UnifiedEntry[]>(() => {
       if (store._isBrowser) {
-        const pushups = store._live.entries().map(pushupRecordToUnified);
-        const exercises = store._live
+        // Post-cutover the live feed already carries pushups
+        // (`exerciseId:'pushup'`) alongside every other exercise, so a
+        // single map over `exerciseEntries()` is the whole history — no
+        // separate pushup source to merge (and nothing to double-count).
+        return store._live
           .exerciseEntries()
-          .map(exerciseEntryToUnified);
-        return [...pushups, ...exercises].sort((a, b) =>
-          a.timestamp.localeCompare(b.timestamp)
-        );
+          .map(exerciseEntryToUnified)
+          .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
       }
       const ssrPushups = (store._entriesResource.value() ?? []).map(
         pushupRecordToUnified

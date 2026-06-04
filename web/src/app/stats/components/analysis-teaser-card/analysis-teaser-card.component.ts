@@ -185,12 +185,21 @@ export class AnalysisTeaserCardComponent {
       return this.pushupLabel;
     }
 
+    // Post-cutover pushups are `exerciseEntries` too, so split the single
+    // feed on `exerciseId` to keep the "Liegestütze" vs "Alle Übungen"
+    // distinction.
     const hasPushupReps = this.live
-      .entries()
-      .some((e) => inRange(e.timestamp) && e.reps > 0);
+      .exerciseEntries()
+      .some(
+        (e) =>
+          e.exerciseId === 'pushup' && inRange(e.timestamp) && (e.reps ?? 0) > 0
+      );
     const hasOtherReps = this.live
       .exerciseEntries()
-      .some((e) => inRange(e.timestamp) && (e.reps ?? 0) > 0);
+      .some(
+        (e) =>
+          e.exerciseId !== 'pushup' && inRange(e.timestamp) && (e.reps ?? 0) > 0
+      );
 
     if (hasOtherReps) return this.allExercisesLabel;
     if (hasPushupReps) return this.pushupLabel;
@@ -224,11 +233,9 @@ export class AnalysisTeaserCardComponent {
       return day >= from && day <= to;
     };
 
-    for (const entry of this.live.entries()) {
-      if (!inRange(entry.timestamp)) continue;
-      const day = entry.timestamp.slice(0, 10);
-      totals.set(day, (totals.get(day) ?? 0) + entry.reps);
-    }
+    // Post-cutover the live feed carries pushups too, so a single pass over
+    // `exerciseEntries()` sums every exercise (no separate pushup loop, no
+    // double-count).
     for (const entry of this.live.exerciseEntries()) {
       if (!inRange(entry.timestamp)) continue;
       const reps = entry.reps ?? 0;

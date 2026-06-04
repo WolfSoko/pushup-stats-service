@@ -59,13 +59,21 @@ describe('EntriesPageComponent', () => {
     updatePushup: vitest.fn().mockReturnValue(of({ _id: '1' })),
   };
 
+  // Post-cutover pushups are `exerciseEntries` (`exerciseId:'pushup'`) with
+  // no variant/`type` — the legacy variant is dropped by the migration. The
+  // history feed therefore surfaces plain Liegestütze rows.
   const liveMock = {
     connected: signal(true),
-    entries: signal(rows),
-    // EntriesStore now reads from both pushups and exerciseEntries via
-    // LiveDataStore. The Phase-0 history flow only exercises pushups
-    // here, so an empty exerciseEntries signal is enough.
-    exerciseEntries: signal([] as never[]),
+    exerciseEntriesLoaded: signal(true),
+    exerciseEntries: signal(
+      rows.map((r) => ({
+        _id: r._id,
+        exerciseId: 'pushup',
+        timestamp: r.timestamp,
+        reps: r.reps,
+        source: r.source,
+      }))
+    ),
     updateTick: signal(0),
   };
 
@@ -105,12 +113,10 @@ describe('EntriesPageComponent', () => {
     expect(store.to()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
-  it('applies source, type and reps filter', () => {
-    // The filter dropdown emits canonical kebab-case ids. Legacy
-    // entryLabel rows ("Wide") still match because the store
-    // canonicalizes both sides before comparing.
+  it('applies source and reps filter', () => {
+    // Post-cutover pushups carry no variant, so only source + reps narrow
+    // the list. source 'wa' → rows 1 & 3; reps ≥ 11 → row 3.
     store.setSource('wa');
-    store.setType('wide');
     store.setRepsMin(11);
 
     expect(store.filteredRows().map((x: { _id: string }) => x._id)).toEqual([
@@ -157,21 +163,11 @@ describe('EntriesPageComponent', () => {
     expect(apiMock.deletePushup).toHaveBeenCalledWith('2');
   });
 
-  it('deduplicates legacy entryLabel and new canonical id in typeOptions', () => {
-    // Rows 2 ("Diamond") and 4 ("diamond") must collapse into a single
-    // filter option keyed by the canonical id.
+  it('exposes no pushup variant type options post-cutover', () => {
+    // Pushups carry no variant after the exerciseEntries cutover, so the
+    // legacy Diamond/Wide "Typ" options no longer appear.
     const options = store.typeOptions();
-    const diamondOptions = options.filter((o) => o.value === 'diamond');
-    expect(diamondOptions).toHaveLength(1);
-    // Filter selection on the canonical id must match both legacy AND
-    // new-form rows in filteredRows.
-    store.setType('diamond');
-    expect(
-      store
-        .filteredRows()
-        .map((x: { _id: string }) => x._id)
-        .sort()
-    ).toEqual(['2', '4']);
+    expect(options.some((o) => o.value === 'diamond')).toBe(false);
   });
 
   describe('kindFilterOptions + kindLabel', () => {

@@ -18,6 +18,11 @@ import {
  * for exercises the catalog doesn't ship). Exported only for that guard.
  */
 export const EXERCISE_DISPLAY_NAMES: Readonly<Record<string, string>> = {
+  // pushup — first-class catalog exercise post Phase-7 cutover; reuses the
+  // shared `@@exercise.category.pushup` id so the label stays in lockstep
+  // with the category name and the legacy display paths.
+  pushup: $localize`:@@exercise.category.pushup:Liegestütze`,
+
   // core (legacy `abs.*` ids kept for data stability)
   'abs.situps': $localize`:@@exercise.abs.situps.name:Sit-ups`,
   'abs.crunches': $localize`:@@exercise.abs.crunches.name:Crunches`,

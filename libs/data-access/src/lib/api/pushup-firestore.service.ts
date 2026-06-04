@@ -24,6 +24,9 @@ import {
 import { from, map, Observable, throwError } from 'rxjs';
 
 const PUSHUPS_COLLECTION = 'pushups';
+const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
+/** Pushups are stored as `exerciseEntries` with this id post-cutover. */
+const PUSHUP_EXERCISE_ID = 'pushup';
 
 export class PushupValidationError extends Error {
   constructor(
@@ -113,14 +116,24 @@ export class PushupFirestoreService {
     );
   }
 
+  /**
+   * Post Phase-7 cutover a "pushup" is just an `exerciseEntries` doc with
+   * `exerciseId:'pushup'` — the same store, aggregation, leaderboard and
+   * history path as every other exercise. New pushups therefore land in
+   * `exerciseEntries` (auto-id), NOT the legacy `pushups` collection, which
+   * is now read-only until its step-6 deletion. The legacy pushup variant
+   * (`type`) has no field in the unified schema and is intentionally dropped
+   * (matches the staged migration). The return keeps the `PushupRecord`
+   * shape so existing callers stay source-compatible.
+   */
   createPushup(
     userId: string,
     payload: PushupCreate
   ): Observable<PushupRecord> {
     const violation = repsViolationObservable<PushupRecord>(payload.reps);
     if (violation) return violation;
-    const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
-    const newRef = doc(pushupsRef);
+    const entriesRef = collection(this.firestore, EXERCISE_ENTRIES_COLLECTION);
+    const newRef = doc(entriesRef);
     const nowIso = new Date().toISOString();
     const record: PushupRecord & { userId: string } = {
       _id: newRef.id,
@@ -135,10 +148,10 @@ export class PushupFirestoreService {
     };
 
     const firestoreData: Record<string, unknown> = {
+      exerciseId: PUSHUP_EXERCISE_ID,
       timestamp: record.timestamp,
       reps: record.reps,
       source: record.source,
-      type: record.type ?? 'Standard',
       createdAt: record.createdAt,
       updatedAt: record.updatedAt,
       userId,
