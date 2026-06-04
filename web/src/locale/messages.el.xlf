@@ -10034,15 +10034,15 @@
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+        <target>Αναπλήρωση συνόλου push-up (perExercise/pushup)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="initial">
-        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
+      <segment state="translated">
+        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>Ανακατασκευάζει το «userStats/{uid}/perExercise/pushup» από τις μεταναστευμένες εγγραφές push-up ώστε ο πίνακας εργαλείων να εμφανίζει αμέσως σωστά σύνολα και σερί push-up μετά τη μετάβαση. Εκτελέστε μετά τη μετεγκατάσταση ενοποίησης. Ιδεμποτική.</target>
       </segment>
     </unit>
 </file>

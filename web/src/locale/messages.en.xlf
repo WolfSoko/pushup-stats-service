@@ -10200,15 +10200,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+        <target>Backfill pushup aggregate (perExercise/pushup)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="initial">
-        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
+      <segment state="translated">
+        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>Rebuilds “userStats/{uid}/perExercise/pushup” from migrated pushup entries so the dashboard shows correct pushup totals and streaks immediately after cutover. Run after the unification migration. Idempotent.</target>
       </segment>
     </unit>
 </file>

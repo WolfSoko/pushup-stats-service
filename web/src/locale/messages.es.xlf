@@ -10030,15 +10030,15 @@
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+        <target>Relleno retroactivo del agregado de flexiones (perExercise/pushup)</target>
       </segment>
     </unit>
     <unit id="admin.migrations.pushupBackfill.description">
-      <segment state="initial">
-        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
-        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
+      <segment state="translated">
+        <source>Baut „userStats/{uid}/perExercise/pushup” aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>Reconstruye «userStats/{uid}/perExercise/pushup» a partir de los registros de flexiones migrados para que el panel muestre inmediatamente los totales y rachas de flexiones correctos tras el traspaso. Ejecutar después de la migración de unificación. Idempotente.</target>
       </segment>
     </unit>
 </file>
