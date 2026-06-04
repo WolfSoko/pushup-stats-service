@@ -959,7 +959,16 @@ async function fetchPublicProfileProjection(uid: string) {
   const db = admin.firestore();
   const [cfgSnap, statsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
-    db.collection('userStats').doc(uid).get(),
+    // Post Phase-7 cutover the public pushup stats live in the per-exercise
+    // aggregate (`updateExerciseStatsOnEntryWrite` keeps it fresh); the
+    // top-level `userStats/{uid}` doc is frozen for pushups. Same UserStats
+    // shape, so `buildPublicProfile` is unchanged.
+    db
+      .collection('userStats')
+      .doc(uid)
+      .collection('perExercise')
+      .doc('pushup')
+      .get(),
   ]);
   const config = cfgSnap.exists
     ? (cfgSnap.data() as UserConfigForPublicProfile)
@@ -2408,7 +2417,10 @@ export const backfillPushupPerExerciseStats = onCall(
 
     const nowIso = new Date().toISOString();
     let rebuiltUsers = 0;
-    for (const chunk of batchArray([...byUser.entries()], MIGRATION_BATCH_SIZE)) {
+    for (const chunk of batchArray(
+      [...byUser.entries()],
+      MIGRATION_BATCH_SIZE
+    )) {
       const batch = db.batch();
       for (const [userId, entries] of chunk) {
         const stats = rebuildFromEntries(userId, entries, nowIso);

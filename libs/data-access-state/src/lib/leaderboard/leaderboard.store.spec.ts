@@ -188,7 +188,7 @@ describe('LeaderboardStore — live snapshot reload', () => {
 });
 
 describe('LeaderboardStore — exercise snapshot reload', () => {
-  it('Force-reloads every cached non-pushup exerciseId when the exercise snapshot doc emits', async () => {
+  it('Force-reloads every cached exerciseId (incl pushup) when the exercise snapshot doc emits', async () => {
     // Given — the store has the pushup bucket and two exercise buckets
     // already cached from earlier user navigation.
     const api = makeApiMock();
@@ -209,16 +209,16 @@ describe('LeaderboardStore — exercise snapshot reload', () => {
     await Promise.resolve();
     await Promise.resolve();
 
-    // Then — the pushup bucket is untouched by the exercise sub
-    // (its own sub on `leaderboards/current` owns invalidation), and
-    // both cached exercise buckets get refetched so the user sees the
-    // newly rebuilt rankings without manually re-selecting.
+    // Then — every cached bucket gets refetched so the user sees the
+    // newly rebuilt rankings without manually re-selecting. Post Phase-7
+    // cutover pushups are ranked in `leaderboards/exercises` too, so the
+    // pushup bucket is refreshed by this sub like any other exercise.
     expect(api.load).toHaveBeenCalledWith('legs.squats');
     expect(api.load).toHaveBeenCalledWith('plank.standard');
     const pushupForceReloads = api.load.mock.calls.filter(
       ([id]) => id === LEADERBOARD_PUSHUP_ID
     ).length;
-    expect(pushupForceReloads).toBe(1); // only the initial load
+    expect(pushupForceReloads).toBe(2); // initial load + exercise-snapshot refresh
   });
 
   it('Tears down both subscriptions on injector destroy', () => {

@@ -182,14 +182,14 @@ export const LeaderboardStore = signalStore(
       // page before the first post-deploy snapshot exists would cache
       // an empty bucket and never see it refill, because
       // `load(exerciseId)` short-circuits on cache hits. Force-reload
-      // every already-cached non-pushup exerciseId on each emission so
-      // the visible leaderboard stays fresh; the pushup sub above
-      // owns the pushup bucket's invalidation.
+      // every already-cached exerciseId on each emission so the visible
+      // leaderboard stays fresh. Post Phase-7 cutover pushups are ranked
+      // here too, so they're refreshed by this sub like any other exercise
+      // (the legacy `pushupSub` above is now redundant and goes away with
+      // the legacy ranker in step 6 — see #452).
       const exerciseSub = store._api.observeExerciseSnapshot().subscribe({
         next: () => {
-          const cachedExerciseIds = Object.keys(store.data()).filter(
-            (id) => id !== LEADERBOARD_PUSHUP_ID
-          );
+          const cachedExerciseIds = Object.keys(store.data());
           for (const exerciseId of cachedExerciseIds) {
             void store.load(exerciseId, { force: true });
           }
