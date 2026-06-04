@@ -4,20 +4,38 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { appRouterFeatures } from './app.router-features';
+import { createAppRouterFeatures } from './app.router-features';
 
-@Component({ template: 'a' })
+@Component({ template: 'a', standalone: true })
 class RouteAComponent {}
 
-@Component({ template: 'b' })
+@Component({ template: 'b', standalone: true })
 class RouteBComponent {}
 
-describe('appRouterFeatures', () => {
+describe('createAppRouterFeatures', () => {
   let originalStartViewTransition: Document['startViewTransition'] | undefined;
+  let originalMatchMedia: typeof globalThis.matchMedia | undefined;
+  let startViewTransition: ReturnType<typeof vi.fn>;
+  let skipTransition: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     originalStartViewTransition = (document as Partial<Document>)
       .startViewTransition;
+    originalMatchMedia = (globalThis as Partial<typeof globalThis>).matchMedia;
+
+    // jsdom omits the View Transitions API; stub it so the router feature runs.
+    skipTransition = vi.fn();
+    startViewTransition = vi.fn((callback?: () => void | Promise<void>) => {
+      void callback?.();
+      return {
+        finished: Promise.resolve(),
+        ready: Promise.resolve(),
+        updateCallbackDone: Promise.resolve(),
+        skipTransition,
+      } as unknown as ViewTransition;
+    });
+    document.startViewTransition =
+      startViewTransition as Document['startViewTransition'];
   });
 
   afterEach(() => {
@@ -26,25 +44,22 @@ describe('appRouterFeatures', () => {
     } else {
       delete (document as Partial<Document>).startViewTransition;
     }
+    if (originalMatchMedia) {
+      globalThis.matchMedia = originalMatchMedia;
+    } else {
+      delete (globalThis as Partial<typeof globalThis>).matchMedia;
+    }
   });
 
-  it('should drive cross-route navigation through the View Transitions API while skipping the initial one', async () => {
-    // given the View Transitions API stubbed (jsdom omits it) and the app's
-    // router features applied to two routes
-    const startViewTransition = vi.fn(
-      (callback?: () => void | Promise<void>) => {
-        void callback?.();
-        return {
-          finished: Promise.resolve(),
-          ready: Promise.resolve(),
-          updateCallbackDone: Promise.resolve(),
-          skipTransition: () => undefined,
-        } as unknown as ViewTransition;
-      }
-    );
-    document.startViewTransition =
-      startViewTransition as Document['startViewTransition'];
+  const stubReducedMotion = (matches: boolean): void => {
+    globalThis.matchMedia = ((query: string) =>
+      ({
+        matches,
+        media: query,
+      }) as unknown as MediaQueryList) as typeof globalThis.matchMedia;
+  };
 
+  const createHarness = async (): Promise<RouterTestingHarness> => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(
@@ -52,23 +67,43 @@ describe('appRouterFeatures', () => {
             { path: 'a', component: RouteAComponent },
             { path: 'b', component: RouteBComponent },
           ],
-          ...appRouterFeatures
+          ...createAppRouterFeatures()
         ),
       ],
     });
-    const harness = await RouterTestingHarness.create();
+    return RouterTestingHarness.create();
+  };
+
+  it('should drive cross-route navigation through the View Transitions API while skipping the initial one', async () => {
+    // given motion is allowed and the app's router features on two routes
+    stubReducedMotion(false);
+    const harness = await createHarness();
 
     // when the router performs its first navigation
     await harness.navigateByUrl('/a');
 
-    // then the initial transition is skipped (withViewTransitions
-    // skipInitialTransition)
+    // then the initial transition is skipped (skipInitialTransition)
     expect(startViewTransition).not.toHaveBeenCalled();
 
     // when navigating to a different route
     await harness.navigateByUrl('/b');
 
-    // then the View Transitions API drives the change
+    // then the View Transitions API drives the change and the animation runs
     expect(startViewTransition).toHaveBeenCalledTimes(1);
+    expect(skipTransition).not.toHaveBeenCalled();
+  });
+
+  it('should skip the transition animation when the user prefers reduced motion', async () => {
+    // given the user prefers reduced motion
+    stubReducedMotion(true);
+    const harness = await createHarness();
+
+    // when navigating across routes (the first navigation is the skipped one)
+    await harness.navigateByUrl('/a');
+    await harness.navigateByUrl('/b');
+
+    // then the created transition still starts but its animation is skipped
+    expect(startViewTransition).toHaveBeenCalledTimes(1);
+    expect(skipTransition).toHaveBeenCalledTimes(1);
   });
 });
