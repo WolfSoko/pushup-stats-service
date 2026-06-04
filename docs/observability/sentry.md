@@ -5,7 +5,7 @@ End-to-end reference for how Sentry is wired up in this project — SDKs, releas
 Read this **before** touching any of:
 
 - `scripts/upload-sentry-sourcemaps.sh`
-- `apphosting.yaml` / `apphosting.staging.yaml` (`SENTRY_AUTH_TOKEN` references, `scripts.buildCommand`)
+- `apphosting.yaml` (`SENTRY_AUTH_TOKEN` reference, `scripts.buildCommand`) — `apphosting.staging.yaml` deliberately omits both (see [Staging](#staging-skips-the-app-hosting-source-map-upload))
 - `.github/workflows/firebase-hosting-merge.yml` (`Upload source maps to Sentry` step)
 - `Sentry.init(...)` calls in `web/src/main.ts`, `web/src/server.ts`, `data-store/functions/src/index.ts`
 
@@ -64,7 +64,7 @@ This is the gotcha that originally caused production stack traces to stay minifi
 
 ### 2. Firebase App Hosting (Cloud Run SSR build that serves `pushup-stats.com`)
 
-- Source: Cloud Secret Manager secret named `SENTRY_AUTH_TOKEN` in the GCP project (`pushup-stats` for prod, `pushup-stats-staging-867b7` for staging).
+- Source: Cloud Secret Manager secret named `SENTRY_AUTH_TOKEN` in the **production** GCP project (`pushup-stats`). Staging (`pushup-stats-staging-867b7`) deliberately omits it — see [Staging skips the App Hosting source-map upload](#staging-skips-the-app-hosting-source-map-upload).
 - Consumed by: `apphosting.yaml` `env` block with `availability: BUILD`. The override in `scripts.buildCommand` runs `pnpm sentry:sourcemaps` after the Angular build inside Cloud Build.
 - Covers: the SSR + browser bundles actually served at `pushup-stats.com`.
 
@@ -81,14 +81,18 @@ echo -n "<token>" | gcloud secrets versions add SENTRY_AUTH_TOKEN \
   --data-file=- --project pushup-stats
 firebase apphosting:secrets:grantaccess SENTRY_AUTH_TOKEN \
   --backend pushup-stats-service --project pushup-stats
-
-# Staging — only needed if apphosting.staging.yaml keeps the SENTRY_AUTH_TOKEN
-# secret reference. Otherwise PR-preview rollouts will fail with "secret not found".
-gcloud secrets create SENTRY_AUTH_TOKEN \
-  --replication-policy=automatic \
-  --project pushup-stats-staging-867b7
-# ... same pattern as above with --project pushup-stats-staging-867b7
 ```
+
+### Staging skips the App Hosting source-map upload
+
+`apphosting.staging.yaml` intentionally has **no** `SENTRY_AUTH_TOKEN` secret reference and **no** `pnpm sentry:sourcemaps` in its `buildCommand`. Staging is an ephemeral preview surface, so minified stack traces there are an acceptable trade-off for a simpler, dependency-free rollout.
+
+This is not just a convenience — it is **load-bearing**. An App Hosting `env` entry with `secret: SENTRY_AUTH_TOKEN` pointing at a secret that doesn't exist in the staging GCP project fails the rollout **at bind time, before the build runs**. The upload script's "no-op when `SENTRY_AUTH_TOKEN` is unset" guard cannot catch this — the failure is in App Hosting's secret resolution, not in the script. The original assumption that the reference would "fall through harmlessly" was wrong and broke every staging rollout.
+
+If you ever need real source maps in staging, you must do **both** together, or the rollout breaks again:
+
+1. Create + grant the secret in the staging project (same `gcloud` / `firebase apphosting:secrets:grantaccess` pattern as production, with `--project pushup-stats-staging-867b7`).
+2. Re-add the `SENTRY_AUTH_TOKEN` `env` block **and** the `&& pnpm sentry:sourcemaps` build step to `apphosting.staging.yaml`.
 
 ### Auth token scopes
 
