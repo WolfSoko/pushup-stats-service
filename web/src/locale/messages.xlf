@@ -654,7 +654,7 @@
     </unit>
     <unit id="pushup.validation.reps.outOfRange">
       <notes>
-        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:48</note>
+        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:51</note>
       </notes>
       <segment>
         <source>Reps müssen zwischen <ph id="0" equiv="min" disp="PUSHUP_REPS_MIN"/> und <ph id="1" equiv="max" disp="PUSHUP_REPS_MAX"/> liegen.</source>
@@ -662,7 +662,7 @@
     </unit>
     <unit id="pushup.validation.reps.notInteger">
       <notes>
-        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:51</note>
+        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:54</note>
       </notes>
       <segment>
         <source>Reps muss eine ganze Zahl sein.</source>
@@ -670,7 +670,7 @@
     </unit>
     <unit id="pushup.validation.generic">
       <notes>
-        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:54</note>
+        <note category="location">libs/data-access/src/lib/api/pushup-firestore.service.ts:57</note>
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
@@ -3087,17 +3087,33 @@
         <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
       </segment>
     </unit>
-    <unit id="admin.migrations.subtitle">
+    <unit id="admin.migrations.pushupBackfill.title">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:29,32</note>
+        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:69</note>
       </notes>
       <segment>
-        <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
+        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupBackfill.description">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:70</note>
+      </notes>
+      <segment>
+        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.subtitle">
+      <notes>
+        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:30,33</note>
+      </notes>
+      <segment>
+        <source> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </source>
       </segment>
     </unit>
     <unit id="admin.migrations.backToAdmin">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:35,39</note>
+        <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:38,42</note>
       </notes>
       <segment>
         <source>Zurück zum Admin-Bereich</source>
@@ -4174,13 +4190,13 @@
     </unit>
     <unit id="exercise.category.pushup">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:354</note>
+        <note category="location">web/src/app/core/app-data.facade.ts:364</note>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:43</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:145</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:222</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:1288</note>
-        <note category="location">web/src/app/stats/dashboard.store.ts:78</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:77</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:24</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:195</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:219</note>
@@ -7527,7 +7543,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:539</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:550</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
@@ -7535,7 +7551,7 @@
     </unit>
     <unit id="dashboard.share.text.profile.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:540</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:551</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Schau dir mein Profil an:</source>
@@ -7543,7 +7559,7 @@
     </unit>
     <unit id="dashboard.share.text.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:544</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:555</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft – Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -7551,7 +7567,7 @@
     </unit>
     <unit id="dashboard.share.text.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:545</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:556</note>
       </notes>
       <segment>
         <source>Heute schon <ph id="0" equiv="total" disp="total"/> Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:</source>
@@ -7559,7 +7575,7 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard.store.ts:549</note>
+        <note category="location">web/src/app/stats/dashboard.store.ts:560</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>

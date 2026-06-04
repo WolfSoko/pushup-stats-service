@@ -651,11 +651,12 @@ export const AnalysisStore = signalStore(
     // canonical model — no parallel field list to drift.
     type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
 
-    // Post-cutover the live feed carries pushups too, so once it has
-    // connected it is the single source (no REST-pushup merge, no
-    // double-count). SSR / cold-start has no live feed, so it falls back to
-    // the pushup REST resource (pushups-only — acceptable for the analysis
-    // surface until the live snapshot mounts).
+    // Pushup rows come from the REST resource (so SSR + variant history keep
+    // working); other exercises come from the live snapshot. Post-cutover the
+    // live feed ALSO carries pushups (`exerciseId:'pushup'`), so those are
+    // filtered out here to avoid double-counting the REST pushups. (New
+    // post-cutover pushups therefore surface on analysis only after the legacy
+    // collection is retired in step 6 — acceptable for this secondary view.)
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
       const to = store.to();
@@ -665,15 +666,14 @@ export const AnalysisStore = signalStore(
         if (to && date > to) return false;
         return true;
       };
-      if (store._live.connected()) {
-        return store._live
-          .exerciseEntries()
-          .filter((e) => inRange(e.timestamp))
-          .map(exerciseEntryToUnified);
-      }
-      return rows()
+      const pushups = rows()
         .filter((r) => inRange(r.timestamp))
         .map(pushupRecordToUnified);
+      const exercises = store._live
+        .exerciseEntries()
+        .filter((e) => e.exerciseId !== 'pushup' && inRange(e.timestamp))
+        .map(exerciseEntryToUnified);
+      return [...pushups, ...exercises];
     });
 
     /** Distinct kind keys with at least one entry in the visible range. */
@@ -1011,17 +1011,16 @@ export const AnalysisStore = signalStore(
       window: { from: string; to: string }
     ): UnifiedEntry[] => {
       const inRange = inRangeFn(window.from, window.to);
-      // Live feed (incl. pushups) is the single source once connected; REST
-      // pushups are the SSR/cold-start fallback. Mirrors `unifiedRows`.
-      if (store._live.connected()) {
-        return store._live
-          .exerciseEntries()
-          .filter((e) => inRange(e.timestamp))
-          .map(exerciseEntryToUnified);
-      }
-      return pushupRows
+      // Pushups from REST; other exercises from the live feed (pushup copies
+      // filtered out to avoid double-count). Mirrors `unifiedRows`.
+      const pushups = pushupRows
         .filter((r) => inRange(r.timestamp))
         .map(pushupRecordToUnified);
+      const exercises = store._live
+        .exerciseEntries()
+        .filter((e) => e.exerciseId !== 'pushup' && inRange(e.timestamp))
+        .map(exerciseEntryToUnified);
+      return [...pushups, ...exercises];
     };
 
     const applyViewFilter = (rows: UnifiedEntry[]): UnifiedEntry[] => {

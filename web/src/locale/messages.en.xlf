@@ -10187,16 +10187,28 @@ Deine Position: # ·  Reps        </source>
         <target>Als abgeschlossen markieren</target>
       </segment>
     </unit>
-        <unit id="admin.migrations.subtitle">
+            <unit id="admin.migrations.subtitle">
       <segment state="initial">
-        <source>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</source>
-        <target>Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren.</target>
+        <source> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </source>
+        <target> Einmalige Datenmigrationen ausführen, prüfen und als abgeschlossen markieren. </target>
       </segment>
     </unit>
     <unit id="admin.migrations.backToAdmin">
       <segment state="initial">
         <source>Zurück zum Admin-Bereich</source>
         <target>Zurück zum Admin-Bereich</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupBackfill.title">
+      <segment state="initial">
+        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
+        <target>Pushup-Aggregat backfillen (perExercise/pushup)</target>
+      </segment>
+    </unit>
+    <unit id="admin.migrations.pushupBackfill.description">
+      <segment state="initial">
+        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
+        <target>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</target>
       </segment>
     </unit>
 </file>

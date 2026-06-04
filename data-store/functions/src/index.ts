@@ -937,7 +937,7 @@ export const refreshExerciseLeaderboardsOnEntryWrite = onDocumentWritten(
     region: 'europe-west3',
     retry: false,
   },
-  async (event) => {
+  async () => {
     // Post-cutover pushups (`exerciseId:'pushup'`) aggregate + rank like
     // every other exercise, so there is no exercise-id guard here.
 

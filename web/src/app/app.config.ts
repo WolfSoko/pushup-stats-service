@@ -30,7 +30,7 @@ import {
   withI18nSupport,
   withIncrementalHydration,
 } from '@angular/platform-browser';
-import { provideRouter, Router, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, Router, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import {
   provideAuth,
@@ -59,6 +59,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideRouter(
       appRoutes,
+      withViewTransitions(),
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'enabled',
