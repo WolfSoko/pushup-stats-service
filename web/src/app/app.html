@@ -349,4 +349,6 @@
   (fillToGoal)="handleFillToGoal()"
   (opened)="handleFabOpened()"
 />
-}
+@if (speedDialCoachmarkVisible()) {
+<lib-quick-add-fab-coachmark (dismiss)="dismissSpeedDialCoachmark()" />
+} }

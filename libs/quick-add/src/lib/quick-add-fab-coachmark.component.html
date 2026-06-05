@@ -1,0 +1,32 @@
+<div class="coachmark" role="dialog" aria-labelledby="coachmark-title">
+  <button
+    mat-icon-button
+    type="button"
+    class="coachmark-close"
+    [attr.aria-label]="closeAriaLabel"
+    (click)="dismiss.emit()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="coachmark-content">
+    <mat-icon class="coachmark-icon" aria-hidden="true">touch_app</mat-icon>
+    <div>
+      <p id="coachmark-title" class="coachmark-title">{{ title }}</p>
+      <p class="coachmark-body">{{ body }}</p>
+    </div>
+  </div>
+
+  <div class="coachmark-actions">
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="dismiss.emit()"
+    >
+      {{ dismissLabel }}
+    </button>
+  </div>
+
+  <span class="coachmark-arrow" aria-hidden="true"></span>
+</div>

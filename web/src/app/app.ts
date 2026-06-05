@@ -6,9 +6,11 @@ import {
   effect,
   inject,
   LOCALE_ID,
+  PLATFORM_ID,
   signal,
   viewChild,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { type ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
 import { Analytics, logEvent } from '@angular/fire/analytics';
@@ -46,8 +48,10 @@ import {
 import { CookieConsentBannerComponent } from '@pu-stats/ads';
 import {
   QuickAddFabComponent,
+  QuickAddFabCoachmarkComponent,
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
+import { UserConfigStore } from './core/user-config.store';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
@@ -118,6 +122,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     MatDividerModule,
     UserMenuComponent,
     QuickAddFabComponent,
+    QuickAddFabCoachmarkComponent,
     ThemeToggleComponent,
     CookieConsentBannerComponent,
     MatDialogModule,
@@ -140,6 +145,8 @@ export class App {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly user = inject(UserContextService);
   private readonly featureFlags = inject(FeatureFlagsService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly userConfig = inject(UserConfigStore);
   readonly isAdmin = computed(() => this.user.isAdmin());
   readonly autoCountEnabled = computed(() =>
     this.featureFlags.autoExerciseCounter()
@@ -196,6 +203,44 @@ export class App {
       }
     });
   });
+
+  private static readonly COACHMARK_SEEN_KEY = 'pus_speeddial_coachmark_seen';
+
+  /** Drives the one-time tutorial bubble pointing at the speed-dial FAB. */
+  protected readonly speedDialCoachmarkVisible = signal(false);
+  // Latch so the trigger effect resolves exactly once per session — the
+  // onboarding signal is backed by a Firestore listener that may re-emit.
+  private speedDialCoachmarkResolved = false;
+
+  // Show the coachmark the first time a logged-in user lands after completing
+  // onboarding (`consent.acceptedAt` is set). The localStorage flag keeps it a
+  // one-time hint; before onboarding the config has no `acceptedAt` so the
+  // bubble naturally stays hidden until the flow finishes.
+  private readonly _maybeShowSpeedDialCoachmark = effect(() => {
+    if (this.speedDialCoachmarkResolved) return;
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.isLoggedIn()) return;
+    const config = this.userConfig.config();
+    if (!config) return; // resource not hydrated yet
+    if (!config.consent?.acceptedAt) return; // onboarding not finished
+    this.speedDialCoachmarkResolved = true;
+    let seen: boolean;
+    try {
+      seen = localStorage.getItem(App.COACHMARK_SEEN_KEY) === '1';
+    } catch {
+      seen = true; // no storage → don't nag
+    }
+    if (!seen) this.speedDialCoachmarkVisible.set(true);
+  });
+
+  dismissSpeedDialCoachmark(): void {
+    this.speedDialCoachmarkVisible.set(false);
+    try {
+      localStorage.setItem(App.COACHMARK_SEEN_KEY, '1');
+    } catch {
+      // localStorage unavailable — bubble simply reappears next session
+    }
+  }
 
   private readonly _handleSnoozeParam = afterNextRender(() => {
     const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
@@ -442,6 +487,7 @@ export class App {
   }
 
   handleFabOpened(): void {
+    if (this.speedDialCoachmarkVisible()) this.dismissSpeedDialCoachmark();
     this.appData.reloadAfterMutation();
   }
 

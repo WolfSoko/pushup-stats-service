@@ -1044,6 +1044,97 @@ describe('App (testing-library)', () => {
     expect(earlyAccessCall?.[2]?.verticalPosition).toBe('top');
   });
 
+  describe('speed-dial coachmark', () => {
+    const SEEN_KEY = 'pus_speeddial_coachmark_seen';
+
+    function coachmarkProviders() {
+      return [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
+      ];
+    }
+
+    afterEach(() => {
+      try {
+        localStorage.removeItem(SEEN_KEY);
+      } catch {
+        /* localStorage unavailable */
+      }
+    });
+
+    it('shows the tutorial bubble once onboarding is complete and it has not been seen', async () => {
+      // given — onboarding finished (consent.acceptedAt set), flag absent
+      localStorage.removeItem(SEEN_KEY);
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({ dailyGoal: 100, consent: { acceptedAt: '2025-01-01T00:00:00Z' } })
+      );
+
+      // when
+      await render(App, { providers: coachmarkProviders() });
+
+      // then — the bubble's primary action proves it is visible
+      expect(
+        await screen.findByRole('button', { name: 'Verstanden' })
+      ).toBeTruthy();
+    });
+
+    it('stays hidden when the tutorial was already dismissed', async () => {
+      // given — flag persisted from a previous session
+      localStorage.setItem(SEEN_KEY, '1');
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({ dailyGoal: 100, consent: { acceptedAt: '2025-01-01T00:00:00Z' } })
+      );
+
+      // when
+      await render(App, { providers: coachmarkProviders() });
+      // wait until config has propagated (toolbar shows the goal) so the
+      // trigger effect has definitely run before we assert absence
+      await screen.findAllByText((content) => content.includes('/ 100'));
+
+      // then
+      expect(screen.queryByRole('button', { name: 'Verstanden' })).toBeNull();
+    });
+
+    it('stays hidden while onboarding is not yet complete', async () => {
+      // given — no consent.acceptedAt → onboarding unfinished
+      localStorage.removeItem(SEEN_KEY);
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
+
+      // when
+      await render(App, { providers: coachmarkProviders() });
+      await screen.findAllByText((content) => content.includes('/ 100'));
+
+      // then
+      expect(screen.queryByRole('button', { name: 'Verstanden' })).toBeNull();
+    });
+  });
+
   describe('service worker update notifications', () => {
     function makeSwUpdateMock() {
       const versionUpdates = new Subject<{ type: string }>();
