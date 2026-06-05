@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   computed,
+  DestroyRef,
   effect,
   ElementRef,
   inject,
@@ -258,6 +259,15 @@ export class StatsChartComponent implements AfterViewInit {
       this.measurement();
       this.paceSeries();
       queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
+    });
+    // Destroy the chart when the component is torn down (e.g. the analysis
+    // page toggles it out via `@if`). Without this, Chart.js's responsive
+    // ResizeObserver outlives the element and a queued resize fires on the
+    // detached chart — crashing in a plugin hook
+    // (`Cannot set properties of undefined (setting '_listened')`).
+    inject(DestroyRef).onDestroy(() => {
+      this.chart?.destroy();
+      this.chart = undefined;
     });
   }
 
