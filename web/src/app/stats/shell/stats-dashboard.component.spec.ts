@@ -963,6 +963,25 @@ describe('StatsDashboardComponent', () => {
         );
       });
     });
+
+    describe('When openQuickAddConfig is called', () => {
+      it('Then MatDialog.open caps the panel width so the content fits without horizontal scroll', () => {
+        // given
+        dialogOpenSpy.mockClear();
+
+        // when
+        fixture.componentInstance.openQuickAddConfig();
+
+        // then
+        expect(dialogOpenSpy).toHaveBeenCalledWith(
+          expect.any(Function), // QuickAddConfigDialogComponent
+          expect.objectContaining({
+            width: 'min(92vw, 460px)',
+            maxWidth: '92vw',
+          })
+        );
+      });
+    });
   });
 
   // Regression: a `?snooze=N` deep-link arrives via the SW snooze action

@@ -166,7 +166,7 @@ interface ExerciseOption {
     .content {
       display: grid;
       gap: 10px;
-      min-width: min(94vw, 520px);
+      min-width: 0;
     }
     .hint {
       margin: 0;

@@ -229,7 +229,7 @@ export class StatsDashboardComponent {
 
   openQuickAddConfig(): void {
     this.dialog.open(QuickAddConfigDialogComponent, {
-      width: 'min(92vw, 480px)',
+      width: 'min(92vw, 460px)',
       maxWidth: '92vw',
     });
   }
