@@ -1810,6 +1810,10 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     }
 
     if ((isCreate && !existingStats) || versionOutdated) {
+      // Equality filters on userId + exerciseId combined with
+      // orderBy(timestamp) require a composite index over those three fields;
+      // without it Firestore rejects the query and the aggregate below is
+      // never written.
       const allEntriesSnap = await db
         .collection('exerciseEntries')
         .where('userId', '==', userId)
