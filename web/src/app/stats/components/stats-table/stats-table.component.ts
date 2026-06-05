@@ -90,8 +90,8 @@ export interface StatsTableRemove {
 /**
  * Create payload emitted from the table. Mirrors {@link StatsTableUpdate}
  * but without `id`, since a new entry has no doc to patch yet. The `kind`
- * discriminator lets the parent store dispatch to `createPushup` or
- * `createEntry` without re-introspecting the dialog result.
+ * discriminator lets the parent store build the create payload without
+ * re-introspecting the dialog result.
  */
 export interface StatsTableCreate {
   kind: 'pushup' | 'exercise';

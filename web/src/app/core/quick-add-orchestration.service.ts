@@ -183,7 +183,6 @@ export class QuickAddOrchestrationService {
         timestamp: nowLocalIsoTimestamp(),
         reps,
         source: 'quick-add',
-        variantId: 'standard',
       })
       .subscribe({
         next: () => {
@@ -219,7 +218,6 @@ export class QuickAddOrchestrationService {
         timestamp: nowLocalIsoTimestamp(),
         reps: gap,
         source: 'goal-fill',
-        variantId: 'standard',
       })
       .subscribe({
         next: () => {
@@ -425,7 +423,6 @@ export class QuickAddOrchestrationService {
             reps: result.reps,
             sets: result.sets,
             source: result.source,
-            ...(result.type ? { variantId: result.type } : {}),
           })
         );
       } else {

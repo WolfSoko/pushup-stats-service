@@ -73,7 +73,6 @@ export class QuickLogListenerService {
           reps,
           sets: [reps],
           source: 'reminder',
-          variantId: 'standard',
         })
       );
       this.snackBar.open(

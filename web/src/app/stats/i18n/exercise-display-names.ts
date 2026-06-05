@@ -175,15 +175,10 @@ export function variantDisplayName(variant: ExerciseVariant): string {
 }
 
 /**
- * Resolves the filter-key shape used by the analysis page (`'pushup'`
- * for the collapsed legacy-pushup bucket, exerciseId for everything
- * else) to a localised label. Shared between the page filter chips and
- * the type-pie legend so both stay in sync without duplicating the
+ * Resolves an analysis-page filter key (an exerciseId, including
+ * `'pushup'`) to a localised label. Shared between the page filter chips
+ * and the type-pie legend so both stay in sync without duplicating the
  * `$localize` calls.
- *
- * Legacy pushup entries (Liegestütze) keep their own bucket separate
- * from the generic `push` movement-pattern category (dips, handstand),
- * so this branch resolves to the Liegestütze label.
  *
  * For ids that miss the catalog (user-defined custom exercises or
  * legacy ids whose Firestore entries still exist) the raw `value`

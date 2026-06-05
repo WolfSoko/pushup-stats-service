@@ -299,7 +299,6 @@ export class StatsDashboardComponent {
           reps: result.reps,
           sets: result.sets,
           source: result.source,
-          ...(result.type ? { variantId: result.type } : {}),
         })
       );
     } else {
@@ -350,7 +349,6 @@ export class StatsDashboardComponent {
         reps,
         sets: [reps],
         source,
-        variantId: 'standard',
       })
     );
     this.store.refreshAll();

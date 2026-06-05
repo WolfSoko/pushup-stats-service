@@ -406,7 +406,9 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(payload.exerciseId).toBe('pushup');
     expect(payload.reps).toBe(15);
     expect(payload.source).toBe('auto-count');
-    expect(payload.variantId).toBe('standard');
+    // Pushups carry no variant post-cutover (PUSHUP_DEFINITION has no
+    // catalog variants), so no variantId is sent.
+    expect(payload.variantId).toBeUndefined();
   });
 
   it('Given the entry dialog returns a confirmed exercise, Then exerciseApi.createEntry is called with the userId and exercise payload', async () => {

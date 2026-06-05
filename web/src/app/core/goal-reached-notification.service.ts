@@ -328,8 +328,8 @@ export class GoalReachedNotificationService {
  *     these through `new Date()`, because that parses them in the device's
  *     local timezone and shifts the day on devices not in `Europe/Berlin`.
  *     The Cloud Function's bucketing logic also uses the literal date prefix.
- *   - TZ-aware (`...Z` or `...±HH:mm`) — written by `createPushup` via
- *     `new Date().toISOString()`. We convert these via the Berlin formatter
+ *   - TZ-aware (`...Z` or `...±HH:mm`) — written by the entry-create path
+ *     via `new Date().toISOString()`. We convert these via the Berlin formatter
  *     so that an entry made at 00:30 Berlin (== 22:30 UTC the prior day)
  *     counts toward today and not yesterday.
  */

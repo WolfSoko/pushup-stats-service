@@ -92,7 +92,8 @@ describe('QuickLogListenerService', () => {
     expect(payload.reps).toBe(15);
     expect(payload.sets).toEqual([15]);
     expect(payload.source).toBe('reminder');
-    expect(payload.variantId).toBe('standard');
+    // Pushups carry no variant post-cutover, so no variantId is sent.
+    expect(payload.variantId).toBeUndefined();
     expect(typeof payload.timestamp).toBe('string');
   });
 
