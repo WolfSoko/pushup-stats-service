@@ -1810,6 +1810,12 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     }
 
     if ((isCreate && !existingStats) || versionOutdated) {
+      // The `userId ==` + `exerciseId ==` + `orderBy(timestamp)` shape needs
+      // the composite index `exerciseEntries (userId, exerciseId, timestamp)`
+      // — without it Firestore throws FAILED_PRECONDITION on the first entry
+      // of an exercise, the aggregate below is never written, and everything
+      // sourced from `perExercise/{exerciseId}.total` (the "Alle Zeit"
+      // leaderboard) stays empty for it. Guarded by firestore-indexes.spec.ts.
       const allEntriesSnap = await db
         .collection('exerciseEntries')
         .where('userId', '==', userId)
