@@ -37,7 +37,7 @@ A freshly created Secret Manager secret has **zero IAM bindings** (`gcloud secre
 ### How it works
 
 ```typescript
-// In updateUserStatsOnPushupWrite:
+// In updateExerciseStatsOnEntryWrite:
 if (existingStats.version < USERSTATS_VERSION) {
   // Fetch all entries and call rebuildFromEntries —
   // automatically applies calculation improvements
