@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,7 +5,6 @@ import {
   Injector,
   signal,
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import {
   email,
   form,
@@ -31,8 +29,6 @@ export { hasStrongPasswordPolicy } from '../password-policy';
   selector: 'pus-login',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
