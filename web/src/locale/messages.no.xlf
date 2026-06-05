@@ -9305,5 +9305,35 @@ Deine Position: # ·  Reps        </source>
         <target>Gjenoppbygger «userStats/{uid}/perExercise/pushup» fra migrerte pushup-oppføringer slik at dashbordet viser korrekte pushup-totaler og -serier umiddelbart etter overgangen. Kjør etter unifikasjonsmigrasjonen. Idempotent.</target>
       </segment>
     </unit>
+    <unit id="quickAdd.coachmark.title">
+      <segment state="initial">
+        <source>Schnellerfassung</source>
+        <target>Schnellerfassung</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.coachmark.body">
+      <segment state="initial">
+        <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
+        <target>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.coachmark.dismiss">
+      <segment state="initial">
+        <source>Verstanden</source>
+        <target>Verstanden</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.coachmark.closeAria">
+      <segment state="initial">
+        <source>Tutorial schließen</source>
+        <target>Tutorial schließen</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.quickActions.speedDialHint">
+      <segment state="initial">
+        <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
+        <target>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

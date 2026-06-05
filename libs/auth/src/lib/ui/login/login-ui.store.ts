@@ -46,6 +46,7 @@ export const LoginUiStore = signalStore(
     // may still hold stale data due to toSignal() microtask delay.
     currentUserDisplayName: (): string =>
       auth?.currentUser?.displayName ?? authStore.user()?.displayName ?? '',
+    clearError: (): void => authStore.clearError(),
     toggleHidePassword: () =>
       patchState(store, { hidePassword: !store.hidePassword() }),
     setGoogleDisplayName: (value: string) =>

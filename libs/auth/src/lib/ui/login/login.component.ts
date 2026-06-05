@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,7 +5,6 @@ import {
   Injector,
   signal,
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import {
   email,
   form,
@@ -25,20 +23,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
 import { LoginUiStore } from './login-ui.store';
+import { FormsModule } from '@angular/forms';
 export { hasStrongPasswordPolicy } from '../password-policy';
 
 @Component({
   selector: 'pus-login',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
     FormField,
+    FormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -73,10 +71,12 @@ export class LoginComponent {
   );
 
   async goToRegister(): Promise<void> {
+    this.loginUiStore.clearError();
     await this.router.navigateByUrl('/register');
   }
 
-  async signInWithEmail(): Promise<void> {
+  async signInWithEmail(event?: Event): Promise<void> {
+    event?.preventDefault();
     if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
       return;
     const { email, password } = this.loginForm().value();

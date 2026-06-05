@@ -334,7 +334,7 @@
 
 <lib-cookie-consent-banner #consentBanner />
 
-@if (isLoggedIn()) {
+@if (showQuickAddFab()) {
 <lib-quick-add-fab
   [suggestions]="quickAddSuggestions()"
   [remainingToGoal]="remainingToGoal()"
@@ -349,4 +349,6 @@
   (fillToGoal)="handleFillToGoal()"
   (opened)="handleFabOpened()"
 />
-}
+@if (speedDialCoachmarkVisible()) {
+<lib-quick-add-fab-coachmark (dismiss)="dismissSpeedDialCoachmark()" />
+} }

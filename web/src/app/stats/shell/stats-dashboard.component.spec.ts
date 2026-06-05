@@ -371,6 +371,17 @@ describe('StatsDashboardComponent', () => {
         ).toBeTruthy();
       });
 
+      it('Then it points users at the floating speed-dial FAB', () => {
+        // given
+        const hint = fixture.nativeElement.querySelector(
+          '.quick-actions-hint'
+        ) as HTMLElement | null;
+
+        // then
+        expect(hint).toBeTruthy();
+        expect(hint?.textContent).toContain('schwebenden');
+      });
+
       it('Then the all-time mini-badges sit directly under the hero header', () => {
         const root = fixture.nativeElement as HTMLElement;
         const header = root.querySelector('.page-header');

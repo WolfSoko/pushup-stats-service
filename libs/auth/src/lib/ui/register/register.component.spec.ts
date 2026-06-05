@@ -19,6 +19,7 @@ const authStoreMock = {
   signUpWithEmail: jest.fn(),
   upgradeWithGoogle: jest.fn(),
   logout: jest.fn(),
+  clearError: jest.fn(),
 };
 
 const onboardingStoreMock = {
@@ -72,12 +73,31 @@ describe('RegisterComponent', () => {
     onboardingStoreMock.saveProfile.mockReset().mockResolvedValue(undefined);
     authStoreMock.signUpWithEmail.mockReset().mockResolvedValue(true);
     authStoreMock.upgradeWithGoogle.mockReset().mockResolvedValue(true);
+    authStoreMock.clearError.mockReset();
+    authStoreMock.logout.mockReset().mockResolvedValue(undefined);
     Object.values(analyticsMock).forEach((spy) => spy.mockReset());
   });
 
   it('renders registration title', async () => {
     await renderRegister();
     expect(screen.getByText('Registrierung')).toBeInTheDocument();
+  });
+
+  it('should clear a stale auth error when navigating back to login', async () => {
+    // given
+    authStoreMock.error.set(
+      new Error('Für diese E-Mail existiert bereits ein Konto.')
+    );
+    const view = await renderRegister();
+    const router = view.fixture.debugElement.injector.get(Router);
+    jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+
+    // when
+    await view.fixture.componentInstance.goToLogin();
+
+    // then
+    expect(authStoreMock.clearError).toHaveBeenCalled();
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 
   it('shows human-readable error message (not [object Object]) for invalid email', async () => {
