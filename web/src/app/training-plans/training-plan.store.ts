@@ -20,7 +20,6 @@ import {
 import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
-  StatsApiService,
   UserTrainingPlanApiService,
 } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
@@ -79,7 +78,6 @@ export const TrainingPlanStore = signalStore(
   { providedIn: 'root' },
   withProps(() => ({
     _api: inject(UserTrainingPlanApiService),
-    _statsApi: inject(StatsApiService),
     _findPlanById: inject(TRAINING_PLAN_LOOKUP),
     // Resolved lazily (only when a non-pushup day is logged) rather than as a
     // construction-time field. `ExerciseFirestoreService` injects `Firestore`
@@ -289,9 +287,7 @@ export const TrainingPlanStore = signalStore(
     },
 
     /** Lazily resolve the Firestore-bound exercise API. Returns null when no
-     *  provider is registered (e.g. a test harness without `Firestore`); a
-     *  genuine instantiation error is allowed to propagate rather than
-     *  silently no-op the write. */
+     *  provider is registered (e.g. a test harness without `Firestore`). */
     _resolveExerciseApi(): ExerciseFirestoreService | null {
       return store._injector.get(ExerciseFirestoreService, null);
     },
@@ -415,18 +411,15 @@ export const TrainingPlanStore = signalStore(
       const day = planDayByIndex(c, dayIndex);
       if (!day || day.kind === 'rest' || day.targetReps <= 0) return 'noop';
       const exerciseId = trainingPlanDayExerciseId(day);
-      // Non-pushup days route through exerciseEntries; only reps-measured catalog
+      // All plan days route through exerciseEntries. Only reps-measured catalog
       // exercises map onto a plan day's targetReps/sets. A time- or distance-
       // measured day can't be honored with a reps payload, and createEntry needs
       // a resolved user plus the lazily-resolved Firestore-backed exercise API —
       // fail closed on any of these.
-      let exerciseApi: ExerciseFirestoreService | null = null;
-      if (exerciseId !== 'pushup') {
-        const def = findExerciseDefinition(exerciseId);
-        if (!def || def.measurement !== 'reps') return 'noop';
-        exerciseApi = store._resolveExerciseApi();
-        if (!store._user.userIdSafe() || !exerciseApi) return 'noop';
-      }
+      const def = findExerciseDefinition(exerciseId);
+      if (!def || def.measurement !== 'reps') return 'noop';
+      const exerciseApi = store._resolveExerciseApi();
+      if (!store._user.userIdSafe() || !exerciseApi) return 'noop';
 
       const currentIdx = store.currentDayIndex();
       if (currentIdx === null || dayIndex > currentIdx) return 'noop';
@@ -456,29 +449,15 @@ export const TrainingPlanStore = signalStore(
             alreadyLogged === 0 ? (day.sets ?? [day.targetReps]) : [remaining];
           const reps = alreadyLogged === 0 ? day.targetReps : remaining;
           const timestamp = appendLocalOffset(`${dateIso}T12:00`);
-          if (exerciseId === 'pushup') {
-            await firstValueFrom(
-              store._statsApi.createPushup({
-                timestamp,
-                reps,
-                sets,
-                source: 'plan',
-                type: 'standard',
-              })
-            );
-          } else if (exerciseApi) {
-            // `exerciseApi` is non-null here: the non-pushup guard above
-            // returns 'noop' when it can't be resolved, so this always runs.
-            await firstValueFrom(
-              exerciseApi.createEntry(store._user.userIdSafe(), {
-                exerciseId,
-                timestamp,
-                reps,
-                sets,
-                source: 'plan',
-              })
-            );
-          }
+          await firstValueFrom(
+            exerciseApi.createEntry(store._user.userIdSafe(), {
+              exerciseId,
+              timestamp,
+              reps,
+              sets,
+              source: 'plan',
+            })
+          );
           result = 'logged';
         } else {
           result = 'already-logged';

@@ -86,6 +86,34 @@ describe('StatsDashboardComponent', () => {
     deletePushup: vitest.fn().mockReturnValue(of({ ok: true })),
   };
 
+  const defaultUserStats = {
+    userId: 'u1',
+    total: 1200,
+    totalEntries: 100,
+    totalDays: 25,
+    dailyReps: 12,
+    dailyKey: '2025-01-15',
+    weeklyReps: 20,
+    weeklyKey: '2025-W03',
+    monthlyReps: 20,
+    monthlyKey: '2025-01',
+    currentStreak: 2,
+    lastEntryDate: '2025-01-15',
+    heatmap: {},
+    totalSets: 0,
+    totalSetsReps: 0,
+    avgSetSize: 0,
+    bestSingleSet: 0,
+    bestDay: null,
+    bestSingleEntry: null,
+    updatedAt: '2025-01-15T12:00:00Z',
+  };
+
+  const userStatsMock = {
+    getUserStats: vitest.fn().mockReturnValue(of(null)),
+    getPerExerciseStats: vitest.fn().mockReturnValue(of(defaultUserStats)),
+  };
+
   const liveTick = signal(0);
   const liveConnected = signal(false);
   const liveEntries = signal<
@@ -171,9 +199,27 @@ describe('StatsDashboardComponent', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(frozenDate);
     vi.clearAllMocks();
+    userStatsMock.getPerExerciseStats
+      .mockReset()
+      .mockReturnValue(of(defaultUserStats));
     liveTick.set(0);
-    liveConnected.set(false);
-    liveEntries.set([]);
+    liveConnected.set(true);
+    liveEntries.set([
+      {
+        _id: '1',
+        timestamp: '2025-01-14T13:45:00',
+        reps: 8,
+        source: 'wa',
+        type: 'Standard',
+      },
+      {
+        _id: '2',
+        timestamp: todayTs,
+        reps: 12,
+        source: 'web',
+        type: 'Diamond',
+      },
+    ]);
     liveExerciseEntries.set([]);
     dailyGoalBreakdown.set([]);
     window.history.replaceState({}, '', '/');
@@ -197,13 +243,7 @@ describe('StatsDashboardComponent', () => {
         // the spec — so they don't materially worsen any pre-existing
         // timer-leak budget.
         { provide: StatsApiService, useValue: serviceMock },
-        {
-          provide: UserStatsApiService,
-          useValue: {
-            getUserStats: vitest.fn().mockReturnValue(of(null)),
-            getPerExerciseStats: vitest.fn().mockReturnValue(of(null)),
-          },
-        },
+        { provide: UserStatsApiService, useValue: userStatsMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: UserContextService, useValue: userContextSpy },
         { provide: AdsStore, useValue: adsConfigMock },
@@ -394,7 +434,7 @@ describe('StatsDashboardComponent', () => {
         expect(cta.textContent).toContain('Zur Historie');
       });
 
-      it('Then tileIcon distinguishes pushup entries from generic exercise entries', () => {
+      it('Then tileIcon returns sports_gymnastics for all entry kinds', () => {
         const component = fixture.componentInstance;
         const pushupIcon = component.tileIcon({
           _id: 'p',
@@ -408,12 +448,8 @@ describe('StatsDashboardComponent', () => {
           exerciseId: 'plank.standard',
           timestamp: todayTs,
         } as unknown as Parameters<typeof component.tileIcon>[0]);
-        // Two distinct icons keep pushup tiles visually separable from the
-        // newer multi-exercise tiles — important now that the dashboard
-        // mixes both kinds in the same grid.
-        expect(pushupIcon).toBe('fitness_center');
+        expect(pushupIcon).toBe('sports_gymnastics');
         expect(exerciseIcon).toBe('sports_gymnastics');
-        expect(pushupIcon).not.toBe(exerciseIcon);
       });
 
       it('Then the Schnellaktionen card is rendered above the today-focus section', () => {
@@ -465,10 +501,12 @@ describe('StatsDashboardComponent', () => {
 
   describe('Given the component initializes', () => {
     describe('When the API is called', () => {
-      it('Then it should load all-time stats and entries without filters', () => {
+      it('Then it should load all-time stats via getPerExerciseStats', () => {
         // Then
-        expect(serviceMock.load).toHaveBeenCalledWith({});
-        expect(serviceMock.listPushups).toHaveBeenCalledWith({});
+        expect(userStatsMock.getPerExerciseStats).toHaveBeenCalledWith(
+          'u1',
+          'pushup'
+        );
       });
     });
 
@@ -571,7 +609,7 @@ describe('StatsDashboardComponent', () => {
 
   describe('Given a quick entry is added', () => {
     describe('When addQuickEntry is called with 10 reps', () => {
-      it('Then it should call createPushup with correct parameters', async () => {
+      it('Then it should call createEntry with correct parameters', async () => {
         // Given
         const component = fixture.componentInstance;
 
@@ -579,8 +617,13 @@ describe('StatsDashboardComponent', () => {
         await component.addQuickEntry(10);
 
         // Then
-        expect(serviceMock.createPushup).toHaveBeenCalledWith(
-          expect.objectContaining({ reps: 10, source: 'web', type: 'standard' })
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'pushup',
+            reps: 10,
+            source: 'web',
+          })
         );
       });
     });
@@ -606,14 +649,15 @@ describe('StatsDashboardComponent', () => {
           label: '+12 Liegestütze',
         });
 
-        expect(serviceMock.createPushup).toHaveBeenCalledWith(
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
           expect.objectContaining({
+            exerciseId: 'pushup',
             reps: 12,
             source: 'quick-add',
-            type: 'standard',
           })
         );
-        expect(exerciseCreateSpy).not.toHaveBeenCalled();
+        expect(serviceMock.createPushup).not.toHaveBeenCalled();
       });
     });
 
@@ -695,7 +739,7 @@ describe('StatsDashboardComponent', () => {
 
   describe('Given the manual entry dialog is submitted (regression: create event was silently dropped)', () => {
     describe('When createEntry is called with a pushup result', () => {
-      it('Then it should call createPushup', async () => {
+      it('Then it should call createEntry with pushup payload', async () => {
         // Given — createEntry() is the handler called after the dialog closes
         const component = fixture.componentInstance;
         vi.clearAllMocks();
@@ -712,19 +756,23 @@ describe('StatsDashboardComponent', () => {
         await fixture.whenStable();
 
         // Then
-        expect(serviceMock.createPushup).toHaveBeenCalledWith({
-          timestamp: todayTs,
-          reps: 15,
-          sets: [15],
-          source: 'web',
-          type: 'diamond',
-        });
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'pushup',
+            reps: 15,
+            source: 'web',
+          })
+        );
       });
 
       it('Then it should refresh the store after creation', async () => {
         // Given
         const component = fixture.componentInstance;
         vi.clearAllMocks();
+        userStatsMock.getPerExerciseStats
+          .mockReset()
+          .mockReturnValue(of(defaultUserStats));
 
         // When
         await component.createEntry({
@@ -738,8 +786,8 @@ describe('StatsDashboardComponent', () => {
         // refreshAll() triggers async resource reload — wait for it
         await fixture.whenStable();
 
-        // Then
-        expect(serviceMock.listPushups).toHaveBeenCalled();
+        // Then — refreshAll() reloads the userStats resource
+        expect(userStatsMock.getPerExerciseStats).toHaveBeenCalled();
       });
 
       it('Then it should reload AppDataFacade so the toolbar count refreshes', async () => {
@@ -1035,20 +1083,18 @@ describe('StatsDashboardComponent', () => {
     describe('When the live tick changes', () => {
       it('Then it should reload data', async () => {
         // Given
-        const initialLoadCalls = serviceMock.load.mock.calls.length;
-        const initialListCalls = serviceMock.listPushups.mock.calls.length;
+        const initialStatsCalls =
+          userStatsMock.getPerExerciseStats.mock.calls.length;
 
         // When
         liveTick.set(1);
         await fixture.whenStable();
 
-        // Then
-        expect(serviceMock.load.mock.calls.length).toBeGreaterThan(
-          initialLoadCalls
-        );
-        expect(serviceMock.listPushups.mock.calls.length).toBeGreaterThan(
-          initialListCalls
-        );
+        // Then — the live-tick effect calls refreshAll() which reloads the
+        // userStats resource, triggering a new getPerExerciseStats call.
+        expect(
+          userStatsMock.getPerExerciseStats.mock.calls.length
+        ).toBeGreaterThan(initialStatsCalls);
       });
     });
 
@@ -1117,32 +1163,30 @@ describe('StatsDashboardComponent', () => {
 
     describe('When monthReps is computed', () => {
       it('Then it should sum reps from entries in current month only', async () => {
-        // Given - add an out-of-month entry
-        serviceMock.listPushups.mockReturnValueOnce(
-          of([
-            {
-              _id: '1',
-              timestamp: '2025-01-14T13:45:00',
-              reps: 8,
-              source: 'wa',
-              type: 'Standard',
-            },
-            {
-              _id: '2',
-              timestamp: '2025-01-15T12:00',
-              reps: 12,
-              source: 'web',
-              type: 'Diamond',
-            },
-            {
-              _id: '3',
-              timestamp: '2024-12-20T10:00:00',
-              reps: 50,
-              source: 'web',
-              type: 'Standard',
-            },
-          ])
-        );
+        // Given - override live entries to include an out-of-month entry
+        liveEntries.set([
+          {
+            _id: '1',
+            timestamp: '2025-01-14T13:45:00',
+            reps: 8,
+            source: 'wa',
+            type: 'Standard',
+          },
+          {
+            _id: '2',
+            timestamp: '2025-01-15T12:00',
+            reps: 12,
+            source: 'web',
+            type: 'Diamond',
+          },
+          {
+            _id: '3',
+            timestamp: '2024-12-20T10:00:00',
+            reps: 50,
+            source: 'web',
+            type: 'Standard',
+          },
+        ]);
         const freshFixture = TestBed.createComponent(StatsDashboardComponent);
         await freshFixture.whenStable();
 
@@ -1170,18 +1214,16 @@ describe('StatsDashboardComponent', () => {
 
     describe('When reps exceed the goal', () => {
       it('Then progress percent should be capped at 100', async () => {
-        // Given - entries with reps exceeding goals
-        serviceMock.listPushups.mockReturnValueOnce(
-          of([
-            {
-              _id: '1',
-              timestamp: '2025-01-15T10:00',
-              reps: 9999,
-              source: 'web',
-              type: 'Standard',
-            },
-          ])
-        );
+        // Given - override live entries with reps exceeding goals
+        liveEntries.set([
+          {
+            _id: '1',
+            timestamp: '2025-01-15T10:00',
+            reps: 9999,
+            source: 'web',
+            type: 'Standard',
+          },
+        ]);
         const configApi = TestBed.inject(UserConfigApiService);
         (configApi.getConfig as ReturnType<typeof vitest.fn>).mockReturnValue(
           of({ userId: 'u1', dailyGoal: 10, weeklyGoal: 10, monthlyGoal: 10 })
@@ -1353,31 +1395,13 @@ describe('StatsDashboardComponent', () => {
     });
 
     it('Then a multi-day streak adds the streak count to the share text', async () => {
-      // Given — 3 consecutive days ending today (frozen Jan 15, 2025)
-      serviceMock.listPushups.mockReturnValueOnce(
-        of([
-          {
-            _id: 'a',
-            timestamp: '2025-01-13T12:00:00',
-            reps: 10,
-            source: 'web',
-            type: 'Standard',
-          },
-          {
-            _id: 'b',
-            timestamp: '2025-01-14T12:00:00',
-            reps: 10,
-            source: 'web',
-            type: 'Standard',
-          },
-          {
-            _id: 'c',
-            timestamp: '2025-01-15T12:00:00',
-            reps: 10,
-            source: 'web',
-            type: 'Standard',
-          },
-        ])
+      // Given — server stats report a 3-day streak ending today
+      userStatsMock.getPerExerciseStats.mockReturnValueOnce(
+        of({
+          ...defaultUserStats,
+          currentStreak: 3,
+          lastEntryDate: '2025-01-15',
+        })
       );
       const freshFixture = TestBed.createComponent(StatsDashboardComponent);
       await freshFixture.whenStable();
@@ -1455,18 +1479,17 @@ describe('StatsDashboardComponent', () => {
   describe('Given entries with consecutive dates', () => {
     describe('When currentStreak is computed with no recent entries', () => {
       it('Then it should return 0 when last entry is more than 1 day ago', async () => {
-        // Given - mock with old entries only (more than 1 day before frozen date)
-        serviceMock.listPushups.mockReturnValueOnce(
-          of([
-            {
-              _id: '1',
-              timestamp: '2025-01-10T10:00:00',
-              reps: 10,
-              source: 'wa',
-              type: 'Standard',
-            },
-          ])
-        );
+        // Given - null server stats forces client-side fallback; only old entry
+        userStatsMock.getPerExerciseStats.mockReturnValueOnce(of(null));
+        liveEntries.set([
+          {
+            _id: '1',
+            timestamp: '2025-01-10T10:00:00',
+            reps: 10,
+            source: 'wa',
+            type: 'Standard',
+          },
+        ]);
 
         // When - create fresh component with old data
         const freshFixture = TestBed.createComponent(StatsDashboardComponent);

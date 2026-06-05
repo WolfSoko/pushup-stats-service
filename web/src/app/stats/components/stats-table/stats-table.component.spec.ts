@@ -40,8 +40,15 @@ describe('StatsTableComponent', () => {
   });
 
   it('binds entry data to table dataSource (mapped to UnifiedEntry)', async () => {
-    const entries = [
-      { _id: '1', timestamp: '2026-02-10T13:45:00', reps: 8, source: 'wa' },
+    const entries: UnifiedEntry[] = [
+      {
+        kind: 'exercise',
+        exerciseId: 'pushup',
+        _id: '1',
+        timestamp: '2026-02-10T13:45:00',
+        reps: 8,
+        source: 'wa',
+      },
     ];
     fixture.componentRef.setInput('entries', entries);
     await fixture.whenStable();
@@ -49,7 +56,7 @@ describe('StatsTableComponent', () => {
     const data = fixture.componentInstance.dataSource.data;
     expect(data).toHaveLength(1);
     expect(data[0]).toMatchObject({
-      kind: 'pushup',
+      kind: 'exercise',
       _id: '1',
       reps: 8,
       source: 'wa',
@@ -154,13 +161,14 @@ describe('StatsTableComponent', () => {
       component.update.subscribe(updateSpy);
 
       const entry: UnifiedEntry = {
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 30,
         sets: [10, 10, 10] as number[],
         source: 'wa',
-        variantType: 'Diamond',
+        variantId: 'diamond',
       };
 
       const editResult: TrainingEntryDialogResult = {
@@ -189,7 +197,7 @@ describe('StatsTableComponent', () => {
             reps: entry.reps,
             sets: entry.sets,
             source: entry.source,
-            type: entry.variantType,
+            type: entry.variantId,
           }),
         })
       );
@@ -215,12 +223,12 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 8,
         source: 'wa',
-        variantType: null,
       });
 
       expect(updateSpy).not.toHaveBeenCalled();
@@ -233,12 +241,13 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 20,
         source: 'web',
-        variantType: 'Standard',
+        variantId: 'standard',
       });
 
       expect(openSpy).toHaveBeenCalledWith(
@@ -271,12 +280,13 @@ describe('StatsTableComponent', () => {
       } as never);
 
       component.openEditDialog({
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: '1',
         timestamp: '2026-02-10T13:45:00',
         reps: 20,
         source: 'web',
-        variantType: 'Standard',
+        variantId: 'standard',
       });
 
       expect(updateSpy).toHaveBeenCalledWith(
@@ -626,20 +636,22 @@ describe('StatsTableComponent', () => {
       const component = fixture.componentInstance;
       fixture.componentRef.setInput('entries', [
         {
-          kind: 'pushup',
+          kind: 'exercise',
+          exerciseId: 'pushup',
           _id: '1',
           timestamp: '2026-02-10T13:45:00',
           reps: 20,
           source: 'web',
-          variantType: 'Standard',
+          variantId: 'standard',
         },
         {
-          kind: 'pushup',
+          kind: 'exercise',
+          exerciseId: 'pushup',
           _id: '2',
           timestamp: '2026-02-09T13:45:00',
           reps: 15,
           source: 'web',
-          variantType: 'Diamond',
+          variantId: 'diamond',
         },
       ] satisfies UnifiedEntry[]);
 
@@ -650,12 +662,13 @@ describe('StatsTableComponent', () => {
       const component = fixture.componentInstance;
       fixture.componentRef.setInput('entries', [
         {
-          kind: 'pushup',
+          kind: 'exercise',
+          exerciseId: 'pushup',
           _id: '1',
           timestamp: '2026-02-10T13:45:00',
           reps: 20,
           source: 'web',
-          variantType: 'Standard',
+          variantId: 'standard',
         },
         {
           kind: 'exercise',
@@ -711,13 +724,14 @@ describe('StatsTableComponent', () => {
     it('routes a pushup entry with a known variant to the pushup wiki detail', () => {
       const component = fixture.componentInstance;
       const entry: UnifiedEntry = {
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: 'p1',
         timestamp: '2026-02-10T10:00:00',
         reps: 10,
         source: 'web',
-        variantType: 'diamond',
-      } as UnifiedEntry;
+        variantId: 'diamond',
+      };
       // 'diamond' resolves via findPushupTypeByStoredValue to a typed slug;
       // the link must drill into the matching detail page.
       const link = component.exerciseWikiLink(entry);
@@ -728,13 +742,13 @@ describe('StatsTableComponent', () => {
     it('falls back to the pushup wiki list when the variant is unknown', () => {
       const component = fixture.componentInstance;
       const entry: UnifiedEntry = {
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: 'p2',
         timestamp: '2026-02-10T10:00:00',
         reps: 10,
         source: 'web',
-        variantType: null,
-      } as UnifiedEntry;
+      };
       expect(component.exerciseWikiLink(entry)).toEqual([
         '/wiki/liegestuetz-typen',
       ]);
@@ -771,21 +785,22 @@ describe('StatsTableComponent', () => {
   });
 
   describe('emitRemove kind dispatch', () => {
-    it('emits a pushup remove payload for pushup rows', () => {
+    it('emits an exercise remove payload for pushup exercise rows', () => {
       const component = fixture.componentInstance;
       const removeSpy = vitest.fn();
       component.remove.subscribe(removeSpy);
 
       component.emitRemove({
-        kind: 'pushup',
+        kind: 'exercise',
+        exerciseId: 'pushup',
         _id: 'p-1',
         timestamp: '2026-02-10T13:45:00',
         reps: 20,
         source: 'web',
-        variantType: 'Standard',
+        variantId: 'standard',
       });
 
-      expect(removeSpy).toHaveBeenCalledWith({ kind: 'pushup', id: 'p-1' });
+      expect(removeSpy).toHaveBeenCalledWith({ kind: 'exercise', id: 'p-1' });
     });
 
     it('emits an exercise remove payload for exercise rows', () => {

@@ -181,11 +181,71 @@ describe('AnalysisPageComponent', () => {
     });
     vitest.setSystemTime(new Date(2026, 1, 15, 12));
 
-    liveExerciseEntries.set([]);
+    liveExerciseEntries.set([
+      {
+        _id: '1',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-09T08:00:00',
+        reps: 10,
+        sets: [5, 5],
+        source: 'wa',
+        variantId: 'standard',
+      } as ExerciseEntry,
+      {
+        _id: '2',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-10T08:00:00',
+        reps: 12,
+        sets: [6, 6],
+        source: 'web',
+        variantId: 'diamond',
+      } as ExerciseEntry,
+      {
+        _id: '3',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-11T08:00:00',
+        reps: 20,
+        sets: [10, 5, 5],
+        source: 'wa',
+        variantId: 'Diamond',
+      } as ExerciseEntry,
+      {
+        _id: '4',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-12T08:00:00',
+        reps: 8,
+        source: 'web',
+        variantId: 'Wide',
+      } as ExerciseEntry,
+      {
+        _id: '5',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-13T08:00:00',
+        reps: 25,
+        sets: [10, 8, 7],
+        source: 'wa',
+        variantId: 'standard',
+      } as ExerciseEntry,
+      {
+        _id: '6',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-15T08:00:00',
+        reps: 18,
+        sets: [9, 9],
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
     liveExerciseDefinitions.set([]);
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
+        provideRouter([]),
         // 'server' skips the component's setInterval-based clock tick
         // and the URL history effect; both depend on browser-only APIs
         // and otherwise risk leaking timers across TestBed resets.
@@ -418,7 +478,8 @@ describe('AnalysisPageComponent', () => {
 
   describe('per-category view (activeView / viewFilteredRows)', () => {
     beforeEach(() => {
-      liveExerciseEntries.set([
+      liveExerciseEntries.update((entries) => [
+        ...entries,
         {
           _id: 'ex-abs',
           userId: 'u1',
@@ -467,7 +528,9 @@ describe('AnalysisPageComponent', () => {
       store.setActiveView('pushup');
       const rows = store.viewFilteredRows();
       expect(rows).toHaveLength(6);
-      expect(rows.every((r) => r.kind === 'pushup')).toBe(true);
+      expect(
+        rows.every((r) => r.kind === 'exercise' && r.exerciseId === 'pushup')
+      ).toBe(true);
     });
 
     it('setActiveView("legs") narrows to legs-category entries only', () => {
@@ -1044,7 +1107,8 @@ describe('AnalysisPageComponent', () => {
       // routed under the `push` movement-pattern category.
       expect(component.visibleTabs().map((t) => t.id)).toEqual(['pushup']);
 
-      liveExerciseEntries.set([
+      liveExerciseEntries.update((entries) => [
+        ...entries,
         {
           _id: 'e1',
           userId: 'u1',
@@ -1160,12 +1224,10 @@ describe('AnalysisPageComponent', () => {
 });
 
 describe('AnalysisPageComponent empty-state CTA gating', () => {
-  // Regression guard: `showEmptyCta` was introduced specifically to avoid
-  // an ExpressionChangedAfterItHasBeenCheckedError thrown when reading
-  // `store.rows().length` while `entriesResource` was still in its
-  // initial undefined→[] transition. The CTA must stay hidden until the
-  // resource resolves, then surface for empty datasets.
+  // `showEmptyCta` must stay hidden when not yet connected (data still
+  // loading), then surface once connected with an empty dataset.
   let fixture: ComponentFixture<AnalysisPageComponent>;
+  const liveConnectedCta = signal(false);
 
   const emptyApiMock = {
     load: vitest.fn().mockReturnValue(
@@ -1185,6 +1247,7 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
   };
 
   beforeEach(async () => {
+    liveConnectedCta.set(false);
     await TestBed.configureTestingModule({
       imports: [AnalysisPageComponent],
       providers: [
@@ -1196,7 +1259,7 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
         {
           provide: LiveDataStore,
           useValue: {
-            connected: signal(true),
+            connected: liveConnectedCta,
             entries: signal([]),
             exerciseEntries: signal([]),
             exerciseDefinitions: signal([]),
@@ -1238,18 +1301,18 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
     fixture = TestBed.createComponent(AnalysisPageComponent);
   });
 
-  it('hides the empty-state CTA while the entries resource has not resolved', () => {
-    // Pre-stabilization: resource status is still 'loading', so even
-    // though `rows()` would coalesce to `[]`, the CTA must stay hidden
-    // to avoid the false-positive flicker that triggered the original
-    // NG0100 error.
+  it('hides the empty-state CTA while not yet connected (data still loading)', () => {
+    // `connected=false` means the live data store hasn't established its
+    // WebSocket yet; `showEmptyCta` short-circuits to false so the CTA
+    // doesn't flash before the first payload arrives.
     expect(fixture.componentInstance.showEmptyCta()).toBe(false);
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
     expect(host.querySelector('[data-testid="analysis-empty-cta"]')).toBeNull();
   });
 
-  it('renders the empty-state CTA after the entries resource resolves with no data', async () => {
+  it('renders the empty-state CTA after connecting with no data', async () => {
+    liveConnectedCta.set(true);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -1329,6 +1392,32 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         {
+          provide: LiveDataStore,
+          useValue: {
+            connected: signal(true),
+            entries: signal([]),
+            exerciseEntries: signal([
+              {
+                _id: 'h1',
+                userId: 'u1',
+                exerciseId: 'pushup',
+                // May 1 2026 is within the 8-week trend window ending
+                // FROZEN_NOW (May 8), but outside the Dec 2026 page filter.
+                timestamp: new Date(
+                  FROZEN_NOW.getFullYear(),
+                  FROZEN_NOW.getMonth(),
+                  1
+                ).toISOString(),
+                reps: 30,
+                sets: [10, 10, 10],
+                source: 'web',
+              },
+            ]),
+            exerciseDefinitions: signal([]),
+            updateTick: signal(0),
+          },
+        },
+        {
           provide: UserStatsApiService,
           useValue: {
             getUserStats: vitest.fn().mockReturnValue(of(null)),
@@ -1372,7 +1461,7 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
   });
 
   it('hides the empty CTA when fixed-window trends have data', () => {
-    expect(fixture.componentInstance.store.rows().length).toBe(0);
+    expect(fixture.componentInstance.store.unifiedRows().length).toBe(0);
     const week = fixture.componentInstance.store.weekTrend();
     expect(week.some((w) => w.total > 0)).toBe(true);
     expect(fixture.componentInstance.showEmptyCta()).toBe(false);
@@ -1412,6 +1501,16 @@ describe('AnalysisStore fixed-window trend filters', () => {
         { provide: StatsApiService, useValue: apiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: signal(true),
+            entries: signal([]),
+            exerciseEntries: signal([]),
+            exerciseDefinitions: signal([]),
+            updateTick: signal(0),
+          },
+        },
         {
           provide: UserStatsApiService,
           useValue: {

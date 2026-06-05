@@ -1,19 +1,3 @@
-/**
- * Domain-neutral read shape that unifies the legacy `pushups` collection
- * and the new `exerciseEntries` collection for read paths (history,
- * filter-bar, future analysis page). Pure model — UI components consume
- * `UnifiedEntry` rather than touching `PushupRecord` or `ExerciseEntry`
- * directly so the eventual migration of pushups into `exerciseEntries`
- * (Phase 7) becomes a single mapper change.
- *
- * Discriminated by `kind`:
- *   - `'pushup'` carries the legacy `variantType` (Diamond/Wide/…) which
- *     drives the existing dashboard wiki link and the type-pie chart.
- *   - `'exercise'` carries the catalog `exerciseId` (e.g. `'abs.situps'`)
- *     and any measurement-specific companion values that are present on
- *     the source doc.
- */
-
 import { findExerciseDefinition } from './exercise.catalog';
 import type {
   ExerciseCategoryId,
@@ -21,7 +5,6 @@ import type {
   ExerciseEntry,
   MeasurementType,
 } from './exercise.models';
-import type { PushupRecord } from './pushup.models';
 
 export interface UnifiedEntryBase {
   _id: string;
@@ -29,18 +12,11 @@ export interface UnifiedEntryBase {
   reps: number;
   sets?: number[];
   /** Per-interval breakdown for endurance exercises (sprints, HIIT). See
-   *  `ExerciseEntry.intervals`. Never set on legacy pushup entries. */
+   *  `ExerciseEntry.intervals`. */
   intervals?: number[];
   source: string;
   createdAt?: string;
   updatedAt?: string;
-}
-
-export interface UnifiedPushupEntry extends UnifiedEntryBase {
-  kind: 'pushup';
-  /** Pushup variant as stored on the legacy doc — canonical id, legacy
-   *  English entryLabel, custom user string, or null when missing. */
-  variantType: string | null;
 }
 
 export interface UnifiedExerciseEntry extends UnifiedEntryBase {
@@ -52,32 +28,19 @@ export interface UnifiedExerciseEntry extends UnifiedEntryBase {
   weightKg?: number;
 }
 
-export type UnifiedEntry = UnifiedPushupEntry | UnifiedExerciseEntry;
+export type UnifiedEntry = UnifiedExerciseEntry;
 
 /**
  * Logical filter key for the History/Analysis exercise multi-select.
- * `'pushup'` matches every legacy pushup doc regardless of variant;
- * any other value is an `ExerciseDefinition.id` from the catalog.
+ * For pushup entries (`exerciseId:'pushup'`) this resolves to `'pushup'`,
+ * matching the dedicated category. Any other value is an `ExerciseDefinition.id`
+ * from the catalog.
  *
  * The `string & {}` half is the standard TypeScript trick to keep
  * `'pushup'` as an autocomplete hint without widening the union all
  * the way to `string` (which is what `'pushup' | string` collapses to).
  */
 export type UnifiedEntryFilterKey = 'pushup' | (string & {});
-
-export function pushupRecordToUnified(r: PushupRecord): UnifiedPushupEntry {
-  return {
-    kind: 'pushup',
-    _id: r._id,
-    timestamp: r.timestamp,
-    reps: r.reps,
-    ...(r.sets ? { sets: r.sets } : {}),
-    source: r.source,
-    variantType: r.type ?? null,
-    ...(r.createdAt ? { createdAt: r.createdAt } : {}),
-    ...(r.updatedAt ? { updatedAt: r.updatedAt } : {}),
-  };
-}
 
 export function exerciseEntryToUnified(e: ExerciseEntry): UnifiedExerciseEntry {
   return {
@@ -104,30 +67,24 @@ export function exerciseEntryToUnified(e: ExerciseEntry): UnifiedExerciseEntry {
 
 /**
  * Returns the filter key a UnifiedEntry contributes to the multi-select
- * filter on the history page. Pushup entries always collapse into the
- * single `'pushup'` bucket regardless of variant — the variant filter
- * stays a separate dropdown so users can still drill down to "Diamond
- * Pushups only".
+ * filter on the history page. Pushup entries (`exerciseId:'pushup'`)
+ * collapse into the `'pushup'` bucket; every other exercise uses its
+ * catalog id.
  */
 export function unifiedEntryFilterKey(
   entry: UnifiedEntry
 ): UnifiedEntryFilterKey {
-  return entry.kind === 'pushup' ? 'pushup' : entry.exerciseId;
+  return entry.exerciseId;
 }
 
 /**
- * Maps a UnifiedEntry to the exercise category it belongs to. Legacy
- * pushup entries (kind `'pushup'`, served from the legacy `pushups`
- * collection) always map to the dedicated `'pushup'` category so
- * Liegestütze keep their own dashboard bucket — the generic `push`
- * movement-pattern category is reserved for non-pushup pressing
- * movements (dips, handstand). Exercise entries are resolved via the
- * catalog — `resolveDefinition` defaults to
- * {@link findExerciseDefinition} but can be overridden when the
- * analysis page needs to resolve custom user exercises that live
- * outside the standard catalog. Returns `null` when the exercise id
- * is not resolvable, so callers can decide whether to bucket the
- * entry into an "unknown" group or drop it.
+ * Maps a UnifiedEntry to the exercise category it belongs to. Entries
+ * are resolved via the catalog — `resolveDefinition` defaults to
+ * {@link findExerciseDefinition} but can be overridden when the analysis
+ * page needs to resolve custom user exercises that live outside the
+ * standard catalog. Returns `null` when the exercise id is not resolvable,
+ * so callers can decide whether to bucket the entry into an "unknown"
+ * group or drop it.
  */
 export function unifiedEntryCategoryId(
   entry: UnifiedEntry,
@@ -135,15 +92,14 @@ export function unifiedEntryCategoryId(
     id: string
   ) => ExerciseDefinition | null = findExerciseDefinition
 ): ExerciseCategoryId | null {
-  if (entry.kind === 'pushup') return 'pushup';
   return resolveDefinition(entry.exerciseId)?.categoryId ?? null;
 }
 
 /**
  * Returns the measurement type for an entry — the dimension its primary
- * value lives on. Pushup entries are always `'reps'`. Exercise entries
- * resolve through the catalog; an unknown `exerciseId` yields `null` so
- * callers can decide whether to drop the row or fall back to a default.
+ * value lives on. Entries resolve through the catalog; an unknown
+ * `exerciseId` yields `null` so callers can decide whether to drop the
+ * row or fall back to a default.
  */
 export function unifiedEntryMeasurement(
   entry: UnifiedEntry,
@@ -151,7 +107,6 @@ export function unifiedEntryMeasurement(
     id: string
   ) => ExerciseDefinition | null = findExerciseDefinition
 ): MeasurementType | null {
-  if (entry.kind === 'pushup') return 'reps';
   return resolveDefinition(entry.exerciseId)?.measurement ?? null;
 }
 
@@ -165,22 +120,13 @@ export function unifiedEntryMeasurement(
  *   - `time`            → `durationSec`
  *   - `distance` / `distance-time` → `distanceM`
  *
- * The legacy implementation summed `reps` unconditionally, which made
- * planks, hollow holds and timed cardio surface as zero-height bars
- * even when the user had logged them — that's the bug this helper
- * fixes (and what the historical TODO in `analysis.store.ts`
- * `typeBreakdown` referred to as "until per-measurement charts land").
- *
  * Unknown exerciseIds (custom user exercises whose catalog entry the
  * caller didn't resolve) fall back to the first populated
  * volume-meaningful field in the order `reps` → `durationSec` →
  * `distanceM` so they still contribute a visible bar rather than
  * vanishing. `weightKg` is intentionally excluded: it expresses load
  * per rep rather than a volume, and summing it across entries has no
- * sensible meaning for a chart bar height. Mixed-unit aggregation in
- * a category that contains both reps and time exercises is intentional
- * for now — drilling into a single measurement is a separate UX
- * concern.
+ * sensible meaning for a chart bar height.
  */
 export function unifiedEntryPrimaryValue(
   entry: UnifiedEntry,
@@ -188,7 +134,6 @@ export function unifiedEntryPrimaryValue(
     id: string
   ) => ExerciseDefinition | null = findExerciseDefinition
 ): number {
-  if (entry.kind === 'pushup') return entry.reps;
   const measurement = resolveDefinition(entry.exerciseId)?.measurement;
   switch (measurement) {
     case 'reps':

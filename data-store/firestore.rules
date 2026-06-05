@@ -103,38 +103,6 @@ service cloud.firestore {
                             && request.resource.data.displayName.matches('^[\\p{L}\\p{N} _.\\-]+$')));
     }
 
-    // Pushup entries are user-owned.
-    // Public read is allowed for the SEO demo user so SSR can render preview pages.
-    // Public read for SEO demo user (UID: aqgzwSbhudRLrluz1zBSW3XQx013).
-    //
-    // `reps` plausibility cap mirrors `PUSHUP_REPS_MIN` / `PUSHUP_REPS_MAX`
-    // in `libs/stats/src/lib/models/pushup.models.ts`. Keep the two in sync —
-    // honest writes get rejected here if the client cap is wider.
-    //
-    // Update path gates the cap on `reps` actually changing — otherwise
-    // legacy entries above the new cap would be effectively non-updatable
-    // (fixing `timestamp`/`source` would fail unless `reps` was also
-    // changed first), since `request.resource.data` is the full
-    // post-update document.
-    match /pushups/{pushupId} {
-      allow read: if resource.data.userId == 'aqgzwSbhudRLrluz1zBSW3XQx013'
-                  || (request.auth != null && resource.data.userId == request.auth.uid);
-      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow update: if request.auth != null
-                    && resource.data.userId == request.auth.uid
-                    && request.resource.data.userId == request.auth.uid
-                    && request.resource.data.userId == resource.data.userId
-                    && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
-                        || (request.resource.data.reps is int
-                            && request.resource.data.reps >= 1
-                            && request.resource.data.reps <= 500));
-      allow create: if request.auth != null
-                    && request.resource.data.userId == request.auth.uid
-                    && request.resource.data.reps is int
-                    && request.resource.data.reps >= 1
-                    && request.resource.data.reps <= 500;
-    }
-
     // Public leaderboard snapshot: readable by everyone, writable only via Admin SDK (Cloud Functions).
     match /leaderboards/{docId} {
       allow read: if true;

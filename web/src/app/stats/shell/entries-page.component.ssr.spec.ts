@@ -72,12 +72,12 @@ describe('EntriesPageComponent (SSR/REST)', () => {
     await fixture.whenStable();
   });
 
-  it('loads rows via REST on server', () => {
+  it('renders empty on server (Firestore subscription is browser-only)', () => {
     const store = fixture.debugElement.injector.get(EntriesStore);
-    expect(apiMock.listPushups).toHaveBeenCalled();
-    expect(store.rows().map((x) => x._id)).toEqual(['1']);
-    // Server path of `entriesLoaded` flips once the REST resource resolves;
-    // the empty-state CTA is gated on this flag, so verify it's true here.
-    expect(store.entriesLoaded()).toBe(true);
+    expect(apiMock.listPushups).not.toHaveBeenCalled();
+    expect(store.rows()).toEqual([]);
+    // SSR has no live Firestore connection, so entriesLoaded stays false
+    // and the empty-state CTA is not gated on stale server data.
+    expect(store.entriesLoaded()).toBe(false);
   });
 });

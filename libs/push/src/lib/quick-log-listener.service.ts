@@ -2,12 +2,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
+  ExerciseFirestoreService,
   pushupValidationMessage,
-  StatsApiService,
 } from '@pu-stats/data-access';
 import { QUICK_LOG_REPS_MAX, QUICK_LOG_REPS_MIN } from '@pu-stats/models';
 import { appendLocalOffset } from '@pu-stats/date';
 import { firstValueFrom } from 'rxjs';
+import { UserContextService } from '@pu-auth/auth';
 
 /**
  * Listens for `QUICK_LOG_PUSHUPS` messages posted by the push service worker
@@ -21,7 +22,10 @@ import { firstValueFrom } from 'rxjs';
  */
 @Injectable({ providedIn: 'root' })
 export class QuickLogListenerService {
-  private readonly api = inject(StatsApiService);
+  private readonly exerciseApi = inject(ExerciseFirestoreService, {
+    optional: true,
+  });
+  private readonly userContext = inject(UserContextService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly zone = inject(NgZone);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -52,14 +56,23 @@ export class QuickLogListenerService {
 
   /** Visible for testing — invokes the same flow as the SW message handler. */
   async logEntry(reps: number): Promise<void> {
+    const userId = this.userContext.userIdSafe();
+    if (!userId || !this.exerciseApi) {
+      this.snackBar.open(
+        pushupValidationMessage(new Error('not authenticated')),
+        $localize`:@@snackbar.close:Schließen`,
+        { duration: 5000 }
+      );
+      return;
+    }
     try {
       await firstValueFrom(
-        this.api.createPushup({
+        this.exerciseApi.createEntry(userId, {
+          exerciseId: 'pushup',
           timestamp: appendLocalOffset(currentLocalTimestamp()),
           reps,
           sets: [reps],
           source: 'reminder',
-          type: 'standard',
         })
       );
       this.snackBar.open(

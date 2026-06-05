@@ -24,10 +24,10 @@ export const DEFAULT_SNAP_QUALITY: SnapQuality = 'low';
 export type QuickAddMode = 'reps' | 'auto-count';
 
 /**
- * Sentinel exerciseId for the legacy pushups collection. Pushup quick-adds
- * still flow through `StatsApi.createPushup()` rather than the generic
- * `exerciseEntries` collection — keep this single source so the dashboard,
- * config dialog, and orchestrator stay in lockstep.
+ * Exercise id for pushups. Pushup quick-adds write to `exerciseEntries`
+ * (`exerciseId:'pushup'`) like every other exercise; kept as a named
+ * constant so the dashboard, config dialog, and orchestrator reference the
+ * same id.
  */
 export const PUSHUP_QUICK_ADD_EXERCISE_ID = 'pushup';
 

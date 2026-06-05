@@ -6,7 +6,6 @@ import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
   pushupValidationMessage,
-  StatsApiService,
 } from '@pu-stats/data-access';
 import {
   EXERCISE_CATALOG,
@@ -112,11 +111,6 @@ function catalogIdForHoldTimerProfile(
 
 @Injectable({ providedIn: 'root' })
 export class QuickAddOrchestrationService {
-  private readonly statsApi = inject(StatsApiService);
-  // Optional because the legacy fillToGoal/openDialog/quickAdd flows
-  // never touch exercises and most app-level test harnesses don't
-  // provide the Firestore-bound service. The auto-count exercise path
-  // checks for null and surfaces an error snackbar if needed.
   private readonly exerciseApi = inject(ExerciseFirestoreService, {
     optional: true,
   });
@@ -178,10 +172,17 @@ export class QuickAddOrchestrationService {
   }
 
   add(reps: number): void {
-    this.statsApi
-      .createPushup({
+    const userId = this.userContext.userIdSafe();
+    if (!userId || !this.exerciseApi) {
+      this.openErrorSnackbar();
+      return;
+    }
+    this.exerciseApi
+      .createEntry(userId, {
+        exerciseId: 'pushup',
         timestamp: nowLocalIsoTimestamp(),
         reps,
+        sets: [reps],
         source: 'quick-add',
       })
       .subscribe({
@@ -205,12 +206,19 @@ export class QuickAddOrchestrationService {
     if (this._fillToGoalInFlight()) return;
     const gap = this.appData.remainingToGoal();
     if (gap <= 0) return;
+    const userId = this.userContext.userIdSafe();
+    if (!userId || !this.exerciseApi) {
+      this.openErrorSnackbar();
+      return;
+    }
 
     this._fillToGoalInFlight.set(true);
-    this.statsApi
-      .createPushup({
+    this.exerciseApi
+      .createEntry(userId, {
+        exerciseId: 'pushup',
         timestamp: nowLocalIsoTimestamp(),
         reps: gap,
+        sets: [gap],
         source: 'goal-fill',
       })
       .subscribe({
@@ -403,23 +411,23 @@ export class QuickAddOrchestrationService {
      */
     exerciseSource = 'web'
   ): Promise<void> {
+    const userId = this.userContext.userIdSafe();
+    if (!userId || !this.exerciseApi) {
+      this.openErrorSnackbar();
+      return;
+    }
     try {
       if (result.kind === 'pushup') {
         await firstValueFrom(
-          this.statsApi.createPushup({
+          this.exerciseApi.createEntry(userId, {
+            exerciseId: 'pushup',
             timestamp: result.timestamp,
             reps: result.reps,
             sets: result.sets,
             source: result.source,
-            type: result.type,
           })
         );
       } else {
-        const userId = this.userContext.userIdSafe();
-        if (!userId || !this.exerciseApi) {
-          this.openErrorSnackbar();
-          return;
-        }
         await firstValueFrom(
           this.exerciseApi.createEntry(
             userId,

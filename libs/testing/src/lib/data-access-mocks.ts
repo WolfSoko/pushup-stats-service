@@ -8,9 +8,9 @@
  * Pass your framework's spy as an override to verify calls:
  *
  *   // Jest:
- *   const mock = makePushupFirestoreMock({ createPushup: jest.fn().mockReturnValue(of(record)) });
+ *   const mock = makePushupFirestoreMock({ migrateUserData: jest.fn() });
  *   // Vitest:
- *   const mock = makePushupFirestoreMock({ createPushup: vitest.fn().mockReturnValue(of(record)) });
+ *   const mock = makePushupFirestoreMock({ migrateUserData: vitest.fn() });
  */
 
 import { EMPTY, of } from 'rxjs';
@@ -22,39 +22,22 @@ import {
   StatsApiService,
   UserConfigApiService,
 } from '@pu-stats/data-access';
-import {
-  PushupRecord,
-  StatsFilter,
-  StatsResponse,
-  UserConfig,
-  UserConfigUpdate,
-} from '@pu-stats/models';
-import { makePushupRecord } from './pushup-fixtures';
+import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 
 // ---------------------------------------------------------------------------
 // PushupFirestoreService mock
 // ---------------------------------------------------------------------------
 
 /**
- * Creates a PushupFirestoreService mock that returns empty lists by default.
+ * Creates a PushupFirestoreService mock.
  *
  * @example
  * { provide: PushupFirestoreService, useValue: makePushupFirestoreMock() }
- *
- * // With custom data:
- * const records = makePushupList(3);
- * const mock = makePushupFirestoreMock({ listPushups: () => of(records) });
  */
 export function makePushupFirestoreMock(
   overrides: Partial<PushupFirestoreService> = {}
 ): Partial<PushupFirestoreService> {
-  const defaultRecord = makePushupRecord();
   return {
-    listPushups: (_userId: string, _filter?: StatsFilter) =>
-      of([] as PushupRecord[]),
-    createPushup: (_userId: string) => of(defaultRecord),
-    updatePushup: (_id: string) => of(undefined),
-    deletePushup: (_id: string) => of({ ok: true as const }),
     migrateUserData: () => Promise.resolve(),
     ...overrides,
   };
@@ -86,20 +69,9 @@ export function makeUserConfigMock(
 // StatsApiService mock
 // ---------------------------------------------------------------------------
 
-const emptyStats: StatsResponse = {
-  meta: {
-    from: null,
-    to: null,
-    entries: 0,
-    days: 0,
-    total: 0,
-    granularity: 'daily',
-  },
-  series: [],
-};
-
 /**
- * Creates a StatsApiService mock returning empty stats by default.
+ * Creates a StatsApiService mock. The service is now a no-op shell,
+ * so this factory simply returns an empty object.
  *
  * @example
  * { provide: StatsApiService, useValue: makeStatsApiMock() }
@@ -107,13 +79,7 @@ const emptyStats: StatsResponse = {
 export function makeStatsApiMock(
   overrides: Partial<StatsApiService> = {}
 ): Partial<StatsApiService> {
-  const defaultRecord = makePushupRecord();
   return {
-    load: (_filter?: StatsFilter) => of(emptyStats),
-    listPushups: (_filter?: StatsFilter) => of([] as PushupRecord[]),
-    createPushup: () => of(defaultRecord),
-    updatePushup: (_id: string) => of(undefined),
-    deletePushup: (_id: string) => of({ ok: true as const }),
     ...overrides,
   };
 }

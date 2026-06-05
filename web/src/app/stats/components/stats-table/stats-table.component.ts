@@ -32,8 +32,6 @@ import {
   formatEntryDisplay,
   formatExerciseValue,
   measurementValueField,
-  PushupRecord,
-  pushupRecordToUnified,
   UnifiedEntry,
   unifiedEntryFilterKey,
 } from '@pu-stats/models';
@@ -92,8 +90,8 @@ export interface StatsTableRemove {
 /**
  * Create payload emitted from the table. Mirrors {@link StatsTableUpdate}
  * but without `id`, since a new entry has no doc to patch yet. The `kind`
- * discriminator lets the parent store dispatch to `createPushup` or
- * `createEntry` without re-introspecting the dialog result.
+ * discriminator lets the parent store build the create payload without
+ * re-introspecting the dialog result.
  */
 export interface StatsTableCreate {
   kind: 'pushup' | 'exercise';
@@ -138,10 +136,10 @@ export class StatsTableComponent {
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
   readonly typeLabel = (entry: UnifiedEntry): string => {
-    if (entry.kind === 'pushup') {
-      return displayPushupType(entry.variantType, this.locale);
+    if (entry.exerciseId === 'pushup') {
+      return displayPushupType(entry.variantId ?? '', this.locale);
     }
-    // Typ is a sub-type (pushup variant), not the exercise itself —
+    // Typ is a sub-type (variant), not the exercise itself —
     // surfacing the exercise name here would duplicate the Übung column.
     return entry.variantId ?? '';
   };
@@ -156,13 +154,7 @@ export class StatsTableComponent {
    */
   readonly highlightEntryId = input<string | null>(null);
 
-  /**
-   * The table accepts both legacy `PushupRecord[]` (dashboard preview)
-   * and the new `UnifiedEntry[]` (history page). Pushup arrays are
-   * mapped on the way in via `pushupRecordToUnified`. Backwards-compat
-   * keeps the dashboard caller untouched.
-   */
-  readonly entries = input<UnifiedEntry[] | PushupRecord[]>([]);
+  readonly entries = input<UnifiedEntry[]>([]);
   readonly readOnly = input(false);
   readonly busyAction = input<'create' | 'update' | 'delete' | null>(null);
   readonly busyId = input<string | null>(null);
@@ -199,18 +191,9 @@ export class StatsTableComponent {
     return cols;
   });
 
-  /** Normalize each input element to UnifiedEntry. The two callers
-   * pass homogeneous arrays today (dashboard preview = PushupRecord[],
-   * history page = UnifiedEntry[]), but a per-element check is barely
-   * costlier than a first-element heuristic and keeps mixed arrays
-   * working if a future caller ever feeds one. */
-  private readonly unifiedEntries = computed<UnifiedEntry[]>(() => {
-    const raw = this.entries() ?? [];
-    if (raw.length === 0) return [];
-    return (raw as Array<PushupRecord | UnifiedEntry>).map((r) =>
-      'kind' in r ? r : pushupRecordToUnified(r)
-    );
-  });
+  private readonly unifiedEntries = computed<UnifiedEntry[]>(
+    () => this.entries() ?? []
+  );
 
   readonly dataSource = new MatTableDataSource<UnifiedEntry>([]);
 
@@ -218,7 +201,7 @@ export class StatsTableComponent {
   readonly exerciseColumnLabel = $localize`:@@colExercise:Übung`;
 
   exerciseLabel(entry: UnifiedEntry): string {
-    if (entry.kind === 'pushup') {
+    if (entry.exerciseId === 'pushup') {
       return $localize`:@@exercise.category.pushup:Liegestütze`;
     }
     const def = findExerciseDefinition(entry.exerciseId);
@@ -236,8 +219,8 @@ export class StatsTableComponent {
    * exercises wiki, so the column is always rendered as a link.
    */
   exerciseWikiLink(entry: UnifiedEntry): string[] {
-    if (entry.kind === 'pushup') {
-      const variant = findPushupTypeByStoredValue(entry.variantType);
+    if (entry.exerciseId === 'pushup') {
+      const variant = findPushupTypeByStoredValue(entry.variantId);
       return variant
         ? ['/wiki/liegestuetz-typen', variant.slug]
         : ['/wiki/liegestuetz-typen'];
@@ -322,14 +305,14 @@ export class StatsTableComponent {
 
   openEditDialog(entry: UnifiedEntry): void {
     const dialogData: TrainingEntryDialogData =
-      entry.kind === 'pushup'
+      entry.exerciseId === 'pushup'
         ? {
             kind: 'pushup',
             timestamp: entry.timestamp,
             reps: entry.reps,
             sets: entry.sets,
             source: entry.source,
-            type: entry.variantType ?? undefined,
+            type: entry.variantId ?? undefined,
           }
         : {
             kind: 'exercise',
@@ -430,21 +413,21 @@ export class StatsTableComponent {
     result: TrainingEntryDialogResult
   ): StatsTableUpdate {
     // Edit mode locks the kind picker, so dialog result kind always
-    // matches the row's kind. The kind-narrowed branches keep the
-    // payload type-safe even though the runtime guard is on `entry`.
-    if (entry.kind === 'pushup' && result.kind === 'pushup') {
+    // matches the row's exercise. The exerciseId-narrowed branches keep
+    // the payload type-safe even though the runtime guard is on `entry`.
+    if (entry.exerciseId === 'pushup' && result.kind === 'pushup') {
       return this.pushupUpdatePayload(entry, result);
     }
-    if (entry.kind === 'exercise' && result.kind === 'exercise') {
+    if (entry.exerciseId !== 'pushup' && result.kind === 'exercise') {
       return this.exerciseUpdatePayload(entry, result);
     }
     throw new Error(
-      `toUpdatePayload: kind mismatch — entry='${entry.kind}', result='${result.kind}'`
+      `toUpdatePayload: kind mismatch — exerciseId='${entry.exerciseId}', result='${result.kind}'`
     );
   }
 
   private pushupUpdatePayload(
-    entry: Extract<UnifiedEntry, { kind: 'pushup' }>,
+    entry: UnifiedEntry,
     result: PushupEntryDialogResult
   ): StatsTableUpdate {
     return {
@@ -468,7 +451,7 @@ export class StatsTableComponent {
   }
 
   private exerciseUpdatePayload(
-    entry: Extract<UnifiedEntry, { kind: 'exercise' }>,
+    entry: UnifiedEntry,
     result: ExerciseEntryDialogResult
   ): StatsTableUpdate {
     // The dialog disables the category + exercise pickers in edit mode
@@ -524,7 +507,7 @@ export class StatsTableComponent {
   }
 
   emitRemove(entry: UnifiedEntry): void {
-    this.remove.emit({ kind: entry.kind, id: entry._id });
+    this.remove.emit({ kind: 'exercise', id: entry._id });
   }
 
   isBusy(action: 'update' | 'delete', id: string): boolean {
@@ -562,7 +545,6 @@ export class StatsTableComponent {
    * formatting in one place.
    */
   formatEntry(entry: UnifiedEntry): string {
-    if (entry.kind === 'pushup') return String(entry.reps);
     const def = findExerciseDefinition(entry.exerciseId);
     if (!def) return String(entry.reps);
     return formatEntryDisplay(entry, def);
@@ -576,7 +558,6 @@ export class StatsTableComponent {
    * stale entries.
    */
   private sortValue(entry: UnifiedEntry): number {
-    if (entry.kind === 'pushup') return entry.reps;
     const def = findExerciseDefinition(entry.exerciseId);
     if (!def) return entry.reps;
     const field = measurementValueField(def.measurement);

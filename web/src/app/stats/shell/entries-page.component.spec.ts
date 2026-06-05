@@ -8,7 +8,7 @@ import {
   StatsApiService,
 } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { AuthStore } from '@pu-auth/auth';
+import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { EntriesStore } from '../entries.store';
@@ -99,6 +99,7 @@ describe('EntriesPageComponent', () => {
         { provide: ExerciseFirestoreService, useValue: exerciseServiceMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
+        { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: AppDataFacade, useValue: appDataMock },
       ],
     }).compileComponents();
@@ -132,11 +133,10 @@ describe('EntriesPageComponent', () => {
       source: 'web',
     });
 
-    expect(apiMock.createPushup).toHaveBeenCalledWith({
-      timestamp: '2026-02-11T20:00',
-      reps: 12,
-      source: 'web',
-    });
+    expect(exerciseServiceMock.createEntry).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ exerciseId: 'pushup', reps: 12, source: 'web' })
+    );
   });
 
   it('updates an entry via api', async () => {
@@ -149,18 +149,17 @@ describe('EntriesPageComponent', () => {
       type: 'Diamond',
     });
 
-    expect(apiMock.updatePushup).toHaveBeenCalledWith('1', {
-      timestamp: '2026-02-11T20:00',
-      reps: 14,
-      source: 'web',
-      type: 'Diamond',
-    });
+    expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+      '1',
+      'pushup',
+      expect.objectContaining({ reps: 14, source: 'web' })
+    );
   });
 
   it('deletes a single row via api', async () => {
     await store.deleteEntry({ kind: 'pushup', id: '2' });
 
-    expect(apiMock.deletePushup).toHaveBeenCalledWith('2');
+    expect(exerciseServiceMock.deleteEntry).toHaveBeenCalledWith('2');
   });
 
   it('exposes no pushup variant type options post-cutover', () => {

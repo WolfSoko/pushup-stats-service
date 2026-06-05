@@ -1,14 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  computed,
-  inject,
-  Injectable,
-  PLATFORM_ID,
-  resource,
-} from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { UserContextService } from '@pu-auth/auth';
-import { StatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   type ComplexGoalEntry,
@@ -88,41 +80,29 @@ function configuredSuggestion(
 @Injectable({ providedIn: 'root' })
 export class AppDataFacade {
   private readonly user = inject(UserContextService);
-  private readonly statsApi = inject(StatsApiService);
   private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
   private readonly userConfig = inject(UserConfigStore);
   private readonly trainingPlan = inject(TrainingPlanStore);
   private readonly live = inject(LiveDataStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  readonly recentEntriesResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => {
-      if (!params.userId) return [];
+  /** Last 7 days of pushup entries — derived live from Firestore in the browser. */
+  private readonly recentEntries = computed<
+    { timestamp: string; reps: number }[]
+  >(() => {
+    if (this.isBrowser && this.live.connected()) {
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const from = sevenDaysAgo.toISOString().slice(0, 10);
-      return firstValueFrom(this.statsApi.listPushups({ from }));
-    },
-  });
-
-  /** Last 7 days of entries — derived live from Firestore in the browser. */
-  private readonly recentEntries = computed<{ timestamp: string; reps: number }[]>(
-    () => {
-      if (this.isBrowser && this.live.connected()) {
-        const sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-        const cutoff = sevenDaysAgo.toISOString().slice(0, 10);
-        return this.live
-          .exerciseEntries()
-          .filter(
-            (e) => e.exerciseId === 'pushup' && e.timestamp.slice(0, 10) >= cutoff
-          )
-          .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }));
-      }
-      return this.recentEntriesResource.value() ?? [];
+      const cutoff = sevenDaysAgo.toISOString().slice(0, 10);
+      return this.live
+        .exerciseEntries()
+        .filter(
+          (e) => e.exerciseId === 'pushup' && e.timestamp.slice(0, 10) >= cutoff
+        )
+        .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }));
     }
-  );
+    return [];
+  });
 
   readonly quickAddSuggestions = computed<QuickAddSuggestion[]>(() => {
     const configured = this.userConfig.quickAdds();
@@ -166,18 +146,6 @@ export class AppDataFacade {
 
   readonly dailyGoal = computed(() => this.effectiveDailyGoal() || 100);
 
-  readonly dailyProgressResource = resource({
-    params: () => ({ userId: this.user.userIdSafe() }),
-    loader: async ({ params }) => {
-      if (!params.userId) return 0;
-      const today = new Date().toISOString().slice(0, 10);
-      const stats = await firstValueFrom(
-        this.statsApi.load({ from: today, to: today })
-      );
-      return stats?.meta?.total ?? 0;
-    },
-  });
-
   readonly todayProgress = computed(() => {
     if (this.isBrowser && this.live.connected()) {
       const berlinToday = toBerlinIsoDate(new Date());
@@ -190,7 +158,7 @@ export class AppDataFacade {
         )
         .reduce((sum, e) => sum + (e.reps ?? 0), 0);
     }
-    return this.dailyProgressResource.value() ?? 0;
+    return 0;
   });
 
   readonly remainingToGoal = computed(() =>
@@ -383,7 +351,6 @@ export class AppDataFacade {
    * defence-in-depth if the Firestore listener ever drops.
    */
   reloadAfterMutation(): void {
-    this.recentEntriesResource.reload();
-    this.dailyProgressResource.reload();
+    // no-op: live updates flow automatically through LiveDataStore
   }
 }

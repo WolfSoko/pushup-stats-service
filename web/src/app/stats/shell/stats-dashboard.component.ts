@@ -18,14 +18,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {
-  ExerciseFirestoreService,
-  StatsApiService,
-} from '@pu-stats/data-access';
+import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
-  displayPushupType,
   findExerciseDefinition,
   formatEntryDisplay,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
@@ -75,7 +71,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsDashboardComponent {
-  private readonly api = inject(StatsApiService);
   private readonly exerciseService = inject(ExerciseFirestoreService);
   private readonly userContext = inject(UserContextService);
   private readonly dialog = inject(MatDialog);
@@ -87,33 +82,22 @@ export class StatsDashboardComponent {
   private readonly appData = inject(AppDataFacade);
   private readonly locale = inject(LOCALE_ID) as string;
 
-  readonly pushupTypeLabel = (
-    entry: Extract<UnifiedEntry, { kind: 'pushup' }>
-  ): string => displayPushupType(entry.variantType, this.locale);
-
   // Mirrors stats-table.formatEntry so the dashboard preview matches
   // the history page when a catalog definition exists (plank → m:ss,
   // cardio.running → distance · time (pace), etc.).
-  readonly exerciseEntryValue = (
-    entry: Extract<UnifiedEntry, { kind: 'exercise' }>
-  ): string => {
+  readonly exerciseEntryValue = (entry: UnifiedEntry): string => {
     const def = findExerciseDefinition(entry.exerciseId);
     if (!def) return String(entry.reps);
     return formatEntryDisplay(entry, def);
   };
 
-  readonly exerciseEntryLabel = (
-    entry: Extract<UnifiedEntry, { kind: 'exercise' }>
-  ): string => exerciseDisplayName(entry.exerciseId);
+  readonly exerciseEntryLabel = (entry: UnifiedEntry): string =>
+    exerciseDisplayName(entry.exerciseId);
 
-  readonly tileIcon = (entry: UnifiedEntry): string =>
-    entry.kind === 'pushup' ? 'fitness_center' : 'sports_gymnastics';
+  readonly tileIcon = (_entry: UnifiedEntry): string => 'sports_gymnastics';
 
   readonly tileAriaLabel = (entry: UnifiedEntry): string => {
-    const label =
-      entry.kind === 'pushup'
-        ? $localize`:@@dashboard.tile.pushupTitle:Liegestütze`
-        : this.exerciseEntryLabel(entry);
+    const label = this.exerciseEntryLabel(entry);
     return $localize`:@@dashboard.tile.openInHistoryAria:${label}:label: in der Historie öffnen`;
   };
 
@@ -305,19 +289,19 @@ export class StatsDashboardComponent {
   });
 
   async createEntry(result: TrainingEntryDialogResult) {
+    const userId = this.userContext.userIdSafe();
+    if (!userId) return;
     if (result.kind === 'pushup') {
       await firstValueFrom(
-        this.api.createPushup({
+        this.exerciseService.createEntry(userId, {
+          exerciseId: 'pushup',
           timestamp: result.timestamp,
           reps: result.reps,
           sets: result.sets,
           source: result.source,
-          type: result.type,
         })
       );
     } else {
-      const userId = this.userContext.userIdSafe();
-      if (!userId) return;
       const intervals = result.intervals ?? [];
       await firstValueFrom(
         this.exerciseService.createEntry(userId, {
@@ -356,13 +340,15 @@ export class StatsDashboardComponent {
     reps: number,
     source: 'web' | 'reminder' | 'quick-add' = 'web'
   ) {
+    const userId = this.userContext.userIdSafe();
+    if (!userId) return;
     await firstValueFrom(
-      this.api.createPushup({
+      this.exerciseService.createEntry(userId, {
+        exerciseId: 'pushup',
         timestamp: nowLocalIsoTimestamp(),
         reps,
         sets: [reps],
         source,
-        type: 'standard',
       })
     );
     this.store.refreshAll();

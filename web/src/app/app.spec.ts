@@ -7,7 +7,12 @@ import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
 import { NEVER, of, Subject } from 'rxjs';
-import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
+import {
+  ExerciseFirestoreService,
+  StatsApiService,
+  UserConfigApiService,
+} from '@pu-stats/data-access';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { Auth } from '@angular/fire/auth';
 import {
   AuthService,
@@ -23,6 +28,8 @@ import { QuickAddOrchestrationService } from './core/quick-add-orchestration.ser
 
 describe('App (testing-library)', () => {
   let userNameSignal: WritableSignal<string>;
+  let liveEntriesSignal: WritableSignal<unknown[]>;
+  let liveConnectedSignal: WritableSignal<boolean>;
   const authMock = {
     user: signal({ uid: 'default', displayName: 'default', email: 'default' }),
     loading: () => false,
@@ -77,8 +84,17 @@ describe('App (testing-library)', () => {
     listPushups: vitest.fn().mockReturnValue(of([])),
   };
 
+  const exerciseFirestoreMock = {
+    createEntry: vitest.fn().mockReturnValue(of({ _id: 'x' })),
+    listEntries: vitest.fn().mockReturnValue(of([])),
+    deleteEntry: vitest.fn().mockReturnValue(of({ ok: true })),
+    updateEntry: vitest.fn().mockReturnValue(of(undefined)),
+  };
+
   beforeEach(() => {
     userNameSignal = signal('default');
+    liveEntriesSignal = signal([]);
+    liveConnectedSignal = signal(false);
     vitest.clearAllMocks();
   });
 
@@ -107,6 +123,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
     expect(fixture.componentInstance).toBeTruthy();
@@ -133,6 +159,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
     expect(screen.getAllByText('Dashboard').length).toBeGreaterThan(0);
@@ -150,19 +186,17 @@ describe('App (testing-library)', () => {
 
   it('shows daily progress and goal in toolbar', async () => {
     userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 137 }));
-    statsApiMock.load.mockReturnValue(
-      of({
-        meta: {
-          from: null,
-          to: null,
-          entries: 2,
-          days: 1,
-          total: 42,
-          granularity: 'daily',
-        },
-        series: [],
-      })
-    );
+    const today = new Date().toISOString().slice(0, 10);
+    liveEntriesSignal.set([
+      {
+        _id: 'e1',
+        exerciseId: 'pushup',
+        timestamp: `${today}T10:00:00`,
+        reps: 42,
+        source: 'web',
+      },
+    ]);
+    liveConnectedSignal.set(true);
 
     await render(App, {
       providers: [
@@ -184,6 +218,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
 
@@ -195,19 +239,17 @@ describe('App (testing-library)', () => {
 
   it('given a configured daily goal, when the goal pill is hovered, then it expands into a per-exercise breakdown dropdown', async () => {
     userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 137 }));
-    statsApiMock.load.mockReturnValue(
-      of({
-        meta: {
-          from: null,
-          to: null,
-          entries: 2,
-          days: 1,
-          total: 42,
-          granularity: 'daily',
-        },
-        series: [],
-      })
-    );
+    const today = new Date().toISOString().slice(0, 10);
+    liveEntriesSignal.set([
+      {
+        _id: 'e1',
+        exerciseId: 'pushup',
+        timestamp: `${today}T10:00:00`,
+        reps: 42,
+        source: 'web',
+      },
+    ]);
+    liveConnectedSignal.set(true);
 
     await render(App, {
       providers: [
@@ -229,6 +271,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
 
@@ -269,12 +321,7 @@ describe('App (testing-library)', () => {
     }) {
       return [
         provideRouter([]),
-        // PLATFORM_ID 'server' so the TrainingPlanStore's once-a-minute
-        // setInterval in withHooks (browser-only branch) doesn't leak
-        // across TestBed.resetTestingModule(). The pill state we assert on
-        // is driven purely by signals/resource, both of which work on
-        // server.
-        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: UserContextService,
           useValue: {
@@ -291,6 +338,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
         // Stub the notifier so its constructor-time effects (which inject
         // many other root services) don't run in this minimal harness.
         { provide: GoalReachedNotificationService, useValue: notifierMock },
@@ -300,26 +357,22 @@ describe('App (testing-library)', () => {
     it('given the daily goal is reached, when the pill is clicked, then it replays the daily celebration', async () => {
       // Given — dailyGoal=50, todayProgress=80 → goalReached === true.
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 80,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
       const user = userEvent.setup();
+      const today1 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today1}T10:00:00`,
+          reps: 80,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, {
         providers: commonProviders(notifierMock),
       });
-      // Wait for the dailyProgressResource to resolve so goalReached() flips
-      // to true and the pill is wired into the DOM.
       await screen.findAllByText((content) => content.includes('80 / 50'));
 
       // When
@@ -333,21 +386,19 @@ describe('App (testing-library)', () => {
     it('given the daily goal has NOT been reached, when the pill is clicked, then the notifier stays quiet', async () => {
       // Given — dailyGoal=100, todayProgress=10 → goalReached === false.
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 10,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
       const user = userEvent.setup();
+      const today2 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today2}T10:00:00`,
+          reps: 10,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, {
         providers: commonProviders(notifierMock),
       });
@@ -364,20 +415,18 @@ describe('App (testing-library)', () => {
     it('exposes role="button", tabindex="0" and a localized aria-label on the pill once the daily goal is reached', async () => {
       // Given
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 80,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
+      const today3 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today3}T10:00:00`,
+          reps: 80,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, { providers: commonProviders(notifierMock) });
       await screen.findAllByText((content) => content.includes('80 / 50'));
 
@@ -397,20 +446,18 @@ describe('App (testing-library)', () => {
     it('omits role/tabindex/aria-label on the pill while the daily goal is not yet reached', async () => {
       // Given
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 10,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
+      const today4 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today4}T10:00:00`,
+          reps: 10,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, { providers: commonProviders(notifierMock) });
       await screen.findAllByText((content) => content.includes('10 / 100'));
 
@@ -428,20 +475,18 @@ describe('App (testing-library)', () => {
     it('replays the celebration when Enter is pressed on the pill after the goal is reached', async () => {
       // Given — goal reached + pill focusable.
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 80,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
+      const today5 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today5}T10:00:00`,
+          reps: 80,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, { providers: commonProviders(notifierMock) });
       await screen.findAllByText((content) => content.includes('80 / 50'));
       const pill = document.querySelector<HTMLElement>(
@@ -461,20 +506,18 @@ describe('App (testing-library)', () => {
     it('replays the celebration when Space is pressed and suppresses the default page-scroll', async () => {
       // Given
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 80,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
+      const today6 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today6}T10:00:00`,
+          reps: 80,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, { providers: commonProviders(notifierMock) });
       await screen.findAllByText((content) => content.includes('80 / 50'));
       const pill = document.querySelector<HTMLElement>(
@@ -499,20 +542,18 @@ describe('App (testing-library)', () => {
       // Given — held Enter emits repeated keydown events; WAI-ARIA Button
       // Pattern says only the first press activates.
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 50 }));
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 1,
-            days: 1,
-            total: 80,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
       const notifierMock = makeNotifierMock();
+      const today7 = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today7}T10:00:00`,
+          reps: 80,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
       await render(App, { providers: commonProviders(notifierMock) });
       await screen.findAllByText((content) => content.includes('80 / 50'));
       const pill = document.querySelector<HTMLElement>(
@@ -557,6 +598,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
         ],
       });
 
@@ -597,6 +651,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
         ],
       });
 
@@ -637,6 +704,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
         ],
       });
 
@@ -677,6 +757,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
         ],
       });
 
@@ -720,6 +813,19 @@ describe('App (testing-library)', () => {
             { provide: StatsApiService, useValue: statsApiMock },
             { provide: AdsStore, useValue: adsStoreMock },
             { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+            {
+              provide: ExerciseFirestoreService,
+              useValue: exerciseFirestoreMock,
+            },
+            {
+              provide: LiveDataStore,
+              useValue: {
+                connected: liveConnectedSignal,
+                exerciseEntries: liveEntriesSignal,
+                exerciseEntriesLoaded: liveConnectedSignal,
+                updateTick: signal(0),
+              },
+            },
           ],
         });
 
@@ -759,6 +865,19 @@ describe('App (testing-library)', () => {
             { provide: StatsApiService, useValue: statsApiMock },
             { provide: AdsStore, useValue: adsStoreMock },
             { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+            {
+              provide: ExerciseFirestoreService,
+              useValue: exerciseFirestoreMock,
+            },
+            {
+              provide: LiveDataStore,
+              useValue: {
+                connected: liveConnectedSignal,
+                exerciseEntries: liveEntriesSignal,
+                exerciseEntriesLoaded: liveConnectedSignal,
+                updateTick: signal(0),
+              },
+            },
           ],
         });
 
@@ -797,6 +916,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
 
@@ -829,6 +958,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
 
@@ -885,6 +1024,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
 
@@ -937,6 +1086,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
           { provide: SwUpdate, useValue: swUpdate },
         ],
       });
@@ -987,6 +1149,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
           { provide: SwUpdate, useValue: swUpdate },
         ],
       });
@@ -1036,6 +1211,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
           { provide: SwUpdate, useValue: swUpdate },
         ],
       });
@@ -1081,6 +1269,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
           { provide: SwUpdate, useValue: swUpdate },
         ],
       });
@@ -1125,6 +1326,19 @@ describe('App (testing-library)', () => {
             { provide: StatsApiService, useValue: statsApiMock },
             { provide: AdsStore, useValue: adsStoreMock },
             { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+            {
+              provide: ExerciseFirestoreService,
+              useValue: exerciseFirestoreMock,
+            },
+            {
+              provide: LiveDataStore,
+              useValue: {
+                connected: liveConnectedSignal,
+                exerciseEntries: liveEntriesSignal,
+                exerciseEntriesLoaded: liveConnectedSignal,
+                updateTick: signal(0),
+              },
+            },
             { provide: SwUpdate, useValue: swUpdate },
           ],
         });
@@ -1163,6 +1377,16 @@ describe('App (testing-library)', () => {
         { provide: StatsApiService, useValue: statsApiMock },
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
       ],
     });
 
@@ -1197,6 +1421,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
         ],
       });
       expect(fixture.componentInstance.autoCountEnabled()).toBe(true);
@@ -1231,6 +1468,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
           {
             provide: QuickAddOrchestrationService,
             useValue: {
@@ -1274,6 +1524,19 @@ describe('App (testing-library)', () => {
           { provide: StatsApiService, useValue: statsApiMock },
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
           {
             provide: QuickAddOrchestrationService,
             useValue: {

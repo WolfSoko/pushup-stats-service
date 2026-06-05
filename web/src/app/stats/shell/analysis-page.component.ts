@@ -299,9 +299,7 @@ export class AnalysisPageComponent {
    * narrowing the filter to an empty range contradicts populated trend cards.
    */
   readonly showEmptyCta = computed(() => {
-    if (this.store.entriesResource.status() !== 'resolved') return false;
-    if (this.store.weekEntriesResource.status() !== 'resolved') return false;
-    if (this.store.monthEntriesResource.status() !== 'resolved') return false;
+    if (!this.live.connected()) return false;
     if (this.store.unifiedRows().length > 0) return false;
     if (this.store.weekTrend().some((t) => t.total > 0)) return false;
     if (this.store.monthTrend().some((t) => t.total > 0)) return false;
