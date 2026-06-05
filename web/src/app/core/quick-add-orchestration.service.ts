@@ -182,6 +182,7 @@ export class QuickAddOrchestrationService {
         exerciseId: 'pushup',
         timestamp: nowLocalIsoTimestamp(),
         reps,
+        sets: [reps],
         source: 'quick-add',
       })
       .subscribe({
@@ -217,6 +218,7 @@ export class QuickAddOrchestrationService {
         exerciseId: 'pushup',
         timestamp: nowLocalIsoTimestamp(),
         reps: gap,
+        sets: [gap],
         source: 'goal-fill',
       })
       .subscribe({
