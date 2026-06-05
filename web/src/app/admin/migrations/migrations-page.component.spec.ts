@@ -3,9 +3,14 @@ import { provideRouter } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MigrationsPageComponent } from './migrations-page.component';
 
-vi.mock('@angular/fire/functions', () => ({
-  Functions: class {},
+const mocks = vi.hoisted(() => ({
+  Functions: class Functions {},
   httpsCallable: vi.fn(),
+}));
+
+vi.mock('@angular/fire/functions', () => ({
+  Functions: mocks.Functions,
+  httpsCallable: mocks.httpsCallable,
 }));
 
 interface CallableRecord {
@@ -14,7 +19,7 @@ interface CallableRecord {
 }
 
 function setupCallables(records: CallableRecord[]): void {
-  vi.mocked(httpsCallable).mockImplementation(
+  mocks.httpsCallable.mockImplementation(
     (_functions: Functions, name: string) => {
       const match = records.find((r) => r.name === name);
       if (!match) {
@@ -70,7 +75,7 @@ describe('MigrationsPageComponent', () => {
 
     // then the page exposes it to the cards
     expect(component.statuses()['pushup-unification']?.completed).toBe(true);
-    expect(httpsCallable).toHaveBeenCalledWith(
+    expect(mocks.httpsCallable).toHaveBeenCalledWith(
       expect.anything(),
       'getMigrationStatuses'
     );

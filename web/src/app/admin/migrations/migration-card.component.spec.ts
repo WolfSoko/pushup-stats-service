@@ -4,9 +4,15 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MigrationCardComponent } from './migration-card.component';
 import { MigrationDescriptor } from './migration-descriptors';
 
-vi.mock('@angular/fire/functions', () => ({
-  Functions: class {},
+const mocks = vi.hoisted(() => ({
+  // Named class keeps the same identity within this file's vi.mock factory.
+  Functions: class Functions {},
   httpsCallable: vi.fn(),
+}));
+
+vi.mock('@angular/fire/functions', () => ({
+  Functions: mocks.Functions,
+  httpsCallable: mocks.httpsCallable,
 }));
 
 interface CallableRecord {
@@ -15,7 +21,7 @@ interface CallableRecord {
 }
 
 function setupCallables(records: CallableRecord[]): void {
-  vi.mocked(httpsCallable).mockImplementation(
+  mocks.httpsCallable.mockImplementation(
     (_functions: Functions, name: string) => {
       const match = records.find((r) => r.name === name);
       if (!match) {
@@ -94,7 +100,7 @@ describe('MigrationCardComponent', () => {
     await clickButton('Probelauf');
 
     // then the callable is invoked with dryRun:true and counters render
-    expect(httpsCallable).toHaveBeenCalledWith(
+    expect(mocks.httpsCallable).toHaveBeenCalledWith(
       expect.anything(),
       'migratePushupsToExerciseEntries',
       expect.objectContaining({ timeout: expect.any(Number) })
@@ -170,7 +176,7 @@ describe('MigrationCardComponent', () => {
     fixture.detectChanges();
 
     // then the rollback callable is invoked and its counter renders
-    expect(httpsCallable).toHaveBeenCalledWith(
+    expect(mocks.httpsCallable).toHaveBeenCalledWith(
       expect.anything(),
       'rollbackPushupUnification',
       expect.objectContaining({ timeout: expect.any(Number) })
