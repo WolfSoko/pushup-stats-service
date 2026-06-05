@@ -3,30 +3,14 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
- * Guards `data-store/firestore.indexes.json` against the composite indexes the
- * delta-aggregation triggers rely on.
+ * Guards the composite indexes the stats-aggregation triggers depend on.
  *
- * On the first write for a (user, exercise) — and on a `USERSTATS_VERSION`
- * bump — the trigger rebuilds the lifetime aggregate from scratch by fetching
- * that user's full history ordered by timestamp:
- *
- *   updateUserStatsOnPushupWrite     pushups.where('userId','==').orderBy('timestamp')
- *   updateExerciseStatsOnEntryWrite  exerciseEntries.where('userId','==')
- *                                                    .where('exerciseId','==')
- *                                                    .orderBy('timestamp')
- *
- * Firestore serves an equality-filtered query with an `orderBy` on another
- * field only from a composite index over (…equality fields…, orderBy field).
- * If that index is absent the query throws `FAILED_PRECONDITION`, the trigger
- * never writes `userStats/{uid}/perExercise/{exerciseId}`, and every consumer
- * of that aggregate silently reads empty — most visibly the per-exercise
- * "Alle Zeit" leaderboard, which is sourced from `perExercise/*.total`.
- *
- * The `pushups (userId, timestamp)` index shipped; the matching
- * `exerciseEntries (userId, exerciseId, timestamp)` one did not — so all-time
- * was empty for every non-pushup exercise (e.g. Crunches). Pushup hid the bug
- * because its aggregate is seeded by a separate backfill, not the rebuild
- * query. This guard keeps both indexes declared.
+ * Both rebuild a user's lifetime aggregate with an equality-filtered query
+ * ordered by timestamp. Firestore serves `where(==)…orderBy(other field)` only
+ * from a composite index over (…equality fields…, orderBy field); if it is
+ * absent the query is rejected and the aggregate (and everything sourced from
+ * it) is never written. Any such query must ship its index in
+ * `firestore.indexes.json`.
  */
 
 interface IndexField {
@@ -51,9 +35,11 @@ function loadIndexes(): CompositeIndex[] {
 }
 
 /**
- * True when an ASCENDING composite index over exactly `fieldPaths` (in order)
- * is declared for `collectionGroup` — the shape a `where(==)…orderBy(asc)`
- * rebuild query needs.
+ * True when a `COLLECTION`-scoped ASCENDING composite index over exactly
+ * `fieldPaths` (in order) is declared for `collectionGroup` — the shape a
+ * plain-collection `where(==)…orderBy(asc)` rebuild query needs. The scope
+ * check matters: the triggers query a single collection, so a
+ * `COLLECTION_GROUP` index would not satisfy them.
  */
 function hasAscendingIndex(
   indexes: CompositeIndex[],
@@ -63,6 +49,7 @@ function hasAscendingIndex(
   return indexes.some(
     (idx) =>
       idx.collectionGroup === collectionGroup &&
+      idx.queryScope === 'COLLECTION' &&
       idx.fields.length === fieldPaths.length &&
       idx.fields.every(
         (f, i) => f.fieldPath === fieldPaths[i] && f.order === 'ASCENDING'
