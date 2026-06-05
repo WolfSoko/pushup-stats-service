@@ -97,6 +97,38 @@ describe('AuthStore – signInWithEmail return value', () => {
   });
 });
 
+describe('AuthStore – clearError', () => {
+  it('should reset the error to null', async () => {
+    // given
+    const { fixture } = await render('', {
+      providers: [
+        AuthStore,
+        {
+          provide: AuthService,
+          useValue: {
+            user: (() => null) as Signal<ReturnType<AuthService['user']>>,
+            isAuthenticated: (() => false) as Signal<boolean>,
+            idToken: (() => null) as Signal<string | null | undefined>,
+            userDbSyncState: signal('idle' as const),
+            signInWithEmailAndMigrateGuest: () =>
+              Promise.reject(new Error('auth/invalid-credential')),
+          },
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const store = fixture.debugElement.injector.get(AuthStore);
+    await store.signInWithEmail('bad@test.de', 'wrong');
+    expect(store.error()).not.toBeNull();
+
+    // when
+    store.clearError();
+
+    // then
+    expect(store.error()).toBeNull();
+  });
+});
+
 describe('AuthStore – unsubscribeAllPushDevices', () => {
   function makeAuthServiceWith(
     impl: Partial<AuthService>

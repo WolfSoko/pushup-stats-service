@@ -23,6 +23,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
 import { LoginUiStore } from './login-ui.store';
+import { FormsModule } from '@angular/forms';
 export { hasStrongPasswordPolicy } from '../password-policy';
 
 @Component({
@@ -35,6 +36,7 @@ export { hasStrongPasswordPolicy } from '../password-policy';
     MatInputModule,
     MatProgressSpinnerModule,
     FormField,
+    FormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -69,6 +71,7 @@ export class LoginComponent {
   );
 
   async goToRegister(): Promise<void> {
+    this.loginUiStore.clearError();
     await this.router.navigateByUrl('/register');
   }
 

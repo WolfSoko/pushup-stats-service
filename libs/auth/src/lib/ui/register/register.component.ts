@@ -154,6 +154,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   async goToLogin(): Promise<void> {
     if (this.authState.isAuthenticated()) await this.authState.logout();
     this.registerUiStore.resetSuccess();
+    this.authState.clearError();
     await this.router.navigateByUrl('/login');
   }
 

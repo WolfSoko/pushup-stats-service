@@ -71,6 +71,7 @@ export const AuthStore = signalStore(
     isGuest: computed(() => store._authService.user()?.isAnonymous ?? false),
   })),
   withMethods(({ _authService, ...store }) => ({
+    clearError: (): void => patchState(store, { error: null }),
     login: async (): Promise<boolean> => {
       patchState(store, { loading: true, error: null });
       try {

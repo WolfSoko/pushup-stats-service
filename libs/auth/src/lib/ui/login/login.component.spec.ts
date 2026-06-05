@@ -1,25 +1,31 @@
-import { render, screen } from '@testing-library/angular';
-import { ActivatedRoute } from '@angular/router';
-import { signal } from '@angular/core';
+import { fireEvent, render, screen } from '@testing-library/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { signal, WritableSignal } from '@angular/core';
 import { AuthStore } from '../../core/state/auth.store';
 import { LoginOnboardingStore } from '../../core/state/login-onboarding.store';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
-  const renderLogin = () =>
-    render(LoginComponent, {
+  const renderLogin = (error: Error | null = null) => {
+    const errorSignal: WritableSignal<Error | null> = signal(error);
+    const clearError = jest.fn(() => errorSignal.set(null));
+    const navigateByUrl = jest.fn().mockResolvedValue(true);
+
+    return render(LoginComponent, {
       providers: [
         {
           provide: ActivatedRoute,
           useValue: { snapshot: { queryParamMap: { get: () => null } } },
         },
+        { provide: Router, useValue: { navigateByUrl } },
         {
           provide: AuthStore,
           useValue: {
             loading: signal(false),
-            error: signal(null),
+            error: errorSignal,
             isAuthenticated: signal(false),
             user: signal(null),
+            clearError,
             signInWithEmail: jest.fn(),
             login: jest.fn(),
             logout: jest.fn(),
@@ -34,7 +40,8 @@ describe('LoginComponent', () => {
           },
         },
       ],
-    });
+    }).then((rendered) => ({ ...rendered, clearError, navigateByUrl }));
+  };
 
   it('renders login title', async () => {
     await renderLogin();
@@ -56,5 +63,20 @@ describe('LoginComponent', () => {
 
     // then
     expect(submitEvent.defaultPrevented).toBe(true);
+  });
+
+  it('should clear a stale auth error when navigating to register', async () => {
+    // given
+    const message = 'E-Mail oder Passwort ist nicht korrekt.';
+    const { clearError, navigateByUrl } = await renderLogin(new Error(message));
+    expect(screen.getByText(message)).toBeInTheDocument();
+
+    // when
+    fireEvent.click(screen.getByRole('button', { name: /Registrieren/ }));
+
+    // then
+    expect(clearError).toHaveBeenCalled();
+    expect(navigateByUrl).toHaveBeenCalledWith('/register');
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
   });
 });
