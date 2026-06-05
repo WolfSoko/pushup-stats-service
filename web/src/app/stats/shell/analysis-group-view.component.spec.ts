@@ -118,7 +118,18 @@ describe('AnalysisGroupViewComponent', () => {
   beforeEach(async () => {
     vitest.useFakeTimers({ toFake: ['Date'] });
     vitest.setSystemTime(new Date(2026, 1, 15, 12));
-    liveExerciseEntries.set([]);
+    // Seed a pushup entry within the default week range so heatmapMeasurement()
+    // resolves to 'reps' and the toggle renders in structure tests.
+    liveExerciseEntries.set([
+      {
+        _id: 'seed-pushup',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-15T08:00:00.000+01:00',
+        reps: 10,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
 
     await TestBed.configureTestingModule({
       imports: [HostComponent],

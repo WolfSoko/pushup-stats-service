@@ -341,16 +341,10 @@
       </mat-card-header>
       <mat-card-content>
         @if (lastEntry(); as latest) {
-          @if (latest.kind === 'pushup') {
-            <p i18n="@@latEntryReps">
-              {{ latest.reps }} Reps · {{ pushupTypeLabel(latest) }}
-            </p>
-          } @else {
-            <p data-testid="dashboard-last-entry-exercise">
-              {{ exerciseEntryValue(latest) }} ·
-              {{ exerciseEntryLabel(latest) }}
-            </p>
-          }
+          <p data-testid="dashboard-last-entry-exercise">
+            {{ exerciseEntryValue(latest) }} ·
+            {{ exerciseEntryLabel(latest) }}
+          </p>
           <small>{{ latest.timestamp | date: 'short' }}</small>
         } @else {
           <p i18n="@@dashboard.noEntryYet">Noch kein Eintrag.</p>
@@ -400,25 +394,14 @@
                   <mat-icon>{{ tileIcon(entry) }}</mat-icon>
                 </div>
                 <div class="tile-body">
-                  @if (entry.kind === 'pushup') {
-                    <strong
-                      class="tile-title"
-                      i18n="@@dashboard.tile.pushupTitle"
-                      >Liegestütze</strong
-                    >
-                    <span class="tile-value" i18n="@@latEntryReps">
-                      {{ entry.reps }} Reps · {{ pushupTypeLabel(entry) }}
-                    </span>
-                  } @else {
-                    <strong class="tile-title">{{
-                      exerciseEntryLabel(entry)
-                    }}</strong>
-                    <span
-                      class="tile-value"
-                      data-testid="dashboard-recent-exercise-tile-value"
-                      >{{ exerciseEntryValue(entry) }}</span
-                    >
-                  }
+                  <strong class="tile-title">{{
+                    exerciseEntryLabel(entry)
+                  }}</strong>
+                  <span
+                    class="tile-value"
+                    data-testid="dashboard-recent-exercise-tile-value"
+                    >{{ exerciseEntryValue(entry) }}</span
+                  >
                   <small class="tile-time">{{
                     entry.timestamp | date: 'short'
                   }}</small>

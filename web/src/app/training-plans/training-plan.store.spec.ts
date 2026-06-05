@@ -528,8 +528,10 @@ describe('TrainingPlanStore', () => {
       await store.logPlanDay(2);
       await flush();
 
-      expect(mocks.statsApiMock.createPushup).toHaveBeenCalledTimes(1);
-      const call = mocks.statsApiMock.createPushup.mock.calls[0][0];
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+      const [userId, call] = mocks.exerciseApiMock.createEntry.mock.calls[0];
+      expect(userId).toBe('u1');
+      expect(call.exerciseId).toBe('pushup');
       expect(call.reps).toBe(day2.targetReps);
       expect(call.sets).toEqual(day2.sets);
       expect(call.source).toBe('plan');
@@ -599,7 +601,8 @@ describe('TrainingPlanStore', () => {
       await store.logPlanDay(2);
       await flush();
 
-      const call = mocks.statsApiMock.createPushup.mock.calls[0][0];
+      const [, call] = mocks.exerciseApiMock.createEntry.mock.calls[0];
+      expect(call.exerciseId).toBe('pushup');
       expect(call.reps).toBe(day2Target - 20);
       expect(call.sets).toEqual([day2Target - 20]);
     });
@@ -764,10 +767,10 @@ describe('TrainingPlanStore', () => {
         addCompletedDay: vitest.fn(() => of(void 0)),
         removeCompletedDay: vitest.fn(() => of(void 0)),
       };
-      const statsApiMock = {
-        createPushup: vitest.fn(() => from(firstWrite).pipe(map(() => ({})))),
+      const statsApiMock = { createPushup: vitest.fn() };
+      const exerciseApiMock = {
+        createEntry: vitest.fn(() => from(firstWrite).pipe(map(() => ({})))),
       };
-      const exerciseApiMock = { createEntry: vitest.fn() };
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
         providers: [
@@ -804,7 +807,7 @@ describe('TrainingPlanStore', () => {
 
       const secondResult = await secondPromise;
       expect(secondResult).toBe('in-flight');
-      expect(statsApiMock.createPushup).toHaveBeenCalledTimes(1);
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
 
       releaseFirst();
       const firstResult = await firstPromise;
@@ -829,9 +832,13 @@ describe('TrainingPlanStore', () => {
       await store.logPlanDay(2);
       await flush();
 
-      // then — legacy createPushup runs; createEntry is never touched
-      expect(mocks.statsApiMock.createPushup).toHaveBeenCalledTimes(1);
-      expect(mocks.exerciseApiMock.createEntry).not.toHaveBeenCalled();
+      // then — pushup routes through createEntry (exerciseId:'pushup'); legacy createPushup is not called
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({ exerciseId: 'pushup' })
+      );
+      expect(mocks.statsApiMock.createPushup).not.toHaveBeenCalled();
     });
 
     it('should log a non-pushup plan day via createEntry once and mark it done', async () => {

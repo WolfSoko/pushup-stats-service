@@ -55,7 +55,7 @@ function makeApiMock(): {
 
 describe('LeaderboardStore — live snapshot reload', () => {
   describe('Given the app is running in the browser', () => {
-    it('Then it subscribes to observeSnapshot on init and force-reloads on each emission', async () => {
+    it('Then it subscribes to observeExerciseSnapshot on init and does NOT subscribe to the legacy pushup snapshot', () => {
       // Given
       const api = makeApiMock();
       TestBed.configureTestingModule({
@@ -64,106 +64,15 @@ describe('LeaderboardStore — live snapshot reload', () => {
           { provide: LeaderboardService, useValue: api },
         ],
       });
-      const store = TestBed.inject(LeaderboardStore);
-      // The hook subscribes synchronously during creation.
-      expect(api.observeSnapshot).toHaveBeenCalledTimes(1);
-
-      // When — Cloud Function rewrites the snapshot doc twice.
-      api.snapshot$.next({ rev: 1 });
-      await Promise.resolve();
-      api.snapshot$.next({ rev: 2 });
-      await Promise.resolve();
-      // Drain the second performLoad triggered by reloadPending.
-      await Promise.resolve();
-      await Promise.resolve();
-
-      // Then — the API was hit at least once per emission, always
-      // targeted at the pushup leaderboard (the only one the Cloud
-      // Function ranker writes a snapshot for). With the in-flight
-      // queueing in `load()` the second emission may collapse with the
-      // first but is never dropped: the final fetch always reflects
-      // the latest doc.
-      expect(api.load).toHaveBeenCalled();
-      expect(api.load).toHaveBeenCalledWith(LEADERBOARD_PUSHUP_ID);
-      expect(store.loading()).toBe(false);
-      expect(store.data()).toEqual({
-        [LEADERBOARD_PUSHUP_ID]: emptyLeaderboard,
-      });
-    });
-
-    it('Then it unsubscribes from observeSnapshot when the injector is destroyed', () => {
-      // Given
-      const api = makeApiMock();
-      TestBed.configureTestingModule({
-        providers: [
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          { provide: LeaderboardService, useValue: api },
-        ],
-      });
-      TestBed.inject(LeaderboardStore);
-      expect(api.snapshot$.observed).toBe(true);
 
       // When
-      TestBed.resetTestingModule();
+      TestBed.inject(LeaderboardStore);
 
-      // Then — the effect's onCleanup tore down the subscription so the
-      // store instance does not keep Firestore listeners alive after destroy.
-      expect(api.snapshot$.observed).toBe(false);
-    });
-
-    it('Then a snapshot emission arriving while a load is in flight queues a follow-up reload', async () => {
-      // Given — `_api.load()` resolves only when we pull on `release`.
-      const api = makeApiMock();
-      let release!: (data: LeaderboardData) => void;
-      const dataA: LeaderboardData = {
-        ...emptyLeaderboard,
-        daily: {
-          top: [{ alias: 'A', reps: 1, rank: 1 }],
-          current: null,
-        },
-      };
-      const dataB: LeaderboardData = {
-        ...emptyLeaderboard,
-        daily: {
-          top: [{ alias: 'B', reps: 2, rank: 1 }],
-          current: null,
-        },
-      };
-      api.load.mockImplementationOnce(
-        () =>
-          new Promise<LeaderboardData>((resolve) => {
-            release = resolve;
-          })
-      );
-      api.load.mockResolvedValueOnce(dataB);
-
-      TestBed.configureTestingModule({
-        providers: [
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          { provide: LeaderboardService, useValue: api },
-        ],
-      });
-      const store = TestBed.inject(LeaderboardStore);
-
-      // First emission starts a load that is still pending.
-      api.snapshot$.next({ rev: 1 });
-      await Promise.resolve();
-      expect(store.loading()).toBe(true);
-
-      // When — second emission arrives while the first load is still in flight.
-      api.snapshot$.next({ rev: 2 });
-      await Promise.resolve();
-      // Now finish the first load. The store must run a second one for rev=2,
-      // not silently drop it.
-      release(dataA);
-      await Promise.resolve();
-      await Promise.resolve();
-      await Promise.resolve();
-
-      // Then — both loads ran and the store reflects the LATER snapshot.
-      expect(api.load).toHaveBeenCalledTimes(2);
-      expect(store.data()).toEqual({ [LEADERBOARD_PUSHUP_ID]: dataB });
-      expect(store.loading()).toBe(false);
+      // Then — only the exercise snapshot listener is registered; pushups
+      // are ranked in the exercises doc post-cutover, so no separate
+      // pushup-snapshot subscription is needed.
+      expect(api.observeExerciseSnapshot).toHaveBeenCalledTimes(1);
+      expect(api.observeSnapshot).not.toHaveBeenCalled();
     });
   });
 
@@ -183,6 +92,7 @@ describe('LeaderboardStore — live snapshot reload', () => {
 
       // Then
       expect(api.observeSnapshot).not.toHaveBeenCalled();
+      expect(api.observeExerciseSnapshot).not.toHaveBeenCalled();
     });
   });
 });
@@ -221,7 +131,8 @@ describe('LeaderboardStore — exercise snapshot reload', () => {
     expect(pushupForceReloads).toBe(2); // initial load + exercise-snapshot refresh
   });
 
-  it('Tears down both subscriptions on injector destroy', () => {
+  it('Tears down the exercise snapshot subscription on injector destroy', () => {
+    // given
     const api = makeApiMock();
     TestBed.configureTestingModule({
       providers: [
@@ -230,13 +141,12 @@ describe('LeaderboardStore — exercise snapshot reload', () => {
       ],
     });
     TestBed.inject(LeaderboardStore);
-    expect(api.snapshot$.observed).toBe(true);
+    // when
     expect(api.exerciseSnapshot$.observed).toBe(true);
-
     TestBed.resetTestingModule();
-
-    expect(api.snapshot$.observed).toBe(false);
+    // then — exercise subscription torn down; pushup snapshot was never opened
     expect(api.exerciseSnapshot$.observed).toBe(false);
+    expect(api.snapshot$.observed).toBe(false);
   });
 });
 

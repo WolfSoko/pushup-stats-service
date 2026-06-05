@@ -72,13 +72,13 @@ describe('EntriesStore', () => {
 
       await store.deleteEntry({ kind: 'pushup', id: '1' });
 
-      expect(apiMock.deletePushup).toHaveBeenCalledWith('1');
+      expect(exerciseServiceMock.deleteEntry).toHaveBeenCalledWith('1');
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
     it('Given a failing delete, Then app-level resources are not reloaded', async () => {
       const store = setup();
-      apiMock.deletePushup.mockReturnValueOnce(
+      exerciseServiceMock.deleteEntry.mockReturnValueOnce(
         throwError(() => new Error('boom'))
       );
 
@@ -108,7 +108,10 @@ describe('EntriesStore', () => {
         reps: 12,
       });
 
-      expect(apiMock.createPushup).toHaveBeenCalled();
+      expect(exerciseServiceMock.createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({ exerciseId: 'pushup', reps: 12 })
+      );
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
@@ -191,13 +194,17 @@ describe('EntriesStore', () => {
         reps: 25,
       });
 
-      expect(apiMock.updatePushup).toHaveBeenCalled();
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        '1',
+        'pushup',
+        expect.objectContaining({ reps: 25 })
+      );
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
     it('Given a failing update, Then app-level resources are not reloaded', async () => {
       const store = setup();
-      apiMock.updatePushup.mockReturnValueOnce(
+      exerciseServiceMock.updateEntry.mockReturnValueOnce(
         throwError(() => new Error('boom'))
       );
 

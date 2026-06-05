@@ -1,4 +1,4 @@
-import { computed, inject, LOCALE_ID, resource } from '@angular/core';
+import { computed, inject, LOCALE_ID } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
   patchState,
@@ -8,8 +8,8 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { firstValueFrom, of } from 'rxjs';
-import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { of } from 'rxjs';
+import { UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
@@ -21,18 +21,15 @@ import {
   EXERCISE_CATEGORIES,
   findExerciseDefinition,
   type MeasurementType,
-  PushupRecord,
-  pushupRecordToUnified,
-  StatsGranularity,
-  StatsResponse,
-  StatsSeriesEntry,
-  UnifiedEntry,
+  type StatsGranularity,
+  type StatsSeriesEntry,
+  type UnifiedEntry,
   unifiedEntryCategoryId,
-  UnifiedEntryFilterKey,
+  type UnifiedEntryFilterKey,
   unifiedEntryFilterKey,
   unifiedEntryMeasurement,
   unifiedEntryPrimaryValue,
-  UserStats,
+  type UserStats,
 } from '@pu-stats/models';
 import {
   createWeekRange,
@@ -43,18 +40,6 @@ import { categoryDisplayName } from './i18n/exercise-display-names';
 
 /** Active analysis view: overview tab or a specific exercise category. */
 export type AnalysisView = 'overview' | ExerciseCategoryId;
-
-const EMPTY_STATS: StatsResponse = {
-  meta: {
-    from: null,
-    to: null,
-    entries: 0,
-    days: 0,
-    total: 0,
-    granularity: 'daily',
-  },
-  series: [],
-};
 
 interface TrendPoint {
   label: string;
@@ -519,13 +504,11 @@ export const AnalysisStore = signalStore(
     };
   }),
   withProps(() => {
-    const api = inject(StatsApiService);
     const userStatsApi = inject(UserStatsApiService);
     const user = inject(UserContextService);
     const live = inject(LiveDataStore);
     const locale = inject(LOCALE_ID);
     return {
-      _api: api,
       _userStatsApi: userStatsApi,
       _user: user,
       _live: live,
@@ -591,17 +574,6 @@ export const AnalysisStore = signalStore(
     };
   }),
   withProps((store) => {
-    const statsResource = resource({
-      params: () => store.filter(),
-      loader: async ({ params }) => firstValueFrom(store._api.load(params)),
-    });
-
-    const entriesResource = resource({
-      params: () => store.filter(),
-      loader: async ({ params }) =>
-        firstValueFrom(store._api.listPushups(params)),
-    });
-
     // Real-time listener on `userStats/{userId}` so server-side aggregation
     // updates (heatmap, best entries) flow into the analysis page without
     // requiring a manual reload.
@@ -613,37 +585,15 @@ export const AnalysisStore = signalStore(
           : of(null),
     });
 
-    const weekEntriesResource = resource({
-      params: () => store.weekFilter(),
-      loader: async ({ params }) =>
-        firstValueFrom(store._api.listPushups(params)),
-    });
-
-    const monthEntriesResource = resource({
-      params: () => store.monthFilter(),
-      loader: async ({ params }) =>
-        firstValueFrom(store._api.listPushups(params)),
-    });
-
     return {
-      statsResource,
-      entriesResource,
       userStatsResource,
-      weekEntriesResource,
-      monthEntriesResource,
     };
   }),
   withComputed((store) => {
-    const stats = computed(() => store.statsResource.value() ?? EMPTY_STATS);
-    const chartSeries = computed<StatsSeriesEntry[]>(() => stats().series);
-    const granularity = computed<StatsGranularity>(
-      () => stats().meta.granularity
-    );
-    /** Resolved dayChartMode: user's explicit toggle, or API's resolved value from user config. */
+    /** Resolved dayChartMode: user's explicit toggle or default. */
     const resolvedDayChartMode = computed<'24h' | '14h'>(
-      () => store.dayChartMode() ?? stats().meta.dayChartMode ?? '14h'
+      () => store.dayChartMode() ?? '14h'
     );
-    const rows = computed(() => store.entriesResource.value() ?? []);
 
     // The stats-chart's stacked-bar layer reads `timestamp`, `reps` and
     // optional `sets[]`. UnifiedEntry already declares all three on its
@@ -651,41 +601,18 @@ export const AnalysisStore = signalStore(
     // canonical model — no parallel field list to drift.
     type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
 
-    // Pushup history has two sources during the transitional window (until
-    // the legacy `pushups` collection is retired in step 6):
-    //   - pre-cutover pushups live in the legacy `pushups` collection, read
-    //     via the REST resource (keeps their variant/`type` history); the
-    //     migration also copied each into `exerciseEntries` under a
-    //     `pushup__`-prefixed id, which we EXCLUDE below so they aren't
-    //     double-counted.
-    //   - post-cutover pushups are written straight to `exerciseEntries`
-    //     (`exerciseId:'pushup'`, native auto-id) and only appear on the live
-    //     feed — so they MUST be merged in here or the analysis page misses
-    //     them (every other surface already reads them live).
-    // Non-pushup exercises come from the live feed as before.
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
       const to = store.to();
-      const inRange = (timestamp: string): boolean => {
-        const date = timestamp.slice(0, 10);
-        if (from && date < from) return false;
-        if (to && date > to) return false;
-        return true;
-      };
-      const pushupsRest = rows()
-        .filter((r) => inRange(r.timestamp))
-        .map(pushupRecordToUnified);
-      const live = store._live
+      return store._live
         .exerciseEntries()
-        .filter((e) =>
-          e.exerciseId === 'pushup'
-            ? // post-cutover pushups only — skip the migrated `pushup__` copies
-              // already represented by the REST rows above.
-              !e._id.startsWith('pushup__') && inRange(e.timestamp)
-            : inRange(e.timestamp)
-        )
+        .filter((e) => {
+          const date = e.timestamp.slice(0, 10);
+          if (from && date < from) return false;
+          if (to && date > to) return false;
+          return true;
+        })
         .map(exerciseEntryToUnified);
-      return [...pushupsRest, ...live];
     });
 
     /** Distinct kind keys with at least one entry in the visible range. */
@@ -1001,43 +928,21 @@ export const AnalysisStore = signalStore(
 
     // Trend rows mirror the activeView filter so the 8-week and
     // 6-month windows reflect the same category as the rest of the
-    // page. We merge the pushup REST data (which the resource already
-    // fetches for the trend window) with the live exercise entries —
-    // no extra Firestore reads — and then drop entries outside both
-    // the trend window and the active view.
-    const inRangeFn = (from: string, to: string) => (timestamp: string) => {
-      const date = timestamp.slice(0, 10);
-      if (from && date < from) return false;
-      if (to && date > to) return false;
-      return true;
-    };
-
-    // Pushups come from a date-scoped REST resource; exercise entries
-    // are taken from `_live.exerciseEntries()` (the full Firestore
-    // snapshot) and clipped client-side. This asymmetry is acceptable
-    // for typical histories but should grow into a date-windowed
-    // exerciseEntries resource once long histories show up — until
-    // then the inRange filter keeps memory predictable.
-    const trendUnifiedRows = (
-      pushupRows: ReadonlyArray<PushupRecord>,
-      window: { from: string; to: string }
-    ): UnifiedEntry[] => {
-      const inRange = inRangeFn(window.from, window.to);
-      // Pre-cutover pushups from REST (variant history); post-cutover pushups
-      // (native id) from the live feed; migrated copies (`pushup__` id) skipped
-      // to avoid double-count. Mirrors `unifiedRows`.
-      const pushupsRest = pushupRows
-        .filter((r) => inRange(r.timestamp))
-        .map(pushupRecordToUnified);
-      const live = store._live
+    // page. The live feed carries the full history, so we just clip
+    // to the trend window client-side.
+    const trendUnifiedRows = (window: {
+      from: string;
+      to: string;
+    }): UnifiedEntry[] => {
+      return store._live
         .exerciseEntries()
-        .filter((e) =>
-          e.exerciseId === 'pushup'
-            ? !e._id.startsWith('pushup__') && inRange(e.timestamp)
-            : inRange(e.timestamp)
-        )
+        .filter((e) => {
+          const date = e.timestamp.slice(0, 10);
+          if (date < window.from) return false;
+          if (date > window.to) return false;
+          return true;
+        })
         .map(exerciseEntryToUnified);
-      return [...pushupsRest, ...live];
     };
 
     const applyViewFilter = (rows: UnifiedEntry[]): UnifiedEntry[] => {
@@ -1050,12 +955,7 @@ export const AnalysisStore = signalStore(
     };
 
     const weekTrendRows = computed<UnifiedEntry[]>(() =>
-      applyViewFilter(
-        trendUnifiedRows(
-          store.weekEntriesResource.value() ?? [],
-          store.weekFilter()
-        )
-      )
+      applyViewFilter(trendUnifiedRows(store.weekFilter()))
     );
 
     const weekTrend = computed<TrendPoint[]>(() => {
@@ -1094,12 +994,7 @@ export const AnalysisStore = signalStore(
     });
 
     const monthTrendRows = computed<UnifiedEntry[]>(() =>
-      applyViewFilter(
-        trendUnifiedRows(
-          store.monthEntriesResource.value() ?? [],
-          store.monthFilter()
-        )
-      )
+      applyViewFilter(trendUnifiedRows(store.monthFilter()))
     );
 
     const monthTrend = computed<TrendPoint[]>(() => {
@@ -1157,8 +1052,8 @@ export const AnalysisStore = signalStore(
       if (showPushupVariants) {
         const byType = new Map<string, { reps: number; allSets: number[] }>();
         for (const row of rowsForView) {
-          if (row.kind !== 'pushup') continue;
-          const key = canonicalizePushupType(row.variantType) || 'standard';
+          if (row.exerciseId !== 'pushup') continue;
+          const key = canonicalizePushupType(row.variantId ?? '') || 'standard';
           const entry = byType.get(key) ?? { reps: 0, allSets: [] };
           entry.reps += row.reps;
           if (row.sets?.length) entry.allSets.push(...row.sets);
@@ -1298,15 +1193,11 @@ export const AnalysisStore = signalStore(
     });
 
     return {
-      stats,
-      chartSeries,
       viewChartSeries,
       viewChartEntries,
       viewGranularity,
       viewMeasurement,
       viewPaceSeries,
-      granularity,
-      rows,
       unifiedRows,
       viewFilteredRows,
       categorySummaries,
@@ -1347,11 +1238,7 @@ export const AnalysisStore = signalStore(
       patchState(store, { activeView });
     },
     refreshAll(): void {
-      store.statsResource.reload();
-      store.entriesResource.reload();
       store.userStatsResource.reload();
-      store.weekEntriesResource.reload();
-      store.monthEntriesResource.reload();
     },
     tickClock(): void {
       const todayKey = toLocalIsoDate(new Date());

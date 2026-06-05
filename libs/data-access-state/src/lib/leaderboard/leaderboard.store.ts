@@ -158,24 +158,12 @@ export const LeaderboardStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      // Live-refresh whenever either precomputed leaderboard doc
+      // Live-refresh whenever the precomputed exercise leaderboard doc
       // changes. We subscribe directly (not via `effect`) so the
-      // listeners attach synchronously at construction — tests can
+      // listener attaches synchronously at construction — tests can
       // assert behaviour without flushing effects, and cleanup is
       // hooked into `DestroyRef` for symmetric tear-down.
       if (!store._isBrowser || !store._api) return;
-
-      // `leaderboards/current` mutates only after the pushup ranker
-      // rewrites it (every 15 min + on every pushups write).
-      const pushupSub = store._api.observeSnapshot().subscribe({
-        next: () => {
-          void store.load(LEADERBOARD_PUSHUP_ID, { force: true });
-        },
-        error: () => {
-          /* swallow — leaderboard is non-critical, fall back to one-shot load */
-        },
-      });
-      store._destroyRef.onDestroy(() => pushupSub.unsubscribe());
 
       // `leaderboards/exercises` mutates after the per-exercise ranker
       // rewrites it. Without this subscription a user who opens the
@@ -183,8 +171,8 @@ export const LeaderboardStore = signalStore(
       // an empty bucket and never see it refill, because
       // `load(exerciseId)` short-circuits on cache hits. Force-reload
       // every already-cached exerciseId on each emission so the visible
-      // leaderboard stays fresh. Pushups are ranked here too, so they're
-      // refreshed by this sub like any other exercise.
+      // leaderboard stays fresh. Pushups are ranked here like any other
+      // exercise.
       const exerciseSub = store._api.observeExerciseSnapshot().subscribe({
         next: () => {
           const cachedExerciseIds = Object.keys(store.data());
@@ -193,7 +181,7 @@ export const LeaderboardStore = signalStore(
           }
         },
         error: () => {
-          /* swallow — same rationale as the pushup sub */
+          /* swallow — leaderboard is non-critical, fall back to one-shot load */
         },
       });
       store._destroyRef.onDestroy(() => exerciseSub.unsubscribe());

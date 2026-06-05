@@ -1,32 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  collection,
-  deleteDoc,
-  doc,
-  Firestore,
-  getDocs,
-  orderBy,
-  query,
-  QueryConstraint,
-  setDoc,
-  updateDoc,
-  where,
-} from '@angular/fire/firestore';
-import {
-  PUSHUP_REPS_MAX,
-  PUSHUP_REPS_MIN,
-  PushupCreate,
-  PushupRecord,
-  PushupUpdate,
-  StatsFilter,
-  validatePushupReps,
-} from '@pu-stats/models';
-import { from, map, Observable, throwError } from 'rxjs';
-
-const PUSHUPS_COLLECTION = 'pushups';
-const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
-/** Pushups are stored as `exerciseEntries` with this id post-cutover. */
-const PUSHUP_EXERCISE_ID = 'pushup';
+import { Injectable } from '@angular/core';
+import { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN } from '@pu-stats/models';
 
 export class PushupValidationError extends Error {
   constructor(
@@ -39,11 +12,8 @@ export class PushupValidationError extends Error {
 }
 
 /**
- * Map a failed `createPushup`/`updatePushup` rejection to a human-readable,
- * localized snack-bar message. Surfacing the specific cap/violation reason
- * is more actionable than the generic "konnte nicht gespeichert werden" —
- * users hitting the 500-rep cap get a clear hint instead of a silent retry
- * loop.
+ * Map a failed pushup reps validation to a human-readable, localized
+ * snack-bar message.
  */
 export function pushupValidationMessage(err: unknown): string {
   if (err instanceof PushupValidationError && err.field === 'reps') {
@@ -57,153 +27,22 @@ export function pushupValidationMessage(err: unknown): string {
   return $localize`:@@pushup.validation.generic:Eintrag konnte nicht gespeichert werden.`;
 }
 
-/**
- * Returns an Observable that errors with `PushupValidationError` if the
- * reps fail validation, otherwise null. Wrapping the throw in a cold
- * Observable lets RxJS subscribers see the error via their `error`
- * handler instead of getting a synchronous throw at call time — which
- * would bypass `subscribe({ error })` and crash callers that build
- * their own pipelines around the returned Observable.
- */
-function repsViolationObservable<T>(reps: number): Observable<T> | null {
-  const violation = validatePushupReps(reps);
-  if (!violation) return null;
-  return throwError(() => new PushupValidationError('reps', violation));
-}
-
 /** Re-exported so callers can read the cap without importing from `@pu-stats/models`. */
 export { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN };
 
+/**
+ * Legacy pushup Firestore service. All read/write operations have been
+ * removed post-Phase-7 cutover. Pushup entries now live in
+ * `exerciseEntries` with `exerciseId:'pushup'` and are managed by
+ * `ExerciseFirestoreService`.
+ *
+ * Client-side migration of pushup documents between different userIds is
+ * intentionally disabled. Any cross-user migration must be performed in a
+ * trusted backend (e.g. Cloud Function / Admin SDK).
+ */
 @Injectable({ providedIn: 'root' })
 export class PushupFirestoreService {
-  private readonly firestore = inject(Firestore);
-
-  listPushups(
-    userId: string,
-    filter?: StatsFilter
-  ): Observable<PushupRecord[]> {
-    const pushupsRef = collection(this.firestore, PUSHUPS_COLLECTION);
-    const constraints: QueryConstraint[] = [
-      where('userId', '==', userId),
-      orderBy('timestamp', 'asc'),
-    ];
-    if (filter?.from) {
-      constraints.push(
-        where('timestamp', '>=', `${filter.from}T00:00:00.000Z`)
-      );
-    }
-    if (filter?.to) {
-      constraints.push(where('timestamp', '<=', `${filter.to}T23:59:59.999Z`));
-    }
-
-    const q = query(pushupsRef, ...constraints);
-
-    return from(getDocs(q)).pipe(
-      map((snapshot) =>
-        snapshot.docs
-          .map((d) => {
-            const data = d.data() as Omit<PushupRecord, '_id'>;
-            return { _id: d.id, ...data } as PushupRecord;
-          })
-          .filter((record) => {
-            const date = record.timestamp.slice(0, 10);
-            return (
-              (!filter?.from || date >= filter.from) &&
-              (!filter?.to || date <= filter.to)
-            );
-          })
-      )
-    );
-  }
-
-  /**
-   * Post Phase-7 cutover a "pushup" is just an `exerciseEntries` doc with
-   * `exerciseId:'pushup'` — the same store, aggregation, leaderboard and
-   * history path as every other exercise. New pushups therefore land in
-   * `exerciseEntries` (auto-id), NOT the legacy `pushups` collection, which
-   * is now read-only until its step-6 deletion. The legacy pushup variant
-   * (`type`) has no field in the unified schema and is intentionally dropped
-   * (matches the staged migration). The return keeps the `PushupRecord`
-   * shape so existing callers stay source-compatible.
-   */
-  createPushup(
-    userId: string,
-    payload: PushupCreate
-  ): Observable<PushupRecord> {
-    const violation = repsViolationObservable<PushupRecord>(payload.reps);
-    if (violation) return violation;
-    const entriesRef = collection(this.firestore, EXERCISE_ENTRIES_COLLECTION);
-    const newRef = doc(entriesRef);
-    const nowIso = new Date().toISOString();
-    const record: PushupRecord & { userId: string } = {
-      _id: newRef.id,
-      timestamp: payload.timestamp,
-      reps: payload.reps,
-      ...(payload.sets?.length ? { sets: payload.sets } : {}),
-      source: payload.source ?? 'web',
-      type: payload.type ?? 'Standard',
-      createdAt: nowIso,
-      updatedAt: nowIso,
-      userId,
-    };
-
-    const firestoreData: Record<string, unknown> = {
-      exerciseId: PUSHUP_EXERCISE_ID,
-      timestamp: record.timestamp,
-      reps: record.reps,
-      source: record.source,
-      createdAt: record.createdAt,
-      updatedAt: record.updatedAt,
-      userId,
-    };
-    if (payload.sets?.length) {
-      firestoreData['sets'] = payload.sets;
-    }
-
-    return from(setDoc(newRef, firestoreData)).pipe(map(() => record));
-  }
-
-  updatePushup(id: string, payload: PushupUpdate): Observable<void> {
-    if (payload.reps !== undefined) {
-      const violation = repsViolationObservable<void>(payload.reps);
-      if (violation) return violation;
-    }
-    const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
-    // Filter out undefined values and empty arrays — Firestore rejects undefined,
-    // and empty sets should be omitted to match createPushup behavior.
-    const cleanPayload = Object.fromEntries(
-      Object.entries(payload).filter(
-        ([, v]) => v !== undefined && !(Array.isArray(v) && v.length === 0)
-      )
-    );
-    return from(
-      updateDoc(rowRef, {
-        ...cleanPayload,
-        updatedAt: new Date().toISOString(),
-      })
-    ).pipe(map(() => void 0));
-  }
-
-  deletePushup(id: string): Observable<{ ok: true }> {
-    const rowRef = doc(this.firestore, PUSHUPS_COLLECTION, id);
-    return from(deleteDoc(rowRef)).pipe(map(() => ({ ok: true as const })));
-  }
-
-  /**
-   * Client-side migration of pushup documents between different userIds is
-   * intentionally disabled.
-   *
-   * With strict Firestore rules (`resource.data.userId == request.auth.uid`
-   * and `request.resource.data.userId == request.auth.uid`), a client
-   * authenticated as `toUserId` cannot read `fromUserId`'s documents or write
-   * documents owned by a different uid. Any cross-user migration must be
-   * performed in a trusted backend (e.g. Cloud Function / Admin SDK).
-   *
-   * Kept as a no-op for API compatibility; `AuthService.migrateGuestDataSafe`
-   * wraps calls in a try/catch and only console.warns on failure.
-   */
-
   async migrateUserData(_fromUserId: string, _toUserId: string): Promise<void> {
-    // No-op by design. See comment above.
+    // No-op by design. See class comment.
   }
 }

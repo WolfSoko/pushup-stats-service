@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import type {
-  UnifiedExerciseEntry,
-  UnifiedPushupEntry,
-} from '@pu-stats/models';
+import type { UnifiedEntry, UnifiedExerciseEntry } from '@pu-stats/models';
 import { IntervalsDistributionComponent } from './intervals-distribution.component';
 
 function exerciseEntry(
@@ -28,14 +25,15 @@ function exerciseEntry(
   };
 }
 
-function pushupEntry(intervals?: number[]): UnifiedPushupEntry {
+function pushupEntry(intervals?: number[]): UnifiedEntry {
   return {
-    kind: 'pushup',
+    kind: 'exercise',
     _id: `p-${Math.random()}`,
     timestamp: '2026-05-14T10:00:00.000Z',
     reps: 30,
     source: 'test',
-    variantType: 'Diamond',
+    exerciseId: 'pushup',
+    variantId: 'diamond',
     ...(intervals ? { intervals } : {}),
   };
 }

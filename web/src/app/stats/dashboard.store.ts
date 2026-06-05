@@ -1,11 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  computed,
-  inject,
-  LOCALE_ID,
-  PLATFORM_ID,
-  resource,
-} from '@angular/core';
+import { computed, inject, LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
   signalStore,
@@ -13,25 +7,23 @@ import {
   withMethods,
   withProps,
 } from '@ngrx/signals';
-import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
+import { UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   exerciseEntryToUnified,
   findExerciseDefinition,
   isAutoCountQuickAddExerciseId,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
-  pushupRecordToUnified,
-  QuickAddConfig,
-  QuickAddMode,
-  StatsResponse,
-  UnifiedEntry,
-  UserStats,
+  type QuickAddConfig,
+  type QuickAddMode,
+  type UnifiedEntry,
+  type UserStats,
 } from '@pu-stats/models';
 import { toBerlinIsoDate, toLocalIsoDate } from '@pu-stats/date';
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
-import { firstValueFrom, of } from 'rxjs';
+import { of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
 import { ShareResult, ShareService } from '../core/share.service';
 import { buildProfileShareUrl } from '../core/profile-share-url';
@@ -96,18 +88,6 @@ function toQuickAddViewModel(
   };
 }
 
-const EMPTY_STATS: StatsResponse = {
-  meta: {
-    from: null,
-    to: null,
-    entries: 0,
-    days: 0,
-    total: 0,
-    granularity: 'daily',
-  },
-  series: [],
-};
-
 function sortedUniqueDates(rows: { timestamp: string }[]): string[] {
   return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
     a.localeCompare(b)
@@ -151,7 +131,6 @@ function currentMonthKey(): string {
 
 export const DashboardStore = signalStore(
   withProps(() => ({
-    _api: inject(StatsApiService),
     _userConfig: inject(UserConfigStore),
     _userStatsApi: inject(UserStatsApiService),
     _user: inject(UserContextService),
@@ -164,16 +143,6 @@ export const DashboardStore = signalStore(
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withProps((store) => ({
-    // SSR fallback only. In the browser we read entries from `_live.entries()`
-    // directly so Firestore real-time updates propagate without an extra REST
-    // round-trip. The resource is still reloaded by `refreshAll()` to keep the
-    // SSR cache warm.
-    entriesResource: resource({
-      loader: async () => firstValueFrom(store._api.listPushups({})),
-    }),
-    allTimeResource: resource({
-      loader: async () => firstValueFrom(store._api.load({})),
-    }),
     // Real-time listener on the per-exercise pushup aggregate
     // `userStats/{userId}/perExercise/pushup`. Post-cutover this is the
     // source for pushup totals/streak/heatmap (the
@@ -190,41 +159,21 @@ export const DashboardStore = signalStore(
     }),
   })),
   withComputed((store) => {
-    const allTimeStats = computed(
-      () => store.allTimeResource.value() ?? EMPTY_STATS
+    const entryRows = computed<{ timestamp: string; reps: number }[]>(() =>
+      store._live
+        .exerciseEntries()
+        .filter((e) => e.exerciseId === 'pushup')
+        .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }))
     );
-
-    // Source of truth for entries: Firestore-backed `LiveDataStore` once it
-    // has connected (reactive, real-time). Until then we fall back to the
-    // REST resource so SSR and the cold-start hydration window still render
-    // data instead of an empty state.
-    const entryRows = computed<{ timestamp: string; reps: number }[]>(() => {
-      if (store._isBrowser && store._live.connected()) {
-        return store._live
-          .exerciseEntries()
-          .filter((e) => e.exerciseId === 'pushup')
-          .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }));
-      }
-      return (store.entriesResource.value() ?? []).map((r) => ({
-        timestamp: r.timestamp,
-        reps: r.reps,
-      }));
-    });
 
     /** Precomputed server-side stats (null if not yet available). */
     const userStats = computed<UserStats | null>(
       () => store.userStatsResource.value() ?? null
     );
 
-    const allTimeTotal = computed(
-      () => userStats()?.total ?? allTimeStats().meta.total
-    );
-    const allTimeDays = computed(
-      () => userStats()?.totalDays ?? allTimeStats().meta.days
-    );
-    const allTimeEntries = computed(
-      () => userStats()?.totalEntries ?? allTimeStats().meta.entries
-    );
+    const allTimeTotal = computed(() => userStats()?.total ?? 0);
+    const allTimeDays = computed(() => userStats()?.totalDays ?? 0);
+    const allTimeEntries = computed(() => userStats()?.totalEntries ?? 0);
     const allTimeAvg = computed(() =>
       allTimeDays() ? (allTimeTotal() / allTimeDays()).toFixed(1) : '0'
     );
@@ -328,19 +277,9 @@ export const DashboardStore = signalStore(
       () => configuredDailyGoal() > 0 && todayTotal() >= configuredDailyGoal()
     );
 
-    // Once the live feed has connected it already carries pushups alongside
-    // every other exercise, so the unified history is a single map over
-    // `exerciseEntries()`. SSR and the cold-start browser window (before the
-    // listener connects) fall back to the pushup REST resource (pushup-only —
-    // exerciseEntries have no REST endpoint) so history renders instead of
-    // flickering empty. Goal / streak / total metrics stay on the pushup-only
-    // `entryRows()`; only history surfaces consume `unifiedRows`.
-    const unifiedRows = computed<UnifiedEntry[]>(() => {
-      if (store._isBrowser && store._live.connected()) {
-        return store._live.exerciseEntries().map(exerciseEntryToUnified);
-      }
-      return (store.entriesResource.value() ?? []).map(pushupRecordToUnified);
-    });
+    const unifiedRows = computed<UnifiedEntry[]>(() =>
+      store._live.exerciseEntries().map(exerciseEntryToUnified)
+    );
 
     const lastEntry = computed<UnifiedEntry | null>(() => {
       const rows = unifiedRows();
@@ -457,16 +396,9 @@ export const DashboardStore = signalStore(
         configuredMonthlyGoal() > 0 && monthReps() >= configuredMonthlyGoal()
     );
 
-    const loading = computed(() => {
-      if (store._isBrowser) {
-        // Treat the dashboard as "loading" only until the Firestore listener
-        // has emitted at least once; subsequent updates happen reactively
-        // through `_live.entries()` without a loading flicker.
-        return !store._live.connected() && entryRows().length === 0;
-      }
-      const status = store.entriesResource.status();
-      return status === 'loading' || status === 'reloading';
-    });
+    const loading = computed(
+      () => !store._live.connected() && entryRows().length === 0
+    );
 
     const liveConnected = computed(() => store._live.connected());
 
@@ -481,7 +413,6 @@ export const DashboardStore = signalStore(
     const todayQuote = store._motivation.todayQuote;
 
     return {
-      allTimeStats,
       allTimeTotal,
       allTimeDays,
       allTimeEntries,
@@ -522,8 +453,6 @@ export const DashboardStore = signalStore(
   }),
   withMethods((store) => ({
     refreshAll(): void {
-      store.allTimeResource.reload();
-      store.entriesResource.reload();
       store.userStatsResource.reload();
     },
     async loadQuote(): Promise<void> {

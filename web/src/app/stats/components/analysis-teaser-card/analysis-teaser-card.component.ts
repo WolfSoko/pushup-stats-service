@@ -4,29 +4,14 @@ import {
   computed,
   inject,
   input,
-  resource,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { StatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { StatsResponse, StatsSeriesEntry } from '@pu-stats/models';
+import { StatsSeriesEntry } from '@pu-stats/models';
 import { toLocalIsoDate } from '@pu-stats/date';
-import { firstValueFrom } from 'rxjs';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
-
-const EMPTY_STATS: StatsResponse = {
-  meta: {
-    from: null,
-    to: null,
-    entries: 0,
-    days: 0,
-    total: 0,
-    granularity: 'daily',
-  },
-  series: [],
-};
 
 @Component({
   selector: 'app-analysis-teaser-card',
@@ -58,22 +43,16 @@ const EMPTY_STATS: StatsResponse = {
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        @if (statsResource.error() && !liveConnected()) {
-          <p class="error-fallback" i18n="@@dashboard.analysisTeaserError">
-            Daten konnten nicht geladen werden.
-          </p>
-        } @else {
-          <div class="mini-chart">
-            <app-stats-chart
-              [series]="chartSeries()"
-              [granularity]="'daily'"
-              [rangeMode]="'week'"
-              [from]="from()"
-              [to]="to()"
-              [kindLabel]="chartKindLabel()"
-            />
-          </div>
-        }
+        <div class="mini-chart">
+          <app-stats-chart
+            [series]="chartSeries()"
+            [granularity]="'daily'"
+            [rangeMode]="'week'"
+            [from]="from()"
+            [to]="to()"
+            [kindLabel]="chartKindLabel()"
+          />
+        </div>
       </mat-card-content>
       <mat-card-actions align="end">
         <span
@@ -126,7 +105,6 @@ const EMPTY_STATS: StatsResponse = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalysisTeaserCardComponent {
-  private readonly api = inject(StatsApiService);
   private readonly live = inject(LiveDataStore);
   private readonly router = inject(Router);
 
@@ -143,9 +121,6 @@ export class AnalysisTeaserCardComponent {
    * data surfaced on the teaser chart.
    */
   private readonly pushupLabel = $localize`:@@exercise.category.pushup:Liegestütze`;
-
-  /** Exposed for the template's error-fallback gate. */
-  readonly liveConnected = computed(() => this.live.connected());
 
   /**
    * Rolling 7-day window ending today (inclusive). The earlier
@@ -206,25 +181,10 @@ export class AnalysisTeaserCardComponent {
     return '';
   });
 
-  readonly statsResource = resource({
-    params: () => ({ ...this.weekRange(), _refresh: this.refreshTrigger() }),
-    loader: async ({ params }) =>
-      firstValueFrom(this.api.load({ from: params.from, to: params.to })),
-  });
-
-  /**
-   * Daily totals for the current week summed across **every** tracked
-   * exercise. The REST resource serves the SSR/cold-start window (and
-   * still feeds the unauthenticated demo render via the API). Once the
-   * Firestore listener has connected we switch to the live unified
-   * stream so pushups *and* exercise entries (sit-ups, squats, …)
-   * both contribute — otherwise users who train other exercises see
-   * an empty "Verlauf" chart even when they were active that week.
-   */
   readonly chartSeries = computed<StatsSeriesEntry[]>(() => {
     const { from, to } = this.weekRange();
     if (!this.live.connected()) {
-      return (this.statsResource.value() ?? EMPTY_STATS).series;
+      return [];
     }
 
     const totals = new Map<string, number>();

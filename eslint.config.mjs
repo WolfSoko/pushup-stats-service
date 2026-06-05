@@ -76,13 +76,15 @@ export default [
             },
             // push owns Web Push subscription state + /push/ service worker.
             // Depends on data-access for QuickLogListener (logs a pushup
-            // entry from the notification action).
+            // entry from the notification action) and auth to resolve the
+            // current user ID when writing exercise entries.
             {
               sourceTag: 'scope:push',
               onlyDependOnLibsWithTags: [
                 'scope:models',
                 'scope:date',
                 'scope:data-access',
+                'scope:auth',
                 'scope:testing',
               ],
               bannedExternalImports: bannedFirebaseImports,

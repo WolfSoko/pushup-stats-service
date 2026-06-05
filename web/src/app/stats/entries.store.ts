@@ -1,11 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import {
-  computed,
-  inject,
-  LOCALE_ID,
-  PLATFORM_ID,
-  resource,
-} from '@angular/core';
+import { computed, inject, LOCALE_ID } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -16,18 +9,14 @@ import {
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
-import {
-  ExerciseFirestoreService,
-  StatsApiService,
-} from '@pu-stats/data-access';
+import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   canonicalizePushupType,
   displayPushupType,
   exerciseEntryToUnified,
-  pushupRecordToUnified,
-  UnifiedEntry,
-  UnifiedEntryFilterKey,
+  type UnifiedEntry,
+  type UnifiedEntryFilterKey,
   unifiedEntryFilterKey,
 } from '@pu-stats/models';
 import { AppDataFacade } from '../core/app-data.facade';
@@ -80,59 +69,20 @@ const initialState: EntriesState = {
 export const EntriesStore = signalStore(
   withState(initialState),
   withProps(() => ({
-    _api: inject(StatsApiService),
     _exerciseService: inject(ExerciseFirestoreService),
     _live: inject(LiveDataStore),
     _appData: inject(AppDataFacade),
     _userContext: inject(UserContextService),
-    _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
     _locale: inject(LOCALE_ID) as string,
   })),
-  withProps((store) => ({
-    _entriesResource: resource({
-      params: () => ({
-        from: store.from() || undefined,
-        to: store.to() || undefined,
-      }),
-      loader: async ({ params }) =>
-        firstValueFrom(store._api.listPushups(params)),
-    }),
-  })),
   withComputed((store) => ({
-    /**
-     * Unified rows from both Firestore collections. Browser uses the
-     * live snapshots from {@link LiveDataStore}; SSR falls back to the
-     * pushup REST endpoint (exerciseEntries are skipped on SSR since
-     * the History page doesn't drive SEO).
-     */
-    rows: computed<UnifiedEntry[]>(() => {
-      if (store._isBrowser) {
-        // Post-cutover the live feed already carries pushups
-        // (`exerciseId:'pushup'`) alongside every other exercise, so a
-        // single map over `exerciseEntries()` is the whole history — no
-        // separate pushup source to merge (and nothing to double-count).
-        return store._live
-          .exerciseEntries()
-          .map(exerciseEntryToUnified)
-          .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
-      }
-      const ssrPushups = (store._entriesResource.value() ?? []).map(
-        pushupRecordToUnified
-      );
-      return ssrPushups;
-    }),
-    /**
-     * True once the entries data source has produced its first result.
-     * In the browser this gates on the live Firestore listener (which
-     * starts with an empty array before the first snapshot arrives,
-     * so an unguarded empty-state CTA flickers on every cold load).
-     * On the server it gates on the REST resource resolving.
-     */
-    entriesLoaded: computed(() =>
-      store._isBrowser
-        ? store._live.connected()
-        : store._entriesResource.status() === 'resolved'
+    rows: computed<UnifiedEntry[]>(() =>
+      store._live
+        .exerciseEntries()
+        .map(exerciseEntryToUnified)
+        .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
     ),
+    entriesLoaded: computed(() => store._live.connected()),
   })),
   withComputed((store) => ({
     sourceOptions: computed(() =>
@@ -148,8 +98,8 @@ export const EntriesStore = signalStore(
     typeOptions: computed<PushupTypeFilterOption[]>(() => {
       const seen = new Map<string, PushupTypeFilterOption>();
       for (const row of store.rows()) {
-        if (row.kind !== 'pushup') continue;
-        const value = canonicalizePushupType(row.variantType) || 'standard';
+        if (row.exerciseId !== 'pushup') continue;
+        const value = canonicalizePushupType(row.variantId ?? '') || 'standard';
         if (seen.has(value)) continue;
         seen.set(value, {
           value,
@@ -199,8 +149,9 @@ export const EntriesStore = signalStore(
           // The variant dropdown is pushup-only; selecting it
           // implicitly hides every non-pushup row regardless of the
           // exercise-kind filter.
-          if (row.kind !== 'pushup') return false;
-          const rowKey = canonicalizePushupType(row.variantType) || 'standard';
+          if (row.exerciseId !== 'pushup') return false;
+          const rowKey =
+            canonicalizePushupType(row.variantId ?? '') || 'standard';
           if (rowKey !== type) return false;
         }
         if (repsMin !== null && row.reps < repsMin) return false;
@@ -209,199 +160,149 @@ export const EntriesStore = signalStore(
       });
     }),
   })),
-  withMethods(
-    ({
-      _api,
-      _exerciseService,
-      _appData,
-      _userContext,
-      _isBrowser,
-      _entriesResource,
-      ...store
-    }) => ({
-      setFrom(value: string): void {
-        patchState(store, { from: value });
-      },
-      setTo(value: string): void {
-        patchState(store, { to: value });
-      },
-      setSource(value: string): void {
-        patchState(store, { source: value });
-      },
-      setType(value: string): void {
-        patchState(store, { type: value });
-      },
-      setKinds(value: ReadonlyArray<UnifiedEntryFilterKey>): void {
-        patchState(store, { kinds: value });
-      },
-      setRepsMin(value: number | null): void {
-        patchState(store, { repsMin: value });
-      },
-      setRepsMax(value: number | null): void {
-        patchState(store, { repsMax: value });
-      },
-      async createEntry(payload: {
-        kind: 'pushup' | 'exercise';
-        timestamp: string;
-        reps?: number;
-        sets?: number[];
-        durationSec?: number;
-        distanceM?: number;
-        source?: string;
-        type?: string;
-        exerciseId?: string;
-        variantId?: string;
-      }): Promise<void> {
-        patchState(store, { busyAction: 'create', busyId: null, error: null });
-        try {
-          if (payload.kind === 'pushup') {
-            await firstValueFrom(
-              _api.createPushup({
-                timestamp: payload.timestamp,
-                reps: payload.reps ?? 0,
-                ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
-                source: payload.source,
-                type: payload.type,
-              })
-            );
-          } else {
-            if (!payload.exerciseId) {
-              throw new Error(
-                'createEntry: exerciseId is required for kind="exercise"'
-              );
-            }
-            const userId = _userContext.userIdSafe();
-            if (!userId) {
-              throw new Error('createEntry: missing user id');
-            }
-            await firstValueFrom(
-              _exerciseService.createEntry(userId, {
-                exerciseId: payload.exerciseId,
-                timestamp: payload.timestamp,
-                ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
-                ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
-                ...(payload.durationSec !== undefined
-                  ? { durationSec: payload.durationSec }
-                  : {}),
-                ...(payload.distanceM !== undefined
-                  ? { distanceM: payload.distanceM }
-                  : {}),
-                ...(payload.source !== undefined
-                  ? { source: payload.source }
-                  : {}),
-                ...(payload.variantId ? { variantId: payload.variantId } : {}),
-              })
-            );
-          }
-          if (!_isBrowser) _entriesResource.reload();
-          _appData.reloadAfterMutation();
-        } catch (err) {
-          patchState(store, {
-            error: err instanceof Error ? err.message : String(err),
-          });
-        } finally {
-          patchState(store, { busyAction: null, busyId: null });
+  withMethods(({ _exerciseService, _appData, _userContext, ...store }) => ({
+    setFrom(value: string): void {
+      patchState(store, { from: value });
+    },
+    setTo(value: string): void {
+      patchState(store, { to: value });
+    },
+    setSource(value: string): void {
+      patchState(store, { source: value });
+    },
+    setType(value: string): void {
+      patchState(store, { type: value });
+    },
+    setKinds(value: ReadonlyArray<UnifiedEntryFilterKey>): void {
+      patchState(store, { kinds: value });
+    },
+    setRepsMin(value: number | null): void {
+      patchState(store, { repsMin: value });
+    },
+    setRepsMax(value: number | null): void {
+      patchState(store, { repsMax: value });
+    },
+    async createEntry(payload: {
+      kind: 'pushup' | 'exercise';
+      timestamp: string;
+      reps?: number;
+      sets?: number[];
+      durationSec?: number;
+      distanceM?: number;
+      source?: string;
+      type?: string;
+      exerciseId?: string;
+      variantId?: string;
+    }): Promise<void> {
+      patchState(store, { busyAction: 'create', busyId: null, error: null });
+      try {
+        const exerciseId =
+          payload.kind === 'pushup' ? 'pushup' : payload.exerciseId;
+        if (!exerciseId) {
+          throw new Error(
+            'createEntry: exerciseId is required for kind="exercise"'
+          );
         }
-      },
-      async updateEntry(payload: {
-        kind: 'pushup' | 'exercise';
-        id: string;
-        exerciseId?: string;
-        timestamp: string;
-        // Measurement-specific value fields. Reps/sets for reps
-        // exercises, durationSec for plank, distanceM (+ durationSec
-        // companion) for cardio.running. Each call patches whatever
-        // the dialog produced; the data-access layer enforces that
-        // mutually exclusive fields don't end up on the same doc.
-        reps?: number;
-        sets?: number[];
-        durationSec?: number;
-        distanceM?: number;
-        source?: string;
-        type?: string;
-        // `null` is the "clear this variant" sentinel forwarded from the
-        // dialog tri-state; the data-access layer translates it into a
-        // Firestore `deleteField()` so the doc actually loses the variant
-        // rather than keeping the old one.
-        variantId?: string | null;
-      }): Promise<void> {
+        const userId = _userContext.userIdSafe();
+        if (!userId) {
+          throw new Error('createEntry: missing user id');
+        }
+        await firstValueFrom(
+          _exerciseService.createEntry(userId, {
+            exerciseId,
+            timestamp: payload.timestamp,
+            ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
+            ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+            ...(payload.durationSec !== undefined
+              ? { durationSec: payload.durationSec }
+              : {}),
+            ...(payload.distanceM !== undefined
+              ? { distanceM: payload.distanceM }
+              : {}),
+            ...(payload.source !== undefined ? { source: payload.source } : {}),
+            ...(payload.variantId ? { variantId: payload.variantId } : {}),
+          })
+        );
+        _appData.reloadAfterMutation();
+      } catch (err) {
         patchState(store, {
-          busyAction: 'update',
-          busyId: payload.id,
-          error: null,
+          error: err instanceof Error ? err.message : String(err),
         });
-        try {
-          if (payload.kind === 'pushup') {
-            await firstValueFrom(
-              _api.updatePushup(payload.id, {
-                timestamp: payload.timestamp,
-                reps: payload.reps,
-                ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
-                source: payload.source,
-                type: payload.type,
-              })
-            );
-          } else {
-            if (!payload.exerciseId) {
-              throw new Error(
-                'updateEntry: exerciseId is required for kind="exercise"'
-              );
-            }
-            await firstValueFrom(
-              _exerciseService.updateEntry(payload.id, payload.exerciseId, {
-                timestamp: payload.timestamp,
-                ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
-                ...(payload.durationSec !== undefined
-                  ? { durationSec: payload.durationSec }
-                  : {}),
-                ...(payload.distanceM !== undefined
-                  ? { distanceM: payload.distanceM }
-                  : {}),
-                ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
-                ...(payload.source !== undefined
-                  ? { source: payload.source }
-                  : {}),
-                ...(payload.variantId !== undefined
-                  ? { variantId: payload.variantId }
-                  : {}),
-              })
-            );
-          }
-          if (!_isBrowser) _entriesResource.reload();
-          _appData.reloadAfterMutation();
-        } catch (err) {
-          patchState(store, {
-            error: err instanceof Error ? err.message : String(err),
-          });
-        } finally {
-          patchState(store, { busyAction: null, busyId: null });
+      } finally {
+        patchState(store, { busyAction: null, busyId: null });
+      }
+    },
+    async updateEntry(payload: {
+      kind: 'pushup' | 'exercise';
+      id: string;
+      exerciseId?: string;
+      timestamp: string;
+      reps?: number;
+      sets?: number[];
+      durationSec?: number;
+      distanceM?: number;
+      source?: string;
+      type?: string;
+      variantId?: string | null;
+    }): Promise<void> {
+      patchState(store, {
+        busyAction: 'update',
+        busyId: payload.id,
+        error: null,
+      });
+      try {
+        const exerciseId =
+          payload.kind === 'pushup' ? 'pushup' : payload.exerciseId;
+        if (!exerciseId) {
+          throw new Error(
+            'updateEntry: exerciseId is required for kind="exercise"'
+          );
         }
-      },
-      async deleteEntry(payload: {
-        kind: 'pushup' | 'exercise';
-        id: string;
-      }): Promise<void> {
+        await firstValueFrom(
+          _exerciseService.updateEntry(payload.id, exerciseId, {
+            timestamp: payload.timestamp,
+            ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
+            ...(payload.durationSec !== undefined
+              ? { durationSec: payload.durationSec }
+              : {}),
+            ...(payload.distanceM !== undefined
+              ? { distanceM: payload.distanceM }
+              : {}),
+            ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+            ...(payload.source !== undefined ? { source: payload.source } : {}),
+            ...(payload.variantId !== undefined
+              ? { variantId: payload.variantId }
+              : {}),
+          })
+        );
+        _appData.reloadAfterMutation();
+      } catch (err) {
         patchState(store, {
-          busyAction: 'delete',
-          busyId: payload.id,
-          error: null,
+          error: err instanceof Error ? err.message : String(err),
         });
-        try {
-          if (payload.kind === 'pushup') {
-            await firstValueFrom(_api.deletePushup(payload.id));
-          } else {
-            await firstValueFrom(_exerciseService.deleteEntry(payload.id));
-          }
-          if (!_isBrowser) _entriesResource.reload();
-          _appData.reloadAfterMutation();
-        } catch (err) {
-          patchState(store, {
-            error: err instanceof Error ? err.message : String(err),
-          });
-        } finally {
-          patchState(store, { busyAction: null, busyId: null });
-        }
-      },
-    })
-  )
+      } finally {
+        patchState(store, { busyAction: null, busyId: null });
+      }
+    },
+    async deleteEntry(payload: {
+      kind: 'pushup' | 'exercise';
+      id: string;
+    }): Promise<void> {
+      patchState(store, {
+        busyAction: 'delete',
+        busyId: payload.id,
+        error: null,
+      });
+      try {
+        await firstValueFrom(_exerciseService.deleteEntry(payload.id));
+        _appData.reloadAfterMutation();
+      } catch (err) {
+        patchState(store, {
+          error: err instanceof Error ? err.message : String(err),
+        });
+      } finally {
+        patchState(store, { busyAction: null, busyId: null });
+      }
+    },
+  }))
 );

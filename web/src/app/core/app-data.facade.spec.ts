@@ -9,6 +9,20 @@ import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
 import type { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
+function todayBerlinIsoDate(): string {
+  const date = new Date();
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Berlin',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const y = parts.find((p) => p.type === 'year')?.value ?? '1970';
+  const m = parts.find((p) => p.type === 'month')?.value ?? '01';
+  const d = parts.find((p) => p.type === 'day')?.value ?? '01';
+  return `${y}-${m}-${d}`;
+}
+
 describe('AppDataFacade', () => {
   const userId = signal<string>('u1');
 
@@ -63,24 +77,25 @@ describe('AppDataFacade', () => {
         of({ userId: 'u1', dailyGoal: options.dailyGoal })
       );
     }
-    if (options.todayTotal !== undefined) {
-      statsApiMock.load.mockReturnValue(
-        of({
-          meta: {
-            from: null,
-            to: null,
-            entries: 0,
-            days: 0,
-            total: options.todayTotal,
-            granularity: 'daily',
-          },
-          series: [],
-        })
-      );
-    }
-
     liveConnected = signal(options.live?.connected ?? false);
     liveEntries = signal<PushupRecord[]>(options.live?.entries ?? []);
+
+    if (options.todayTotal !== undefined) {
+      liveConnected = signal(true);
+      liveEntries = signal<PushupRecord[]>(
+        options.todayTotal > 0
+          ? [
+              {
+                _id: 'today-entry',
+                userId: 'u1',
+                timestamp: `${todayBerlinIsoDate()}T10:00:00`,
+                reps: options.todayTotal,
+                source: 'test',
+              } as PushupRecord,
+            ]
+          : []
+      );
+    }
     const planDay = options.planTodayDay ?? null;
     planTodayDay.set(planDay);
     planHasActive.set(planDay !== null);
@@ -299,21 +314,6 @@ describe('AppDataFacade', () => {
   });
 
   describe('Firestore live reactivity (regression: SpeedDial → fill-to-goal button stale)', () => {
-    function todayBerlinIsoDate(): string {
-      // Match the AppDataFacade implementation (toBerlinIsoDate(new Date())).
-      const date = new Date();
-      const parts = new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'Europe/Berlin',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }).formatToParts(date);
-      const y = parts.find((p) => p.type === 'year')?.value ?? '1970';
-      const m = parts.find((p) => p.type === 'month')?.value ?? '01';
-      const d = parts.find((p) => p.type === 'day')?.value ?? '01';
-      return `${y}-${m}-${d}`;
-    }
-
     it('Given live is connected, When a new pushup arrives via Firestore, Then todayProgress, remainingToGoal and goalReached update reactively without an explicit reload', async () => {
       // Given a connected LiveDataStore with no entries today and a 100-rep goal
       const facade = setup({

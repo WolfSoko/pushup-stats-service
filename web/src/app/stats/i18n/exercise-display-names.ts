@@ -191,9 +191,6 @@ export function variantDisplayName(variant: ExerciseVariant): string {
  * filter chips and the type-pie legend.
  */
 export function kindDisplayName(value: UnifiedEntryFilterKey): string {
-  if (value === 'pushup') {
-    return $localize`:@@exercise.category.pushup:Liegestütze`;
-  }
   const def = findExerciseDefinition(value);
   if (def) return exerciseDisplayName(def.id);
   // Catalog-miss path: user-defined exercises (custom UUIDs) and

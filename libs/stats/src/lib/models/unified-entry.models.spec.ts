@@ -1,58 +1,11 @@
 import {
   exerciseEntryToUnified,
-  pushupRecordToUnified,
   unifiedEntryCategoryId,
   unifiedEntryFilterKey,
   unifiedEntryMeasurement,
   unifiedEntryPrimaryValue,
 } from './unified-entry.models';
 import type { ExerciseDefinition, ExerciseEntry } from './exercise.models';
-import type { PushupRecord } from './pushup.models';
-
-describe('pushupRecordToUnified', () => {
-  describe('Given a fully populated pushup record', () => {
-    it('maps every persisted field through and tags kind as "pushup"', () => {
-      const r: PushupRecord = {
-        _id: 'p1',
-        timestamp: '2026-04-15T10:00:00Z',
-        reps: 25,
-        sets: [10, 15],
-        source: 'web',
-        type: 'diamond',
-        createdAt: '2026-04-15T10:00:01Z',
-        updatedAt: '2026-04-15T10:00:01Z',
-      };
-      expect(pushupRecordToUnified(r)).toEqual({
-        kind: 'pushup',
-        _id: 'p1',
-        timestamp: '2026-04-15T10:00:00Z',
-        reps: 25,
-        sets: [10, 15],
-        source: 'web',
-        variantType: 'diamond',
-        createdAt: '2026-04-15T10:00:01Z',
-        updatedAt: '2026-04-15T10:00:01Z',
-      });
-    });
-  });
-
-  describe('Given a pushup record without optional fields', () => {
-    it('omits sets/createdAt/updatedAt and surfaces null for missing type', () => {
-      const r: PushupRecord = {
-        _id: 'p2',
-        timestamp: '2026-04-15T10:00:00Z',
-        reps: 10,
-        source: 'web',
-      };
-      const out = pushupRecordToUnified(r);
-      expect(out.kind).toBe('pushup');
-      expect(out.variantType).toBeNull();
-      expect('sets' in out).toBe(false);
-      expect('createdAt' in out).toBe(false);
-      expect('updatedAt' in out).toBe(false);
-    });
-  });
-});
 
 describe('exerciseEntryToUnified', () => {
   describe('Given a reps-measured exercise entry', () => {
@@ -91,6 +44,31 @@ describe('exerciseEntryToUnified', () => {
       const out = exerciseEntryToUnified(e);
       expect(out.reps).toBe(0);
       expect(out.durationSec).toBe(60);
+    });
+  });
+
+  describe('Given a pushup entry (exerciseId: "pushup")', () => {
+    it('maps reps + variantId and tags kind as "exercise"', () => {
+      const e: ExerciseEntry = {
+        _id: 'p1',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-04-15T10:00:00Z',
+        reps: 25,
+        sets: [10, 15],
+        variantId: 'diamond',
+        source: 'web',
+      };
+      expect(exerciseEntryToUnified(e)).toEqual({
+        kind: 'exercise',
+        _id: 'p1',
+        timestamp: '2026-04-15T10:00:00Z',
+        reps: 25,
+        sets: [10, 15],
+        source: 'web',
+        exerciseId: 'pushup',
+        variantId: 'diamond',
+      });
     });
   });
 
@@ -157,25 +135,26 @@ describe('exerciseEntryToUnified', () => {
 });
 
 describe('unifiedEntryFilterKey', () => {
-  it('returns "pushup" for any pushup-kind entry regardless of variant', () => {
+  it('returns "pushup" for a pushup exercise entry regardless of variant', () => {
     expect(
       unifiedEntryFilterKey({
-        kind: 'pushup',
+        kind: 'exercise',
         _id: 'p',
         timestamp: 't',
         reps: 1,
         source: 'web',
-        variantType: 'diamond',
+        exerciseId: 'pushup',
+        variantId: 'diamond',
       })
     ).toBe('pushup');
     expect(
       unifiedEntryFilterKey({
-        kind: 'pushup',
+        kind: 'exercise',
         _id: 'p',
         timestamp: 't',
         reps: 1,
         source: 'web',
-        variantType: null,
+        exerciseId: 'pushup',
       })
     ).toBe('pushup');
   });
@@ -195,26 +174,27 @@ describe('unifiedEntryFilterKey', () => {
 });
 
 describe('unifiedEntryCategoryId', () => {
-  describe('Given a pushup entry', () => {
+  describe('Given a pushup entry (exerciseId: "pushup")', () => {
     it('returns "pushup" regardless of variant', () => {
       expect(
         unifiedEntryCategoryId({
-          kind: 'pushup',
+          kind: 'exercise',
           _id: 'p',
           timestamp: 't',
           reps: 1,
           source: 'web',
-          variantType: 'diamond',
+          exerciseId: 'pushup',
+          variantId: 'diamond',
         })
       ).toBe('pushup');
       expect(
         unifiedEntryCategoryId({
-          kind: 'pushup',
+          kind: 'exercise',
           _id: 'p',
           timestamp: 't',
           reps: 1,
           source: 'web',
-          variantType: null,
+          exerciseId: 'pushup',
         })
       ).toBe('pushup');
     });
@@ -310,15 +290,15 @@ describe('unifiedEntryCategoryId', () => {
 });
 
 describe('unifiedEntryMeasurement', () => {
-  it('returns "reps" for any pushup entry', () => {
+  it('returns "reps" for a pushup exercise entry', () => {
     expect(
       unifiedEntryMeasurement({
-        kind: 'pushup',
+        kind: 'exercise',
         _id: 'p',
         timestamp: 't',
         reps: 1,
         source: 'web',
-        variantType: null,
+        exerciseId: 'pushup',
       })
     ).toBe('reps');
   });
@@ -364,15 +344,16 @@ describe('unifiedEntryMeasurement', () => {
 
 describe('unifiedEntryPrimaryValue', () => {
   describe('Given a reps-measured entry (pushup or catalog rep exercise)', () => {
-    it('returns the reps count for pushups', () => {
+    it('returns the reps count for pushup exercise entries', () => {
       expect(
         unifiedEntryPrimaryValue({
-          kind: 'pushup',
+          kind: 'exercise',
           _id: 'p',
           timestamp: 't',
           reps: 25,
           source: 'web',
-          variantType: 'standard',
+          exerciseId: 'pushup',
+          variantId: 'standard',
         })
       ).toBe(25);
     });

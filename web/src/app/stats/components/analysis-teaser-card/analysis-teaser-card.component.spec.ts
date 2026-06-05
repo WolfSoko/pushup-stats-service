@@ -205,6 +205,20 @@ describe('AnalysisTeaserCardComponent', () => {
   });
 
   describe('Given the API returns data successfully', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      // A pushup entry within the current week window (FROZEN_TODAY = 2026-04-08)
+      // so chartSeries() computes a non-empty result from live data.
+      await setupWithLiveStore({
+        connected: true,
+        entries: [
+          { _id: 'p1', timestamp: '2026-04-07T08:00:00+01:00', reps: 20 },
+        ],
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+    });
+
     it('Then it should display the chart', async () => {
       // Given
       await fixture.whenStable();
@@ -320,14 +334,12 @@ describe('AnalysisTeaserCardComponent', () => {
   });
 
   describe('Given the live store has not connected yet', () => {
-    it('Then chartSeries falls back to the REST resource (pushup-only)', async () => {
+    it('Then chartSeries is empty when the live store has not connected (no REST fallback)', async () => {
       fixture.detectChanges();
       await fixture.whenStable();
 
-      // REST mock returns one bucket; live store is disconnected.
-      expect(component.chartSeries()).toEqual([
-        { bucket: '2026-03-30', total: 20, dayIntegral: 20 },
-      ]);
+      // Live store disconnected → component returns [] (no REST fallback).
+      expect(component.chartSeries()).toEqual([]);
     });
 
     it('Then chartKindLabel names the pushup-only REST source', () => {
