@@ -22,7 +22,7 @@
         </div>
       }
 
-      <form (submit)="signInWithEmail()" class="login-form">
+      <form (submit)="signInWithEmail($event)" class="login-form">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label i18n="@@auth.email">E-Mail</mat-label>
           <input

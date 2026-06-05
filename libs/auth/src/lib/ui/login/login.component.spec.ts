@@ -6,8 +6,8 @@ import { LoginOnboardingStore } from '../../core/state/login-onboarding.store';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
-  it('renders login title', async () => {
-    await render(LoginComponent, {
+  const renderLogin = () =>
+    render(LoginComponent, {
       providers: [
         {
           provide: ActivatedRoute,
@@ -36,6 +36,25 @@ describe('LoginComponent', () => {
       ],
     });
 
+  it('renders login title', async () => {
+    await renderLogin();
+
     expect(screen.getByText('Willkommen bei PushUp Stats')).toBeInTheDocument();
+  });
+
+  it('should prevent the native form submission so credentials never leak into the URL', async () => {
+    // given
+    const { container } = await renderLogin();
+    const form = container.querySelector('form');
+    const submitEvent = new Event('submit', {
+      bubbles: true,
+      cancelable: true,
+    });
+
+    // when
+    form?.dispatchEvent(submitEvent);
+
+    // then
+    expect(submitEvent.defaultPrevented).toBe(true);
   });
 });

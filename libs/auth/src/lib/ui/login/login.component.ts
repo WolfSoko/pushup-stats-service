@@ -76,7 +76,8 @@ export class LoginComponent {
     await this.router.navigateByUrl('/register');
   }
 
-  async signInWithEmail(): Promise<void> {
+  async signInWithEmail(event?: Event): Promise<void> {
+    event?.preventDefault();
     if (this.loginForm.email().invalid() || this.loginForm.password().invalid())
       return;
     const { email, password } = this.loginForm().value();
