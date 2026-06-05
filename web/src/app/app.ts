@@ -154,6 +154,10 @@ export class App {
   readonly isLoggedIn = computed(
     () => !!this.user.userIdSafe() && !this.user.isGuest()
   );
+  // The speed-dial FAB is for anyone who can persist an entry — guests have a
+  // real (anonymous) auth uid and can quick-add too, so it shows for them as
+  // well, unlike the reminders nav which is gated to signed-in accounts.
+  readonly showQuickAddFab = computed(() => !!this.user.userIdSafe());
   private readonly pushService = inject(PushSubscriptionService);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
   private readonly quickLogListener = inject(QuickLogListenerService);

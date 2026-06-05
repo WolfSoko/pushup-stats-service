@@ -334,7 +334,7 @@
 
 <lib-cookie-consent-banner #consentBanner />
 
-@if (isLoggedIn()) {
+@if (showQuickAddFab()) {
 <lib-quick-add-fab
   [suggestions]="quickAddSuggestions()"
   [remainingToGoal]="remainingToGoal()"

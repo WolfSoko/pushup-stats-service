@@ -1135,6 +1135,73 @@ describe('App (testing-library)', () => {
     });
   });
 
+  describe('speed-dial FAB visibility', () => {
+    function providersForUser(userCtx: {
+      userIdSafe: () => string;
+      isGuest: () => boolean;
+    }) {
+      return [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            isAdmin: () => false,
+            ...userCtx,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
+      ];
+    }
+
+    it('renders the speed-dial FAB for guest users', async () => {
+      // given — a guest (real anonymous uid, isGuest === true)
+      await render(App, {
+        providers: providersForUser({
+          userIdSafe: () => 'guest-uid',
+          isGuest: () => true,
+        }),
+      });
+
+      // then
+      expect(
+        await screen.findByRole('button', { name: /Schnellerfassung öffnen/i })
+      ).toBeTruthy();
+    });
+
+    it('hides the speed-dial FAB when there is no authenticated user', async () => {
+      // given — signed out (no uid)
+      await render(App, {
+        providers: providersForUser({
+          userIdSafe: () => '',
+          isGuest: () => false,
+        }),
+      });
+
+      // then
+      expect(
+        screen.queryByRole('button', { name: /Schnellerfassung öffnen/i })
+      ).toBeNull();
+    });
+  });
+
   describe('service worker update notifications', () => {
     function makeSwUpdateMock() {
       const versionUpdates = new Subject<{ type: string }>();
