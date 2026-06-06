@@ -247,7 +247,7 @@
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:95</note>
+        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:96</note>
       </notes>
       <segment>
         <source>Kein eingeloggter Nutzer gefunden.</source>
@@ -255,7 +255,7 @@
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:101</note>
+        <note category="location">libs/auth/src/lib/ui/login/login-ui.store.ts:102</note>
       </notes>
       <segment>
         <source>Bitte stimme der Datenverarbeitung zu.</source>
@@ -348,7 +348,7 @@
     </unit>
     <unit id="validate.email.required">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:61</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:59</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:123</note>
       </notes>
       <segment>
@@ -357,7 +357,7 @@
     </unit>
     <unit id="validate.email.email">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:64</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:62</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:126</note>
       </notes>
       <segment>
@@ -366,7 +366,7 @@
     </unit>
     <unit id="validate.password.required">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:67</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:65</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:129</note>
       </notes>
       <segment>
@@ -375,7 +375,7 @@
     </unit>
     <unit id="validate.password.minLength">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:70</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:68</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:132</note>
       </notes>
       <segment>
@@ -3725,7 +3725,7 @@
     </unit>
     <unit id="earlyAccess.text">
       <notes>
-        <note category="location">web/src/app/app.ts:187</note>
+        <note category="location">web/src/app/app.ts:191</note>
       </notes>
       <segment>
         <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
@@ -3733,7 +3733,7 @@
     </unit>
     <unit id="earlyAccess.feedback">
       <notes>
-        <note category="location">web/src/app/app.ts:188</note>
+        <note category="location">web/src/app/app.ts:192</note>
       </notes>
       <segment>
         <source>Feedback</source>
@@ -3741,7 +3741,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:304</note>
+        <note category="location">web/src/app/app.ts:308</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -3749,7 +3749,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:415</note>
+        <note category="location">web/src/app/app.ts:419</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -3757,7 +3757,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:418</note>
+        <note category="location">web/src/app/app.ts:422</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -3765,7 +3765,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:439</note>
+        <note category="location">web/src/app/app.ts:443</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -3773,7 +3773,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:440</note>
+        <note category="location">web/src/app/app.ts:444</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -3781,7 +3781,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:516</note>
+        <note category="location">web/src/app/app.ts:520</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -3789,7 +3789,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:545</note>
+        <note category="location">web/src/app/app.ts:549</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -3797,7 +3797,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:552</note>
+        <note category="location">web/src/app/app.ts:556</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
