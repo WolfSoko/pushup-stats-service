@@ -1688,12 +1688,10 @@ export const rebuildUserStats = onCall(
 );
 
 // ─── updateExerciseStatsOnEntryWrite ──────────────────────────────────────────
-// Phase-0 of the multi-exercise migration. Mirrors
-// `updateUserStatsOnPushupWrite` but for entries written to the new
-// `exerciseEntries` collection. Aggregates land in
-// `userStats/{userId}/perExercise/{exerciseId}` so the existing
-// `userStats/{userId}` doc — which still serves the Pushup dashboard —
-// stays untouched.
+// Per-exercise stats aggregation triggered by writes to `exerciseEntries`.
+// Aggregates land in `userStats/{userId}/perExercise/{exerciseId}` so the
+// top-level `userStats/{userId}` doc — frozen post-Phase-7-cutover — is
+// not touched by this trigger.
 //
 // We deliberately reuse `applyDelta`/`rebuildFromEntries` from
 // `user-stats-delta.ts` to avoid forking the streak/heatmap logic. The
