@@ -60,8 +60,8 @@ function hasAscendingIndex(
 describe('firestore.indexes.json ⇄ delta-aggregation rebuild queries', () => {
   const indexes = loadIndexes();
 
-  it('should declare the (userId, timestamp) index updateUserStatsOnPushupWrite rebuilds from', () => {
-    // given the pushup aggregation trigger's chronological rebuild fetch
+  it('should declare the (userId, timestamp) index rebuildUserStats rebuilds from', () => {
+    // given rebuildUserStats's chronological rebuild fetch from the pushups collection
     // when looking up its supporting composite index
     const declared = hasAscendingIndex(indexes, 'pushups', [
       'userId',
