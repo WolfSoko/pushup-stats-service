@@ -81,7 +81,6 @@
     "jiti": "2.4.2",
     "lint-staged": "16.2.7",
     "marked": "16.4.1",
-    "nedb-promises": "6.2.3",
     "node-fetch": "3.3.2",
     "nx": "22.7.5",
     "pino-pretty": "^13.1.3",
