@@ -149,7 +149,7 @@ async function rebuildExerciseLeaderboardsCore(opts: {
   // Single Firestore query over the trailing 30-day window across all
   // exercises. Per-exercise filtering happens in-memory afterwards —
   // cheaper than 40+ separate queries and small enough to fit in a
-  // single function invocation (Phase-0 catalog × active users).
+  // single function invocation.
   const snap = await db
     .collection('exerciseEntries')
     .where('timestamp', '>=', queryStart)
@@ -842,10 +842,10 @@ async function fetchPublicProfileProjection(uid: string) {
   const db = admin.firestore();
   const [cfgSnap, statsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
-    // Post Phase-7 cutover the public pushup stats live in the per-exercise
-    // aggregate (`updateExerciseStatsOnEntryWrite` keeps it fresh); the
-    // top-level `userStats/{uid}` doc is frozen for pushups. Same UserStats
-    // shape, so `buildPublicProfile` is unchanged.
+    // Public pushup stats now live in the per-exercise aggregate
+    // (`updateExerciseStatsOnEntryWrite` keeps it fresh); the top-level
+    // `userStats/{uid}` doc is frozen for pushups. Same UserStats shape,
+    // so `buildPublicProfile` is unchanged.
     db
       .collection('userStats')
       .doc(uid)
@@ -1688,16 +1688,10 @@ export const rebuildUserStats = onCall(
 );
 
 // ─── updateExerciseStatsOnEntryWrite ──────────────────────────────────────────
-// Per-exercise stats aggregation triggered by writes to `exerciseEntries`.
-// Aggregates land in `userStats/{userId}/perExercise/{exerciseId}` so the
-// top-level `userStats/{userId}` doc — frozen post-Phase-7-cutover — is
-// not touched by this trigger.
-//
-// We deliberately reuse `applyDelta`/`rebuildFromEntries` from
-// `user-stats-delta.ts` to avoid forking the streak/heatmap logic. The
-// per-exercise doc carries the same UserStats shape; downstream consumers
-// can decide which fields to surface (heatmap and sets are over-spec
-// for a Phase-0 sit-ups counter but cost nothing).
+// Listens on `exerciseEntries` and writes per-exercise aggregates to
+// `userStats/{userId}/perExercise/{exerciseId}`, leaving the existing
+// `userStats/{userId}` doc untouched.
+// Reuses `applyDelta`/`rebuildFromEntries` to avoid forking the streak/heatmap logic.
 
 export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
   {
@@ -1938,7 +1932,7 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
 // Admin-only one-shot copy of `pushups/*` → `exerciseEntries/*` with
 // `exerciseId:'pushup'`. STAGED: no write-path flip, no legacy deletion —
 // the dashboard keeps reading `pushups`. The trigger guards above keep the
-// copies out of per-exercise stats + leaderboards until Phase-7 cutover.
+// copies out of per-exercise stats + leaderboards.
 // All classification lives in the pure `pushup-unification` planners; these
 // wrappers only do auth, Firestore IO and batched writes. Runbook:
 // `docs/migrations/pushup-unification.md`.
