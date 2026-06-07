@@ -10046,33 +10046,33 @@
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schnellerfassung</source>
-        <target>Schnellerfassung</target>
+        <target>Γρήγορη καταχώρηση</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</target>
+        <target>Με αυτό το κουμπί + καταγράφεις επαναλήψεις αστραπιαία – από οποιαδήποτε σελίδα.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">
-      <segment state="initial">
+      <segment state="translated">
         <source>Verstanden</source>
-        <target>Verstanden</target>
+        <target>Κατάλαβα</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.closeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tutorial schließen</source>
-        <target>Tutorial schließen</target>
+        <target>Κλείσιμο οδηγού</target>
       </segment>
     </unit>
     <unit id="dashboard.quickActions.speedDialHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
-        <target>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</target>
+        <target>Συμβουλή: Χρησιμοποίησε το πλωτό κουμπί + κάτω δεξιά για γρήγορη καταγραφή από οποιαδήποτε σελίδα.</target>
       </segment>
     </unit>
 </file>

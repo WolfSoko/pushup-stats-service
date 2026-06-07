@@ -9306,33 +9306,33 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schnellerfassung</source>
-        <target>Schnellerfassung</target>
+        <target>Hurtigregistrering</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</target>
+        <target>Med denne +‑knappen registrerer du repetisjoner lynraskt – fra hvilken som helst side.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">
-      <segment state="initial">
+      <segment state="translated">
         <source>Verstanden</source>
-        <target>Verstanden</target>
+        <target>Forstått</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.closeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tutorial schließen</source>
-        <target>Tutorial schließen</target>
+        <target>Lukk veiledning</target>
       </segment>
     </unit>
     <unit id="dashboard.quickActions.speedDialHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
-        <target>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</target>
+        <target>Tips: Bruk den flytende +‑knappen nede til høyre for å registrere lynraskt fra hvilken som helst side.</target>
       </segment>
     </unit>
 </file>
