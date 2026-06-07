@@ -10054,7 +10054,7 @@
     <unit id="quickAdd.coachmark.body">
       <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Con questo pulsante + puoi registrare le ripetizioni in un lampo – da qualsiasi pagina.</target>
+        <target>Con questo pulsante + puoi registrare esercizi in un lampo – da qualsiasi pagina.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">

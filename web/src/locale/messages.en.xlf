@@ -10220,7 +10220,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="quickAdd.coachmark.body">
       <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Use this + button to record reps lightning fast – from any page.</target>
+        <target>Use this + button to record exercises lightning fast – from any page.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">

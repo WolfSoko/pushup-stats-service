@@ -9548,7 +9548,7 @@
     <unit id="quickAdd.coachmark.body">
       <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>使用此 + 按钮，可从任意页面闪速记录训练次数。</target>
+        <target>使用此 + 按钮，可从任意页面闪速记录练习。</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">

@@ -10054,7 +10054,7 @@
     <unit id="quickAdd.coachmark.body">
       <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Hoc botone + repetitiones velocissime addes – ex quavis pagina.</target>
+        <target>Hoc botone + exercitia velocissime addes – ex quavis pagina.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">

@@ -19,7 +19,7 @@ export class QuickAddFabCoachmarkComponent {
   readonly dismiss = output<void>();
 
   protected readonly title = $localize`:@@quickAdd.coachmark.title:Schnellerfassung`;
-  protected readonly body = $localize`:@@quickAdd.coachmark.body:Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.`;
+  protected readonly body = $localize`:@@quickAdd.coachmark.body:Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.`;
   protected readonly dismissLabel = $localize`:@@quickAdd.coachmark.dismiss:Verstanden`;
   protected readonly closeAriaLabel = $localize`:@@quickAdd.coachmark.closeAria:Tutorial schließen`;
 }
