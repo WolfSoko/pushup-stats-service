@@ -9926,7 +9926,7 @@
     <unit id="quickAdd.coachmark.body">
       <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Ce bouton + te permet de saisir des répétitions en un éclair – depuis n’importe quelle page.</target>
+        <target>Ce bouton + te permet d'enregistrer des exercices en un éclair – depuis n'importe quelle page.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">
@@ -9944,7 +9944,7 @@
     <unit id="dashboard.quickActions.speedDialHint">
       <segment state="translated">
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
-        <target>Conseil : Le bouton + flottant en bas à droite te permet de saisir depuis n’importe quelle page en un éclair.</target>
+        <target>Astuce : Utilise le bouton + flottant en bas à droite pour saisir rapidement depuis n'importe quelle page.</target>
       </segment>
     </unit>
 </file>

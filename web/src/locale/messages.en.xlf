@@ -10214,13 +10214,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="quickAdd.coachmark.title">
       <segment state="translated">
         <source>Schnellerfassung</source>
-        <target>Quick Entry</target>
+        <target>Quick Add</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
       <segment state="translated">
         <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
-        <target>Use this + button to log reps instantly – from any page.</target>
+        <target>Use this + button to record exercises lightning fast – from any page.</target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.dismiss">
@@ -10238,7 +10238,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="dashboard.quickActions.speedDialHint">
       <segment state="translated">
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
-        <target>Tip: Use the floating + button at the bottom right to log reps instantly from any page.</target>
+        <target>Tip: Use the floating + button at the bottom right to quickly log from any page.</target>
       </segment>
     </unit>
 </file>
