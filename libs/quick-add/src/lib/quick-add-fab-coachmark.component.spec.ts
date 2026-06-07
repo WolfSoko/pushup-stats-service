@@ -10,7 +10,7 @@ describe('QuickAddFabCoachmarkComponent', () => {
     // then
     expect(screen.getByText('Schnellerfassung')).toBeTruthy();
     expect(
-      screen.getByText(/erfasst du Wiederholungen blitzschnell/i)
+      screen.getByText(/erfasst du Übungen blitzschnell/i)
     ).toBeTruthy();
   });
 
