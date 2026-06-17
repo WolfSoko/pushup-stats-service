@@ -139,6 +139,12 @@
         "libs/sw-push/**/*",
         "web/**/*"
       ]
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
     }
   ],
   "analytics": true,
