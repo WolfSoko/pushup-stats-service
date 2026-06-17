@@ -4,7 +4,6 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "web/src",
-  "implicitDependencies": ["data-store", "sw-push"],
   "i18n": {
     "sourceLocale": "de",
     "locales": {
@@ -48,6 +47,7 @@
     "defaultLocale": "de"
   },
   "tags": ["scope:app"],
+  "implicitDependencies": ["data-store", "sw-push"],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
@@ -57,6 +57,7 @@
         "sw-push:build"
       ],
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/web",
         "browser": "web/src/main.ts",
@@ -187,12 +188,12 @@
             }
           ]
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "continuous": true,
       "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
       "options": {
         "proxyConfig": "web/proxy.conf.json"
       },
@@ -209,8 +210,7 @@
         "staging": {
           "buildTarget": "web:build:staging"
         }
-      },
-      "defaultConfiguration": "development"
+      }
     },
     "serve-local": {
       "continuous": true,
@@ -228,7 +228,15 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.mjs",
+        {
+          "externalDependencies": ["eslint"]
+        }
+      ]
     },
     "test": {
       "executor": "@angular/build:unit-test",

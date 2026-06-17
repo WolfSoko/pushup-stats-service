@@ -117,6 +117,28 @@
       "options": {
         "targetName": "e2e"
       }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      },
+      "include": [
+        "data-store/functions/**/*",
+        "libs/ads/**/*",
+        "libs/auth/**/*",
+        "libs/auto-count/**/*",
+        "libs/data-access/**/*",
+        "libs/data-access-state/**/*",
+        "libs/motivation/**/*",
+        "libs/push/**/*",
+        "libs/quick-add/**/*",
+        "libs/reminders/**/*",
+        "libs/stats/**/*",
+        "libs/stats-date/**/*",
+        "libs/sw-push/**/*",
+        "web/**/*"
+      ]
     }
   ],
   "analytics": true,
