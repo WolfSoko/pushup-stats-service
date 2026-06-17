@@ -1,6 +1,5 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
   ErrorHandler,
   inject,
@@ -8,10 +7,6 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import {
-  createErrorHandler as sentryCreateErrorHandler,
-  TraceService as SentryTraceService,
-} from '@sentry/angular';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import {
   connectFunctionsEmulator,
@@ -30,7 +25,7 @@ import {
   withI18nSupport,
   withIncrementalHydration,
 } from '@angular/platform-browser';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import {
   provideAuth,
@@ -53,30 +48,19 @@ import { PushSubscriptionService, VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { SHOULD_SKIP_IN_APP_REMINDER } from '@pu-reminders/reminders';
 import { appRoutes } from './app.routes';
 import { createAppRouterFeatures } from './app.router-features';
+import { DeferredSentryErrorHandler } from './core/observability/sentry';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
     provideRouter(appRoutes, ...createAppRouterFeatures()),
-    // Sentry error monitoring – production only (not in dev mode or emulator)
+    // Sentry error monitoring – production only (not in dev mode or emulator).
+    // The handler buffers errors until the Sentry SDK is lazily initialised
+    // post-bootstrap (see initSentryLazily in main.ts), keeping @sentry/* off
+    // the eager critical path.
     ...(!firebaseRuntime.useEmulators && !isDevMode()
-      ? [
-          {
-            provide: ErrorHandler,
-            useValue: sentryCreateErrorHandler(),
-          },
-          {
-            provide: SentryTraceService,
-            deps: [Router],
-          },
-          {
-            provide: APP_INITIALIZER,
-            useFactory: () => () => undefined,
-            deps: [SentryTraceService],
-            multi: true,
-          },
-        ]
+      ? [{ provide: ErrorHandler, useClass: DeferredSentryErrorHandler }]
       : []),
     provideClientHydration(
       withIncrementalHydration(),

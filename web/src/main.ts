@@ -1,9 +1,4 @@
 /// <reference types="@angular/localize" />
-import {
-  addIntegration,
-  browserTracingIntegration,
-  init as sentryInit,
-} from '@sentry/angular';
 import { isDevMode, mergeApplicationConfig } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { App } from './app/app';
@@ -11,23 +6,9 @@ import { appConfig } from './app/app.config';
 import { appBrowserConfig } from './app/app.browser.config';
 import { firebaseRuntime } from './env/firebase-runtime';
 import { AuthService } from '@pu-auth/auth';
+import { initSentryLazily } from './app/core/observability/sentry';
 
 const sentryEnabled = !firebaseRuntime.useEmulators && !isDevMode();
-
-if (sentryEnabled) {
-  sentryInit({
-    dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
-    sendDefaultPii: true,
-    release: (globalThis as Record<string, unknown>)['SENTRY_RELEASE'] as
-      | string
-      | undefined,
-    environment: 'production',
-    integrations: [browserTracingIntegration()],
-    tracesSampleRate: 0.2,
-    replaysSessionSampleRate: 0.05,
-    replaysOnErrorSampleRate: 1.0,
-  });
-}
 
 type E2EWindowHelpers = {
   signInAnonymouslyForE2E?: () => Promise<void>;
@@ -44,23 +25,32 @@ bootstrapApplication(App, mergeApplicationConfig(appConfig, appBrowserConfig))
       e2eWindow.isAuthenticatedForE2E = () => authService.isAuthenticated();
     }
 
-    // Lazy-load Sentry replay integration after bootstrap so the heavy rrweb
-    // recorder stays out of the eager main bundle. requestIdleCallback ensures
-    // it doesn't compete with first interaction; setTimeout is the fallback.
+    // Defer the whole Sentry SDK (core + tracing + rrweb session replay) to
+    // post-bootstrap idle time so @sentry/* stays out of the eager bundle. The
+    // DeferredSentryErrorHandler buffers any errors thrown in the meantime.
+    // requestIdleCallback keeps it off the first-interaction path; setTimeout
+    // is the fallback.
     if (sentryEnabled) {
-      const loadReplay = () =>
-        import('@sentry/angular').then((m) => {
-          addIntegration(m.replayIntegration());
-        });
+      const loadSentry = () =>
+        initSentryLazily(appRef, {
+          dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
+          release: (globalThis as Record<string, unknown>)['SENTRY_RELEASE'] as
+            | string
+            | undefined,
+          environment: 'production',
+          tracesSampleRate: 0.2,
+          replaysSessionSampleRate: 0.05,
+          replaysOnErrorSampleRate: 1.0,
+        }).catch((err) => console.error('Sentry init failed', err));
       const ric = (
         window as Window & {
           requestIdleCallback?: (cb: () => void, opts?: object) => number;
         }
       ).requestIdleCallback;
       if (typeof ric === 'function') {
-        ric(loadReplay, { timeout: 4000 });
+        ric(loadSentry, { timeout: 4000 });
       } else {
-        setTimeout(loadReplay, 2000);
+        setTimeout(loadSentry, 2000);
       }
     }
   })
