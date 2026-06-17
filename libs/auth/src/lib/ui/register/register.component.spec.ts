@@ -116,6 +116,21 @@ describe('RegisterComponent', () => {
     });
   });
 
+  it('enables the step-1 next button once a valid email is entered', async () => {
+    // given
+    const user = userEvent.setup();
+    await renderRegister();
+    const nextButton = screen.getAllByRole('button', { name: /weiter/i })[0];
+    expect(nextButton).toBeDisabled();
+
+    // when
+    const emailInput = screen.getByPlaceholderText('deine@email.de');
+    await user.type(emailInput, 'test@example.com');
+
+    // then
+    expect(nextButton).toBeEnabled();
+  });
+
   it('shows required error message as readable string when email is touched and empty', async () => {
     const user = userEvent.setup();
     await renderRegister();
