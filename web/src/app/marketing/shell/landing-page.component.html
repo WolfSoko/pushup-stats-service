@@ -1,11 +1,18 @@
 <main class="landing">
   <section class="hero">
-    <img
-      class="hero-logo"
-      src="assets/pushup-logo.png"
-      alt="Pushup Tracker Logo"
-      i18n-alt="@@brandLogoAlt"
-    />
+    <picture>
+      <source srcset="assets/pushup-logo.webp" type="image/webp" />
+      <img
+        class="hero-logo"
+        src="assets/pushup-logo.png"
+        alt="Pushup Tracker Logo"
+        i18n-alt="@@brandLogoAlt"
+        width="160"
+        height="160"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
     <div class="hero-text">
       <p class="eyebrow" i18n="@@landing.eyebrow">Pushup Tracker</p>
       <span class="early-access-badge" i18n="@@landing.earlyAccess.badge"

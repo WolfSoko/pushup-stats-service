@@ -6,6 +6,7 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
+import compression from 'compression';
 import express from 'express';
 import { join } from 'node:path';
 
@@ -38,6 +39,13 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 app.use(pinoHttp({ logger }));
+
+// gzip/brotli the SSR HTML and any text asset served from the bundle.
+// Firebase App Hosting fronts Cloud Run but does not compress origin
+// responses for us (PageSpeed flagged "no text compression"), so the
+// Express origin has to do it. Registered before the static and SSR
+// handlers so it wraps every downstream response.
+app.use(compression());
 
 const angularApp = new AngularNodeAppEngine();
 

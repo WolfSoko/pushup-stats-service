@@ -933,7 +933,7 @@ describe('App (testing-library)', () => {
     expect(brandLink.closest('mat-toolbar.top-nav')).toBeTruthy();
     const logo = brandLink.querySelector('img') as HTMLImageElement | null;
     expect(logo).toBeTruthy();
-    expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.png');
+    expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.webp');
   });
 
   it('given app is rendered, when reading bottom navigation, then it exposes five primary links', async () => {

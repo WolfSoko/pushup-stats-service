@@ -162,6 +162,14 @@ describe('LandingPageComponent', () => {
     const logo = screen.getByAltText('Pushup Tracker Logo') as HTMLImageElement;
     expect(logo.getAttribute('src')).toBe('assets/pushup-logo.png');
     expect(logo.closest('section.hero')).toBeTruthy();
+    // LCP element: prioritised, fixed-size, and served as WebP via <picture>.
+    expect(logo.getAttribute('fetchpriority')).toBe('high');
+    expect(logo.getAttribute('width')).toBe('160');
+    expect(logo.getAttribute('height')).toBe('160');
+    const webpSource = logo
+      .closest('picture')
+      ?.querySelector('source[type="image/webp"]');
+    expect(webpSource?.getAttribute('srcset')).toBe('assets/pushup-logo.webp');
   });
 
   it('orders landing sections as feature grid, preview, discover', async () => {

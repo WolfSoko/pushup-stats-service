@@ -14,6 +14,7 @@
  *   web/public/favicon.ico        (multi-res: 16, 32, 48)
  *   web/public/favicon.png        (180 - apple-touch compatible)
  *   web/public/assets/pushup-logo.png (in-app toolbar/header logo)
+ *   web/public/assets/pushup-logo.webp (LCP-optimised, ~95% smaller)
  */
 
 const { resolve } = require('node:path');
@@ -30,6 +31,9 @@ const PWA_SIZES = [72, 96, 128, 144, 152, 192, 384, 512];
 const FAVICON_ICO_SIZES = [16, 32, 48];
 const FAVICON_PNG_SIZE = 180;
 const LOGO_PNG_SIZE = 512;
+// WebP rendition served to the page. Displayed at ≤160px (hero), so 384px
+// covers retina everywhere while staying a fraction of the PNG's size.
+const LOGO_WEBP_SIZE = 384;
 const BADGE_SIZE = 72;
 
 async function resizeTo(size, outPath) {
@@ -65,6 +69,18 @@ async function main() {
 
   console.log('\nIn-app logo (toolbar + dashboard header):');
   await resizeTo(LOGO_PNG_SIZE, 'web/public/assets/pushup-logo.png');
+
+  console.log('\nIn-app logo WebP (LCP-optimised):');
+  await sharp(SOURCE)
+    .resize(LOGO_WEBP_SIZE, LOGO_WEBP_SIZE, {
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
+    .webp({ quality: 82 })
+    .toFile(resolve(ROOT, 'web/public/assets/pushup-logo.webp'));
+  console.log(
+    `  ${LOGO_WEBP_SIZE}x${LOGO_WEBP_SIZE}  →  web/public/assets/pushup-logo.webp`
+  );
 
   console.log('\nFavicon PNG (modern browsers, apple-touch):');
   await resizeTo(FAVICON_PNG_SIZE, 'web/public/favicon.png');
