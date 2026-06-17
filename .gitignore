@@ -86,3 +86,5 @@ mobile/android-twa/local.properties
 
 # Ephemeral agent-orchestration coordination state (process, not product)
 .orchestration/
+
+.nx/migrate-runs
