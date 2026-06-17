@@ -1882,24 +1882,6 @@
         <target>Privacybeleid van Pushup Tracker – informatie over gegevensverwerking, cookies en uw rechten.</target>
       </segment>
     </unit>
-    <unit id="earlyAccess.text">
-      <notes>
-        <note category="location">web/src/app/app.ts:121</note>
-      </notes>
-      <segment state="translated">
-        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Vroege toegang – pushup-stats.com is nog in aanbouw. Functies en ontwerp kunnen op elk moment veranderen.</target>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.feedback">
-      <notes>
-        <note category="location">web/src/app/app.ts:122</note>
-      </notes>
-      <segment state="translated">
-        <source>Feedback</source>
-        <target>Feedback</target>
-      </segment>
-    </unit>
     <unit id="seo.default.title">
       <notes>
         <note category="location">web/src/app/app.ts:221</note>
@@ -2603,15 +2585,6 @@
       <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Push-uptracker</target>
-      </segment>
-    </unit>
-    <unit id="landing.earlyAccess.badge">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:12,14</note>
-      </notes>
-      <segment state="translated">
-        <source>Early Access</source>
-        <target>Vroege toegang</target>
       </segment>
     </unit>
     <unit id="landing.free.badge">

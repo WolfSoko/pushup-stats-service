@@ -188,31 +188,8 @@ mat-card-header + mat-card-footer {
   line-height: 28px;
 }
 
-// Early Access toast — tertiary container color.
-// Pushed below the 64px sticky top toolbar so it doesn't overlap the
-// brand area and so the bottom-anchored cookie consent banner stays
-// fully visible.
-.early-access-snackbar {
-  margin-top: 72px;
-}
-
-.early-access-snackbar .mdc-snackbar__surface {
-  background: var(--mat-sys-tertiary-container, #ffd8e4) !important;
-  color: var(--mat-sys-on-tertiary-container, #31111d) !important;
-}
-
-.early-access-snackbar .mdc-snackbar__label {
-  color: var(--mat-sys-on-tertiary-container, #31111d) !important;
-}
-
-.early-access-snackbar .mat-mdc-button {
-  color: var(--mat-sys-on-tertiary-container, #31111d) !important;
-  font-weight: 600;
-}
-
 // ngsw update available — top-anchored, primary container so it reads as an
-// actionable system prompt distinct from the early-access notice. Clears the
-// 64px sticky toolbar like the early-access toast.
+// actionable system prompt. Clears the 64px sticky toolbar.
 .sw-update-snackbar {
   margin-top: 72px;
 }

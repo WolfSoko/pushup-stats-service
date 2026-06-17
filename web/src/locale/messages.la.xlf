@@ -1882,24 +1882,6 @@
         <target>Pushup Tracker secretum consilium - informationes de MGE, crustula et iura tua.</target>
       </segment>
     </unit>
-    <unit id="earlyAccess.text">
-      <notes>
-        <note category="location">web/src/app/app.ts:121</note>
-      </notes>
-      <segment state="translated">
-        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Early Access – pushup-stats.com constructione adhuc est. Ut congue et mauris ut interdum.</target>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.feedback">
-      <notes>
-        <note category="location">web/src/app/app.ts:122</note>
-      </notes>
-      <segment state="translated">
-        <source>Feedback</source>
-        <target>Feedback</target>
-      </segment>
-    </unit>
     <unit id="seo.default.title">
       <notes>
         <note category="location">web/src/app/app.ts:221</note>
@@ -2603,15 +2585,6 @@
       <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Pushup Tracker</target>
-      </segment>
-    </unit>
-    <unit id="landing.earlyAccess.badge">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:12,14</note>
-      </notes>
-      <segment state="translated">
-        <source>Early Access</source>
-        <target>Early Access</target>
       </segment>
     </unit>
     <unit id="landing.free.badge">

@@ -2681,22 +2681,6 @@
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
       <target>俯卧撑追踪器隐私政策 – 数据处理、Cookie 和您的权利信息。</target></segment>
     </unit>
-    <unit id="earlyAccess.text">
-      <notes>
-        <note category="location">web/src/app/app.ts:167</note>
-      </notes>
-      <segment state="translated">
-        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-      <target>早期访问 – pushup-stats.com 仍在建设中。功能和设计可能随时更改。</target></segment>
-    </unit>
-    <unit id="earlyAccess.feedback">
-      <notes>
-        <note category="location">web/src/app/app.ts:168</note>
-      </notes>
-      <segment state="translated">
-        <source>Feedback</source>
-      <target>反馈</target></segment>
-    </unit>
     <unit id="seo.default.title">
       <notes>
         <note category="location">web/src/app/app.ts:284</note>
@@ -3327,14 +3311,6 @@
       <segment state="translated">
         <source>Pushup Tracker</source>
       <target>俯卧撑追踪器</target></segment>
-    </unit>
-    <unit id="landing.earlyAccess.badge">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:12,14</note>
-      </notes>
-      <segment state="translated">
-        <source>Early Access</source>
-      <target>早期访问</target></segment>
     </unit>
     <unit id="landing.free.badge">
       <notes>

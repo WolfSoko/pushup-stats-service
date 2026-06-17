@@ -5187,18 +5187,6 @@ Deine Position: # ·  Reps        </source>
         <target>Du kan slette brukerkontoen din og alle tilknyttede data når som helst via programmets innstillingsside. Etter sletting fjernes alle personopplysninger umiddelbart fra systemene våre.</target>
       </segment>
     </unit>
-    <unit id="earlyAccess.text">
-      <segment state="translated">
-        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Early Access – pushup-stats.com er fortsatt under utvikling. Funksjoner og design kan endres til enhver tid.</target>
-      </segment>
-    </unit>
-    <unit id="landing.earlyAccess.badge">
-      <segment state="translated">
-        <source>Early Access</source>
-        <target>Early Access</target>
-      </segment>
-    </unit>
     <unit id="feedback.success">
       <segment state="translated">
         <source>Danke für dein Feedback!</source>
@@ -5209,12 +5197,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Feedback konnte nicht gesendet werden.</source>
         <target>Kunne ikke sende tilbakemelding.</target>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.feedback">
-      <segment state="translated">
-        <source>Feedback</source>
-        <target>Tilbakemelding</target>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">

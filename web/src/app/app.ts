@@ -178,36 +178,6 @@ export class App {
   // a Firebase Auth token and is rejected as 'unauthenticated'.
   private readonly _pendingSnooze = signal<number | null>(null);
 
-  private static readonly EA_DISMISSED_KEY = 'pus_early_access_dismissed';
-
-  private readonly _showEarlyAccessToast = afterNextRender(() => {
-    try {
-      if (localStorage.getItem(App.EA_DISMISSED_KEY) === '1') return;
-    } catch {
-      return;
-    }
-
-    const ref = this.snackBar.open(
-      $localize`:@@earlyAccess.text:Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.`,
-      $localize`:@@earlyAccess.feedback:Feedback`,
-      {
-        duration: 12_000,
-        horizontalPosition: 'left',
-        verticalPosition: 'top',
-        panelClass: 'early-access-snackbar',
-      }
-    );
-
-    ref.onAction().subscribe(() => this.openFeedbackDialog(false));
-    ref.afterDismissed().subscribe(() => {
-      try {
-        localStorage.setItem(App.EA_DISMISSED_KEY, '1');
-      } catch {
-        // localStorage unavailable
-      }
-    });
-  });
-
   private static readonly COACHMARK_SEEN_KEY = 'pus_speeddial_coachmark_seen';
 
   /** Drives the one-time tutorial bubble pointing at the speed-dial FAB. */

@@ -6157,18 +6157,6 @@ Deine Position: # ·  Reps        </source>
         <target>You can delete your user account and all associated data at any time via the application's settings page. After deletion, all personal data will be promptly removed from our systems.</target>
       </segment>
     </unit>
-    <unit id="earlyAccess.text">
-      <segment state="translated">
-        <source>Early Access – pushup-stats.com befindet sich noch im Aufbau. Funktionen und Design können sich jederzeit ändern.</source>
-        <target>Early Access – pushup-stats.com is still under development. Features and design may change at any time.</target>
-      </segment>
-    </unit>
-    <unit id="landing.earlyAccess.badge">
-      <segment state="translated">
-        <source>Early Access</source>
-        <target>Early Access</target>
-      </segment>
-    </unit>
     <unit id="feedback.success">
       <segment state="translated">
         <source>Danke für dein Feedback!</source>
@@ -6179,12 +6167,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Feedback konnte nicht gesendet werden.</source>
         <target>Could not send feedback.</target>
-      </segment>
-    </unit>
-    <unit id="earlyAccess.feedback">
-      <segment state="translated">
-        <source>Feedback</source>
-        <target>Feedback</target>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">
