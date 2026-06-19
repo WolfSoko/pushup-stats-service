@@ -55,6 +55,7 @@ export function bucketKeyForTimestamp(
   }
 ): string {
   if (!opts.isDayRange) return timestamp.slice(0, 10);
+  if (!opts.from) return timestamp.slice(0, 13) + ':00:00';
   const hour = new Date(timestamp).getHours();
   if (opts.dayChartMode === '14h' && (hour < 8 || hour >= 22)) {
     return `${opts.from}T00:00:00`;

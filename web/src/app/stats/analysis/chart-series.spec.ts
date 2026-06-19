@@ -94,6 +94,17 @@ describe('bucketKeyForTimestamp', () => {
     // then
     expect(key).toBe('2026-06-15T03:00:00');
   });
+
+  it('should fall back to timestamp-derived hour when from is null', () => {
+    // given / when — from is nullable in the type; guard prevents nullT…:00:00
+    const key = bucketKeyForTimestamp('2026-06-15T09:00:00', {
+      isDayRange: true,
+      dayChartMode: '14h',
+      from: null,
+    });
+    // then
+    expect(key).toBe('2026-06-15T09:00:00');
+  });
 });
 
 describe('buildViewChartSeries', () => {
