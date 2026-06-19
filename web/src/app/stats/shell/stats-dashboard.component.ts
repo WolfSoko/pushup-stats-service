@@ -47,10 +47,8 @@ import {
   TrainingEntryDialogResult,
 } from '../components/training-entry-dialog/training-entry-dialog.component';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
-import {
-  DashboardStore,
-  type QuickAddButtonViewModel,
-} from '../dashboard.store';
+import { DashboardStore } from '../dashboard.store';
+import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
 
 @Component({
   selector: 'app-stats-dashboard',

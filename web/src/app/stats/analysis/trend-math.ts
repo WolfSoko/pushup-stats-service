@@ -1,4 +1,5 @@
 import { type UnifiedEntry, unifiedEntryPrimaryValue } from '@pu-stats/models';
+import { daysBetween, sortedUniqueDates } from '@pu-stats/date';
 import type { TrendPoint } from './analysis.types';
 
 export const TREND_WEEKS = 8;
@@ -21,20 +22,6 @@ export function isoWeekYear(date: Date): number {
   const day = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - day);
   return d.getUTCFullYear();
-}
-
-export function daysBetween(a: string, b: string): number {
-  const ad = new Date(`${a}T00:00:00`).getTime();
-  const bd = new Date(`${b}T00:00:00`).getTime();
-  return Math.round((bd - ad) / 86_400_000);
-}
-
-export function sortedUniqueDates(
-  rows: ReadonlyArray<{ timestamp: string }>
-): string[] {
-  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
-    a.localeCompare(b)
-  );
 }
 
 /** Monday of the ISO week containing the given date (local time, midnight). */

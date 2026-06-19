@@ -4,10 +4,8 @@ import {
   buildWeekTrend,
   computeCurrentStreak,
   computeLongestStreak,
-  daysBetween,
   isoWeek,
   isoWeekYear,
-  sortedUniqueDates,
   startOfIsoWeek,
   startOfMonth,
   TREND_MONTHS,
@@ -29,30 +27,6 @@ function repEntry(
     ...(sets ? { sets } : {}),
   };
 }
-
-describe('daysBetween', () => {
-  it('should count whole calendar days between two ISO dates', () => {
-    // given / when / then
-    expect(daysBetween('2026-01-01', '2026-01-02')).toBe(1);
-    expect(daysBetween('2026-01-01', '2026-01-01')).toBe(0);
-    expect(daysBetween('2026-03-01', '2026-02-28')).toBe(-1);
-  });
-});
-
-describe('sortedUniqueDates', () => {
-  it('should dedupe to day granularity and sort ascending', () => {
-    // given
-    const rows = [
-      { timestamp: '2026-01-03T10:00:00' },
-      { timestamp: '2026-01-01T08:00:00' },
-      { timestamp: '2026-01-01T20:00:00' },
-    ];
-    // when
-    const dates = sortedUniqueDates(rows);
-    // then
-    expect(dates).toEqual(['2026-01-01', '2026-01-03']);
-  });
-});
 
 describe('isoWeek / isoWeekYear', () => {
   it('should place the 2026-01-01 Thursday in ISO week 1 of 2026', () => {
