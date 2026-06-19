@@ -1,0 +1,49 @@
+<mat-card class="chart">
+  <mat-card-header>
+    <mat-card-title data-testid="stats-chart-title">{{
+      chartTitle()
+    }}</mat-card-title>
+    <mat-card-subtitle data-testid="stats-chart-subtitle">{{
+      subtitleText()
+    }}</mat-card-subtitle>
+    @if (granularity() === 'hourly') {
+      <mat-button-toggle-group
+        [value]="dayChartMode()"
+        (change)="dayChartMode.set($event.value)"
+        class="chart-mode-toggle"
+        aria-label="Zeitraum der Stundenansicht"
+        i18n-aria-label="@@chart.modeToggleAria"
+      >
+        <mat-button-toggle value="14h" i18n="@@chart.mode14h"
+          >14h</mat-button-toggle
+        >
+        <mat-button-toggle value="24h" i18n="@@chart.mode24h"
+          >24h</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    }
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="chart-host">
+      <canvas #chartCanvas></canvas>
+    </div>
+
+    <div
+      class="legend"
+      aria-label="Legende"
+      i18n-aria-label="@@chart.legendAria"
+      data-testid="stats-chart-legend"
+    >
+      <span><i class="dot dot-bar"></i>{{ intervalLegendText() }}</span>
+      <span><i class="dot dot-line"></i>{{ secondaryLegendText() }}</span>
+      <span><i class="dot dot-avg"></i>{{ movingAvgLegendText() }}</span>
+      @if (hasSetsData()) {
+        <span
+          ><i class="dot dot-sets-bar"></i
+          ><ng-container i18n="@@chart.withSets">Mit Sets</ng-container></span
+        >
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

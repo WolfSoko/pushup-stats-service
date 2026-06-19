@@ -1,0 +1,165 @@
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+.save-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+.save-status[data-status='saving'] {
+  background: rgba(123, 159, 255, 0.16);
+  border-color: rgba(123, 159, 255, 0.4);
+}
+.save-status[data-status='saved'] {
+  background: rgba(120, 220, 140, 0.14);
+  border-color: rgba(120, 220, 140, 0.36);
+}
+.save-status[data-status='error'] {
+  background: rgba(255, 120, 120, 0.16);
+  border-color: rgba(255, 120, 120, 0.45);
+}
+.save-status[data-status='pending'] {
+  background: rgba(255, 200, 100, 0.14);
+  border-color: rgba(255, 200, 100, 0.36);
+}
+.save-status .status-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+.save-status .status-icon.ok {
+  color: #7fd99a;
+}
+.save-status .status-icon.err {
+  color: #ff8b8b;
+}
+.section-card {
+  padding: 4px 4px 8px;
+}
+.section-card mat-card-header {
+  padding-bottom: 8px;
+}
+.section-card[class*='danger-zone'] {
+  border: 1px dashed rgba(255, 120, 120, 0.45);
+}
+.danger-icon {
+  color: #ffb2b2;
+}
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
+}
+.stack {
+  display: grid;
+  gap: 12px;
+}
+.setting-row {
+  display: grid;
+  gap: 6px;
+}
+.full-width {
+  width: 100%;
+}
+.muted {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.profile-link-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(123, 159, 255, 0.12);
+  border: 1px solid rgba(123, 159, 255, 0.28);
+}
+.profile-link {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+.delete-dialog-content {
+  display: grid;
+  gap: 10px;
+  min-width: min(92vw, 460px);
+
+  p {
+    margin: 0;
+  }
+}
+.error {
+  color: #ffd8d8;
+}
+.field-error {
+  margin: -8px 0 4px;
+  color: #ff8b8b;
+  font-size: 0.85rem;
+}
+.guest-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(100, 160, 255, 0.1);
+  border: 1px solid rgba(100, 160, 255, 0.3);
+  flex-wrap: wrap;
+}
+.snap-quality-field {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.snap-quality-label {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+.inline-link {
+  margin-left: 6px;
+}
+.profile-hint-row {
+  margin: -8px 0 0;
+}
+.hint-link {
+  color: var(--mat-sys-primary, #8fb4ff);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.plan-override-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: rgba(123, 159, 255, 0.12);
+  border: 1px solid rgba(123, 159, 255, 0.28);
+  font-size: 0.9rem;
+}
+.plan-override-hint span {
+  flex: 1 1 220px;
+}
+/* Anchor scroll offset so the page header doesn't cover the section title.
+   The fixed app toolbar is ~64px tall. */
+.section-card[id] {
+  scroll-margin-top: 80px;
+}

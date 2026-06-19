@@ -13,12 +13,12 @@ import { provideRouter } from '@angular/router';
 // fallback chain; fr-FR does not, hence the targeted re-register.
 registerLocaleData(localeFr, 'fr-FR');
 
+import { TrainingEntryDialogComponent } from './training-entry-dialog.component';
 import {
   ExerciseEntryDialogResult,
-  TrainingEntryDialogComponent,
   TrainingEntryDialogData,
   TrainingEntryDialogResult,
-} from './training-entry-dialog.component';
+} from './training-entry-dialog.models';
 
 describe('TrainingEntryDialogComponent', () => {
   function createDialog(

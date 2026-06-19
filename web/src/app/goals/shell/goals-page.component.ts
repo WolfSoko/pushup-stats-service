@@ -25,53 +25,32 @@ import {
   type ComplexGoalEntry,
   type ComplexGoals,
   COMPLEX_GOALS_MAX_PER_SCOPE,
-  EXERCISE_CATALOG,
-  type ExerciseDefinition,
   type GoalScope,
-  type MeasurementType,
   PUSHUP_DEFINITION,
 } from '@pu-stats/models';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { UserConfigStore } from '../../core/user-config.store';
-import { exerciseDisplayName } from '../../stats/i18n/exercise-display-names';
+import {
+  buildExerciseOptions,
+  clampTargetForEntry,
+  clampTargetToOption,
+  cloneGoals,
+  findOption,
+  makeEntryId,
+  normaliseWeekdays,
+  scopesEqual,
+  targetFromInput,
+  targetLabel,
+} from './goals-page.helpers';
+import {
+  AUTO_SAVE_DEBOUNCE_MS,
+  type GoalScopeDescriptor,
+  SAVED_INDICATOR_MS,
+  type SaveStatus,
+  type WeekdayOption,
+} from './goals-page.models';
 
-type SaveStatus = 'idle' | 'pending' | 'saving' | 'saved' | 'error';
-
-const AUTO_SAVE_DEBOUNCE_MS = 600;
-const SAVED_INDICATOR_MS = 1800;
-
-interface ExercisePickerEntry {
-  id: string;
-  label: string;
-  measurement: MeasurementType;
-  unit: string;
-  min: number;
-  max: number;
-}
-
-function pickerFromDefinition(def: ExerciseDefinition): ExercisePickerEntry {
-  return {
-    id: def.id,
-    label: exerciseDisplayName(def.id),
-    measurement: def.measurement,
-    unit: def.unit,
-    min: def.min,
-    max: def.max,
-  };
-}
-
-function buildExerciseOptions(): ExercisePickerEntry[] {
-  return EXERCISE_CATALOG.map(pickerFromDefinition);
-}
-
-function makeEntryId(): string {
-  if (typeof globalThis.crypto?.randomUUID === 'function') {
-    return globalThis.crypto.randomUUID();
-  }
-  return `goal-${Math.random().toString(36).slice(2)}-${Date.now().toString(36)}`;
-}
-
-const WEEKDAYS = [
+const WEEKDAYS: readonly WeekdayOption[] = [
   { value: 1, label: $localize`:@@goals.weekday.short.mon:Mo` },
   { value: 2, label: $localize`:@@goals.weekday.short.tue:Di` },
   { value: 3, label: $localize`:@@goals.weekday.short.wed:Mi` },
@@ -79,7 +58,7 @@ const WEEKDAYS = [
   { value: 5, label: $localize`:@@goals.weekday.short.fri:Fr` },
   { value: 6, label: $localize`:@@goals.weekday.short.sat:Sa` },
   { value: 0, label: $localize`:@@goals.weekday.short.sun:So` },
-] as const;
+];
 
 @Component({
   selector: 'app-goals-page',
@@ -452,12 +431,7 @@ export class GoalsPageComponent {
   readonly removeAriaLabel = $localize`:@@goals.removeAria:Ziel entfernen`;
   readonly weekdayAria = $localize`:@@goals.weekdayAria:Wochentage`;
 
-  readonly scopes: ReadonlyArray<{
-    id: GoalScope;
-    icon: string;
-    title: string;
-    subtitle: string;
-  }> = [
+  readonly scopes: readonly GoalScopeDescriptor[] = [
     {
       id: 'daily',
       icon: 'today',
@@ -511,8 +485,7 @@ export class GoalsPageComponent {
         const status = this.saveStatus();
         const baseline = this.lastPersisted();
         const dirty =
-          baseline !== null &&
-          !this.scopesEqual(this.draftSnapshot(), baseline);
+          baseline !== null && !scopesEqual(this.draftSnapshot(), baseline);
         if (
           baseline !== null &&
           (status === 'pending' || status === 'saving' || dirty)
@@ -529,7 +502,7 @@ export class GoalsPageComponent {
       const baseline = this.lastPersisted();
       untracked(() => {
         if (baseline === null) return;
-        if (this.scopesEqual(draft, baseline)) {
+        if (scopesEqual(draft, baseline)) {
           this.cancelAutoSaveTimer();
           if (this.saveStatus() === 'pending') this.saveStatus.set('idle');
           return;
@@ -573,59 +546,56 @@ export class GoalsPageComponent {
   }
 
   updateExercise(scope: GoalScope, entryId: string, exerciseId: string): void {
-    const opt = this.exerciseOptions.find((o) => o.id === exerciseId);
+    const opt = findOption(this.exerciseOptions, exerciseId);
     if (!opt) return;
     this.entriesFor(scope).update((list) =>
-      list.map((e) => {
-        if (e.id !== entryId) return e;
-        const clamped = Math.min(
-          opt.max,
-          Math.max(opt.min, e.target || opt.min)
-        );
-        return {
-          ...e,
-          exerciseId: opt.id,
-          measurement: opt.measurement,
-          unit: opt.unit,
-          target: clamped,
-        };
-      })
+      list.map((e) =>
+        e.id === entryId
+          ? {
+              ...e,
+              exerciseId: opt.id,
+              measurement: opt.measurement,
+              unit: opt.unit,
+              target: clampTargetToOption(e.target, opt),
+            }
+          : e
+      )
     );
   }
 
   updateTarget(scope: GoalScope, entryId: string, target: number): void {
     if (!Number.isFinite(target)) return;
     this.entriesFor(scope).update((list) =>
-      list.map((e) => {
-        if (e.id !== entryId) return e;
-        const opt = this.findOption(e.exerciseId);
-        const min = opt?.min ?? 1;
-        const max = opt?.max ?? Number.MAX_SAFE_INTEGER;
-        const clamped = Math.min(max, Math.max(min, Math.trunc(target)));
-        return { ...e, target: clamped };
-      })
+      list.map((e) =>
+        e.id === entryId
+          ? {
+              ...e,
+              target: clampTargetForEntry(
+                target,
+                findOption(this.exerciseOptions, e.exerciseId)
+              ),
+            }
+          : e
+      )
     );
   }
 
   /** Catalog `min` for the entry's exercise (defaults to 1). */
   targetMin(entry: ComplexGoalEntry): number {
-    return this.findOption(entry.exerciseId)?.min ?? 1;
+    return findOption(this.exerciseOptions, entry.exerciseId)?.min ?? 1;
   }
 
   /** Catalog `max` for the entry's exercise — used for the `<input>` cap. */
   targetMax(entry: ComplexGoalEntry): number {
-    return this.findOption(entry.exerciseId)?.max ?? Number.MAX_SAFE_INTEGER;
-  }
-
-  private findOption(exerciseId: string): ExercisePickerEntry | undefined {
-    return this.exerciseOptions.find((o) => o.id === exerciseId);
+    return (
+      findOption(this.exerciseOptions, entry.exerciseId)?.max ??
+      Number.MAX_SAFE_INTEGER
+    );
   }
 
   updateWeekdays(scope: GoalScope, entryId: string, weekdays: number[]): void {
     if (scope !== 'daily') return;
-    const normalised = (weekdays ?? [])
-      .filter((n) => Number.isInteger(n) && n >= 0 && n <= 6)
-      .sort((a, b) => a - b);
+    const normalised = normaliseWeekdays(weekdays);
     this.entriesFor(scope).update((list) =>
       list.map((e) => (e.id === entryId ? { ...e, weekdays: normalised } : e))
     );
@@ -636,72 +606,20 @@ export class GoalsPageComponent {
   }
 
   targetLabel(entry: ComplexGoalEntry): string {
-    switch (entry.measurement) {
-      case 'time':
-        return $localize`:@@goals.field.target.time:Ziel (Sekunden)`;
-      case 'distance':
-      case 'distance-time':
-        return $localize`:@@goals.field.target.distance:Ziel (Meter)`;
-      case 'weight':
-      case 'reps':
-      default:
-        return $localize`:@@goals.field.target.reps:Ziel`;
-    }
+    return targetLabel(entry);
   }
 
   asNumber(event: Event, fallback: number): number {
-    const raw = (event.target as HTMLInputElement).value;
-    if (raw === '') return fallback;
-    const n = Number(raw);
-    return Number.isNaN(n) ? fallback : n;
+    return targetFromInput(event, fallback);
   }
 
   private applyGoalsToDrafts(goals: ComplexGoals): void {
-    this.draftDaily.set([...(goals.daily ?? [])]);
-    this.draftWeekly.set([...(goals.weekly ?? [])]);
-    this.draftMonthly.set([...(goals.monthly ?? [])]);
-    this.lastPersisted.set({
-      daily: [...(goals.daily ?? [])],
-      weekly: [...(goals.weekly ?? [])],
-      monthly: [...(goals.monthly ?? [])],
-    });
+    const snapshot = cloneGoals(goals);
+    this.draftDaily.set(snapshot.daily ?? []);
+    this.draftWeekly.set(snapshot.weekly ?? []);
+    this.draftMonthly.set(snapshot.monthly ?? []);
+    this.lastPersisted.set(cloneGoals(goals));
     if (this.saveStatus() === 'pending') this.saveStatus.set('idle');
-  }
-
-  private scopesEqual(a: ComplexGoals, b: ComplexGoals): boolean {
-    return (
-      this.entryListEqual(a.daily ?? [], b.daily ?? []) &&
-      this.entryListEqual(a.weekly ?? [], b.weekly ?? []) &&
-      this.entryListEqual(a.monthly ?? [], b.monthly ?? [])
-    );
-  }
-
-  private entryListEqual(
-    a: readonly ComplexGoalEntry[],
-    b: readonly ComplexGoalEntry[]
-  ): boolean {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      const x = a[i];
-      const y = b[i];
-      if (
-        x.id !== y.id ||
-        x.exerciseId !== y.exerciseId ||
-        x.measurement !== y.measurement ||
-        x.unit !== y.unit ||
-        x.target !== y.target ||
-        (x.variantId ?? '') !== (y.variantId ?? '')
-      ) {
-        return false;
-      }
-      const xw = x.weekdays ?? [];
-      const yw = y.weekdays ?? [];
-      if (xw.length !== yw.length) return false;
-      for (let j = 0; j < xw.length; j++) {
-        if (xw[j] !== yw[j]) return false;
-      }
-    }
-    return true;
   }
 
   private scheduleAutoSave(): void {
@@ -728,7 +646,7 @@ export class GoalsPageComponent {
       await this.inFlightSave;
       const draft = this.draftSnapshot();
       const baseline = this.lastPersisted();
-      if (baseline && this.scopesEqual(draft, baseline)) return;
+      if (baseline && scopesEqual(draft, baseline)) return;
     }
     const run = this.performSave();
     this.inFlightSave = run;
@@ -745,11 +663,7 @@ export class GoalsPageComponent {
     this.saveStatus.set('saving');
     try {
       await this.userConfigStore.saveGoals(draft);
-      this.lastPersisted.set({
-        daily: [...(draft.daily ?? [])],
-        weekly: [...(draft.weekly ?? [])],
-        monthly: [...(draft.monthly ?? [])],
-      });
+      this.lastPersisted.set(cloneGoals(draft));
       this.saveStatus.set('saved');
       if (this.savedTimer !== null) clearTimeout(this.savedTimer);
       this.savedTimer = setTimeout(() => {

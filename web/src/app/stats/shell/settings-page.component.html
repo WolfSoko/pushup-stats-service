@@ -1,0 +1,442 @@
+<main class="page-wrap">
+  <app-page-header icon="tune" variant="settings">
+    <h1 page-title i18n="@@settingsHeaderTitle">Einstellungen</h1>
+    <p page-subtitle i18n="@@settingsHeaderSubtitle">
+      Profil, Ziele und Sichtbarkeit nach deinem Geschmack.
+    </p>
+    <div
+      page-actions
+      class="save-status"
+      role="status"
+      aria-live="polite"
+      [attr.data-status]="saveStatus()"
+      data-testid="settings-save-status"
+    >
+      @switch (saveStatus()) {
+        @case ('saving') {
+          <mat-progress-spinner
+            diameter="16"
+            mode="indeterminate"
+          ></mat-progress-spinner>
+          <span i18n="@@settings.status.saving">Speichert…</span>
+        }
+        @case ('saved') {
+          <mat-icon class="status-icon ok">check_circle</mat-icon>
+          <span i18n="@@settings.status.saved">Gespeichert</span>
+        }
+        @case ('error') {
+          <mat-icon class="status-icon err">error</mat-icon>
+          <span i18n="@@settings.status.error">Fehler beim Speichern</span>
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="retrySave()"
+            i18n="@@settings.status.retry"
+          >
+            Erneut versuchen
+          </button>
+        }
+        @case ('pending') {
+          <mat-icon class="status-icon">edit</mat-icon>
+          <span i18n="@@settings.status.pending"
+            >Ungespeicherte Änderungen…</span
+          >
+        }
+        @default {
+          <mat-icon class="status-icon ok">cloud_done</mat-icon>
+          <span i18n="@@settings.status.synced"
+            >Alle Änderungen gespeichert</span
+          >
+        }
+      }
+    </div>
+  </app-page-header>
+
+  @if (isGuest()) {
+    <div class="guest-banner">
+      <mat-icon>info</mat-icon>
+      <span i18n="@@guest.banner.text"
+        >Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu
+        nutzen.</span
+      >
+      <a mat-stroked-button routerLink="/register" i18n="@@guest.banner.cta"
+        >Konto erstellen</a
+      >
+    </div>
+  }
+
+  <mat-card id="profile" class="section-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>person</mat-icon>
+      <mat-card-title i18n="@@settings.section.profile.title"
+        >Profil</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.section.profile.subtitle">
+        Wie du in der App und der Bestenliste erscheinst.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label i18n="@@displayNameLabel">Anzeigename</mat-label>
+        <input
+          matInput
+          [value]="displayNameDraft()"
+          (input)="displayNameDraft.set(asValue($event))"
+          placeholder="Wolf"
+          i18n-placeholder="@@displayNamePlaceholder"
+        />
+        <mat-hint i18n="@@settings.displayNameHint"
+          >Kann in der Bestenliste angezeigt werden.</mat-hint
+        >
+      </mat-form-field>
+      @switch (displayNameViolation()) {
+        @case ('too-short') {
+          <p
+            class="field-error"
+            role="alert"
+            data-testid="settings-displayname-error"
+            i18n="@@displayName.violation.tooShort"
+          >
+            Mindestens 2 Zeichen.
+          </p>
+        }
+        @case ('too-long') {
+          <p
+            class="field-error"
+            role="alert"
+            data-testid="settings-displayname-error"
+            i18n="@@displayName.violation.tooLong"
+          >
+            Höchstens 30 Zeichen.
+          </p>
+        }
+        @case ('invalid-characters') {
+          <p
+            class="field-error"
+            role="alert"
+            data-testid="settings-displayname-error"
+            i18n="@@displayName.violation.invalidCharacters"
+          >
+            Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt.
+          </p>
+        }
+      }
+      <p class="muted profile-hint-row">
+        <a
+          routerLink="/leaderboard"
+          class="hint-link"
+          i18n="@@settings.displayNameHint.leaderboardLink"
+          >Zur Bestenliste</a
+        >
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card id="visibility" class="section-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>visibility</mat-icon>
+      <mat-card-title i18n="@@settings.section.privacy.title"
+        >Sichtbarkeit</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.section.privacy.subtitle">
+        Steuere, wer dein Profil sehen kann.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="stack">
+      <div class="setting-row">
+        <mat-slide-toggle
+          [checked]="!leaderboardOptOutDraft()"
+          [disabled]="!publicProfileDraft()"
+          (change)="leaderboardOptOutDraft.set(!$event.checked)"
+          data-testid="settings-leaderboard-toggle"
+          i18n="@@settings.leaderboardOptIn"
+        >
+          In Bestenliste anzeigen
+        </mat-slide-toggle>
+        @if (publicProfileDraft()) {
+          <p class="muted" i18n="@@settings.leaderboardOptOutHint">
+            Wenn deaktiviert, wird dein Profil in der Bestenliste nicht
+            angezeigt.
+          </p>
+        } @else {
+          <p
+            class="muted"
+            data-testid="settings-leaderboard-requires-public-profile"
+            i18n="@@settings.leaderboardRequiresPublicProfile"
+          >
+            Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der
+            Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option
+            zu nutzen.
+          </p>
+        }
+      </div>
+
+      <div class="setting-row">
+        <mat-slide-toggle
+          [checked]="publicProfileDraft()"
+          (change)="publicProfileDraft.set($event.checked)"
+          data-testid="settings-public-profile-toggle"
+          i18n="@@settings.publicProfile.toggle"
+        >
+          Öffentliches Profil aktivieren
+        </mat-slide-toggle>
+        <p class="muted" i18n="@@settings.publicProfile.hint">
+          Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und
+          Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und
+          Erinnerungen bleiben privat.
+        </p>
+
+        <!-- Gate the share CTA on the persisted setting (not the draft).
+             If we showed the link as soon as the toggle flipped, a user
+             could tap "Profil teilen" before the auto-save round trip has
+             written ui.publicProfile to Firestore and end up sharing a
+             link that the backend will 404. -->
+        @if (config().publicProfile && profileUrl()) {
+          <div
+            class="profile-link-row"
+            data-testid="settings-public-profile-link"
+          >
+            <code class="profile-link">{{ profileUrl() }}</code>
+            <a
+              mat-stroked-button
+              [routerLink]="['/u', userId()]"
+              data-testid="settings-public-profile-preview"
+              i18n="@@settings.publicProfile.previewCta"
+            >
+              <mat-icon>visibility</mat-icon>
+              Vorschau
+            </a>
+            <button
+              type="button"
+              mat-stroked-button
+              (click)="shareMyProfile()"
+              i18n="@@settings.publicProfile.shareCta"
+            >
+              <mat-icon>share</mat-icon>
+              Profil teilen
+            </button>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card
+    id="targets"
+    class="section-card"
+    data-testid="settings-goals-link-card"
+  >
+    <mat-card-header>
+      <mat-icon mat-card-avatar>flag</mat-icon>
+      <mat-card-title i18n="@@settings.section.goals.title"
+        >Ziele</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.section.goals.linkSubtitle">
+        Tägliche, wöchentliche und monatliche Ziele mit verschiedenen Übungen
+        werden jetzt auf der eigenen Seite verwaltet.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (planActive()) {
+        <div
+          class="plan-override-hint"
+          data-testid="settings-plan-override-hint"
+        >
+          <mat-icon>fitness_center</mat-icon>
+          <span i18n="@@settings.goals.planOverrideHint">
+            Ein aktiver Trainingsplan setzt dein Tagesziel automatisch. Manuelle
+            Werte gelten erst nach Planende.
+          </span>
+          <a
+            mat-stroked-button
+            [routerLink]="['/training-plans', activePlanSlug()]"
+            i18n="@@settings.goals.openActivePlan"
+            >Aktiven Plan öffnen</a
+          >
+        </div>
+      }
+    </mat-card-content>
+    <mat-card-actions>
+      <a
+        mat-stroked-button
+        routerLink="/goals"
+        data-testid="settings-goals-link"
+        i18n="@@settings.goals.openPageCta"
+      >
+        <mat-icon>flag</mat-icon>
+        Tagesziele öffnen
+      </a>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card id="display" class="section-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>tune</mat-icon>
+      <mat-card-title i18n="@@settings.section.display.title"
+        >Anzeige</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.section.display.subtitle">
+        Animationen und Darstellung.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="snap-quality-field">
+        <span
+          id="snap-quality-label"
+          class="snap-quality-label"
+          i18n="@@settings.snapQualityLabel"
+          >Snap-Animation Qualität</span
+        >
+        <mat-button-toggle-group
+          hideSingleSelectionIndicator
+          [value]="snapQualityDraft()"
+          (change)="snapQualityDraft.set($event.value)"
+          aria-labelledby="snap-quality-label"
+          data-testid="settings-snap-quality"
+        >
+          <mat-button-toggle value="low" i18n="@@settings.snapQuality.low"
+            >Niedrig</mat-button-toggle
+          >
+          <mat-button-toggle value="middle" i18n="@@settings.snapQuality.middle"
+            >Mittel</mat-button-toggle
+          >
+          <mat-button-toggle value="high" i18n="@@settings.snapQuality.high"
+            >Hoch</mat-button-toggle
+          >
+        </mat-button-toggle-group>
+        <p class="muted" i18n="@@settings.snapQualityHint">
+          Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k /
+          200k).
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card id="ads" class="section-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>campaign</mat-icon>
+      <mat-card-title i18n="@@settings.section.ads.title"
+        >Werbung</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.section.ads.subtitle">
+        Personalisierung der Werbe-Slots.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="stack">
+      <mat-slide-toggle
+        [checked]="adsConsentDraft()"
+        (change)="adsConsentDraft.set($event.checked)"
+        i18n="@@settings.adsConsentOptIn"
+      >
+        Personalisierte Werbung aktivieren
+      </mat-slide-toggle>
+      <p class="muted">
+        <span i18n="@@settings.adsConsentHint"
+          >Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.</span
+        >
+        <a
+          routerLink="/datenschutz"
+          class="inline-link"
+          i18n="@@settings.adsConsent.privacyLink"
+          >Datenschutzerklärung</a
+        >
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card id="reminders" class="section-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>notifications</mat-icon>
+      <mat-card-title i18n="@@settings.remindersLinkTitle"
+        >Erinnerungen</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.remindersLinkDesc">
+        Liegestütz-Erinnerungen und Push-Benachrichtigungen konfigurieren.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <a
+        mat-stroked-button
+        routerLink="/reminders"
+        i18n="@@settings.remindersLinkCta"
+      >
+        <mat-icon>notifications</mat-icon>
+        Erinnerungen verwalten
+      </a>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card id="danger-zone" class="section-card danger-zone">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="danger-icon">warning</mat-icon>
+      <mat-card-title i18n="@@settings.dangerZoneTitle"
+        >Danger Zone</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@settings.dangerZoneBody">
+        Konto löschen entfernt dein Konto. Trainingsdaten bleiben für
+        statistische Auswertung anonymisiert erhalten.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button
+        type="button"
+        mat-stroked-button
+        color="warn"
+        [disabled]="deletingAccount()"
+        (click)="openDeleteDialog(deleteDialogTpl)"
+        i18n="@@settings.deleteAccount"
+      >
+        <mat-icon>warning</mat-icon>
+        Konto löschen
+      </button>
+      @if (deletingAccount()) {
+        <span class="muted" i18n="@@settings.deletingAccount"
+          >Konto wird gelöscht…</span
+        >
+      }
+    </mat-card-actions>
+  </mat-card>
+
+  <ng-template #deleteDialogTpl>
+    <h2 mat-dialog-title i18n="@@settings.deleteDialogTitle">
+      Account wirklich löschen?
+    </h2>
+    <mat-dialog-content class="delete-dialog-content">
+      <p i18n="@@settings.deleteDialogWarning">
+        Achtung: Diese Aktion ist nicht rückgängig.
+      </p>
+      <p i18n="@@settings.deleteDialogInfo">
+        Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische
+        Auswertung anonymisiert erhalten.
+      </p>
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@settings.deleteDialogPhraseLabel"
+          >Bestätigungswort eingeben</mat-label
+        >
+        <input
+          matInput
+          [value]="deletePhraseInput()"
+          (input)="deletePhraseInput.set(asValue($event))"
+          placeholder="löscchen"
+        />
+        <mat-hint i18n="@@settings.deleteDialogPhraseHint"
+          >Bitte exakt „löscchen“ eingeben.</mat-hint
+        >
+      </mat-form-field>
+      @if (deleteDialogError()) {
+        <p class="error" role="alert">{{ deleteDialogError() }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close i18n="@@cancel">Abbrechen</button>
+      <button
+        mat-flat-button
+        color="warn"
+        (click)="confirmDeleteFromDialog()"
+        i18n="@@settings.deleteConfirmFinal"
+      >
+        Final löschen
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+</main>

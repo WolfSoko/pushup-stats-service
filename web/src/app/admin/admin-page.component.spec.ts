@@ -7,7 +7,8 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { AdminPageComponent, AdminUser } from './admin-page.component';
+import { AdminPageComponent } from './admin-page.component';
+import { AdminUser } from './admin-page.models';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';

@@ -1,7 +1,8 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { TypePieComponent, PieDatum } from './type-pie.component';
+import { TypePieComponent } from './type-pie.component';
+import { PieDatum } from './type-pie.models';
 
 describe('TypePieComponent', () => {
   let fixture: ComponentFixture<TypePieComponent>;

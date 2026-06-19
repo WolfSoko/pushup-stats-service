@@ -1,0 +1,339 @@
+@if (plan(); as p) {
+  <main class="page-wrap">
+    @if (p.heroImage && !heroImageFailed()) {
+      <figure class="plan-hero">
+        <img
+          [src]="p.heroImage"
+          [alt]="p.title"
+          loading="eager"
+          decoding="async"
+          width="1200"
+          height="675"
+          (error)="heroImageFailed.set(true)"
+        />
+        @if (p.heroImagePhotographer; as photographer) {
+          <figcaption>
+            <span i18n="@@trainingPlans.photoCreditPrefix">Foto:</span>
+            <a
+              [href]="photographer.profileUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ photographer.name }}</a
+            >
+            /
+            <a
+              href="https://unsplash.com/?utm_source=pushup_stats&utm_medium=referral"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Unsplash</a
+            >
+          </figcaption>
+        }
+      </figure>
+    }
+    <app-page-header icon="fitness_center" variant="training">
+      <h1 page-title>{{ p.title }}</h1>
+      <p page-subtitle>{{ p.summary }}</p>
+      <a
+        page-actions
+        mat-icon-button
+        routerLink="/training-plans"
+        aria-label="Zurück"
+        i18n-aria-label="@@trainingPlans.back"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+    </app-page-header>
+
+    <mat-chip-set class="meta-chips">
+      <mat-chip
+        >{{ p.totalDays }}
+        <span i18n="@@trainingPlans.daysSuffix">Tage</span></mat-chip
+      >
+      <mat-chip>
+        @if (p.level === 'beginner') {
+          <span i18n="@@trainingPlans.level.beginner">Einsteiger</span>
+        } @else if (p.level === 'intermediate') {
+          <span i18n="@@trainingPlans.level.intermediate">Mittelstufe</span>
+        } @else {
+          <span i18n="@@trainingPlans.level.advanced">Fortgeschritten</span>
+        }
+      </mat-chip>
+    </mat-chip-set>
+
+    @if (isThisPlanActive()) {
+      <mat-card class="status-card">
+        <mat-card-content>
+          <div class="progress-row">
+            <span i18n="@@trainingPlans.progress">Fortschritt</span>
+            <strong>{{ store.completionPercent() }}%</strong>
+          </div>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="store.completionPercent()"
+          />
+          @if (store.currentDayIndex(); as idx) {
+            <p class="muted current-day">
+              <span i18n="@@trainingPlans.currentDay">Aktueller Tag:</span>
+              {{ idx }} / {{ p.totalDays }}
+            </p>
+          }
+          <p class="muted goal-hint">
+            <mat-icon aria-hidden="true">flag</mat-icon>
+            <span i18n="@@trainingPlans.goalOverrideHint">
+              Tagesziel wird vom Plan gesetzt.
+            </span>
+            <a
+              routerLink="/settings"
+              fragment="targets"
+              i18n="@@trainingPlans.goalOverrideHint.cta"
+              >Manuelle Ziele anpassen</a
+            >
+          </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="abandon()"
+            i18n="@@trainingPlans.abandon"
+          >
+            <mat-icon>cancel</mat-icon>
+            Plan beenden
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    } @else if (authResolved()) {
+      <mat-card class="status-card">
+        <mat-card-content>
+          @if (isAuthenticated()) {
+            <p i18n="@@trainingPlans.startCta">
+              Starte den Plan und das Tagesziel im Dashboard wird automatisch
+              nach diesem Plan gesetzt.
+            </p>
+          } @else {
+            <p i18n="@@trainingPlans.signupCta">
+              Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir
+              tracken deinen Fortschritt automatisch und setzen dein Tagesziel
+              passend zum Plan.
+            </p>
+            <ul class="signup-benefits">
+              <li i18n="@@trainingPlans.signupBenefit.tracking">
+                Automatische Fortschrittsverfolgung
+              </li>
+              <li i18n="@@trainingPlans.signupBenefit.goal">
+                Tagesziel passt sich täglich an deinen Plan an
+              </li>
+              <li i18n="@@trainingPlans.signupBenefit.streak">
+                Streaks, Statistiken und Bestenliste
+              </li>
+            </ul>
+          }
+        </mat-card-content>
+        <mat-card-actions align="end">
+          @if (isAuthenticated()) {
+            @if (store.hasActivePlan()) {
+              <p class="muted warn-replace" i18n="@@trainingPlans.replaceWarn">
+                Achtung: Dies ersetzt den aktuell aktiven Plan.
+              </p>
+            }
+            <button mat-flat-button color="primary" (click)="start()">
+              <mat-icon>play_arrow</mat-icon>
+              <span i18n="@@trainingPlans.start">Plan starten</span>
+            </button>
+          } @else {
+            <a
+              mat-flat-button
+              color="primary"
+              [routerLink]="['/register']"
+              [queryParams]="signupQueryParams()"
+            >
+              <mat-icon>person_add</mat-icon>
+              <span i18n="@@trainingPlans.signupAndStart"
+                >Konto erstellen & Plan starten</span
+              >
+            </a>
+            <a
+              mat-stroked-button
+              [routerLink]="['/login']"
+              [queryParams]="loginQueryParams()"
+              i18n="@@trainingPlans.loginAndStart"
+              >Schon Konto? Einloggen</a
+            >
+          }
+        </mat-card-actions>
+      </mat-card>
+    }
+
+    @for (week of weeks(); track week.weekIndex) {
+      <section class="week">
+        <h2>
+          <span i18n="@@trainingPlans.week">Woche</span>
+          {{ week.weekIndex }}
+        </h2>
+        <ul class="day-list">
+          @for (row of week.rows; track row.day.dayIndex) {
+            <li
+              class="day-row"
+              [attr.id]="'day-' + row.day.dayIndex"
+              [class.today]="row.isToday"
+              [class.done]="row.isCompleted"
+              [class.skipped]="row.isSkipped"
+              [class.future]="row.isFuture"
+            >
+              <div class="day-num">
+                <strong>{{ row.day.dayIndex }}</strong>
+              </div>
+              <div class="day-icon">
+                @if (row.day.kind === 'rest') {
+                  <mat-icon aria-hidden="true">self_improvement</mat-icon>
+                } @else if (row.day.kind === 'light') {
+                  <mat-icon aria-hidden="true">directions_walk</mat-icon>
+                } @else if (row.day.kind === 'test') {
+                  <mat-icon aria-hidden="true">local_fire_department</mat-icon>
+                } @else {
+                  <mat-icon aria-hidden="true">fitness_center</mat-icon>
+                }
+              </div>
+              <div class="day-body">
+                <div class="day-title">
+                  @if (row.day.kind === 'rest') {
+                    <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
+                  } @else if (row.day.kind === 'test') {
+                    <span i18n="@@trainingPlans.kind.test">Maximaltest</span>
+                  } @else if (row.day.kind === 'light') {
+                    <span i18n="@@trainingPlans.kind.light">Leichter Tag</span>
+                    @if (row.day.targetReps > 0) {
+                      <span class="reps">
+                        <span class="muted">·</span>
+                        <strong>{{ row.day.targetReps }}</strong>
+                        <span i18n="@@trainingPlans.reps">Wdh.</span>
+                      </span>
+                    }
+                  } @else if (row.day.targetReps > 0) {
+                    <span class="reps">
+                      <strong>{{ row.day.targetReps }}</strong>
+                      <span i18n="@@trainingPlans.reps">Wdh.</span>
+                    </span>
+                  }
+                  @if (row.day.sets && row.day.sets.length > 1) {
+                    <span class="sets muted">{{
+                      formatSets(row.day.sets)
+                    }}</span>
+                  }
+                </div>
+                <div class="day-desc muted">{{ row.day.description }}</div>
+                @if (row.pushupTypes.length > 0) {
+                  <div class="pushup-types">
+                    @for (type of row.pushupTypes; track type.slug) {
+                      <a
+                        class="pushup-type-chip"
+                        [routerLink]="['/wiki/liegestuetz-typen', type.slug]"
+                        [matTooltip]="type.summary"
+                        matTooltipPosition="above"
+                      >
+                        <mat-icon class="pushup-type-icon" aria-hidden="true"
+                          >help_outline</mat-icon
+                        >
+                        <span>{{ type.name }}</span>
+                      </a>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="day-actions">
+                @if (
+                  isThisPlanActive() &&
+                  (row.day.kind !== 'rest' || !row.isToday)
+                ) {
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="dayMenu"
+                    aria-label="Tagesaktionen öffnen"
+                    i18n-aria-label="@@trainingPlans.menu.triggerAria"
+                  >
+                    @if (row.isCompleted) {
+                      <mat-icon>check_circle</mat-icon>
+                    } @else if (row.isSkipped) {
+                      <mat-icon>skip_next</mat-icon>
+                    } @else {
+                      <mat-icon>more_vert</mat-icon>
+                    }
+                  </button>
+                  <mat-menu #dayMenu="matMenu">
+                    @if (row.day.kind !== 'rest') {
+                      @if (row.isCompleted) {
+                        <button
+                          mat-menu-item
+                          (click)="unmark(row.day.dayIndex)"
+                        >
+                          <mat-icon>undo</mat-icon>
+                          <span i18n="@@trainingPlans.menu.undoDone"
+                            >Erledigt rückgängig machen</span
+                          >
+                        </button>
+                      } @else if (row.isSkipped) {
+                        <button
+                          mat-menu-item
+                          (click)="unskip(row.day.dayIndex)"
+                        >
+                          <mat-icon>undo</mat-icon>
+                          <span i18n="@@trainingPlans.menu.undoSkip"
+                            >Überspringen rückgängig machen</span
+                          >
+                        </button>
+                      } @else {
+                        @if (row.day.targetReps > 0) {
+                          <button
+                            mat-menu-item
+                            (click)="logPlanDay(row.day.dayIndex)"
+                          >
+                            <mat-icon color="primary">check_circle</mat-icon>
+                            <span i18n="@@trainingPlans.menu.logDone"
+                              >Plan-Sätze eintragen & abhaken</span
+                            >
+                          </button>
+                        }
+                        <button mat-menu-item (click)="mark(row.day.dayIndex)">
+                          <mat-icon>check</mat-icon>
+                          <span i18n="@@trainingPlans.menu.markDone"
+                            >Nur abhaken (ohne Eintrag)</span
+                          >
+                        </button>
+                        <button mat-menu-item (click)="skip(row.day.dayIndex)">
+                          <mat-icon>skip_next</mat-icon>
+                          <span i18n="@@trainingPlans.menu.skip"
+                            >Tag überspringen</span
+                          >
+                        </button>
+                      }
+                    }
+                    @if (!row.isToday) {
+                      <button
+                        mat-menu-item
+                        (click)="jumpToDay(row.day.dayIndex)"
+                      >
+                        <mat-icon>fast_forward</mat-icon>
+                        <span i18n="@@trainingPlans.menu.jump"
+                          >Zu diesem Tag springen</span
+                        >
+                      </button>
+                    }
+                  </mat-menu>
+                }
+              </div>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </main>
+} @else {
+  <main class="page-wrap">
+    <p i18n="@@trainingPlans.notFound">Plan nicht gefunden.</p>
+    <a mat-stroked-button routerLink="/training-plans">
+      <mat-icon>arrow_back</mat-icon>
+      <span i18n="@@trainingPlans.back">Zurück</span>
+    </a>
+  </main>
+}

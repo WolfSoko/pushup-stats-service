@@ -12,7 +12,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { AdminUser } from './admin-page.component';
+import { AdminUser } from './admin-page.models';
 
 @Component({
   selector: 'app-delete-user-dialog',

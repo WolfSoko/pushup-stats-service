@@ -1,9 +1,7 @@
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  StatsChartComponent,
-  type PaceSeriesEntry,
-} from './stats-chart.component';
+import { StatsChartComponent } from './stats-chart.component';
+import { type PaceSeriesEntry } from './stats-chart.models';
 
 /**
  * Renders the chart under `PLATFORM_ID: 'server'` so the Chart.js
