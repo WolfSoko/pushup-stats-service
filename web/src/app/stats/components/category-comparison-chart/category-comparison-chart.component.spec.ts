@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal } from '@angular/core';
 
-import type { CategoryComparison } from '../../analysis.store';
+import type { CategoryComparison } from '../../analysis/analysis.types';
 import { CategoryComparisonChartComponent } from './category-comparison-chart.component';
 
 @Component({

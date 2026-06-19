@@ -16,7 +16,7 @@ import type {
   CategorySingleFacet,
   CategorySummary,
   CategoryTimeFacet,
-} from '../../analysis.store';
+} from '../../analysis/analysis.types';
 import { categoryDisplayName } from '../../i18n/exercise-display-names';
 
 /**

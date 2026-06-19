@@ -1,7 +1,10 @@
 import { Component, input, output, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import type { CategoryComparison, CategorySummary } from '../analysis.store';
+import type {
+  CategoryComparison,
+  CategorySummary,
+} from '../analysis/analysis.types';
 import { AnalysisStore } from '../analysis.store';
 
 type AnalysisStoreType = InstanceType<typeof AnalysisStore>;
