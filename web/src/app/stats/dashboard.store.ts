@@ -14,7 +14,7 @@ import {
   type UnifiedEntry,
   type UserStats,
 } from '@pu-stats/models';
-import { toBerlinIsoDate } from '@pu-stats/date';
+import { daysBetween, toBerlinIsoDate } from '@pu-stats/date';
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
@@ -30,7 +30,6 @@ import {
   computeStreakFromEntries,
   currentIsoWeekKey,
   currentMonthKey,
-  daysBetween,
   goalPercent,
   type RepEntry,
   sumRepsInMonth,

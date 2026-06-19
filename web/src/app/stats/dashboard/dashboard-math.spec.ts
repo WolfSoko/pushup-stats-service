@@ -2,10 +2,8 @@ import {
   computeStreakFromEntries,
   currentIsoWeekKey,
   currentMonthKey,
-  daysBetween,
   goalPercent,
   type RepEntry,
-  sortedUniqueDates,
   sumRepsInMonth,
   sumRepsInWeek,
 } from './dashboard-math';
@@ -13,28 +11,6 @@ import {
 function row(timestamp: string, reps: number): RepEntry {
   return { timestamp, reps };
 }
-
-describe('sortedUniqueDates', () => {
-  it('should dedupe to day granularity and sort ascending', () => {
-    // given
-    const rows = [
-      row('2026-06-03T10:00:00', 5),
-      row('2026-06-01T08:00:00', 5),
-      row('2026-06-01T20:00:00', 5),
-    ];
-    // when / then
-    expect(sortedUniqueDates(rows)).toEqual(['2026-06-01', '2026-06-03']);
-  });
-});
-
-describe('daysBetween', () => {
-  it('should count whole calendar days, ignoring time of day', () => {
-    // given / when / then
-    expect(daysBetween('2026-06-01', '2026-06-02')).toBe(1);
-    expect(daysBetween('2026-06-01', '2026-06-01')).toBe(0);
-    expect(daysBetween('2026-06-02', '2026-06-01')).toBe(-1);
-  });
-});
 
 describe('computeStreakFromEntries', () => {
   it('should return 0 for no rows', () => {

@@ -6,3 +6,5 @@ export * from './lib/now-local-iso-timestamp';
 export * from './lib/create-week-range';
 export * from './lib/infer-range-mode';
 export * from './lib/range-modes.type';
+export * from './lib/days-between';
+export * from './lib/sorted-unique-dates';

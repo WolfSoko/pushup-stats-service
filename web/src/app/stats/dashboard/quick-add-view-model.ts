@@ -24,7 +24,8 @@ export interface QuickAddButtonViewModel {
   readonly icon: string;
   /** Translated exercise display label (e.g. `"Liegestütze"`). */
   readonly exerciseLabel: string;
-  /** Fully composed button label, e.g. `"+10 Liegestütze"` / `"Auto: Sit-ups"`. */
+  /** Fully composed button label: `"+10 Liegestütze"` in reps mode, or
+   *  just the exercise label (e.g. `"Sit-ups"`) in auto-count mode. */
   readonly label: string;
 }
 
@@ -34,20 +35,11 @@ export function toQuickAddViewModel(
 ): QuickAddButtonViewModel {
   const exerciseId = config.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
   const mode: QuickAddMode = config.mode ?? 'reps';
-  // Resolve the display label for the legacy pushup sentinel separately —
-  // it isn't in EXERCISE_CATALOG (lives in the pushups collection) but the
-  // template needs a localised label all the same.
-  const def =
-    exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
-      ? null
-      : findExerciseDefinition(exerciseId);
-  const exerciseLabel =
-    exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
-      ? $localize`:@@exercise.category.pushup:Liegestütze`
-      : exerciseDisplayName(exerciseId);
-  // The catalog `icon` is the natural per-exercise glyph. Pushup falls
-  // back to `fitness_center`; auto-count rows override to a camera icon
-  // to make the mode visually obvious.
+  const def = findExerciseDefinition(exerciseId);
+  const exerciseLabel = exerciseDisplayName(exerciseId);
+  // The catalog `icon` is the natural per-exercise glyph, with a
+  // `fitness_center` fallback for unknown ids; auto-count rows override
+  // to a camera icon to make the mode visually obvious.
   const icon =
     mode === 'auto-count' && isAutoCountQuickAddExerciseId(exerciseId)
       ? 'videocam'

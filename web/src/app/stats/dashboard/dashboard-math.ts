@@ -1,24 +1,13 @@
-import { toBerlinIsoDate, toLocalIsoDate } from '@pu-stats/date';
+import {
+  daysBetween,
+  sortedUniqueDates,
+  toBerlinIsoDate,
+  toLocalIsoDate,
+} from '@pu-stats/date';
 
 export interface RepEntry {
   timestamp: string;
   reps: number;
-}
-
-export function sortedUniqueDates(
-  rows: ReadonlyArray<{ timestamp: string }>
-): string[] {
-  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
-    a.localeCompare(b)
-  );
-}
-
-export function daysBetween(a: string, b: string): number {
-  const ad = new Date(`${a}T00:00:00`);
-  const bd = new Date(`${b}T00:00:00`);
-  ad.setHours(0, 0, 0, 0);
-  bd.setHours(0, 0, 0, 0);
-  return Math.round((bd.getTime() - ad.getTime()) / 86_400_000);
 }
 
 /** ISO-week key (`YYYY-Www`) for today, in the Berlin timezone used by
