@@ -352,8 +352,8 @@ export class StatsChartComponent implements AfterViewInit {
       let bucketTs: number;
       if (isHourly) {
         const hour = date.getHours();
-        // In 14h mode, hours 0-7 merge into the 00:00 bucket
-        const mappedHour = is14h && hour < 8 ? 0 : hour;
+        // In 14h mode, hours 0-7 and 22-23 merge into the 00:00 bucket
+        const mappedHour = is14h && (hour < 8 || hour >= 22) ? 0 : hour;
         bucketTs = new Date(
           date.getFullYear(),
           date.getMonth(),
