@@ -30,11 +30,13 @@ describe('facetKindFor', () => {
     // Collapsing `weight` into `reps` at the kind level prevents two
     // buckets with identical emitted kind, which would trigger Angular
     // NG0955 (duplicate keys, incorrect row reuse).
+    // given / when / then
     expect(facetKindFor('reps')).toBe('reps');
     expect(facetKindFor('weight')).toBe('reps');
   });
 
   it('should preserve time, distance and distance-time as their own kinds', () => {
+    // given / when / then
     expect(facetKindFor('time')).toBe('time');
     expect(facetKindFor('distance')).toBe('distance');
     expect(facetKindFor('distance-time')).toBe('distance-time');
@@ -43,6 +45,7 @@ describe('facetKindFor', () => {
 
 describe('measurementScale', () => {
   it('should scale distance dimensions to km and leave others at 1', () => {
+    // given / when / then
     expect(measurementScale('distance')).toBe(1 / 1000);
     expect(measurementScale('distance-time')).toBe(1 / 1000);
     expect(measurementScale('reps')).toBe(1);
@@ -81,6 +84,7 @@ describe('buildFacet', () => {
   });
 
   it('should fold time rows into a time facet by durationSec', () => {
+    // given
     const rows = [
       entry({
         exerciseId: 'plank.standard',
@@ -93,7 +97,9 @@ describe('buildFacet', () => {
         durationSec: 90,
       }),
     ];
+    // when
     const facet = buildFacet('time', rows, '2026-06-15');
+    // then
     expect(facet).toEqual({
       kind: 'time',
       totalSec: 150,
@@ -103,6 +109,7 @@ describe('buildFacet', () => {
   });
 
   it('should rank a distance-time best day by distance', () => {
+    // given
     const rows = [
       entry({
         exerciseId: 'cardio.running',
@@ -117,7 +124,9 @@ describe('buildFacet', () => {
         durationSec: 900,
       }),
     ];
+    // when
     const facet = buildFacet('distance-time', rows, '2026-06-15');
+    // then
     expect(facet.kind).toBe('distance-time');
     if (facet.kind === 'distance-time') {
       expect(facet.totalM).toBe(8000);
@@ -133,8 +142,11 @@ describe('buildFacet', () => {
 
 describe('computeCategoryVolume', () => {
   it('should return a single facet when all rows share one measurement', () => {
+    // given
     const rows = [entry({ exerciseId: 'pushup', reps: 10 })];
+    // when
     const volume = computeCategoryVolume(rows, '2026-06-15');
+    // then
     expect(volume.kind).toBe('reps');
   });
 
@@ -144,7 +156,9 @@ describe('computeCategoryVolume', () => {
       entry({ exerciseId: 'pushup', reps: 10 }),
       entry({ exerciseId: 'plank.standard', durationSec: 60 }),
     ];
+    // when
     const volume = computeCategoryVolume(rows, '2026-06-15');
+    // then
     expect(volume.kind).toBe('mixed');
     if (volume.kind === 'mixed') {
       // reps before time per the stable facet order
@@ -160,13 +174,14 @@ describe('buildCategorySummaries', () => {
       entry({ exerciseId: 'pushup', reps: 10 }),
       entry({ exerciseId: 'plank.standard', durationSec: 60 }),
     ];
+    // when
     const summaries = buildCategorySummaries(
       rows,
       findExerciseDefinition,
       '2026-06-15'
     );
-    const ids = summaries.map((s) => s.categoryId);
     // then every summary has at least one entry
+    const ids = summaries.map((s) => s.categoryId);
     expect(summaries.every((s) => s.entries > 0)).toBe(true);
     // and ordering is non-decreasing by catalog order
     const orders = summaries.map((s) => s.order);
@@ -177,11 +192,14 @@ describe('buildCategorySummaries', () => {
 
 describe('buildCategoryComparison', () => {
   it('should project labels and entry counts from summaries', () => {
+    // given
     const summaries = [
       { categoryId: 'pushup', entries: 3 } as CategorySummary,
       { categoryId: 'core', entries: 1 } as CategorySummary,
     ];
+    // when
     const comparison = buildCategoryComparison(summaries);
+    // then
     expect(comparison.entries).toEqual([3, 1]);
     expect(comparison.labels).toHaveLength(2);
   });

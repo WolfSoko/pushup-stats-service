@@ -399,15 +399,12 @@ export const AnalysisStore = signalStore(
       () => userStats()?.heatmap ?? {}
     );
 
-    /** Average reps per individual set across the active view's entries. */
     const avgSetSize = computed(() => computeAvgSetSize(viewFilteredRows()));
 
-    /** Distribution of entries by number of sets (e.g. "3 sets" → 40%). */
     const setsDistribution = computed(() =>
       computeSetsDistribution(viewFilteredRows())
     );
 
-    /** Maximum reps in a single set across the active view's entries. */
     const bestSingleSet = computed(() =>
       computeBestSingleSet(viewFilteredRows())
     );

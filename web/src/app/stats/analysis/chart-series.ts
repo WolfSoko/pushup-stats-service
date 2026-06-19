@@ -34,16 +34,17 @@ export function computeViewMeasurement(
 
 /**
  * Maps a timestamp to the bucket-key it should fall into for the active
- * chart bucketing scheme, so pace alignment lines up with the bar series:
+ * chart bucketing scheme, so pace alignment lines up 1:1 with the bar
+ * series:
  *   - daily            → `YYYY-MM-DD`
  *   - hourly 24h mode  → `${from}T${HH}:00:00` (all 24 hours)
- *   - hourly 14h mode  → `${from}T00:00:00` for hours 0-7 (merged night
- *     bucket); otherwise the hour-suffixed key above.
+ *   - hourly 14h mode  → `${from}T00:00:00` for the merged night bucket
+ *     (hours 22–07, i.e. the day's off-hours); otherwise the
+ *     hour-suffixed key above for hours 08–21.
  *
- * In 14h mode {@link buildViewChartSeries} only emits the night bucket
- * plus hours 08–21, so a timestamp at hour 22/23 yields a key with no
- * matching bar — it simply drops out of the pace alignment, mirroring
- * the chart, which doesn't plot those hours either.
+ * The 14h night bucket folds in late-evening hours 22–23 alongside
+ * 00–07 so no logged activity is dropped from the day's totals — the
+ * bar is still labelled `00-07` (see {@link buildViewChartSeries}).
  */
 export function bucketKeyForTimestamp(
   timestamp: string,
@@ -55,7 +56,7 @@ export function bucketKeyForTimestamp(
 ): string {
   if (!opts.isDayRange) return timestamp.slice(0, 10);
   const hour = new Date(timestamp).getHours();
-  if (opts.dayChartMode === '14h' && hour < 8) {
+  if (opts.dayChartMode === '14h' && (hour < 8 || hour >= 22)) {
     return `${opts.from}T00:00:00`;
   }
   return `${opts.from}T${String(hour).padStart(2, '0')}:00:00`;
@@ -97,9 +98,13 @@ export function buildViewChartSeries(
       });
     }
     const result: StatsSeriesEntry[] = [];
-    const nightTotal = hourTotals
-      .slice(0, 8)
-      .reduce((sum, value) => sum + value, 0);
+    // The night bucket also folds in hours 22–23 so late-evening
+    // activity isn't dropped from the day's totals; the bar keeps the
+    // `00-07` label since those off-hours read as one block.
+    const nightTotal = [
+      ...hourTotals.slice(0, 8),
+      ...hourTotals.slice(22, 24),
+    ].reduce((sum, value) => sum + value, 0);
     cumulative += nightTotal;
     result.push({
       bucket: `${from}T00:00:00`,
