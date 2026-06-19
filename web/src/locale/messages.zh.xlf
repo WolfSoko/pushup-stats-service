@@ -9559,8 +9559,8 @@
     </unit>
     <unit id="settings.delete.error">
       <segment state="translated">
-        <source>Bitte exakt „löschen” eingeben.</source>
-        <target>请准确输入”删除”。</target>
+        <source>Bitte exakt „löschen“ eingeben.</source>
+        <target>请准确输入“删除”。</target>
       </segment>
     </unit>
     <unit id="settings.anonymizedName">

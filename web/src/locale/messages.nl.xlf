@@ -10062,7 +10062,7 @@
     </unit>
     <unit id="settings.delete.error">
       <segment state="translated">
-        <source>Bitte exakt „löschen” eingeben.</source>
+        <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Voer precies “verwijderen” in.</target>
       </segment>
     </unit>

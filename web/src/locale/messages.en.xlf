@@ -10237,7 +10237,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.delete.error">
       <segment state="translated">
-        <source>Bitte exakt „löschen” eingeben.</source>
+        <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Please enter exactly “delete”.</target>
       </segment>
     </unit>
