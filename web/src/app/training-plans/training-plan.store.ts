@@ -25,7 +25,6 @@ import {
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   currentPlanDayIndex,
-  findExerciseDefinition,
   findPlanById,
   isPlanCompleted,
   planDayByIndex,
@@ -36,12 +35,23 @@ import {
   TRAINING_PLANS,
   UserTrainingPlan,
 } from '@pu-stats/models';
-import {
-  appendLocalOffset,
-  toBerlinIsoDate,
-  toLocalIsoDate,
-} from '@pu-stats/date';
+import { appendLocalOffset, toBerlinIsoDate } from '@pu-stats/date';
 import { firstValueFrom, of } from 'rxjs';
+import {
+  addToSet,
+  computeCompletionPercent,
+  nonRestDaysBeforeTarget,
+  planDayDate,
+  planDayRepsPayload,
+  removeFromSet,
+  sumRepsLoggedOn,
+} from './training-plan-store.math';
+import {
+  dayTarget,
+  isDayDone,
+  isDaySkipped,
+  isRepsMeasuredPlanDay,
+} from './training-plan-store.selectors';
 
 /**
  * Result of `logPlanDay` / `logTodayPlanDay`. Lets callers tailor
@@ -152,43 +162,21 @@ export const TrainingPlanStore = signalStore(
       return planDayByIndex(c, idx);
     });
 
-    const todayTarget = computed(() => todayDay()?.targetReps ?? 0);
+    const todayTarget = computed(() => dayTarget(todayDay()));
 
-    const todayDone = computed(() => {
-      const idx = currentDayIndex();
-      const a = activePlan();
-      if (!a || idx === null) return false;
-      return a.completedDays.includes(idx);
-    });
+    const todayDone = computed(() =>
+      isDayDone(activePlan(), currentDayIndex())
+    );
 
-    const todaySkipped = computed(() => {
-      const idx = currentDayIndex();
-      const a = activePlan();
-      if (!a || idx === null) return false;
-      return (a.skippedDays ?? []).includes(idx);
-    });
+    const todaySkipped = computed(() =>
+      isDaySkipped(activePlan(), currentDayIndex())
+    );
 
     const completionPercent = computed(() => {
       const a = activePlan();
       const c = activeCatalog();
       if (!a || !c) return 0;
-      const skipped = new Set(a.skippedDays ?? []);
-      const requiredDayIndexes = new Set(
-        c.days
-          .filter((d) => d.kind !== 'rest' && !skipped.has(d.dayIndex))
-          .map((d) => d.dayIndex)
-      );
-      if (requiredDayIndexes.size === 0) return 0;
-      // Only count non-rest, non-skipped days. Rest-day or skipped-day
-      // entries leaking into `completedDays` would otherwise skew
-      // progress > 100%.
-      const completedRequired = a.completedDays.filter((idx) =>
-        requiredDayIndexes.has(idx)
-      ).length;
-      return Math.min(
-        100,
-        Math.round((completedRequired / requiredDayIndexes.size) * 100)
-      );
+      return computeCompletionPercent(c, a.completedDays, a.skippedDays ?? []);
     });
 
     const isCompleted = computed(() => {
@@ -248,42 +236,18 @@ export const TrainingPlanStore = signalStore(
      * checks).
      */
     _planDayDate(dayIndex: number): string {
-      const a = store.activePlan();
-      if (!a) return toBerlinIsoDate(new Date());
-      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(a.startDate);
-      if (!m) return toBerlinIsoDate(new Date());
-      const year = Number(m[1]);
-      const month = Number(m[2]);
-      const day = Number(m[3]);
-      const start = new Date(year, month - 1, day);
-      // Round-trip: `new Date(2026, 1, 30)` silently overflows to
-      // March 2 instead of failing on Feb-30. Reject impossible
-      // dates so a corrupt `startDate` can't shift logging into
-      // the wrong calendar day.
-      if (
-        start.getFullYear() !== year ||
-        start.getMonth() !== month - 1 ||
-        start.getDate() !== day
-      ) {
-        return toBerlinIsoDate(new Date());
-      }
-      start.setHours(0, 0, 0, 0);
-      const target = new Date(start);
-      target.setDate(start.getDate() + (dayIndex - 1));
-      return toLocalIsoDate(target);
+      return planDayDate(store.activePlan()?.startDate, dayIndex);
     },
 
     /** Sum of reps already logged on a given local date for one exercise.
      *  Reads the `exerciseEntries` mirror filtered by id — post-cutover
      *  pushups live there too (`exerciseId:'pushup'`), so no special case. */
     _repsLoggedOn(dateIso: string, exerciseId: string): number {
-      return store._live
-        .exerciseEntries()
-        .filter(
-          (e) =>
-            e.exerciseId === exerciseId && e.timestamp.slice(0, 10) === dateIso
-        )
-        .reduce((sum, e) => sum + (e.reps ?? 0), 0);
+      return sumRepsLoggedOn(
+        store._live.exerciseEntries(),
+        dateIso,
+        exerciseId
+      );
     },
 
     /** Lazily resolve the Firestore-bound exercise API. Returns null when no
@@ -296,18 +260,14 @@ export const TrainingPlanStore = signalStore(
     _acquireWriteLock(dayIndex: number): boolean {
       const set = store._writingDays();
       if (set.has(dayIndex)) return false;
-      const next = new Set(set);
-      next.add(dayIndex);
-      store._writingDays.set(next);
+      store._writingDays.set(addToSet(set, dayIndex));
       return true;
     },
 
     _releaseWriteLock(dayIndex: number): void {
       const set = store._writingDays();
       if (!set.has(dayIndex)) return;
-      const next = new Set(set);
-      next.delete(dayIndex);
-      store._writingDays.set(next);
+      store._writingDays.set(removeFromSet(set, dayIndex));
     },
   })),
   withMethods((store) => ({
@@ -410,14 +370,13 @@ export const TrainingPlanStore = signalStore(
       if (!a || !c || a.status !== 'active') return 'noop';
       const day = planDayByIndex(c, dayIndex);
       if (!day || day.kind === 'rest' || day.targetReps <= 0) return 'noop';
-      const exerciseId = trainingPlanDayExerciseId(day);
       // All plan days route through exerciseEntries. Only reps-measured catalog
       // exercises map onto a plan day's targetReps/sets. A time- or distance-
       // measured day can't be honored with a reps payload, and createEntry needs
       // a resolved user plus the lazily-resolved Firestore-backed exercise API —
       // fail closed on any of these.
-      const def = findExerciseDefinition(exerciseId);
-      if (!def || def.measurement !== 'reps') return 'noop';
+      if (!isRepsMeasuredPlanDay(day)) return 'noop';
+      const exerciseId = trainingPlanDayExerciseId(day);
       const exerciseApi = store._resolveExerciseApi();
       if (!store._user.userIdSafe() || !exerciseApi) return 'noop';
 
@@ -437,24 +396,17 @@ export const TrainingPlanStore = signalStore(
       try {
         const dateIso = store._planDayDate(dayIndex);
         const alreadyLogged = store._repsLoggedOn(dateIso, exerciseId);
+        const payload = planDayRepsPayload(day, alreadyLogged);
         let result: LogPlanDayResult;
 
-        if (alreadyLogged < day.targetReps) {
-          const remaining = day.targetReps - alreadyLogged;
-          // If the user has logged nothing yet, persist the full
-          // prescribed sets so the breakdown is preserved. If they
-          // logged some reps already, just top up the remainder as
-          // a single set — we don't try to second-guess their split.
-          const sets =
-            alreadyLogged === 0 ? (day.sets ?? [day.targetReps]) : [remaining];
-          const reps = alreadyLogged === 0 ? day.targetReps : remaining;
+        if (payload) {
           const timestamp = appendLocalOffset(`${dateIso}T12:00`);
           await firstValueFrom(
             exerciseApi.createEntry(store._user.userIdSafe(), {
               exerciseId,
               timestamp,
-              reps,
-              sets,
+              reps: payload.reps,
+              sets: payload.sets,
               source: 'plan',
             })
           );
@@ -551,16 +503,12 @@ export const TrainingPlanStore = signalStore(
       );
       if (!newStartDate) return;
 
-      const nonRestDaysBeforeTarget = c.days
-        .filter((d) => d.dayIndex < targetDayIndex && d.kind !== 'rest')
-        .map((d) => d.dayIndex);
-
       const userId = store._user.userIdSafe();
       await firstValueFrom(
         store._api.jumpToDay(userId, {
           newStartDate,
           targetDayIndex,
-          nonRestDaysBeforeTarget,
+          nonRestDaysBeforeTarget: nonRestDaysBeforeTarget(c, targetDayIndex),
         })
       );
       store.activeResource.reload();
@@ -611,11 +559,8 @@ export const TrainingPlanStore = signalStore(
         // Matching logPlanDay: only reps-measured days can be honored off the
         // exerciseEntries reps mirror. Auto-mark only flips the done flag (no
         // write), so the resolved-user check isn't needed here.
+        if (!isRepsMeasuredPlanDay(day)) return;
         const exerciseId = trainingPlanDayExerciseId(day);
-        if (exerciseId !== 'pushup') {
-          const def = findExerciseDefinition(exerciseId);
-          if (!def || def.measurement !== 'reps') return;
-        }
         if (a.completedDays.includes(idx)) return;
         // Same readiness guard as `logPlanDay` — without this, a pre-sync
         // mirror could appear to satisfy the target on stale state and

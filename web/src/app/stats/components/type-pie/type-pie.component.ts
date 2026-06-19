@@ -1,22 +1,16 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
-export interface PieDatum {
-  /**
-   * Stable, locale-independent identifier used for selection state and
-   * test selectors. Defaults to `label` when omitted, but production
-   * callers should pass a canonical key (e.g. the canonical pushup
-   * type id) so checkbox state and `data-testid` survive locale
-   * switches and labels with spaces/diacritics.
-   */
-  id?: string;
-  label: string;
-  value: number;
-  avgSetSize?: number;
-}
-
-const TOP_N = 5;
+import type { PieDatum } from './type-pie.models';
+import {
+  buildAllSegments,
+  buildArcSegments,
+  percentOfSelected,
+  pieTotal,
+  selectedTotal,
+  setsEqual,
+  topNIds,
+} from './type-pie-data';
 
 @Component({
   selector: 'app-type-pie',
@@ -143,159 +137,7 @@ const TOP_N = 5;
       <div class="empty" i18n="@@pie.noData">Keine Daten</div>
     }
   `,
-  styles: `
-    .wrap {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      align-items: start;
-      gap: 16px;
-    }
-    .pie-area {
-      display: grid;
-      gap: 10px;
-      justify-items: center;
-    }
-    .pie-stack {
-      position: relative;
-      width: 160px;
-      height: 160px;
-    }
-    .pie {
-      width: 160px;
-      height: 160px;
-      transform: rotate(-90deg);
-    }
-    .bg {
-      fill: none;
-      stroke: rgba(0, 0, 0, 0.08);
-      stroke-width: 10;
-    }
-    .seg {
-      fill: none;
-      stroke-width: 10;
-      stroke-linecap: butt;
-      cursor: pointer;
-      transition:
-        stroke-width 0.15s ease,
-        opacity 0.15s ease;
-    }
-    .seg:hover,
-    .seg:focus-visible,
-    .seg.focused {
-      stroke-width: 12;
-      outline: none;
-    }
-    .seg.dimmed {
-      opacity: 0.45;
-    }
-    .pie-center {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      align-content: center;
-      justify-items: center;
-      text-align: center;
-      pointer-events: none;
-      padding: 18%;
-      gap: 2px;
-    }
-    .center-label {
-      font-size: 0.72rem;
-      opacity: 0.75;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .center-value {
-      font-size: 1.25rem;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.1;
-    }
-    .center-pct {
-      font-size: 0.85rem;
-      opacity: 0.85;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .legend {
-      display: grid;
-      gap: 4px;
-      min-width: 0;
-      max-height: 220px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-    .row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-    .row-name {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-    }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-      flex: 0 0 auto;
-    }
-    .name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .pct {
-      font-variant-numeric: tabular-nums;
-      opacity: 0.8;
-    }
-    .pct.count {
-      opacity: 0.5;
-    }
-    .set-detail {
-      opacity: 0.6;
-      font-size: 0.8rem;
-      grid-template-columns: 1fr auto;
-      padding-left: 36px;
-    }
-    .preset-row {
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      padding-bottom: 4px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      background: var(--mat-sys-surface, #fff);
-    }
-    .preset-name {
-      font-weight: 600;
-    }
-    .set-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .set-value {
-      font-variant-numeric: tabular-nums;
-    }
-    .empty {
-      opacity: 0.7;
-    }
-
-    @media (max-width: 600px) {
-      .wrap {
-        grid-template-columns: 1fr;
-      }
-      .pie-stack {
-        margin: 0 auto;
-      }
-    }
-  `,
+  styleUrl: './type-pie.component.scss',
 })
 export class TypePieComponent {
   readonly data = input<PieDatum[]>([]);
@@ -311,54 +153,12 @@ export class TypePieComponent {
     () => this.focusedSegment()?.id ?? null
   );
 
-  readonly total = computed(() =>
-    this.data().reduce((sum, x) => sum + (x.value || 0), 0)
-  );
+  readonly total = computed(() => pieTotal(this.data()));
 
-  private readonly palette = [
-    '#1976d2', // blue
-    '#9c27b0', // purple
-    '#2e7d32', // green
-    '#ef6c00', // orange
-    '#d32f2f', // red
-    '#00838f', // teal
-    '#5d4037', // brown
-    '#455a64', // blue grey
-  ];
+  readonly allSegments = computed(() => buildAllSegments(this.data()));
 
-  readonly allSegments = computed(() => {
-    const total = this.total();
-    if (!total)
-      return [] as Array<{
-        id: string;
-        label: string;
-        value: number;
-        percent: number;
-        color: string;
-        avgSetSize: number;
-      }>;
-
-    const rows = [...this.data()]
-      .filter((x) => (x.value || 0) > 0)
-      .sort((a, b) => (b.value || 0) - (a.value || 0));
-
-    return rows.map((row, idx) => ({
-      id: row.id ?? row.label,
-      label: row.label,
-      value: row.value || 0,
-      percent: Math.round(((row.value || 0) / total) * 100),
-      color: this.palette[idx % this.palette.length],
-      avgSetSize: row.avgSetSize ?? 0,
-    }));
-  });
-
-  readonly topFiveIds = computed<ReadonlySet<string>>(
-    () =>
-      new Set(
-        this.allSegments()
-          .slice(0, TOP_N)
-          .map((s) => s.id)
-      )
+  readonly topFiveIds = computed<ReadonlySet<string>>(() =>
+    topNIds(this.allSegments())
   );
 
   readonly selectedIds = computed<ReadonlySet<string>>(() => {
@@ -367,62 +167,22 @@ export class TypePieComponent {
     return this.topFiveIds();
   });
 
-  readonly isTopFiveActive = computed(() => {
-    const selected = this.selectedIds();
-    const top = this.topFiveIds();
-    if (selected.size !== top.size) return false;
-    for (const id of top) {
-      if (!selected.has(id)) return false;
-    }
-    return true;
-  });
+  readonly isTopFiveActive = computed(() =>
+    setsEqual(this.selectedIds(), this.topFiveIds())
+  );
 
   /**
    * Sum of values across the currently selected types — defines the 100%
    * reference used by the pie and legend percentages so the rendered pie
    * has no Other arc when types are excluded.
    */
-  readonly selectedTotal = computed(() => {
-    const selected = this.selectedIds();
-    return this.allSegments()
-      .filter((s) => selected.has(s.id))
-      .reduce((sum, s) => sum + s.value, 0);
-  });
+  readonly selectedTotal = computed(() =>
+    selectedTotal(this.allSegments(), this.selectedIds())
+  );
 
-  readonly visibleSegments = computed(() => {
-    const selectedTotal = this.selectedTotal();
-    if (!selectedTotal)
-      return [] as Array<{
-        id: string;
-        label: string;
-        value: number;
-        percent: number;
-        color: string;
-        avgSetSize: number;
-        dasharray: string;
-        offset: number;
-      }>;
-
-    const selected = this.selectedIds();
-    let acc = 0;
-    return this.allSegments()
-      .filter((s) => selected.has(s.id))
-      .map((seg) => {
-        const dash = (seg.value / selectedTotal) * 100;
-        const result = {
-          id: seg.id,
-          label: seg.label,
-          value: seg.value,
-          percent: Math.round((seg.value / selectedTotal) * 100),
-          color: seg.color,
-          avgSetSize: seg.avgSetSize,
-          dasharray: `${dash} ${100 - dash}`,
-          offset: 25 - acc,
-        };
-        acc += dash;
-        return result;
-      });
-  });
+  readonly visibleSegments = computed(() =>
+    buildArcSegments(this.allSegments(), this.selectedIds())
+  );
 
   readonly focusedSegment = computed(() => {
     const id = this._focusedId();
@@ -461,11 +221,6 @@ export class TypePieComponent {
 
   /** Percent of the selected total — `null` for unselected rows. */
   legendPercent(id: string): number | null {
-    if (!this.selectedIds().has(id)) return null;
-    const total = this.selectedTotal();
-    if (total <= 0) return null;
-    const seg = this.allSegments().find((s) => s.id === id);
-    if (!seg) return null;
-    return Math.round((seg.value / total) * 100);
+    return percentOfSelected(this.allSegments(), this.selectedIds(), id);
   }
 }

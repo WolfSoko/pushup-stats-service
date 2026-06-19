@@ -28,29 +28,18 @@ import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
-
-export interface AdminUser {
-  uid: string;
-  displayName: string | null;
-  email: string | null;
-  anonymous: boolean;
-  pushupCount: number;
-  lastEntry: string | null;
-  createdAt: string | null;
-  role: string | null;
-}
-
-interface AdminFeedback {
-  id: string;
-  name: string | null;
-  email: string | null;
-  message: string;
-  userId: string | null;
-  createdAt: string | null;
-  userAgent: string | null;
-  read: boolean;
-  githubIssueUrl: string | null;
-}
+import {
+  AdminFeedback,
+  AdminUser,
+  BulkDeleteResult,
+} from './admin-page.models';
+import {
+  adminFeedbackSortValue,
+  adminUserSortValue,
+  errorMessage,
+  filterAdminUsers,
+  toggleSetMember,
+} from './admin-page.helpers';
 
 @Component({
   selector: 'app-admin-page',
@@ -568,9 +557,7 @@ export class AdminPageComponent {
   readonly inactiveDays = signal(20);
   readonly bulkLoading = signal(false);
   readonly bulkError = signal<string | null>(null);
-  readonly bulkResult = signal<{ deleted: number; skipped: number } | null>(
-    null
-  );
+  readonly bulkResult = signal<BulkDeleteResult | null>(null);
 
   readonly feedbackColumns = [
     'createdAt',
@@ -587,9 +574,7 @@ export class AdminPageComponent {
   readonly feedbackActionError = signal<string | null>(null);
 
   readonly filteredUsers = computed(() =>
-    this.showOnlyAnonymous()
-      ? this.users().filter((u) => u.anonymous)
-      : this.users()
+    filterAdminUsers(this.users(), this.showOnlyAnonymous())
   );
 
   readonly usersDataSource = new MatTableDataSource<AdminUser>([]);
@@ -599,37 +584,8 @@ export class AdminPageComponent {
   private readonly feedbackSort = viewChild<MatSort>('feedbackSort');
 
   constructor() {
-    this.usersDataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'displayName':
-          return (item.displayName ?? '').toLowerCase();
-        case 'email':
-          return (item.email ?? '').toLowerCase();
-        case 'anonymous':
-          return item.anonymous ? 1 : 0;
-        case 'pushupCount':
-          return item.pushupCount;
-        case 'lastEntry':
-          return item.lastEntry ? new Date(item.lastEntry).getTime() : 0;
-        case 'createdAt':
-          return item.createdAt ? new Date(item.createdAt).getTime() : 0;
-        default:
-          return '';
-      }
-    };
-
-    this.feedbackDataSource.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'createdAt':
-          return item.createdAt ? new Date(item.createdAt).getTime() : 0;
-        case 'name':
-          return (item.name ?? '').toLowerCase();
-        case 'email':
-          return (item.email ?? '').toLowerCase();
-        default:
-          return '';
-      }
-    };
+    this.usersDataSource.sortingDataAccessor = adminUserSortValue;
+    this.feedbackDataSource.sortingDataAccessor = adminFeedbackSortValue;
 
     effect(() => {
       this.usersDataSource.data = this.filteredUsers();
@@ -661,7 +617,7 @@ export class AdminPageComponent {
       const result = await fn();
       this.users.set(result.data);
     } catch (err) {
-      this.error.set(err instanceof Error ? err.message : String(err));
+      this.error.set(errorMessage(err));
     } finally {
       this.loading.set(false);
     }
@@ -678,7 +634,7 @@ export class AdminPageComponent {
       const result = await fn();
       this.feedbackList.set(result.data);
     } catch (err) {
-      this.feedbackError.set(err instanceof Error ? err.message : String(err));
+      this.feedbackError.set(errorMessage(err));
     } finally {
       this.feedbackLoading.set(false);
     }
@@ -689,15 +645,7 @@ export class AdminPageComponent {
   }
 
   private setFeedbackLoading(id: string, loading: boolean): void {
-    this.feedbackActionLoading.update((s) => {
-      const next = new Set(s);
-      if (loading) {
-        next.add(id);
-      } else {
-        next.delete(id);
-      }
-      return next;
-    });
+    this.feedbackActionLoading.update((s) => toggleSetMember(s, id, loading));
   }
 
   async markFeedbackRead(
@@ -713,9 +661,7 @@ export class AdminPageComponent {
         list.map((f) => (f.id === feedback.id ? { ...f, read } : f))
       );
     } catch (err) {
-      this.feedbackActionError.set(
-        err instanceof Error ? err.message : String(err)
-      );
+      this.feedbackActionError.set(errorMessage(err));
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
@@ -743,9 +689,7 @@ export class AdminPageComponent {
         list.filter((f) => f.id !== feedback.id)
       );
     } catch (err) {
-      this.feedbackActionError.set(
-        err instanceof Error ? err.message : String(err)
-      );
+      this.feedbackActionError.set(errorMessage(err));
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
@@ -768,9 +712,7 @@ export class AdminPageComponent {
         )
       );
     } catch (err) {
-      this.feedbackActionError.set(
-        err instanceof Error ? err.message : String(err)
-      );
+      this.feedbackActionError.set(errorMessage(err));
     } finally {
       this.setFeedbackLoading(feedback.id, false);
     }
@@ -803,7 +745,7 @@ export class AdminPageComponent {
       await fn({ uid: user.uid, anonymize: result.anonymize });
       this.users.update((list) => list.filter((u) => u.uid !== user.uid));
     } catch (err) {
-      this.error.set(err instanceof Error ? err.message : String(err));
+      this.error.set(errorMessage(err));
     }
   }
 
@@ -821,7 +763,7 @@ export class AdminPageComponent {
       // Refresh user list after bulk delete
       await this.loadUsers();
     } catch (err) {
-      this.bulkError.set(err instanceof Error ? err.message : String(err));
+      this.bulkError.set(errorMessage(err));
     } finally {
       this.bulkLoading.set(false);
     }

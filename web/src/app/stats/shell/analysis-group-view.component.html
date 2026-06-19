@@ -1,0 +1,249 @@
+@if (isEmptyRange()) {
+  <p
+    class="empty"
+    data-testid="analysis-group-view-empty"
+    i18n="@@noEntriesInSelectedRange"
+  >
+    Keine Einträge im gewählten Zeitraum.
+  </p>
+} @else {
+  <app-stats-chart
+    [series]="store.viewChartSeries()"
+    [granularity]="store.viewGranularity()"
+    [rangeMode]="store.rangeMode()"
+    [from]="store.from()"
+    [to]="store.to()"
+    [entries]="store.viewChartEntries()"
+    [measurement]="store.viewMeasurement()"
+    [paceSeries]="store.viewPaceSeries()"
+    [dayChartMode]="store.resolvedDayChartMode()"
+    (dayChartModeChange)="store.setDayChartMode($event)"
+  />
+}
+
+@if (!isEmptyRange()) {
+  <section class="grid">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title i18n="@@analysis.bestStreaksTitle"
+          >Bestwerte & Streaks</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content class="best-grid">
+        <div>
+          <strong i18n="@@analysis.bestSingleEntry"
+            >Bestwert Einzel-Eintrag:</strong
+          >
+          <div>
+            {{ store.bestSingleEntry()?.reps ?? 0 }}
+            <span i18n="@@analysis.repsUnitLong">Reps</span>
+          </div>
+        </div>
+        <div>
+          <strong i18n="@@analysis.bestDay">Bester Tag:</strong>
+          <div>
+            {{ store.bestDay()?.date ?? '—' }} ·
+            {{ store.bestDay()?.total ?? 0 }}
+            <span i18n="@@analysis.repsUnitLong">Reps</span>
+          </div>
+        </div>
+        @if (store.bestSingleSet()) {
+          <div>
+            <strong i18n="@@analysis.bestSingleSet">Bestes Einzel-Set:</strong>
+            <div>
+              {{ store.bestSingleSet() }}
+              <span i18n="@@analysis.repsUnit">Wdh.</span>
+            </div>
+          </div>
+        }
+        <div>
+          <strong i18n="@@analysis.currentStreak">Aktuelle Streak:</strong>
+          <div>
+            <ng-container i18n="@@analysis.streakDays"
+              >{{ store.currentStreak() }} Tage</ng-container
+            >
+          </div>
+        </div>
+        <div>
+          <strong i18n="@@analysis.longestStreak">Längste Streak:</strong>
+          <div>
+            <ng-container i18n="@@analysis.streakDays"
+              >{{ store.longestStreak() }} Tage</ng-container
+            >
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title i18n="@@analysis.typesTitle"
+          >Typen (Anteile)</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content>
+        @defer (hydrate on viewport) {
+          <app-type-pie [data]="typeBreakdownDisplay()" />
+        }
+      </mat-card-content>
+    </mat-card>
+
+    @if (store.avgSetSize()) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title i18n="@@analysis.avgSetSizeTitle"
+            >&#x2300; Set-Gr&#x00F6;&#x00DF;e</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content class="kpi-big">
+          <b>{{ store.avgSetSize() }}</b>
+          <span i18n="@@analysis.repsPerSet">Reps / Set</span>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (store.setsDistribution().length) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title i18n="@@analysis.setsDistTitle"
+            >Sets-Verteilung</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          @defer (hydrate on viewport) {
+            <app-sets-distribution [data]="store.setsDistribution()" />
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  </section>
+
+  <mat-card class="heatmap-full">
+    <mat-card-header>
+      <mat-card-title i18n="@@analysis.heatmapTitle"
+        >Heatmap (Wochentag/Uhrzeit)</mat-card-title
+      >
+      @if (heatmapToggleLabels(); as labels) {
+        <mat-button-toggle-group
+          [value]="heatmapMode()"
+          (change)="heatmapMode.set($event.value)"
+          class="heatmap-toggle"
+          aria-label="Heatmap-Modus auswählen"
+          i18n-aria-label="@@analysis.heatmapToggleAriaLabel"
+        >
+          <mat-button-toggle value="primary">{{
+            labels.primary
+          }}</mat-button-toggle>
+          <mat-button-toggle value="breakdown">{{
+            labels.breakdown
+          }}</mat-button-toggle>
+        </mat-button-toggle-group>
+      }
+    </mat-card-header>
+    <mat-card-content class="heatmap-wrap">
+      @defer (hydrate on viewport) {
+        <app-heatmap
+          [entries]="store.viewFilteredRows()"
+          [measurement]="heatmapMeasurement()"
+          [mode]="heatmapMode()"
+        />
+      }
+    </mat-card-content>
+  </mat-card>
+}
+
+<section class="trends-section" data-testid="analysis-trends-section">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title i18n="@@analysis.weekTrendTitle"
+        >Wochentrend</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@analysis.weekTrendSubtitle"
+        >Letzte 8 Wochen</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      @defer (on viewport) {
+        <mat-table [dataSource]="store.weekTrend()">
+          <ng-container matColumnDef="label">
+            <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
+              >Woche</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+              >Reps</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="avgSetsPerEntry">
+            <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
+              >&#x2300; Sets</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{
+              row.avgSetsPerEntry !== null && row.avgSetsPerEntry !== undefined
+                ? (row.avgSetsPerEntry | number)
+                : '—'
+            }}</mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="trendColumnsWithSets"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: trendColumnsWithSets"
+          ></mat-row>
+        </mat-table>
+      } @placeholder {
+        <div class="trend-placeholder" aria-hidden="true"></div>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title i18n="@@analysis.monthTrendTitle"
+        >Monatstrend</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@analysis.monthTrendSubtitle"
+        >Letzte 6 Monate</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      @defer (on viewport) {
+        <mat-table [dataSource]="store.monthTrend()">
+          <ng-container matColumnDef="label">
+            <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
+              >Monat</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef i18n="@@analysis.repsCol"
+              >Reps</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.total }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="avgSetsPerEntry">
+            <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
+              >&#x2300; Sets</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{
+              row.avgSetsPerEntry !== null && row.avgSetsPerEntry !== undefined
+                ? (row.avgSetsPerEntry | number)
+                : '—'
+            }}</mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="trendColumnsWithSets"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: trendColumnsWithSets"
+          ></mat-row>
+        </mat-table>
+      } @placeholder {
+        <div class="trend-placeholder" aria-hidden="true"></div>
+      }
+    </mat-card-content>
+  </mat-card>
+</section>

@@ -6,7 +6,7 @@ import { StatsTableComponent } from './stats-table.component';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UserContextService } from '@pu-auth/auth';
 import type { UnifiedEntry } from '@pu-stats/models';
-import type { TrainingEntryDialogResult } from '../training-entry-dialog/training-entry-dialog.component';
+import type { TrainingEntryDialogResult } from '../training-entry-dialog/training-entry-dialog.models';
 
 describe('StatsTableComponent', () => {
   let fixture: ComponentFixture<StatsTableComponent>;

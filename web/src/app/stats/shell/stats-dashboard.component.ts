@@ -33,19 +33,17 @@ import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
-import {
-  autoCountProfileForCatalogId,
-  QuickAddOrchestrationService,
-} from '../../core/quick-add-orchestration.service';
+import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
+import { autoCountProfileForCatalogId } from '../../core/quick-add-orchestration.helpers';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
+import { TrainingEntryDialogComponent } from '../components/training-entry-dialog/training-entry-dialog.component';
 import {
-  TrainingEntryDialogComponent,
   TrainingEntryDialogData,
   TrainingEntryDialogResult,
-} from '../components/training-entry-dialog/training-entry-dialog.component';
+} from '../components/training-entry-dialog/training-entry-dialog.models';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';

@@ -135,6 +135,26 @@ describe('EntriesStore', () => {
       expect(apiMock.createPushup).not.toHaveBeenCalled();
     });
 
+    it('Given an endurance create with intervals, Then the per-interval breakdown is forwarded to the service', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.createEntry({
+        kind: 'exercise',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-27T08:00:00',
+        distanceM: 1200,
+        intervals: [400, 400, 400],
+      });
+
+      // then
+      expect(exerciseServiceMock.createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({ intervals: [400, 400, 400] })
+      );
+    });
+
     it('Given an exercise-kind create without exerciseId, Then no service is called and store.error is set', async () => {
       const store = setup();
 
@@ -236,6 +256,50 @@ describe('EntriesStore', () => {
         expect.objectContaining({ reps: 25 })
       );
       expect(apiMock.updatePushup).not.toHaveBeenCalled();
+    });
+
+    it('Given an endurance update with intervals, Then the per-interval breakdown is forwarded to the service', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.updateEntry({
+        kind: 'exercise',
+        id: 's42',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-27T08:00:00',
+        distanceM: 1200,
+        intervals: [400, 400, 400],
+      });
+
+      // then
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        's42',
+        'cardio.running',
+        expect.objectContaining({ intervals: [400, 400, 400] })
+      );
+    });
+
+    it('Given an endurance update clearing intervals, Then the empty-array clear sentinel reaches the service', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.updateEntry({
+        kind: 'exercise',
+        id: 's42',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-27T08:00:00',
+        distanceM: 1200,
+        intervals: [],
+      });
+
+      // then
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        's42',
+        'cardio.running',
+        expect.objectContaining({ intervals: [] })
+      );
     });
 
     it('Given an exercise-kind update WITHOUT exerciseId, Then the guard sets store.error and skips the service call', async () => {

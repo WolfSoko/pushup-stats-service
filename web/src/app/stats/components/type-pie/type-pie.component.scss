@@ -1,0 +1,151 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: start;
+  gap: 16px;
+}
+.pie-area {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+.pie-stack {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+.pie {
+  width: 160px;
+  height: 160px;
+  transform: rotate(-90deg);
+}
+.bg {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.08);
+  stroke-width: 10;
+}
+.seg {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: butt;
+  cursor: pointer;
+  transition:
+    stroke-width 0.15s ease,
+    opacity 0.15s ease;
+}
+.seg:hover,
+.seg:focus-visible,
+.seg.focused {
+  stroke-width: 12;
+  outline: none;
+}
+.seg.dimmed {
+  opacity: 0.45;
+}
+.pie-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  pointer-events: none;
+  padding: 18%;
+  gap: 2px;
+}
+.center-label {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.center-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.center-pct {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+.row-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pct {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+.pct.count {
+  opacity: 0.5;
+}
+.set-detail {
+  opacity: 0.6;
+  font-size: 0.8rem;
+  grid-template-columns: 1fr auto;
+  padding-left: 36px;
+}
+.preset-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--mat-sys-surface, #fff);
+}
+.preset-name {
+  font-weight: 600;
+}
+.set-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.set-value {
+  font-variant-numeric: tabular-nums;
+}
+.empty {
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+  .pie-stack {
+    margin: 0 auto;
+  }
+}

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { AdminUser } from './admin-page.component';
+import { AdminUser } from './admin-page.models';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 
 describe('UserDetailsDialogComponent', () => {

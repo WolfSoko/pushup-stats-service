@@ -1,0 +1,360 @@
+<h2 mat-dialog-title>
+  @if (isEditMode) {
+    <span i18n="@@editDialogTitle">Eintrag bearbeiten</span>
+  } @else {
+    <span i18n="@@trainingEntryDialog.title">Trainingseintrag anlegen</span>
+  }
+</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label i18n="@@trainingEntryDialog.category">Kategorie</mat-label>
+    <mat-select
+      [value]="category()"
+      (valueChange)="onCategoryChange($event)"
+      [disabled]="isEditMode"
+      data-testid="training-entry-category"
+    >
+      @for (option of categoryOptions; track option.value) {
+        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (showExercisePicker()) {
+    <div class="type-row">
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
+        <mat-select
+          [value]="exerciseId()"
+          (valueChange)="onExerciseChange($event)"
+          [disabled]="isEditMode"
+          data-testid="training-entry-exercise"
+        >
+          @for (option of exerciseOptions(); track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <a
+        mat-icon-button
+        class="type-help"
+        [routerLink]="exerciseWikiLink()"
+        [matTooltip]="exerciseWikiTooltip()"
+        matTooltipPosition="left"
+        mat-dialog-close
+        data-testid="training-entry-exercise-wiki"
+        i18n-aria-label="@@exerciseWikiLinkAria"
+        aria-label="Anleitung zur Übung öffnen"
+      >
+        <mat-icon>help_outline</mat-icon>
+      </a>
+    </div>
+  }
+
+  <mat-form-field appearance="outline">
+    <mat-label i18n="@@timestampLabel">Zeitpunkt</mat-label>
+    <input
+      matInput
+      type="datetime-local"
+      [value]="timestamp()"
+      (input)="timestamp.set(asValue($event))"
+      required
+    />
+  </mat-form-field>
+
+  @if (mode() === 'pushup') {
+    <div class="type-row">
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@typeLabel">Typ</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="pushupTypeControl"
+          [matAutocomplete]="typeAuto"
+          placeholder="Auswählen oder eintippen"
+          i18n-placeholder="@@typePlaceholder"
+        />
+        <mat-autocomplete
+          #typeAuto="matAutocomplete"
+          [displayWith]="displayPushupType"
+        >
+          @for (
+            option of filteredPushupTypeOptions$ | async;
+            track option.value
+          ) {
+            <mat-option [value]="option.value">
+              <span class="type-option">
+                <span>{{ option.label }}</span>
+                @if (pushupTooltipFor(option.value); as info) {
+                  <mat-icon
+                    class="type-option-info"
+                    [matTooltip]="info"
+                    matTooltipPosition="right"
+                    [attr.aria-label]="info"
+                    role="img"
+                    (click)="$event.stopPropagation()"
+                    >info_outline</mat-icon
+                  >
+                }
+              </span>
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+      <a
+        mat-icon-button
+        class="type-help"
+        [routerLink]="['/wiki/liegestuetz-typen']"
+        [queryParams]="pushupWikiQueryParams()"
+        [matTooltip]="pushupWikiTooltip()"
+        matTooltipPosition="left"
+        mat-dialog-close
+        i18n-aria-label="@@typeWikiLinkAria"
+        aria-label="Anleitung zum Liegestütztyp öffnen"
+      >
+        <mat-icon>help_outline</mat-icon>
+      </a>
+    </div>
+  } @else if (showVariantPicker()) {
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@entryDialog.variant">Variante</mat-label>
+      <mat-select [formControl]="variantControl">
+        <mat-option [value]="''" i18n="@@entryDialog.variantNone">—</mat-option>
+        @for (variant of currentDefinition()?.variants; track variant.id) {
+          <mat-option [value]="variant.id">{{
+            exerciseVariantLabel(variant)
+          }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+
+  @if (isDistanceTimeMeasurement()) {
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
+      <input
+        matInput
+        type="text"
+        inputmode="decimal"
+        [placeholder]="distancePlaceholder"
+        [value]="distanceInput()"
+        (input)="distanceInput.set(asValue($event))"
+        data-testid="training-entry-distance"
+        required
+      />
+    </mat-form-field>
+    <div class="duration-row">
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          placeholder="25"
+          min="0"
+          step="1"
+          [value]="durationMinutesInput()"
+          (input)="durationMinutesInput.set(asValue($event))"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          placeholder="0"
+          min="0"
+          [max]="secondsMax"
+          step="1"
+          [value]="durationSecondsInput()"
+          (input)="durationSecondsInput.set(asValue($event))"
+        />
+      </mat-form-field>
+    </div>
+  } @else if (isTimeMeasurement()) {
+    <div class="duration-row">
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          placeholder="1"
+          min="0"
+          step="1"
+          [value]="durationMinutesInput()"
+          (input)="durationMinutesInput.set(asValue($event))"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          placeholder="30"
+          min="0"
+          [max]="secondsMax"
+          step="1"
+          [value]="durationSecondsInput()"
+          (input)="durationSecondsInput.set(asValue($event))"
+        />
+      </mat-form-field>
+    </div>
+  } @else {
+    @for (set of sets(); track $index) {
+      <div class="set-row">
+        <mat-form-field appearance="outline">
+          @if (hasMultipleSets()) {
+            <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
+          } @else {
+            <mat-label i18n="@@repsLabel">Reps</mat-label>
+          }
+          <input
+            matInput
+            type="number"
+            [min]="0"
+            [max]="repsMax()"
+            step="1"
+            [value]="set"
+            (input)="updateSet($index, asValue($event))"
+            required
+          />
+        </mat-form-field>
+        @if (hasMultipleSets()) {
+          <button
+            type="button"
+            mat-icon-button
+            (click)="removeSet($index)"
+            i18n-aria-label="@@removeSetAria"
+            aria-label="Set entfernen"
+          >
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+        }
+        @if ($last) {
+          <button
+            type="button"
+            mat-icon-button
+            (click)="addSet()"
+            i18n-aria-label="@@addSetAria"
+            aria-label="Set hinzufügen"
+            i18n-matTooltip="@@addSetTooltip"
+            matTooltip="Weiteres Set hinzufügen"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        }
+      </div>
+    }
+    @if (hasMultipleSets()) {
+      <div class="total-reps" i18n="@@totalReps">
+        Gesamt: {{ totalReps() }} Reps
+      </div>
+    }
+  }
+
+  @if (breakdownField() === 'intervals') {
+    @for (interval of intervals(); track $index) {
+      <div class="set-row">
+        <mat-form-field appearance="outline">
+          @if (hasMultipleIntervals()) {
+            <mat-label i18n="@@entry.interval.label"
+              >Intervall {{ $index + 1 }}</mat-label
+            >
+          } @else {
+            <mat-label i18n="@@entry.intervals.label">Intervalle</mat-label>
+          }
+          <input
+            matInput
+            type="number"
+            inputmode="numeric"
+            min="0"
+            step="1"
+            [value]="interval"
+            (input)="updateInterval($index, asValue($event))"
+          />
+        </mat-form-field>
+        @if (hasMultipleIntervals()) {
+          <button
+            type="button"
+            mat-icon-button
+            (click)="removeInterval($index)"
+            i18n-aria-label="@@entry.intervals.remove"
+            aria-label="Intervall entfernen"
+          >
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+        }
+        @if ($last) {
+          <button
+            type="button"
+            mat-icon-button
+            (click)="addInterval()"
+            i18n-aria-label="@@entry.intervals.add"
+            aria-label="Intervall hinzufügen"
+            i18n-matTooltip="@@entry.intervals.addTooltip"
+            matTooltip="Weiteres Intervall hinzufügen"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        }
+      </div>
+    }
+  }
+
+  @if (overCap()) {
+    <div class="total-reps">
+      @if (overCapKind() === 'duration') {
+        <span i18n="@@entryDialog.overCapDuration"
+          >Maximum-Dauer: {{ formattedDurationMax() }}</span
+        >
+      } @else if (overCapKind() === 'distance' || isTimeMeasurement()) {
+        <span i18n="@@entryDialog.overCapTime"
+          >Maximum: {{ formattedMax() }}</span
+        >
+      } @else {
+        <span i18n="@@entryDialog.overCap"
+          >Maximum: {{ repsMax() }} pro Eintrag</span
+        >
+      }
+    </div>
+  }
+
+  @if (mode() === 'pushup') {
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@sourceLabel">Quelle</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="sourceControl"
+        [matAutocomplete]="sourceAuto"
+        placeholder="web / whatsapp / eigene Quelle"
+        i18n-placeholder="@@sourcePlaceholder"
+      />
+      <mat-autocomplete #sourceAuto="matAutocomplete">
+        @for (option of filteredSourceOptions$ | async; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" mat-button mat-dialog-close i18n="@@cancel">
+    Abbrechen
+  </button>
+  <button
+    type="button"
+    mat-flat-button
+    [disabled]="!canSubmit()"
+    (click)="submit()"
+    i18n="@@saveEntry"
+    data-testid="training-entry-submit"
+  >
+    Speichern
+  </button>
+</mat-dialog-actions>
