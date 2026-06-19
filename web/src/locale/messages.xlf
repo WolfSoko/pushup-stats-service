@@ -8530,7 +8530,7 @@
     </unit>
     <unit id="analysisHeaderTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:58,59</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:59,60</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -8538,7 +8538,7 @@
     </unit>
     <unit id="analysisHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:60,62</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:61,63</note>
       </notes>
       <segment>
         <source> Trends, Verteilungen und Streaks deines Trainings auf einen Blick. </source>
@@ -8546,7 +8546,7 @@
     </unit>
     <unit id="analysis.empty.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:79,81</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Noch keine Daten zum Analysieren.</source>
@@ -8554,7 +8554,7 @@
     </unit>
     <unit id="analysis.empty.body">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:82,84</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:83,85</note>
       </notes>
       <segment>
         <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
@@ -8562,7 +8562,7 @@
     </unit>
     <unit id="analysis.empty.cta">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:93,95</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:94,96</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
@@ -8570,7 +8570,7 @@
     </unit>
     <unit id="analysis.tabs.overview">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:109,111</note>
+        <note category="location">web/src/app/stats/shell/analysis-page.component.ts:110,112</note>
       </notes>
       <segment>
         <source>Übersicht</source>
