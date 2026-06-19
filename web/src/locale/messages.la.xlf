@@ -10049,31 +10049,31 @@
       </segment>
     </unit>
     <unit id="analysis.repsUnitLong">
-      <segment state="initial">
+      <segment state="translated">
         <source>Reps</source>
-        <target>Reps</target>
+        <target>Repetitiones</target>
       </segment>
     </unit>
     <unit id="settings.delete.confirmPlaceholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>löschen</source>
-        <target>löschen</target>
+        <target>dele</target>
       </segment>
     </unit>
     <unit id="settings.delete.error">
-      <segment state="initial">
-        <source>Bitte exakt „löschen“ eingeben.</source>
-        <target>Bitte exakt „löschen“ eingeben.</target>
+      <segment state="translated">
+        <source>Bitte exakt „löschen” eingeben.</source>
+        <target>Scribe exacte “dele”.</target>
       </segment>
     </unit>
     <unit id="settings.anonymizedName">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelöschter Benutzer</source>
-        <target>Gelöschter Benutzer</target>
+        <target>Usor deletus</target>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCredit.unsplash">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unsplash</source>
         <target>Unsplash</target>
       </segment>
