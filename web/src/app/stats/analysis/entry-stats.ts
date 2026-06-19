@@ -10,8 +10,13 @@ import type { AnalysisView, TypeBreakdownDatum } from './analysis.types';
 export function computeBestSingleEntry(
   rows: ReadonlyArray<UnifiedEntry>
 ): UnifiedEntry | null {
-  if (!rows.length) return null;
-  return [...rows].sort((a, b) => b.reps - a.reps)[0] ?? null;
+  // Single-pass max keeps the first occurrence on ties, matching a
+  // stable descending sort, without the copy + O(n log n).
+  let best: UnifiedEntry | null = null;
+  for (const row of rows) {
+    if (!best || row.reps > best.reps) best = row;
+  }
+  return best;
 }
 
 export function computeBestDay(

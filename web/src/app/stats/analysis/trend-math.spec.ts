@@ -103,7 +103,7 @@ describe('computeLongestStreak / computeCurrentStreak', () => {
 });
 
 describe('buildWeekTrend', () => {
-  it('should always emit TREND_WEEKS buckets oldest-first with seeded zeros', () => {
+  it('should always emit TREND_WEEKS buckets with seeded zeros', () => {
     // given an empty history
     const monday = startOfIsoWeek(new Date(2026, 5, 15));
     // when
