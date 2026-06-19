@@ -100,6 +100,8 @@ export class SettingsPageComponent implements OnDestroy {
   readonly deletePhraseInput = signal('');
   readonly deleteDialogError = signal('');
 
+  private readonly deleteConfirmationPhrase = 'löschen';
+
   readonly config = computed<ResolvedConfig>(() =>
     resolveConfig(this.userConfigStore.config())
   );
@@ -164,19 +166,24 @@ export class SettingsPageComponent implements OnDestroy {
   }
 
   async confirmDeleteFromDialog(): Promise<void> {
-    if (this.deletePhraseInput().trim().toLowerCase() !== 'löscchen') {
-      this.deleteDialogError.set('Bitte exakt „löscchen“ eingeben.');
+    if (
+      this.deletePhraseInput().trim().toLowerCase() !==
+      this.deleteConfirmationPhrase
+    ) {
+      this.deleteDialogError.set(
+        $localize`:@@settings.delete.error:Bitte exakt „löschen“ eingeben.`
+      );
       return;
     }
 
     this.dialog.closeAll();
-    this.autoSave.cancelTimer();
+    await this.autoSave.drain();
 
     this.deletingAccount.set(true);
 
     try {
       await this.userConfigStore.save({
-        displayName: 'Gelöschter Benutzer',
+        displayName: $localize`:@@settings.anonymizedName:Gelöschter Benutzer`,
         email: null,
         ui: {
           hideFromLeaderboard: true,

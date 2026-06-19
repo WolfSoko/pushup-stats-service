@@ -21,18 +21,18 @@ export function buildAllSegments(
   data: readonly PieDatum[],
   palette: readonly string[] = PIE_PALETTE
 ): PieSegment[] {
-  const total = pieTotal(data);
-  if (!total) return [];
-
   const rows = [...data]
-    .filter((x) => (x.value || 0) > 0)
-    .sort((a, b) => (b.value || 0) - (a.value || 0));
+    .filter((x) => (x.value ?? 0) > 0)
+    .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
+
+  const total = rows.reduce((sum, x) => sum + (x.value ?? 0), 0);
+  if (total <= 0) return [];
 
   return rows.map((row, idx) => ({
     id: row.id ?? row.label,
     label: row.label,
-    value: row.value || 0,
-    percent: Math.round(((row.value || 0) / total) * 100),
+    value: row.value ?? 0,
+    percent: Math.round(((row.value ?? 0) / total) * 100),
     color: palette[idx % palette.length],
     avgSetSize: row.avgSetSize ?? 0,
   }));

@@ -403,6 +403,24 @@ describe('training-entry-dialog.helpers', () => {
       expect(def.max).toBe(86_400);
     });
 
+    it('should infer a distance measurement from distanceM alone', () => {
+      // given
+      const data: ExerciseEntryDialogData = {
+        kind: 'exercise',
+        timestamp: '2026-01-01T10:00',
+        exerciseId: 'stale.run',
+        distanceM: 5000,
+      };
+
+      // when
+      const def = syntheticDefinitionFor(data, 'cardio');
+
+      // then
+      expect(def.measurement).toBe('distance');
+      expect(def.unit).toBe('m');
+      expect(def.max).toBe(100_000);
+    });
+
     it('should infer distance-time when both distance and duration are present', () => {
       // given
       const data: ExerciseEntryDialogData = {

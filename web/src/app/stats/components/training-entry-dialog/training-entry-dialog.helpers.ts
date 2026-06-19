@@ -169,8 +169,8 @@ export function inferExerciseCategory(
  * Build a permissive `ExerciseDefinition` for a stale catalog id so
  * the edit dialog can still render an entry whose original definition
  * has been renamed or removed. Picks the measurement off the existing
- * payload (durationSec → time, distanceM+durationSec → distance-time,
- * else reps) and uses {@link COMPANION_BOUNDS} for the cap so the
+ * payload (distanceM+durationSec → distance-time, distanceM → distance,
+ * durationSec → time, else reps) and uses {@link COMPANION_BOUNDS} for the cap so the
  * over-cap hint and submit gate keep working.
  */
 export function syntheticDefinitionFor(
@@ -180,9 +180,11 @@ export function syntheticDefinitionFor(
   const measurement: MeasurementType =
     data.distanceM !== undefined && data.durationSec !== undefined
       ? 'distance-time'
-      : data.durationSec !== undefined
-        ? 'time'
-        : 'reps';
+      : data.distanceM !== undefined
+        ? 'distance'
+        : data.durationSec !== undefined
+          ? 'time'
+          : 'reps';
   const bounds =
     measurement === 'reps'
       ? COMPANION_BOUNDS.reps

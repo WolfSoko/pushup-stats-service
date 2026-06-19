@@ -132,9 +132,9 @@ export function buildChartData(
       },
       {
         label: inputs.labels.movingAvgLabel,
-        data: movingAvg.map((avg, index) => ({
-          x: bucketToTs(series[index].bucket),
-          y: avg,
+        data: series.map((entry, index) => ({
+          x: bucketToTs(entry.bucket),
+          y: movingAvg[index] ?? null,
         })),
         type: 'line',
         borderColor: '#7ef0c8',

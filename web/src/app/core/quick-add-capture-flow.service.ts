@@ -55,22 +55,26 @@ export class QuickAddCaptureFlowService {
    * opens the camera.
    */
   async openAutoCount(preselect?: AutoCountExerciseId): Promise<void> {
-    const { AutoCountDialogComponent } =
-      await import('../auto-count/auto-count-dialog.component');
-    this.dialog
-      .open<
-        AutoCountDialogComponent,
-        { initialExerciseId?: AutoCountExerciseId } | undefined,
-        AutoCountResult | null
-      >(AutoCountDialogComponent, {
-        ...AUTO_COUNT_DIALOG_CONFIG,
-        ...(preselect ? { data: { initialExerciseId: preselect } } : {}),
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        if (!result || result.reps <= 0) return;
-        void this.confirmAutoCount(result);
-      });
+    try {
+      const { AutoCountDialogComponent } =
+        await import('../auto-count/auto-count-dialog.component');
+      this.dialog
+        .open<
+          AutoCountDialogComponent,
+          { initialExerciseId?: AutoCountExerciseId } | undefined,
+          AutoCountResult | null
+        >(AutoCountDialogComponent, {
+          ...AUTO_COUNT_DIALOG_CONFIG,
+          ...(preselect ? { data: { initialExerciseId: preselect } } : {}),
+        })
+        .afterClosed()
+        .subscribe((result) => {
+          if (!result || result.reps <= 0) return;
+          void this.confirmAutoCount(result);
+        });
+    } catch (err) {
+      notifyError(this.snackBar, err);
+    }
   }
 
   /**
@@ -78,18 +82,22 @@ export class QuickAddCaptureFlowService {
    * optional pose-detection toggle that mirrors the rep-counter flow.
    */
   async openExerciseTimer(): Promise<void> {
-    const { ExerciseTimerDialogComponent } =
-      await import('../auto-count/exercise-timer-dialog.component');
-    this.dialog
-      .open<ExerciseTimerDialogComponent, void, ExerciseTimerResult | null>(
-        ExerciseTimerDialogComponent,
-        EXERCISE_TIMER_DIALOG_CONFIG
-      )
-      .afterClosed()
-      .subscribe((result) => {
-        if (!result || result.durationSec <= 0) return;
-        void this.confirmExerciseTimer(result);
-      });
+    try {
+      const { ExerciseTimerDialogComponent } =
+        await import('../auto-count/exercise-timer-dialog.component');
+      this.dialog
+        .open<ExerciseTimerDialogComponent, void, ExerciseTimerResult | null>(
+          ExerciseTimerDialogComponent,
+          EXERCISE_TIMER_DIALOG_CONFIG
+        )
+        .afterClosed()
+        .subscribe((result) => {
+          if (!result || result.durationSec <= 0) return;
+          void this.confirmExerciseTimer(result);
+        });
+    } catch (err) {
+      notifyError(this.snackBar, err);
+    }
   }
 
   private async confirmExerciseTimer(
@@ -122,19 +130,26 @@ export class QuickAddCaptureFlowService {
     data: TrainingEntryDialogData,
     exerciseSource: string
   ): Promise<void> {
-    const { TrainingEntryDialogComponent } =
-      await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
-    this.dialog
-      .open<
-        TrainingEntryDialogComponent,
-        TrainingEntryDialogData,
-        TrainingEntryDialogResult
-      >(TrainingEntryDialogComponent, { data, ...TRAINING_ENTRY_DIALOG_CONFIG })
-      .afterClosed()
-      .subscribe((dialogResult) => {
-        if (!dialogResult) return;
-        void this.persistConfirmed(dialogResult, exerciseSource);
-      });
+    try {
+      const { TrainingEntryDialogComponent } =
+        await import('../stats/components/training-entry-dialog/training-entry-dialog.component');
+      this.dialog
+        .open<
+          TrainingEntryDialogComponent,
+          TrainingEntryDialogData,
+          TrainingEntryDialogResult
+        >(TrainingEntryDialogComponent, {
+          data,
+          ...TRAINING_ENTRY_DIALOG_CONFIG,
+        })
+        .afterClosed()
+        .subscribe((dialogResult) => {
+          if (!dialogResult) return;
+          void this.persistConfirmed(dialogResult, exerciseSource);
+        });
+    } catch (err) {
+      notifyError(this.snackBar, err);
+    }
   }
 
   private async persistConfirmed(

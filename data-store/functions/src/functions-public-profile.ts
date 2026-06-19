@@ -1,11 +1,10 @@
 import * as Sentry from '@sentry/node';
-import * as admin from 'firebase-admin';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
-import './firebase-app';
+import { db } from './firebase-app';
 import {
   buildPublicProfile,
   isValidUid,
@@ -24,7 +23,6 @@ import {
 // functions in `index.ts` are thin wrappers" rule.
 async function fetchPublicProfileProjection(uid: string) {
   if (!isValidUid(uid)) return null;
-  const db = admin.firestore();
   const [cfgSnap, statsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
     // Public pushup stats now live in the per-exercise aggregate

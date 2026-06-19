@@ -187,6 +187,7 @@ export const EntriesStore = signalStore(
       timestamp: string;
       reps?: number;
       sets?: number[];
+      intervals?: number[];
       durationSec?: number;
       distanceM?: number;
       source?: string;
@@ -213,6 +214,9 @@ export const EntriesStore = signalStore(
             timestamp: payload.timestamp,
             ...(payload.reps !== undefined ? { reps: payload.reps } : {}),
             ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+            ...(payload.intervals !== undefined
+              ? { intervals: payload.intervals }
+              : {}),
             ...(payload.durationSec !== undefined
               ? { durationSec: payload.durationSec }
               : {}),
@@ -239,6 +243,7 @@ export const EntriesStore = signalStore(
       timestamp: string;
       reps?: number;
       sets?: number[];
+      intervals?: number[];
       durationSec?: number;
       distanceM?: number;
       source?: string;
@@ -269,6 +274,9 @@ export const EntriesStore = signalStore(
               ? { distanceM: payload.distanceM }
               : {}),
             ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
+            ...(payload.intervals !== undefined
+              ? { intervals: payload.intervals }
+              : {}),
             ...(payload.source !== undefined ? { source: payload.source } : {}),
             ...(payload.variantId !== undefined
               ? { variantId: payload.variantId }

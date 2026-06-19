@@ -34,13 +34,17 @@
           <strong i18n="@@analysis.bestSingleEntry"
             >Bestwert Einzel-Eintrag:</strong
           >
-          <div>{{ store.bestSingleEntry()?.reps ?? 0 }} Reps</div>
+          <div>
+            {{ store.bestSingleEntry()?.reps ?? 0 }}
+            <span i18n="@@analysis.repsUnitLong">Reps</span>
+          </div>
         </div>
         <div>
           <strong i18n="@@analysis.bestDay">Bester Tag:</strong>
           <div>
             {{ store.bestDay()?.date ?? '—' }} ·
-            {{ store.bestDay()?.total ?? 0 }} Reps
+            {{ store.bestDay()?.total ?? 0 }}
+            <span i18n="@@analysis.repsUnitLong">Reps</span>
           </div>
         </div>
         @if (store.bestSingleSet()) {

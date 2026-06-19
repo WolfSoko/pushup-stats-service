@@ -67,8 +67,8 @@ export class QuickAddOrchestrationService {
       );
       notifyEntrySaved(this.snackBar);
       this.appData.reloadAfterMutation();
-    } catch {
-      notifyError(this.snackBar);
+    } catch (err) {
+      notifyError(this.snackBar, err);
     }
   }
 

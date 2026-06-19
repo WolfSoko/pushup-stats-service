@@ -35,8 +35,9 @@ export function computeMovingAvg(
   totals: number[],
   windowSize: number
 ): number[] {
+  const safeWindowSize = Math.max(1, windowSize);
   return totals.map((_, index) => {
-    const from = Math.max(0, index - windowSize + 1);
+    const from = Math.max(0, index - safeWindowSize + 1);
     const window = totals.slice(from, index + 1);
     const sum = window.reduce((acc, value) => acc + value, 0);
     return Number((sum / window.length).toFixed(2));

@@ -10044,5 +10044,35 @@
         <target>Consejo: Usa el botón + flotante en la esquina inferior derecha para registrar desde cualquier página al instante.</target>
       </segment>
     </unit>
+    <unit id="analysis.repsUnitLong">
+      <segment state="initial">
+        <source>Reps</source>
+        <target>Reps</target>
+      </segment>
+    </unit>
+    <unit id="settings.delete.confirmPlaceholder">
+      <segment state="initial">
+        <source>löschen</source>
+        <target>löschen</target>
+      </segment>
+    </unit>
+    <unit id="settings.delete.error">
+      <segment state="initial">
+        <source>Bitte exakt „löschen“ eingeben.</source>
+        <target>Bitte exakt „löschen“ eingeben.</target>
+      </segment>
+    </unit>
+    <unit id="settings.anonymizedName">
+      <segment state="initial">
+        <source>Gelöschter Benutzer</source>
+        <target>Gelöschter Benutzer</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.photoCredit.unsplash">
+      <segment state="initial">
+        <source>Unsplash</source>
+        <target>Unsplash</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

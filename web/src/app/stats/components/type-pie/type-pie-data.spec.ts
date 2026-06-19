@@ -80,6 +80,20 @@ describe('type-pie-data', () => {
       expect(segments.map((s) => s.id)).toEqual(['a']);
     });
 
+    it('should normalize percentages off retained positive rows only', () => {
+      // given
+      const data: PieDatum[] = [
+        { id: 'a', label: 'a', value: 10 },
+        { id: 'b', label: 'b', value: -9 },
+      ];
+      // when
+      const segments = buildAllSegments(data);
+      // then
+      expect(segments).toHaveLength(1);
+      expect(segments[0].id).toBe('a');
+      expect(segments[0].percent).toBe(100);
+    });
+
     it('should cycle colors when segments exceed palette length', () => {
       // given
       const data: PieDatum[] = Array.from(

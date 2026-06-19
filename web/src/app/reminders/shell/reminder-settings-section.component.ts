@@ -13,7 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import type { NotificationPermissionStatus } from '@pu-reminders/reminders';
 import { ReminderFormStore } from './reminder-form.store';
-import { parseInputNumber, parseInputValue } from './reminders-page.helpers';
+import { parseInputNumber } from './reminders-page.helpers';
+import { ReminderQuietHoursComponent } from './reminder-quiet-hours.component';
+import { ReminderQuickLogComponent } from './reminder-quick-log.component';
 
 @Component({
   selector: 'app-reminder-settings-section',
@@ -25,6 +27,8 @@ import { parseInputNumber, parseInputValue } from './reminders-page.helpers';
     MatButtonModule,
     MatIconModule,
     MatSlideToggleModule,
+    ReminderQuietHoursComponent,
+    ReminderQuickLogComponent,
   ],
   template: `
     <section class="reminder-section">
@@ -113,101 +117,24 @@ import { parseInputNumber, parseInputValue } from './reminders-page.helpers';
             </mat-form-field>
           </div>
 
-          <div>
-            <p class="field-label" i18n="@@reminder.quickLog.label">
-              Direkt-Eintrag aus der Benachrichtigung
-            </p>
-            <p class="muted" i18n="@@reminder.quickLog.desc">
-              Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn
-              die App schon geöffnet ist, wird der Eintrag im Hintergrund
-              gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag
-              automatisch anlegt.
-            </p>
-            <div class="reminder-row">
-              <mat-slide-toggle
-                [checked]="form.quickLogEnabled()"
-                [disabled]="form.saving()"
-                (change)="form.setQuickLogEnabled($event.checked)"
-                i18n="@@reminder.quickLog.toggle"
-              >
-                Schnell-Eintrag aktivieren
-              </mat-slide-toggle>
-              @if (form.quickLogEnabled()) {
-                <mat-form-field appearance="outline" class="quick-log-field">
-                  <mat-label i18n="@@reminder.quickLog.reps.label"
-                    >Anzahl Liegestütze</mat-label
-                  >
-                  <input
-                    matInput
-                    type="number"
-                    min="1"
-                    max="500"
-                    [disabled]="form.saving()"
-                    [value]="form.quickLogReps()"
-                    (input)="form.setQuickLogReps(asNumber($event))"
-                    (blur)="form.clampQuickLogReps()"
-                  />
-                  <mat-hint i18n="@@reminder.quickLog.reps.hint"
-                    >1–500 Wiederholungen</mat-hint
-                  >
-                </mat-form-field>
-              }
-            </div>
-          </div>
+          <app-reminder-quick-log
+            [enabled]="form.quickLogEnabled()"
+            [reps]="form.quickLogReps()"
+            [saving]="form.saving()"
+            (enabledToggle)="form.setQuickLogEnabled($event)"
+            (repsInput)="form.setQuickLogReps($event)"
+            (repsBlur)="form.clampQuickLogReps()"
+          />
 
-          <div class="quiet-hours-section">
-            <p class="field-label" i18n="@@reminder.quietHours.label">
-              Ruhezeiten
-            </p>
-            @for (qh of form.quietHours(); track $index) {
-              <div class="quiet-hour-row">
-                <mat-form-field appearance="outline" class="time-field">
-                  <mat-label i18n="@@reminder.quietHours.from">Von</mat-label>
-                  <input
-                    matInput
-                    type="time"
-                    [disabled]="form.saving()"
-                    [value]="qh.from"
-                    (change)="
-                      form.updateQuietHour($index, 'from', asValue($event))
-                    "
-                  />
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="time-field">
-                  <mat-label i18n="@@reminder.quietHours.to">Bis</mat-label>
-                  <input
-                    matInput
-                    type="time"
-                    [disabled]="form.saving()"
-                    [value]="qh.to"
-                    (change)="
-                      form.updateQuietHour($index, 'to', asValue($event))
-                    "
-                  />
-                </mat-form-field>
-                <button
-                  type="button"
-                  mat-icon-button
-                  [disabled]="form.saving()"
-                  (click)="form.removeQuietHour($index)"
-                  aria-label="Ruhezeit entfernen"
-                  i18n-aria-label="@@reminder.quietHours.remove.aria"
-                >
-                  <mat-icon>remove_circle_outline</mat-icon>
-                </button>
-              </div>
-            }
-            <button
-              type="button"
-              mat-stroked-button
-              [disabled]="form.saving()"
-              (click)="form.addQuietHour()"
-              i18n="@@reminder.quietHours.add"
-            >
-              <mat-icon>add</mat-icon>
-              Ruhezeit hinzufügen
-            </button>
-          </div>
+          <app-reminder-quiet-hours
+            [quietHours]="form.quietHours()"
+            [saving]="form.saving()"
+            (quietHourAdd)="form.addQuietHour()"
+            (quietHourRemove)="form.removeQuietHour($event)"
+            (quietHourUpdate)="
+              form.updateQuietHour($event.index, $event.field, $event.value)
+            "
+          />
         </div>
       }
 
@@ -270,22 +197,6 @@ import { parseInputNumber, parseInputValue } from './reminders-page.helpers';
       margin-top: 8px;
       max-width: 180px;
     }
-    .quick-log-field {
-      max-width: 180px;
-    }
-    .quiet-hours-section {
-      display: grid;
-      gap: 8px;
-    }
-    .quiet-hour-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .time-field {
-      max-width: 130px;
-    }
     .permission-hint {
       display: flex;
       align-items: center;
@@ -308,6 +219,5 @@ export class ReminderSettingsSectionComponent {
   readonly reminderToggle = output<boolean>();
   readonly save = output<void>();
 
-  asValue = parseInputValue;
   asNumber = parseInputNumber;
 }

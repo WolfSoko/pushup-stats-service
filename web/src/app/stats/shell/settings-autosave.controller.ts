@@ -74,7 +74,9 @@ export class SettingsAutoSaveController {
     if (baseline === null) return;
     if (snapshotsEqual(draft, baseline)) {
       this.cancelTimer();
-      if (this.saveStatus() === 'pending') this.saveStatus.set('idle');
+      // Clean draft: clear any leftover 'pending' or stale 'error' pill. Never
+      // stomp a 'saving' status mid-round-trip.
+      if (this.saveStatus() !== 'saving') this.saveStatus.set('idle');
       return;
     }
     // Block save only when the user actively edited displayName to an invalid
@@ -93,6 +95,22 @@ export class SettingsAutoSaveController {
 
   retry(): void {
     void this.flush();
+  }
+
+  /**
+   * Cancel the debounce timer and await any in-flight save before returning.
+   * Callers that issue a competing write (e.g. account anonymisation) use this
+   * to avoid racing the auto-save round trip.
+   */
+  async drain(): Promise<void> {
+    this.cancelTimer();
+    if (this.inFlightSave) {
+      try {
+        await this.inFlightSave;
+      } catch {
+        // swallow: a failed in-flight save is already reflected in saveStatus
+      }
+    }
   }
 
   destroy(): void {
@@ -151,7 +169,13 @@ export class SettingsAutoSaveController {
       await this.deps.save(buildSaveUpdate(draft, this.deps.readConfig()));
       this.lastPersisted.set(draft);
       this.saveStatus.set('saved');
-      this.deps.onSaved(draft);
+      // The persist already succeeded; a throwing side-effect callback must not
+      // flip the pill back to 'error'.
+      try {
+        this.deps.onSaved(draft);
+      } catch {
+        // swallow: side-effect failure does not affect save outcome
+      }
       if (this.savedTimer !== null) clearTimeout(this.savedTimer);
       this.savedTimer = setTimeout(() => {
         this.savedTimer = null;

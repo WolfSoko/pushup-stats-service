@@ -20,19 +20,36 @@ export function resolveConfig(val: unknown): ResolvedConfig {
       snapQuality: DEFAULT_SNAP_QUALITY,
     };
   }
+  const record = val as Record<string, unknown>;
+  const ui =
+    record['ui'] && typeof record['ui'] === 'object'
+      ? (record['ui'] as Record<string, unknown>)
+      : {};
+  const consent =
+    record['consent'] && typeof record['consent'] === 'object'
+      ? (record['consent'] as Record<string, unknown>)
+      : null;
+
   return {
-    displayName: (val as { displayName?: string }).displayName ?? '',
+    displayName:
+      typeof record['displayName'] === 'string' ? record['displayName'] : '',
     hideFromLeaderboard:
-      (val as { ui?: { hideFromLeaderboard?: boolean } }).ui
-        ?.hideFromLeaderboard ?? false,
+      typeof ui['hideFromLeaderboard'] === 'boolean'
+        ? ui['hideFromLeaderboard']
+        : false,
     publicProfile:
-      (val as { ui?: { publicProfile?: boolean } }).ui?.publicProfile ?? false,
-    consent: (val as { consent?: { targetedAds?: boolean } }).consent ?? {
-      targetedAds: true,
-    },
-    snapQuality:
-      (val as { ui?: { snapQuality?: SnapQuality } }).ui?.snapQuality ??
-      DEFAULT_SNAP_QUALITY,
+      typeof ui['publicProfile'] === 'boolean' ? ui['publicProfile'] : false,
+    consent:
+      consent === null
+        ? { targetedAds: true }
+        : {
+            ...consent,
+            targetedAds:
+              typeof consent['targetedAds'] === 'boolean'
+                ? consent['targetedAds']
+                : true,
+          },
+    snapQuality: (ui['snapQuality'] as SnapQuality) ?? DEFAULT_SNAP_QUALITY,
   };
 }
 
@@ -79,8 +96,14 @@ export function eventValue(event: Event): string {
 }
 
 export function isAnalyticsConsentGranted(): boolean {
-  const storage = globalThis.localStorage;
-  const hasGetItem = typeof storage?.getItem === 'function';
-  if (!hasGetItem) return false;
-  return storage.getItem('pus_analytics_consent') === 'granted';
+  try {
+    const storage = globalThis.localStorage;
+    const hasGetItem = typeof storage?.getItem === 'function';
+    if (!hasGetItem) return false;
+    return storage.getItem('pus_analytics_consent') === 'granted';
+  } catch {
+    // Accessing localStorage can throw (e.g. blocked by privacy settings);
+    // fail closed so analytics stays off when consent can't be confirmed.
+    return false;
+  }
 }

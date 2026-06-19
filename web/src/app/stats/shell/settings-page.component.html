@@ -417,10 +417,11 @@
           matInput
           [value]="deletePhraseInput()"
           (input)="deletePhraseInput.set(asValue($event))"
-          placeholder="löscchen"
+          i18n-placeholder="@@settings.delete.confirmPlaceholder"
+          placeholder="löschen"
         />
         <mat-hint i18n="@@settings.deleteDialogPhraseHint"
-          >Bitte exakt „löscchen“ eingeben.</mat-hint
+          >Bitte exakt „löschen“ eingeben.</mat-hint
         >
       </mat-form-field>
       @if (deleteDialogError()) {

@@ -41,7 +41,8 @@ describe('adminUserSortValue', () => {
     // given
     const named = makeUser({ displayName: 'ZÉBRA' });
     const unnamed = makeUser({ displayName: null });
-    // when / then
+    // when
+    // then
     expect(adminUserSortValue(named, 'displayName')).toBe('zébra');
     expect(adminUserSortValue(unnamed, 'displayName')).toBe('');
   });
@@ -50,13 +51,16 @@ describe('adminUserSortValue', () => {
     // given
     const user = makeUser({ email: 'A@B.COM' });
     const noEmail = makeUser({ email: null });
-    // when / then
+    // when
+    // then
     expect(adminUserSortValue(user, 'email')).toBe('a@b.com');
     expect(adminUserSortValue(noEmail, 'email')).toBe('');
   });
 
   it('should map anonymous to 1 and non-anonymous to 0', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(adminUserSortValue(makeUser({ anonymous: true }), 'anonymous')).toBe(
       1
     );
@@ -66,7 +70,9 @@ describe('adminUserSortValue', () => {
   });
 
   it('should return the raw pushupCount', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(
       adminUserSortValue(makeUser({ pushupCount: 42 }), 'pushupCount')
     ).toBe(42);
@@ -76,7 +82,8 @@ describe('adminUserSortValue', () => {
     // given
     const iso = '2026-01-02T08:00:00.000Z';
     const expected = new Date(iso).getTime();
-    // when / then
+    // when
+    // then
     expect(adminUserSortValue(makeUser({ lastEntry: iso }), 'lastEntry')).toBe(
       expected
     );
@@ -92,7 +99,9 @@ describe('adminUserSortValue', () => {
   });
 
   it('should return empty string for an unknown property', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(adminUserSortValue(makeUser(), 'role')).toBe('');
   });
 });
@@ -101,7 +110,8 @@ describe('adminFeedbackSortValue', () => {
   it('should convert createdAt to epoch ms and use 0 when null', () => {
     // given
     const iso = '2026-03-04T10:00:00.000Z';
-    // when / then
+    // when
+    // then
     expect(
       adminFeedbackSortValue(makeFeedback({ createdAt: iso }), 'createdAt')
     ).toBe(new Date(iso).getTime());
@@ -111,7 +121,9 @@ describe('adminFeedbackSortValue', () => {
   });
 
   it('should lowercase name/email and fall back to empty string when null', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(adminFeedbackSortValue(makeFeedback({ name: 'CARL' }), 'name')).toBe(
       'carl'
     );
@@ -127,7 +139,9 @@ describe('adminFeedbackSortValue', () => {
   });
 
   it('should return empty string for an unknown property', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(adminFeedbackSortValue(makeFeedback(), 'message')).toBe('');
   });
 });
@@ -155,7 +169,8 @@ describe('filterAdminUsers', () => {
   it('should return an empty array when no users are anonymous', () => {
     // given
     const users = [makeUser({ anonymous: false })];
-    // when / then
+    // when
+    // then
     expect(filterAdminUsers(users, true)).toEqual([]);
   });
 });
@@ -185,19 +200,24 @@ describe('toggleSetMember', () => {
   it('should be a no-op result when removing a missing id', () => {
     // given
     const original = new Set(['a']);
-    // when / then
+    // when
+    // then
     expect(toggleSetMember(original, 'z', false)).toEqual(new Set(['a']));
   });
 });
 
 describe('errorMessage', () => {
   it('should return the message of an Error instance', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(errorMessage(new Error('boom'))).toBe('boom');
   });
 
   it('should stringify a non-Error value', () => {
-    // given / when / then
+    // given
+    // when
+    // then
     expect(errorMessage('plain')).toBe('plain');
     expect(errorMessage(404)).toBe('404');
     expect(errorMessage(null)).toBe('null');

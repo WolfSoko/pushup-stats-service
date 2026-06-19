@@ -51,7 +51,7 @@ describe('SettingsAutoSaveController', () => {
   });
 
   describe('hydrate', () => {
-    it('Given no baseline yet, When hydrate runs, Then it applies config and seeds the baseline', () => {
+    it('should apply config and seed the baseline when no baseline exists yet', () => {
       // given
       const { deps, applyConfig } = makeDeps();
       const ctrl = new SettingsAutoSaveController(deps);
@@ -64,7 +64,7 @@ describe('SettingsAutoSaveController', () => {
       expect(ctrl.saveStatus()).toBe('idle');
     });
 
-    it('Given dirty drafts, When a remote config arrives, Then it does not clobber the drafts', () => {
+    it('should not clobber dirty drafts when a remote config arrives', () => {
       // given
       const { deps, applyConfig, draftRef } = makeDeps();
       const ctrl = new SettingsAutoSaveController(deps);
@@ -81,7 +81,7 @@ describe('SettingsAutoSaveController', () => {
       ctrl.destroy();
     });
 
-    it('Given pristine drafts after a baseline, When a remote config arrives, Then it re-applies config', () => {
+    it('should re-apply config when a remote config arrives over pristine drafts', () => {
       // given
       const { deps, applyConfig } = makeDeps();
       const ctrl = new SettingsAutoSaveController(deps);
@@ -97,7 +97,7 @@ describe('SettingsAutoSaveController', () => {
   });
 
   describe('onDraftChange', () => {
-    it('Given no baseline, When a draft changes, Then no save is scheduled', () => {
+    it('should not schedule a save when a draft changes without a baseline', () => {
       // given
       vitest.useFakeTimers();
       const { deps, save } = makeDeps();
@@ -112,7 +112,7 @@ describe('SettingsAutoSaveController', () => {
       expect(ctrl.saveStatus()).toBe('idle');
     });
 
-    it('Given a dirty draft, When the debounce elapses, Then save runs once', async () => {
+    it('should run save once when the debounce elapses on a dirty draft', async () => {
       // given
       vitest.useFakeTimers({ shouldAdvanceTime: true });
       const { deps, save, draftRef } = makeDeps();
@@ -132,7 +132,7 @@ describe('SettingsAutoSaveController', () => {
       expect(ctrl.saveStatus()).toBe('saved');
     });
 
-    it('Given a draft reverted to the baseline, When changed, Then a pending status returns to idle', () => {
+    it('should return a pending status to idle when a draft reverts to the baseline', () => {
       // given
       vitest.useFakeTimers();
       const { deps, save } = makeDeps();
@@ -150,7 +150,7 @@ describe('SettingsAutoSaveController', () => {
       expect(ctrl.saveStatus()).toBe('idle');
     });
 
-    it('Given an actively edited invalid displayName, When changed, Then save is blocked and status stays pending', () => {
+    it('should block save and keep status pending when an actively edited displayName is invalid', () => {
       // given
       vitest.useFakeTimers();
       const { deps, save } = makeDeps();
@@ -166,7 +166,7 @@ describe('SettingsAutoSaveController', () => {
       expect(ctrl.saveStatus()).toBe('pending');
     });
 
-    it('Given an invalid name from storage but another field edited, When changed, Then save still runs', async () => {
+    it('should still run save when another field is edited despite an invalid name from storage', async () => {
       // given
       vitest.useFakeTimers({ shouldAdvanceTime: true });
       const { deps, save, draftRef } = makeDeps();
@@ -188,7 +188,7 @@ describe('SettingsAutoSaveController', () => {
   });
 
   describe('save failure', () => {
-    it('Given save rejects, When the debounce elapses, Then status becomes error', async () => {
+    it('should set status to error when save rejects after the debounce elapses', async () => {
       // given
       vitest.useFakeTimers({ shouldAdvanceTime: true });
       const { deps, draftRef } = makeDeps({
@@ -207,10 +207,104 @@ describe('SettingsAutoSaveController', () => {
       // then
       expect(ctrl.saveStatus()).toBe('error');
     });
+
+    it('should reset a stale error status to idle when the draft reverts to clean', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      const { deps, draftRef } = makeDeps({
+        save: vitest.fn().mockRejectedValue(new Error('down')),
+      });
+      const ctrl = new SettingsAutoSaveController(deps);
+      ctrl.hydrate(CONFIG);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY, null);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(ctrl.saveStatus()).toBe('error');
+
+      // when
+      draftRef.current = PERSISTED;
+      ctrl.onDraftChange(PERSISTED, null);
+
+      // then
+      expect(ctrl.saveStatus()).toBe('idle');
+      ctrl.destroy();
+    });
+  });
+
+  describe('onSaved side-effects', () => {
+    it('should keep status saved when the onSaved callback throws', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      const onSaved = vitest.fn(() => {
+        throw new Error('analytics boom');
+      });
+      const { deps, draftRef } = makeDeps({ onSaved });
+      const ctrl = new SettingsAutoSaveController(deps);
+      ctrl.hydrate(CONFIG);
+      draftRef.current = DIRTY;
+
+      // when
+      ctrl.onDraftChange(DIRTY, null);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // then
+      expect(onSaved).toHaveBeenCalledTimes(1);
+      expect(ctrl.saveStatus()).toBe('saved');
+      ctrl.destroy();
+    });
+  });
+
+  describe('drain', () => {
+    it('should await the in-flight save before resolving', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      let resolveSave!: () => void;
+      const savePromise = new Promise<void>((resolve) => {
+        resolveSave = resolve;
+      });
+      const save = vitest.fn(() => savePromise);
+      const { deps, draftRef } = makeDeps({ save });
+      const ctrl = new SettingsAutoSaveController(deps);
+      ctrl.hydrate(CONFIG);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY, null);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await Promise.resolve();
+      expect(ctrl.saveStatus()).toBe('saving');
+
+      // when
+      let drained = false;
+      const drainPromise = ctrl.drain().then(() => {
+        drained = true;
+      });
+      await Promise.resolve();
+
+      // then
+      expect(drained).toBe(false);
+      resolveSave();
+      await drainPromise;
+      expect(drained).toBe(true);
+      expect(save).toHaveBeenCalledTimes(1);
+      ctrl.destroy();
+    });
+
+    it('should resolve immediately when no save is in flight', async () => {
+      // given
+      const { deps } = makeDeps();
+      const ctrl = new SettingsAutoSaveController(deps);
+      ctrl.hydrate(CONFIG);
+
+      // when / then
+      await expect(ctrl.drain()).resolves.toBeUndefined();
+    });
   });
 
   describe('SSR', () => {
-    it('Given a non-browser platform, When a draft changes, Then no timer-driven save fires', () => {
+    it('should not fire a timer-driven save on a non-browser platform', () => {
       // given
       vitest.useFakeTimers();
       const { deps, save, draftRef } = makeDeps({ isBrowser: false });

@@ -139,9 +139,10 @@ async function rebuildExerciseLeaderboardsCore(opts: {
   ];
   const userProfiles = new Map<string, UserProfile>();
   if (userIds.length > 0) {
-    const cfgSnaps = await Promise.all(
-      userIds.map((userId) => db.collection('userConfigs').doc(userId).get())
+    const cfgRefs = userIds.map((userId) =>
+      db.collection('userConfigs').doc(userId)
     );
+    const cfgSnaps = await db.getAll(...cfgRefs);
     for (const cfg of cfgSnaps) {
       userProfiles.set(
         cfg.id,

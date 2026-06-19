@@ -11,7 +11,7 @@ import type { DraftSnapshot, ResolvedConfig } from './settings-page.models';
 
 describe('settings-page.helpers', () => {
   describe('resolveConfig', () => {
-    it('Given a null config, When resolved, Then it returns defaults with ads opted-in', () => {
+    it('should return defaults with ads opted-in for a null config', () => {
       // given
       // when
       const result = resolveConfig(null);
@@ -26,7 +26,7 @@ describe('settings-page.helpers', () => {
       });
     });
 
-    it('Given a non-object config, When resolved, Then it returns the defaults', () => {
+    it('should return the defaults for a non-object config', () => {
       // given
       // when
       const result = resolveConfig('nonsense' as unknown);
@@ -36,7 +36,7 @@ describe('settings-page.helpers', () => {
       expect(result.consent.targetedAds).toBe(true);
     });
 
-    it('Given a fully populated config, When resolved, Then every field is mapped', () => {
+    it('should map every field for a fully populated config', () => {
       // given
       const raw = {
         displayName: 'Wolf',
@@ -61,7 +61,7 @@ describe('settings-page.helpers', () => {
       });
     });
 
-    it('Given a config missing ui and consent, When resolved, Then defaults fill the gaps', () => {
+    it('should fill the gaps with defaults for a config missing ui and consent', () => {
       // given
       const raw = { displayName: 'Ann' };
 
@@ -75,7 +75,7 @@ describe('settings-page.helpers', () => {
       expect(result.consent).toEqual({ targetedAds: true });
     });
 
-    it('Given a config with an empty ui object, When resolved, Then ui fields fall back to defaults', () => {
+    it('should fall back ui fields to defaults for a config with an empty ui object', () => {
       // given
       const raw = { displayName: 'Ann', ui: {} };
 
@@ -84,6 +84,38 @@ describe('settings-page.helpers', () => {
 
       // then
       expect(result.hideFromLeaderboard).toBe(false);
+      expect(result.snapQuality).toBe(DEFAULT_SNAP_QUALITY);
+    });
+
+    it('should coerce wrongly-typed fields to their defaults', () => {
+      // given
+      const raw = {
+        displayName: 42,
+        ui: { hideFromLeaderboard: 'yes', publicProfile: 1 },
+        consent: { targetedAds: 'nope' },
+      };
+
+      // when
+      const result = resolveConfig(raw as unknown);
+
+      // then
+      expect(result.displayName).toBe('');
+      expect(result.hideFromLeaderboard).toBe(false);
+      expect(result.publicProfile).toBe(false);
+      expect(result.consent.targetedAds).toBe(true);
+    });
+
+    it('should fall back to defaults when ui and consent are non-objects', () => {
+      // given
+      const raw = { displayName: 'Ann', ui: 'broken', consent: 7 };
+
+      // when
+      const result = resolveConfig(raw as unknown);
+
+      // then
+      expect(result.displayName).toBe('Ann');
+      expect(result.hideFromLeaderboard).toBe(false);
+      expect(result.consent).toEqual({ targetedAds: true });
       expect(result.snapQuality).toBe(DEFAULT_SNAP_QUALITY);
     });
   });
@@ -97,7 +129,7 @@ describe('settings-page.helpers', () => {
       snapQuality: 'middle',
     };
 
-    it('Given a config, When snapshotted, Then the displayName is trimmed', () => {
+    it('should trim the displayName when snapshotted', () => {
       // when
       const snap = snapshotFromConfig(base);
 
@@ -105,7 +137,7 @@ describe('settings-page.helpers', () => {
       expect(snap.displayName).toBe('Wolf');
     });
 
-    it('Given consent without targetedAds, When snapshotted, Then adsConsent defaults to true', () => {
+    it('should default adsConsent to true when consent lacks targetedAds', () => {
       // given
       const cfg: ResolvedConfig = { ...base, consent: {} };
 
@@ -116,7 +148,7 @@ describe('settings-page.helpers', () => {
       expect(snap.adsConsent).toBe(true);
     });
 
-    it('Given consent.targetedAds false, When snapshotted, Then adsConsent is false', () => {
+    it('should set adsConsent to false when consent.targetedAds is false', () => {
       // when
       const snap = snapshotFromConfig(base);
 
@@ -134,7 +166,7 @@ describe('settings-page.helpers', () => {
       snapQuality: 'low',
     };
 
-    it('Given two identical snapshots, When compared, Then they are equal', () => {
+    it('should report two identical snapshots as equal', () => {
       // when
       const result = snapshotsEqual(a, { ...a });
 
@@ -142,7 +174,7 @@ describe('settings-page.helpers', () => {
       expect(result).toBe(true);
     });
 
-    it('Given snapshots differing only in displayName, When compared, Then they are not equal', () => {
+    it('should report snapshots differing only in displayName as not equal', () => {
       // when
       const result = snapshotsEqual(a, { ...a, displayName: 'Other' });
 
@@ -150,7 +182,7 @@ describe('settings-page.helpers', () => {
       expect(result).toBe(false);
     });
 
-    it('Given snapshots differing in snapQuality, When compared, Then they are not equal', () => {
+    it('should report snapshots differing in snapQuality as not equal', () => {
       // when
       const result = snapshotsEqual(a, { ...a, snapQuality: 'high' });
 
@@ -158,7 +190,7 @@ describe('settings-page.helpers', () => {
       expect(result).toBe(false);
     });
 
-    it('Given snapshots differing in each boolean flag, When compared, Then each difference is detected', () => {
+    it('should detect a difference in each boolean flag', () => {
       // then
       expect(snapshotsEqual(a, { ...a, hideFromLeaderboard: true })).toBe(
         false
@@ -177,7 +209,7 @@ describe('settings-page.helpers', () => {
       snapQuality: 'high',
     };
 
-    it('Given a draft and current config, When building the update, Then existing consent keys are preserved', () => {
+    it('should preserve existing consent keys when building the update', () => {
       // given
       const current: ResolvedConfig = {
         displayName: 'Wolf',
@@ -202,7 +234,7 @@ describe('settings-page.helpers', () => {
       });
     });
 
-    it('Given a current config with no consent, When building the update, Then only targetedAds is written', () => {
+    it('should write only targetedAds when the current config has no consent', () => {
       // given
       const current: ResolvedConfig = {
         displayName: 'Wolf',
@@ -221,7 +253,7 @@ describe('settings-page.helpers', () => {
   });
 
   describe('eventValue', () => {
-    it('Given an input event, When read, Then the target value is returned', () => {
+    it('should return the target value from an input event', () => {
       // given
       const event = { target: { value: 'hello' } } as unknown as Event;
 
@@ -250,7 +282,7 @@ describe('settings-page.helpers', () => {
       });
     }
 
-    it('Given consent stored as granted, When checked, Then it returns true', () => {
+    it('should return true when consent is stored as granted', () => {
       // given
       stubStorage({
         getItem: (key: string) =>
@@ -261,7 +293,7 @@ describe('settings-page.helpers', () => {
       expect(isAnalyticsConsentGranted()).toBe(true);
     });
 
-    it('Given consent stored as something else, When checked, Then it returns false', () => {
+    it('should return false when consent is stored as something else', () => {
       // given
       stubStorage({ getItem: () => 'denied' } as unknown as Storage);
 
@@ -269,9 +301,21 @@ describe('settings-page.helpers', () => {
       expect(isAnalyticsConsentGranted()).toBe(false);
     });
 
-    it('Given no localStorage, When checked, Then it returns false', () => {
+    it('should return false when there is no localStorage', () => {
       // given
       stubStorage(undefined);
+
+      // when / then
+      expect(isAnalyticsConsentGranted()).toBe(false);
+    });
+
+    it('should fail closed and return false when localStorage access throws', () => {
+      // given
+      stubStorage({
+        getItem: () => {
+          throw new Error('blocked');
+        },
+      } as unknown as Storage);
 
       // when / then
       expect(isAnalyticsConsentGranted()).toBe(false);

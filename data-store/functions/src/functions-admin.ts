@@ -196,12 +196,13 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       pageToken = result.pageToken;
     } while (pageToken);
 
+    const anonymousUserSet = new Set(anonymousUsers);
     const lastPushupMap = new Map<string, string>();
     if (anonymousUsers.length > 0) {
       const pushupSnap = await db.collection('pushups').get();
       for (const doc of pushupSnap.docs) {
         const data = doc.data();
-        if (!data.userId || !anonymousUsers.includes(data.userId)) continue;
+        if (!data.userId || !anonymousUserSet.has(data.userId)) continue;
         const ts = String(data.timestamp || '').slice(0, 10);
         if (
           !lastPushupMap.has(data.userId) ||
@@ -230,9 +231,10 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
         .where('userId', '==', uid)
         .get();
 
-      if (!pushupSnap.empty) {
+      const BATCH_SIZE = 500;
+      for (let i = 0; i < pushupSnap.docs.length; i += BATCH_SIZE) {
         const batch = db.batch();
-        for (const doc of pushupSnap.docs) {
+        for (const doc of pushupSnap.docs.slice(i, i + BATCH_SIZE)) {
           batch.delete(doc.ref);
         }
         await batch.commit();

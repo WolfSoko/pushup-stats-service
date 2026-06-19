@@ -281,6 +281,7 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
             .collection('exerciseEntries')
             .where('userId', '==', userId)
             .where('exerciseId', '==', exerciseId)
+            .orderBy('timestamp', 'asc')
         );
         const userEntries = userEntriesSnap.docs.map((d) => {
           const data = d.data();

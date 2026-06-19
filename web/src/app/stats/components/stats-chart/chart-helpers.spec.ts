@@ -94,6 +94,24 @@ describe('computeMovingAvg', () => {
     // given / when / then
     expect(computeMovingAvg([], 7)).toEqual([]);
   });
+
+  it('should treat a window of 1 as a per-bucket passthrough', () => {
+    // given
+    const totals = [10, 20, 30];
+    // when
+    const avg = computeMovingAvg(totals, 1);
+    // then
+    expect(avg).toEqual([10, 20, 30]);
+  });
+
+  it('should clamp a non-positive window to 1 instead of producing NaN', () => {
+    // given
+    const totals = [10, 20, 30];
+    // when
+    const avg = computeMovingAvg(totals, 0);
+    // then
+    expect(avg).toEqual([10, 20, 30]);
+  });
 });
 
 describe('buildBucketLabelByTs', () => {

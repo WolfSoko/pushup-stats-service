@@ -18,14 +18,10 @@ import type {
 } from './quick-add-orchestration.models';
 
 /**
- * Resolves an auto-count pose-detector profile id to the catalog
- * `exerciseId` used by the training-entry dialog and
- * `ExerciseFirestoreService`. Derived from each catalog entry's
- * `autoCountProfileId`, so the profile↔catalog mapping has a single
- * source (the catalog) instead of a hardcoded id list duplicated here.
- * `'pushup'` is special: it has no catalog entry (it lives in the legacy
- * `pushups` collection), so it maps to the `PUSHUP_QUICK_ADD_EXERCISE_ID`
- * sentinel.
+ * Mapping is derived from each catalog entry's `autoCountProfileId` so the
+ * catalog stays the single source of truth (no duplicated id list here).
+ * `'pushup'` has no catalog entry (legacy `pushups` collection) and maps to
+ * the `PUSHUP_QUICK_ADD_EXERCISE_ID` sentinel.
  */
 export function catalogIdForAutoCountProfile(
   profile: AutoCountExerciseId
@@ -40,10 +36,9 @@ export function catalogIdForAutoCountProfile(
 }
 
 /**
- * Runtime allowlist for the `AutoCountExerciseId` union (type-only in the
- * dialog component) — validates a catalog `autoCountProfileId` string before
- * it is treated as a detector profile, so an unexpected catalog value can't
- * slip through an unchecked cast and open the dialog with an invalid id.
+ * Runtime allowlist for the type-only `AutoCountExerciseId` union, so an
+ * unexpected catalog value can't slip through an unchecked cast and open the
+ * dialog with an invalid detector id.
  */
 export function isAutoCountProfile(
   value: string | undefined
@@ -57,11 +52,9 @@ export function isAutoCountProfile(
 }
 
 /**
- * Inverse of {@link catalogIdForAutoCountProfile} — resolves a catalog
- * exerciseId (or the `'pushup'` sentinel) to the auto-count profile the
- * camera dialog understands, reading `autoCountProfileId` straight off the
- * catalog. Returns `null` for catalog ids without a valid detector profile
- * so the dashboard fails closed instead of opening the wrong detector.
+ * Inverse of {@link catalogIdForAutoCountProfile}. Returns `null` for catalog
+ * ids without a valid detector profile so the dashboard fails closed instead
+ * of opening the wrong detector.
  */
 export function autoCountProfileForCatalogId(
   catalogId: string
@@ -86,10 +79,9 @@ export function catalogIdForHoldTimerProfile(
 }
 
 /**
- * Builds the training-entry dialog prefill from an auto-count result.
- * Pushup results go to the legacy `pushups` path; catalog exercises resolve
- * their profile to a catalog id, returning `null` when no valid catalog id
- * exists so the caller can fail closed.
+ * Pushup results take the legacy `pushups` path; catalog exercises resolve
+ * their profile to a catalog id, returning `null` when none exists so the
+ * caller can fail closed.
  */
 export function buildAutoCountPrefill(
   result: AutoCountResult
@@ -116,10 +108,8 @@ export function buildAutoCountPrefill(
 }
 
 /**
- * Map a confirmed `TrainingEntryDialogResult` to its `ExerciseEntryCreate`
- * payload. Pushup results keep their own dialog-supplied `source`; every
- * other result is treated as a catalog exercise and carries the orchestration
- * `source` attribution.
+ * Pushup results keep their own dialog-supplied `source`; catalog exercises
+ * carry the orchestration `source` attribution instead.
  */
 export function buildConfirmedEntryPayload(
   result: TrainingEntryDialogResult,
@@ -138,10 +128,8 @@ export function buildConfirmedEntryPayload(
 }
 
 /**
- * Map an exercise-mode `TrainingEntryDialogResult` to the
- * `ExerciseEntryCreate` payload shape, honouring the catalog's
- * measurement discriminator so a switch to a time- or distance-based
- * exercise mid-flow (e.g. plank, run) doesn't drop the required
+ * Honours the catalog's measurement discriminator so a switch to a time- or
+ * distance-based exercise mid-flow (e.g. plank, run) doesn't drop the required
  * companion fields and trigger `validateExerciseEntry` rejection.
  */
 export function buildExerciseEntryPayload(
