@@ -11,123 +11,32 @@ import { UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   exerciseEntryToUnified,
-  findExerciseDefinition,
-  isAutoCountQuickAddExerciseId,
-  PUSHUP_QUICK_ADD_EXERCISE_ID,
-  type QuickAddConfig,
-  type QuickAddMode,
   type UnifiedEntry,
   type UserStats,
 } from '@pu-stats/models';
-import { toBerlinIsoDate, toLocalIsoDate } from '@pu-stats/date';
+import { toBerlinIsoDate } from '@pu-stats/date';
 import { AdsStore } from '@pu-stats/ads';
 import { UserContextService } from '@pu-auth/auth';
 import { MotivationStore } from '@pu-stats/motivation';
 import { of } from 'rxjs';
 import { UserConfigStore } from '../core/user-config.store';
 import { ShareResult, ShareService } from '../core/share.service';
-import { buildProfileShareUrl } from '../core/profile-share-url';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
-import { exerciseDisplayName } from './i18n/exercise-display-names';
-
-export interface QuickAddButtonViewModel {
-  /**
-   * Stable per-slot tracking key for `@for`. Derived from the slot index
-   * (not from `reps`/`mode`/`exerciseId`) so editing an existing button
-   * reuses its DOM node and duplicate buttons (same reps/exercise/mode)
-   * don't collide.
-   */
-  readonly key: string;
-  readonly mode: QuickAddMode;
-  /** `'pushup'` sentinel or a rep-based catalog exerciseId. */
-  readonly exerciseId: string;
-  /** Rep count for `mode === 'reps'`; ignored for `'auto-count'`. */
-  readonly reps: number;
-  /** Material icon name — exercise's catalog icon, with mode-aware fallbacks. */
-  readonly icon: string;
-  /** Translated exercise display label (e.g. `"Liegestütze"`). */
-  readonly exerciseLabel: string;
-  /** Fully composed button label, e.g. `"+10 Liegestütze"` / `"Auto: Sit-ups"`. */
-  readonly label: string;
-}
-
-function toQuickAddViewModel(
-  config: QuickAddConfig,
-  slotIndex: number
-): QuickAddButtonViewModel {
-  const exerciseId = config.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
-  const mode: QuickAddMode = config.mode ?? 'reps';
-  // Resolve the display label for the legacy pushup sentinel separately —
-  // it isn't in EXERCISE_CATALOG (lives in the pushups collection) but the
-  // template needs a localised label all the same.
-  const def =
-    exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
-      ? null
-      : findExerciseDefinition(exerciseId);
-  const exerciseLabel =
-    exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
-      ? $localize`:@@exercise.category.pushup:Liegestütze`
-      : exerciseDisplayName(exerciseId);
-  // The catalog `icon` is the natural per-exercise glyph. Pushup falls
-  // back to `fitness_center`; auto-count rows override to a camera icon
-  // to make the mode visually obvious.
-  const icon =
-    mode === 'auto-count' && isAutoCountQuickAddExerciseId(exerciseId)
-      ? 'videocam'
-      : (def?.icon ?? 'fitness_center');
-  const repsLabel = mode === 'auto-count' ? '' : `+${config.reps} `;
-  const label = `${repsLabel}${exerciseLabel}`;
-  return {
-    key: `slot:${slotIndex}`,
-    mode,
-    exerciseId,
-    reps: config.reps,
-    icon,
-    exerciseLabel,
-    label,
-  };
-}
-
-function sortedUniqueDates(rows: { timestamp: string }[]): string[] {
-  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
-    a.localeCompare(b)
-  );
-}
-
-function daysBetween(a: string, b: string): number {
-  const ad = new Date(`${a}T00:00:00`);
-  const bd = new Date(`${b}T00:00:00`);
-  ad.setHours(0, 0, 0, 0);
-  bd.setHours(0, 0, 0, 0);
-  return Math.round((bd.getTime() - ad.getTime()) / 86_400_000);
-}
-
-function currentIsoWeekKey(): string {
-  // Use Berlin date to match server-side period key calculation
-  const berlinDate = toBerlinIsoDate(new Date());
-  const [y, m, day] = berlinDate.split('-').map(Number);
-  const d = new Date(y, m - 1, day);
-  d.setHours(0, 0, 0, 0);
-  const weekday = (d.getDay() + 6) % 7;
-  d.setDate(d.getDate() + 3 - weekday);
-  const isoYear = d.getFullYear();
-  const firstThursday = new Date(isoYear, 0, 4);
-  firstThursday.setHours(0, 0, 0, 0);
-  const ftDay = (firstThursday.getDay() + 6) % 7;
-  firstThursday.setDate(firstThursday.getDate() + 3 - ftDay);
-  const week =
-    1 +
-    Math.round(
-      (d.getTime() - firstThursday.getTime()) / (7 * 24 * 60 * 60 * 1000)
-    );
-  return `${isoYear}-W${String(week).padStart(2, '0')}`;
-}
-
-function currentMonthKey(): string {
-  // Use Berlin date to match server-side period key calculation
-  const berlinDate = toBerlinIsoDate(new Date());
-  return berlinDate.slice(0, 7);
-}
+import {
+  type QuickAddButtonViewModel,
+  buildQuickAddButtons,
+} from './dashboard/quick-add-view-model';
+import {
+  computeStreakFromEntries,
+  currentIsoWeekKey,
+  currentMonthKey,
+  daysBetween,
+  goalPercent,
+  type RepEntry,
+  sumRepsInMonth,
+  sumRepsInWeek,
+} from './dashboard/dashboard-math';
+import { buildShareDayPayload } from './dashboard/dashboard-share';
 
 export const DashboardStore = signalStore(
   withProps(() => ({
@@ -159,7 +68,7 @@ export const DashboardStore = signalStore(
     }),
   })),
   withComputed((store) => {
-    const entryRows = computed<{ timestamp: string; reps: number }[]>(() =>
+    const entryRows = computed<RepEntry[]>(() =>
       store._live
         .exerciseEntries()
         .filter((e) => e.exerciseId === 'pushup')
@@ -233,32 +142,12 @@ export const DashboardStore = signalStore(
     const weeklyGoal = computed(() => store._userConfig.weeklyGoal() || 50);
     const monthlyGoal = computed(() => store._userConfig.monthlyGoal() || 200);
 
-    /** View-model for the Schnellaktionen card. When the user configured
-     *  any custom buttons those override the defaults (three pushup-reps
-     *  buttons 10/20/30). Each VM carries everything the template needs:
-     *  display label, icon, mode, and the click-handler payload. */
-    const quickAddButtons = computed<QuickAddButtonViewModel[]>(() => {
-      const configured = store._userConfig.quickAdds();
-      if (configured.length > 0) {
-        return configured.map((cfg, i) => toQuickAddViewModel(cfg, i));
-      }
-      return [10, 20, 30].map((reps, i) =>
-        toQuickAddViewModel(
-          {
-            reps,
-            inSpeedDial: false,
-            exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
-            mode: 'reps',
-          },
-          i
-        )
-      );
-    });
+    const quickAddButtons = computed<QuickAddButtonViewModel[]>(() =>
+      buildQuickAddButtons(store._userConfig.quickAdds())
+    );
 
     const goalProgressPercent = computed(() =>
-      dailyGoal()
-        ? Math.min(100, Math.round((todayTotal() / dailyGoal()) * 100))
-        : 0
+      goalPercent(todayTotal(), dailyGoal())
     );
 
     /** Effective daily goal = plan target if active, else configured. */
@@ -308,83 +197,35 @@ export const DashboardStore = signalStore(
         const diff = daysBetween(us.lastEntryDate, toBerlinIsoDate(new Date()));
         return diff >= 0 && diff <= 1 ? us.currentStreak : 0;
       }
-
       // Fallback: client-side computation
-      const dates = sortedUniqueDates(entryRows());
-      if (!dates.length) return 0;
-
-      const today = toBerlinIsoDate(new Date());
-      const lastDate = dates[dates.length - 1];
-
-      const diff = daysBetween(lastDate, today);
-      if (diff > 1 || diff < 0) return 0;
-
-      let streak = 1;
-      for (let i = dates.length - 1; i > 0; i--) {
-        if (daysBetween(dates[i - 1], dates[i]) === 1) {
-          streak += 1;
-        } else {
-          break;
-        }
-      }
-      return streak;
-    });
-
-    // Live computation from entries — used as the primary source in the
-    // browser (always fresh) and as the fallback elsewhere.
-    const weekRepsFromEntries = computed(() => {
-      const berlinToday = toBerlinIsoDate(new Date());
-      const [by, bm, bd] = berlinToday.split('-').map(Number);
-      const todayDate = new Date(by, bm - 1, bd);
-      const dayOfWeek = (todayDate.getDay() + 6) % 7; // Monday = 0
-      const monday = new Date(todayDate);
-      monday.setDate(todayDate.getDate() - dayOfWeek);
-      const mondayStr = toLocalIsoDate(monday);
-      const sunday = new Date(monday);
-      sunday.setDate(monday.getDate() + 6);
-      const sundayStr = toLocalIsoDate(sunday);
-
-      return entryRows()
-        .filter((entry) => {
-          const day = entry.timestamp.slice(0, 10);
-          return day >= mondayStr && day <= sundayStr;
-        })
-        .reduce((sum, entry) => sum + entry.reps, 0);
+      return computeStreakFromEntries(entryRows(), toBerlinIsoDate(new Date()));
     });
 
     const weekReps = computed(() => {
+      // In the browser live entries are always fresher than the
+      // server-precomputed period totals (the aggregator runs after the
+      // write), so prefer the live sum when connected.
       if (store._isBrowser && store._live.connected())
-        return weekRepsFromEntries();
+        return sumRepsInWeek(entryRows(), toBerlinIsoDate(new Date()));
       const us = userStats();
       if (us && us.weeklyKey === currentIsoWeekKey()) return us.weeklyReps;
-      return weekRepsFromEntries();
-    });
-
-    const monthRepsFromEntries = computed(() => {
-      const prefix = toBerlinIsoDate(new Date()).slice(0, 7);
-      return entryRows()
-        .filter((entry) => entry.timestamp.startsWith(prefix))
-        .reduce((sum, entry) => sum + entry.reps, 0);
+      return sumRepsInWeek(entryRows(), toBerlinIsoDate(new Date()));
     });
 
     const monthReps = computed(() => {
       if (store._isBrowser && store._live.connected())
-        return monthRepsFromEntries();
+        return sumRepsInMonth(entryRows(), toBerlinIsoDate(new Date()));
       const us = userStats();
       if (us && us.monthlyKey === currentMonthKey()) return us.monthlyReps;
-      return monthRepsFromEntries();
+      return sumRepsInMonth(entryRows(), toBerlinIsoDate(new Date()));
     });
 
     const weeklyGoalProgressPercent = computed(() =>
-      weeklyGoal()
-        ? Math.min(100, Math.round((weekReps() / weeklyGoal()) * 100))
-        : 0
+      goalPercent(weekReps(), weeklyGoal())
     );
 
     const monthlyGoalProgressPercent = computed(() =>
-      monthlyGoal()
-        ? Math.min(100, Math.round((monthReps() / monthlyGoal()) * 100))
-        : 0
+      goalPercent(monthReps(), monthlyGoal())
     );
 
     const weeklyGoalReached = computed(
@@ -459,37 +300,15 @@ export const DashboardStore = signalStore(
       await store._motivation.loadQuotes(store._user.userIdSafe());
     },
     shareDay(): Promise<ShareResult> {
-      const total = store.todayTotal();
-      const streak = store.currentStreak();
-      // Prefer the user's public-profile URL when they opted in — it carries
-      // the dynamic OG card (per-user stats + CTA) so the shared link
-      // produces a much richer social-card preview than the generic
-      // homepage. When the user hasn't opted in, fall back to the homepage
-      // and a plain CTA text — same as before.
-      const uid = store._user.userIdSafe();
-      const publicProfile =
-        store._userConfig.config()?.ui?.publicProfile === true;
-      const profileUrl =
-        publicProfile && uid ? buildProfileShareUrl(uid, store._localeId) : '';
-
-      let text: string;
-      if (profileUrl) {
-        text =
-          streak > 1
-            ? $localize`:@@dashboard.share.text.profile.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Schau dir mein Profil an:`
-            : $localize`:@@dashboard.share.text.profile.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Schau dir mein Profil an:`;
-      } else {
-        text =
-          streak > 1
-            ? $localize`:@@dashboard.share.text.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
-            : $localize`:@@dashboard.share.text.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:`;
-      }
-
-      return store._share.share({
-        title: $localize`:@@dashboard.share.title:Pushup Tracker`,
-        text,
-        url: profileUrl || 'https://pushup-stats.com',
-      });
+      return store._share.share(
+        buildShareDayPayload({
+          total: store.todayTotal(),
+          streak: store.currentStreak(),
+          uid: store._user.userIdSafe(),
+          publicProfile: store._userConfig.config()?.ui?.publicProfile === true,
+          localeId: store._localeId,
+        })
+      );
     },
   }))
 );
