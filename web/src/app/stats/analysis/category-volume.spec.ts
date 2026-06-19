@@ -26,10 +26,10 @@ function entry(
 
 describe('facetKindFor', () => {
   it('should route reps and weight to the same facet kind', () => {
-    // Regression (Codex P2): the card template iterates facets with
-    // `@for … track facet.kind`. Collapsing `weight` into `reps` at the
-    // kind level prevents two buckets with identical emitted kind, which
-    // would trigger Angular NG0955.
+    // The card template iterates facets with `@for … track facet.kind`.
+    // Collapsing `weight` into `reps` at the kind level prevents two
+    // buckets with identical emitted kind, which would trigger Angular
+    // NG0955 (duplicate keys, incorrect row reuse).
     expect(facetKindFor('reps')).toBe('reps');
     expect(facetKindFor('weight')).toBe('reps');
   });

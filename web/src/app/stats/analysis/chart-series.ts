@@ -34,12 +34,16 @@ export function computeViewMeasurement(
 
 /**
  * Maps a timestamp to the bucket-key it should fall into for the active
- * chart bucketing scheme. Mirrors the keys {@link buildViewChartSeries}
- * emits so pace alignment is 1:1 with the bar series:
+ * chart bucketing scheme, so pace alignment lines up with the bar series:
  *   - daily            → `YYYY-MM-DD`
- *   - hourly 24h mode  → `${from}T${HH}:00:00`
+ *   - hourly 24h mode  → `${from}T${HH}:00:00` (all 24 hours)
  *   - hourly 14h mode  → `${from}T00:00:00` for hours 0-7 (merged night
  *     bucket); otherwise the hour-suffixed key above.
+ *
+ * In 14h mode {@link buildViewChartSeries} only emits the night bucket
+ * plus hours 08–21, so a timestamp at hour 22/23 yields a key with no
+ * matching bar — it simply drops out of the pace alignment, mirroring
+ * the chart, which doesn't plot those hours either.
  */
 export function bucketKeyForTimestamp(
   timestamp: string,
