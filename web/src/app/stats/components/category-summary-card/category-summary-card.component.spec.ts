@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import type { CategorySummary } from '../../analysis.store';
+import type { CategorySummary } from '../../analysis/analysis.types';
 import { CategorySummaryCardComponent } from './category-summary-card.component';
 
 @Component({

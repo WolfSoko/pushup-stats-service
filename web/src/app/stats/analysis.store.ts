@@ -13,22 +13,15 @@ import { UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
-  canonicalizePushupType,
-  displayPushupType,
   exerciseEntryToUnified,
-  type ExerciseCategoryId,
   type ExerciseDefinition,
-  EXERCISE_CATEGORIES,
   findExerciseDefinition,
   type MeasurementType,
   type StatsGranularity,
-  type StatsSeriesEntry,
   type UnifiedEntry,
   unifiedEntryCategoryId,
   type UnifiedEntryFilterKey,
   unifiedEntryFilterKey,
-  unifiedEntryMeasurement,
-  unifiedEntryPrimaryValue,
   type UserStats,
 } from '@pu-stats/models';
 import {
@@ -36,111 +29,42 @@ import {
   inferRangeMode,
   toLocalIsoDate,
 } from '@pu-stats/date';
-import { categoryDisplayName } from './i18n/exercise-display-names';
-
-/** Active analysis view: overview tab or a specific exercise category. */
-export type AnalysisView = 'overview' | ExerciseCategoryId;
-
-interface TrendPoint {
-  label: string;
-  total: number;
-  avgSetsPerEntry?: number;
-}
-
-export interface TypeBreakdownDatum {
-  /** Canonical pushup type id — stable across locales. */
-  id: string;
-  label: string;
-  value: number;
-  avgSetSize: number;
-}
-
-/**
- * Reps-measurement facet of a {@link CategorySummary.volume}. Carries
- * the set count (only meaningful when entries log per-set breakdowns).
- */
-export interface CategoryRepsFacet {
-  kind: 'reps';
-  totalReps: number;
-  todayReps: number;
-  totalSets: number;
-  bestDay: { date: string; total: number } | null;
-}
-
-/** Time-measurement facet (planks, hollow holds, mobility holds). */
-export interface CategoryTimeFacet {
-  kind: 'time';
-  totalSec: number;
-  todaySec: number;
-  bestDay: { date: string; totalSec: number } | null;
-}
-
-/** Distance-only facet (loaded carries, future cycling). */
-export interface CategoryDistanceFacet {
-  kind: 'distance';
-  totalM: number;
-  todayM: number;
-  bestDay: { date: string; totalM: number } | null;
-}
-
-/** Distance-time composite facet (cardio runs). */
-export interface CategoryDistanceTimeFacet {
-  kind: 'distance-time';
-  totalM: number;
-  totalSec: number;
-  todayM: number;
-  todaySec: number;
-  bestDay: { date: string; totalM: number; totalSec: number } | null;
-}
-
-export type CategorySingleFacet =
-  | CategoryRepsFacet
-  | CategoryTimeFacet
-  | CategoryDistanceFacet
-  | CategoryDistanceTimeFacet;
-
-/**
- * Mixed-measurement bucket: emitted when a category contains entries
- * of more than one measurement type (e.g. `core` mixes sit-ups (reps)
- * and plank (time)). The card renders one section per facet so neither
- * dimension swallows the other.
- */
-export interface CategoryMixedVolume {
-  kind: 'mixed';
-  facets: ReadonlyArray<CategorySingleFacet>;
-}
-
-export type CategoryVolume = CategorySingleFacet | CategoryMixedVolume;
-
-/**
- * Per-category roll-up consumed by the analysis overview tab. The
- * cards render `nameKey`/`icon` plus a measurement-aware `volume`,
- * and the comparison chart compares categories by `entries` (count of
- * logged trainings) so reps, seconds and meters can no longer share a
- * bar. Categories with no entries in the current date range are
- * filtered out upstream — every entry here represents a present,
- * non-empty group.
- */
-export interface CategorySummary {
-  categoryId: ExerciseCategoryId;
-  nameKey: string;
-  icon: string;
-  order: number;
-  entries: number;
-  currentStreak: number;
-  volume: CategoryVolume;
-}
-
-/**
- * Series shape consumed by the overview comparison chart. `entries`
- * counts logged trainings per category — the only metric that lets
- * reps-, time- and distance-categories share one axis without
- * mis-comparing seconds vs. repetitions.
- */
-export interface CategoryComparison {
-  labels: ReadonlyArray<string>;
-  entries: ReadonlyArray<number>;
-}
+import type {
+  AnalysisView,
+  CategoryComparison,
+  CategorySummary,
+  ChartFeedEntry,
+  TrendPoint,
+  TypeBreakdownDatum,
+} from './analysis/analysis.types';
+import {
+  buildCategoryComparison,
+  buildCategorySummaries,
+} from './analysis/category-volume';
+import {
+  buildViewChartEntries,
+  buildViewChartSeries,
+  buildViewPaceSeries,
+  computeViewMeasurement,
+} from './analysis/chart-series';
+import {
+  computeAvgSetSize,
+  computeBestDay,
+  computeBestSingleEntry,
+  computeBestSingleSet,
+  computeSetsDistribution,
+  computeTypeBreakdown,
+} from './analysis/entry-stats';
+import {
+  buildMonthTrend,
+  buildWeekTrend,
+  computeCurrentStreak,
+  computeLongestStreak,
+  startOfIsoWeek,
+  startOfMonth,
+  TREND_MONTHS,
+  TREND_WEEKS,
+} from './analysis/trend-math';
 
 type AnalysisState = {
   from: string;
@@ -172,319 +96,6 @@ type AnalysisState = {
   clockTick: number;
   lastDayKey: string;
 };
-
-function isoWeek(date: Date): number {
-  const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
-  const day = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - day);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
-}
-
-function isoWeekYear(date: Date): number {
-  const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
-  const day = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - day);
-  return d.getUTCFullYear();
-}
-
-function daysBetween(a: string, b: string): number {
-  const ad = new Date(`${a}T00:00:00`).getTime();
-  const bd = new Date(`${b}T00:00:00`).getTime();
-  return Math.round((bd - ad) / 86_400_000);
-}
-
-function sortedUniqueDates(
-  rows: ReadonlyArray<{ timestamp: string }>
-): string[] {
-  return [...new Set(rows.map((x) => x.timestamp.slice(0, 10)))].sort((a, b) =>
-    a.localeCompare(b)
-  );
-}
-
-const TREND_WEEKS = 8;
-const TREND_MONTHS = 6;
-
-/** Monday of the ISO week containing the given date (local time, midnight). */
-function startOfIsoWeek(date: Date): Date {
-  const day = date.getDay() || 7;
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() - (day - 1)
-  );
-}
-
-/** First day of the calendar month containing the given date. */
-function startOfMonth(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), 1);
-}
-
-/**
- * `1 km` reads better on the y-axis than `1000`. Distance bars are
- * scaled at the source so every downstream consumer (chart bar,
- * stacked-bar layer, tooltip) sees the same display value. Time stays
- * in seconds and reps stay in reps — the legend communicates the unit.
- *
- * Pure / referentially-transparent so it lives outside `withComputed`'s
- * closure — no per-signal-evaluation allocation.
- */
-function measurementScale(
-  measurement: MeasurementType | 'mixed' | null
-): number {
-  return measurement === 'distance' || measurement === 'distance-time'
-    ? 1 / 1000
-    : 1;
-}
-
-/**
- * Folds rows that share a single measurement into the matching
- * {@link CategorySingleFacet}. Pulled out of `categorySummaries` so the
- * mixed-bucket path can call it once per measurement subset.
- *
- * Pushup entries (`kind: 'pushup'`) and `'weight'`-measurement
- * exercises (currently none in the catalog, but reserved) route through
- * the reps facet — both expose their volume on `entry.reps`.
- *
- * Best-day always picks the day with the largest primary volume in the
- * facet's dimension; the comparator on a `distance-time` facet uses
- * distance because that's what users intuitively rank a "best run" by.
- */
-function durationOf(entry: UnifiedEntry): number {
-  return entry.kind === 'exercise' ? (entry.durationSec ?? 0) : 0;
-}
-
-function distanceOf(entry: UnifiedEntry): number {
-  return entry.kind === 'exercise' ? (entry.distanceM ?? 0) : 0;
-}
-
-function buildFacet(
-  measurement: MeasurementType,
-  rows: ReadonlyArray<UnifiedEntry>,
-  todayKey: string
-): CategorySingleFacet {
-  switch (measurement) {
-    case 'time': {
-      const totalSec = rows.reduce((s, r) => s + durationOf(r), 0);
-      const todaySec = rows.reduce(
-        (s, r) =>
-          r.timestamp.slice(0, 10) === todayKey ? s + durationOf(r) : s,
-        0
-      );
-      const byDay = new Map<string, number>();
-      for (const r of rows) {
-        const k = r.timestamp.slice(0, 10);
-        byDay.set(k, (byDay.get(k) ?? 0) + durationOf(r));
-      }
-      const bestPair = pickBestDay(byDay);
-      return {
-        kind: 'time',
-        totalSec,
-        todaySec,
-        bestDay: bestPair ? { date: bestPair[0], totalSec: bestPair[1] } : null,
-      };
-    }
-    case 'distance': {
-      const totalM = rows.reduce((s, r) => s + distanceOf(r), 0);
-      const todayM = rows.reduce(
-        (s, r) =>
-          r.timestamp.slice(0, 10) === todayKey ? s + distanceOf(r) : s,
-        0
-      );
-      const byDay = new Map<string, number>();
-      for (const r of rows) {
-        const k = r.timestamp.slice(0, 10);
-        byDay.set(k, (byDay.get(k) ?? 0) + distanceOf(r));
-      }
-      const bestPair = pickBestDay(byDay);
-      return {
-        kind: 'distance',
-        totalM,
-        todayM,
-        bestDay: bestPair ? { date: bestPair[0], totalM: bestPair[1] } : null,
-      };
-    }
-    case 'distance-time': {
-      const totalM = rows.reduce((s, r) => s + distanceOf(r), 0);
-      const totalSec = rows.reduce((s, r) => s + durationOf(r), 0);
-      const todayM = rows.reduce(
-        (s, r) =>
-          r.timestamp.slice(0, 10) === todayKey ? s + distanceOf(r) : s,
-        0
-      );
-      const todaySec = rows.reduce(
-        (s, r) =>
-          r.timestamp.slice(0, 10) === todayKey ? s + durationOf(r) : s,
-        0
-      );
-      const byDay = new Map<string, { m: number; sec: number }>();
-      for (const r of rows) {
-        const k = r.timestamp.slice(0, 10);
-        const cur = byDay.get(k) ?? { m: 0, sec: 0 };
-        cur.m += distanceOf(r);
-        cur.sec += durationOf(r);
-        byDay.set(k, cur);
-      }
-      let bestEntry: [string, { m: number; sec: number }] | null = null;
-      for (const e of byDay.entries()) {
-        if (!bestEntry || e[1].m > bestEntry[1].m) bestEntry = e;
-      }
-      return {
-        kind: 'distance-time',
-        totalM,
-        totalSec,
-        todayM,
-        todaySec,
-        bestDay: bestEntry
-          ? {
-              date: bestEntry[0],
-              totalM: bestEntry[1].m,
-              totalSec: bestEntry[1].sec,
-            }
-          : null,
-      };
-    }
-    case 'reps':
-    case 'weight':
-    default: {
-      const totalReps = rows.reduce((s, r) => s + r.reps, 0);
-      const totalSets = rows.reduce((s, r) => s + (r.sets?.length ?? 0), 0);
-      const todayReps = rows.reduce(
-        (s, r) => (r.timestamp.slice(0, 10) === todayKey ? s + r.reps : s),
-        0
-      );
-      const byDay = new Map<string, number>();
-      for (const r of rows) {
-        const k = r.timestamp.slice(0, 10);
-        byDay.set(k, (byDay.get(k) ?? 0) + r.reps);
-      }
-      const bestPair = pickBestDay(byDay);
-      return {
-        kind: 'reps',
-        totalReps,
-        totalSets,
-        todayReps,
-        bestDay: bestPair ? { date: bestPair[0], total: bestPair[1] } : null,
-      };
-    }
-  }
-}
-
-function pickBestDay(byDay: Map<string, number>): [string, number] | null {
-  let best: [string, number] | null = null;
-  for (const e of byDay.entries()) {
-    if (!best || e[1] > best[1]) best = e;
-  }
-  return best;
-}
-
-/**
- * Maps a measurement type to the facet kind {@link buildFacet} emits
- * for it. `weight` shares the reps-shaped facet (both expose volume on
- * `entry.reps`), so the catalog's reserved `weight` measurement must
- * not produce a second `kind: 'reps'` facet alongside a real reps
- * bucket — that would push two entries with identical
- * `facet.kind` into the card's `@for … track facet.kind` loop and
- * trigger Angular NG0955 (duplicate keys, incorrect row reuse).
- */
-export function facetKindFor(
-  measurement: MeasurementType
-): CategorySingleFacet['kind'] {
-  switch (measurement) {
-    case 'time':
-      return 'time';
-    case 'distance':
-      return 'distance';
-    case 'distance-time':
-      return 'distance-time';
-    case 'reps':
-    case 'weight':
-    default:
-      return 'reps';
-  }
-}
-
-/**
- * Resolves a category's rows into a single measurement facet or a
- * mixed bucket. Unknown exerciseIds (custom catalog entries deleted
- * from the device's local catalog) fold into the reps facet so they
- * still surface a number — the rationale matches
- * {@link unifiedEntryPrimaryValue}'s fallback.
- *
- * Bucketing is keyed by *facet kind* rather than the raw
- * {@link MeasurementType}: `reps` and `weight` collapse into one
- * `'reps'` bucket so a category mixing custom weight entries with
- * bodyweight reps doesn't emit two `kind: 'reps'` facets (which would
- * collide under `@for … track facet.kind`).
- */
-function computeCategoryVolume(
-  rows: ReadonlyArray<UnifiedEntry>,
-  todayKey: string
-): CategoryVolume {
-  const byKind = new Map<
-    CategorySingleFacet['kind'],
-    { measurement: MeasurementType; rows: UnifiedEntry[] }
-  >();
-  for (const row of rows) {
-    const measurement = unifiedEntryMeasurement(row) ?? 'reps';
-    const kind = facetKindFor(measurement);
-    const bucket = byKind.get(kind);
-    if (bucket) bucket.rows.push(row);
-    else byKind.set(kind, { measurement, rows: [row] });
-  }
-  if (byKind.size === 1) {
-    const [{ measurement, rows: group }] = [...byKind.values()];
-    return buildFacet(measurement, group, todayKey);
-  }
-  // Stable facet order: reps → time → distance → distance-time.
-  // Matches the dominant-to-rare frequency in the catalog so the
-  // primary-movement facet leads the card.
-  const order: ReadonlyArray<CategorySingleFacet['kind']> = [
-    'reps',
-    'time',
-    'distance',
-    'distance-time',
-  ];
-  const facets: CategorySingleFacet[] = [];
-  for (const kind of order) {
-    const bucket = byKind.get(kind);
-    if (!bucket?.rows.length) continue;
-    facets.push(buildFacet(bucket.measurement, bucket.rows, todayKey));
-  }
-  return { kind: 'mixed', facets };
-}
-
-/**
- * Maps a timestamp to the bucket-key it should fall into for the
- * active chart bucketing scheme. Pulled out of `withComputed` so
- * `viewPaceSeries`'s row→bucket lookup and any future caller share a
- * single source of truth.
- *
- * Mirrors the keys `viewChartSeries` emits:
- *   - daily            → `YYYY-MM-DD`
- *   - hourly 24h mode  → `${from}T${HH}:00:00`
- *   - hourly 14h mode  → `${from}T00:00:00` for hours 0-7 (the merged
- *     night bucket); otherwise the hour-suffixed key above.
- */
-function bucketKeyForTimestamp(
-  timestamp: string,
-  opts: {
-    isDayRange: boolean;
-    dayChartMode: '14h' | '24h';
-    from: string | null;
-  }
-): string {
-  if (!opts.isDayRange) return timestamp.slice(0, 10);
-  const hour = new Date(timestamp).getHours();
-  if (opts.dayChartMode === '14h' && hour < 8) {
-    return `${opts.from}T00:00:00`;
-  }
-  return `${opts.from}T${String(hour).padStart(2, '0')}:00:00`;
-}
 
 export const AnalysisStore = signalStore(
   withState<AnalysisState>(() => {
@@ -595,12 +206,6 @@ export const AnalysisStore = signalStore(
       () => store.dayChartMode() ?? '14h'
     );
 
-    // The stats-chart's stacked-bar layer reads `timestamp`, `reps` and
-    // optional `sets[]`. UnifiedEntry already declares all three on its
-    // base, so Pick keeps the structural feed in lockstep with the
-    // canonical model — no parallel field list to drift.
-    type ChartFeedEntry = Pick<UnifiedEntry, 'timestamp' | 'reps' | 'sets'>;
-
     const unifiedRows = computed<UnifiedEntry[]>(() => {
       const from = store.from();
       const to = store.to();
@@ -671,199 +276,31 @@ export const AnalysisStore = signalStore(
       return !!from && !!to && from === to ? 'hourly' : 'daily';
     });
 
-    /**
-     * Dominant measurement type of the entries currently driving the
-     * chart. Drives the chart's subtitle copy, legend units, and the
-     * "Tages-Integral → km Tempo" line swap for distance/cardio.
-     *
-     *   - `null`     — no entries in the view
-     *   - a single measurement — every entry shares it (e.g. all
-     *     pushups → `'reps'`, all planks → `'time'`, all runs →
-     *     `'distance-time'`)
-     *   - `'mixed'`  — the view contains more than one measurement
-     *     (typical for `core`, which mixes sit-ups and planks, or
-     *     `overview`); the chart falls back to generic copy without a
-     *     specific unit.
-     *
-     * Unknown exerciseIds collapse into `'mixed'` so a custom user
-     * exercise that the catalog can't resolve doesn't masquerade as a
-     * specific unit. `'distance'` (e.g. carries) and `'distance-time'`
-     * (e.g. runs) are returned as distinct values — downstream
-     * consumers (chart paceMode, unit scaling) treat them equivalently
-     * via an `('distance' | 'distance-time')` check, which keeps the
-     * type informative for tab-level UI without forcing a normalisation
-     * step here.
-     */
-    const viewMeasurement = computed<MeasurementType | 'mixed' | null>(() => {
-      const rowsForView = viewFilteredRows();
-      let measurement: MeasurementType | null = null;
-      for (const row of rowsForView) {
-        const m = unifiedEntryMeasurement(row);
-        if (m === null) return 'mixed';
-        if (measurement === null) {
-          measurement = m;
-        } else if (measurement !== m) {
-          return 'mixed';
-        }
-      }
-      return measurement;
-    });
+    const viewMeasurement = computed<MeasurementType | 'mixed' | null>(() =>
+      computeViewMeasurement(viewFilteredRows())
+    );
 
-    /**
-     * Chart series scoped to {@link AnalysisState.activeView}. The
-     * REST-backed {@link chartSeries} aggregates pushups-only on the
-     * server, so consuming it from a per-category tab would always
-     * render the pushup history regardless of which tab is active.
-     * This computed mirrors the daily/hourly bucketing in
-     * `StatsApiService.toStatsResponse` but feeds on the view-filtered
-     * unified rows so each tab's chart matches its KPIs. Hourly
-     * bucketing is gated on `from === to` (the same condition the
-     * server uses) rather than `granularity()` so the series doesn't
-     * lag behind during a cold-start where the resource hasn't yet
-     * resolved to its `'hourly'` meta.
-     */
-    const viewChartSeries = computed<StatsSeriesEntry[]>(() => {
-      const from = store.from();
-      const isDayRange = viewGranularity() === 'hourly';
-      const rowsForView = viewFilteredRows();
-      const scale = measurementScale(viewMeasurement());
-
-      if (isDayRange) {
-        const hourTotals = Array.from({ length: 24 }, () => 0);
-        for (const row of rowsForView) {
-          const hour = new Date(row.timestamp).getHours();
-          if (hour >= 0 && hour <= 23)
-            hourTotals[hour] += unifiedEntryPrimaryValue(row) * scale;
-        }
-        let cumulative = 0;
-        if (resolvedDayChartMode() === '24h') {
-          return hourTotals.map((total, hour) => {
-            cumulative += total;
-            return {
-              bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
-              total,
-              dayIntegral: cumulative,
-            };
-          });
-        }
-        const result: StatsSeriesEntry[] = [];
-        const nightTotal = hourTotals
-          .slice(0, 8)
-          .reduce((sum, value) => sum + value, 0);
-        cumulative += nightTotal;
-        result.push({
-          bucket: `${from}T00:00:00`,
-          bucketLabel: '00-07',
-          total: nightTotal,
-          dayIntegral: cumulative,
-        });
-        for (let hour = 8; hour <= 21; hour++) {
-          const total = hourTotals[hour] ?? 0;
-          cumulative += total;
-          result.push({
-            bucket: `${from}T${String(hour).padStart(2, '0')}:00:00`,
-            total,
-            dayIntegral: cumulative,
-          });
-        }
-        return result;
-      }
-
-      const totals = new Map<string, number>();
-      for (const row of rowsForView) {
-        const day = row.timestamp.slice(0, 10);
-        totals.set(
-          day,
-          (totals.get(day) ?? 0) + unifiedEntryPrimaryValue(row) * scale
-        );
-      }
-      const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
-      let cumulative = 0;
-      return sortedDays.map((day) => {
-        const total = totals.get(day) ?? 0;
-        cumulative += total;
-        return { bucket: day, total, dayIntegral: cumulative };
-      });
-    });
-
-    /**
-     * Returns the bucket-key a row falls into for the current chart's
-     * bucketing scheme. Mirrors the keys produced by
-     * {@link viewChartSeries} so {@link viewPaceSeries} can align its
-     * entries 1:1 with the bar series.
-     */
-    const bucketKeyForRow = (row: UnifiedEntry): string =>
-      bucketKeyForTimestamp(row.timestamp, {
+    const viewChartSeries = computed(() =>
+      buildViewChartSeries(viewFilteredRows(), {
+        from: store.from(),
         isDayRange: viewGranularity() === 'hourly',
         dayChartMode: resolvedDayChartMode(),
+        measurement: viewMeasurement(),
+      })
+    );
+
+    const viewPaceSeries = computed(() =>
+      buildViewPaceSeries(viewFilteredRows(), viewChartSeries(), {
         from: store.from(),
-      });
+        isDayRange: viewGranularity() === 'hourly',
+        dayChartMode: resolvedDayChartMode(),
+        measurement: viewMeasurement(),
+      })
+    );
 
-    /**
-     * Per-bucket pace (min/km) for distance / distance-time views,
-     * aligned 1:1 with {@link viewChartSeries} buckets so the chart's
-     * line layer can render it in place of the day integral. Empty
-     * `[]` for any other measurement — the chart falls back to the
-     * cumulative day-integral line.
-     *
-     * `pace = (totalDurationSec / 60) / (totalDistanceM / 1000)`. A
-     * bucket with zero distance returns `pace = null` so the chart
-     * can break the line at gaps rather than dropping to zero (which
-     * would imply an impossibly fast pace).
-     */
-    const viewPaceSeries = computed<
-      Array<{ bucket: string; pace: number | null }>
-    >(() => {
-      const measurement = viewMeasurement();
-      if (measurement !== 'distance' && measurement !== 'distance-time') {
-        return [];
-      }
-      const stats = new Map<string, { totalSec: number; totalM: number }>();
-      for (const row of viewFilteredRows()) {
-        if (row.kind !== 'exercise') continue;
-        const totalSec = row.durationSec ?? 0;
-        const totalM = row.distanceM ?? 0;
-        if (!totalSec && !totalM) continue;
-        const key = bucketKeyForRow(row);
-        const e = stats.get(key) ?? { totalSec: 0, totalM: 0 };
-        e.totalSec += totalSec;
-        e.totalM += totalM;
-        stats.set(key, e);
-      }
-      return viewChartSeries().map(({ bucket }) => {
-        const e = stats.get(bucket);
-        // Carry exercises are pure `distance` (no paired duration); without
-        // both numbers a pace value is meaningless, so break the line.
-        if (!e || e.totalM === 0 || e.totalSec === 0) {
-          return { bucket, pace: null };
-        }
-        return { bucket, pace: e.totalSec / 60 / (e.totalM / 1000) };
-      });
-    });
-
-    /**
-     * Raw view-filtered entries shaped for {@link StatsChartComponent}'s
-     * sets-stacking pass: it groups entries by bucket to colour the
-     * "with sets" portion separately. Routing exercise entries through
-     * here means a non-pushup tab gets its own stack rather than
-     * silently borrowing the pushup `[entries]`.
-     *
-     * `reps` carries the entry's primary measurement value (so time /
-     * distance entries contribute their `durationSec` / `distanceM`)
-     * rather than the literal rep count — otherwise the chart's
-     * stacked-bar layer would render time-measured rows as zero even
-     * though {@link viewChartSeries} now sums them correctly. Sets are
-     * a reps/weight concept, so time-measured rows still fall into the
-     * "no sets" portion of the stack.
-     */
-    const viewChartEntries = computed<ChartFeedEntry[]>(() => {
-      const scale = measurementScale(viewMeasurement());
-      return viewFilteredRows().map((row) => ({
-        timestamp: row.timestamp,
-        reps: unifiedEntryPrimaryValue(row) * scale,
-        ...(row.sets ? { sets: row.sets } : {}),
-      }));
-    });
+    const viewChartEntries = computed<ChartFeedEntry[]>(() =>
+      buildViewChartEntries(viewFilteredRows(), viewMeasurement())
+    );
 
     /**
      * Per-category roll-up for the overview tab. Always operates on
@@ -874,57 +311,17 @@ export const AnalysisStore = signalStore(
      * `lastDayKey` is read so `todayReps` re-evaluates after a
      * `tickClock()` crosses midnight without forcing an extra signal.
      */
-    const categorySummaries = computed<CategorySummary[]>(() => {
-      const todayKey = store.lastDayKey();
-      const rows = unifiedRows();
-      const resolver = resolveDefinition();
-      const byCategory = new Map<ExerciseCategoryId, UnifiedEntry[]>();
-      for (const row of rows) {
-        const cat = unifiedEntryCategoryId(row, resolver);
-        if (!cat) continue;
-        const bucket = byCategory.get(cat);
-        if (bucket) bucket.push(row);
-        else byCategory.set(cat, [row]);
-      }
-      const result: CategorySummary[] = [];
-      for (const meta of EXERCISE_CATEGORIES) {
-        const catRows = byCategory.get(meta.id);
-        if (!catRows || !catRows.length) continue;
-        const dates = sortedUniqueDates(catRows);
-        let streak = 0;
-        if (dates.length) {
-          streak = 1;
-          for (let i = dates.length - 1; i > 0; i--) {
-            if (daysBetween(dates[i - 1], dates[i]) === 1) streak += 1;
-            else break;
-          }
-        }
-        result.push({
-          categoryId: meta.id,
-          nameKey: meta.nameKey,
-          icon: meta.icon,
-          order: meta.order,
-          entries: catRows.length,
-          currentStreak: streak,
-          volume: computeCategoryVolume(catRows, todayKey),
-        });
-      }
-      return result.sort((a, b) => a.order - b.order);
-    });
+    const categorySummaries = computed<CategorySummary[]>(() =>
+      buildCategorySummaries(
+        unifiedRows(),
+        resolveDefinition(),
+        store.lastDayKey()
+      )
+    );
 
-    // Labels are resolved here (not in the chart component) because the
-    // chart now compares categories by training count — a measurement-
-    // agnostic axis. Reps, seconds and meters can no longer share a
-    // bar, so summed-volume metrics are intentionally omitted: any
-    // future side-by-side reps-vs-time comparison belongs in a
-    // measurement-specific drill-down view, not the overview chart.
-    const categoryComparison = computed<CategoryComparison>(() => {
-      const summaries = categorySummaries();
-      return {
-        labels: summaries.map((s) => categoryDisplayName(s.categoryId)),
-        entries: summaries.map((s) => s.entries),
-      };
-    });
+    const categoryComparison = computed<CategoryComparison>(() =>
+      buildCategoryComparison(categorySummaries())
+    );
 
     // Trend rows mirror the activeView filter so the 8-week and
     // 6-month windows reflect the same category as the rest of the
@@ -954,193 +351,43 @@ export const AnalysisStore = signalStore(
       );
     };
 
-    const weekTrendRows = computed<UnifiedEntry[]>(() =>
-      applyViewFilter(trendUnifiedRows(store.weekFilter()))
+    const weekTrend = computed<TrendPoint[]>(() =>
+      buildWeekTrend(
+        applyViewFilter(trendUnifiedRows(store.weekFilter())),
+        store.currentMonday()
+      )
     );
 
-    const weekTrend = computed<TrendPoint[]>(() => {
-      // Pre-seed TREND_WEEKS ISO weeks so a sparse history still produces
-      // a fixed-length trend with explicit zero rows; otherwise users
-      // would silently see fewer than 8 buckets.
-      const monday = store.currentMonday();
-      const byWeek = new Map<
-        string,
-        { total: number; entryCount: number; setsCount: number }
-      >();
-      for (let i = TREND_WEEKS - 1; i >= 0; i--) {
-        const d = new Date(monday);
-        d.setDate(monday.getDate() - i * 7);
-        const key = `${isoWeekYear(d)}-W${String(isoWeek(d)).padStart(2, '0')}`;
-        byWeek.set(key, { total: 0, entryCount: 0, setsCount: 0 });
-      }
-      for (const row of weekTrendRows()) {
-        const date = new Date(row.timestamp);
-        const key = `${isoWeekYear(date)}-W${String(isoWeek(date)).padStart(2, '0')}`;
-        const entry = byWeek.get(key);
-        if (!entry) continue;
-        entry.total += unifiedEntryPrimaryValue(row);
-        entry.entryCount += 1;
-        entry.setsCount += row.sets?.length ?? 0;
-      }
-      return [...byWeek.entries()]
-        .reverse()
-        .map(([label, { total, entryCount, setsCount }]) => ({
-          label,
-          total,
-          avgSetsPerEntry: entryCount
-            ? Math.round((setsCount / entryCount) * 10) / 10
-            : undefined,
-        }));
-    });
-
-    const monthTrendRows = computed<UnifiedEntry[]>(() =>
-      applyViewFilter(trendUnifiedRows(store.monthFilter()))
+    const monthTrend = computed<TrendPoint[]>(() =>
+      buildMonthTrend(
+        applyViewFilter(trendUnifiedRows(store.monthFilter())),
+        store.currentMonthStart()
+      )
     );
 
-    const monthTrend = computed<TrendPoint[]>(() => {
-      const monthStart = store.currentMonthStart();
-      const byMonth = new Map<
-        string,
-        { total: number; entryCount: number; setsCount: number }
-      >();
-      for (let i = TREND_MONTHS - 1; i >= 0; i--) {
-        const d = new Date(
-          monthStart.getFullYear(),
-          monthStart.getMonth() - i,
-          1
-        );
-        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-        byMonth.set(key, { total: 0, entryCount: 0, setsCount: 0 });
-      }
-      for (const row of monthTrendRows()) {
-        const date = new Date(row.timestamp);
-        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-        const entry = byMonth.get(key);
-        if (!entry) continue;
-        entry.total += unifiedEntryPrimaryValue(row);
-        entry.entryCount += 1;
-        entry.setsCount += row.sets?.length ?? 0;
-      }
-      return [...byMonth.entries()]
-        .reverse()
-        .map(([label, { total, entryCount, setsCount }]) => ({
-          label,
-          total,
-          avgSetsPerEntry: entryCount
-            ? Math.round((setsCount / entryCount) * 10) / 10
-            : undefined,
-        }));
-    });
+    const typeBreakdown = computed<TypeBreakdownDatum[]>(() =>
+      computeTypeBreakdown(viewFilteredRows(), {
+        view: store.activeView(),
+        kinds: store.kinds(),
+        locale: store._locale,
+      })
+    );
 
-    const typeBreakdown = computed<TypeBreakdownDatum[]>(() => {
-      const view = store.activeView();
-      const rowsForView = viewFilteredRows();
-      const kinds = store.kinds();
-      const kindSet = kinds.length > 0 ? new Set<string>(kinds) : null;
-      // In a per-category tab the pushup-variant breakdown only makes
-      // sense for the dedicated `pushup` tab (Liegestütze); every
-      // other category — including the generic `push` movement-pattern
-      // bucket (dips, handstand) — renders the kind-mode breakdown
-      // over its own entries. In overview the legacy gate stays so a
-      // default page still shows pushup variants when no kind filter
-      // is active.
-      const showPushupVariants =
-        view === 'pushup' ||
-        (view === 'overview' &&
-          (!kindSet || (kindSet.size === 1 && kindSet.has('pushup'))));
+    const bestSingleEntry = computed<UnifiedEntry | null>(() =>
+      computeBestSingleEntry(viewFilteredRows())
+    );
 
-      if (showPushupVariants) {
-        const byType = new Map<string, { reps: number; allSets: number[] }>();
-        for (const row of rowsForView) {
-          if (row.exerciseId !== 'pushup') continue;
-          const key = canonicalizePushupType(row.variantId ?? '') || 'standard';
-          const entry = byType.get(key) ?? { reps: 0, allSets: [] };
-          entry.reps += row.reps;
-          if (row.sets?.length) entry.allSets.push(...row.sets);
-          byType.set(key, entry);
-        }
-        return [...byType.entries()]
-          .sort((a, b) => b[1].reps - a[1].reps)
-          .map(([key, { reps, allSets }]) => ({
-            id: key,
-            label: displayPushupType(key, store._locale),
-            value: reps,
-            avgSetSize: allSets.length
-              ? Math.round(
-                  (allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10
-                ) / 10
-              : 0,
-          }));
-      }
+    const bestDay = computed<{ date: string; total: number } | null>(() =>
+      computeBestDay(viewFilteredRows())
+    );
 
-      // Reps-only view: `time` and `distance-time` exercises surface
-      // with `value = 0` until per-measurement charts land. Label is
-      // emitted as the bare key — `$localize` for kind names lives in
-      // the page component.
-      const byKind = new Map<string, { reps: number; allSets: number[] }>();
-      for (const row of rowsForView) {
-        const key = unifiedEntryFilterKey(row);
-        if (kindSet && !kindSet.has(key)) continue;
-        const bucket = byKind.get(key) ?? { reps: 0, allSets: [] };
-        bucket.reps += row.reps;
-        if (row.sets?.length) bucket.allSets.push(...row.sets);
-        byKind.set(key, bucket);
-      }
-      return [...byKind.entries()]
-        .sort((a, b) => b[1].reps - a[1].reps)
-        .map(([key, { reps, allSets }]) => ({
-          id: key,
-          // Caller maps id → localised label.
-          label: key,
-          value: reps,
-          avgSetSize: allSets.length
-            ? Math.round(
-                (allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10
-              ) / 10
-            : 0,
-        }));
-    });
+    const longestStreak = computed(() =>
+      computeLongestStreak(viewFilteredRows())
+    );
 
-    const bestSingleEntry = computed<UnifiedEntry | null>(() => {
-      const view = viewFilteredRows();
-      if (!view.length) return null;
-      return [...view].sort((a, b) => b.reps - a.reps)[0] ?? null;
-    });
-
-    const bestDay = computed<{ date: string; total: number } | null>(() => {
-      const byDay = new Map<string, number>();
-      for (const row of viewFilteredRows()) {
-        const key = row.timestamp.slice(0, 10);
-        byDay.set(key, (byDay.get(key) ?? 0) + row.reps);
-      }
-      if (!byDay.size) return null;
-      const [date, total] = [...byDay.entries()].sort((a, b) => b[1] - a[1])[0];
-      return { date, total };
-    });
-
-    const longestStreak = computed(() => {
-      const dates = sortedUniqueDates(viewFilteredRows());
-      if (!dates.length) return 0;
-      let best = 1;
-      let current = 1;
-      for (let i = 1; i < dates.length; i++) {
-        if (daysBetween(dates[i - 1], dates[i]) === 1) current += 1;
-        else current = 1;
-        best = Math.max(best, current);
-      }
-      return best;
-    });
-
-    const currentStreak = computed(() => {
-      const dates = sortedUniqueDates(viewFilteredRows());
-      if (!dates.length) return 0;
-      let streak = 1;
-      for (let i = dates.length - 1; i > 0; i--) {
-        if (daysBetween(dates[i - 1], dates[i]) === 1) streak += 1;
-        else break;
-      }
-      return streak;
-    });
+    const currentStreak = computed(() =>
+      computeCurrentStreak(viewFilteredRows())
+    );
 
     /** Precomputed server-side stats (null if not yet available). */
     const userStats = computed<UserStats | null>(
@@ -1152,45 +399,15 @@ export const AnalysisStore = signalStore(
       () => userStats()?.heatmap ?? {}
     );
 
-    /** Average reps per individual set across the active view's entries. */
-    const avgSetSize = computed(() => {
-      const allSets = viewFilteredRows().flatMap((r) => r.sets ?? []);
-      if (!allSets.length) return 0;
-      return (
-        Math.round((allSets.reduce((s, v) => s + v, 0) / allSets.length) * 10) /
-        10
-      );
-    });
+    const avgSetSize = computed(() => computeAvgSetSize(viewFilteredRows()));
 
-    /** Distribution of entries by number of sets (e.g. "3 sets" → 40%). */
-    const setsDistribution = computed<
-      Array<{ setCount: number; count: number; percent: number }>
-    >(() => {
-      const entriesWithSets = viewFilteredRows().filter(
-        (r): r is typeof r & { sets: number[] } => !!r.sets?.length
-      );
-      if (!entriesWithSets.length) return [];
-      const byCount = new Map<number, number>();
-      for (const row of entriesWithSets) {
-        const setCount = row.sets.length;
-        byCount.set(setCount, (byCount.get(setCount) ?? 0) + 1);
-      }
-      const total = entriesWithSets.length;
-      return [...byCount.entries()]
-        .sort((a, b) => a[0] - b[0])
-        .map(([setCount, count]) => ({
-          setCount,
-          count,
-          percent: Math.round((count / total) * 100),
-        }));
-    });
+    const setsDistribution = computed(() =>
+      computeSetsDistribution(viewFilteredRows())
+    );
 
-    /** Maximum reps in a single set across the active view's entries. */
-    const bestSingleSet = computed(() => {
-      const allSets = viewFilteredRows().flatMap((r) => r.sets ?? []);
-      if (!allSets.length) return 0;
-      return Math.max(...allSets);
-    });
+    const bestSingleSet = computed(() =>
+      computeBestSingleSet(viewFilteredRows())
+    );
 
     return {
       viewChartSeries,

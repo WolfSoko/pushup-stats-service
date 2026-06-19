@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 
-import type { CategoryComparison } from '../../analysis.store';
+import type { CategoryComparison } from '../../analysis/analysis.types';
 
 /**
  * Horizontal bar comparison across exercise categories. Sits in the
