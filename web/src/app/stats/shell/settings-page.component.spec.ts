@@ -273,6 +273,10 @@ describe('SettingsPageComponent — auto-save', () => {
   });
 
   describe('account deletion', () => {
+    afterEach(() => {
+      clearTranslations();
+    });
+
     it('should set deleteDialogError when wrong phrase is entered', async () => {
       // given
       setup();
@@ -344,8 +348,6 @@ describe('SettingsPageComponent — auto-save', () => {
       // then
       expect(localComponent.deleteDialogError()).toBe('');
       expect(deleteAccountSpy).toHaveBeenCalledTimes(1);
-
-      clearTranslations();
     });
   });
 

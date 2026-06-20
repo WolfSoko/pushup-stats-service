@@ -5838,7 +5838,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte exakt „löscchen“ eingeben.</source>
-        <target>Inserisci esattamente "cancella".</target>
+        <target>Inserisci esattamente "elimina".</target>
       </segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">

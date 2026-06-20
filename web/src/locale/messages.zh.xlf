@@ -6423,7 +6423,7 @@
       </notes>
       <segment state="translated">
         <source>Bitte exakt „löscchen“ eingeben.</source>
-      <target>请准确输入"löscchen"。</target></segment>
+      <target>请准确输入"删除"。</target></segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>

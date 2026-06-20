@@ -100,7 +100,10 @@ export class SettingsPageComponent implements OnDestroy {
   readonly deletePhraseInput = signal('');
   readonly deleteDialogError = signal('');
 
-  private readonly deleteConfirmationPhrase = $localize`:@@settings.delete.confirmPlaceholder:löschen`;
+  private readonly deleteConfirmationPhrase =
+    $localize`:@@settings.delete.confirmPlaceholder:löschen`
+      .trim()
+      .toLowerCase();
 
   readonly config = computed<ResolvedConfig>(() =>
     resolveConfig(this.userConfigStore.config())

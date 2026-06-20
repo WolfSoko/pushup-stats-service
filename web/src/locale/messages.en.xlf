@@ -4070,7 +4070,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="settings.deleteDialogPhraseHint">
       <segment state="translated">
         <source />
-        <target>Please enter exactly "löschen".</target>
+        <target>Please enter exactly "delete".</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
