@@ -302,6 +302,28 @@ describe('GoalsAutoSaveController', () => {
     });
   });
 
+  describe('destroy', () => {
+    it('should flush a pending dirty draft instead of silently dropping it on teardown', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      const { deps, save, draftRef } = makeDeps();
+      const ctrl = new GoalsAutoSaveController(deps);
+      ctrl.hydrate(PERSISTED);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY);
+      expect(ctrl.saveStatus()).toBe('pending');
+
+      // when – destroy is called before the debounce timer fires
+      ctrl.destroy();
+      await Promise.resolve();
+      await Promise.resolve();
+
+      // then
+      expect(save).toHaveBeenCalledTimes(1);
+      expect(save).toHaveBeenCalledWith(DIRTY);
+    });
+  });
+
   describe('SSR', () => {
     it('should not fire a timer-driven save on a non-browser platform', () => {
       // given

@@ -76,7 +76,13 @@ export class GoalsAutoSaveController {
   }
 
   destroy(): void {
-    this.cancelTimer();
+    if (this.autoSaveTimer !== null) {
+      clearTimeout(this.autoSaveTimer);
+      this.autoSaveTimer = null;
+      // Flush the pending dirty draft before teardown — cancelling the timer
+      // would otherwise silently drop edits made within the debounce window.
+      void this.flush();
+    }
     if (this.savedTimer !== null) {
       clearTimeout(this.savedTimer);
       this.savedTimer = null;
