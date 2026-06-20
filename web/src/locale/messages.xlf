@@ -4336,65 +4336,9 @@
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
       </segment>
     </unit>
-    <unit id="goals.weekday.short.mon">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:54</note>
-      </notes>
-      <segment>
-        <source>Mo</source>
-      </segment>
-    </unit>
-    <unit id="goals.weekday.short.tue">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:55</note>
-      </notes>
-      <segment>
-        <source>Di</source>
-      </segment>
-    </unit>
-    <unit id="goals.weekday.short.wed">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:56</note>
-      </notes>
-      <segment>
-        <source>Mi</source>
-      </segment>
-    </unit>
-    <unit id="goals.weekday.short.thu">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:57</note>
-      </notes>
-      <segment>
-        <source>Do</source>
-      </segment>
-    </unit>
-    <unit id="goals.weekday.short.fri">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:58</note>
-      </notes>
-      <segment>
-        <source>Fr</source>
-      </segment>
-    </unit>
-    <unit id="goals.weekday.short.sat">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:59</note>
-      </notes>
-      <segment>
-        <source>Sa</source>
-      </segment>
-    </unit>
-    <unit id="goals.weekday.short.sun">
-      <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:60</note>
-      </notes>
-      <segment>
-        <source>So</source>
-      </segment>
-    </unit>
     <unit id="goalsHeaderTitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:83,84</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:3,4</note>
       </notes>
       <segment>
         <source>Tagesziele</source>
@@ -4402,7 +4346,7 @@
     </unit>
     <unit id="goalsHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:85,87</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:5,8</note>
       </notes>
       <segment>
         <source> Verschiedene Übungen pro Tag, pro Woche, pro Monat. </source>
@@ -4410,7 +4354,7 @@
     </unit>
     <unit id="goals.status.saving">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:101,103</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:21,23</note>
       </notes>
       <segment>
         <source>Speichert…</source>
@@ -4418,7 +4362,7 @@
     </unit>
     <unit id="goals.status.saved">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:105,107</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:25,27</note>
       </notes>
       <segment>
         <source>Gespeichert</source>
@@ -4426,7 +4370,7 @@
     </unit>
     <unit id="goals.status.error">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:109,111</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:29,31</note>
       </notes>
       <segment>
         <source>Fehler beim Speichern</source>
@@ -4434,7 +4378,7 @@
     </unit>
     <unit id="goals.status.retry">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:116,117</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:36,38</note>
       </notes>
       <segment>
         <source> Erneut versuchen </source>
@@ -4442,7 +4386,7 @@
     </unit>
     <unit id="goals.status.pending">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:122,124</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:41,43</note>
       </notes>
       <segment>
         <source>Ungespeicherte Änderungen…</source>
@@ -4450,7 +4394,7 @@
     </unit>
     <unit id="goals.status.synced">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:127,130</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:45,48</note>
       </notes>
       <segment>
         <source>Alle Ziele gespeichert</source>
@@ -4458,7 +4402,7 @@
     </unit>
     <unit id="guest.banner.text">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:137,140</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:55,58</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:59,62</note>
       </notes>
       <segment>
@@ -4467,7 +4411,7 @@
     </unit>
     <unit id="guest.banner.cta">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:141,144</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:59,64</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:63,68</note>
       </notes>
       <segment>
@@ -4476,7 +4420,7 @@
     </unit>
     <unit id="goals.intro">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:147,150</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:65,70</note>
       </notes>
       <segment>
         <source> Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan. </source>
@@ -4484,7 +4428,7 @@
     </unit>
     <unit id="goals.section.empty">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:171,172</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:89,91</note>
       </notes>
       <segment>
         <source> Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu. </source>
@@ -4492,7 +4436,7 @@
     </unit>
     <unit id="goals.field.exercise">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:180,181</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:98,99</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -4500,7 +4444,7 @@
     </unit>
     <unit id="goals.weekdayLabel">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:223,225</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:139,141</note>
       </notes>
       <segment>
         <source>Aktiv an:</source>
@@ -4508,7 +4452,7 @@
     </unit>
     <unit id="goals.weekdayEveryDayHint">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:244,246</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:158,160</note>
       </notes>
       <segment>
         <source>Keine Auswahl = gilt jeden Tag.</source>
@@ -4516,7 +4460,7 @@
     </unit>
     <unit id="goals.addEntry">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:259,260</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:173,175</note>
       </notes>
       <segment>
         <source>Ziel hinzufügen</source>
@@ -4524,7 +4468,7 @@
     </unit>
     <unit id="goals.limitHint">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:263,264</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:177,179</note>
       </notes>
       <segment>
         <source> Maximal <ph id="0" equiv="INTERPOLATION" disp="{{ maxPerScope }}"/> Ziele pro Bereich. </source>
@@ -4532,7 +4476,7 @@
     </unit>
     <unit id="goals.linkBack.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:274,276</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:188,190</note>
       </notes>
       <segment>
         <source>Andere Einstellungen</source>
@@ -4540,7 +4484,7 @@
     </unit>
     <unit id="goals.linkBack.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:277,278</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:191,193</note>
       </notes>
       <segment>
         <source> Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten. </source>
@@ -4548,7 +4492,7 @@
     </unit>
     <unit id="goals.linkBack.cta">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:286,288</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.html:196,199</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">tune</pc> Einstellungen öffnen </source>
@@ -4556,7 +4500,7 @@
     </unit>
     <unit id="goals.removeAria">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:431</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:78</note>
       </notes>
       <segment>
         <source>Ziel entfernen</source>
@@ -4564,15 +4508,71 @@
     </unit>
     <unit id="goals.weekdayAria">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:432</note>
+        <note category="location">web/src/app/goals/shell/goals-page.component.ts:79</note>
       </notes>
       <segment>
         <source>Wochentage</source>
       </segment>
     </unit>
+    <unit id="goals.weekday.short.mon">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:4</note>
+      </notes>
+      <segment>
+        <source>Mo</source>
+      </segment>
+    </unit>
+    <unit id="goals.weekday.short.tue">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:5</note>
+      </notes>
+      <segment>
+        <source>Di</source>
+      </segment>
+    </unit>
+    <unit id="goals.weekday.short.wed">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:6</note>
+      </notes>
+      <segment>
+        <source>Mi</source>
+      </segment>
+    </unit>
+    <unit id="goals.weekday.short.thu">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:7</note>
+      </notes>
+      <segment>
+        <source>Do</source>
+      </segment>
+    </unit>
+    <unit id="goals.weekday.short.fri">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:8</note>
+      </notes>
+      <segment>
+        <source>Fr</source>
+      </segment>
+    </unit>
+    <unit id="goals.weekday.short.sat">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:9</note>
+      </notes>
+      <segment>
+        <source>Sa</source>
+      </segment>
+    </unit>
+    <unit id="goals.weekday.short.sun">
+      <notes>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:10</note>
+      </notes>
+      <segment>
+        <source>So</source>
+      </segment>
+    </unit>
     <unit id="goals.section.daily.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:438</note>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:17</note>
       </notes>
       <segment>
         <source>Tagesziele</source>
@@ -4580,7 +4580,7 @@
     </unit>
     <unit id="goals.section.daily.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:439</note>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:18</note>
       </notes>
       <segment>
         <source>Was du an einzelnen Wochentagen schaffen willst.</source>
@@ -4588,7 +4588,7 @@
     </unit>
     <unit id="goals.section.weekly.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:444</note>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:23</note>
       </notes>
       <segment>
         <source>Wochenziele</source>
@@ -4596,7 +4596,7 @@
     </unit>
     <unit id="goals.section.weekly.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:445</note>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:24</note>
       </notes>
       <segment>
         <source>Summen pro Übung über die ganze Woche.</source>
@@ -4604,7 +4604,7 @@
     </unit>
     <unit id="goals.section.monthly.title">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:450</note>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:29</note>
       </notes>
       <segment>
         <source>Monatsziele</source>
@@ -4612,7 +4612,7 @@
     </unit>
     <unit id="goals.section.monthly.subtitle">
       <notes>
-        <note category="location">web/src/app/goals/shell/goals-page.component.ts:451</note>
+        <note category="location">web/src/app/goals/shell/goals-page.content.ts:30</note>
       </notes>
       <segment>
         <source>Größere Ziele über den ganzen Monat verteilt.</source>
@@ -9114,6 +9114,7 @@
     <unit id="settings.delete.confirmPlaceholder">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:422,423</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:103</note>
       </notes>
       <segment>
         <source>löschen</source>
