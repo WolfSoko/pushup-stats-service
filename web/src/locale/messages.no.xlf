@@ -9348,15 +9348,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.col.anonTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anonym</source>
         <target>Anonym</target>
       </segment>
     </unit>
     <unit id="admin.user.deleteTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Benutzer löschen</source>
-        <target>Benutzer löschen</target>
+        <target>Slett bruker</target>
       </segment>
     </unit>
 </file>
