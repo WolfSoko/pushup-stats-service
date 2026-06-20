@@ -1,0 +1,239 @@
+@if (state.showExercisePicker()) {
+  <div class="type-row">
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
+      <mat-select
+        [value]="state.exerciseId()"
+        (valueChange)="state.onExerciseChange($event)"
+        [disabled]="isEditMode()"
+        data-testid="training-entry-exercise"
+      >
+        @for (option of state.exerciseOptions(); track option.value) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <a
+      mat-icon-button
+      class="type-help"
+      [routerLink]="state.exerciseWikiLink()"
+      [matTooltip]="state.exerciseWikiTooltip()"
+      matTooltipPosition="left"
+      mat-dialog-close
+      data-testid="training-entry-exercise-wiki"
+      i18n-aria-label="@@exerciseWikiLinkAria"
+      aria-label="Anleitung zur Übung öffnen"
+    >
+      <mat-icon>help_outline</mat-icon>
+    </a>
+  </div>
+}
+
+@if (state.showVariantPicker()) {
+  <mat-form-field appearance="outline">
+    <mat-label i18n="@@entryDialog.variant">Variante</mat-label>
+    <mat-select [formControl]="state.variantControl">
+      <mat-option [value]="''" i18n="@@entryDialog.variantNone">—</mat-option>
+      @for (variant of state.currentDefinition()?.variants; track variant.id) {
+        <mat-option [value]="variant.id">{{
+          state.exerciseVariantLabel(variant)
+        }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+}
+
+@if (state.isDistanceTimeMeasurement()) {
+  <mat-form-field appearance="outline">
+    <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
+    <input
+      matInput
+      type="text"
+      inputmode="decimal"
+      [placeholder]="state.distancePlaceholder"
+      [value]="state.distanceInput()"
+      (input)="state.distanceInput.set(asValue($event))"
+      data-testid="training-entry-distance"
+      required
+    />
+  </mat-form-field>
+  <div class="duration-row">
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+      <input
+        matInput
+        type="number"
+        inputmode="numeric"
+        placeholder="25"
+        min="0"
+        step="1"
+        [value]="state.durationMinutesInput()"
+        (input)="state.durationMinutesInput.set(asValue($event))"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+      <input
+        matInput
+        type="number"
+        inputmode="numeric"
+        placeholder="0"
+        min="0"
+        [max]="state.secondsMax"
+        step="1"
+        [value]="state.durationSecondsInput()"
+        (input)="state.durationSecondsInput.set(asValue($event))"
+      />
+    </mat-form-field>
+  </div>
+} @else if (state.isTimeMeasurement()) {
+  <div class="duration-row">
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+      <input
+        matInput
+        type="number"
+        inputmode="numeric"
+        placeholder="1"
+        min="0"
+        step="1"
+        [value]="state.durationMinutesInput()"
+        (input)="state.durationMinutesInput.set(asValue($event))"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+      <input
+        matInput
+        type="number"
+        inputmode="numeric"
+        placeholder="30"
+        min="0"
+        [max]="state.secondsMax"
+        step="1"
+        [value]="state.durationSecondsInput()"
+        (input)="state.durationSecondsInput.set(asValue($event))"
+      />
+    </mat-form-field>
+  </div>
+} @else {
+  @for (set of state.sets(); track $index) {
+    <div class="set-row">
+      <mat-form-field appearance="outline">
+        @if (state.hasMultipleSets()) {
+          <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
+        } @else {
+          <mat-label i18n="@@repsLabel">Reps</mat-label>
+        }
+        <input
+          matInput
+          type="number"
+          [min]="0"
+          [max]="state.repsMax()"
+          step="1"
+          [value]="set"
+          (input)="state.updateSet($index, asValue($event))"
+          required
+        />
+      </mat-form-field>
+      @if (state.hasMultipleSets()) {
+        <button
+          type="button"
+          mat-icon-button
+          (click)="state.removeSet($index)"
+          i18n-aria-label="@@removeSetAria"
+          aria-label="Set entfernen"
+        >
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+      }
+      @if ($last) {
+        <button
+          type="button"
+          mat-icon-button
+          (click)="state.addSet()"
+          i18n-aria-label="@@addSetAria"
+          aria-label="Set hinzufügen"
+          i18n-matTooltip="@@addSetTooltip"
+          matTooltip="Weiteres Set hinzufügen"
+        >
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+      }
+    </div>
+  }
+  @if (state.hasMultipleSets()) {
+    <div class="total-reps" i18n="@@totalReps">
+      Gesamt: {{ state.totalReps() }} Reps
+    </div>
+  }
+}
+
+@if (state.breakdownField() === 'intervals') {
+  @for (interval of state.intervals(); track $index) {
+    <div class="set-row">
+      <mat-form-field appearance="outline">
+        @if (state.hasMultipleIntervals()) {
+          <mat-label i18n="@@entry.interval.label"
+            >Intervall {{ $index + 1 }}</mat-label
+          >
+        } @else {
+          <mat-label i18n="@@entry.intervals.label">Intervalle</mat-label>
+        }
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          min="0"
+          step="1"
+          [value]="interval"
+          (input)="state.updateInterval($index, asValue($event))"
+        />
+      </mat-form-field>
+      @if (state.hasMultipleIntervals()) {
+        <button
+          type="button"
+          mat-icon-button
+          (click)="state.removeInterval($index)"
+          i18n-aria-label="@@entry.intervals.remove"
+          aria-label="Intervall entfernen"
+        >
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+      }
+      @if ($last) {
+        <button
+          type="button"
+          mat-icon-button
+          (click)="state.addInterval()"
+          i18n-aria-label="@@entry.intervals.add"
+          aria-label="Intervall hinzufügen"
+          i18n-matTooltip="@@entry.intervals.addTooltip"
+          matTooltip="Weiteres Intervall hinzufügen"
+        >
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+      }
+    </div>
+  }
+}
+
+@if (state.overCap()) {
+  <div class="total-reps">
+    @if (state.overCapKind() === 'duration') {
+      <span i18n="@@entryDialog.overCapDuration"
+        >Maximum-Dauer: {{ state.formattedDurationMax() }}</span
+      >
+    } @else if (
+      state.overCapKind() === 'distance' || state.isTimeMeasurement()
+    ) {
+      <span i18n="@@entryDialog.overCapTime"
+        >Maximum: {{ state.formattedMax() }}</span
+      >
+    } @else {
+      <span i18n="@@entryDialog.overCap"
+        >Maximum: {{ state.repsMax() }} pro Eintrag</span
+      >
+    }
+  </div>
+}
