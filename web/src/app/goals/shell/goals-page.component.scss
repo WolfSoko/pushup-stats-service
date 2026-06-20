@@ -1,0 +1,125 @@
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+.intro {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(123, 159, 255, 0.08);
+  border: 1px solid rgba(123, 159, 255, 0.2);
+  line-height: 1.5;
+}
+.save-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+.save-status[data-status='saving'] {
+  background: rgba(123, 159, 255, 0.16);
+  border-color: rgba(123, 159, 255, 0.4);
+}
+.save-status[data-status='saved'] {
+  background: rgba(120, 220, 140, 0.14);
+  border-color: rgba(120, 220, 140, 0.36);
+}
+.save-status[data-status='error'] {
+  background: rgba(255, 120, 120, 0.16);
+  border-color: rgba(255, 120, 120, 0.45);
+}
+.save-status[data-status='pending'] {
+  background: rgba(255, 200, 100, 0.14);
+  border-color: rgba(255, 200, 100, 0.36);
+}
+.save-status .status-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+.save-status .status-icon.ok {
+  color: #7fd99a;
+}
+.save-status .status-icon.err {
+  color: #ff8b8b;
+}
+.section-card {
+  padding: 4px 4px 8px;
+}
+.section-card mat-card-header {
+  padding-bottom: 8px;
+}
+.stack {
+  display: grid;
+  gap: 12px;
+}
+.goal-row {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(120px, 180px) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.weekday-row {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.weekday-label {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+.weekday-hint {
+  flex-basis: 100%;
+  margin-top: 0;
+}
+.exercise-field,
+.target-field {
+  width: 100%;
+}
+.muted {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.empty {
+  padding: 12px 4px;
+  font-style: italic;
+}
+.limit-hint {
+  margin-top: 4px;
+}
+.guest-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(100, 160, 255, 0.1);
+  border: 1px solid rgba(100, 160, 255, 0.3);
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .goal-row {
+    grid-template-columns: 1fr auto;
+  }
+  .target-field {
+    grid-column: 1 / 2;
+  }
+}
