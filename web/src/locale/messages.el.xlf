@@ -10078,5 +10078,17 @@
         <target>Unsplash</target>
       </segment>
     </unit>
+    <unit id="admin.col.anonTooltip">
+      <segment state="initial">
+        <source>Anonym</source>
+        <target>Anonym</target>
+      </segment>
+    </unit>
+    <unit id="admin.user.deleteTooltip">
+      <segment state="initial">
+        <source>Benutzer löschen</source>
+        <target>Benutzer löschen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

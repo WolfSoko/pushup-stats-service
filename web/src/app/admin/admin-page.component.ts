@@ -15,6 +15,7 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -42,6 +43,7 @@ import {
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
@@ -72,6 +74,8 @@ export class AdminPageComponent {
   ];
 
   readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
+  readonly anonTooltip = $localize`:@@admin.col.anonTooltip:Anonym`;
+  readonly deleteUserTooltip = $localize`:@@admin.user.deleteTooltip:Benutzer löschen`;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);

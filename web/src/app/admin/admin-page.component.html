@@ -78,7 +78,12 @@
     >
       Nur anonyme Benutzer
     </mat-slide-toggle>
-    <button mat-icon-button (click)="loadUsers()" [matTooltip]="refreshTooltip">
+    <button
+      mat-icon-button
+      (click)="loadUsers()"
+      [matTooltip]="refreshTooltip"
+      [attr.aria-label]="refreshTooltip"
+    >
       <mat-icon>refresh</mat-icon>
     </button>
   </div>
@@ -136,7 +141,7 @@
           >
           <mat-cell *matCellDef="let u">
             @if (u.anonymous) {
-              <mat-icon [matTooltip]="'Anonym'" class="anon-icon-warn"
+              <mat-icon [matTooltip]="anonTooltip" class="anon-icon-warn"
                 >person_outline</mat-icon
               >
             }
@@ -188,7 +193,8 @@
               mat-icon-button
               color="warn"
               (click)="openDeleteDialog(u)"
-              [matTooltip]="'Benutzer löschen'"
+              [matTooltip]="deleteUserTooltip"
+              [attr.aria-label]="deleteUserTooltip"
             >
               <mat-icon>delete</mat-icon>
             </button>

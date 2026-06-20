@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -32,6 +32,7 @@ import {
     DatePipe,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatSortModule,

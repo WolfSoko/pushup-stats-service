@@ -28,7 +28,7 @@ mat-table {
 }
 .message-cell {
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: break-word;
   max-width: 400px;
 }
 .anon-icon {
