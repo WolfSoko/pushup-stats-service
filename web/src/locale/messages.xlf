@@ -230,7 +230,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:315,316</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:152,153</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:348,350</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:48,50</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:432,433</note>
       </notes>
       <segment>
@@ -4229,7 +4229,7 @@
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:123</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.format.ts:71</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:18</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:56</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:24</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:211</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:289</note>
@@ -7121,6 +7121,247 @@
         <source>Übung</source>
       </segment>
     </unit>
+    <unit id="trainingEntryDialog.exercise">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:4,6</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:25,27</note>
+      </notes>
+      <segment>
+        <source>Anleitung zur Übung öffnen</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.variant">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>Variante</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.variantNone">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:36,37</note>
+      </notes>
+      <segment>
+        <source>—</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:48,50</note>
+      </notes>
+      <segment>
+        <source>Distanz (km)</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.durationMinutes">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:62,64</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:92,94</note>
+      </notes>
+      <segment>
+        <source>Minuten</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.durationSeconds">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:75,77</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:105,107</note>
+      </notes>
+      <segment>
+        <source>Sekunden</source>
+      </segment>
+    </unit>
+    <unit id="setLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:124,125</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:55,56</note>
+      </notes>
+      <segment>
+        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+      </segment>
+    </unit>
+    <unit id="repsLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:126,128</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:57,59</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="removeSetAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:145,147</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:76,78</note>
+      </notes>
+      <segment>
+        <source>Set entfernen</source>
+      </segment>
+    </unit>
+    <unit id="addSetAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:156,157</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:87,88</note>
+      </notes>
+      <segment>
+        <source>Set hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="addSetTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:158,160</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:89,91</note>
+      </notes>
+      <segment>
+        <source>Weiteres Set hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="totalReps">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:167,171</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:98,102</note>
+      </notes>
+      <segment>
+        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ state.totalReps() }}"/> Reps </source>
+      </segment>
+    </unit>
+    <unit id="entry.interval.label">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:178,179</note>
+      </notes>
+      <segment>
+        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.label">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:181,183</note>
+      </notes>
+      <segment>
+        <source>Intervalle</source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.remove">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:199,201</note>
+      </notes>
+      <segment>
+        <source>Intervall entfernen</source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.add">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:210,211</note>
+      </notes>
+      <segment>
+        <source>Intervall hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.addTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:212,214</note>
+      </notes>
+      <segment>
+        <source>Weiteres Intervall hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapDuration">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:225,227</note>
+      </notes>
+      <segment>
+        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedDurationMax() }}"/></source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCapTime">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:231,233</note>
+      </notes>
+      <segment>
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedMax() }}"/></source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.overCap">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:235,237</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:104,106</note>
+      </notes>
+      <segment>
+        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.repsMax() }}"/> pro Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="typeLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:3,5</note>
+      </notes>
+      <segment>
+        <source>Typ</source>
+      </segment>
+    </unit>
+    <unit id="typePlaceholder">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:9,10</note>
+      </notes>
+      <segment>
+        <source>Auswählen oder eintippen</source>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:45,47</note>
+      </notes>
+      <segment>
+        <source>Anleitung zum Liegestütztyp öffnen</source>
+      </segment>
+    </unit>
+    <unit id="sourceLabel">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:109,111</note>
+      </notes>
+      <segment>
+        <source>Quelle</source>
+      </segment>
+    </unit>
+    <unit id="sourcePlaceholder">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:115,116</note>
+      </notes>
+      <segment>
+        <source>web / whatsapp / eigene Quelle</source>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.pushup.exercise">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:86</note>
+      </notes>
+      <segment>
+        <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.generic">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:153</note>
+      </notes>
+      <segment>
+        <source>Anleitung zu Liegestütztypen öffnen</source>
+      </segment>
+    </unit>
+    <unit id="typeWikiLinkTooltip.specific">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:155</note>
+      </notes>
+      <segment>
+        <source>Anleitung öffnen</source>
+      </segment>
+    </unit>
     <unit id="editDialogTitle">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:3,5</note>
@@ -7145,243 +7386,25 @@
         <source>Kategorie</source>
       </segment>
     </unit>
-    <unit id="trainingEntryDialog.exercise">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:27,29</note>
-      </notes>
-      <segment>
-        <source>Übung</source>
-      </segment>
-    </unit>
-    <unit id="exerciseWikiLinkAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:48,50</note>
-      </notes>
-      <segment>
-        <source>Anleitung zur Übung öffnen</source>
-      </segment>
-    </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:56,58</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:25,27</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
       </segment>
     </unit>
-    <unit id="typeLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:69,70</note>
-      </notes>
-      <segment>
-        <source>Typ</source>
-      </segment>
-    </unit>
-    <unit id="typePlaceholder">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:75,76</note>
-      </notes>
-      <segment>
-        <source>Auswählen oder eintippen</source>
-      </segment>
-    </unit>
-    <unit id="typeWikiLinkAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:114,116</note>
-      </notes>
-      <segment>
-        <source>Anleitung zum Liegestütztyp öffnen</source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.variant">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:121,122</note>
-      </notes>
-      <segment>
-        <source>Variante</source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.variantNone">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:123,124</note>
-      </notes>
-      <segment>
-        <source>—</source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.distance">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:135,137</note>
-      </notes>
-      <segment>
-        <source>Distanz (km)</source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.durationMinutes">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:149,151</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:179,181</note>
-      </notes>
-      <segment>
-        <source>Minuten</source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.durationSeconds">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:162,164</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:192,194</note>
-      </notes>
-      <segment>
-        <source>Sekunden</source>
-      </segment>
-    </unit>
-    <unit id="setLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:211,212</note>
-      </notes>
-      <segment>
-        <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-      </segment>
-    </unit>
-    <unit id="repsLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:213,214</note>
-      </notes>
-      <segment>
-        <source>Reps</source>
-      </segment>
-    </unit>
-    <unit id="removeSetAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:232,234</note>
-      </notes>
-      <segment>
-        <source>Set entfernen</source>
-      </segment>
-    </unit>
-    <unit id="addSetAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:243,244</note>
-      </notes>
-      <segment>
-        <source>Set hinzufügen</source>
-      </segment>
-    </unit>
-    <unit id="addSetTooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:245,247</note>
-      </notes>
-      <segment>
-        <source>Weiteres Set hinzufügen</source>
-      </segment>
-    </unit>
-    <unit id="totalReps">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:254,256</note>
-      </notes>
-      <segment>
-        <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ totalReps() }}"/> Reps </source>
-      </segment>
-    </unit>
-    <unit id="entry.interval.label">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:265,266</note>
-      </notes>
-      <segment>
-        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.label">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:268,270</note>
-      </notes>
-      <segment>
-        <source>Intervalle</source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.remove">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:286,288</note>
-      </notes>
-      <segment>
-        <source>Intervall entfernen</source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.add">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:297,298</note>
-      </notes>
-      <segment>
-        <source>Intervall hinzufügen</source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.addTooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:299,301</note>
-      </notes>
-      <segment>
-        <source>Weiteres Intervall hinzufügen</source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.overCapDuration">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:312,314</note>
-      </notes>
-      <segment>
-        <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedDurationMax() }}"/></source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.overCapTime">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:316,318</note>
-      </notes>
-      <segment>
-        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ formattedMax() }}"/></source>
-      </segment>
-    </unit>
-    <unit id="entryDialog.overCap">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:320,322</note>
-      </notes>
-      <segment>
-        <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ repsMax() }}"/> pro Eintrag</source>
-      </segment>
-    </unit>
-    <unit id="sourceLabel">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:328,330</note>
-      </notes>
-      <segment>
-        <source>Quelle</source>
-      </segment>
-    </unit>
-    <unit id="sourcePlaceholder">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:334,335</note>
-      </notes>
-      <segment>
-        <source>web / whatsapp / eigene Quelle</source>
-      </segment>
-    </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:358,360</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:58,60</note>
       </notes>
       <segment>
         <source> Speichern </source>
       </segment>
     </unit>
-    <unit id="trainingEntryDialog.pushup.exercise">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:153</note>
-      </notes>
-      <segment>
-        <source>Liegestütze</source>
-      </segment>
-    </unit>
     <unit id="exerciseWikiLinkTooltip.generic">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:349</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.display.ts:22</note>
       </notes>
       <segment>
         <source>Anleitung zu Übungen öffnen</source>
@@ -7389,23 +7412,7 @@
     </unit>
     <unit id="exerciseWikiLinkTooltip.specific">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:351</note>
-      </notes>
-      <segment>
-        <source>Anleitung öffnen</source>
-      </segment>
-    </unit>
-    <unit id="typeWikiLinkTooltip.generic">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:358</note>
-      </notes>
-      <segment>
-        <source>Anleitung zu Liegestütztypen öffnen</source>
-      </segment>
-    </unit>
-    <unit id="typeWikiLinkTooltip.specific">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.ts:360</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.display.ts:24</note>
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
@@ -7413,7 +7420,7 @@
     </unit>
     <unit id="exercise.category.push">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:19</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:57</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:212</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:462</note>
       </notes>
@@ -7423,7 +7430,7 @@
     </unit>
     <unit id="exercise.category.pull">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:20</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:58</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:213</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:463</note>
       </notes>
@@ -7433,7 +7440,7 @@
     </unit>
     <unit id="exercise.category.squat">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:21</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:59</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:214</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:464</note>
       </notes>
@@ -7443,7 +7450,7 @@
     </unit>
     <unit id="exercise.category.hinge">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:22</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:60</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:215</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:465</note>
       </notes>
@@ -7453,7 +7460,7 @@
     </unit>
     <unit id="exercise.category.lunge">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:23</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:61</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:216</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:466</note>
       </notes>
@@ -7463,7 +7470,7 @@
     </unit>
     <unit id="exercise.category.carry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:24</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:62</note>
       </notes>
       <segment>
         <source>Tragen</source>
@@ -7471,7 +7478,7 @@
     </unit>
     <unit id="exercise.category.core">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:25</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:63</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:217</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:467</note>
       </notes>
@@ -7481,7 +7488,7 @@
     </unit>
     <unit id="exercise.category.cardio">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:26</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:64</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:218</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:468</note>
       </notes>
@@ -7491,7 +7498,7 @@
     </unit>
     <unit id="exercise.category.mobility">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:27</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:65</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:219</note>
         <note category="location">web/src/app/wiki/exercises-page.component.ts:469</note>
       </notes>
@@ -7501,7 +7508,7 @@
     </unit>
     <unit id="exercise.category.strength">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:28</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:66</note>
       </notes>
       <segment>
         <source>Krafttraining</source>
