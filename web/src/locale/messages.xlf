@@ -5859,7 +5859,7 @@
     </unit>
     <unit id="reminder.quietHours.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:32,33</note>
+        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:27,28</note>
       </notes>
       <segment>
         <source>Ruhezeiten</source>
@@ -5867,7 +5867,7 @@
     </unit>
     <unit id="reminder.quietHours.from">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:36,38</note>
+        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:31,33</note>
       </notes>
       <segment>
         <source>Von</source>
@@ -5875,7 +5875,7 @@
     </unit>
     <unit id="reminder.quietHours.to">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:52,54</note>
+        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:47,49</note>
       </notes>
       <segment>
         <source>Bis</source>
@@ -5883,7 +5883,7 @@
     </unit>
     <unit id="reminder.quietHours.remove.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:72,73</note>
+        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:67,68</note>
       </notes>
       <segment>
         <source>Ruhezeit entfernen</source>
@@ -5891,7 +5891,7 @@
     </unit>
     <unit id="reminder.quietHours.add">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:86,88</note>
+        <note category="location">web/src/app/reminders/shell/reminder-quiet-hours.component.ts:81,83</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Ruhezeit hinzufügen </source>
