@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Analytics } from '@angular/fire/analytics';
+import { clearTranslations, loadTranslations } from '@angular/localize';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-push/push';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
@@ -269,6 +270,83 @@ describe('SettingsPageComponent — auto-save', () => {
         'input[type="number"][placeholder="10"]'
       )
     ).toBeNull();
+  });
+
+  describe('account deletion', () => {
+    it('should set deleteDialogError when wrong phrase is entered', async () => {
+      // given
+      setup();
+      await flushMicrotasks();
+      component.deletePhraseInput.set('wrong');
+
+      // when
+      await component.confirmDeleteFromDialog();
+
+      // then
+      expect(component.deleteDialogError()).not.toBe('');
+      expect(component.deletingAccount()).toBe(false);
+    });
+
+    it('should accept the locale-translated phrase, not the German fallback', async () => {
+      // given — inject a non-German translation so $localize returns 'delete'.
+      // This test would have FAILED before the fix: the old hardcoded 'löschen'
+      // would not match 'delete', blocking deletion on every non-German locale.
+      loadTranslations({ 'settings.delete.confirmPlaceholder': 'delete' });
+      const deleteAccountSpy = vitest.fn().mockResolvedValue(undefined);
+      TestBed.resetTestingModule();
+      const configSignalLocal = signal<UserConfig>({
+        userId: 'u1',
+        displayName: 'Wolf',
+      });
+      TestBed.configureTestingModule({
+        imports: [SettingsPageComponent],
+        providers: [
+          {
+            provide: UserConfigStore,
+            useValue: {
+              config: configSignalLocal.asReadonly(),
+              save: vitest
+                .fn()
+                .mockResolvedValue({ userId: 'u1', displayName: 'Wolf' }),
+              reload: vitest.fn(),
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { isGuest: signal(false), userIdSafe: signal('u1') },
+          },
+          {
+            provide: AuthStore,
+            useValue: {
+              ...makeAuthStoreMock(),
+              deleteAccount: deleteAccountSpy,
+            },
+          },
+          provideRouter([]),
+          { provide: Analytics, useValue: null },
+          {
+            provide: PushSubscriptionService,
+            useValue: { unsubscribe: vitest.fn().mockResolvedValue(undefined) },
+          },
+          { provide: ShareService, useValue: { share: vitest.fn() } },
+        ],
+      });
+      const localFixture = TestBed.createComponent(SettingsPageComponent);
+      const localComponent = localFixture.componentInstance;
+      localFixture.detectChanges();
+      await flushMicrotasks();
+      localComponent.deletePhraseInput.set('delete');
+
+      // when
+      await localComponent.confirmDeleteFromDialog();
+      await flushMicrotasks();
+
+      // then
+      expect(localComponent.deleteDialogError()).toBe('');
+      expect(deleteAccountSpy).toHaveBeenCalledTimes(1);
+
+      clearTranslations();
+    });
   });
 
   describe('displayName validation', () => {
