@@ -271,6 +271,78 @@ describe('SettingsPageComponent — auto-save', () => {
     ).toBeNull();
   });
 
+  describe('account deletion', () => {
+    it('should set deleteDialogError when wrong phrase is entered', async () => {
+      // given
+      setup();
+      await flushMicrotasks();
+      component.deletePhraseInput.set('wrong');
+
+      // when
+      await component.confirmDeleteFromDialog();
+
+      // then
+      expect(component.deleteDialogError()).not.toBe('');
+      expect(component.deletingAccount()).toBe(false);
+    });
+
+    it('should clear deleteDialogError and start deletion when correct phrase is entered', async () => {
+      // given
+      const deleteAccountSpy = vitest.fn().mockResolvedValue(undefined);
+      TestBed.resetTestingModule();
+      const configSignalLocal = signal<UserConfig>({
+        userId: 'u1',
+        displayName: 'Wolf',
+      });
+      TestBed.configureTestingModule({
+        imports: [SettingsPageComponent],
+        providers: [
+          {
+            provide: UserConfigStore,
+            useValue: {
+              config: configSignalLocal.asReadonly(),
+              save: vitest
+                .fn()
+                .mockResolvedValue({ userId: 'u1', displayName: 'Wolf' }),
+              reload: vitest.fn(),
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { isGuest: signal(false), userIdSafe: signal('u1') },
+          },
+          {
+            provide: AuthStore,
+            useValue: {
+              ...makeAuthStoreMock(),
+              deleteAccount: deleteAccountSpy,
+            },
+          },
+          provideRouter([]),
+          { provide: Analytics, useValue: null },
+          {
+            provide: PushSubscriptionService,
+            useValue: { unsubscribe: vitest.fn().mockResolvedValue(undefined) },
+          },
+          { provide: ShareService, useValue: { share: vitest.fn() } },
+        ],
+      });
+      const localFixture = TestBed.createComponent(SettingsPageComponent);
+      const localComponent = localFixture.componentInstance;
+      localFixture.detectChanges();
+      await flushMicrotasks();
+      localComponent.deletePhraseInput.set('löschen');
+
+      // when
+      await localComponent.confirmDeleteFromDialog();
+      await flushMicrotasks();
+
+      // then
+      expect(localComponent.deleteDialogError()).toBe('');
+      expect(deleteAccountSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('displayName validation', () => {
     it('Given an invalid displayName, When the debounce elapses, Then no save fires and the error message is rendered', async () => {
       setup({ userId: 'u1', displayName: 'Alex' });
