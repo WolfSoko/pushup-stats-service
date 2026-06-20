@@ -305,6 +305,17 @@ describe('training-entry-dialog.submit', () => {
           totalReps: 600,
         })
       ).toBe('value');
+      // distance is dead in the catalog today but stays consistent with
+      // buildExerciseResult's distance branch.
+      expect(
+        exerciseOverCapKind({
+          measurement: 'distance',
+          max: 100000,
+          distanceM: 150000,
+          durationSec: null,
+          totalReps: 0,
+        })
+      ).toBe('distance');
     });
 
     it('should gate exercise submit on the measurement minimums', () => {
@@ -327,6 +338,25 @@ describe('training-entry-dialog.submit', () => {
           overCap: false,
         })
       ).toBe(true);
+      // distance gates on distanceM >= min (no duration required)
+      expect(
+        canSubmitExercise({
+          def: distanceDef,
+          distanceM: 5000,
+          durationSec: null,
+          totalReps: 0,
+          overCap: false,
+        })
+      ).toBe(true);
+      expect(
+        canSubmitExercise({
+          def: distanceDef,
+          distanceM: 50,
+          durationSec: null,
+          totalReps: 0,
+          overCap: false,
+        })
+      ).toBe(false);
       expect(
         canSubmitExercise({
           def: null,

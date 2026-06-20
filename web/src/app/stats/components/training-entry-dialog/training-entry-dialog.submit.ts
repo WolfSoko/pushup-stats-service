@@ -6,7 +6,6 @@ import {
 import {
   ExerciseEntryDialogResult,
   PushupEntryDialogResult,
-  PushupTypeOption,
 } from './training-entry-dialog.models';
 
 export function appendListEntry(list: ReadonlyArray<number>): number[] {
@@ -27,34 +26,6 @@ export function clampListValue(value: string, max = Infinity): number {
   const parsed = Number(value);
   const finite = Number.isFinite(parsed) ? Math.max(0, Math.floor(parsed)) : 0;
   return Math.min(finite, max);
-}
-
-export function filterStringOptions(
-  value: string | null | undefined,
-  options: ReadonlyArray<string>
-): string[] {
-  const needle = (value ?? '').toLowerCase().trim();
-  if (!needle) return [...options];
-  if (options.some((opt) => opt.toLowerCase() === needle)) return [...options];
-  return options.filter((opt) => opt.toLowerCase().includes(needle));
-}
-
-export function filterPushupTypeOptions(
-  value: string | null | undefined,
-  options: ReadonlyArray<PushupTypeOption>
-): PushupTypeOption[] {
-  const needle = (value ?? '').toLowerCase().trim();
-  if (!needle) return [...options];
-  const exact = options.some(
-    (opt) =>
-      opt.value.toLowerCase() === needle || opt.label.toLowerCase() === needle
-  );
-  if (exact) return [...options];
-  return options.filter(
-    (opt) =>
-      opt.label.toLowerCase().includes(needle) ||
-      opt.value.toLowerCase().includes(needle)
-  );
 }
 
 /** Caps pushup reps at the same shared per-entry ceiling (500). */
@@ -117,6 +88,11 @@ export function exerciseOverCapKind(args: {
   if (measurement === 'time') {
     return durationSec !== null && durationSec > max ? 'value' : null;
   }
+  // `distance` is dead in today's catalog but kept consistent with
+  // buildExerciseResult's distance branch for a future distance-only exercise.
+  if (measurement === 'distance') {
+    return distanceM !== null && distanceM > max ? 'distance' : null;
+  }
   return totalReps > max ? 'value' : null;
 }
 
@@ -145,6 +121,9 @@ export function canSubmitExercise(args: {
       durationSec >= def.min &&
       !overCap
     );
+  }
+  if (def.measurement === 'distance') {
+    return distanceM !== null && distanceM >= def.min && !overCap;
   }
   return totalReps >= def.min && !overCap;
 }

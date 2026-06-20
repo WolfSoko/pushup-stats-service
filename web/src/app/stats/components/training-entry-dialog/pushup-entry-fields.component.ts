@@ -37,13 +37,15 @@ import {
   buildPushupResult,
   canSubmitPushup,
   clampListValue,
-  filterPushupTypeOptions,
-  filterStringOptions,
   normalizeSource,
   PUSHUP_REPS_MAX,
   pushupOverCap,
   removeListEntry,
 } from './training-entry-dialog.submit';
+import {
+  filterPushupTypeOptions,
+  filterStringOptions,
+} from './training-entry-dialog.filters';
 
 /**
  * Pushup-mode fields: variant autocomplete + wiki link, reps/sets list,
