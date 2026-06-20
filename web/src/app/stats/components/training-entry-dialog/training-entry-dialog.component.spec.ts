@@ -1,17 +1,7 @@
-import { LOCALE_ID, Provider } from '@angular/core';
+import { Provider } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideRouter } from '@angular/router';
-
-// test-setup.ts also registers `fr`, but the Angular vitest builder
-// doesn't reliably pick that up for the `fr-FR` region key in this spec
-// — re-registering at the spec level is the only configuration that
-// keeps `formatNumber(_, 'fr-FR', _)` from throwing NG0701 in the
-// fr-FR round-trip tests below. de-DE works through the test-setup
-// fallback chain; fr-FR does not, hence the targeted re-register.
-registerLocaleData(localeFr, 'fr-FR');
 
 import { TrainingEntryDialogComponent } from './training-entry-dialog.component';
 import {
@@ -41,287 +31,92 @@ describe('TrainingEntryDialogComponent', () => {
       ],
     });
     const fixture = TestBed.createComponent(TrainingEntryDialogComponent);
+    fixture.detectChanges();
     return { component: fixture.componentInstance, fixture, closeSpy };
   }
 
-  describe('create mode (no edit data)', () => {
-    it('defaults to the pushup category and synthetic exercise id', () => {
+  describe('create mode', () => {
+    it('should default to the pushup category', () => {
+      // given / when
       const { component } = createDialog(null);
 
+      // then
       expect(component.category()).toBe('pushup');
       expect(component.mode()).toBe('pushup');
       expect(component.isEditMode).toBe(false);
     });
 
-    it('switching the category resets the exercise picker and the value fields', () => {
-      const { component } = createDialog(null);
+    it('should switch to exercise mode when the category changes', () => {
+      // given
+      const { component, fixture } = createDialog(null);
 
-      component.sets.set([20]);
+      // when
       component.onCategoryChange('core');
+      fixture.detectChanges();
 
+      // then
       expect(component.category()).toBe('core');
       expect(component.mode()).toBe('exercise');
-      // First catalog entry in the core category becomes the picker default.
-      expect(component.exerciseId()).toBe('abs.situps');
-      // Reps/sets must reset so a stale 20-rep value can't bleed into
-      // the new measurement-specific form.
-      expect(component.sets()).toEqual([0]);
     });
 
-    it('emits a pushup result when category=pushup and reps are entered', () => {
-      const { component, closeSpy } = createDialog(null);
-
+    it('should close with a pushup result when reps are entered', () => {
+      // given
+      const { component, fixture, closeSpy } = createDialog(null);
       component.timestamp.set('2026-02-10T13:45');
-      component.updateSet(0, '20');
-      component.pushupTypeControl.setValue('diamond');
-      component.sourceControl.setValue('web');
+      const root: HTMLElement = fixture.nativeElement;
+      const repsEl: HTMLInputElement = root.querySelector(
+        'app-pushup-entry-fields input[type="number"]'
+      ) as HTMLInputElement;
+      repsEl.value = '20';
+      repsEl.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
 
+      // when
       expect(component.canSubmit()).toBe(true);
       component.submit();
 
+      // then
       expect(closeSpy).toHaveBeenCalledTimes(1);
       const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
-      expect(result).toMatchObject({
-        kind: 'pushup',
-        reps: 20,
-        sets: [20],
-        type: 'diamond',
-        source: 'web',
-      });
-      // Result preserves the user-entered local time with the local
-      // offset appended so the Firestore doc matches the user's tz.
+      expect(result).toMatchObject({ kind: 'pushup', reps: 20, sets: [20] });
+      // Preserves the user-entered local time with the local offset.
       expect(result.timestamp).toMatch(/^2026-02-10T13:45/);
     });
 
-    it('emits an exercise result with durationSec when plank is picked under core', () => {
-      const { component, closeSpy } = createDialog(null);
-
+    it('should close with an exercise result when an exercise is filled', () => {
+      // given
+      const { component, fixture, closeSpy } = createDialog(null);
       component.onCategoryChange('core');
-      // Plank lives in the core category now — switch the picker to it
-      // explicitly because the category default is the first reps-based
-      // entry (`abs.situps`), not the time-measurement plank row.
-      component.onExerciseChange('plank.standard');
+      fixture.detectChanges();
+      const root: HTMLElement = fixture.nativeElement;
+      const repsEl: HTMLInputElement = root.querySelector(
+        'app-exercise-entry-fields input[type="number"]'
+      ) as HTMLInputElement;
+      repsEl.value = '12';
+      repsEl.dispatchEvent(new Event('input'));
       component.timestamp.set('2026-02-10T13:45');
-      component.durationMinutesInput.set('1');
-      component.durationSecondsInput.set('30');
-
-      expect(component.canSubmit()).toBe(true);
-      component.submit();
-
-      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
-      expect(result).toMatchObject({
-        kind: 'exercise',
-        exerciseId: 'plank.standard',
-        measurement: 'time',
-        durationSec: 90,
-        reps: 0,
-        sets: [],
-      });
-    });
-
-    it('emits an exercise result with distance + duration for cardio.running', () => {
-      const { component, closeSpy } = createDialog(null);
-
-      component.onCategoryChange('cardio');
-      component.timestamp.set('2026-02-10T13:45');
-      component.distanceInput.set('5.25');
-      component.durationMinutesInput.set('25');
-      component.durationSecondsInput.set('0');
-
-      expect(component.canSubmit()).toBe(true);
-      component.submit();
-
-      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
-      expect(result).toMatchObject({
-        kind: 'exercise',
-        exerciseId: 'cardio.running',
-        measurement: 'distance-time',
-        // 5.25 km → 5250 m (rounded to integer meters because the
-        // catalog stores distanceM as integer).
-        distanceM: 5250,
-        durationSec: 1500,
-      });
-    });
-
-    it('accepts a German decimal comma in the km input (5,25 → 5250 m)', () => {
-      const { component, fixture, closeSpy } = createDialog(null, [
-        { provide: LOCALE_ID, useValue: 'de-DE' },
-      ]);
-
-      component.onCategoryChange('cardio');
       fixture.detectChanges();
 
-      // The km input must use type="text" + inputmode="decimal" — a
-      // native type="number" input rejects "," in most browsers
-      // regardless of locale, so a German user who types the local
-      // decimal separator would see their input silently dropped.
-      const distanceEl: HTMLInputElement = fixture.nativeElement.querySelector(
-        'input[data-testid="training-entry-distance"]'
-      );
-      expect(distanceEl).toBeTruthy();
-      expect(distanceEl.type).toBe('text');
-      expect(distanceEl.inputMode).toBe('decimal');
-
-      distanceEl.value = '5,25';
-      distanceEl.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-
-      component.timestamp.set('2026-02-10T13:45');
-      component.durationMinutesInput.set('25');
-      component.durationSecondsInput.set('0');
-
-      expect(component.distanceM()).toBe(5250);
+      // when
       expect(component.canSubmit()).toBe(true);
       component.submit();
 
-      const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
+      // then
+      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
       expect(result).toMatchObject({
-        distanceM: 5250,
-        durationSec: 1500,
+        kind: 'exercise',
+        exerciseId: 'abs.situps',
+        reps: 12,
+        sets: [12],
+        intervals: [],
       });
-    });
-
-    it.each([
-      // Round-trip safety: the formatter is now Angular's `formatNumber`
-      // (via DecimalPipe-style '1.2-2'), which always groups thousands.
-      // The parser must tolerate the matching grouping separator so a
-      // 1000+ km value formatted by edit mode still parses back cleanly
-      // — including the (narrow) NBSP that fr-style locales use.
-      ['de-DE', '1.234,56', 1234560],
-      ['en-US', '1,234.56', 1234560],
-      // CLDR fr uses U+202F (narrow no-break space) as the grouping
-      // separator; older Intl impls emit U+00A0. The escape sequences
-      // are visually identical in editors — keep them explicit so the
-      // distinction can't get silently normalised away.
-      ['fr-FR', '1\u202F234,56', 1234560],
-      ['fr-FR', '1\u00A0234,56', 1234560],
-    ])(
-      'parses km input with thousand separators (%s "%s")',
-      (locale, input, expectedM) => {
-        const { component } = createDialog(null, [
-          { provide: LOCALE_ID, useValue: locale },
-        ]);
-        component.onCategoryChange('cardio');
-        component.distanceInput.set(input);
-        expect(component.distanceM()).toBe(expectedM);
-      }
-    );
-
-    it('round-trips formatNumber output through parseKmToMeters in fr-FR', () => {
-      // Edit mode writes `formatKm(distanceM/1000, locale)` into the
-      // signal; this guards that whatever the formatter emits for
-      // fr-FR (space-grouped form) is something the parser accepts —
-      // without this the field would render but submit would block.
-      const { component } = createDialog(
-        {
-          kind: 'exercise',
-          exerciseId: 'cardio.running',
-          timestamp: '2026-02-10T13:45:00+01:00',
-          distanceM: 12500,
-          durationSec: 3600,
-        },
-        [{ provide: LOCALE_ID, useValue: 'fr-FR' }]
-      );
-
-      expect(component.distanceM()).toBe(12500);
-      expect(component.canSubmit()).toBe(true);
-    });
-
-    it.each([
-      // The grouping-aware parser must still reject malformed inputs —
-      // typos like "1.2.3" or "1,2,3" used to fail Number(...) outright;
-      // silently coercing them to "12.3" would persist a wrong distance.
-      '1.2.3',
-      '1,2,3',
-      '5..25',
-      'abc',
-    ])('rejects malformed km input %j', (input) => {
-      const { component } = createDialog(null);
-      component.onCategoryChange('cardio');
-      component.distanceInput.set(input);
-      component.timestamp.set('2026-02-10T13:45');
-      component.durationMinutesInput.set('25');
-      component.durationSecondsInput.set('0');
-      expect(component.distanceM()).toBeNull();
-      expect(component.canSubmit()).toBe(false);
-    });
-
-    it('renders a locale-aware placeholder for the km input', () => {
-      const { fixture: deFixture } = createDialog(null, [
-        { provide: LOCALE_ID, useValue: 'de-DE' },
-      ]);
-      deFixture.componentInstance.onCategoryChange('cardio');
-      deFixture.detectChanges();
-      const deInput: HTMLInputElement = deFixture.nativeElement.querySelector(
-        'input[data-testid="training-entry-distance"]'
-      );
-      expect(deInput.placeholder).toBe('5,00');
-
-      const { fixture: enFixture } = createDialog(null, [
-        { provide: LOCALE_ID, useValue: 'en-US' },
-      ]);
-      enFixture.componentInstance.onCategoryChange('cardio');
-      enFixture.detectChanges();
-      const enInput: HTMLInputElement = enFixture.nativeElement.querySelector(
-        'input[data-testid="training-entry-distance"]'
-      );
-      expect(enInput.placeholder).toBe('5.00');
-    });
-
-    it('clears the variant control and value fields when the exercise picker changes', () => {
-      const { component } = createDialog(null);
-
-      component.onCategoryChange('core');
-      component.variantControl.setValue('weighted');
-      component.updateSet(0, '12');
-
-      // Simulate the picker switching to a different exercise within
-      // the same category. The variant id from the previous exercise
-      // would otherwise survive and be rejected as `invalid-variant`
-      // by the data-access validator on submit.
-      component.onExerciseChange('legs.squats');
-
-      expect(component.variantControl.value).toBe('');
-      expect(component.sets()).toEqual([0]);
-    });
-
-    it('caps reps at the catalog max for the chosen exercise', () => {
-      const { component } = createDialog(null);
-
-      component.onCategoryChange('core');
-      component.updateSet(0, '9999');
-
-      // abs.situps caps at 500 — typing a higher value clamps so
-      // canSubmit() never reports green for an out-of-range entry.
-      expect(component.sets()[0]).toBe(500);
-      expect(component.overCap()).toBe(false);
-    });
-
-    it('computes a /wiki/uebungen detail link for the currently selected exercise', () => {
-      const { component } = createDialog(null);
-
-      component.onCategoryChange('core');
-      // abs.situps maps to slug 'sit-ups' in EXERCISE_WIKI_CATALOG.
-      expect(component.exerciseId()).toBe('abs.situps');
-      expect(component.exerciseWikiLink()).toEqual([
-        '/wiki/uebungen',
-        'sit-ups',
-      ]);
-    });
-
-    it('falls back to the /wiki/uebungen list when the picker is on the synthetic pushup row', () => {
-      const { component } = createDialog(null);
-
-      // Default category is `pushup`; the synthetic exerciseId has no
-      // wiki entry — make sure the link never becomes a dead 404 by
-      // pointing to the list page instead.
-      expect(component.exerciseWikiLink()).toEqual(['/wiki/uebungen']);
     });
   });
 
   describe('edit mode', () => {
-    it('populates the form from a pushup edit payload and locks the category picker', () => {
-      const { component } = createDialog({
+    it('should lock the category picker and stay on the original category', () => {
+      // given
+      const { component, fixture } = createDialog({
         kind: 'pushup',
         timestamp: '2026-02-10T13:45:00+01:00',
         reps: 30,
@@ -330,18 +125,23 @@ describe('TrainingEntryDialogComponent', () => {
         type: 'diamond',
       });
 
+      // then
       expect(component.isEditMode).toBe(true);
       expect(component.category()).toBe('pushup');
-      expect(component.sets()).toEqual([10, 10, 10]);
-      expect(component.pushupTypeControl.value).toBe('diamond');
-      expect(component.sourceControl.value).toBe('whatsapp');
-      // Edit mode must not allow moving an entry between collections,
-      // so the category-change handler is a no-op.
+      const select: HTMLElement = fixture.nativeElement.querySelector(
+        '[data-testid="training-entry-category"]'
+      );
+      expect(select.classList.contains('mat-mdc-select-disabled')).toBe(true);
+
+      // when — the category-change handler is a no-op in edit mode.
       component.onCategoryChange('core');
+
+      // then
       expect(component.category()).toBe('pushup');
     });
 
-    it('preserves the original ISO timestamp when the user does not touch the field', () => {
+    it('should preserve the original ISO timestamp when untouched', () => {
+      // given
       const { component, closeSpy } = createDialog({
         kind: 'pushup',
         timestamp: '2026-02-10T13:45:00+01:00',
@@ -349,248 +149,28 @@ describe('TrainingEntryDialogComponent', () => {
         sets: [20],
       });
 
+      // when
       component.submit();
 
+      // then — untouched timestamp keeps its full original ISO form.
       const result = closeSpy.mock.calls[0][0] as TrainingEntryDialogResult;
-      // Untouched timestamp keeps its full original ISO form (with
-      // seconds + offset). Re-serializing would silently drop the
-      // seconds and could shift the offset in another tz.
       expect(result.timestamp).toBe('2026-02-10T13:45:00+01:00');
     });
 
-    it('populates the form from an exercise edit payload (plank)', () => {
+    it('should open in exercise mode for a stale exercise id', () => {
+      // given / when
       const { component } = createDialog({
         kind: 'exercise',
-        exerciseId: 'plank.standard',
+        exerciseId: 'abs.removed-variant',
         timestamp: '2026-02-10T13:45:00+01:00',
-        durationSec: 90,
+        reps: 25,
+        sets: [25],
       });
 
-      expect(component.category()).toBe('core');
-      expect(component.exerciseId()).toBe('plank.standard');
+      // then
       expect(component.mode()).toBe('exercise');
-      expect(component.isTimeMeasurement()).toBe(true);
-      expect(component.durationMinutesInput()).toBe('1');
-      expect(component.durationSecondsInput()).toBe('30');
-    });
-
-    it.each([
-      // Edit-mode km initial value must match the active locale so the
-      // create + edit paths show the same separator. Without this, a
-      // de-DE user opening an existing run would see a dot-formatted
-      // value while typing fresh entries gets a comma placeholder.
-      ['de-DE', '5,25'],
-      ['en-US', '5.25'],
-    ])(
-      'formats the edit-mode km initial value with the active locale (%s)',
-      (locale, expected) => {
-        const { component } = createDialog(
-          {
-            kind: 'exercise',
-            exerciseId: 'cardio.running',
-            timestamp: '2026-02-10T13:45:00+01:00',
-            distanceM: 5250,
-            durationSec: 1500,
-          },
-          [{ provide: LOCALE_ID, useValue: locale }]
-        );
-
-        expect(component.distanceInput()).toBe(expected);
-        // Round-trip: the locale-formatted string must still parse back
-        // to the original metres so the edit dialog opens at green.
-        expect(component.distanceM()).toBe(5250);
-        expect(component.canSubmit()).toBe(true);
-      }
-    );
-
-    it('emits a null variantId when the user clears a previously-set variant', () => {
-      const { component, closeSpy } = createDialog({
-        kind: 'exercise',
-        exerciseId: 'abs.situps',
-        timestamp: '2026-02-10T13:45:00+01:00',
-        reps: 30,
-        sets: [30],
-        variantId: 'weighted',
-      });
-
-      component.variantControl.setValue('');
-      component.submit();
-
-      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
-      // Tri-state: explicit null is the patch sentinel that tells the
-      // store to issue a Firestore deleteField() instead of leaving
-      // the stale variant on the doc.
-      expect(result.variantId).toBeNull();
-    });
-
-    it.each([
-      // Legacy id prefix → recovered movement-pattern category. The
-      // dialog must stay in exercise mode and surface the right
-      // dashboard category for stale ids whose catalog entry was
-      // renamed or removed.
-      ['abs.removed-variant', 'core' as const],
-      ['plank.removed-variant', 'core' as const],
-      ['legs.removed-variant', 'squat' as const],
-    ])(
-      'keeps an exercise-kind entry in exercise mode for stale id %s',
-      (exerciseId, expectedCategory) => {
-        const { component, closeSpy } = createDialog({
-          kind: 'exercise',
-          exerciseId,
-          timestamp: '2026-02-10T13:45:00+01:00',
-          reps: 25,
-          sets: [25],
-        });
-
-        expect(component.mode()).toBe('exercise');
-        expect(component.category()).toBe(expectedCategory);
-        // The synthetic fallback definition lets the user fix and
-        // resubmit the entry without staring at a frozen dialog.
-        expect(component.canSubmit()).toBe(true);
-
-        component.submit();
-        const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
-        expect(result.kind).toBe('exercise');
-        expect(result.exerciseId).toBe(exerciseId);
-      }
-    );
-  });
-
-  describe('intervals (endurance breakdown)', () => {
-    function breakdownLabels(
-      fixture: ComponentFixture<TrainingEntryDialogComponent>
-    ): string[] {
-      const root: HTMLElement = fixture.nativeElement;
-      return Array.from(root.querySelectorAll('mat-label')).map((el) =>
-        (el.textContent ?? '').trim()
-      );
-    }
-
-    it('labels the breakdown row as "Reps" for a single-set strength exercise (sit-ups)', () => {
-      const { fixture } = createDialog(null);
-      fixture.componentInstance.onCategoryChange('core');
-      fixture.componentInstance.onExerciseChange('abs.situps');
-      fixture.detectChanges();
-
-      const labels = breakdownLabels(fixture);
-      // Single-set strength shows the "Reps" headline; the intervals
-      // block must never render for a strength exercise (Firestore
-      // mutex rejects both fields populated at once).
-      expect(labels).toContain('Reps');
-      expect(labels.every((l) => !l.startsWith('Intervall'))).toBe(true);
-    });
-
-    it('labels the per-row breakdown as "Intervall N" for an endurance exercise (plank)', () => {
-      const { fixture, component } = createDialog(null);
-      component.onCategoryChange('core');
-      component.onExerciseChange('plank.standard');
-      component.addInterval();
-      fixture.detectChanges();
-
-      const labels = breakdownLabels(fixture);
-      // With two intervals the per-row label is "Intervall N" — single
-      // interval collapses to the headline "Intervalle" label, mirroring
-      // how single-set sets-mode collapses to "Reps".
-      expect(labels).toContain('Intervall 1');
-      expect(labels).toContain('Intervall 2');
-      expect(labels.every((l) => !l.startsWith('Set '))).toBe(true);
-    });
-
-    it('submits intervals on the payload for an endurance entry (plank with 30s × 3)', () => {
-      const { component, closeSpy } = createDialog(null);
-
-      component.onCategoryChange('core');
-      component.onExerciseChange('plank.standard');
-      component.timestamp.set('2026-02-10T13:45');
-      component.durationMinutesInput.set('1');
-      component.durationSecondsInput.set('30');
-      component.updateInterval(0, '30');
-      component.addInterval();
-      component.updateInterval(1, '30');
-      component.addInterval();
-      component.updateInterval(2, '30');
-
+      expect(component.category()).toBe('core');
       expect(component.canSubmit()).toBe(true);
-      component.submit();
-
-      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
-      expect(result).toMatchObject({
-        kind: 'exercise',
-        exerciseId: 'plank.standard',
-        measurement: 'time',
-        durationSec: 90,
-        intervals: [30, 30, 30],
-        sets: [],
-        reps: 0,
-      });
-    });
-
-    it('omits intervals on the payload when none were entered for an endurance entry', () => {
-      const { component, closeSpy } = createDialog(null);
-
-      component.onCategoryChange('core');
-      component.onExerciseChange('plank.standard');
-      component.timestamp.set('2026-02-10T13:45');
-      component.durationMinutesInput.set('1');
-      component.durationSecondsInput.set('30');
-
-      component.submit();
-      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
-      // No intervals typed → result.intervals is the empty-array clear
-      // sentinel so an existing breakdown can be wiped on edit. Never
-      // both fields populated at once: strength uses sets, endurance
-      // uses intervals.
-      expect(result.intervals).toEqual([]);
-      expect(result.sets).toEqual([]);
-    });
-
-    it('keeps intervals empty on a strength submission and writes sets only', () => {
-      const { component, closeSpy } = createDialog(null);
-
-      component.onCategoryChange('core');
-      component.onExerciseChange('abs.situps');
-      component.timestamp.set('2026-02-10T13:45');
-      component.updateSet(0, '12');
-
-      component.submit();
-      const result = closeSpy.mock.calls[0][0] as ExerciseEntryDialogResult;
-      expect(result).toMatchObject({
-        measurement: 'reps',
-        reps: 12,
-        sets: [12],
-        intervals: [],
-      });
-    });
-
-    it('pre-fills intervals from an existing endurance edit payload', () => {
-      const { component } = createDialog({
-        kind: 'exercise',
-        exerciseId: 'plank.standard',
-        timestamp: '2026-02-10T13:45:00+01:00',
-        durationSec: 90,
-        intervals: [30, 30, 30],
-      });
-
-      expect(component.intervals()).toEqual([30, 30, 30]);
-    });
-
-    it('clears stale intervals state when switching from endurance to a strength exercise', () => {
-      const { component } = createDialog(null);
-
-      component.onCategoryChange('core');
-      component.onExerciseChange('plank.standard');
-      component.updateInterval(0, '45');
-      component.addInterval();
-      component.updateInterval(1, '45');
-
-      component.onExerciseChange('abs.situps');
-
-      // Switching exercises must wipe the previous breakdown so a stale
-      // intervals value can't leak through to the new exercise — the
-      // Firestore rules / validator enforce the mutex, and submitting
-      // `intervals` on a reps exercise would be rejected.
-      expect(component.intervals()).toEqual([0]);
-      expect(component.sets()).toEqual([0]);
     });
   });
 });

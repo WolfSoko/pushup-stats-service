@@ -14,6 +14,44 @@ import type {
 
 export const SECONDS_MAX = 59;
 
+export interface ExerciseSeed {
+  sets?: number[];
+  intervals?: number[];
+  durationMinutes: string;
+  durationSeconds: string;
+  distanceInput?: string;
+  variantId: string;
+}
+
+/**
+ * Compute the initial form values for an exercise edit payload. Returns
+ * only the fields present on the payload so the caller can leave the rest
+ * at their create-mode defaults (`[0]`, empty strings). Sets vs intervals
+ * are mutually exclusive on the doc, so both are passed through verbatim.
+ */
+export function exerciseSeedFromData(
+  data: ExerciseEntryDialogData,
+  locale: string
+): ExerciseSeed {
+  const parts = splitDurationParts(data.durationSec);
+  const sets = data.sets?.length
+    ? [...data.sets]
+    : data.reps !== undefined && data.reps > 0
+      ? [data.reps]
+      : undefined;
+  return {
+    sets,
+    intervals: data.intervals?.length ? [...data.intervals] : undefined,
+    durationMinutes: parts.minutes,
+    durationSeconds: parts.seconds,
+    distanceInput:
+      data.distanceM !== undefined
+        ? formatKmInput(data.distanceM, locale)
+        : undefined,
+    variantId: data.variantId ?? '',
+  };
+}
+
 const CATEGORY_NAMES: Record<ExerciseCategoryId, () => string> = {
   pushup: () => $localize`:@@exercise.category.pushup:Liegestütze`,
   push: () => $localize`:@@exercise.category.push:Drücken`,
