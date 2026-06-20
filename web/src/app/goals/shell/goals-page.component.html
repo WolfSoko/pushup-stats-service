@@ -1,0 +1,201 @@
+<main class="page-wrap">
+  <app-page-header icon="flag" variant="default">
+    <h1 page-title i18n="@@goalsHeaderTitle">Tagesziele</h1>
+    <p page-subtitle i18n="@@goalsHeaderSubtitle">
+      Verschiedene Übungen pro Tag, pro Woche, pro Monat.
+    </p>
+    <div
+      page-actions
+      class="save-status"
+      role="status"
+      aria-live="polite"
+      [attr.data-status]="saveStatus()"
+      data-testid="goals-save-status"
+    >
+      @switch (saveStatus()) {
+        @case ('saving') {
+          <mat-progress-spinner
+            diameter="16"
+            mode="indeterminate"
+          ></mat-progress-spinner>
+          <span i18n="@@goals.status.saving">Speichert…</span>
+        }
+        @case ('saved') {
+          <mat-icon class="status-icon ok">check_circle</mat-icon>
+          <span i18n="@@goals.status.saved">Gespeichert</span>
+        }
+        @case ('error') {
+          <mat-icon class="status-icon err">error</mat-icon>
+          <span i18n="@@goals.status.error">Fehler beim Speichern</span>
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="retrySave()"
+            i18n="@@goals.status.retry"
+          >
+            Erneut versuchen
+          </button>
+        }
+        @case ('pending') {
+          <mat-icon class="status-icon">edit</mat-icon>
+          <span i18n="@@goals.status.pending">Ungespeicherte Änderungen…</span>
+        }
+        @default {
+          <mat-icon class="status-icon ok">cloud_done</mat-icon>
+          <span i18n="@@goals.status.synced">Alle Ziele gespeichert</span>
+        }
+      }
+    </div>
+  </app-page-header>
+
+  @if (isGuest()) {
+    <div class="guest-banner">
+      <mat-icon>info</mat-icon>
+      <span i18n="@@guest.banner.text"
+        >Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu
+        nutzen.</span
+      >
+      <a mat-stroked-button routerLink="/register" i18n="@@guest.banner.cta"
+        >Konto erstellen</a
+      >
+    </div>
+  }
+
+  <p class="intro" i18n="@@goals.intro">
+    Lege pro Tag, Woche und Monat eine Liste von Übungen mit Zielwerten an. Bei
+    Tageszielen kannst du außerdem festlegen, an welchen Wochentagen das
+    jeweilige Ziel gilt — perfekt für einen Push/Pull/Beine-Splitplan.
+  </p>
+
+  @for (scope of scopes; track scope.id) {
+    <mat-card
+      [id]="'goals-' + scope.id"
+      class="section-card"
+      [attr.data-testid]="'goals-section-' + scope.id"
+    >
+      <mat-card-header>
+        <mat-icon mat-card-avatar>{{ scope.icon }}</mat-icon>
+        <mat-card-title>{{ scope.title }}</mat-card-title>
+        <mat-card-subtitle>{{ scope.subtitle }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="stack">
+        @let list = entriesFor(scope.id)();
+        @if (list.length === 0) {
+          <p
+            class="muted empty"
+            [attr.data-testid]="'goals-empty-' + scope.id"
+            i18n="@@goals.section.empty"
+          >
+            Noch keine Ziele angelegt. Füge unten dein erstes Ziel hinzu.
+          </p>
+        }
+        @for (entry of list; track entry.id) {
+          <div
+            class="goal-row"
+            [attr.data-testid]="'goal-row-' + scope.id + '-' + $index"
+          >
+            <mat-form-field appearance="outline" class="exercise-field">
+              <mat-label i18n="@@goals.field.exercise">Übung</mat-label>
+              <mat-select
+                [value]="entry.exerciseId"
+                (selectionChange)="
+                  updateExercise(scope.id, entry.id, $event.value)
+                "
+              >
+                @for (opt of exerciseOptions; track opt.id) {
+                  <mat-option [value]="opt.id">{{ opt.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="target-field">
+              <mat-label>{{ targetLabel(entry) }}</mat-label>
+              <input
+                matInput
+                type="number"
+                [min]="targetMin(entry)"
+                [max]="targetMax(entry)"
+                [value]="entry.target"
+                [attr.aria-label]="targetLabel(entry)"
+                (input)="updateTarget(scope.id, entry.id, asNumber($event, 1))"
+              />
+              <span matTextSuffix>{{ entry.unit }}</span>
+            </mat-form-field>
+
+            <button
+              type="button"
+              mat-icon-button
+              color="warn"
+              (click)="removeEntry(scope.id, entry.id)"
+              [attr.aria-label]="removeAriaLabel"
+              [attr.data-testid]="'goal-remove-' + scope.id + '-' + $index"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            @if (scope.id === 'daily') {
+              <div class="weekday-row">
+                <span class="weekday-label" i18n="@@goals.weekdayLabel"
+                  >Aktiv an:</span
+                >
+                <mat-button-toggle-group
+                  multiple
+                  hideMultipleSelectionIndicator
+                  [value]="weekdayValue(entry)"
+                  (change)="updateWeekdays(scope.id, entry.id, $event.value)"
+                  [attr.aria-label]="weekdayAria"
+                >
+                  @for (day of weekdays; track day.value) {
+                    <mat-button-toggle [value]="day.value">{{
+                      day.label
+                    }}</mat-button-toggle>
+                  }
+                </mat-button-toggle-group>
+                @if (weekdayValue(entry).length === 0) {
+                  <span
+                    class="muted weekday-hint"
+                    i18n="@@goals.weekdayEveryDayHint"
+                    >Keine Auswahl = gilt jeden Tag.</span
+                  >
+                }
+              </div>
+            }
+          </div>
+        }
+        <button
+          type="button"
+          mat-stroked-button
+          [disabled]="list.length >= maxPerScope"
+          (click)="addEntry(scope.id)"
+          [attr.data-testid]="'goal-add-' + scope.id"
+        >
+          <mat-icon>add</mat-icon>
+          <span i18n="@@goals.addEntry">Ziel hinzufügen</span>
+        </button>
+        @if (list.length >= maxPerScope) {
+          <p class="muted limit-hint" i18n="@@goals.limitHint">
+            Maximal {{ maxPerScope }} Ziele pro Bereich.
+          </p>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <mat-card class="section-card hint-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>tips_and_updates</mat-icon>
+      <mat-card-title i18n="@@goals.linkBack.title"
+        >Andere Einstellungen</mat-card-title
+      >
+      <mat-card-subtitle i18n="@@goals.linkBack.subtitle">
+        Profil, Sichtbarkeit, Erinnerungen und Werbung verwalten.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <a mat-stroked-button routerLink="/settings" i18n="@@goals.linkBack.cta">
+        <mat-icon>tune</mat-icon>
+        Einstellungen öffnen
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</main>
