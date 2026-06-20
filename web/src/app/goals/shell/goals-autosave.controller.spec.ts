@@ -32,6 +32,20 @@ const DIRTY: ComplexGoals = {
 };
 
 const DEBOUNCE_MS = 600;
+const SAVED_INDICATOR_MS = 1800;
+
+const DIRTIER: ComplexGoals = {
+  ...PERSISTED,
+  daily: [
+    {
+      id: 'a',
+      exerciseId: 'pushup',
+      target: 99,
+      measurement: 'reps',
+      unit: 'reps',
+    },
+  ],
+};
 
 function makeDeps(overrides: Partial<GoalsAutoSaveDeps> = {}): {
   deps: GoalsAutoSaveDeps;
@@ -203,6 +217,86 @@ describe('GoalsAutoSaveController', () => {
 
       // then
       expect(save).toHaveBeenCalledTimes(2);
+      expect(ctrl.saveStatus()).toBe('saved');
+      ctrl.destroy();
+    });
+
+    it('should reset a stale error status to idle when the draft reverts to clean', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      const { deps, draftRef } = makeDeps({
+        save: vitest.fn().mockRejectedValue(new Error('down')),
+      });
+      const ctrl = new GoalsAutoSaveController(deps);
+      ctrl.hydrate(PERSISTED);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(ctrl.saveStatus()).toBe('error');
+
+      // when
+      draftRef.current = PERSISTED;
+      ctrl.onDraftChange(PERSISTED);
+
+      // then
+      expect(ctrl.saveStatus()).toBe('idle');
+      ctrl.destroy();
+    });
+  });
+
+  describe('saved indicator', () => {
+    it('should return the saved status to idle after the indicator window elapses', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      const { deps, draftRef } = makeDeps();
+      const ctrl = new GoalsAutoSaveController(deps);
+      ctrl.hydrate(PERSISTED);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(ctrl.saveStatus()).toBe('saved');
+
+      // when
+      vitest.advanceTimersByTime(SAVED_INDICATOR_MS);
+
+      // then
+      expect(ctrl.saveStatus()).toBe('idle');
+      ctrl.destroy();
+    });
+  });
+
+  describe('coalescing', () => {
+    it('should run a second save for the newest draft when it changes mid-flight', async () => {
+      // given a save whose first call we hold open
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      let resolveFirst!: () => void;
+      const first = new Promise<void>((resolve) => {
+        resolveFirst = resolve;
+      });
+      const save = vitest.fn().mockReturnValueOnce(first).mockResolvedValue({});
+      const { deps, draftRef } = makeDeps({ save });
+      const ctrl = new GoalsAutoSaveController(deps);
+      ctrl.hydrate(PERSISTED);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      await Promise.resolve();
+      expect(ctrl.saveStatus()).toBe('saving');
+
+      // when a newer draft arrives before the first save resolves
+      draftRef.current = DIRTIER;
+      ctrl.onDraftChange(DIRTIER);
+      vitest.advanceTimersByTime(DEBOUNCE_MS);
+      resolveFirst();
+      for (let i = 0; i < 6; i++) await Promise.resolve();
+
+      // then the held save and a coalesced follow-up both run, latest last
+      expect(save).toHaveBeenCalledTimes(2);
+      expect(save.mock.calls[1][0].daily?.[0].target).toBe(99);
       expect(ctrl.saveStatus()).toBe('saved');
       ctrl.destroy();
     });

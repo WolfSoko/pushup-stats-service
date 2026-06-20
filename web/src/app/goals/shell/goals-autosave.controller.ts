@@ -63,7 +63,9 @@ export class GoalsAutoSaveController {
     if (baseline === null) return;
     if (scopesEqual(draft, baseline)) {
       this.cancelTimer();
-      if (this.saveStatus() === 'pending') this.saveStatus.set('idle');
+      // Clean draft: clear any leftover 'pending' or stale 'error' pill. Never
+      // stomp a 'saving' status mid-round-trip.
+      if (this.saveStatus() !== 'saving') this.saveStatus.set('idle');
       return;
     }
     this.schedule();
