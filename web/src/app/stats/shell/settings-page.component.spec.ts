@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Analytics } from '@angular/fire/analytics';
+import { clearTranslations, loadTranslations } from '@angular/localize';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-push/push';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
@@ -286,8 +287,11 @@ describe('SettingsPageComponent — auto-save', () => {
       expect(component.deletingAccount()).toBe(false);
     });
 
-    it('should clear deleteDialogError and start deletion when correct phrase is entered', async () => {
-      // given
+    it('should accept the locale-translated phrase, not the German fallback', async () => {
+      // given — inject a non-German translation so $localize returns 'delete'.
+      // This test would have FAILED before the fix: the old hardcoded 'löschen'
+      // would not match 'delete', blocking deletion on every non-German locale.
+      loadTranslations({ 'settings.delete.confirmPlaceholder': 'delete' });
       const deleteAccountSpy = vitest.fn().mockResolvedValue(undefined);
       TestBed.resetTestingModule();
       const configSignalLocal = signal<UserConfig>({
@@ -331,7 +335,7 @@ describe('SettingsPageComponent — auto-save', () => {
       const localComponent = localFixture.componentInstance;
       localFixture.detectChanges();
       await flushMicrotasks();
-      localComponent.deletePhraseInput.set('löschen');
+      localComponent.deletePhraseInput.set('delete');
 
       // when
       await localComponent.confirmDeleteFromDialog();
@@ -340,6 +344,8 @@ describe('SettingsPageComponent — auto-save', () => {
       // then
       expect(localComponent.deleteDialogError()).toBe('');
       expect(deleteAccountSpy).toHaveBeenCalledTimes(1);
+
+      clearTranslations();
     });
   });
 
