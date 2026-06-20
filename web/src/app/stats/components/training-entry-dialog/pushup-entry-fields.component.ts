@@ -68,6 +68,9 @@ import {
     RouterLink,
   ],
   styleUrl: './training-entry-dialog.component.scss',
+  // Transparent host so the fields stay direct items of the dialog's
+  // `mat-dialog-content` grid (preserves the 10px inter-field spacing).
+  styles: ':host { display: contents; }',
   templateUrl: './pushup-entry-fields.component.html',
 })
 export class PushupEntryFieldsComponent {
