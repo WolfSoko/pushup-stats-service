@@ -9,13 +9,12 @@ import {
   PushupTypeOption,
 } from './training-entry-dialog.models';
 
-/** Append a clone of the last entry (or 0) to a sets/intervals list. */
 export function appendListEntry(list: ReadonlyArray<number>): number[] {
   const last = list[list.length - 1] ?? 0;
   return [...list, last > 0 ? last : 0];
 }
 
-/** Drop an index from a sets/intervals list, never leaving it empty. */
+// Never leaves the list empty: a removed sole entry collapses back to `[0]`.
 export function removeListEntry(
   list: ReadonlyArray<number>,
   index: number
@@ -24,7 +23,6 @@ export function removeListEntry(
   return next.length === 0 ? [0] : next;
 }
 
-/** Parse + floor a non-negative integer, optionally clamped to a cap. */
 export function clampListValue(value: string, max = Infinity): number {
   const parsed = Number(value);
   const finite = Number.isFinite(parsed) ? Math.max(0, Math.floor(parsed)) : 0;
@@ -154,8 +152,6 @@ export function canSubmitExercise(args: {
 export interface BuildExerciseInput {
   timestamp: string;
   def: ExerciseDefinition;
-  // Variant tri-state: `{}` unchanged, `{variantId}` set/keep,
-  // `{variantId: null}` cleared from an existing one.
   variantPatch: { variantId?: string | null };
   sets: ReadonlyArray<number>;
   intervals: ReadonlyArray<number>;
@@ -222,12 +218,8 @@ export function buildExerciseResult(
   }
 
   if (measurement === 'distance') {
-    // No pure-`distance` exercise ships in the catalog yet (cardio
-    // entries use `distance-time`), so this branch is dead today. Kept
-    // in lockstep with the data model so a future distance-only
-    // exercise (e.g. a sprint-repeats workout measured purely by metres)
-    // emits `intervals` instead of silently dropping them through the
-    // strength fallback.
+    // Dead today (no pure-`distance` catalog exercise), kept in lockstep with
+    // the data model so a future distance-only exercise emits `intervals`.
     if (distanceM === null || distanceM <= 0) return null;
     return {
       kind: 'exercise',

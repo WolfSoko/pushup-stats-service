@@ -42,10 +42,8 @@ import {
   removeListEntry,
 } from './training-entry-dialog.submit';
 
-/**
- * All exercise-mode form state + logic, extracted so the component stays a
- * thin shell. Inputs are supplied as signals so the state stays reactive.
- */
+// All exercise-mode form state + logic, extracted so the component stays a thin
+// shell. Inputs are supplied as signals so the state stays reactive.
 export class ExerciseFormState {
   readonly exerciseId = signal<string>('');
 
@@ -65,9 +63,8 @@ export class ExerciseFormState {
   readonly currentDefinition = computed<ExerciseDefinition | null>(() => {
     const def = findExerciseDefinition(this.exerciseId());
     if (def) return def;
-    // Stale-data fallback: in edit mode the catalog id may have been
-    // renamed/removed since the entry was written — synthesize a permissive
-    // definition so the form still renders and the user can fix the entry.
+    // Stale-data fallback: in edit mode a renamed/removed catalog id gets a
+    // synthetic permissive definition so the user can still fix the entry.
     const data = this.data();
     if (this.isEditMode() && data?.kind === 'exercise') {
       return syntheticDefinitionFor(data, this.category());
@@ -81,9 +78,8 @@ export class ExerciseFormState {
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
 
-  // Per-interval value for endurance exercises. Strength exercises keep
-  // `[0]` so a stale value can't leak through a measurement switch —
-  // submit always picks `sets` vs `intervals`, never both.
+  // Endurance per-interval value; strength keeps `[0]` so a stale value can't
+  // leak through a measurement switch (submit picks `sets` xor `intervals`).
   readonly intervals = signal<number[]>([0]);
   readonly hasMultipleIntervals = computed(() => this.intervals().length > 1);
   readonly breakdownField = computed<'sets' | 'intervals'>(() => {
@@ -105,9 +101,8 @@ export class ExerciseFormState {
   readonly distanceInput = signal('');
   readonly distanceM = computed(() => parseKmToMeters(this.distanceInput()));
 
-  // Locale-aware km placeholder. The input is `type="text"` +
-  // `inputmode="decimal"` (not `type="number"`) so users can type either
-  // separator — `type="number"` silently rejects "," regardless of locale.
+  // Locale-aware km placeholder; the input is text + inputmode=decimal so both
+  // decimal separators work (`type="number"` rejects "," regardless of locale).
   readonly distancePlaceholder: string;
   readonly isTimeMeasurement = computed(
     () => this.currentDefinition()?.measurement === 'time'
@@ -223,24 +218,19 @@ export class ExerciseFormState {
   addSet(): void {
     this.sets.update(appendListEntry);
   }
-
   removeSet(index: number): void {
     this.sets.update((s) => removeListEntry(s, index));
   }
-
   updateSet(index: number, value: string): void {
     const clamped = clampListValue(value, this.repsMax());
     this.sets.update((s) => s.map((v, i) => (i === index ? clamped : v)));
   }
-
   addInterval(): void {
     this.intervals.update(appendListEntry);
   }
-
   removeInterval(index: number): void {
     this.intervals.update((s) => removeListEntry(s, index));
   }
-
   updateInterval(index: number, value: string): void {
     const finite = clampListValue(value);
     this.intervals.update((s) => s.map((v, i) => (i === index ? finite : v)));
