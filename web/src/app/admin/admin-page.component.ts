@@ -14,8 +14,6 @@ import { RouterLink } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -25,20 +23,14 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
-import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
+import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
+import { AdminUser, BulkDeleteResult } from './admin-page.models';
 import {
-  AdminFeedback,
-  AdminUser,
-  BulkDeleteResult,
-} from './admin-page.models';
-import {
-  adminFeedbackSortValue,
   adminUserSortValue,
   errorMessage,
   filterAdminUsers,
-  toggleSetMember,
 } from './admin-page.helpers';
 
 @Component({
@@ -49,8 +41,6 @@ import {
     FormsModule,
     MatButtonModule,
     MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
     MatDialogModule,
     MatIconModule,
     MatInputModule,
@@ -61,472 +51,10 @@ import {
     MatSlideToggleModule,
     PageHeaderComponent,
     RouterLink,
+    AdminFeedbackSectionComponent,
   ],
-  template: `
-    <div class="admin-page">
-      <app-page-header icon="admin_panel_settings" variant="admin">
-        <h1 page-title i18n="@@adminHeaderTitle">Admin-Bereich</h1>
-        <p page-subtitle i18n="@@adminHeaderSubtitle">
-          Nutzerverwaltung, Feedback und Bereinigungen.
-        </p>
-      </app-page-header>
-
-      <!-- Data migrations (own page) -->
-      <a
-        mat-stroked-button
-        routerLink="/admin/migrations"
-        class="migrations-link"
-      >
-        <mat-icon>sync_alt</mat-icon>
-        <span i18n="@@admin.migrations.title">Daten-Migrationen</span>
-      </a>
-
-      <!-- Bulk action card -->
-      <mat-card class="bulk-card">
-        <mat-card-header>
-          <mat-card-title i18n="@@admin.bulk.title"
-            >Anonyme Benutzer aufräumen</mat-card-title
-          >
-        </mat-card-header>
-        <mat-card-content>
-          <mat-form-field appearance="outline">
-            <mat-label i18n="@@admin.bulk.daysLabel"
-              >Inaktiv seit (Tage)</mat-label
-            >
-            <input
-              matInput
-              type="number"
-              [ngModel]="inactiveDays()"
-              (ngModelChange)="inactiveDays.set(+$event)"
-              min="1"
-            />
-          </mat-form-field>
-          <p class="bulk-hint" i18n="@@admin.bulk.hint">
-            Löscht anonyme Benutzer ohne Pushups in den letzten
-            {{ inactiveDays() }} Tagen.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-flat-button
-            color="warn"
-            [disabled]="bulkLoading()"
-            (click)="bulkDelete()"
-          >
-            @if (bulkLoading()) {
-              <mat-spinner diameter="20" />
-            } @else {
-              <ng-container>
-                <mat-icon>delete_sweep</mat-icon>
-                <span i18n="@@admin.bulk.button">Inaktive löschen</span>
-              </ng-container>
-            }
-          </button>
-        </mat-card-actions>
-        @if (bulkResult()) {
-          <mat-card-content>
-            <p class="bulk-result">
-              <span i18n="@@admin.bulk.deleted">Gelöscht:</span>
-              {{ bulkResult()!.deleted }},
-              <span i18n="@@admin.bulk.skipped">Übersprungen:</span>
-              {{ bulkResult()!.skipped }}
-            </p>
-          </mat-card-content>
-        }
-        @if (bulkError()) {
-          <mat-card-content>
-            <p class="error-text">{{ bulkError() }}</p>
-          </mat-card-content>
-        }
-      </mat-card>
-
-      <!-- Filter toggle -->
-      <div class="filter-row">
-        <mat-slide-toggle
-          [ngModel]="showOnlyAnonymous()"
-          (ngModelChange)="showOnlyAnonymous.set($event)"
-          i18n="@@admin.filter.anonymous"
-        >
-          Nur anonyme Benutzer
-        </mat-slide-toggle>
-        <button
-          mat-icon-button
-          (click)="loadUsers()"
-          [matTooltip]="refreshTooltip"
-        >
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </div>
-
-      @if (loading()) {
-        <div class="spinner-container">
-          <mat-spinner />
-        </div>
-      } @else if (error()) {
-        <p class="error-text">{{ error() }}</p>
-      } @else {
-        <mat-card>
-          <mat-table
-            [dataSource]="usersDataSource"
-            matSort
-            #usersSort="matSort"
-          >
-            <!-- UID column -->
-            <ng-container matColumnDef="uid">
-              <mat-header-cell *matHeaderCellDef i18n="@@admin.col.uid"
-                >UID</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">
-                <span [matTooltip]="u.uid" class="uid-chip">{{
-                  u.uid.slice(0, 8)
-                }}</span>
-              </mat-cell>
-            </ng-container>
-
-            <!-- displayName column -->
-            <ng-container matColumnDef="displayName">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.col.name"
-                >Name</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">{{
-                u.displayName ?? '–'
-              }}</mat-cell>
-            </ng-container>
-
-            <!-- email column -->
-            <ng-container matColumnDef="email">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.col.email"
-                >E-Mail</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">{{ u.email ?? '–' }}</mat-cell>
-            </ng-container>
-
-            <!-- anonymous column -->
-            <ng-container matColumnDef="anonymous">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.col.anon"
-                >Anon</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">
-                @if (u.anonymous) {
-                  <mat-icon [matTooltip]="'Anonym'" class="anon-icon-warn"
-                    >person_outline</mat-icon
-                  >
-                }
-              </mat-cell>
-            </ng-container>
-
-            <!-- pushupCount column -->
-            <ng-container matColumnDef="pushupCount">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.col.pushups"
-                >Pushups</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">{{ u.pushupCount }}</mat-cell>
-            </ng-container>
-
-            <!-- lastEntry column -->
-            <ng-container matColumnDef="lastEntry">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.col.lastEntry"
-                >Letzter Eintrag</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">{{
-                u.lastEntry | date: 'short'
-              }}</mat-cell>
-            </ng-container>
-
-            <!-- createdAt column -->
-            <ng-container matColumnDef="createdAt">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.col.createdAt"
-                >Erstellt</mat-header-cell
-              >
-              <mat-cell *matCellDef="let u">{{
-                u.createdAt | date: 'short'
-              }}</mat-cell>
-            </ng-container>
-
-            <!-- actions column -->
-            <ng-container matColumnDef="actions">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
-                <button
-                  mat-icon-button
-                  color="warn"
-                  (click)="openDeleteDialog(u)"
-                  [matTooltip]="'Benutzer löschen'"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns" />
-            <mat-row
-              *matRowDef="let row; columns: displayedColumns"
-              class="clickable-row"
-              tabindex="0"
-              role="button"
-              [attr.aria-label]="detailsAriaLabel(row)"
-              (click)="openDetailsDialog(row)"
-              (keydown.enter)="openDetailsDialog(row)"
-              (keydown.space)="openDetailsDialog(row); $event.preventDefault()"
-            />
-          </mat-table>
-        </mat-card>
-      }
-
-      <!-- Feedback section -->
-      <h2 i18n="@@admin.feedback.title">Feedback</h2>
-
-      <div class="filter-row">
-        <button
-          mat-icon-button
-          (click)="loadFeedback()"
-          [matTooltip]="refreshTooltip"
-        >
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </div>
-
-      @if (feedbackLoading()) {
-        <div class="spinner-container">
-          <mat-spinner />
-        </div>
-      } @else if (feedbackError()) {
-        <p class="error-text">{{ feedbackError() }}</p>
-      } @else if (feedbackList().length === 0) {
-        <p i18n="@@admin.feedback.empty">Noch kein Feedback vorhanden.</p>
-      } @else {
-        @if (feedbackActionError()) {
-          <p class="error-text">{{ feedbackActionError() }}</p>
-        }
-        <mat-card>
-          <mat-table
-            [dataSource]="feedbackDataSource"
-            matSort
-            #feedbackSort="matSort"
-          >
-            <ng-container matColumnDef="createdAt">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.feedback.col.date"
-                >Datum</mat-header-cell
-              >
-              <mat-cell *matCellDef="let f">{{
-                f.createdAt | date: 'short'
-              }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.feedback.col.name"
-                >Name</mat-header-cell
-              >
-              <mat-cell *matCellDef="let f">{{ f.name ?? '–' }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="email">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                i18n="@@admin.feedback.col.email"
-                >E-Mail</mat-header-cell
-              >
-              <mat-cell *matCellDef="let f">{{ f.email ?? '–' }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="message">
-              <mat-header-cell
-                *matHeaderCellDef
-                i18n="@@admin.feedback.col.message"
-                >Nachricht</mat-header-cell
-              >
-              <mat-cell *matCellDef="let f" class="message-cell">{{
-                f.message
-              }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="userId">
-              <mat-header-cell
-                *matHeaderCellDef
-                i18n="@@admin.feedback.col.userId"
-                >User</mat-header-cell
-              >
-              <mat-cell *matCellDef="let f">
-                @if (f.userId) {
-                  <span [matTooltip]="f.userId" class="uid-chip">{{
-                    f.userId.slice(0, 8)
-                  }}</span>
-                } @else {
-                  <mat-icon [matTooltip]="anonymTooltip" class="anon-icon"
-                    >person_outline</mat-icon
-                  >
-                }
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="feedbackActions">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let f" class="feedback-actions-cell">
-                <button
-                  mat-icon-button
-                  [attr.aria-label]="
-                    f.read ? markUnreadTooltip : markReadTooltip
-                  "
-                  [matTooltip]="f.read ? markUnreadTooltip : markReadTooltip"
-                  [disabled]="isFeedbackActionLoading(f.id)"
-                  (click)="markFeedbackRead(f, !f.read)"
-                >
-                  <mat-icon>{{
-                    f.read ? 'mark_email_read' : 'mark_email_unread'
-                  }}</mat-icon>
-                </button>
-                @if (f.githubIssueUrl) {
-                  <a
-                    mat-icon-button
-                    [href]="f.githubIssueUrl"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    [attr.aria-label]="openIssueTooltip"
-                    [matTooltip]="openIssueTooltip"
-                  >
-                    <mat-icon>open_in_new</mat-icon>
-                  </a>
-                } @else {
-                  <button
-                    mat-icon-button
-                    [attr.aria-label]="createIssueTooltip"
-                    [matTooltip]="createIssueTooltip"
-                    [disabled]="isFeedbackActionLoading(f.id)"
-                    (click)="createGithubIssue(f)"
-                  >
-                    <mat-icon>bug_report</mat-icon>
-                  </button>
-                }
-                <button
-                  mat-icon-button
-                  color="warn"
-                  [attr.aria-label]="deleteFeedbackTooltip"
-                  [matTooltip]="deleteFeedbackTooltip"
-                  [disabled]="isFeedbackActionLoading(f.id)"
-                  (click)="deleteFeedback(f)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="feedbackColumns" />
-            <mat-row
-              *matRowDef="let row; columns: feedbackColumns"
-              [class.feedback-read]="row.read"
-            />
-          </mat-table>
-        </mat-card>
-      }
-    </div>
-  `,
-  styles: `
-    .admin-page {
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    h1 {
-      margin-bottom: 24px;
-    }
-    .bulk-card {
-      margin-bottom: 24px;
-    }
-    .bulk-card mat-form-field {
-      margin-top: 16px;
-    }
-    .bulk-hint {
-      color: var(--mat-sys-on-surface-variant);
-      font-size: 0.85em;
-      margin-top: 8px;
-    }
-    .bulk-result {
-      font-weight: 500;
-    }
-    .filter-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    .spinner-container {
-      display: flex;
-      justify-content: center;
-      padding: 48px;
-    }
-    .error-text {
-      color: var(--mat-sys-error);
-    }
-    .uid-chip {
-      font-family: monospace;
-      font-size: 0.85em;
-      background: var(--mat-sys-surface-variant);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    .anon-icon-warn {
-      color: var(--mat-sys-error);
-    }
-    mat-table {
-      width: 100%;
-    }
-    .clickable-row {
-      cursor: pointer;
-    }
-    .clickable-row:hover {
-      background: var(--mat-sys-surface-variant);
-    }
-    .clickable-row:focus-visible {
-      outline: 2px solid var(--mat-sys-primary);
-      outline-offset: -2px;
-      background: var(--mat-sys-surface-variant);
-    }
-    h2 {
-      margin-top: 48px;
-      margin-bottom: 16px;
-    }
-    .message-cell {
-      white-space: pre-wrap;
-      word-break: break-word;
-      max-width: 400px;
-    }
-    .anon-icon {
-      opacity: 0.5;
-    }
-    .feedback-read {
-      opacity: 0.55;
-    }
-    .feedback-actions-cell {
-      display: flex;
-      gap: 4px;
-      justify-content: flex-end;
-    }
-  `,
+  templateUrl: './admin-page.component.html',
+  styleUrl: './admin-page.component.scss',
 })
 export class AdminPageComponent {
   private readonly functions = inject(Functions);
@@ -544,12 +72,6 @@ export class AdminPageComponent {
   ];
 
   readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
-  readonly anonymTooltip = $localize`:@@admin.feedback.anon:Anonym`;
-  readonly markReadTooltip = $localize`:@@admin.feedback.markRead:Als gelesen markieren`;
-  readonly markUnreadTooltip = $localize`:@@admin.feedback.markUnread:Als ungelesen markieren`;
-  readonly createIssueTooltip = $localize`:@@admin.feedback.createIssue:GitHub-Issue erstellen`;
-  readonly openIssueTooltip = $localize`:@@admin.feedback.openIssue:GitHub-Issue öffnen`;
-  readonly deleteFeedbackTooltip = $localize`:@@admin.feedback.delete:Feedback löschen`;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
@@ -559,51 +81,25 @@ export class AdminPageComponent {
   readonly bulkError = signal<string | null>(null);
   readonly bulkResult = signal<BulkDeleteResult | null>(null);
 
-  readonly feedbackColumns = [
-    'createdAt',
-    'name',
-    'email',
-    'message',
-    'userId',
-    'feedbackActions',
-  ];
-  readonly feedbackLoading = signal(false);
-  readonly feedbackError = signal<string | null>(null);
-  readonly feedbackList = signal<AdminFeedback[]>([]);
-  readonly feedbackActionLoading = signal<Set<string>>(new Set());
-  readonly feedbackActionError = signal<string | null>(null);
-
   readonly filteredUsers = computed(() =>
     filterAdminUsers(this.users(), this.showOnlyAnonymous())
   );
 
   readonly usersDataSource = new MatTableDataSource<AdminUser>([]);
-  readonly feedbackDataSource = new MatTableDataSource<AdminFeedback>([]);
-
   private readonly usersSort = viewChild<MatSort>('usersSort');
-  private readonly feedbackSort = viewChild<MatSort>('feedbackSort');
 
   constructor() {
     this.usersDataSource.sortingDataAccessor = adminUserSortValue;
-    this.feedbackDataSource.sortingDataAccessor = adminFeedbackSortValue;
 
     effect(() => {
       this.usersDataSource.data = this.filteredUsers();
     });
     effect(() => {
-      this.feedbackDataSource.data = this.feedbackList();
-    });
-    effect(() => {
       const s = this.usersSort();
       if (s) this.usersDataSource.sort = s;
     });
-    effect(() => {
-      const s = this.feedbackSort();
-      if (s) this.feedbackDataSource.sort = s;
-    });
 
     this.loadUsers();
-    this.loadFeedback();
   }
 
   async loadUsers(): Promise<void> {
@@ -620,101 +116,6 @@ export class AdminPageComponent {
       this.error.set(errorMessage(err));
     } finally {
       this.loading.set(false);
-    }
-  }
-
-  async loadFeedback(): Promise<void> {
-    this.feedbackLoading.set(true);
-    this.feedbackError.set(null);
-    try {
-      const fn = httpsCallable<void, AdminFeedback[]>(
-        this.functions,
-        'adminListFeedback'
-      );
-      const result = await fn();
-      this.feedbackList.set(result.data);
-    } catch (err) {
-      this.feedbackError.set(errorMessage(err));
-    } finally {
-      this.feedbackLoading.set(false);
-    }
-  }
-
-  isFeedbackActionLoading(id: string): boolean {
-    return this.feedbackActionLoading().has(id);
-  }
-
-  private setFeedbackLoading(id: string, loading: boolean): void {
-    this.feedbackActionLoading.update((s) => toggleSetMember(s, id, loading));
-  }
-
-  async markFeedbackRead(
-    feedback: AdminFeedback,
-    read: boolean
-  ): Promise<void> {
-    this.setFeedbackLoading(feedback.id, true);
-    this.feedbackActionError.set(null);
-    try {
-      const fn = httpsCallable(this.functions, 'adminMarkFeedbackRead');
-      await fn({ feedbackId: feedback.id, read });
-      this.feedbackList.update((list) =>
-        list.map((f) => (f.id === feedback.id ? { ...f, read } : f))
-      );
-    } catch (err) {
-      this.feedbackActionError.set(errorMessage(err));
-    } finally {
-      this.setFeedbackLoading(feedback.id, false);
-    }
-  }
-
-  async deleteFeedback(feedback: AdminFeedback): Promise<void> {
-    const ref = this.dialog.open<
-      DeleteFeedbackDialogComponent,
-      { name: string | null; message: string },
-      boolean
-    >(DeleteFeedbackDialogComponent, {
-      data: { name: feedback.name, message: feedback.message },
-      width: '480px',
-    });
-
-    const confirmed = await firstValueFrom(ref.afterClosed());
-    if (!confirmed) return;
-
-    this.setFeedbackLoading(feedback.id, true);
-    this.feedbackActionError.set(null);
-    try {
-      const fn = httpsCallable(this.functions, 'adminDeleteFeedback');
-      await fn({ feedbackId: feedback.id });
-      this.feedbackList.update((list) =>
-        list.filter((f) => f.id !== feedback.id)
-      );
-    } catch (err) {
-      this.feedbackActionError.set(errorMessage(err));
-    } finally {
-      this.setFeedbackLoading(feedback.id, false);
-    }
-  }
-
-  async createGithubIssue(feedback: AdminFeedback): Promise<void> {
-    this.setFeedbackLoading(feedback.id, true);
-    this.feedbackActionError.set(null);
-    try {
-      const fn = httpsCallable<unknown, { ok: boolean; issueUrl: string }>(
-        this.functions,
-        'adminCreateGithubIssue'
-      );
-      const result = await fn({ feedbackId: feedback.id });
-      this.feedbackList.update((list) =>
-        list.map((f) =>
-          f.id === feedback.id
-            ? { ...f, githubIssueUrl: result.data.issueUrl }
-            : f
-        )
-      );
-    } catch (err) {
-      this.feedbackActionError.set(errorMessage(err));
-    } finally {
-      this.setFeedbackLoading(feedback.id, false);
     }
   }
 

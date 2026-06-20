@@ -1,0 +1,214 @@
+<div class="admin-page">
+  <app-page-header icon="admin_panel_settings" variant="admin">
+    <h1 page-title i18n="@@adminHeaderTitle">Admin-Bereich</h1>
+    <p page-subtitle i18n="@@adminHeaderSubtitle">
+      Nutzerverwaltung, Feedback und Bereinigungen.
+    </p>
+  </app-page-header>
+
+  <!-- Data migrations (own page) -->
+  <a mat-stroked-button routerLink="/admin/migrations" class="migrations-link">
+    <mat-icon>sync_alt</mat-icon>
+    <span i18n="@@admin.migrations.title">Daten-Migrationen</span>
+  </a>
+
+  <!-- Bulk action card -->
+  <mat-card class="bulk-card">
+    <mat-card-header>
+      <mat-card-title i18n="@@admin.bulk.title"
+        >Anonyme Benutzer aufräumen</mat-card-title
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label i18n="@@admin.bulk.daysLabel">Inaktiv seit (Tage)</mat-label>
+        <input
+          matInput
+          type="number"
+          [ngModel]="inactiveDays()"
+          (ngModelChange)="inactiveDays.set(+$event)"
+          min="1"
+        />
+      </mat-form-field>
+      <p class="bulk-hint" i18n="@@admin.bulk.hint">
+        Löscht anonyme Benutzer ohne Pushups in den letzten
+        {{ inactiveDays() }} Tagen.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-flat-button
+        color="warn"
+        [disabled]="bulkLoading()"
+        (click)="bulkDelete()"
+      >
+        @if (bulkLoading()) {
+          <mat-spinner diameter="20" />
+        } @else {
+          <ng-container>
+            <mat-icon>delete_sweep</mat-icon>
+            <span i18n="@@admin.bulk.button">Inaktive löschen</span>
+          </ng-container>
+        }
+      </button>
+    </mat-card-actions>
+    @if (bulkResult()) {
+      <mat-card-content>
+        <p class="bulk-result">
+          <span i18n="@@admin.bulk.deleted">Gelöscht:</span>
+          {{ bulkResult()!.deleted }},
+          <span i18n="@@admin.bulk.skipped">Übersprungen:</span>
+          {{ bulkResult()!.skipped }}
+        </p>
+      </mat-card-content>
+    }
+    @if (bulkError()) {
+      <mat-card-content>
+        <p class="error-text">{{ bulkError() }}</p>
+      </mat-card-content>
+    }
+  </mat-card>
+
+  <!-- Filter toggle -->
+  <div class="filter-row">
+    <mat-slide-toggle
+      [ngModel]="showOnlyAnonymous()"
+      (ngModelChange)="showOnlyAnonymous.set($event)"
+      i18n="@@admin.filter.anonymous"
+    >
+      Nur anonyme Benutzer
+    </mat-slide-toggle>
+    <button mat-icon-button (click)="loadUsers()" [matTooltip]="refreshTooltip">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="spinner-container">
+      <mat-spinner />
+    </div>
+  } @else if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  } @else {
+    <mat-card>
+      <mat-table [dataSource]="usersDataSource" matSort #usersSort="matSort">
+        <!-- UID column -->
+        <ng-container matColumnDef="uid">
+          <mat-header-cell *matHeaderCellDef i18n="@@admin.col.uid"
+            >UID</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">
+            <span [matTooltip]="u.uid" class="uid-chip">{{
+              u.uid.slice(0, 8)
+            }}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- displayName column -->
+        <ng-container matColumnDef="displayName">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.col.name"
+            >Name</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">{{ u.displayName ?? '–' }}</mat-cell>
+        </ng-container>
+
+        <!-- email column -->
+        <ng-container matColumnDef="email">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.col.email"
+            >E-Mail</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">{{ u.email ?? '–' }}</mat-cell>
+        </ng-container>
+
+        <!-- anonymous column -->
+        <ng-container matColumnDef="anonymous">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.col.anon"
+            >Anon</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">
+            @if (u.anonymous) {
+              <mat-icon [matTooltip]="'Anonym'" class="anon-icon-warn"
+                >person_outline</mat-icon
+              >
+            }
+          </mat-cell>
+        </ng-container>
+
+        <!-- pushupCount column -->
+        <ng-container matColumnDef="pushupCount">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.col.pushups"
+            >Pushups</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">{{ u.pushupCount }}</mat-cell>
+        </ng-container>
+
+        <!-- lastEntry column -->
+        <ng-container matColumnDef="lastEntry">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.col.lastEntry"
+            >Letzter Eintrag</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">{{
+            u.lastEntry | date: 'short'
+          }}</mat-cell>
+        </ng-container>
+
+        <!-- createdAt column -->
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.col.createdAt"
+            >Erstellt</mat-header-cell
+          >
+          <mat-cell *matCellDef="let u">{{
+            u.createdAt | date: 'short'
+          }}</mat-cell>
+        </ng-container>
+
+        <!-- actions column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="openDeleteDialog(u)"
+              [matTooltip]="'Benutzer löschen'"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns" />
+        <mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="clickable-row"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="detailsAriaLabel(row)"
+          (click)="openDetailsDialog(row)"
+          (keydown.enter)="openDetailsDialog(row)"
+          (keydown.space)="openDetailsDialog(row); $event.preventDefault()"
+        />
+      </mat-table>
+    </mat-card>
+  }
+
+  <app-admin-feedback-section />
+</div>
