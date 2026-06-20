@@ -1,0 +1,146 @@
+<h2 i18n="@@admin.feedback.title">Feedback</h2>
+
+<div class="filter-row">
+  <button
+    mat-icon-button
+    (click)="loadFeedback()"
+    [matTooltip]="refreshTooltip"
+    [attr.aria-label]="refreshTooltip"
+  >
+    <mat-icon>refresh</mat-icon>
+  </button>
+</div>
+
+@if (feedbackLoading()) {
+  <div class="spinner-container">
+    <mat-spinner />
+  </div>
+} @else if (feedbackError()) {
+  <p class="error-text">{{ feedbackError() }}</p>
+} @else if (feedbackList().length === 0) {
+  <p i18n="@@admin.feedback.empty">Noch kein Feedback vorhanden.</p>
+} @else {
+  @if (feedbackActionError()) {
+    <p class="error-text">{{ feedbackActionError() }}</p>
+  }
+  <mat-card>
+    <mat-table
+      [dataSource]="feedbackDataSource"
+      matSort
+      #feedbackSort="matSort"
+    >
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@admin.feedback.col.date"
+          >Datum</mat-header-cell
+        >
+        <mat-cell *matCellDef="let f">{{
+          f.createdAt | date: 'short'
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@admin.feedback.col.name"
+          >Name</mat-header-cell
+        >
+        <mat-cell *matCellDef="let f">{{ f.name ?? '–' }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          i18n="@@admin.feedback.col.email"
+          >E-Mail</mat-header-cell
+        >
+        <mat-cell *matCellDef="let f">{{ f.email ?? '–' }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="message">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.feedback.col.message"
+          >Nachricht</mat-header-cell
+        >
+        <mat-cell *matCellDef="let f" class="message-cell">{{
+          f.message
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="userId">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.feedback.col.userId"
+          >User</mat-header-cell
+        >
+        <mat-cell *matCellDef="let f">
+          @if (f.userId) {
+            <span [matTooltip]="f.userId" class="uid-chip">{{
+              f.userId.slice(0, 8)
+            }}</span>
+          } @else {
+            <mat-icon [matTooltip]="anonymTooltip" class="anon-icon"
+              >person_outline</mat-icon
+            >
+          }
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="feedbackActions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let f" class="feedback-actions-cell">
+          <button
+            mat-icon-button
+            [attr.aria-label]="f.read ? markUnreadTooltip : markReadTooltip"
+            [matTooltip]="f.read ? markUnreadTooltip : markReadTooltip"
+            [disabled]="isFeedbackActionLoading(f.id)"
+            (click)="markFeedbackRead(f, !f.read)"
+          >
+            <mat-icon>{{
+              f.read ? 'mark_email_read' : 'mark_email_unread'
+            }}</mat-icon>
+          </button>
+          @if (f.githubIssueUrl) {
+            <a
+              mat-icon-button
+              [href]="f.githubIssueUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="openIssueTooltip"
+              [matTooltip]="openIssueTooltip"
+            >
+              <mat-icon>open_in_new</mat-icon>
+            </a>
+          } @else {
+            <button
+              mat-icon-button
+              [attr.aria-label]="createIssueTooltip"
+              [matTooltip]="createIssueTooltip"
+              [disabled]="isFeedbackActionLoading(f.id)"
+              (click)="createGithubIssue(f)"
+            >
+              <mat-icon>bug_report</mat-icon>
+            </button>
+          }
+          <button
+            mat-icon-button
+            color="warn"
+            [attr.aria-label]="deleteFeedbackTooltip"
+            [matTooltip]="deleteFeedbackTooltip"
+            [disabled]="isFeedbackActionLoading(f.id)"
+            (click)="deleteFeedback(f)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="feedbackColumns" />
+      <mat-row
+        *matRowDef="let row; columns: feedbackColumns"
+        [class.feedback-read]="row.read"
+      />
+    </mat-table>
+  </mat-card>
+}
