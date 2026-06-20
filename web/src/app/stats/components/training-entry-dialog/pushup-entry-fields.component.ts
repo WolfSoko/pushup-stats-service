@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AsyncPipe } from '@angular/common';
 import { map, startWith } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -56,7 +55,6 @@ import {
   selector: 'app-pushup-entry-fields',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AsyncPipe,
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
@@ -115,15 +113,20 @@ export class PushupEntryFieldsComponent {
 
   private readonly sourceOptions = ['web', 'whatsapp'];
 
-  readonly filteredPushupTypeOptions$ =
+  readonly filteredPushupTypeOptions = toSignal(
     this.pushupTypeControl.valueChanges.pipe(
       startWith(this.pushupTypeControl.value),
       map((value) => filterPushupTypeOptions(value, this.pushupTypeOptions))
-    );
+    ),
+    { initialValue: this.pushupTypeOptions as PushupTypeOption[] }
+  );
 
-  readonly filteredSourceOptions$ = this.sourceControl.valueChanges.pipe(
-    startWith(this.sourceControl.value),
-    map((value) => filterStringOptions(value, this.sourceOptions))
+  readonly filteredSourceOptions = toSignal(
+    this.sourceControl.valueChanges.pipe(
+      startWith(this.sourceControl.value),
+      map((value) => filterStringOptions(value, this.sourceOptions))
+    ),
+    { initialValue: this.sourceOptions as string[] }
   );
 
   readonly displayPushupType = (value: string | null | undefined): string => {

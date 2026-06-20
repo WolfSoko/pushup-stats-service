@@ -13,7 +13,7 @@
       #typeAuto="matAutocomplete"
       [displayWith]="displayPushupType"
     >
-      @for (option of filteredPushupTypeOptions$ | async; track option.value) {
+      @for (option of filteredPushupTypeOptions(); track option.value) {
         <mat-option [value]="option.value">
           <span class="type-option">
             <span>{{ option.label }}</span>
@@ -116,7 +116,7 @@
     i18n-placeholder="@@sourcePlaceholder"
   />
   <mat-autocomplete #sourceAuto="matAutocomplete">
-    @for (option of filteredSourceOptions$ | async; track option) {
+    @for (option of filteredSourceOptions(); track option) {
       <mat-option [value]="option">{{ option }}</mat-option>
     }
   </mat-autocomplete>
