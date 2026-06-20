@@ -9318,31 +9318,31 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.repsUnitLong">
-      <segment state="initial">
+      <segment state="translated">
         <source>Reps</source>
         <target>Reps</target>
       </segment>
     </unit>
     <unit id="settings.delete.confirmPlaceholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>löschen</source>
-        <target>löschen</target>
+        <target>slett</target>
       </segment>
     </unit>
     <unit id="settings.delete.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte exakt „löschen“ eingeben.</source>
-        <target>Bitte exakt „löschen“ eingeben.</target>
+        <target>Skriv inn nøyaktig «slett».</target>
       </segment>
     </unit>
     <unit id="settings.anonymizedName">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelöschter Benutzer</source>
-        <target>Gelöschter Benutzer</target>
+        <target>Slettet bruker</target>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCredit.unsplash">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unsplash</source>
         <target>Unsplash</target>
       </segment>
