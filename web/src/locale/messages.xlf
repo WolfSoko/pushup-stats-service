@@ -9114,6 +9114,7 @@
     <unit id="settings.delete.confirmPlaceholder">
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:422,423</note>
+        <note category="location">web/src/app/stats/shell/settings-page.component.ts:103</note>
       </notes>
       <segment>
         <source>löschen</source>
