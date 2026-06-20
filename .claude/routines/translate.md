@@ -19,14 +19,22 @@ reasonable fix attempt.
 
 ### Goal
 
-Detect every missing translation in the repo and translate it. Open one pull
-request titled `chore(i18n): fill missing translations (<count> items)` from a
-`claude/translations-<run-date>` branch with `Closes` set to nothing (no
-backing issue) and a body that lists each touched locale with a per-locale
-gap count.
+Detect every missing translation in the repo and translate it. Keep **exactly
+one** open translation PR alive at any time, backed by a single long-lived
+branch `claude/translations` (no date suffix). If that PR is already open,
+**update it in place** — never open a second one. The PR is titled
+`chore(i18n): fill missing translations (<count> items)`, has `Closes` set to
+nothing (no backing issue), and a body that lists each touched locale with a
+per-locale gap count.
 
-If the detector reports zero gaps, exit cleanly with a short status message
-and do **not** open a PR.
+Exit decision after gap detection:
+
+- **No gaps and no open translation PR** → exit cleanly with a short status
+  message; do **not** open a PR.
+- **No new gaps but a translation PR is already open** → leave it untouched
+  (it is just waiting to be merged); exit cleanly. Do **not** open a second PR.
+- **Gaps to fill** → translate them, then create the PR (none open) or push to
+  `claude/translations` so the already-open PR updates.
 
 ### Source of truth
 
@@ -47,7 +55,46 @@ reads this directly — do not hardcode the list).
 
 ### Steps
 
-1. **Refresh i18n surface** so the detector sees the current state, not a
+1. **Find the existing translation PR — there must only ever be one.** Look
+   for an **open** PR whose head branch is `claude/translations` (e.g.
+   `list_pull_requests` filtered to `head: claude/translations`, state
+   `open`), and check whether the branch exists on the remote:
+
+   ```bash
+   git fetch origin
+   git ls-remote --heads origin claude/translations
+   ```
+
+   Note whether you are **reusing** an open PR/branch or **creating** a fresh
+   one — later steps depend on it. If you ever find more than one open
+   `chore(i18n): fill missing translations …` PR, keep the lowest-numbered one,
+   close the rest with a comment pointing at the survivor, and converge back to
+   a single PR.
+
+2. **Check out the single working branch `claude/translations`:**
+
+   - **Reusing** (branch exists) — check it out and bring it up to date with
+     `main` so it does not go stale. Prefer a rebase; if it conflicts, fall
+     back to a hard reset onto `main` (the detector re-derives every
+     outstanding gap, so nothing is lost — it just re-translates):
+
+     ```bash
+     git checkout -B claude/translations origin/claude/translations
+     git rebase origin/main || { git rebase --abort; git reset --hard origin/main; }
+     ```
+
+   - **Creating** (no branch yet) — start it from the tip of `main`:
+
+     ```bash
+     git checkout -B claude/translations origin/main
+     ```
+
+   Running the detector on this branch (not on `main`) means units already
+   translated on the open PR keep `state="translated"` and are **not**
+   re-flagged — only genuinely new gaps get picked up, and human corrections
+   already pushed to the PR are preserved.
+
+3. **Refresh the i18n surface** so the detector sees the current state, not a
    stale snapshot:
 
    ```bash
@@ -56,7 +103,7 @@ reads this directly — do not hardcode the list).
    node tools/src/sync-xliff-locales.mjs
    ```
 
-2. **Detect gaps**:
+4. **Detect gaps**:
 
    ```bash
    mkdir -p .claude-translations
@@ -70,10 +117,15 @@ reads this directly — do not hardcode the list).
    inventory and the hard rules. Treat that report as authoritative for the
    list of items to translate.
 
-   If `summary.env` shows `has_gaps=false`, post a one-line status and exit
-   without opening a PR.
+   Apply the exit decision from **Goal** using `summary.env`:
 
-3. **Translate** from the German source (or, where missing, the English
+   - `has_gaps=false` **and no open translation PR** → post a one-line status
+     and exit without opening a PR.
+   - `has_gaps=false` **and a translation PR is already open** → leave it as
+     is and exit. Do **not** open a second PR or force-push an empty change.
+   - `has_gaps=true` → continue.
+
+5. **Translate** from the German source (or, where missing, the English
    sibling). Keep meaning, tone, brevity, and any HTML/placeholders intact.
 
    Hard rules — copied verbatim from the report so they bind even when this
@@ -106,7 +158,7 @@ reads this directly — do not hardcode the list).
       every item in `instructions`, and every item in `tips`. Keep
       numeric/code values (`3×8`, `Tempo 3-1-1`) unchanged.
 
-4. **Pre-push checks** (from `AGENTS.md` → Pre-Push Checklist):
+6. **Pre-push checks** (from `AGENTS.md` → Pre-Push Checklist):
 
    ```bash
    pnpm nx affected -t=lint,test,build -c=production --parallel=3
@@ -116,22 +168,35 @@ reads this directly — do not hardcode the list).
    not push — write a status comment summarising the failure and stop. A
    broken `main` is worse than a delayed translation.
 
-5. **Commit and push** to `claude/translations-<YYYY-MM-DD>`:
+7. **Commit and push** to the single `claude/translations` branch:
 
    ```bash
-   git checkout -b claude/translations-$(date -u +%F)
    git add web/src/locale/messages.*.xlf \
            content/blog content/wiki \
            web/src/content # regenerated by generate-content, if applicable
    git commit -m "chore(i18n): fill missing translations (<count> items)"
-   git push -u origin "claude/translations-$(date -u +%F)"
+   # Reused branch (rebased/reset in step 2) → history was rewritten:
+   git push --force-with-lease -u origin claude/translations
+   # Freshly created branch → a plain push is enough:
+   # git push -u origin claude/translations
    ```
 
    Stage files by name — never `git add -A` or `git add .`. The detector's
    artefacts under `.claude-translations/` are throwaway and must not be
-   committed.
+   committed. Use `--force-with-lease` (never plain `--force`) so a concurrent
+   push aborts the routine instead of being clobbered.
 
-6. **Open a PR** against `main`. Body must include:
+8. **Open or update the single PR** against `main` — never create a second one:
+
+   - **No PR open** → create it. Title `chore(i18n): fill missing translations
+     (<count> items)`, where `<count>` is the number of translation items this
+     branch adds over `main` (XLIFF units flipped to `translated` + new
+     blog/wiki files).
+   - **PR already open** → update the existing PR's title and body in place
+     (e.g. `update_pull_request`) so the count and per-locale breakdown reflect
+     the new state.
+
+   The body (new or updated) must include:
 
    - One bullet per touched locale: `- <locale>: <n> unit(s), <n> blog
      post(s), <n> wiki entry/entries`.
@@ -140,9 +205,11 @@ reads this directly — do not hardcode the list).
      skipped list.
    - The exact `detect-translation-gaps.mjs` summary line for traceability.
 
-7. **Subscribe to the PR's activity** via `subscribe_pr_activity` so CI
-   failures and review comments are picked up automatically — per
-   `AGENTS.md` → Pull Requests.
+9. **Subscribe to the PR's activity** via `subscribe_pr_activity` (only when
+   you just created it) so CI failures and review comments are picked up
+   automatically — per `AGENTS.md` → Pull Requests. When the PR finally merges,
+   let it **delete** the `claude/translations` branch (squash + delete branch)
+   so the next run starts clean from `main`.
 
 ### Skipped section format
 
@@ -179,8 +246,9 @@ This file is the prompt only. To wire it up:
    as an autonomous Claude Code routine` down to the trailing
    `---`).
 4. **Repository:** `WolfSoko/pushup-stats-service`. Leave
-   **Allow unrestricted branch pushes** off — the routine pushes to
-   `claude/translations-<date>` only.
+   **Allow unrestricted branch pushes** off — the routine only ever pushes to
+   the single `claude/translations` branch (including `--force-with-lease`
+   updates to it when an open PR is being refreshed).
 5. **Environment:** Default (Trusted) is enough. No extra secrets needed —
    no service account, no PAT, no Copilot dispatch token (that's the whole
    point of replacing the workflow).
