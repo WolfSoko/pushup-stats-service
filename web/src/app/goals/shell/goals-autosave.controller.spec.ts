@@ -322,6 +322,25 @@ describe('GoalsAutoSaveController', () => {
       expect(save).toHaveBeenCalledTimes(1);
       expect(save).toHaveBeenCalledWith(DIRTY);
     });
+
+    it('should not schedule a savedTimer after teardown', async () => {
+      // given
+      vitest.useFakeTimers({ shouldAdvanceTime: true });
+      const { deps, draftRef } = makeDeps();
+      const ctrl = new GoalsAutoSaveController(deps);
+      ctrl.hydrate(PERSISTED);
+      draftRef.current = DIRTY;
+      ctrl.onDraftChange(DIRTY);
+
+      // when
+      ctrl.destroy();
+      await Promise.resolve();
+      await Promise.resolve();
+      vitest.advanceTimersByTime(SAVED_INDICATOR_MS);
+
+      // then – status stays at whatever it was after save; no timer fires to mutate it
+      expect(ctrl.saveStatus()).not.toBe('idle');
+    });
   });
 
   describe('SSR', () => {

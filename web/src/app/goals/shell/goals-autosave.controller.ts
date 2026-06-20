@@ -33,6 +33,7 @@ export class GoalsAutoSaveController {
   private autoSaveTimer: ReturnType<typeof setTimeout> | null = null;
   private savedTimer: ReturnType<typeof setTimeout> | null = null;
   private inFlightSave: Promise<void> | null = null;
+  private destroyed = false;
 
   constructor(private readonly deps: GoalsAutoSaveDeps) {}
 
@@ -76,6 +77,7 @@ export class GoalsAutoSaveController {
   }
 
   destroy(): void {
+    this.destroyed = true;
     if (this.autoSaveTimer !== null) {
       clearTimeout(this.autoSaveTimer);
       this.autoSaveTimer = null;
@@ -132,6 +134,7 @@ export class GoalsAutoSaveController {
     try {
       await this.deps.save(draft);
       this.lastPersisted.set(cloneGoals(draft));
+      if (this.destroyed) return;
       this.saveStatus.set('saved');
       if (this.savedTimer !== null) clearTimeout(this.savedTimer);
       this.savedTimer = setTimeout(() => {
