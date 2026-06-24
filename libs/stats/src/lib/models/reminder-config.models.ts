@@ -26,23 +26,39 @@ export const QUICK_LOG_REPS_MAX = 500;
  */
 export const DEFAULT_REMINDER_TIMEZONE = 'Europe/Berlin';
 
-function minutesInZone(timezone: string, now: Date): number {
+function zonedParts(timezone: string, now: Date): Intl.DateTimeFormatPart[] {
   // `formatToParts` gives structured hour/minute parts, so we never depend on a
-  // locale's string layout. `% 24` collapses the midnight "24" some engines
-  // emit under hour12:false back to 0.
-  const parts = new Intl.DateTimeFormat('en-GB', {
+  // locale's string layout.
+  return new Intl.DateTimeFormat('en-GB', {
     timeZone: timezone,
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
   }).formatToParts(now);
+}
+
+function minutesInZone(timezone: string, now: Date): number {
+  let parts: Intl.DateTimeFormatPart[];
+  try {
+    parts = zonedParts(timezone, now);
+  } catch {
+    // An invalid IANA zone (legacy/partial/user-edited Firestore docs) makes
+    // `Intl.DateTimeFormat` throw a RangeError — never let a bad timezone
+    // string crash scheduling; fall back to the default zone.
+    parts = zonedParts(DEFAULT_REMINDER_TIMEZONE, now);
+  }
+  // `% 24` collapses the midnight "24" some engines emit under hour12:false.
   const hour = Number(parts.find((p) => p.type === 'hour')?.value) % 24;
   const minute = Number(parts.find((p) => p.type === 'minute')?.value);
   return hour * 60 + minute;
 }
 
 function toMinutes(hhmm: string): number {
-  const [h, m] = hhmm.split(':').map(Number);
+  const segments = hhmm.split(':');
+  if (segments.length !== 2) return Number.NaN;
+  const [h, m] = segments.map(Number);
+  if (!Number.isInteger(h) || !Number.isInteger(m)) return Number.NaN;
+  if (h < 0 || h > 23 || m < 0 || m > 59) return Number.NaN;
   return h * 60 + m;
 }
 

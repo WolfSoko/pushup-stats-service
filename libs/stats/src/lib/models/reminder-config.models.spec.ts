@@ -66,6 +66,34 @@ describe('reminder-config quiet hours', () => {
     );
   });
 
+  it('should treat windows with out-of-range clock tokens as disabled', () => {
+    // given — 10:00 UTC, which would fall inside each window if the tokens
+    // were parsed leniently as real ranges
+    const now = new Date('2026-03-23T10:00:00Z');
+    const malformed = [
+      { from: '24:00', to: '01:00' },
+      { from: '-1:00', to: '11:00' },
+      { from: '09:00', to: '10:999' },
+      { from: '07:00:30', to: '11:00' },
+      { from: 'oops', to: '11:00' },
+    ];
+
+    // then — each malformed window is disabled, so quiet hours never trigger
+    for (const window of malformed) {
+      expect(isInQuietHours([window], 'UTC', now)).toBe(false);
+    }
+  });
+
+  it('should fall back to Europe/Berlin for an invalid IANA timezone instead of throwing', () => {
+    // given — 08:30 UTC is 09:30 Berlin (winter); a garbage zone must not throw
+    const now = new Date('2026-01-15T08:30:00Z');
+    const window = [{ from: '09:00', to: '10:00' }];
+
+    // then — resolves like the default zone, no RangeError escapes
+    expect(() => isInQuietHours(window, 'Not/AZone', now)).not.toThrow();
+    expect(isInQuietHours(window, 'Not/AZone', now)).toBe(true);
+  });
+
   it('should default a missing/empty timezone to Europe/Berlin', () => {
     // given — 08:30 UTC is 09:30 in Berlin (winter, UTC+1); the window only
     // matches when evaluated against Berlin, proving the default zone.
