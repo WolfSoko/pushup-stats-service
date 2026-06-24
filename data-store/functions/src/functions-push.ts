@@ -257,7 +257,9 @@ export const dispatchPushReminders = onSchedule(
           .doc(uid)
           .get();
         const userConfigData = userConfigSnap.data() ?? {};
-        const reminder = userConfigData.reminder as ReminderConfig | undefined;
+        const reminder = userConfigData.reminder as
+          | Partial<ReminderConfig>
+          | undefined;
         // Prefer the explicit top-level `locale` written by recent clients.
         // Fall back to the legacy `reminder.language` field on docs created
         // before that field migrated up — without this, a user who set

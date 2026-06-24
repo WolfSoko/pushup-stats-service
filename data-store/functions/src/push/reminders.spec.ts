@@ -22,7 +22,7 @@ describe('push/reminders', () => {
     const baseTime = new Date('2024-03-15T10:00:00Z').getTime(); // 11:00 Berlin time (UTC+1)
 
     it('returns false when reminder is not enabled', () => {
-      const reminder: ReminderConfig = { enabled: false };
+      const reminder: Partial<ReminderConfig> = { enabled: false };
       const result = shouldSendReminder(reminder, null, baseTime, null);
       expect(result).toBe(false);
     });
@@ -33,14 +33,14 @@ describe('push/reminders', () => {
     });
 
     it('returns true when reminder is enabled and no constraints', () => {
-      const reminder: ReminderConfig = { enabled: true };
+      const reminder: Partial<ReminderConfig> = { enabled: true };
       const result = shouldSendReminder(reminder, null, baseTime, null);
       expect(result).toBe(true);
     });
 
     it('respects quiet hours (non-midnight-crossing)', () => {
       // Quiet hours from 22:00 to 06:00 Berlin time
-      const reminder: ReminderConfig = {
+      const reminder: Partial<ReminderConfig> = {
         enabled: true,
         timezone: 'Europe/Berlin',
         quietHours: [{ from: '22:00', to: '06:00' }],
@@ -63,7 +63,7 @@ describe('push/reminders', () => {
 
     it('respects quiet hours (simple daytime range)', () => {
       // Quiet hours from 12:00 to 14:00
-      const reminder: ReminderConfig = {
+      const reminder: Partial<ReminderConfig> = {
         enabled: true,
         timezone: 'Europe/Berlin',
         quietHours: [{ from: '12:00', to: '14:00' }],
@@ -83,7 +83,7 @@ describe('push/reminders', () => {
     });
 
     it('handles multiple quiet hour ranges', () => {
-      const reminder: ReminderConfig = {
+      const reminder: Partial<ReminderConfig> = {
         enabled: true,
         timezone: 'Europe/Berlin',
         quietHours: [
@@ -110,7 +110,7 @@ describe('push/reminders', () => {
     });
 
     it('respects snooze time', () => {
-      const reminder: ReminderConfig = { enabled: true };
+      const reminder: Partial<ReminderConfig> = { enabled: true };
       const now = baseTime;
       const snoozeUntil = mockFirestoreTime(now + 1000 * 60 * 10); // Snooze 10 minutes
 
@@ -130,7 +130,10 @@ describe('push/reminders', () => {
     });
 
     it('respects interval since last send', () => {
-      const reminder: ReminderConfig = { enabled: true, intervalMinutes: 60 };
+      const reminder: Partial<ReminderConfig> = {
+        enabled: true,
+        intervalMinutes: 60,
+      };
       const now = baseTime;
       const lastSent = mockFirestoreTime(now - 1000 * 60 * 30); // 30 min ago
 
@@ -150,7 +153,7 @@ describe('push/reminders', () => {
     });
 
     it('uses default interval when not specified', () => {
-      const reminder: ReminderConfig = { enabled: true };
+      const reminder: Partial<ReminderConfig> = { enabled: true };
       const now = baseTime;
       // Exactly 59 minutes and 59 seconds ago (just under 1 hour)
       const lastSent = mockFirestoreTime(now - 1000 * 60 * 60 + 1000);
@@ -171,7 +174,7 @@ describe('push/reminders', () => {
     });
 
     it('handles Firestore timestamp objects without toMillis method', () => {
-      const reminder: ReminderConfig = { enabled: true };
+      const reminder: Partial<ReminderConfig> = { enabled: true };
       const now = baseTime;
 
       // Simulate raw Firestore timestamp that needs parsing
@@ -186,7 +189,7 @@ describe('push/reminders', () => {
     });
 
     it('combines all constraints correctly', () => {
-      const reminder: ReminderConfig = {
+      const reminder: Partial<ReminderConfig> = {
         enabled: true,
         timezone: 'Europe/Berlin',
         intervalMinutes: 60,

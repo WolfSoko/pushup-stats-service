@@ -4,23 +4,19 @@
  */
 
 import {
+  isInQuietHours,
   normalizeReminderLocale,
   reminderBodyChoices,
   reminderLogLabel,
   reminderQuickLogLabel,
   reminderSnoozeLabel,
+  type ReminderConfig,
 } from '@pu-stats/models';
 
-const TZ = 'Europe/Berlin';
-
-export interface ReminderConfig {
-  enabled?: boolean;
-  timezone?: string;
-  quietHours?: Array<{ from: string; to: string }>;
-  intervalMinutes?: number;
-  /** One-tap pushup count surfaced as a notification action. */
-  quickLogReps?: number;
-}
+// Single source of truth: the shared model. Firestore docs may be partial, so
+// the dispatcher works against `Partial<ReminderConfig>`. Re-exported so other
+// CF modules and tests keep importing the type from here.
+export type { ReminderConfig };
 
 export interface FirestoreTimestamp {
   toMillis?: () => number;
@@ -36,7 +32,7 @@ export interface FirestoreTimestamp {
  * @returns true if reminder should be sent
  */
 export function shouldSendReminder(
-  reminder: ReminderConfig | undefined,
+  reminder: Partial<ReminderConfig> | undefined,
   lastSentAt: FirestoreTimestamp | null,
   nowMs: number,
   snoozedUntil: FirestoreTimestamp | null
@@ -44,34 +40,16 @@ export function shouldSendReminder(
   // Reminder must be enabled
   if (!reminder?.enabled) return false;
 
-  // Check quiet hours
-  const tz = reminder.timezone || TZ;
-  const nowDate = new Date(nowMs);
-
-  const timeStr = nowDate.toLocaleTimeString('de-DE', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: tz,
-    hour12: false,
-  });
-  const [hh, mm] = timeStr.split(':').map(Number);
-  const currentMinutes = hh * 60 + mm;
-
-  const quietHours = reminder.quietHours || [];
-  for (const { from, to } of quietHours) {
-    const [fh, fm] = from.split(':').map(Number);
-    const [th, tm] = to.split(':').map(Number);
-    const fromMin = fh * 60 + fm;
-    const toMin = th * 60 + tm;
-
-    // Handle ranges that don't cross midnight
-    if (fromMin <= toMin) {
-      if (currentMinutes >= fromMin && currentMinutes < toMin) return false;
-    } else {
-      // Handle ranges that cross midnight (e.g., 22:00 - 06:00)
-      if (currentMinutes >= fromMin || currentMinutes < toMin) return false;
-    }
-  }
+  // Quiet hours — shared with the in-app tier via @pu-stats/models so both
+  // agree on timezone defaulting, time parsing, and boundary handling.
+  if (
+    isInQuietHours(
+      reminder.quietHours ?? [],
+      reminder.timezone,
+      new Date(nowMs)
+    )
+  )
+    return false;
 
   // Check if snoozed
   if (snoozedUntil) {
