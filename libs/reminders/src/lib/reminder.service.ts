@@ -98,6 +98,15 @@ export class ReminderService {
     // Function already handles delivery, showing both causes duplicate sounds.
     if (this.shouldSkipInApp()) return;
 
+    // Throttle: start() fires an immediate tick and runs on every login /
+    // auth change, so without this a user who reloads the app gets a fresh
+    // reminder every few seconds. Suppress if one was already shown within the
+    // configured interval. Per-device (localStorage) — the server tier keeps
+    // its own lastSentAt in reminderDispatchState, which stays Admin-SDK only.
+    const intervalMs = (config.intervalMinutes ?? 60) * 60 * 1000;
+    const lastShownAt = this.readLastShownAt();
+    if (lastShownAt !== null && Date.now() - lastShownAt < intervalMs) return;
+
     const quote = await this.getNextQuote();
     if (!quote) return;
 
@@ -108,7 +117,7 @@ export class ReminderService {
       // supported on Android Chrome and throws "Illegal constructor". We
       // explicitly show via the /push/ registration so that a later
       // notificationclick is handled by sw-push (ngsw has no listener).
-      let shown = false;
+      let displayed = false;
       try {
         const reg = await this.pushSwRegistration.getRegistration();
         if (reg) {
@@ -121,12 +130,12 @@ export class ReminderService {
             renotify: true,
             data: { url: `/${this.locale}/app`, locale: this.locale },
           } as NotificationOptions);
-          shown = true;
+          displayed = true;
         }
       } catch {
         // SW notification failed — fall through to Notification() fallback
       }
-      if (!shown) {
+      if (!displayed) {
         try {
           const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
             .href;
@@ -134,10 +143,35 @@ export class ReminderService {
             body: quote,
             icon: iconUrl,
           });
+          displayed = true;
         } catch {
           // Fallback also failed (e.g. Android Chrome) — give up silently
         }
       }
+      if (displayed) this.writeLastShownAt(Date.now());
+    }
+  }
+
+  private static readonly LAST_SHOWN_KEY = 'pu:reminder:last-shown-at';
+
+  private readLastShownAt(): number | null {
+    if (!this.isBrowser) return null;
+    try {
+      const raw = localStorage.getItem(ReminderService.LAST_SHOWN_KEY);
+      if (!raw) return null;
+      const ms = Number(raw);
+      return Number.isFinite(ms) ? ms : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private writeLastShownAt(ms: number): void {
+    if (!this.isBrowser) return;
+    try {
+      localStorage.setItem(ReminderService.LAST_SHOWN_KEY, String(ms));
+    } catch {
+      // Storage unavailable (private mode / quota) — throttle is best-effort.
     }
   }
 
