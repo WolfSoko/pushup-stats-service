@@ -16,6 +16,8 @@ type ReminderFormState = {
   enabled: boolean;
   intervalMinutes: number;
   quietHours: { from: string; to: string }[];
+  /** Active weekdays, 0=Sunday..6=Saturday. Empty means every day. */
+  weekdays: number[];
   /**
    * Whether the one-tap quick-log notification action is enabled. Tracked as
    * a separate flag so the count can be edited while the toggle is off
@@ -34,6 +36,7 @@ const initialState: ReminderFormState = {
   enabled: false,
   intervalMinutes: 60,
   quietHours: [],
+  weekdays: [],
   quickLogEnabled: false,
   quickLogReps: DEFAULT_QUICK_LOG_REPS,
   dirty: false,
@@ -66,6 +69,7 @@ export const ReminderFormStore = signalStore(
         enabled: config?.enabled ?? false,
         intervalMinutes: config?.intervalMinutes ?? 60,
         quietHours: config?.quietHours ? [...config.quietHours] : [],
+        weekdays: config?.weekdays ? [...config.weekdays] : [],
         quickLogEnabled: repsValid,
         quickLogReps: repsValid
           ? Math.min(normalizedReps as number, QUICK_LOG_REPS_MAX)
@@ -88,6 +92,13 @@ export const ReminderFormStore = signalStore(
 
     setInterval(value: number): void {
       patchState(store, { intervalMinutes: value, dirty: true });
+    },
+
+    setWeekdays(days: number[]): void {
+      patchState(store, {
+        weekdays: [...days].sort((a, b) => a - b),
+        dirty: true,
+      });
     },
 
     addQuietHour(): void {
@@ -151,6 +162,10 @@ export const ReminderFormStore = signalStore(
         quietHours: store.quietHours(),
         timezone,
       };
+      const weekdays = store.weekdays();
+      if (weekdays.length > 0) {
+        config.weekdays = [...weekdays].sort((a, b) => a - b);
+      }
       if (store.quickLogEnabled()) {
         const reps = Math.floor(store.quickLogReps());
         if (Number.isFinite(reps) && reps >= QUICK_LOG_REPS_MIN) {

@@ -6,6 +6,12 @@ export interface ReminderConfig {
     to: string;
   }[];
   timezone: string;
+  /**
+   * Weekdays the reminder is active on, `0` = Sunday … `6` = Saturday (same
+   * convention as `ComplexGoalEntry.weekdays`). Empty or undefined means the
+   * reminder fires every day.
+   */
+  weekdays?: number[];
   lastQuoteFetchAt?: string;
   /**
    * One-tap pushup count surfaced as a notification action button. When set
@@ -65,6 +71,49 @@ function toMinutes(hhmm: string): number {
   const m = Number(rawM);
   if (h > 23 || m > 59) return Number.NaN;
   return h * 60 + m;
+}
+
+const WEEKDAY_SHORT_TO_INDEX: Readonly<Record<string, number>> = {
+  Sun: 0,
+  Mon: 1,
+  Tue: 2,
+  Wed: 3,
+  Thu: 4,
+  Fri: 5,
+  Sat: 6,
+};
+
+/**
+ * Single source of truth for "is the reminder active on the current weekday".
+ * Shared by the in-app tier and the Cloud Function dispatcher so both resolve
+ * the weekday in the same timezone.
+ *
+ * - `weekdays` uses `0` = Sunday … `6` = Saturday.
+ * - An empty or undefined list means "every day" (no restriction).
+ */
+export function isReminderDayActive(
+  weekdays: ReadonlyArray<number> | undefined,
+  timezone: string = DEFAULT_REMINDER_TIMEZONE,
+  now: Date = new Date()
+): boolean {
+  if (!weekdays?.length) return true;
+
+  const tz = timezone || DEFAULT_REMINDER_TIMEZONE;
+  let short: string;
+  try {
+    short = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      weekday: 'short',
+    }).format(now);
+  } catch {
+    short = new Intl.DateTimeFormat('en-US', {
+      timeZone: DEFAULT_REMINDER_TIMEZONE,
+      weekday: 'short',
+    }).format(now);
+  }
+
+  const index = WEEKDAY_SHORT_TO_INDEX[short];
+  return index !== undefined && weekdays.includes(index);
 }
 
 /**

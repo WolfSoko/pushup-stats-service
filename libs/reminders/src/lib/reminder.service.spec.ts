@@ -372,6 +372,32 @@ describe('ReminderService', () => {
     service.stop();
   });
 
+  it('should fire the first reminder at the remaining throttle, not a full extra interval', async () => {
+    // given — last shown 30 minutes ago with a 60-minute interval
+    localStorage.setItem(
+      'pu:reminder:last-shown-at',
+      String(Date.now() - 30 * 60_000)
+    );
+    const service = createService();
+
+    // when — still throttled at the usual 5s immediate mark
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).not.toHaveBeenCalled();
+
+    // when — the remaining ~30 minutes elapse (not a full 60-minute interval)
+    jest.advanceTimersByTime(30 * 60_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).toHaveBeenCalledTimes(1);
+
+    service.stop();
+  });
+
   it('should show again once the interval has elapsed since the last reminder', async () => {
     // given — last shown 61 minutes ago, just past the 60-minute interval
     localStorage.setItem(
@@ -387,6 +413,40 @@ describe('ReminderService', () => {
 
     // then
     expect(showNotificationSpy).toHaveBeenCalledTimes(1);
+
+    service.stop();
+  });
+
+  it('should not show a notification on a weekday that is not scheduled', async () => {
+    // given — freeze on a Monday (UTC) so the weekday gate is deterministic
+    jest.setSystemTime(new Date('2026-03-23T12:00:00Z'));
+    const excludedDay = (new Date().getUTCDay() + 1) % 7;
+    const service = createService({ weekdays: [excludedDay] });
+
+    // when
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).not.toHaveBeenCalled();
+
+    service.stop();
+  });
+
+  it('should show a notification on a scheduled weekday', async () => {
+    // given — freeze on a Monday (UTC) so the weekday gate is deterministic
+    jest.setSystemTime(new Date('2026-03-23T12:00:00Z'));
+    const today = new Date().getUTCDay();
+    const service = createService({ weekdays: [today] });
+
+    // when
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).toHaveBeenCalled();
 
     service.stop();
   });

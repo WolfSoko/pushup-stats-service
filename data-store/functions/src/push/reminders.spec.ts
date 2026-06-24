@@ -38,6 +38,36 @@ describe('push/reminders', () => {
       expect(result).toBe(true);
     });
 
+    it('respects weekday scheduling', () => {
+      // baseTime is 11:00 Berlin, same calendar day as UTC, so the Berlin
+      // weekday equals the UTC weekday for this instant.
+      const today = new Date(baseTime).getUTCDay();
+
+      const onScheduledDay: Partial<ReminderConfig> = {
+        enabled: true,
+        timezone: 'Europe/Berlin',
+        weekdays: [today],
+      };
+      expect(shouldSendReminder(onScheduledDay, null, baseTime, null)).toBe(
+        true
+      );
+
+      const onOtherDay: Partial<ReminderConfig> = {
+        enabled: true,
+        timezone: 'Europe/Berlin',
+        weekdays: [(today + 1) % 7],
+      };
+      expect(shouldSendReminder(onOtherDay, null, baseTime, null)).toBe(false);
+
+      // Empty weekdays means every day.
+      const everyDay: Partial<ReminderConfig> = {
+        enabled: true,
+        timezone: 'Europe/Berlin',
+        weekdays: [],
+      };
+      expect(shouldSendReminder(everyDay, null, baseTime, null)).toBe(true);
+    });
+
     it('respects quiet hours (non-midnight-crossing)', () => {
       // Quiet hours from 22:00 to 06:00 Berlin time
       const reminder: Partial<ReminderConfig> = {

@@ -5,6 +5,7 @@
 
 import {
   isInQuietHours,
+  isReminderDayActive,
   normalizeReminderLocale,
   reminderBodyChoices,
   reminderLogLabel,
@@ -39,6 +40,13 @@ export function shouldSendReminder(
 ): boolean {
   // Reminder must be enabled
   if (!reminder?.enabled) return false;
+
+  // Weekday gate — shared with the in-app tier so both resolve the weekday in
+  // the same timezone. Empty/undefined weekdays means every day.
+  if (
+    !isReminderDayActive(reminder.weekdays, reminder.timezone, new Date(nowMs))
+  )
+    return false;
 
   // Quiet hours — shared with the in-app tier via @pu-stats/models so both
   // agree on timezone defaulting, time parsing, and boundary handling.

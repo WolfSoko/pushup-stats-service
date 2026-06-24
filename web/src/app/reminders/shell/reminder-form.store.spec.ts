@@ -59,6 +59,35 @@ describe('ReminderFormStore', () => {
     expect(store.dirty()).toBe(false);
   });
 
+  describe('weekday scheduling', () => {
+    it('initializes with no weekday restriction (every day)', () => {
+      expect(store.weekdays()).toEqual([]);
+    });
+
+    it('stores weekdays sorted and marks the form dirty', () => {
+      store.setWeekdays([5, 1, 3]);
+      expect(store.weekdays()).toEqual([1, 3, 5]);
+      expect(store.dirty()).toBe(true);
+    });
+
+    it('hydrates weekdays from config', () => {
+      store.syncFromConfig({ ...defaultConfig, weekdays: [1, 3] });
+      expect(store.weekdays()).toEqual([1, 3]);
+      expect(store.dirty()).toBe(false);
+    });
+
+    it('omits weekdays from the saved config when none are selected', () => {
+      const config = store.toConfig('Europe/Berlin');
+      expect(config.weekdays).toBeUndefined();
+    });
+
+    it('writes sorted weekdays to the saved config when selected', () => {
+      store.setWeekdays([6, 0, 2]);
+      const config = store.toConfig('Europe/Berlin');
+      expect(config.weekdays).toEqual([0, 2, 6]);
+    });
+  });
+
   describe('quickLog (one-tap notification action)', () => {
     it('initializes with quickLog disabled and the default count', () => {
       expect(store.quickLogEnabled()).toBe(false);
