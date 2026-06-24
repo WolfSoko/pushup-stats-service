@@ -1,41 +1,21 @@
 import { inject, Injectable, LOCALE_ID, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { normalizeReminderLocale, reminderTitle } from '@pu-stats/models';
+import {
+  DEFAULT_REMINDER_TIMEZONE,
+  isInQuietHours,
+  normalizeReminderLocale,
+  reminderTitle,
+} from '@pu-stats/models';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { PushSwRegistrationService } from '@pu-push/push';
 import { SHOULD_SKIP_IN_APP_REMINDER } from './skip-in-app-reminder.token';
 
-export function isInQuietHours(
-  quietHours: { from: string; to: string }[],
-  timezone: string,
-  now: Date = new Date()
-): boolean {
-  if (!quietHours.length) return false;
-
-  // Get HH:MM in the target timezone
-  const hhmm = new Intl.DateTimeFormat('en-GB', {
-    timeZone: timezone,
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  })
-    .format(now)
-    .slice(0, 5); // "HH:MM"
-
-  return quietHours.some(({ from, to }) => {
-    if (from === to) return false;
-
-    if (from < to) {
-      // Same-day window e.g. 12:00 – 13:00
-      return hhmm >= from && hhmm < to;
-    } else {
-      // Overnight window e.g. 22:00 – 07:00
-      return hhmm >= from || hhmm < to;
-    }
-  });
-}
+// Re-exported so the in-app tier and the server dispatcher share one
+// quiet-hours implementation (`@pu-stats/models`) — same timezone default,
+// time parsing, and boundary handling on both sides.
+export { isInQuietHours } from '@pu-stats/models';
 
 export interface ReminderUserContext {
   userId?: string;
@@ -105,7 +85,12 @@ export class ReminderService {
       return;
     }
 
-    if (isInQuietHours(config.quietHours ?? [], config.timezone ?? 'UTC')) {
+    if (
+      isInQuietHours(
+        config.quietHours ?? [],
+        config.timezone ?? DEFAULT_REMINDER_TIMEZONE
+      )
+    ) {
       return;
     }
 
