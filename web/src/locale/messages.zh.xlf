@@ -9588,63 +9588,63 @@
       </segment>
     </unit>
     <unit id="reminder.weekdays.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>星期</target>
       </segment>
     </unit>
     <unit id="reminder.weekdays.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>星期</target>
       </segment>
     </unit>
     <unit id="reminder.weekdays.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Auswahl = jeden Tag </source>
-        <target> Keine Auswahl = jeden Tag </target>
+        <target> 未选择 = 每天 </target>
       </segment>
     </unit>
     <unit id="reminder.weekday.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>周一</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>周二</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>周三</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>周四</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>周五</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>周六</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>周日</target>
       </segment>
     </unit>
 </file>

@@ -10091,63 +10091,63 @@
       </segment>
     </unit>
     <unit id="reminder.weekdays.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>Weekdagen</target>
       </segment>
     </unit>
     <unit id="reminder.weekdays.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>Weekdagen</target>
       </segment>
     </unit>
     <unit id="reminder.weekdays.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Auswahl = jeden Tag </source>
-        <target> Keine Auswahl = jeden Tag </target>
+        <target> Geen selectie = elke dag </target>
       </segment>
     </unit>
     <unit id="reminder.weekday.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>Ma</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
         <target>Di</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>Wo</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
         <target>Do</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Vr</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Za</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>Zo</target>
       </segment>
     </unit>
 </file>
