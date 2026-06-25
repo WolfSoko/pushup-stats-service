@@ -93,6 +93,9 @@ describe('ReminderService', () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
+    // Throttle state persists in localStorage across tests in jsdom; clear it
+    // so each test starts from a clean "never shown" baseline.
+    localStorage.clear();
 
     showNotificationSpy = jest.fn().mockResolvedValue(undefined);
 
@@ -330,6 +333,60 @@ describe('ReminderService', () => {
     await flushMicrotasks();
 
     expect(showNotificationSpy).not.toHaveBeenCalled();
+
+    service.stop();
+  });
+
+  it('should record the last-shown timestamp after displaying a reminder', async () => {
+    // given
+    const service = createService();
+
+    // when
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).toHaveBeenCalledTimes(1);
+    expect(localStorage.getItem('pu:reminder:last-shown-at')).not.toBeNull();
+
+    service.stop();
+  });
+
+  it('should suppress the immediate tick when one was shown within the interval', async () => {
+    // given — a reminder was shown a minute ago on this device (interval 60m)
+    localStorage.setItem(
+      'pu:reminder:last-shown-at',
+      String(Date.now() - 60_000)
+    );
+    const service = createService();
+
+    // when
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).not.toHaveBeenCalled();
+
+    service.stop();
+  });
+
+  it('should show again once the interval has elapsed since the last reminder', async () => {
+    // given — last shown 61 minutes ago, just past the 60-minute interval
+    localStorage.setItem(
+      'pu:reminder:last-shown-at',
+      String(Date.now() - 61 * 60_000)
+    );
+    const service = createService();
+
+    // when
+    service.start({ userId: 'u1' });
+    jest.advanceTimersByTime(5_000);
+    await flushMicrotasks();
+
+    // then
+    expect(showNotificationSpy).toHaveBeenCalledTimes(1);
 
     service.stop();
   });
