@@ -4,6 +4,8 @@
   "projectType": "application",
   "sourceRoot": "libs/sw-push/src",
   "tags": ["scope:sw-push"],
+  "//": "implicitDependency on stats-models so `nx affected` runs the constants drift-guard (constants-drift.spec.ts) when the canonical reminder models change. The guard reads those files via fs, not a TS import, so there is no import edge for Nx to infer.",
+  "implicitDependencies": ["stats-models"],
   "targets": {
     "build": {
       "executor": "nx:run-commands",
