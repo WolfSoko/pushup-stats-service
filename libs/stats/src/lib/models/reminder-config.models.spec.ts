@@ -1,6 +1,7 @@
 import {
   DEFAULT_REMINDER_TIMEZONE,
   isInQuietHours,
+  isReminderDayActive,
 } from './reminder-config.models';
 
 describe('reminder-config quiet hours', () => {
@@ -110,5 +111,49 @@ describe('reminder-config quiet hours', () => {
     expect(isInQuietHours(window, undefined, now)).toBe(true);
     expect(isInQuietHours(window, '', now)).toBe(true);
     expect(isInQuietHours(window, 'UTC', now)).toBe(false);
+  });
+});
+
+describe('reminder weekday scheduling', () => {
+  it('should be active every day when no weekdays are set', () => {
+    // given
+    const now = new Date('2026-03-23T10:00:00Z');
+
+    // then
+    expect(isReminderDayActive(undefined, 'UTC', now)).toBe(true);
+    expect(isReminderDayActive([], 'UTC', now)).toBe(true);
+  });
+
+  it('should only be active on the listed weekdays', () => {
+    // given
+    const now = new Date('2026-03-23T10:00:00Z');
+    const today = now.getUTCDay();
+
+    // then
+    expect(isReminderDayActive([today], 'UTC', now)).toBe(true);
+    expect(isReminderDayActive([(today + 1) % 7], 'UTC', now)).toBe(false);
+  });
+
+  it('should resolve the weekday in the configured timezone', () => {
+    // given — 23:30 UTC is already the next calendar day (00:30) in Berlin
+    const now = new Date('2026-01-15T23:30:00Z');
+    const utcDay = now.getUTCDay();
+    const berlinDay = (utcDay + 1) % 7;
+
+    // then
+    expect(isReminderDayActive([berlinDay], 'Europe/Berlin', now)).toBe(true);
+    expect(isReminderDayActive([utcDay], 'Europe/Berlin', now)).toBe(false);
+  });
+
+  it('should fall back to the default timezone for an invalid zone', () => {
+    // given
+    const now = new Date('2026-01-15T23:30:00Z');
+    const berlinDay = (now.getUTCDay() + 1) % 7;
+
+    // then
+    expect(() =>
+      isReminderDayActive([berlinDay], 'Not/AZone', now)
+    ).not.toThrow();
+    expect(isReminderDayActive([berlinDay], 'Not/AZone', now)).toBe(true);
   });
 });

@@ -5916,7 +5916,7 @@
     </unit>
     <unit id="reminder.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:35,37</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:37,39</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen / Reminders</source>
@@ -5924,7 +5924,7 @@
     </unit>
     <unit id="reminder.enabled.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:43,44</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:45,46</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen aktivieren </source>
@@ -5932,7 +5932,7 @@
     </unit>
     <unit id="reminder.permission.denied.hint">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:51,53</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:53,55</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Benachrichtigungen sind im Browser blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
@@ -5940,7 +5940,7 @@
     </unit>
     <unit id="reminder.permission.granted">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:59,62</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:61,64</note>
       </notes>
       <segment>
         <source>Benachrichtigungen erlaubt</source>
@@ -5948,7 +5948,7 @@
     </unit>
     <unit id="reminder.permission.unsupported">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:67,69</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:69,71</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Benachrichtigungen. </source>
@@ -5956,7 +5956,7 @@
     </unit>
     <unit id="reminder.interval.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:77,79</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:79,81</note>
       </notes>
       <segment>
         <source> Erinnerungsintervall </source>
@@ -5964,7 +5964,7 @@
     </unit>
     <unit id="reminder.interval.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:83,84</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:85,86</note>
       </notes>
       <segment>
         <source>Intervall-Voreinstellungen</source>
@@ -5972,7 +5972,7 @@
     </unit>
     <unit id="reminder.interval.30min">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:87,89</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:89,91</note>
       </notes>
       <segment>
         <source>30 Min</source>
@@ -5980,7 +5980,7 @@
     </unit>
     <unit id="reminder.interval.1h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:90,92</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:92,94</note>
       </notes>
       <segment>
         <source>1 Std</source>
@@ -5988,7 +5988,7 @@
     </unit>
     <unit id="reminder.interval.2h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:93,95</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:95,97</note>
       </notes>
       <segment>
         <source>2 Std</source>
@@ -5996,7 +5996,7 @@
     </unit>
     <unit id="reminder.interval.4h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:96,98</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:98,100</note>
       </notes>
       <segment>
         <source>4 Std</source>
@@ -6004,7 +6004,7 @@
     </unit>
     <unit id="reminder.interval.custom.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:102,104</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:104,106</note>
       </notes>
       <segment>
         <source>Benutzerdefiniert (Min)</source>
@@ -6012,7 +6012,7 @@
     </unit>
     <unit id="reminder.interval.hint">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:115,117</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:117,119</note>
       </notes>
       <segment>
         <source>15–480 Minuten</source>
@@ -6020,7 +6020,7 @@
     </unit>
     <unit id="reminder.save">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:149,151</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:157,159</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Erinnerungen speichern </source>
@@ -6028,10 +6028,90 @@
     </unit>
     <unit id="reminder.saved">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:153,155</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:161,163</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekdays.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:20,22</note>
+      </notes>
+      <segment>
+        <source>Wochentage</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekdays.aria">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:26,27</note>
+      </notes>
+      <segment>
+        <source>Wochentage</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekdays.hint">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:36,40</note>
+      </notes>
+      <segment>
+        <source> Keine Auswahl = jeden Tag </source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.mon">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:61</note>
+      </notes>
+      <segment>
+        <source>Mo</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.tue">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:62</note>
+      </notes>
+      <segment>
+        <source>Di</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.wed">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:63</note>
+      </notes>
+      <segment>
+        <source>Mi</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.thu">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:64</note>
+      </notes>
+      <segment>
+        <source>Do</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.fri">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:65</note>
+      </notes>
+      <segment>
+        <source>Fr</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.sat">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:66</note>
+      </notes>
+      <segment>
+        <source>Sa</source>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.sun">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-weekdays.component.ts:67</note>
+      </notes>
+      <segment>
+        <source>So</source>
       </segment>
     </unit>
     <unit id="remindersHeaderTitle">

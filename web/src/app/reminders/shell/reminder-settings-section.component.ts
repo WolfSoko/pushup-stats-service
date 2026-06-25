@@ -16,6 +16,7 @@ import { ReminderFormStore } from './reminder-form.store';
 import { parseInputNumber } from './reminders-page.helpers';
 import { ReminderQuietHoursComponent } from './reminder-quiet-hours.component';
 import { ReminderQuickLogComponent } from './reminder-quick-log.component';
+import { ReminderWeekdaysComponent } from './reminder-weekdays.component';
 
 @Component({
   selector: 'app-reminder-settings-section',
@@ -29,6 +30,7 @@ import { ReminderQuickLogComponent } from './reminder-quick-log.component';
     MatSlideToggleModule,
     ReminderQuietHoursComponent,
     ReminderQuickLogComponent,
+    ReminderWeekdaysComponent,
   ],
   template: `
     <section class="reminder-section">
@@ -116,6 +118,12 @@ import { ReminderQuickLogComponent } from './reminder-quick-log.component';
               >
             </mat-form-field>
           </div>
+
+          <app-reminder-weekdays
+            [weekdays]="form.weekdays()"
+            [saving]="form.saving()"
+            (weekdaysChange)="form.setWeekdays($event)"
+          />
 
           <app-reminder-quick-log
             [enabled]="form.quickLogEnabled()"

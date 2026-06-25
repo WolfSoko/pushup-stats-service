@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   DEFAULT_REMINDER_TIMEZONE,
   isInQuietHours,
+  isReminderDayActive,
   normalizeReminderLocale,
   reminderTitle,
 } from '@pu-stats/models';
@@ -53,13 +54,22 @@ export class ReminderService {
     if (!config?.enabled) return;
     if (this.permissionService.status() !== 'granted') return;
 
-    // Fire once after a short delay so the user gets immediate feedback
+    const intervalMs = (config.intervalMinutes ?? 60) * 60 * 1000;
+
+    // First tick: 5s for immediate feedback, unless a reminder was already
+    // shown within the interval — then wait out the remaining throttle so the
+    // first reminder isn't delayed by almost a full extra interval (the
+    // setInterval below is anchored at start()).
+    const lastShownAt = this.readLastShownAt();
+    const remainingThrottle =
+      lastShownAt !== null ? lastShownAt + intervalMs - Date.now() : 0;
+    const initialDelay = Math.max(5_000, remainingThrottle);
+
     this.initialTickTimeoutId = setTimeout(() => {
       this.initialTickTimeoutId = null;
       this.tick();
-    }, 5_000);
+    }, initialDelay);
 
-    const intervalMs = (config.intervalMinutes ?? 60) * 60 * 1000;
     this.intervalId = setInterval(() => this.tick(), intervalMs);
   }
 
@@ -85,12 +95,13 @@ export class ReminderService {
       return;
     }
 
-    if (
-      isInQuietHours(
-        config.quietHours ?? [],
-        config.timezone ?? DEFAULT_REMINDER_TIMEZONE
-      )
-    ) {
+    const timezone = config.timezone ?? DEFAULT_REMINDER_TIMEZONE;
+
+    // Weekday gate — only fire on the configured days. Shared with the server
+    // tier so both resolve the weekday in the same timezone.
+    if (!isReminderDayActive(config.weekdays, timezone)) return;
+
+    if (isInQuietHours(config.quietHours ?? [], timezone)) {
       return;
     }
 

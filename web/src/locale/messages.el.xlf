@@ -10090,5 +10090,65 @@
         <target>Διαγραφή χρήστη</target>
       </segment>
     </unit>
+    <unit id="reminder.weekdays.label">
+      <segment state="initial">
+        <source>Wochentage</source>
+        <target>Wochentage</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekdays.aria">
+      <segment state="initial">
+        <source>Wochentage</source>
+        <target>Wochentage</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekdays.hint">
+      <segment state="initial">
+        <source> Keine Auswahl = jeden Tag </source>
+        <target> Keine Auswahl = jeden Tag </target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.mon">
+      <segment state="initial">
+        <source>Mo</source>
+        <target>Mo</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.tue">
+      <segment state="initial">
+        <source>Di</source>
+        <target>Di</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.wed">
+      <segment state="initial">
+        <source>Mi</source>
+        <target>Mi</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.thu">
+      <segment state="initial">
+        <source>Do</source>
+        <target>Do</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.fri">
+      <segment state="initial">
+        <source>Fr</source>
+        <target>Fr</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.sat">
+      <segment state="initial">
+        <source>Sa</source>
+        <target>Sa</target>
+      </segment>
+    </unit>
+    <unit id="reminder.weekday.sun">
+      <segment state="initial">
+        <source>So</source>
+        <target>So</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
