@@ -21,7 +21,7 @@ export const SW_PUSH_VERSION: string =
  * here too. The CF already sanitizes before sending; this guard catches stale
  * payloads from older deployments and any payload tampering.
  */
-const SW_QUICK_LOG_MAX = 500;
+export const SW_QUICK_LOG_MAX = 500;
 
 /**
  * Mirrored from `@pu-stats/models#SUPPORTED_REMINDER_LOCALES`. Inlined so
@@ -31,7 +31,7 @@ const SW_QUICK_LOG_MAX = 500;
  * the default and route to `/de/app...` instead of the locale-prefixed
  * URL.
  */
-const SW_SUPPORTED_LOCALES = [
+export const SW_SUPPORTED_LOCALES = [
   'de',
   'en',
   'fr',
