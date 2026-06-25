@@ -64,9 +64,12 @@ email are not sensitive. The old `FIREBASE_SERVICE_ACCOUNT_*` JSON-key secrets a
 no longer used; delete them once a deploy has succeeded (the script prints the
 exact `gh secret delete` commands).
 
-> **Propagation note:** the `workloadIdentityUser` binding can take a few minutes
-> to propagate. A deploy started within ~2–5 min of running `setup-wif.sh` may fail
-> once with `Failed to authenticate, have you run firebase login?` — just re-run it.
+> **Transient auth note:** firebase-tools re-runs the OIDC→STS→impersonation token
+> exchange on every invocation, so a transient hop (or freshly-propagating
+> `workloadIdentityUser` binding right after `setup-wif.sh`) can surface as
+> `Failed to authenticate, have you run firebase login?`. The deploy workflows retry
+> the firebase commands a few times to absorb this; `gcloud` (used in the same jobs)
+> authenticates reliably from the same credential file.
 
 ## Production Secrets Workflow
 

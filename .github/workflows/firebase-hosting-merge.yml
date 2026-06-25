@@ -94,6 +94,16 @@ jobs:
           project_id: pushup-stats
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_DEPLOY_SA }}
+      # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
+      # invocation and surfaces any transient hop as "Failed to authenticate".
+      # Retry a few times before giving up; a genuine failure still fails the job.
       - name: Deploy Hosting + Cloud Functions + Firestore rules & indexes
-        run: pnpm exec firebase deploy --only hosting,functions,firestore --project pushup-stats
         working-directory: data-store
+        run: |
+          for attempt in 1 2 3 4; do
+            pnpm exec firebase deploy --only hosting,functions,firestore --project pushup-stats && exit 0
+            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
+            sleep 15
+          done
+          echo "::error::firebase deploy failed after 4 attempts"
+          exit 1

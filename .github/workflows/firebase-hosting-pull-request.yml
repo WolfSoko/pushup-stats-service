@@ -87,15 +87,34 @@ jobs:
           gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
             echo -n "placeholder-not-configured" | \
             gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
+      # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
+      # invocation and surfaces any transient hop as "Failed to authenticate".
+      # Retry a few times before giving up; a genuine failure still fails the job.
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
-        run: pnpm exec firebase deploy --only functions,firestore --project staging --force
         working-directory: data-store
+        run: |
+          for attempt in 1 2 3 4; do
+            pnpm exec firebase deploy --only functions,firestore --project staging --force && exit 0
+            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
+            sleep 15
+          done
+          echo "::error::firebase deploy failed after 4 attempts"
+          exit 1
       - name: Deploy Hosting preview channel
         id: preview
         working-directory: data-store
         run: |
-          DEPLOY_JSON=$(pnpm exec firebase hosting:channel:deploy "pr-${{ github.event.pull_request.number }}" \
-            --expires 7d --project staging --json)
+          DEPLOY_JSON=""
+          for attempt in 1 2 3 4; do
+            if DEPLOY_JSON=$(pnpm exec firebase hosting:channel:deploy "pr-${{ github.event.pull_request.number }}" \
+              --expires 7d --project staging --json); then
+              break
+            fi
+            echo "::warning::channel deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
+            DEPLOY_JSON=""
+            sleep 15
+          done
+          if [ -z "$DEPLOY_JSON" ]; then echo "::error::channel deploy failed after 4 attempts"; exit 1; fi
           echo "$DEPLOY_JSON"
           URL=$(printf '%s' "$DEPLOY_JSON" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const m=d.match(/\{[\s\S]*\}/);if(!m)process.exit(0);const r=JSON.parse(m[0]).result||{};const c=Object.values(r)[0]||{};process.stdout.write(c.url||'')})")
           echo "url=$URL" >> "$GITHUB_OUTPUT"
