@@ -8,6 +8,9 @@ permissions:
   checks: write
   contents: read
   pull-requests: write
+  # Required so the runner can mint a GitHub OIDC token for keyless
+  # Workload Identity Federation auth to the staging GCP project.
+  id-token: write
 env:
   # Für PRs nur Read-Token, für main Pushes Write-Token.
   # Bei Fork-PRs sind Secrets automatisch nicht verfügbar.
@@ -67,31 +70,39 @@ jobs:
           find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
             cp "$f" "${f%index.csr.html}index.html"
           done
-      - name: Authenticate Firebase CLI
-        run: |
-          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}' > "$RUNNER_TEMP/firebase-sa.json"
+      # Keyless auth via Workload Identity Federation. The action writes an
+      # external-account credential file and exports GOOGLE_APPLICATION_CREDENTIALS
+      # (consumed by firebase-tools) and CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
+      # (consumed by gcloud), so neither needs an explicit key file.
+      # vars.WIF_PROVIDER_STAGING / vars.WIF_DEPLOY_SA_STAGING are set by infra/setup-wif.sh.
+      # Pinned to the v3.0.0 commit per GitHub's third-party-action hardening guidance.
+      - name: Authenticate to Google Cloud (keyless, WIF)
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          project_id: pushup-stats-staging-867b7
+          workload_identity_provider: ${{ vars.WIF_PROVIDER_STAGING }}
+          service_account: ${{ vars.WIF_DEPLOY_SA_STAGING }}
       - name: Ensure GITHUB_TOKEN secret exists in staging
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
         run: |
-          gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS" --quiet
           gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
             echo -n "placeholder-not-configured" | \
             gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
         run: pnpm exec firebase deploy --only functions,firestore --project staging --force
         working-directory: data-store
+      - name: Deploy Hosting preview channel
+        id: preview
+        working-directory: data-store
+        run: |
+          DEPLOY_JSON=$(pnpm exec firebase hosting:channel:deploy "pr-${{ github.event.pull_request.number }}" \
+            --expires 7d --project staging --json)
+          echo "$DEPLOY_JSON"
+          URL=$(printf '%s' "$DEPLOY_JSON" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const m=d.match(/\{[\s\S]*\}/);if(!m)process.exit(0);const r=JSON.parse(m[0]).result||{};const c=Object.values(r)[0]||{};process.stdout.write(c.url||'')})")
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+      - name: Comment preview URL on PR
+        if: steps.preview.outputs.url != ''
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-      # Pinned to the v0.10.0 commit (latest release as of 2026-05) per
-      # GitHub's third-party-action hardening guidance — keeps the deploy
-      # immune to a future v0 retag (and removes the ambiguity Copilot
-      # flagged on the floating v0.10.0 semver alias).
-      - uses: FirebaseExtended/action-hosting-deploy@e2eda2e106cfa35cdbcf4ac9ddaf6c4756df2c8c # v0.10.0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PUSHUP_STATS_STAGING }}
-          projectId: pushup-stats-staging-867b7
-          channelId: pr-${{ github.event.pull_request.number }}
-          expires: 7d
-          entryPoint: data-store
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" \
+            --body "🚀 Staging preview deployed: ${{ steps.preview.outputs.url }} (expires in 7 days)"

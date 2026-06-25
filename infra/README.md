@@ -4,11 +4,12 @@ Shell scripts for managing the Firebase environments (staging + production).
 
 ## Scripts
 
-| Script                   | Description                                                                                         |
-| ------------------------ | --------------------------------------------------------------------------------------------------- |
-| `setup-staging.sh`       | One-time setup of the staging Firebase project (APIs, SA, IAM, secrets)                            |
-| `teardown-staging.sh`    | Remove staging deploy resources (SA, secrets)                                                       |
-| `setup-prod-secrets.sh`  | Idempotent IAM bindings for all `defineSecret()` secrets on the prod project (runs after a new secret is added) |
+| Script                  | Description                                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `setup-wif.sh`          | Keyless GitHub Actions → GCP auth via Workload Identity Federation for prod + staging (deploy SA, WIF pool/provider, repo variables) |
+| `setup-staging.sh`      | One-time setup of the staging Firebase project (APIs, SA, IAM, secrets)                                                              |
+| `teardown-staging.sh`   | Remove staging deploy resources (SA, secrets)                                                                                        |
+| `setup-prod-secrets.sh` | Idempotent IAM bindings for all `defineSecret()` secrets on the prod project (runs after a new secret is added)                      |
 
 ## Prerequisites
 
@@ -19,6 +20,10 @@ Shell scripts for managing the Firebase environments (staging + production).
 ## Usage
 
 ```bash
+# One-time: set up keyless deploy auth (Workload Identity Federation)
+./infra/setup-wif.sh --dry-run
+./infra/setup-wif.sh
+
 # Preview what will be done
 ./infra/setup-staging.sh --dry-run
 
@@ -32,6 +37,32 @@ Shell scripts for managing the Firebase environments (staging + production).
 ./infra/setup-prod-secrets.sh --dry-run
 ./infra/setup-prod-secrets.sh
 ```
+
+## Deploy Authentication (Workload Identity Federation)
+
+The deploy workflows (`firebase-hosting-merge.yml`, `firebase-hosting-pull-request.yml`)
+authenticate to GCP **without a long-lived service-account key**. GitHub mints a
+short-lived OIDC token per run; GCP exchanges it for scoped credentials bound to
+this repository only via Workload Identity Federation (WIF).
+
+`setup-wif.sh` provisions everything (idempotent, both projects):
+
+- a deploy service account with the deploy roles (same set as `setup-staging.sh`),
+- a Workload Identity Pool + GitHub OIDC provider, restricted to this repo's owner,
+- a `roles/iam.workloadIdentityUser` binding for this repo's principal,
+- the GitHub **repository variables** the workflows read:
+
+  | Variable                | Project                      |
+  | ----------------------- | ---------------------------- |
+  | `WIF_PROVIDER`          | `pushup-stats` (prod)        |
+  | `WIF_DEPLOY_SA`         | `pushup-stats` (prod)        |
+  | `WIF_PROVIDER_STAGING`  | `pushup-stats-staging-867b7` |
+  | `WIF_DEPLOY_SA_STAGING` | `pushup-stats-staging-867b7` |
+
+These are GitHub **variables** (not secrets) — the provider resource name and SA
+email are not sensitive. The old `FIREBASE_SERVICE_ACCOUNT_*` JSON-key secrets are
+no longer used; delete them once a deploy has succeeded (the script prints the
+exact `gh secret delete` commands).
 
 ## Production Secrets Workflow
 
