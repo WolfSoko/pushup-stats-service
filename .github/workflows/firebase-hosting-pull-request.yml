@@ -87,6 +87,14 @@ jobs:
           gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
             echo -n "placeholder-not-configured" | \
             gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
+      - name: (DEBUG) diagnose firebase auth
+        working-directory: data-store
+        run: |
+          echo "GAC=$GOOGLE_APPLICATION_CREDENTIALS"
+          node -e "const c=require(process.env.GOOGLE_APPLICATION_CREDENTIALS);console.log('type=',c.type,'impersonation=',!!c.service_account_impersonation_url,'cred_source=',JSON.stringify(c.credential_source))" || echo "cred read failed"
+          echo "--- gcloud token ---"; gcloud auth print-access-token >/dev/null 2>&1 && echo "gcloud token OK" || echo "gcloud token FAIL"
+          echo "--- firebase --debug (tail) ---"
+          pnpm exec firebase deploy --only functions,firestore --project staging --force --debug 2>&1 | tail -50 || true
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
         run: pnpm exec firebase deploy --only functions,firestore --project staging --force
         working-directory: data-store
