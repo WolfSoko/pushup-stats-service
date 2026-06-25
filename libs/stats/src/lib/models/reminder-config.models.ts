@@ -56,9 +56,14 @@ function minutesInZone(timezone: string, now: Date): number {
 function toMinutes(hhmm: string): number {
   const segments = hhmm.split(':');
   if (segments.length !== 2) return Number.NaN;
-  const [h, m] = segments.map(Number);
-  if (!Number.isInteger(h) || !Number.isInteger(m)) return Number.NaN;
-  if (h < 0 || h > 23 || m < 0 || m > 59) return Number.NaN;
+  const [rawH, rawM] = segments;
+  // Require 1–2 plain decimal digits per segment. `Number()` alone would
+  // accept '' / ' ' (→ 0), '1e1', '0x10' and negatives, letting malformed
+  // windows slip through as real ranges.
+  if (!/^\d{1,2}$/.test(rawH) || !/^\d{1,2}$/.test(rawM)) return Number.NaN;
+  const h = Number(rawH);
+  const m = Number(rawM);
+  if (h > 23 || m > 59) return Number.NaN;
   return h * 60 + m;
 }
 

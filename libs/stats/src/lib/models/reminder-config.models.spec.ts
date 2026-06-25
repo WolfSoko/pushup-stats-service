@@ -76,6 +76,12 @@ describe('reminder-config quiet hours', () => {
       { from: '09:00', to: '10:999' },
       { from: '07:00:30', to: '11:00' },
       { from: 'oops', to: '11:00' },
+      // empty / whitespace segments (Number('') === 0)
+      { from: '09:', to: '11:00' },
+      { from: ':15', to: '11:00' },
+      // non-decimal numeric tokens that Number() would otherwise parse
+      { from: '1e1:00', to: '11:00' },
+      { from: '0x10:00', to: '11:00' },
     ];
 
     // then — each malformed window is disabled, so quiet hours never trigger
