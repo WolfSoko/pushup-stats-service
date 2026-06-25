@@ -16,6 +16,15 @@ How code reaches production and staging. AGENTS.md keeps the high-level rule (no
 - **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
 - **Sentry source maps:** The deploy workflow uploads source maps to Sentry after the production build (`pnpm sentry:sourcemaps`). Requires `SENTRY_AUTH_TOKEN` GitHub secret. See [`observability/sentry.md`](observability/sentry.md).
 
+## Deploy Authentication (Workload Identity Federation)
+
+Both deploy workflows authenticate to GCP **keylessly** via Workload Identity Federation — no long-lived service-account JSON key is stored in GitHub. Each run mints a GitHub OIDC token (`permissions: id-token: write`); GCP exchanges it for short-lived credentials scoped to this repo. `google-github-actions/auth` exports `GOOGLE_APPLICATION_CREDENTIALS`, which `firebase deploy` and `gcloud` consume automatically.
+
+- **GitHub variables** read by the workflows (set by `infra/setup-wif.sh`): `WIF_PROVIDER` / `WIF_DEPLOY_SA` (prod) and `WIF_PROVIDER_STAGING` / `WIF_DEPLOY_SA_STAGING` (staging). These are non-sensitive variables, not secrets.
+- **One-time GCP setup:** run [`infra/setup-wif.sh`](../infra/README.md#deploy-authentication-workload-identity-federation) (idempotent; provisions the deploy SA, WIF pool/provider, and repo variables for both projects).
+- **Why:** the previous `FIREBASE_SERVICE_ACCOUNT_*` key-based auth broke when the SA key was disabled/expired with no warning. WIF removes the key entirely.
+- The PR-preview workflow deploys its hosting channel with `firebase hosting:channel:deploy` and comments the preview URL via `gh pr comment` (replacing `FirebaseExtended/action-hosting-deploy`, which requires a key).
+
 ## Staging Environment
 
 A separate Firebase project (`pushup-stats-staging-867b7`) provides full isolation for PR previews:
