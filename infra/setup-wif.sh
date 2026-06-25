@@ -69,6 +69,28 @@ run() {
   echo
 }
 
+# Like run(), but retries on transient failures. A freshly created service
+# account is not immediately visible to IAM policy bindings (eventual
+# consistency), so add-iam-policy-binding can fail with "does not exist" or
+# INVALID_ARGUMENT for a few seconds after creation.
+run_retry() {
+  echo "▶ $*"
+  if [[ "$DRY_RUN" == false ]]; then
+    local attempt
+    for attempt in 1 2 3 4 5 6; do
+      if "$@"; then
+        echo
+        return 0
+      fi
+      echo "  …attempt $attempt failed, retrying in 5s (IAM propagation)…"
+      sleep 5
+    done
+    echo "  ✗ still failing after retries" >&2
+    return 1
+  fi
+  echo
+}
+
 # ──────────────────────────────────────────────
 # Per-project setup
 #   $1 PROJECT_ID   $2 SA_NAME   $3 provider var name   $4 SA var name
@@ -108,7 +130,7 @@ setup_project() {
 
   echo "── Grant deploy roles ──"
   for role in "${ROLES[@]}"; do
-    run gcloud projects add-iam-policy-binding "$project_id" \
+    run_retry gcloud projects add-iam-policy-binding "$project_id" \
       --member="serviceAccount:$sa_email" \
       --role="$role" \
       --condition=None \
@@ -146,7 +168,7 @@ setup_project() {
   fi
 
   echo "── Bind workloadIdentityUser for ${GITHUB_REPO} ──"
-  run gcloud iam service-accounts add-iam-policy-binding "$sa_email" \
+  run_retry gcloud iam service-accounts add-iam-policy-binding "$sa_email" \
     --role=roles/iam.workloadIdentityUser \
     --member="principalSet://iam.googleapis.com/projects/${project_number}/locations/global/workloadIdentityPools/${POOL_ID}/attribute.repository/${GITHUB_REPO}" \
     --project="$project_id" \
