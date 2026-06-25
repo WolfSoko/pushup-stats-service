@@ -10091,63 +10091,63 @@
       </segment>
     </unit>
     <unit id="reminder.weekdays.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>Dies Hebdomadae</target>
       </segment>
     </unit>
     <unit id="reminder.weekdays.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wochentage</source>
-        <target>Wochentage</target>
+        <target>Dies Hebdomadae</target>
       </segment>
     </unit>
     <unit id="reminder.weekdays.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Auswahl = jeden Tag </source>
-        <target> Keine Auswahl = jeden Tag </target>
+        <target> Nulla electa = omni die </target>
       </segment>
     </unit>
     <unit id="reminder.weekday.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>Lun</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>Mar</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>Mer</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>Iov</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Ven</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Sat</target>
       </segment>
     </unit>
     <unit id="reminder.weekday.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>Sol</target>
       </segment>
     </unit>
 </file>
