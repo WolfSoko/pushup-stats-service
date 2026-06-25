@@ -25,10 +25,23 @@ env:
     availability:
       - BUILD
 
+  # Override apphosting.yaml's `secret: SENTRY_AUTH_TOKEN` binding with an empty
+  # literal. App Hosting MERGES this file onto apphosting.yaml by variable name,
+  # and base-only entries persist — so merely omitting the secret here does NOT
+  # drop it. The inherited `secret:` reference resolves against a secret that
+  # doesn't exist in pushup-stats-staging-867b7 and fails the rollout at bind
+  # time, before the build runs (the upload script's no-op-when-unset guard
+  # can't catch a bind-time failure). Redefining the same variable as a plain
+  # value removes the secret resolution; staging's buildCommand omits
+  # `pnpm sentry:sourcemaps`, so the value is never read.
+  - variable: SENTRY_AUTH_TOKEN
+    value: ''
+    availability:
+      - BUILD
+
 scripts:
-  # No Sentry source-map upload here (unlike apphosting.yaml): the staging GCP
-  # project has no SENTRY_AUTH_TOKEN secret, and a `secret:` reference to a
-  # missing secret fails the rollout at bind time — before the build even runs —
-  # so it can't be guarded by the upload script's no-op-when-unset check.
+  # No Sentry source-map upload here (unlike apphosting.yaml): staging skips the
+  # debug-ID upload (see the SENTRY_AUTH_TOKEN override above for why the secret
+  # is replaced with an empty literal rather than just omitted).
   buildCommand: pnpm nx run web:build -c staging
   runCommand: node dist/web/server/server.mjs

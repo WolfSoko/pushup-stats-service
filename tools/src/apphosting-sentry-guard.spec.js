@@ -35,6 +35,12 @@ function buildCommand(config) {
  * (pushup-stats-staging-867b7) has no such secret, and an App Hosting `secret:`
  * reference to a missing secret fails the rollout at bind time — before the
  * build runs — which the upload script's no-op-when-unset guard cannot catch.
+ *
+ * App Hosting MERGES apphosting.staging.yaml onto apphosting.yaml by env
+ * variable name, so base-only entries persist: simply omitting the secret from
+ * staging does NOT drop the inherited prod binding. Staging must therefore
+ * explicitly OVERRIDE SENTRY_AUTH_TOKEN with a literal `value:` to replace the
+ * secret resolution — which is what the override test below locks in.
  */
 describe('App Hosting Sentry configuration', () => {
   describe('staging (apphosting.staging.yaml)', () => {
@@ -45,6 +51,20 @@ describe('App Hosting Sentry configuration', () => {
       // when App Hosting resolves env secrets at rollout time
       // then no secret binding may exist that would fail before the build runs
       expect(secretVariables(staging)).not.toContain('SENTRY_AUTH_TOKEN');
+    });
+
+    it('should override the inherited SENTRY_AUTH_TOKEN with a literal value', () => {
+      // given App Hosting merges apphosting.yaml onto this file by variable name,
+      //   so prod's `secret: SENTRY_AUTH_TOKEN` would otherwise leak into staging
+      // when staging redefines the same variable with a plain value
+      // then the inherited secret binding is replaced and bind-time resolution
+      //   of a nonexistent staging secret can't break the rollout
+      const tokenEntry = (staging.env ?? []).find(
+        (entry) => isMapping(entry) && entry.variable === 'SENTRY_AUTH_TOKEN'
+      );
+      expect(tokenEntry).toBeDefined();
+      expect(tokenEntry).not.toHaveProperty('secret');
+      expect(tokenEntry).toHaveProperty('value');
     });
 
     it('should not run the Sentry source-map upload in its build command', () => {
