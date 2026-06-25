@@ -155,8 +155,11 @@ setup_project() {
     echo "  Provider $PROVIDER_ID already exists, skipping creation."
     echo
   else
-    # attribute-condition restricts token exchange to this repo's owner so a
-    # token from any other GitHub repo cannot impersonate the deploy SA.
+    # Two-layer scoping: the attribute-condition gates the STS token exchange to
+    # repos under this owner, and the principalSet binding below
+    # (attribute.repository/<owner>/<repo>) restricts SA impersonation to this
+    # exact repository. The binding is the precise boundary; the condition is
+    # defense-in-depth against tokens from other owners.
     run gcloud iam workload-identity-pools providers create-oidc "$PROVIDER_ID" \
       --location=global \
       --workload-identity-pool="$POOL_ID" \
