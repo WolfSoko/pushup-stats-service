@@ -53,18 +53,20 @@ describe('App Hosting Sentry configuration', () => {
       expect(secretVariables(staging)).not.toContain('SENTRY_AUTH_TOKEN');
     });
 
-    it('should override the inherited SENTRY_AUTH_TOKEN with a literal value', () => {
+    it('should override the inherited SENTRY_AUTH_TOKEN with a non-empty literal value', () => {
       // given App Hosting merges apphosting.yaml onto this file by variable name,
       //   so prod's `secret: SENTRY_AUTH_TOKEN` would otherwise leak into staging
       // when staging redefines the same variable with a plain value
       // then the inherited secret binding is replaced and bind-time resolution
-      //   of a nonexistent staging secret can't break the rollout
+      //   of a nonexistent staging secret can't break the rollout — and the value
+      //   must be non-empty, since App Hosting reserves "" and rejects it
       const tokenEntry = (staging.env ?? []).find(
         (entry) => isMapping(entry) && entry.variable === 'SENTRY_AUTH_TOKEN'
       );
       expect(tokenEntry).toBeDefined();
       expect(tokenEntry).not.toHaveProperty('secret');
-      expect(tokenEntry).toHaveProperty('value');
+      expect(typeof tokenEntry.value).toBe('string');
+      expect(tokenEntry.value.length).toBeGreaterThan(0);
     });
 
     it('should not run the Sentry source-map upload in its build command', () => {

@@ -25,23 +25,24 @@ env:
     availability:
       - BUILD
 
-  # Override apphosting.yaml's `secret: SENTRY_AUTH_TOKEN` binding with an empty
-  # literal. App Hosting MERGES this file onto apphosting.yaml by variable name,
-  # and base-only entries persist — so merely omitting the secret here does NOT
-  # drop it. The inherited `secret:` reference resolves against a secret that
-  # doesn't exist in pushup-stats-staging-867b7 and fails the rollout at bind
-  # time, before the build runs (the upload script's no-op-when-unset guard
-  # can't catch a bind-time failure). Redefining the same variable as a plain
-  # value removes the secret resolution; staging's buildCommand omits
-  # `pnpm sentry:sourcemaps`, so the value is never read.
+  # Override apphosting.yaml's `secret: SENTRY_AUTH_TOKEN` binding with a plain
+  # placeholder value. App Hosting MERGES this file onto apphosting.yaml by
+  # variable name, and base-only entries persist — so merely omitting the secret
+  # here does NOT drop it. The inherited `secret:` reference resolves against a
+  # secret that doesn't exist in pushup-stats-staging-867b7 and fails the rollout
+  # at bind time, before the build runs (the upload script's no-op-when-unset
+  # guard can't catch a bind-time failure). Redefining the same variable as a
+  # plain value removes the secret resolution. The value is never read — staging's
+  # buildCommand omits `pnpm sentry:sourcemaps` — and can't be empty because App
+  # Hosting reserves "" and rejects it as invalid formatting.
   - variable: SENTRY_AUTH_TOKEN
-    value: ''
+    value: 'unused-on-staging'
     availability:
       - BUILD
 
 scripts:
   # No Sentry source-map upload here (unlike apphosting.yaml): staging skips the
   # debug-ID upload (see the SENTRY_AUTH_TOKEN override above for why the secret
-  # is replaced with an empty literal rather than just omitted).
+  # is replaced with a placeholder value rather than just omitted).
   buildCommand: pnpm nx run web:build -c staging
   runCommand: node dist/web/server/server.mjs
