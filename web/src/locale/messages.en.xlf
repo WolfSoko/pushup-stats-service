@@ -10322,7 +10322,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="landing.plans.fullbody.title">
       <segment state="translated">
         <source>Full Body Strong — 6 Wochen</source>
-        <target>Full Body Strong — 6 Weeks</target>
+        <target>Full Body Strong — 6 weeks</target>
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.body">
@@ -10334,7 +10334,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="landing.plans.core.title">
       <segment state="translated">
         <source>Core Foundations — 4 Wochen</source>
-        <target>Core Foundations — 4 Weeks</target>
+        <target>Core Foundations — 4 weeks</target>
       </segment>
     </unit>
     <unit id="landing.plans.core.body">
