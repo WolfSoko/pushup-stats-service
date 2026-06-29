@@ -243,7 +243,7 @@ describe('LandingPageComponent', () => {
   });
 
   describe('training plans section', () => {
-    it('showcases a diverse set of plan cards beyond pushups', async () => {
+    it('should showcase a diverse set of plan cards beyond pushups', async () => {
       await render(LandingPageComponent, {
         providers: [
           provideRouter([]),
@@ -256,8 +256,6 @@ describe('LandingPageComponent', () => {
       const planLinks = screen.getAllByRole('link', { name: 'Plan ansehen' });
       const hrefs = planLinks.map((a) => a.getAttribute('href'));
 
-      // The featured trio spans a pushup progression, a full-body and a core
-      // plan so the section reflects the broader catalog, not just pushups.
       expect(hrefs).toEqual(
         expect.arrayContaining([
           '/training-plans/recruit-6w',

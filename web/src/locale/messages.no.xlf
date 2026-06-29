@@ -1959,21 +1959,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="landing.plans.title">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-      </notes>
-      <segment state="translated">
-        <source> Liegestütz-Trainingspläne, die wirklich funktionieren </source>
-        <target> Armhevning-treningsplaner som virkelig fungerer </target>
+      <segment state="initial">
+        <source> Trainingspläne für jedes Ziel </source>
+        <target> Trainingspläne für jedes Ziel </target>
       </segment>
     </unit>
     <unit id="landing.plans.subtitle">
-      <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
-      </notes>
-      <segment state="translated">
-        <source> Vom Einsteiger zum 100er-Set: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
-        <target> Fra nybegynner til 100 armhevninger: veilede planer med daglige mål, sett og automatisk progresjonssporing. Bla gratis — for å starte og spore en plan, opprett bare en gratis konto. </target>
+      <segment state="initial">
+        <source> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
+        <target> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </target>
       </segment>
     </unit>
     <unit id="landing.plans.recruit.title">
