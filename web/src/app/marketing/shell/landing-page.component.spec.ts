@@ -243,7 +243,7 @@ describe('LandingPageComponent', () => {
   });
 
   describe('training plans section', () => {
-    it('renders three plan cards linking to the public detail pages', async () => {
+    it('should showcase a diverse set of plan cards beyond pushups', async () => {
       await render(LandingPageComponent, {
         providers: [
           provideRouter([]),
@@ -259,8 +259,8 @@ describe('LandingPageComponent', () => {
       expect(hrefs).toEqual(
         expect.arrayContaining([
           '/training-plans/recruit-6w',
-          '/training-plans/challenge-30d',
-          '/training-plans/over-40-4w',
+          '/training-plans/full-body-6w',
+          '/training-plans/core-4w',
         ])
       );
     });
