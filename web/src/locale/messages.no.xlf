@@ -1959,15 +1959,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="landing.plans.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainingspläne für jedes Ziel </source>
-        <target> Trainingspläne für jedes Ziel </target>
+        <target> Treningsplaner for ethvert mål </target>
       </segment>
     </unit>
     <unit id="landing.plans.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
-        <target> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </target>
+        <target> Push-ups, styrke for hele kroppen, core, push &amp; pull, HIIT eller aktiv restitusjon: Veiledede planer med daglig mål, sett og automatisk fremgangssporing. Bla gratis — start og spor med en gratis konto. </target>
       </segment>
     </unit>
     <unit id="landing.plans.recruit.title">
@@ -9414,27 +9414,27 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong — 6 Wochen</source>
-        <target>Full Body Strong — 6 Wochen</target>
+        <target>Full Body Strong — 6 uker</target>
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </source>
-        <target> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </target>
+        <target> Helkroppsøvelse med push-ups, knebøy, utfall, glute bridges og planke. Tre treningsdager per uke. </target>
       </segment>
     </unit>
     <unit id="landing.plans.core.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core Foundations — 4 Wochen</source>
-        <target>Core Foundations — 4 Wochen</target>
+        <target>Core Foundations — 4 uker</target>
       </segment>
     </unit>
     <unit id="landing.plans.core.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </source>
-        <target> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </target>
+        <target> Kjernemuskelstabilitet med planke, hollow hold, dead bug og benhev — pluss en moderat push-up aktivering per økt. </target>
       </segment>
     </unit>
 </file>

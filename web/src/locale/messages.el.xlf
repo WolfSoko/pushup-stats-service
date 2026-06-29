@@ -2670,15 +2670,15 @@
       </segment>
     </unit>
     <unit id="landing.plans.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainingspläne für jedes Ziel </source>
-        <target> Trainingspläne für jedes Ziel </target>
+        <target> Προπονητικά προγράμματα για κάθε στόχο </target>
       </segment>
     </unit>
     <unit id="landing.plans.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
-        <target> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </target>
+        <target> Push-ups, δύναμη ολόκληρου σώματος, core, push &amp; pull, HIIT ή ενεργή αποκατάσταση: Καθοδηγούμενα προγράμματα με ημερήσιο στόχο, σετ και αυτόματη παρακολούθηση προόδου. Περιηγηθείτε δωρεάν — ξεκινήστε και παρακολουθήστε με έναν δωρεάν λογαριασμό. </target>
       </segment>
     </unit>
     <unit id="landing.plans.recruit.title">
@@ -10145,27 +10145,27 @@
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong — 6 Wochen</source>
-        <target>Full Body Strong — 6 Wochen</target>
+        <target>Full Body Strong — 6 εβδομάδες</target>
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </source>
-        <target> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </target>
+        <target> Κύκλωμα ολόκληρου σώματος με push-ups, squats, lunges, glute bridges και plank. Τρεις ημέρες προπόνησης ανά εβδομάδα. </target>
       </segment>
     </unit>
     <unit id="landing.plans.core.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core Foundations — 4 Wochen</source>
-        <target>Core Foundations — 4 Wochen</target>
+        <target>Core Foundations — 4 εβδομάδες</target>
       </segment>
     </unit>
     <unit id="landing.plans.core.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </source>
-        <target> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </target>
+        <target> Σταθερότητα κορμού με plank, hollow hold, dead bug και ανυψώσεις ποδιών — συν μέτρια ενεργοποίηση push-up ανά συνεδρία. </target>
       </segment>
     </unit>
 </file>

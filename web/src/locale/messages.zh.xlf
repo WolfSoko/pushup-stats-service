@@ -3386,15 +3386,15 @@
       <target>结构化训练</target></segment>
     </unit>
     <unit id="landing.plans.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainingspläne für jedes Ziel </source>
-        <target> Trainingspläne für jedes Ziel </target>
+        <target> 适合每个目标的训练计划 </target>
       </segment>
     </unit>
     <unit id="landing.plans.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
-        <target> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </target>
+        <target> 俯卧撑、全身力量、核心、推与拉、HIIT或积极恢复：带有每日目标、组数和自动进度追踪的引导计划。免费浏览 — 使用免费账户开始并追踪。 </target>
       </segment>
     </unit>
     <unit id="landing.plans.recruit.title">
@@ -9644,27 +9644,27 @@
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong — 6 Wochen</source>
-        <target>Full Body Strong — 6 Wochen</target>
+        <target>Full Body Strong — 6周</target>
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </source>
-        <target> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </target>
+        <target> 包含俯卧撑、深蹲、弓步、臀桥和平板支撑的全身循环训练。每周三个训练日。 </target>
       </segment>
     </unit>
     <unit id="landing.plans.core.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core Foundations — 4 Wochen</source>
-        <target>Core Foundations — 4 Wochen</target>
+        <target>Core Foundations — 4周</target>
       </segment>
     </unit>
     <unit id="landing.plans.core.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </source>
-        <target> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </target>
+        <target> 通过平板支撑、空心支撑、死虫式和抬腿进行核心稳定性训练 — 每次课程还有适度的俯卧撑激活。 </target>
       </segment>
     </unit>
 </file>
