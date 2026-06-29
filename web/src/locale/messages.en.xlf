@@ -10325,5 +10325,29 @@ Deine Position: # ·  Reps        </source>
         <target>Sun</target>
       </segment>
     </unit>
+    <unit id="landing.plans.fullbody.title">
+      <segment state="initial">
+        <source>Full Body Strong — 6 Wochen</source>
+        <target>Full Body Strong — 6 Wochen</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.fullbody.body">
+      <segment state="initial">
+        <source> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </source>
+        <target> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.core.title">
+      <segment state="initial">
+        <source>Core Foundations — 4 Wochen</source>
+        <target>Core Foundations — 4 Wochen</target>
+      </segment>
+    </unit>
+    <unit id="landing.plans.core.body">
+      <segment state="initial">
+        <source> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </source>
+        <target> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>
