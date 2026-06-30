@@ -83,26 +83,40 @@ jobs:
           find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
             cp "$f" "${f%index.csr.html}index.html"
           done
-      # Keyless auth via Workload Identity Federation. The action writes an
-      # external-account credential file and exports GOOGLE_APPLICATION_CREDENTIALS,
-      # which firebase-tools (and gcloud) pick up automatically for ADC.
+      # Keyless auth via Workload Identity Federation. token_format: access_token
+      # makes the action perform the OIDC→STS→SA-impersonation exchange itself and
+      # expose a short-lived OAuth2 access token (steps.auth.outputs.access_token).
+      # We hand that token to firebase-tools directly (FIREBASE_TOKEN below) instead
+      # of letting firebase-tools run its own ADC exchange: its autoAuth path is
+      # unreliable with WIF external-account credentials and fails with a generic
+      # "Failed to authenticate, have you run firebase login?" (firebase/firebase-tools#10726).
+      # The action still writes a credential file + exports GOOGLE_APPLICATION_CREDENTIALS,
+      # which gcloud uses reliably for any ADC-based steps.
       # vars.WIF_PROVIDER / vars.WIF_DEPLOY_SA are set by infra/setup-wif.sh.
       # Pinned to the v3.0.0 commit per GitHub's third-party-action hardening guidance.
       - name: Authenticate to Google Cloud (keyless, WIF)
+        id: auth
         uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
           project_id: pushup-stats
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_DEPLOY_SA }}
-      # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
-      # invocation and surfaces any transient hop as "Failed to authenticate".
-      # Retry a few times before giving up; a genuine failure still fails the job.
+          token_format: access_token
+      # firebase-tools authenticates with the WIF access token minted above, passed
+      # as FIREBASE_TOKEN. firebase-tools tries to refresh it, gets a 400/401 (it is
+      # an access token, not a refresh token) and falls back to using it directly as
+      # a bearer — bypassing the flaky ADC exchange. The token is short-lived (1h) and
+      # scoped to cloud-platform, so it is not a reintroduced long-lived secret.
+      # Retry a few times to absorb transient deploy/network hiccups; a genuine
+      # failure still fails the job.
       - name: Deploy Hosting + Cloud Functions + Firestore rules & indexes
         working-directory: data-store
+        env:
+          FIREBASE_TOKEN: ${{ steps.auth.outputs.access_token }}
         run: |
           for attempt in 1 2 3 4; do
             pnpm exec firebase deploy --only hosting,functions,firestore --project pushup-stats && exit 0
-            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
+            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s"
             sleep 15
           done
           echo "::error::firebase deploy failed after 4 attempts"
