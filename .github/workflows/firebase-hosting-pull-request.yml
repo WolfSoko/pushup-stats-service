@@ -87,24 +87,31 @@ jobs:
           gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
             echo -n "placeholder-not-configured" | \
             gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
-      # DIAGNOSTIC: --debug surfaces the underlying ADC error that firebase-tools
-      # otherwise hides behind the generic "Failed to authenticate" message, so we
-      # can pin down why the WIF external-account exchange is being rejected.
-      # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
-      # invocation; retry a few times before giving up.
+      # firebase-tools' bundled google-auth-library/gaxios fails the WIF STS token
+      # exchange with a network-layer "Premature close" (the connection resets
+      # mid-response) while the auth action and gcloud reach STS fine — see
+      # firebase/firebase-tools#10726. --dns-result-order=ipv4first forces firebase
+      # onto the IPv4 path the working clients use, avoiding a flaky IPv6 hop.
+      # --debug keeps the underlying error visible until this is confirmed fixed.
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
         working-directory: data-store
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144 --dns-result-order=ipv4first
         run: |
           for attempt in 1 2 3 4; do
             pnpm exec firebase deploy --only functions,firestore --project staging --force --debug && exit 0
-            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
-            sleep 15
+            if [ "$attempt" -lt 4 ]; then
+              echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s"
+              sleep 15
+            fi
           done
           echo "::error::firebase deploy failed after 4 attempts"
           exit 1
       - name: Deploy Hosting preview channel
         id: preview
         working-directory: data-store
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144 --dns-result-order=ipv4first
         run: |
           DEPLOY_JSON=""
           for attempt in 1 2 3 4; do
@@ -112,9 +119,11 @@ jobs:
               --expires 7d --project staging --json); then
               break
             fi
-            echo "::warning::channel deploy attempt $attempt failed; retrying in 15s"
-            DEPLOY_JSON=""
-            sleep 15
+            if [ "$attempt" -lt 4 ]; then
+              echo "::warning::channel deploy attempt $attempt failed; retrying in 15s"
+              DEPLOY_JSON=""
+              sleep 15
+            fi
           done
           if [ -z "$DEPLOY_JSON" ]; then echo "::error::channel deploy failed after 4 attempts"; exit 1; fi
           echo "$DEPLOY_JSON"
