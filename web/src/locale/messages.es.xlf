@@ -2670,15 +2670,15 @@
       </segment>
     </unit>
     <unit id="landing.plans.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainingspläne für jedes Ziel </source>
-        <target> Trainingspläne für jedes Ziel </target>
+        <target> Planes de entrenamiento para cada objetivo </target>
       </segment>
     </unit>
     <unit id="landing.plans.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </source>
-        <target> Liegestütze, Ganzkörper-Kraft, Core, Push &amp; Pull, HIIT oder aktive Erholung: Geführte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Stöbere kostenlos — starten und tracken kannst du mit einem kostenlosen Konto. </target>
+        <target> Flexiones, fuerza de cuerpo completo, core, push &amp; pull, HIIT o recuperación activa: Planes guiados con objetivo diario, series y seguimiento automático del progreso. Explora gratis — empieza y realiza el seguimiento con una cuenta gratuita. </target>
       </segment>
     </unit>
     <unit id="landing.plans.recruit.title">
@@ -10141,27 +10141,27 @@
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong — 6 Wochen</source>
-        <target>Full Body Strong — 6 Wochen</target>
+        <target>Full Body Strong — 6 semanas</target>
       </segment>
     </unit>
     <unit id="landing.plans.fullbody.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </source>
-        <target> Ganzkörper-Zirkel mit Liegestützen, Kniebeugen, Ausfallschritten, Glute Bridges und Plank. Drei Trainingstage pro Woche. </target>
+        <target> Circuito de cuerpo completo con flexiones, sentadillas, zancadas, glute bridges y plancha. Tres días de entrenamiento por semana. </target>
       </segment>
     </unit>
     <unit id="landing.plans.core.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core Foundations — 4 Wochen</source>
-        <target>Core Foundations — 4 Wochen</target>
+        <target>Core Foundations — 4 semanas</target>
       </segment>
     </unit>
     <unit id="landing.plans.core.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </source>
-        <target> Rumpfstabilität mit Plank, Hollow Hold, Dead Bug und Beinheben — plus eine moderate Liegestütze-Aktivierung pro Einheit. </target>
+        <target> Estabilidad del core con plancha, hollow hold, dead bug y elevaciones de piernas — más una activación moderada de flexiones por sesión. </target>
       </segment>
     </unit>
 </file>
