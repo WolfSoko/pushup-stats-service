@@ -26,10 +26,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Pin Node instead of .nvmrc's lts/* (latest LTS, Node 24) for the deploy
+      # job: under that Node line firebase-tools' bundled node-fetch fails the WIF
+      # STS exchange with a "Premature close" (firebase/firebase-tools#10726), while
+      # gcloud/the auth action succeed. Node 22 LTS avoids that regression. The
+      # functions still ship to the nodejs24 runtime (build-time Node is unrelated).
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version-file: .nvmrc
+          node-version: '22'
 
       # Use corepack to install the exact pnpm version from package.json's
       # `packageManager` field. See ci.yml for background on why we avoid
