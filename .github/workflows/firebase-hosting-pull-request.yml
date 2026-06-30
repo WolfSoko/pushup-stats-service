@@ -87,22 +87,34 @@ jobs:
           gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
             echo -n "placeholder-not-configured" | \
             gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
-      # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
-      # invocation and surfaces any transient hop as "Failed to authenticate".
-      # Retry a few times before giving up; a genuine failure still fails the job.
+      # firebase-tools authenticates with FIREBASE_TOKEN (a `firebase login:ci`
+      # refresh token in repo secrets), refreshing via oauth2.googleapis.com and
+      # bypassing the broken WIF/STS path that surfaces as "Failed to authenticate"
+      # (firebase/firebase-tools#10726). The WIF step above still provides gcloud's
+      # ADC for the secret-bootstrap step. Retry to absorb transient hiccups.
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
         working-directory: data-store
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
+          if [ -z "$FIREBASE_TOKEN" ]; then
+            echo "::error::FIREBASE_TOKEN secret is not set. Create it with 'firebase login:ci' and add it as a repo secret (see infra/README.md)."
+            exit 1
+          fi
           for attempt in 1 2 3 4; do
             pnpm exec firebase deploy --only functions,firestore --project staging --force && exit 0
-            echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
-            sleep 15
+            if [ "$attempt" -lt 4 ]; then
+              echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s"
+              sleep 15
+            fi
           done
           echo "::error::firebase deploy failed after 4 attempts"
           exit 1
       - name: Deploy Hosting preview channel
         id: preview
         working-directory: data-store
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           DEPLOY_JSON=""
           for attempt in 1 2 3 4; do
@@ -110,9 +122,11 @@ jobs:
               --expires 7d --project staging --json); then
               break
             fi
-            echo "::warning::channel deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
-            DEPLOY_JSON=""
-            sleep 15
+            if [ "$attempt" -lt 4 ]; then
+              echo "::warning::channel deploy attempt $attempt failed; retrying in 15s"
+              DEPLOY_JSON=""
+              sleep 15
+            fi
           done
           if [ -z "$DEPLOY_JSON" ]; then echo "::error::channel deploy failed after 4 attempts"; exit 1; fi
           echo "$DEPLOY_JSON"
