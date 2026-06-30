@@ -64,17 +64,12 @@ email are not sensitive. The old `FIREBASE_SERVICE_ACCOUNT_*` JSON-key secrets a
 no longer used; delete them once a deploy has succeeded (the script prints the
 exact `gh secret delete` commands).
 
-> **Auth note:** firebase-tools' own ADC exchange is unreliable with WIF
-> external-account credentials — it surfaces a generic
-> `Failed to authenticate, have you run firebase login?`
-> ([firebase/firebase-tools#10726](https://github.com/firebase/firebase-tools/issues/10726)).
-> The deploy workflows therefore set `token_format: access_token` on the
-> `google-github-actions/auth` step (so the action runs the OIDC→STS→impersonation
-> exchange itself) and pass the minted short-lived token to firebase-tools via
-> `FIREBASE_TOKEN`, which firebase-tools uses directly as a bearer. `gcloud`
-> continues to authenticate from the exported credential file for any ADC-based
-> steps. The firebase commands still retry a few times to absorb transient
-> deploy/network hiccups.
+> **Transient auth note:** firebase-tools re-runs the OIDC→STS→impersonation token
+> exchange on every invocation, so a transient hop (or freshly-propagating
+> `workloadIdentityUser` binding right after `setup-wif.sh`) can surface as
+> `Failed to authenticate, have you run firebase login?`. The deploy workflows retry
+> the firebase commands a few times to absorb this; `gcloud` (used in the same jobs)
+> authenticates reliably from the same credential file.
 
 ## Production Secrets Workflow
 
