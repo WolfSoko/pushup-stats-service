@@ -64,12 +64,28 @@ email are not sensitive. The old `FIREBASE_SERVICE_ACCOUNT_*` JSON-key secrets a
 no longer used; delete them once a deploy has succeeded (the script prints the
 exact `gh secret delete` commands).
 
-> **Transient auth note:** firebase-tools re-runs the OIDC→STS→impersonation token
-> exchange on every invocation, so a transient hop (or freshly-propagating
-> `workloadIdentityUser` binding right after `setup-wif.sh`) can surface as
-> `Failed to authenticate, have you run firebase login?`. The deploy workflows retry
-> the firebase commands a few times to absorb this; `gcloud` (used in the same jobs)
-> authenticates reliably from the same credential file.
+> **firebase-tools auth — why a `FIREBASE_TOKEN` secret is still needed.** WIF
+> provides `gcloud`'s ADC, but **firebase-tools** cannot use WIF on the GitHub
+> runners: its bundled `google-auth-library`/`gaxios` fails the STS token exchange
+> with a transport `Premature close`, which it reports as
+> `Failed to authenticate, have you run firebase login?`
+> ([firebase/firebase-tools#10726](https://github.com/firebase/firebase-tools/issues/10726)).
+> `gcloud` and the auth action perform the same exchange fine, so this is a
+> firebase-tools client defect, not a WIF/IAM problem. The deploy workflows
+> therefore pass `FIREBASE_TOKEN` (a `firebase login:ci` refresh token), which
+> firebase-tools refreshes via `oauth2.googleapis.com`, bypassing STS entirely.
+>
+> Set it up once:
+>
+> ```bash
+> firebase login:ci   # prints a refresh token
+> gh secret set FIREBASE_TOKEN -R WolfSoko/pushup-stats-service --body '<token>'
+> ```
+>
+> One token covers both projects (it authenticates as the user account, which has
+> access to prod + staging). Re-run `firebase login:ci` and update the secret if it
+> is ever revoked. Revisit this once firebase-tools fixes its WIF/STS handling — at
+> which point the workflows can drop `FIREBASE_TOKEN` and rely on WIF alone.
 
 ## Production Secrets Workflow
 

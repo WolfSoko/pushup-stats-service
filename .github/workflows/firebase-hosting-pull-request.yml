@@ -30,15 +30,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Pin Node instead of .nvmrc's lts/* (latest LTS, Node 24) for the deploy
-      # job: under that Node line firebase-tools' bundled node-fetch fails the WIF
-      # STS exchange with a "Premature close" (firebase/firebase-tools#10726), while
-      # gcloud/the auth action succeed. Node 22 LTS avoids that regression. The
-      # functions still ship to the nodejs24 runtime (build-time Node is unrelated).
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version-file: .nvmrc
 
       # Use corepack to install the exact pnpm version from package.json's
       # `packageManager` field. See ci.yml for background on why we avoid
@@ -92,19 +87,18 @@ jobs:
           gcloud secrets describe GITHUB_TOKEN --project=pushup-stats-staging-867b7 2>/dev/null || \
             echo -n "placeholder-not-configured" | \
             gcloud secrets create GITHUB_TOKEN --data-file=- --project=pushup-stats-staging-867b7 --quiet
-      # firebase-tools' bundled google-auth-library/gaxios fails the WIF STS token
-      # exchange with a network-layer "Premature close" (the connection resets
-      # mid-response) while the auth action and gcloud reach STS fine — see
-      # firebase/firebase-tools#10726. --dns-result-order=ipv4first forces firebase
-      # onto the IPv4 path the working clients use, avoiding a flaky IPv6 hop.
-      # --debug keeps the underlying error visible until this is confirmed fixed.
+      # firebase-tools authenticates with FIREBASE_TOKEN (a `firebase login:ci`
+      # refresh token in repo secrets), refreshing via oauth2.googleapis.com and
+      # bypassing the broken WIF/STS path that surfaces as "Failed to authenticate"
+      # (firebase/firebase-tools#10726). The WIF step above still provides gcloud's
+      # ADC for the secret-bootstrap step. Retry to absorb transient hiccups.
       - name: Deploy Cloud Functions + Firestore rules & indexes to staging
         working-directory: data-store
         env:
-          NODE_OPTIONS: --max-old-space-size=6144 --dns-result-order=ipv4first
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           for attempt in 1 2 3 4; do
-            pnpm exec firebase deploy --only functions,firestore --project staging --force --debug && exit 0
+            pnpm exec firebase deploy --only functions,firestore --project staging --force && exit 0
             if [ "$attempt" -lt 4 ]; then
               echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s"
               sleep 15
@@ -116,7 +110,7 @@ jobs:
         id: preview
         working-directory: data-store
         env:
-          NODE_OPTIONS: --max-old-space-size=6144 --dns-result-order=ipv4first
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           DEPLOY_JSON=""
           for attempt in 1 2 3 4; do

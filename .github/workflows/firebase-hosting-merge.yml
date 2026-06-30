@@ -26,15 +26,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Pin Node instead of .nvmrc's lts/* (latest LTS, Node 24) for the deploy
-      # job: under that Node line firebase-tools' bundled node-fetch fails the WIF
-      # STS exchange with a "Premature close" (firebase/firebase-tools#10726), while
-      # gcloud/the auth action succeed. Node 22 LTS avoids that regression. The
-      # functions still ship to the nodejs24 runtime (build-time Node is unrelated).
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version-file: .nvmrc
 
       # Use corepack to install the exact pnpm version from package.json's
       # `packageManager` field. See ci.yml for background on why we avoid
@@ -88,27 +83,28 @@ jobs:
           find data-store/hosting-public -type f -name 'index.csr.html' -print0 | while IFS= read -r -d '' f; do
             cp "$f" "${f%index.csr.html}index.html"
           done
-      # Keyless auth via Workload Identity Federation. The action writes an
-      # external-account credential file and exports GOOGLE_APPLICATION_CREDENTIALS,
-      # which firebase-tools (and gcloud) pick up automatically for ADC.
-      # vars.WIF_PROVIDER / vars.WIF_DEPLOY_SA are set by infra/setup-wif.sh.
-      # Pinned to the v3.0.0 commit per GitHub's third-party-action hardening guidance.
+      # WIF still provides gcloud's ADC (and is kept for any GCP CLI steps), but
+      # firebase-tools itself authenticates via FIREBASE_TOKEN below — its own
+      # WIF/STS exchange fails on the GitHub runners with a transport "Premature
+      # close" (firebase/firebase-tools#10726), which it reports as the generic
+      # "Failed to authenticate". vars.WIF_PROVIDER / vars.WIF_DEPLOY_SA are set by
+      # infra/setup-wif.sh. Pinned to the v3.0.0 commit per GitHub's third-party-
+      # action hardening guidance.
       - name: Authenticate to Google Cloud (keyless, WIF)
-        id: auth
         uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
           project_id: pushup-stats
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_DEPLOY_SA }}
-      # firebase-tools' bundled google-auth-library/gaxios fails the WIF STS token
-      # exchange with a network-layer "Premature close" (the connection resets
-      # mid-response) while the auth action and gcloud reach STS fine — see
-      # firebase/firebase-tools#10726. --dns-result-order=ipv4first forces firebase
-      # onto the IPv4 path the working clients use, avoiding a flaky IPv6 hop.
+      # firebase-tools authenticates with FIREBASE_TOKEN (a `firebase login:ci`
+      # refresh token in repo secrets). It refreshes via oauth2.googleapis.com,
+      # bypassing the broken WIF/STS path entirely. requireAuth checks FIREBASE_TOKEN
+      # before ADC, so the credential file the auth step exported is not used here.
+      # Retry to absorb transient deploy/network hiccups; the final attempt fails fast.
       - name: Deploy Hosting + Cloud Functions + Firestore rules & indexes
         working-directory: data-store
         env:
-          NODE_OPTIONS: --max-old-space-size=6144 --dns-result-order=ipv4first
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           for attempt in 1 2 3 4; do
             pnpm exec firebase deploy --only hosting,functions,firestore --project pushup-stats && exit 0
