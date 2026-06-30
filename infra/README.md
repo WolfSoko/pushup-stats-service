@@ -75,17 +75,22 @@ exact `gh secret delete` commands).
 > therefore pass `FIREBASE_TOKEN` (a `firebase login:ci` refresh token), which
 > firebase-tools refreshes via `oauth2.googleapis.com`, bypassing STS entirely.
 >
-> Set it up once:
+> Set it up once — **prefer a dedicated, least-privilege deployer Google account**
+> (e.g. `ci-deployer@…`) granted only the deploy roles on both Firebase projects,
+> rather than a personal account. The `FIREBASE_TOKEN` is a long-lived refresh
+> token, so scoping it to a throwaway deployer identity limits the blast radius if
+> it ever leaks (and the token can be revoked without affecting a human's account):
 >
 > ```bash
-> firebase login:ci   # prints a refresh token
+> firebase login:ci   # log in AS the dedicated deployer account; prints a refresh token
 > gh secret set FIREBASE_TOKEN -R WolfSoko/pushup-stats-service --body '<token>'
 > ```
 >
-> One token covers both projects (it authenticates as the user account, which has
-> access to prod + staging). Re-run `firebase login:ci` and update the secret if it
-> is ever revoked. Revisit this once firebase-tools fixes its WIF/STS handling — at
-> which point the workflows can drop `FIREBASE_TOKEN` and rely on WIF alone.
+> One token covers both projects (the deployer account needs access to prod +
+> staging). Revoke a leaked token with `firebase logout --token '<token>'`, then
+> re-issue and update the secret. Revisit this once firebase-tools fixes its
+> WIF/STS handling — at which point the workflows can drop `FIREBASE_TOKEN` and
+> rely on WIF alone.
 
 ## Production Secrets Workflow
 

@@ -97,6 +97,10 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
+          if [ -z "$FIREBASE_TOKEN" ]; then
+            echo "::error::FIREBASE_TOKEN secret is not set. Create it with 'firebase login:ci' and add it as a repo secret (see infra/README.md)."
+            exit 1
+          fi
           for attempt in 1 2 3 4; do
             pnpm exec firebase deploy --only functions,firestore --project staging --force && exit 0
             if [ "$attempt" -lt 4 ]; then
