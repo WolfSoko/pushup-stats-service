@@ -16,7 +16,7 @@ import { dirname, join } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const LOCALE_DIR = join(__dirname, '..', '..', 'web', 'src', 'locale');
 const SOURCE_FILE = 'messages.xlf';
-const TRG_LOCALES = ['en', 'es', 'fr', 'it', 'la', 'nl', 'no', 'zh', 'el'];
+const TRG_LOCALES = ['en', 'es', 'fr', 'it', 'nl', 'no', 'zh', 'el'];
 
 function extractUnits(xml) {
   const map = new Map();

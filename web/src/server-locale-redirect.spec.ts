@@ -40,7 +40,6 @@ describe('pickLocale', () => {
     ['de,de-DE;q=0.9,fr;q=0.8', 'de'],
     ['nl-BE', 'nl'],
     ['el', 'el'],
-    ['la', 'la'],
     ['no', 'no'],
     ['no-NO', 'no'],
     // Norwegian browsers advertise `nb` (Bokmål) or `nn` (Nynorsk),
@@ -91,7 +90,7 @@ describe('computeLocaleRedirect', () => {
         '/it/login',
         '/nl',
         '/el',
-        '/la/blog',
+        '/no/blog',
         '/no',
       ]) {
         expect(computeLocaleRedirect(input({ path, url: path }))).toEqual({

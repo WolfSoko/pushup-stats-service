@@ -111,21 +111,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Aggiungi una pausa di 1 secondo in alto per aumentare lo stimolo a parità di ripetizioni.',
       ],
     },
-    la: {
-      name: 'Flexiones',
-      summary:
-        'Flexio brevis dorsi superioris — rectus abdominis sine multiplicibus tensionibus coxalis.',
-      instructions: [
-        'Supine, genua flexa, pedes in pavimento.',
-        'Manus leve post aures vel pectore opposito.',
-        'Scapulas tantum leva, dorsum inferius in pavimento remansit.',
-        'Deorsum sub tensione, numquam in fine tensionem omnino amitte.',
-      ],
-      tips: [
-        'Mentum laxe ad pectus, sed collo non tracta — musculi abdominis laborem faciunt, non collum.',
-        'Stationem unius secundae in summitate adde ut stimulus crescat.',
-      ],
-    },
     nl: {
       name: 'Crunches',
       summary:
@@ -260,21 +245,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Progressione: ginocchia piegate — ginocchia al petto — gambe dritte in orizzontale.',
         'In sospensione, attiva consapevolmente la depressione scapolare altrimenti i deltoidi fanno il lavoro.',
-      ],
-    },
-    la: {
-      name: 'Crura Elevata',
-      summary:
-        'Crura elevata supina vel pendentia — inferiorem partem muralis abdominis emphasisa.',
-      instructions: [
-        'Supine vel ex barra suspensia.',
-        'Crura recta vel leve flexa, lente ad caelum tolle.',
-        'Spina lumbaris (supina) vel truncus (pendentia) quies manet — nullum molimen.',
-        'Deorsum sub tensione, numquam in pavimentum collidentia et nullum kipping in fine.',
-      ],
-      tips: [
-        'Progressio: genua cohaerentia → genua ad pectus → crura recta horizontalia.',
-        'Pendentia, deprime scapulas active vel spatula pars laborem omnem faciet.',
       ],
     },
     nl: {
@@ -413,21 +383,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Variante: ginocchio al gomito opposto colpisce più gli obliqui.',
       ],
     },
-    la: {
-      name: 'Montium Ascensores',
-      summary:
-        'Celeris alternatio genu ad pressionem — musculi abdominis, flexores coxae et cardio in uno.',
-      instructions: [
-        'Tabula alta ut pressio incipiat, manus sub humeris, corpus in lineam rectam.',
-        'Unum genu ad pectus tracta, tum restitue dum alterum prosiliet.',
-        'Tempus eligit — velociter ad cardio, lente ad tensionem abdominalem maiorem.',
-        'Coxae humiles manent — nullum piking vel rocking.',
-      ],
-      tips: [
-        '"Sinistrum + dextrum = unum reputatum" ut res constantes maneat.',
-        'Varians: inter corpora (genu ad cubito opposito) obliquos magis ferit.',
-      ],
-    },
     nl: {
       name: 'Mountain Climbers',
       summary:
@@ -559,20 +514,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "Carica con un manubrio, kettlebell o bottiglia d'acqua per aumentare la difficoltà.",
         'Una ripetizione = una torsione a sinistra E una a destra.',
-      ],
-    },
-    la: {
-      name: 'Tormentum Russicum',
-      summary: 'Rotatio torsi sedentia — vires rotatoriae et obliqui.',
-      instructions: [
-        'Nates sedete, genua flexa, pedes vel elevati vel in pavimento.',
-        'Truncum paulum retrorsum incline cum dorso plano.',
-        'Manus iunctae ante pectus (vel onus tenentes); sinistram dextraque rotate.',
-        'Motus ex trunco, non ex brachiis.',
-      ],
-      tips: [
-        'Onus adiunge — halter, situlas aquae vel lagenas ad aumento scalarum.',
-        'Unum reputatum = tormentum sinistrum ET dextrum.',
       ],
     },
     nl: {
@@ -707,21 +648,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Se il collo protesta, usa i crunch o il dead bug al suo posto.',
         'La variante declinata (piedi elevati) la rende notevolmente più difficile.',
-      ],
-    },
-    la: {
-      name: 'Assurgentiae',
-      summary:
-        'Flexio torsi classica ex supino ad sedentem — exercitium abdominis simplicissimum.',
-      instructions: [
-        'Supine, genua flexa, pedes in pavimento (fixati vel sub aliquo).',
-        'Manus post caput vel pectore opposito — collum ne tracta.',
-        'Truncum sub vires abdominales flecte donec sedeas.',
-        'Deorsum cum eadem tensione — noli in pavimentum cadere.',
-      ],
-      tips: [
-        'Si collum est molestum, flexiones vel muscae mortui potius eligite.',
-        'Varians declinans (pedes elevati) notabiliter durius fit.',
       ],
     },
     nl: {
@@ -860,21 +786,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Varianti più semplici: salta il piegamento, sostituisci il salto con alzarsi in piedi.',
       ],
     },
-    la: {
-      name: 'Burpees',
-      summary:
-        'Cardio totius corporis ex genuflexione ad pressionem ad saltum — difficillima sine instrumentis.',
-      instructions: [
-        'Sta, in genuflexionem cade et manus ante pedes pone.',
-        'Ambo crura in tabulam salta, optime unam pressionem perfice.',
-        'Crura sub corpus antrorsum salta, in genuflexionem redire.',
-        'In saltum exsurge, manus breve super caput.',
-      ],
-      tips: [
-        'Tempus eligit secundum aetatem — forma velocitate melior.',
-        'Scalae: pressionem omitte; saltum cum assurgemento substitue — ambo accessa faciunt.',
-      ],
-    },
     nl: {
       name: 'Burpees',
       summary:
@@ -1009,21 +920,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "Valuta lo sforzo con la potenza (watt) o la frequenza cardiaca — il puro 'intuito' è ingannevole.",
         "I pedali a scatto aumentano l'efficienza ma richiedono qualche uscita per abituarsi.",
-      ],
-    },
-    la: {
-      name: 'Equitatio Mechanica',
-      summary:
-        'Exercitatio resistentiae, articulis gratia — idae, dorsum et condicio in uno cyclo.',
-      instructions: [
-        'Sellam sic constitue ut genu leve flecti maneat (10-15°) in fundamento — crura numquam plane extensa.',
-        'Cadentia 80-100 rpm — minus tormentum, minus usura genu.',
-        'Manus relaxatae, humeri deorsum — non elevati.',
-        'Spiratio tempori accommodata.',
-      ],
-      tips: [
-        'Quantum exercendi — wattium vel cardiarum — versus sensus purus fallat.',
-        'Pedales adhaerentes vim augebunt, sed paucae equitationes consuetudinis indigent.',
       ],
     },
     nl: {
@@ -1162,21 +1058,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Se le ginocchia non salgono alto, è jogging sul posto — non è questo esercizio.',
       ],
     },
-    la: {
-      name: 'Genua Alta',
-      summary:
-        'Currentia loco cum altis genubus — cordis frequentia augetur et flexores coxae praeparantur.',
-      instructions: [
-        'Rectus sta, bracchia ad pugilarem angulum.',
-        'Genua celeriter ad altitudinem coxae vel altiorem alterna.',
-        'Pedes in digitos cade, elastic et silentio.',
-        'Rectus mane — ne inclina ut genua occurras.',
-      ],
-      tips: [
-        'Optimum cardio-impetum inter series (30-60 s) — nullum instrumentum, stimulus multus.',
-        'Genua non ascendentia — non cursus sed exercitium hoc est.',
-      ],
-    },
     nl: {
       name: 'High Knees',
       summary:
@@ -1311,21 +1192,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Perfetto riscaldamento prima di sessioni di piegamenti o corsa — 2-3 minuti sono sufficienti.',
         'Le ginocchia non sopportano i salti? Fai step-touch al posto dei salti per una variante a basso impatto.',
-      ],
-    },
-    la: {
-      name: 'Saltus Gemini',
-      summary:
-        'Motus classicus praeparationis et cardio — humeri, coxae et cordis frequentia in uno.',
-      instructions: [
-        'Rectus sta, pedes simul, bracchia ad latera.',
-        'Unum saltum, crura lateraliter sparge dum bracchia supra caput tollas.',
-        'Proximo saltu, ad initium redire.',
-        'Rhythmicum teneto, pedes in digitos molliter cadens.',
-      ],
-      tips: [
-        'Praeparatio optima ante sessionem pressionis vel currentis — 2-3 minuta satis.',
-        'Genua molesta? Digitorum tactus saltum loco — varians sine impactu.',
       ],
     },
     nl: {
@@ -1464,21 +1330,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Non forzare i doppi salti — prima una base solida e ritmica, poi aumenta la velocità.',
       ],
     },
-    la: {
-      name: 'Funis Saltatio',
-      summary:
-        'Cardio intensissimum cum minimo instrumentum — certa, coordinatio et condicio.',
-      instructions: [
-        'Funem sic constitue ut capita ad medium-pectoris pertingant cum pedibus funis in medio.',
-        'Rectus sta, cubiti prope corpus, motus e carpiis venit.',
-        'Saltus parvi celeriter — iusta funem liberare (1-2 cm).',
-        'Pedes in digitos cadera, genua absorbentia — nulla plantarum vox.',
-      ],
-      tips: [
-        'Incipientes — computationes in seriebus (3 × 50); periti in tempore (3 × 60 s).',
-        'Duplices impetus ne coges — rhythmum purum primo perfice, tum celeritatem adiunge.',
-      ],
-    },
     nl: {
       name: 'Springtouw',
       summary:
@@ -1613,21 +1464,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         '60-70% della potenza viene dalle gambe — non tirare eccessivamente con le braccia.',
         'Mira a una frequenza di colpi 18-26 spm per la resistenza; più alta per gli intervalli.',
-      ],
-    },
-    la: {
-      name: 'Remigatio Mechanica',
-      summary:
-        'Cardio totius corporis in ergometrion — crura, dorsum et condicio in uno ictu.',
-      instructions: [
-        'Captus: genua flexa, tibiae perpendiculares, bracchia extensa, truncus paulum antrorsum.',
-        'Impetus: primus crura, tum truncus retrorsus, denique bracchia ad costas inferiores.',
-        'Finis: crura recta, truncus paulum retrorsus, bracchia ad costas inferiores.',
-        'Recursio: sequentiam inversum — bracchia extendenda, truncus antrorsum, genua flectenda.',
-      ],
-      tips: [
-        '60-70% vis ex cruribus — ne nimium e brachiis tracta.',
-        'Ictus frequentia 18-26 spm ut resistentia; altiora ad intervals.',
       ],
     },
     nl: {
@@ -1766,21 +1602,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Scarpe e orologio da corsa aiutano, ma la coerenza batte qualsiasi attrezzo.',
       ],
     },
-    la: {
-      name: 'Cursio',
-      summary:
-        'Exercitatio resistentiae classica — via facilior ad meliorem condicionem et VO₂max.',
-      instructions: [
-        'Postura relaxata, passus naturales, truncus paulum antrorsum.',
-        'Pedes in parte media cadant (non pure in calcaneis) ut impactus minuatur.',
-        'Spiratio uniformis — in cursibus facillimis tres passi in, tres ex; in velocioribus 2/2.',
-        'Quotidiana miliaria non amplius 10% auge (regula decem percentorum).',
-      ],
-      tips: [
-        'Incipientes cum alternationis ambulationis/currentis (1 min cursio, 1 min ambulatio).',
-        'Calcei et horologia currentia iuvant, sed constantia omne instrumentum superat.',
-      ],
-    },
     nl: {
       name: 'Hardlopen',
       summary:
@@ -1917,21 +1738,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Gli occhialini riducono notevolmente l'attrito e l'irritazione — attrezzo indispensabile.",
       ],
     },
-    la: {
-      name: 'Natatio',
-      summary:
-        'Cardio totius corporis in aqua — articulis gratia et respiratione exigentia.',
-      instructions: [
-        'Corpus horizontale — coxas et crura prope superficiem adprope.',
-        'Latere spira omni 2-3 icti (libera) vel antrorsum (pectoralis).',
-        'Pedalem ex coxis, non ex genu — ictus parvi velociter.',
-        'Tractus longi pares agunt melius quam vehementia — efficientia super vim.',
-      ],
-      tips: [
-        'Breves distantiae (4 × 50 m) cum quiete, non unum 200 m conatum.',
-        'Perspicilla penetrant resistentiam et molestiam — non est negotium.',
-      ],
-    },
     nl: {
       name: 'Zwemmen',
       summary:
@@ -2065,21 +1871,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         '6-10 km/h su terreno piatto; le colline aumentano lo stimolo in modo significativo.',
         'Le scarpe contano più del ritmo — scarpe scadenti distruggono il tuo andatura dopo 30 minuti.',
-      ],
-    },
-    la: {
-      name: 'Ambulatio',
-      summary:
-        'Ambulatio velox extra vel in maschina — stimulus cardio maxime neglectus.',
-      instructions: [
-        'Rectus ambula, passus naturales, bracchia oscillantia.',
-        'Tempus velox — adhuc fari potis, numquam cantare.',
-        'Per nasum spiratum, nisi declivitas — tum ore et naso.',
-        '30-60 minuta per sessionem ad resistentiam, vel breves ambulationes per diem.',
-      ],
-      tips: [
-        '6-10 km/h in plano; colles vim augent.',
-        'Calcei materiam magis quam tempus significat — mali calcei 30 minutis gressum destruunt.',
       ],
     },
     nl: {
@@ -2218,21 +2009,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Il tempo conta più dell'ampiezza — 3-4 s per lato batte un movimento affrettato.",
       ],
     },
-    la: {
-      name: 'Muscae Mortui',
-      summary:
-        'Exercitatio supina contra-extensionis — coordina vinculum centrale cum bracchio et crure oppositorum.',
-      instructions: [
-        'Supine, bracchia recta supra, genua 90° super coxas flexa.',
-        'Dorsum inferius in pavimentum premia — nullum spatium inter dorsum et tapete.',
-        'Lente bracchium et crus opposita simul deorsum deprima sine dorso elevato.',
-        'Sub tensione redire, tum alte vicissim.',
-      ],
-      tips: [
-        'Dorsum inferius si elevetur, seriem minue vel genu altiore teneto.',
-        'Tempus plus quam series refert — 3-4 s per latus quam acceleratione melius.',
-      ],
-    },
     nl: {
       name: 'Dead Bug',
       summary:
@@ -2367,21 +2143,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Scala da facile a difficile: ginocchia piegate — mezza hollow (ginocchia 90°) — hollow completo (esteso).',
         'Principianti: 3 × 15-20 s; avanzati 3 × 45-60 s.',
-      ],
-    },
-    la: {
-      name: 'Hollow Hold',
-      summary:
-        'Positio statira "corporis vacui" — fundamentum vires gymnasticae.',
-      instructions: [
-        'Supine, bracchia et crura recta extensa.',
-        'Humeros et crura simul tolle ut dorsum inferius pavimentum tangat.',
-        'Premendo spinam lumbalem in pavimentum — "vacu" maneat.',
-        'Positionem teneto, uniformiter spirando.',
-      ],
-      tips: [
-        'Scala ex facili ad difficile: adducta (genua plicata) → dimidium-vacu (genua 90°) → plenum-vacu (extensum).',
-        'Incipientes: 3 × 15-20 s; periti 3 × 45-60 s.',
       ],
     },
     nl: {
@@ -2520,21 +2281,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Ritmo 3-1-1 (3 s giù, 1 s pausa, 1 s su) massimizza lo stimolo con poco peso.',
       ],
     },
-    la: {
-      name: 'Salutatio Matutina',
-      summary:
-        'Cardo coxae cum trunco erecto — posterior catena extensio et vires.',
-      instructions: [
-        'Statio latitudinis humerorum, manus post caput, super humeros vel barra.',
-        'Genua minime flexa, coxas lente retrorsum proba.',
-        'Truncum antrorsum sub tensione inclina cum dorso plano — donec musculi posterioris femuralis operantem se sensui.',
-        'Per calcanea impelle ut standum redeas.',
-      ],
-      tips: [
-        'Mobilitas profunditatem terminat — numquam dorsum inferius arcua vel rotundum.',
-        'Tempus 3-1-1 (3 s deorsum, 1 s statio, 1 s sursum) stimulus cum parvo onere.',
-      ],
-    },
     nl: {
       name: 'Good Morning',
       summary:
@@ -2669,21 +2415,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "Tenere un peso (manubrio, bottiglia d'acqua) nella mano opposta aumenta la richiesta di stabilità.",
         "Consenti le dita su un muro all'inizio — l'equilibrio su una gamba richiede pratica.",
-      ],
-    },
-    la: {
-      name: 'Singulum Crus Mortuum Elevatum',
-      summary:
-        'Cardo unius cruris — aequilibrium, posterior catena et stabilitas coxae.',
-      instructions: [
-        'Rectus sta, onus in uno crure, alterum leve elevatum.',
-        'Coxas retrorsum et truncum antrorsum — crus posterius ut contrapondus extenditur.',
-        'Dorsum planum, genu standum flexibile; cardo ad horizontale vel quantam forma permittit.',
-        'Per calcneum impelle dum coxas antrorsum propelles.',
-      ],
-      tips: [
-        'Onus in opposita manu (halter, lagena aquae) stabilitate augetur.',
-        'Digito tutelarum in muro initio — unius cruris aequilibrium exercitium indiget.',
       ],
     },
     nl: {
@@ -2822,21 +2553,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Le alte ripetizioni funzionano meglio per i polpacci — mira a 15-25 per serie.',
       ],
     },
-    la: {
-      name: 'Sura Elevationes',
-      summary:
-        'Exercitatio surarum — potentia saltatoria et stabilitas talorum et genuarum.',
-      instructions: [
-        'Rectus sta, pedes latitudinis coxae, onus in digitis.',
-        'Lente in digitos surge, summitatem breviter statio.',
-        'Deorsum sub tensione — calcanei ne collidant.',
-        'Gradus in margine corpore plenitudinem motus liberat.',
-      ],
-      tips: [
-        'Gradus (calcanei suspensa) multum extensionem et stimulum adit.',
-        'Surarum ad repetitiones — iubilus 15-25 per seriem.',
-      ],
-    },
     nl: {
       name: 'Kuitraises',
       summary:
@@ -2971,21 +2687,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Spingi attraverso i talloni, non le dita dei piedi — la pressione sulle dita sposta il carico ai quadricipiti.',
         'Progredisci con una variante su una gamba o peso aggiunto una volta che il peso corporeo è troppo facile.',
-      ],
-    },
-    la: {
-      name: 'Pont Natis',
-      summary:
-        'Extensio coxae supina — directum natis et posterior catena opus.',
-      instructions: [
-        'Supine, genua flexa, pedes plana et latitudinis coxae.',
-        'Nates exprime et coxas ad caelum impelle.',
-        'Summitate breve (1 s) teneto — corpus lineam formam genu ad humerum.',
-        'Deorsum sub tensione — pavimentum tangito breviter, tum iterum.',
-      ],
-      tips: [
-        'Per calcanea impelle, non digitis — digiti-pressura quad superscriptum munit.',
-        'Cum singulum-crure variante vel onere adducto cum corporis pondere facile.',
       ],
     },
     nl: {
@@ -3124,21 +2825,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Gli atterraggi forti sono difficili per le articolazioni; un tappetino o scarpe ammortizzate aiutano.',
       ],
     },
-    la: {
-      name: 'Saltus Genua',
-      summary:
-        'Explosiva genuflexio cum saltu verticali — velocitas-vires et crura potentia.',
-      instructions: [
-        'In genuflexionem ordinaria deorsum.',
-        'Impetum fundamento explosivum bracchiis dynamice oscillantibus.',
-        'Digitorum cadum molliter, genua absorbentia — directe in proximam genuflexionem.',
-        'Tensio super velocitatem — forma si frangitur, requiete vel ordinaria genuflexione.',
-      ],
-      tips: [
-        'Non sta alto — praetensio fundamento est quod altitudinem mittit.',
-        'Fortia cadens articulis gravis; tapete vel calcei adiuvant.',
-      ],
-    },
     nl: {
       name: 'Jump Squats',
       summary:
@@ -3273,21 +2959,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Rimani eretto — il busto non deve crollare in avanti.',
         "Varianti: gli affondi all'indietro sono più delicati per le ginocchia, gli affondi in movimento aggiungono una richiesta di equilibrio.",
-      ],
-    },
-    la: {
-      name: 'Lunae',
-      summary:
-        'Vires singuli cruris in statu divisso — potentia, aequilibrium et symmetria.',
-      instructions: [
-        'Rectus sta, longum passum antrorsum fac.',
-        'Genu posterius sub tensione deorsum versus pavimentum, genu anterius super talum.',
-        'Ambo genua circa 90° — tibia anterior verticalis.',
-        'Per calcneum anterium impelle ut standum redeas; alterna vel passim.',
-      ],
-      tips: [
-        'Erectus mane — truncus non collapsa antrorsum.',
-        'Variantes: reversae lunae genua facilius, ambulantes lunae aequilibrium augent.',
       ],
     },
     nl: {
@@ -3426,20 +3097,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Stringi i glutei mentre sali o la parte bassa della schiena finisce per lavorare eccessivamente.',
       ],
     },
-    la: {
-      name: 'Genuflexiones',
-      summary: 'Rex exercitiumorum crurum — quads, nates et centrum in uno.',
-      instructions: [
-        'Statio humerorum latitudinis, digiti paulum extrinsecus versi.',
-        'Coxas retrorsum, genua flexta super digitos — ut in cathedram invisibilem sedes.',
-        'Descendere profundum quoad mobilitas et coxae permittunt — ideale femuralia parallela vel sub.',
-        'Potentialiter surga per calcanea; genua in summitatem ne fixa.',
-      ],
-      tips: [
-        'Genua super digitos sequi — ne introrsum flectantur.',
-        'Nates exprime in via sursum vel dorsum inferius laborat nimis.',
-      ],
-    },
     nl: {
       name: 'Squats',
       summary:
@@ -3573,21 +3230,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "Scegli un'altezza dove il ginocchio anteriore si piega a circa 90° — altrimenti la quantità di moto prende il sopravvento.",
         'Non spingere con la gamba posteriore — lo stimolo deve venire dalla gamba che lavora (anteriore).',
-      ],
-    },
-    la: {
-      name: 'Ascensus Gradus',
-      summary:
-        'Ascende elevatione — extensio singuli cruris cum exitu cotidiani alto.',
-      instructions: [
-        'Ante elevationem stabila (sella, gradus) sta.',
-        'Unum pedem omnino super elevationem — calcaneus centrato.',
-        'Per eum calcneum impelle donec crus posterius volens; breve statio.',
-        'Deorsum sub tensione, repetitio in crure eodem vel alternatio.',
-      ],
-      tips: [
-        'Altitudinem elige qua genu ante circa 90° flexitur — momenti ne sumit.',
-        'Posterium crus ne propelle — stimulus ex labore cruris (anterioris) venit.',
       ],
     },
     nl: {
@@ -3726,21 +3368,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Il movimento deve scorrere, non scattare tra le posizioni finali.',
       ],
     },
-    la: {
-      name: 'Felis-Vacca',
-      summary:
-        'Mobilizatio spinalis in quadrupedia — alternatio inter dorsum rotundum et arcuatum.',
-      instructions: [
-        'Incipe super manus et genua — manus sub humeris, genua sub coxis.',
-        'Spirans, vacca: venter deorsum, pectus et oculos supra.',
-        'Exspirans, felis: spina ad caelum rotunda, mentum ad pectus, cauda plicata.',
-        'Cum spiratione 8-12 motus — nullus celer, iactans transitio.',
-      ],
-      tips: [
-        'Perfecta ante et post longum sedentarium — totam spinam mobilizat.',
-        'Motus fluere debet, non inter fines fractus.',
-      ],
-    },
     nl: {
       name: 'Cat-Cow',
       summary:
@@ -3875,21 +3502,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Prima della forza o dei salti sempre dinamico, mai statico — lo stretching statico riduce la prestazione.',
         'Estendi il riscaldamento in inverno; accorcialo al caldo.',
-      ],
-    },
-    la: {
-      name: 'Praeparatio Dynamica',
-      summary:
-        'Calefactio motus ante exercitium — articulos, musculos et nervum praeparat.',
-      instructions: [
-        '5-10 minuta motus faciles (cursus, saltus, funis) ut cor frequentia crescat.',
-        'Tum articulos proprios qui se gravandos (coxae, humeri, talones) mobiliza.',
-        'Amplitudines motus sed nullae fines-stationes — oscillationes ut crura.',
-        'Finito cum paucis seriebus levibus ante realem sessionem.',
-      ],
-      tips: [
-        'Ante vires vel saltum aliquando dynamica, numquam statica — staticus effeminatus est.',
-        'Hiemem augeto, aestatem minue.',
       ],
     },
     nl: {
@@ -4028,21 +3640,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Non rollare direttamente su ossa o articolazioni — solo sui corpi muscolari.',
       ],
     },
-    la: {
-      name: 'Rotula Foamea',
-      summary:
-        'Automassagium in rotula — tensionem liberat et circulationem auget.',
-      instructions: [
-        'Musculum obiectivum in rotulam pone, corpus pondus super illa regit.',
-        'Lente (2-3 cm per secundam) voluta, loca tenera 20-30 s statio.',
-        'Uniformiter spirato — numquam teneas respiratum, 5-6/10 intentionem aspira, ne amplius.',
-        '30-60 s per musculum maiorem, longius cum necessitate.',
-      ],
-      tips: [
-        'Breve (1-2 min per aream) ante exercitium, longius et relaxatum post.',
-        'Directe super ossa vel articulos ne voluta — musculum tantum.',
-      ],
-    },
     nl: {
       name: 'Foam Rolling',
       summary:
@@ -4177,21 +3774,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         '5 minuti al giorno battono 30 minuti una volta a settimana.',
         "Respira nello stretching — rilascia un po' di più a ogni espirazione.",
-      ],
-    },
-    la: {
-      name: 'Aperitor Coxae',
-      summary:
-        'Routine mobiliziationis coxarum — essentiale laborantibus sedentia et genuflexionibus profundis.',
-      instructions: [
-        'Ab omni-quattuor, unum crus antrorsum in positionem 90/90 ferre.',
-        'Posterius crus rectum extendere, ambo puncta coxae planitudini quadrata.',
-        'Antrorsum super anticum crus incline ut natis extensionem; lenis antrorsum-retrorsum.',
-        'Rotatio per piceonem, ranam et papilionenem plenitudinem coxae.',
-      ],
-      tips: [
-        'Quotidiana 5 minuta superat 30 minuta semel in septimana.',
-        'In extensionem spirato — release paulum maiorem omni exspiratione.',
       ],
     },
     nl: {
@@ -4330,21 +3912,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "La flessibilità richiede settimane — la pazienza batte l'intensità.",
       ],
     },
-    la: {
-      name: 'Extensio',
-      summary:
-        'Extensio statica post exercitium — amplitudinem motus longodurne habet.',
-      instructions: [
-        'Solum cum musculi calidi (post exercitium vel levem calefactionem).',
-        'In unaquaque extensionem lente dum trahumen leve sentis (numquam dolorem).',
-        'Unumquemque locum 30-60 secundas quiete, uniformiter spirando.',
-        '2-3 repetitiones per musculum per sessionem — nullam frigida-extensionem ex statu.',
-      ],
-      tips: [
-        'Extensionem staticem ante gravem vires vel velocitatem evita (10-20 min expecta).',
-        'Flexibilitas multis hebdomadis — patientia intensitatem superat.',
-      ],
-    },
     nl: {
       name: 'Stretching',
       summary:
@@ -4479,21 +4046,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         "I principianti traggono più vantaggio da una classe guidata (studio o video) che dall'improvvisazione.",
         '20-30 minuti, 3× a settimana, già produce guadagni di mobilità notevoli.',
-      ],
-    },
-    la: {
-      name: 'Yoga',
-      summary:
-        'Praxis motus posturae spirationis et concentrationis — mobilitas et regulatio anxietatis.',
-      instructions: [
-        'Incipe stylo qui fini tuae convenit (Hatha, Vinyasa, Yin).',
-        'Spiratione ducta motum — inspira ad apertionem, exspira ad profunditatem.',
-        'Unumquemque asanam nitide; brevius et nitidus quam longus et compressus.',
-        'Shavasana (silentium) fini — pars est practise.',
-      ],
-      tips: [
-        'Incipientes magis e clasmata alit (studio vel video) quam ex improviso.',
-        '20-30 minuta, 3× per septimana, iam valde mobilitatem adit.',
       ],
     },
     nl: {
@@ -4632,21 +4184,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Principianti: 3 × 20-30 s, avanzati 3 × 60-90 s; ferma quando la forma si rompe.',
       ],
     },
-    la: {
-      name: 'Tabula',
-      summary:
-        'Statio isometrica e carpis vel manibus — aureum stabilitatem central.',
-      instructions: [
-        'Carpi vel palmae latitudinis humerorum, cubiti directe sub humeris.',
-        'Corpus lineam a capite ad calces formant — nates et musculos abdominis active firma.',
-        'Humeros ab auribus retracta, collum longum, inter manus spectato.',
-        'Positionem teneto — nullus sagita, nullus dorsum inferius arcuatum, nullae coxae.',
-      ],
-      tips: [
-        'Uniformiter spirato — numquam teneas respiratum.',
-        'Incipientes: 3 × 20-30 s; periti 3 × 60-90 s; forma cum frangit termina.',
-      ],
-    },
     nl: {
       name: 'Plank',
       summary:
@@ -4781,21 +4318,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Principianti: 3 × 15-20 s; avanzati 3 × 45-60 s — target a lungo termine 1-2 minuti di fila.',
         'Spalle sensibili? Usa una sospensione attiva (scapolari depresse) invece che passiva.',
-      ],
-    },
-    la: {
-      name: 'Dead Hang',
-      summary:
-        'Suspensio passiva ex barra — vires prehensilis, mobilitas humerorum et decompressio spinalis.',
-      instructions: [
-        'Barram latitudinis humerorum prende, pollices extra (vel voluta) — ambo pedes a pavimento.',
-        'Humeros active deorsum et retrorsum — nullus elevatus, nullus sunken.',
-        'Truncus relaxatus sed nullus dorsum inferius arcuatum — crura quies, nullus motus.',
-        'Teneto quantam formam recto, tum sub tensione deorsum.',
-      ],
-      tips: [
-        'Incipientes: 3 × 15-20 s; periti 3 × 45-60 s — longum iubilus 1-2 minuta recta.',
-        'Humeri sensibiles? Suspensione activa (scapulae depressae) pasiva loco.',
       ],
     },
     nl: {
@@ -4934,21 +4456,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Compagno ideale a qualsiasi sessione di pressione; 15-25 ripetizioni per serie.',
       ],
     },
-    la: {
-      name: 'Tractio Facialis',
-      summary:
-        'Tractio alta cum banda vel chabo — posteriores humeri et pressio contra-balancia.',
-      instructions: [
-        'Bandam vel chabum altitudinis oculorum fi, ambabus manibus fines prende.',
-        'Erectus cum brachiis antrorsum; retroactus passus unum vel duo ut band tensio.',
-        'Cubiti sursum et extra versus aures tracta, pollices retrorsum spectantes.',
-        'Breviter in fine (1 s) statio, tum sub tensione redire.',
-      ],
-      tips: [
-        'Humeri deorsum — nullus elevatio scapularum.',
-        'Sessionem pressione companio optima; 15-25 repetitiones per seriem.',
-      ],
-    },
     nl: {
       name: 'Face Pull',
       summary:
@@ -5083,21 +4590,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Regressione: negative (salta su, abbassa lentamente) o trazioni assistite con band.',
         'Ampiezza completa — mento sopra la barra in alto, gomiti completamente estesi in basso.',
-      ],
-    },
-    la: {
-      name: 'Tractationes',
-      summary:
-        'Tractio verticalis ex barra — rex trahentium superioris corporis ut dorsum, biceps et prehensio.',
-      instructions: [
-        'E barra suspende, prensa latitudinis humerorum, palmae antrorsum (ordinaria) vel retrorsum (menti).',
-        'Scapulas active deorsum — nullus elevatio humerorum fundatore.',
-        'Pectus ad barram tracta, cubiti deorsum et paulum retrorsum.',
-        'Deorsum sub tensione in suspensione plenam — nullus kipping.',
-      ],
-      tips: [
-        'Regressio: negativae (salta supra, lente deorsum) vel banda-adiutrix.',
-        'Amplitudo plena — mentum super barram summitatem, cubiti plane extensi fundatore.',
       ],
     },
     nl: {
@@ -5236,21 +4728,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Niente kipping — il busto rimane fermo, solo le braccia e la parte superiore della schiena si muovono.',
       ],
     },
-    la: {
-      name: 'Tractationes Horizontales',
-      summary:
-        'Tractio horizontalis — contra-pars pressioni et clavis ad postura salubrem.',
-      instructions: [
-        'Corporalis: pendentia sub barra bassa vel TRX, corpus recta in lineam.',
-        'Ponderata: cum dorso plano, onus iuxta tibiam.',
-        'Incipe e scapulis — retrahe primo, tum cubitus ad coxas tracta.',
-        'Deorsum sub tensione donec scapulae longan se sensui.',
-      ],
-      tips: [
-        'Ad inferiores costas tracta ut latas praeferre; ad pectus tractio medii-dorsi.',
-        'Nullus kipping — truncus quiescit, brachia et superior dorsum solum.',
-      ],
-    },
     nl: {
       name: 'Rijen',
       summary:
@@ -5383,20 +4860,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Proteggi le spalle — non scendere più profondo di quanto ti senti bene.',
         'Rendilo più difficile con gambe dritte, piedi su una seconda panca, o peso sulle ginocchia.',
-      ],
-    },
-    la: {
-      name: 'Diptus Selli',
-      summary: 'Diptus tricipitis cum manibus in sella — introductio accessa.',
-      instructions: [
-        'Posterium sella confrons, manus latitudinis humerorum in margine.',
-        'Coxas antrorsum e sella, crura extensa vel flexa antrorsum.',
-        'Cubitos flextos circa 90° sub tensione, coxae recta deorsum (non antrorsum).',
-        'Per tricipitem repellere, cubitos ne fixos.',
-      ],
-      tips: [
-        'Humeros protect — ne profundius quam sentis bene.',
-        'Cruribus rectis, pedibus in sella altera vel onere difficilior.',
       ],
     },
     nl: {
@@ -5532,21 +4995,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Inclina leggermente in avanti per enfatizzare il petto; rimani eretto per enfatizzare i tricipiti.',
         'Principianti: inizia con dips su panca, poi dips negativi (solo eccentrico), poi dips completi.',
-      ],
-    },
-    la: {
-      name: 'Diptus',
-      summary:
-        'Pressio verticalis in barris parallelis vel anellis — pectus, tricipites et humeri.',
-      instructions: [
-        'Super duas barras parallelas sustine, brachia extensa, crura libera.',
-        'Scapulas active deorsum — nullus labi in articulis.',
-        'Corpus sub tensione deorsum, cubiti paulum retrorsum, donec bracchium superius parallele.',
-        'Potentialiter surga, cubitus ne fixos.',
-      ],
-      tips: [
-        'Paulum antrorsum inclina ut pectum bias; erecto teneto ad tricipitis bias.',
-        'Incipientes: celler-diptus incipe, tum negativa (excentrica), tum pleni diptus.',
       ],
     },
     nl: {
@@ -5685,21 +5133,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Premi le spalle attivamente 'nelle orecchie' — niente posizione sprofondata.",
       ],
     },
-    la: {
-      name: 'Statio Manuum',
-      summary:
-        'Statira inversio contra murum vel libera — vires humerorum, stabilitas et totius tensio.',
-      instructions: [
-        'Genuflecte ante murum apertum, manus latitudinis humerorum, digiti iuxta muri.',
-        'Unum crus supra, alterum sequere — talones muri leve levantur.',
-        'Corpus rectam lineam teneto — coxae et pectus super manus, nates firma.',
-        'Deorsum antequam humeri defatiguentur.',
-      ],
-      tips: [
-        'Incipientes: prius pike-pressionem et muri-ambulationes perfice, tum habere incipe.',
-        'Humeros active "in aures" preme — nullus sunken.',
-      ],
-    },
     nl: {
       name: 'Handstand Hold',
       summary:
@@ -5836,21 +5269,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         'Scendi tra le ripetizioni — atterra ripetutamente da altezza è difficile per ginocchia e tendine di Achille.',
       ],
     },
-    la: {
-      name: 'Saltus Capsa',
-      summary:
-        'Saltus super elevationem — velocitas-vires, coordinatio et fiducia.',
-      instructions: [
-        'Ante capsam firmam (vel sellam, labellum) sta.',
-        'In genuflexionem quartam, brachiis retrorsum oscillantibus.',
-        'Ex fundamento explosivum impelle, bracchia antrorsum oscillantia.',
-        'Mollis ambabus pedibus super capsam, genua absorbentia — tum retrorsum (ne salta).',
-      ],
-      tips: [
-        'Altitudinem elige quam secure traicias — maior pars saltationes vulnera ex altitudine.',
-        'Retrorsum descende inter repetitiones — repetita cadens ex altitudine genua et Achillum gravia.',
-      ],
-    },
     nl: {
       name: 'Box Jumps',
       summary:
@@ -5984,20 +5402,6 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       tips: [
         'Principianti: 3 × 20-30 s; avanzati 3 × 60-90 s.',
         'Se le ginocchia protestano, mantieni i fianchi leggermente più alti — 90° non è obbligatorio.',
-      ],
-    },
-    la: {
-      name: 'Sessio Muri',
-      summary: 'Genuflexio isometrica cum dorso ad murum — purus quad ardor.',
-      instructions: [
-        'Posterium murum planum cum standu, pedes latitudinis coxae, passus antrorsum.',
-        'Deorsum murum donec genua 90° flexta.',
-        'Femuralia murum parallela, genua super talos.',
-        'Positionem teneto — pressura uniformis ambo calcanei, musculos abdominis leve.',
-      ],
-      tips: [
-        'Incipientes: 3 × 20-30 s; periti 3 × 60-90 s.',
-        'Genua molesta? Coxas paulum altiores teneto — 90° non mandatorium.',
       ],
     },
     nl: {

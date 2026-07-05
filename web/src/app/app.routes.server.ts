@@ -78,6 +78,10 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
+    path: 'ueber-uns',
+    renderMode: RenderMode.Prerender,
+  },
+  {
     path: 'impressum',
     renderMode: RenderMode.Prerender,
   },

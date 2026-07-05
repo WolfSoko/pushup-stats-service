@@ -87,7 +87,6 @@ const LANGUAGE_OPTIONS: ReadonlyArray<LanguageOption> = [
   { code: 'it', label: 'Italiano' },
   { code: 'nl', label: 'Nederlands' },
   { code: 'el', label: 'Ελληνικά' },
-  { code: 'la', label: 'Latina' },
   { code: 'no', label: 'Norsk' },
   { code: 'zh', label: '中文' },
 ];

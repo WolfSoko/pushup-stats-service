@@ -39,7 +39,6 @@ export const SW_SUPPORTED_LOCALES = [
   'it',
   'nl',
   'el',
-  'la',
   'no',
   'zh',
 ] as const;

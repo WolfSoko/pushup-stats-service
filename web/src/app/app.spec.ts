@@ -790,7 +790,7 @@ describe('App (testing-library)', () => {
     // Regression: the prefix-stripping regex is now driven by
     // SUPPORTED_LOCALES, so a typo in any of the new codes would
     // silently break language switching. Smoke-test every one.
-    it.each(['fr', 'es', 'it', 'nl', 'el', 'la', 'no', 'zh'] as const)(
+    it.each(['fr', 'es', 'it', 'nl', 'el', 'no', 'zh'] as const)(
       'switches from /de/<path> to /%s/<path> for the new locales',
       async (target) => {
         const { fixture } = await render(App, {
@@ -842,7 +842,7 @@ describe('App (testing-library)', () => {
       }
     );
 
-    it.each(['fr', 'es', 'it', 'nl', 'el', 'la', 'no', 'zh'] as const)(
+    it.each(['fr', 'es', 'it', 'nl', 'el', 'no', 'zh'] as const)(
       'strips a /%s/ prefix when switching back to /de/',
       async (source) => {
         const { fixture } = await render(App, {

@@ -228,6 +228,17 @@ export const appRoutes: Routes = [
     ],
   },
   {
+    path: 'ueber-uns',
+    data: {
+      seoTitle: $localize`:@@seo.about.title:Über uns – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.about.description:Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.`,
+    },
+    loadComponent: () =>
+      import('./marketing/about/ueber-uns-page.component').then(
+        (m) => m.UeberUnsPageComponent
+      ),
+  },
+  {
     path: 'impressum',
     data: {
       seoTitle: $localize`:@@seo.impressum.title:Impressum – Pushup Tracker`,

@@ -248,11 +248,16 @@ export class PushupTypeDetailComponent implements OnInit {
     }
     const localeSlug = localizePushupTypeSlug(found, this.locale);
 
+    // noindex until the wiki entries carry substantial unique content:
+    // ~60-100 words per page across many locales reads as thin/scaled
+    // content to Google (AdSense "low value content" rejection). The
+    // list page stays indexable; detail pages serve internal navigation
+    // until each entry is expanded.
     this.seo.update(
       seoTitle,
       this.summary,
       `/wiki/liegestuetz-typen/${localeSlug}`,
-      { alternates }
+      { alternates, noindex: true }
     );
     // Combine DE + EN keyword sets — the catalog only carries those
     // two, and Google ignores the keywords meta anyway, so this is a

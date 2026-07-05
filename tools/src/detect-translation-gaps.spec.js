@@ -149,17 +149,7 @@ describe('detect-translation-gaps', () => {
       expect(summary).toMatch(/^wiki_count=\d+$/m);
       expect(Array.isArray(gaps.gaps)).toBe(true);
       expect(gaps.locales).toEqual(
-        expect.arrayContaining([
-          'en',
-          'fr',
-          'es',
-          'it',
-          'nl',
-          'el',
-          'la',
-          'no',
-          'zh',
-        ])
+        expect.arrayContaining(['en', 'fr', 'es', 'it', 'nl', 'el', 'no', 'zh'])
       );
       // de is the source locale — never a target.
       expect(gaps.locales).not.toContain('de');

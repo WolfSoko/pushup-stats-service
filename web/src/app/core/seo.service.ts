@@ -181,7 +181,6 @@ export class SeoService {
       it: 'it_IT',
       nl: 'nl_NL',
       el: 'el_GR',
-      la: 'la',
       // OpenGraph uses ISO 639-1 + ISO 3166-1 region codes. Norwegian
       // Bokmål's standard form is `nb_NO`; the macro tag `no_NO` is
       // not in Facebook/OpenGraph's accepted set.

@@ -13,7 +13,6 @@ export const SUPPORTED_REMINDER_LOCALES = [
   'it',
   'nl',
   'el',
-  'la',
   'no',
   'zh',
 ] as const;
@@ -55,7 +54,6 @@ const REMINDER_TITLES: Record<ReminderLocale, string> = {
   it: '💪 Ora dei push-up!',
   nl: '💪 Tijd voor push-ups!',
   el: '💪 Ώρα για push-ups!',
-  la: '💪 Tempus flexionis!',
   no: '💪 Tid for push-ups!',
   zh: '💪 做俯卧撑的时间!',
 };
@@ -110,13 +108,6 @@ const REMINDER_BODIES: Record<ReminderLocale, ReadonlyArray<string>> = {
     'Κουνήσου! Τα push-ups σε περιμένουν. 🔥',
     'Το σώμα σου καλεί: push-ups, πάμε!',
   ],
-  la: [
-    'Tempus flexionis! 💪',
-    'Brevis pausa? Aptissima flexionibus!',
-    'Potes id facere – paucae flexiones!',
-    'Move te! Flexiones te exspectant. 🔥',
-    'Corpus vocat: flexiones, age!',
-  ],
   no: [
     'Tid for push-ups! 💪',
     'Kort pause? Perfekt for push-ups!',
@@ -141,7 +132,6 @@ const SNOOZE_LABELS: Record<ReminderLocale, string> = {
   it: '⏰ Posticipa 30 min',
   nl: '⏰ Uitstellen 30 min',
   el: '⏰ Αναβολή 30 λεπτά',
-  la: '⏰ Differre 30 min',
   no: '⏰ Utsett 30 min',
   zh: '⏰ 推迟30分钟',
 };
@@ -154,7 +144,6 @@ const LOG_LABELS: Record<ReminderLocale, string> = {
   it: '✅ Registra',
   nl: '✅ Registreren',
   el: '✅ Καταχώριση',
-  la: '✅ Inscribere',
   no: '✅ Registrer',
   zh: '✅ 记录',
 };
@@ -167,7 +156,6 @@ const QUICK_LOG_LABELS: Record<ReminderLocale, (n: number) => string> = {
   it: (n) => `✅ Registra ${n}`,
   nl: (n) => `✅ Registreer ${n}`,
   el: (n) => `✅ Καταχώριση ${n}`,
-  la: (n) => `✅ Inscribere ${n}`,
   no: (n) => `✅ Logg ${n}`,
   zh: (n) => `✅ 记录 ${n}`,
 };
