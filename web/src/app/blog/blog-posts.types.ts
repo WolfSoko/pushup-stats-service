@@ -12,8 +12,8 @@ export interface BlogPost {
   updatedAt?: string;
   content: string;
   keywords: string[];
-  /** Map of every locale this article is translated into, to that locale's slug (including this post's own locale) — enables full hreflang alternate sets on both the sitemap and the article page. */
-  alternateSlugs?: Record<string, string>;
+  /** Map of every locale this article is translated into, to that locale's slug (including this post's own locale) — enables full hreflang alternate sets on both the sitemap and the article page. Always populated by the content generator, even for a post with no sibling translations (self-mapped). */
+  alternateSlugs: Record<string, string>;
   /** Absolute URL of the hero image rendered above the article body and used for og:image. */
   heroImage?: string;
   /** Accessible alt text for the hero image. */

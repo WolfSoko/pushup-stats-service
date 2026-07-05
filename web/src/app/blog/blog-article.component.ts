@@ -304,14 +304,12 @@ export class BlogArticleComponent implements OnInit {
     // tell SeoService exactly which locales this article exists in
     // and what their slugs are. Locales without a translation get no
     // hreflang alternate — better than advertising URLs that 404.
-    const alternates: Record<string, string> = found.alternateSlugs
-      ? Object.fromEntries(
-          Object.entries(found.alternateSlugs).map(([lang, slug]) => [
-            lang,
-            `/blog/${slug}`,
-          ])
-        )
-      : { [found.lang]: `/blog/${found.slug}` };
+    const alternates: Record<string, string> = Object.fromEntries(
+      Object.entries(found.alternateSlugs).map(([lang, slug]) => [
+        lang,
+        `/blog/${slug}`,
+      ])
+    );
     this.seo.update(found.title, found.description, `/blog/${found.slug}`, {
       imageUrl: found.heroImage,
       imageAlt: found.heroImageAlt,
