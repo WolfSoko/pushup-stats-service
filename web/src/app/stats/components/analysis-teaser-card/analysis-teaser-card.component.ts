@@ -8,100 +8,26 @@ import {
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { StatsSeriesEntry } from '@pu-stats/models';
+import {
+  exerciseEntryToUnified,
+  StatsSeriesEntry,
+  UnifiedEntry,
+} from '@pu-stats/models';
 import { toLocalIsoDate } from '@pu-stats/date';
 import { StatsChartComponent } from '../stats-chart/stats-chart.component';
+import {
+  buildTeaserAllSeries,
+  buildTeaserExerciseTabs,
+  TeaserTabVm,
+} from './analysis-teaser-tabs';
 
 @Component({
   selector: 'app-analysis-teaser-card',
-  imports: [MatCardModule, MatIconModule, StatsChartComponent],
-  template: `
-    <mat-card
-      class="teaser-card"
-      role="link"
-      tabindex="0"
-      (click)="navigateToAnalysis()"
-      (keydown.enter)="navigateToAnalysis()"
-      (keyup.space)="navigateToAnalysis(); $event.preventDefault()"
-      aria-label="Analyse öffnen"
-      i18n-aria-label="@@dashboard.analysisTeaserAriaLabel"
-    >
-      <mat-card-header>
-        <mat-card-title i18n="@@dashboard.analysisTeaserTitle"
-          >Analyse</mat-card-title
-        >
-        <mat-card-subtitle>
-          <ng-container i18n="@@dashboard.analysisTeaserStreak"
-            >Streak: {{ streak() }} Tage</ng-container
-          >
-          ·
-          <ng-container i18n="@@dashboard.analysisTeaserWeekReps"
-            >Diese Woche: {{ weekReps() }} /
-            {{ weeklyGoal() }} Reps</ng-container
-          >
-        </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="mini-chart">
-          <app-stats-chart
-            [series]="chartSeries()"
-            [granularity]="'daily'"
-            [rangeMode]="'week'"
-            [from]="from()"
-            [to]="to()"
-            [kindLabel]="chartKindLabel()"
-          />
-        </div>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <span
-          class="teaser-cta"
-          aria-label="Zur Analyse navigieren"
-          i18n-aria-label="@@dashboard.analysisTeaserCtaAriaLabel"
-        >
-          <mat-icon>bar_chart</mat-icon>
-          <span i18n="@@dashboard.analysisTeaserCta">Zur Analyse</span>
-        </span>
-      </mat-card-actions>
-    </mat-card>
-  `,
-  styles: `
-    .teaser-card {
-      cursor: pointer;
-      transition:
-        box-shadow 0.2s ease,
-        transform 0.15s ease;
-    }
-
-    .teaser-card:hover,
-    .teaser-card:focus {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      transform: translateY(-2px);
-      outline: 2px solid var(--mat-sys-primary, #3f51b5);
-      outline-offset: 2px;
-    }
-
-    .mini-chart {
-      min-height: clamp(260px, 34vw, 360px);
-      pointer-events: none;
-    }
-
-    .error-fallback {
-      min-height: clamp(260px, 34vw, 360px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--mat-sys-error, #f44336);
-    }
-
-    .teaser-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--mat-sys-primary);
-    }
-  `,
+  imports: [MatCardModule, MatIconModule, MatTabsModule, StatsChartComponent],
+  templateUrl: './analysis-teaser-card.component.html',
+  styleUrl: './analysis-teaser-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalysisTeaserCardComponent {
@@ -140,6 +66,23 @@ export class AnalysisTeaserCardComponent {
   readonly to = computed(() => this.weekRange().to);
 
   /**
+   * Post-cutover the live feed carries pushups too (`exerciseId:'pushup'`),
+   * so one range-filtered pass over `exerciseEntries()` feeds both the
+   * aggregate series and the per-exercise tabs.
+   */
+  private readonly weekRows = computed<UnifiedEntry[]>(() => {
+    if (!this.live.connected()) return [];
+    const { from, to } = this.weekRange();
+    return this.live
+      .exerciseEntries()
+      .filter((entry) => {
+        const day = entry.timestamp.slice(0, 10);
+        return day >= from && day <= to;
+      })
+      .map(exerciseEntryToUnified);
+  });
+
+  /**
    * Honest heading label that tracks the *actual* data the chart is
    * showing — not a fixed string. Without this, the cold-start / SSR
    * fallback labels REST-only pushup data as "Alle Übungen" and a
@@ -150,68 +93,53 @@ export class AnalysisTeaserCardComponent {
    * "Alle Übungen" when no other rep-bearing kind is present.
    */
   readonly chartKindLabel = computed(() => {
-    const { from, to } = this.weekRange();
-    const inRange = (timestamp: string): boolean => {
-      const day = timestamp.slice(0, 10);
-      return day >= from && day <= to;
-    };
-
     if (!this.live.connected()) {
       return this.pushupLabel;
     }
-
-    // Post-cutover pushups are `exerciseEntries` too, so split the single
-    // feed on `exerciseId` to keep the "Liegestütze" vs "Alle Übungen"
-    // distinction.
-    const hasPushupReps = this.live
-      .exerciseEntries()
-      .some(
-        (e) =>
-          e.exerciseId === 'pushup' && inRange(e.timestamp) && (e.reps ?? 0) > 0
-      );
-    const hasOtherReps = this.live
-      .exerciseEntries()
-      .some(
-        (e) =>
-          e.exerciseId !== 'pushup' && inRange(e.timestamp) && (e.reps ?? 0) > 0
-      );
+    const rows = this.weekRows();
+    const hasPushupReps = rows.some(
+      (e) => e.exerciseId === 'pushup' && (e.reps ?? 0) > 0
+    );
+    const hasOtherReps = rows.some(
+      (e) => e.exerciseId !== 'pushup' && (e.reps ?? 0) > 0
+    );
 
     if (hasOtherReps) return this.allExercisesLabel;
     if (hasPushupReps) return this.pushupLabel;
     return '';
   });
 
-  readonly chartSeries = computed<StatsSeriesEntry[]>(() => {
-    const { from, to } = this.weekRange();
-    if (!this.live.connected()) {
-      return [];
-    }
+  readonly chartSeries = computed<StatsSeriesEntry[]>(() =>
+    buildTeaserAllSeries(this.weekRows())
+  );
 
-    const totals = new Map<string, number>();
-    const inRange = (timestamp: string): boolean => {
-      const day = timestamp.slice(0, 10);
-      return day >= from && day <= to;
-    };
+  private readonly exerciseTabs = computed(() =>
+    buildTeaserExerciseTabs(this.weekRows())
+  );
 
-    // Post-cutover the live feed carries pushups too, so a single pass over
-    // `exerciseEntries()` sums every exercise (no separate pushup loop, no
-    // double-count).
-    for (const entry of this.live.exerciseEntries()) {
-      if (!inRange(entry.timestamp)) continue;
-      const reps = entry.reps ?? 0;
-      if (reps <= 0) continue;
-      const day = entry.timestamp.slice(0, 10);
-      totals.set(day, (totals.get(day) ?? 0) + reps);
-    }
-
-    const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
-    let cumulative = 0;
-    return sortedDays.map((day) => {
-      const total = totals.get(day) ?? 0;
-      cumulative += total;
-      return { bucket: day, total, dayIntegral: cumulative };
-    });
+  /**
+   * One tab per exercise done in the 7-day window. With several
+   * exercises the reps aggregate keeps its place as a leading "Alle
+   * Übungen" tab; a single exercise needs no aggregate duplicate.
+   */
+  readonly tabs = computed<TeaserTabVm[]>(() => {
+    const exerciseTabs = this.exerciseTabs();
+    if (exerciseTabs.length < 2) return exerciseTabs;
+    return [
+      {
+        id: 'all',
+        label: this.allExercisesLabel,
+        measurement: null,
+        series: this.chartSeries(),
+        paceSeries: [],
+      },
+      ...exerciseTabs,
+    ];
   });
+
+  stopCardActivation(event: Event): void {
+    event.stopPropagation();
+  }
 
   navigateToAnalysis(): void {
     this.router.navigate(['/analysis']);

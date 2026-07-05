@@ -1,0 +1,40 @@
+.teaser-card {
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.teaser-card:hover,
+.teaser-card:focus {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+  outline: 2px solid var(--mat-sys-primary, #3f51b5);
+  outline-offset: 2px;
+}
+
+.mini-chart {
+  min-height: clamp(260px, 34vw, 360px);
+  pointer-events: none;
+}
+
+/* The tab strip is interactive, not part of the card's link surface —
+   don't advertise the card's pointer cursor over it. */
+.teaser-tabs {
+  cursor: default;
+}
+
+.error-fallback {
+  min-height: clamp(260px, 34vw, 360px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mat-sys-error, #f44336);
+}
+
+.teaser-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mat-sys-primary);
+}
