@@ -20,6 +20,18 @@ export const POST: BlogPost = {
     "qui musculi pulsus exercent",
     "progressio pulsuum domi"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-varianten",
+    "el": "pieseis-ges-poikiliai",
+    "en": "pushup-variations",
+    "es": "variaciones-flexiones",
+    "fr": "variantes-pompes",
+    "it": "varianti-piegamenti",
+    "la": "variationes-pressionum",
+    "nl": "opdrukken-variaties",
+    "no": "armhevning-varianter",
+    "zh": "pushup-variations"
+  },
   "heroImage": "https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athleta variationem pressionis in spatio exercitationis faciens.",
   "heroImageCredit": "Imago: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

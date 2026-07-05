@@ -21,6 +21,18 @@ export const POST: BlogPost = {
     "imparare push-up",
     "Pushup Tracker app"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-steigern",
+    "el": "pieseis-ges-anabasis",
+    "en": "pushup-progression",
+    "es": "progresion-flexiones",
+    "fr": "progression-pompes",
+    "it": "progressione-piegamenti",
+    "la": "progressio-pressionum",
+    "nl": "opdrukken-progressie",
+    "no": "okende-armhevninger",
+    "zh": "pushup-progression"
+  },
   "heroImage": "https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta in canottiera rossa che esegue un piegamento pulito.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

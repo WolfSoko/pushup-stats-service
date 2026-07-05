@@ -21,6 +21,18 @@ export const POST: BlogPost = {
     "pulsus valsalva",
     "respiratio pulsuum maximi conatus"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-atmung",
+    "el": "pnoe-pieseos-ges",
+    "en": "pushup-breathing",
+    "es": "respiracion-flexiones",
+    "fr": "respiration-pompes",
+    "it": "respirazione-piegamenti",
+    "la": "spiratio-in-pressionibus",
+    "nl": "opdrukken-ademhaling",
+    "no": "armhevning-pusteteknikk",
+    "zh": "pushup-breathing"
+  },
   "heroImage": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athleta in positione plana cum vultu intento.",
   "heroImageCredit": "Imago: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

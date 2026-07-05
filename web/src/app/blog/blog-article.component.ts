@@ -300,17 +300,16 @@ export class BlogArticleComponent implements OnInit {
     this.post = found;
     const wordCount = countWords(found.content);
     this.readingTimeMinutes = readingMinutes(found.content);
-    // Blog posts have locale-specific slugs (`translationSlug`), so
-    // we tell SeoService exactly which locales this article exists in
+    // Blog posts have locale-specific slugs (`alternateSlugs`), so we
+    // tell SeoService exactly which locales this article exists in
     // and what their slugs are. Locales without a translation get no
     // hreflang alternate — better than advertising URLs that 404.
-    const otherLang = found.lang === 'de' ? 'en' : 'de';
-    const alternates: { de?: string; en?: string } = {
-      [found.lang]: `/blog/${found.slug}`,
-    };
-    if (found.translationSlug) {
-      alternates[otherLang] = `/blog/${found.translationSlug}`;
-    }
+    const alternates: Record<string, string> = Object.fromEntries(
+      Object.entries(found.alternateSlugs).map(([lang, slug]) => [
+        lang,
+        `/blog/${slug}`,
+      ])
+    );
     this.seo.update(found.title, found.description, `/blog/${found.slug}`, {
       imageUrl: found.heroImage,
       imageAlt: found.heroImageAlt,

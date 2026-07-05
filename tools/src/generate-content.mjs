@@ -115,8 +115,11 @@ function assertSafeLang(lang, sourcePath) {
  * BlogPost-shaped object per locale file. Folder name is the
  * cross-locale identifier; per-locale `slug` in frontmatter overrides
  * the URL slug for that locale (so `liegestuetze-fehler/en.md` can set
- * `slug: pushup-mistakes`). The other locale's slug becomes
- * `translationSlug` automatically — no manual cross-reference needed.
+ * `slug: pushup-mistakes`). Every post carries `alternateSlugs` — the
+ * map of every sibling locale's slug (including this post's own) —
+ * mirroring `scanMarkdownBlogPosts` in `generate-sitemap.js` so the
+ * runtime SEO service can emit a full hreflang set, not just a
+ * single bilingual pairing.
  */
 export function loadBlogPosts(contentRoot) {
   const blogRoot = join(contentRoot, 'blog');
@@ -172,14 +175,9 @@ export function loadBlogPosts(contentRoot) {
         keywords: Array.isArray(data.keywords) ? data.keywords.map(String) : [],
       };
       if (data.updatedAt) post.updatedAt = String(data.updatedAt);
-      // Build translationSlug: other-locale entry in same folder, if present.
-      // For bilingual (de/en) pairs the other locale's slug becomes translationSlug.
-      // For multi-locale folders this is omitted (sitemap handles hreflang separately).
-      const otherLangs = langs.filter((l) => l !== lang);
-      if (otherLangs.length === 1) {
-        const other = perLocale[otherLangs[0]];
-        post.translationSlug = other.data.slug ?? folder;
-      }
+      post.alternateSlugs = Object.fromEntries(
+        langs.map((l) => [l, perLocale[l].data.slug ?? folder])
+      );
       if (data.heroImage) post.heroImage = String(data.heroImage);
       if (data.heroImageAlt) post.heroImageAlt = String(data.heroImageAlt);
       if (data.heroImageCredit) {
