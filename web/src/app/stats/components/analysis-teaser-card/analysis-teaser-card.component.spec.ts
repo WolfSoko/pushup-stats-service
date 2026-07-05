@@ -528,6 +528,22 @@ describe('AnalysisTeaserCardComponent', () => {
       // then
       expect(routerSpy.navigate).not.toHaveBeenCalled();
     });
+
+    it('should still navigate when the chart area inside the tabs is clicked', () => {
+      // given
+      fixture.detectChanges();
+      const chartArea: HTMLElement =
+        fixture.nativeElement.querySelector('.mini-chart');
+      expect(chartArea).toBeTruthy();
+
+      // when
+      chartArea.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      );
+
+      // then
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/analysis']);
+    });
   });
 
   describe('Given only one exercise type this week', () => {

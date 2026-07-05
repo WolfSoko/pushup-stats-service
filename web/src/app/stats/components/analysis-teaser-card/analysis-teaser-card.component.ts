@@ -137,8 +137,17 @@ export class AnalysisTeaserCardComponent {
     ];
   });
 
+  /**
+   * Swallow interactions that originate in the tab strip so switching
+   * exercises doesn't trigger the card's link-style navigation. Events
+   * from the tab body (the chart) keep bubbling — that area navigated
+   * to the analysis page before tabs existed and still should.
+   */
   stopCardActivation(event: Event): void {
-    event.stopPropagation();
+    const target = event.target as Element | null;
+    if (target?.closest('.mat-mdc-tab-header')) {
+      event.stopPropagation();
+    }
   }
 
   navigateToAnalysis(): void {

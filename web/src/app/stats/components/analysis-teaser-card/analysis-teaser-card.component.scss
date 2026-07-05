@@ -18,12 +18,6 @@
   pointer-events: none;
 }
 
-/* The tab strip is interactive, not part of the card's link surface —
-   don't advertise the card's pointer cursor over it. */
-.teaser-tabs {
-  cursor: default;
-}
-
 .error-fallback {
   min-height: clamp(260px, 34vw, 360px);
   display: flex;

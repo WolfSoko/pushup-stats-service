@@ -7,31 +7,13 @@ import {
 import { of } from 'rxjs';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { CallableFunctionsService } from './callable-functions.service';
+import {
+  CallableRecord,
+  createCallablesMock,
+} from './callable-functions.testing';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 
-interface CallableRecord {
-  name: string;
-  impl: (data: unknown) => Promise<{ data: unknown }>;
-}
-
-// Faked via DI instead of vi.mock('@angular/fire/functions'): module
-// mocks of the fire package break whenever the spec bundler moves it
-// into a shared chunk (the mocked `Functions` token and the component's
-// bundled one are then different classes -> NG0201), and which admin
-// spec breaks shifts with the workspace's overall spec-file set.
-const callablesMock = { call: vi.fn() };
-
-function setupCallables(records: CallableRecord[]): void {
-  callablesMock.call.mockImplementation((name: string) => {
-    const match = records.find((r) => r.name === name);
-    if (!match) {
-      return async () => {
-        throw new Error(`Unexpected callable: ${name}`);
-      };
-    }
-    return match.impl;
-  });
-}
+const { callablesMock, setupCallables } = createCallablesMock();
 
 describe('AdminFeedbackSectionComponent', () => {
   let fixture: ComponentFixture<AdminFeedbackSectionComponent>;
