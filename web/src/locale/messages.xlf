@@ -4198,17 +4198,9 @@
         <source>Artikel lesen</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.repAria">
-      <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:41</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
-      </segment>
-    </unit>
     <unit id="quickAdd.fab.exerciseRepAria">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:59</note>
+        <note category="location">web/src/app/core/app-data.facade.ts:46</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
@@ -4216,7 +4208,7 @@
     </unit>
     <unit id="exercise.category.pushup">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:325</note>
+        <note category="location">web/src/app/core/app-data.facade.ts:322</note>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:43</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:123</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>

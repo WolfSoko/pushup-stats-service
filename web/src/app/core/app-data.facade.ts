@@ -33,24 +33,11 @@ export interface DailyGoalItemView {
   readonly reached: boolean;
 }
 
-function pushupSuggestion(reps: number, slot: number): QuickAddSuggestion {
-  return {
-    key: `slot:${slot}`,
-    reps,
-    label: `+${reps} ${exerciseDisplayName(PUSHUP_QUICK_ADD_EXERCISE_ID)}`,
-    ariaLabel: $localize`:@@quickAdd.fab.repAria:${reps}:REPS: Liegestütze hinzufügen`,
-    exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
-  };
-}
-
 function configuredSuggestion(
   cfg: QuickAddConfig,
   slot: number
 ): QuickAddSuggestion {
   const exerciseId = cfg.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
-  if (exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
-    return pushupSuggestion(cfg.reps, slot);
-  }
   const exerciseLabel = exerciseDisplayName(exerciseId);
   return {
     key: `slot:${slot}`,
@@ -110,9 +97,17 @@ export class AppDataFacade {
         .slice(0, 3)
         .map((cfg, i) => configuredSuggestion(cfg, i));
     }
-    return this.adaptiveQuickAdd
-      .compute(this.recentEntries())
-      .map((reps, i) => pushupSuggestion(reps, i));
+    return this.adaptiveQuickAdd.compute(this.recentEntries()).map((reps, i) =>
+      configuredSuggestion(
+        {
+          reps,
+          inSpeedDial: true,
+          exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
+          mode: 'reps',
+        },
+        i
+      )
+    );
   });
 
   /**
