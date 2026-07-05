@@ -10,8 +10,7 @@ function pushupSuggestion(reps: number): QuickAddSuggestion {
   return {
     key: `pushup:${reps}`,
     reps,
-    icon: 'bolt',
-    label: `+${reps} Reps`,
+    label: `+${reps} Liegestütze`,
     ariaLabel: `${reps} Liegestütze hinzufügen`,
     exerciseId: 'pushup',
   };
@@ -136,16 +135,15 @@ describe('QuickAddFabComponent — goal dial item', () => {
       remainingToGoal: 42,
     });
 
-    expect(screen.getByText('+5 Reps')).toBeTruthy();
-    expect(screen.getByText('+10 Reps')).toBeTruthy();
-    expect(screen.getByText('+15 Reps')).toBeTruthy();
+    expect(screen.getByText('+5 Liegestütze')).toBeTruthy();
+    expect(screen.getByText('+10 Liegestütze')).toBeTruthy();
+    expect(screen.getByText('+15 Liegestütze')).toBeTruthy();
   });
 
-  it('Given a non-pushup suggestion, Then its localised label and icon render', async () => {
+  it('Given a non-pushup suggestion, Then its localised label renders without an exercise icon', async () => {
     const situps: QuickAddSuggestion = {
       key: 'abs.situps:10',
       reps: 10,
-      icon: 'self_improvement',
       label: '+10 Sit-ups',
       ariaLabel: '10 Sit-ups hinzufügen',
       exerciseId: 'abs.situps',
@@ -157,16 +155,13 @@ describe('QuickAddFabComponent — goal dial item', () => {
       name: /10 Sit-ups hinzufügen/i,
     });
     expect(button).toBeTruthy();
-    expect(button.querySelector('mat-icon')?.textContent).toContain(
-      'self_improvement'
-    );
+    expect(button.querySelector('mat-icon')).toBeNull();
   });
 
   it('When a quick item is clicked, Then the full suggestion is emitted', async () => {
     const situps: QuickAddSuggestion = {
       key: 'abs.situps:10',
       reps: 10,
-      icon: 'self_improvement',
       label: '+10 Sit-ups',
       ariaLabel: '10 Sit-ups hinzufügen',
       exerciseId: 'abs.situps',

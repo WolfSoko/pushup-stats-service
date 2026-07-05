@@ -1,6 +1,4 @@
 import {
-  findExerciseDefinition,
-  isAutoCountQuickAddExerciseId,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
   type QuickAddMode,
@@ -20,8 +18,6 @@ export interface QuickAddButtonViewModel {
   readonly exerciseId: string;
   /** Rep count for `mode === 'reps'`; ignored for `'auto-count'`. */
   readonly reps: number;
-  /** Material icon name — exercise's catalog icon, with mode-aware fallbacks. */
-  readonly icon: string;
   /** Translated exercise display label (e.g. `"Liegestütze"`). */
   readonly exerciseLabel: string;
   /** Fully composed button label: `"+10 Liegestütze"` in reps mode, or
@@ -35,15 +31,7 @@ export function toQuickAddViewModel(
 ): QuickAddButtonViewModel {
   const exerciseId = config.exerciseId ?? PUSHUP_QUICK_ADD_EXERCISE_ID;
   const mode: QuickAddMode = config.mode ?? 'reps';
-  const def = findExerciseDefinition(exerciseId);
   const exerciseLabel = exerciseDisplayName(exerciseId);
-  // The catalog `icon` is the natural per-exercise glyph, with a
-  // `fitness_center` fallback for unknown ids; auto-count rows override
-  // to a camera icon to make the mode visually obvious.
-  const icon =
-    mode === 'auto-count' && isAutoCountQuickAddExerciseId(exerciseId)
-      ? 'videocam'
-      : (def?.icon ?? 'fitness_center');
   const repsLabel = mode === 'auto-count' ? '' : `+${config.reps} `;
   const label = `${repsLabel}${exerciseLabel}`;
   return {
@@ -51,7 +39,6 @@ export function toQuickAddViewModel(
     mode,
     exerciseId,
     reps: config.reps,
-    icon,
     exerciseLabel,
     label,
   };

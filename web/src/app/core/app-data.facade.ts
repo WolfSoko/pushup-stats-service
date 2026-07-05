@@ -5,7 +5,6 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   type ComplexGoalEntry,
   complexGoalAppliesOnWeekday,
-  findExerciseDefinition,
   formatExerciseValue,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
@@ -18,8 +17,6 @@ import {
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
-
-const FALLBACK_QUICK_ICONS = ['bolt', 'flash_on', 'whatshot'] as const;
 
 /**
  * Per-exercise view of a single daily goal — exercise name, formatted
@@ -40,8 +37,7 @@ function pushupSuggestion(reps: number, slot: number): QuickAddSuggestion {
   return {
     key: `slot:${slot}`,
     reps,
-    icon: FALLBACK_QUICK_ICONS[slot] ?? 'bolt',
-    label: $localize`:@@quickAdd.fab.pushupRepsLabel:+${reps}:REPS: Reps`,
+    label: `+${reps} ${exerciseDisplayName(PUSHUP_QUICK_ADD_EXERCISE_ID)}`,
     ariaLabel: $localize`:@@quickAdd.fab.repAria:${reps}:REPS: Liegestütze hinzufügen`,
     exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
   };
@@ -55,13 +51,10 @@ function configuredSuggestion(
   if (exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
     return pushupSuggestion(cfg.reps, slot);
   }
-  const def = findExerciseDefinition(exerciseId);
   const exerciseLabel = exerciseDisplayName(exerciseId);
-  const icon = def?.icon ?? 'fitness_center';
   return {
     key: `slot:${slot}`,
     reps: cfg.reps,
-    icon,
     label: `+${cfg.reps} ${exerciseLabel}`,
     ariaLabel: $localize`:@@quickAdd.fab.exerciseRepAria:${cfg.reps}:REPS: ${exerciseLabel}:EXERCISE: hinzufügen`,
     exerciseId,

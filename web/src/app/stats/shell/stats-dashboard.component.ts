@@ -90,8 +90,6 @@ export class StatsDashboardComponent {
   readonly exerciseEntryLabel = (entry: UnifiedEntry): string =>
     exerciseDisplayName(entry.exerciseId);
 
-  readonly tileIcon = (_entry: UnifiedEntry): string => 'sports_gymnastics';
-
   readonly tileAriaLabel = (entry: UnifiedEntry): string => {
     const label = this.exerciseEntryLabel(entry);
     return $localize`:@@dashboard.tile.openInHistoryAria:${label}:label: in der Historie öffnen`;
@@ -129,12 +127,6 @@ export class StatsDashboardComponent {
   readonly monthlyGoalReached = this.store.monthlyGoalReached;
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
   readonly quickAddButtons = this.store.quickAddButtons;
-  // Exposed for the template so the quick-add branch can compare against
-  // the canonical sentinel instead of the literal string 'pushup' —
-  // keeps one source of truth between the schema, the orchestrator, and
-  // the dashboard.
-  protected readonly PUSHUP_QUICK_ADD_EXERCISE_ID =
-    PUSHUP_QUICK_ADD_EXERCISE_ID;
   readonly adSlotDashboardInline = this.store.adSlotDashboardInline;
   readonly dashboardInlineAdsEnabled = this.store.dashboardInlineAdsEnabled;
   readonly planActive = this.store.planActive;

@@ -310,7 +310,7 @@ export class QuickAddConfigDialogComponent {
     if (!this.isAutoCountCapable(prev.exerciseId)) return;
     // Auto-count + SpeedDial is incoherent: the FAB pipeline only knows how
     // to fire a fixed-reps `quickAdd(n)` call, so a SpeedDial item paired
-    // with `reps: 0` would surface as a broken `+0 Reps` action. Force the
+    // with `reps: 0` would surface as a broken `+0` action. Force the
     // flag off here; the read-time facade filter
     // (`AppDataFacade.quickAddSuggestions`) defends against legacy configs.
     const inSpeedDial = checked ? false : prev.inSpeedDial;

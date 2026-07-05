@@ -5,15 +5,14 @@ import { patchState, signalState } from '@ngrx/signals';
 
 /**
  * Pre-resolved quick-add the speed dial should render. Producers
- * (e.g. `AppDataFacade.quickAddSuggestions`) localise the label and
- * resolve the exercise's icon so the FAB stays presentation-only.
+ * (e.g. `AppDataFacade.quickAddSuggestions`) localise the label so the
+ * FAB stays presentation-only.
  * `exerciseId` is opaque to the FAB — it round-trips back through the
  * `quickAdd` output so the dispatcher can pick the right write target.
  */
 export interface QuickAddSuggestion {
   readonly key: string;
   readonly reps: number;
-  readonly icon: string;
   readonly label: string;
   readonly ariaLabel: string;
   readonly exerciseId: string;
@@ -28,7 +27,8 @@ interface DialItem {
     | 'goal'
     | 'auto-count'
     | 'exercise-timer';
-  readonly icon: string;
+  /** Functional glyph for the fixed dial items; quick-add items render label-only. */
+  readonly icon?: string;
   readonly label?: string;
   readonly ariaLabel?: string;
   readonly suggestion?: QuickAddSuggestion;
@@ -66,7 +66,6 @@ export class QuickAddFabComponent {
         (s): DialItem => ({
           value: s.reps,
           type: 'quick',
-          icon: s.icon,
           label: s.label,
           ariaLabel: s.ariaLabel,
           suggestion: s,

@@ -198,6 +198,20 @@ describe('AppDataFacade', () => {
       ).toBe(true);
     });
 
+    it('Given default pushup suggestions, Then their labels carry the exercise name like other exercises', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(
+        of({ userId: 'u1', dailyGoal: 100 })
+      );
+      const facade = setup();
+      await flushResources();
+
+      expect(facade.quickAddSuggestions().map((s) => s.label)).toEqual([
+        '+1 Liegestütze',
+        '+5 Liegestütze',
+        '+10 Liegestütze',
+      ]);
+    });
+
     it('Given configured quickAdds, Then only entries with inSpeedDial=true are returned', async () => {
       userConfigApiMock.getConfig.mockReturnValue(
         of({
@@ -218,7 +232,7 @@ describe('AppDataFacade', () => {
       expect(reps(facade)).toEqual([15, 50]);
     });
 
-    it('Given a configured exercise quick-add, Then the suggestion carries the catalog icon and a localised label', async () => {
+    it('Given a configured exercise quick-add, Then the suggestion carries a localised label', async () => {
       userConfigApiMock.getConfig.mockReturnValue(
         of({
           userId: 'u1',
@@ -241,7 +255,6 @@ describe('AppDataFacade', () => {
       const [s] = facade.quickAddSuggestions();
       expect(s.exerciseId).toBe('abs.situps');
       expect(s.reps).toBe(10);
-      expect(s.icon).toBe('self_improvement');
       expect(s.label).toContain('Sit-ups');
       expect(s.label).toContain('10');
     });
@@ -264,7 +277,7 @@ describe('AppDataFacade', () => {
 
     // A legacy / cross-device-edited config can carry `inSpeedDial: true`
     // alongside `mode: 'auto-count'` (which persists `reps: 0` as a
-    // sentinel). The FAB would otherwise surface a broken `+0 Reps`
+    // sentinel). The FAB would otherwise surface a broken `+0`
     // action that hits `quickAdd(0)`. Filter must drop both auto-count
     // rows and any non-positive reps.
     it('Given configured quickAdds with an auto-count entry in SpeedDial, Then it is filtered out', async () => {
