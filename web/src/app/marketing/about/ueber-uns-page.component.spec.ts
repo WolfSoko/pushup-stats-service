@@ -11,15 +11,18 @@ describe('UeberUnsPageComponent', () => {
   }
 
   it('should render the page heading', async () => {
-    // when
+    // given
     const { container } = await renderPage();
 
+    // when
+    const heading = container.querySelector('h1');
+
     // then
-    expect(container.querySelector('h1')?.textContent).toContain('Über uns');
+    expect(heading?.textContent).toContain('Über uns');
   });
 
   it('should name the site operator', async () => {
-    // when
+    // given
     const { container } = await renderPage();
 
     // then
@@ -27,7 +30,7 @@ describe('UeberUnsPageComponent', () => {
   });
 
   it('should show the contact email address', async () => {
-    // when
+    // given
     const { container } = await renderPage();
 
     // then
@@ -35,13 +38,15 @@ describe('UeberUnsPageComponent', () => {
   });
 
   it('should link to Impressum and Datenschutz', async () => {
-    // when
+    // given
     const { container } = await renderPage();
 
-    // then
+    // when
     const hrefs = Array.from(container.querySelectorAll('a')).map((a) =>
       a.getAttribute('href')
     );
+
+    // then
     expect(hrefs).toContain('/impressum');
     expect(hrefs).toContain('/datenschutz');
   });

@@ -231,8 +231,8 @@ export class ExerciseDetailComponent implements OnInit {
     const titleSuffix = $localize`:@@seo.wiki.exercise.titleSuffix:Anleitung & Technik | Pushup Tracker`;
     const seoTitle = `${this.name} – ${titleSuffix}`;
 
-    // noindex until the wiki entries carry substantial unique content —
-    // same rationale as pushup-type-detail (thin content, AdSense).
+    // Thin-content page: noindex until the entry carries substantial
+    // unique content. The list page stays indexable.
     this.seo.update(seoTitle, this.summary, `/wiki/uebungen/${found.slug}`, {
       noindex: true,
     });

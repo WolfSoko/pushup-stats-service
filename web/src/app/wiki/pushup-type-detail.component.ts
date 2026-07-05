@@ -248,11 +248,8 @@ export class PushupTypeDetailComponent implements OnInit {
     }
     const localeSlug = localizePushupTypeSlug(found, this.locale);
 
-    // noindex until the wiki entries carry substantial unique content:
-    // ~60-100 words per page across many locales reads as thin/scaled
-    // content to Google (AdSense "low value content" rejection). The
-    // list page stays indexable; detail pages serve internal navigation
-    // until each entry is expanded.
+    // Thin-content page: noindex until the entry carries substantial
+    // unique content. The list page stays indexable.
     this.seo.update(
       seoTitle,
       this.summary,
