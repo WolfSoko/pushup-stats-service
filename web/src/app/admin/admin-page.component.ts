@@ -11,7 +11,6 @@ import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -23,6 +22,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
@@ -59,7 +59,7 @@ import {
   styleUrl: './admin-page.component.scss',
 })
 export class AdminPageComponent {
-  private readonly functions = inject(Functions);
+  private readonly callables = inject(CallableFunctionsService);
   private readonly dialog = inject(MatDialog);
 
   readonly displayedColumns = [
@@ -110,10 +110,7 @@ export class AdminPageComponent {
     this.loading.set(true);
     this.error.set(null);
     try {
-      const fn = httpsCallable<void, AdminUser[]>(
-        this.functions,
-        'adminListUsers'
-      );
+      const fn = this.callables.call<void, AdminUser[]>('adminListUsers');
       const result = await fn();
       this.users.set(result.data);
     } catch (err) {
@@ -146,7 +143,7 @@ export class AdminPageComponent {
     if (!result) return;
 
     try {
-      const fn = httpsCallable(this.functions, 'adminDeleteUser');
+      const fn = this.callables.call('adminDeleteUser');
       await fn({ uid: user.uid, anonymize: result.anonymize });
       this.users.update((list) => list.filter((u) => u.uid !== user.uid));
     } catch (err) {
@@ -159,10 +156,10 @@ export class AdminPageComponent {
     this.bulkError.set(null);
     this.bulkResult.set(null);
     try {
-      const fn = httpsCallable<
+      const fn = this.callables.call<
         { inactiveDays: number },
         { deleted: number; skipped: number }
-      >(this.functions, 'adminBulkDeleteInactiveAnonymous');
+      >('adminBulkDeleteInactiveAnonymous');
       const result = await fn({ inactiveDays: this.inactiveDays() });
       this.bulkResult.set(result.data);
       // Refresh user list after bulk delete

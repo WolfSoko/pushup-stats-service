@@ -1,0 +1,83 @@
+<mat-card
+  class="teaser-card"
+  role="link"
+  tabindex="0"
+  (click)="navigateToAnalysis()"
+  (keydown.enter)="navigateToAnalysis()"
+  (keyup.space)="navigateToAnalysis(); $event.preventDefault()"
+  aria-label="Analyse öffnen"
+  i18n-aria-label="@@dashboard.analysisTeaserAriaLabel"
+>
+  <mat-card-header>
+    <mat-card-title i18n="@@dashboard.analysisTeaserTitle"
+      >Analyse</mat-card-title
+    >
+    <mat-card-subtitle>
+      <ng-container i18n="@@dashboard.analysisTeaserStreak"
+        >Streak: {{ streak() }} Tage</ng-container
+      >
+      ·
+      <ng-container i18n="@@dashboard.analysisTeaserWeekReps"
+        >Diese Woche: {{ weekReps() }} / {{ weeklyGoal() }} Reps</ng-container
+      >
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    @if (tabs().length > 0) {
+      <!-- Guards only tab-header events; chart-body clicks still
+           activate the card link. See stopCardActivation. -->
+      <div
+        class="teaser-tabs"
+        role="presentation"
+        (click)="stopCardActivation($event)"
+        (keydown.enter)="stopCardActivation($event)"
+        (keyup.space)="stopCardActivation($event)"
+      >
+        <mat-tab-group mat-align-tabs="start" [mat-stretch-tabs]="false">
+          @for (tab of tabs(); track tab.id) {
+            <mat-tab
+              [label]="tab.label"
+              [attr.data-testid]="'teaser-tab-' + tab.id"
+            >
+              <ng-template matTabContent>
+                <div class="mini-chart">
+                  <app-stats-chart
+                    [series]="tab.series"
+                    [granularity]="'daily'"
+                    [rangeMode]="'week'"
+                    [from]="from()"
+                    [to]="to()"
+                    [kindLabel]="tab.label"
+                    [measurement]="tab.measurement"
+                    [paceSeries]="tab.paceSeries"
+                  />
+                </div>
+              </ng-template>
+            </mat-tab>
+          }
+        </mat-tab-group>
+      </div>
+    } @else {
+      <div class="mini-chart">
+        <app-stats-chart
+          [series]="chartSeries()"
+          [granularity]="'daily'"
+          [rangeMode]="'week'"
+          [from]="from()"
+          [to]="to()"
+          [kindLabel]="chartKindLabel()"
+        />
+      </div>
+    }
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <span
+      class="teaser-cta"
+      aria-label="Zur Analyse navigieren"
+      i18n-aria-label="@@dashboard.analysisTeaserCtaAriaLabel"
+    >
+      <mat-icon>bar_chart</mat-icon>
+      <span i18n="@@dashboard.analysisTeaserCta">Zur Analyse</span>
+    </span>
+  </mat-card-actions>
+</mat-card>

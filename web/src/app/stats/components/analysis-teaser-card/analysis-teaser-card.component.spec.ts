@@ -23,6 +23,8 @@ class StubStatsChartComponent {
   readonly to = input<string>('');
   readonly entries = input<unknown[]>([]);
   readonly kindLabel = input<string>('');
+  readonly measurement = input<string | null>(null);
+  readonly paceSeries = input<unknown[]>([]);
 }
 
 function makeLiveStoreMock(
@@ -441,6 +443,139 @@ describe('AnalysisTeaserCardComponent', () => {
       const label = component.chartKindLabel();
       expect(label).not.toBe('');
       expect(label).not.toMatch(/Alle Übungen/i);
+    });
+  });
+
+  describe('Given entries for multiple exercise types this week', () => {
+    const weekMid = '2026-04-08';
+
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      await setupWithLiveStore({
+        connected: true,
+        entries: [
+          { _id: 'p1', timestamp: '2026-04-06T08:00:00+01:00', reps: 10 },
+        ],
+        exerciseEntries: [
+          {
+            _id: 'e1',
+            exerciseId: 'abs.situps',
+            timestamp: `${weekMid}T12:00:00+01:00`,
+            reps: 15,
+            source: 'web',
+          },
+          {
+            _id: 'e2',
+            exerciseId: 'plank.standard',
+            timestamp: `${weekMid}T13:00:00+01:00`,
+            durationSec: 60,
+            source: 'web',
+          },
+        ],
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+    });
+
+    it('should expose one tab per exercise type plus a leading "Alle Übungen" tab', () => {
+      // then
+      expect(component.tabs().map((t) => t.id)).toEqual([
+        'all',
+        'pushup',
+        'abs.situps',
+        'plank.standard',
+      ]);
+    });
+
+    it('should chart the plank tab on its duration instead of reps', () => {
+      // when
+      const plankTab = component.tabs().find((t) => t.id === 'plank.standard');
+
+      // then
+      expect(plankTab?.measurement).toBe('time');
+      expect(plankTab?.series).toEqual([
+        { bucket: weekMid, total: 60, dayIntegral: 60 },
+      ]);
+    });
+
+    it('should reuse the reps aggregate as the "Alle Übungen" tab series', () => {
+      // when
+      const allTab = component.tabs()[0];
+
+      // then
+      expect(allTab.label).toMatch(/Alle Übungen/i);
+      expect(allTab.series).toEqual(component.chartSeries());
+    });
+
+    it('should render a tab header for every tab', () => {
+      // when
+      fixture.detectChanges();
+      const headers = fixture.nativeElement.querySelectorAll('[role="tab"]');
+
+      // then
+      expect(headers.length).toBe(4);
+    });
+
+    it('should not navigate to the analysis page when a tab header is clicked', () => {
+      // given
+      fixture.detectChanges();
+      const header: HTMLElement =
+        fixture.nativeElement.querySelector('[role="tab"]');
+
+      // when
+      header.click();
+
+      // then
+      expect(routerSpy.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should still navigate when the chart area inside the tabs is clicked', () => {
+      // given
+      fixture.detectChanges();
+      const chartArea: HTMLElement =
+        fixture.nativeElement.querySelector('.mini-chart');
+      expect(chartArea).toBeTruthy();
+
+      // when
+      chartArea.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      );
+
+      // then
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/analysis']);
+    });
+  });
+
+  describe('Given only one exercise type this week', () => {
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      await setupWithLiveStore({
+        connected: true,
+        entries: [
+          { _id: 'p1', timestamp: '2026-04-07T08:00:00+01:00', reps: 20 },
+        ],
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+    });
+
+    it('should show a single exercise tab without an "Alle Übungen" duplicate', () => {
+      // then
+      expect(component.tabs().map((t) => t.id)).toEqual(['pushup']);
+    });
+  });
+
+  describe('Given no entries in the current week', () => {
+    it('should fall back to the single aggregate chart without tabs', () => {
+      // given — default setup: live store not connected, no entries
+      fixture.detectChanges();
+
+      // then
+      expect(component.tabs()).toEqual([]);
+      expect(fixture.nativeElement.querySelector('mat-tab-group')).toBeFalsy();
+      expect(
+        fixture.nativeElement.querySelector('app-stats-chart')
+      ).toBeTruthy();
     });
   });
 
