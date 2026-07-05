@@ -93,7 +93,7 @@ export class SeoService {
     // Canonical resolution: when the active locale is one we have an
     // alternate path for, the canonical points there. Otherwise we
     // fall back to the source locale so phantom URLs (e.g.
-    // `/fr/blog/<de-slug>` when fr/es/it/nl/el/la builds reuse the
+    // `/fr/blog/<de-slug>` when fr/es/it/nl/el builds reuse the
     // German blog data) deduplicate to the post's real language URL
     // and match the JSON-LD canonical emitted by callers.
     const canonicalLocale =

@@ -89,10 +89,6 @@
         "destination": "/el/index.html"
       },
       {
-        "source": "/la{,/**}",
-        "destination": "/la/index.html"
-      },
-      {
         "source": "/no{,/**}",
         "destination": "/no/index.html"
       },
