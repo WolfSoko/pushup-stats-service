@@ -2478,15 +2478,6 @@ Deine Position: # ·  Reps        </source>
             </segment>
 
         </unit>
-    <unit id="dashboard.quickAdd.button">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
-      </notes>
-      <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> armhevninger</target>
-      </segment>
-    </unit>
     <unit id="quickActions.edit.aria">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
@@ -2557,15 +2548,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
         <target>Legg til <ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/></target>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.pushupRepsLabel">
-      <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
-        <target>+<ph id="0" equiv="REPS" disp="reps"/> Reps</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.clearAria">
@@ -4687,12 +4669,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</source>
         <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> Reps</target>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.repAria">
-      <segment state="translated">
-        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
-        <target>Legg til <ph id="0" equiv="REPS" disp="reps"/> armhevinger</target>
       </segment>
     </unit>
     <unit id="quickAdd.success.create">

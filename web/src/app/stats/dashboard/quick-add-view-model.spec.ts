@@ -5,7 +5,7 @@ import {
 } from './quick-add-view-model';
 
 describe('toQuickAddViewModel', () => {
-  it('should label the pushup sentinel with the fitness fallback icon', () => {
+  it('should compose the pushup sentinel label from the exercise display name', () => {
     // given the legacy pushup sentinel in reps mode
     const vm = toQuickAddViewModel(
       {
@@ -20,12 +20,11 @@ describe('toQuickAddViewModel', () => {
     expect(vm.key).toBe('slot:0');
     expect(vm.exerciseId).toBe('pushup');
     expect(vm.reps).toBe(10);
-    expect(vm.icon).toBe('fitness_center');
     expect(vm.label).toBe(`+10 ${vm.exerciseLabel}`);
     expect(vm.exerciseLabel.length).toBeGreaterThan(0);
   });
 
-  it('should resolve a catalog exercise icon and reps label', () => {
+  it('should resolve a catalog exercise reps label', () => {
     // given a rep-based catalog exercise
     const vm = toQuickAddViewModel(
       { reps: 15, inSpeedDial: false, exerciseId: 'legs.squats', mode: 'reps' },
@@ -34,11 +33,10 @@ describe('toQuickAddViewModel', () => {
     // then
     expect(vm.key).toBe('slot:2');
     expect(vm.exerciseId).toBe('legs.squats');
-    expect(vm.icon.length).toBeGreaterThan(0);
     expect(vm.label).toBe(`+15 ${vm.exerciseLabel}`);
   });
 
-  it('should use the camera icon and drop the reps prefix for auto-count mode', () => {
+  it('should drop the reps prefix for auto-count mode', () => {
     // given an auto-count-capable exercise in auto-count mode
     const vm = toQuickAddViewModel(
       {
@@ -51,7 +49,6 @@ describe('toQuickAddViewModel', () => {
     );
     // then
     expect(vm.mode).toBe('auto-count');
-    expect(vm.icon).toBe('videocam');
     expect(vm.label).toBe(vm.exerciseLabel);
   });
 });

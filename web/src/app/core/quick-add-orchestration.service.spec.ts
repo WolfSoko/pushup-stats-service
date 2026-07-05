@@ -204,15 +204,13 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
   const pushupSuggestion: QuickAddSuggestion = {
     key: 'slot:0',
     reps: 10,
-    icon: 'bolt',
-    label: '+10 Reps',
+    label: '+10 Liegestütze',
     ariaLabel: '10 Liegestütze hinzufügen',
     exerciseId: 'pushup',
   };
   const situpsSuggestion: QuickAddSuggestion = {
     key: 'slot:1',
     reps: 12,
-    icon: 'self_improvement',
     label: '+12 Sit-ups',
     ariaLabel: '12 Sit-ups hinzufügen',
     exerciseId: 'abs.situps',

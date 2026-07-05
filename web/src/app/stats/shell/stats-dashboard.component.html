@@ -161,16 +161,14 @@
           [attr.data-exercise]="vm.exerciseId"
           (click)="addQuickEntryFromConfig(vm)"
         >
-          <mat-icon>{{ vm.icon }}</mat-icon>
           @if (vm.mode === 'auto-count') {
+            <mat-icon>videocam</mat-icon>
             <span>
               <span i18n="@@dashboard.quickAdd.autoPrefix">Auto:</span>
               {{ vm.exerciseLabel }}
             </span>
-          } @else if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
-            <span i18n="@@dashboard.quickAdd.button">+{{ vm.reps }} Reps</span>
           } @else {
-            <span>+{{ vm.reps }} {{ vm.exerciseLabel }}</span>
+            <span>{{ vm.label }}</span>
           }
         </button>
       }
@@ -400,9 +398,6 @@
           >
             <mat-card>
               <mat-card-content>
-                <div class="tile-icon" aria-hidden="true">
-                  <mat-icon>{{ tileIcon(entry) }}</mat-icon>
-                </div>
                 <div class="tile-body">
                   <strong class="tile-title">{{
                     exerciseEntryLabel(entry)

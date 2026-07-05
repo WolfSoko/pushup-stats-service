@@ -3030,15 +3030,6 @@ Deine Position: # ·  Reps        </source>
       
       
         </unit>
-    <unit id="dashboard.quickAdd.button">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
-      </notes>
-      <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}" /> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ vm.reps }}" /> reps</target>
-      </segment>
-    </unit>
     <unit id="dashboard.quickAdd.autoPrefix">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html</note>
@@ -3118,15 +3109,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source><ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
         <target>Add <ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/></target>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.pushupRepsLabel">
-      <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
-        <target>+<ph id="0" equiv="REPS" disp="reps"/> Reps</target>
       </segment>
     </unit>
     <unit id="quickAddConfig.hintV2">
@@ -5663,12 +5645,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</source>
         <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}" /> Reps</target>
-      </segment>
-    </unit>
-    <unit id="quickAdd.fab.repAria">
-      <segment state="translated">
-        <source><ph id="0" equiv="REPS" disp="reps" /> Liegestütze hinzufügen</source>
-        <target>Add <ph id="0" equiv="REPS" disp="reps" /> push-ups</target>
       </segment>
     </unit>
     <unit id="quickAdd.success.create">

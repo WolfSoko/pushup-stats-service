@@ -909,15 +909,6 @@
         <target>Obiettivo giornaliero già raggiunto</target>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.repAria">
-      <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:71</note>
-      </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="REPS" disp="reps"/> Liegestütze hinzufügen</source>
-        <target><ph id="0" equiv="REPS" disp="reps"/> Aggiungi flessioni</target>
-      </segment>
-    </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:75</note>
@@ -4635,15 +4626,6 @@
         <target>Aggiungi <ph id="0" equiv="REPS" disp="reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/></target>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.pushupRepsLabel">
-      <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>+<ph id="0" equiv="REPS" disp="reps"/> Reps</source>
-        <target>+<ph id="0" equiv="REPS" disp="reps"/> Reps</target>
-      </segment>
-    </unit>
     <unit id="save">
       <notes>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:84,85</note>
@@ -6120,15 +6102,6 @@
       <segment state="translated">
         <source>Schnellaktionen bearbeiten</source>
         <target>Modifica azioni rapide</target>
-      </segment>
-    </unit>
-    <unit id="dashboard.quickAdd.button">
-      <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,209</note>
-      </notes>
-      <segment state="translated">
-        <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Reps</source>
-        <target>+<ph id="0" equiv="INTERPOLATION" disp="{{ reps }}"/> Rip</target>
       </segment>
     </unit>
     <unit id="dashboard.goalFill.reached">

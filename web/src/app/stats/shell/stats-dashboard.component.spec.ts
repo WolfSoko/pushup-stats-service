@@ -358,9 +358,9 @@ describe('StatsDashboardComponent', () => {
         const text = fixture.nativeElement.textContent;
 
         // Then
-        expect(text).toContain('+10 Reps');
-        expect(text).toContain('+20 Reps');
-        expect(text).toContain('+30 Reps');
+        expect(text).toContain('+10 Liegestütze');
+        expect(text).toContain('+20 Liegestütze');
+        expect(text).toContain('+30 Liegestütze');
       });
 
       it('Then it should render the Schnellaktionen edit icon', () => {
@@ -445,22 +445,13 @@ describe('StatsDashboardComponent', () => {
         expect(cta.textContent).toContain('Zur Historie');
       });
 
-      it('Then tileIcon returns sports_gymnastics for all entry kinds', () => {
-        const component = fixture.componentInstance;
-        const pushupIcon = component.tileIcon({
-          _id: 'p',
-          kind: 'pushup',
-          timestamp: todayTs,
-          reps: 10,
-        } as unknown as Parameters<typeof component.tileIcon>[0]);
-        const exerciseIcon = component.tileIcon({
-          _id: 'e',
-          kind: 'exercise',
-          exerciseId: 'plank.standard',
-          timestamp: todayTs,
-        } as unknown as Parameters<typeof component.tileIcon>[0]);
-        expect(pushupIcon).toBe('sports_gymnastics');
-        expect(exerciseIcon).toBe('sports_gymnastics');
+      it('Then a recent-exercise tile renders without a decorative icon', () => {
+        const root = fixture.nativeElement as HTMLElement;
+        const tile = root.querySelector<HTMLElement>(
+          '[data-testid="dashboard-recent-exercise-tile"]'
+        );
+        expect(tile).toBeTruthy();
+        expect(tile?.querySelector('mat-icon')).toBeNull();
       });
 
       it('Then the Schnellaktionen card is rendered above the today-focus section', () => {
@@ -500,12 +491,12 @@ describe('StatsDashboardComponent', () => {
         await freshFixture.whenStable();
 
         const text = freshFixture.nativeElement.textContent;
-        expect(text).toContain('+15 Reps');
-        expect(text).toContain('+25 Reps');
-        expect(text).toContain('+50 Reps');
-        expect(text).not.toContain('+10 Reps');
-        expect(text).not.toContain('+20 Reps');
-        expect(text).not.toContain('+30 Reps');
+        expect(text).toContain('+15 Liegestütze');
+        expect(text).toContain('+25 Liegestütze');
+        expect(text).toContain('+50 Liegestütze');
+        expect(text).not.toContain('+10 Liegestütze');
+        expect(text).not.toContain('+20 Liegestütze');
+        expect(text).not.toContain('+30 Liegestütze');
       });
     });
   });
@@ -655,7 +646,6 @@ describe('StatsDashboardComponent', () => {
           mode: 'reps',
           exerciseId: 'pushup',
           reps: 12,
-          icon: 'fitness_center',
           exerciseLabel: 'Liegestütze',
           label: '+12 Liegestütze',
         });
@@ -682,7 +672,6 @@ describe('StatsDashboardComponent', () => {
           mode: 'reps',
           exerciseId: 'abs.situps',
           reps: 20,
-          icon: 'self_improvement',
           exerciseLabel: 'Sit-ups',
           label: '+20 Sit-ups',
         });
@@ -713,7 +702,6 @@ describe('StatsDashboardComponent', () => {
           mode: 'auto-count',
           exerciseId: 'legs.squats',
           reps: 0,
-          icon: 'videocam',
           exerciseLabel: 'Kniebeugen',
           label: 'Auto: Kniebeugen',
         });
@@ -736,7 +724,6 @@ describe('StatsDashboardComponent', () => {
           mode: 'auto-count',
           exerciseId: 'hinge.goodmorning',
           reps: 0,
-          icon: 'videocam',
           exerciseLabel: 'Good Morning',
           label: 'Auto: Good Morning',
         });
