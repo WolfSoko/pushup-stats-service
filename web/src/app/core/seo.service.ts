@@ -41,7 +41,7 @@ export class SeoService {
       /**
        * Per-locale path overrides for hreflang alternates. Required
        * for routes whose slug differs by locale (e.g. blog posts with
-       * `translationSlug`). When omitted, the route is assumed to be
+       * `alternateSlugs`). When omitted, the route is assumed to be
        * locale-agnostic and the same path is advertised for every
        * supported locale. Locales not present in the map are skipped
        * so we never claim alternates for content that doesn't resolve

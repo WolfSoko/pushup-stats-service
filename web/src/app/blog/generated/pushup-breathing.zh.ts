@@ -21,6 +21,18 @@ export const POST: BlogPost = {
     "俯卧撑瓦氏动作",
     "俯卧撑最大努力呼吸"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-atmung",
+    "el": "pnoe-pieseos-ges",
+    "en": "pushup-breathing",
+    "es": "respiracion-flexiones",
+    "fr": "respiration-pompes",
+    "it": "respirazione-piegamenti",
+    "la": "spiratio-in-pressionibus",
+    "nl": "opdrukken-ademhaling",
+    "no": "armhevning-pusteteknikk",
+    "zh": "pushup-breathing"
+  },
   "heroImage": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "运动员处于平板支撑位置，表情专注。",
   "heroImageCredit": "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

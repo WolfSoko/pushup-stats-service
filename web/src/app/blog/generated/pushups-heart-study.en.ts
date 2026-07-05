@@ -20,6 +20,18 @@ export const POST: BlogPost = {
     "JAMA push-ups",
     "push-ups cardiovascular benefit"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-herz-studie",
+    "el": "pieseis-ges-kardia-melete",
+    "en": "pushups-heart-study",
+    "es": "flexiones-salud-corazon",
+    "fr": "pompes-sante-cardiaque",
+    "it": "piegamenti-salute-cuore",
+    "la": "pressiones-et-cor-studium",
+    "nl": "opdrukken-hart-studie",
+    "no": "armhevninger-hjertestudie",
+    "zh": "pushups-heart-study"
+  },
   "heroImage": "https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlete in a plank position on asphalt — the push-up capacity test.",
   "heroImageCredit": "Photo: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

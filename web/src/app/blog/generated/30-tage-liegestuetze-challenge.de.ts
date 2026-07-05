@@ -21,6 +21,18 @@ export const POST: BlogPost = {
     "Liegestütze täglich steigern",
     "Pushup Tracker App"
   ],
+  "alternateSlugs": {
+    "de": "30-tage-liegestuetze-challenge",
+    "el": "triakonta-emerai-pieseos",
+    "en": "30-day-pushup-challenge",
+    "es": "desafio-flexiones-30-dias",
+    "fr": "defi-pompes-30-jours",
+    "it": "sfida-30-giorni-piegamenti",
+    "la": "provocatio-triginta-dierum",
+    "nl": "30-dagen-opdruk-challenge",
+    "no": "30-dagers-armhevning-utfordring",
+    "zh": "30-day-pushup-challenge"
+  },
   "heroImage": "https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportler bei einer Outdoor-Liegestütze – tägliche Challenge im Grünen.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

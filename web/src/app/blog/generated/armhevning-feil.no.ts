@@ -21,6 +21,18 @@ export const POST: BlogPost = {
     "hvordan gjøre push-ups riktig",
     "Pushup Tracker app"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-fehler",
+    "el": "hamartiai-pieseos-ges",
+    "en": "pushup-mistakes",
+    "es": "errores-flexiones",
+    "fr": "erreurs-pompes",
+    "it": "errori-piegamenti",
+    "la": "errores-in-pressionibus",
+    "nl": "opdrukken-fouten",
+    "no": "armhevning-feil",
+    "zh": "pushup-mistakes"
+  },
   "heroImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Idrettsmann i plankeposisjon på en treningskatt, nøytral hodestilling.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
