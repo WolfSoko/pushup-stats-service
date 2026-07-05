@@ -1,37 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Functions, httpsCallable } from '@angular/fire/functions';
+import { CallableFunctionsService } from '../callable-functions.service';
 import { MigrationCardComponent } from './migration-card.component';
 import { MigrationDescriptor } from './migration-descriptors';
-
-const mocks = vi.hoisted(() => ({
-  // Named class keeps the same identity within this file's vi.mock factory.
-  Functions: class Functions {},
-  httpsCallable: vi.fn(),
-}));
-
-vi.mock('@angular/fire/functions', () => ({
-  Functions: mocks.Functions,
-  httpsCallable: mocks.httpsCallable,
-}));
 
 interface CallableRecord {
   name: string;
   impl: (data: unknown) => Promise<{ data: unknown }>;
 }
 
+// Faked via DI instead of vi.mock('@angular/fire/functions'): module
+// mocks of the fire package break whenever the spec bundler moves it
+// into a shared chunk (the mocked `Functions` token and the component's
+// bundled one are then different classes -> NG0201), and which admin
+// spec breaks shifts with the workspace's overall spec-file set.
+const callablesMock = { call: vi.fn() };
+
 function setupCallables(records: CallableRecord[]): void {
-  mocks.httpsCallable.mockImplementation(
-    (_functions: Functions, name: string) => {
-      const match = records.find((r) => r.name === name);
-      if (!match) {
-        return (async () => {
-          throw new Error(`Unexpected callable: ${name}`);
-        }) as unknown as ReturnType<typeof httpsCallable>;
-      }
-      return match.impl as unknown as ReturnType<typeof httpsCallable>;
+  callablesMock.call.mockImplementation((name: string) => {
+    const match = records.find((r) => r.name === name);
+    if (!match) {
+      return async () => {
+        throw new Error(`Unexpected callable: ${name}`);
+      };
     }
-  );
+    return match.impl;
+  });
 }
 
 const WITH_ROLLBACK: MigrationDescriptor = {
@@ -53,7 +47,9 @@ describe('MigrationCardComponent', () => {
     setupCallables(callables);
     await TestBed.configureTestingModule({
       imports: [MigrationCardComponent],
-      providers: [{ provide: Functions, useValue: {} }],
+      providers: [
+        { provide: CallableFunctionsService, useValue: callablesMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MigrationCardComponent);
@@ -100,8 +96,7 @@ describe('MigrationCardComponent', () => {
     await clickButton('Probelauf');
 
     // then the callable is invoked with dryRun:true and counters render
-    expect(mocks.httpsCallable).toHaveBeenCalledWith(
-      expect.anything(),
+    expect(callablesMock.call).toHaveBeenCalledWith(
       'migratePushupsToExerciseEntries',
       expect.objectContaining({ timeout: expect.any(Number) })
     );
@@ -176,8 +171,7 @@ describe('MigrationCardComponent', () => {
     fixture.detectChanges();
 
     // then the rollback callable is invoked and its counter renders
-    expect(mocks.httpsCallable).toHaveBeenCalledWith(
-      expect.anything(),
+    expect(callablesMock.call).toHaveBeenCalledWith(
       'rollbackPushupUnification',
       expect.objectContaining({ timeout: expect.any(Number) })
     );

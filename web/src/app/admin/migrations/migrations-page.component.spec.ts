@@ -1,35 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Functions, httpsCallable } from '@angular/fire/functions';
+import { CallableFunctionsService } from '../callable-functions.service';
 import { MigrationsPageComponent } from './migrations-page.component';
-
-const mocks = vi.hoisted(() => ({
-  Functions: class Functions {},
-  httpsCallable: vi.fn(),
-}));
-
-vi.mock('@angular/fire/functions', () => ({
-  Functions: mocks.Functions,
-  httpsCallable: mocks.httpsCallable,
-}));
 
 interface CallableRecord {
   name: string;
   impl: (data: unknown) => Promise<{ data: unknown }>;
 }
 
+// Faked via DI instead of vi.mock('@angular/fire/functions'): module
+// mocks of the fire package break whenever the spec bundler moves it
+// into a shared chunk (the mocked `Functions` token and the component's
+// bundled one are then different classes -> NG0201), and which admin
+// spec breaks shifts with the workspace's overall spec-file set.
+const callablesMock = { call: vi.fn() };
+
 function setupCallables(records: CallableRecord[]): void {
-  mocks.httpsCallable.mockImplementation(
-    (_functions: Functions, name: string) => {
-      const match = records.find((r) => r.name === name);
-      if (!match) {
-        return (async () => {
-          throw new Error(`Unexpected callable: ${name}`);
-        }) as unknown as ReturnType<typeof httpsCallable>;
-      }
-      return match.impl as unknown as ReturnType<typeof httpsCallable>;
+  callablesMock.call.mockImplementation((name: string) => {
+    const match = records.find((r) => r.name === name);
+    if (!match) {
+      return async () => {
+        throw new Error(`Unexpected callable: ${name}`);
+      };
     }
-  );
+    return match.impl;
+  });
 }
 
 describe('MigrationsPageComponent', () => {
@@ -40,7 +35,10 @@ describe('MigrationsPageComponent', () => {
     setupCallables(callables);
     await TestBed.configureTestingModule({
       imports: [MigrationsPageComponent],
-      providers: [{ provide: Functions, useValue: {} }, provideRouter([])],
+      providers: [
+        { provide: CallableFunctionsService, useValue: callablesMock },
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MigrationsPageComponent);
@@ -75,10 +73,7 @@ describe('MigrationsPageComponent', () => {
 
     // then the page exposes it to the cards
     expect(component.statuses()['pushup-unification']?.completed).toBe(true);
-    expect(mocks.httpsCallable).toHaveBeenCalledWith(
-      expect.anything(),
-      'getMigrationStatuses'
-    );
+    expect(callablesMock.call).toHaveBeenCalledWith('getMigrationStatuses');
   });
 
   it('should persist a status toggle via setMigrationStatus', async () => {

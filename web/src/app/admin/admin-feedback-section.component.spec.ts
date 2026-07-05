@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
   MatDialog,
   MatDialogModule,
@@ -7,30 +6,31 @@ import {
 } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
+import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
-
-vi.mock('@angular/fire/functions', () => ({
-  Functions: class {},
-  httpsCallable: vi.fn(),
-}));
 
 interface CallableRecord {
   name: string;
   impl: (data: unknown) => Promise<{ data: unknown }>;
 }
 
+// Faked via DI instead of vi.mock('@angular/fire/functions'): module
+// mocks of the fire package break whenever the spec bundler moves it
+// into a shared chunk (the mocked `Functions` token and the component's
+// bundled one are then different classes -> NG0201), and which admin
+// spec breaks shifts with the workspace's overall spec-file set.
+const callablesMock = { call: vi.fn() };
+
 function setupCallables(records: CallableRecord[]): void {
-  vi.mocked(httpsCallable).mockImplementation(
-    (_functions: Functions, name: string) => {
-      const match = records.find((r) => r.name === name);
-      if (!match) {
-        return (async () => {
-          throw new Error(`Unexpected callable: ${name}`);
-        }) as unknown as ReturnType<typeof httpsCallable>;
-      }
-      return match.impl as unknown as ReturnType<typeof httpsCallable>;
+  callablesMock.call.mockImplementation((name: string) => {
+    const match = records.find((r) => r.name === name);
+    if (!match) {
+      return async () => {
+        throw new Error(`Unexpected callable: ${name}`);
+      };
     }
-  );
+    return match.impl;
+  });
 }
 
 describe('AdminFeedbackSectionComponent', () => {
@@ -78,7 +78,9 @@ describe('AdminFeedbackSectionComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [AdminFeedbackSectionComponent, MatDialogModule],
-      providers: [{ provide: Functions, useValue: {} }],
+      providers: [
+        { provide: CallableFunctionsService, useValue: callablesMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdminFeedbackSectionComponent);
@@ -106,10 +108,7 @@ describe('AdminFeedbackSectionComponent', () => {
       // then
       expect(component.feedbackList().length).toBe(2);
       expect(component.feedbackList()[0].id).toBe('fb-1');
-      expect(httpsCallable).toHaveBeenCalledWith(
-        expect.anything(),
-        'adminListFeedback'
-      );
+      expect(callablesMock.call).toHaveBeenCalledWith('adminListFeedback');
     });
 
     it('should keep the list empty when the Cloud Function returns empty data', async () => {
