@@ -4800,7 +4800,7 @@
     </unit>
     <unit id="about.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:10,12</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:10,13</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4816,7 +4816,7 @@
     </unit>
     <unit id="about.who.body1">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:15,19</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:15,20</note>
       </notes>
       <segment>
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
@@ -4840,7 +4840,7 @@
     </unit>
     <unit id="about.mission.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:33,37</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:33,38</note>
       </notes>
       <segment>
         <source> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
@@ -4880,7 +4880,7 @@
     </unit>
     <unit id="about.toImpressum">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:63,66</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:66,69</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4888,7 +4888,7 @@
     </unit>
     <unit id="about.toDatenschutz">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:69,72</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:72,75</note>
       </notes>
       <segment>
         <source>Datenschutz</source>

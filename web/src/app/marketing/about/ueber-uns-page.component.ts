@@ -7,35 +7,34 @@ import { RouterLink } from '@angular/router';
   imports: [MatButtonModule, RouterLink],
   template: `
     <article class="about-page">
-      <h1 i18n="@@about.title">&Uuml;ber uns</h1>
+      <h1 i18n="@@about.title">Über uns</h1>
 
       <section>
         <h2 i18n="@@about.who.title">Wer hinter Pushup Tracker steckt</h2>
         <p i18n="@@about.who.body1">
-          Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben
-          &ndash; Softwareentwickler aus der N&auml;he von Hamburg und selbst
-          t&auml;glicher Liegest&uuml;tze-Trainierender. Die App ist aus einem
-          pers&ouml;nlichen Bed&uuml;rfnis entstanden: das eigene Training ohne
-          Zettelwirtschaft festzuhalten und den Fortschritt &uuml;ber Wochen und
-          Monate sichtbar zu machen.
+          Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben –
+          Softwareentwickler aus der Nähe von Hamburg und selbst täglicher
+          Liegestütze-Trainierender. Die App ist aus einem persönlichen
+          Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft
+          festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu
+          machen.
         </p>
         <p i18n="@@about.who.body2">
           Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger
-          Trainings-Tracker mit Trainingspl&auml;nen, Tageszielen, Streaks,
-          Bestenliste und automatischer Wiederholungsz&auml;hlung per Kamera
-          &ndash; komplett im Browser, kostenlos und ohne App-Store.
+          Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks,
+          Bestenliste und automatischer Wiederholungszählung per Kamera –
+          komplett im Browser, kostenlos und ohne App-Store.
         </p>
       </section>
 
       <section>
         <h2 i18n="@@about.mission.title">Warum es diese Seite gibt</h2>
         <p i18n="@@about.mission.body">
-          Liegest&uuml;tze sind die einfachste Kraft&uuml;bung der Welt: kein
-          Ger&auml;t, kein Studio, keine Ausrede. Was den meisten fehlt, ist
-          nicht die &Uuml;bung, sondern die Kontinuit&auml;t. Genau da setzt
-          Pushup Tracker an &ndash; messbarer Fortschritt, kleine Tagesziele und
-          eine Streak, die man ungern rei&szlig;en l&auml;sst, machen aus ein
-          paar Wiederholungen eine dauerhafte Gewohnheit.
+          Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein
+          Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung,
+          sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer
+          Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen
+          lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit.
         </p>
       </section>
 
@@ -45,8 +44,8 @@ import { RouterLink } from '@angular/router';
           Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung
           und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert
           werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine
-          medizinische Beratung &ndash; bei Vorerkrankungen oder Schmerzen
-          geh&ouml;rt die Frage zuerst zu &Auml;rztin oder Arzt.
+          medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die
+          Frage zuerst zu Ärztin oder Arzt.
         </p>
       </section>
 
