@@ -20,6 +20,17 @@ export const POST: BlogPost = {
     "女性俯卧撑进步",
     "女性跪姿俯卧撑"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-frauen",
+    "el": "pieseis-ges-gynaixin",
+    "en": "pushups-for-women",
+    "es": "flexiones-mujeres",
+    "fr": "pompes-pour-femmes",
+    "it": "piegamenti-per-donne",
+    "nl": "opdrukken-voor-vrouwen",
+    "no": "armhevninger-for-kvinner",
+    "zh": "pushups-for-women"
+  },
   "heroImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "女性运动员在室外垫子上进行规范的俯卧撑。",
   "heroImageCredit": "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

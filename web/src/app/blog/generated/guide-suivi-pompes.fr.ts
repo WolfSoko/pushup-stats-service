@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "Pushup Tracker",
     "suivi progression pompes"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-tracker",
+    "el": "ichneutes-pieseos-ges",
+    "en": "pushup-tracker-guide",
+    "es": "guia-registro-flexiones",
+    "fr": "guide-suivi-pompes",
+    "it": "guida-tracker-piegamenti",
+    "nl": "opdruk-tracker-gids",
+    "no": "armhevning-tracker-guide",
+    "zh": "pushup-tracker-guide"
+  },
   "heroImage": "https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlète faisant une pompe propre sur un plancher en bois — la progression au premier plan.",
   "heroImageCredit": "Photo : <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

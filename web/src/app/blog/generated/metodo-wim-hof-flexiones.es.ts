@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "recuperación exposición frío",
     "respiración Wim Hof flexiones"
   ],
+  "alternateSlugs": {
+    "de": "wim-hof-liegestuetze",
+    "el": "wim-hof-pieseis-ges",
+    "en": "wim-hof-pushups",
+    "es": "metodo-wim-hof-flexiones",
+    "fr": "pompes-wim-hof",
+    "it": "metodo-wim-hof-piegamenti",
+    "nl": "wim-hof-opdrukken",
+    "no": "wim-hof-armhevninger",
+    "zh": "wim-hof-pushups"
+  },
   "heroImage": "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta de pie en un paisaje helado — imágenes del método Wim Hof de respiración y frío.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

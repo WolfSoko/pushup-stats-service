@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "comment faire des pompes correctement",
     "Pushup Tracker app"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-fehler",
+    "el": "hamartiai-pieseos-ges",
+    "en": "pushup-mistakes",
+    "es": "errores-flexiones",
+    "fr": "erreurs-pompes",
+    "it": "errori-piegamenti",
+    "nl": "opdrukken-fouten",
+    "no": "armhevning-feil",
+    "zh": "pushup-mistakes"
+  },
   "heroImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlète en position de planche sur un tapis d'entraînement, tête en position neutre.",
   "heroImageCredit": "Photo : <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

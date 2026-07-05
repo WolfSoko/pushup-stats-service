@@ -7,12 +7,12 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CallableFunctionsService } from '../callable-functions.service';
 import {
   MigrationActionKind,
   MigrationDescriptor,
@@ -234,7 +234,7 @@ const IDLE: ActionState = {
   ],
 })
 export class MigrationCardComponent {
-  private readonly functions = inject(Functions);
+  private readonly callables = inject(CallableFunctionsService);
 
   readonly migration = input.required<MigrationDescriptor>();
   /** Persisted completion status; undefined until the page loads it. */
@@ -269,8 +269,7 @@ export class MigrationCardComponent {
 
     this.patch(kind, { busy: true, error: null, result: null });
     try {
-      const fn = httpsCallable<{ dryRun: boolean }, MigrationResult>(
-        this.functions,
+      const fn = this.callables.call<{ dryRun: boolean }, MigrationResult>(
         action.callable,
         { timeout: MIGRATION_CALLABLE_TIMEOUT_MS }
       );

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
   MatDialog,
   MatDialogModule,
@@ -9,32 +8,15 @@ import {
 import { of } from 'rxjs';
 import { AdminPageComponent } from './admin-page.component';
 import { AdminUser } from './admin-page.models';
+import { CallableFunctionsService } from './callable-functions.service';
+import {
+  CallableRecord,
+  createCallablesMock,
+} from './callable-functions.testing';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 
-vi.mock('@angular/fire/functions', () => ({
-  Functions: class {},
-  httpsCallable: vi.fn(),
-}));
-
-interface CallableRecord {
-  name: string;
-  impl: (data: unknown) => Promise<{ data: unknown }>;
-}
-
-function setupCallables(records: CallableRecord[]): void {
-  vi.mocked(httpsCallable).mockImplementation(
-    (_functions: Functions, name: string) => {
-      const match = records.find((r) => r.name === name);
-      if (!match) {
-        return (async () => {
-          throw new Error(`Unexpected callable: ${name}`);
-        }) as unknown as ReturnType<typeof httpsCallable>;
-      }
-      return match.impl as unknown as ReturnType<typeof httpsCallable>;
-    }
-  );
-}
+const { callablesMock, setupCallables } = createCallablesMock();
 
 describe('AdminPageComponent', () => {
   let fixture: ComponentFixture<AdminPageComponent>;
@@ -70,7 +52,10 @@ describe('AdminPageComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [AdminPageComponent, MatDialogModule],
-      providers: [{ provide: Functions, useValue: {} }, provideRouter([])],
+      providers: [
+        { provide: CallableFunctionsService, useValue: callablesMock },
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdminPageComponent);
@@ -97,10 +82,7 @@ describe('AdminPageComponent', () => {
 
       // then
       expect(component.users().length).toBe(1);
-      expect(httpsCallable).toHaveBeenCalledWith(
-        expect.anything(),
-        'adminListUsers'
-      );
+      expect(callablesMock.call).toHaveBeenCalledWith('adminListUsers');
     });
   });
 

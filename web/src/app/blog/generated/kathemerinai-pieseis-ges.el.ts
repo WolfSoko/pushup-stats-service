@@ -20,6 +20,17 @@ export const POST: BlogPost = {
     "συνήθεια push-up",
     "push-up υγεία"
   ],
+  "alternateSlugs": {
+    "de": "taeglich-liegestuetze",
+    "el": "kathemerinai-pieseis-ges",
+    "en": "daily-pushups",
+    "es": "flexiones-diarias",
+    "fr": "pompes-quotidiennes",
+    "it": "piegamenti-quotidiani",
+    "nl": "dagelijks-opdrukken",
+    "no": "daglige-armhevninger",
+    "zh": "daily-pushups"
+  },
   "heroImage": "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Αθλήτρια κάνει push-up — καθημερινή προπόνηση σε εξωτερικό χώρο.",
   "heroImageCredit": "Φωτογραφία: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

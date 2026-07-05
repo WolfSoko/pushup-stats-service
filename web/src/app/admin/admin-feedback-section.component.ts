@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -17,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteFeedbackDialogComponent } from './delete-feedback-dialog.component';
 import { AdminFeedback } from './admin-page.models';
 import {
@@ -43,7 +43,7 @@ import {
   styleUrl: './admin-feedback-section.component.scss',
 })
 export class AdminFeedbackSectionComponent {
-  private readonly functions = inject(Functions);
+  private readonly callables = inject(CallableFunctionsService);
   private readonly dialog = inject(MatDialog);
 
   readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
@@ -87,8 +87,7 @@ export class AdminFeedbackSectionComponent {
     this.feedbackLoading.set(true);
     this.feedbackError.set(null);
     try {
-      const fn = httpsCallable<void, AdminFeedback[]>(
-        this.functions,
+      const fn = this.callables.call<void, AdminFeedback[]>(
         'adminListFeedback'
       );
       const result = await fn();
@@ -115,7 +114,7 @@ export class AdminFeedbackSectionComponent {
     this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
-      const fn = httpsCallable(this.functions, 'adminMarkFeedbackRead');
+      const fn = this.callables.call('adminMarkFeedbackRead');
       await fn({ feedbackId: feedback.id, read });
       this.feedbackList.update((list) =>
         list.map((f) => (f.id === feedback.id ? { ...f, read } : f))
@@ -143,7 +142,7 @@ export class AdminFeedbackSectionComponent {
     this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
-      const fn = httpsCallable(this.functions, 'adminDeleteFeedback');
+      const fn = this.callables.call('adminDeleteFeedback');
       await fn({ feedbackId: feedback.id });
       this.feedbackList.update((list) =>
         list.filter((f) => f.id !== feedback.id)
@@ -159,10 +158,10 @@ export class AdminFeedbackSectionComponent {
     this.setFeedbackLoading(feedback.id, true);
     this.feedbackActionError.set(null);
     try {
-      const fn = httpsCallable<unknown, { ok: boolean; issueUrl: string }>(
-        this.functions,
-        'adminCreateGithubIssue'
-      );
+      const fn = this.callables.call<
+        unknown,
+        { ok: boolean; issueUrl: string }
+      >('adminCreateGithubIssue');
       const result = await fn({ feedbackId: feedback.id });
       this.feedbackList.update((list) =>
         list.map((f) =>

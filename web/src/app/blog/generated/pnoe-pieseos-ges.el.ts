@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "push-up valsalva",
     "push-ups μέγιστη προσπάθεια αναπνοή"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-atmung",
+    "el": "pnoe-pieseos-ges",
+    "en": "pushup-breathing",
+    "es": "respiracion-flexiones",
+    "fr": "respiration-pompes",
+    "it": "respirazione-piegamenti",
+    "nl": "opdrukken-ademhaling",
+    "no": "armhevning-pusteteknikk",
+    "zh": "pushup-breathing"
+  },
   "heroImage": "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Αθλητής σε θέση plank με συγκεντρωμένη έκφραση.",
   "heroImageCredit": "Φωτογραφία: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

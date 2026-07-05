@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "cómo hacer flexiones correctamente",
     "Pushup Tracker app"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-fehler",
+    "el": "hamartiai-pieseos-ges",
+    "en": "pushup-mistakes",
+    "es": "errores-flexiones",
+    "fr": "erreurs-pompes",
+    "it": "errori-piegamenti",
+    "nl": "opdrukken-fouten",
+    "no": "armhevning-feil",
+    "zh": "pushup-mistakes"
+  },
   "heroImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta en posición de plancha sobre una esterilla de entrenamiento, cabeza en posición neutra.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

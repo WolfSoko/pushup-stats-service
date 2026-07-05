@@ -4,11 +4,11 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
+import { CallableFunctionsService } from '../callable-functions.service';
 import { MigrationCardComponent } from './migration-card.component';
 import { DATA_MIGRATIONS, MigrationStatus } from './migration-descriptors';
 
@@ -67,7 +67,7 @@ import { DATA_MIGRATIONS, MigrationStatus } from './migration-descriptors';
   ],
 })
 export class MigrationsPageComponent {
-  private readonly functions = inject(Functions);
+  private readonly callables = inject(CallableFunctionsService);
 
   readonly migrations = DATA_MIGRATIONS;
   readonly statuses = signal<Record<string, MigrationStatus | undefined>>({});
@@ -81,10 +81,10 @@ export class MigrationsPageComponent {
 
   private async loadStatuses(): Promise<void> {
     try {
-      const fn = httpsCallable<
+      const fn = this.callables.call<
         void,
         { statuses: Record<string, MigrationStatus> }
-      >(this.functions, 'getMigrationStatuses');
+      >('getMigrationStatuses');
       const response = await fn();
       this.statuses.set(response.data.statuses ?? {});
     } catch (err) {
@@ -96,10 +96,10 @@ export class MigrationsPageComponent {
     this.busyId.set(id);
     this.error.set(null);
     try {
-      const fn = httpsCallable<
+      const fn = this.callables.call<
         { id: string; completed: boolean },
         MigrationStatus & { id: string }
-      >(this.functions, 'setMigrationStatus');
+      >('setMigrationStatus');
       const { data } = await fn({ id, completed });
       this.statuses.update((current) => ({
         ...current,

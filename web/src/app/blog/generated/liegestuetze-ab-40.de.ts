@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "Liegestütze Gelenke schonen",
     "Liegestütze Senioren"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-ab-40",
+    "el": "pieseis-ges-meta-tessarakonta",
+    "en": "pushups-over-40",
+    "es": "flexiones-mayores-40",
+    "fr": "pompes-apres-40-ans",
+    "it": "piegamenti-dopo-i-40",
+    "nl": "opdrukken-na-40",
+    "no": "armhevninger-etter-40",
+    "zh": "pushups-over-40"
+  },
   "heroImage": "https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Sportlerin bei einer sauberen Liegestütze im Grünen – Training ab 40.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

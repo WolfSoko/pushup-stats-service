@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "冷暴露恢复",
     "Wim Hof呼吸俯卧撑"
   ],
+  "alternateSlugs": {
+    "de": "wim-hof-liegestuetze",
+    "el": "wim-hof-pieseis-ges",
+    "en": "wim-hof-pushups",
+    "es": "metodo-wim-hof-flexiones",
+    "fr": "pompes-wim-hof",
+    "it": "metodo-wim-hof-piegamenti",
+    "nl": "wim-hof-opdrukken",
+    "no": "wim-hof-armhevninger",
+    "zh": "wim-hof-pushups"
+  },
   "heroImage": "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "运动员站在冰冻景观中——Wim Hof 呼吸法的呼吸和冷的意象。",
   "heroImageCredit": "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

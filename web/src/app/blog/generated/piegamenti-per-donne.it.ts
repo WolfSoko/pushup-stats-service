@@ -20,6 +20,17 @@ export const POST: BlogPost = {
     "progressione push-up donne",
     "push-up ginocchia donne"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-frauen",
+    "el": "pieseis-ges-gynaixin",
+    "en": "pushups-for-women",
+    "es": "flexiones-mujeres",
+    "fr": "pompes-pour-femmes",
+    "it": "piegamenti-per-donne",
+    "nl": "opdrukken-voor-vrouwen",
+    "no": "armhevninger-for-kvinner",
+    "zh": "pushups-for-women"
+  },
   "heroImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta femminile che esegue un piegamento controllato su un tappetino da allenamento all'aperto.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

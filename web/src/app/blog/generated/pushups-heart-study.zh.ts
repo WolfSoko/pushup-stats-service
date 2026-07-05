@@ -20,6 +20,17 @@ export const POST: BlogPost = {
     "JAMA俯卧撑",
     "俯卧撑心血管益处"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-herz-studie",
+    "el": "pieseis-ges-kardia-melete",
+    "en": "pushups-heart-study",
+    "es": "flexiones-salud-corazon",
+    "fr": "pompes-sante-cardiaque",
+    "it": "piegamenti-salute-cuore",
+    "nl": "opdrukken-hart-studie",
+    "no": "armhevninger-hjertestudie",
+    "zh": "pushups-heart-study"
+  },
   "heroImage": "https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "运动员在沥青地面上保持平板支撑位置 — 俯卧撑能力测试。",
   "heroImageCredit": "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

@@ -1,36 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Functions, httpsCallable } from '@angular/fire/functions';
+import { CallableFunctionsService } from '../callable-functions.service';
+import {
+  CallableRecord,
+  createCallablesMock,
+} from '../callable-functions.testing';
 import { MigrationsPageComponent } from './migrations-page.component';
 
-const mocks = vi.hoisted(() => ({
-  Functions: class Functions {},
-  httpsCallable: vi.fn(),
-}));
-
-vi.mock('@angular/fire/functions', () => ({
-  Functions: mocks.Functions,
-  httpsCallable: mocks.httpsCallable,
-}));
-
-interface CallableRecord {
-  name: string;
-  impl: (data: unknown) => Promise<{ data: unknown }>;
-}
-
-function setupCallables(records: CallableRecord[]): void {
-  mocks.httpsCallable.mockImplementation(
-    (_functions: Functions, name: string) => {
-      const match = records.find((r) => r.name === name);
-      if (!match) {
-        return (async () => {
-          throw new Error(`Unexpected callable: ${name}`);
-        }) as unknown as ReturnType<typeof httpsCallable>;
-      }
-      return match.impl as unknown as ReturnType<typeof httpsCallable>;
-    }
-  );
-}
+const { callablesMock, setupCallables } = createCallablesMock();
 
 describe('MigrationsPageComponent', () => {
   let fixture: ComponentFixture<MigrationsPageComponent>;
@@ -40,7 +17,10 @@ describe('MigrationsPageComponent', () => {
     setupCallables(callables);
     await TestBed.configureTestingModule({
       imports: [MigrationsPageComponent],
-      providers: [{ provide: Functions, useValue: {} }, provideRouter([])],
+      providers: [
+        { provide: CallableFunctionsService, useValue: callablesMock },
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MigrationsPageComponent);
@@ -75,10 +55,7 @@ describe('MigrationsPageComponent', () => {
 
     // then the page exposes it to the cards
     expect(component.statuses()['pushup-unification']?.completed).toBe(true);
-    expect(mocks.httpsCallable).toHaveBeenCalledWith(
-      expect.anything(),
-      'getMigrationStatuses'
-    );
+    expect(callablesMock.call).toHaveBeenCalledWith('getMigrationStatuses');
   });
 
   it('should persist a status toggle via setMigrationStatus', async () => {

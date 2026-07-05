@@ -20,6 +20,17 @@ export const POST: BlogPost = {
     "quels muscles travaillent les pompes",
     "progression pompes maison"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-varianten",
+    "el": "pieseis-ges-poikiliai",
+    "en": "pushup-variations",
+    "es": "variaciones-flexiones",
+    "fr": "variantes-pompes",
+    "it": "varianti-piegamenti",
+    "nl": "opdrukken-variaties",
+    "no": "armhevning-varianter",
+    "zh": "pushup-variations"
+  },
   "heroImage": "https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Athlète réalisant une variante de pompe dans un espace d'entraînement.",
   "heroImageCredit": "Photo : <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

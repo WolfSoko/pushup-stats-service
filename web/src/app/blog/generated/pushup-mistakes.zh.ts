@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "如何正确做俯卧撑",
     "Pushup Tracker app"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-fehler",
+    "el": "hamartiai-pieseos-ges",
+    "en": "pushup-mistakes",
+    "es": "errores-flexiones",
+    "fr": "erreurs-pompes",
+    "it": "errori-piegamenti",
+    "nl": "opdrukken-fouten",
+    "no": "armhevning-feil",
+    "zh": "pushup-mistakes"
+  },
   "heroImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "运动员在垫子上保持平板支撑，头部保持中立位置。",
   "heroImageCredit": "图片：<a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"

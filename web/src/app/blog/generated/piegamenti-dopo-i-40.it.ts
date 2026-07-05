@@ -21,6 +21,17 @@ export const POST: BlogPost = {
     "push-up per anziani",
     "push-up età avanzata"
   ],
+  "alternateSlugs": {
+    "de": "liegestuetze-ab-40",
+    "el": "pieseis-ges-meta-tessarakonta",
+    "en": "pushups-over-40",
+    "es": "flexiones-mayores-40",
+    "fr": "pompes-apres-40-ans",
+    "it": "piegamenti-dopo-i-40",
+    "nl": "opdrukken-na-40",
+    "no": "armhevninger-etter-40",
+    "zh": "pushups-over-40"
+  },
   "heroImage": "https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&fit=crop&w=1600&q=80",
   "heroImageAlt": "Atleta che esegue un piegamento pulito all'aperto — allenamento dopo i 40.",
   "heroImageCredit": "Foto: <a href=\"https://unsplash.com\" target=\"_blank\" rel=\"noopener noreferrer\">Unsplash</a>"
