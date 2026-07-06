@@ -4779,20 +4779,20 @@
         <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:15,19</note>
       </notes>
       <segment>
-        <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
+        <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
       </segment>
     </unit>
     <unit id="about.who.body2">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:23,26</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:22,27</note>
       </notes>
       <segment>
-        <source> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
+        <source> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
       </segment>
     </unit>
     <unit id="about.mission.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:31,32</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:32,33</note>
       </notes>
       <segment>
         <source>Warum es diese Seite gibt</source>
@@ -4800,15 +4800,15 @@
     </unit>
     <unit id="about.mission.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:33,37</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:34,39</note>
       </notes>
       <segment>
-        <source> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
+        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
       </segment>
     </unit>
     <unit id="about.content.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:42,43</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Wie unsere Inhalte entstehen</source>
@@ -4816,15 +4816,15 @@
     </unit>
     <unit id="about.content.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:44,48</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:46,50</note>
       </notes>
       <segment>
-        <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </source>
+        <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
       </segment>
     </unit>
     <unit id="about.contact.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:53,55</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:55,57</note>
       </notes>
       <segment>
         <source>Kontakt</source>
@@ -4832,7 +4832,7 @@
     </unit>
     <unit id="about.contact.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:56,58</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:58,60</note>
       </notes>
       <segment>
         <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
@@ -4840,7 +4840,7 @@
     </unit>
     <unit id="about.toImpressum">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:65,68</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:67,70</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4848,7 +4848,7 @@
     </unit>
     <unit id="about.toDatenschutz">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:71,74</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:73,76</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
