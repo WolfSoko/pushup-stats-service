@@ -72,5 +72,7 @@ export const AdsStore = signalStore(
       if (typeof value !== 'boolean') return;
       patchState(store, { targetedAdsConsent: value, consentAnswered: true });
     },
+    /** Back to the unanswered state, e.g. while the CMP revocation UI is open. */
+    resetConsent: () => patchState(store, initialState),
   }))
 );

@@ -11,7 +11,10 @@ import {
 type TcfListener = (tcData: TcData, success: boolean) => void;
 
 describe('TcfConsentService', () => {
-  let adsStoreMock: { setTargetedAdsConsent: jest.Mock };
+  let adsStoreMock: {
+    setTargetedAdsConsent: jest.Mock;
+    resetConsent: jest.Mock;
+  };
   let gtagMock: jest.Mock;
   let tcfListener: TcfListener | undefined;
 
@@ -36,7 +39,10 @@ describe('TcfConsentService', () => {
   }
 
   beforeEach(() => {
-    adsStoreMock = { setTargetedAdsConsent: jest.fn() };
+    adsStoreMock = {
+      setTargetedAdsConsent: jest.fn(),
+      resetConsent: jest.fn(),
+    };
     gtagMock = jest.fn();
     window.gtag = gtagMock;
     window.__tcfapi = tcfApiMock;
@@ -250,5 +256,21 @@ describe('TcfConsentService', () => {
 
     // then
     expect(showRevocationMessage).toHaveBeenCalled();
+  });
+
+  it('should revoke local consent state when consent settings are opened', () => {
+    // given
+    const service = setup();
+    localStorage.setItem(ANALYTICS_CONSENT_KEY, 'granted');
+
+    // when
+    service.openConsentSettings();
+
+    // then
+    expect(adsStoreMock.resetConsent).toHaveBeenCalled();
+    expect(gtagMock).toHaveBeenCalledWith('consent', 'update', {
+      analytics_storage: 'denied',
+    });
+    expect(localStorage.getItem(ANALYTICS_CONSENT_KEY)).toBeNull();
   });
 });

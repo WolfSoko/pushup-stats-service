@@ -99,6 +99,13 @@ export class TcfConsentService {
   /** Re-opens the CMP message so the user can change their consent. */
   openConsentSettings(): void {
     if (!this.isBrowser) return;
+    // showRevocationMessage clears the stored EU consent record before the
+    // user makes a new choice; mirror that locally so an abandoned dialog
+    // cannot keep the revoked consent active. A completed choice re-publishes
+    // via the TCF listener.
+    this.adsStore.resetConsent();
+    window.gtag?.('consent', 'update', { analytics_storage: 'denied' });
+    this.clearLegacyConsent();
     window.googlefc = window.googlefc ?? {};
     window.googlefc.callbackQueue = window.googlefc.callbackQueue ?? [];
     window.googlefc.callbackQueue.push({
