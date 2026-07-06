@@ -9631,15 +9631,15 @@
       </segment>
     </unit>
     <unit id="about.who.body1">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </target>
+        <target> Pushup Tracker 由 Wolfram Sokollek 开发和运营——他是一名来自汉堡附近的软件开发者,自己也每天坚持训练。这款应用源于一个个人需求:在没有纸笔记录的情况下追踪自己的训练,并让数周乃至数月的进步清晰可见。 </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
-        <target> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </target>
+        <target> 最初只是一个关于俯卧撑的小型周末项目,如今已发展成涵盖数十种练习的完整训练追踪工具——从俯卧撑、引体向上、深蹲,到平板支撑、弓步以及有氧和灵活性训练。配备训练计划、每日目标、连续记录、排行榜以及通过摄像头自动计数——完全在浏览器中运行,免费且无需应用商店。 </target>
       </segment>
     </unit>
     <unit id="about.mission.title">
@@ -9649,9 +9649,9 @@
       </segment>
     </unit>
     <unit id="about.mission.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </target>
+        <target> 无论是俯卧撑、深蹲还是引体向上——大多数自重训练动作既不需要器械,也不需要健身房,更没有借口可找。大多数人缺少的不是练习本身,而是坚持。这正是 Pushup Tracker 的用武之地——可衡量的进步、小小的每日目标,以及一个让人舍不得中断的连续记录,能把寥寥几次重复变成持久的习惯。 </target>
       </segment>
     </unit>
     <unit id="about.content.title">
@@ -9661,9 +9661,9 @@
       </segment>
     </unit>
     <unit id="about.content.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
-        <target> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </target>
+        <target> 指南和博客文章基于个人训练经验以及公认的训练原则;如果引用了研究,文章中会附上链接。这些内容不能替代医疗建议——如有既往疾病或疼痛,请先咨询医生。 </target>
       </segment>
     </unit>
     <unit id="about.contact.title">

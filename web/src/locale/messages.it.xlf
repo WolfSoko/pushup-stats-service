@@ -10127,15 +10127,15 @@
       </segment>
     </unit>
     <unit id="about.who.body1">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </target>
+        <target> Pushup Tracker è sviluppato e gestito da Wolfram Sokollek – sviluppatore software nei pressi di Amburgo e lui stesso allenato quotidianamente. L'app è nata da un'esigenza personale: tenere traccia del proprio allenamento senza fogli sparsi e rendere visibili i progressi nel corso di settimane e mesi. </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
-        <target> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </target>
+        <target> Quello che è iniziato come un piccolo progetto del weekend per i piegamenti oggi è un tracker di allenamento completo per decine di esercizi – da piegamenti, trazioni e squat a plank, affondi e sessioni di cardio e mobilità. Con piani di allenamento, obiettivi giornalieri, streak, classifica e conteggio automatico delle ripetizioni tramite fotocamera – tutto nel browser, gratis e senza app store. </target>
       </segment>
     </unit>
     <unit id="about.mission.title">
@@ -10145,9 +10145,9 @@
       </segment>
     </unit>
     <unit id="about.mission.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </target>
+        <target> Che si tratti di piegamenti, squat o trazioni, la maggior parte degli esercizi a corpo libero non richiede attrezzatura, né una palestra, e non lascia scuse. Ciò che manca alla maggior parte delle persone non è l'esercizio, ma la costanza. Ed è proprio qui che interviene Pushup Tracker – progressi misurabili, piccoli obiettivi giornalieri e uno streak che non si vuole interrompere trasformano poche ripetizioni in un'abitudine duratura. </target>
       </segment>
     </unit>
     <unit id="about.content.title">
@@ -10157,9 +10157,9 @@
       </segment>
     </unit>
     <unit id="about.content.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
-        <target> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </target>
+        <target> Le guide e gli articoli del blog si basano sull'esperienza personale di allenamento e su principi di allenamento generalmente riconosciuti; dove vengono citati studi, sono collegati nell'articolo. I contenuti non sostituiscono una consulenza medica – in caso di patologie pregresse o dolori, consulta prima un medico. </target>
       </segment>
     </unit>
     <unit id="about.contact.title">

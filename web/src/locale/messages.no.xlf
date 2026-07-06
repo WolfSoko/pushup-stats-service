@@ -9414,15 +9414,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="about.who.body1">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </target>
+        <target> Pushup Tracker utvikles og driftes av Wolfram Sokollek – programvareutvikler fra området rundt Hamburg som selv trener daglig. Appen oppsto fra et personlig behov: å holde styr på egen trening uten papirlapper og gjøre fremgangen synlig over uker og måneder. </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
-        <target> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </target>
+        <target> Det som begynte som et lite helgeprosjekt for push-ups, er i dag en fullverdig treningstracker for dusinvis av øvelser – fra push-ups, pull-ups og knebøy til planker, utfall og cardio- og mobilitetsøkter. Med treningsplaner, daglige mål, streaks, resultatliste og automatisk repetisjonstelling via kamera – helt i nettleseren, gratis og uten app-butikk. </target>
       </segment>
     </unit>
     <unit id="about.mission.title">
@@ -9432,9 +9432,9 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="about.mission.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </target>
+        <target> Enten det er push-ups, knebøy eller pull-ups – de fleste kroppsvektøvelser krever ikke utstyr, ikke treningsstudio, og gir ingen unnskyldning. Det de fleste mangler, er ikke øvelsen, men kontinuiteten. Akkurat der kommer Pushup Tracker inn – målbar fremgang, små daglige mål og en streak man nødig vil bryte, gjør noen få repetisjoner til en varig vane. </target>
       </segment>
     </unit>
     <unit id="about.content.title">
@@ -9444,9 +9444,9 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="about.content.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
-        <target> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </target>
+        <target> Guidene og blogginnleggene er basert på egen treningserfaring og allment anerkjente treningsprinsipper; der studier siteres, er de lenket i artikkelen. Innholdet erstatter ikke medisinsk rådgivning – har du underliggende sykdom eller smerter, bør du først søke legehjelp. </target>
       </segment>
     </unit>
     <unit id="about.contact.title">
