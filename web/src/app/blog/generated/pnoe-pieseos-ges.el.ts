@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "respiracion-flexiones",
     "fr": "respiration-pompes",
     "it": "respirazione-piegamenti",
-    "la": "spiratio-in-pressionibus",
     "nl": "opdrukken-ademhaling",
     "no": "armhevning-pusteteknikk",
     "zh": "pushup-breathing"

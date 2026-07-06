@@ -9413,5 +9413,95 @@ Deine Position: # ·  Reps        </source>
         <target> Kjernemuskelstabilitet med planke, hollow hold, dead bug og benhev — pluss en moderat push-up aktivering per økt. </target>
       </segment>
     </unit>
+    <unit id="footer.about">
+      <segment state="initial">
+        <source>Über uns</source>
+        <target>Über uns</target>
+      </segment>
+    </unit>
+    <unit id="seo.about.title">
+      <segment state="initial">
+        <source>Über uns – Pushup Tracker</source>
+        <target>Über uns – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.about.description">
+      <segment state="initial">
+        <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
+        <target>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</target>
+      </segment>
+    </unit>
+    <unit id="about.title">
+      <segment state="initial">
+        <source>Über uns</source>
+        <target>Über uns</target>
+      </segment>
+    </unit>
+    <unit id="about.who.title">
+      <segment state="initial">
+        <source>Wer hinter Pushup Tracker steckt</source>
+        <target>Wer hinter Pushup Tracker steckt</target>
+      </segment>
+    </unit>
+    <unit id="about.who.body1">
+      <segment state="initial">
+        <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
+        <target> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </target>
+      </segment>
+    </unit>
+    <unit id="about.who.body2">
+      <segment state="initial">
+        <source> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
+        <target> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </target>
+      </segment>
+    </unit>
+    <unit id="about.mission.title">
+      <segment state="initial">
+        <source>Warum es diese Seite gibt</source>
+        <target>Warum es diese Seite gibt</target>
+      </segment>
+    </unit>
+    <unit id="about.mission.body">
+      <segment state="initial">
+        <source> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
+        <target> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </target>
+      </segment>
+    </unit>
+    <unit id="about.content.title">
+      <segment state="initial">
+        <source>Wie unsere Inhalte entstehen</source>
+        <target>Wie unsere Inhalte entstehen</target>
+      </segment>
+    </unit>
+    <unit id="about.content.body">
+      <segment state="initial">
+        <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </source>
+        <target> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </target>
+      </segment>
+    </unit>
+    <unit id="about.contact.title">
+      <segment state="initial">
+        <source>Kontakt</source>
+        <target>Kontakt</target>
+      </segment>
+    </unit>
+    <unit id="about.contact.body">
+      <segment state="initial">
+        <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
+        <target>Fragen, Feedback oder Fehler gefunden? Schreib uns:</target>
+      </segment>
+    </unit>
+    <unit id="about.toImpressum">
+      <segment state="initial">
+        <source>Impressum</source>
+        <target>Impressum</target>
+      </segment>
+    </unit>
+    <unit id="about.toDatenschutz">
+      <segment state="initial">
+        <source>Datenschutz</source>
+        <target>Datenschutz</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

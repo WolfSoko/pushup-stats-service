@@ -11,16 +11,11 @@ const {
   staticRoutes,
   extractBlogPosts,
   extractTrainingPlanSlugs,
-  extractPushupTypes,
-  extractPushupTypeSlugs,
-  extractExerciseWikiSlugs,
   scanMarkdownBlogPosts,
   buildUrl,
   buildStaticRoutes,
   buildBlogRoutes,
   buildTrainingPlanRoutes,
-  buildPushupTypeRoutes,
-  buildExerciseWikiRoutes,
   generateSitemap,
 } = require('./generate-sitemap');
 
@@ -41,178 +36,10 @@ describe('generate-sitemap', () => {
         '/wiki/liegestuetz-typen',
         '/wiki/uebungen',
         '/leaderboard',
+        '/ueber-uns',
         '/impressum',
         '/datenschutz',
       ]);
-    });
-  });
-
-  describe('extractPushupTypes', () => {
-    it('parses default slug from PUSHUP_TYPES catalog entries', () => {
-      const source = `
-        export const PUSHUP_TYPES = [
-          {
-            id: 'standard',
-            slug: 'standard',
-            name: 'x',
-          },
-          {
-            id: 'diamond',
-            slug: 'diamant',
-            name: 'y',
-          },
-        ];
-      `;
-      expect(extractPushupTypes(source)).toEqual([
-        { id: 'standard', slug: 'standard', slugs: { de: 'standard' } },
-        { id: 'diamond', slug: 'diamant', slugs: { de: 'diamant' } },
-      ]);
-    });
-
-    it('parses per-locale slugs block', () => {
-      const source = `
-        export const PUSHUP_TYPES = [
-          {
-            id: 'diamond',
-            slug: 'diamant',
-            slugs: {
-              en: 'diamond-pushup',
-              fr: 'pompe-diamant',
-            },
-            name: 'y',
-          },
-        ];
-      `;
-      expect(extractPushupTypes(source)).toEqual([
-        {
-          id: 'diamond',
-          slug: 'diamant',
-          slugs: {
-            de: 'diamant',
-            en: 'diamond-pushup',
-            fr: 'pompe-diamant',
-          },
-        },
-      ]);
-    });
-
-    it('extractPushupTypeSlugs returns the default-slug list', () => {
-      const source = `
-        export const PUSHUP_TYPES = [
-          {
-            id: 'standard',
-            slug: 'standard',
-          },
-          {
-            id: 'diamond',
-            slug: 'diamant',
-          },
-        ];
-      `;
-      expect(extractPushupTypeSlugs(source)).toEqual(['standard', 'diamant']);
-    });
-
-    it('ignores `slug:` occurrences not paired with an `id:` line', () => {
-      const source = `
-        const day = { slug: 'not-a-type' };
-        const type = {
-          id: 'foo',
-          slug: 'foo',
-        };
-      `;
-      expect(extractPushupTypeSlugs(source)).toEqual(['foo']);
-    });
-  });
-
-  describe('buildPushupTypeRoutes', () => {
-    it('emits one route per (type × locale) using each locale slug', () => {
-      const routes = buildPushupTypeRoutes([
-        {
-          id: 'diamond',
-          slug: 'diamant',
-          slugs: { de: 'diamant', en: 'diamond-pushup' },
-        },
-      ]);
-      const de = routes.find((r) => r.locale === 'de');
-      const en = routes.find((r) => r.locale === 'en');
-      expect(de.path).toBe('/wiki/liegestuetz-typen/diamant');
-      expect(en.path).toBe('/wiki/liegestuetz-typen/diamond-pushup');
-      // Locales without an override fall back to the default slug.
-      const fr = routes.find((r) => r.locale === 'fr');
-      expect(fr.path).toBe('/wiki/liegestuetz-typen/diamant');
-    });
-
-    it('emits a complete alternates set so every locale links to every other', () => {
-      const routes = buildPushupTypeRoutes([
-        {
-          id: 'diamond',
-          slug: 'diamant',
-          slugs: { de: 'diamant', en: 'diamond-pushup' },
-        },
-      ]);
-      const en = routes.find((r) => r.locale === 'en');
-      expect(en.alternates).toContainEqual({
-        lang: 'de',
-        path: '/wiki/liegestuetz-typen/diamant',
-      });
-      expect(en.alternates).toContainEqual({
-        lang: 'en',
-        path: '/wiki/liegestuetz-typen/diamond-pushup',
-      });
-    });
-  });
-
-  describe('extractExerciseWikiSlugs', () => {
-    it('parses slug from EXERCISE_WIKI_CATALOG entries', () => {
-      const source = `
-        export const EXERCISE_WIKI_CATALOG = [
-          {
-            id: 'plank.standard',
-            categoryId: 'core',
-            slug: 'plank',
-            difficulty: 'beginner',
-            icon: 'horizontal_rule',
-          },
-          {
-            id: 'legs.squats',
-            categoryId: 'squat',
-            slug: 'squats',
-            difficulty: 'beginner',
-            icon: 'airline_seat_legroom_reduced',
-          },
-        ];
-      `;
-      expect(extractExerciseWikiSlugs(source)).toEqual(['plank', 'squats']);
-    });
-
-    it('returns empty array when the catalog is missing', () => {
-      expect(extractExerciseWikiSlugs('// no catalog here')).toEqual([]);
-    });
-  });
-
-  describe('buildExerciseWikiRoutes', () => {
-    const { LOCALES } = require('./generate-sitemap');
-
-    it('emits one route per (slug × locale) under /wiki/uebungen', () => {
-      const routes = buildExerciseWikiRoutes(['plank']);
-      expect(routes).toHaveLength(LOCALES.length);
-      for (const lang of LOCALES) {
-        expect(routes).toContainEqual(
-          expect.objectContaining({
-            path: '/wiki/uebungen/plank',
-            locale: lang,
-            changefreq: 'monthly',
-            priority: '0.6',
-          })
-        );
-      }
-    });
-
-    it('attaches a full hreflang alternates set to every variant', () => {
-      const [route] = buildExerciseWikiRoutes(['plank']);
-      expect(route.alternates).toEqual(
-        LOCALES.map((lang) => ({ lang, path: '/wiki/uebungen/plank' }))
-      );
     });
   });
 
@@ -688,46 +515,16 @@ describe('generate-sitemap', () => {
       );
     });
 
-    it('emits per-(slug × locale) exercise-wiki detail entries', () => {
-      const { LOCALES } = require('./generate-sitemap');
-      const xml = generateSitemap([], [], [], ['plank']);
-      for (const lang of LOCALES) {
-        expect(xml).toContain(
-          `<loc>https://pushup-stats.com/${lang}/wiki/uebungen/plank</loc>`
-        );
-      }
+    it('emits the wiki list pages but no wiki detail entries (thin content stays noindexed)', () => {
+      const xml = generateSitemap([]);
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/wiki/uebungen/plank"/>'
-      );
-    });
-
-    it('emits per-locale wiki URLs with hreflang alternates pointing at each locale slug', () => {
-      const xml = generateSitemap(
-        [],
-        [],
-        [
-          {
-            id: 'diamond',
-            slug: 'diamant',
-            slugs: { de: 'diamant', en: 'diamond-pushup' },
-          },
-        ]
-      );
-      // Default-slug URL emitted for the DE locale.
-      expect(xml).toContain(
-        '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant</loc>'
-      );
-      // Locale-specific slug emitted for EN.
-      expect(xml).toContain(
-        '<loc>https://pushup-stats.com/en/wiki/liegestuetz-typen/diamond-pushup</loc>'
-      );
-      // hreflang alternates point at each locale's correct slug.
-      expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/wiki/liegestuetz-typen/diamond-pushup"/>'
+        '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen</loc>'
       );
       expect(xml).toContain(
-        '<xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant"/>'
+        '<loc>https://pushup-stats.com/de/wiki/uebungen</loc>'
       );
+      expect(xml).not.toMatch(/wiki\/liegestuetz-typen\/[^<]/);
+      expect(xml).not.toMatch(/wiki\/uebungen\/[^<]/);
     });
   });
 });
@@ -739,6 +536,16 @@ describe('generate-sitemap', () => {
 describe('sitemap reciprocity invariants', () => {
   const sitemapPath = resolve(__dirname, '../../web/public/sitemap.xml');
   const xml = readFileSync(sitemapPath, 'utf-8');
+
+  it('contains no wiki detail URLs (noindexed thin content)', () => {
+    expect(xml).not.toMatch(/wiki\/liegestuetz-typen\/[^<]/);
+    expect(xml).not.toMatch(/wiki\/uebungen\/[^<]/);
+  });
+
+  it('contains no URLs for removed locales', () => {
+    expect(xml).not.toContain('pushup-stats.com/la');
+    expect(xml).not.toContain('hreflang="la"');
+  });
 
   it('every hreflang href (except x-default) appears as a <loc>', () => {
     const locs = new Set();
@@ -792,8 +599,10 @@ describe('sitemap reciprocity invariants', () => {
         continue;
       }
       const href = xDefaultMatch[1];
-      if (!href.startsWith('https://pushup-stats.com/de/') &&
-          href !== 'https://pushup-stats.com/de') {
+      if (
+        !href.startsWith('https://pushup-stats.com/de/') &&
+        href !== 'https://pushup-stats.com/de'
+      ) {
         violations.push({ loc, reason: `x-default not DE: ${href}` });
       }
     }

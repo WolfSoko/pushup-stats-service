@@ -8,7 +8,7 @@ Long-form content lives in markdown files with YAML frontmatter under `content/`
 
 All generated modules are checked in so reviewers see the diff and the build is hermetic. The generator runs automatically as a `dependsOn` of `web:build` and `tools:generate-sitemap`.
 
-**Supported locales** (also drives sitemap hreflang): `de`, `en`, `fr`, `es`, `it`, `nl`, `el`, `la`, `no`. Source language is German; English is the canonical secondary; the others are translations of the English version. Adding a new locale across all content = drop in one `<lang>.md` per folder/wiki entry — the generator and sitemap pick them up automatically. **Adding a new locale code itself touches 7 places** — see [`gotchas/i18n.md`](gotchas/i18n.md#adding-a-new-locale).
+**Supported locales** (also drives sitemap hreflang): `de`, `en`, `fr`, `es`, `it`, `nl`, `el`, `no`, `zh`. Source language is German; English is the canonical secondary; the others are translations of the English version. Adding a new locale across all content = drop in one `<lang>.md` per folder/wiki entry — the generator and sitemap pick them up automatically. **Adding a new locale code itself touches 7 places** — see [`gotchas/i18n.md`](gotchas/i18n.md#adding-a-new-locale).
 
 ## How to add a new blog post
 
@@ -57,8 +57,8 @@ All generated modules are checked in so reviewers see the diff and the build is 
 Locale coverage rules for `content/blog/<folder>/<lang>.md` files.
 
 - **Required for every post:** `de.md` (source) and `en.md` (canonical). A post that ships only one of these must not merge — the sitemap would emit a hreflang cluster of one and Google treats it as a thin locale graph.
-- **Recommended:** every other supported locale (`fr`, `es`, `it`, `nl`, `el`, `la`, `no`, `zh`). Full 10-locale coverage is the target; short-term gaps are tolerated but should be tracked as follow-up issues, not left silent.
-- **Current state:** all blog folders ship in all 10 supported locales. Adopting a new post means matching that invariant — drop in all 10 `<lang>.md` files in the same PR, or open a tracking issue for the missing translations before merge.
+- **Recommended:** every other supported locale (`fr`, `es`, `it`, `nl`, `el`, `no`, `zh`). Full 9-locale coverage is the target; short-term gaps are tolerated but should be tracked as follow-up issues, not left silent.
+- **Current state:** all blog folders ship in all 9 supported locales. Adopting a new post means matching that invariant — drop in all 9 `<lang>.md` files in the same PR, or open a tracking issue for the missing translations before merge.
 - **Intentionally-untranslated posts** (e.g. a DE-only local event recap) have no formal mechanism today. If the need arises we will add a `localesIntentionallyAbsent: ['it', 'no']` frontmatter field so the sitemap can skip those locales without flagging them as gaps. Until then: don't ship such posts. If you must, call it out in the PR description so reviewers know the partial coverage is deliberate.
 - **Sitemap consequence:** `scanMarkdownBlogPosts` in `tools/src/generate-sitemap.js` emits a per-locale `<loc>` only for `.md` files that actually exist on disk. Missing locales are silently omitted from the post's hreflang cluster — Google reads that as "this post only exists in these locales". That behaviour is intentional: emitting a hreflang to a locale where the runtime would 404 is worse than a smaller cluster.
 

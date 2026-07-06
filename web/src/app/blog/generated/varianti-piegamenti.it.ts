@@ -27,7 +27,6 @@ export const POST: BlogPost = {
     "es": "variaciones-flexiones",
     "fr": "variantes-pompes",
     "it": "varianti-piegamenti",
-    "la": "variationes-pressionum",
     "nl": "opdrukken-variaties",
     "no": "armhevning-varianter",
     "zh": "pushup-variations"

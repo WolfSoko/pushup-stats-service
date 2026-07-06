@@ -35,6 +35,7 @@ describe('appRoutes', () => {
       'leaderboard',
       'u/:uid',
       'blog',
+      'ueber-uns',
       'impressum',
       'datenschutz',
       'admin',

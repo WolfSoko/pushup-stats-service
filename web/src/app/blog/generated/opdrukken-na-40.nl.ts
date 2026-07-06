@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "flexiones-mayores-40",
     "fr": "pompes-apres-40-ans",
     "it": "piegamenti-dopo-i-40",
-    "la": "pressiones-post-xl-annos",
     "nl": "opdrukken-na-40",
     "no": "armhevninger-etter-40",
     "zh": "pushups-over-40"

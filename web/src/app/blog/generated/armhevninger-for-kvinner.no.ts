@@ -27,7 +27,6 @@ export const POST: BlogPost = {
     "es": "flexiones-mujeres",
     "fr": "pompes-pour-femmes",
     "it": "piegamenti-per-donne",
-    "la": "pressiones-pro-feminis",
     "nl": "opdrukken-voor-vrouwen",
     "no": "armhevninger-for-kvinner",
     "zh": "pushups-for-women"

@@ -248,11 +248,13 @@ export class PushupTypeDetailComponent implements OnInit {
     }
     const localeSlug = localizePushupTypeSlug(found, this.locale);
 
+    // Thin-content page: noindex until the entry carries substantial
+    // unique content. The list page stays indexable.
     this.seo.update(
       seoTitle,
       this.summary,
       `/wiki/liegestuetz-typen/${localeSlug}`,
-      { alternates }
+      { alternates, noindex: true }
     );
     // Combine DE + EN keyword sets — the catalog only carries those
     // two, and Google ignores the keywords meta anyway, so this is a

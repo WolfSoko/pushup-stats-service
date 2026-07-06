@@ -27,7 +27,6 @@ export const POST: BlogPost = {
     "es": "flexiones-salud-corazon",
     "fr": "pompes-sante-cardiaque",
     "it": "piegamenti-salute-cuore",
-    "la": "pressiones-et-cor-studium",
     "nl": "opdrukken-hart-studie",
     "no": "armhevninger-hjertestudie",
     "zh": "pushups-heart-study"

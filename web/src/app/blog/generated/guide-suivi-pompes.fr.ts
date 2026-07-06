@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "guia-registro-flexiones",
     "fr": "guide-suivi-pompes",
     "it": "guida-tracker-piegamenti",
-    "la": "index-pressionum",
     "nl": "opdruk-tracker-gids",
     "no": "armhevning-tracker-guide",
     "zh": "pushup-tracker-guide"

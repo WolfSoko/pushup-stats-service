@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "desafio-flexiones-30-dias",
     "fr": "defi-pompes-30-jours",
     "it": "sfida-30-giorni-piegamenti",
-    "la": "provocatio-triginta-dierum",
     "nl": "30-dagen-opdruk-challenge",
     "no": "30-dagers-armhevning-utfordring",
     "zh": "30-day-pushup-challenge"

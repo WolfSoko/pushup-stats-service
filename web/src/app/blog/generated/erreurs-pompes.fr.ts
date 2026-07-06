@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "errores-flexiones",
     "fr": "erreurs-pompes",
     "it": "errori-piegamenti",
-    "la": "errores-in-pressionibus",
     "nl": "opdrukken-fouten",
     "no": "armhevning-feil",
     "zh": "pushup-mistakes"

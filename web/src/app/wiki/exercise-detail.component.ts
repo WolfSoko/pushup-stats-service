@@ -231,7 +231,11 @@ export class ExerciseDetailComponent implements OnInit {
     const titleSuffix = $localize`:@@seo.wiki.exercise.titleSuffix:Anleitung & Technik | Pushup Tracker`;
     const seoTitle = `${this.name} – ${titleSuffix}`;
 
-    this.seo.update(seoTitle, this.summary, `/wiki/uebungen/${found.slug}`);
+    // Thin-content page: noindex until the entry carries substantial
+    // unique content. The list page stays indexable.
+    this.seo.update(seoTitle, this.summary, `/wiki/uebungen/${found.slug}`, {
+      noindex: true,
+    });
     this.injectJsonLd(found);
   }
 

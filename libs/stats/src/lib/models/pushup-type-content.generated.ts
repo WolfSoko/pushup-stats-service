@@ -104,20 +104,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Un tempo 3-1-1 (3 s discesa, 1 s pausa, 1 s salita) sviluppa la forza in modo notevolmente più efficace."
       ]
     },
-    "la": {
-      "name": "Pressio Sagittaria",
-      "summary": "Pressio asymmetrica: unum brachium flectitur dum alterum extensum manet — gradus ad pressionem unimanam.",
-      "instructions": [
-        "Manus notabiliter latius quam humeri positae, digitis paululo foris versis.",
-        "Descendendo ad unum latus inclina: unum brachium flectitur, alterum paene rectum manet.",
-        "Brachium rectum ut fulcrum agit; maior pars oneris in brachio flexo est.",
-        "Moderate surge, ad centrum redi, tum ad alterum latus inclina.",
-        "Repetitiones per latus numera — consilium numerum per brachium plerumque indicat."
-      ],
-      "tips": [
-        "Tempus 3-1-1 (3 s deorsum, 1 s statio, 1 s sursum) vires notabiliter maiores aedificat."
-      ]
-    },
     "nl": {
       "name": "Archer-opdruk",
       "summary": "Asymmetrische opdruk: één arm buigt terwijl de andere gestrekt blijft — een opstap naar de eénarmige opdruk.",
@@ -240,19 +226,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Non lasciare che la zona lombare si inarcherebbe — tieni addominali e glutei attivi, soprattutto con i piedi molto alti."
       ]
     },
-    "la": {
-      "name": "Pressio Declinans (pedes elevati)",
-      "summary": "Pedes in elevatione, manus in pavimento — onus auctum in pectore superiore et humeris.",
-      "instructions": [
-        "Pedes in elevatione stabili (scamno, sella, gradu).",
-        "Manus latitudine humerorum in pavimento, lineam rectam a capite ad calces serva.",
-        "Pectus moderate demitte, musculos abdominis firmatos tenens.",
-        "Surge vi — quo altiores pedes, eo maior participatio humerorum."
-      ],
-      "tips": [
-        "Ne dorsum inferius arcuetur — musculos abdominis et nates active firma, praecipue pedibus altis."
-      ]
-    },
     "nl": {
       "name": "Decline-opdruk (voeten verhoogd)",
       "summary": "Voeten op een verhoging, handen op de vloer — extra belasting op de bovenborst en schouders.",
@@ -370,19 +343,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Principianti: familiarizzate con il diamante sulle ginocchia prima di tentare la versione completa."
-      ]
-    },
-    "la": {
-      "name": "Pressio Adamantina",
-      "summary": "Manus triangulum sub pectore formant — intentio tricipitis maxima.",
-      "instructions": [
-        "Pollices et indices se tangunt, triangulum \"adamantinum\" formantes.",
-        "Manus directe sub pectore inferiore, non nimis versus ventrem deorsum.",
-        "Cubitos prope truncum tene, retro spectantes.",
-        "Pectus ad adamantem demitte, tum directe surge."
-      ],
-      "tips": [
-        "Incipientes: prius a genibus-adamantinis assuescite antequam plenam versionem tentetis."
       ]
     },
     "nl": {
@@ -504,19 +464,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Abbassa l'altezza della superficie una volta che 3×10 ripetizioni risultano pulite e controllate."
       ]
     },
-    "la": {
-      "name": "Pressio Inclinans (manus elevatae)",
-      "summary": "Manus in scamno, mensa, aut muro — onus in bracchiis diminutum.",
-      "instructions": [
-        "Manus in elevatione stabili pone (scamno, mensa, scala).",
-        "Pedes in pavimento, corpus in lineam rectam.",
-        "Pectus moderate ad elevationem demitte, tum surge.",
-        "Quo inferior elevatio, eo difficilior exercitatio."
-      ],
-      "tips": [
-        "Elevationem minue semel 3×10 repetitiones purae sentirentur."
-      ]
-    },
     "nl": {
       "name": "Incline-opdruk (handen verhoogd)",
       "summary": "Handen op een bank, tafel of muur — vermindert de belasting op de armen.",
@@ -634,19 +581,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Rimani sui piegamenti sulle ginocchia finché riesci a fare 3×8 ripetizioni pulite, poi passa alla versione standard."
-      ]
-    },
-    "la": {
-      "name": "Pressio a Genibus",
-      "summary": "Regressio facilior genibus in pavimento — incipientibus idealis.",
-      "instructions": [
-        "Genua in pavimento pone, pedes elevatos aut transverse positos.",
-        "Manus latitudine humerorum, lineam rectam a genibus ad humeros serva.",
-        "Coxas firma — ne deflectant neve acutum angulum faciant.",
-        "Pectus moderate demitte, tum surge."
-      ],
-      "tips": [
-        "In pressionibus a genibus mane donec 3×8 repetitiones purae fieri possint, tum ad versionem ordinariam progredere."
       ]
     },
     "nl": {
@@ -768,19 +702,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Utile per polsi sensibili — il carico si sposta dall'articolazione alle nocche."
       ]
     },
-    "la": {
-      "name": "Pressio a Condylis",
-      "summary": "In condylis manuum fit potius quam in manibus planis — carpo parcit et brachia anteriora firmat.",
-      "instructions": [
-        "Pugni fiant, fulcrum in duobus primis condylis (indicis et medii digiti).",
-        "Dorsum manus rectum serva — carpum ne flectas.",
-        "Incipe in superficie molli (tapete, linteum), progressu ad pavimentum durum.",
-        "Cetera ut pressio ordinaria exsequere."
-      ],
-      "tips": [
-        "Utilis pro carpo sensibili — onus ab articulo in condylos transit."
-      ]
-    },
     "nl": {
       "name": "Vuistopdruk",
       "summary": "Uitgevoerd op de knokkels in plaats van platte handen — vriendelijker voor de polsen en versterkt de onderarmen.",
@@ -898,19 +819,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Aumenta gradualmente il tempo eccentrico: 3 s → 5 s → 8 s nell'arco di più settimane."
-      ]
-    },
-    "la": {
-      "name": "Pressio Unimana Negativa",
-      "summary": "Solum pars descendens unimana fit — eccentrica moderata vires pro motu pleno aedificat.",
-      "instructions": [
-        "Unam manum in scamno/elevatione pone; pedes late pro stabilitate.",
-        "Altera manus in dorso inferiore aut coxa; corpus ut planum tene.",
-        "Versus scamnum per 3-5 secundas demitte — nulla \"iactatio\" repentina.",
-        "Surge cum ambabus manibus aut ex positione elevata — pars concentrica hic unimana non fit."
-      ],
-      "tips": [
-        "Tempus eccentricum lente aedifica: 3 s → 5 s → 8 s per plures hebdomades."
       ]
     },
     "nl": {
@@ -1038,20 +946,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Le ripetizioni si contano per lato — inizia con il lato dominante e pareggiale sul lato più debole."
       ]
     },
-    "la": {
-      "name": "Pressio Unimana",
-      "summary": "Pressio plena una manu — rex pressionum pondere corporis.",
-      "instructions": [
-        "Pedes notabiliter latius quam latitudo coxarum pro stabilitate maxima (initio latissime).",
-        "Una manus sub centro pectoris; altera in dorso inferiore aut coxa.",
-        "Corpus intentionaliter ut planum tene — coxae et humeri rotari non debent.",
-        "Pectus ad manum moderate demitte, tum directe surge.",
-        "Crescentibus viribus, distantiam pedum gradatim minue."
-      ],
-      "tips": [
-        "Repetitiones per latus numerantur — a latere dominante incipe et in latere debiliore para."
-      ]
-    },
     "nl": {
       "name": "Eénarmige opdruk",
       "summary": "Volledige opdruk met één hand — de koning van lichaamsgewicht-drukken.",
@@ -1159,17 +1053,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "L'altra mano sulla zona lombare; mantieni il corpo come una plank — non ruotare i fianchi.",
         "Scendi intenzionalmente solo fino all'altezza della panca (ROM ridotto).",
         "Spingi su con un braccio; abbassa progressivamente l'altezza della panca."
-      ],
-      "tips": []
-    },
-    "la": {
-      "name": "Pressio Unimana Partialis",
-      "summary": "Pressiones unimanae per ambitum motus diminutum (e.g. a scamno humili).",
-      "instructions": [
-        "Unam manum in scamno/gradu humili pone; pedes latissime (saltem latitudine coxarum).",
-        "Altera manus in dorso inferiore; corpus ut planum tene — coxas ne rotes.",
-        "Intentionaliter solum ad altitudinem scamni descende (ambitus diminutus).",
-        "Unimana surge; altitudinem scamni progressive minue."
       ],
       "tips": []
     },
@@ -1284,19 +1167,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Per renderlo più difficile: metti i piedi su un rialzo per una posizione quasi verticale."
-      ]
-    },
-    "la": {
-      "name": "Pressio Pici",
-      "summary": "Pressiones ex forma V — pressio paene verticalis, gradus ad pressiones in manibus stantis.",
-      "instructions": [
-        "Ex positione quadrupedis coxas sursus preme — corpus V inversam format.",
-        "Manus latitudine humerorum, crura recta aut leviter flexa, coxae altae.",
-        "Caput inter brachia versus pavimentum demitte — cubiti retro sequuntur.",
-        "Surge sine in positionem pressionis ordinariae cadendo."
-      ],
-      "tips": [
-        "Difficiliorem fac: pedes in elevatione pone pro positione paene verticali."
       ]
     },
     "nl": {
@@ -1430,21 +1300,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Respirazione: inspira nella discesa, espira nella spinta verso l'alto."
       ]
     },
-    "la": {
-      "name": "Pressio Ordinaria",
-      "summary": "Pressio classica cum manibus latitudine humerorum et corpore in lineam rectam formato.",
-      "instructions": [
-        "Manus latitudine humerorum, directe sub humeris, digitis antrorsum spectantibus.",
-        "Corpus lineam rectam a capite ad calces format — musculos abdominis et nates firma.",
-        "Cubiti circiter 45° ad truncum, non late divaricati.",
-        "Pectus moderate demitte donec paene pavimentum tangat.",
-        "Surge vi, cubitos in summo non rigidos."
-      ],
-      "tips": [
-        "Paulum ante oculos in pavimentum specta — cervicem ne extende.",
-        "Spiratio: inspira descendendo, exspira premendo."
-      ]
-    },
     "nl": {
       "name": "Standaard opdruk",
       "summary": "Klassieke opdruk met schouderbreedte handpositie en een rechte lichaamslijn.",
@@ -1555,17 +1410,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
         "Appoggia una mano sulla parete all'altezza della spalla; l'altra mano poggia sulla zona lombare o sul fianco.",
         "Inclina il corpo come una plank solida verso la parete, piegando il gomito in modo controllato.",
         "Scendi con un eccentrico lento (3 s) verso la parete, poi spingi via con forza."
-      ],
-      "tips": []
-    },
-    "la": {
-      "name": "Pressio Unimana a Muro",
-      "summary": "Pressiones unimanae versus murum — exercitatio tuta initialis pro progressione unimana.",
-      "instructions": [
-        "Sta circiter brachii longitudine a muro.",
-        "Unam manum ad murum ad altitudinem humeri pone; altera in dorso inferiore aut coxa quiescat.",
-        "Corpus ut planum solidum versus murum inclina, cubito moderate flexo.",
-        "Lente (3 s) versus murum demitte, tum vi recede."
       ],
       "tips": []
     },
@@ -1680,19 +1524,6 @@ export const PUSHUP_TYPE_CONTENT: Readonly<
       ],
       "tips": [
         "Salute delle spalle: mantieni le scapole retratte, non cedere nelle articolazioni."
-      ]
-    },
-    "la": {
-      "name": "Pressio Lata",
-      "summary": "Positio manuum latior pectori prospicit et tricipitem minus sollicitat.",
-      "instructions": [
-        "Manus notabiliter latius quam humeri positae, digitis paululo foris versis.",
-        "Cubiti ad latera sequuntur, latius aperientes descendendo.",
-        "Pectus moderate demitte cum clara sensatione extensionis per pectus.",
-        "Surge pectore intentionaliter — tricipitis \"fraudem\" ne adhibeas."
-      ],
-      "tips": [
-        "Valetudo humerorum: scapulas retractas tene, in articulis ne pendeas."
       ]
     },
     "nl": {

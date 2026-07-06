@@ -9,7 +9,6 @@ Disallow: /es/admin
 Disallow: /it/admin
 Disallow: /nl/admin
 Disallow: /el/admin
-Disallow: /la/admin
 Disallow: /no/admin
 Disallow: /zh/admin
 Disallow: /settings
@@ -20,7 +19,6 @@ Disallow: /es/settings
 Disallow: /it/settings
 Disallow: /nl/settings
 Disallow: /el/settings
-Disallow: /la/settings
 Disallow: /no/settings
 Disallow: /zh/settings
 Disallow: /reminders
@@ -31,7 +29,6 @@ Disallow: /es/reminders
 Disallow: /it/reminders
 Disallow: /nl/reminders
 Disallow: /el/reminders
-Disallow: /la/reminders
 Disallow: /no/reminders
 Disallow: /zh/reminders
 

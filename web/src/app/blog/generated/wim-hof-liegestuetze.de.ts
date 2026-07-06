@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "metodo-wim-hof-flexiones",
     "fr": "pompes-wim-hof",
     "it": "metodo-wim-hof-piegamenti",
-    "la": "pressiones-wim-hof",
     "nl": "wim-hof-opdrukken",
     "no": "wim-hof-armhevninger",
     "zh": "wim-hof-pushups"

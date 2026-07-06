@@ -27,7 +27,6 @@ export const POST: BlogPost = {
     "es": "flexiones-diarias",
     "fr": "pompes-quotidiennes",
     "it": "piegamenti-quotidiani",
-    "la": "pressiones-cotidianae",
     "nl": "dagelijks-opdrukken",
     "no": "daglige-armhevninger",
     "zh": "daily-pushups"

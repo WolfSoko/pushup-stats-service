@@ -97,4 +97,30 @@ describe('ExerciseDetailComponent', () => {
     expect(back).toBeTruthy();
     expect(back?.getAttribute('href')).toBe('/wiki/uebungen');
   });
+
+  describe('robots meta tag', () => {
+    afterEach(() => {
+      document.head.querySelector('meta[name="robots"]')?.remove();
+    });
+
+    it('should emit a noindex robots meta tag for the thin detail page', async () => {
+      // given
+      document.head.querySelector('meta[name="robots"]')?.remove();
+
+      // when
+      await render(ExerciseDetailComponent, {
+        providers: [
+          provideRouter([]),
+          provideLocationMocks(),
+          { provide: ActivatedRoute, useValue: makeRouteMock('squats') },
+        ],
+      });
+
+      // then
+      const robots = document.head.querySelector(
+        'meta[name="robots"]'
+      ) as HTMLMetaElement | null;
+      expect(robots?.content).toBe('noindex,follow');
+    });
+  });
 });

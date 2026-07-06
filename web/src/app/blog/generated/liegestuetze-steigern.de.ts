@@ -28,7 +28,6 @@ export const POST: BlogPost = {
     "es": "progresion-flexiones",
     "fr": "progression-pompes",
     "it": "progressione-piegamenti",
-    "la": "progressio-pressionum",
     "nl": "opdrukken-progressie",
     "no": "okende-armhevninger",
     "zh": "pushup-progression"

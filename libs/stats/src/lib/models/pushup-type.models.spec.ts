@@ -255,7 +255,6 @@ describe('pushup-type catalog', () => {
           'it',
           'nl',
           'el',
-          'la',
           'no',
           'zh',
         ]) {
@@ -323,7 +322,6 @@ describe('pushup-type catalog', () => {
         'it',
         'nl',
         'el',
-        'la',
         'no',
         'zh',
       ] as const;
