@@ -1,51 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="de" trgLang="el">
   <file id="ngi18n" original="ng.template">
-    <unit id="consent.banner.aria">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:45,46</note>
-      </notes>
-      <segment state="translated">
-        <source>Cookie-Einstellungen</source>
-        <target>Ρυθμίσεις cookie</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.text">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:49,52</note>
-      </notes>
-      <segment state="translated">
-        <source> Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten. </source>
-        <target> Χρησιμοποιούμε cookies για να λειτουργήσει ο ιστότοπος. Χρησιμοποιούμε επίσης το Google Analytics και το Google AdSense. Μπορείτε να επιλέξετε εάν θα επιτρέπονται εξατομικευμένες διαφημίσεις και αναλυτικά στοιχεία. </target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.acceptAll">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:61,63</note>
-      </notes>
-      <segment state="translated">
-        <source> Alle akzeptieren </source>
-        <target> Αποδοχή όλων </target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.necessaryOnly">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:68,70</note>
-      </notes>
-      <segment state="translated">
-        <source> Nur notwendige </source>
-        <target> Μόνο απαραίτητο </target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.privacyLink">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:73,76</note>
-      </notes>
-      <segment state="translated">
-        <source>Mehr in unserer Datenschutzerklärung</source>
-        <target>Περισσότερα στη δήλωση προστασίας δεδομένων μας</target>
-      </segment>
-    </unit>
     <unit id="auth.error.generic">
       <notes>
         <note category="location">libs/auth/src/lib/core/state/auth.store.ts:27</note>

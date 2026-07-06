@@ -78,9 +78,23 @@
       function gtag() {
         dataLayer.push(arguments);
       }
+      // Consent Mode v2: everything denied until the CMP reports a choice.
+      // ad_* keys are then derived from the IAB TCF string by gtag itself
+      // (gtag_enable_tcf_support); analytics_storage is outside TCF scope
+      // and updated by TcfConsentService.
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500,
+      });
+      window.gtag_enable_tcf_support = true;
       gtag('js', new Date());
       gtag('config', 'G-5D32B9B1S6');
     </script>
+    <!-- Must load before consent: delivers the Google Privacy & Messaging
+         consent UI; ad requests wait for the TCF signal. -->
     <script
       id="ads-client-script"
       async

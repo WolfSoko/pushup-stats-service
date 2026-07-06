@@ -5863,36 +5863,6 @@ Deine Position: # ·  Reps        </source>
     </unit>
 
     
-    <unit id="consent.banner.aria">
-      <segment state="translated">
-        <source>Cookie-Einstellungen</source>
-        <target>Cookie Settings</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.text">
-      <segment state="translated">
-        <source>Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten.</source>
-        <target>We use cookies for website functionality. We also use Google Analytics and Google AdSense. You can choose whether to allow personalized advertising and analytics.</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.acceptAll">
-      <segment state="translated">
-        <source>Alle akzeptieren</source>
-        <target>Accept all</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.necessaryOnly">
-      <segment state="translated">
-        <source>Nur notwendige</source>
-        <target>Necessary only</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.privacyLink">
-      <segment state="translated">
-        <source>Mehr in unserer Datenschutzerklärung</source>
-        <target>More in our Privacy Policy</target>
-      </segment>
-    </unit>
 
     
     <unit id="seo.impressum.title">

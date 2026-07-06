@@ -8,7 +8,6 @@ import {
   LOCALE_ID,
   PLATFORM_ID,
   signal,
-  viewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -45,7 +44,7 @@ import {
   PushSwRegistrationService,
   QuickLogListenerService,
 } from '@pu-push/push';
-import { CookieConsentBannerComponent } from '@pu-stats/ads';
+import { TcfConsentService } from '@pu-stats/ads';
 import {
   QuickAddFabComponent,
   QuickAddFabCoachmarkComponent,
@@ -123,7 +122,6 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     QuickAddFabComponent,
     QuickAddFabCoachmarkComponent,
     ThemeToggleComponent,
-    CookieConsentBannerComponent,
     MatDialogModule,
     MatFormFieldModule,
     MatProgressBarModule,
@@ -330,11 +328,10 @@ export class App {
   }
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
 
-  private readonly consentBanner =
-    viewChild<CookieConsentBannerComponent>('consentBanner');
+  private readonly tcfConsent = inject(TcfConsentService);
 
   openCookieSettings(): void {
-    this.consentBanner()?.reopen();
+    this.tcfConsent.openConsentSettings();
   }
 
   /** Locale options shown in the sidenav language picker. */

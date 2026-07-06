@@ -64,7 +64,6 @@ describe('App (testing-library)', () => {
     dashboardInlineEnabled: () => false,
     setTargetedAdsConsent: vitest.fn(),
     init: () => Promise.resolve(true),
-    hydrateConsent: vitest.fn(),
   };
 
   const statsApiMock = {

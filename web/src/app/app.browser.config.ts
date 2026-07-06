@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { fireConfig } from '../env/fire.config';
-import { AdsStore, GoogleAdsService } from '@pu-stats/ads';
+import { AdsStore, GoogleAdsService, TcfConsentService } from '@pu-stats/ads';
 import { provideAutoCount } from './auto-count/provide-auto-count';
 
 export const appBrowserConfig: ApplicationConfig = {
@@ -15,6 +15,7 @@ export const appBrowserConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const adsStore = inject(AdsStore);
       const googleAds = inject(GoogleAdsService);
+      inject(TcfConsentService).init();
       const effectRef = effect(async () => {
         await adsStore.init();
         const adClient = adsStore.adClient();

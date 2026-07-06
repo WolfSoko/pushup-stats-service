@@ -4893,36 +4893,6 @@ Deine Position: # ·  Reps        </source>
     </unit>
 
     <!-- Cookie Consent Banner -->
-    <unit id="consent.banner.aria">
-      <segment state="translated">
-        <source>Cookie-Einstellungen</source>
-        <target>Informasjonskapselinnstillinger</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.text">
-      <segment state="translated">
-        <source>Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten.</source>
-        <target>Vi bruker informasjonskapsler for nettstedets funksjonalitet. Vi bruker også Google Analytics og Google AdSense. Du kan velge om du vil tillate personalisert annonsering og analyse.</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.acceptAll">
-      <segment state="translated">
-        <source>Alle akzeptieren</source>
-        <target>Godta alle</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.necessaryOnly">
-      <segment state="translated">
-        <source>Nur notwendige</source>
-        <target>Bare nødvendige</target>
-      </segment>
-    </unit>
-    <unit id="consent.banner.privacyLink">
-      <segment state="translated">
-        <source>Mehr in unserer Datenschutzerklärung</source>
-        <target>Mer om dette i personvernpolicyen vår</target>
-      </segment>
-    </unit>
 
     <!-- SEO: Legal pages -->
     <unit id="seo.impressum.title">
