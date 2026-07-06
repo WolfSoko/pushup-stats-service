@@ -9641,93 +9641,93 @@
       </segment>
     </unit>
     <unit id="footer.about">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über uns</source>
-        <target>Über uns</target>
+        <target>关于我们</target>
       </segment>
     </unit>
     <unit id="seo.about.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über uns – Pushup Tracker</source>
-        <target>Über uns – Pushup Tracker</target>
+        <target>关于我们 – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.about.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
-        <target>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</target>
+        <target>了解 Pushup Tracker 背后的团队、应用诞生的原因，以及我们训练内容的创作方式。</target>
       </segment>
     </unit>
     <unit id="about.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über uns</source>
-        <target>Über uns</target>
+        <target>关于我们</target>
       </segment>
     </unit>
     <unit id="about.who.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer hinter Pushup Tracker steckt</source>
-        <target>Wer hinter Pushup Tracker steckt</target>
+        <target>Pushup Tracker 背后的团队</target>
       </segment>
     </unit>
     <unit id="about.who.body1">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </target>
+        <target> Pushup Tracker 由 Wolfram Sokollek 开发和运营——他是一名来自汉堡附近的软件开发者，也是每天坚持俯卧撑训练的人。这款应用源于个人需求：不用纸笔记录自己的训练，并让数周乃至数月的进步一目了然。 </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
-        <target> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </target>
+        <target> 这个最初只是周末小项目的应用，如今已发展成一个功能完善的训练追踪工具，包含训练计划、每日目标、连续打卡记录、排行榜，以及通过摄像头自动计数——完全在浏览器中运行，免费且无需应用商店。 </target>
       </segment>
     </unit>
     <unit id="about.mission.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Warum es diese Seite gibt</source>
-        <target>Warum es diese Seite gibt</target>
+        <target>为什么会有这个页面</target>
       </segment>
     </unit>
     <unit id="about.mission.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </target>
+        <target> 俯卧撑是世界上最简单的力量训练：不需要器材，不需要健身房，也没有借口。大多数人缺的不是训练动作本身，而是坚持。这正是 Pushup Tracker 发挥作用的地方——可衡量的进步、微小的每日目标，以及一份不忍中断的连续打卡记录，让寥寥数次训练变成持久的习惯。 </target>
       </segment>
     </unit>
     <unit id="about.content.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wie unsere Inhalte entstehen</source>
-        <target>Wie unsere Inhalte entstehen</target>
+        <target>我们的内容是如何创作的</target>
       </segment>
     </unit>
     <unit id="about.content.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </source>
-        <target> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </target>
+        <target> 我们的指南和博客文章基于个人训练经验以及普遍认可的训练原则；如果引用了研究，会在文章中附上链接。这些内容不能替代医疗建议——如果你有既往病史或身体不适，请先咨询医生。 </target>
       </segment>
     </unit>
     <unit id="about.contact.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kontakt</source>
-        <target>Kontakt</target>
+        <target>联系方式</target>
       </segment>
     </unit>
     <unit id="about.contact.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
-        <target>Fragen, Feedback oder Fehler gefunden? Schreib uns:</target>
+        <target>有疑问、反馈或发现了漏洞？请写信联系我们：</target>
       </segment>
     </unit>
     <unit id="about.toImpressum">
-      <segment state="initial">
+      <segment state="translated">
         <source>Impressum</source>
-        <target>Impressum</target>
+        <target>法律声明</target>
       </segment>
     </unit>
     <unit id="about.toDatenschutz">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenschutz</source>
-        <target>Datenschutz</target>
+        <target>隐私政策</target>
       </segment>
     </unit>
 </file>

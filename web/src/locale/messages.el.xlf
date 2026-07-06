@@ -10142,93 +10142,93 @@
       </segment>
     </unit>
     <unit id="footer.about">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über uns</source>
-        <target>Über uns</target>
+        <target>Σχετικά με εμάς</target>
       </segment>
     </unit>
     <unit id="seo.about.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über uns – Pushup Tracker</source>
-        <target>Über uns – Pushup Tracker</target>
+        <target>Σχετικά με εμάς – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.about.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
-        <target>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</target>
+        <target>Ποιος κρύβεται πίσω από το Pushup Tracker, γιατί υπάρχει η εφαρμογή και πώς δημιουργείται το περιεχόμενο προπόνησής μας.</target>
       </segment>
     </unit>
     <unit id="about.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über uns</source>
-        <target>Über uns</target>
+        <target>Σχετικά με εμάς</target>
       </segment>
     </unit>
     <unit id="about.who.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer hinter Pushup Tracker steckt</source>
-        <target>Wer hinter Pushup Tracker steckt</target>
+        <target>Ποιος κρύβεται πίσω από το Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="about.who.body1">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglicher Liegestütze-Trainierender. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </target>
+        <target> Το Pushup Tracker αναπτύσσεται και λειτουργεί από τον Wolfram Sokollek — προγραμματιστή λογισμικού κοντά στο Αμβούργο και ο ίδιος καθημερινός λάτρης των push-up. Η εφαρμογή γεννήθηκε από μια προσωπική ανάγκη: να καταγράφει την προπόνησή του χωρίς χαρτιά και να κάνει την πρόοδο ορατή για εβδομάδες και μήνες. </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
-        <target> Was als kleines Wochenendprojekt begann, ist heute ein vollwertiger Trainings-Tracker mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </target>
+        <target> Αυτό που ξεκίνησε ως ένα μικρό πρότζεκτ σαββατοκύριακου είναι σήμερα ένας πλήρης ιχνηλάτης προπόνησης με προγράμματα προπόνησης, καθημερινούς στόχους, σερί, πίνακα κατάταξης και αυτόματη καταμέτρηση επαναλήψεων μέσω κάμερας — εξ ολοκλήρου μέσα από το πρόγραμμα περιήγησης, δωρεάν και χωρίς κατάστημα εφαρμογών. </target>
       </segment>
     </unit>
     <unit id="about.mission.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Warum es diese Seite gibt</source>
-        <target>Warum es diese Seite gibt</target>
+        <target>Γιατί υπάρχει αυτή η σελίδα</target>
       </segment>
     </unit>
     <unit id="about.mission.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> Liegestütze sind die einfachste Kraftübung der Welt: kein Gerät, kein Studio, keine Ausrede. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </target>
+        <target> Οι push-up είναι η απλούστερη άσκηση δύναμης στον κόσμο: χωρίς εξοπλισμό, χωρίς γυμναστήριο, καμία δικαιολογία. Αυτό που λείπει από τους περισσότερους δεν είναι η άσκηση αλλά η συνέπεια. Ακριβώς εκεί έρχεται το Pushup Tracker — μετρήσιμη πρόοδος, μικροί καθημερινοί στόχοι και ένα σερί που δεν θέλεις να χαλάσεις μετατρέπουν λίγες επαναλήψεις σε μόνιμη συνήθεια. </target>
       </segment>
     </unit>
     <unit id="about.content.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wie unsere Inhalte entstehen</source>
-        <target>Wie unsere Inhalte entstehen</target>
+        <target>Πώς δημιουργείται το περιεχόμενό μας</target>
       </segment>
     </unit>
     <unit id="about.content.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </source>
-        <target> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – bei Vorerkrankungen oder Schmerzen gehört die Frage zuerst zu Ärztin oder Arzt. </target>
+        <target> Οι οδηγοί και τα άρθρα του blog βασίζονται σε προσωπική εμπειρία προπόνησης και σε γενικά αποδεκτές αρχές προπόνησης· όπου αναφέρονται μελέτες, υπάρχει σύνδεσμος μέσα στο άρθρο. Το περιεχόμενο δεν αντικαθιστά την ιατρική συμβουλή — σε περίπτωση προϋπάρχουσας πάθησης ή πόνου, συμβουλευτείτε πρώτα έναν γιατρό. </target>
       </segment>
     </unit>
     <unit id="about.contact.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kontakt</source>
-        <target>Kontakt</target>
+        <target>Επικοινωνία</target>
       </segment>
     </unit>
     <unit id="about.contact.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
-        <target>Fragen, Feedback oder Fehler gefunden? Schreib uns:</target>
+        <target>Ερωτήσεις, σχόλια ή βρήκατε σφάλμα; Γράψτε μας:</target>
       </segment>
     </unit>
     <unit id="about.toImpressum">
-      <segment state="initial">
+      <segment state="translated">
         <source>Impressum</source>
-        <target>Impressum</target>
+        <target>Αποτύπωμα</target>
       </segment>
     </unit>
     <unit id="about.toDatenschutz">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenschutz</source>
-        <target>Datenschutz</target>
+        <target>Προστασία δεδομένων</target>
       </segment>
     </unit>
 </file>
