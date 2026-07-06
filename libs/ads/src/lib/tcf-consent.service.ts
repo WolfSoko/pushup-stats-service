@@ -62,6 +62,7 @@ export class TcfConsentService {
   init(): void {
     if (!this.isBrowser || this.started) return;
     this.started = true;
+    this.clearLegacyConsent();
     if (this.tryRegister()) return;
 
     let tries = 0;
@@ -70,6 +71,20 @@ export class TcfConsentService {
         clearInterval(poll);
       }
     }, TCF_POLL_INTERVAL_MS);
+  }
+
+  /**
+   * The pre-CMP banner persisted consent in localStorage; a stale 'granted'
+   * must not gate analytics now that the TC string is the source of truth.
+   * `publishConsent` re-writes the analytics flag on every TCF decision.
+   */
+  private clearLegacyConsent(): void {
+    try {
+      globalThis.localStorage?.removeItem(ANALYTICS_CONSENT_KEY);
+      globalThis.localStorage?.removeItem('pus_cookie_consent');
+    } catch {
+      /* storage blocked (e.g. private browsing) */
+    }
   }
 
   private tryRegister(): boolean {

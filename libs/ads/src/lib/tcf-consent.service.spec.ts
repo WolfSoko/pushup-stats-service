@@ -79,6 +79,20 @@ describe('TcfConsentService', () => {
     expect(tcfListener).toBeDefined();
   });
 
+  it('should clear legacy banner consent flags on init so stale grants cannot bypass the CMP', () => {
+    // given
+    localStorage.setItem(ANALYTICS_CONSENT_KEY, 'granted');
+    localStorage.setItem('pus_cookie_consent', 'all');
+    const service = setup();
+
+    // when
+    service.init();
+
+    // then
+    expect(localStorage.getItem(ANALYTICS_CONSENT_KEY)).toBeNull();
+    expect(localStorage.getItem('pus_cookie_consent')).toBeNull();
+  });
+
   it('should not register a listener on the server platform', () => {
     // given
     const service = setup('server');

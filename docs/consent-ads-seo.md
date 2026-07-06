@@ -9,7 +9,7 @@
   - writes `pus_analytics_consent` (`'granted'` | `'denied'`) to localStorage for the runtime analytics guards.
 - **Consent Mode v2:** `index.html` sets `gtag('consent', 'default', { … all denied })` **before** `gtag('config', …)`. The `ad_*` keys are never updated by our code — gtag derives them from the TC string natively (`window.gtag_enable_tcf_support = true` in `index.html`).
 - **Re-open consent settings:** the footer "Cookie-Einstellungen" button calls `TcfConsentService.openConsentSettings()`, which shows the CMP revocation message via `googlefc`.
-- The legacy `pus_cookie_consent` localStorage key is obsolete; consent persistence is owned by the CMP (TC string).
+- The legacy `pus_cookie_consent` localStorage key is obsolete; consent persistence is owned by the CMP (TC string). `TcfConsentService.init()` clears both legacy keys on boot so a stale pre-CMP `'granted'` cannot gate analytics before the TCF decision arrives.
 - When testing ads components, mock `AdsStore` (not `RemoteConfig`) – see `ad-slot.component.spec.ts` for the pattern; for TCF mapping tests see `tcf-consent.service.spec.ts`.
 
 ## Legal Pages
