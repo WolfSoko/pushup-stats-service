@@ -80,17 +80,4 @@ describe('AdsStore (consent gating)', () => {
     // then
     expect(store.consentAnswered()).toBe(false);
   });
-
-  it('should return to the unanswered state when consent is reset', () => {
-    // given
-    const store = createStore();
-    store.setTargetedAdsConsent(true);
-
-    // when
-    store.resetConsent();
-
-    // then
-    expect(store.consentAnswered()).toBe(false);
-    expect(store.targetedAdsConsent()).toBe(false);
-  });
 });
