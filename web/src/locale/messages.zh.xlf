@@ -1,46 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="de" trgLang="zh">
   <file id="ngi18n" original="ng.template">
-    <unit id="consent.banner.aria">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:45,46</note>
-      </notes>
-      <segment state="translated">
-        <source>Cookie-Einstellungen</source>
-      <target>Cookie 设置</target></segment>
-    </unit>
-    <unit id="consent.banner.text">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:49,52</note>
-      </notes>
-      <segment state="translated">
-        <source> Wir verwenden Cookies für die Funktion der Website. Zusätzlich nutzen wir Google Analytics und Google AdSense. Sie können wählen, ob Sie personalisierte Werbung und Analyse zulassen möchten. </source>
-      <target> 我们使用 Cookie 来提供网站功能。此外，我们还使用 Google Analytics 和 Google AdSense。您可以选择是否允许个性化广告和分析。 </target></segment>
-    </unit>
-    <unit id="consent.banner.acceptAll">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:61,63</note>
-      </notes>
-      <segment state="translated">
-        <source> Alle akzeptieren </source>
-      <target> 全部接受 </target></segment>
-    </unit>
-    <unit id="consent.banner.necessaryOnly">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:68,70</note>
-      </notes>
-      <segment state="translated">
-        <source> Nur notwendige </source>
-      <target> 仅必需 </target></segment>
-    </unit>
-    <unit id="consent.banner.privacyLink">
-      <notes>
-        <note category="location">libs/ads/src/lib/cookie-consent-banner.component.ts:73,76</note>
-      </notes>
-      <segment state="translated">
-        <source>Mehr in unserer Datenschutzerklärung</source>
-      <target>了解更多信息，请查阅我们的隐私政策</target></segment>
-    </unit>
     <unit id="auth.error.generic">
       <notes>
         <note category="location">libs/auth/src/lib/core/state/auth.store.ts:27</note>

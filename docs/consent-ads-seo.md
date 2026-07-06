@@ -2,11 +2,15 @@
 
 ## Consent & Ads
 
-- **Cookie consent** is stored in `localStorage` key `pus_cookie_consent` (`'all'` | `'necessary'` | absent).
-- **AdsStore** reads this on init: `consentAnswered` gates whether any ads render; `targetedAdsConsent` controls personalized vs. non-personalized (NPA) mode.
-- **Analytics consent** lives in `pus_analytics_consent` (`'granted'` | `'denied'`), set by the consent banner alongside the cookie consent.
-- **Non-personalized ads** don't require GDPR opt-in but still need a consent _notice_. The banner satisfies this.
-- When testing ads components, mock `AdsStore` (not `RemoteConfig`) – see `ad-slot.component.spec.ts` for the pattern.
+- **CMP:** Google **Privacy & Messaging** (configured in the AdSense console) is the TCF-v2.2-certified consent layer. Its UI is delivered through `adsbygoogle.js` — that script therefore **must** load unconditionally in `index.html`; Google withholds EEA/UK ad requests until the TCF signal allows them. There is no self-built consent banner anymore.
+- **TcfConsentService** (`libs/ads`) polls for `window.__tcfapi`, registers a TCF event listener, and on every consent decision (`tcloaded` / `useractioncomplete`, or `gdprApplies === false`):
+  - patches `AdsStore` — `consentAnswered` gates whether ad slots render at all; `targetedAdsConsent` (TCF purposes 1+3+4 and Google vendor 755) controls personalized vs. non-personalized (NPA) mode,
+  - updates Consent Mode's `analytics_storage` (TCF purposes 1+8) via `gtag('consent', 'update', …)`,
+  - writes `pus_analytics_consent` (`'granted'` | `'denied'`) to localStorage for the runtime analytics guards.
+- **Consent Mode v2:** `index.html` sets `gtag('consent', 'default', { … all denied })` **before** `gtag('config', …)`. The `ad_*` keys are never updated by our code — gtag derives them from the TC string natively (`window.gtag_enable_tcf_support = true` in `index.html`).
+- **Re-open consent settings:** the footer "Cookie-Einstellungen" button calls `TcfConsentService.openConsentSettings()`, which shows the CMP revocation message via `googlefc`.
+- The legacy `pus_cookie_consent` localStorage key is obsolete; consent persistence is owned by the CMP (TC string). `TcfConsentService.init()` clears both legacy keys on boot so a stale pre-CMP `'granted'` cannot gate analytics before the TCF decision arrives.
+- When testing ads components, mock `AdsStore` (not `RemoteConfig`) – see `ad-slot.component.spec.ts` for the pattern; for TCF mapping tests see `tcf-consent.service.spec.ts`.
 
 ## Legal Pages
 

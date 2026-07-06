@@ -28,3 +28,69 @@ describe('AdsStore (SSR)', () => {
     expect(result).toBe(false);
   });
 });
+
+describe('AdsStore (consent gating)', () => {
+  function createStore() {
+    TestBed.configureTestingModule({
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }, AdsStore],
+    });
+    return TestBed.inject(AdsStore);
+  }
+
+  it('should start with consent unanswered and no targeted-ads consent', () => {
+    // given / when
+    const store = createStore();
+
+    // then
+    expect(store.consentAnswered()).toBe(false);
+    expect(store.targetedAdsConsent()).toBe(false);
+    expect(store.adsAllowed()).toBe(false);
+  });
+
+  it('should mark consent answered when a consent decision is applied', () => {
+    // given
+    const store = createStore();
+
+    // when
+    store.setTargetedAdsConsent(false);
+
+    // then
+    expect(store.consentAnswered()).toBe(true);
+    expect(store.targetedAdsConsent()).toBe(false);
+  });
+
+  it('should record targeted-ads consent when granted', () => {
+    // given
+    const store = createStore();
+
+    // when
+    store.setTargetedAdsConsent(true);
+
+    // then
+    expect(store.targetedAdsConsent()).toBe(true);
+  });
+
+  it('should ignore non-boolean consent values', () => {
+    // given
+    const store = createStore();
+
+    // when
+    store.setTargetedAdsConsent(undefined);
+
+    // then
+    expect(store.consentAnswered()).toBe(false);
+  });
+
+  it('should return to the unanswered state when consent is reset', () => {
+    // given
+    const store = createStore();
+    store.setTargetedAdsConsent(true);
+
+    // when
+    store.resetConsent();
+
+    // then
+    expect(store.consentAnswered()).toBe(false);
+    expect(store.targetedAdsConsent()).toBe(false);
+  });
+});
