@@ -208,7 +208,8 @@
         "tsConfig": "web/tsconfig.spec.json",
         "coverage": true,
         "watch": false,
-        "runnerConfig": "web/vitest.config.ts"
+        "runnerConfig": "web/vitest.config.ts",
+        "setupFiles": ["web/src/test-setup.ts"]
       }
     },
     "extract-i18n": {

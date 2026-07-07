@@ -52,3 +52,15 @@ if (typeof globalThis.IntersectionObserver === 'undefined') {
   globalThis.IntersectionObserver =
     IntersectionObserverStub as unknown as typeof IntersectionObserver;
 }
+
+// ng2-charts' BaseChartDirective calls `canvas.getContext('2d')` in its
+// constructor. jsdom has no canvas backend, so it emits a noisy
+// "Not implemented: HTMLCanvasElement.prototype.getContext" error for every
+// chart component rendered across the suite, drowning real failures. The
+// directive already no-ops rendering when the context is falsy (`render()`
+// bails on `!ctx`), so returning null preserves behaviour while silencing the
+// jsdom noise.
+if (typeof HTMLCanvasElement !== 'undefined') {
+  HTMLCanvasElement.prototype.getContext = (() =>
+    null) as typeof HTMLCanvasElement.prototype.getContext;
+}
