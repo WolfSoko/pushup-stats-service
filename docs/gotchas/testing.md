@@ -1,9 +1,26 @@
 # Gotchas: Testing
 
+## The `web` runner shares one environment across every spec (`isolate: false`)
+
+`@angular/build:unit-test` runs Vitest with **`isolate: false`** (a deliberate default, "to align with the Karma/Jasmine experience"). Every spec file in `web` therefore shares **one** module registry, one jsdom `document`, and one set of globals — there is no per-file reset beyond what Angular's TestBed cleanup hook does. Any module-level or global mutation a spec leaves behind bleeds into whatever spec runs next **in the same worker**, so the victim is order- and worker-distribution-dependent: the same code fails a _different, wandering_ set of tests each run, and adding/removing any unrelated spec can shift which one breaks. Isolated (single-file) runs are always green, which is the tell.
+
+Consequences that have actually bitten us:
+
+- **Un-restored global spies carry their call history into the next file.** `vi.spyOn(console, 'error')` that is never restored stays installed on the shared `console`. A _later_ `vi.spyOn(console, 'error')` in a different spec then returns **that same mock, call history included** — so an unrelated test sees a phantom `console.error` call it never made. Always pair a global spy (`console`, `window`, `document`, `navigator`) with `afterEach(() => spy.mockRestore())`. Real regression: `sentry.spec.ts`'s `initSentryLazily` block leaked its console spy and intermittently failed `DeferredSentryErrorHandler`.
+- **`Functions` / Firebase DI split (`NG0201: No provider found for Functions`).** Never `vi.mock('@angular/fire/*')` in a `web` spec — see the dedicated note below. The admin surface injects the `CallableFunctionsService` seam instead.
+
+The general rule: a `web` spec must leave the shared world exactly as it found it. Reset shared signal mocks in `beforeEach`, restore every global spy in `afterEach`, and never mutate a `providedIn: 'root'` singleton in place.
+
+### The `web` setup file only runs if it is wired via `setupFiles`
+
+`web/src/test-setup.ts` (canvas/`getContext` stub for ng2-charts, `IntersectionObserver` stub, locale registration, `process` polyfill) is listed in `tsconfig.spec.json` `files` **for type-checking only** — that does _not_ execute it at runtime. The `@angular/build:unit-test` builder runs a setup file only when it is named in the target's **`setupFiles`** option (`web/project.json` → `targets.test.options.setupFiles`). If a global stub "has no effect," check that wiring first: a `throw` added to `test-setup.ts` that does **not** fail the run proves the file is dead config.
+
 ## Signal/mock isolation
 
 - **Shared signal mocks:** When tests mutate shared `signal()` mocks (e.g. `authStoreMock.error.set(...)`), always reset them in `beforeEach`. Otherwise tests become order-dependent.
 - **`window.location` spies:** `vitest.spyOn(window, 'location', 'get')` is NOT restored by `clearAllMocks()`. Add `afterEach(() => vitest.restoreAllMocks())` when using getter spies.
+- **`console`/global spies leak across files (`isolate: false`):** see the section above — an un-restored `vi.spyOn(console, …)` hands its call history to the next spec that spies on the same global. Always `mockRestore()` in `afterEach`.
+- **ng2-charts jsdom noise:** `BaseChartDirective` calls `canvas.getContext('2d')` on construction; jsdom has no canvas backend and emits a "Not implemented: HTMLCanvasElement.prototype.getContext" error per chart. `test-setup.ts` stubs `getContext` to return `null` (the directive's `render()` already bails on a falsy context, so behaviour is unchanged) purely to keep that noise from drowning real failures in the log.
 
 ## Angular test patterns
 

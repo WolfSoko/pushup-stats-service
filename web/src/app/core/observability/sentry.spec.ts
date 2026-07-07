@@ -82,10 +82,24 @@ describe('DeferredSentryErrorHandler', () => {
 });
 
 describe('initSentryLazily', () => {
+  let consoleError: ReturnType<typeof vi.spyOn>;
+
   beforeEach(() => {
     sentryInit.mockClear();
     createErrorHandler.mockClear();
     realErrorHandler.handleError.mockClear();
+    consoleError = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => undefined);
+  });
+
+  // Under the non-isolated `web` runner (isolate: false) `console` is shared
+  // across every spec file. An un-restored `vi.spyOn(console, 'error')` stays
+  // installed, so a later `vi.spyOn(console, 'error')` in another file returns
+  // this same mock together with its call history — surfacing phantom calls in
+  // unrelated tests. Always restore console spies. See docs/gotchas/testing.md.
+  afterEach(() => {
+    consoleError.mockRestore();
   });
 
   function appRefWith(handler: ErrorHandler): ApplicationRef {
@@ -118,7 +132,6 @@ describe('initSentryLazily', () => {
   it('should adopt the live Sentry error handler so buffered errors flush', async () => {
     // given
     const handler = new DeferredSentryErrorHandler();
-    vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const buffered = new Error('startup');
     handler.handleError(buffered);
 
