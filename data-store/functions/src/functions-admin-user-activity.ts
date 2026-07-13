@@ -33,10 +33,8 @@ export const updateAdminUserActivityOnEntryWrite = onDocumentWritten(
     const beforeData = event.data?.before?.data();
     const afterData = event.data?.after?.data();
 
-    const userId = (afterData?.userId ?? beforeData?.userId) as
-      | string
-      | undefined;
-    if (!userId) {
+    const userId = afterData?.userId ?? beforeData?.userId;
+    if (typeof userId !== 'string' || !userId) {
       logger.warn('updateAdminUserActivityOnEntryWrite: no userId, skipping');
       return;
     }
@@ -70,14 +68,15 @@ export const updateAdminUserActivityOnEntryWrite = onDocumentWritten(
       let lastEntry = aggregate.lastEntry;
       if (needsRecompute) {
         // The deleted/moved entry was the running max — re-derive the true
-        // latest timestamp from source. The (userId, timestamp) composite
-        // index serves this reversed.
+        // latest timestamp from source. `orderBy(asc).limitToLast(1)` returns
+        // the highest timestamp using the declared (userId, timestamp) ASC
+        // composite index in its native direction.
         const maxSnap = await tx.get(
           db
             .collection('exerciseEntries')
             .where('userId', '==', userId)
-            .orderBy('timestamp', 'desc')
-            .limit(1)
+            .orderBy('timestamp', 'asc')
+            .limitToLast(1)
         );
         const maxTs = maxSnap.empty
           ? null
