@@ -13,7 +13,7 @@ function makeUser(overrides: Partial<AdminUser> = {}): AdminUser {
     displayName: 'Alice',
     email: 'alice@example.com',
     anonymous: false,
-    pushupCount: 10,
+    entryCount: 10,
     lastEntry: '2026-01-02T08:00:00.000Z',
     createdAt: '2026-01-01T08:00:00.000Z',
     role: null,
@@ -69,13 +69,13 @@ describe('adminUserSortValue', () => {
     ).toBe(0);
   });
 
-  it('should return the raw pushupCount', () => {
+  it('should return the raw entryCount', () => {
     // given
     // when
     // then
-    expect(
-      adminUserSortValue(makeUser({ pushupCount: 42 }), 'pushupCount')
-    ).toBe(42);
+    expect(adminUserSortValue(makeUser({ entryCount: 42 }), 'entryCount')).toBe(
+      42
+    );
   });
 
   it('should convert lastEntry/createdAt to epoch ms and use 0 when null', () => {

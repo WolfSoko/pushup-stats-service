@@ -19,8 +19,8 @@ export function adminUserSortValue(
       return (item.email ?? '').toLowerCase();
     case 'anonymous':
       return item.anonymous ? 1 : 0;
-    case 'pushupCount':
-      return item.pushupCount;
+    case 'entryCount':
+      return item.entryCount;
     case 'lastEntry':
       return timeOf(item.lastEntry);
     case 'createdAt':

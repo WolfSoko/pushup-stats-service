@@ -67,7 +67,7 @@ export class AdminPageComponent {
     'displayName',
     'email',
     'anonymous',
-    'pushupCount',
+    'entryCount',
     'lastEntry',
     'createdAt',
     'actions',

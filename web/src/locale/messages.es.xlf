@@ -10182,5 +10182,17 @@
         <target>Protección de datos</target>
       </segment>
     </unit>
+    <unit id="admin.col.entries">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.entryCount">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

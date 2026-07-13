@@ -26,7 +26,7 @@ export interface UserAccountInfo {
   displayName: string | null;
   email: string | null;
   anonymous: boolean;
-  pushupCount: number;
+  entryCount: number;
   lastEntry: string | null;
   createdAt: unknown;
   role: string | null;

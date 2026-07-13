@@ -43,22 +43,19 @@ export const adminListUsers = onCall(
       }
     }
 
-    const pushupCountMap = new Map<string, number>();
-    const lastPushupMap = new Map<string, string>();
-    const pushupSnap = await db.collection('pushups').get();
-    for (const doc of pushupSnap.docs) {
+    const entryCountMap = new Map<string, number>();
+    const lastEntryMap = new Map<string, string>();
+    const entrySnap = await db.collection('exerciseEntries').get();
+    for (const doc of entrySnap.docs) {
       const data = doc.data();
       if (!data.userId) continue;
-      pushupCountMap.set(
-        data.userId,
-        (pushupCountMap.get(data.userId) || 0) + 1
-      );
+      entryCountMap.set(data.userId, (entryCountMap.get(data.userId) || 0) + 1);
       const ts = data.timestamp as string;
       if (
-        !lastPushupMap.has(data.userId) ||
-        ts > (lastPushupMap.get(data.userId) ?? '')
+        !lastEntryMap.has(data.userId) ||
+        ts > (lastEntryMap.get(data.userId) ?? '')
       ) {
-        lastPushupMap.set(data.userId, ts);
+        lastEntryMap.set(data.userId, ts);
       }
     }
 
@@ -72,8 +69,8 @@ export const adminListUsers = onCall(
           null,
         email: (config as Record<string, unknown>).email || user.email || null,
         anonymous: user.providerData.length === 0,
-        pushupCount: pushupCountMap.get(user.uid) || 0,
-        lastEntry: lastPushupMap.get(user.uid) || null,
+        entryCount: entryCountMap.get(user.uid) || 0,
+        lastEntry: lastEntryMap.get(user.uid) || null,
         createdAt: user.metadata.creationTime || null,
         role: user.customClaims?.admin === true ? 'admin' : null,
       };
@@ -114,15 +111,15 @@ export const adminDeleteUser = onCall(
     } else {
       await db.collection('userConfigs').doc(uid).delete();
 
-      const pushupSnap = await db
-        .collection('pushups')
+      const entrySnap = await db
+        .collection('exerciseEntries')
         .where('userId', '==', uid)
         .get();
 
       const BATCH_SIZE = 500;
-      for (let i = 0; i < pushupSnap.docs.length; i += BATCH_SIZE) {
+      for (let i = 0; i < entrySnap.docs.length; i += BATCH_SIZE) {
         const batch = db.batch();
-        for (const doc of pushupSnap.docs.slice(i, i + BATCH_SIZE)) {
+        for (const doc of entrySnap.docs.slice(i, i + BATCH_SIZE)) {
           batch.delete(doc.ref);
         }
         await batch.commit();
@@ -197,18 +194,18 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     } while (pageToken);
 
     const anonymousUserSet = new Set(anonymousUsers);
-    const lastPushupMap = new Map<string, string>();
+    const lastEntryMap = new Map<string, string>();
     if (anonymousUsers.length > 0) {
-      const pushupSnap = await db.collection('pushups').get();
-      for (const doc of pushupSnap.docs) {
+      const entrySnap = await db.collection('exerciseEntries').get();
+      for (const doc of entrySnap.docs) {
         const data = doc.data();
         if (!data.userId || !anonymousUserSet.has(data.userId)) continue;
         const ts = String(data.timestamp || '').slice(0, 10);
         if (
-          !lastPushupMap.has(data.userId) ||
-          ts > (lastPushupMap.get(data.userId) ?? '')
+          !lastEntryMap.has(data.userId) ||
+          ts > (lastEntryMap.get(data.userId) ?? '')
         ) {
-          lastPushupMap.set(data.userId, ts);
+          lastEntryMap.set(data.userId, ts);
         }
       }
     }
@@ -217,7 +214,7 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     let skipped = 0;
 
     for (const uid of anonymousUsers) {
-      const lastTs = lastPushupMap.get(uid);
+      const lastTs = lastEntryMap.get(uid);
       if (lastTs && lastTs >= cutoff) {
         skipped++;
         continue;
@@ -226,15 +223,15 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       await admin.auth().deleteUser(uid);
       await db.collection('userConfigs').doc(uid).delete();
 
-      const pushupSnap = await db
-        .collection('pushups')
+      const entrySnap = await db
+        .collection('exerciseEntries')
         .where('userId', '==', uid)
         .get();
 
       const BATCH_SIZE = 500;
-      for (let i = 0; i < pushupSnap.docs.length; i += BATCH_SIZE) {
+      for (let i = 0; i < entrySnap.docs.length; i += BATCH_SIZE) {
         const batch = db.batch();
-        for (const doc of pushupSnap.docs.slice(i, i + BATCH_SIZE)) {
+        for (const doc of entrySnap.docs.slice(i, i + BATCH_SIZE)) {
           batch.delete(doc.ref);
         }
         await batch.commit();

@@ -19,7 +19,7 @@ describe('UserDetailsDialogComponent', () => {
     displayName: 'Alice',
     email: 'alice@example.com',
     anonymous: false,
-    pushupCount: 42,
+    entryCount: 42,
     lastEntry: '2026-04-20T10:00:00.000Z',
     createdAt: '2026-01-01T00:00:00.000Z',
     role: 'admin',
