@@ -75,7 +75,8 @@ export const adminListUsers = onCall(
       .select('userId', 'timestamp')
       .get();
     const activity = aggregateEntryActivity(
-      entrySnap.docs.map((doc) => doc.data())
+      entrySnap.docs.map((doc) => doc.data()),
+      new Set(uids)
     );
 
     return authUsers.map((user) => {
