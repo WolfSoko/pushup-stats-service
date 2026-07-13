@@ -75,6 +75,29 @@ describe('aggregateEntryActivity', () => {
     expect(result.has('named-1')).toBe(false);
   });
 
+  it('should accumulate across calls when an existing map is passed as `into`', () => {
+    // given a first page already folded into a map
+    const acc = aggregateEntryActivity([
+      { userId: 'a', timestamp: '2026-01-01T08:00:00.000Z' },
+    ]);
+    // when a second page is folded into the same map
+    const result = aggregateEntryActivity(
+      [
+        { userId: 'a', timestamp: '2026-03-01T08:00:00.000Z' },
+        { userId: 'b', timestamp: '2026-02-01T08:00:00.000Z' },
+      ],
+      undefined,
+      acc
+    );
+    // then counts sum and the latest timestamp wins across pages
+    expect(result).toBe(acc);
+    expect(result.get('a')).toEqual({
+      count: 2,
+      lastTimestamp: '2026-03-01T08:00:00.000Z',
+    });
+    expect(result.get('b')?.count).toBe(1);
+  });
+
   it('should produce an ISO last timestamp that compares correctly against a date-only cutoff', () => {
     // given
     const entries = [{ userId: 'a', timestamp: '2026-06-23T05:00:00.000Z' }];

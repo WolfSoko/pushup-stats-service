@@ -11,12 +11,17 @@ export interface EntryActivity {
  * subset. `lastTimestamp` is the raw ISO string, whose lexicographic
  * order matches chronological order, so callers may compare it directly
  * against a date-only cutoff.
+ *
+ * Pass an existing map as `into` to accumulate across calls — this lets the
+ * backfill fold one bounded page of entries at a time so peak memory stays
+ * O(#users) instead of O(#entries).
  */
 export function aggregateEntryActivity(
   entries: Iterable<{ userId?: unknown; timestamp?: unknown }>,
-  onlyUserIds?: ReadonlySet<string>
+  onlyUserIds?: ReadonlySet<string>,
+  into?: Map<string, EntryActivity>
 ): Map<string, EntryActivity> {
-  const result = new Map<string, EntryActivity>();
+  const result = into ?? new Map<string, EntryActivity>();
   for (const entry of entries) {
     const userId = entry.userId;
     if (typeof userId !== 'string' || !userId) continue;

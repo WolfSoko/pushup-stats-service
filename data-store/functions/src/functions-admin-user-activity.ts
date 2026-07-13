@@ -1,3 +1,7 @@
+import {
+  FieldPath,
+  type QueryDocumentSnapshot,
+} from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { onCall } from 'firebase-functions/v2/https';
@@ -5,6 +9,7 @@ import { onCall } from 'firebase-functions/v2/https';
 import { batchArray } from './admin';
 import {
   aggregateEntryActivity,
+  type EntryActivity,
   nextActivityAggregate,
   type UserActivityAggregate,
 } from './admin/user-entry-activity';
@@ -17,6 +22,7 @@ import { assertAdmin } from './functions-admin';
 // + the backfill callable); clients are denied at the Firestore-rule layer.
 const ADMIN_USER_ACTIVITY_COLLECTION = 'adminUserActivity';
 const BACKFILL_BATCH_SIZE = 500;
+const BACKFILL_PAGE_SIZE = 5000;
 
 function timestampField(
   data: Record<string, unknown> | undefined
@@ -110,18 +116,35 @@ export const backfillAdminUserActivity = onCall(
     // (including a missing/falsy-but-not-false one) stays a dry-run.
     const dryRun = request.data?.dryRun !== false;
 
-    const snap = await db
-      .collection('exerciseEntries')
-      .select('userId', 'timestamp')
-      .get();
-    const activity = aggregateEntryActivity(snap.docs.map((doc) => doc.data()));
+    // Page through `exerciseEntries` by document id, folding each bounded
+    // page into a single per-user map, so peak memory stays O(#users)
+    // rather than materialising the whole collection at once. This backfill
+    // is load-bearing (the admin dashboard reads the aggregate post-deploy),
+    // so it must stay reliable as the collection grows.
+    const activity = new Map<string, EntryActivity>();
+    let entries = 0;
+    let cursor: QueryDocumentSnapshot | undefined;
+    for (;;) {
+      let query = db
+        .collection('exerciseEntries')
+        .select('userId', 'timestamp')
+        .orderBy(FieldPath.documentId())
+        .limit(BACKFILL_PAGE_SIZE);
+      if (cursor) query = query.startAfter(cursor);
+      const page = await query.get();
+      if (page.empty) break;
+      aggregateEntryActivity(
+        page.docs.map((doc) => doc.data()),
+        undefined,
+        activity
+      );
+      entries += page.size;
+      cursor = page.docs[page.docs.length - 1];
+      if (page.size < BACKFILL_PAGE_SIZE) break;
+    }
 
     if (dryRun) {
-      return {
-        dryRun: true,
-        wouldWriteUsers: activity.size,
-        entries: snap.size,
-      };
+      return { dryRun: true, wouldWriteUsers: activity.size, entries };
     }
 
     const nowIso = new Date().toISOString();
@@ -144,10 +167,10 @@ export const backfillAdminUserActivity = onCall(
 
     logger.info('backfillAdminUserActivity', {
       writtenUsers,
-      entries: snap.size,
+      entries,
       by: request.auth?.uid,
     });
 
-    return { writtenUsers, entries: snap.size };
+    return { writtenUsers, entries };
   }
 );
