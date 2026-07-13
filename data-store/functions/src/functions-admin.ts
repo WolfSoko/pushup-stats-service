@@ -52,14 +52,19 @@ async function readUserActivity(
   uids: string[]
 ): Promise<Map<string, UserActivityAggregate>> {
   const activity = new Map<string, UserActivityAggregate>();
-  for (let i = 0; i < uids.length; i += 10) {
-    const batch = uids.slice(i, i + 10);
-    const snaps = await db
-      .collection('adminUserActivity')
-      .where(admin.firestore.FieldPath.documentId(), 'in', batch)
-      .get();
-    for (const snap of snaps.docs) {
-      activity.set(snap.id, snap.data() as UserActivityAggregate);
+  if (uids.length === 0) return activity;
+
+  // `getAll` fetches by document reference in one round-trip per chunk, with
+  // no 10-item `in`-query cap, so this stays cheap even for large user lists.
+  const collection = db.collection('adminUserActivity');
+  const CHUNK = 300;
+  for (let i = 0; i < uids.length; i += CHUNK) {
+    const refs = uids.slice(i, i + CHUNK).map((uid) => collection.doc(uid));
+    const snaps = await db.getAll(...refs);
+    for (const snap of snaps) {
+      if (snap.exists) {
+        activity.set(snap.id, snap.data() as UserActivityAggregate);
+      }
     }
   }
   return activity;
