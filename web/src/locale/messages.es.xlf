@@ -10165,15 +10165,15 @@
       </segment>
     </unit>
     <unit id="admin.col.entries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Entradas</target>
       </segment>
     </unit>
     <unit id="admin.details.entryCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Entradas</target>
       </segment>
     </unit>
 </file>
