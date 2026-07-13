@@ -203,12 +203,15 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     const anonymousUserSet = new Set(anonymousUsers);
     let activity = aggregateEntryActivity([]);
     if (anonymousUsers.length > 0) {
+      // A user is "active" iff they have any entry on/after the cutoff, so
+      // only those entries need reading. ISO timestamps sort lexicographically
+      // against the date-only `cutoff`, so the range filter is exact and keeps
+      // the read volume proportional to recent activity, not full history.
       const entrySnap = await db
         .collection('exerciseEntries')
+        .where('timestamp', '>=', cutoff)
         .select('userId', 'timestamp')
         .get();
-      // ISO timestamps sort lexicographically, so the raw `lastTimestamp`
-      // compares correctly against the date-only `cutoff` below.
       activity = aggregateEntryActivity(
         entrySnap.docs.map((doc) => doc.data()),
         anonymousUserSet
