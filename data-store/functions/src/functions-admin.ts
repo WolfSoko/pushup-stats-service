@@ -7,6 +7,7 @@ import {
   validateLeaderboardExclusionPayload,
   validateSetMigrationStatusPayload,
 } from './admin';
+import { aggregateEntryActivity } from './admin/user-entry-activity';
 import { db, DEMO_USER_ID } from './firebase-app';
 import { deleteAllPushSubscriptions } from './functions-push';
 
@@ -21,19 +22,24 @@ export function assertAdmin(request: {
 // `exerciseEntries`, but the pushup unification migration deliberately
 // left the legacy `pushups` source intact — so a full erasure must purge
 // both collections, otherwise pre-cutover rows outlive the deleted uid.
+// Pages through the results (`limit` + re-query) so a user with a huge
+// history never materialises more than one batch of docs at a time.
 async function deleteUserExerciseData(uid: string): Promise<void> {
   const BATCH_SIZE = 500;
   for (const collection of ['exerciseEntries', 'pushups']) {
-    const snap = await db
-      .collection(collection)
-      .where('userId', '==', uid)
-      .get();
-    for (let i = 0; i < snap.docs.length; i += BATCH_SIZE) {
+    for (;;) {
+      const snap = await db
+        .collection(collection)
+        .where('userId', '==', uid)
+        .limit(BATCH_SIZE)
+        .get();
+      if (snap.empty) break;
       const batch = db.batch();
-      for (const doc of snap.docs.slice(i, i + BATCH_SIZE)) {
+      for (const doc of snap.docs) {
         batch.delete(doc.ref);
       }
       await batch.commit();
+      if (snap.size < BATCH_SIZE) break;
     }
   }
 }
@@ -64,27 +70,17 @@ export const adminListUsers = onCall(
       }
     }
 
-    const entryCountMap = new Map<string, number>();
-    const lastEntryMap = new Map<string, string>();
     const entrySnap = await db
       .collection('exerciseEntries')
       .select('userId', 'timestamp')
       .get();
-    for (const doc of entrySnap.docs) {
-      const data = doc.data();
-      if (!data.userId) continue;
-      entryCountMap.set(data.userId, (entryCountMap.get(data.userId) || 0) + 1);
-      const ts = data.timestamp as string;
-      if (
-        !lastEntryMap.has(data.userId) ||
-        ts > (lastEntryMap.get(data.userId) ?? '')
-      ) {
-        lastEntryMap.set(data.userId, ts);
-      }
-    }
+    const activity = aggregateEntryActivity(
+      entrySnap.docs.map((doc) => doc.data())
+    );
 
     return authUsers.map((user) => {
       const config = configMap.get(user.uid) || {};
+      const userActivity = activity.get(user.uid);
       return {
         uid: user.uid,
         displayName:
@@ -93,8 +89,8 @@ export const adminListUsers = onCall(
           null,
         email: (config as Record<string, unknown>).email || user.email || null,
         anonymous: user.providerData.length === 0,
-        entryCount: entryCountMap.get(user.uid) || 0,
-        lastEntry: lastEntryMap.get(user.uid) || null,
+        entryCount: userActivity?.count ?? 0,
+        lastEntry: userActivity?.lastTimestamp ?? null,
         createdAt: user.metadata.creationTime || null,
         role: user.customClaims?.admin === true ? 'admin' : null,
       };
@@ -205,30 +201,25 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     } while (pageToken);
 
     const anonymousUserSet = new Set(anonymousUsers);
-    const lastEntryMap = new Map<string, string>();
+    let activity = aggregateEntryActivity([]);
     if (anonymousUsers.length > 0) {
       const entrySnap = await db
         .collection('exerciseEntries')
         .select('userId', 'timestamp')
         .get();
-      for (const doc of entrySnap.docs) {
-        const data = doc.data();
-        if (!data.userId || !anonymousUserSet.has(data.userId)) continue;
-        const ts = String(data.timestamp || '').slice(0, 10);
-        if (
-          !lastEntryMap.has(data.userId) ||
-          ts > (lastEntryMap.get(data.userId) ?? '')
-        ) {
-          lastEntryMap.set(data.userId, ts);
-        }
-      }
+      // ISO timestamps sort lexicographically, so the raw `lastTimestamp`
+      // compares correctly against the date-only `cutoff` below.
+      activity = aggregateEntryActivity(
+        entrySnap.docs.map((doc) => doc.data()),
+        anonymousUserSet
+      );
     }
 
     let deleted = 0;
     let skipped = 0;
 
     for (const uid of anonymousUsers) {
-      const lastTs = lastEntryMap.get(uid);
+      const lastTs = activity.get(uid)?.lastTimestamp;
       if (lastTs && lastTs >= cutoff) {
         skipped++;
         continue;

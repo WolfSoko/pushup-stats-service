@@ -1880,14 +1880,6 @@
         <source>Anon</source>
       <target>匿名</target></segment>
     </unit>
-    <unit id="admin.col.pushups">
-      <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:225,226</note>
-      </notes>
-      <segment state="translated">
-        <source>Pushups</source>
-      <target>俯卧撑</target></segment>
-    </unit>
     <unit id="admin.col.lastEntry">
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:236,238</note>
@@ -2159,14 +2151,6 @@
       <segment state="translated">
         <source>Rolle</source>
       <target>角色</target></segment>
-    </unit>
-    <unit id="admin.details.pushupCount">
-      <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:38,39</note>
-      </notes>
-      <segment state="translated">
-        <source>Pushups</source>
-      <target>俯卧撑</target></segment>
     </unit>
     <unit id="admin.details.lastEntry">
       <notes>
