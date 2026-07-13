@@ -51,3 +51,21 @@ export async function readUserActivity(
   }
   return activity;
 }
+
+// Bounded source-of-truth check for whether a user has any entry on/after
+// `cutoff`. Used as a fallback in the inactive-anonymous cleanup for users
+// with no `adminUserActivity` aggregate yet (e.g. the window after deploy
+// before `backfillAdminUserActivity` has run) so an active user is never
+// deleted. Served by the (userId, timestamp) composite index.
+export async function hasEntrySince(
+  uid: string,
+  cutoff: string
+): Promise<boolean> {
+  const snap = await db
+    .collection('exerciseEntries')
+    .where('userId', '==', uid)
+    .where('timestamp', '>=', cutoff)
+    .limit(1)
+    .get();
+  return !snap.empty;
+}

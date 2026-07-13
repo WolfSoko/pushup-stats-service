@@ -106,7 +106,9 @@ export const backfillAdminUserActivity = onCall(
   async (request) => {
     assertAdmin(request);
 
-    const dryRun = Boolean(request.data?.dryRun ?? true);
+    // Fail-safe: only an explicit `dryRun: false` writes; any other value
+    // (including a missing/falsy-but-not-false one) stays a dry-run.
+    const dryRun = request.data?.dryRun !== false;
 
     const snap = await db
       .collection('exerciseEntries')

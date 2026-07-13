@@ -8,6 +8,7 @@ import {
 } from './admin';
 import {
   deleteUserExerciseData,
+  hasEntrySince,
   readUserActivity,
 } from './admin/user-data-ops';
 import { db, DEMO_USER_ID } from './firebase-app';
@@ -180,8 +181,16 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     let skipped = 0;
 
     for (const uid of anonymousUsers) {
-      const lastTs = activity.get(uid)?.lastEntry;
-      if (lastTs && lastTs >= cutoff) {
+      const aggregate = activity.get(uid);
+      if (aggregate) {
+        if (aggregate.lastEntry && aggregate.lastEntry >= cutoff) {
+          skipped++;
+          continue;
+        }
+      } else if (await hasEntrySince(uid, cutoff)) {
+        // No aggregate yet (e.g. the post-deploy window before the backfill
+        // ran) — fall back to a bounded source check so an active user is
+        // never deleted.
         skipped++;
         continue;
       }
