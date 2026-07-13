@@ -31,7 +31,7 @@
         />
       </mat-form-field>
       <p class="bulk-hint" i18n="@@admin.bulk.hint">
-        Löscht anonyme Benutzer ohne Pushups in den letzten
+        Löscht anonyme Benutzer ohne Übungseinträge in den letzten
         {{ inactiveDays() }} Tagen.
       </p>
     </mat-card-content>
@@ -148,15 +148,15 @@
           </mat-cell>
         </ng-container>
 
-        <!-- pushupCount column -->
-        <ng-container matColumnDef="pushupCount">
+        <!-- entryCount column -->
+        <ng-container matColumnDef="entryCount">
           <mat-header-cell
             *matHeaderCellDef
             mat-sort-header
-            i18n="@@admin.col.pushups"
-            >Pushups</mat-header-cell
+            i18n="@@admin.col.entries"
+            >Einträge</mat-header-cell
           >
-          <mat-cell *matCellDef="let u">{{ u.pushupCount }}</mat-cell>
+          <mat-cell *matCellDef="let u">{{ u.entryCount }}</mat-cell>
         </ng-container>
 
         <!-- lastEntry column -->

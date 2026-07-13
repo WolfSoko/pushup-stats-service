@@ -2828,7 +2828,7 @@
         <note category="location">web/src/app/admin/admin-page.component.html:34,37</note>
       </notes>
       <segment>
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
+        <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
       </segment>
     </unit>
     <unit id="admin.bulk.button">
@@ -2895,12 +2895,12 @@
         <source>Anon</source>
       </segment>
     </unit>
-    <unit id="admin.col.pushups">
+    <unit id="admin.col.entries">
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.html:157,159</note>
       </notes>
       <segment>
-        <source>Pushups</source>
+        <source>Einträge</source>
       </segment>
     </unit>
     <unit id="admin.col.lastEntry">
@@ -3193,12 +3193,12 @@
         <source>Rolle</source>
       </segment>
     </unit>
-    <unit id="admin.details.pushupCount">
+    <unit id="admin.details.entryCount">
       <notes>
         <note category="location">web/src/app/admin/user-details-dialog.component.ts:38,39</note>
       </notes>
       <segment>
-        <source>Pushups</source>
+        <source>Einträge</source>
       </segment>
     </unit>
     <unit id="admin.details.lastEntry">
@@ -4792,7 +4792,7 @@
     </unit>
     <unit id="about.mission.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:32,33</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:33,34</note>
       </notes>
       <segment>
         <source>Warum es diese Seite gibt</source>
@@ -4800,7 +4800,7 @@
     </unit>
     <unit id="about.mission.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:34,39</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:35,40</note>
       </notes>
       <segment>
         <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
@@ -4808,7 +4808,7 @@
     </unit>
     <unit id="about.content.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:44,45</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:45,46</note>
       </notes>
       <segment>
         <source>Wie unsere Inhalte entstehen</source>
@@ -4816,7 +4816,7 @@
     </unit>
     <unit id="about.content.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:46,50</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:47,51</note>
       </notes>
       <segment>
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
@@ -4824,7 +4824,7 @@
     </unit>
     <unit id="about.contact.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:55,57</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:56,58</note>
       </notes>
       <segment>
         <source>Kontakt</source>
@@ -4832,7 +4832,7 @@
     </unit>
     <unit id="about.contact.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:58,60</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:59,61</note>
       </notes>
       <segment>
         <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
@@ -4840,7 +4840,7 @@
     </unit>
     <unit id="about.toImpressum">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:67,70</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:68,71</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4848,7 +4848,7 @@
     </unit>
     <unit id="about.toDatenschutz">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:73,76</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:74,77</note>
       </notes>
       <segment>
         <source>Datenschutz</source>

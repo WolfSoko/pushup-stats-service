@@ -35,8 +35,8 @@ import { AdminUser } from './admin-page.models';
         <dt i18n="@@admin.details.role">Rolle</dt>
         <dd>{{ user.role ?? emptyLabel }}</dd>
 
-        <dt i18n="@@admin.details.pushupCount">Pushups</dt>
-        <dd>{{ user.pushupCount }}</dd>
+        <dt i18n="@@admin.details.entryCount">Einträge</dt>
+        <dd>{{ user.entryCount }}</dd>
 
         <dt i18n="@@admin.details.lastEntry">Letzter Eintrag</dt>
         <dd>

@@ -32,7 +32,7 @@ describe('AdminPageComponent', () => {
     displayName: 'Alice',
     email: 'alice@example.com',
     anonymous: false,
-    pushupCount: 12,
+    entryCount: 12,
     lastEntry: '2026-04-09T10:00:00.000Z',
     createdAt: '2026-01-01T00:00:00.000Z',
     role: null,

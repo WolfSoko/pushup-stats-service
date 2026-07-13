@@ -5,8 +5,12 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import {
   validateAdminAccess,
   validateLeaderboardExclusionPayload,
-  validateSetMigrationStatusPayload,
 } from './admin';
+import {
+  deleteUserExerciseData,
+  hasEntrySince,
+  readUserActivity,
+} from './admin/user-data-ops';
 import { db, DEMO_USER_ID } from './firebase-app';
 import { deleteAllPushSubscriptions } from './functions-push';
 
@@ -43,27 +47,11 @@ export const adminListUsers = onCall(
       }
     }
 
-    const pushupCountMap = new Map<string, number>();
-    const lastPushupMap = new Map<string, string>();
-    const pushupSnap = await db.collection('pushups').get();
-    for (const doc of pushupSnap.docs) {
-      const data = doc.data();
-      if (!data.userId) continue;
-      pushupCountMap.set(
-        data.userId,
-        (pushupCountMap.get(data.userId) || 0) + 1
-      );
-      const ts = data.timestamp as string;
-      if (
-        !lastPushupMap.has(data.userId) ||
-        ts > (lastPushupMap.get(data.userId) ?? '')
-      ) {
-        lastPushupMap.set(data.userId, ts);
-      }
-    }
+    const activity = await readUserActivity(uids);
 
     return authUsers.map((user) => {
       const config = configMap.get(user.uid) || {};
+      const userActivity = activity.get(user.uid);
       return {
         uid: user.uid,
         displayName:
@@ -72,8 +60,8 @@ export const adminListUsers = onCall(
           null,
         email: (config as Record<string, unknown>).email || user.email || null,
         anonymous: user.providerData.length === 0,
-        pushupCount: pushupCountMap.get(user.uid) || 0,
-        lastEntry: lastPushupMap.get(user.uid) || null,
+        entryCount: userActivity?.entryCount ?? 0,
+        lastEntry: userActivity?.lastEntry ?? null,
         createdAt: user.metadata.creationTime || null,
         role: user.customClaims?.admin === true ? 'admin' : null,
       };
@@ -113,20 +101,7 @@ export const adminDeleteUser = onCall(
         );
     } else {
       await db.collection('userConfigs').doc(uid).delete();
-
-      const pushupSnap = await db
-        .collection('pushups')
-        .where('userId', '==', uid)
-        .get();
-
-      const BATCH_SIZE = 500;
-      for (let i = 0; i < pushupSnap.docs.length; i += BATCH_SIZE) {
-        const batch = db.batch();
-        for (const doc of pushupSnap.docs.slice(i, i + BATCH_SIZE)) {
-          batch.delete(doc.ref);
-        }
-        await batch.commit();
-      }
+      await deleteUserExerciseData(uid);
     }
 
     await deleteAllPushSubscriptions(uid);
@@ -196,49 +171,33 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       pageToken = result.pageToken;
     } while (pageToken);
 
-    const anonymousUserSet = new Set(anonymousUsers);
-    const lastPushupMap = new Map<string, string>();
-    if (anonymousUsers.length > 0) {
-      const pushupSnap = await db.collection('pushups').get();
-      for (const doc of pushupSnap.docs) {
-        const data = doc.data();
-        if (!data.userId || !anonymousUserSet.has(data.userId)) continue;
-        const ts = String(data.timestamp || '').slice(0, 10);
-        if (
-          !lastPushupMap.has(data.userId) ||
-          ts > (lastPushupMap.get(data.userId) ?? '')
-        ) {
-          lastPushupMap.set(data.userId, ts);
-        }
-      }
-    }
+    // A user is "active" iff their last entry is on/after the cutoff. Read the
+    // precomputed per-user aggregates (O(#anonymous)) instead of scanning the
+    // entry history. ISO `lastEntry` sorts lexicographically against the
+    // date-only `cutoff`, so the comparison is exact.
+    const activity = await readUserActivity(anonymousUsers);
 
     let deleted = 0;
     let skipped = 0;
 
     for (const uid of anonymousUsers) {
-      const lastTs = lastPushupMap.get(uid);
-      if (lastTs && lastTs >= cutoff) {
+      const aggregate = activity.get(uid);
+      if (aggregate) {
+        if (aggregate.lastEntry && aggregate.lastEntry >= cutoff) {
+          skipped++;
+          continue;
+        }
+      } else if (await hasEntrySince(uid, cutoff)) {
+        // No aggregate yet (e.g. the post-deploy window before the backfill
+        // ran) — fall back to a bounded source check so an active user is
+        // never deleted.
         skipped++;
         continue;
       }
 
       await admin.auth().deleteUser(uid);
       await db.collection('userConfigs').doc(uid).delete();
-
-      const pushupSnap = await db
-        .collection('pushups')
-        .where('userId', '==', uid)
-        .get();
-
-      const BATCH_SIZE = 500;
-      for (let i = 0; i < pushupSnap.docs.length; i += BATCH_SIZE) {
-        const batch = db.batch();
-        for (const doc of pushupSnap.docs.slice(i, i + BATCH_SIZE)) {
-          batch.delete(doc.ref);
-        }
-        await batch.commit();
-      }
+      await deleteUserExerciseData(uid);
 
       await deleteAllPushSubscriptions(uid);
       deleted++;
@@ -252,59 +211,5 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       by: request.auth?.uid,
     });
     return { deleted, skipped };
-  }
-);
-
-const MIGRATION_STATUS_COLLECTION = 'migrationStatus';
-
-export const getMigrationStatuses = onCall(
-  { region: 'europe-west3' },
-  async (request) => {
-    assertAdmin(request);
-    const snap = await db.collection(MIGRATION_STATUS_COLLECTION).get();
-    const statuses: Record<
-      string,
-      { completed: boolean; completedAt: string | null; completedBy: string }
-    > = {};
-    for (const doc of snap.docs) {
-      const data = doc.data();
-      statuses[doc.id] = {
-        completed: Boolean(data.completed),
-        completedAt: (data.completedAt as string | null) ?? null,
-        completedBy: (data.completedBy as string) ?? '',
-      };
-    }
-    return { statuses };
-  }
-);
-
-export const setMigrationStatus = onCall(
-  { region: 'europe-west3' },
-  async (request) => {
-    assertAdmin(request);
-
-    const validation = validateSetMigrationStatusPayload(request.data);
-    if (!validation.valid || !validation.id) {
-      throw new HttpsError('invalid-argument', validation.error ?? 'invalid');
-    }
-
-    const nowIso = new Date().toISOString();
-    const completed = validation.completed === true;
-    const doc = {
-      completed,
-      completedAt: completed ? nowIso : null,
-      completedBy: completed ? (request.auth?.uid ?? '') : '',
-    };
-    await db
-      .collection(MIGRATION_STATUS_COLLECTION)
-      .doc(validation.id)
-      .set(doc);
-
-    logger.info('setMigrationStatus', {
-      id: validation.id,
-      completed,
-      by: request.auth?.uid,
-    });
-    return { id: validation.id, ...doc };
   }
 );

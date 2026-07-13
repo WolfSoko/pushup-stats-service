@@ -4819,12 +4819,6 @@ Deine Position: # ·  Reps        </source>
         <target>Anon</target>
       </segment>
     </unit>
-    <unit id="admin.col.pushups">
-      <segment state="translated">
-        <source>Pushups</source>
-        <target>Pushups</target>
-      </segment>
-    </unit>
     <unit id="admin.col.lastEntry">
       <segment state="translated">
         <source>Letzter Eintrag</source>
@@ -4901,12 +4895,6 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Rolle</source>
         <target>Role</target>
-      </segment>
-    </unit>
-    <unit id="admin.details.pushupCount">
-      <segment state="translated">
-        <source>Pushups</source>
-        <target>Pushups</target>
       </segment>
     </unit>
     <unit id="admin.details.lastEntry">
@@ -10377,6 +10365,18 @@ Deine Position: # ·  Reps        </source>
       <segment state="translated">
         <source>Datenschutz</source>
         <target>Privacy Policy</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.entries">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.entryCount">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
       </segment>
     </unit>
 </file>

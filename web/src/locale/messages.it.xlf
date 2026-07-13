@@ -1016,15 +1016,6 @@
         <target>Anonimo</target>
       </segment>
     </unit>
-    <unit id="admin.col.pushups">
-      <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:225,226</note>
-      </notes>
-      <segment state="translated">
-        <source>Pushups</source>
-        <target>Flessioni sulle braccia</target>
-      </segment>
-    </unit>
     <unit id="admin.col.lastEntry">
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:236,238</note>
@@ -1329,15 +1320,6 @@
       <segment state="translated">
         <source>Rolle</source>
         <target>Ruolo</target>
-      </segment>
-    </unit>
-    <unit id="admin.details.pushupCount">
-      <notes>
-        <note category="location">web/src/app/admin/user-details-dialog.component.ts:38,39</note>
-      </notes>
-      <segment state="translated">
-        <source>Pushups</source>
-        <target>Flessioni sulle braccia</target>
       </segment>
     </unit>
     <unit id="admin.details.lastEntry">
@@ -10184,6 +10166,18 @@
       <segment state="translated">
         <source>Datenschutz</source>
         <target>Tutela dei dati</target>
+      </segment>
+    </unit>
+    <unit id="admin.col.entries">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
+      </segment>
+    </unit>
+    <unit id="admin.details.entryCount">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
       </segment>
     </unit>
 </file>

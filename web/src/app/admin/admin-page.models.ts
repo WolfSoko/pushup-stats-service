@@ -3,7 +3,7 @@ export interface AdminUser {
   displayName: string | null;
   email: string | null;
   anonymous: boolean;
-  pushupCount: number;
+  entryCount: number;
   lastEntry: string | null;
   createdAt: string | null;
   role: string | null;
