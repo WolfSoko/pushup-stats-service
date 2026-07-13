@@ -58,6 +58,15 @@ export const updateAdminUserActivityOnEntryWrite = onDocumentWritten(
         after
       );
 
+      if (aggregate.entryCount <= 0) {
+        // No entries remain — e.g. the user deleted their last entry, or a
+        // hard-delete/bulk-cleanup purged them all. Drop the aggregate rather
+        // than leave an orphaned zero doc. Converges to "deleted" even under
+        // out-of-order batch-delete triggers, since the final entryCount is 0.
+        tx.delete(ref);
+        return;
+      }
+
       let lastEntry = aggregate.lastEntry;
       if (needsRecompute) {
         // The deleted/moved entry was the running max — re-derive the true
