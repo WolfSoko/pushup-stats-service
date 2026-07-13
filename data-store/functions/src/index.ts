@@ -15,14 +15,17 @@ export {
   adminDeleteUser,
   adminListUsers,
   adminSetLeaderboardExclusion,
-  getMigrationStatuses,
-  setMigrationStatus,
 } from './functions-admin';
 
 export {
   backfillAdminUserActivity,
   updateAdminUserActivityOnEntryWrite,
 } from './functions-admin-user-activity';
+
+export {
+  getMigrationStatuses,
+  setMigrationStatus,
+} from './functions-migration-status';
 
 export {
   adminCreateGithubIssue,

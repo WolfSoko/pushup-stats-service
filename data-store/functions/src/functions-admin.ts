@@ -5,9 +5,11 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import {
   validateAdminAccess,
   validateLeaderboardExclusionPayload,
-  validateSetMigrationStatusPayload,
 } from './admin';
-import { type UserActivityAggregate } from './admin/user-entry-activity';
+import {
+  deleteUserExerciseData,
+  readUserActivity,
+} from './admin/user-data-ops';
 import { db, DEMO_USER_ID } from './firebase-app';
 import { deleteAllPushSubscriptions } from './functions-push';
 
@@ -16,58 +18,6 @@ export function assertAdmin(request: {
 }) {
   const error = validateAdminAccess(request.auth);
   if (error) throw new HttpsError(error.code, error.message);
-}
-
-// Hard-delete a user's exercise history. Post-cutover writes land in
-// `exerciseEntries`, but the pushup unification migration deliberately
-// left the legacy `pushups` source intact — so a full erasure must purge
-// both collections, otherwise pre-cutover rows outlive the deleted uid.
-// Pages through the results (`limit` + re-query) so a user with a huge
-// history never materialises more than one batch of docs at a time.
-async function deleteUserExerciseData(uid: string): Promise<void> {
-  const BATCH_SIZE = 500;
-  for (const collection of ['exerciseEntries', 'pushups']) {
-    for (;;) {
-      const snap = await db
-        .collection(collection)
-        .where('userId', '==', uid)
-        .limit(BATCH_SIZE)
-        .get();
-      if (snap.empty) break;
-      const batch = db.batch();
-      for (const doc of snap.docs) {
-        batch.delete(doc.ref);
-      }
-      await batch.commit();
-      if (snap.size < BATCH_SIZE) break;
-    }
-  }
-}
-
-// Read the precomputed `adminUserActivity/{uid}` aggregates for the given
-// uids. Reads are O(#uids) (chunked `in` on the document id), not a scan of
-// the whole `exerciseEntries` collection. The `updateAdminUserActivityOnEntryWrite`
-// trigger keeps the docs current; `backfillAdminUserActivity` seeds history.
-async function readUserActivity(
-  uids: string[]
-): Promise<Map<string, UserActivityAggregate>> {
-  const activity = new Map<string, UserActivityAggregate>();
-  if (uids.length === 0) return activity;
-
-  // `getAll` fetches by document reference in one round-trip per chunk, with
-  // no 10-item `in`-query cap, so this stays cheap even for large user lists.
-  const collection = db.collection('adminUserActivity');
-  const CHUNK = 300;
-  for (let i = 0; i < uids.length; i += CHUNK) {
-    const refs = uids.slice(i, i + CHUNK).map((uid) => collection.doc(uid));
-    const snaps = await db.getAll(...refs);
-    for (const snap of snaps) {
-      if (snap.exists) {
-        activity.set(snap.id, snap.data() as UserActivityAggregate);
-      }
-    }
-  }
-  return activity;
 }
 
 export const adminListUsers = onCall(
@@ -252,59 +202,5 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       by: request.auth?.uid,
     });
     return { deleted, skipped };
-  }
-);
-
-const MIGRATION_STATUS_COLLECTION = 'migrationStatus';
-
-export const getMigrationStatuses = onCall(
-  { region: 'europe-west3' },
-  async (request) => {
-    assertAdmin(request);
-    const snap = await db.collection(MIGRATION_STATUS_COLLECTION).get();
-    const statuses: Record<
-      string,
-      { completed: boolean; completedAt: string | null; completedBy: string }
-    > = {};
-    for (const doc of snap.docs) {
-      const data = doc.data();
-      statuses[doc.id] = {
-        completed: Boolean(data.completed),
-        completedAt: (data.completedAt as string | null) ?? null,
-        completedBy: (data.completedBy as string) ?? '',
-      };
-    }
-    return { statuses };
-  }
-);
-
-export const setMigrationStatus = onCall(
-  { region: 'europe-west3' },
-  async (request) => {
-    assertAdmin(request);
-
-    const validation = validateSetMigrationStatusPayload(request.data);
-    if (!validation.valid || !validation.id) {
-      throw new HttpsError('invalid-argument', validation.error ?? 'invalid');
-    }
-
-    const nowIso = new Date().toISOString();
-    const completed = validation.completed === true;
-    const doc = {
-      completed,
-      completedAt: completed ? nowIso : null,
-      completedBy: completed ? (request.auth?.uid ?? '') : '',
-    };
-    await db
-      .collection(MIGRATION_STATUS_COLLECTION)
-      .doc(validation.id)
-      .set(doc);
-
-    logger.info('setMigrationStatus', {
-      id: validation.id,
-      completed,
-      by: request.auth?.uid,
-    });
-    return { id: validation.id, ...doc };
   }
 );
