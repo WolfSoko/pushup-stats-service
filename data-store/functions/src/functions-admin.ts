@@ -17,6 +17,27 @@ export function assertAdmin(request: {
   if (error) throw new HttpsError(error.code, error.message);
 }
 
+// Hard-delete a user's exercise history. Post-cutover writes land in
+// `exerciseEntries`, but the pushup unification migration deliberately
+// left the legacy `pushups` source intact — so a full erasure must purge
+// both collections, otherwise pre-cutover rows outlive the deleted uid.
+async function deleteUserExerciseData(uid: string): Promise<void> {
+  const BATCH_SIZE = 500;
+  for (const collection of ['exerciseEntries', 'pushups']) {
+    const snap = await db
+      .collection(collection)
+      .where('userId', '==', uid)
+      .get();
+    for (let i = 0; i < snap.docs.length; i += BATCH_SIZE) {
+      const batch = db.batch();
+      for (const doc of snap.docs.slice(i, i + BATCH_SIZE)) {
+        batch.delete(doc.ref);
+      }
+      await batch.commit();
+    }
+  }
+}
+
 export const adminListUsers = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
@@ -45,7 +66,10 @@ export const adminListUsers = onCall(
 
     const entryCountMap = new Map<string, number>();
     const lastEntryMap = new Map<string, string>();
-    const entrySnap = await db.collection('exerciseEntries').get();
+    const entrySnap = await db
+      .collection('exerciseEntries')
+      .select('userId', 'timestamp')
+      .get();
     for (const doc of entrySnap.docs) {
       const data = doc.data();
       if (!data.userId) continue;
@@ -110,20 +134,7 @@ export const adminDeleteUser = onCall(
         );
     } else {
       await db.collection('userConfigs').doc(uid).delete();
-
-      const entrySnap = await db
-        .collection('exerciseEntries')
-        .where('userId', '==', uid)
-        .get();
-
-      const BATCH_SIZE = 500;
-      for (let i = 0; i < entrySnap.docs.length; i += BATCH_SIZE) {
-        const batch = db.batch();
-        for (const doc of entrySnap.docs.slice(i, i + BATCH_SIZE)) {
-          batch.delete(doc.ref);
-        }
-        await batch.commit();
-      }
+      await deleteUserExerciseData(uid);
     }
 
     await deleteAllPushSubscriptions(uid);
@@ -196,7 +207,10 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     const anonymousUserSet = new Set(anonymousUsers);
     const lastEntryMap = new Map<string, string>();
     if (anonymousUsers.length > 0) {
-      const entrySnap = await db.collection('exerciseEntries').get();
+      const entrySnap = await db
+        .collection('exerciseEntries')
+        .select('userId', 'timestamp')
+        .get();
       for (const doc of entrySnap.docs) {
         const data = doc.data();
         if (!data.userId || !anonymousUserSet.has(data.userId)) continue;
@@ -222,20 +236,7 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
 
       await admin.auth().deleteUser(uid);
       await db.collection('userConfigs').doc(uid).delete();
-
-      const entrySnap = await db
-        .collection('exerciseEntries')
-        .where('userId', '==', uid)
-        .get();
-
-      const BATCH_SIZE = 500;
-      for (let i = 0; i < entrySnap.docs.length; i += BATCH_SIZE) {
-        const batch = db.batch();
-        for (const doc of entrySnap.docs.slice(i, i + BATCH_SIZE)) {
-          batch.delete(doc.ref);
-        }
-        await batch.commit();
-      }
+      await deleteUserExerciseData(uid);
 
       await deleteAllPushSubscriptions(uid);
       deleted++;
