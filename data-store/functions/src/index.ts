@@ -20,6 +20,11 @@ export {
 } from './functions-admin';
 
 export {
+  backfillAdminUserActivity,
+  updateAdminUserActivityOnEntryWrite,
+} from './functions-admin-user-activity';
+
+export {
   adminCreateGithubIssue,
   adminDeleteFeedback,
   adminListFeedback,

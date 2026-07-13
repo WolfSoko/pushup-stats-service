@@ -7,7 +7,7 @@ import {
   validateLeaderboardExclusionPayload,
   validateSetMigrationStatusPayload,
 } from './admin';
-import { aggregateEntryActivity } from './admin/user-entry-activity';
+import { type UserActivityAggregate } from './admin/user-entry-activity';
 import { db, DEMO_USER_ID } from './firebase-app';
 import { deleteAllPushSubscriptions } from './functions-push';
 
@@ -44,6 +44,27 @@ async function deleteUserExerciseData(uid: string): Promise<void> {
   }
 }
 
+// Read the precomputed `adminUserActivity/{uid}` aggregates for the given
+// uids. Reads are O(#uids) (chunked `in` on the document id), not a scan of
+// the whole `exerciseEntries` collection. The `updateAdminUserActivityOnEntryWrite`
+// trigger keeps the docs current; `backfillAdminUserActivity` seeds history.
+async function readUserActivity(
+  uids: string[]
+): Promise<Map<string, UserActivityAggregate>> {
+  const activity = new Map<string, UserActivityAggregate>();
+  for (let i = 0; i < uids.length; i += 10) {
+    const batch = uids.slice(i, i + 10);
+    const snaps = await db
+      .collection('adminUserActivity')
+      .where(admin.firestore.FieldPath.documentId(), 'in', batch)
+      .get();
+    for (const snap of snaps.docs) {
+      activity.set(snap.id, snap.data() as UserActivityAggregate);
+    }
+  }
+  return activity;
+}
+
 export const adminListUsers = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
@@ -70,14 +91,7 @@ export const adminListUsers = onCall(
       }
     }
 
-    const entrySnap = await db
-      .collection('exerciseEntries')
-      .select('userId', 'timestamp')
-      .get();
-    const activity = aggregateEntryActivity(
-      entrySnap.docs.map((doc) => doc.data()),
-      new Set(uids)
-    );
+    const activity = await readUserActivity(uids);
 
     return authUsers.map((user) => {
       const config = configMap.get(user.uid) || {};
@@ -90,8 +104,8 @@ export const adminListUsers = onCall(
           null,
         email: (config as Record<string, unknown>).email || user.email || null,
         anonymous: user.providerData.length === 0,
-        entryCount: userActivity?.count ?? 0,
-        lastEntry: userActivity?.lastTimestamp ?? null,
+        entryCount: userActivity?.entryCount ?? 0,
+        lastEntry: userActivity?.lastEntry ?? null,
         createdAt: user.metadata.creationTime || null,
         role: user.customClaims?.admin === true ? 'admin' : null,
       };
@@ -201,29 +215,17 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
       pageToken = result.pageToken;
     } while (pageToken);
 
-    const anonymousUserSet = new Set(anonymousUsers);
-    let activity = aggregateEntryActivity([]);
-    if (anonymousUsers.length > 0) {
-      // A user is "active" iff they have any entry on/after the cutoff, so
-      // only those entries need reading. ISO timestamps sort lexicographically
-      // against the date-only `cutoff`, so the range filter is exact and keeps
-      // the read volume proportional to recent activity, not full history.
-      const entrySnap = await db
-        .collection('exerciseEntries')
-        .where('timestamp', '>=', cutoff)
-        .select('userId', 'timestamp')
-        .get();
-      activity = aggregateEntryActivity(
-        entrySnap.docs.map((doc) => doc.data()),
-        anonymousUserSet
-      );
-    }
+    // A user is "active" iff their last entry is on/after the cutoff. Read the
+    // precomputed per-user aggregates (O(#anonymous)) instead of scanning the
+    // entry history. ISO `lastEntry` sorts lexicographically against the
+    // date-only `cutoff`, so the comparison is exact.
+    const activity = await readUserActivity(anonymousUsers);
 
     let deleted = 0;
     let skipped = 0;
 
     for (const uid of anonymousUsers) {
-      const lastTs = activity.get(uid)?.lastTimestamp;
+      const lastTs = activity.get(uid)?.lastEntry;
       if (lastTs && lastTs >= cutoff) {
         skipped++;
         continue;

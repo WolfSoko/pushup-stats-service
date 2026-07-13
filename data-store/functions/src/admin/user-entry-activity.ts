@@ -38,3 +38,55 @@ export function aggregateEntryActivity(
   }
   return result;
 }
+
+export interface UserActivityAggregate {
+  entryCount: number;
+  lastEntry: string | null;
+}
+
+/**
+ * Apply a single `exerciseEntries` write (create / update / delete) to a
+ * user's precomputed activity aggregate, keeping `adminListUsers` an
+ * O(#users) read instead of an O(#entries) scan.
+ *
+ * `entryCount` is a pure delta. `lastEntry` (max timestamp) can only be
+ * bumped up by the surviving entry, so most writes stay delta-only; the one
+ * case the delta can't resolve is removing/moving away from the entry that
+ * *was* the max, which may lower it — signalled via `needsRecompute` so the
+ * caller re-derives the true max from source. Pass `null` for the missing
+ * side of a create (`before`) or delete (`after`).
+ */
+export function nextActivityAggregate(
+  current: UserActivityAggregate | null,
+  before: { timestamp: string | null } | null,
+  after: { timestamp: string | null } | null
+): { aggregate: UserActivityAggregate; needsRecompute: boolean } {
+  const base = current ?? { entryCount: 0, lastEntry: null };
+  const beforeTs = before?.timestamp ?? null;
+  const afterTs = after?.timestamp ?? null;
+
+  const entryCount = Math.max(
+    0,
+    base.entryCount + (after ? 1 : 0) - (before ? 1 : 0)
+  );
+
+  let lastEntry = base.lastEntry;
+  if (afterTs && (lastEntry === null || afterTs > lastEntry)) {
+    lastEntry = afterTs;
+  }
+
+  // The entry whose timestamp leaves the collection with this write: a delete
+  // removes `beforeTs`; an update that changes the timestamp moves away from
+  // the old one. If that timestamp was the running max — and the surviving
+  // `afterTs` didn't re-establish an equal-or-higher one — the new max is
+  // unknowable from the delta alone.
+  const removedTs =
+    before && (!after || afterTs !== beforeTs) ? beforeTs : null;
+  const needsRecompute =
+    removedTs !== null &&
+    lastEntry !== null &&
+    removedTs === lastEntry &&
+    !(afterTs !== null && afterTs >= removedTs);
+
+  return { aggregate: { entryCount, lastEntry }, needsRecompute };
+}

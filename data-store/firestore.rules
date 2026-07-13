@@ -141,6 +141,12 @@ service cloud.firestore {
       allow read, write: if false; // Cloud Functions (Admin SDK) only
     }
 
+    // Precomputed per-user activity aggregate for the admin dashboard —
+    // internal only, no client access.
+    match /adminUserActivity/{userId} {
+      allow read, write: if false; // Cloud Functions (Admin SDK) only
+    }
+
     // Feedback — create-only for authenticated users. No read/update/delete from client.
     match /feedback/{feedbackId} {
       allow create: if request.auth != null

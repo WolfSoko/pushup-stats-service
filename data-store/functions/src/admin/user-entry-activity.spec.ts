@@ -1,5 +1,8 @@
 import { describe, it, expect } from '@jest/globals';
-import { aggregateEntryActivity } from './user-entry-activity';
+import {
+  aggregateEntryActivity,
+  nextActivityAggregate,
+} from './user-entry-activity';
 
 describe('aggregateEntryActivity', () => {
   it('should count entries and keep the latest timestamp per user', () => {
@@ -80,5 +83,138 @@ describe('aggregateEntryActivity', () => {
     // then — same-day activity counts as active (>= cutoff), earlier day does not
     expect(last >= '2026-06-23').toBe(true);
     expect(last >= '2026-06-24').toBe(false);
+  });
+});
+
+describe('nextActivityAggregate', () => {
+  it('should seed a fresh aggregate on the first create', () => {
+    // given no existing aggregate
+    // when a first entry is created
+    const { aggregate, needsRecompute } = nextActivityAggregate(null, null, {
+      timestamp: '2026-03-01T08:00:00.000Z',
+    });
+    // then
+    expect(aggregate).toEqual({
+      entryCount: 1,
+      lastEntry: '2026-03-01T08:00:00.000Z',
+    });
+    expect(needsRecompute).toBe(false);
+  });
+
+  it('should bump count and lastEntry when a newer entry is created', () => {
+    // given
+    const current = { entryCount: 2, lastEntry: '2026-03-01T08:00:00.000Z' };
+    // when
+    const { aggregate, needsRecompute } = nextActivityAggregate(current, null, {
+      timestamp: '2026-05-01T08:00:00.000Z',
+    });
+    // then
+    expect(aggregate).toEqual({
+      entryCount: 3,
+      lastEntry: '2026-05-01T08:00:00.000Z',
+    });
+    expect(needsRecompute).toBe(false);
+  });
+
+  it('should keep lastEntry when a create is older than the current max', () => {
+    // given
+    const current = { entryCount: 1, lastEntry: '2026-05-01T08:00:00.000Z' };
+    // when
+    const { aggregate } = nextActivityAggregate(current, null, {
+      timestamp: '2026-01-01T08:00:00.000Z',
+    });
+    // then
+    expect(aggregate).toEqual({
+      entryCount: 2,
+      lastEntry: '2026-05-01T08:00:00.000Z',
+    });
+  });
+
+  it('should decrement without recompute when a non-max entry is deleted', () => {
+    // given
+    const current = { entryCount: 3, lastEntry: '2026-05-01T08:00:00.000Z' };
+    // when an older entry is deleted
+    const { aggregate, needsRecompute } = nextActivityAggregate(
+      current,
+      { timestamp: '2026-01-01T08:00:00.000Z' },
+      null
+    );
+    // then
+    expect(aggregate).toEqual({
+      entryCount: 2,
+      lastEntry: '2026-05-01T08:00:00.000Z',
+    });
+    expect(needsRecompute).toBe(false);
+  });
+
+  it('should signal recompute when the max entry is deleted', () => {
+    // given
+    const current = { entryCount: 2, lastEntry: '2026-05-01T08:00:00.000Z' };
+    // when the latest entry is deleted
+    const { aggregate, needsRecompute } = nextActivityAggregate(
+      current,
+      { timestamp: '2026-05-01T08:00:00.000Z' },
+      null
+    );
+    // then — count drops, lastEntry is stale until the caller recomputes
+    expect(aggregate.entryCount).toBe(1);
+    expect(needsRecompute).toBe(true);
+  });
+
+  it('should not signal recompute on a same-timestamp update', () => {
+    // given
+    const current = { entryCount: 1, lastEntry: '2026-05-01T08:00:00.000Z' };
+    // when an entry is updated without changing its timestamp
+    const { aggregate, needsRecompute } = nextActivityAggregate(
+      current,
+      { timestamp: '2026-05-01T08:00:00.000Z' },
+      { timestamp: '2026-05-01T08:00:00.000Z' }
+    );
+    // then count is unchanged and no recompute is needed
+    expect(aggregate.entryCount).toBe(1);
+    expect(needsRecompute).toBe(false);
+  });
+
+  it('should signal recompute when the max entry is moved to an earlier time', () => {
+    // given
+    const current = { entryCount: 2, lastEntry: '2026-05-01T08:00:00.000Z' };
+    // when the max entry's timestamp moves earlier
+    const { needsRecompute } = nextActivityAggregate(
+      current,
+      { timestamp: '2026-05-01T08:00:00.000Z' },
+      { timestamp: '2026-02-01T08:00:00.000Z' }
+    );
+    // then
+    expect(needsRecompute).toBe(true);
+  });
+
+  it('should re-establish the max without recompute when an update moves later', () => {
+    // given
+    const current = { entryCount: 2, lastEntry: '2026-05-01T08:00:00.000Z' };
+    // when the max entry moves to an even later time
+    const { aggregate, needsRecompute } = nextActivityAggregate(
+      current,
+      { timestamp: '2026-05-01T08:00:00.000Z' },
+      { timestamp: '2026-06-01T08:00:00.000Z' }
+    );
+    // then
+    expect(aggregate).toEqual({
+      entryCount: 2,
+      lastEntry: '2026-06-01T08:00:00.000Z',
+    });
+    expect(needsRecompute).toBe(false);
+  });
+
+  it('should never drive entryCount below zero', () => {
+    // given a (corrupt) empty aggregate
+    const current = { entryCount: 0, lastEntry: null };
+    // when a delete arrives with nothing to remove
+    const { aggregate } = nextActivityAggregate(
+      current,
+      { timestamp: '2026-05-01T08:00:00.000Z' },
+      null
+    );
+    // then
+    expect(aggregate.entryCount).toBe(0);
   });
 });
