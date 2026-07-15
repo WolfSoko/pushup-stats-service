@@ -109,13 +109,31 @@ export const adminUpdateUserEntry = onCall(
       );
     }
 
-    const def = findExerciseDefinition(String(data.exerciseId));
-    if (!def) {
-      throw new HttpsError('failed-precondition', 'Unbekannte Übung.');
-    }
-    const violation = validateExerciseEntry(patch, def, { partial: true });
-    if (violation) {
-      throw new HttpsError('invalid-argument', violation);
+    // Only the measurement/variant fields need catalog validation. A
+    // timestamp-only patch is allowed even for a stale exercise id whose
+    // catalog entry was renamed/removed — the edit dialog offers exactly
+    // that for such entries. Mirrors `ExerciseFirestoreService.updateEntry`,
+    // which validates only when a value field actually changes.
+    const needsCatalog = (
+      [
+        'reps',
+        'durationSec',
+        'distanceM',
+        'weightKg',
+        'sets',
+        'intervals',
+        'variantId',
+      ] as const
+    ).some((k) => patch[k] !== undefined);
+    if (needsCatalog) {
+      const def = findExerciseDefinition(String(data.exerciseId));
+      if (!def) {
+        throw new HttpsError('failed-precondition', 'Unbekannte Übung.');
+      }
+      const violation = validateExerciseEntry(patch, def, { partial: true });
+      if (violation) {
+        throw new HttpsError('invalid-argument', violation);
+      }
     }
 
     await ref.update(buildEntryUpdate(patch));

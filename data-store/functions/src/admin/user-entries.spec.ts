@@ -161,6 +161,35 @@ describe('admin/user-entries', () => {
       expect(result.valid).toBe(false);
     });
 
+    it('should treat a whitespace-only variantId as a clear (null)', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { variantId: '   ' },
+      });
+
+      // then
+      expect(result).toEqual({
+        valid: true,
+        uid: 'u',
+        entryId: 'e',
+        patch: { variantId: null },
+      });
+    });
+
+    it('should trim surrounding whitespace from a variantId', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { variantId: '  bodyweight  ' },
+      });
+
+      // then
+      expect(result.valid && result.patch.variantId).toBe('bodyweight');
+    });
+
     it('should pass through cleared breakdowns and a cleared variant', () => {
       // given / when
       const result = validateUpdateUserEntryPayload({

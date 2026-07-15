@@ -172,7 +172,10 @@ export function validateUpdateUserEntryPayload(
     if (raw.variantId !== null && typeof raw.variantId !== 'string') {
       return { valid: false, error: 'variantId must be a string or null' };
     }
-    patch.variantId = raw.variantId as string | null;
+    // Trim, and treat a blank/whitespace-only value as `null` ("clear the
+    // variant") rather than writing it verbatim as a bogus variant id.
+    const trimmed = raw.variantId === null ? null : raw.variantId.trim();
+    patch.variantId = trimmed === '' ? null : trimmed;
   }
 
   if (Object.keys(patch).length === 0) {
