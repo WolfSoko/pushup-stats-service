@@ -47,7 +47,9 @@ export const adminListUserEntries = onCall(
       .limitToLast(limit)
       .get();
 
-    return snap.docs.reverse().map((doc) => ({ _id: doc.id, ...doc.data() }));
+    // `_id` last so the real doc id always wins over any stray `_id`
+    // field a document might carry from older data or a client bug.
+    return snap.docs.reverse().map((doc) => ({ ...doc.data(), _id: doc.id }));
   }
 );
 

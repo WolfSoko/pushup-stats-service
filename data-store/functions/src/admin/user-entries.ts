@@ -42,7 +42,8 @@ const KNOWN_PATCH_FIELDS: ReadonlySet<string> = new Set<string>([
   'variantId',
 ]);
 
-// ISO-8601 date-time with a *required* timezone suffix (`Z` or `±HH:MM`):
+// ISO-8601 date-time with a *required* timezone suffix (`Z`, `±HH:MM`, or
+// `±HHMM` — `appendLocalOffset` may emit the colon-less form):
 // the client only ever writes the stored `…Z` form or `appendLocalOffset`
 // output (`…+02:00`). Since the admin callable bypasses the Firestore rules
 // that pin this shape, re-check it here — `buildEntryUpdate` stores the value
