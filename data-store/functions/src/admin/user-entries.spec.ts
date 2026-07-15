@@ -81,6 +81,50 @@ describe('admin/user-entries', () => {
       });
     });
 
+    it('should trim a whitespace-padded ISO timestamp', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { timestamp: '  2026-04-01T12:30:00+02:00  ' },
+      });
+
+      // then
+      expect(result).toEqual({
+        valid: true,
+        uid: 'u',
+        entryId: 'e',
+        patch: { timestamp: '2026-04-01T12:30:00+02:00' },
+      });
+    });
+
+    it('should reject a malformed timestamp', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { timestamp: 'not-a-timestamp' },
+      });
+
+      // then
+      expect(result.valid).toBe(false);
+    });
+
+    it('should reject an unknown patch field', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { repss: 30 },
+      });
+
+      // then
+      expect(result).toEqual({
+        valid: false,
+        error: 'unknown patch field: repss',
+      });
+    });
+
     it('should reject an empty patch', () => {
       // given / when
       const result = validateUpdateUserEntryPayload({

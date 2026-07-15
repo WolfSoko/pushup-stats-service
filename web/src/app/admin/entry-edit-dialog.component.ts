@@ -141,7 +141,7 @@ export class AdminEntryEditDialogComponent {
       ? $localize`:@@admin.entry.edit.duration:Dauer (s)`
       : $localize`:@@admin.entry.edit.weight:Gewicht (kg)`;
 
-  private readonly originalLocal = this.entry.timestamp.slice(0, 16);
+  private readonly originalLocal = this.isoToLocalInput(this.entry.timestamp);
   readonly timestamp = signal(this.originalLocal);
   readonly value = signal<number | null>(this.initialPrimaryValue());
   readonly companionValue = signal<number | null>(
@@ -178,6 +178,20 @@ export class AdminEntryEditDialogComponent {
     return this.timestamp() === this.originalLocal
       ? this.entry.timestamp
       : appendLocalOffset(this.timestamp());
+  }
+
+  // Render a stored instant as a `YYYY-MM-DDTHH:mm` string in the *viewer's*
+  // local timezone for the `datetime-local` input. Slicing the raw ISO
+  // prefix would misread entries stored in UTC (`…Z`) or another user's
+  // offset — an admin edits any user's entries, so their local tz may
+  // differ from the entry's. `appendLocalOffset` converts back on save.
+  private isoToLocalInput(iso: string): string {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso.slice(0, 16);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
+      d.getDate()
+    )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
   }
 
   private initialPrimaryValue(): number | null {

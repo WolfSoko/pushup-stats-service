@@ -32,6 +32,24 @@ describe('AdminEntryEditDialogComponent', () => {
     source: 'web',
   };
 
+  const runningEntry: ExerciseEntry = {
+    _id: 'e2',
+    userId: 'u1',
+    exerciseId: 'cardio.running',
+    timestamp: '2026-04-02T08:00:00.000Z',
+    distanceM: 5000,
+    durationSec: 1500,
+    source: 'web',
+  };
+
+  function localInput(iso: string): string {
+    const d = new Date(iso);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
+      d.getDate()
+    )}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -85,6 +103,33 @@ describe('AdminEntryEditDialogComponent', () => {
     expect(component.canSave()).toBe(false);
     component.save();
     expect(closeSpy).not.toHaveBeenCalled();
+  });
+
+  it('should seed the timestamp input in the viewer local timezone', () => {
+    // given / when — raw slice would misread a `…Z` timestamp when the
+    // viewer's tz is not UTC; the dialog must render the local wall-clock.
+    const { component } = setup(repsEntry);
+
+    // then
+    expect(component.timestamp()).toBe(localInput(repsEntry.timestamp));
+  });
+
+  it('should edit the companion value of a distance-time entry', () => {
+    // given
+    const { component } = setup(runningEntry);
+
+    // then — companion wiring resolves to duration
+    expect(component.companion).toBe('durationSec');
+    expect(component.companionLabel).toContain('Dauer');
+    expect(component.companionValue()).toBe(1500);
+
+    // when
+    component.companionValue.set(1600);
+
+    // then
+    expect(component.canSave()).toBe(true);
+    component.save();
+    expect(closeSpy).toHaveBeenCalledWith({ durationSec: 1600 });
   });
 
   it('should only expose the timestamp field for a stale exercise id', () => {

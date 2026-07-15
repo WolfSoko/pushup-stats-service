@@ -35,6 +35,25 @@ const NUMERIC_FIELDS = [
 ] as const;
 const BREAKDOWN_FIELDS = ['sets', 'intervals'] as const;
 
+const KNOWN_PATCH_FIELDS: ReadonlySet<string> = new Set<string>([
+  'timestamp',
+  ...NUMERIC_FIELDS,
+  ...BREAKDOWN_FIELDS,
+  'variantId',
+]);
+
+// ISO-8601-ish date-time: the client writes either the stored `…Z` form or
+// `appendLocalOffset` output (`…+02:00`). Since the admin callable bypasses
+// the Firestore rules that pin this shape, re-check it here — `buildEntryUpdate`
+// stores the value verbatim and `orderBy('timestamp')` / the activity
+// aggregate assume lexicographically-ordered ISO strings.
+const ISO_TIMESTAMP_RE =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?$/;
+
+function isIsoTimestamp(value: string): boolean {
+  return ISO_TIMESTAMP_RE.test(value) && !Number.isNaN(Date.parse(value));
+}
+
 /**
  * Validates the `adminListUserEntries` payload: a non-empty `uid` and an
  * optional positive integer `limit` capped at {@link MAX_USER_ENTRIES_LIMIT}.
@@ -105,17 +124,28 @@ export function validateUpdateUserEntryPayload(
   if ('exerciseId' in raw) {
     return { valid: false, error: 'exerciseId is immutable' };
   }
+  // Reject unknown keys rather than silently dropping them, so a typo like
+  // `repss` surfaces as an error instead of a no-op the admin thinks saved.
+  for (const key of Object.keys(raw)) {
+    if (!KNOWN_PATCH_FIELDS.has(key)) {
+      return { valid: false, error: `unknown patch field: ${key}` };
+    }
+  }
 
   const patch: AdminEntryPatch = {};
 
   if (raw.timestamp !== undefined) {
-    if (
-      typeof raw.timestamp !== 'string' ||
-      raw.timestamp.trim().length === 0
-    ) {
-      return { valid: false, error: 'timestamp must be a non-empty string' };
+    if (typeof raw.timestamp !== 'string') {
+      return { valid: false, error: 'timestamp must be a string' };
     }
-    patch.timestamp = raw.timestamp;
+    const ts = raw.timestamp.trim();
+    if (!isIsoTimestamp(ts)) {
+      return {
+        valid: false,
+        error: 'timestamp must be an ISO date-time string',
+      };
+    }
+    patch.timestamp = ts;
   }
 
   for (const f of NUMERIC_FIELDS) {
