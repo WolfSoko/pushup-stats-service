@@ -25,6 +25,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
+import { UserEntriesDialogComponent } from './user-entries-dialog.component';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { AdminUser, BulkDeleteResult } from './admin-page.models';
@@ -76,6 +77,7 @@ export class AdminPageComponent {
   readonly refreshTooltip = $localize`:@@admin.refresh:Neu laden`;
   readonly anonTooltip = $localize`:@@admin.col.anonTooltip:Anonym`;
   readonly deleteUserTooltip = $localize`:@@admin.user.deleteTooltip:Benutzer löschen`;
+  readonly entriesTooltip = $localize`:@@admin.user.entriesTooltip:Einträge anzeigen`;
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly users = signal<AdminUser[]>([]);
@@ -126,6 +128,19 @@ export class AdminPageComponent {
       width: 'min(92vw, 480px)',
       maxWidth: '92vw',
     });
+  }
+
+  openEntriesDialog(user: AdminUser): void {
+    this.dialog.open(UserEntriesDialogComponent, {
+      data: { user },
+      width: 'min(94vw, 720px)',
+      maxWidth: '94vw',
+    });
+  }
+
+  entriesAriaLabel(user: AdminUser): string {
+    const identifier = user.displayName ?? user.email ?? user.uid;
+    return $localize`:@@admin.row.entriesAria:Einträge anzeigen für ${identifier}:identifier:`;
   }
 
   detailsAriaLabel(user: AdminUser): string {

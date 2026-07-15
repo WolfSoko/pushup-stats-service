@@ -23,6 +23,11 @@ export {
 } from './functions-admin-user-activity';
 
 export {
+  adminListUserEntries,
+  adminUpdateUserEntry,
+} from './functions-admin-user-entries';
+
+export {
   getMigrationStatuses,
   setMigrationStatus,
 } from './functions-migration-status';

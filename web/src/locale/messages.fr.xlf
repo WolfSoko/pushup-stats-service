@@ -10052,5 +10052,119 @@
         <target>Entrées</target>
       </segment>
     </unit>
+    <unit id="admin.user.entriesTooltip">
+      <segment state="initial">
+        <source>Einträge anzeigen</source>
+        <target>Einträge anzeigen</target>
+      </segment>
+    </unit>
+    <unit id="admin.row.entriesAria">
+      <segment state="initial">
+        <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
+        <target>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.title">
+      <segment state="initial">
+        <source>Eintrag bearbeiten</source>
+        <target>Eintrag bearbeiten</target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.timestamp">
+      <segment state="initial">
+        <source>Zeitpunkt</source>
+        <target>Zeitpunkt</target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.value">
+      <segment state="initial">
+        <source>Wert</source>
+        <target>Wert</target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.staleExercise">
+      <segment state="initial">
+        <source> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </source>
+        <target> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.save">
+      <segment state="initial">
+        <source> Speichern </source>
+        <target> Speichern </target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.duration">
+      <segment state="initial">
+        <source>Dauer (s)</source>
+        <target>Dauer (s)</target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.weight">
+      <segment state="initial">
+        <source>Gewicht (kg)</source>
+        <target>Gewicht (kg)</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.title">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.empty">
+      <segment state="initial">
+        <source> Keine Einträge vorhanden. </source>
+        <target> Keine Einträge vorhanden. </target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.timestamp">
+      <segment state="initial">
+        <source>Zeitpunkt</source>
+        <target>Zeitpunkt</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.exercise">
+      <segment state="initial">
+        <source>Übung</source>
+        <target>Übung</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.value">
+      <segment state="initial">
+        <source>Wert</source>
+        <target>Wert</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.source">
+      <segment state="initial">
+        <source>Quelle</source>
+        <target>Quelle</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.close">
+      <segment state="initial">
+        <source> Schließen </source>
+        <target> Schließen </target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.editTooltip">
+      <segment state="initial">
+        <source>Eintrag bearbeiten</source>
+        <target>Eintrag bearbeiten</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.refresh">
+      <segment state="initial">
+        <source>Neu laden</source>
+        <target>Neu laden</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
