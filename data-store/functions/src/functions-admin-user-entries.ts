@@ -19,8 +19,16 @@ const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
 // Admin-only read of a single user's exercise history. The Firestore
 // rules scope client reads to `userId == request.auth.uid`, so the
 // dashboard's per-user drill-down can't query this collection directly —
-// it goes through the Admin SDK here. Ordered newest-first and capped so
-// a user with a huge history never materialises unbounded.
+// it goes through the Admin SDK here. Returns the newest `limit` entries,
+// newest first, so a user with a huge history never materialises unbounded.
+//
+// Uses `orderBy(timestamp, asc).limitToLast(limit)` + a client-side
+// reverse rather than `orderBy(desc)`: the only declared composite index
+// is `(userId ASC, timestamp ASC)`, which serves this in its native
+// direction. A `desc` order would need a separate descending index and
+// otherwise fail with FAILED_PRECONDITION in production. Same trick the
+// `updateAdminUserActivityOnEntryWrite` trigger uses to read the max
+// timestamp.
 export const adminListUserEntries = onCall(
   { region: 'europe-west3', timeoutSeconds: 60 },
   async (request) => {
@@ -35,11 +43,11 @@ export const adminListUserEntries = onCall(
     const snap = await db
       .collection(EXERCISE_ENTRIES_COLLECTION)
       .where('userId', '==', uid)
-      .orderBy('timestamp', 'desc')
-      .limit(limit)
+      .orderBy('timestamp', 'asc')
+      .limitToLast(limit)
       .get();
 
-    return snap.docs.map((doc) => ({ _id: doc.id, ...doc.data() }));
+    return snap.docs.reverse().map((doc) => ({ _id: doc.id, ...doc.data() }));
   }
 );
 
