@@ -1,0 +1,39 @@
+.entries-content {
+  min-width: min(94vw, 640px);
+}
+
+.user-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+
+.user-name {
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.error-text {
+  color: var(--mat-sys-error);
+}
+
+.empty-text {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+mat-cell,
+mat-header-cell {
+  white-space: nowrap;
+}

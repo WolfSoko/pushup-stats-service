@@ -191,6 +191,14 @@
           <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
             <button
               mat-icon-button
+              (click)="openEntriesDialog(u)"
+              [matTooltip]="entriesTooltip"
+              [attr.aria-label]="entriesAriaLabel(u)"
+            >
+              <mat-icon>list_alt</mat-icon>
+            </button>
+            <button
+              mat-icon-button
               color="warn"
               (click)="openDeleteDialog(u)"
               [matTooltip]="deleteUserTooltip"

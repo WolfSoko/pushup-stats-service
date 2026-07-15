@@ -15,6 +15,7 @@ import {
 } from './callable-functions.testing';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
+import { UserEntriesDialogComponent } from './user-entries-dialog.component';
 
 const { callablesMock, setupCallables } = createCallablesMock();
 
@@ -131,10 +132,12 @@ describe('AdminPageComponent', () => {
       // call the (mocked-missing) adminDeleteUser callable.
       dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
 
-      // when
-      const deleteButton = fixture.nativeElement.querySelector(
+      // when — the delete button is the warn-colored (last) action button;
+      // the first action button now opens the entries dialog.
+      const actionButtons = fixture.nativeElement.querySelectorAll(
         'mat-cell.mat-column-actions button'
-      ) as HTMLButtonElement | null;
+      ) as NodeListOf<HTMLButtonElement>;
+      const deleteButton = actionButtons[actionButtons.length - 1] ?? null;
       expect(deleteButton).toBeTruthy();
       if (!deleteButton) return;
       deleteButton.dispatchEvent(
@@ -150,6 +153,50 @@ describe('AdminPageComponent', () => {
       // ... but the row click handler must NOT fire (stopPropagation works)
       expect(dialogOpenSpy).not.toHaveBeenCalledWith(
         UserDetailsDialogComponent,
+        expect.anything()
+      );
+    });
+  });
+
+  describe('openEntriesDialog', () => {
+    it('should open UserEntriesDialogComponent with the user wrapped in data', async () => {
+      // given
+      await createComponent();
+      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
+
+      // when
+      component.openEntriesDialog(sampleUser);
+
+      // then
+      expect(dialogOpenSpy).toHaveBeenCalledWith(
+        UserEntriesDialogComponent,
+        expect.objectContaining({ data: { user: sampleUser } })
+      );
+    });
+
+    it('should open the entries dialog (not delete) from the first action button', async () => {
+      // given
+      await createComponent([sampleUser]);
+      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
+
+      // when
+      const firstAction = fixture.nativeElement.querySelector(
+        'mat-cell.mat-column-actions button'
+      ) as HTMLButtonElement | null;
+      expect(firstAction).toBeTruthy();
+      if (!firstAction) return;
+      firstAction.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, cancelable: true })
+      );
+      await fixture.whenStable();
+
+      // then
+      expect(dialogOpenSpy).toHaveBeenCalledWith(
+        UserEntriesDialogComponent,
+        expect.objectContaining({ data: { user: sampleUser } })
+      );
+      expect(dialogOpenSpy).not.toHaveBeenCalledWith(
+        DeleteUserDialogComponent,
         expect.anything()
       );
     });

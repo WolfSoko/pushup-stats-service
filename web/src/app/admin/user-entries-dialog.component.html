@@ -1,0 +1,96 @@
+<h2 mat-dialog-title i18n="@@admin.entries.title">Einträge</h2>
+<mat-dialog-content class="entries-content">
+  <p class="user-line">
+    <span class="user-name">{{
+      user.displayName ?? user.email ?? user.uid
+    }}</span>
+    <button
+      mat-icon-button
+      (click)="loadEntries()"
+      [matTooltip]="refreshTooltip"
+      [attr.aria-label]="refreshTooltip"
+    >
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </p>
+
+  @if (loading()) {
+    <div class="spinner-container">
+      <mat-spinner diameter="32" />
+    </div>
+  } @else if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  } @else if (!entries().length) {
+    <p class="empty-text" i18n="@@admin.entries.empty">
+      Keine Einträge vorhanden.
+    </p>
+  } @else {
+    <div class="table-scroll">
+      <mat-table [dataSource]="dataSource" matSort #entriesSort="matSort">
+        <ng-container matColumnDef="timestamp">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.entries.col.timestamp"
+            >Zeitpunkt</mat-header-cell
+          >
+          <mat-cell *matCellDef="let e">{{
+            e.timestamp | date: 'short'
+          }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="exercise">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.entries.col.exercise"
+            >Übung</mat-header-cell
+          >
+          <mat-cell *matCellDef="let e">{{ exerciseName(e) }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.entries.col.value"
+            >Wert</mat-header-cell
+          >
+          <mat-cell *matCellDef="let e">{{ valueDisplay(e) }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            i18n="@@admin.entries.col.source"
+            >Quelle</mat-header-cell
+          >
+          <mat-cell *matCellDef="let e">{{ e.source }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let e">
+            <button
+              mat-icon-button
+              (click)="openEditDialog(e)"
+              [matTooltip]="editTooltip"
+              [attr.aria-label]="editTooltip"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns" />
+        <mat-row *matRowDef="let row; columns: displayedColumns" />
+      </mat-table>
+    </div>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close i18n="@@admin.entries.close">
+    Schließen
+  </button>
+</mat-dialog-actions>

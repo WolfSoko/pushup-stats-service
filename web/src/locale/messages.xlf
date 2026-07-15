@@ -2728,7 +2728,7 @@
     <unit id="admin.refresh">
       <notes>
         <note category="location">web/src/app/admin/admin-feedback-section.component.ts:49</note>
-        <note category="location">web/src/app/admin/admin-page.component.ts:76</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:77</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -2921,7 +2921,7 @@
     </unit>
     <unit id="admin.col.anonTooltip">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:77</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:78</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -2929,15 +2929,31 @@
     </unit>
     <unit id="admin.user.deleteTooltip">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:78</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:79</note>
       </notes>
       <segment>
         <source>Benutzer löschen</source>
       </segment>
     </unit>
+    <unit id="admin.user.entriesTooltip">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:80</note>
+      </notes>
+      <segment>
+        <source>Einträge anzeigen</source>
+      </segment>
+    </unit>
+    <unit id="admin.row.entriesAria">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.ts:143</note>
+      </notes>
+      <segment>
+        <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
+      </segment>
+    </unit>
     <unit id="admin.row.detailsAria">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:133</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:148</note>
       </notes>
       <segment>
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
@@ -3013,6 +3029,70 @@
       </notes>
       <segment>
         <source> Löschen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.title">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:45,46</note>
+      </notes>
+      <segment>
+        <source>Eintrag bearbeiten</source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.timestamp">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:50,52</note>
+      </notes>
+      <segment>
+        <source>Zeitpunkt</source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.value">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:61,63</note>
+      </notes>
+      <segment>
+        <source>Wert</source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.staleExercise">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:84,87</note>
+      </notes>
+      <segment>
+        <source> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.cancel">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:90,93</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.save">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:99,101</note>
+      </notes>
+      <segment>
+        <source> Speichern </source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.duration">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:135</note>
+      </notes>
+      <segment>
+        <source>Dauer (s)</source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.edit.weight">
+      <notes>
+        <note category="location">web/src/app/admin/entry-edit-dialog.component.ts:136</note>
+      </notes>
+      <segment>
+        <source>Gewicht (kg)</source>
       </segment>
     </unit>
     <unit id="admin.migrations.status.completed">
@@ -3223,6 +3303,78 @@
       </notes>
       <segment>
         <source> Schließen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.title">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:1,2</note>
+      </notes>
+      <segment>
+        <source>Einträge</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.empty">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:25,28</note>
+      </notes>
+      <segment>
+        <source> Keine Einträge vorhanden. </source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.timestamp">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:35,37</note>
+      </notes>
+      <segment>
+        <source>Zeitpunkt</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.exercise">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:47,49</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.value">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:57,59</note>
+      </notes>
+      <segment>
+        <source>Wert</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.source">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:67,69</note>
+      </notes>
+      <segment>
+        <source>Quelle</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.close">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.html:94,96</note>
+      </notes>
+      <segment>
+        <source> Schließen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.editTooltip">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.ts:67</note>
+      </notes>
+      <segment>
+        <source>Eintrag bearbeiten</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.refresh">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-dialog.component.ts:68</note>
+      </notes>
+      <segment>
+        <source>Neu laden</source>
       </segment>
     </unit>
     <unit id="app.title">
