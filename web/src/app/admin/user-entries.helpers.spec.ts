@@ -67,6 +67,14 @@ describe('user-entries.helpers', () => {
       );
     });
 
+    it('should normalise a malformed timestamp to 0', () => {
+      // given
+      const entry = repsEntry({ timestamp: 'not-a-date' });
+
+      // when / then — NaN would make MatSort unstable
+      expect(adminEntrySortValue(entry, 'timestamp')).toBe(0);
+    });
+
     it('should sort value by the primary measurement number', () => {
       // given / when / then
       expect(adminEntrySortValue(repsEntry({ reps: 42 }), 'value')).toBe(42);

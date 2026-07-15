@@ -110,6 +110,18 @@ describe('admin/user-entries', () => {
       expect(result.valid).toBe(false);
     });
 
+    it('should reject a timestamp without a timezone suffix', () => {
+      // given / when — ambiguous local time would be parsed in the server locale
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { timestamp: '2026-04-01T12:30:00' },
+      });
+
+      // then
+      expect(result.valid).toBe(false);
+    });
+
     it('should reject an unknown patch field', () => {
       // given / when
       const result = validateUpdateUserEntryPayload({

@@ -42,13 +42,15 @@ const KNOWN_PATCH_FIELDS: ReadonlySet<string> = new Set<string>([
   'variantId',
 ]);
 
-// ISO-8601-ish date-time: the client writes either the stored `…Z` form or
-// `appendLocalOffset` output (`…+02:00`). Since the admin callable bypasses
-// the Firestore rules that pin this shape, re-check it here — `buildEntryUpdate`
-// stores the value verbatim and `orderBy('timestamp')` / the activity
-// aggregate assume lexicographically-ordered ISO strings.
+// ISO-8601 date-time with a *required* timezone suffix (`Z` or `±HH:MM`):
+// the client only ever writes the stored `…Z` form or `appendLocalOffset`
+// output (`…+02:00`). Since the admin callable bypasses the Firestore rules
+// that pin this shape, re-check it here — `buildEntryUpdate` stores the value
+// verbatim and `orderBy('timestamp')` / the activity aggregate assume
+// unambiguous, lexicographically-ordered ISO strings. A timezone-less value
+// would be parsed in the server's locale and break that invariant.
 const ISO_TIMESTAMP_RE =
-  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?$/;
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})$/;
 
 function isIsoTimestamp(value: string): boolean {
   return ISO_TIMESTAMP_RE.test(value) && !Number.isNaN(Date.parse(value));

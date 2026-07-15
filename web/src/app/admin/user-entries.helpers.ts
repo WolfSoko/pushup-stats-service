@@ -21,8 +21,13 @@ export function adminEntrySortValue(
   property: string
 ): SortValue {
   switch (property) {
-    case 'timestamp':
-      return entry.timestamp ? new Date(entry.timestamp).getTime() : 0;
+    case 'timestamp': {
+      // Normalise a missing or malformed timestamp to 0 — `getTime()` returns
+      // NaN for an unparseable value, and NaN comparisons make MatSort's order
+      // unstable.
+      const time = entry.timestamp ? new Date(entry.timestamp).getTime() : 0;
+      return Number.isNaN(time) ? 0 : time;
+    }
     case 'exercise':
       return entryExerciseName(entry).toLowerCase();
     case 'value':
