@@ -50,7 +50,11 @@ export function entryValueDisplay(entry: ExerciseEntry): string {
   return formatEntryDisplay(entry, def);
 }
 
-/** Raw primary measurement value, or 0 when the exercise is unknown. */
+/**
+ * Raw primary measurement value. For an unknown/stale exercise id (no
+ * catalog definition) it falls back to the first present numeric field
+ * (`reps` → `durationSec` → `distanceM`), or 0 when none is set.
+ */
 export function primaryValue(entry: ExerciseEntry): number {
   const def = findExerciseDefinition(entry.exerciseId);
   if (!def) return entry.reps ?? entry.durationSec ?? entry.distanceM ?? 0;

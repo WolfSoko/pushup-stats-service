@@ -34,8 +34,9 @@ import {
  * measurement has one) the companion value. `exerciseId` is immutable
  * (a different exercise is a delete + create, see
  * {@link ExerciseFirestoreService.updateEntry}), so it is shown read-only.
- * Closes with the minimal change patch, or `undefined` when nothing
- * changed or the exercise id no longer resolves in the catalog.
+ * Closes with the minimal change patch. When the exercise id no longer
+ * resolves in the catalog only the timestamp stays editable (the value
+ * fields are hidden), so the patch is timestamp-only in that case.
  */
 @Component({
   selector: 'app-admin-entry-edit-dialog',
