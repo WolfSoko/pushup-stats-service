@@ -1,4 +1,10 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -65,6 +71,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       </mat-card>
     </main>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .page-wrap {
       max-width: 900px;

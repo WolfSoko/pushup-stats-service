@@ -160,7 +160,10 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
             }
             <a
               mat-flat-button
-              [routerLink]="['/training-plans', store.activeCatalog()?.slug]"
+              [routerLink]="[
+                '/training-plans',
+                $safeNavigationMigration(store.activeCatalog()?.slug),
+              ]"
             >
               <mat-icon>open_in_full</mat-icon>
               <span i18n="@@trainingPlans.openDetail">Details öffnen</span>

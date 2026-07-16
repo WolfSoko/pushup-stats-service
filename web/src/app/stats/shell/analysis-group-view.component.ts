@@ -1,5 +1,11 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,6 +41,7 @@ import {
     TypePieComponent,
   ],
   templateUrl: './analysis-group-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './analysis-group-view.component.scss',
 })
 export class AnalysisGroupViewComponent {

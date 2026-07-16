@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { render, screen } from '@testing-library/angular';
 import { PageHeaderComponent } from './page-header.component';
 
 @Component({
   imports: [PageHeaderComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-page-header icon="insights" variant="analysis">
       <h1 page-title>Analyse</h1>
@@ -16,6 +17,7 @@ class HostComponent {}
 
 @Component({
   imports: [PageHeaderComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-page-header>
       <h1 page-title>Standard</h1>

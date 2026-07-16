@@ -1,7 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Component, input, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AnalysisTeaserCardComponent } from './analysis-teaser-card.component';
 import { StatsApiService } from '@pu-stats/data-access';
@@ -13,6 +18,7 @@ import { StatsChartComponent } from '../stats-chart/stats-chart.component';
 @Component({
   selector: 'app-stats-chart',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class StubStatsChartComponent {

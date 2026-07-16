@@ -12,7 +12,8 @@
     "noFallthroughCasesInSwitch": true,
     "emitDecoratorMetadata": false,
     "module": "preserve",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

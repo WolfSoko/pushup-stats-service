@@ -1,4 +1,10 @@
-import { Component, computed, input, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { patchState, signalState } from '@ngrx/signals';
@@ -39,6 +45,7 @@ interface DialItem {
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
   templateUrl: './quick-add-fab.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './quick-add-fab.component.scss',
 })
 export class QuickAddFabComponent {
