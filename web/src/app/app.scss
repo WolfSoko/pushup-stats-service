@@ -267,12 +267,17 @@ mat-sidenav-content {
 
   nav {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 24px;
   }
 
   @media (max-width: 767px) {
     padding-bottom: 72px;
+
+    nav {
+      gap: 4px 12px;
+    }
   }
 }
 
