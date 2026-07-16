@@ -10183,19 +10183,19 @@
     <unit id="admin.user.entriesTooltip">
       <segment state="translated">
         <source>Einträge anzeigen</source>
-        <target>Vermeldingen weergeven</target>
+        <target>Invoeren weergeven</target>
       </segment>
     </unit>
     <unit id="admin.row.entriesAria">
       <segment state="translated">
         <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
-        <target>Vermeldingen weergeven voor <ph id="0" equiv="identifier" disp="identifier"/></target>
+        <target>Invoeren weergeven voor <ph id="0" equiv="identifier" disp="identifier"/></target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.title">
       <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Vermelding bewerken</target>
+        <target>Invoer bewerken</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.timestamp">
@@ -10243,13 +10243,13 @@
     <unit id="admin.entries.title">
       <segment state="translated">
         <source>Einträge</source>
-        <target>Vermeldingen</target>
+        <target>Invoeren</target>
       </segment>
     </unit>
     <unit id="admin.entries.empty">
       <segment state="translated">
         <source> Keine Einträge vorhanden. </source>
-        <target> Geen vermeldingen beschikbaar. </target>
+        <target> Geen invoeren beschikbaar. </target>
       </segment>
     </unit>
     <unit id="admin.entries.col.timestamp">
@@ -10285,7 +10285,7 @@
     <unit id="admin.entry.editTooltip">
       <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Vermelding bewerken</target>
+        <target>Invoer bewerken</target>
       </segment>
     </unit>
     <unit id="admin.entries.refresh">
