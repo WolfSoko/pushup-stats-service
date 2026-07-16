@@ -1,5 +1,10 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +38,7 @@ import { categoryDisplayName } from '../../i18n/exercise-display-names';
   standalone: true,
   imports: [DecimalPipe, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './category-summary-card.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     :host {
       display: block;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-impressum-page',
@@ -64,6 +64,7 @@ import { Component } from '@angular/core';
       </section>
     </article>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .legal-page {
       max-width: 720px;

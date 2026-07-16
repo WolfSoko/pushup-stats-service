@@ -11,6 +11,7 @@ import {
   PLATFORM_ID,
   signal,
   viewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -70,6 +71,7 @@ import {
     ScrollingModule,
   ],
   templateUrl: './stats-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './stats-table.component.scss',
 })
 export class StatsTableComponent {

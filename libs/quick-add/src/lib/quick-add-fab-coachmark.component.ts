@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, output, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
   templateUrl: './quick-add-fab-coachmark.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './quick-add-fab-coachmark.component.scss',
 })
 export class QuickAddFabCoachmarkComponent {

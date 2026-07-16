@@ -1,4 +1,10 @@
-import { Component, LOCALE_ID, Provider, signal } from '@angular/core';
+import {
+  Component,
+  LOCALE_ID,
+  Provider,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -18,6 +24,7 @@ import {
 @Component({
   selector: 'app-host',
   imports: [ExerciseEntryFieldsComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template:
     '<app-exercise-entry-fields [category]="category()" [data]="data" [isEditMode]="isEditMode" />',
 })

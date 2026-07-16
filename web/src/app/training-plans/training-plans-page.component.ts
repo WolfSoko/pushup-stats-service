@@ -158,10 +158,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
                 </button>
               }
             }
-            <a
-              mat-flat-button
-              [routerLink]="['/training-plans', store.activeCatalog()?.slug]"
-            >
+            <a mat-flat-button [routerLink]="['/training-plans', active.slug]">
               <mat-icon>open_in_full</mat-icon>
               <span i18n="@@trainingPlans.openDetail">Details öffnen</span>
             </a>
@@ -363,6 +360,7 @@ export class TrainingPlansPageComponent {
     const cat = this.store.activeCatalog();
     if (!cat || !this.store.hasActivePlan()) return null;
     return {
+      slug: cat.slug,
       title: cat.title,
       summary: cat.summary,
       totalDays: cat.totalDays,

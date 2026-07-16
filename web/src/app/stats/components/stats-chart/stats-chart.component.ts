@@ -13,6 +13,7 @@ import {
   PLATFORM_ID,
   signal,
   viewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -44,6 +45,7 @@ Chart.register(...registerables);
   selector: 'app-stats-chart',
   imports: [MatButtonToggleModule, MatCardModule],
   templateUrl: './stats-chart.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './stats-chart.component.scss',
 })
 export class StatsChartComponent implements AfterViewInit {

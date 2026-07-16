@@ -22,6 +22,7 @@ import {
   output,
   PLATFORM_ID,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ExerciseDefinition, ExerciseEntry } from '@pu-stats/models';
 import { RangeModes } from '@pu-stats/date';
@@ -29,6 +30,7 @@ import { RangeModes } from '@pu-stats/date';
 @Component({
   selector: 'app-filter-bar',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockFilterBarComponent {
@@ -42,6 +44,7 @@ class MockFilterBarComponent {
 @Component({
   selector: 'app-heatmap',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockHeatmapComponent {
@@ -52,6 +55,7 @@ class MockHeatmapComponent {
 @Component({
   selector: 'app-type-pie',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockTypePieComponent {
@@ -61,6 +65,7 @@ class MockTypePieComponent {
 @Component({
   selector: 'app-stats-chart',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockStatsChartComponent {
@@ -78,6 +83,7 @@ class MockStatsChartComponent {
 @Component({
   selector: 'app-sets-distribution',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockSetsDistributionComponent {

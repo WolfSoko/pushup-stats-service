@@ -1,4 +1,10 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -177,6 +183,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
       }
     </main>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .page-wrap {
       max-width: 1200px;

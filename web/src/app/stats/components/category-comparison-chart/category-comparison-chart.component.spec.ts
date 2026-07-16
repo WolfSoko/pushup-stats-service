@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import type { CategoryComparison } from '../../analysis/analysis.types';
 import { CategoryComparisonChartComponent } from './category-comparison-chart.component';
@@ -8,6 +8,7 @@ import { CategoryComparisonChartComponent } from './category-comparison-chart.co
   selector: 'app-host',
   standalone: true,
   imports: [CategoryComparisonChartComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<app-category-comparison-chart [data]="data()" />`,
 })
 class HostComponent {

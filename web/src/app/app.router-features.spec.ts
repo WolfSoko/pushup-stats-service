@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -6,10 +6,18 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createAppRouterFeatures } from './app.router-features';
 
-@Component({ template: 'a', standalone: true })
+@Component({
+  template: 'a',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+})
 class RouteAComponent {}
 
-@Component({ template: 'b', standalone: true })
+@Component({
+  template: 'b',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+})
 class RouteBComponent {}
 
 describe('createAppRouterFeatures', () => {

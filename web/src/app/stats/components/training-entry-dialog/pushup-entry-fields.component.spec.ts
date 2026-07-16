@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { PushupEntryFieldsComponent } from './pushup-entry-fields.component';
@@ -10,6 +10,7 @@ import {
 @Component({
   selector: 'app-host',
   imports: [PushupEntryFieldsComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<app-pushup-entry-fields [data]="data" />',
 })
 class HostComponent {

@@ -1,5 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, PLATFORM_ID, computed, inject, input } from '@angular/core';
+import {
+  Component,
+  PLATFORM_ID,
+  computed,
+  inject,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import type { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective, provideCharts } from 'ng2-charts';
 import { ensureHeatmapChartRegistered } from './chart-setup';
@@ -53,6 +60,7 @@ export interface HeatmapCell {
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     :host {
       display: block;
