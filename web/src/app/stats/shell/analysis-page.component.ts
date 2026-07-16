@@ -7,6 +7,7 @@ import {
   inject,
   PLATFORM_ID,
   REQUEST,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -140,6 +141,7 @@ interface VisibleTab {
       }
     </main>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .page-wrap {
       max-width: 1200px;

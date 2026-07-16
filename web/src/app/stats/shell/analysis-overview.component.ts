@@ -1,4 +1,11 @@
-import { Component, computed, effect, inject, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import type { ExerciseCategoryId } from '@pu-stats/models';
 
@@ -68,6 +75,7 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
       </p>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     :host {
       display: grid;

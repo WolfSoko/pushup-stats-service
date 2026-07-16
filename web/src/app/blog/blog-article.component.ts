@@ -5,6 +5,7 @@ import {
   inject,
   LOCALE_ID,
   OnInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -103,6 +104,7 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       :host {

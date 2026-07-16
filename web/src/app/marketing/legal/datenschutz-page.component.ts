@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-datenschutz-page',
@@ -133,6 +133,7 @@ import { Component } from '@angular/core';
       </section>
     </article>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .legal-page {
       max-width: 720px;

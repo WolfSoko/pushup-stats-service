@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -43,6 +43,7 @@ const HEATMAP_PATTERN: readonly string[] = [
     ReminderFeatureSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {

@@ -8,6 +8,7 @@ import {
   LOCALE_ID,
   PLATFORM_ID,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -129,6 +130,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     OverlayModule,
   ],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.scss',
 })
 export class App {

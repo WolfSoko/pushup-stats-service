@@ -8,6 +8,7 @@ import {
   OnChanges,
   output,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -157,6 +158,7 @@ import {
       </mat-form-field>
     </section>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './filter-bar.component.scss',
 })
 export class FilterBarComponent implements OnChanges {

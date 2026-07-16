@@ -1,4 +1,9 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   type MeasurementType,
   type UnifiedEntry,
@@ -49,6 +54,7 @@ export interface IntervalsDistributionDatum {
       </div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     .bars {
       display: grid;

@@ -63,7 +63,7 @@
         "allowedCommonJsDependencies": ["pino", "pino-http"],
         "ssr": {
           "entry": "web/src/server.ts",
-          "experimentalPlatform": "node"
+          "platform": "node"
         },
         "polyfills": ["@angular/localize/init"],
         "tsConfig": "web/tsconfig.app.json",

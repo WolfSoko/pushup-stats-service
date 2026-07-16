@@ -1,4 +1,10 @@
-import { Component, input, output, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import type {
@@ -19,6 +25,7 @@ import { CategorySummaryCardComponent } from '../components/category-summary-car
 @Component({
   selector: 'app-category-comparison-chart',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class StubComparisonChartComponent {
@@ -30,6 +37,7 @@ class StubComparisonChartComponent {
 @Component({
   selector: 'app-category-summary-card',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<button type="button" (click)="emit()">drill</button>',
 })
 class StubSummaryCardComponent {
@@ -43,6 +51,7 @@ class StubSummaryCardComponent {
 @Component({
   selector: 'app-analysis-group-view',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<div data-testid="stub-group-view"></div>',
 })
 class StubAnalysisGroupViewComponent {}
@@ -73,6 +82,7 @@ function makeFakeStore(): FakeStore {
   selector: 'app-host',
   standalone: true,
   imports: [AnalysisOverviewComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<app-analysis-overview (viewSelect)="lastEmitted.set($event)" />`,
 })
 class HostComponent {

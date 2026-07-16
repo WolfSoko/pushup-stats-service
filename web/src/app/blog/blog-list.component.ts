@@ -1,5 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, LOCALE_ID } from '@angular/core';
+import {
+  Component,
+  inject,
+  LOCALE_ID,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
@@ -66,6 +71,7 @@ import { getBlogPostsByLocale } from './blog-posts.data';
       </div>
     </main>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       :host {

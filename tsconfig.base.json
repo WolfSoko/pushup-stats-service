@@ -26,7 +26,11 @@
       "@pu-stats/quick-add": ["./libs/quick-add/src/index.ts"],
       "@pu-stats/motivation": ["./libs/motivation/src/index.ts"],
       "@pu-stats/auto-count": ["./libs/auto-count/src/index.ts"]
-    }
+    },
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": true
   },
   "exclude": ["node_modules", "tmp"]
 }

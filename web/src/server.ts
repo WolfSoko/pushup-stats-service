@@ -47,7 +47,9 @@ app.use(pinoHttp({ logger }));
 // handlers so it wraps every downstream response.
 app.use(compression());
 
-const angularApp = new AngularNodeAppEngine();
+const angularApp = new AngularNodeAppEngine({
+  trustProxyHeaders: ['x-forwarded-host', 'x-forwarded-proto'],
+});
 
 // Serve root-level files from the /de build output so they're
 // available at the domain root for crawlers, validators, and

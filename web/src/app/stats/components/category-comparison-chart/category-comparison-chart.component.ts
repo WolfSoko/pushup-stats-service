@@ -1,5 +1,10 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import type { CategoryComparison } from '../../analysis/analysis.types';
 
@@ -56,6 +61,7 @@ import type { CategoryComparison } from '../../analysis/analysis.types';
       </ul>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     :host {
       display: block;

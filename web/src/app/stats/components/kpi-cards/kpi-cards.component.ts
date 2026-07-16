@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -40,6 +40,7 @@ import { MatCardModule } from '@angular/material/card';
       </mat-card>
     </section>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './kpi-cards.component.scss',
 })
 export class KpiCardsComponent {

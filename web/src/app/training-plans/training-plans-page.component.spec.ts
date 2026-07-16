@@ -7,12 +7,15 @@ import { TRAINING_PLANS } from '@pu-stats/models';
 import { TrainingPlansPageComponent } from './training-plans-page.component';
 import { TrainingPlanStore } from './training-plan.store';
 
-function makeStoreMock() {
+function makeStoreMock(
+  activeCatalog: (typeof TRAINING_PLANS)[number] | null = null,
+  hasActivePlan = false
+) {
   return {
     allPlans: () => TRAINING_PLANS,
-    activeCatalog: signal(null),
+    activeCatalog: signal(activeCatalog),
     activePlan: signal(null),
-    hasActivePlan: signal(false),
+    hasActivePlan: signal(hasActivePlan),
     activePlanLoaded: signal(true),
     currentDayIndex: signal(null),
     completionPercent: signal(0),
@@ -109,6 +112,34 @@ describe('TrainingPlansPageComponent', () => {
 
     const planLinks = screen.getAllByRole('link', { name: 'Plan ansehen' });
     expect(planLinks.length).toBe(TRAINING_PLANS.length);
+  });
+
+  it('should link the active plan card to its catalog slug', async () => {
+    // given
+    const activePlan = TRAINING_PLANS[0];
+
+    // when
+    await render(TrainingPlansPageComponent, {
+      providers: [
+        provideRouter([]),
+        {
+          provide: TrainingPlanStore,
+          useValue: makeStoreMock(activePlan, true),
+        },
+        {
+          provide: AuthStore,
+          useValue: makeAuthStoreMock({
+            isAuthenticated: true,
+            authResolved: true,
+          }),
+        },
+      ],
+    });
+
+    // then
+    expect(
+      screen.getByRole('link', { name: 'Details öffnen' }).getAttribute('href')
+    ).toBe(`/training-plans/${activePlan.slug}`);
   });
 
   it('renders a topical hero image for every plan card', async () => {

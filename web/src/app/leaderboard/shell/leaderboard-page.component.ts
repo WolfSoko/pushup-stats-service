@@ -1,5 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject, linkedSignal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,6 +70,7 @@ const POPULAR_EXERCISE_IDS: ReadonlyArray<string> = [
     PageHeaderComponent,
   ],
   templateUrl: './leaderboard-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './leaderboard-page.component.scss',
 })
 export class LeaderboardPageComponent {

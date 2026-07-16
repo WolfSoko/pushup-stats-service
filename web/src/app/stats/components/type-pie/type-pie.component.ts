@@ -1,5 +1,11 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, computed, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import type { PieDatum } from './type-pie.models';
 import {
@@ -137,6 +143,7 @@ import {
       <div class="empty" i18n="@@pie.noData">Keine Daten</div>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './type-pie.component.scss',
 })
 export class TypePieComponent {

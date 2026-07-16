@@ -1,4 +1,11 @@
-import { Component, input, model, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  model,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -19,6 +26,7 @@ import { SetsDistributionComponent } from '../components/sets-distribution/sets-
 @Component({
   selector: 'app-heatmap',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockHeatmapComponent {
@@ -30,6 +38,7 @@ class MockHeatmapComponent {
 @Component({
   selector: 'app-type-pie',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockTypePieComponent {
@@ -39,6 +48,7 @@ class MockTypePieComponent {
 @Component({
   selector: 'app-stats-chart',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockStatsChartComponent {
@@ -56,6 +66,7 @@ class MockStatsChartComponent {
 @Component({
   selector: 'app-sets-distribution',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '',
 })
 class MockSetsDistributionComponent {
@@ -72,6 +83,7 @@ class MockSetsDistributionComponent {
   standalone: true,
   imports: [AnalysisGroupViewComponent],
   providers: [AnalysisStore],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<app-analysis-group-view />',
 })
 class HostComponent {}
