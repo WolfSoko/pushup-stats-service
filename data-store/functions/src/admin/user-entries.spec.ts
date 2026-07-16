@@ -260,6 +260,14 @@ describe('admin/user-entries', () => {
       expect(toIsoString(42)).toBeUndefined();
       expect(toIsoString({})).toBeUndefined();
     });
+
+    it('should drop a malformed/non-ISO string instead of passing it through', () => {
+      // given / when / then — the admin UI feeds these to DatePipe, which
+      // throws on an unparseable date, so a bad legacy value must not survive.
+      expect(toIsoString('not a date')).toBeUndefined();
+      expect(toIsoString('2026-04-01')).toBeUndefined();
+      expect(toIsoString('2026-04-01T10:00:00')).toBeUndefined();
+    });
   });
 
   describe('serializeEntry', () => {

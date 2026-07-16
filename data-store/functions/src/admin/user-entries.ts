@@ -72,7 +72,12 @@ const ENTRY_TS_FIELDS = ['timestamp', 'createdAt', 'updatedAt'];
  * else yields `undefined` (the field is dropped from the projection).
  */
 export function toIsoString(value: unknown): string | undefined {
-  if (typeof value === 'string') return value;
+  // Drop a malformed/non-ISO legacy string rather than pass it through: the
+  // admin UI feeds these to Angular's DatePipe, which throws on an
+  // unparseable date. `.toDate().toISOString()` always yields a valid `…Z`.
+  if (typeof value === 'string') {
+    return isIsoTimestamp(value) ? value : undefined;
+  }
   if (value && typeof (value as { toDate?: unknown }).toDate === 'function') {
     return (value as { toDate(): Date }).toDate().toISOString();
   }
