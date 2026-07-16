@@ -52,9 +52,12 @@ mat-table {
 // clips the second (delete) button. Pin its width and let its buttons stay
 // on one line, right-aligned.
 .mat-column-actions {
+  display: flex;
   flex: 0 0 auto;
+  flex-wrap: nowrap;
   min-width: 96px;
   overflow: visible;
+  align-items: center;
   justify-content: flex-end;
   gap: 4px;
 }

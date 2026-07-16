@@ -57,6 +57,56 @@ function isIsoTimestamp(value: string): boolean {
   return ISO_TIMESTAMP_RE.test(value) && !Number.isNaN(Date.parse(value));
 }
 
+// The fields an admin entry row may carry. Projecting explicitly keeps the
+// callable response strictly JSON-serializable — a stray Firestore
+// `Timestamp`/`GeoPoint`/`DocumentReference` on a legacy doc would otherwise
+// make the callable fail to encode and surface to the client as a generic
+// `internal` error.
+const ENTRY_STRING_FIELDS = ['userId', 'exerciseId', 'variantId', 'source'];
+const ENTRY_TS_FIELDS = ['timestamp', 'createdAt', 'updatedAt'];
+
+/**
+ * Coerce a Firestore timestamp-ish value to an ISO string. Post-cutover docs
+ * store ISO strings already, but a legacy/migrated doc might carry a Firestore
+ * `Timestamp` (has `.toDate()`), which is not JSON-serializable as-is. Anything
+ * else yields `undefined` (the field is dropped from the projection).
+ */
+export function toIsoString(value: unknown): string | undefined {
+  if (typeof value === 'string') return value;
+  if (value && typeof (value as { toDate?: unknown }).toDate === 'function') {
+    return (value as { toDate(): Date }).toDate().toISOString();
+  }
+  return undefined;
+}
+
+/**
+ * Project a raw `exerciseEntries` document into a strictly JSON-serializable
+ * admin row: allowlisted string/number/array fields plus ISO timestamps. Only
+ * finite numbers survive (NaN/Infinity are not valid JSON numbers).
+ */
+export function serializeEntry(
+  id: string,
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const entry: Record<string, unknown> = { _id: id };
+  for (const f of ENTRY_STRING_FIELDS) {
+    if (typeof data[f] === 'string') entry[f] = data[f];
+  }
+  for (const f of ENTRY_TS_FIELDS) {
+    const iso = toIsoString(data[f]);
+    if (iso !== undefined) entry[f] = iso;
+  }
+  for (const f of NUMERIC_FIELDS) {
+    if (Number.isFinite(data[f])) entry[f] = data[f];
+  }
+  for (const f of BREAKDOWN_FIELDS) {
+    if (Array.isArray(data[f])) {
+      entry[f] = (data[f] as unknown[]).filter((n) => Number.isFinite(n));
+    }
+  }
+  return entry;
+}
+
 /**
  * Validates the `adminListUserEntries` payload: a non-empty `uid` and an
  * optional positive integer `limit` capped at {@link MAX_USER_ENTRIES_LIMIT}.

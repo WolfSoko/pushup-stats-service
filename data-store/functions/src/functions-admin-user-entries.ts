@@ -8,6 +8,7 @@ import {
 
 import {
   type AdminEntryPatch,
+  serializeEntry,
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './admin/user-entries';
@@ -15,60 +16,6 @@ import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
-
-// The fields an admin entry row may carry. Projecting explicitly keeps the
-// callable response strictly JSON-serializable — a stray Firestore
-// `Timestamp`/`GeoPoint`/`DocumentReference` on a legacy doc would otherwise
-// make the callable fail to encode and surface to the client as a generic
-// `internal` error.
-const ENTRY_STRING_FIELDS = [
-  'userId',
-  'exerciseId',
-  'variantId',
-  'source',
-] as const;
-const ENTRY_TS_FIELDS = ['timestamp', 'createdAt', 'updatedAt'] as const;
-const ENTRY_NUMBER_FIELDS = [
-  'reps',
-  'durationSec',
-  'distanceM',
-  'weightKg',
-] as const;
-const ENTRY_ARRAY_FIELDS = ['sets', 'intervals'] as const;
-
-// Coerce a Firestore timestamp-ish value to an ISO string: post-cutover docs
-// store ISO strings already, but a legacy/migrated doc might carry a Firestore
-// `Timestamp` (has `.toDate()`), which is not JSON-serializable as-is.
-function toIsoString(value: unknown): string | undefined {
-  if (typeof value === 'string') return value;
-  if (value && typeof (value as { toDate?: unknown }).toDate === 'function') {
-    return (value as { toDate(): Date }).toDate().toISOString();
-  }
-  return undefined;
-}
-
-function serializeEntry(
-  id: string,
-  data: Record<string, unknown>
-): Record<string, unknown> {
-  const entry: Record<string, unknown> = { _id: id };
-  for (const f of ENTRY_STRING_FIELDS) {
-    if (typeof data[f] === 'string') entry[f] = data[f];
-  }
-  for (const f of ENTRY_TS_FIELDS) {
-    const iso = toIsoString(data[f]);
-    if (iso !== undefined) entry[f] = iso;
-  }
-  for (const f of ENTRY_NUMBER_FIELDS) {
-    if (Number.isFinite(data[f])) entry[f] = data[f];
-  }
-  for (const f of ENTRY_ARRAY_FIELDS) {
-    if (Array.isArray(data[f])) {
-      entry[f] = (data[f] as unknown[]).filter((n) => Number.isFinite(n));
-    }
-  }
-  return entry;
-}
 
 // Admin-only read of a single user's exercise history. The Firestore
 // rules scope client reads to `userId == request.auth.uid`, so the
@@ -107,11 +54,12 @@ export const adminListUserEntries = onCall(
         .map((doc) => serializeEntry(doc.id, doc.data()));
     } catch (err) {
       // Surface a clear, logged error instead of an opaque `internal`.
-      // Log the message string, not the raw error, so a non-serializable
-      // value can't make the log statement itself fail.
+      // Log a string (stack when available), not the raw error, so a
+      // non-serializable value can't make the log statement itself fail
+      // while still preserving the most useful diagnostic detail.
       logger.error('adminListUserEntries failed', {
         uid,
-        error: err instanceof Error ? err.message : String(err),
+        error: err instanceof Error ? (err.stack ?? err.message) : String(err),
       });
       throw new HttpsError(
         'internal',

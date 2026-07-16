@@ -1,6 +1,8 @@
 import { describe, it, expect } from '@jest/globals';
 import {
   MAX_USER_ENTRIES_LIMIT,
+  serializeEntry,
+  toIsoString,
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './user-entries';
@@ -231,6 +233,108 @@ describe('admin/user-entries', () => {
       expect(
         validateUpdateUserEntryPayload({ uid: 'u', entryId: 'e' }).valid
       ).toBe(false);
+    });
+  });
+
+  describe('toIsoString', () => {
+    it('should pass through an ISO string unchanged', () => {
+      // given / when / then
+      expect(toIsoString('2026-04-01T10:00:00.000Z')).toBe(
+        '2026-04-01T10:00:00.000Z'
+      );
+    });
+
+    it('should convert a Firestore Timestamp-like value via toDate()', () => {
+      // given
+      const date = new Date('2026-04-01T10:00:00.000Z');
+      const timestamp = { toDate: () => date };
+
+      // when / then
+      expect(toIsoString(timestamp)).toBe('2026-04-01T10:00:00.000Z');
+    });
+
+    it('should return undefined for non-string, non-timestamp values', () => {
+      // given / when / then
+      expect(toIsoString(undefined)).toBeUndefined();
+      expect(toIsoString(null)).toBeUndefined();
+      expect(toIsoString(42)).toBeUndefined();
+      expect(toIsoString({})).toBeUndefined();
+    });
+  });
+
+  describe('serializeEntry', () => {
+    it('should project allowlisted fields and set _id from the doc id', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'legs.squats',
+        variantId: 'weighted',
+        source: 'web',
+        timestamp: '2026-04-01T10:00:00.000Z',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-02-01T00:00:00.000Z',
+        reps: 30,
+        weightKg: 20,
+        sets: [10, 10, 10],
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry).toEqual({
+        _id: 'e1',
+        userId: 'user-1',
+        exerciseId: 'legs.squats',
+        variantId: 'weighted',
+        source: 'web',
+        timestamp: '2026-04-01T10:00:00.000Z',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-02-01T00:00:00.000Z',
+        reps: 30,
+        weightKg: 20,
+        sets: [10, 10, 10],
+      });
+    });
+
+    it('should coerce a legacy Firestore Timestamp field to an ISO string', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'pushup',
+        timestamp: { toDate: () => new Date('2026-04-01T10:00:00.000Z') },
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry.timestamp).toBe('2026-04-01T10:00:00.000Z');
+    });
+
+    it('should drop non-JSON field shapes and non-finite numbers', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'pushup',
+        reps: Number.NaN,
+        weightKg: Number.POSITIVE_INFINITY,
+        durationSec: 42,
+        sets: [10, Number.NaN, 20],
+        ref: { path: 'exerciseEntries/e1' },
+        _id: 'stray-id',
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry._id).toBe('e1');
+      expect('reps' in entry).toBe(false);
+      expect('weightKg' in entry).toBe(false);
+      expect('ref' in entry).toBe(false);
+      expect(entry.durationSec).toBe(42);
+      expect(entry.sets).toEqual([10, 20]);
     });
   });
 });
