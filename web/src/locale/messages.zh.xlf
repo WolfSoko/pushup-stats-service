@@ -9719,7 +9719,7 @@
     <unit id="admin.entry.edit.staleExercise">
       <segment state="translated">
         <source> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </source>
-        <target> 未知练习 – 只能编辑时间。 </target>
+        <target> 未知训练 – 只能编辑时间。 </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.cancel">
