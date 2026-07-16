@@ -9687,117 +9687,117 @@
       </segment>
     </unit>
     <unit id="admin.user.entriesTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge anzeigen</source>
-        <target>Einträge anzeigen</target>
+        <target>显示记录</target>
       </segment>
     </unit>
     <unit id="admin.row.entriesAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
-        <target>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></target>
+        <target>显示<ph id="0" equiv="identifier" disp="identifier"/>的记录</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Eintrag bearbeiten</target>
+        <target>编辑记录</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.timestamp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitpunkt</source>
-        <target>Zeitpunkt</target>
+        <target>时间</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.value">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert</source>
-        <target>Wert</target>
+        <target>值</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.staleExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </source>
-        <target> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </target>
+        <target> 未知练习 – 只能编辑时间。 </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> 取消 </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> 保存 </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer (s)</source>
-        <target>Dauer (s)</target>
+        <target>时长（秒）</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewicht (kg)</source>
-        <target>Gewicht (kg)</target>
+        <target>重量（公斤）</target>
       </segment>
     </unit>
     <unit id="admin.entries.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>记录</target>
       </segment>
     </unit>
     <unit id="admin.entries.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Einträge vorhanden. </source>
-        <target> Keine Einträge vorhanden. </target>
+        <target> 暂无记录。 </target>
       </segment>
     </unit>
     <unit id="admin.entries.col.timestamp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitpunkt</source>
-        <target>Zeitpunkt</target>
+        <target>时间</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>训练</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.value">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert</source>
-        <target>Wert</target>
+        <target>值</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.source">
-      <segment state="initial">
+      <segment state="translated">
         <source>Quelle</source>
-        <target>Quelle</target>
+        <target>来源</target>
       </segment>
     </unit>
     <unit id="admin.entries.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> 关闭 </target>
       </segment>
     </unit>
     <unit id="admin.entry.editTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Eintrag bearbeiten</target>
+        <target>编辑记录</target>
       </segment>
     </unit>
     <unit id="admin.entries.refresh">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu laden</source>
-        <target>Neu laden</target>
+        <target>重新加载</target>
       </segment>
     </unit>
 </file>
