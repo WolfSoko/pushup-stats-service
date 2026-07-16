@@ -47,6 +47,20 @@ h1 {
 mat-table {
   width: 100%;
 }
+// The actions column carries two icon buttons (entries + delete). Without a
+// reserved width the flex column collapses on narrow/mobile viewports and
+// clips the second (delete) button. Pin its width and let its buttons stay
+// on one line, right-aligned.
+.mat-column-actions {
+  flex: 0 0 auto;
+  min-width: 96px;
+  overflow: visible;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.mat-column-actions button {
+  flex: 0 0 auto;
+}
 .clickable-row {
   cursor: pointer;
 }
