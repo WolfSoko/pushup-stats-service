@@ -62,7 +62,14 @@ function isIsoTimestamp(value: string): boolean {
 // `Timestamp`/`GeoPoint`/`DocumentReference` on a legacy doc would otherwise
 // make the callable fail to encode and surface to the client as a generic
 // `internal` error.
-const ENTRY_STRING_FIELDS = ['userId', 'exerciseId', 'variantId', 'source'];
+//
+// `userId`/`exerciseId` are required by the admin UI, which calls string
+// methods on them unconditionally (the sort helper does
+// `exerciseDisplayName(exerciseId).toLowerCase()`), so they're always emitted
+// with an empty-string default; `variantId`/`source` are optional and dropped
+// when absent/non-string.
+const ENTRY_REQUIRED_STRING_FIELDS = ['userId', 'exerciseId'];
+const ENTRY_OPTIONAL_STRING_FIELDS = ['variantId', 'source'];
 // `timestamp` is required by the admin UI (`ExerciseEntry.timestamp: string`);
 // `createdAt`/`updatedAt` are optional and dropped when absent/malformed.
 const ENTRY_OPTIONAL_TS_FIELDS = ['createdAt', 'updatedAt'];
@@ -90,15 +97,23 @@ export function toIsoString(value: unknown): string | undefined {
  * Project a raw `exerciseEntries` document into a strictly JSON-serializable
  * admin row: allowlisted string/number/array fields plus ISO timestamps. Only
  * finite numbers survive (NaN/Infinity are not valid JSON numbers). The
- * required `timestamp` is always present (empty string when absent/malformed);
- * `createdAt`/`updatedAt` are optional and omitted when absent/malformed.
+ * required `userId`/`exerciseId`/`timestamp` are always present (empty string
+ * when absent/malformed) so the admin UI can't crash calling string methods on
+ * them; `variantId`/`source`/`createdAt`/`updatedAt` are optional and omitted
+ * when absent/malformed.
  */
 export function serializeEntry(
   id: string,
   data: Record<string, unknown>
 ): Record<string, unknown> {
   const entry: Record<string, unknown> = { _id: id };
-  for (const f of ENTRY_STRING_FIELDS) {
+  // Always emit the required identity strings (empty default) so the admin UI,
+  // which calls string methods on them unconditionally, can't crash on a
+  // legacy/bad doc.
+  for (const f of ENTRY_REQUIRED_STRING_FIELDS) {
+    entry[f] = typeof data[f] === 'string' ? data[f] : '';
+  }
+  for (const f of ENTRY_OPTIONAL_STRING_FIELDS) {
     if (typeof data[f] === 'string') entry[f] = data[f];
   }
   // Always emit `timestamp` so the admin edit dialog (which types it as a

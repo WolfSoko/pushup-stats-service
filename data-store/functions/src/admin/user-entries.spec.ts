@@ -357,5 +357,32 @@ describe('admin/user-entries', () => {
         ''
       );
     });
+
+    it('should default a missing or non-string userId/exerciseId to an empty string', () => {
+      // given — the admin UI calls string methods on these unconditionally
+      // (e.g. `exerciseDisplayName(exerciseId).toLowerCase()` in the sort
+      // helper), so they must never be undefined.
+      // when
+      const entry = serializeEntry('e1', { reps: 10 });
+
+      // then
+      expect(entry.userId).toBe('');
+      expect(entry.exerciseId).toBe('');
+    });
+
+    it('should keep optional variantId/source only when present as strings', () => {
+      // given / when
+      const withValues = serializeEntry('e1', {
+        variantId: 'diamond',
+        source: 'web',
+      });
+      const withoutValues = serializeEntry('e2', { reps: 10 });
+
+      // then
+      expect(withValues.variantId).toBe('diamond');
+      expect(withValues.source).toBe('web');
+      expect('variantId' in withoutValues).toBe(false);
+      expect('source' in withoutValues).toBe(false);
+    });
   });
 });
