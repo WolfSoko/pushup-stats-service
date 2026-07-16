@@ -10163,7 +10163,7 @@
     <unit id="admin.entries.refresh">
       <segment state="translated">
         <source>Neu laden</source>
-        <target>Actualiser</target>
+        <target>Recharger</target>
       </segment>
     </unit>
 </file>

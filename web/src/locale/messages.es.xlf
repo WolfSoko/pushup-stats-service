@@ -10287,7 +10287,7 @@
     <unit id="admin.entries.refresh">
       <segment state="translated">
         <source>Neu laden</source>
-        <target>Actualizar</target>
+        <target>Recargar</target>
       </segment>
     </unit>
 </file>
