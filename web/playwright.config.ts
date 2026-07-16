@@ -26,7 +26,7 @@ export default defineConfig({
   webServer: {
     command: 'npx nx serve web --host=127.0.0.1 --port=4300',
     url: 'http://127.0.0.1:4300',
-    reuseExistingServer: !process.env['CI'],
+    reuseExistingServer: true,
     cwd: workspaceRoot,
     timeout: 180_000,
   },
