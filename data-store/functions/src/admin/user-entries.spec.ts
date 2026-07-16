@@ -261,12 +261,20 @@ describe('admin/user-entries', () => {
       expect(toIsoString({})).toBeUndefined();
     });
 
-    it('should drop a malformed/non-ISO string instead of passing it through', () => {
+    it('should keep an offset-less legacy ISO datetime unchanged', () => {
+      // given / when / then — older entries were stored without a timezone
+      // offset (docs/gotchas/precomputed-data.md → "Timestamp format"); these
+      // are valid, Date-parseable, and must not be blanked in the admin UI.
+      expect(toIsoString('2026-04-05T22:50')).toBe('2026-04-05T22:50');
+      expect(toIsoString('2026-04-06T00:17:00')).toBe('2026-04-06T00:17:00');
+    });
+
+    it('should drop a malformed/non-datetime string instead of passing it through', () => {
       // given / when / then — the admin UI feeds these to DatePipe, which
       // throws on an unparseable date, so a bad legacy value must not survive.
       expect(toIsoString('not a date')).toBeUndefined();
       expect(toIsoString('2026-04-01')).toBeUndefined();
-      expect(toIsoString('2026-04-01T10:00:00')).toBeUndefined();
+      expect(toIsoString('2026-13-01T10:00:00')).toBeUndefined();
     });
   });
 

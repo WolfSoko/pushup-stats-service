@@ -57,6 +57,19 @@ function isIsoTimestamp(value: string): boolean {
   return ISO_TIMESTAMP_RE.test(value) && !Number.isNaN(Date.parse(value));
 }
 
+// The *read* path is more lenient than the update-payload check above: the
+// timezone suffix is optional. Older entries were stored without an offset
+// (e.g. `2026-04-05T22:50`) and are treated as Berlin local time — see
+// `docs/gotchas/precomputed-data.md` → "Timestamp format". These are valid,
+// `Date`-parseable, and safe for the admin UI's `DatePipe`/`new Date()`; only
+// truly unparseable/non-datetime strings must be dropped.
+const ISO_DATETIME_READ_RE =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?$/;
+
+function isIsoDateTime(value: string): boolean {
+  return ISO_DATETIME_READ_RE.test(value) && !Number.isNaN(Date.parse(value));
+}
+
 // The fields an admin entry row may carry. Projecting explicitly keeps the
 // callable response strictly JSON-serializable — a stray Firestore
 // `Timestamp`/`GeoPoint`/`DocumentReference` on a legacy doc would otherwise
@@ -81,11 +94,12 @@ const ENTRY_OPTIONAL_TS_FIELDS = ['createdAt', 'updatedAt'];
  * else yields `undefined` (the field is dropped from the projection).
  */
 export function toIsoString(value: unknown): string | undefined {
-  // Drop a malformed/non-ISO legacy string rather than pass it through: the
-  // admin UI feeds these to Angular's DatePipe, which throws on an
-  // unparseable date. `.toDate().toISOString()` always yields a valid `…Z`.
+  // Keep a valid (possibly offset-less legacy) ISO datetime, drop anything
+  // truly unparseable: the admin UI feeds these to Angular's DatePipe, which
+  // throws on an unparseable date. `.toDate().toISOString()` always yields a
+  // valid `…Z`.
   if (typeof value === 'string') {
-    return isIsoTimestamp(value) ? value : undefined;
+    return isIsoDateTime(value) ? value : undefined;
   }
   if (value && typeof (value as { toDate?: unknown }).toDate === 'function') {
     return (value as { toDate(): Date }).toDate().toISOString();
