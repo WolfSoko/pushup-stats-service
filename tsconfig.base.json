@@ -29,7 +29,6 @@
     },
     "strict": false,
     "noUncheckedSideEffectImports": false,
-    "types": ["*"],
     "esModuleInterop": true
   },
   "exclude": ["node_modules", "tmp"]
