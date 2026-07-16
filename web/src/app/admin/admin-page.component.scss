@@ -47,10 +47,20 @@ h1 {
 mat-table {
   width: 100%;
 }
-// The actions column carries two icon buttons (entries + delete). Without a
-// reserved width the flex column collapses on narrow/mobile viewports and
-// clips the second (delete) button. Pin its width and let its buttons stay
-// on one line, right-aligned.
+// The users table has many columns; on narrow/mobile viewports it exceeds the
+// card width. Let it scroll horizontally instead of clipping (a mat-card hides
+// overflow), and keep cells on one line so columns don't crush.
+.table-scroll {
+  overflow-x: auto;
+}
+mat-cell,
+mat-header-cell {
+  white-space: nowrap;
+}
+// The actions column carries two icon buttons (entries + delete). It is pinned
+// to the end with `stickyEnd` so both buttons stay visible while the rest of
+// the table scrolls. A sticky column must be opaque, otherwise scrolled cells
+// show through it.
 .mat-column-actions {
   display: flex;
   flex: 0 0 auto;
@@ -60,6 +70,7 @@ mat-table {
   align-items: center;
   justify-content: flex-end;
   gap: 4px;
+  background: var(--mat-sys-surface);
 }
 .mat-column-actions button {
   flex: 0 0 auto;

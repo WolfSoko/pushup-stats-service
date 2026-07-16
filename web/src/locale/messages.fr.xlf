@@ -10166,5 +10166,17 @@
         <target>Neu laden</target>
       </segment>
     </unit>
+    <unit id="admin.entries.pageTitle">
+      <segment state="initial">
+        <source>Einträge</source>
+        <target>Einträge</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.backToAdmin">
+      <segment state="initial">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Zurück zum Admin-Bereich</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

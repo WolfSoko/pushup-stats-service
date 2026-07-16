@@ -10,7 +10,7 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -25,7 +25,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
-import { UserEntriesDialogComponent } from './user-entries-dialog.component';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { AdminUser, BulkDeleteResult } from './admin-page.models';
@@ -62,6 +61,7 @@ import {
 export class AdminPageComponent {
   private readonly callables = inject(CallableFunctionsService);
   private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
 
   readonly displayedColumns = [
     'uid',
@@ -130,11 +130,11 @@ export class AdminPageComponent {
     });
   }
 
-  openEntriesDialog(user: AdminUser): void {
-    this.dialog.open(UserEntriesDialogComponent, {
-      data: { user },
-      width: 'min(94vw, 720px)',
-      maxWidth: '94vw',
+  openUserEntries(user: AdminUser): void {
+    // Pass a friendly label through navigation state so the entries page can
+    // show a name instead of a raw uid; it falls back to the uid on reload.
+    void this.router.navigate(['/admin/users', user.uid, 'entries'], {
+      state: { label: user.displayName ?? user.email ?? user.uid },
     });
   }
 

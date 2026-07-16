@@ -96,131 +96,133 @@
     <p class="error-text">{{ error() }}</p>
   } @else {
     <mat-card>
-      <mat-table [dataSource]="usersDataSource" matSort #usersSort="matSort">
-        <!-- UID column -->
-        <ng-container matColumnDef="uid">
-          <mat-header-cell *matHeaderCellDef i18n="@@admin.col.uid"
-            >UID</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">
-            <span [matTooltip]="u.uid" class="uid-chip">{{
-              u.uid.slice(0, 8)
-            }}</span>
-          </mat-cell>
-        </ng-container>
+      <div class="table-scroll">
+        <mat-table [dataSource]="usersDataSource" matSort #usersSort="matSort">
+          <!-- UID column -->
+          <ng-container matColumnDef="uid">
+            <mat-header-cell *matHeaderCellDef i18n="@@admin.col.uid"
+              >UID</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">
+              <span [matTooltip]="u.uid" class="uid-chip">{{
+                u.uid.slice(0, 8)
+              }}</span>
+            </mat-cell>
+          </ng-container>
 
-        <!-- displayName column -->
-        <ng-container matColumnDef="displayName">
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            i18n="@@admin.col.name"
-            >Name</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">{{ u.displayName ?? '–' }}</mat-cell>
-        </ng-container>
+          <!-- displayName column -->
+          <ng-container matColumnDef="displayName">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              i18n="@@admin.col.name"
+              >Name</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">{{ u.displayName ?? '–' }}</mat-cell>
+          </ng-container>
 
-        <!-- email column -->
-        <ng-container matColumnDef="email">
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            i18n="@@admin.col.email"
-            >E-Mail</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">{{ u.email ?? '–' }}</mat-cell>
-        </ng-container>
+          <!-- email column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              i18n="@@admin.col.email"
+              >E-Mail</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">{{ u.email ?? '–' }}</mat-cell>
+          </ng-container>
 
-        <!-- anonymous column -->
-        <ng-container matColumnDef="anonymous">
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            i18n="@@admin.col.anon"
-            >Anon</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">
-            @if (u.anonymous) {
-              <mat-icon [matTooltip]="anonTooltip" class="anon-icon-warn"
-                >person_outline</mat-icon
+          <!-- anonymous column -->
+          <ng-container matColumnDef="anonymous">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              i18n="@@admin.col.anon"
+              >Anon</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">
+              @if (u.anonymous) {
+                <mat-icon [matTooltip]="anonTooltip" class="anon-icon-warn"
+                  >person_outline</mat-icon
+                >
+              }
+            </mat-cell>
+          </ng-container>
+
+          <!-- entryCount column -->
+          <ng-container matColumnDef="entryCount">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              i18n="@@admin.col.entries"
+              >Einträge</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">{{ u.entryCount }}</mat-cell>
+          </ng-container>
+
+          <!-- lastEntry column -->
+          <ng-container matColumnDef="lastEntry">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              i18n="@@admin.col.lastEntry"
+              >Letzter Eintrag</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">{{
+              u.lastEntry | date: 'short'
+            }}</mat-cell>
+          </ng-container>
+
+          <!-- createdAt column -->
+          <ng-container matColumnDef="createdAt">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              i18n="@@admin.col.createdAt"
+              >Erstellt</mat-header-cell
+            >
+            <mat-cell *matCellDef="let u">{{
+              u.createdAt | date: 'short'
+            }}</mat-cell>
+          </ng-container>
+
+          <!-- actions column -->
+          <ng-container matColumnDef="actions" stickyEnd>
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
+              <button
+                mat-icon-button
+                (click)="openUserEntries(u)"
+                [matTooltip]="entriesTooltip"
+                [attr.aria-label]="entriesAriaLabel(u)"
               >
-            }
-          </mat-cell>
-        </ng-container>
+                <mat-icon>list_alt</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="openDeleteDialog(u)"
+                [matTooltip]="deleteUserTooltip"
+                [attr.aria-label]="deleteUserTooltip"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
 
-        <!-- entryCount column -->
-        <ng-container matColumnDef="entryCount">
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            i18n="@@admin.col.entries"
-            >Einträge</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">{{ u.entryCount }}</mat-cell>
-        </ng-container>
-
-        <!-- lastEntry column -->
-        <ng-container matColumnDef="lastEntry">
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            i18n="@@admin.col.lastEntry"
-            >Letzter Eintrag</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">{{
-            u.lastEntry | date: 'short'
-          }}</mat-cell>
-        </ng-container>
-
-        <!-- createdAt column -->
-        <ng-container matColumnDef="createdAt">
-          <mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            i18n="@@admin.col.createdAt"
-            >Erstellt</mat-header-cell
-          >
-          <mat-cell *matCellDef="let u">{{
-            u.createdAt | date: 'short'
-          }}</mat-cell>
-        </ng-container>
-
-        <!-- actions column -->
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let u" (click)="$event.stopPropagation()">
-            <button
-              mat-icon-button
-              (click)="openEntriesDialog(u)"
-              [matTooltip]="entriesTooltip"
-              [attr.aria-label]="entriesAriaLabel(u)"
-            >
-              <mat-icon>list_alt</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="openDeleteDialog(u)"
-              [matTooltip]="deleteUserTooltip"
-              [attr.aria-label]="deleteUserTooltip"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns" />
-        <mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          class="clickable-row"
-          tabindex="0"
-          role="button"
-          [attr.aria-label]="detailsAriaLabel(row)"
-          (click)="openDetailsDialog(row)"
-          (keydown.enter)="openDetailsDialog(row)"
-          (keydown.space)="openDetailsDialog(row); $event.preventDefault()"
-        />
-      </mat-table>
+          <mat-header-row *matHeaderRowDef="displayedColumns" />
+          <mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="clickable-row"
+            tabindex="0"
+            role="button"
+            [attr.aria-label]="detailsAriaLabel(row)"
+            (click)="openDetailsDialog(row)"
+            (keydown.enter)="openDetailsDialog(row)"
+            (keydown.space)="openDetailsDialog(row); $event.preventDefault()"
+          />
+        </mat-table>
+      </div>
     </mat-card>
   }
 
