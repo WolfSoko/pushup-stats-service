@@ -76,13 +76,13 @@ function isIsoDateTime(value: string): boolean {
 // make the callable fail to encode and surface to the client as a generic
 // `internal` error.
 //
-// `userId`/`exerciseId` are required by the admin UI, which calls string
-// methods on them unconditionally (the sort helper does
-// `exerciseDisplayName(exerciseId).toLowerCase()`), so they're always emitted
-// with an empty-string default; `variantId`/`source` are optional and dropped
-// when absent/non-string.
-const ENTRY_REQUIRED_STRING_FIELDS = ['userId', 'exerciseId'];
-const ENTRY_OPTIONAL_STRING_FIELDS = ['variantId', 'source'];
+// `userId`/`exerciseId`/`source` are required on the shared `ExerciseEntry`
+// model and the admin UI calls string methods on them unconditionally (the
+// sort helper does `exerciseDisplayName(exerciseId).toLowerCase()`), so they're
+// always emitted with an empty-string default; `variantId` is optional and
+// dropped when absent/non-string.
+const ENTRY_REQUIRED_STRING_FIELDS = ['userId', 'exerciseId', 'source'];
+const ENTRY_OPTIONAL_STRING_FIELDS = ['variantId'];
 // `timestamp` is required by the admin UI (`ExerciseEntry.timestamp: string`);
 // `createdAt`/`updatedAt` are optional and dropped when absent/malformed.
 const ENTRY_OPTIONAL_TS_FIELDS = ['createdAt', 'updatedAt'];
@@ -111,9 +111,9 @@ export function toIsoString(value: unknown): string | undefined {
  * Project a raw `exerciseEntries` document into a strictly JSON-serializable
  * admin row: allowlisted string/number/array fields plus ISO timestamps. Only
  * finite numbers survive (NaN/Infinity are not valid JSON numbers). The
- * required `userId`/`exerciseId`/`timestamp` are always present (empty string
- * when absent/malformed) so the admin UI can't crash calling string methods on
- * them; `variantId`/`source`/`createdAt`/`updatedAt` are optional and omitted
+ * required `userId`/`exerciseId`/`source`/`timestamp` are always present (empty
+ * string when absent/malformed) so the admin UI can't crash calling string
+ * methods on them; `variantId`/`createdAt`/`updatedAt` are optional and omitted
  * when absent/malformed.
  */
 export function serializeEntry(

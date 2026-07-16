@@ -378,19 +378,25 @@ describe('admin/user-entries', () => {
       expect(entry.exerciseId).toBe('');
     });
 
-    it('should keep optional variantId/source only when present as strings', () => {
+    it('should keep optional variantId only when present as a string', () => {
       // given / when
-      const withValues = serializeEntry('e1', {
-        variantId: 'diamond',
-        source: 'web',
-      });
+      const withValues = serializeEntry('e1', { variantId: 'diamond' });
       const withoutValues = serializeEntry('e2', { reps: 10 });
 
       // then
       expect(withValues.variantId).toBe('diamond');
-      expect(withValues.source).toBe('web');
       expect('variantId' in withoutValues).toBe(false);
-      expect('source' in withoutValues).toBe(false);
+    });
+
+    it('should always emit the required source field (empty when absent)', () => {
+      // given / when — `source` is required on the shared ExerciseEntry model,
+      // so it must never be dropped, even for a legacy doc that lacks it.
+      const withSource = serializeEntry('e1', { source: 'web' });
+      const withoutSource = serializeEntry('e2', { reps: 10 });
+
+      // then
+      expect(withSource.source).toBe('web');
+      expect(withoutSource.source).toBe('');
     });
   });
 });
