@@ -85,4 +85,25 @@ describe('firestore.indexes.json ⇄ delta-aggregation rebuild queries', () => {
     // then it is declared
     expect(declared).toBe(true);
   });
+
+  it('should declare the (userId ASC, timestamp DESC) index adminListUserEntries reads from', () => {
+    // given adminListUserEntries' newest-first fetch
+    // (where('userId','==').orderBy('timestamp','desc').limit(n)) — the
+    // descending timestamp order needs its own composite index; the ascending
+    // one does NOT serve it, so without this the callable throws
+    // FAILED_PRECONDITION and the admin entries page can't load
+    // when looking up its supporting composite index
+    const declared = indexes.some(
+      (idx) =>
+        idx.collectionGroup === 'exerciseEntries' &&
+        idx.queryScope === 'COLLECTION' &&
+        idx.fields.length === 2 &&
+        idx.fields[0].fieldPath === 'userId' &&
+        idx.fields[0].order === 'ASCENDING' &&
+        idx.fields[1].fieldPath === 'timestamp' &&
+        idx.fields[1].order === 'DESCENDING'
+    );
+    // then it is declared
+    expect(declared).toBe(true);
+  });
 });

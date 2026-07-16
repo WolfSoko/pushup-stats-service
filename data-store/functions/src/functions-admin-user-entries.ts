@@ -23,13 +23,12 @@ const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
 // it goes through the Admin SDK here. Returns the newest `limit` entries,
 // newest first, so a user with a huge history never materialises unbounded.
 //
-// Uses `orderBy(timestamp, asc).limitToLast(limit)` + a client-side
-// reverse rather than `orderBy(desc)`: the only declared composite index
-// is `(userId ASC, timestamp ASC)`, which serves this in its native
-// direction. A `desc` order would need a separate descending index and
-// otherwise fail with FAILED_PRECONDITION in production. Same trick the
-// `updateAdminUserActivityOnEntryWrite` trigger uses to read the max
-// timestamp.
+// `where('userId','==').orderBy('timestamp','desc')` needs the composite
+// index `(userId ASC, timestamp DESC)` (declared in `firestore.indexes.json`);
+// without it the query fails with FAILED_PRECONDITION. Note a `limitToLast`
+// on an *ascending* order would need this exact same descending index —
+// Firestore reverses the scan internally — so the ascending composite does
+// not serve this query.
 export const adminListUserEntries = onCall(
   { region: 'europe-west3', timeoutSeconds: 60 },
   async (request) => {
@@ -45,13 +44,11 @@ export const adminListUserEntries = onCall(
       const snap = await db
         .collection(EXERCISE_ENTRIES_COLLECTION)
         .where('userId', '==', uid)
-        .orderBy('timestamp', 'asc')
-        .limitToLast(limit)
+        .orderBy('timestamp', 'desc')
+        .limit(limit)
         .get();
 
-      return snap.docs
-        .reverse()
-        .map((doc) => serializeEntry(doc.id, doc.data()));
+      return snap.docs.map((doc) => serializeEntry(doc.id, doc.data()));
     } catch (err) {
       // Surface a clear, logged error instead of an opaque `internal`.
       // Log a string (stack when available), not the raw error, so a
