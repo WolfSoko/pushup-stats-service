@@ -9474,117 +9474,117 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.user.entriesTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge anzeigen</source>
-        <target>Einträge anzeigen</target>
+        <target>Vis oppføringer</target>
       </segment>
     </unit>
     <unit id="admin.row.entriesAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
-        <target>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></target>
+        <target>Vis oppføringer for <ph id="0" equiv="identifier" disp="identifier"/></target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Eintrag bearbeiten</target>
+        <target>Rediger oppføring</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.timestamp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitpunkt</source>
-        <target>Zeitpunkt</target>
+        <target>Tidspunkt</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.value">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert</source>
-        <target>Wert</target>
+        <target>Verdi</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.staleExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </source>
-        <target> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </target>
+        <target> Ukjent øvelse – bare tidspunktet kan redigeres. </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Avbryt </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> Lagre </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer (s)</source>
-        <target>Dauer (s)</target>
+        <target>Varighet (s)</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewicht (kg)</source>
-        <target>Gewicht (kg)</target>
+        <target>Vekt (kg)</target>
       </segment>
     </unit>
     <unit id="admin.entries.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Oppføringer</target>
       </segment>
     </unit>
     <unit id="admin.entries.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Einträge vorhanden. </source>
-        <target> Keine Einträge vorhanden. </target>
+        <target> Ingen oppføringer tilgjengelig. </target>
       </segment>
     </unit>
     <unit id="admin.entries.col.timestamp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitpunkt</source>
-        <target>Zeitpunkt</target>
+        <target>Tidspunkt</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Øvelse</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.value">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert</source>
-        <target>Wert</target>
+        <target>Verdi</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.source">
-      <segment state="initial">
+      <segment state="translated">
         <source>Quelle</source>
-        <target>Quelle</target>
+        <target>Kilde</target>
       </segment>
     </unit>
     <unit id="admin.entries.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> Lukk </target>
       </segment>
     </unit>
     <unit id="admin.entry.editTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Eintrag bearbeiten</target>
+        <target>Rediger oppføring</target>
       </segment>
     </unit>
     <unit id="admin.entries.refresh">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu laden</source>
-        <target>Neu laden</target>
+        <target>Last inn på nytt</target>
       </segment>
     </unit>
 </file>

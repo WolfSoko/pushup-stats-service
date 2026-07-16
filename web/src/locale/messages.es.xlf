@@ -10177,117 +10177,117 @@
       </segment>
     </unit>
     <unit id="admin.user.entriesTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge anzeigen</source>
-        <target>Einträge anzeigen</target>
+        <target>Mostrar entradas</target>
       </segment>
     </unit>
     <unit id="admin.row.entriesAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
-        <target>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></target>
+        <target>Mostrar entradas para <ph id="0" equiv="identifier" disp="identifier"/></target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Eintrag bearbeiten</target>
+        <target>Editar entrada</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.timestamp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitpunkt</source>
-        <target>Zeitpunkt</target>
+        <target>Fecha y hora</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.value">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert</source>
-        <target>Wert</target>
+        <target>Valor</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.staleExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </source>
-        <target> Unbekannte Übung – nur der Zeitpunkt kann bearbeitet werden. </target>
+        <target> Ejercicio desconocido: solo se puede editar la fecha y hora. </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Cancelar </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> Guardar </target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer (s)</source>
-        <target>Dauer (s)</target>
+        <target>Duración (s)</target>
       </segment>
     </unit>
     <unit id="admin.entry.edit.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewicht (kg)</source>
-        <target>Gewicht (kg)</target>
+        <target>Peso (kg)</target>
       </segment>
     </unit>
     <unit id="admin.entries.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Entradas</target>
       </segment>
     </unit>
     <unit id="admin.entries.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Keine Einträge vorhanden. </source>
-        <target> Keine Einträge vorhanden. </target>
+        <target> No hay entradas disponibles. </target>
       </segment>
     </unit>
     <unit id="admin.entries.col.timestamp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitpunkt</source>
-        <target>Zeitpunkt</target>
+        <target>Fecha y hora</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Ejercicio</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.value">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert</source>
-        <target>Wert</target>
+        <target>Valor</target>
       </segment>
     </unit>
     <unit id="admin.entries.col.source">
-      <segment state="initial">
+      <segment state="translated">
         <source>Quelle</source>
-        <target>Quelle</target>
+        <target>Fuente</target>
       </segment>
     </unit>
     <unit id="admin.entries.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> Cerrar </target>
       </segment>
     </unit>
     <unit id="admin.entry.editTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag bearbeiten</source>
-        <target>Eintrag bearbeiten</target>
+        <target>Editar entrada</target>
       </segment>
     </unit>
     <unit id="admin.entries.refresh">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu laden</source>
-        <target>Neu laden</target>
+        <target>Recargar</target>
       </segment>
     </unit>
 </file>
