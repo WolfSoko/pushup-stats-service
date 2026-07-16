@@ -60,11 +60,11 @@ function serializeEntry(
     if (iso !== undefined) entry[f] = iso;
   }
   for (const f of ENTRY_NUMBER_FIELDS) {
-    if (typeof data[f] === 'number') entry[f] = data[f];
+    if (Number.isFinite(data[f])) entry[f] = data[f];
   }
   for (const f of ENTRY_ARRAY_FIELDS) {
     if (Array.isArray(data[f])) {
-      entry[f] = (data[f] as unknown[]).filter((n) => typeof n === 'number');
+      entry[f] = (data[f] as unknown[]).filter((n) => Number.isFinite(n));
     }
   }
   return entry;
@@ -107,7 +107,12 @@ export const adminListUserEntries = onCall(
         .map((doc) => serializeEntry(doc.id, doc.data()));
     } catch (err) {
       // Surface a clear, logged error instead of an opaque `internal`.
-      logger.error('adminListUserEntries failed', { uid, err });
+      // Log the message string, not the raw error, so a non-serializable
+      // value can't make the log statement itself fail.
+      logger.error('adminListUserEntries failed', {
+        uid,
+        error: err instanceof Error ? err.message : String(err),
+      });
       throw new HttpsError(
         'internal',
         'Einträge konnten nicht geladen werden.'
