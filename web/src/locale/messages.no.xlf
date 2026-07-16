@@ -9588,15 +9588,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.entries.pageTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Oppføringer</target>
       </segment>
     </unit>
     <unit id="admin.entries.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>Tilbake til administrasjonsområdet</target>
       </segment>
     </unit>
 </file>
