@@ -30,8 +30,7 @@
     "strict": false,
     "noUncheckedSideEffectImports": false,
     "types": ["*"],
-    "esModuleInterop": false,
-    "ignoreDeprecations": "6.0"
+    "esModuleInterop": true
   },
   "exclude": ["node_modules", "tmp"]
 }
