@@ -344,5 +344,18 @@ describe('admin/user-entries', () => {
       expect(entry.durationSec).toBe(42);
       expect(entry.sets).toEqual([10, 20]);
     });
+
+    it('should default a missing or malformed timestamp to an empty string', () => {
+      // given — the admin edit dialog types `timestamp` as a required string
+      // and calls `.slice()` on it, so it must never be undefined.
+      // when / then
+      expect(serializeEntry('e1', { exerciseId: 'pushup' }).timestamp).toBe('');
+      expect(serializeEntry('e1', { timestamp: 'not a date' }).timestamp).toBe(
+        ''
+      );
+      expect(serializeEntry('e1', { timestamp: '2026-04-01' }).timestamp).toBe(
+        ''
+      );
+    });
   });
 });

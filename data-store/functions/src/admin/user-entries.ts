@@ -63,7 +63,9 @@ function isIsoTimestamp(value: string): boolean {
 // make the callable fail to encode and surface to the client as a generic
 // `internal` error.
 const ENTRY_STRING_FIELDS = ['userId', 'exerciseId', 'variantId', 'source'];
-const ENTRY_TS_FIELDS = ['timestamp', 'createdAt', 'updatedAt'];
+// `timestamp` is required by the admin UI (`ExerciseEntry.timestamp: string`);
+// `createdAt`/`updatedAt` are optional and dropped when absent/malformed.
+const ENTRY_OPTIONAL_TS_FIELDS = ['createdAt', 'updatedAt'];
 
 /**
  * Coerce a Firestore timestamp-ish value to an ISO string. Post-cutover docs
@@ -87,7 +89,9 @@ export function toIsoString(value: unknown): string | undefined {
 /**
  * Project a raw `exerciseEntries` document into a strictly JSON-serializable
  * admin row: allowlisted string/number/array fields plus ISO timestamps. Only
- * finite numbers survive (NaN/Infinity are not valid JSON numbers).
+ * finite numbers survive (NaN/Infinity are not valid JSON numbers). The
+ * required `timestamp` is always present (empty string when absent/malformed);
+ * `createdAt`/`updatedAt` are optional and omitted when absent/malformed.
  */
 export function serializeEntry(
   id: string,
@@ -97,7 +101,11 @@ export function serializeEntry(
   for (const f of ENTRY_STRING_FIELDS) {
     if (typeof data[f] === 'string') entry[f] = data[f];
   }
-  for (const f of ENTRY_TS_FIELDS) {
+  // Always emit `timestamp` so the admin edit dialog (which types it as a
+  // required string and calls `.slice()` on it) can't crash on a legacy/bad
+  // doc. An empty string is safe for `date` pipe, `new Date()`, and sorting.
+  entry['timestamp'] = toIsoString(data['timestamp']) ?? '';
+  for (const f of ENTRY_OPTIONAL_TS_FIELDS) {
     const iso = toIsoString(data[f]);
     if (iso !== undefined) entry[f] = iso;
   }
