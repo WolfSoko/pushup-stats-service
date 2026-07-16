@@ -7,22 +7,20 @@ import {
   viewChild,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogModule,
-} from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { type ExerciseEntry } from '@pu-stats/models';
+import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { CallableFunctionsService } from './callable-functions.service';
 import { AdminEntryEditDialogComponent } from './entry-edit-dialog.component';
-import { AdminUser } from './admin-page.models';
 import { errorMessage } from './admin-page.helpers';
 import {
   adminEntrySortValue,
@@ -30,39 +28,45 @@ import {
   entryValueDisplay,
 } from './user-entries.helpers';
 
-export interface UserEntriesDialogData {
-  user: AdminUser;
-}
-
 /**
- * Admin drill-down into one user's exercise entries. Reads through the
- * `adminListUserEntries` callable (client Firestore rules scope reads to
- * the owner), renders a sortable table, and opens
- * {@link AdminEntryEditDialogComponent} per row to patch an entry via
- * `adminUpdateUserEntry`.
+ * Admin drill-down into one user's exercise entries, as a routed page
+ * (`/admin/users/:uid/entries`). Reads through the `adminListUserEntries`
+ * callable (client Firestore rules scope reads to the owner), renders a
+ * sortable table, and opens {@link AdminEntryEditDialogComponent} per row to
+ * patch an entry via `adminUpdateUserEntry`.
  */
 @Component({
-  selector: 'app-user-entries-dialog',
+  selector: 'app-user-entries-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
+    RouterLink,
     MatButtonModule,
+    MatCardModule,
     MatDialogModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
+    PageHeaderComponent,
   ],
-  templateUrl: './user-entries-dialog.component.html',
-  styleUrl: './user-entries-dialog.component.scss',
+  templateUrl: './user-entries-page.component.html',
+  styleUrl: './user-entries-page.component.scss',
 })
-export class UserEntriesDialogComponent {
-  private readonly data = inject<UserEntriesDialogData>(MAT_DIALOG_DATA);
+export class UserEntriesPageComponent {
+  private readonly route = inject(ActivatedRoute);
   private readonly callables = inject(CallableFunctionsService);
   private readonly dialog = inject(MatDialog);
 
-  readonly user = this.data.user;
+  readonly uid = this.route.snapshot.paramMap.get('uid') ?? '';
+  // The admin list passes a friendly label via navigation state; a direct
+  // deep-link or reload loses it, so fall back to the uid.
+  readonly userLabel =
+    (typeof history !== 'undefined' &&
+      (history.state as { label?: string } | null)?.label) ||
+    this.uid;
+
   readonly displayedColumns = [
     'timestamp',
     'exercise',
@@ -92,7 +96,7 @@ export class UserEntriesDialogComponent {
       const s = this.sort();
       if (s) this.dataSource.sort = s;
     });
-    this.loadEntries();
+    void this.loadEntries();
   }
 
   async loadEntries(): Promise<void> {
@@ -102,7 +106,7 @@ export class UserEntriesDialogComponent {
       const fn = this.callables.call<{ uid: string }, ExerciseEntry[]>(
         'adminListUserEntries'
       );
-      const result = await fn({ uid: this.user.uid });
+      const result = await fn({ uid: this.uid });
       this.entries.set(result.data);
     } catch (err) {
       this.error.set(errorMessage(err));
@@ -122,7 +126,7 @@ export class UserEntriesDialogComponent {
 
     try {
       const fn = this.callables.call('adminUpdateUserEntry');
-      await fn({ uid: this.user.uid, entryId: entry._id, patch });
+      await fn({ uid: this.uid, entryId: entry._id, patch });
       this.entries.update((list) =>
         list.map((e) =>
           e._id === entry._id ? ({ ...e, ...patch } as ExerciseEntry) : e

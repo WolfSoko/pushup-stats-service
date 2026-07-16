@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import {
   MatDialog,
   MatDialogModule,
@@ -15,7 +15,6 @@ import {
 } from './callable-functions.testing';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
-import { UserEntriesDialogComponent } from './user-entries-dialog.component';
 
 const { callablesMock, setupCallables } = createCallablesMock();
 
@@ -158,26 +157,30 @@ describe('AdminPageComponent', () => {
     });
   });
 
-  describe('openEntriesDialog', () => {
-    it('should open UserEntriesDialogComponent with the user wrapped in data', async () => {
+  describe('openUserEntries', () => {
+    it('should navigate to the user entries page with a friendly label in state', async () => {
       // given
       await createComponent();
-      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
+      const navSpy = vi
+        .spyOn(TestBed.inject(Router), 'navigate')
+        .mockResolvedValue(true);
 
       // when
-      component.openEntriesDialog(sampleUser);
+      component.openUserEntries(sampleUser);
 
       // then
-      expect(dialogOpenSpy).toHaveBeenCalledWith(
-        UserEntriesDialogComponent,
-        expect.objectContaining({ data: { user: sampleUser } })
+      expect(navSpy).toHaveBeenCalledWith(
+        ['/admin/users', sampleUser.uid, 'entries'],
+        expect.objectContaining({ state: { label: 'Alice' } })
       );
     });
 
-    it('should open the entries dialog (not delete) from the first action button', async () => {
+    it('should navigate (not open the delete dialog) from the first action button', async () => {
       // given
       await createComponent([sampleUser]);
-      dialogOpenSpy.mockReturnValue(stubDialogRef(undefined));
+      const navSpy = vi
+        .spyOn(TestBed.inject(Router), 'navigate')
+        .mockResolvedValue(true);
 
       // when
       const firstAction = fixture.nativeElement.querySelector(
@@ -191,9 +194,9 @@ describe('AdminPageComponent', () => {
       await fixture.whenStable();
 
       // then
-      expect(dialogOpenSpy).toHaveBeenCalledWith(
-        UserEntriesDialogComponent,
-        expect.objectContaining({ data: { user: sampleUser } })
+      expect(navSpy).toHaveBeenCalledWith(
+        ['/admin/users', sampleUser.uid, 'entries'],
+        expect.anything()
       );
       expect(dialogOpenSpy).not.toHaveBeenCalledWith(
         DeleteUserDialogComponent,

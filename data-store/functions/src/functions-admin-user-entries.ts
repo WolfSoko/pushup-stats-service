@@ -8,6 +8,7 @@ import {
 
 import {
   type AdminEntryPatch,
+  serializeEntry,
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './admin/user-entries';
@@ -40,16 +41,31 @@ export const adminListUserEntries = onCall(
     }
     const { uid, limit } = result;
 
-    const snap = await db
-      .collection(EXERCISE_ENTRIES_COLLECTION)
-      .where('userId', '==', uid)
-      .orderBy('timestamp', 'asc')
-      .limitToLast(limit)
-      .get();
+    try {
+      const snap = await db
+        .collection(EXERCISE_ENTRIES_COLLECTION)
+        .where('userId', '==', uid)
+        .orderBy('timestamp', 'asc')
+        .limitToLast(limit)
+        .get();
 
-    // `_id` last so the real doc id always wins over any stray `_id`
-    // field a document might carry from older data or a client bug.
-    return snap.docs.reverse().map((doc) => ({ ...doc.data(), _id: doc.id }));
+      return snap.docs
+        .reverse()
+        .map((doc) => serializeEntry(doc.id, doc.data()));
+    } catch (err) {
+      // Surface a clear, logged error instead of an opaque `internal`.
+      // Log a string (stack when available), not the raw error, so a
+      // non-serializable value can't make the log statement itself fail
+      // while still preserving the most useful diagnostic detail.
+      logger.error('adminListUserEntries failed', {
+        uid,
+        error: err instanceof Error ? (err.stack ?? err.message) : String(err),
+      });
+      throw new HttpsError(
+        'internal',
+        'Einträge konnten nicht geladen werden.'
+      );
+    }
   }
 );
 

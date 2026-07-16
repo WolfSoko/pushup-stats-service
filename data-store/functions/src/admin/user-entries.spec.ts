@@ -1,6 +1,8 @@
 import { describe, it, expect } from '@jest/globals';
 import {
   MAX_USER_ENTRIES_LIMIT,
+  serializeEntry,
+  toIsoString,
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './user-entries';
@@ -231,6 +233,170 @@ describe('admin/user-entries', () => {
       expect(
         validateUpdateUserEntryPayload({ uid: 'u', entryId: 'e' }).valid
       ).toBe(false);
+    });
+  });
+
+  describe('toIsoString', () => {
+    it('should pass through an ISO string unchanged', () => {
+      // given / when / then
+      expect(toIsoString('2026-04-01T10:00:00.000Z')).toBe(
+        '2026-04-01T10:00:00.000Z'
+      );
+    });
+
+    it('should convert a Firestore Timestamp-like value via toDate()', () => {
+      // given
+      const date = new Date('2026-04-01T10:00:00.000Z');
+      const timestamp = { toDate: () => date };
+
+      // when / then
+      expect(toIsoString(timestamp)).toBe('2026-04-01T10:00:00.000Z');
+    });
+
+    it('should return undefined for non-string, non-timestamp values', () => {
+      // given / when / then
+      expect(toIsoString(undefined)).toBeUndefined();
+      expect(toIsoString(null)).toBeUndefined();
+      expect(toIsoString(42)).toBeUndefined();
+      expect(toIsoString({})).toBeUndefined();
+    });
+
+    it('should keep an offset-less legacy ISO datetime unchanged', () => {
+      // given / when / then — older entries were stored without a timezone
+      // offset (docs/gotchas/precomputed-data.md → "Timestamp format"); these
+      // are valid, Date-parseable, and must not be blanked in the admin UI.
+      expect(toIsoString('2026-04-05T22:50')).toBe('2026-04-05T22:50');
+      expect(toIsoString('2026-04-06T00:17:00')).toBe('2026-04-06T00:17:00');
+    });
+
+    it('should drop a malformed/non-datetime string instead of passing it through', () => {
+      // given / when / then — the admin UI feeds these to DatePipe, which
+      // throws on an unparseable date, so a bad legacy value must not survive.
+      expect(toIsoString('not a date')).toBeUndefined();
+      expect(toIsoString('2026-04-01')).toBeUndefined();
+      expect(toIsoString('2026-13-01T10:00:00')).toBeUndefined();
+    });
+  });
+
+  describe('serializeEntry', () => {
+    it('should project allowlisted fields and set _id from the doc id', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'legs.squats',
+        variantId: 'weighted',
+        source: 'web',
+        timestamp: '2026-04-01T10:00:00.000Z',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-02-01T00:00:00.000Z',
+        reps: 30,
+        weightKg: 20,
+        sets: [10, 10, 10],
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry).toEqual({
+        _id: 'e1',
+        userId: 'user-1',
+        exerciseId: 'legs.squats',
+        variantId: 'weighted',
+        source: 'web',
+        timestamp: '2026-04-01T10:00:00.000Z',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-02-01T00:00:00.000Z',
+        reps: 30,
+        weightKg: 20,
+        sets: [10, 10, 10],
+      });
+    });
+
+    it('should coerce a legacy Firestore Timestamp field to an ISO string', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'pushup',
+        timestamp: { toDate: () => new Date('2026-04-01T10:00:00.000Z') },
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry.timestamp).toBe('2026-04-01T10:00:00.000Z');
+    });
+
+    it('should drop non-JSON field shapes and non-finite numbers', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'pushup',
+        reps: Number.NaN,
+        weightKg: Number.POSITIVE_INFINITY,
+        durationSec: 42,
+        sets: [10, Number.NaN, 20],
+        ref: { path: 'exerciseEntries/e1' },
+        _id: 'stray-id',
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry._id).toBe('e1');
+      expect('reps' in entry).toBe(false);
+      expect('weightKg' in entry).toBe(false);
+      expect('ref' in entry).toBe(false);
+      expect(entry.durationSec).toBe(42);
+      expect(entry.sets).toEqual([10, 20]);
+    });
+
+    it('should default a missing or malformed timestamp to an empty string', () => {
+      // given — the admin edit dialog types `timestamp` as a required string
+      // and calls `.slice()` on it, so it must never be undefined.
+      // when / then
+      expect(serializeEntry('e1', { exerciseId: 'pushup' }).timestamp).toBe('');
+      expect(serializeEntry('e1', { timestamp: 'not a date' }).timestamp).toBe(
+        ''
+      );
+      expect(serializeEntry('e1', { timestamp: '2026-04-01' }).timestamp).toBe(
+        ''
+      );
+    });
+
+    it('should default a missing or non-string userId/exerciseId to an empty string', () => {
+      // given — the admin UI calls string methods on these unconditionally
+      // (e.g. `exerciseDisplayName(exerciseId).toLowerCase()` in the sort
+      // helper), so they must never be undefined.
+      // when
+      const entry = serializeEntry('e1', { reps: 10 });
+
+      // then
+      expect(entry.userId).toBe('');
+      expect(entry.exerciseId).toBe('');
+    });
+
+    it('should keep optional variantId only when present as a string', () => {
+      // given / when
+      const withValues = serializeEntry('e1', { variantId: 'diamond' });
+      const withoutValues = serializeEntry('e2', { reps: 10 });
+
+      // then
+      expect(withValues.variantId).toBe('diamond');
+      expect('variantId' in withoutValues).toBe(false);
+    });
+
+    it('should always emit the required source field (empty when absent)', () => {
+      // given / when — `source` is required on the shared ExerciseEntry model,
+      // so it must never be dropped, even for a legacy doc that lacks it.
+      const withSource = serializeEntry('e1', { source: 'web' });
+      const withoutSource = serializeEntry('e2', { reps: 10 });
+
+      // then
+      expect(withSource.source).toBe('web');
+      expect(withoutSource.source).toBe('');
     });
   });
 });

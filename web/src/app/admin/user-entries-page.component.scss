@@ -1,0 +1,48 @@
+.entries-page {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.user-line {
+  overflow-wrap: break-word;
+}
+
+// Let the table scroll horizontally on narrow viewports instead of clipping
+// inside the card; the actions column is pinned with `stickyEnd` so the edit
+// button stays reachable while the rest scrolls.
+.table-scroll {
+  overflow-x: auto;
+}
+
+mat-cell,
+mat-header-cell {
+  white-space: nowrap;
+}
+
+// A sticky column must be opaque, otherwise scrolled cells show through it.
+.mat-column-actions {
+  background: var(--mat-sys-surface);
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.error-text {
+  color: var(--mat-sys-error);
+}
+
+.empty-text {
+  color: var(--mat-sys-on-surface-variant);
+}

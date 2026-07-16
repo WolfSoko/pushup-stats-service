@@ -40,6 +40,7 @@ describe('appRoutes', () => {
       'datenschutz',
       'admin',
       'admin/migrations',
+      'admin/users/:uid/entries',
       '**',
     ]);
   });

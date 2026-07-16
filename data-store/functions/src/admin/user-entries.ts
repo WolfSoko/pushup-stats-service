@@ -57,6 +57,98 @@ function isIsoTimestamp(value: string): boolean {
   return ISO_TIMESTAMP_RE.test(value) && !Number.isNaN(Date.parse(value));
 }
 
+// The *read* path is more lenient than the update-payload check above: the
+// timezone suffix is optional. Older entries were stored without an offset
+// (e.g. `2026-04-05T22:50`) and are treated as Berlin local time — see
+// `docs/gotchas/precomputed-data.md` → "Timestamp format". These are valid,
+// `Date`-parseable, and safe for the admin UI's `DatePipe`/`new Date()`; only
+// truly unparseable/non-datetime strings must be dropped.
+const ISO_DATETIME_READ_RE =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:?\d{2})?$/;
+
+function isIsoDateTime(value: string): boolean {
+  return ISO_DATETIME_READ_RE.test(value) && !Number.isNaN(Date.parse(value));
+}
+
+// The fields an admin entry row may carry. Projecting explicitly keeps the
+// callable response strictly JSON-serializable — a stray Firestore
+// `Timestamp`/`GeoPoint`/`DocumentReference` on a legacy doc would otherwise
+// make the callable fail to encode and surface to the client as a generic
+// `internal` error.
+//
+// `userId`/`exerciseId`/`source` are required on the shared `ExerciseEntry`
+// model and the admin UI calls string methods on them unconditionally (the
+// sort helper does `exerciseDisplayName(exerciseId).toLowerCase()`), so they're
+// always emitted with an empty-string default; `variantId` is optional and
+// dropped when absent/non-string.
+const ENTRY_REQUIRED_STRING_FIELDS = ['userId', 'exerciseId', 'source'];
+const ENTRY_OPTIONAL_STRING_FIELDS = ['variantId'];
+// `timestamp` is required by the admin UI (`ExerciseEntry.timestamp: string`);
+// `createdAt`/`updatedAt` are optional and dropped when absent/malformed.
+const ENTRY_OPTIONAL_TS_FIELDS = ['createdAt', 'updatedAt'];
+
+/**
+ * Coerce a Firestore timestamp-ish value to an ISO string. Post-cutover docs
+ * store ISO strings already, but a legacy/migrated doc might carry a Firestore
+ * `Timestamp` (has `.toDate()`), which is not JSON-serializable as-is. Anything
+ * else yields `undefined` (the field is dropped from the projection).
+ */
+export function toIsoString(value: unknown): string | undefined {
+  // Keep a valid (possibly offset-less legacy) ISO datetime, drop anything
+  // truly unparseable: the admin UI feeds these to Angular's DatePipe, which
+  // throws on an unparseable date. `.toDate().toISOString()` always yields a
+  // valid `…Z`.
+  if (typeof value === 'string') {
+    return isIsoDateTime(value) ? value : undefined;
+  }
+  if (value && typeof (value as { toDate?: unknown }).toDate === 'function') {
+    return (value as { toDate(): Date }).toDate().toISOString();
+  }
+  return undefined;
+}
+
+/**
+ * Project a raw `exerciseEntries` document into a strictly JSON-serializable
+ * admin row: allowlisted string/number/array fields plus ISO timestamps. Only
+ * finite numbers survive (NaN/Infinity are not valid JSON numbers). The
+ * required `userId`/`exerciseId`/`source`/`timestamp` are always present (empty
+ * string when absent/malformed) so the admin UI can't crash calling string
+ * methods on them; `variantId`/`createdAt`/`updatedAt` are optional and omitted
+ * when absent/malformed.
+ */
+export function serializeEntry(
+  id: string,
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const entry: Record<string, unknown> = { _id: id };
+  // Always emit the required identity strings (empty default) so the admin UI,
+  // which calls string methods on them unconditionally, can't crash on a
+  // legacy/bad doc.
+  for (const f of ENTRY_REQUIRED_STRING_FIELDS) {
+    entry[f] = typeof data[f] === 'string' ? data[f] : '';
+  }
+  for (const f of ENTRY_OPTIONAL_STRING_FIELDS) {
+    if (typeof data[f] === 'string') entry[f] = data[f];
+  }
+  // Always emit `timestamp` so the admin edit dialog (which types it as a
+  // required string and calls `.slice()` on it) can't crash on a legacy/bad
+  // doc. An empty string is safe for `date` pipe, `new Date()`, and sorting.
+  entry['timestamp'] = toIsoString(data['timestamp']) ?? '';
+  for (const f of ENTRY_OPTIONAL_TS_FIELDS) {
+    const iso = toIsoString(data[f]);
+    if (iso !== undefined) entry[f] = iso;
+  }
+  for (const f of NUMERIC_FIELDS) {
+    if (Number.isFinite(data[f])) entry[f] = data[f];
+  }
+  for (const f of BREAKDOWN_FIELDS) {
+    if (Array.isArray(data[f])) {
+      entry[f] = (data[f] as unknown[]).filter((n) => Number.isFinite(n));
+    }
+  }
+  return entry;
+}
+
 /**
  * Validates the `adminListUserEntries` payload: a non-empty `uid` and an
  * optional positive integer `limit` capped at {@link MAX_USER_ENTRIES_LIMIT}.

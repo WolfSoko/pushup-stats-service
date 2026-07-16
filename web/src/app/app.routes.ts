@@ -274,5 +274,13 @@ export const appRoutes: Routes = [
         (m) => m.MigrationsPageComponent
       ),
   },
+  {
+    path: 'admin/users/:uid/entries',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/user-entries-page.component').then(
+        (m) => m.UserEntriesPageComponent
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];
