@@ -10307,69 +10307,69 @@
       </segment>
     </unit>
     <unit id="admin.entries.meta.uid">
-      <segment state="initial">
+      <segment state="translated">
         <source>UID</source>
         <target>UID</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.entryCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Voci</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.firstEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Eintrag</source>
-        <target>Erster Eintrag</target>
+        <target>Prima immissione</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.lastEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter Eintrag</source>
-        <target>Letzter Eintrag</target>
+        <target>Ultima immissione</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.createdAt">
-      <segment state="initial">
+      <segment state="translated">
         <source>Registriert</source>
-        <target>Registriert</target>
+        <target>Registrato</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.activePlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktiver Plan</source>
-        <target>Aktiver Plan</target>
+        <target>Piano attivo</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.noPlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kein aktiver Plan</source>
-        <target>Kein aktiver Plan</target>
+        <target>Nessun piano attivo</target>
       </segment>
     </unit>
     <unit id="admin.entries.copyUid">
-      <segment state="initial">
+      <segment state="translated">
         <source>UID kopieren</source>
-        <target>UID kopieren</target>
+        <target>Copia UID</target>
       </segment>
     </unit>
     <unit id="admin.entries.roleAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Admin</source>
         <target>Admin</target>
       </segment>
     </unit>
     <unit id="admin.entries.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anonym</source>
-        <target>Anonym</target>
+        <target>Anonimo</target>
       </segment>
     </unit>
     <unit id="admin.entries.publicProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Öffentliches Profil</source>
-        <target>Öffentliches Profil</target>
+        <target>Profilo pubblico</target>
       </segment>
     </unit>
 </file>
