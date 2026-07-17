@@ -16,7 +16,8 @@ import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
-// Sentinel exercise id for pushup rows (they have no catalog definition).
+// Catalog id for pushup rows — the only exercise whose entries carry an
+// editable `source`, so the update path checks against it.
 const PUSHUP_EXERCISE_ID = 'pushup';
 
 // Admin-only read of a single user's exercise history. The Firestore
