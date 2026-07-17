@@ -10333,7 +10333,7 @@
     <unit id="admin.entries.meta.createdAt">
       <segment state="translated">
         <source>Registriert</source>
-        <target>Εγγεγραμμένος</target>
+        <target>Ημερομηνία εγγραφής</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.activePlan">

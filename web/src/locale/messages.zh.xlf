@@ -9827,13 +9827,13 @@
     <unit id="admin.entries.meta.firstEntry">
       <segment state="translated">
         <source>Erster Eintrag</source>
-        <target>首次训练</target>
+        <target>首次记录</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.lastEntry">
       <segment state="translated">
         <source>Letzter Eintrag</source>
-        <target>最后一次训练</target>
+        <target>最后一次记录</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.createdAt">
