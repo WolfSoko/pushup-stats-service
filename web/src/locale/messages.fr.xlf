@@ -10211,13 +10211,13 @@
     <unit id="admin.entries.meta.activePlan">
       <segment state="translated">
         <source>Aktiver Plan</source>
-        <target>Forfait actif</target>
+        <target>Plan d'entraînement actif</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.noPlan">
       <segment state="translated">
         <source>Kein aktiver Plan</source>
-        <target>Aucun forfait actif</target>
+        <target>Aucun plan d'entraînement actif</target>
       </segment>
     </unit>
     <unit id="admin.entries.copyUid">
