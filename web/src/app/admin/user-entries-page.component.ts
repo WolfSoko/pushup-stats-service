@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -11,29 +12,35 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { type ExerciseEntry } from '@pu-stats/models';
+import { type ExerciseEntry, TRAINING_PLANS } from '@pu-stats/models';
+import { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
+import { type TrainingEntryDialogResult } from '../stats/components/training-entry-dialog/training-entry-dialog.models';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { CallableFunctionsService } from './callable-functions.service';
-import { AdminEntryEditDialogComponent } from './entry-edit-dialog.component';
 import { errorMessage } from './admin-page.helpers';
+import { AdminUserDetails } from './admin-page.models';
 import {
   adminEntrySortValue,
+  dialogResultToPatch,
   entryExerciseName,
+  entryToDialogData,
   entryValueDisplay,
 } from './user-entries.helpers';
 
 /**
  * Admin drill-down into one user's exercise entries, as a routed page
  * (`/admin/users/:uid/entries`). Reads through the `adminListUserEntries`
- * callable (client Firestore rules scope reads to the owner), renders a
- * sortable table, and opens {@link AdminEntryEditDialogComponent} per row to
- * patch an entry via `adminUpdateUserEntry`.
+ * callable (client Firestore rules scope reads to the owner), loads richer
+ * user detail via `adminGetUserDetails` for the header, renders a sortable
+ * table, and opens the shared {@link TrainingEntryDialogComponent} per row —
+ * the same editor the history page uses — persisting via `adminUpdateUserEntry`.
  */
 @Component({
   selector: 'app-user-entries-page',
@@ -43,6 +50,7 @@ import {
     RouterLink,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatDialogModule,
     MatIconModule,
     MatProgressSpinnerModule,
@@ -60,9 +68,10 @@ export class UserEntriesPageComponent {
   private readonly dialog = inject(MatDialog);
 
   readonly uid = this.route.snapshot.paramMap.get('uid') ?? '';
-  // The admin list passes a friendly label via navigation state; a direct
-  // deep-link or reload loses it, so fall back to the uid.
-  readonly userLabel =
+  // The admin list passes a friendly label via navigation state for an instant
+  // header before `adminGetUserDetails` resolves; a deep-link/reload loses it,
+  // so fall back to the uid.
+  private readonly initialLabel =
     (typeof history !== 'undefined' &&
       (history.state as { label?: string } | null)?.label) ||
     this.uid;
@@ -76,10 +85,36 @@ export class UserEntriesPageComponent {
   ];
   readonly editTooltip = $localize`:@@admin.entry.editTooltip:Eintrag bearbeiten`;
   readonly refreshTooltip = $localize`:@@admin.entries.refresh:Neu laden`;
+  readonly copyUidTooltip = $localize`:@@admin.entries.copyUid:UID kopieren`;
+  readonly adminBadge = $localize`:@@admin.entries.roleAdmin:Admin`;
+  readonly anonBadge = $localize`:@@admin.entries.anonymous:Anonym`;
+  readonly publicBadge = $localize`:@@admin.entries.publicProfile:Öffentliches Profil`;
 
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly entries = signal<ExerciseEntry[]>([]);
+  readonly details = signal<AdminUserDetails | null>(null);
+
+  readonly userLabel = computed(() => {
+    const d = this.details();
+    return d ? (d.displayName ?? d.email ?? d.uid) : this.initialLabel;
+  });
+
+  // Entries load newest-first, so the last row is the oldest loaded entry.
+  // With the default 1000-entry page this is the true first entry for all but
+  // the most prolific users.
+  readonly firstEntry = computed(() => {
+    const list = this.entries();
+    return list.length > 0 ? list[list.length - 1].timestamp : null;
+  });
+
+  readonly activePlanTitle = computed(() => {
+    const plan = this.details()?.activePlan;
+    if (!plan) return null;
+    return (
+      TRAINING_PLANS.find((p) => p.id === plan.planId)?.title ?? plan.planId
+    );
+  });
 
   readonly dataSource = new MatTableDataSource<ExerciseEntry>([]);
   private readonly sort = viewChild<MatSort>('entriesSort');
@@ -97,6 +132,7 @@ export class UserEntriesPageComponent {
       if (s) this.dataSource.sort = s;
     });
     void this.loadEntries();
+    void this.loadDetails();
   }
 
   async loadEntries(): Promise<void> {
@@ -115,25 +151,52 @@ export class UserEntriesPageComponent {
     }
   }
 
+  async loadDetails(): Promise<void> {
+    // Header detail is supplementary — a failure here must not blank the
+    // entries table, so it's swallowed (the uid header still renders).
+    try {
+      const fn = this.callables.call<{ uid: string }, AdminUserDetails>(
+        'adminGetUserDetails'
+      );
+      const result = await fn({ uid: this.uid });
+      this.details.set(result.data);
+    } catch {
+      this.details.set(null);
+    }
+  }
+
   async openEditDialog(entry: ExerciseEntry): Promise<void> {
-    const ref = this.dialog.open(AdminEntryEditDialogComponent, {
-      data: entry,
-      width: 'min(92vw, 420px)',
-      maxWidth: '92vw',
+    const ref = this.dialog.open(TrainingEntryDialogComponent, {
+      data: entryToDialogData(entry),
+      width: 'min(96vw, 560px)',
+      maxWidth: '96vw',
     });
-    const patch = await firstValueFrom(ref.afterClosed());
-    if (!patch) return;
+    const result = await firstValueFrom<TrainingEntryDialogResult | undefined>(
+      ref.afterClosed()
+    );
+    if (!result) return;
+
+    const patch = dialogResultToPatch(entry, result);
+    // Nothing actually changed — skip the write so we don't bump `updatedAt`
+    // or re-trigger aggregates for a no-op save.
+    if (Object.keys(patch).length === 0) return;
 
     try {
       const fn = this.callables.call('adminUpdateUserEntry');
       await fn({ uid: this.uid, entryId: entry._id, patch });
-      this.entries.update((list) =>
-        list.map((e) =>
-          e._id === entry._id ? ({ ...e, ...patch } as ExerciseEntry) : e
-        )
-      );
+      // Reload rather than optimistic-merge: the shared dialog can clear
+      // breakdowns / variants, so a naive spread would misrepresent the row.
+      await this.loadEntries();
     } catch (err) {
       this.error.set(errorMessage(err));
+    }
+  }
+
+  async copyUid(): Promise<void> {
+    try {
+      await navigator.clipboard?.writeText(this.uid);
+    } catch {
+      // Clipboard may be unavailable (insecure context / denied) — no-op.
     }
   }
 }

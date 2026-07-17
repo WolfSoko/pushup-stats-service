@@ -2,10 +2,14 @@ import {
   type ExerciseEntry,
   findExerciseDefinition,
   formatEntryDisplay,
-  measurementCompanionValueField,
   measurementValueField,
 } from '@pu-stats/models';
+import { appendLocalOffset } from '@pu-stats/date';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import {
+  type TrainingEntryDialogData,
+  type TrainingEntryDialogResult,
+} from '../stats/components/training-entry-dialog/training-entry-dialog.models';
 
 type SortValue = string | number;
 
@@ -67,50 +71,160 @@ export function primaryValue(entry: ExerciseEntry): number {
   return (entry[field] as number | undefined) ?? 0;
 }
 
-/** Companion value field for an entry, or `undefined` when it has none. */
-export function companionField(
+/**
+ * Adapt a stored admin entry into the shared {@link TrainingEntryDialogData}
+ * so the admin page opens the *same* editor the history page uses. Pushup
+ * rows (`exerciseId === 'pushup'`) open in pushup mode; everything else in
+ * exercise mode. Mirrors the history page's `toEditDialogData`.
+ *
+ * The timestamp is converted to the *admin's* local wall-clock (with the local
+ * offset appended) so the dialog — which seeds its `datetime-local` input from
+ * `timestamp.slice(0, 16)` without converting — shows the right time even for
+ * an entry stored as UTC (`…Z`) or with another user's offset. Because it still
+ * carries an offset, an unchanged save round-trips to the same instant.
+ */
+export function entryToDialogData(
   entry: ExerciseEntry
-): 'durationSec' | 'weightKg' | undefined {
-  const def = findExerciseDefinition(entry.exerciseId);
-  if (!def) return undefined;
-  const companion = measurementCompanionValueField(def.measurement);
-  if (companion === 'durationSec') return 'durationSec';
-  if (def.measurement === 'weight') return 'weightKg';
-  return undefined;
+): TrainingEntryDialogData {
+  const timestamp = toLocalDialogTimestamp(entry.timestamp);
+  if (entry.exerciseId === 'pushup') {
+    return {
+      kind: 'pushup',
+      timestamp,
+      reps: entry.reps,
+      sets: entry.sets,
+      source: entry.source,
+      type: entry.variantId ?? undefined,
+    };
+  }
+  return {
+    kind: 'exercise',
+    timestamp,
+    reps: entry.reps,
+    sets: entry.sets,
+    intervals: entry.intervals,
+    ...(entry.durationSec !== undefined
+      ? { durationSec: entry.durationSec }
+      : {}),
+    ...(entry.distanceM !== undefined ? { distanceM: entry.distanceM } : {}),
+    exerciseId: entry.exerciseId,
+    variantId: entry.variantId,
+  };
 }
 
-export interface AdminEntryEditForm {
-  timestamp: string;
-  value: number | null;
-  companion: number | null;
+// Render a stored instant as `YYYY-MM-DDTHH:mm:ss±HH:MM` in the viewer's local
+// timezone. `appendLocalOffset` supplies the DST-correct offset (the same one
+// the dialog uses when the admin edits the field), so the value both displays
+// correctly and denotes the original instant when saved unchanged.
+function toLocalDialogTimestamp(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const localWall = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
+    d.getDate()
+  )}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  return appendLocalOffset(localWall);
 }
 
 /**
- * Diffs the edit-form values against the original entry and returns the
- * minimal patch of changed fields, or `null` when nothing changed. Keeps
- * the callable payload small and avoids no-op writes that would bump
- * `updatedAt` and re-trigger aggregates for nothing.
+ * Translate a shared-dialog result into the *minimal* `adminUpdateUserEntry`
+ * patch: only fields whose value actually changed, so a no-op save doesn't bump
+ * `updatedAt` / re-trigger aggregates. Returns `{}` when nothing changed.
+ *
+ * The measurement branch mirrors the history page's `toUpdatePayload`, but
+ * emits the plain field patch the admin callable expects (no `kind`/`id`,
+ * `exerciseId` stays immutable). For exercise entries `source` is left
+ * untouched; only pushup rows carry an editable source. For a stale exercise id
+ * (no catalog definition) only the timestamp is patchable — the callable can't
+ * catalog-validate value fields for it — matching the old admin dialog.
  */
-export function buildEntryPatch(
+export function dialogResultToPatch(
   entry: ExerciseEntry,
-  form: AdminEntryEditForm
-): Record<string, unknown> | null {
+  result: TrainingEntryDialogResult
+): Record<string, unknown> {
   const patch: Record<string, unknown> = {};
-  if (form.timestamp && form.timestamp !== entry.timestamp) {
-    patch['timestamp'] = form.timestamp;
+  // The dialog echoes back a re-offset string for an unchanged timestamp, so
+  // compare instants rather than strings.
+  if (!sameInstant(result.timestamp, entry.timestamp)) {
+    patch['timestamp'] = result.timestamp;
   }
-  const def = findExerciseDefinition(entry.exerciseId);
-  if (def && form.value !== null) {
-    const field = measurementValueField(def.measurement);
-    if (form.value !== (entry[field] as number | undefined)) {
-      patch[field] = form.value;
+
+  // Stale exercise id: timestamp-only (see doc comment). Pushup resolves in the
+  // catalog, so it is unaffected by this guard.
+  if (findExerciseDefinition(entry.exerciseId) === null) {
+    return patch;
+  }
+
+  const proposed: Record<string, unknown> = {};
+  if (result.kind === 'pushup') {
+    proposed['reps'] = result.reps;
+    proposed['source'] = result.source;
+    // A pushup's "type" is its variant; an empty type clears the variant.
+    proposed['variantId'] = result.type ? result.type : null;
+    collapseBreakdown(proposed, 'sets', result.sets, entry.sets);
+  } else {
+    const intervals = result.intervals ?? [];
+    switch (result.measurement) {
+      case 'time':
+        proposed['durationSec'] = result.durationSec ?? 0;
+        collapseBreakdown(proposed, 'intervals', intervals, entry.intervals);
+        break;
+      case 'distance-time':
+        proposed['distanceM'] = result.distanceM ?? 0;
+        proposed['durationSec'] = result.durationSec ?? 0;
+        collapseBreakdown(proposed, 'intervals', intervals, entry.intervals);
+        break;
+      case 'distance':
+        proposed['distanceM'] = result.distanceM ?? 0;
+        collapseBreakdown(proposed, 'intervals', intervals, entry.intervals);
+        break;
+      default:
+        proposed['reps'] = result.reps;
+        collapseBreakdown(proposed, 'sets', result.sets, entry.sets);
     }
+    if (result.variantId !== undefined)
+      proposed['variantId'] = result.variantId;
   }
-  const companion = companionField(entry);
-  if (companion && form.companion !== null) {
-    if (form.companion !== (entry[companion] as number | undefined)) {
-      patch[companion] = form.companion;
-    }
+
+  for (const [field, value] of Object.entries(proposed)) {
+    if (!fieldEquals(entry, field, value)) patch[field] = value;
   }
-  return Object.keys(patch).length > 0 ? patch : null;
+  return patch;
+}
+
+/** True when two ISO strings denote the same instant (ignoring offset form). */
+function sameInstant(a: string, b: string): boolean {
+  const ta = new Date(a).getTime();
+  const tb = new Date(b).getTime();
+  return !Number.isNaN(ta) && !Number.isNaN(tb) && ta === tb;
+}
+
+// True when a proposed patch value matches the entry's current value (so it can
+// be dropped as a no-op). Handles the breakdown clear sentinel (`[]`) and the
+// variant tri-state (missing variant ≡ `null`).
+function fieldEquals(
+  entry: ExerciseEntry,
+  field: string,
+  value: unknown
+): boolean {
+  if (field === 'variantId') return (entry.variantId ?? null) === value;
+  if (field === 'sets' || field === 'intervals') {
+    const cur = (entry[field] as number[] | undefined) ?? [];
+    const next = (value as number[] | undefined) ?? [];
+    return cur.length === next.length && cur.every((n, i) => n === next[i]);
+  }
+  return (entry as unknown as Record<string, unknown>)[field] === value;
+}
+
+// A multi-value breakdown collapses to a single value by clearing the stored
+// array: emit `[]` (the callable maps it to `deleteField()`) only when the
+// entry actually had one, so we never write a redundant empty array.
+function collapseBreakdown(
+  patch: Record<string, unknown>,
+  field: 'sets' | 'intervals',
+  next: number[],
+  existing: number[] | undefined
+): void {
+  if (next.length > 1) patch[field] = next;
+  else if (existing !== undefined) patch[field] = [];
 }

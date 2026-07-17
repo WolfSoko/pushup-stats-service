@@ -13,8 +13,12 @@ import { of } from 'rxjs';
 import { type ExerciseEntry } from '@pu-stats/models';
 import { UserEntriesPageComponent } from './user-entries-page.component';
 import { CallableFunctionsService } from './callable-functions.service';
-import { createCallablesMock } from './callable-functions.testing';
-import { AdminEntryEditDialogComponent } from './entry-edit-dialog.component';
+import {
+  CallableRecord,
+  createCallablesMock,
+} from './callable-functions.testing';
+import { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
+import { AdminUserDetails } from './admin-page.models';
 
 const { callablesMock, setupCallables } = createCallablesMock();
 
@@ -31,11 +35,30 @@ describe('UserEntriesPageComponent', () => {
     source: 'web',
   };
 
+  const sampleDetails: AdminUserDetails = {
+    uid: 'user-1',
+    displayName: 'Alice',
+    email: 'alice@example.com',
+    anonymous: false,
+    role: 'admin',
+    createdAt: '2026-01-01T00:00:00.000Z',
+    entryCount: 12,
+    lastEntry: '2026-04-09T10:00:00.000Z',
+    publicProfile: true,
+    activePlan: { planId: 'recruit-6w', startDate: '2026-04-01' },
+  };
+
   async function createComponent(
-    entries: ExerciseEntry[] = [sampleEntry]
+    entries: ExerciseEntry[] = [sampleEntry],
+    extraCallables: CallableRecord[] = []
   ): Promise<void> {
     setupCallables([
       { name: 'adminListUserEntries', impl: async () => ({ data: entries }) },
+      {
+        name: 'adminGetUserDetails',
+        impl: async () => ({ data: sampleDetails }),
+      },
+      ...extraCallables,
     ]);
 
     await TestBed.configureTestingModule({
@@ -75,6 +98,32 @@ describe('UserEntriesPageComponent', () => {
     expect(component.entries().length).toBe(1);
   });
 
+  it('should load user details for the header', async () => {
+    // given / when
+    await createComponent();
+
+    // then
+    expect(callablesMock.call).toHaveBeenCalledWith('adminGetUserDetails');
+    expect(component.details()?.email).toBe('alice@example.com');
+    // active plan id resolves to a catalog title (or the id as fallback)
+    expect(component.activePlanTitle()).toBeTruthy();
+  });
+
+  it('should render the public-profile and admin badges from details', async () => {
+    // given / when
+    await createComponent();
+
+    // then
+    const chips = fixture.nativeElement.querySelectorAll(
+      'mat-chip'
+    ) as NodeListOf<HTMLElement>;
+    const text = Array.from(chips)
+      .map((c) => c.textContent ?? '')
+      .join(' ');
+    expect(text).toContain('Admin');
+    expect(text).toContain('Öffentliches Profil');
+  });
+
   it('should render one table row per entry', async () => {
     // given / when
     await createComponent();
@@ -95,7 +144,7 @@ describe('UserEntriesPageComponent', () => {
     expect(empty).toBeTruthy();
   });
 
-  it('should open the edit dialog for the clicked entry', async () => {
+  it('should open the shared training dialog for the clicked entry', async () => {
     // given
     await createComponent();
     const dialog = fixture.debugElement.injector.get(MatDialog);
@@ -113,10 +162,53 @@ describe('UserEntriesPageComponent', () => {
     );
     await fixture.whenStable();
 
-    // then
+    // then — the pushup row opens the shared dialog in pushup mode
     expect(openSpy).toHaveBeenCalledWith(
-      AdminEntryEditDialogComponent,
-      expect.objectContaining({ data: sampleEntry })
+      TrainingEntryDialogComponent,
+      expect.objectContaining({
+        data: expect.objectContaining({
+          kind: 'pushup',
+          reps: 30,
+          source: 'web',
+        }),
+      })
+    );
+  });
+
+  it('should persist a dialog result via adminUpdateUserEntry and reload', async () => {
+    // given
+    const update = vi.fn(async () => ({ data: { ok: true } }));
+    await createComponent(
+      [sampleEntry],
+      [{ name: 'adminUpdateUserEntry', impl: update }]
+    );
+    const dialog = fixture.debugElement.injector.get(MatDialog);
+    vi.spyOn(dialog, 'open').mockReturnValue({
+      afterClosed: () =>
+        of({
+          kind: 'pushup',
+          timestamp: '2026-04-10T08:00:00.000+02:00',
+          reps: 40,
+          sets: [40],
+          source: 'quick-add',
+          type: '',
+        }),
+    } as MatDialogRef<unknown, unknown>);
+
+    // when
+    await component.openEditDialog(sampleEntry);
+
+    // then
+    expect(update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        uid: 'user-1',
+        entryId: 'entry-1',
+        patch: expect.objectContaining({
+          reps: 40,
+          source: 'quick-add',
+          timestamp: '2026-04-10T08:00:00.000+02:00',
+        }),
+      })
     );
   });
 });

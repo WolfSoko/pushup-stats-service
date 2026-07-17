@@ -192,6 +192,36 @@ describe('admin/user-entries', () => {
       expect(result.valid && result.patch.variantId).toBe('bodyweight');
     });
 
+    it('should accept and trim a source (editable for pushup entries)', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { source: '  quick-add  ' },
+      });
+
+      // then
+      expect(result.valid && result.patch.source).toBe('quick-add');
+    });
+
+    it('should reject a blank or non-string source', () => {
+      // given / when / then
+      expect(
+        validateUpdateUserEntryPayload({
+          uid: 'u',
+          entryId: 'e',
+          patch: { source: '   ' },
+        }).valid
+      ).toBe(false);
+      expect(
+        validateUpdateUserEntryPayload({
+          uid: 'u',
+          entryId: 'e',
+          patch: { source: 42 },
+        }).valid
+      ).toBe(false);
+    });
+
     it('should pass through cleared breakdowns and a cleared variant', () => {
       // given / when
       const result = validateUpdateUserEntryPayload({

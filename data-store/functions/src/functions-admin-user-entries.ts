@@ -16,6 +16,9 @@ import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
+// Catalog id for pushup rows — the only exercise whose entries carry an
+// editable `source`, so the update path checks against it.
+const PUSHUP_EXERCISE_ID = 'pushup';
 
 // Admin-only read of a single user's exercise history. The Firestore
 // rules scope client reads to `userId == request.auth.uid`, so the
@@ -89,6 +92,7 @@ function buildEntryUpdate(patch: AdminEntryPatch): Record<string, unknown> {
         ? admin.firestore.FieldValue.delete()
         : patch.variantId;
   }
+  if (patch.source !== undefined) update.source = patch.source;
   return update;
 }
 
@@ -122,11 +126,23 @@ export const adminUpdateUserEntry = onCall(
       );
     }
 
+    // `source` is only meaningful for pushup rows (the shared dialog exposes it
+    // there); never let it ride along on a catalog exercise update, even though
+    // the payload schema accepts the field.
+    if (
+      patch.source !== undefined &&
+      String(data.exerciseId) !== PUSHUP_EXERCISE_ID
+    ) {
+      delete patch.source;
+    }
+
     // Only the measurement/variant fields need catalog validation. A
-    // timestamp-only patch is allowed even for a stale exercise id whose
-    // catalog entry was renamed/removed — the edit dialog offers exactly
+    // timestamp/source-only patch is allowed even for a stale exercise id
+    // whose catalog entry was renamed/removed — the edit dialog offers exactly
     // that for such entries. Mirrors `ExerciseFirestoreService.updateEntry`,
-    // which validates only when a value field actually changes.
+    // which validates only when a value field actually changes. Pushup is a
+    // first-class catalog exercise (`id: 'pushup'`), so it validates like any
+    // other — reps bounds, variant, etc. — through the same path.
     const needsCatalog = (
       [
         'reps',
@@ -143,7 +159,13 @@ export const adminUpdateUserEntry = onCall(
       if (!def) {
         throw new HttpsError('failed-precondition', 'Unbekannte Übung.');
       }
-      const violation = validateExerciseEntry(patch, def, { partial: true });
+      // `source` is not a catalog-validated field — validate only the
+      // measurement/variant fields against the definition.
+      const measurementPatch = { ...patch };
+      delete measurementPatch.source;
+      const violation = validateExerciseEntry(measurementPatch, def, {
+        partial: true,
+      });
       if (violation) {
         throw new HttpsError('invalid-argument', violation);
       }

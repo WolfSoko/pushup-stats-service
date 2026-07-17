@@ -1,7 +1,7 @@
 <div class="entries-page">
   <app-page-header icon="list_alt" variant="admin">
     <h1 page-title i18n="@@admin.entries.pageTitle">Einträge</h1>
-    <p page-subtitle class="user-line">{{ userLabel }}</p>
+    <p page-subtitle class="user-line">{{ userLabel() }}</p>
   </app-page-header>
 
   <div class="toolbar">
@@ -18,6 +18,95 @@
       <mat-icon>refresh</mat-icon>
     </button>
   </div>
+
+  <mat-card class="user-card">
+    <mat-card-content>
+      <div class="user-head">
+        <div class="user-ident">
+          <span class="user-name">{{ userLabel() }}</span>
+          @if (details()?.email; as email) {
+            <span class="user-email">{{ email }}</span>
+          }
+        </div>
+        <mat-chip-set aria-hidden="false">
+          @if (details()?.anonymous) {
+            <mat-chip highlighted color="warn">{{ anonBadge }}</mat-chip>
+          }
+          @if (details()?.role === 'admin') {
+            <mat-chip highlighted color="primary">{{ adminBadge }}</mat-chip>
+          }
+          @if (details()?.publicProfile) {
+            <mat-chip highlighted>{{ publicBadge }}</mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+
+      <dl class="user-meta">
+        <div class="meta-item meta-uid">
+          <dt i18n="@@admin.entries.meta.uid">UID</dt>
+          <dd>
+            <span class="uid-chip" [matTooltip]="uid">{{
+              uid.slice(0, 12)
+            }}</span>
+            <button
+              mat-icon-button
+              class="copy-btn"
+              (click)="copyUid()"
+              [matTooltip]="copyUidTooltip"
+              [attr.aria-label]="copyUidTooltip"
+            >
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </dd>
+        </div>
+
+        <div class="meta-item">
+          <dt i18n="@@admin.entries.meta.entryCount">Einträge</dt>
+          <dd>{{ details()?.entryCount ?? entries().length }}</dd>
+        </div>
+
+        <div class="meta-item">
+          <dt i18n="@@admin.entries.meta.firstEntry">Erster Eintrag</dt>
+          <dd>{{ firstEntry() ? (firstEntry() | date: 'short') : '–' }}</dd>
+        </div>
+
+        <div class="meta-item">
+          <dt i18n="@@admin.entries.meta.lastEntry">Letzter Eintrag</dt>
+          <dd>
+            {{
+              details()?.lastEntry
+                ? (details()!.lastEntry | date: 'short')
+                : '–'
+            }}
+          </dd>
+        </div>
+
+        <div class="meta-item">
+          <dt i18n="@@admin.entries.meta.createdAt">Registriert</dt>
+          <dd>
+            {{
+              details()?.createdAt
+                ? (details()!.createdAt | date: 'short')
+                : '–'
+            }}
+          </dd>
+        </div>
+
+        <div class="meta-item">
+          <dt i18n="@@admin.entries.meta.activePlan">Aktiver Plan</dt>
+          <dd>
+            @if (activePlanTitle(); as title) {
+              {{ title }}
+            } @else {
+              <span class="muted" i18n="@@admin.entries.meta.noPlan"
+                >Kein aktiver Plan</span
+              >
+            }
+          </dd>
+        </div>
+      </dl>
+    </mat-card-content>
+  </mat-card>
 
   @if (loading()) {
     <div class="spinner-container">
