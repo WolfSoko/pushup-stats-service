@@ -16,6 +16,8 @@ import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
 const EXERCISE_ENTRIES_COLLECTION = 'exerciseEntries';
+// Sentinel exercise id for pushup rows (they have no catalog definition).
+const PUSHUP_EXERCISE_ID = 'pushup';
 
 // Admin-only read of a single user's exercise history. The Firestore
 // rules scope client reads to `userId == request.auth.uid`, so the
@@ -89,6 +91,7 @@ function buildEntryUpdate(patch: AdminEntryPatch): Record<string, unknown> {
         ? admin.firestore.FieldValue.delete()
         : patch.variantId;
   }
+  if (patch.source !== undefined) update.source = patch.source;
   return update;
 }
 
@@ -123,8 +126,8 @@ export const adminUpdateUserEntry = onCall(
     }
 
     // Only the measurement/variant fields need catalog validation. A
-    // timestamp-only patch is allowed even for a stale exercise id whose
-    // catalog entry was renamed/removed — the edit dialog offers exactly
+    // timestamp/source-only patch is allowed even for a stale exercise id
+    // whose catalog entry was renamed/removed — the edit dialog offers exactly
     // that for such entries. Mirrors `ExerciseFirestoreService.updateEntry`,
     // which validates only when a value field actually changes.
     const needsCatalog = (
@@ -138,7 +141,12 @@ export const adminUpdateUserEntry = onCall(
         'variantId',
       ] as const
     ).some((k) => patch[k] !== undefined);
-    if (needsCatalog) {
+    // Pushup entries (`exerciseId === 'pushup'`, e.g. migrated from the legacy
+    // `pushups` collection) have no catalog `ExerciseDefinition`; the client
+    // pushup path likewise skips catalog validation. Their value fields
+    // (reps/sets/variant/source) are still editable via the shared dialog.
+    const isPushup = String(data.exerciseId) === PUSHUP_EXERCISE_ID;
+    if (needsCatalog && !isPushup) {
       const def = findExerciseDefinition(String(data.exerciseId));
       if (!def) {
         throw new HttpsError('failed-precondition', 'Unbekannte Übung.');

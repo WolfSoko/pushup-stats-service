@@ -26,6 +26,7 @@ export {
   adminListUserEntries,
   adminUpdateUserEntry,
 } from './functions-admin-user-entries';
+export { adminGetUserDetails } from './functions-admin-user-details';
 
 export {
   getMigrationStatuses,

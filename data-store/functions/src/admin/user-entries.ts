@@ -25,6 +25,12 @@ export interface AdminEntryPatch {
    * to a Firestore `deleteField()`), `undefined` leaves it untouched.
    */
   variantId?: string | null;
+  /**
+   * Free-text origin of the entry (e.g. `'web'`, `'quick-add'`). Only
+   * pushup entries (`exerciseId === 'pushup'`) carry an editable source; the
+   * shared training dialog exposes it for those, so the admin path accepts it.
+   */
+  source?: string;
 }
 
 const NUMERIC_FIELDS = [
@@ -40,6 +46,7 @@ const KNOWN_PATCH_FIELDS: ReadonlySet<string> = new Set<string>([
   ...NUMERIC_FIELDS,
   ...BREAKDOWN_FIELDS,
   'variantId',
+  'source',
 ]);
 
 // ISO-8601 date-time with a *required* timezone suffix (`Z`, `±HH:MM`, or
@@ -268,6 +275,13 @@ export function validateUpdateUserEntryPayload(
     // variant") rather than writing it verbatim as a bogus variant id.
     const trimmed = raw.variantId === null ? null : raw.variantId.trim();
     patch.variantId = trimmed === '' ? null : trimmed;
+  }
+
+  if (raw.source !== undefined) {
+    if (typeof raw.source !== 'string' || raw.source.trim().length === 0) {
+      return { valid: false, error: 'source must be a non-empty string' };
+    }
+    patch.source = raw.source.trim();
   }
 
   if (Object.keys(patch).length === 0) {

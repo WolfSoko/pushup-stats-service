@@ -2,10 +2,13 @@ import {
   type ExerciseEntry,
   findExerciseDefinition,
   formatEntryDisplay,
-  measurementCompanionValueField,
   measurementValueField,
 } from '@pu-stats/models';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import {
+  type TrainingEntryDialogData,
+  type TrainingEntryDialogResult,
+} from '../stats/components/training-entry-dialog/training-entry-dialog.models';
 
 type SortValue = string | number;
 
@@ -67,50 +70,93 @@ export function primaryValue(entry: ExerciseEntry): number {
   return (entry[field] as number | undefined) ?? 0;
 }
 
-/** Companion value field for an entry, or `undefined` when it has none. */
-export function companionField(
+/**
+ * Adapt a stored admin entry into the shared {@link TrainingEntryDialogData}
+ * so the admin page opens the *same* editor the history page uses. Pushup
+ * rows (`exerciseId === 'pushup'`) open in pushup mode; everything else in
+ * exercise mode. Mirrors the history page's `toEditDialogData`.
+ */
+export function entryToDialogData(
   entry: ExerciseEntry
-): 'durationSec' | 'weightKg' | undefined {
-  const def = findExerciseDefinition(entry.exerciseId);
-  if (!def) return undefined;
-  const companion = measurementCompanionValueField(def.measurement);
-  if (companion === 'durationSec') return 'durationSec';
-  if (def.measurement === 'weight') return 'weightKg';
-  return undefined;
-}
-
-export interface AdminEntryEditForm {
-  timestamp: string;
-  value: number | null;
-  companion: number | null;
+): TrainingEntryDialogData {
+  if (entry.exerciseId === 'pushup') {
+    return {
+      kind: 'pushup',
+      timestamp: entry.timestamp,
+      reps: entry.reps,
+      sets: entry.sets,
+      source: entry.source,
+      type: entry.variantId ?? undefined,
+    };
+  }
+  return {
+    kind: 'exercise',
+    timestamp: entry.timestamp,
+    reps: entry.reps,
+    sets: entry.sets,
+    intervals: entry.intervals,
+    ...(entry.durationSec !== undefined
+      ? { durationSec: entry.durationSec }
+      : {}),
+    ...(entry.distanceM !== undefined ? { distanceM: entry.distanceM } : {}),
+    exerciseId: entry.exerciseId,
+    variantId: entry.variantId,
+  };
 }
 
 /**
- * Diffs the edit-form values against the original entry and returns the
- * minimal patch of changed fields, or `null` when nothing changed. Keeps
- * the callable payload small and avoids no-op writes that would bump
- * `updatedAt` and re-trigger aggregates for nothing.
+ * Translate a shared-dialog result into the `adminUpdateUserEntry` patch.
+ * The measurement branch mirrors the history page's `toUpdatePayload`, but
+ * emits the plain field patch the admin callable expects (no `kind`/`id`,
+ * `exerciseId` stays immutable). For exercise entries `source` is left
+ * untouched; only pushup rows carry an editable source.
  */
-export function buildEntryPatch(
+export function dialogResultToPatch(
   entry: ExerciseEntry,
-  form: AdminEntryEditForm
-): Record<string, unknown> | null {
-  const patch: Record<string, unknown> = {};
-  if (form.timestamp && form.timestamp !== entry.timestamp) {
-    patch['timestamp'] = form.timestamp;
+  result: TrainingEntryDialogResult
+): Record<string, unknown> {
+  const patch: Record<string, unknown> = { timestamp: result.timestamp };
+  if (result.kind === 'pushup') {
+    patch['reps'] = result.reps;
+    patch['source'] = result.source;
+    // A pushup's "type" is its variant; an empty type clears the variant.
+    patch['variantId'] = result.type ? result.type : null;
+    collapseBreakdown(patch, 'sets', result.sets, entry.sets);
+    return patch;
   }
-  const def = findExerciseDefinition(entry.exerciseId);
-  if (def && form.value !== null) {
-    const field = measurementValueField(def.measurement);
-    if (form.value !== (entry[field] as number | undefined)) {
-      patch[field] = form.value;
-    }
+
+  const intervals = result.intervals ?? [];
+  switch (result.measurement) {
+    case 'time':
+      patch['durationSec'] = result.durationSec ?? 0;
+      collapseBreakdown(patch, 'intervals', intervals, entry.intervals);
+      break;
+    case 'distance-time':
+      patch['distanceM'] = result.distanceM ?? 0;
+      patch['durationSec'] = result.durationSec ?? 0;
+      collapseBreakdown(patch, 'intervals', intervals, entry.intervals);
+      break;
+    case 'distance':
+      patch['distanceM'] = result.distanceM ?? 0;
+      collapseBreakdown(patch, 'intervals', intervals, entry.intervals);
+      break;
+    default:
+      patch['reps'] = result.reps;
+      collapseBreakdown(patch, 'sets', result.sets, entry.sets);
   }
-  const companion = companionField(entry);
-  if (companion && form.companion !== null) {
-    if (form.companion !== (entry[companion] as number | undefined)) {
-      patch[companion] = form.companion;
-    }
-  }
-  return Object.keys(patch).length > 0 ? patch : null;
+  if (result.variantId !== undefined) patch['variantId'] = result.variantId;
+  return patch;
+}
+
+// A multi-value breakdown collapses to a single value by clearing the stored
+// array: emit `[]` (the callable maps it to `deleteField()`) only when the
+// entry actually had one, so we never write a redundant empty array.
+function collapseBreakdown(
+  patch: Record<string, unknown>,
+  field: 'sets' | 'intervals',
+  next: number[],
+  existing: number[] | undefined
+): void {
+  if (next.length > 1) patch[field] = next;
+  else if (existing !== undefined) patch[field] = [];
 }

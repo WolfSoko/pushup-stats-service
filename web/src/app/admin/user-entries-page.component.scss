@@ -16,6 +16,72 @@
   overflow-wrap: break-word;
 }
 
+.user-card {
+  margin-bottom: 16px;
+}
+.user-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.user-ident {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.user-name {
+  font-weight: 600;
+  font-size: 1.1em;
+  overflow-wrap: anywhere;
+}
+.user-email {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+.user-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px 24px;
+  margin: 16px 0 0;
+}
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.meta-item dt {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.meta-item dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.meta-uid dd {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.uid-chip {
+  font-family: monospace;
+  font-size: 0.85em;
+  background: var(--mat-sys-surface-variant);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.copy-btn {
+  flex: 0 0 auto;
+}
+.muted {
+  color: var(--mat-sys-on-surface-variant);
+}
+
 // Let the table scroll horizontally on narrow viewports instead of clipping
 // inside the card; the actions column is pinned with `stickyEnd` so the edit
 // button stays reachable while the rest scrolls.
