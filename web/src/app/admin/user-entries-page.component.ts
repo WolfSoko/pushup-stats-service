@@ -176,13 +176,14 @@ export class UserEntriesPageComponent {
     );
     if (!result) return;
 
+    const patch = dialogResultToPatch(entry, result);
+    // Nothing actually changed — skip the write so we don't bump `updatedAt`
+    // or re-trigger aggregates for a no-op save.
+    if (Object.keys(patch).length === 0) return;
+
     try {
       const fn = this.callables.call('adminUpdateUserEntry');
-      await fn({
-        uid: this.uid,
-        entryId: entry._id,
-        patch: dialogResultToPatch(entry, result),
-      });
+      await fn({ uid: this.uid, entryId: entry._id, patch });
       // Reload rather than optimistic-merge: the shared dialog can clear
       // breakdowns / variants, so a naive spread would misrepresent the row.
       await this.loadEntries();

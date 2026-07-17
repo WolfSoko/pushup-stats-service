@@ -125,11 +125,23 @@ export const adminUpdateUserEntry = onCall(
       );
     }
 
+    // `source` is only meaningful for pushup rows (the shared dialog exposes it
+    // there); never let it ride along on a catalog exercise update, even though
+    // the payload schema accepts the field.
+    if (
+      patch.source !== undefined &&
+      String(data.exerciseId) !== PUSHUP_EXERCISE_ID
+    ) {
+      delete patch.source;
+    }
+
     // Only the measurement/variant fields need catalog validation. A
     // timestamp/source-only patch is allowed even for a stale exercise id
     // whose catalog entry was renamed/removed — the edit dialog offers exactly
     // that for such entries. Mirrors `ExerciseFirestoreService.updateEntry`,
-    // which validates only when a value field actually changes.
+    // which validates only when a value field actually changes. Pushup is a
+    // first-class catalog exercise (`id: 'pushup'`), so it validates like any
+    // other — reps bounds, variant, etc. — through the same path.
     const needsCatalog = (
       [
         'reps',
@@ -141,17 +153,18 @@ export const adminUpdateUserEntry = onCall(
         'variantId',
       ] as const
     ).some((k) => patch[k] !== undefined);
-    // Pushup entries (`exerciseId === 'pushup'`, e.g. migrated from the legacy
-    // `pushups` collection) have no catalog `ExerciseDefinition`; the client
-    // pushup path likewise skips catalog validation. Their value fields
-    // (reps/sets/variant/source) are still editable via the shared dialog.
-    const isPushup = String(data.exerciseId) === PUSHUP_EXERCISE_ID;
-    if (needsCatalog && !isPushup) {
+    if (needsCatalog) {
       const def = findExerciseDefinition(String(data.exerciseId));
       if (!def) {
         throw new HttpsError('failed-precondition', 'Unbekannte Übung.');
       }
-      const violation = validateExerciseEntry(patch, def, { partial: true });
+      // `source` is not a catalog-validated field — validate only the
+      // measurement/variant fields against the definition.
+      const measurementPatch = { ...patch };
+      delete measurementPatch.source;
+      const violation = validateExerciseEntry(measurementPatch, def, {
+        partial: true,
+      });
       if (violation) {
         throw new HttpsError('invalid-argument', violation);
       }
