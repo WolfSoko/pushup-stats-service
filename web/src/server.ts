@@ -47,8 +47,14 @@ app.use(pinoHttp({ logger }));
 // handlers so it wraps every downstream response.
 app.use(compression());
 
+// Only trust `x-forwarded-*` in production, where Firebase App Hosting /
+// Cloud Run sets and sanitizes these headers. In dev (`nx serve`) or behind
+// an untrusted proxy the server can be reachable directly, so trusting them
+// would let clients spoof host/proto and skew URL generation and redirects.
 const angularApp = new AngularNodeAppEngine({
-  trustProxyHeaders: ['x-forwarded-host', 'x-forwarded-proto'],
+  trustProxyHeaders: isProduction
+    ? ['x-forwarded-host', 'x-forwarded-proto']
+    : false,
 });
 
 // Serve root-level files from the /de build output so they're
