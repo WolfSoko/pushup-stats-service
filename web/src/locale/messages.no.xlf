@@ -9600,69 +9600,69 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.entries.meta.uid">
-      <segment state="initial">
+      <segment state="translated">
         <source>UID</source>
         <target>UID</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.entryCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Einträge</target>
+        <target>Oppføringer</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.firstEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Eintrag</source>
-        <target>Erster Eintrag</target>
+        <target>Første oppføring</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.lastEntry">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter Eintrag</source>
-        <target>Letzter Eintrag</target>
+        <target>Siste oppføring</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.createdAt">
-      <segment state="initial">
+      <segment state="translated">
         <source>Registriert</source>
-        <target>Registriert</target>
+        <target>Registrert</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.activePlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktiver Plan</source>
-        <target>Aktiver Plan</target>
+        <target>Aktiv plan</target>
       </segment>
     </unit>
     <unit id="admin.entries.meta.noPlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kein aktiver Plan</source>
-        <target>Kein aktiver Plan</target>
+        <target>Ingen aktiv plan</target>
       </segment>
     </unit>
     <unit id="admin.entries.copyUid">
-      <segment state="initial">
+      <segment state="translated">
         <source>UID kopieren</source>
-        <target>UID kopieren</target>
+        <target>Kopier UID</target>
       </segment>
     </unit>
     <unit id="admin.entries.roleAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Admin</source>
         <target>Admin</target>
       </segment>
     </unit>
     <unit id="admin.entries.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anonym</source>
         <target>Anonym</target>
       </segment>
     </unit>
     <unit id="admin.entries.publicProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Öffentliches Profil</source>
-        <target>Öffentliches Profil</target>
+        <target>Offentlig profil</target>
       </segment>
     </unit>
 </file>
