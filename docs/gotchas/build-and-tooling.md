@@ -1,5 +1,25 @@
 # Gotchas: Build & Tooling
 
+## Prerender per-route timeout is patched (30 s → 120 s)
+
+`@angular/build` hard-codes `AbortSignal.timeout(30_000)` per prerendered route
+(`src/utils/server-rendering/render-worker.js` and
+`routes-extractor-worker.js`) with no configuration option (verified up to
+22.1.0-next). The App Hosting production build prerenders ~2400 routes
+(9 locales, `sourceMap: true`) close to the 6 GB heap ceiling — a single GC
+pause or slow route past 30 s aborts the **entire** ~30-minute build: the log
+shows one `AbortError ... TimeoutError` on the first route, then a cascade of
+`Error: Terminating worker thread` on every other in-flight route (those are
+collateral, not root causes).
+
+The pnpm patch `patches/@angular__build.patch` (registered in
+`pnpm-workspace.yaml` under `patchedDependencies`) raises the budget to 120 s.
+`tools/src/prerender-timeout-patch-guard.spec.js` fails CI if the patch is
+dropped or stops applying. After an Angular upgrade, refresh it with
+`pnpm patch @angular/build` + `pnpm patch-commit` (re-apply the same one-line
+change in both worker files) instead of deleting it — or delete patch, guard
+test, and this section together once upstream makes the timeout configurable.
+
 ## Transient build flakes
 
 **`Inlining of fonts failed ... fonts.googleapis.com/icon?family=Material+Icons`** is a network flake during `web:build`, **not a code bug**. Retry `pnpm nx run web:build -c production` after a few seconds.

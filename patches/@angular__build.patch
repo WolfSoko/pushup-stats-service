@@ -1,0 +1,26 @@
+diff --git a/src/utils/server-rendering/render-worker.js b/src/utils/server-rendering/render-worker.js
+index 016e54a55f1b316f9fba9ae81f92ed367795200f..27d25b7652861ddb1e30ff8e0ed47a7680312487 100755
+--- a/src/utils/server-rendering/render-worker.js
++++ b/src/utils/server-rendering/render-worker.js
+@@ -58,7 +58,7 @@ async function renderPage({ url }) {
+     const angularServerApp = getOrCreateAngularServerApp({
+         allowStaticRouteRender: true,
+     });
+-    const response = await angularServerApp.handle(new Request(new URL(url, serverURL), { signal: AbortSignal.timeout(30_000) }));
++    const response = await angularServerApp.handle(new Request(new URL(url, serverURL), { signal: AbortSignal.timeout(120_000) }));
+     if (!response) {
+         return null;
+     }
+diff --git a/src/utils/server-rendering/routes-extractor-worker.js b/src/utils/server-rendering/routes-extractor-worker.js
+index b346011a15318c67c5f916d0aca73871fd1862b8..e2fe454a4b7793060bb44acfd1566b8af1eea55e 100755
+--- a/src/utils/server-rendering/routes-extractor-worker.js
++++ b/src/utils/server-rendering/routes-extractor-worker.js
+@@ -61,7 +61,7 @@ async function extractRoutes() {
+         url: serverURL,
+         invokeGetPrerenderParams: outputMode !== undefined,
+         includePrerenderFallbackRoutes: outputMode === schema_1.OutputMode.Server,
+-        signal: AbortSignal.timeout(30_000),
++        signal: AbortSignal.timeout(120_000),
+     });
+     return {
+         errors,
