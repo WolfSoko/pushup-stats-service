@@ -25,6 +25,13 @@ env:
     availability:
       - BUILD
 
+  # Match prod: cap prerender workers so the ~8 GB App Hosting builder
+  # doesn't thrash during the ~2400-route prerender (see apphosting.yaml).
+  - variable: NG_BUILD_MAX_WORKERS
+    value: '2'
+    availability:
+      - BUILD
+
   # Override apphosting.yaml's `secret: SENTRY_AUTH_TOKEN` binding with a plain
   # placeholder value. App Hosting MERGES this file onto apphosting.yaml by
   # variable name, and base-only entries persist — so merely omitting the secret
