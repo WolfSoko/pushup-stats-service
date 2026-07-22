@@ -6,6 +6,15 @@
   "tags": ["scope:tools"],
   "targets": {
     "test": {
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js",
+        "{workspaceRoot}/apphosting.yaml",
+        "{workspaceRoot}/apphosting.staging.yaml",
+        "{workspaceRoot}/pnpm-workspace.yaml",
+        "{workspaceRoot}/patches/**/*"
+      ],
       "options": {
         "passWithNoTests": true
       },

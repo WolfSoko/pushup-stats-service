@@ -47,6 +47,16 @@ env:
     availability:
       - BUILD
 
+  # Same merge pitfall as SENTRY_AUTH_TOKEN above: override the inherited
+  # `secret:` binding with a plain value, because the staging project has no
+  # NX_CLOUD_ACCESS_TOKEN secret and a dangling secret reference fails the
+  # rollout at bind time. An invalid token only degrades Nx Cloud to a 401
+  # warning with no cache — the build itself proceeds.
+  - variable: NX_CLOUD_ACCESS_TOKEN
+    value: 'unused-on-staging'
+    availability:
+      - BUILD
+
 scripts:
   # No Sentry source-map upload here (unlike apphosting.yaml): staging skips the
   # debug-ID upload (see the SENTRY_AUTH_TOKEN override above for why the secret

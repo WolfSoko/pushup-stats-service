@@ -13,7 +13,16 @@ the log shows one `AbortError ... TimeoutError`, then a cascade of
 collateral, not root causes). The same build takes ~3 minutes on GitHub's
 16 GB runners — the workload only fails on the memory-starved builder.
 
-Two defenses, both locked in by
+Even with the worker cap, the builder remains marginal: after "Application
+bundle generation complete" the Node process can stall for 10+ minutes in the
+finalization phase (writing the multi-locale dist, final GC near the 6 GB heap
+cap), at which point the resident esbuild Go service panics with
+`fatal error: all goroutines are asleep - deadlock!` and fails the build. The
+structural fix is to not build there at all — the App Hosting rollout restores
+`web:build:production` from the Nx Cloud remote cache seeded by CI (see
+[`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse").
+
+Defenses for the case the cache misses, locked in by
 `tools/src/prerender-timeout-patch-guard.spec.js`:
 
 1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
