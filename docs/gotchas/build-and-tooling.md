@@ -1,25 +1,33 @@
 # Gotchas: Build & Tooling
 
-## Prerender per-route timeout is patched (30 s → 120 s)
+## App Hosting prerender: worker cap + patched per-route timeout
 
-`@angular/build` hard-codes `AbortSignal.timeout(30_000)` per prerendered route
-(`src/utils/server-rendering/render-worker.js` and
-`routes-extractor-worker.js`) with no configuration option (verified up to
-22.1.0-next). The App Hosting production build prerenders ~2400 routes
-(9 locales, `sourceMap: true`) close to the 6 GB heap ceiling — a single GC
-pause or slow route past 30 s aborts the **entire** ~30-minute build: the log
-shows one `AbortError ... TimeoutError` on the first route, then a cascade of
+The App Hosting production build prerenders ~2400 routes (9 locales,
+`sourceMap: true`) on a builder with ~8 GB RAM. The main build process needs
+the 6 GB heap from `NODE_OPTIONS`, and each prerender worker thread adds its
+own V8 isolate on top — with the default 4 workers the machine thrashes into
+memory-pressure stalls late in the build, where a single route can hang for
+**minutes** (observed > 120 s). One hung route aborts the **entire** build:
+the log shows one `AbortError ... TimeoutError`, then a cascade of
 `Error: Terminating worker thread` on every other in-flight route (those are
-collateral, not root causes).
+collateral, not root causes). The same build takes ~3 minutes on GitHub's
+16 GB runners — the workload only fails on the memory-starved builder.
 
-The pnpm patch `patches/@angular__build.patch` (registered in
-`pnpm-workspace.yaml` under `patchedDependencies`) raises the budget to 120 s.
-`tools/src/prerender-timeout-patch-guard.spec.js` fails CI if the patch is
-dropped or stops applying. After an Angular upgrade, refresh it instead of
-deleting it: `pnpm patch @angular/build` prints an edit directory — re-apply
-the same one-line change in both worker files there, then run
-`pnpm patch-commit <edit-dir>`. Delete patch, guard test, and this section
-together only once upstream makes the timeout configurable.
+Two defenses, both locked in by
+`tools/src/prerender-timeout-patch-guard.spec.js`:
+
+1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
+   and `apphosting.staging.yaml` — the primary fix; keeps peak memory inside
+   the machine. (`@angular/build` defaults to `min(4, cores - 1)` workers.)
+2. **`patches/@angular__build.patch`** (registered in `pnpm-workspace.yaml`
+   under `patchedDependencies`) raises the hard-coded 30 s per-route
+   `AbortSignal.timeout` in `render-worker.js` / `routes-extractor-worker.js`
+   to 300 s as headroom — upstream has no config option for it (verified up to
+   22.1.0-next). After an Angular upgrade, refresh it instead of deleting it:
+   `pnpm patch @angular/build` prints an edit directory — re-apply the same
+   one-line change in both worker files there, then run
+   `pnpm patch-commit <edit-dir>`. Delete patch, guard test, and this section
+   together only once upstream makes the timeout configurable.
 
 ## Transient build flakes
 

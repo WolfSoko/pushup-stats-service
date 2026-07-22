@@ -9,18 +9,22 @@ const PRERENDER_WORKER_FILES = [
   'src/utils/server-rendering/render-worker.js',
   'src/utils/server-rendering/routes-extractor-worker.js',
 ];
-const RAISED_TIMEOUT = 'AbortSignal.timeout(120_000)';
+const RAISED_TIMEOUT = 'AbortSignal.timeout(300_000)';
 const UPSTREAM_TIMEOUT = 'AbortSignal.timeout(30_000)';
 
 /**
- * Locks in the pnpm patch that raises @angular/build's hard-coded 30 s
- * per-route prerender timeout to 120 s (patches/@angular__build.patch).
+ * Locks in the two defenses against App Hosting prerender build failures:
+ * the pnpm patch raising @angular/build's hard-coded 30 s per-route prerender
+ * timeout to 300 s (patches/@angular__build.patch), and the
+ * NG_BUILD_MAX_WORKERS=2 cap in both apphosting configs.
  *
- * The App Hosting production build prerenders ~2400 routes (9 locales) with
- * `sourceMap: true` near the 6 GB heap limit; a single GC pause or slow route
- * exceeding the 30 s budget aborts the whole ~30-minute build (AbortError on
- * one route, then "Terminating worker thread" on every in-flight route).
- * Upstream offers no configuration for this timeout as of 22.x.
+ * The App Hosting builder has ~8 GB RAM; the main build process needs a 6 GB
+ * heap and each prerender worker thread adds its own V8 isolate. With the
+ * default 4 workers the ~2400-route prerender (9 locales, `sourceMap: true`)
+ * thrashes into memory-pressure stalls late in the build — a single route
+ * hanging past the timeout aborts the whole build (AbortError on one route,
+ * then "Terminating worker thread" on every in-flight route). Upstream offers
+ * no configuration for the timeout as of 22.x.
  *
  * If an Angular upgrade drops or breaks the patch, refresh it via
  * `pnpm patch @angular/build` instead of deleting it — see
@@ -72,9 +76,26 @@ describe('@angular/build prerender-timeout patch', () => {
     for (const workerFile of PRERENDER_WORKER_FILES) {
       // when reading the worker that owns the per-route abort signal
       const source = readFileSync(join(installedRoot, workerFile), 'utf-8');
-      // then the patched 120 s budget is in effect and the 30 s one is gone
+      // then the patched 300 s budget is in effect and the 30 s one is gone
       expect(source).toContain(RAISED_TIMEOUT);
       expect(source).not.toContain(UPSTREAM_TIMEOUT);
     }
   });
+
+  it.each(['apphosting.yaml', 'apphosting.staging.yaml'])(
+    'should cap prerender workers at BUILD time in %s',
+    (configFile) => {
+      // given the ~8 GB App Hosting builder that thrashes with 4 workers
+      const config = parse(readFileSync(resolve(ROOT, configFile), 'utf-8'));
+      // when App Hosting resolves the build-time environment
+      const workersEntry = (config.env ?? []).find(
+        (entry) => entry && entry.variable === 'NG_BUILD_MAX_WORKERS'
+      );
+      // then the worker cap is bound at BUILD availability and stays small
+      expect(workersEntry).toBeDefined();
+      expect(workersEntry.availability).toEqual(['BUILD']);
+      expect(Number(workersEntry.value)).toBeGreaterThanOrEqual(1);
+      expect(Number(workersEntry.value)).toBeLessThanOrEqual(2);
+    }
+  );
 });

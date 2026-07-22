@@ -50,6 +50,18 @@ env:
     availability:
       - BUILD
 
+  # The App Hosting builder has ~8 GB RAM total; the main build process
+  # needs the 6 GB heap above, and each prerender worker thread adds its
+  # own V8 isolate on top. With the default 4 workers the ~2400-route
+  # prerender thrashes into memory-pressure stalls late in the build —
+  # single routes hang > 120 s and abort the whole build (see
+  # docs/gotchas/build-and-tooling.md). Two workers keep peak memory
+  # inside the machine.
+  - variable: NG_BUILD_MAX_WORKERS
+    value: '2'
+    availability:
+      - BUILD
+
 # Grant access to secrets in Cloud Secret Manager.
 # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
 scripts:

@@ -7,7 +7,7 @@ index 016e54a55f1b316f9fba9ae81f92ed367795200f..27d25b7652861ddb1e30ff8e0ed47a76
          allowStaticRouteRender: true,
      });
 -    const response = await angularServerApp.handle(new Request(new URL(url, serverURL), { signal: AbortSignal.timeout(30_000) }));
-+    const response = await angularServerApp.handle(new Request(new URL(url, serverURL), { signal: AbortSignal.timeout(120_000) }));
++    const response = await angularServerApp.handle(new Request(new URL(url, serverURL), { signal: AbortSignal.timeout(300_000) }));
      if (!response) {
          return null;
      }
@@ -20,7 +20,7 @@ index b346011a15318c67c5f916d0aca73871fd1862b8..e2fe454a4b7793060bb44acfd1566b8a
          invokeGetPrerenderParams: outputMode !== undefined,
          includePrerenderFallbackRoutes: outputMode === schema_1.OutputMode.Server,
 -        signal: AbortSignal.timeout(30_000),
-+        signal: AbortSignal.timeout(120_000),
++        signal: AbortSignal.timeout(300_000),
      });
      return {
          errors,
