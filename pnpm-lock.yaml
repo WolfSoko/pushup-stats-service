@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@angular/build':
+    hash: fa4bc95e1eaef457f5776af6783f8b7c2200bf4fdd9e30d0c0f11134cbf939e0
+    path: patches/@angular__build.patch
+
 importers:
 
   .:
@@ -152,7 +157,7 @@ importers:
         version: 22.0.7
       '@angular/build':
         specifier: 22.0.7
-        version: 22.0.7(618990100da157f0dba4214b8366d199)
+        version: 22.0.7(patch_hash=fa4bc95e1eaef457f5776af6783f8b7c2200bf4fdd9e30d0c0f11134cbf939e0)(618990100da157f0dba4214b8366d199)
       '@angular/cli':
         specifier: 22.0.7
         version: 22.0.7(@types/node@25.9.1)
@@ -179,7 +184,7 @@ importers:
         version: 2.0.1
       '@nx/angular':
         specifier: 23.1.0
-        version: 23.1.0(ef7ba69b50e1d0fe180f58729ae00aa4)
+        version: 23.1.0(f2a39145f21a5b5f886ff392bd5e3e01)
       '@nx/devkit':
         specifier: 23.1.0
         version: 23.1.0(nx@23.1.0(@swc-node/register@1.11.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@swc/core@1.15.41(@swc/helpers@0.5.23))(@swc/types@0.1.27)(typescript@6.0.3))(@swc/core@1.15.41(@swc/helpers@0.5.23)))
@@ -11935,7 +11940,7 @@ snapshots:
       '@angular-devkit/architect': 0.2200.7
       '@angular-devkit/build-webpack': 0.2200.7(webpack-dev-server@5.2.3(tslib@2.8.1)(webpack-cli@7.0.3)(webpack@5.106.2(@swc/core@1.15.41(@swc/helpers@0.5.23))(esbuild@0.28.1)(lightningcss@1.32.0)(postcss@8.5.13)(webpack-cli@7.0.3)))(webpack@5.106.2(@swc/core@1.15.41(@swc/helpers@0.5.23))(esbuild@0.28.1)(lightningcss@1.32.0)(postcss@8.5.13)(webpack-cli@7.0.3))
       '@angular-devkit/core': 22.0.7
-      '@angular/build': 22.0.7(fdc8541fc2252c8ab257e01d87502e11)
+      '@angular/build': 22.0.7(patch_hash=fa4bc95e1eaef457f5776af6783f8b7c2200bf4fdd9e30d0c0f11134cbf939e0)(fdc8541fc2252c8ab257e01d87502e11)
       '@angular/compiler-cli': 22.0.7(@angular/compiler@22.0.7)(typescript@6.0.3)
       '@babel/core': 7.29.7
       '@babel/generator': 7.29.7
@@ -12155,7 +12160,7 @@ snapshots:
       eslint: 10.5.0(jiti@2.4.2)
       typescript: 6.0.3
 
-  '@angular/build@22.0.7(618990100da157f0dba4214b8366d199)':
+  '@angular/build@22.0.7(patch_hash=fa4bc95e1eaef457f5776af6783f8b7c2200bf4fdd9e30d0c0f11134cbf939e0)(618990100da157f0dba4214b8366d199)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2200.7
@@ -12211,7 +12216,7 @@ snapshots:
       - tsx
       - yaml
 
-  '@angular/build@22.0.7(fdc8541fc2252c8ab257e01d87502e11)':
+  '@angular/build@22.0.7(patch_hash=fa4bc95e1eaef457f5776af6783f8b7c2200bf4fdd9e30d0c0f11134cbf939e0)(fdc8541fc2252c8ab257e01d87502e11)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2200.7
@@ -15584,9 +15589,9 @@ snapshots:
 
   '@napi-rs/wasm-runtime@1.0.7':
     dependencies:
-      '@emnapi/core': 1.10.0
-      '@emnapi/runtime': 1.10.0
-      '@tybys/wasm-util': 0.10.2
+      '@emnapi/core': 1.11.2
+      '@emnapi/runtime': 1.11.2
+      '@tybys/wasm-util': 0.10.3
     optional: true
 
   '@napi-rs/wasm-runtime@1.1.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
@@ -15783,7 +15788,7 @@ snapshots:
     dependencies:
       consola: 3.4.2
 
-  '@nx/angular@23.1.0(ef7ba69b50e1d0fe180f58729ae00aa4)':
+  '@nx/angular@23.1.0(f2a39145f21a5b5f886ff392bd5e3e01)':
     dependencies:
       '@angular-devkit/core': 22.0.7
       '@angular-devkit/schematics': 22.0.7
@@ -15808,7 +15813,7 @@ snapshots:
       webpack-merge: 5.10.0
     optionalDependencies:
       '@angular-devkit/build-angular': 22.0.7(4bc9dc16f0b3372842cf1a43ceaa0a21)
-      '@angular/build': 22.0.7(618990100da157f0dba4214b8366d199)
+      '@angular/build': 22.0.7(patch_hash=fa4bc95e1eaef457f5776af6783f8b7c2200bf4fdd9e30d0c0f11134cbf939e0)(618990100da157f0dba4214b8366d199)
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@minify-html/node'

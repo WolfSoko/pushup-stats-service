@@ -5,6 +5,7 @@ allowBuilds:
   '@firebase/util': true
   '@nestjs/core': true
   '@parcel/watcher': true
+  '@sentry/cli': true
   '@swc/core': true
   esbuild: true
   less: true
@@ -12,14 +13,15 @@ allowBuilds:
   msgpackr-extract: true
   nx: true
   protobufjs: true
-  '@sentry/cli': true
   re2: true
   unrs-resolver: true
+patchedDependencies:
+  '@angular/build': patches/@angular__build.patch
 
 peerDependencyRules:
   allowedVersions:
-    '@angular/core': '21'
     '@angular/common': '21'
+    '@angular/core': '21'
     '@angular/platform-browser': '21'
     '@angular/platform-browser-dynamic': '21'
     'rxjs': '7.8'
