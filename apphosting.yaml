@@ -40,6 +40,25 @@ env:
     availability:
       - BUILD
 
+  # Nx Cloud read token so the App Hosting build can restore
+  # `web:build:production` from the remote cache instead of rebuilding it.
+  # CI seeds the cache on every main push (`nx affected -t build -c production`
+  # with the write token), and App Hosting only builds commits that already
+  # passed CI (the `deploy` branch is fast-forwarded post-CI), so every rollout
+  # should be a cache hit — turning the ~16-min build that overwhelms the ~8 GB
+  # builder into an artifact download. See docs/ci-cd.md.
+  #
+  # Setup (one-time, requires gcloud + Firebase project owner role; reuse the
+  # read-only token stored as the NX_CLOUD_ACCESS_TOKEN_READ GitHub secret):
+  #   gcloud secrets create NX_CLOUD_ACCESS_TOKEN --replication-policy=automatic
+  #   echo -n "<read-only token>" | gcloud secrets versions add NX_CLOUD_ACCESS_TOKEN --data-file=-
+  #   firebase apphosting:secrets:grantaccess NX_CLOUD_ACCESS_TOKEN \
+  #     --backend pushup-stats-service --project pushup-stats
+  - variable: NX_CLOUD_ACCESS_TOKEN
+    secret: NX_CLOUD_ACCESS_TOKEN
+    availability:
+      - BUILD
+
   # Default Node heap (~2 GB) OOMs during the Angular SSR build's
   # Mark-Compact phase after bundle generation completes. GitHub Actions
   # already bumps to 6144 for the Firebase deploy workflows

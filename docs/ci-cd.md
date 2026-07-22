@@ -8,6 +8,31 @@ How code reaches production and staging. AGENTS.md keeps the high-level rule (no
 - **Agent pool:** Nx Cloud dynamic distribution — see `.nx/workflows/distribution-config.yaml`. Details in [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md).
 - **Deploy gate:** CI fast-forwards the `deploy` branch from `main` only after all checks pass (`promote-to-deploy` job). Both deployment targets watch this branch.
 
+## App Hosting Build Cache Reuse
+
+The App Hosting builder (~8 GB RAM) cannot reliably run the full production
+web build (9-locale prerender + sourcemaps) — see
+[`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md). Instead of
+rebuilding, its `buildCommand` restores `web:build:production` from the Nx
+Cloud remote cache:
+
+- **Seeding:** CI runs `nx affected -t=lint,test,build -c=production` with the
+  `NX_CLOUD_ACCESS_TOKEN_WRITE` secret on every main push. If a commit doesn't
+  affect `web`, the previous cache entry still matches (identical input hash).
+- **Ordering guarantee:** App Hosting deploys from the `deploy` branch, which
+  `promote-to-deploy` fast-forwards only after CI is green — the cache entry
+  always exists before the rollout builds.
+- **Restore:** `apphosting.yaml` binds the `NX_CLOUD_ACCESS_TOKEN` Cloud
+  Secret (a read-only Nx Cloud token) at BUILD availability, so
+  `pnpm nx run web:build -c production` in the rollout is a cache download.
+  The task hash matches CI because `web:build` inputs are file-only (no env
+  inputs) and the build reads no env vars at build time.
+- **Staging override:** `apphosting.staging.yaml` replaces the secret binding
+  with a placeholder value (same bind-time-failure pitfall as
+  `SENTRY_AUTH_TOKEN`); an invalid token only degrades to a 401 warning
+  without cache, it never fails the build.
+- Guard tests: `tools/src/apphosting-nx-cloud-guard.spec.js`.
+
 ## Deployment Targets
 
 - **Firebase Hosting** (static, `.github/workflows/firebase-hosting-merge.yml`): Triggers on push to `deploy` branch.
