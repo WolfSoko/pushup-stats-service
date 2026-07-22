@@ -45,20 +45,23 @@ describe('@angular/build prerender-timeout patch', () => {
       'utf-8'
     );
     for (const workerFile of PRERENDER_WORKER_FILES) {
-      // when looking at the hunk for each worker that renders/extracts routes
-      expect(patch).toContain(`--- a/${workerFile}`);
-      expect(patch).toContain(`+++ b/${workerFile}`);
+      // when isolating the diff section of the worker that renders/extracts routes
+      const section = patch
+        .split(/^diff --git /m)
+        .find((part) => part.includes(`--- a/${workerFile}`));
+      expect(section).toBeDefined();
+      // then that worker's own hunk swaps the upstream 30 s budget for 120 s
+      const lines = section.split('\n');
+      expect(
+        lines.some((l) => l.startsWith('-') && l.includes(UPSTREAM_TIMEOUT))
+      ).toBe(true);
+      expect(
+        lines.some((l) => l.startsWith('+') && l.includes(RAISED_TIMEOUT))
+      ).toBe(true);
+      expect(
+        lines.some((l) => l.startsWith('+') && l.includes(UPSTREAM_TIMEOUT))
+      ).toBe(false);
     }
-    // then it swaps the upstream 30 s budget for the raised 120 s one
-    const addedLines = patch
-      .split('\n')
-      .filter((line) => line.startsWith('+') && !line.startsWith('+++'));
-    expect(
-      addedLines.filter((line) => line.includes(RAISED_TIMEOUT))
-    ).toHaveLength(PRERENDER_WORKER_FILES.length);
-    expect(addedLines.some((line) => line.includes(UPSTREAM_TIMEOUT))).toBe(
-      false
-    );
   });
 
   it('should apply the raised timeout to the installed @angular/build', () => {

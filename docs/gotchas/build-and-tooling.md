@@ -15,10 +15,11 @@ collateral, not root causes).
 The pnpm patch `patches/@angular__build.patch` (registered in
 `pnpm-workspace.yaml` under `patchedDependencies`) raises the budget to 120 s.
 `tools/src/prerender-timeout-patch-guard.spec.js` fails CI if the patch is
-dropped or stops applying. After an Angular upgrade, refresh it with
-`pnpm patch @angular/build` + `pnpm patch-commit` (re-apply the same one-line
-change in both worker files) instead of deleting it — or delete patch, guard
-test, and this section together once upstream makes the timeout configurable.
+dropped or stops applying. After an Angular upgrade, refresh it instead of
+deleting it: `pnpm patch @angular/build` prints an edit directory — re-apply
+the same one-line change in both worker files there, then run
+`pnpm patch-commit <edit-dir>`. Delete patch, guard test, and this section
+together only once upstream makes the timeout configurable.
 
 ## Transient build flakes
 
