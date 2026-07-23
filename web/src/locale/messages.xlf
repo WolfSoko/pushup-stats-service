@@ -2959,6 +2959,46 @@
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
       </segment>
     </unit>
+    <unit id="admin.entries.delete.title">
+      <notes>
+        <note category="location">web/src/app/admin/delete-entries-dialog.component.ts:19,22</note>
+      </notes>
+      <segment>
+        <source> Einträge löschen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.cancel">
+      <notes>
+        <note category="location">web/src/app/admin/delete-entries-dialog.component.ts:26,29</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.button">
+      <notes>
+        <note category="location">web/src/app/admin/delete-entries-dialog.component.ts:34,36</note>
+      </notes>
+      <segment>
+        <source> Löschen </source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.confirmOne">
+      <notes>
+        <note category="location">web/src/app/admin/delete-entries-dialog.component.ts:48</note>
+      </notes>
+      <segment>
+        <source>Möchtest du diesen Eintrag wirklich endgültig löschen?</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.confirmMany">
+      <notes>
+        <note category="location">web/src/app/admin/delete-entries-dialog.component.ts:49</note>
+      </notes>
+      <segment>
+        <source>Möchtest du diese <ph id="0" equiv="count" disp="count"/> Einträge wirklich endgültig löschen?</source>
+      </segment>
+    </unit>
     <unit id="admin.feedback.delete.title">
       <notes>
         <note category="location">web/src/app/admin/delete-feedback-dialog.component.ts:20,23</note>
@@ -3283,7 +3323,7 @@
     </unit>
     <unit id="admin.entries.meta.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:74,76</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.html:74,77</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3291,7 +3331,7 @@
     </unit>
     <unit id="admin.entries.meta.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:81,83</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.html:85,88</note>
       </notes>
       <segment>
         <source>Registriert</source>
@@ -3299,7 +3339,7 @@
     </unit>
     <unit id="admin.entries.meta.activePlan">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:88,90</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.html:96,98</note>
       </notes>
       <segment>
         <source>Aktiver Plan</source>
@@ -3307,7 +3347,7 @@
     </unit>
     <unit id="admin.entries.meta.noPlan">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:94,97</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.html:102,105</note>
       </notes>
       <segment>
         <source>Kein aktiver Plan</source>
@@ -3315,55 +3355,15 @@
     </unit>
     <unit id="admin.entries.empty">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:111,114</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.html:119,122</note>
       </notes>
       <segment>
         <source> Keine Einträge vorhanden. </source>
       </segment>
     </unit>
-    <unit id="admin.entries.col.timestamp">
-      <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:122,124</note>
-      </notes>
-      <segment>
-        <source>Zeitpunkt</source>
-      </segment>
-    </unit>
-    <unit id="admin.entries.col.exercise">
-      <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:134,136</note>
-      </notes>
-      <segment>
-        <source>Übung</source>
-      </segment>
-    </unit>
-    <unit id="admin.entries.col.value">
-      <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:144,146</note>
-      </notes>
-      <segment>
-        <source>Wert</source>
-      </segment>
-    </unit>
-    <unit id="admin.entries.col.source">
-      <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.html:154,156</note>
-      </notes>
-      <segment>
-        <source>Quelle</source>
-      </segment>
-    </unit>
-    <unit id="admin.entry.editTooltip">
-      <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.ts:86</note>
-      </notes>
-      <segment>
-        <source>Eintrag bearbeiten</source>
-      </segment>
-    </unit>
     <unit id="admin.entries.refresh">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.ts:87</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.ts:69</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -3371,7 +3371,7 @@
     </unit>
     <unit id="admin.entries.copyUid">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.ts:88</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.ts:70</note>
       </notes>
       <segment>
         <source>UID kopieren</source>
@@ -3379,7 +3379,7 @@
     </unit>
     <unit id="admin.entries.roleAdmin">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.ts:89</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.ts:71</note>
       </notes>
       <segment>
         <source>Admin</source>
@@ -3387,7 +3387,7 @@
     </unit>
     <unit id="admin.entries.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.ts:90</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.ts:72</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -3395,10 +3395,90 @@
     </unit>
     <unit id="admin.entries.publicProfile">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-page.component.ts:91</note>
+        <note category="location">web/src/app/admin/user-entries-page.component.ts:73</note>
       </notes>
       <segment>
         <source>Öffentliches Profil</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.selection.count">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.html:8,10</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ selectedIds().size }}"/> ausgewählt</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.deleteSelected">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.html:17,22</note>
+      </notes>
+      <segment>
+        <source>Ausgewählte löschen</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.timestamp">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.html:47,49</note>
+      </notes>
+      <segment>
+        <source>Zeitpunkt</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.exercise">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.html:59,61</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.value">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.html:69,71</note>
+      </notes>
+      <segment>
+        <source>Wert</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.col.source">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.html:79,81</note>
+      </notes>
+      <segment>
+        <source>Quelle</source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.editTooltip">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:78</note>
+      </notes>
+      <segment>
+        <source>Eintrag bearbeiten</source>
+      </segment>
+    </unit>
+    <unit id="admin.entry.deleteTooltip">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:79</note>
+      </notes>
+      <segment>
+        <source>Eintrag löschen</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.selectAll">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:80</note>
+      </notes>
+      <segment>
+        <source>Alle Einträge auswählen</source>
+      </segment>
+    </unit>
+    <unit id="admin.entries.selectRow">
+      <notes>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:81</note>
+      </notes>
+      <segment>
+        <source>Eintrag auswählen</source>
       </segment>
     </unit>
     <unit id="app.title">

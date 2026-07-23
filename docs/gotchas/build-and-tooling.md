@@ -38,6 +38,31 @@ Defenses for the case the cache misses, locked in by
    `pnpm patch-commit <edit-dir>`. Delete patch, guard test, and this section
    together only once upstream makes the timeout configurable.
 
+## Cloud Functions deploy: pruned lockfile carries an irrelevant patch entry
+
+`@nx/esbuild`'s `generatePackageJson` (used by `cloud-functions:build`) prunes
+a subset `package.json` + `pnpm-lock.yaml` into `data-store/functions-dist`,
+but copies the workspace's `patchedDependencies` block from the root
+`pnpm-lock.yaml` verbatim — even though `@angular/build` (patched for the
+prerender timeout above) isn't a dependency of the functions codebase at all.
+Firebase's Cloud Build then runs its own `pnpm install --frozen-lockfile`
+against the generated `package.json` (which has no matching
+`pnpm.patchedDependencies` field), and pnpm rejects the mismatch with
+`ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`.
+
+This only bites when Cloud Build actually rebuilds a function — an
+unchanged-hash deploy is skipped entirely, so the bug can sit latent for a
+long time (it first surfaced only when a brand-new function was deployed,
+well after the `@angular/build` patch had been added). The fix is a
+`predeploy` hook in `data-store/firebase.json` (`functions.predeploy`) that
+runs `tools/src/strip-unused-lockfile-patches.mjs` against the generated
+lockfile before Firebase packages it — it removes the `patchedDependencies`
+block only when none of its packages actually appear in the lockfile's
+`packages:` section, via a targeted text splice (not a full YAML
+parse/stringify round-trip, which would reformat the entire 2000+ line file).
+If a genuinely-used patch and an unused one are ever mixed in the same
+lockfile, the script bails out with a warning instead of guessing.
+
 ## Transient build flakes
 
 **`Inlining of fonts failed ... fonts.googleapis.com/icon?family=Material+Icons`** is a network flake during `web:build`, **not a code bug**. Retry `pnpm nx run web:build -c production` after a few seconds.

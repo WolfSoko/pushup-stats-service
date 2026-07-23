@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
   signal,
-  viewChild,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -16,8 +14,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { type ExerciseEntry, TRAINING_PLANS } from '@pu-stats/models';
 import { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
@@ -26,13 +22,8 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { CallableFunctionsService } from './callable-functions.service';
 import { errorMessage } from './admin-page.helpers';
 import { AdminUserDetails } from './admin-page.models';
-import {
-  adminEntrySortValue,
-  dialogResultToPatch,
-  entryExerciseName,
-  entryToDialogData,
-  entryValueDisplay,
-} from './user-entries.helpers';
+import { UserEntriesTableComponent } from './user-entries-table.component';
+import { dialogResultToPatch, entryToDialogData } from './user-entries.helpers';
 
 /**
  * Admin drill-down into one user's exercise entries, as a routed page
@@ -54,10 +45,9 @@ import {
     MatDialogModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatSortModule,
-    MatTableModule,
     MatTooltipModule,
     PageHeaderComponent,
+    UserEntriesTableComponent,
   ],
   templateUrl: './user-entries-page.component.html',
   styleUrl: './user-entries-page.component.scss',
@@ -76,14 +66,6 @@ export class UserEntriesPageComponent {
       (history.state as { label?: string } | null)?.label) ||
     this.uid;
 
-  readonly displayedColumns = [
-    'timestamp',
-    'exercise',
-    'value',
-    'source',
-    'actions',
-  ];
-  readonly editTooltip = $localize`:@@admin.entry.editTooltip:Eintrag bearbeiten`;
   readonly refreshTooltip = $localize`:@@admin.entries.refresh:Neu laden`;
   readonly copyUidTooltip = $localize`:@@admin.entries.copyUid:UID kopieren`;
   readonly adminBadge = $localize`:@@admin.entries.roleAdmin:Admin`;
@@ -116,21 +98,7 @@ export class UserEntriesPageComponent {
     );
   });
 
-  readonly dataSource = new MatTableDataSource<ExerciseEntry>([]);
-  private readonly sort = viewChild<MatSort>('entriesSort');
-
-  readonly exerciseName = entryExerciseName;
-  readonly valueDisplay = entryValueDisplay;
-
   constructor() {
-    this.dataSource.sortingDataAccessor = adminEntrySortValue;
-    effect(() => {
-      this.dataSource.data = this.entries();
-    });
-    effect(() => {
-      const s = this.sort();
-      if (s) this.dataSource.sort = s;
-    });
     void this.loadEntries();
     void this.loadDetails();
   }

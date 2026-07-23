@@ -120,68 +120,12 @@
     </p>
   } @else {
     <mat-card>
-      <div class="table-scroll">
-        <mat-table [dataSource]="dataSource" matSort #entriesSort="matSort">
-          <ng-container matColumnDef="timestamp">
-            <mat-header-cell
-              *matHeaderCellDef
-              mat-sort-header
-              i18n="@@admin.entries.col.timestamp"
-              >Zeitpunkt</mat-header-cell
-            >
-            <mat-cell *matCellDef="let e">{{
-              e.timestamp ? (e.timestamp | date: 'short') : '–'
-            }}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="exercise">
-            <mat-header-cell
-              *matHeaderCellDef
-              mat-sort-header
-              i18n="@@admin.entries.col.exercise"
-              >Übung</mat-header-cell
-            >
-            <mat-cell *matCellDef="let e">{{ exerciseName(e) }}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="value">
-            <mat-header-cell
-              *matHeaderCellDef
-              mat-sort-header
-              i18n="@@admin.entries.col.value"
-              >Wert</mat-header-cell
-            >
-            <mat-cell *matCellDef="let e">{{ valueDisplay(e) }}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="source">
-            <mat-header-cell
-              *matHeaderCellDef
-              mat-sort-header
-              i18n="@@admin.entries.col.source"
-              >Quelle</mat-header-cell
-            >
-            <mat-cell *matCellDef="let e">{{ e.source }}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="actions" stickyEnd>
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let e">
-              <button
-                mat-icon-button
-                (click)="openEditDialog(e)"
-                [matTooltip]="editTooltip"
-                [attr.aria-label]="editTooltip"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns" />
-          <mat-row *matRowDef="let row; columns: displayedColumns" />
-        </mat-table>
-      </div>
+      <app-user-entries-table
+        [entries]="entries()"
+        [uid]="uid"
+        (edit)="openEditDialog($event)"
+        (refresh)="loadEntries()"
+      />
     </mat-card>
   }
 </div>

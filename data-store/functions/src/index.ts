@@ -23,6 +23,7 @@ export {
 } from './functions-admin-user-activity';
 
 export {
+  adminDeleteUserEntries,
   adminListUserEntries,
   adminUpdateUserEntry,
 } from './functions-admin-user-entries';

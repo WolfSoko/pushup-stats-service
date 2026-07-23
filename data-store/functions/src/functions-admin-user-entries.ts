@@ -12,6 +12,7 @@ import {
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './admin/user-entries';
+import { validateDeleteUserEntriesPayload } from './admin/user-entries-delete';
 import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
@@ -179,5 +180,54 @@ export const adminUpdateUserEntry = onCall(
       by: request.auth?.uid,
     });
     return { ok: true };
+  }
+);
+
+// Admin-only bulk delete of a user's exercise entries (one row or many, from
+// the entries-page table's row/select-all checkboxes). Ownership is
+// re-checked per entry via `db.getAll` — a stale/foreign entryId in the batch
+// is silently skipped rather than aborting the whole request, mirroring
+// `adminBulkDeleteInactiveAnonymous`'s `{ deleted, skipped }` shape. The
+// `updateExerciseStatsOnEntryWrite`, `updateAdminUserActivityOnEntryWrite` and
+// `refreshExerciseLeaderboardsOnEntryWrite` triggers all key off
+// `onDocumentWritten`, which fires on delete too, so aggregates stay current.
+export const adminDeleteUserEntries = onCall(
+  { region: 'europe-west3', timeoutSeconds: 60 },
+  async (request) => {
+    assertAdmin(request);
+
+    const result = validateDeleteUserEntriesPayload(request.data);
+    if (!result.valid) {
+      throw new HttpsError('invalid-argument', result.error);
+    }
+    const { uid, entryIds } = result;
+
+    const refs = entryIds.map((id) =>
+      db.collection(EXERCISE_ENTRIES_COLLECTION).doc(id)
+    );
+    const snaps = await db.getAll(...refs);
+
+    const batch = db.batch();
+    let deleted = 0;
+    let skipped = 0;
+    for (const snap of snaps) {
+      if (snap.exists && snap.data()?.userId === uid) {
+        batch.delete(snap.ref);
+        deleted++;
+      } else {
+        skipped++;
+      }
+    }
+    if (deleted > 0) {
+      await batch.commit();
+    }
+
+    logger.info('adminDeleteUserEntries', {
+      uid,
+      deleted,
+      skipped,
+      by: request.auth?.uid,
+    });
+    return { deleted, skipped };
   }
 );
