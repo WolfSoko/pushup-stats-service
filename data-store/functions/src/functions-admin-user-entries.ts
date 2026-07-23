@@ -9,10 +9,10 @@ import {
 import {
   type AdminEntryPatch,
   serializeEntry,
-  validateDeleteUserEntriesPayload,
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './admin/user-entries';
+import { validateDeleteUserEntriesPayload } from './admin/user-entries-delete';
 import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
