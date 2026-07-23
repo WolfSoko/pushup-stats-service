@@ -286,11 +286,16 @@ describe('UserEntriesTableComponent', () => {
 
       // then
       expect(deleteCallable).toHaveBeenCalledTimes(2);
-      const [firstCall, secondCall] = deleteCallable.mock.calls as [
-        { entryIds: string[] },
+      const requests = deleteCallable.mock.calls as [
+        { uid: string; entryIds: string[] },
       ][];
+      const [firstCall, secondCall] = requests;
       expect(firstCall[0].entryIds.length).toBe(500);
       expect(secondCall[0].entryIds.length).toBe(100);
+      expect(requests.every(([{ uid }]) => uid === 'user-1')).toBe(true);
+      expect(requests.flatMap(([{ entryIds }]) => entryIds).sort()).toEqual(
+        manyEntries.map(({ _id }) => _id).sort()
+      );
     });
 
     it('should still emit refresh after a later chunk fails, so earlier deletions are reflected', async () => {

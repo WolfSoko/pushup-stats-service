@@ -57,6 +57,20 @@ describe('admin/user-entries-delete', () => {
       expect(result.valid).toBe(false);
     });
 
+    it('should accept entryIds at exactly the maximum batch size', () => {
+      // given
+      const entryIds = Array.from(
+        { length: MAX_DELETE_ENTRY_IDS },
+        (_, i) => `e${i}`
+      );
+
+      // when
+      const result = validateDeleteUserEntriesPayload({ uid: 'u', entryIds });
+
+      // then
+      expect(result.valid).toBe(true);
+    });
+
     it('should reject a non-string or blank entryId in the array', () => {
       // given / when / then
       expect(

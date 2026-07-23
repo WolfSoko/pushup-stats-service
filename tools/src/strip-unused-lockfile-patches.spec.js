@@ -19,8 +19,7 @@ function runStripUnusedPatches(raw) {
 }
 
 describe('stripUnusedPatches', () => {
-  it('should leave the content untouched when there is no patchedDependencies block', () => {
-    // given
+  it('leaves the content untouched when there is no patchedDependencies block', () => {
     const raw = [
       "lockfileVersion: '9.0'",
       '',
@@ -29,10 +28,8 @@ describe('stripUnusedPatches', () => {
       '',
     ].join('\n');
 
-    // when
     const result = runStripUnusedPatches(raw);
 
-    // then
     expect(result).toEqual({
       content: raw,
       removedNames: [],
@@ -40,10 +37,10 @@ describe('stripUnusedPatches', () => {
     });
   });
 
-  it('should remove the block when the patched package is not resolved anywhere else', () => {
-    // given — mirrors the real `data-store/functions-dist/pnpm-lock.yaml`
-    // shape: @angular/build is patched workspace-wide but isn't a dependency
-    // of this project, so it never appears as a `packages:` key.
+  it('removes the block when the patched package is not resolved anywhere else', () => {
+    // Mirrors the real `data-store/functions-dist/pnpm-lock.yaml` shape:
+    // @angular/build is patched workspace-wide but isn't a dependency of
+    // this project, so it never appears as a `packages:` key.
     const raw = [
       "lockfileVersion: '9.0'",
       '',
@@ -68,10 +65,8 @@ describe('stripUnusedPatches', () => {
       '',
     ].join('\n');
 
-    // when
     const result = runStripUnusedPatches(raw);
 
-    // then
     expect(result.removedNames).toEqual(['@angular/build']);
     expect(result.skippedNames).toEqual([]);
     expect(result.content).not.toContain('patchedDependencies');
@@ -81,8 +76,7 @@ describe('stripUnusedPatches', () => {
     expect(result.content).toContain('settings:');
   });
 
-  it('should leave the block untouched when the patched package is actually resolved', () => {
-    // given — a patch for a package that IS a real dependency here
+  it('leaves the block untouched when the patched package is actually resolved', () => {
     const raw = [
       "lockfileVersion: '9.0'",
       '',
@@ -97,10 +91,9 @@ describe('stripUnusedPatches', () => {
       '',
     ].join('\n');
 
-    // when
     const result = runStripUnusedPatches(raw);
 
-    // then — bail out rather than risk a malformed partial splice
+    // bail out rather than risk a malformed partial splice
     expect(result).toEqual({
       content: raw,
       removedNames: [],
@@ -108,8 +101,34 @@ describe('stripUnusedPatches', () => {
     });
   });
 
-  it('should remove the trailing blank line along with the block', () => {
-    // given
+  it('does not mistake an unrelated package with a matching suffix for a real match', () => {
+    // Regression: a naive `outsideBlock.includes('${name}@')` substring
+    // check would treat `@babel/core@7.0.0` as "core" being used, since
+    // the substring `core@7.0.0` appears inside it. The exact-key check
+    // must tell these apart.
+    const raw = [
+      "lockfileVersion: '9.0'",
+      '',
+      'patchedDependencies:',
+      "  'core':",
+      '    hash: abc123',
+      '    path: patches/core.patch',
+      '',
+      'packages:',
+      "  '@babel/core@7.0.0':",
+      '    resolution: {integrity: sha512-abc}',
+      '',
+    ].join('\n');
+
+    const result = runStripUnusedPatches(raw);
+
+    expect(result.removedNames).toEqual(['core']);
+    expect(result.skippedNames).toEqual([]);
+    expect(result.content).not.toContain('patchedDependencies');
+    expect(result.content).toContain("'@babel/core@7.0.0':");
+  });
+
+  it('removes the trailing blank line along with the block', () => {
     const raw = [
       "lockfileVersion: '9.0'",
       '',
@@ -123,10 +142,32 @@ describe('stripUnusedPatches', () => {
       '',
     ].join('\n');
 
-    // when
     const result = runStripUnusedPatches(raw);
 
-    // then — no leftover double-blank-line where the block used to be
+    // no leftover double-blank-line where the block used to be
+    expect(result.content).toBe(
+      ["lockfileVersion: '9.0'", '', 'importers:', '  .: {}', ''].join('\n')
+    );
+  });
+
+  it('does not delete the next section header when there is no blank separator', () => {
+    // Regression: an earlier version computed the splice length as
+    // `endIdx - startIdx + 1` whenever there was no trailing blank line,
+    // which ate the very next line — the next section's own `key:` header.
+    const raw = [
+      "lockfileVersion: '9.0'",
+      '',
+      'patchedDependencies:',
+      "  '@angular/build':",
+      '    hash: abc123',
+      '    path: patches/@angular__build.patch',
+      'importers:',
+      '  .: {}',
+      '',
+    ].join('\n');
+
+    const result = runStripUnusedPatches(raw);
+
     expect(result.content).toBe(
       ["lockfileVersion: '9.0'", '', 'importers:', '  .: {}', ''].join('\n')
     );

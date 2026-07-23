@@ -30,15 +30,13 @@ import { promises as fs } from 'node:fs';
  * (possibly unchanged) content plus which names were removed vs. left in
  * place because they still looked used.
  */
-export function stripUnusedPatches(raw) {
-  const lines = raw.split('\n');
+// Finds a top-level (column-0) `key:` line and the half-open line range
+// [startIdx, endIdx) of its block — up to the next top-level, non-blank line
+// (or EOF). Returns null if the key isn't present.
+function findTopLevelBlock(lines, key) {
+  const startIdx = lines.findIndex((l) => l === `${key}:`);
+  if (startIdx === -1) return null;
 
-  const startIdx = lines.findIndex((l) => l === 'patchedDependencies:');
-  if (startIdx === -1) {
-    return { content: raw, removedNames: [], skippedNames: [] };
-  }
-
-  // The block runs until the next top-level (unindented, non-blank) line.
   let endIdx = lines.length;
   for (let i = startIdx + 1; i < lines.length; i++) {
     if (lines[i].length > 0 && !lines[i].startsWith(' ')) {
@@ -46,6 +44,17 @@ export function stripUnusedPatches(raw) {
       break;
     }
   }
+  return { startIdx, endIdx };
+}
+
+export function stripUnusedPatches(raw) {
+  const lines = raw.split('\n');
+
+  const patchedBlock = findTopLevelBlock(lines, 'patchedDependencies');
+  if (!patchedBlock) {
+    return { content: raw, removedNames: [], skippedNames: [] };
+  }
+  const { startIdx, endIdx } = patchedBlock;
 
   // Patched package names are the block's 2-space-indented `'name':` keys.
   const nameRe = /^ {2}'?([^':]+)'?:\s*$/;
@@ -54,11 +63,24 @@ export function stripUnusedPatches(raw) {
     .map((l) => l.match(nameRe)?.[1])
     .filter((name) => name !== undefined);
 
-  const outsideBlock =
-    lines.slice(0, startIdx).join('\n') + lines.slice(endIdx).join('\n');
-  const stillUsed = patchedNames.filter((name) =>
-    outsideBlock.includes(`${name}@`)
-  );
+  // A package is "used" only if it's an exact resolved key in `packages:`
+  // (e.g. `'@babel/core@7.0.0':` -> name `@babel/core`) — not a raw
+  // substring match, which would false-positive on e.g. a patch named
+  // `core` against an unrelated `@babel/core@...` entry.
+  const packagesBlock = findTopLevelBlock(lines, 'packages');
+  const resolvedNames = new Set();
+  if (packagesBlock) {
+    const pkgKeyRe = /^ {2}'?(.+)@[^@'\s]+'?:\s*$/;
+    for (const line of lines.slice(
+      packagesBlock.startIdx + 1,
+      packagesBlock.endIdx
+    )) {
+      const match = line.match(pkgKeyRe);
+      if (match) resolvedNames.add(match[1]);
+    }
+  }
+
+  const stillUsed = patchedNames.filter((name) => resolvedNames.has(name));
 
   if (stillUsed.length > 0) {
     // A mixed case (some patches used, some not) needs real YAML-aware
@@ -67,12 +89,12 @@ export function stripUnusedPatches(raw) {
     return { content: raw, removedNames: [], skippedNames: stillUsed };
   }
 
-  // A trailing blank line separates this block from the next section; drop
-  // it along with the block itself so section spacing stays consistent.
-  let spliceEnd = endIdx;
-  if (lines[spliceEnd - 1] === '') spliceEnd -= 1;
+  // [startIdx, endIdx) already spans exactly the block (including any blank
+  // line that separates it from the next section, since that blank line
+  // sits before endIdx) — splicing anything more would eat the next
+  // section's header when there's no blank separator.
   const nextLines = lines.slice();
-  nextLines.splice(startIdx, spliceEnd - startIdx + 1);
+  nextLines.splice(startIdx, endIdx - startIdx);
 
   return {
     content: nextLines.join('\n'),
