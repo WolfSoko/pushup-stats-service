@@ -1,0 +1,110 @@
+@if (error()) {
+  <p class="error-text">{{ error() }}</p>
+}
+
+@if (hasSelection()) {
+  <div class="selection-bar">
+    <span i18n="@@admin.entries.selection.count"
+      >{{ selectedIds().size }} ausgewählt</span
+    >
+    <button
+      mat-button
+      color="warn"
+      [disabled]="deleting()"
+      (click)="deleteSelected()"
+    >
+      <mat-icon>delete</mat-icon>
+      <span i18n="@@admin.entries.deleteSelected">Ausgewählte löschen</span>
+    </button>
+  </div>
+}
+
+<div class="table-scroll">
+  <mat-table [dataSource]="dataSource" matSort #entriesSort="matSort">
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          [checked]="allSelected()"
+          [indeterminate]="someSelected()"
+          [attr.aria-label]="selectAllLabel"
+          (change)="toggleAll($event.checked)"
+        />
+      </mat-header-cell>
+      <mat-cell *matCellDef="let e">
+        <mat-checkbox
+          [checked]="isSelected(e)"
+          [attr.aria-label]="selectRowLabel"
+          (change)="toggleRow(e, $event.checked)"
+        />
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        i18n="@@admin.entries.col.timestamp"
+        >Zeitpunkt</mat-header-cell
+      >
+      <mat-cell *matCellDef="let e">{{
+        e.timestamp ? (e.timestamp | date: 'short') : '–'
+      }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="exercise">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        i18n="@@admin.entries.col.exercise"
+        >Übung</mat-header-cell
+      >
+      <mat-cell *matCellDef="let e">{{ exerciseName(e) }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        i18n="@@admin.entries.col.value"
+        >Wert</mat-header-cell
+      >
+      <mat-cell *matCellDef="let e">{{ valueDisplay(e) }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="source">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        i18n="@@admin.entries.col.source"
+        >Quelle</mat-header-cell
+      >
+      <mat-cell *matCellDef="let e">{{ e.source }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions" stickyEnd>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let e">
+        <button
+          mat-icon-button
+          (click)="edit.emit(e)"
+          [matTooltip]="editTooltip"
+          [attr.aria-label]="editTooltip"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          [disabled]="deleting()"
+          (click)="deleteOne(e)"
+          [matTooltip]="deleteTooltip"
+          [attr.aria-label]="deleteTooltip"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns" />
+    <mat-row *matRowDef="let row; columns: displayedColumns" />
+  </mat-table>
+</div>

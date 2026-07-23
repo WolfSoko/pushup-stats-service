@@ -10372,5 +10372,65 @@
         <target>Profilo pubblico</target>
       </segment>
     </unit>
+    <unit id="admin.entries.delete.title">
+      <segment state="initial">
+        <source> Einträge löschen </source>
+        <target> Einträge löschen </target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.button">
+      <segment state="initial">
+        <source> Löschen </source>
+        <target> Löschen </target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.confirmOne">
+      <segment state="initial">
+        <source>Möchtest du diesen Eintrag wirklich endgültig löschen?</source>
+        <target>Möchtest du diesen Eintrag wirklich endgültig löschen?</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.delete.confirmMany">
+      <segment state="initial">
+        <source>Möchtest du diese <ph id="0" equiv="count" disp="count"/> Einträge wirklich endgültig löschen?</source>
+        <target>Möchtest du diese <ph id="0" equiv="count" disp="count"/> Einträge wirklich endgültig löschen?</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.selection.count">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ selectedIds().size }}"/> ausgewählt</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ selectedIds().size }}"/> ausgewählt</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.deleteSelected">
+      <segment state="initial">
+        <source>Ausgewählte löschen</source>
+        <target>Ausgewählte löschen</target>
+      </segment>
+    </unit>
+    <unit id="admin.entry.deleteTooltip">
+      <segment state="initial">
+        <source>Eintrag löschen</source>
+        <target>Eintrag löschen</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.selectAll">
+      <segment state="initial">
+        <source>Alle Einträge auswählen</source>
+        <target>Alle Einträge auswählen</target>
+      </segment>
+    </unit>
+    <unit id="admin.entries.selectRow">
+      <segment state="initial">
+        <source>Eintrag auswählen</source>
+        <target>Eintrag auswählen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
