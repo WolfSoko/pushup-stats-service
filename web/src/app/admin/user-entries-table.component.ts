@@ -32,6 +32,12 @@ import {
   entryValueDisplay,
 } from './user-entries.helpers';
 
+// Must match `MAX_DELETE_ENTRY_IDS` in
+// `data-store/functions/src/admin/user-entries.ts` (a Firestore `WriteBatch`
+// caps at 500 operations). The entries page loads up to 1000 rows, so
+// "select all" can exceed this — chunk the request rather than fail.
+const MAX_DELETE_BATCH_SIZE = 500;
+
 /**
  * Sortable, selectable table for one user's exercise entries — the drill-down
  * body of `UserEntriesPageComponent`. Owns row/select-all checkboxes and the
@@ -149,17 +155,24 @@ export class UserEntriesTableComponent {
 
     this.deleting.set(true);
     this.error.set(null);
+    const fn = this.callables.call<
+      { uid: string; entryIds: string[] },
+      BulkDeleteResult
+    >('adminDeleteUserEntries');
+    let anyDeleted = false;
     try {
-      const fn = this.callables.call<
-        { uid: string; entryIds: string[] },
-        BulkDeleteResult
-      >('adminDeleteUserEntries');
-      await fn({ uid: this.uid(), entryIds });
-      this.refresh.emit();
+      for (let i = 0; i < entryIds.length; i += MAX_DELETE_BATCH_SIZE) {
+        const chunk = entryIds.slice(i, i + MAX_DELETE_BATCH_SIZE);
+        await fn({ uid: this.uid(), entryIds: chunk });
+        anyDeleted = true;
+      }
     } catch (err) {
       this.error.set(errorMessage(err));
     } finally {
       this.deleting.set(false);
+      // Refresh even on a partial failure so rows deleted by earlier chunks
+      // don't linger stale in the table until a manual reload.
+      if (anyDeleted) this.refresh.emit();
     }
   }
 }

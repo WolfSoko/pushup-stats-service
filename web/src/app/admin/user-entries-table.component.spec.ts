@@ -257,5 +257,73 @@ describe('UserEntriesTableComponent', () => {
       // then
       expect(dialogOpenSpy).not.toHaveBeenCalled();
     });
+
+    it('should chunk a selection larger than the 500-entry delete batch cap', async () => {
+      // given — the page can load up to 1000 entries, above the server's
+      // per-call limit, so a full select-all must split into multiple calls
+      const manyEntries: ExerciseEntry[] = Array.from(
+        { length: 600 },
+        (_, i) => ({
+          _id: `entry-${i}`,
+          userId: 'user-1',
+          exerciseId: 'pushup',
+          timestamp: '2026-04-09T10:00:00.000Z',
+          reps: 10,
+          source: 'web',
+        })
+      );
+      const deleteCallable = vi.fn(async (_req: unknown) => ({
+        data: { deleted: 500, skipped: 0 },
+      }));
+      await createComponent(manyEntries, [
+        { name: 'adminDeleteUserEntries', impl: deleteCallable },
+      ]);
+      component.toggleAll(true);
+      dialogOpenSpy.mockReturnValue(stubDialogRef(true));
+
+      // when
+      await component.deleteSelected();
+
+      // then
+      expect(deleteCallable).toHaveBeenCalledTimes(2);
+      const [firstCall, secondCall] = deleteCallable.mock.calls as [
+        { entryIds: string[] },
+      ][];
+      expect(firstCall[0].entryIds.length).toBe(500);
+      expect(secondCall[0].entryIds.length).toBe(100);
+    });
+
+    it('should still emit refresh after a later chunk fails, so earlier deletions are reflected', async () => {
+      // given
+      const manyEntries: ExerciseEntry[] = Array.from(
+        { length: 600 },
+        (_, i) => ({
+          _id: `entry-${i}`,
+          userId: 'user-1',
+          exerciseId: 'pushup',
+          timestamp: '2026-04-09T10:00:00.000Z',
+          reps: 10,
+          source: 'web',
+        })
+      );
+      const deleteCallable = vi
+        .fn()
+        .mockResolvedValueOnce({ data: { deleted: 500, skipped: 0 } })
+        .mockRejectedValueOnce(new Error('internal'));
+      await createComponent(manyEntries, [
+        { name: 'adminDeleteUserEntries', impl: deleteCallable },
+      ]);
+      component.toggleAll(true);
+      dialogOpenSpy.mockReturnValue(stubDialogRef(true));
+      const refreshSpy = vi.fn();
+      component.refresh.subscribe(refreshSpy);
+
+      // when
+      await component.deleteSelected();
+
+      // then
+      expect(component.error()).toBe('internal');
+      expect(refreshSpy).toHaveBeenCalled();
+    });
   });
 });
