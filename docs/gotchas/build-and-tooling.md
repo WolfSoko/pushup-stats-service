@@ -1,6 +1,6 @@
 # Gotchas: Build & Tooling
 
-## App Hosting prerender: worker cap + patched per-route timeout
+## App Hosting prerender: worker cap
 
 The App Hosting production build prerenders ~2400 routes (9 locales,
 `sourceMap: true`) on a builder with ~8 GB RAM. The main build process needs
@@ -22,29 +22,29 @@ structural fix is to not build there at all — the App Hosting rollout restores
 `web:build:production` from the Nx Cloud remote cache seeded by CI (see
 [`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse").
 
-Defenses for the case the cache misses, locked in by
+Defense for the case the cache misses, locked in by
 `tools/src/prerender-timeout-patch-guard.spec.js`:
 
-1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
-   and `apphosting.staging.yaml` — the primary fix; keeps peak memory inside
-   the machine. (`@angular/build` defaults to `min(4, cores - 1)` workers.)
-2. **`patches/@angular__build.patch`** (registered in `pnpm-workspace.yaml`
-   under `patchedDependencies`) raises the hard-coded 30 s per-route
-   `AbortSignal.timeout` in `render-worker.js` / `routes-extractor-worker.js`
-   to 300 s as headroom — upstream has no config option for it (verified up to
-   22.1.0-next). After an Angular upgrade, refresh it instead of deleting it:
-   `pnpm patch @angular/build` prints an edit directory — re-apply the same
-   one-line change in both worker files there, then run
-   `pnpm patch-commit <edit-dir>`. Delete patch, guard test, and this section
-   together only once upstream makes the timeout configurable.
+- **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
+  and `apphosting.staging.yaml` — the primary fix; keeps peak memory inside
+  the machine. (`@angular/build` defaults to `min(4, cores - 1)` workers.)
+
+> A pnpm patch (`patches/@angular__build.patch`) previously also raised the
+> hard-coded 30 s per-route `AbortSignal.timeout` in `render-worker.js` /
+> `routes-extractor-worker.js` to 300 s as extra headroom. It was removed to
+> keep the dependency unpatched; the worker cap above remains the primary
+> defense. If the per-route timeout ever becomes the bottleneck again on a
+> cache miss, re-add the patch via `pnpm patch @angular/build` (upstream still
+> exposes no config option for it).
 
 ## Cloud Functions deploy: pruned lockfile carries an irrelevant patch entry
 
 `@nx/esbuild`'s `generatePackageJson` (used by `cloud-functions:build`) prunes
 a subset `package.json` + `pnpm-lock.yaml` into `data-store/functions-dist`,
-but copies the workspace's `patchedDependencies` block from the root
-`pnpm-lock.yaml` verbatim — even though `@angular/build` (patched for the
-prerender timeout above) isn't a dependency of the functions codebase at all.
+but copies any `patchedDependencies` block from the root `pnpm-lock.yaml`
+verbatim — even for a package that isn't a dependency of the functions
+codebase at all (as `@angular/build`, formerly patched for the prerender
+timeout, was).
 Firebase's Cloud Build then runs its own `pnpm install --frozen-lockfile`
 against the generated `package.json` (which has no matching
 `pnpm.patchedDependencies` field), and pnpm rejects the mismatch with
