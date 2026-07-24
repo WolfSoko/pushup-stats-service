@@ -80,6 +80,36 @@ parse/stringify round-trip, which would reformat the entire 2000+ line file).
 If a genuinely-used patch and an unused one are ever mixed in the same
 lockfile, the script bails out with a warning instead of guessing.
 
+## Cloud Functions deploy: pruned directory has no `allowBuilds` allowlist
+
+Same root cause as the patch entry above (`data-store/functions-dist` is a
+standalone pruned directory, not a member of the root pnpm workspace), but a
+different symptom: pnpm 11 hard-fails `pnpm install` with
+`[ERR_PNPM_IGNORED_BUILDS]` for any resolved dependency that has an
+install/postinstall script and isn't allowlisted (observed:
+`@firebase/util`, `protobufjs`) — exit code 1, not just a warning. The root
+`pnpm-workspace.yaml`'s `allowBuilds` map never reaches Cloud Build's
+`pnpm install` because that directory has no `pnpm-workspace.yaml` of its
+own, and — verified against pnpm 11.17.0 — pnpm does **not** honor an
+equivalent `pnpm.allowBuilds` / `pnpm.onlyBuiltDependencies` field placed
+directly in `package.json` for a single-package (non-workspace) directory;
+`allowBuilds` is read from `pnpm-workspace.yaml` only.
+
+Fixed the same way as the patch entry: a `predeploy` hook
+(`tools/src/write-functions-workspace-allowbuilds.mjs`) writes a minimal
+`pnpm-workspace.yaml` into `functions-dist` before Firebase packages it,
+containing only the root's `allowBuilds` entries that actually resolve in
+the pruned lockfile (so it can't drift from the root config or over-grant).
+Reproduce/verify locally without waiting on a full deploy:
+
+```bash
+pnpm nx run cloud-functions:build
+cp -r data-store/functions-dist /tmp/fd-test
+node tools/src/strip-unused-lockfile-patches.mjs /tmp/fd-test/pnpm-lock.yaml
+node tools/src/write-functions-workspace-allowbuilds.mjs /tmp/fd-test/pnpm-lock.yaml pnpm-workspace.yaml
+(cd /tmp/fd-test && pnpm install --frozen-lockfile)  # must exit 0
+```
+
 ## Transient build flakes
 
 **`Inlining of fonts failed ... fonts.googleapis.com/icon?family=Material+Icons`** is a network flake during `web:build`, **not a code bug**. Retry `pnpm nx run web:build -c production` after a few seconds.

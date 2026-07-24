@@ -3,7 +3,8 @@
     "source": "functions-dist",
     "runtime": "nodejs24",
     "predeploy": [
-      "node ../tools/src/strip-unused-lockfile-patches.mjs functions-dist/pnpm-lock.yaml"
+      "node ../tools/src/strip-unused-lockfile-patches.mjs functions-dist/pnpm-lock.yaml",
+      "node ../tools/src/write-functions-workspace-allowbuilds.mjs functions-dist/pnpm-lock.yaml ../pnpm-workspace.yaml"
     ]
   },
   "emulators": {
