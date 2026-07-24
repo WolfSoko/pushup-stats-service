@@ -10373,63 +10373,63 @@
       </segment>
     </unit>
     <unit id="admin.entries.delete.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Einträge löschen </source>
-        <target> Einträge löschen </target>
+        <target> Invoeren verwijderen </target>
       </segment>
     </unit>
     <unit id="admin.entries.delete.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Annuleren </target>
       </segment>
     </unit>
     <unit id="admin.entries.delete.button">
-      <segment state="initial">
+      <segment state="translated">
         <source> Löschen </source>
-        <target> Löschen </target>
+        <target> Verwijderen </target>
       </segment>
     </unit>
     <unit id="admin.entries.delete.confirmOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Möchtest du diesen Eintrag wirklich endgültig löschen?</source>
-        <target>Möchtest du diesen Eintrag wirklich endgültig löschen?</target>
+        <target>Wil je deze invoer echt definitief verwijderen?</target>
       </segment>
     </unit>
     <unit id="admin.entries.delete.confirmMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Möchtest du diese <ph id="0" equiv="count" disp="count"/> Einträge wirklich endgültig löschen?</source>
-        <target>Möchtest du diese <ph id="0" equiv="count" disp="count"/> Einträge wirklich endgültig löschen?</target>
+        <target>Wil je deze <ph id="0" equiv="count" disp="count"/> invoeren echt definitief verwijderen?</target>
       </segment>
     </unit>
     <unit id="admin.entries.selection.count">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ selectedIds().size }}"/> ausgewählt</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ selectedIds().size }}"/> ausgewählt</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ selectedIds().size }}"/> geselecteerd</target>
       </segment>
     </unit>
     <unit id="admin.entries.deleteSelected">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausgewählte löschen</source>
-        <target>Ausgewählte löschen</target>
+        <target>Geselecteerde verwijderen</target>
       </segment>
     </unit>
     <unit id="admin.entry.deleteTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag löschen</source>
-        <target>Eintrag löschen</target>
+        <target>Invoer verwijderen</target>
       </segment>
     </unit>
     <unit id="admin.entries.selectAll">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Einträge auswählen</source>
-        <target>Alle Einträge auswählen</target>
+        <target>Alle invoeren selecteren</target>
       </segment>
     </unit>
     <unit id="admin.entries.selectRow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintrag auswählen</source>
-        <target>Eintrag auswählen</target>
+        <target>Invoer selecteren</target>
       </segment>
     </unit>
 </file>
