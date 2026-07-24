@@ -14,7 +14,11 @@ import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
 import { computeLocaleRedirect } from './server-locale-redirect';
-import { staticCacheControl } from './server-static-cache';
+import { isCacheableStaticSsrPath } from './server-ssr-cache';
+import {
+  SHORT_LIVED_CACHE_CONTROL,
+  staticCacheControl,
+} from './server-static-cache';
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 
@@ -173,13 +177,23 @@ app.use(
 
 /**
  * Handle all other requests by rendering the Angular application.
+ *
+ * Wiki detail pages (`RenderMode.Server` for catalog-driven, not
+ * per-request, content — see `app.routes.server.ts`) get an explicit
+ * Cache-Control so App Hosting's CDN absorbs repeat hits instead of
+ * re-rendering identical HTML on Cloud Run every time. Only applied to
+ * `2xx` responses so a 404 (unknown slug) or a redirect never gets
+ * cached.
  */
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next()
-    )
+    .then((response) => {
+      if (response?.ok && isCacheableStaticSsrPath(req.path)) {
+        response.headers.set('Cache-Control', SHORT_LIVED_CACHE_CONTROL);
+      }
+      return response ? writeResponseToNodeResponse(response, res) : next();
+    })
     .catch(next);
 });
 

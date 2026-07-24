@@ -42,9 +42,8 @@ jobs:
           node-version-file: .nvmrc
 
       # Use corepack to install the exact pnpm version pinned in package.json's
-      # `packageManager` field. Avoids pnpm/action-setup@v6 pulling pnpm v11 RC,
-      # which rewrites pnpm-lock.yaml with two YAML docs that Nx cannot parse
-      # (see pnpm/action-setup#228).
+      # `packageManager` field, instead of letting pnpm/action-setup@v6 pick
+      # its own version (see pnpm/action-setup#228).
       - name: Enable corepack
         env:
           COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'

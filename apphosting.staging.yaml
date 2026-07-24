@@ -26,7 +26,7 @@ env:
       - BUILD
 
   # Match prod: cap prerender workers so the ~8 GB App Hosting builder
-  # doesn't thrash during the ~2400-route prerender (see apphosting.yaml).
+  # doesn't thrash during the ~970-route prerender (see apphosting.yaml).
   - variable: NG_BUILD_MAX_WORKERS
     value: '2'
     availability:

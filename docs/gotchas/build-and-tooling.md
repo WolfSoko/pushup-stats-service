@@ -1,8 +1,8 @@
 # Gotchas: Build & Tooling
 
-## App Hosting prerender: worker cap + patched per-route timeout
+## App Hosting prerender: worker cap, and keep the prerender list SEO-only
 
-The App Hosting production build prerenders ~2400 routes (9 locales,
+The App Hosting production build prerenders ~970 routes (9 locales,
 `sourceMap: true`) on a builder with ~8 GB RAM. The main build process needs
 the 6 GB heap from `NODE_OPTIONS`, and each prerender worker thread adds its
 own V8 isolate on top — with the default 4 workers the machine thrashes into
@@ -22,33 +22,50 @@ structural fix is to not build there at all — the App Hosting rollout restores
 `web:build:production` from the Nx Cloud remote cache seeded by CI (see
 [`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse").
 
-Defenses for the case the cache misses, locked in by
-`tools/src/prerender-timeout-patch-guard.spec.js`:
+Defenses for the case the cache misses:
 
 1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
-   and `apphosting.staging.yaml` — the primary fix; keeps peak memory inside
-   the machine. (`@angular/build` defaults to `min(4, cores - 1)` workers.)
-2. **`patches/@angular__build.patch`** (registered in `pnpm-workspace.yaml`
-   under `patchedDependencies`) raises the hard-coded 30 s per-route
-   `AbortSignal.timeout` in `render-worker.js` / `routes-extractor-worker.js`
-   to 300 s as headroom — upstream has no config option for it (verified up to
-   22.1.0-next). After an Angular upgrade, refresh it instead of deleting it:
-   `pnpm patch @angular/build` prints an edit directory — re-apply the same
-   one-line change in both worker files there, then run
-   `pnpm patch-commit <edit-dir>`. Delete patch, guard test, and this section
-   together only once upstream makes the timeout configurable.
+   and `apphosting.staging.yaml` — keeps peak memory inside the machine.
+   (`@angular/build` defaults to `min(4, cores - 1)` workers.)
+2. **Keep `app.routes.server.ts`'s `RenderMode.Prerender` list limited to
+   routes that actually matter for SEO** (i.e. routes in `sitemap.xml` —
+   see [`docs/consent-ads-seo.md`](../consent-ads-seo.md)). Every
+   `getPrerenderParams()`-driven route multiplies by 9 locales, so a single
+   large catalog can add thousands of routes. The wiki detail pages
+   (`wiki/liegestuetz-typen/:slug`, `wiki/uebungen/:slug`) used to do exactly
+   this — ~155 catalog entries × 9 locales ≈ 1400 routes — despite being
+   `noindex` and excluded from the sitemap (thin content, see
+   `docs/consent-ads-seo.md`). They were moved to `RenderMode.Server`
+   instead, cutting the prerendered total by more than half; the CDN cache
+   in `web/src/server-ssr-cache.ts` keeps the resulting per-request
+   rendering cheap for those catalog-driven (not per-request) pages. If a
+   catalog-backed route grows large again, prefer `RenderMode.Server` +
+   a cache-path entry over adding it to the prerender list, unless the
+   route is genuinely sitemap-worthy.
+3. **`@angular/build` hard-codes a 30 s per-route `AbortSignal.timeout`** in
+   `render-worker.js` / `routes-extractor-worker.js` with no config option
+   (verified up to 22.1.0-next). This repo does not currently patch it —
+   the worker cap and the reduced route count above have kept individual
+   routes well under 30 s. If a future prerendered route is legitimately
+   slow (e.g. a heavy data fetch in `getPrerenderParams`), patch it via
+   `pnpm patch @angular/build` (raise the timeout in both worker files,
+   `pnpm patch-commit <edit-dir>`) rather than working around it another
+   way — re-add a guard test alongside the patch so an Angular upgrade
+   can't silently drop it.
 
-## Cloud Functions deploy: pruned lockfile carries an irrelevant patch entry
+## Cloud Functions deploy: pruned lockfile can carry an irrelevant patch entry
 
 `@nx/esbuild`'s `generatePackageJson` (used by `cloud-functions:build`) prunes
 a subset `package.json` + `pnpm-lock.yaml` into `data-store/functions-dist`,
 but copies the workspace's `patchedDependencies` block from the root
-`pnpm-lock.yaml` verbatim — even though `@angular/build` (patched for the
-prerender timeout above) isn't a dependency of the functions codebase at all.
-Firebase's Cloud Build then runs its own `pnpm install --frozen-lockfile`
-against the generated `package.json` (which has no matching
-`pnpm.patchedDependencies` field), and pnpm rejects the mismatch with
-`ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`.
+`pnpm-lock.yaml` verbatim — even if the patched package (e.g. a previous
+`@angular/build` patch, since removed) isn't a dependency of the functions
+codebase at all. Firebase's Cloud Build then runs its own
+`pnpm install --frozen-lockfile` against the generated `package.json` (which
+has no matching `pnpm.patchedDependencies` field), and pnpm rejects the
+mismatch with `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`. The workspace currently
+has no patches, so this is latent — the defense below stays in place for
+whenever one gets added back (see point 3 above).
 
 This only bites when Cloud Build actually rebuilds a function — an
 unchanged-hash deploy is skipped entirely, so the bug can sit latent for a
@@ -80,7 +97,7 @@ See `tools/src/generate-logo-assets.js` for a real example.
 
 ## pnpm via corepack, not `pnpm/action-setup`
 
-CI uses `corepack enable` to pick up the exact pnpm pinned in `package.json`'s `packageManager` field. Avoid `pnpm/action-setup@v6` — it can pull pnpm v11 RC, which rewrites `pnpm-lock.yaml` into a dual-YAML-document form that Nx cannot parse. See `pnpm/action-setup#228`.
+CI uses `corepack enable` to pick up the exact pnpm pinned in `package.json`'s `packageManager` field (currently pnpm 11.x) instead of `pnpm/action-setup@v6`, which resolves its own version independently and can drift from the pin. See `pnpm/action-setup#228`. (pnpm 11's lockfile can be a multi-document YAML file; Nx 23+ parses that fine — the risk `action-setup` posed was picking a version this repo hadn't validated yet, not the format itself.)
 
 ## Nx Cloud dynamic agent allocation
 

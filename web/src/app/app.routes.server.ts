@@ -1,9 +1,5 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
-import {
-  EXERCISE_WIKI_CATALOG,
-  PUSHUP_TYPES,
-  TRAINING_PLANS,
-} from '@pu-stats/models';
+import { TRAINING_PLANS } from '@pu-stats/models';
 import { BLOG_POSTS } from './blog/blog-posts.data';
 
 export const serverRoutes: ServerRoute[] = [
@@ -43,39 +39,8 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
   {
-    path: 'wiki/liegestuetz-typen/:slug',
-    renderMode: RenderMode.Prerender,
-    async getPrerenderParams() {
-      // Prerender the union of every locale's slug so each
-      // locale-build emits a static HTML for `/<lang>/wiki/.../<slug>`
-      // when `<slug>` is its own locale-specific override AND when
-      // it's another locale's slug (those non-canonical pages still
-      // render correctly thanks to the locale-aware
-      // findPushupTypeBySlug, with `<link rel="canonical">` pointing
-      // back at the locale's canonical slug — Google dedupes via
-      // canonical so non-canonical variants don't fragment ranking).
-      const slugs = new Set<string>();
-      for (const type of PUSHUP_TYPES) {
-        slugs.add(type.slug);
-        if (type.slugs) {
-          for (const localeSlug of Object.values(type.slugs)) {
-            if (localeSlug) slugs.add(localeSlug);
-          }
-        }
-      }
-      return Array.from(slugs).map((slug) => ({ slug }));
-    },
-  },
-  {
     path: 'wiki/uebungen',
     renderMode: RenderMode.Prerender,
-  },
-  {
-    path: 'wiki/uebungen/:slug',
-    renderMode: RenderMode.Prerender,
-    async getPrerenderParams() {
-      return EXERCISE_WIKI_CATALOG.map((entry) => ({ slug: entry.slug }));
-    },
   },
   {
     path: 'ueber-uns',
@@ -97,13 +62,31 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
 
-  // --- Server-rendered (dynamic data per request) ---
+  // --- Server-rendered ---
   {
     path: 'landing',
     renderMode: RenderMode.Server,
   },
   {
     path: 'leaderboard',
+    renderMode: RenderMode.Server,
+  },
+  // Wiki detail pages: catalog-driven content, identical output per
+  // slug+locale until the next deploy — genuinely "static", but
+  // deliberately noindex'd (thin content, see SeoService.update calls
+  // in the components) and excluded from sitemap.xml, so they aren't
+  // "important for SEO" and don't need build-time prerendering. Moved
+  // from Prerender to Server to cut ~1400 of the ~2400 routes that
+  // thrashed the App Hosting builder (see
+  // docs/gotchas/build-and-tooling.md). `server-ssr-cache.ts` gives
+  // the CDN in front of Cloud Run a short TTL for these paths so
+  // repeat hits don't re-render on every request.
+  {
+    path: 'wiki/liegestuetz-typen/:slug',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'wiki/uebungen/:slug',
     renderMode: RenderMode.Server,
   },
   // Public profile pages: dynamic per UID, server-rendered so social-card
