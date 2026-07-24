@@ -15,8 +15,6 @@ allowBuilds:
   protobufjs: true
   re2: true
   unrs-resolver: true
-patchedDependencies:
-  '@angular/build': patches/@angular__build.patch
 
 peerDependencyRules:
   allowedVersions:
