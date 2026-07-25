@@ -20,6 +20,7 @@ import {
   unifiedEntryFilterKey,
 } from '@pu-stats/models';
 import { AppDataFacade } from '../core/app-data.facade';
+import { createVariantPatch, updateVariantPatch } from './entries.variant';
 
 export interface PushupTypeFilterOption {
   /** Canonical filter key (catalog `id` for catalog matches, trimmed
@@ -224,7 +225,7 @@ export const EntriesStore = signalStore(
               ? { distanceM: payload.distanceM }
               : {}),
             ...(payload.source !== undefined ? { source: payload.source } : {}),
-            ...(payload.variantId ? { variantId: payload.variantId } : {}),
+            ...createVariantPatch(payload),
           })
         );
         _appData.reloadAfterMutation();
@@ -278,9 +279,7 @@ export const EntriesStore = signalStore(
               ? { intervals: payload.intervals }
               : {}),
             ...(payload.source !== undefined ? { source: payload.source } : {}),
-            ...(payload.variantId !== undefined
-              ? { variantId: payload.variantId }
-              : {}),
+            ...updateVariantPatch(payload),
           })
         );
         _appData.reloadAfterMutation();

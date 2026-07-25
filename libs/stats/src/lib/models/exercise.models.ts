@@ -104,6 +104,12 @@ export interface ExerciseDefinition {
    */
   holdTimerProfileId?: string;
   variants?: readonly ExerciseVariant[];
+  /**
+   * Whether `variantId` may hold a value outside {@link variants}. Set for
+   * exercises whose variant picker is a free-text autocomplete (pushups),
+   * where a closed allowlist would reject a user-typed type on save.
+   */
+  allowsCustomVariants?: boolean;
 }
 
 export interface ExerciseEntry {
@@ -375,7 +381,10 @@ export function validateExerciseEntry(
     // service translates the sentinel to `deleteField()`).
     variantId?: string | null;
   },
-  def: Pick<ExerciseDefinition, 'measurement' | 'min' | 'max' | 'variants'>,
+  def: Pick<
+    ExerciseDefinition,
+    'measurement' | 'min' | 'max' | 'variants' | 'allowsCustomVariants'
+  >,
   options?: { partial?: boolean }
 ): ExerciseEntryViolation | null {
   const partial = options?.partial === true;
@@ -452,7 +461,8 @@ export function validateExerciseEntry(
   if (
     entry.variantId !== undefined &&
     entry.variantId !== null &&
-    entry.variantId !== ''
+    entry.variantId !== '' &&
+    !def.allowsCustomVariants
   ) {
     const variants = def.variants ?? [];
     if (!variants.some((v) => v.id === entry.variantId)) {

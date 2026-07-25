@@ -119,6 +119,10 @@ export const PUSHUP_DEFINITION: ExerciseDefinition = {
   unit: 'reps',
   nameKey: '@@exercise.category.pushup',
   icon: 'fitness_center',
+  // The pushup "Typ" is a free-text autocomplete over PUSHUP_TYPES (users
+  // may type their own), so the variant stays open-ended instead of a
+  // closed allowlist that would reject custom types on save.
+  allowsCustomVariants: true,
 };
 
 export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [

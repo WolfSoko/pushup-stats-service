@@ -5,6 +5,7 @@ import {
   PUSHUP_QUICK_ADD_EXERCISE_ID,
 } from '@pu-stats/models';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
+import { createVariantPatch } from '../stats/entries.variant';
 
 import type {
   AutoCountExerciseId,
@@ -122,6 +123,7 @@ export function buildConfirmedEntryPayload(
       reps: result.reps,
       sets: result.sets,
       source: result.source,
+      ...createVariantPatch(result),
     };
   }
   return buildExerciseEntryPayload(result, exerciseSource);
