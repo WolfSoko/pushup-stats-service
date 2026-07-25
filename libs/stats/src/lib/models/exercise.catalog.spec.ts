@@ -6,6 +6,7 @@ import {
   findExerciseCategory,
   findExerciseDefinition,
 } from './exercise.catalog';
+import { validateExerciseEntry } from './exercise.models';
 import { AUTO_COUNT_QUICK_ADD_EXERCISE_IDS } from './user-config.models';
 import { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN } from './pushup.models';
 
@@ -310,4 +311,24 @@ describe('PUSHUP_DEFINITION', () => {
     // derivation treats pushup as a normal catalog auto-count exercise
     expect(PUSHUP_DEFINITION.autoCountProfileId).toBe('pushup');
   });
+
+  it.each([
+    ['a catalog pushup type id', 'diamond'],
+    ['a legacy English entryLabel', 'Diamond'],
+    ['a custom user-typed type', 'Sphinx-Liegestütz'],
+  ])(
+    'should accept %s as a pushup variant',
+    (_label: string, variantId: string) => {
+      // given a pushup entry whose "Typ" came from the free-text
+      // autocomplete (or from a legacy `pushups.type` doc)
+      // when validated against the catalog definition
+      const violation = validateExerciseEntry(
+        { reps: 20, variantId },
+        PUSHUP_DEFINITION
+      );
+      // then it passes — the pushup Typ is open-ended, so the edit path
+      // must not reject it with 'invalid-variant'
+      expect(violation).toBeNull();
+    }
+  );
 });

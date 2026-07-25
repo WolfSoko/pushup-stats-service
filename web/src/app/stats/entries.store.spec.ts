@@ -115,6 +115,25 @@ describe('EntriesStore', () => {
       expect(appDataMock.reloadAfterMutation).toHaveBeenCalledTimes(1);
     });
 
+    it('should persist the pushup Typ as the variant on create', async () => {
+      // given a new pushup entry logged with a specific type
+      const store = setup();
+
+      // when the create is dispatched
+      await store.createEntry({
+        kind: 'pushup',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 12,
+        type: 'diamond',
+      });
+
+      // then the type is stored as the entry's variant
+      expect(exerciseServiceMock.createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({ variantId: 'diamond' })
+      );
+    });
+
     it('Given an exercise-kind create, Then ExerciseFirestoreService.createEntry is called with the user id', async () => {
       const store = setup();
 
@@ -237,6 +256,51 @@ describe('EntriesStore', () => {
 
       expect(appDataMock.reloadAfterMutation).not.toHaveBeenCalled();
       expect(store.error()).toBe('boom');
+    });
+
+    it('should persist the pushup Typ as the variant', async () => {
+      // given a pushup edit where the dialog's "Typ" autocomplete resolved
+      // to a catalog type
+      const store = setup();
+
+      // when the update is dispatched
+      await store.updateEntry({
+        kind: 'pushup',
+        id: '1',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 25,
+        type: 'diamond',
+      });
+
+      // then it reaches Firestore as `variantId` — dropping it would make
+      // the Typ field in the edit dialog a no-op
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        '1',
+        'pushup',
+        expect.objectContaining({ variantId: 'diamond' })
+      );
+    });
+
+    it('should clear the variant when the pushup Typ is emptied', async () => {
+      // given a pushup edit whose Typ field was cleared
+      const store = setup();
+
+      // when the update is dispatched
+      await store.updateEntry({
+        kind: 'pushup',
+        id: '1',
+        timestamp: '2026-04-27T08:00:00',
+        reps: 25,
+        type: '',
+      });
+
+      // then the null clear sentinel reaches the service, so the stored
+      // variant is removed rather than left stale
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        '1',
+        'pushup',
+        expect.objectContaining({ variantId: null })
+      );
     });
 
     it('Given an exercise-kind update with exerciseId, Then ExerciseFirestoreService.updateEntry is called', async () => {

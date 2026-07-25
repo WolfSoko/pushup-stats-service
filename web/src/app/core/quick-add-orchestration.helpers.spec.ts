@@ -258,7 +258,27 @@ describe('buildConfirmedEntryPayload', () => {
       reps: 15,
       sets: [15],
       source: 'auto-count',
+      variantId: 'standard',
     });
+  });
+
+  it('should persist the chosen pushup Typ as the variant', () => {
+    // given a quick-add confirmation for a non-default pushup type
+    const result: PushupEntryDialogResult = {
+      kind: 'pushup',
+      timestamp: '2026-05-14T10:00:00+02:00',
+      reps: 15,
+      sets: [15],
+      source: 'auto-count',
+      type: 'diamond',
+    };
+
+    // when the create payload is built
+    const payload = buildConfirmedEntryPayload(result, 'ignored');
+
+    // then the type lands on `variantId`, the field the table, filter and
+    // edit dialog read back
+    expect(payload.variantId).toBe('diamond');
   });
 
   it('should delegate to the exercise payload builder for exercise results', () => {

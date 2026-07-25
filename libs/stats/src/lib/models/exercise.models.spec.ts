@@ -501,3 +501,42 @@ describe('validateExerciseEntry — variants', () => {
     ).toBe('invalid-variant');
   });
 });
+
+describe('validateExerciseEntry — free-form variants', () => {
+  const freeFormDef: Pick<
+    ExerciseDefinition,
+    'measurement' | 'min' | 'max' | 'variants' | 'allowsCustomVariants'
+  > = {
+    ...repsDef,
+    allowsCustomVariants: true,
+    variants: [{ id: 'standard', nameKey: '@@v.standard' }],
+  };
+
+  it('should accept a catalogued variantId', () => {
+    // given a definition whose variant list is only a suggestion
+    // when the entry uses one of the listed variants
+    // then it validates
+    expect(
+      validateExerciseEntry({ reps: 10, variantId: 'standard' }, freeFormDef)
+    ).toBeNull();
+  });
+
+  it('should accept a user-typed variantId that is not in the list', () => {
+    // given a definition that allows custom variants
+    // when the entry carries a free-text variant
+    // then it validates instead of failing with invalid-variant
+    expect(
+      validateExerciseEntry({ reps: 10, variantId: 'Sphinx' }, freeFormDef)
+    ).toBeNull();
+  });
+
+  it('should accept a free-form variantId on a definition without a variant list', () => {
+    // given a definition that allows custom variants and lists none
+    const noListDef = { ...repsDef, allowsCustomVariants: true };
+    // when the entry carries any variant
+    // then it validates
+    expect(
+      validateExerciseEntry({ reps: 10, variantId: 'diamond' }, noListDef)
+    ).toBeNull();
+  });
+});

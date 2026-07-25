@@ -404,9 +404,10 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(payload.exerciseId).toBe('pushup');
     expect(payload.reps).toBe(15);
     expect(payload.source).toBe('auto-count');
-    // Pushups carry no variant post-cutover (PUSHUP_DEFINITION has no
-    // catalog variants), so no variantId is sent.
-    expect(payload.variantId).toBeUndefined();
+    // The dialog's pushup "Typ" is the entry's variant — it has to reach
+    // Firestore, otherwise the Typ column, filter and edit dialog read a
+    // field nothing ever writes.
+    expect(payload.variantId).toBe('standard');
   });
 
   it('Given the entry dialog returns a confirmed exercise, Then exerciseApi.createEntry is called with the userId and exercise payload', async () => {
