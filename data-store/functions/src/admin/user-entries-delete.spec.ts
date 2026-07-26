@@ -234,6 +234,38 @@ describe('admin/user-entries-delete', () => {
       expect(Math.max(...commitBatchSizes)).toBeLessThan(500);
     });
 
+    it('should leave earlier chunks committed when a later commit fails', async () => {
+      // given a full-size request whose second commit chunk rejects
+      const entryIds = Array.from(
+        { length: MAX_DELETE_ENTRY_IDS },
+        (_, i) => `e${i}`
+      );
+      const owners = Object.fromEntries(entryIds.map((id) => [id, 'user-1']));
+      const { db, deletedIds } = fakeDb(owners);
+      const realBatch = db.batch.bind(db);
+      let commits = 0;
+      jest.spyOn(db, 'batch').mockImplementation(() => {
+        const batch = realBatch();
+        const commit = batch.commit.bind(batch);
+        batch.commit = () =>
+          ++commits > 1 ? Promise.reject(new Error('UNAVAILABLE')) : commit();
+        return batch;
+      });
+
+      // when
+      const failure = deleteOwnedEntries(
+        db,
+        'exerciseEntries',
+        'user-1',
+        entryIds
+      );
+
+      // then the caller sees the failure, but the first chunk is already gone —
+      // the admin client must reload rather than trust its local rows
+      await expect(failure).rejects.toThrow('UNAVAILABLE');
+      expect(deletedIds.length).toBe(COMMIT_CHUNK_SIZE);
+    });
+
     it('should propagate a Firestore commit failure to the caller', async () => {
       // given a db whose commit rejects
       const { db } = fakeDb({ mine: 'user-1' });
