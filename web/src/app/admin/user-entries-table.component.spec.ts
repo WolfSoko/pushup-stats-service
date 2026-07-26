@@ -327,7 +327,8 @@ describe('UserEntriesTableComponent', () => {
       await component.deleteSelected();
 
       // then
-      expect(component.error()).toBe('internal');
+      expect(component.error()).toContain('Serverfehler');
+      expect(component.error()).toContain('internal');
       expect(refreshSpy).toHaveBeenCalled();
     });
   });

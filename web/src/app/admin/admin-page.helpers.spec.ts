@@ -222,4 +222,32 @@ describe('errorMessage', () => {
     expect(errorMessage(404)).toBe('404');
     expect(errorMessage(null)).toBe('null');
   });
+
+  it('should replace a bare callable status code with a readable message', () => {
+    // given a callable rejection whose whole message is the status code
+    // when
+    const message = errorMessage(new Error('internal'));
+
+    // then
+    expect(message).not.toBe('internal');
+    expect(message).toContain('Serverfehler');
+    expect(message).toContain('internal');
+  });
+
+  it('should replace the uppercase and unknown callable status codes too', () => {
+    // given / when / then
+    expect(errorMessage(new Error('INTERNAL'))).toContain('Serverfehler');
+    expect(errorMessage(new Error('unknown'))).toContain('Serverfehler');
+  });
+
+  it('should keep a real server message untouched', () => {
+    // given the German message our callables throw
+    // when
+    const message = errorMessage(
+      new Error('Einträge konnten nicht gelöscht werden.')
+    );
+
+    // then
+    expect(message).toBe('Einträge konnten nicht gelöscht werden.');
+  });
 });
