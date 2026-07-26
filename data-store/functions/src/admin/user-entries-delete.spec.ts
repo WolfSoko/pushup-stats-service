@@ -266,6 +266,20 @@ describe('admin/user-entries-delete', () => {
       expect(deletedIds.length).toBe(COMMIT_CHUNK_SIZE);
     });
 
+    it('should propagate a Firestore read failure to the caller', async () => {
+      // given a db whose ownership read rejects
+      const { db, commitBatchSizes } = fakeDb({ mine: 'user-1' });
+      jest
+        .spyOn(db, 'getAll')
+        .mockRejectedValue(new Error('DEADLINE_EXCEEDED') as never);
+
+      // when / then nothing is deleted — the failure happens before any commit
+      await expect(
+        deleteOwnedEntries(db, 'exerciseEntries', 'user-1', ['mine'])
+      ).rejects.toThrow('DEADLINE_EXCEEDED');
+      expect(commitBatchSizes).toEqual([]);
+    });
+
     it('should propagate a Firestore commit failure to the caller', async () => {
       // given a db whose commit rejects
       const { db } = fakeDb({ mine: 'user-1' });

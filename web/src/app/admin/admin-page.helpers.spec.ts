@@ -234,10 +234,12 @@ describe('errorMessage', () => {
     expect(message).toContain('internal');
   });
 
-  it('should replace the uppercase and unknown callable status codes too', () => {
+  it('should replace a callable status code regardless of its casing', () => {
     // given / when / then
     expect(errorMessage(new Error('INTERNAL'))).toContain('Serverfehler');
+    expect(errorMessage(new Error('Internal'))).toContain('Serverfehler');
     expect(errorMessage(new Error('unknown'))).toContain('Serverfehler');
+    expect(errorMessage(new Error('UNKNOWN'))).toContain('Serverfehler');
   });
 
   it('should keep a real server message untouched', () => {
