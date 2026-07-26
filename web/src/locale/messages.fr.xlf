@@ -10305,9 +10305,9 @@
       </segment>
     </unit>
     <unit id="admin.error.callableFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
-        <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
+        <target>Erreur serveur (<ph id="0" equiv="code" disp="code"/>) – l'action n'a pas pu être exécutée. Les détails se trouvent dans le journal du serveur.</target>
       </segment>
     </unit>
 </file>

@@ -10433,9 +10433,9 @@
       </segment>
     </unit>
     <unit id="admin.error.callableFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
-        <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
+        <target>Serverfout (<ph id="0" equiv="code" disp="code"/>) – de actie kon niet worden uitgevoerd. Details staan in het serverlogboek.</target>
       </segment>
     </unit>
 </file>
