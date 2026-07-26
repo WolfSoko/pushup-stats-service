@@ -159,20 +159,20 @@ export class UserEntriesTableComponent {
       { uid: string; entryIds: string[] },
       BulkDeleteResult
     >('adminDeleteUserEntries');
-    let anyDeleted = false;
     try {
       for (let i = 0; i < entryIds.length; i += MAX_DELETE_BATCH_SIZE) {
         const chunk = entryIds.slice(i, i + MAX_DELETE_BATCH_SIZE);
         await fn({ uid: this.uid(), entryIds: chunk });
-        anyDeleted = true;
       }
     } catch (err) {
       this.error.set(errorMessage(err));
     } finally {
       this.deleting.set(false);
-      // Refresh even on a partial failure so rows deleted by earlier chunks
-      // don't linger stale in the table until a manual reload.
-      if (anyDeleted) this.refresh.emit();
+      // Unconditional: a rejected call may still have deleted rows, because
+      // the callable commits a request in several batches and a failure in a
+      // later batch leaves the earlier ones committed. Tracking which calls
+      // resolved is not enough to know whether anything is gone.
+      this.refresh.emit();
     }
   }
 }

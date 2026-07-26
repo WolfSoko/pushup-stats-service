@@ -2959,6 +2959,14 @@
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
       </segment>
     </unit>
+    <unit id="admin.error.callableFailed">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.helpers.ts:88</note>
+      </notes>
+      <segment>
+        <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
+      </segment>
+    </unit>
     <unit id="admin.entries.delete.title">
       <notes>
         <note category="location">web/src/app/admin/delete-entries-dialog.component.ts:19,22</note>
@@ -3451,7 +3459,7 @@
     </unit>
     <unit id="admin.entry.editTooltip">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-table.component.ts:78</note>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:84</note>
       </notes>
       <segment>
         <source>Eintrag bearbeiten</source>
@@ -3459,7 +3467,7 @@
     </unit>
     <unit id="admin.entry.deleteTooltip">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-table.component.ts:79</note>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:85</note>
       </notes>
       <segment>
         <source>Eintrag löschen</source>
@@ -3467,7 +3475,7 @@
     </unit>
     <unit id="admin.entries.selectAll">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-table.component.ts:80</note>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:86</note>
       </notes>
       <segment>
         <source>Alle Einträge auswählen</source>
@@ -3475,7 +3483,7 @@
     </unit>
     <unit id="admin.entries.selectRow">
       <notes>
-        <note category="location">web/src/app/admin/user-entries-table.component.ts:81</note>
+        <note category="location">web/src/app/admin/user-entries-table.component.ts:87</note>
       </notes>
       <segment>
         <source>Eintrag auswählen</source>

@@ -62,6 +62,14 @@ jobs:
         run: pnpm nx run web:build -c staging
       - name: Build Cloud Functions
         run: pnpm nx run cloud-functions:build
+      # Mirrors the merge workflow: Nx esbuild emits package.json +
+      # pnpm-lock.yaml into functions-dist with firebase-functions left
+      # external, and firebase-tools resolves the SDK from that dir. Without
+      # node_modules here the staging deploy fails with "Failed to find
+      # location of Firebase Functions SDK".
+      - name: Install Cloud Functions runtime dependencies
+        working-directory: data-store/functions-dist
+        run: pnpm install --frozen-lockfile --ignore-workspace --ignore-scripts
       - name: Prepare Hosting artifact
         run: |
           rm -rf data-store/hosting-public

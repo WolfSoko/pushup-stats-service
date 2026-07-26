@@ -198,8 +198,10 @@ describe('UserEntriesTableComponent', () => {
       expect(component.error()).toBeNull();
     });
 
-    it('should show an error and NOT emit refresh when the Cloud Function fails', async () => {
-      // given
+    it('should show an error and still emit refresh when the Cloud Function fails', async () => {
+      // given a rejected call — the callable commits in several batches, so a
+      // rejection may still have deleted rows and the table must not keep
+      // showing them
       const deleteCallable = vi.fn(async () => {
         throw new Error('permission-denied');
       });
@@ -216,7 +218,7 @@ describe('UserEntriesTableComponent', () => {
 
       // then
       expect(component.error()).toBe('permission-denied');
-      expect(refreshSpy).not.toHaveBeenCalled();
+      expect(refreshSpy).toHaveBeenCalled();
     });
   });
 
@@ -327,7 +329,8 @@ describe('UserEntriesTableComponent', () => {
       await component.deleteSelected();
 
       // then
-      expect(component.error()).toBe('internal');
+      expect(component.error()).toContain('Serverfehler');
+      expect(component.error()).toContain('internal');
       expect(refreshSpy).toHaveBeenCalled();
     });
   });

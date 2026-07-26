@@ -12,7 +12,10 @@ import {
   validateListUserEntriesPayload,
   validateUpdateUserEntryPayload,
 } from './admin/user-entries';
-import { validateDeleteUserEntriesPayload } from './admin/user-entries-delete';
+import {
+  deleteOwnedEntries,
+  validateDeleteUserEntriesPayload,
+} from './admin/user-entries-delete';
 import { db } from './firebase-app';
 import { assertAdmin } from './functions-admin';
 
@@ -184,11 +187,10 @@ export const adminUpdateUserEntry = onCall(
 );
 
 // Admin-only bulk delete of a user's exercise entries (one row or many, from
-// the entries-page table's row/select-all checkboxes). Ownership is
-// re-checked per entry via `db.getAll` — a stale/foreign entryId in the batch
-// is silently skipped rather than aborting the whole request, mirroring
-// `adminBulkDeleteInactiveAnonymous`'s `{ deleted, skipped }` shape. The
-// `updateExerciseStatsOnEntryWrite`, `updateAdminUserActivityOnEntryWrite` and
+// the entries-page table's row/select-all checkboxes). Ownership is re-checked
+// per entry inside `deleteOwnedEntries`, which also owns the read/commit
+// chunking. The `updateExerciseStatsOnEntryWrite`,
+// `updateAdminUserActivityOnEntryWrite` and
 // `refreshExerciseLeaderboardsOnEntryWrite` triggers all key off
 // `onDocumentWritten`, which fires on delete too, so aggregates stay current.
 export const adminDeleteUserEntries = onCall(
@@ -202,32 +204,36 @@ export const adminDeleteUserEntries = onCall(
     }
     const { uid, entryIds } = result;
 
-    const refs = entryIds.map((id) =>
-      db.collection(EXERCISE_ENTRIES_COLLECTION).doc(id)
-    );
-    const snaps = await db.getAll(...refs);
+    try {
+      const { deleted, skipped } = await deleteOwnedEntries(
+        db,
+        EXERCISE_ENTRIES_COLLECTION,
+        uid,
+        entryIds
+      );
 
-    const batch = db.batch();
-    let deleted = 0;
-    let skipped = 0;
-    for (const snap of snaps) {
-      if (snap.exists && snap.data()?.userId === uid) {
-        batch.delete(snap.ref);
-        deleted++;
-      } else {
-        skipped++;
-      }
+      logger.info('adminDeleteUserEntries', {
+        uid,
+        deleted,
+        skipped,
+        by: request.auth?.uid,
+      });
+      return { deleted, skipped };
+    } catch (err) {
+      // Without this an unhandled Firestore rejection reaches the admin as a
+      // bare `internal` with nothing logged. Log a string (stack when
+      // available), not the raw error, so a non-serializable value can't make
+      // the log statement itself fail — same as `adminListUserEntries`.
+      logger.error('adminDeleteUserEntries failed', {
+        uid,
+        requested: entryIds.length,
+        by: request.auth?.uid,
+        error: err instanceof Error ? (err.stack ?? err.message) : String(err),
+      });
+      throw new HttpsError(
+        'internal',
+        'Einträge konnten nicht gelöscht werden.'
+      );
     }
-    if (deleted > 0) {
-      await batch.commit();
-    }
-
-    logger.info('adminDeleteUserEntries', {
-      uid,
-      deleted,
-      skipped,
-      by: request.auth?.uid,
-    });
-    return { deleted, skipped };
   }
 );

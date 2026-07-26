@@ -67,6 +67,24 @@ export function toggleSetMember(
   return next;
 }
 
+// A callable whose response never parsed — the request was blocked, the
+// backend died before writing CORS headers, or the client is offline — reaches
+// us as an Error whose entire message is the bare status code. Rendering that
+// verbatim tells an admin nothing, so these are replaced with a sentence that
+// still carries the code for a bug report. Anything else is a real message
+// (our callables throw German `HttpsError`s) and is shown as-is.
+// The SDK emits these lowercase when the request never completed and uppercase
+// when it echoes the backend's status enum, so match on the normalized form.
+const OPAQUE_CALLABLE_MESSAGES: ReadonlySet<string> = new Set([
+  'internal',
+  'unknown',
+]);
+
 export function errorMessage(err: unknown): string {
-  return err instanceof Error ? err.message : String(err);
+  if (!(err instanceof Error)) return String(err);
+
+  const code = err.message.toLowerCase();
+  if (!OPAQUE_CALLABLE_MESSAGES.has(code)) return err.message;
+
+  return $localize`:@@admin.error.callableFailed:Serverfehler (${code}:code:) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.`;
 }

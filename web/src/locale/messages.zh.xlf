@@ -9938,5 +9938,11 @@
         <target>选择记录</target>
       </segment>
     </unit>
+    <unit id="admin.error.callableFailed">
+      <segment state="initial">
+        <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
+        <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
