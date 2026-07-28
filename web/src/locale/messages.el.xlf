@@ -10439,93 +10439,93 @@
       </segment>
     </unit>
     <unit id="nav.assistant">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Άνοιγμα προπονητή AI</target>
       </segment>
     </unit>
     <unit id="assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach</source>
-        <target>KI-Coach</target>
+        <target>Προπονητής AI</target>
       </segment>
     </unit>
     <unit id="assistant.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </source>
-        <target> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </target>
+        <target> Ρώτησε για την πρόοδό σου, κατέγραψε σετ ή περιηγήσου στην εφαρμογή. Ο βοηθός επικοινωνεί με τον διαμορφωμένο πράκτορα μέσω του ανοιχτού πρωτοκόλλου AG-UI. </target>
       </segment>
     </unit>
     <unit id="assistant.connecting">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verbindung zum Agenten wird aufgebaut … </source>
-        <target> Verbindung zum Agenten wird aufgebaut … </target>
+        <target> Σύνδεση με τον πράκτορα … </target>
       </segment>
     </unit>
     <unit id="seo.assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach – Pushup Tracker</source>
-        <target>KI-Coach – Pushup Tracker</target>
+        <target>Προπονητής AI – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
-        <target>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</target>
+        <target>Μίλα με τον προπονητή AI σου: ρώτα για την πρόοδο, κατέγραψε σετ και περιηγήσου στην εφαρμογή – μέσω του ανοιχτού πρωτοκόλλου AG-UI.</target>
       </segment>
     </unit>
     <unit id="landing.ai.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>AI ready</source>
         <target>AI ready</target>
       </segment>
     </unit>
     <unit id="landing.ai.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bereit für deinen KI-Coach </source>
-        <target> Bereit für deinen KI-Coach </target>
+        <target> Έτοιμος για τον προπονητή AI σου </target>
       </segment>
     </unit>
     <unit id="landing.ai.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
-        <target> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </target>
+        <target> Η εφαρμογή μιλά το ανοιχτό πρωτόκολλο AG-UI: ένας πράκτορας AI μπορεί να ρωτήσει για την καθημερινή σου πρόοδο, να καταγράψει σετ για εσένα και να σε καθοδηγήσει στην εφαρμογή. Το περιβάλλον βασίζεται στο CopilotKit για Angular – απλώς συνδέεις τον δικό σου πράκτορα. </target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.protocol">
-      <segment state="initial">
+      <segment state="translated">
         <source>AG-UI-Protokoll</source>
-        <target>AG-UI-Protokoll</target>
+        <target>Πρωτόκολλο AG-UI</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.copilotkit">
-      <segment state="initial">
+      <segment state="translated">
         <source>CopilotKit für Angular</source>
-        <target>CopilotKit für Angular</target>
+        <target>CopilotKit για Angular</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.tools">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen &amp; Abfragen per Tool</source>
-        <target>Eintragen &amp; Abfragen per Tool</target>
+        <target>Καταγραφή &amp; ερώτημα μέσω εργαλείου</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.onDevice">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-KI ohne Cloud</source>
-        <target>Kamera-KI ohne Cloud</target>
+        <target>AI κάμερας χωρίς cloud</target>
       </segment>
     </unit>
     <unit id="landing.ai.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Άνοιγμα προπονητή AI</target>
       </segment>
     </unit>
     <unit id="assistant.unavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </source>
-        <target> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </target>
+        <target> Δεν βρέθηκε διαθέσιμος πράκτορας. Έλεγξε το διαμορφωμένο AG-UI runtime. </target>
       </segment>
     </unit>
 </file>
