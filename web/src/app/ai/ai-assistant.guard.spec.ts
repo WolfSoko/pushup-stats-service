@@ -1,18 +1,43 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import {
-  provideRouter,
-  Route,
-  UrlSegment,
-  type PartialMatchRouteSnapshot,
-} from '@angular/router';
-import { AI_ASSISTANT_CONFIG } from './ai-assistant.config';
+import { provideRouter, Router, Routes } from '@angular/router';
+import { AI_ASSISTANT_CONFIG, AI_ASSISTANT_ROUTE } from './ai-assistant.config';
 import { aiAssistantEnabledGuard } from './ai-assistant.guard';
 
-function matchGuard(runtimeUrl: string): boolean {
+@Component({ template: 'assistant' })
+class AssistantStubComponent {}
+
+@Component({ template: 'fallback' })
+class FallbackStubComponent {}
+
+interface Harness {
+  readonly router: Router;
+  /** Counts how often the lazy chunk would have been requested. */
+  readonly loadCount: () => number;
+}
+
+function setup(runtimeUrl: string): Harness {
+  let loads = 0;
+
+  const routes: Routes = [
+    { path: '', component: FallbackStubComponent },
+    {
+      path: AI_ASSISTANT_ROUTE,
+      canMatch: [aiAssistantEnabledGuard],
+      loadChildren: () => {
+        loads += 1;
+        return Promise.resolve([
+          { path: '', component: AssistantStubComponent },
+        ] satisfies Routes);
+      },
+    },
+    { path: '**', redirectTo: '' },
+  ];
+
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
     providers: [
-      provideRouter([]),
+      provideRouter(routes),
       {
         provide: AI_ASSISTANT_CONFIG,
         useValue: { runtimeUrl, agentId: 'default' },
@@ -20,29 +45,33 @@ function matchGuard(runtimeUrl: string): boolean {
     ],
   });
 
-  const route: Route = { path: 'assistant' };
-  const segments: UrlSegment[] = [new UrlSegment('assistant', {})];
-  const snapshot = {} as PartialMatchRouteSnapshot;
-
-  return TestBed.runInInjectionContext(
-    () => aiAssistantEnabledGuard(route, segments, snapshot) as boolean
-  );
+  return { router: TestBed.inject(Router), loadCount: () => loads };
 }
 
 describe('aiAssistantEnabledGuard', () => {
-  it('should not match while no runtime URL is configured', () => {
-    // given / when
-    const matched = matchGuard('');
+  it('should fall through to the wildcard route while no runtime is configured', async () => {
+    // given
+    const { router, loadCount } = setup('');
+
+    // when
+    await router.navigateByUrl(`/${AI_ASSISTANT_ROUTE}`);
 
     // then
-    expect(matched).toBe(false);
+    expect(router.url).toBe('/');
+    expect(loadCount()).toBe(0);
   });
 
-  it('should match once a runtime URL is configured', () => {
-    // given / when
-    const matched = matchGuard('https://agent.example.com/api/copilotkit');
+  it('should activate the assistant route once a runtime is configured', async () => {
+    // given
+    const { router, loadCount } = setup(
+      'https://agent.example.com/api/copilotkit'
+    );
+
+    // when
+    await router.navigateByUrl(`/${AI_ASSISTANT_ROUTE}`);
 
     // then
-    expect(matched).toBe(true);
+    expect(router.url).toBe(`/${AI_ASSISTANT_ROUTE}`);
+    expect(loadCount()).toBe(1);
   });
 });

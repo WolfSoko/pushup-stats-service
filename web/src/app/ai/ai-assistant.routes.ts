@@ -5,6 +5,7 @@ import {
   provideCopilotKit,
 } from '@copilotkit/angular';
 import { aiAssistantConfig } from '../../env/ai.config';
+import { resolveRuntimeUrl } from './ai-assistant.config';
 import { AiAssistantPageComponent } from './ai-assistant-page.component';
 
 /**
@@ -19,7 +20,7 @@ export const aiAssistantRoutes: Routes = [
     path: '',
     providers: [
       provideCopilotKit({
-        runtimeUrl: aiAssistantConfig.runtimeUrl,
+        runtimeUrl: resolveRuntimeUrl(aiAssistantConfig),
         properties: { app: 'pushup-stats-service' },
       }),
       CopilotKit,

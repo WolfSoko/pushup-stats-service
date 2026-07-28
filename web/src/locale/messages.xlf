@@ -3499,7 +3499,7 @@
     </unit>
     <unit id="assistant.title">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:23,24</note>
+        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:24,25</note>
       </notes>
       <segment>
         <source>KI-Coach</source>
@@ -3507,7 +3507,7 @@
     </unit>
     <unit id="assistant.subtitle">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:25,27</note>
+        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:26,28</note>
       </notes>
       <segment>
         <source> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </source>
@@ -3515,15 +3515,23 @@
     </unit>
     <unit id="assistant.connecting">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:34,38</note>
+        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:35,37</note>
       </notes>
       <segment>
         <source> Verbindung zum Agenten wird aufgebaut … </source>
       </segment>
     </unit>
+    <unit id="assistant.unavailable">
+      <notes>
+        <note category="location">web/src/app/ai/ai-assistant-page.component.ts:43,47</note>
+      </notes>
+      <segment>
+        <source> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </source>
+      </segment>
+    </unit>
     <unit id="seo.assistant.title">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant.routes.ts:29</note>
+        <note category="location">web/src/app/ai/ai-assistant.routes.ts:30</note>
       </notes>
       <segment>
         <source>KI-Coach – Pushup Tracker</source>
@@ -3531,7 +3539,7 @@
     </unit>
     <unit id="seo.assistant.description">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant.routes.ts:30</note>
+        <note category="location">web/src/app/ai/ai-assistant.routes.ts:31</note>
       </notes>
       <segment>
         <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
@@ -5908,7 +5916,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:671,674</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:672,675</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -5916,7 +5924,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:675,678</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:677,680</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -5924,7 +5932,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:686,689</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:688,691</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -5932,7 +5940,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:694,696</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:696,698</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -5940,7 +5948,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:701,702</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:703,704</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -5948,7 +5956,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:842,843</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:844,845</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -5956,7 +5964,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:848,850</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:850,852</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -5964,7 +5972,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:852,855</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:854,857</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -5972,7 +5980,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:862,865</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:864,867</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -5980,7 +5988,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:871,873</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:873,875</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -5988,7 +5996,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:875,878</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:877,880</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -5996,7 +6004,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:885,887</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:887,889</note>
       </notes>
       <segment>
         <source>Zum Blog</source>

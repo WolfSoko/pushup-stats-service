@@ -10518,5 +10518,11 @@
         <target>KI-Coach öffnen</target>
       </segment>
     </unit>
+    <unit id="assistant.unavailable">
+      <segment state="initial">
+        <source> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </source>
+        <target> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

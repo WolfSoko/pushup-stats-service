@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { EXERCISE_CATALOG } from '@pu-stats/models';
+import { appRoutes } from '../app.routes';
 import type { AppDataFacade } from '../core/app-data.facade';
 import type { QuickAddOrchestrationService } from '../core/quick-add-orchestration.service';
 import {
@@ -162,5 +163,21 @@ describe('NAVIGATION_TARGETS', () => {
 
     // then
     expect(paths.every((path) => path.startsWith('/'))).toBe(true);
+  });
+
+  it('should stay in lockstep with the routes the app actually declares', () => {
+    // given — a renamed route in app.routes.ts would otherwise leave the agent
+    // navigating to a dead path with no test failing.
+    const declaredPaths = new Set(
+      appRoutes.map((route) => `/${route.path ?? ''}`)
+    );
+
+    // when
+    const missing = Object.values(NAVIGATION_TARGETS).filter(
+      (path) => !declaredPaths.has(path)
+    );
+
+    // then
+    expect(missing).toEqual([]);
   });
 });

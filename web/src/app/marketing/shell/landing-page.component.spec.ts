@@ -521,5 +521,24 @@ describe('LandingPageComponent', () => {
       const cta = screen.getByRole('link', { name: 'KI-Coach öffnen' });
       expect(cta.getAttribute('href')).toBe('/assistant');
     });
+
+    it('should report the CTA click to the analytics handler', async () => {
+      // given
+      const view = await renderWithRuntime(
+        'https://agent.example.com/api/copilotkit'
+      );
+      const trackSpy = vitest.spyOn(
+        view.fixture.componentInstance,
+        'onAiAssistantCtaClick'
+      );
+
+      // when
+      await userEvent.click(
+        screen.getByRole('link', { name: 'KI-Coach öffnen' })
+      );
+
+      // then
+      expect(trackSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });

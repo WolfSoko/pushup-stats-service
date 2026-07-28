@@ -11,6 +11,15 @@ export const AI_ASSISTANT_STYLESHEET_HREF = 'assets/copilotkit/styles.css';
 
 export const AI_ASSISTANT_ROUTE = 'assistant';
 
+/**
+ * CopilotKit strips a trailing slash but not surrounding whitespace, so a
+ * padded value in `ai.config.ts` would reach `fetch` verbatim. Trim once here
+ * and let every consumer read the runtime URL through this function.
+ */
+export function resolveRuntimeUrl(config: AiAssistantConfig): string {
+  return config.runtimeUrl.trim();
+}
+
 export function isAiAssistantEnabled(config: AiAssistantConfig): boolean {
-  return config.runtimeUrl.trim().length > 0;
+  return resolveRuntimeUrl(config).length > 0;
 }

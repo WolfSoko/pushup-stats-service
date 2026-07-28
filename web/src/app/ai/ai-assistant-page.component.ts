@@ -7,6 +7,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { CopilotChat, CopilotKit } from '@copilotkit/angular';
 import { AI_ASSISTANT_CONFIG } from './ai-assistant.config';
+import { toAiAssistantStatus } from './ai-assistant-status';
 import { AiAssistantStylesService } from './ai-assistant-styles.service';
 import { registerAiAssistantTools } from './ai-assistant.tools';
 
@@ -29,9 +30,17 @@ import { registerAiAssistantTools } from './ai-assistant.tools';
         </div>
       </header>
 
-      @if (disconnected()) {
+      @if (status() === 'connecting') {
         <p class="assistant-status" role="status" i18n="@@assistant.connecting">
           Verbindung zum Agenten wird aufgebaut …
+        </p>
+      } @else if (status() === 'unavailable') {
+        <p
+          class="assistant-status"
+          role="status"
+          i18n="@@assistant.unavailable"
+        >
+          Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime.
         </p>
       }
 
@@ -81,10 +90,8 @@ export class AiAssistantPageComponent {
   private readonly config = inject(AI_ASSISTANT_CONFIG);
 
   protected readonly agentId = this.config.agentId;
-  // The status enum ships in `@copilotkit/core`, a transitive package this app
-  // must not import from directly, so compare against its string value.
-  protected readonly disconnected = computed(
-    () => `${this.copilotKit.runtimeConnectionStatus()}` !== 'connected'
+  protected readonly status = computed(() =>
+    toAiAssistantStatus(`${this.copilotKit.runtimeConnectionStatus()}`)
   );
 
   constructor() {
