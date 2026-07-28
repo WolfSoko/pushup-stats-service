@@ -457,7 +457,8 @@ h1 {
   --lp-d5: #1a3a85;
 }
 
-.training-plans-feature {
+.training-plans-feature,
+.ai-ready {
   display: grid;
   gap: 16px;
   border: 1px solid rgba(123, 159, 255, 0.25);
@@ -512,7 +513,8 @@ h1 {
 }
 
 :host-context(html.light-theme) {
-  .training-plans-feature {
+  .training-plans-feature,
+  .ai-ready {
     border-color: rgba(59, 130, 246, 0.25);
     background: linear-gradient(
       155deg,
@@ -532,6 +534,38 @@ h1 {
       color: #475569;
     }
   }
+}
+
+.ai-ready-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(123, 159, 255, 0.3);
+    font-size: 0.85rem;
+    color: #c4d2f2;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #94b1ff;
+  }
+}
+
+:host-context(html.light-theme) .ai-ready-chips li {
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #475569;
 }
 
 mat-card-header mat-icon {

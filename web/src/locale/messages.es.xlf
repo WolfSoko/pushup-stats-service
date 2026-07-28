@@ -10434,5 +10434,89 @@
         <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
       </segment>
     </unit>
+    <unit id="nav.assistant">
+      <segment state="initial">
+        <source>KI-Coach öffnen</source>
+        <target>KI-Coach öffnen</target>
+      </segment>
+    </unit>
+    <unit id="assistant.title">
+      <segment state="initial">
+        <source>KI-Coach</source>
+        <target>KI-Coach</target>
+      </segment>
+    </unit>
+    <unit id="assistant.subtitle">
+      <segment state="initial">
+        <source> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </source>
+        <target> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </target>
+      </segment>
+    </unit>
+    <unit id="assistant.connecting">
+      <segment state="initial">
+        <source> Verbindung zum Agenten wird aufgebaut … </source>
+        <target> Verbindung zum Agenten wird aufgebaut … </target>
+      </segment>
+    </unit>
+    <unit id="seo.assistant.title">
+      <segment state="initial">
+        <source>KI-Coach – Pushup Tracker</source>
+        <target>KI-Coach – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.assistant.description">
+      <segment state="initial">
+        <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
+        <target>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.eyebrow">
+      <segment state="initial">
+        <source>AI ready</source>
+        <target>AI ready</target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.title">
+      <segment state="initial">
+        <source> Bereit für deinen KI-Coach </source>
+        <target> Bereit für deinen KI-Coach </target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.body">
+      <segment state="initial">
+        <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
+        <target> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.chip.protocol">
+      <segment state="initial">
+        <source>AG-UI-Protokoll</source>
+        <target>AG-UI-Protokoll</target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.chip.copilotkit">
+      <segment state="initial">
+        <source>CopilotKit für Angular</source>
+        <target>CopilotKit für Angular</target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.chip.tools">
+      <segment state="initial">
+        <source>Eintragen &amp; Abfragen per Tool</source>
+        <target>Eintragen &amp; Abfragen per Tool</target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.chip.onDevice">
+      <segment state="initial">
+        <source>Kamera-KI ohne Cloud</source>
+        <target>Kamera-KI ohne Cloud</target>
+      </segment>
+    </unit>
+    <unit id="landing.ai.cta">
+      <segment state="initial">
+        <source>KI-Coach öffnen</source>
+        <target>KI-Coach öffnen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

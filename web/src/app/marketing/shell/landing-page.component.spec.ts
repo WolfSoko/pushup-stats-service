@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
 import { makeAuthServiceMock, makeAuthStoreMock } from '@pu-stats/testing';
+import { AI_ASSISTANT_CONFIG } from '../../ai/ai-assistant.config';
 import { InstallPromptService } from '../../core/install-prompt.service';
 import { LandingPageComponent } from './landing-page.component';
 
@@ -471,6 +472,54 @@ describe('LandingPageComponent', () => {
       expect(
         screen.queryByRole('button', { name: /Jetzt als App installieren/ })
       ).toBeNull();
+    });
+  });
+
+  describe('AI ready section', () => {
+    async function renderWithRuntime(runtimeUrl: string) {
+      return render(LandingPageComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+          {
+            provide: AI_ASSISTANT_CONFIG,
+            useValue: { runtimeUrl, agentId: 'default' },
+          },
+        ],
+      });
+    }
+
+    it('should advertise the AG-UI integration even without a configured runtime', async () => {
+      // given / when
+      const view = await renderWithRuntime('');
+
+      // then
+      const host = view.fixture.nativeElement as HTMLElement;
+      expect(host.querySelector('section.ai-ready')).toBeTruthy();
+      expect(screen.getByText('Bereit für deinen KI-Coach')).toBeTruthy();
+      expect(screen.getByText('AG-UI-Protokoll')).toBeTruthy();
+      expect(screen.getByText('CopilotKit für Angular')).toBeTruthy();
+    });
+
+    it('should hide the assistant CTA while no runtime is configured', async () => {
+      // given / when
+      await renderWithRuntime('');
+
+      // then
+      expect(
+        screen.queryByRole('link', { name: 'KI-Coach öffnen' })
+      ).toBeNull();
+    });
+
+    it('should link to the assistant once a runtime is configured', async () => {
+      // given / when
+      await renderWithRuntime('https://agent.example.com/api/copilotkit');
+
+      // then
+      const cta = screen.getByRole('link', { name: 'KI-Coach öffnen' });
+      expect(cta.getAttribute('href')).toBe('/assistant');
     });
   });
 });

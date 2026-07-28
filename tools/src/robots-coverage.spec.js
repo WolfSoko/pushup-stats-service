@@ -12,7 +12,7 @@ const LOCALE_SOURCE_PATH = resolve(ROOT, 'web/src/server-locale-redirect.ts');
  * forces the corresponding robots.txt entries to appear in the same
  * commit — the regression vector this test exists to close.
  */
-const AUTH_ROUTES = ['/admin', '/settings', '/reminders'];
+const AUTH_ROUTES = ['/admin', '/settings', '/reminders', '/assistant'];
 
 function readSupportedLocales() {
   const source = readFileSync(LOCALE_SOURCE_PATH, 'utf-8');
