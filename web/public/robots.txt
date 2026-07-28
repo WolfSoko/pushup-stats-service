@@ -31,5 +31,15 @@ Disallow: /nl/reminders
 Disallow: /el/reminders
 Disallow: /no/reminders
 Disallow: /zh/reminders
+Disallow: /assistant
+Disallow: /de/assistant
+Disallow: /en/assistant
+Disallow: /fr/assistant
+Disallow: /es/assistant
+Disallow: /it/assistant
+Disallow: /nl/assistant
+Disallow: /el/assistant
+Disallow: /no/assistant
+Disallow: /zh/assistant
 
 Sitemap: https://pushup-stats.com/sitemap.xml

@@ -38,6 +38,7 @@ describe('appRoutes', () => {
       'ueber-uns',
       'impressum',
       'datenschutz',
+      'assistant',
       'admin',
       'admin/migrations',
       'admin/users/:uid/entries',
@@ -123,7 +124,14 @@ describe('appRoutes', () => {
   });
 
   it('protects app routes and keeps landing/login/register public-only', () => {
-    const protectedPaths = ['app', 'history', 'analysis', 'settings', 'goals'];
+    const protectedPaths = [
+      'app',
+      'history',
+      'analysis',
+      'settings',
+      'goals',
+      'assistant',
+    ];
     for (const path of protectedPaths) {
       const route = appRoutes.find((r) => r.path === path);
       expect(route?.canActivate).toEqual([authGuard]);

@@ -646,6 +646,51 @@
       <div style="min-height: 90px"></div>
     }
   </section>
+  <section class="ai-ready scroll-reveal" aria-labelledby="ai-ready-title">
+    <span class="section-eyebrow" i18n="@@landing.ai.eyebrow">AI ready</span>
+    <h2 id="ai-ready-title" i18n="@@landing.ai.title">
+      Bereit für deinen KI-Coach
+    </h2>
+    <p i18n="@@landing.ai.body">
+      Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen
+      Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App
+      navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du
+      verbindest einfach deinen eigenen Agenten.
+    </p>
+    <ul class="ai-ready-chips">
+      <li>
+        <mat-icon aria-hidden="true">hub</mat-icon>
+        <span i18n="@@landing.ai.chip.protocol">AG-UI-Protokoll</span>
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">smart_toy</mat-icon>
+        <span i18n="@@landing.ai.chip.copilotkit">CopilotKit für Angular</span>
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">handyman</mat-icon>
+        <span i18n="@@landing.ai.chip.tools"
+          >Eintragen & Abfragen per Tool</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">videocam</mat-icon>
+        <span i18n="@@landing.ai.chip.onDevice">Kamera-KI ohne Cloud</span>
+      </li>
+    </ul>
+    @if (aiAssistantEnabled) {
+      <div class="ai-ready-cta">
+        <a
+          mat-flat-button
+          color="primary"
+          [routerLink]="aiAssistantLink"
+          (click)="onAiAssistantCtaClick()"
+          i18n="@@landing.ai.cta"
+          >KI-Coach öffnen</a
+        >
+      </div>
+    }
+  </section>
+
   <section class="preview scroll-reveal" aria-labelledby="preview-title">
     <h2 id="preview-title" i18n="@@landing.preview.title">
       Deine Statistik auf einen Blick
