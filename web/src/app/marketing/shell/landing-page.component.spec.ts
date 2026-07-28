@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
@@ -476,10 +476,18 @@ describe('LandingPageComponent', () => {
   });
 
   describe('AI ready section', () => {
+    // The CTA is a real routerLink, so clicking it navigates. Without a
+    // matching route the router rejects with NG04002 and fails the run even
+    // though every assertion passes.
+    @Component({ template: '' })
+    class AssistantStubComponent {}
+
     async function renderWithRuntime(runtimeUrl: string) {
       return render(LandingPageComponent, {
         providers: [
-          provideRouter([]),
+          provideRouter([
+            { path: 'assistant', component: AssistantStubComponent },
+          ]),
           { provide: AdsStore, useValue: adsConfigMock },
           { provide: AuthService, useValue: makeAuthServiceMock() },
           { provide: AuthStore, useValue: makeAuthStoreMock() },
