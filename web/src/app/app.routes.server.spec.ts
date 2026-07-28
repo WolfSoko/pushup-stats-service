@@ -76,8 +76,8 @@ describe('serverRoutes', () => {
     }
   });
 
-  it('renders admin and wildcard in Client mode', () => {
-    for (const path of ['admin', '**']) {
+  it('renders admin, assistant and wildcard in Client mode', () => {
+    for (const path of ['admin', 'assistant', '**']) {
       const route = serverRoutes.find((r) => r.path === path);
       expect(route?.renderMode).toBe(RenderMode.Client);
     }

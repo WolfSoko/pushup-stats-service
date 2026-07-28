@@ -121,6 +121,12 @@ export const serverRoutes: ServerRoute[] = [
   },
 
   // --- Client-only ---
+  // The assistant talks to an external AG-UI runtime and pulls its UI chunk
+  // on demand; there is nothing meaningful to render on the server.
+  {
+    path: 'assistant',
+    renderMode: RenderMode.Client,
+  },
   {
     path: 'admin',
     renderMode: RenderMode.Client,

@@ -76,6 +76,11 @@
           {
             "glob": ".well-known/**/*",
             "input": "web/public"
+          },
+          {
+            "glob": "styles.css",
+            "input": "node_modules/@copilotkit/angular/dist",
+            "output": "assets/copilotkit"
           }
         ],
         "styles": ["web/src/styles.scss"]
