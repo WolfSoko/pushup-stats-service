@@ -2,7 +2,7 @@
 
 The in-app assistant is an [`@copilotkit/angular`](https://www.npmjs.com/package/@copilotkit/angular) chat surface talking to the `agUiAgent` Cloud Function over the open **AG-UI** protocol. The function runs Gemini and answers with the run as an SSE event stream.
 
-```
+```text
 CopilotChat ── HttpAgent (@ag-ui/client) ──POST──▶ agUiAgent (europe-west3)
      ▲                                                    │
      └────────────── SSE: AG-UI events ◀──────────────────┘ Gemini

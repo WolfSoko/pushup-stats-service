@@ -10,20 +10,16 @@ import { onRequest } from 'firebase-functions/v2/https';
 
 // Imported for its init side effects (Sentry + admin.initializeApp).
 import './firebase-app';
-import {
-  AI_AGENT_MODEL,
-  AI_AGENT_SYSTEM_PROMPT,
-  limitTranscript,
-} from './ai/agent-prompt';
+import { AI_AGENT_MODEL, AI_AGENT_SYSTEM_PROMPT } from './ai/agent-prompt';
 import { AgUiRunEmitter } from './ai/ag-ui-events';
 import {
   type AgUiContextItem,
   type AgUiMessage,
   type AgUiTool,
-  toGeminiContents,
-  toGeminiFunctionDeclarations,
-  toSystemInstruction,
-} from './ai/gemini-mapping';
+  limitTranscript,
+} from './ai/ag-ui-messages';
+import { toGeminiContents, toSystemInstruction } from './ai/gemini-mapping';
+import { toGeminiFunctionDeclarations } from './ai/gemini-schema';
 
 const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
 
@@ -40,7 +36,9 @@ async function resolveUid(authorization: string | undefined): Promise<string> {
     ? authorization.slice('Bearer '.length).trim()
     : '';
   if (!token) throw new Error('missing-token');
-  const decoded = await admin.auth().verifyIdToken(token);
+  // `checkRevoked` because the app ships `revokeAllSessions` — without it a
+  // "signed out everywhere" user keeps streaming until the token expires.
+  const decoded = await admin.auth().verifyIdToken(token, true);
   return decoded.uid;
 }
 
@@ -93,8 +91,17 @@ export const agUiAgent = onRequest(
     res.setHeader('Connection', 'keep-alive');
     res.flushHeaders?.();
 
+    // Writing to a hung-up socket throws, and that throw inside the error path
+    // would escape the handler. Track the close and let the run wind down.
+    let clientGone = false;
+    req.on('close', () => {
+      clientGone = true;
+    });
+
     const emitter = new AgUiRunEmitter(
-      (frame) => void res.write(frame),
+      (frame) => {
+        if (!clientGone && !res.writableEnded) res.write(frame);
+      },
       threadId,
       runId
     );
@@ -111,7 +118,7 @@ export const agUiAgent = onRequest(
           messages,
           input.context ?? []
         ),
-        // The mapping module stays free of SDK types so it can be unit-tested
+        // The mapping modules stay free of SDK types so they can be unit-tested
         // on plain objects; the structural cast is confined to these two
         // hand-offs. `parameters` is a JSON Schema either way — the SDK just
         // types it with its own `SchemaType` enum.
@@ -127,6 +134,7 @@ export const agUiAgent = onRequest(
       const messageId = `msg_${runId}`;
       let toolCallIndex = 0;
       for await (const chunk of result.stream) {
+        if (clientGone) break;
         for (const candidate of chunk.candidates ?? []) {
           for (const part of candidate.content?.parts ?? []) {
             if (part.functionCall) {
@@ -151,7 +159,7 @@ export const agUiAgent = onRequest(
         'agent-error'
       );
     } finally {
-      res.end();
+      if (!res.writableEnded) res.end();
     }
   }
 );

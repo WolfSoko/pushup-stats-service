@@ -150,17 +150,31 @@ if [[ "$DRY_RUN" == false ]]; then
       gcloud secrets create "GITHUB_TOKEN" --data-file=- --project="$PROJECT_ID"
   fi
 
+  # GEMINI_API_KEY: `defineSecret` makes this deploy-blocking — a missing
+  # secret fails `firebase deploy --only functions` outright, so a placeholder
+  # has to exist even on a staging project that never calls Gemini for real.
+  if gcloud secrets describe "GEMINI_API_KEY" --project="$PROJECT_ID" &>/dev/null; then
+    echo "  Secret GEMINI_API_KEY already exists, skipping (not overwriting real key)."
+  else
+    echo -n "placeholder-not-configured" | \
+      gcloud secrets create "GEMINI_API_KEY" --data-file=- --project="$PROJECT_ID"
+  fi
+
   echo
   echo "  ⚠  Update web/src/env/firebase-runtime.staging.ts vapidPublicKey:"
   echo "     $VAPID_PUBLIC"
   echo
   echo "  ⚠  Replace the GITHUB_TOKEN placeholder with a real PAT for issue creation:"
   echo "     firebase functions:secrets:set GITHUB_TOKEN --project $PROJECT_ID"
+  echo
+  echo "  ⚠  Replace the GEMINI_API_KEY placeholder to make the AI coach answer:"
+  echo "     firebase functions:secrets:set GEMINI_API_KEY --project $PROJECT_ID"
 else
   echo "▶ npx web-push generate-vapid-keys"
   echo "▶ gcloud secrets create VAPID_PRIVATE_KEY ..."
   echo "▶ gcloud secrets create VAPID_PUBLIC_KEY ..."
   echo "▶ gcloud secrets create GITHUB_TOKEN (placeholder) ..."
+  echo "▶ gcloud secrets create GEMINI_API_KEY (placeholder) ..."
 fi
 echo
 
@@ -178,5 +192,5 @@ echo "Manual steps remaining:"
 echo "  1. Create Firestore database in Firebase Console (region: $REGION)"
 echo "  2. Enable Firebase Hosting in Firebase Console"
 echo "  3. Enable Firebase Authentication providers as needed"
-echo "  4. (Optional) Set GEMINI_API_KEY secret for motivation quotes"
+echo "  4. Replace the GEMINI_API_KEY placeholder (AI coach + motivation quotes)"
 echo "  5. (Optional) Configure reCAPTCHA Enterprise for staging"
