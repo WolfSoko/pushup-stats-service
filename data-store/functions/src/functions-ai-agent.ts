@@ -128,7 +128,13 @@ export const agUiAgent = onRequest(
       });
 
       const result = await model.generateContentStream({
-        contents: toGeminiContents(messages) as unknown as Content[],
+        contents: toGeminiContents(messages, (toolCallId) =>
+          logger.warn('agUiAgent: unresolved toolCallId in transcript', {
+            uid,
+            threadId,
+            toolCallId,
+          })
+        ) as unknown as Content[],
       });
 
       const messageId = `msg_${runId}`;

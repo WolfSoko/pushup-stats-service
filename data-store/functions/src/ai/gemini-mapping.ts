@@ -63,7 +63,12 @@ function parseToolResult(content: unknown): Record<string, unknown> {
  * from the assistant turn that opened the call.
  */
 export function toGeminiContents(
-  messages: readonly AgUiMessage[]
+  messages: readonly AgUiMessage[],
+  // `limitTranscript` drops orphaned results upstream, so an unresolved id now
+  // means malformed input. Gemini then rejects the run over a
+  // `functionResponse` named "unknown" with nothing in the logs to explain it —
+  // reported through a callback so this module stays free of the logger.
+  onUnresolvedToolCall?: (toolCallId: string) => void
 ): GeminiContent[] {
   const toolNamesByCallId = new Map<string, string>();
   for (const message of messages) {
@@ -77,13 +82,14 @@ export function toGeminiContents(
     if (message.role === 'system' || message.role === 'developer') continue;
 
     if (message.role === 'tool') {
-      const name = toolNamesByCallId.get(message.toolCallId ?? '') ?? 'unknown';
+      const name = toolNamesByCallId.get(message.toolCallId ?? '');
+      if (!name) onUnresolvedToolCall?.(message.toolCallId ?? '');
       contents.push({
         role: 'user',
         parts: [
           {
             functionResponse: {
-              name,
+              name: name ?? 'unknown',
               response: parseToolResult(message.content),
             },
           },

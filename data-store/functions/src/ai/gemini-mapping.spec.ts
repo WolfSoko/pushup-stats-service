@@ -109,6 +109,45 @@ describe('toGeminiContents', () => {
     });
   });
 
+  it('should report a tool result whose call id cannot be resolved', () => {
+    // given — after limitTranscript this only happens on malformed input, and
+    // Gemini rejects the run without saying why.
+    const messages: AgUiMessage[] = [
+      { id: '1', role: 'tool', toolCallId: 'call-gone', content: '{}' },
+    ];
+    const unresolved: string[] = [];
+
+    // when
+    toGeminiContents(messages, (id) => unresolved.push(id));
+
+    // then
+    expect(unresolved).toEqual(['call-gone']);
+  });
+
+  it('should not report anything when every call id resolves', () => {
+    // given
+    const messages: AgUiMessage[] = [
+      {
+        id: '1',
+        role: 'assistant',
+        toolCalls: [
+          {
+            id: 'call-1',
+            function: { name: 'getTrainingSummary', arguments: '{}' },
+          },
+        ],
+      },
+      { id: '2', role: 'tool', toolCallId: 'call-1', content: '{}' },
+    ];
+    const unresolved: string[] = [];
+
+    // when
+    toGeminiContents(messages, (id) => unresolved.push(id));
+
+    // then
+    expect(unresolved).toEqual([]);
+  });
+
   it('should wrap a non-JSON tool result instead of dropping it', () => {
     // given
     const messages: AgUiMessage[] = [
