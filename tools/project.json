@@ -13,7 +13,8 @@
         "{workspaceRoot}/apphosting.yaml",
         "{workspaceRoot}/apphosting.staging.yaml",
         "{workspaceRoot}/pnpm-workspace.yaml",
-        "{workspaceRoot}/patches/**/*"
+        "{workspaceRoot}/patches/**/*",
+        "{workspaceRoot}/.prettierignore"
       ],
       "options": {
         "passWithNoTests": true
