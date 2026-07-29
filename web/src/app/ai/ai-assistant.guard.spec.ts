@@ -16,7 +16,7 @@ interface Harness {
   readonly loadCount: () => number;
 }
 
-function setup(runtimeUrl: string): Harness {
+function setup(agentUrl: string): Harness {
   let loads = 0;
 
   const routes: Routes = [
@@ -40,7 +40,7 @@ function setup(runtimeUrl: string): Harness {
       provideRouter(routes),
       {
         provide: AI_ASSISTANT_CONFIG,
-        useValue: { runtimeUrl, agentId: 'default' },
+        useValue: { agentUrl, agentId: 'default' },
       },
     ],
   });

@@ -493,7 +493,7 @@ describe('LandingPageComponent', () => {
           { provide: AuthStore, useValue: makeAuthStoreMock() },
           {
             provide: AI_ASSISTANT_CONFIG,
-            useValue: { runtimeUrl, agentId: 'default' },
+            useValue: { agentUrl: runtimeUrl, agentId: 'default' },
           },
         ],
       });

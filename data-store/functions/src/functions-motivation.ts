@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { normalizeReminderLocale } from '@pu-stats/models';
 import { logger } from 'firebase-functions';
+import { defineSecret } from 'firebase-functions/params';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
 import { db } from './firebase-app';
@@ -24,8 +25,13 @@ interface CachedTiered {
   dailyGoal: number;
 }
 
+const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
+
 export const generateMotivationQuotes = onCall(
-  { region: 'europe-west3' },
+  // Without declaring the secret the runtime never mounts it, so
+  // `process.env.GEMINI_API_KEY` stayed undefined and every call fell through
+  // to the static fallback quotes.
+  { region: 'europe-west3', secrets: [GEMINI_API_KEY] },
   async (request) => {
     if (!request.auth) {
       throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
@@ -82,7 +88,7 @@ export const generateMotivationQuotes = onCall(
     let tiers: TieredQuotes = getFallbackTieredQuotes(language);
 
     try {
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY.value());
       const model = genAI.getGenerativeModel({
         model: 'gemini-2.0-flash-lite',
       });

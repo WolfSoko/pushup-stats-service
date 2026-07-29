@@ -1,47 +1,45 @@
-import { isAiAssistantEnabled, resolveRuntimeUrl } from './ai-assistant.config';
+import { isAiAssistantEnabled, resolveAgentUrl } from './ai-assistant.config';
 
-describe('resolveRuntimeUrl', () => {
+describe('resolveAgentUrl', () => {
   it('should strip surrounding whitespace so it never reaches fetch', () => {
     // given
     const config = {
-      runtimeUrl: '  https://agent.example.com/api/copilotkit  ',
+      agentUrl: '  https://agent.example.com/agUiAgent  ',
       agentId: 'default',
     };
 
     // when
-    const runtimeUrl = resolveRuntimeUrl(config);
+    const agentUrl = resolveAgentUrl(config);
 
     // then
-    expect(runtimeUrl).toBe('https://agent.example.com/api/copilotkit');
+    expect(agentUrl).toBe('https://agent.example.com/agUiAgent');
   });
 
   it('should collapse a whitespace-only value to the empty string', () => {
     // given / when / then
-    expect(resolveRuntimeUrl({ runtimeUrl: '   ', agentId: 'default' })).toBe(
-      ''
-    );
+    expect(resolveAgentUrl({ agentUrl: '   ', agentId: 'default' })).toBe('');
   });
 });
 
 describe('isAiAssistantEnabled', () => {
-  it('should be disabled when no runtime URL is configured', () => {
+  it('should be disabled when no agent URL is configured', () => {
     // given / when / then
-    expect(isAiAssistantEnabled({ runtimeUrl: '', agentId: 'default' })).toBe(
+    expect(isAiAssistantEnabled({ agentUrl: '', agentId: 'default' })).toBe(
       false
     );
   });
 
-  it('should be disabled when the runtime URL is only whitespace', () => {
+  it('should be disabled when the agent URL is only whitespace', () => {
     // given / when / then
-    expect(
-      isAiAssistantEnabled({ runtimeUrl: '   ', agentId: 'default' })
-    ).toBe(false);
+    expect(isAiAssistantEnabled({ agentUrl: '   ', agentId: 'default' })).toBe(
+      false
+    );
   });
 
-  it('should be enabled once a runtime URL is configured', () => {
+  it('should be enabled once an agent URL is configured', () => {
     // given
     const config = {
-      runtimeUrl: 'https://agent.example.com/api/copilotkit',
+      agentUrl: 'https://agent.example.com/agUiAgent',
       agentId: 'default',
     };
 

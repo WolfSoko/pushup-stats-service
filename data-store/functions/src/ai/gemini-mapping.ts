@@ -1,0 +1,258 @@
+/**
+ * Translation layer between the AG-UI wire format and the Gemini SDK.
+ *
+ * Kept free of `firebase-functions` and the Gemini client so the mapping —
+ * which is where the protocol edge cases live — is unit-testable on its own.
+ */
+
+export interface AgUiToolCall {
+  readonly id: string;
+  readonly function: { readonly name: string; readonly arguments: string };
+}
+
+export interface AgUiMessage {
+  readonly id: string;
+  readonly role: string;
+  readonly content?: unknown;
+  readonly toolCalls?: readonly AgUiToolCall[];
+  readonly toolCallId?: string;
+}
+
+export interface AgUiTool {
+  readonly name: string;
+  readonly description?: string;
+  readonly parameters?: unknown;
+}
+
+export interface AgUiContextItem {
+  readonly description?: string;
+  readonly value?: string;
+}
+
+export interface GeminiPart {
+  text?: string;
+  functionCall?: { name: string; args: Record<string, unknown> };
+  functionResponse?: { name: string; response: Record<string, unknown> };
+}
+
+export interface GeminiContent {
+  role: 'user' | 'model';
+  parts: GeminiPart[];
+}
+
+export interface GeminiFunctionDeclaration {
+  name: string;
+  description: string;
+  parameters?: Record<string, unknown>;
+}
+
+/** JSON Schema keywords Gemini's function-declaration parser rejects. */
+const UNSUPPORTED_SCHEMA_KEYS = new Set([
+  '$schema',
+  '$id',
+  '$ref',
+  'additionalProperties',
+  'definitions',
+  '$defs',
+  'const',
+  'default',
+  'examples',
+  'exclusiveMinimum',
+  'exclusiveMaximum',
+  'not',
+  'oneOf',
+  'allOf',
+  'patternProperties',
+]);
+
+/**
+ * Strips JSON Schema keywords Gemini rejects. `zod-to-json-schema` emits
+ * `$schema` and `additionalProperties` by default, and Gemini answers the whole
+ * request with a 400 when it sees them — so a single stray keyword takes down
+ * every tool, not just the offending one.
+ */
+export function toGeminiSchema(
+  schema: unknown
+): Record<string, unknown> | undefined {
+  if (Array.isArray(schema)) {
+    // `required` and `enum` hold plain strings — recursing into them would
+    // map every entry to undefined and make Gemini reject the declaration.
+    return schema.map((entry) =>
+      typeof entry === 'object' && entry !== null
+        ? toGeminiSchema(entry)
+        : entry
+    ) as unknown as Record<string, unknown>;
+  }
+  if (typeof schema !== 'object' || schema === null) return undefined;
+
+  const result: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(schema)) {
+    if (UNSUPPORTED_SCHEMA_KEYS.has(key)) continue;
+    if (value === null || value === undefined) continue;
+
+    if (key === 'properties' && typeof value === 'object') {
+      const properties: Record<string, unknown> = {};
+      for (const [name, propertySchema] of Object.entries(
+        value as Record<string, unknown>
+      )) {
+        const mapped = toGeminiSchema(propertySchema);
+        if (mapped) properties[name] = mapped;
+      }
+      result[key] = properties;
+      continue;
+    }
+
+    if (typeof value === 'object') {
+      const mapped = toGeminiSchema(value);
+      if (mapped) result[key] = mapped;
+      continue;
+    }
+
+    result[key] = value;
+  }
+
+  // Gemini rejects an object schema without properties; describe it as empty.
+  if (result['type'] === 'object' && !result['properties']) {
+    result['properties'] = {};
+  }
+  return result;
+}
+
+export function toGeminiFunctionDeclarations(
+  tools: readonly AgUiTool[]
+): GeminiFunctionDeclaration[] {
+  return tools
+    .filter((tool) => typeof tool?.name === 'string' && tool.name.length > 0)
+    .map((tool) => {
+      const parameters = toGeminiSchema(tool.parameters);
+      return {
+        name: tool.name,
+        description: tool.description ?? '',
+        ...(parameters ? { parameters } : {}),
+      };
+    });
+}
+
+function messageText(content: unknown): string {
+  if (typeof content === 'string') return content;
+  if (Array.isArray(content)) {
+    return content
+      .map((part) =>
+        typeof part === 'object' && part !== null && 'text' in part
+          ? String((part as { text?: unknown }).text ?? '')
+          : ''
+      )
+      .join('');
+  }
+  return '';
+}
+
+function parseToolArguments(raw: string): Record<string, unknown> {
+  try {
+    const parsed = JSON.parse(raw || '{}');
+    return typeof parsed === 'object' && parsed !== null
+      ? (parsed as Record<string, unknown>)
+      : {};
+  } catch {
+    return {};
+  }
+}
+
+function parseToolResult(content: unknown): Record<string, unknown> {
+  const text = messageText(content);
+  try {
+    const parsed = JSON.parse(text);
+    return typeof parsed === 'object' && parsed !== null
+      ? (parsed as Record<string, unknown>)
+      : { result: parsed };
+  } catch {
+    return { result: text };
+  }
+}
+
+/**
+ * Maps the AG-UI transcript onto Gemini `contents`.
+ *
+ * Two shapes need care: an assistant turn carrying tool calls becomes a `model`
+ * turn of `functionCall` parts, and a tool result must name the function it
+ * answers — AG-UI identifies it by `toolCallId` only, so the name is resolved
+ * from the assistant turn that opened the call.
+ */
+export function toGeminiContents(
+  messages: readonly AgUiMessage[]
+): GeminiContent[] {
+  const toolNamesByCallId = new Map<string, string>();
+  for (const message of messages) {
+    for (const call of message.toolCalls ?? []) {
+      toolNamesByCallId.set(call.id, call.function.name);
+    }
+  }
+
+  const contents: GeminiContent[] = [];
+  for (const message of messages) {
+    if (message.role === 'system' || message.role === 'developer') continue;
+
+    if (message.role === 'tool') {
+      const name = toolNamesByCallId.get(message.toolCallId ?? '') ?? 'unknown';
+      contents.push({
+        role: 'user',
+        parts: [
+          {
+            functionResponse: {
+              name,
+              response: parseToolResult(message.content),
+            },
+          },
+        ],
+      });
+      continue;
+    }
+
+    const parts: GeminiPart[] = [];
+    const text = messageText(message.content);
+    if (text.trim().length > 0) parts.push({ text });
+
+    if (message.role === 'assistant') {
+      for (const call of message.toolCalls ?? []) {
+        parts.push({
+          functionCall: {
+            name: call.function.name,
+            args: parseToolArguments(call.function.arguments),
+          },
+        });
+      }
+    }
+
+    if (parts.length === 0) continue;
+    contents.push({
+      role: message.role === 'assistant' ? 'model' : 'user',
+      parts,
+    });
+  }
+
+  return contents;
+}
+
+/** Collects `system`/`developer` turns and AG-UI context into one preamble. */
+export function toSystemInstruction(
+  basePrompt: string,
+  messages: readonly AgUiMessage[],
+  context: readonly AgUiContextItem[]
+): string {
+  const sections = [basePrompt];
+
+  for (const message of messages) {
+    if (message.role !== 'system' && message.role !== 'developer') continue;
+    const text = messageText(message.content).trim();
+    if (text) sections.push(text);
+  }
+
+  for (const item of context) {
+    const value = typeof item?.value === 'string' ? item.value.trim() : '';
+    if (!value) continue;
+    const description = item.description?.trim();
+    sections.push(description ? `${description}:\n${value}` : value);
+  }
+
+  return sections.join('\n\n');
+}

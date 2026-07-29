@@ -48,6 +48,8 @@ export {
 
 export { getPublicProfile, ogProfile } from './functions-public-profile';
 
+export { agUiAgent } from './functions-ai-agent';
+
 export { generateMotivationQuotes } from './functions-motivation';
 
 export {

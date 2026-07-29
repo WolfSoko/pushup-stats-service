@@ -1,13 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { CopilotChat, CopilotKit } from '@copilotkit/angular';
+import { CopilotChat } from '@copilotkit/angular';
 import { AI_ASSISTANT_CONFIG } from './ai-assistant.config';
-import { toAiAssistantStatus } from './ai-assistant-status';
 import { AiAssistantStylesService } from './ai-assistant-styles.service';
 import { registerAiAssistantTools } from './ai-assistant.tools';
 
@@ -29,20 +23,6 @@ import { registerAiAssistantTools } from './ai-assistant.tools';
           </p>
         </div>
       </header>
-
-      @if (status() === 'connecting') {
-        <p class="assistant-status" role="status" i18n="@@assistant.connecting">
-          Verbindung zum Agenten wird aufgebaut …
-        </p>
-      } @else if (status() === 'unavailable') {
-        <p
-          class="assistant-status"
-          role="status"
-          i18n="@@assistant.unavailable"
-        >
-          Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime.
-        </p>
-      }
 
       <copilot-chat class="assistant-chat" [agentId]="agentId" />
     </section>
@@ -74,11 +54,6 @@ import { registerAiAssistantTools } from './ai-assistant.tools';
       opacity: 0.8;
     }
 
-    .assistant-status {
-      margin: 0;
-      opacity: 0.7;
-    }
-
     .assistant-chat {
       flex: 1 1 auto;
       min-height: 0;
@@ -86,13 +61,7 @@ import { registerAiAssistantTools } from './ai-assistant.tools';
   `,
 })
 export class AiAssistantPageComponent {
-  private readonly copilotKit = inject(CopilotKit);
-  private readonly config = inject(AI_ASSISTANT_CONFIG);
-
-  protected readonly agentId = this.config.agentId;
-  protected readonly status = computed(() =>
-    toAiAssistantStatus(`${this.copilotKit.runtimeConnectionStatus()}`)
-  );
+  protected readonly agentId = inject(AI_ASSISTANT_CONFIG).agentId;
 
   constructor() {
     inject(AiAssistantStylesService).load();
