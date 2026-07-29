@@ -31,7 +31,8 @@ Cloud remote cache:
   with a placeholder value (same bind-time-failure pitfall as
   `SENTRY_AUTH_TOKEN`); an invalid token only degrades to a 401 warning
   without cache, it never fails the build.
-- Guard tests: `tools/src/apphosting-nx-cloud-guard.spec.js`.
+- **Hash stability:** every path `tools:generate-content` writes must be a declared Nx output and Prettier-ignored, otherwise the generated file's bytes differ between a machine that restored the generator from cache and one that re-ran it — and `web:build`, which hashes those files, misses the remote cache on the builder. See [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md) → "Generated `*.generated.ts` files rewrite on `nx build web`".
+- Guard tests: `tools/src/apphosting-nx-cloud-guard.spec.js`, `tools/src/generated-content-paths.spec.js`.
 
 ## Deployment Targets
 
