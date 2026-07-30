@@ -9726,99 +9726,99 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.error.callableFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
-        <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
+        <target>Serverfeil (<ph id="0" equiv="code" disp="code"/>) – handlingen kunne ikke utføres. Detaljer finnes i serverloggen.</target>
       </segment>
     </unit>
     <unit id="nav.assistant">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Åpne AI-coach</target>
       </segment>
     </unit>
     <unit id="assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach</source>
-        <target>KI-Coach</target>
+        <target>AI-coach</target>
       </segment>
     </unit>
     <unit id="assistant.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </source>
-        <target> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </target>
+        <target> Spør om fremgangen din, la sett registreres, eller naviger gjennom appen. Assistenten snakker med den konfigurerte agenten via den åpne AG-UI-protokollen. </target>
       </segment>
     </unit>
     <unit id="assistant.connecting">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verbindung zum Agenten wird aufgebaut … </source>
-        <target> Verbindung zum Agenten wird aufgebaut … </target>
+        <target> Kobler til agenten … </target>
       </segment>
     </unit>
     <unit id="seo.assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach – Pushup Tracker</source>
-        <target>KI-Coach – Pushup Tracker</target>
+        <target>AI-coach – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
-        <target>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</target>
+        <target>Snakk med AI-coachen din: spør om fremgang, registrer sett og naviger gjennom appen – via den åpne AG-UI-protokollen.</target>
       </segment>
     </unit>
     <unit id="landing.ai.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>AI ready</source>
         <target>AI ready</target>
       </segment>
     </unit>
     <unit id="landing.ai.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bereit für deinen KI-Coach </source>
-        <target> Bereit für deinen KI-Coach </target>
+        <target> Klar for din AI-coach </target>
       </segment>
     </unit>
     <unit id="landing.ai.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
-        <target> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </target>
+        <target> Appen snakker den åpne AG-UI-protokollen: en AI-agent kan spørre om din daglige fremgang, registrere sett for deg og navigere deg gjennom appen. Grensesnittet er bygget på CopilotKit for Angular – du kobler bare til din egen agent. </target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.protocol">
-      <segment state="initial">
+      <segment state="translated">
         <source>AG-UI-Protokoll</source>
-        <target>AG-UI-Protokoll</target>
+        <target>AG-UI-protokoll</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.copilotkit">
-      <segment state="initial">
+      <segment state="translated">
         <source>CopilotKit für Angular</source>
-        <target>CopilotKit für Angular</target>
+        <target>CopilotKit for Angular</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.tools">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen &amp; Abfragen per Tool</source>
-        <target>Eintragen &amp; Abfragen per Tool</target>
+        <target>Registrer &amp; spør via verktøy</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.onDevice">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-KI ohne Cloud</source>
-        <target>Kamera-KI ohne Cloud</target>
+        <target>Kamera-AI uten sky</target>
       </segment>
     </unit>
     <unit id="landing.ai.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Åpne AI-coach</target>
       </segment>
     </unit>
     <unit id="assistant.unavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </source>
-        <target> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </target>
+        <target> Ingen agent tilgjengelig. Sjekk den konfigurerte AG-UI-runtimen. </target>
       </segment>
     </unit>
 </file>
