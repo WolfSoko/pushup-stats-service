@@ -6,6 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
+import {
+  AI_ASSISTANT_CONFIG,
+  AI_ASSISTANT_ROUTE,
+  isAiAssistantEnabled,
+} from '../../ai/ai-assistant.config';
 import { InstallPromptService } from '../../core/install-prompt.service';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 
@@ -65,6 +70,11 @@ export class LandingPageComponent {
   readonly adClient = this.adsStore.adClient;
   readonly landingAdSlot = this.adsStore.landingInlineSlot;
 
+  readonly aiAssistantEnabled = isAiAssistantEnabled(
+    inject(AI_ASSISTANT_CONFIG)
+  );
+  readonly aiAssistantLink = `/${AI_ASSISTANT_ROUTE}`;
+
   // 18 weeks × 7 days, each char = day-class suffix.
   // 'e' = empty, '1'..'5' = intensity buckets (matches .lp-day-* SCSS).
   readonly heatmapWeeks = HEATMAP_PATTERN.map((row, i) => ({
@@ -91,6 +101,10 @@ export class LandingPageComponent {
 
   onPlanCardClick(planSlug: string): void {
     this.track('landing_plan_card_click', { plan: planSlug });
+  }
+
+  onAiAssistantCtaClick(): void {
+    this.track('landing_ai_assistant_click', { target: 'assistant' });
   }
 
   onPlansCtaClick(target: 'overview' | 'signup'): void {

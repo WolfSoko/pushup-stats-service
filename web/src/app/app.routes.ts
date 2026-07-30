@@ -6,6 +6,8 @@ import {
   publicOnlyGuard,
   RegisterComponent,
 } from '@pu-auth/auth';
+import { AI_ASSISTANT_ROUTE } from './ai/ai-assistant.config';
+import { aiAssistantEnabledGuard } from './ai/ai-assistant.guard';
 
 export const appRoutes: Routes = [
   {
@@ -259,6 +261,13 @@ export const appRoutes: Routes = [
       import('./marketing/legal/datenschutz-page.component').then(
         (m) => m.DatenschutzPageComponent
       ),
+  },
+  {
+    path: AI_ASSISTANT_ROUTE,
+    canMatch: [aiAssistantEnabledGuard],
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./ai/ai-assistant.routes').then((m) => m.aiAssistantRoutes),
   },
   {
     path: 'admin',
