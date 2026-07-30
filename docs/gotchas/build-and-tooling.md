@@ -141,7 +141,15 @@ To scale further (bigger agents for e2e specifically, or higher ceilings), edit 
 
 ## Generated `*.generated.ts` files rewrite on `nx build web`
 
-`pnpm nx build web` runs the `generate-content` target first, which rewrites the build-time content files (`libs/stats/src/lib/models/*-content.generated.ts`) and the sitemap from `content/**`. After a local build your working tree may show a large diff in those files — a stale committed copy or a non-deterministic generation order, **not** part of your change. Revert it (`git checkout -- libs/stats/src/lib/models/exercise-wiki-content.generated.ts`) instead of committing the churn; CI regenerates them from the committed sources. Never hand-edit a file whose header says `AUTO-GENERATED`.
+`pnpm nx build web` runs the `generate-content` target first, which rewrites the build-time content files (`libs/stats/src/lib/models/*-content.generated.ts`, `web/src/app/blog/generated/`) and the sitemap from `content/**`. Never hand-edit a file whose header says `AUTO-GENERATED` — change the markdown under `content/` and re-run the generator.
+
+Those files are git-tracked **and** hashed as `web:build` inputs, which makes two things mandatory for every path the generator writes (all three are pinned by `tools/src/generated-content-paths.spec.js` against the single list in `generated-content-paths.mjs`):
+
+1. **Declared in `outputs`** of `tools/project.json`'s `generate-content`. An undeclared path is not restored on a cache hit, so its bytes depend on whether the generator ran — the file differs between a machine that hit the cache and one that missed, `web:build`'s input hash differs with it, and the machine that missed can never restore `web:build` from the remote cache either.
+2. **Listed in `.prettierignore`.** lint-staged runs `prettier --write` on commit; reformatting a generated file makes the committed bytes differ from the generator's output, which produces the same per-machine drift as (1) plus a large spurious diff after every local build.
+3. **Its source tree declared in `inputs`.** A markdown tree the generator reads but the target doesn't hash (this was the case for `content/wiki/exercises/*.md`) leaves stale generated content cached after a content edit.
+
+This is what broke the App Hosting rollout of `f8ba99e`: `exercise-wiki-content.generated.ts` was neither a declared output nor Prettier-ignored, so the builder — where `generate-content` missed the cache and ran — rewrote it, missed `web:build`'s cache as a result, and fell into the 21-minute local build the ~8 GB builder cannot finish (esbuild `all goroutines are asleep - deadlock!`, see the first section). The GitHub Actions deploy job for the same commit restored the build in 14 s.
 
 ## Angular SSR `NG_ALLOWED_HOSTS` must include `*.run.app`
 

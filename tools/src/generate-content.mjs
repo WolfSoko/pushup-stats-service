@@ -25,6 +25,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { marked } from 'marked';
+import { GENERATED_CONTENT_PATHS } from './generated-content-paths.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
@@ -428,7 +429,7 @@ function main() {
   // Per-post generated files + barrel. Track written filenames so two
   // posts colliding on `<slug>.<lang>` (e.g. accidental duplicate slug
   // across folders) fail loudly instead of silently overwriting.
-  const generatedDir = resolve(ROOT, 'web/src/app/blog/generated');
+  const generatedDir = resolve(ROOT, GENERATED_CONTENT_PATHS.blogDir);
   mkdirSync(generatedDir, { recursive: true });
   const writtenKeys = new Set();
   for (const post of posts) {
@@ -445,16 +446,10 @@ function main() {
   const barrelPath = resolve(generatedDir, 'index.ts');
   writeFileSync(barrelPath, emitBlogBarrel(posts), 'utf-8');
 
-  const wikiPath = resolve(
-    ROOT,
-    'libs/stats/src/lib/models/pushup-type-content.generated.ts'
-  );
+  const wikiPath = resolve(ROOT, GENERATED_CONTENT_PATHS.pushupTypes);
   writeFileSync(wikiPath, emitPushupTypeModule(pushupContent), 'utf-8');
 
-  const exerciseWikiPath = resolve(
-    ROOT,
-    'libs/stats/src/lib/models/exercise-wiki-content.generated.ts'
-  );
+  const exerciseWikiPath = resolve(ROOT, GENERATED_CONTENT_PATHS.exerciseWiki);
   writeFileSync(
     exerciseWikiPath,
     emitExerciseWikiModule(exerciseWikiContent),
