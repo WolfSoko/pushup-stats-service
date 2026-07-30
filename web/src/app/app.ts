@@ -38,6 +38,7 @@ import {
 import { SwUpdate } from '@angular/service-worker';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { filter, interval } from 'rxjs';
+import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
 import {
@@ -123,6 +124,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     QuickAddFabComponent,
     QuickAddFabCoachmarkComponent,
     ThemeToggleComponent,
+    AiAssistantNavButtonComponent,
     MatDialogModule,
     MatFormFieldModule,
     MatProgressBarModule,
