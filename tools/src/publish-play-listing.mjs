@@ -87,11 +87,19 @@ export function buildUpdateBody(local, remote) {
   return body;
 }
 
-function summarize(value) {
+const PREVIEW_LENGTH = 72;
+
+/**
+ * One-line preview of a field for the diff output. The operator decides
+ * whether to publish from this, so a shortened preview has to be visibly
+ * shortened — an unmarked cut mid-word reads like the field really ends
+ * there.
+ */
+export function summarize(value) {
   if (value === '') return '(empty)';
-  const firstLine = value.split('\n')[0];
-  const suffix = value.includes('\n') ? ' …' : '';
-  return `${JSON.stringify(firstLine.slice(0, 72))}${suffix} [${countCharacters(value)} chars]`;
+  const preview = value.split('\n')[0].slice(0, PREVIEW_LENGTH);
+  const ellipsis = preview === value ? '' : ' …';
+  return `${JSON.stringify(preview)}${ellipsis} [${countCharacters(value)} chars]`;
 }
 
 /**

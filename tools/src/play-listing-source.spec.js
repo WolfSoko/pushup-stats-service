@@ -593,6 +593,52 @@ describe('buildUpdateBody', () => {
   });
 });
 
+describe('summarize', () => {
+  it('should show a short single-line value in full, with no ellipsis', () => {
+    // given / when
+    const result = runInModule(PUBLISH_MODULE, "mod.summarize('Pushup Stats')");
+
+    // then
+    expect(result.value).toBe('"Pushup Stats" [12 chars]');
+  });
+
+  it('should mark a value cut off mid-line as shortened', () => {
+    // given — 80 characters, longer than the 72-character preview
+    const value = 'x'.repeat(80);
+
+    // when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.summarize(${JSON.stringify(value)})`
+    );
+
+    // then
+    expect(result.value).toContain(' … [80 chars]');
+  });
+
+  it('should mark a multi-line value as shortened even when line one is short', () => {
+    // given
+    const value = 'kurz\nzweite Zeile';
+
+    // when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.summarize(${JSON.stringify(value)})`
+    );
+
+    // then
+    expect(result.value).toBe('"kurz" … [17 chars]');
+  });
+
+  it('should render an absent value as (empty) rather than empty quotes', () => {
+    // given / when — the "before" side for a locale Play does not have yet
+    const result = runInModule(PUBLISH_MODULE, "mod.summarize('')");
+
+    // then
+    expect(result.value).toBe('(empty)');
+  });
+});
+
 describe('diffListing', () => {
   const local = {
     language: 'de-DE',
