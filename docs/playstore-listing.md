@@ -8,7 +8,7 @@ analog zu `web/src/locale/messages.xlf`.
 | ------------------------- | ----- | ------- |
 | Titel                     | 30    | 12      |
 | Kurzbeschreibung          | 80    | 77      |
-| Vollständige Beschreibung | 4000  | 3988    |
+| Vollständige Beschreibung | 4000  | 3994    |
 
 > **Feature-Drift vermeiden:** Diese Datei ist eine Momentaufnahme des
 > Funktionsumfangs. Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne
@@ -18,8 +18,10 @@ analog zu `web/src/locale/messages.xlf`.
 
 Belege für die genannten Zahlen (Stand dieser Datei):
 
-- **40 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
-  in `libs/stats/src/lib/models/exercise.catalog.ts`
+- **41 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
+  in `libs/stats/src/lib/models/exercise.catalog.ts`. Der Katalog enthält
+  `PUSHUP_DEFINITION` **plus** 40 weitere Definitionen — daher „Liegestütze
+  und 40 weitere Übungen“ im Fließtext, aber „41 Übungen“ in der Aufzählung.
 - **13 Liegestütz-Varianten** — `PUSHUP_TYPES` in
   `libs/stats/src/lib/models/pushup-type.models.ts`
 - **10 Trainingspläne** — `TRAINING_PLANS` in
@@ -31,39 +33,48 @@ Belege für die genannten Zahlen (Stand dieser Datei):
   `holdTimerProfileId` (plank, hollowhold) im Übungskatalog
 - **Datenbank in Frankfurt** — Firestore-Region `europe-west3`, siehe
   `docs/ci-cd.md`
+- **Konto-Löschung** — `confirmDeleteFromDialog()` in
+  `web/src/app/stats/shell/settings-page.component.ts` anonymisiert die
+  User-Config und löscht den Auth-User; die Trainingseinträge bleiben
+  anonymisiert bestehen (so sagt es auch der Dialog unter
+  `@@settings.deleteDialogInfo`). Das Listing darf deshalb **keine**
+  vollständige Löschung aller Einträge versprechen.
+- **Sechs Schnellaktionen insgesamt** — `MAX_QUICK_ADDS = 6` in
+  `libs/stats/src/lib/models/user-config.models.ts`. Die sechs Slots teilen
+  sich alle Übungen, es sind keine sechs Presets _pro_ Übung.
 
 ## Titel
 
-```
+```text
 Pushup Stats
 ```
 
 ## Kurzbeschreibung
 
-```
+```text
 Reps per Kamera zählen, Trainingsplänen folgen, in der Bestenliste mithalten.
 ```
 
 ## Vollständige Beschreibung
 
-```
+```text
 Pushup Stats macht aus Liegestützen und 40 weiteren Übungen ein Spiel, das du gewinnen willst.
 
 Egal ob du gerade erst anfängst oder schon dein erstes Hundert geschafft hast — diese App hilft dir, dranzubleiben. Die Kamera zählt deine Wiederholungen automatisch, kuratierte Trainingspläne geben dir jeden Tag eine klare Vorgabe, und die Bestenliste motiviert ohne zu nerven.
 
 📷 REPS AUTOMATISCH ZÄHLEN
-Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit und zählt jede saubere Wiederholung mit. Für Plank und Hollow Hold läuft stattdessen ein automatischer Halte-Timer. Alles direkt auf deinem Gerät — kein Video verlässt dein Handy. Keine Cloud, kein Upload.
+Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit und zählt jede saubere Wiederholung mit. Für Plank und Hollow Hold läuft stattdessen ein automatischer Halte-Timer. Die Erkennung läuft komplett auf deinem Gerät — kein Video verlässt dein Handy.
 
 🏋️ MEHR ALS NUR LIEGESTÜTZE
 • 13 Liegestütz-Varianten: Standard, Knie, Incline, Decline, Wide, Diamant, Pike, Archer bis zur einarmigen — mit Anleitung pro Typ
-• Über 40 Übungen in 9 Kategorien: Push, Pull, Squat, Hinge, Lunge, Core, Cardio und Mobility
-• Klimmzüge, Dips, Kniebeugen, Ausfallschritte, Plank, Hollow Hold, Wall Sit, Burpees, Seilspringen, Yoga, Dehnen und mehr
+• 41 Übungen in 9 Kategorien: Liegestütze, Push, Pull, Squat, Hinge, Lunge, Core, Cardio, Mobility
+• Klimmzüge, Dips, Kniebeugen, Ausfallschritte, Plank, Hollow Hold, Burpees, Seilspringen, Yoga, Dehnen und mehr
 • Ausdauer mit Distanz und Zeit: Laufen, Gehen, Radfahren, Rudern, Schwimmen — inklusive Pace
 • Jede Übung mit eigener Maßeinheit — Wiederholungen, Sekunden oder Meter
 
 ⚡ ERFASSEN IN ZWEI SEKUNDEN
 • Ein Tap auf den Schnell-Button: Eintrag fertig, komplett ohne Dialog
-• Adaptive Vorschläge lernen aus deiner Historie, dazu sechs eigene Presets pro Übung
+• Adaptive Vorschläge lernen aus deiner Historie, dazu sechs frei belegbare Schnellaktionen
 • Sätze einzeln erfassen (12 + 10 + 8) — die App summiert automatisch
 • Intervalle samt Pace für Lauf- und Ausdauer-Workouts
 
@@ -93,7 +104,7 @@ Push-Benachrichtigungen mit konfigurierbarem Intervall, Ruhephasen, Wochentagen 
 Übungs-Wiki mit sauberer Ausführung, Technik-Tipps und typischen Fehlern. Dazu ein Blog mit Trainingstipps von Einsteiger bis Fortgeschritten.
 
 🔒 DEINE DATEN
-Erst als Gast ausprobieren, ganz ohne Konto. Privater Modus auf Wunsch. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Account jederzeit komplett löschbar — inklusive aller Einträge. Datenbank in Frankfurt.
+Als Gast ausprobieren, ganz ohne Konto. Privater Modus auf Wunsch. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Konto jederzeit löschbar — Trainingsdaten bleiben danach nur anonymisiert erhalten. Datenbank in Frankfurt.
 
 📱 ANDROID + WEB
 Die gleichen Daten auf dem Phone und im Browser, mit Echtzeit-Sync über alle Geräte. Login per Google oder E-Mail. Funktioniert auch offline — Einträge synchronisieren sich, sobald du wieder online bist. Helles und dunkles Design.
