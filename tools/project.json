@@ -51,6 +51,14 @@
         "cwd": "{workspaceRoot}"
       }
     },
+    "publish-play-listing": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "options": {
+        "command": "node tools/src/publish-play-listing.mjs",
+        "cwd": "{workspaceRoot}"
+      }
+    },
     "generate-content": {
       "executor": "nx:run-commands",
       "inputs": [

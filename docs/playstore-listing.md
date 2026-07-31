@@ -1,22 +1,34 @@
-# Play Store Listing (de)
+# Play Store Listing — Inhalt & Belege
 
-Quelle für den Google-Play-Store-Eintrag der Android-App (TWA-Wrapper unter
+Der Store-Text der Android-App (TWA-Wrapper unter
 [`mobile/android-twa`](../mobile/android-twa)). Deutsch ist die Quell-Sprache,
 analog zu `web/src/locale/messages.xlf`.
 
-| Feld                      | Limit | Aktuell |
-| ------------------------- | ----- | ------- |
-| Titel                     | 30    | 12      |
-| Kurzbeschreibung          | 80    | 77      |
-| Vollständige Beschreibung | 4000  | 3994    |
+> **Der Text steht nicht mehr in dieser Datei.** Quelle sind die Dateien unter
+> [`store/play/`](../store/play), von dort veröffentlicht das Publish-Script
+> direkt in die Play Console — siehe
+> [`docs/play-store-publishing.md`](play-store-publishing.md).
+>
+> | Feld                      | Datei                                    | Limit |
+> | ------------------------- | ---------------------------------------- | ----- |
+> | Titel                     | `store/play/de-DE/title.txt`             | 30    |
+> | Kurzbeschreibung          | `store/play/de-DE/short-description.txt` | 80    |
+> | Vollständige Beschreibung | `store/play/de-DE/full-description.txt`  | 4000  |
+>
+> Die Limits prüft `pnpm nx test tools` — zu langer Text scheitert in CI,
+> nicht erst beim Veröffentlichen.
 
-> **Feature-Drift vermeiden:** Diese Datei ist eine Momentaufnahme des
-> Funktionsumfangs. Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne
-> (`TRAINING_PLANS`), Liegestütz-Varianten (`PUSHUP_TYPES`) oder die
-> Locale-Liste in `web/project.json` änderst, gehören die Zahlen unten
-> mit angepasst.
+Diese Datei bleibt als **Beleg-Sammlung**: Der Store-Text behauptet konkrete
+Zahlen und Eigenschaften, und die veralten still, wenn sie niemand an den Code
+bindet.
 
-Belege für die genannten Zahlen (Stand dieser Datei):
+## Feature-Drift vermeiden
+
+Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne (`TRAINING_PLANS`),
+Liegestütz-Varianten (`PUSHUP_TYPES`) oder die Locale-Liste in
+`web/project.json` änderst, gehören die Zahlen im Store-Text mit angepasst.
+
+## Belege für die Aussagen im Listing
 
 - **41 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
   in `libs/stats/src/lib/models/exercise.catalog.ts`. Der Katalog enthält
@@ -43,77 +55,12 @@ Belege für die genannten Zahlen (Stand dieser Datei):
   `libs/stats/src/lib/models/user-config.models.ts`. Die sechs Slots teilen
   sich alle Übungen, es sind keine sechs Presets _pro_ Übung.
 
-## Titel
+## Was noch fehlt
 
-```text
-Pushup Stats
-```
-
-## Kurzbeschreibung
-
-```text
-Reps per Kamera zählen, Trainingsplänen folgen, in der Bestenliste mithalten.
-```
-
-## Vollständige Beschreibung
-
-```text
-Pushup Stats macht aus Liegestützen und 40 weiteren Übungen ein Spiel, das du gewinnen willst.
-
-Egal ob du gerade erst anfängst oder schon dein erstes Hundert geschafft hast — diese App hilft dir, dranzubleiben. Die Kamera zählt deine Wiederholungen automatisch, kuratierte Trainingspläne geben dir jeden Tag eine klare Vorgabe, und die Bestenliste motiviert ohne zu nerven.
-
-📷 REPS AUTOMATISCH ZÄHLEN
-Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit und zählt jede saubere Wiederholung mit. Für Plank und Hollow Hold läuft stattdessen ein automatischer Halte-Timer. Die Erkennung läuft komplett auf deinem Gerät — kein Video verlässt dein Handy.
-
-🏋️ MEHR ALS NUR LIEGESTÜTZE
-• 13 Liegestütz-Varianten: Standard, Knie, Incline, Decline, Wide, Diamant, Pike, Archer bis zur einarmigen — mit Anleitung pro Typ
-• 41 Übungen in 9 Kategorien: Liegestütze, Push, Pull, Squat, Hinge, Lunge, Core, Cardio, Mobility
-• Klimmzüge, Dips, Kniebeugen, Ausfallschritte, Plank, Hollow Hold, Burpees, Seilspringen, Yoga, Dehnen und mehr
-• Ausdauer mit Distanz und Zeit: Laufen, Gehen, Radfahren, Rudern, Schwimmen — inklusive Pace
-• Jede Übung mit eigener Maßeinheit — Wiederholungen, Sekunden oder Meter
-
-⚡ ERFASSEN IN ZWEI SEKUNDEN
-• Ein Tap auf den Schnell-Button: Eintrag fertig, komplett ohne Dialog
-• Adaptive Vorschläge lernen aus deiner Historie, dazu sechs frei belegbare Schnellaktionen
-• Sätze einzeln erfassen (12 + 10 + 8) — die App summiert automatisch
-• Intervalle samt Pace für Lauf- und Ausdauer-Workouts
-
-📈 TRAINING MIT SYSTEM — 10 TRAININGSPLÄNE
-• Von 0 auf 100 — 6-Wochen-Aufbau für Einsteiger
-• 30-Tage-Challenge mit Maximaltest an Tag 1 und 30
-• Liegestütze ab 40 — schonender 4-Wochen-Plan
-• Daily 100 — 30 Tage zur 100er-Marke
-• Einarmige Liegestütze — 12-Wochen-Aufbau
-• Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
-Jeden Tag genau die Vorgabe, die dich weiterbringt — mit Ruhetagen, leichten Tagen und Test-Tagen. Erledigte Tage markieren sich automatisch, sobald du dein Tagesziel erreichst.
-
-🎯 ZIELE, STREAKS & STATISTIKEN
-• Tages-, Wochen- und Monatsziele — pro Übung, mit Wochentag-Filter
-• Dreifacher Fortschrittsbalken, Konfetti beim Zielerreichen, Streak-Zähler fürs Dranbleiben
-• Heatmap-Kalender über Wochen und Monate
-• Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich, Zeitraum frei wählbar
-• Bestwerte: bester Tag, bester Satz, beste Einzeleinheit
-
-🏆 BESTENLISTE & PROFIL
-Miss dich mit anderen Athleten oder bleib privat — du entscheidest. Ranglisten für heute, die letzten 7 und die letzten 30 Tage. Dein öffentliches Profil mit Gesamt-Reps, Streak und Bestleistungen lässt sich per Link teilen. Dazu jeden Tag eine frische Motivation.
-
-🔔 SMARTE ERINNERUNGEN
-Push-Benachrichtigungen mit konfigurierbarem Intervall, Ruhephasen, Wochentagen und Zeitzone — auch bei geschlossener App. Und der schnellste Weg zum Eintrag: ein Tap auf „50 eintragen“ direkt in der Benachrichtigung.
-
-📚 WISSEN STATT RATEN
-Übungs-Wiki mit sauberer Ausführung, Technik-Tipps und typischen Fehlern. Dazu ein Blog mit Trainingstipps von Einsteiger bis Fortgeschritten.
-
-🔒 DEINE DATEN
-Als Gast ausprobieren, ganz ohne Konto. Privater Modus auf Wunsch. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Konto jederzeit löschbar — Trainingsdaten bleiben danach nur anonymisiert erhalten. Datenbank in Frankfurt.
-
-📱 ANDROID + WEB
-Die gleichen Daten auf dem Phone und im Browser, mit Echtzeit-Sync über alle Geräte. Login per Google oder E-Mail. Funktioniert auch offline — Einträge synchronisieren sich, sobald du wieder online bist. Helles und dunkles Design.
-
-🌍 NEUN SPRACHEN
-Deutsch, Englisch, Französisch, Spanisch, Italienisch, Niederländisch, Griechisch, Norwegisch, Chinesisch.
-
-Kostenlos. Kein Abo. Keine Kreditkarte.
-
-Pushup Stats ist eine ehrliche App für Leute, die wirklich trainieren — nicht für Sticker-Sammler.
-Lade sie jetzt runter und mach den ersten.
-```
+- **Übersetzungen.** Nur `de-DE` ist gepflegt. Die Store-Texte laufen bewusst
+  **nicht** über die tägliche Übersetzungs-Routine (die arbeitet auf XLIFF und
+  `content/`), also müssen weitere Sprachen von Hand ergänzt werden.
+- **KI-Coach.** Nicht im Listing erwähnt: `aiAssistantConfig.runtimeUrl` ist
+  leer, im ausgelieferten Build ist der Assistent also nicht nutzbar.
+- **Grafiken.** Screenshots, Feature-Grafik und Icon pflegt weiterhin die
+  Console — das Script veröffentlicht nur Text.

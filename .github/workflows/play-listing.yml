@@ -1,0 +1,58 @@
+name: Play Store Listing
+
+# Manual only. Store copy goes into Google's review queue once committed,
+# so this never fires on a push — someone decides when the listing changes.
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: 'Publish for real (unchecked = dry run, prints the diff only)'
+        type: boolean
+        default: false
+      locale:
+        description: 'Limit to one Play locale, e.g. de-DE (empty = all)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  # Two concurrent runs would fight over the same Play edit and one would
+  # fail with a conflict.
+  group: play-listing
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          filter: tree:0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      # Corepack pins the pnpm version from package.json's `packageManager`,
+      # matching ci.yml — see the note there on pnpm/action-setup#228.
+      - name: Enable corepack
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish listing
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          COMMIT_FLAG: ${{ inputs.commit && '--commit' || '' }}
+          LOCALE_FLAG: ${{ inputs.locale && format('--locale={0}', inputs.locale) || '' }}
+        run: node tools/src/publish-play-listing.mjs $COMMIT_FLAG $LOCALE_FLAG
