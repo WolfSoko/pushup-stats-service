@@ -370,6 +370,129 @@ describe('buildAuth', () => {
   });
 });
 
+/**
+ * `authorizedFetch` and `createPlayApi` are the only pieces that touch the
+ * network, so they are exercised with `fetch` stubbed inside the subprocess.
+ * These are the paths the very first real run hits.
+ */
+function runWithStubbedFetch({ status, body = '', expression }) {
+  return runInModule(
+    PUBLISH_MODULE,
+    `(async () => {
+      const requests = [];
+      globalThis.fetch = async (url, init) => {
+        requests.push({ url, method: init?.method ?? 'GET' });
+        return {
+          ok: ${status} >= 200 && ${status} < 300,
+          status: ${status},
+          text: async () => ${JSON.stringify(body)},
+          json: async () => JSON.parse(${JSON.stringify(body || '{}')}),
+        };
+      };
+      const auth = {
+        getClient: async () => ({
+          getAccessToken: async () => ({ token: 'stub-token' }),
+        }),
+      };
+      try {
+        const value = await (${expression});
+        return { value, requests };
+      } catch (error) {
+        return { failed: error.message, status: error.status, requests };
+      }
+    })()`
+  ).value;
+}
+
+describe('authorizedFetch', () => {
+  it('should attach the status so callers can tell 404 from a real failure', () => {
+    // given / when
+    const result = runWithStubbedFetch({
+      status: 403,
+      body: 'The caller does not have permission',
+      expression: "mod.authorizedFetch(auth, 'https://example.test/x')",
+    });
+
+    // then
+    expect(result.status).toBe(403);
+    expect(result.failed).toContain('403');
+    // The body matters: it is what tells the operator the permission is
+    // missing rather than the request being malformed.
+    expect(result.failed).toContain('The caller does not have permission');
+  });
+
+  it('should return null for 204, which has no body to parse', () => {
+    // given / when — deleting an edit answers 204
+    const result = runWithStubbedFetch({
+      status: 204,
+      expression:
+        "mod.authorizedFetch(auth, 'https://example.test/x', { method: 'DELETE' })",
+    });
+
+    // then
+    expect(result.value).toBeNull();
+  });
+});
+
+describe('createPlayApi', () => {
+  it('should treat a 404 listing as "not created yet" rather than an error', () => {
+    // given — the locale exists on disk but not yet in the Console
+    // when
+    const result = runWithStubbedFetch({
+      status: 404,
+      body: 'not found',
+      expression: "mod.createPlayApi(auth).getListing('edit-1', 'en-US')",
+    });
+
+    // then
+    expect(result.failed).toBeUndefined();
+    expect(result.value).toBeNull();
+  });
+
+  it('should propagate a 403 instead of silently reporting no listing', () => {
+    // given — the most likely first-run failure: permissions not propagated
+    // when
+    const result = runWithStubbedFetch({
+      status: 403,
+      body: 'forbidden',
+      expression: "mod.createPlayApi(auth).getListing('edit-1', 'de-DE')",
+    });
+
+    // then
+    expect(result.value).toBeUndefined();
+    expect(result.status).toBe(403);
+  });
+
+  it('should address the listing endpoint by the language in the body', () => {
+    // given / when
+    const result = runWithStubbedFetch({
+      status: 200,
+      body: '{}',
+      expression:
+        "mod.createPlayApi(auth).updateListing('edit-1', { language: 'de-DE', title: 'x' })",
+    });
+
+    // then
+    expect(result.requests[0].method).toBe('PUT');
+    expect(result.requests[0].url).toContain(
+      '/applications/com.pushupstats.app/edits/edit-1/listings/de-DE'
+    );
+  });
+
+  it('should commit through the :commit sub-resource', () => {
+    // given / when
+    const result = runWithStubbedFetch({
+      status: 200,
+      body: '{}',
+      expression: "mod.createPlayApi(auth).commitEdit('edit-1')",
+    });
+
+    // then
+    expect(result.requests[0].method).toBe('POST');
+    expect(result.requests[0].url).toContain('/edits/edit-1:commit');
+  });
+});
+
 describe('selectListings', () => {
   const all = [{ language: 'de-DE' }, { language: 'en-US' }];
 

@@ -164,7 +164,12 @@ export async function publishListings({
   }
 }
 
-async function authorizedFetch(auth, url, init = {}) {
+/**
+ * Adds the bearer token and turns a non-OK response into an Error carrying
+ * `status`, which `getListing` reads to tell "this locale has no listing
+ * yet" (404) from a real failure such as a missing permission (403).
+ */
+export async function authorizedFetch(auth, url, init = {}) {
   const client = await auth.getClient();
   const { token } = await client.getAccessToken();
   const response = await fetch(url, {
@@ -188,7 +193,7 @@ async function authorizedFetch(auth, url, init = {}) {
   return response.status === 204 ? null : response.json();
 }
 
-function createPlayApi(auth) {
+export function createPlayApi(auth) {
   const editsUrl = `${API_ROOT}/applications/${PACKAGE_NAME}/edits`;
   const listingUrl = (editId, language) =>
     `${editsUrl}/${editId}/listings/${language}`;
