@@ -1,0 +1,108 @@
+# Play Store Listing (de)
+
+Quelle für den Google-Play-Store-Eintrag der Android-App (TWA-Wrapper unter
+[`mobile/android-twa`](../mobile/android-twa)). Deutsch ist die Quell-Sprache,
+analog zu `web/src/locale/messages.xlf`.
+
+| Feld                      | Limit | Aktuell |
+| ------------------------- | ----- | ------- |
+| Titel                     | 30    | 12      |
+| Kurzbeschreibung          | 80    | 77      |
+| Vollständige Beschreibung | 4000  | 3988    |
+
+> **Feature-Drift vermeiden:** Diese Datei ist eine Momentaufnahme des
+> Funktionsumfangs. Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne
+> (`TRAINING_PLANS`), Liegestütz-Varianten (`PUSHUP_TYPES`) oder die
+> Locale-Liste in `web/project.json` änderst, gehören die Zahlen unten
+> mit angepasst.
+
+Belege für die genannten Zahlen (Stand dieser Datei):
+
+- **40 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
+  in `libs/stats/src/lib/models/exercise.catalog.ts`
+- **13 Liegestütz-Varianten** — `PUSHUP_TYPES` in
+  `libs/stats/src/lib/models/pushup-type.models.ts`
+- **10 Trainingspläne** — `TRAINING_PLANS` in
+  `libs/stats/src/lib/models/training-plan.catalog.ts`
+- **9 Sprachen** — `localize`-Liste in `web/project.json`:
+  `de, en, fr, es, it, nl, el, no, zh`. Latein ist nicht mehr dabei und darf
+  im Listing nicht mehr auftauchen.
+- **Auto-Zähler** — `autoCountProfileId` (pushup, situp, squat, pullup) bzw.
+  `holdTimerProfileId` (plank, hollowhold) im Übungskatalog
+- **Datenbank in Frankfurt** — Firestore-Region `europe-west3`, siehe
+  `docs/ci-cd.md`
+
+## Titel
+
+```
+Pushup Stats
+```
+
+## Kurzbeschreibung
+
+```
+Reps per Kamera zählen, Trainingsplänen folgen, in der Bestenliste mithalten.
+```
+
+## Vollständige Beschreibung
+
+```
+Pushup Stats macht aus Liegestützen und 40 weiteren Übungen ein Spiel, das du gewinnen willst.
+
+Egal ob du gerade erst anfängst oder schon dein erstes Hundert geschafft hast — diese App hilft dir, dranzubleiben. Die Kamera zählt deine Wiederholungen automatisch, kuratierte Trainingspläne geben dir jeden Tag eine klare Vorgabe, und die Bestenliste motiviert ohne zu nerven.
+
+📷 REPS AUTOMATISCH ZÄHLEN
+Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit und zählt jede saubere Wiederholung mit. Für Plank und Hollow Hold läuft stattdessen ein automatischer Halte-Timer. Alles direkt auf deinem Gerät — kein Video verlässt dein Handy. Keine Cloud, kein Upload.
+
+🏋️ MEHR ALS NUR LIEGESTÜTZE
+• 13 Liegestütz-Varianten: Standard, Knie, Incline, Decline, Wide, Diamant, Pike, Archer bis zur einarmigen — mit Anleitung pro Typ
+• Über 40 Übungen in 9 Kategorien: Push, Pull, Squat, Hinge, Lunge, Core, Cardio und Mobility
+• Klimmzüge, Dips, Kniebeugen, Ausfallschritte, Plank, Hollow Hold, Wall Sit, Burpees, Seilspringen, Yoga, Dehnen und mehr
+• Ausdauer mit Distanz und Zeit: Laufen, Gehen, Radfahren, Rudern, Schwimmen — inklusive Pace
+• Jede Übung mit eigener Maßeinheit — Wiederholungen, Sekunden oder Meter
+
+⚡ ERFASSEN IN ZWEI SEKUNDEN
+• Ein Tap auf den Schnell-Button: Eintrag fertig, komplett ohne Dialog
+• Adaptive Vorschläge lernen aus deiner Historie, dazu sechs eigene Presets pro Übung
+• Sätze einzeln erfassen (12 + 10 + 8) — die App summiert automatisch
+• Intervalle samt Pace für Lauf- und Ausdauer-Workouts
+
+📈 TRAINING MIT SYSTEM — 10 TRAININGSPLÄNE
+• Von 0 auf 100 — 6-Wochen-Aufbau für Einsteiger
+• 30-Tage-Challenge mit Maximaltest an Tag 1 und 30
+• Liegestütze ab 40 — schonender 4-Wochen-Plan
+• Daily 100 — 30 Tage zur 100er-Marke
+• Einarmige Liegestütze — 12-Wochen-Aufbau
+• Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
+Jeden Tag genau die Vorgabe, die dich weiterbringt — mit Ruhetagen, leichten Tagen und Test-Tagen. Erledigte Tage markieren sich automatisch, sobald du dein Tagesziel erreichst.
+
+🎯 ZIELE, STREAKS & STATISTIKEN
+• Tages-, Wochen- und Monatsziele — pro Übung, mit Wochentag-Filter
+• Dreifacher Fortschrittsbalken, Konfetti beim Zielerreichen, Streak-Zähler fürs Dranbleiben
+• Heatmap-Kalender über Wochen und Monate
+• Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich, Zeitraum frei wählbar
+• Bestwerte: bester Tag, bester Satz, beste Einzeleinheit
+
+🏆 BESTENLISTE & PROFIL
+Miss dich mit anderen Athleten oder bleib privat — du entscheidest. Ranglisten für heute, die letzten 7 und die letzten 30 Tage. Dein öffentliches Profil mit Gesamt-Reps, Streak und Bestleistungen lässt sich per Link teilen. Dazu jeden Tag eine frische Motivation.
+
+🔔 SMARTE ERINNERUNGEN
+Push-Benachrichtigungen mit konfigurierbarem Intervall, Ruhephasen, Wochentagen und Zeitzone — auch bei geschlossener App. Und der schnellste Weg zum Eintrag: ein Tap auf „50 eintragen“ direkt in der Benachrichtigung.
+
+📚 WISSEN STATT RATEN
+Übungs-Wiki mit sauberer Ausführung, Technik-Tipps und typischen Fehlern. Dazu ein Blog mit Trainingstipps von Einsteiger bis Fortgeschritten.
+
+🔒 DEINE DATEN
+Erst als Gast ausprobieren, ganz ohne Konto. Privater Modus auf Wunsch. DSGVO-konform mit anpassbarer Cookie-Zustimmung. Account jederzeit komplett löschbar — inklusive aller Einträge. Datenbank in Frankfurt.
+
+📱 ANDROID + WEB
+Die gleichen Daten auf dem Phone und im Browser, mit Echtzeit-Sync über alle Geräte. Login per Google oder E-Mail. Funktioniert auch offline — Einträge synchronisieren sich, sobald du wieder online bist. Helles und dunkles Design.
+
+🌍 NEUN SPRACHEN
+Deutsch, Englisch, Französisch, Spanisch, Italienisch, Niederländisch, Griechisch, Norwegisch, Chinesisch.
+
+Kostenlos. Kein Abo. Keine Kreditkarte.
+
+Pushup Stats ist eine ehrliche App für Leute, die wirklich trainieren — nicht für Sticker-Sammler.
+Lade sie jetzt runter und mach den ersten.
+```
