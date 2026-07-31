@@ -14,7 +14,9 @@
         "{workspaceRoot}/apphosting.staging.yaml",
         "{workspaceRoot}/pnpm-workspace.yaml",
         "{workspaceRoot}/patches/**/*",
-        "{workspaceRoot}/.prettierignore"
+        "{workspaceRoot}/.prettierignore",
+        "{workspaceRoot}/store/play/**/*",
+        "{workspaceRoot}/web/project.json"
       ],
       "options": {
         "passWithNoTests": true

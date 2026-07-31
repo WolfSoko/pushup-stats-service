@@ -58,9 +58,13 @@ Repo → **Settings → Secrets and variables → Actions → New repository sec
 ### 4. Erster Lauf — als Dry-Run
 
 Repo → **Actions → Play Store Listing → Run workflow**, „Publish for real"
-**nicht** ankreuzen. Der Lauf liest den Live-Eintrag, zeigt den Diff und
-schreibt nichts. Sieht der Diff richtig aus, denselben Workflow mit
+**nicht** ankreuzen. Sieht der Diff richtig aus, denselben Workflow mit
 angekreuztem „Publish for real" nochmal starten.
+
+„Dry-Run" heißt: es wird nichts veröffentlicht. **Read-only ist es trotzdem
+nicht** — der Lauf legt einen temporären Play-Edit an, um den Live-Eintrag
+zu lesen, und verwirft ihn danach wieder. Er braucht deshalb dieselbe
+Berechtigung wie ein echter Publish; ein reines Lese-Recht genügt nicht.
 
 ## Alltag
 
@@ -115,9 +119,12 @@ eine neue App-Sprache ohne Play-Mapping bricht CI.
   der nächste mit einem Konflikt scheitern. Das Script räumt seinen Edit im
   Fehlerfall selbst ab; bleibt trotzdem einer hängen, in der Console unter
   dem App-Eintrag verwerfen.
-- **Emoji zählen als ein Zeichen.** Die Beschreibung ist voller Emoji, und
-  `String.length` zählt Surrogatpaare doppelt. `countCharacters()` zählt
-  Codepoints — deshalb passt der lokale Check zu dem, was die Console sagt.
+- **Emoji kosten mehr als ein Zeichen.** Play zählt UTF-16-Code-Units, nicht
+  Glyphen — das Backend ist eine JVM. `📷` kostet 2, `🏋️` sogar 3 (Surrogatpaar
+  plus Variation Selector), obwohl beide wie ein Zeichen aussehen. Die
+  Beschreibung ist voller Emoji: Codepoint-Zählung lag ~10 Zeichen zu niedrig
+  und hätte einen 4004 Zeichen langen Text als „3994" durchgewunken.
+  `countCharacters()` zählt deshalb Code-Units.
 - **Grafiken bleiben Handarbeit.** Screenshots, Feature-Grafik und Icon
   gehen über diesen Weg nicht mit; die API kann sie zwar, das Script macht
   bewusst nur Text.

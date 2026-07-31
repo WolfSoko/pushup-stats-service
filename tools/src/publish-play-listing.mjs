@@ -32,11 +32,21 @@ export function parseArgs(argv) {
   const args = { commit: false, locale: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
-    if (arg === '--commit') args.commit = true;
-    else if (arg === '--locale') args.locale = argv[++i] ?? null;
-    else if (arg.startsWith('--locale='))
-      args.locale = arg.slice('--locale='.length);
-    else throw new Error(`Unknown argument: ${arg}`);
+    if (arg === '--commit') {
+      args.commit = true;
+    } else if (arg === '--locale' || arg.startsWith('--locale=')) {
+      const value =
+        arg === '--locale' ? argv[++i] : arg.slice('--locale='.length);
+      // A blank value must not silently widen the run to every locale — on
+      // the --commit path that is the difference between publishing one
+      // language and publishing all of them.
+      if (!value || value.trim() === '') {
+        throw new Error('--locale needs a value, e.g. --locale=de-DE');
+      }
+      args.locale = value.trim();
+    } else {
+      throw new Error(`Unknown argument: ${arg}`);
+    }
   }
   return args;
 }
@@ -58,11 +68,92 @@ export function diffListing(local, remote) {
   return changes;
 }
 
+/**
+ * `edits.listings.update` is a full replace: any field missing from the body
+ * is cleared on the remote listing. The promo video is maintained by hand in
+ * the Console and this tool has no source for it, so it has to be carried
+ * over from the remote listing or a text change would silently wipe it.
+ */
+export function buildUpdateBody(local, remote) {
+  const body = {
+    language: local.language,
+    title: local.title,
+    shortDescription: local.shortDescription,
+    fullDescription: local.fullDescription,
+  };
+  if (remote?.video) {
+    body.video = remote.video;
+  }
+  return body;
+}
+
 function summarize(value) {
   if (value === '') return '(empty)';
   const firstLine = value.split('\n')[0];
   const suffix = value.includes('\n') ? ' …' : '';
   return `${JSON.stringify(firstLine.slice(0, 72))}${suffix} [${countCharacters(value)} chars]`;
+}
+
+/**
+ * Drives one publish run against an injected `api`, so the transaction —
+ * edit creation, per-locale diff, update, commit, and cleanup on failure —
+ * is testable without talking to Google.
+ *
+ * Returns the number of locales that differed from the live listing.
+ */
+export async function publishListings({
+  listings,
+  commit,
+  api,
+  log = console.log,
+}) {
+  const edit = await api.createEdit();
+  let changedLocales = 0;
+
+  try {
+    for (const listing of listings) {
+      const remote = await api.getListing(edit.id, listing.language);
+      const changes = diffListing(listing, remote);
+
+      if (changes.length === 0) {
+        log(`${listing.language}: unchanged`);
+        continue;
+      }
+
+      changedLocales++;
+      log(`${listing.language}: ${changes.length} field(s) changed`);
+      for (const { field, before, after } of changes) {
+        log(`  ${field}`);
+        log(`    - ${summarize(before)}`);
+        log(`    + ${summarize(after)}`);
+      }
+
+      if (commit) {
+        await api.updateListing(edit.id, buildUpdateBody(listing, remote));
+      }
+    }
+
+    if (!commit || changedLocales === 0) {
+      await api.deleteEdit(edit.id);
+      log(
+        changedLocales === 0
+          ? '\nNothing to do — the live listing already matches the sources.'
+          : `\nDry run: ${changedLocales} locale(s) would change. Re-run with --commit to publish.`
+      );
+      return changedLocales;
+    }
+
+    await api.commitEdit(edit.id);
+    log(
+      `\nPublished ${changedLocales} locale(s). Google reviews store-listing changes before they go live.`
+    );
+    return changedLocales;
+  } catch (error) {
+    // Leaving an edit open blocks the next run with a conflict, so always
+    // try to clean it up — but report the original failure, not the cleanup.
+    await api.deleteEdit(edit.id).catch(() => undefined);
+    throw error;
+  }
 }
 
 async function authorizedFetch(auth, url, init = {}) {
@@ -79,16 +170,46 @@ async function authorizedFetch(auth, url, init = {}) {
 
   if (!response.ok) {
     const body = await response.text();
-    throw new Error(
+    const error = new Error(
       `${init.method ?? 'GET'} ${url} → ${response.status}\n${body}`
     );
+    error.status = response.status;
+    throw error;
   }
 
   return response.status === 204 ? null : response.json();
 }
 
-function buildAuth() {
-  const raw = process.env[CREDENTIALS_ENV];
+function createPlayApi(auth) {
+  const editsUrl = `${API_ROOT}/applications/${PACKAGE_NAME}/edits`;
+  const listingUrl = (editId, language) =>
+    `${editsUrl}/${editId}/listings/${language}`;
+
+  return {
+    createEdit: () => authorizedFetch(auth, editsUrl, { method: 'POST' }),
+    getListing: async (editId, language) => {
+      try {
+        return await authorizedFetch(auth, listingUrl(editId, language));
+      } catch (error) {
+        // A locale with no listing yet 404s; that's a create, not a failure.
+        if (error.status === 404) return null;
+        throw error;
+      }
+    },
+    updateListing: (editId, body) =>
+      authorizedFetch(auth, listingUrl(editId, body.language), {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      }),
+    commitEdit: (editId) =>
+      authorizedFetch(auth, `${editsUrl}/${editId}:commit`, { method: 'POST' }),
+    deleteEdit: (editId) =>
+      authorizedFetch(auth, `${editsUrl}/${editId}`, { method: 'DELETE' }),
+  };
+}
+
+export function buildAuth(env = process.env) {
+  const raw = env[CREDENTIALS_ENV];
   if (!raw) {
     throw new Error(
       `${CREDENTIALS_ENV} is not set. See docs/play-store-publishing.md for how to create the service account and store its key.`
@@ -107,92 +228,29 @@ function buildAuth() {
   return new GoogleAuth({ credentials, scopes: [SCOPE] });
 }
 
+export function selectListings(all, locale) {
+  if (!locale) return all;
+  const selected = all.filter((listing) => listing.language === locale);
+  if (selected.length === 0) {
+    throw new Error(
+      `No listing found for locale ${locale} — known locales: ${all.map((l) => l.language).join(', ')}`
+    );
+  }
+  return selected;
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
 
   // Validation runs before any network call, so bad copy fails fast and
   // never leaves a dangling edit behind in the Console.
-  let listings = readListings();
-  if (args.locale) {
-    listings = listings.filter((l) => l.language === args.locale);
-    if (listings.length === 0) {
-      throw new Error(`No listing found for locale ${args.locale}`);
-    }
-  }
+  const listings = selectListings(readListings(), args.locale);
 
-  const auth = buildAuth();
-  const editsUrl = `${API_ROOT}/applications/${PACKAGE_NAME}/edits`;
-  const edit = await authorizedFetch(auth, editsUrl, { method: 'POST' });
-  const editBase = `${editsUrl}/${edit.id}`;
-
-  let changedLocales = 0;
-  try {
-    for (const listing of listings) {
-      const { language, ...fields } = listing;
-
-      let remote = null;
-      try {
-        remote = await authorizedFetch(
-          auth,
-          `${editBase}/listings/${language}`
-        );
-      } catch (error) {
-        // A locale with no listing yet 404s; that's a create, not a failure.
-        if (!/→ 404/.test(String(error.message))) throw error;
-      }
-
-      const changes = diffListing(listing, remote);
-      if (changes.length === 0) {
-        console.log(`${language}: unchanged`);
-        continue;
-      }
-
-      changedLocales++;
-      console.log(`${language}: ${changes.length} field(s) changed`);
-      for (const { field, before, after } of changes) {
-        console.log(`  ${field}`);
-        console.log(`    - ${summarize(before)}`);
-        console.log(`    + ${summarize(after)}`);
-      }
-
-      if (args.commit) {
-        await authorizedFetch(auth, `${editBase}/listings/${language}`, {
-          method: 'PUT',
-          body: JSON.stringify({ language, ...fields }),
-        });
-      }
-    }
-
-    if (!args.commit) {
-      await authorizedFetch(auth, editBase, { method: 'DELETE' });
-      console.log(
-        changedLocales === 0
-          ? '\nDry run: live listing already matches the sources.'
-          : `\nDry run: ${changedLocales} locale(s) would change. Re-run with --commit to publish.`
-      );
-      return;
-    }
-
-    if (changedLocales === 0) {
-      await authorizedFetch(auth, editBase, { method: 'DELETE' });
-      console.log(
-        '\nNothing to publish — live listing already matches the sources.'
-      );
-      return;
-    }
-
-    await authorizedFetch(auth, `${editBase}:commit`, { method: 'POST' });
-    console.log(
-      `\nPublished ${changedLocales} locale(s). Google reviews store-listing changes before they go live.`
-    );
-  } catch (error) {
-    // Leaving an edit open blocks the next run with a conflict, so always
-    // try to clean it up — but report the original failure, not the cleanup.
-    await authorizedFetch(auth, editBase, { method: 'DELETE' }).catch(
-      () => undefined
-    );
-    throw error;
-  }
+  await publishListings({
+    listings,
+    commit: args.commit,
+    api: createPlayApi(buildAuth()),
+  });
 }
 
 // Only run when invoked as a script, so the spec can import the helpers

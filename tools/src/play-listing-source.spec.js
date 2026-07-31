@@ -1,5 +1,11 @@
 const { execFileSync } = require('node:child_process');
-const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = require('node:fs');
+const {
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+} = require('node:fs');
 const { tmpdir } = require('node:os');
 const { join, resolve } = require('node:path');
 
@@ -23,6 +29,50 @@ function runInModule(modulePath, expression) {
       encoding: 'utf-8',
     })
   );
+}
+
+/**
+ * Runs `publishListings` against a fake API inside the subprocess and returns
+ * the recorded call sequence, so the publish transaction can be asserted
+ * without touching Google.
+ *
+ * `remoteByLocale` seeds what `getListing` returns; `failOn` lists API methods
+ * that should throw, to exercise the cleanup path. Each throws a
+ * `boom:<method>` error so the test can tell which failure surfaced.
+ */
+function runPublish({ listings, commit, remoteByLocale = {}, failOn = [] }) {
+  const expression = `(async () => {
+    const calls = [];
+    const failing = ${JSON.stringify([].concat(failOn))};
+    const record = (name) => (...args) => {
+      calls.push([name, ...args]);
+      if (failing.includes(name)) throw new Error('boom:' + name);
+      return undefined;
+    };
+    const api = {
+      createEdit: async (...a) => { record('createEdit')(...a); return { id: 'edit-1' }; },
+      getListing: async (editId, language) => {
+        calls.push(['getListing', editId, language]);
+        if (failing.includes('getListing')) throw new Error('boom:getListing');
+        return ${JSON.stringify(remoteByLocale)}[language] ?? null;
+      },
+      updateListing: async (...a) => record('updateListing')(...a),
+      commitEdit: async (...a) => record('commitEdit')(...a),
+      deleteEdit: async (...a) => record('deleteEdit')(...a),
+    };
+    try {
+      const changed = await mod.publishListings({
+        listings: ${JSON.stringify(listings)},
+        commit: ${JSON.stringify(commit)},
+        api,
+        log: () => {},
+      });
+      return { calls, changed };
+    } catch (error) {
+      return { calls, failed: error.message };
+    }
+  })()`;
+  return runInModule(PUBLISH_MODULE, expression).value;
 }
 
 function makeListingDir(fields) {
@@ -140,18 +190,42 @@ describe('readListings', () => {
 });
 
 describe('countCharacters', () => {
-  it('should count emoji as one character each, like the Play Console does', () => {
-    // given — naive `String.length` reports 4 for these two surrogate pairs
-    const text = '📷🏋';
-
-    // when
+  // Play enforces its limits on UTF-16 code units (its backend is a JVM), so
+  // an emoji costs more than the one character it looks like. Counting code
+  // points would undercount and let copy through that Play then rejects.
+  it.each([
+    ['a plain ASCII string', 'abc', 3],
+    ['a surrogate-pair emoji', '📷', 2],
+    ['an emoji with a variation selector', '🏋️', 3],
+    ['a ZWJ sequence', '👨‍👩‍👧', 8],
+  ])('should count %s as its UTF-16 length', (_name, text, expected) => {
+    // given / when
     const result = runInModule(
       SOURCE_MODULE,
       `mod.countCharacters(${JSON.stringify(text)})`
     );
 
     // then
-    expect(result.value).toBe(2);
+    expect(result.value).toBe(expected);
+  });
+
+  it('should match the checked-in description, which sits close to the limit', () => {
+    // given — the real copy is emoji-heavy; code-point counting reported ~10
+    // fewer characters and put an over-limit description under the cap
+    const description = readFileSync(
+      resolve(__dirname, '../../store/play/de-DE/full-description.txt'),
+      'utf-8'
+    ).replace(/\n+$/, '');
+
+    // when
+    const result = runInModule(
+      SOURCE_MODULE,
+      `mod.countCharacters(${JSON.stringify(description)})`
+    );
+
+    // then
+    expect(result.value).toBe(description.length);
+    expect(result.value).toBeGreaterThan([...description].length);
   });
 });
 
@@ -174,6 +248,29 @@ describe('the checked-in listing sources', () => {
 
     // then
     expect(result.value).toContain('de-DE');
+  });
+});
+
+describe('the tools:test Nx wiring', () => {
+  // The two guards below assert against files outside the `tools` project.
+  // Nx has no way to infer that, so without these inputs `nx affected` would
+  // skip the run — or replay a stale cached pass — when a PR only touches
+  // the store copy or the locale list. That is exactly the case the guards
+  // exist for.
+  it.each([
+    ['the listing sources', '{workspaceRoot}/store/play/**/*'],
+    ['the app locale list', '{workspaceRoot}/web/project.json'],
+  ])('should declare %s as a test input', (_name, input) => {
+    // given
+    const project = JSON.parse(
+      readFileSync(resolve(__dirname, '../project.json'), 'utf-8')
+    );
+
+    // when
+    const inputs = project.targets.test.inputs;
+
+    // then
+    expect(inputs).toContain(input);
   });
 });
 
@@ -225,6 +322,274 @@ describe('parseArgs', () => {
     // then
     expect(result.ok).toBe(false);
     expect(result.message).toContain('Unknown argument: --publish');
+  });
+
+  it.each([
+    ['--locale with no value', "['--commit', '--locale']"],
+    ['--locale= with an empty value', "['--commit', '--locale=']"],
+    ['--locale with only whitespace', "['--commit', '--locale=  ']"],
+  ])(
+    'should reject %s rather than widening the run to every locale',
+    (_name, argv) => {
+      // given / when
+      const result = runInModule(PUBLISH_MODULE, `mod.parseArgs(${argv})`);
+
+      // then
+      expect(result.ok).toBe(false);
+      expect(result.message).toContain('--locale needs a value');
+    }
+  );
+});
+
+describe('buildAuth', () => {
+  it('should point at the setup doc when the credentials env var is unset', () => {
+    // given / when
+    const result = runInModule(PUBLISH_MODULE, 'mod.buildAuth({})');
+
+    // then
+    expect(result.ok).toBe(false);
+    expect(result.message).toContain(
+      'GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not set'
+    );
+    expect(result.message).toContain('docs/play-store-publishing.md');
+  });
+
+  it('should say so when the env var holds a path instead of the key itself', () => {
+    // given — the likely mistake is exporting the filename, not its contents
+    const env = { GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: '~/keys/play.json' };
+
+    // when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.buildAuth(${JSON.stringify(env)})`
+    );
+
+    // then
+    expect(result.ok).toBe(false);
+    expect(result.message).toContain('not valid JSON');
+  });
+});
+
+describe('selectListings', () => {
+  const all = [{ language: 'de-DE' }, { language: 'en-US' }];
+
+  it('should return every listing when no locale is given', () => {
+    // given / when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.selectListings(${JSON.stringify(all)}, null)`
+    );
+
+    // then
+    expect(result.value).toHaveLength(2);
+  });
+
+  it('should narrow to the requested locale', () => {
+    // given / when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.selectListings(${JSON.stringify(all)}, 'en-US')`
+    );
+
+    // then
+    expect(result.value).toEqual([{ language: 'en-US' }]);
+  });
+
+  it('should fail loudly for a locale that has no listing on disk', () => {
+    // given / when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.selectListings(${JSON.stringify(all)}, 'fr-FR')`
+    );
+
+    // then
+    expect(result.ok).toBe(false);
+    expect(result.message).toContain('No listing found for locale fr-FR');
+  });
+
+  it('should reject a locale that smuggles a second flag in its value', () => {
+    // given — the workflow passes the operator's locale as a single argv
+    // element, so an injected flag arrives as part of the locale string.
+    // This is the last line of defence behind the quoting in the workflow.
+    const argv = "['--locale=de-DE --commit']";
+
+    // when
+    const parsed = runInModule(PUBLISH_MODULE, `mod.parseArgs(${argv})`);
+    const selected = runInModule(
+      PUBLISH_MODULE,
+      `mod.selectListings(${JSON.stringify(all)}, ${JSON.stringify('de-DE --commit')})`
+    );
+
+    // then — it never becomes a commit, and it never matches a real locale
+    expect(parsed.value.commit).toBe(false);
+    expect(selected.ok).toBe(false);
+    expect(selected.message).toContain('No listing found');
+  });
+});
+
+describe('publishListings', () => {
+  const de = {
+    language: 'de-DE',
+    title: 'Pushup Stats',
+    shortDescription: 'kurz',
+    fullDescription: 'lang',
+  };
+  const names = (calls) => calls.map(([name]) => name);
+
+  it('should never write or commit on a dry run', () => {
+    // given — the live listing differs from the source
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: false,
+      remoteByLocale: { 'de-DE': { ...de, shortDescription: 'alt' } },
+    });
+
+    // then
+    expect(names(result.calls)).toEqual([
+      'createEdit',
+      'getListing',
+      'deleteEdit',
+    ]);
+    expect(result.changed).toBe(1);
+  });
+
+  it('should update and commit when --commit is set', () => {
+    // given
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: true,
+      remoteByLocale: { 'de-DE': { ...de, title: 'alt' } },
+    });
+
+    // then
+    expect(names(result.calls)).toEqual([
+      'createEdit',
+      'getListing',
+      'updateListing',
+      'commitEdit',
+    ]);
+  });
+
+  it('should discard the edit instead of committing when nothing changed', () => {
+    // given — live listing already matches, so a commit would be an empty
+    // edit and would still cost a review cycle
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: true,
+      remoteByLocale: { 'de-DE': de },
+    });
+
+    // then
+    expect(names(result.calls)).toEqual([
+      'createEdit',
+      'getListing',
+      'deleteEdit',
+    ]);
+    expect(result.changed).toBe(0);
+  });
+
+  it('should treat a locale with no live listing as a create', () => {
+    // given — `getListing` resolves to null for an unknown locale
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: true,
+      remoteByLocale: {},
+    });
+
+    // then
+    expect(names(result.calls)).toContain('updateListing');
+    expect(result.changed).toBe(1);
+  });
+
+  it('should send the full listing body on update', () => {
+    // given
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: true,
+      remoteByLocale: { 'de-DE': { ...de, title: 'alt' } },
+    });
+
+    // then
+    const [, editId, body] = result.calls.find(
+      ([name]) => name === 'updateListing'
+    );
+    expect(editId).toBe('edit-1');
+    expect(body).toEqual(de);
+  });
+
+  it('should clean up the edit when a call fails mid-transaction', () => {
+    // given — an open edit blocks the next run with a conflict
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: true,
+      remoteByLocale: { 'de-DE': { ...de, title: 'alt' } },
+      failOn: ['updateListing'],
+    });
+
+    // then
+    expect(names(result.calls)).toEqual([
+      'createEdit',
+      'getListing',
+      'updateListing',
+      'deleteEdit',
+    ]);
+    expect(result.failed).toBe('boom:updateListing');
+  });
+
+  it('should report the original failure, not a failure from the cleanup', () => {
+    // given — the update throws, and so does the cleanup that follows it
+    // when
+    const result = runPublish({
+      listings: [de],
+      commit: true,
+      remoteByLocale: { 'de-DE': { ...de, title: 'alt' } },
+      failOn: ['updateListing', 'deleteEdit'],
+    });
+
+    // then — the surfaced error is the one that actually broke the run
+    expect(result.failed).toBe('boom:updateListing');
+  });
+});
+
+describe('buildUpdateBody', () => {
+  const local = {
+    language: 'de-DE',
+    title: 'Pushup Stats',
+    shortDescription: 'kurz',
+    fullDescription: 'lang',
+  };
+
+  it('should carry the promo video over so a text update cannot wipe it', () => {
+    // given — `edits.listings.update` is a full replace, and the video is
+    // maintained in the Console with no source in this repo
+    const remote = { video: 'https://youtu.be/abc123' };
+
+    // when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.buildUpdateBody(${JSON.stringify(local)}, ${JSON.stringify(remote)})`
+    );
+
+    // then
+    expect(result.value.video).toBe('https://youtu.be/abc123');
+  });
+
+  it('should omit the video field when the live listing has none', () => {
+    // given / when
+    const result = runInModule(
+      PUBLISH_MODULE,
+      `mod.buildUpdateBody(${JSON.stringify(local)}, null)`
+    );
+
+    // then
+    expect(result.value).toEqual(local);
+    expect('video' in result.value).toBe(false);
   });
 });
 

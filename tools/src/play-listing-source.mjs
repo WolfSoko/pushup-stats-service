@@ -1,12 +1,14 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /**
  * Root of the Play store listing sources. One directory per Play locale,
  * each holding the three text fields the Play API accepts.
  */
 export const LISTINGS_ROOT = resolve(
-  new URL('../..', import.meta.url).pathname,
+  dirname(fileURLToPath(import.meta.url)),
+  '../..',
   'store/play'
 );
 
@@ -54,12 +56,19 @@ export const SUPPORTED_PLAY_LOCALES = Object.freeze(
 );
 
 /**
- * Play counts characters, not UTF-16 code units. The description is full of
- * emoji (📷, 🏋️, …) which are surrogate pairs, so `String.length` overcounts
- * them and would reject copy the Console accepts. Spread into code points.
+ * Play enforces its limits on UTF-16 code units, not code points or glyphs —
+ * its backend is a JVM, where `String.length()` is the code-unit count. The
+ * description is full of emoji, and they are not one unit each: `📷` is a
+ * surrogate pair (2), and `🏋️` is a surrogate pair plus a variation selector
+ * (3) despite rendering as a single glyph.
+ *
+ * Counting code points instead would undercount by ~10 characters on the
+ * current description and let copy through that the Console then rejects at
+ * commit time. Counting code units can only ever be too strict, which costs
+ * a few characters of headroom and never a failed publish.
  */
 export function countCharacters(text) {
-  return [...text].length;
+  return text.length;
 }
 
 function readField(localeDir, fileName) {
