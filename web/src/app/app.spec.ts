@@ -442,7 +442,7 @@ describe('App (testing-library)', () => {
       );
     });
 
-    it('omits role/tabindex/aria-label on the pill while the daily goal is not yet reached', async () => {
+    it('labels the pill as the goal-details toggle while the daily goal is not yet reached', async () => {
       // Given
       userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
       const notifierMock = makeNotifierMock();
@@ -465,10 +465,39 @@ describe('App (testing-library)', () => {
         '[data-testid="toolbar-goal-pill"]'
       );
       expect(pill).toBeTruthy();
-      expect(pill?.classList.contains('is-clickable')).toBe(false);
-      expect(pill?.getAttribute('role')).toBeNull();
-      expect(pill?.getAttribute('tabindex')).toBeNull();
-      expect(pill?.getAttribute('aria-label')).toBeNull();
+      expect(pill?.getAttribute('role')).toBe('button');
+      expect(pill?.getAttribute('tabindex')).toBe('0');
+      expect(pill?.getAttribute('aria-label')).toBe(
+        'Tagesziel-Einzelpositionen anzeigen'
+      );
+      expect(pill?.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    it('opens the goal details on a pill tap while the daily goal is not yet reached', async () => {
+      // given a goal that is still open (no hover on touch devices)
+      userConfigApiMock.getConfig.mockReturnValue(of({ dailyGoal: 100 }));
+      const notifierMock = makeNotifierMock();
+      const today = new Date().toISOString().slice(0, 10);
+      liveEntriesSignal.set([
+        {
+          _id: 'e1',
+          exerciseId: 'pushup',
+          timestamp: `${today}T10:00:00`,
+          reps: 10,
+          source: 'web',
+        },
+      ]);
+      liveConnectedSignal.set(true);
+      await render(App, { providers: commonProviders(notifierMock) });
+      await screen.findAllByText((content) => content.includes('10 / 100'));
+
+      // when the pill is tapped
+      await userEvent.click(screen.getByTestId('toolbar-goal-pill'));
+
+      // then the breakdown opens instead of replaying the celebration
+      const dropdown = await screen.findByTestId('toolbar-goal-dropdown');
+      expect(dropdown.textContent).toContain('Liegestütze');
+      expect(notifierMock.reopenPrimaryGoal).not.toHaveBeenCalled();
     });
 
     it('replays the celebration when Enter is pressed on the pill after the goal is reached', async () => {

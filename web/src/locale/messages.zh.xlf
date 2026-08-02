@@ -10076,5 +10076,77 @@
         <target>Alle Übungen eintragen &amp; abhaken</target>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.goals">
+      <segment state="initial">
+        <source>Tagesziele</source>
+        <target>Tagesziele</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalsAria">
+      <segment state="initial">
+        <source>Tagesziele zum Abhaken anzeigen</source>
+        <target>Tagesziele zum Abhaken anzeigen</target>
+      </segment>
+    </unit>
+    <unit id="toolbarDailyGoal.checkHint">
+      <segment state="initial">
+        <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
+        <target> Teilziele abhaken kannst du auf dem Dashboard. </target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.reached">
+      <segment state="initial">
+        <source>Ziel erreicht</source>
+        <target>Ziel erreicht</target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.manual">
+      <segment state="initial">
+        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
+        <target>Dieses Ziel braucht einen manuellen Eintrag</target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.fill">
+      <segment state="initial">
+        <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
+        <target>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.aria">
+      <segment state="initial">
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemReachedAria">
+      <segment state="initial">
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemAria">
+      <segment state="initial">
+        <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
+        <target><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.reset">
+      <segment state="initial">
+        <source>Übung zurücksetzen</source>
+        <target>Übung zurücksetzen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetDone">
+      <segment state="initial">
+        <source>Übung zurückgesetzt.</source>
+        <target>Übung zurückgesetzt.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetKept">
+      <segment state="initial">
+        <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
+        <target>Haken entfernt — deine eigenen Einträge bleiben bestehen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

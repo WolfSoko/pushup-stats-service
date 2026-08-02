@@ -22,13 +22,33 @@ import {
   provideRouter,
 } from '@angular/router';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
-import {
-  AppDataFacade,
-  type DailyGoalItemView,
-} from '../../core/app-data.facade';
+import { AppDataFacade } from '../../core/app-data.facade';
+import type { DailyGoalItemView } from '../../core/daily-goal.helpers';
 import { ShareService } from '../../core/share.service';
 import { UserConfigStore } from '../../core/user-config.store';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
+
+function goalItem(
+  overrides: Partial<DailyGoalItemView> = {}
+): DailyGoalItemView {
+  return {
+    id: 'g1',
+    exerciseId: 'pushup',
+    exerciseName: 'Liegestütze',
+    measurement: 'reps',
+    unit: 'reps',
+    target: 100,
+    value: 40,
+    remaining: 60,
+    targetDisplay: '100',
+    progressDisplay: '40',
+    remainingDisplay: '60',
+    percent: 40,
+    reached: false,
+    fillable: true,
+    ...overrides,
+  };
+}
 
 describe('StatsDashboardComponent', () => {
   let fixture: ComponentFixture<StatsDashboardComponent>;
@@ -319,22 +339,21 @@ describe('StatsDashboardComponent', () => {
       it('Then it renders each daily goal with exercise, progress/target and percent', async () => {
         // Given a multi-exercise daily goal breakdown
         dailyGoalBreakdown.set([
-          {
-            id: 'g1',
-            exerciseName: 'Liegestütze',
-            progressDisplay: '40',
-            targetDisplay: '100',
-            percent: 40,
-            reached: false,
-          },
-          {
+          goalItem(),
+          goalItem({
             id: 'g2',
+            exerciseId: 'plank.standard',
             exerciseName: 'Plank',
-            progressDisplay: '1:00',
+            measurement: 'time',
+            unit: 's',
+            target: 120,
+            value: 60,
+            remaining: 60,
             targetDisplay: '2:00',
+            progressDisplay: '1:00',
+            remainingDisplay: '1:00',
             percent: 50,
-            reached: false,
-          },
+          }),
         ]);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -351,6 +370,54 @@ describe('StatsDashboardComponent', () => {
         expect(text).toContain('40%');
         expect(text).toContain('Plank');
         expect(text).toContain('1:00 / 2:00');
+      });
+
+      it('Then ticking a sub-goal logs the amount still missing for it', async () => {
+        // given a daily goal that is 60 reps short
+        dailyGoalBreakdown.set([goalItem()]);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        exerciseCreateSpy.mockClear();
+
+        // when the user ticks it off
+        const checkbox = (fixture.nativeElement as HTMLElement).querySelector(
+          '[data-testid="daily-goal-check"] input'
+        ) as HTMLInputElement;
+        checkbox.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        // then the gap is written as an entry for that exercise
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'pushup',
+            reps: 60,
+            source: 'goal-fill',
+          })
+        );
+      });
+
+      it('Then a reached sub-goal renders checked and locked', async () => {
+        // given a goal that is already covered
+        dailyGoalBreakdown.set([
+          goalItem({ value: 100, remaining: 0, percent: 100, reached: true }),
+        ]);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        // then un-ticking it is not offered — goals are scored from entries.
+        // The row stays focusable so its "Ziel erreicht" tooltip is reachable.
+        const checkbox = (fixture.nativeElement as HTMLElement).querySelector(
+          '[data-testid="daily-goal-check"] input'
+        ) as HTMLInputElement;
+        expect(checkbox.checked).toBe(true);
+        expect(checkbox.getAttribute('aria-disabled')).toBe('true');
+        exerciseCreateSpy.mockClear();
+        checkbox.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
       });
 
       it('Then it should offer quick add buttons for 10, 20 and 30 reps', () => {

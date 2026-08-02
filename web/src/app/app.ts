@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { type ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { Auth } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +22,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -53,6 +52,10 @@ import {
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
 import { UserConfigStore } from './core/user-config.store';
+import { DailyGoalActionsService } from './core/daily-goal-actions.service';
+import { DailyGoalChecklistComponent } from './core/daily-goal/daily-goal-checklist.component';
+import { toGoalDialItems } from './core/daily-goal/goal-dial-items';
+import { createGoalPillOverlay } from './core/daily-goal/goal-pill-overlay';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AppDataFacade } from './core/app-data.facade';
@@ -125,9 +128,9 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     QuickAddFabCoachmarkComponent,
     ThemeToggleComponent,
     AiAssistantNavButtonComponent,
+    DailyGoalChecklistComponent,
     MatDialogModule,
     MatFormFieldModule,
-    MatProgressBarModule,
     MatSelectModule,
     OverlayModule,
   ],
@@ -278,59 +281,38 @@ export class App {
   readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
   protected readonly goalDetailsAriaLabel = $localize`:@@toolbarDailyGoal.detailsAria:Tagesziel-Einzelpositionen anzeigen`;
 
-  // The dropdown renders through a CDK overlay (body-level) instead of as a
-  // toolbar descendant: `.top-nav` carries a `mask-image` edge-fade, and a
-  // CSS mask clips descendant painting to the toolbar box, so an in-toolbar
-  // panel below the bar would be masked away.
-  protected readonly goalDetailsOpen = signal(false);
-  protected readonly goalOverlayPositions: ConnectedPosition[] = [
-    {
-      originX: 'end',
-      originY: 'bottom',
-      overlayX: 'end',
-      overlayY: 'top',
-      offsetY: 6,
-    },
-    {
-      originX: 'end',
-      originY: 'top',
-      overlayX: 'end',
-      overlayY: 'bottom',
-      offsetY: -6,
-    },
-  ];
-  // Bridges the gap between the pill and the detached panel so moving the
-  // pointer across it (or a focus bounce between origin and overlay) doesn't
-  // flicker the menu closed.
-  private goalDetailsCloseTimer: ReturnType<typeof setTimeout> | null = null;
-  private readonly _clearGoalTimerOnDestroy = this.destroyRef.onDestroy(() => {
-    if (this.goalDetailsCloseTimer) clearTimeout(this.goalDetailsCloseTimer);
-  });
+  private readonly goalOverlay = createGoalPillOverlay(
+    () => this.dailyGoalBreakdown().length > 0
+  );
+  protected readonly goalDetailsOpen = this.goalOverlay.open;
+  protected readonly goalOverlayPositions = this.goalOverlay.positions;
 
   openGoalDetails(): void {
-    if (this.goalDetailsCloseTimer) {
-      clearTimeout(this.goalDetailsCloseTimer);
-      this.goalDetailsCloseTimer = null;
-    }
-    if (this.dailyGoalBreakdown().length > 0) this.goalDetailsOpen.set(true);
+    this.goalOverlay.show();
   }
 
   scheduleCloseGoalDetails(): void {
-    if (this.goalDetailsCloseTimer) clearTimeout(this.goalDetailsCloseTimer);
-    this.goalDetailsCloseTimer = setTimeout(
-      () => this.goalDetailsOpen.set(false),
-      120
-    );
+    this.goalOverlay.scheduleHide();
   }
 
   closeGoalDetails(): void {
-    if (this.goalDetailsCloseTimer) {
-      clearTimeout(this.goalDetailsCloseTimer);
-      this.goalDetailsCloseTimer = null;
-    }
-    this.goalDetailsOpen.set(false);
+    this.goalOverlay.hide();
   }
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
+
+  private readonly goalActions = inject(DailyGoalActionsService);
+  /** Daily goals rendered as the speed dial's goal submenu. */
+  readonly goalDialItems = computed(() =>
+    toGoalDialItems(this.dailyGoalBreakdown(), (id) =>
+      this.goalActions.isPending(id)
+    )
+  );
+
+  handleFillGoalItem(goalId: string): void {
+    const item = this.dailyGoalBreakdown().find((i) => i.id === goalId);
+    if (!item) return;
+    void this.goalActions.complete(item);
+  }
 
   private readonly tcfConsent = inject(TcfConsentService);
 
@@ -472,7 +454,12 @@ export class App {
    * is showing. No-op while the pill is still counting up to the goal.
    */
   handleGoalPillClick(): void {
-    if (!this.goalReached()) return;
+    if (!this.goalReached()) {
+      // Touch devices never fire the hover that opens the dropdown, so a tap
+      // on the pill has to open the goal details itself.
+      this.goalOverlay.show();
+      return;
+    }
     this._goalReachedNotifier.reopenPrimaryGoal();
   }
 
