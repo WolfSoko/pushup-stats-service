@@ -372,4 +372,85 @@ describe('UserTrainingPlanApiService', () => {
       })
     );
   });
+  it('should add per-exercise check-offs via arrayUnion', async () => {
+    // given
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    // when
+    service.addCompletedItems('u', ['5:0', '5:1']).subscribe();
+
+    // then
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith('5:0', '5:1');
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedItems: expect.objectContaining({ __type: 'arrayUnion' }),
+      })
+    );
+  });
+
+  it('should remove per-exercise check-offs via arrayRemove', async () => {
+    // given
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    // when
+    service.removeCompletedItems('u', ['5:0']).subscribe();
+
+    // then
+    await Promise.resolve();
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith('5:0');
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedItems: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
+  it('should skip the write when no item ids are given', async () => {
+    // given
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    // when
+    service.addCompletedItems('u', []).subscribe();
+    service.removeCompletedItems('u', []).subscribe();
+
+    // then
+    await Promise.resolve();
+    expect(firestoreFns.updateDoc).not.toHaveBeenCalled();
+  });
 });

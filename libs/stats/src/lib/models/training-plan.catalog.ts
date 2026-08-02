@@ -1,6 +1,7 @@
 import {
   TrainingPlan,
   TrainingPlanDay,
+  TrainingPlanExercise,
   TrainingPlanLevel,
 } from './training-plan.models';
 
@@ -56,6 +57,32 @@ import {
  * (`REST_DAY`, `LIGHT_DAY`, `AMRAP_3X_90S`, …) so the same XLIFF unit
  * covers every occurrence across plans.
  */
+
+// ─── Catalog exercise ids used by the structured day prescriptions ──
+const LS = 'pushup';
+const ROWS = 'pull.rows';
+const PULLUPS = 'pull.pullups';
+const FACEPULL = 'pull.facepull';
+const PLANK = 'plank.standard';
+const HOLLOW = 'core.hollowhold';
+const DEADBUG = 'core.deadbug';
+const LEGRAISE = 'abs.legraises';
+const TWIST = 'abs.russiantwist';
+const CLIMBERS = 'abs.mountainclimbers';
+const SQUATS = 'legs.squats';
+const JUMPSQUATS = 'legs.jumpsquats';
+const LUNGES = 'legs.lunges';
+const STEPUP = 'lunge.stepup';
+const GLUTE = 'legs.glutebridge';
+const WALLSIT = 'squat.wallsit';
+const BURPEES = 'cardio.burpees';
+const JACKS = 'cardio.jumpingjacks';
+const STRETCH = 'mobility.stretching';
+const YOGA = 'mobility.yoga';
+const FOAM = 'mobility.foamrolling';
+const WARMUP = 'mobility.dynamicwarmup';
+const CATCOW = 'mobility.catcow';
+const HIPOPENER = 'mobility.hipopener';
 
 // ─── Shared day-description constants ──────────────────────────────
 const REST_DAY = $localize`:@@plan.day.rest:Ruhetag`;
@@ -905,14 +932,18 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.push-pull-6w.day.1.desc:Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause`
+    $localize`:@@plan.push-pull-6w.day.1.desc:Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause`,
+    { exercises: [x(LS, 30, [10, 10, 10]), x(ROWS, 24, [8, 8, 8], 'inverted')] }
   ),
   d(
     2,
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.push-pull-6w.day.2.desc:Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung`
+    $localize`:@@plan.push-pull-6w.day.2.desc:Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung`,
+    {
+      exercises: [x(ROWS, 32, [8, 8, 8, 8], 'australian'), x(LS, 24, [12, 12])],
+    }
   ),
   d(3, 'rest', 0, undefined, REST_DAY),
   d(
@@ -920,21 +951,35 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     33,
     [11, 11, 11],
-    $localize`:@@plan.push-pull-6w.day.4.desc:Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)`
+    $localize`:@@plan.push-pull-6w.day.4.desc:Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)`,
+    {
+      exercises: [
+        x(LS, 33, [11, 11, 11]),
+        x(PULLUPS, 18, [6, 6, 6], 'negative'),
+      ],
+    }
   ),
   d(
     5,
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.push-pull-6w.day.5.desc:Leichter Tag 2×10 · 3×12 Face Pulls`
+    $localize`:@@plan.push-pull-6w.day.5.desc:Leichter Tag 2×10 · 3×12 Face Pulls`,
+    { exercises: [x(LS, 20, [10, 10]), x(FACEPULL, 36, [12, 12, 12])] }
   ),
   d(
     6,
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.push-pull-6w.day.6.desc:Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s`
+    $localize`:@@plan.push-pull-6w.day.6.desc:Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s`,
+    {
+      exercises: [
+        x(LS, 36, [12, 12, 12]),
+        x(ROWS, 24, [8, 8, 8], 'inverted'),
+        x(PLANK, 90, [30, 30, 30]),
+      ],
+    }
   ),
   d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — same scheme, +10 % volume.
@@ -943,14 +988,21 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [13, 12, 11],
-    $localize`:@@plan.push-pull-6w.day.8.desc:Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern`
+    $localize`:@@plan.push-pull-6w.day.8.desc:Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern`,
+    { exercises: [x(LS, 36, [13, 12, 11]), x(ROWS, 27, [9, 9, 9])] }
   ),
   d(
     9,
     'main',
     27,
     [9, 9, 9],
-    $localize`:@@plan.push-pull-6w.day.9.desc:Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS`
+    $localize`:@@plan.push-pull-6w.day.9.desc:Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS`,
+    {
+      exercises: [
+        x(ROWS, 36, [9, 9, 9, 9], 'australian'),
+        x(LS, 27, [9, 9, 9]),
+      ],
+    }
   ),
   d(10, 'rest', 0, undefined, REST_DAY),
   d(
@@ -958,21 +1010,35 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     39,
     [14, 13, 12],
-    $localize`:@@plan.push-pull-6w.day.11.desc:Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative`
+    $localize`:@@plan.push-pull-6w.day.11.desc:Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative`,
+    {
+      exercises: [
+        x(LS, 39, [14, 13, 12]),
+        x(PULLUPS, 21, [7, 7, 7], 'negative'),
+      ],
+    }
   ),
   d(
     12,
     'light',
     22,
     [11, 11],
-    $localize`:@@plan.push-pull-6w.day.12.desc:Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility`
+    $localize`:@@plan.push-pull-6w.day.12.desc:Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility`,
+    { exercises: [x(LS, 22, [11, 11]), x(FACEPULL, 36, [12, 12, 12])] }
   ),
   d(
     13,
     'main',
     42,
     [15, 14, 13],
-    $localize`:@@plan.push-pull-6w.day.13.desc:Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s`
+    $localize`:@@plan.push-pull-6w.day.13.desc:Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s`,
+    {
+      exercises: [
+        x(LS, 42, [15, 14, 13]),
+        x(ROWS, 30, [10, 10, 10], 'inverted'),
+        x(PLANK, 120, [40, 40, 40]),
+      ],
+    }
   ),
   d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — 4 sets, balanced volume.
@@ -981,14 +1047,21 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     45,
     [12, 11, 11, 11],
-    $localize`:@@plan.push-pull-6w.day.15.desc:Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)`
+    $localize`:@@plan.push-pull-6w.day.15.desc:Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)`,
+    { exercises: [x(LS, 45, [12, 11, 11, 11]), x(PULLUPS, 24, [6, 6, 6, 6])] }
   ),
   d(
     16,
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.push-pull-6w.day.16.desc:Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS`
+    $localize`:@@plan.push-pull-6w.day.16.desc:Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS`,
+    {
+      exercises: [
+        x(ROWS, 40, [8, 8, 8, 8, 8], 'australian'),
+        x(LS, 30, [10, 10, 10]),
+      ],
+    }
   ),
   d(17, 'rest', 0, undefined, REST_DAY),
   d(
@@ -996,21 +1069,36 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     48,
     [13, 12, 12, 11],
-    $localize`:@@plan.push-pull-6w.day.18.desc:Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s`
+    $localize`:@@plan.push-pull-6w.day.18.desc:Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s`,
+    {
+      exercises: [
+        x(LS, 48, [13, 12, 12, 11]),
+        x(PULLUPS, 28, [7, 7, 7, 7]),
+        x(PLANK, 135, [45, 45, 45]),
+      ],
+    }
   ),
   d(
     19,
     'light',
     24,
     [12, 12],
-    $localize`:@@plan.push-pull-6w.day.19.desc:Leichter Tag 2×12 · 3×15 Face Pulls`
+    $localize`:@@plan.push-pull-6w.day.19.desc:Leichter Tag 2×12 · 3×15 Face Pulls`,
+    { exercises: [x(LS, 24, [12, 12]), x(FACEPULL, 45, [15, 15, 15])] }
   ),
   d(
     20,
     'main',
     51,
     [14, 13, 12, 12],
-    $localize`:@@plan.push-pull-6w.day.20.desc:Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s`
+    $localize`:@@plan.push-pull-6w.day.20.desc:Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s`,
+    {
+      exercises: [
+        x(LS, 51, [14, 13, 12, 12]),
+        x(PULLUPS, 32, [8, 8, 8, 8]),
+        x(HOLLOW, 60, [20, 20, 20]),
+      ],
+    }
   ),
   d(21, 'rest', 0, undefined, REST_DAY),
   // Week 4 — heavier loads, balanced sets.
@@ -1019,14 +1107,21 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     54,
     [15, 13, 13, 13],
-    $localize`:@@plan.push-pull-6w.day.22.desc:Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge`
+    $localize`:@@plan.push-pull-6w.day.22.desc:Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge`,
+    { exercises: [x(LS, 54, [15, 13, 13, 13]), x(PULLUPS, 32, [8, 8, 8, 8])] }
   ),
   d(
     23,
     'main',
     33,
     [11, 11, 11],
-    $localize`:@@plan.push-pull-6w.day.23.desc:Pull-Tag: 5×9 Australian Rows · Push 3×11 LS`
+    $localize`:@@plan.push-pull-6w.day.23.desc:Pull-Tag: 5×9 Australian Rows · Push 3×11 LS`,
+    {
+      exercises: [
+        x(ROWS, 45, [9, 9, 9, 9, 9], 'australian'),
+        x(LS, 33, [11, 11, 11]),
+      ],
+    }
   ),
   d(24, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1034,7 +1129,14 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     57,
     [16, 14, 14, 13],
-    $localize`:@@plan.push-pull-6w.day.25.desc:Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s`
+    $localize`:@@plan.push-pull-6w.day.25.desc:Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s`,
+    {
+      exercises: [
+        x(LS, 57, [16, 14, 14, 13]),
+        x(PULLUPS, 36, [9, 9, 9, 9]),
+        x(PLANK, 150, [50, 50, 50]),
+      ],
+    }
   ),
   d(
     26,
@@ -1048,7 +1150,14 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [17, 15, 14, 14],
-    $localize`:@@plan.push-pull-6w.day.27.desc:Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s`
+    $localize`:@@plan.push-pull-6w.day.27.desc:Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s`,
+    {
+      exercises: [
+        x(LS, 60, [17, 15, 14, 14]),
+        x(PULLUPS, 40, [10, 10, 10, 10]),
+        x(HOLLOW, 90, [30, 30, 30]),
+      ],
+    }
   ),
   d(28, 'rest', 0, undefined, REST_DAY),
   // Week 5 — 5 sets, descending reps.
@@ -1057,14 +1166,26 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     65,
     [14, 13, 13, 13, 12],
-    $localize`:@@plan.push-pull-6w.day.29.desc:Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause`
+    $localize`:@@plan.push-pull-6w.day.29.desc:Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause`,
+    {
+      exercises: [
+        x(LS, 65, [14, 13, 13, 13, 12]),
+        x(PULLUPS, 35, [7, 7, 7, 7, 7]),
+      ],
+    }
   ),
   d(
     30,
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.push-pull-6w.day.30.desc:Pull-Tag: 5×10 Australian Rows · Push 3×12 LS`
+    $localize`:@@plan.push-pull-6w.day.30.desc:Pull-Tag: 5×10 Australian Rows · Push 3×12 LS`,
+    {
+      exercises: [
+        x(ROWS, 50, [10, 10, 10, 10, 10], 'australian'),
+        x(LS, 36, [12, 12, 12]),
+      ],
+    }
   ),
   d(31, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1072,21 +1193,36 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     70,
     [15, 14, 14, 14, 13],
-    $localize`:@@plan.push-pull-6w.day.32.desc:Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s`
+    $localize`:@@plan.push-pull-6w.day.32.desc:Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s`,
+    {
+      exercises: [
+        x(LS, 70, [15, 14, 14, 14, 13]),
+        x(PULLUPS, 40, [8, 8, 8, 8, 8]),
+        x(PLANK, 180, [60, 60, 60]),
+      ],
+    }
   ),
   d(
     33,
     'light',
     28,
     [14, 14],
-    $localize`:@@plan.push-pull-6w.day.33.desc:Leichter Tag 2×14 · 4×12 Face Pulls`
+    $localize`:@@plan.push-pull-6w.day.33.desc:Leichter Tag 2×14 · 4×12 Face Pulls`,
+    { exercises: [x(LS, 28, [14, 14]), x(FACEPULL, 48, [12, 12, 12, 12])] }
   ),
   d(
     34,
     'main',
     75,
     [16, 15, 15, 15, 14],
-    $localize`:@@plan.push-pull-6w.day.34.desc:Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s`
+    $localize`:@@plan.push-pull-6w.day.34.desc:Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s`,
+    {
+      exercises: [
+        x(LS, 75, [16, 15, 15, 15, 14]),
+        x(PULLUPS, 45, [9, 9, 9, 9, 9]),
+        x(HOLLOW, 120, [40, 40, 40]),
+      ],
+    }
   ),
   d(35, 'rest', 0, undefined, REST_DAY),
   // Week 6 — peak + final test.
@@ -1095,14 +1231,23 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     80,
     [17, 16, 16, 16, 15],
-    $localize`:@@plan.push-pull-6w.day.36.desc:Push 5 Sätze schwer · Pull 5×10 Klimmzüge`
+    $localize`:@@plan.push-pull-6w.day.36.desc:Push 5 Sätze schwer · Pull 5×10 Klimmzüge`,
+    {
+      exercises: [
+        x(LS, 80, [17, 16, 16, 16, 15]),
+        x(PULLUPS, 50, [10, 10, 10, 10, 10]),
+      ],
+    }
   ),
   d(
     37,
     'main',
     40,
     [10, 10, 10, 10],
-    $localize`:@@plan.push-pull-6w.day.37.desc:Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS`
+    $localize`:@@plan.push-pull-6w.day.37.desc:Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS`,
+    {
+      exercises: [x(PULLUPS, 40, [8, 8, 8, 8, 8]), x(LS, 40, [10, 10, 10, 10])],
+    }
   ),
   d(38, 'rest', 0, undefined, REST_DAY_MOBILITY),
   d(
@@ -1110,7 +1255,8 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.push-pull-6w.day.39.desc:Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge`
+    $localize`:@@plan.push-pull-6w.day.39.desc:Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge`,
+    { exercises: [x(LS, 60, [15, 15, 15, 15]), x(PULLUPS, 18, [6, 6, 6])] }
   ),
   d(
     40,
@@ -1141,14 +1287,23 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     20,
     undefined,
-    $localize`:@@plan.full-body-6w.day.1.desc:Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank`
+    $localize`:@@plan.full-body-6w.day.1.desc:Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank`,
+    { exercises: [x(LS, 20), x(WALLSIT, 60), x(PLANK, 60)] }
   ),
   d(
     2,
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.2.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank`
+    $localize`:@@plan.full-body-6w.day.2.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank`,
+    {
+      exercises: [
+        x(LS, 30, [10, 10, 10]),
+        x(SQUATS, 45, [15, 15, 15]),
+        x(LUNGES, 60, [20, 20, 20]),
+        x(PLANK, 90, [30, 30, 30]),
+      ],
+    }
   ),
   d(3, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1156,21 +1311,38 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.4.desc:Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank`
+    $localize`:@@plan.full-body-6w.day.4.desc:Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank`,
+    {
+      exercises: [
+        x(LS, 30, [10, 10, 10]),
+        x(SQUATS, 45, [15, 15, 15], 'sumo'),
+        x(GLUTE, 36, [12, 12, 12]),
+        x(PLANK, 120, [40, 40, 40]),
+      ],
+    }
   ),
   d(
     5,
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.full-body-6w.day.5.desc:Leichter Tag — 2×10 LS · Mobility 10 min`
+    $localize`:@@plan.full-body-6w.day.5.desc:Leichter Tag — 2×10 LS · Mobility 10 min`,
+    { exercises: [x(LS, 20, [10, 10]), x(STRETCH, 600)] }
   ),
   d(
     6,
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.6.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold`
+    $localize`:@@plan.full-body-6w.day.6.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold`,
+    {
+      exercises: [
+        x(LS, 30, [10, 10, 10]),
+        x(SQUATS, 45, [15, 15, 15]),
+        x(GLUTE, 30, [10, 10, 10]),
+        x(HOLLOW, 90, [30, 30, 30]),
+      ],
+    }
   ),
   d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — +20 % volume per circuit station.
@@ -1179,7 +1351,15 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.8.desc:Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank`
+    $localize`:@@plan.full-body-6w.day.8.desc:Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank`,
+    {
+      exercises: [
+        x(LS, 36, [12, 12, 12]),
+        x(SQUATS, 54, [18, 18, 18]),
+        x(LUNGES, 72, [24, 24, 24]),
+        x(PLANK, 120, [40, 40, 40]),
+      ],
+    }
   ),
   d(9, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1187,21 +1367,38 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.10.desc:Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank`
+    $localize`:@@plan.full-body-6w.day.10.desc:Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank`,
+    {
+      exercises: [
+        x(LS, 36, [12, 12, 12]),
+        x(SQUATS, 54, [18, 18, 18], 'sumo'),
+        x(GLUTE, 45, [15, 15, 15]),
+        x(PLANK, 135, [45, 45, 45]),
+      ],
+    }
   ),
   d(
     11,
     'light',
     22,
     [11, 11],
-    $localize`:@@plan.full-body-6w.day.11.desc:Leichter Tag — 2×11 LS · Hip Opener 10 min`
+    $localize`:@@plan.full-body-6w.day.11.desc:Leichter Tag — 2×11 LS · Hip Opener 10 min`,
+    { exercises: [x(LS, 22, [11, 11]), x(HIPOPENER, 600)] }
   ),
   d(
     12,
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.12.desc:Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank`
+    $localize`:@@plan.full-body-6w.day.12.desc:Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank`,
+    {
+      exercises: [
+        x(LS, 36, [12, 12, 12]),
+        x(STEPUP, 72, [24, 24, 24]),
+        x(TWIST, 45, [15, 15, 15]),
+        x(PLANK, 120, [40, 40, 40]),
+      ],
+    }
   ),
   d(13, 'rest', 0, undefined, REST_DAY),
   d(14, 'rest', 0, undefined, REST_DAY),
@@ -1211,7 +1408,15 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     40,
     [10, 10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.15.desc:Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank`
+    $localize`:@@plan.full-body-6w.day.15.desc:Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank`,
+    {
+      exercises: [
+        x(LS, 40, [10, 10, 10, 10]),
+        x(SQUATS, 60, [15, 15, 15, 15]),
+        x(GLUTE, 48, [12, 12, 12, 12]),
+        x(PLANK, 160, [40, 40, 40, 40]),
+      ],
+    }
   ),
   d(16, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1219,21 +1424,38 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     44,
     [11, 11, 11, 11],
-    $localize`:@@plan.full-body-6w.day.17.desc:Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank`
+    $localize`:@@plan.full-body-6w.day.17.desc:Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank`,
+    {
+      exercises: [
+        x(LS, 44, [11, 11, 11, 11]),
+        x(LUNGES, 128, [32, 32, 32, 32]),
+        x(GLUTE, 60, [15, 15, 15, 15]),
+        x(PLANK, 180, [45, 45, 45, 45]),
+      ],
+    }
   ),
   d(
     18,
     'light',
     24,
     [12, 12],
-    $localize`:@@plan.full-body-6w.day.18.desc:Leichter Tag — 2×12 LS · Yoga 20 min`
+    $localize`:@@plan.full-body-6w.day.18.desc:Leichter Tag — 2×12 LS · Yoga 20 min`,
+    { exercises: [x(LS, 24, [12, 12]), x(YOGA, 1200)] }
   ),
   d(
     19,
     'main',
     48,
     [12, 12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.19.desc:Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank`
+    $localize`:@@plan.full-body-6w.day.19.desc:Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank`,
+    {
+      exercises: [
+        x(LS, 48, [12, 12, 12, 12]),
+        x(JUMPSQUATS, 60, [15, 15, 15, 15]),
+        x(GLUTE, 48, [12, 12, 12, 12]),
+        x(PLANK, 180, [45, 45, 45, 45]),
+      ],
+    }
   ),
   d(20, 'rest', 0, undefined, REST_DAY),
   d(21, 'rest', 0, undefined, REST_DAY),
@@ -1243,7 +1465,15 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     52,
     [13, 13, 13, 13],
-    $localize`:@@plan.full-body-6w.day.22.desc:Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank`
+    $localize`:@@plan.full-body-6w.day.22.desc:Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank`,
+    {
+      exercises: [
+        x(LS, 52, [13, 13, 13, 13]),
+        x(SQUATS, 72, [18, 18, 18, 18]),
+        x(GLUTE, 60, [15, 15, 15, 15]),
+        x(PLANK, 200, [50, 50, 50, 50]),
+      ],
+    }
   ),
   d(23, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1251,21 +1481,38 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     56,
     [14, 14, 14, 14],
-    $localize`:@@plan.full-body-6w.day.24.desc:Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank`
+    $localize`:@@plan.full-body-6w.day.24.desc:Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank`,
+    {
+      exercises: [
+        x(LS, 56, [14, 14, 14, 14]),
+        x(LUNGES, 144, [36, 36, 36, 36]),
+        x(GLUTE, 60, [15, 15, 15, 15], 'hip-thrust'),
+        x(PLANK, 200, [50, 50, 50, 50]),
+      ],
+    }
   ),
   d(
     25,
     'light',
     26,
     [13, 13],
-    $localize`:@@plan.full-body-6w.day.25.desc:Leichter Tag — 2×13 LS · Foam Rolling 15 min`
+    $localize`:@@plan.full-body-6w.day.25.desc:Leichter Tag — 2×13 LS · Foam Rolling 15 min`,
+    { exercises: [x(LS, 26, [13, 13]), x(FOAM, 900)] }
   ),
   d(
     26,
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.26.desc:Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank`
+    $localize`:@@plan.full-body-6w.day.26.desc:Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank`,
+    {
+      exercises: [
+        x(LS, 60, [15, 15, 15, 15]),
+        x(JUMPSQUATS, 72, [18, 18, 18, 18]),
+        x(GLUTE, 60, [15, 15, 15, 15]),
+        x(PLANK, 240, [60, 60, 60, 60]),
+      ],
+    }
   ),
   d(27, 'rest', 0, undefined, REST_DAY),
   d(28, 'rest', 0, undefined, REST_DAY),
@@ -1275,7 +1522,15 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [12, 12, 12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.29.desc:Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`
+    $localize`:@@plan.full-body-6w.day.29.desc:Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`,
+    {
+      exercises: [
+        x(LS, 60, [12, 12, 12, 12, 12]),
+        x(SQUATS, 75, [15, 15, 15, 15, 15]),
+        x(GLUTE, 60, [12, 12, 12, 12, 12]),
+        x(PLANK, 225, [45, 45, 45, 45, 45]),
+      ],
+    }
   ),
   d(30, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1283,21 +1538,38 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     65,
     [13, 13, 13, 13, 13],
-    $localize`:@@plan.full-body-6w.day.31.desc:Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank`
+    $localize`:@@plan.full-body-6w.day.31.desc:Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank`,
+    {
+      exercises: [
+        x(LS, 65, [13, 13, 13, 13, 13]),
+        x(LUNGES, 160, [32, 32, 32, 32, 32]),
+        x(GLUTE, 65, [13, 13, 13, 13, 13]),
+        x(PLANK, 250, [50, 50, 50, 50, 50]),
+      ],
+    }
   ),
   d(
     32,
     'light',
     28,
     [14, 14],
-    $localize`:@@plan.full-body-6w.day.32.desc:Leichter Tag — 2×14 LS · Mobility 15 min`
+    $localize`:@@plan.full-body-6w.day.32.desc:Leichter Tag — 2×14 LS · Mobility 15 min`,
+    { exercises: [x(LS, 28, [14, 14]), x(STRETCH, 900)] }
   ),
   d(
     33,
     'main',
     70,
     [14, 14, 14, 14, 14],
-    $localize`:@@plan.full-body-6w.day.33.desc:Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank`
+    $localize`:@@plan.full-body-6w.day.33.desc:Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank`,
+    {
+      exercises: [
+        x(LS, 70, [14, 14, 14, 14, 14]),
+        x(JUMPSQUATS, 90, [18, 18, 18, 18, 18]),
+        x(GLUTE, 75, [15, 15, 15, 15, 15], 'hip-thrust'),
+        x(PLANK, 300, [60, 60, 60, 60, 60]),
+      ],
+    }
   ),
   d(34, 'rest', 0, undefined, REST_DAY),
   d(35, 'rest', 0, undefined, REST_DAY),
@@ -1307,7 +1579,15 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     75,
     [15, 15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.36.desc:Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank`
+    $localize`:@@plan.full-body-6w.day.36.desc:Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank`,
+    {
+      exercises: [
+        x(LS, 75, [15, 15, 15, 15, 15]),
+        x(SQUATS, 100, [20, 20, 20, 20, 20]),
+        x(GLUTE, 75, [15, 15, 15, 15, 15]),
+        x(PLANK, 300, [60, 60, 60, 60, 60]),
+      ],
+    }
   ),
   d(37, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1315,7 +1595,15 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`
+    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`,
+    {
+      exercises: [
+        x(LS, 60, [15, 15, 15, 15]),
+        x(SQUATS, 60, [15, 15, 15, 15]),
+        x(GLUTE, 48, [12, 12, 12, 12]),
+        x(PLANK, 180, [45, 45, 45, 45]),
+      ],
+    }
   ),
   d(
     39,
@@ -1331,7 +1619,8 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     50,
     undefined,
-    $localize`:@@plan.full-body-6w.day.42.desc:Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt`
+    $localize`:@@plan.full-body-6w.day.42.desc:Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt`,
+    { exercises: [x(LS, 50), x(SQUATS, 50), x(PLANK, 60)] }
   ),
 ];
 
@@ -1354,14 +1643,30 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     20,
     [10, 10],
-    $localize`:@@plan.core-4w.day.2.desc:Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10`
+    $localize`:@@plan.core-4w.day.2.desc:Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10`,
+    {
+      exercises: [
+        x(PLANK, 90, [30, 30, 30]),
+        x(HOLLOW, 60, [20, 20, 20]),
+        x(DEADBUG, 60, [20, 20, 20]),
+        x(LS, 20, [10, 10]),
+      ],
+    }
   ),
   d(
     3,
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.core-4w.day.3.desc:Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12`
+    $localize`:@@plan.core-4w.day.3.desc:Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12`,
+    {
+      exercises: [
+        x(LEGRAISE, 30, [10, 10, 10], 'lying'),
+        x(TWIST, 45, [15, 15, 15]),
+        x(PLANK, 90, [30, 30, 30]),
+        x(LS, 24, [12, 12]),
+      ],
+    }
   ),
   d(4, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1369,14 +1674,29 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     20,
     [10, 10],
-    $localize`:@@plan.core-4w.day.5.desc:Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10`
+    $localize`:@@plan.core-4w.day.5.desc:Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10`,
+    {
+      exercises: [
+        x(CLIMBERS, 90, [30, 30, 30]),
+        x(DEADBUG, 36, [12, 12, 12]),
+        x(PLANK, 105, [35, 35, 35]),
+        x(LS, 20, [10, 10]),
+      ],
+    }
   ),
   d(
     6,
     'light',
     14,
     [7, 7],
-    $localize`:@@plan.core-4w.day.6.desc:Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS`
+    $localize`:@@plan.core-4w.day.6.desc:Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS`,
+    {
+      exercises: [
+        x(CATCOW, 30, [10, 10, 10]),
+        x(HIPOPENER, 120),
+        x(LS, 14, [7, 7]),
+      ],
+    }
   ),
   d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — extend holds, add side plank.
@@ -1385,14 +1705,30 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     22,
     [11, 11],
-    $localize`:@@plan.core-4w.day.8.desc:Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11`
+    $localize`:@@plan.core-4w.day.8.desc:Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11`,
+    {
+      exercises: [
+        x(PLANK, 120, [40, 40, 40]),
+        x(HOLLOW, 75, [25, 25, 25]),
+        x(DEADBUG, 36, [12, 12, 12]),
+        x(LS, 22, [11, 11]),
+      ],
+    }
   ),
   d(
     9,
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.core-4w.day.9.desc:Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12`
+    $localize`:@@plan.core-4w.day.9.desc:Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12`,
+    {
+      exercises: [
+        x(LEGRAISE, 36, [12, 12, 12], 'lying'),
+        x(TWIST, 54, [18, 18, 18]),
+        x(PLANK, 120, [40, 40, 40]),
+        x(LS, 24, [12, 12]),
+      ],
+    }
   ),
   d(10, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1400,21 +1736,37 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.core-4w.day.11.desc:Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12`
+    $localize`:@@plan.core-4w.day.11.desc:Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12`,
+    {
+      exercises: [
+        x(CLIMBERS, 120, [30, 30, 30, 30]),
+        x(PLANK, 100, [25, 25, 25, 25], 'side'),
+        x(LS, 24, [12, 12]),
+      ],
+    }
   ),
   d(
     12,
     'light',
     16,
     [8, 8],
-    $localize`:@@plan.core-4w.day.12.desc:Leichter Tag — Mobility 10 min · 2×8 LS`
+    $localize`:@@plan.core-4w.day.12.desc:Leichter Tag — Mobility 10 min · 2×8 LS`,
+    { exercises: [x(STRETCH, 600), x(LS, 16, [8, 8])] }
   ),
   d(
     13,
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.core-4w.day.13.desc:Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS`
+    $localize`:@@plan.core-4w.day.13.desc:Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS`,
+    {
+      exercises: [
+        x(PLANK, 120, [40, 40, 40]),
+        x(HOLLOW, 60, [20, 20, 20]),
+        x(DEADBUG, 36, [12, 12, 12]),
+        x(LS, 30, [10, 10, 10]),
+      ],
+    }
   ),
   d(14, 'rest', 0, undefined, REST_DAY),
   // Week 3 — heavier holds, hanging work.
@@ -1423,14 +1775,30 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [15, 15],
-    $localize`:@@plan.core-4w.day.15.desc:Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15`
+    $localize`:@@plan.core-4w.day.15.desc:Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15`,
+    {
+      exercises: [
+        x(PLANK, 150, [50, 50, 50]),
+        x(PLANK, 180, [30, 30, 30, 30, 30, 30], 'side'),
+        x(HOLLOW, 90, [30, 30, 30]),
+        x(LS, 30, [15, 15]),
+      ],
+    }
   ),
   d(
     16,
     'main',
     30,
     [15, 15],
-    $localize`:@@plan.core-4w.day.16.desc:Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15`
+    $localize`:@@plan.core-4w.day.16.desc:Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15`,
+    {
+      exercises: [
+        x(LEGRAISE, 24, [8, 8, 8], 'hanging-knee'),
+        x(TWIST, 60, [20, 20, 20]),
+        x(PLANK, 150, [50, 50, 50]),
+        x(LS, 30, [15, 15]),
+      ],
+    }
   ),
   d(17, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1438,21 +1806,38 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [15, 15],
-    $localize`:@@plan.core-4w.day.18.desc:Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15`
+    $localize`:@@plan.core-4w.day.18.desc:Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15`,
+    {
+      exercises: [
+        x(PLANK, 180, [60, 60, 60]),
+        x(DEADBUG, 45, [15, 15, 15]),
+        x(CLIMBERS, 135, [45, 45, 45]),
+        x(LS, 30, [15, 15]),
+      ],
+    }
   ),
   d(
     19,
     'light',
     18,
     [9, 9],
-    $localize`:@@plan.core-4w.day.19.desc:Leichter Tag — 2×9 LS · Stretching 10 min`
+    $localize`:@@plan.core-4w.day.19.desc:Leichter Tag — 2×9 LS · Stretching 10 min`,
+    { exercises: [x(LS, 18, [9, 9]), x(STRETCH, 600)] }
   ),
   d(
     20,
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.core-4w.day.20.desc:Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS`
+    $localize`:@@plan.core-4w.day.20.desc:Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS`,
+    {
+      exercises: [
+        x(PLANK, 150, [50, 50, 50]),
+        x(LEGRAISE, 36, [12, 12, 12], 'lying'),
+        x(TWIST, 60, [20, 20, 20]),
+        x(LS, 30, [10, 10, 10]),
+      ],
+    }
   ),
   d(21, 'rest', 0, undefined, REST_DAY),
   // Week 4 — peak + test.
@@ -1461,14 +1846,30 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     32,
     [16, 16],
-    $localize`:@@plan.core-4w.day.22.desc:Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16`
+    $localize`:@@plan.core-4w.day.22.desc:Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16`,
+    {
+      exercises: [
+        x(PLANK, 180, [60, 60, 60]),
+        x(HOLLOW, 120, [40, 40, 40]),
+        x(LEGRAISE, 30, [10, 10, 10], 'hanging-knee'),
+        x(LS, 32, [16, 16]),
+      ],
+    }
   ),
   d(
     23,
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.core-4w.day.23.desc:Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS`
+    $localize`:@@plan.core-4w.day.23.desc:Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS`,
+    {
+      exercises: [
+        x(PLANK, 180, [60, 60, 60]),
+        x(TWIST, 90, [30, 30, 30]),
+        x(LEGRAISE, 36, [12, 12, 12], 'lying'),
+        x(LS, 36, [12, 12, 12]),
+      ],
+    }
   ),
   d(24, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1476,7 +1877,15 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     32,
     [16, 16],
-    $localize`:@@plan.core-4w.day.25.desc:Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16`
+    $localize`:@@plan.core-4w.day.25.desc:Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16`,
+    {
+      exercises: [
+        x(PLANK, 240, [40, 40, 40, 40, 40, 40], 'side'),
+        x(DEADBUG, 48, [16, 16, 16]),
+        x(HOLLOW, 120, [40, 40, 40]),
+        x(LS, 32, [16, 16]),
+      ],
+    }
   ),
   d(
     26,
@@ -1491,7 +1900,8 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     30,
     undefined,
-    $localize`:@@plan.core-4w.day.28.desc:Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold`
+    $localize`:@@plan.core-4w.day.28.desc:Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold`,
+    { exercises: [x(PLANK, 60), x(LS, 30), x(HOLLOW, 60)] }
   ),
 ];
 
@@ -1507,7 +1917,16 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.hiit-4w.day.1.desc:HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks`
+    $localize`:@@plan.hiit-4w.day.1.desc:HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks`,
+    {
+      exercises: [
+        x(LS, 30, [10, 10, 10]),
+        x(BURPEES, 0),
+        x(CLIMBERS, 0),
+        x(JACKS, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(2, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1515,7 +1934,16 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.hiit-4w.day.3.desc:HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank`
+    $localize`:@@plan.hiit-4w.day.3.desc:HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank`,
+    {
+      exercises: [
+        x(LS, 30, [10, 10, 10]),
+        x(BURPEES, 0),
+        x(JACKS, 0),
+        x(PLANK, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(
     4,
@@ -1529,7 +1957,16 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     32,
     [12, 10, 10],
-    $localize`:@@plan.hiit-4w.day.5.desc:Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats`
+    $localize`:@@plan.hiit-4w.day.5.desc:Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats`,
+    {
+      exercises: [
+        x(LS, 32, [12, 10, 10]),
+        x(BURPEES, 0),
+        x(CLIMBERS, 0),
+        x(JUMPSQUATS, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(6, 'rest', 0, undefined, REST_DAY),
   d(7, 'rest', 0, undefined, REST_DAY),
@@ -1539,7 +1976,17 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.hiit-4w.day.8.desc:HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank`
+    $localize`:@@plan.hiit-4w.day.8.desc:HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank`,
+    {
+      exercises: [
+        x(LS, 36, [12, 12, 12]),
+        x(BURPEES, 0),
+        x(CLIMBERS, 0),
+        x(SQUATS, 0),
+        x(PLANK, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(9, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1547,7 +1994,14 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [8, 7, 6, 5, 4, 3, 2, 1],
-    $localize`:@@plan.hiit-4w.day.10.desc:HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)`
+    $localize`:@@plan.hiit-4w.day.10.desc:HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)`,
+    {
+      exercises: [
+        x(LS, 36, [8, 7, 6, 5, 4, 3, 2, 1]),
+        x(BURPEES, 36, [8, 7, 6, 5, 4, 3, 2, 1]),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(
     11,
@@ -1561,7 +2015,16 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     40,
     [14, 13, 13],
-    $localize`:@@plan.hiit-4w.day.12.desc:HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks`
+    $localize`:@@plan.hiit-4w.day.12.desc:HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks`,
+    {
+      exercises: [
+        x(LS, 40, [14, 13, 13]),
+        x(BURPEES, 0),
+        x(CLIMBERS, 0),
+        x(JACKS, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(13, 'rest', 0, undefined, REST_DAY),
   d(14, 'rest', 0, undefined, REST_DAY),
@@ -1571,7 +2034,16 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     44,
     [11, 11, 11, 11],
-    $localize`:@@plan.hiit-4w.day.15.desc:HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers`
+    $localize`:@@plan.hiit-4w.day.15.desc:HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers`,
+    {
+      exercises: [
+        x(LS, 44, [11, 11, 11, 11]),
+        x(BURPEES, 32, [8, 8, 8, 8]),
+        x(SQUATS, 48, [12, 12, 12, 12]),
+        x(CLIMBERS, 120, [30, 30, 30, 30]),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(16, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1579,21 +2051,42 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     48,
     [12, 12, 12, 12],
-    $localize`:@@plan.hiit-4w.day.17.desc:HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank`
+    $localize`:@@plan.hiit-4w.day.17.desc:HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank`,
+    {
+      exercises: [
+        x(LS, 48, [12, 12, 12, 12]),
+        x(BURPEES, 0),
+        x(CLIMBERS, 0),
+        x(JACKS, 0),
+        x(SQUATS, 0),
+        x(PLANK, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(
     18,
     'light',
     24,
     [12, 12],
-    $localize`:@@plan.hiit-4w.day.18.desc:Aktive Erholung — Yoga 20 min · 2×12 LS`
+    $localize`:@@plan.hiit-4w.day.18.desc:Aktive Erholung — Yoga 20 min · 2×12 LS`,
+    { exercises: [x(LS, 24, [12, 12]), x(YOGA, 1200)] }
   ),
   d(
     19,
     'main',
     52,
     [13, 13, 13, 13],
-    $localize`:@@plan.hiit-4w.day.19.desc:Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC`
+    $localize`:@@plan.hiit-4w.day.19.desc:Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC`,
+    {
+      exercises: [
+        x(LS, 52, [13, 13, 13, 13]),
+        x(BURPEES, 0),
+        x(SQUATS, 0),
+        x(CLIMBERS, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(20, 'rest', 0, undefined, REST_DAY),
   d(21, 'rest', 0, undefined, REST_DAY),
@@ -1603,7 +2096,16 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     56,
     [14, 14, 14, 14],
-    $localize`:@@plan.hiit-4w.day.22.desc:HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner`
+    $localize`:@@plan.hiit-4w.day.22.desc:HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner`,
+    {
+      exercises: [
+        x(LS, 56, [14, 14, 14, 14]),
+        x(BURPEES, 0),
+        x(CLIMBERS, 0),
+        x(JACKS, 0),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(23, 'rest', 0, undefined, REST_DAY),
   d(
@@ -1611,7 +2113,15 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-    $localize`:@@plan.hiit-4w.day.24.desc:EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner`
+    $localize`:@@plan.hiit-4w.day.24.desc:EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner`,
+    {
+      exercises: [
+        x(LS, 60, [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]),
+        x(BURPEES, 60, [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]),
+        x(JACKS, 120, [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]),
+      ],
+      completion: 'checkoff',
+    }
   ),
   d(
     25,
@@ -1627,7 +2137,8 @@ const HIIT_BURNER_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     100,
     undefined,
-    $localize`:@@plan.hiit-4w.day.28.desc:Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)`
+    $localize`:@@plan.hiit-4w.day.28.desc:Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)`,
+    { exercises: [x(LS, 100), x(BURPEES, 50)] }
   ),
 ];
 
@@ -1641,21 +2152,31 @@ const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     10,
     [10],
-    $localize`:@@plan.mobility-2w.day.1.desc:Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching`
+    $localize`:@@plan.mobility-2w.day.1.desc:Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching`,
+    { exercises: [x(WARMUP, 600), x(LS, 10, [10]), x(STRETCH, 600)] }
   ),
   d(
     2,
     'light',
     10,
     [10],
-    $localize`:@@plan.mobility-2w.day.2.desc:Yoga-Flow 20 min · 1×10 LS · Brust-Stretching`
+    $localize`:@@plan.mobility-2w.day.2.desc:Yoga-Flow 20 min · 1×10 LS · Brust-Stretching`,
+    { exercises: [x(YOGA, 1200), x(LS, 10, [10])] }
   ),
   d(
     3,
     'light',
     12,
     [6, 6],
-    $localize`:@@plan.mobility-2w.day.3.desc:Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling`
+    $localize`:@@plan.mobility-2w.day.3.desc:Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling`,
+    {
+      exercises: [
+        x(CATCOW, 30, [10, 10, 10]),
+        x(HIPOPENER, 120),
+        x(LS, 12, [6, 6]),
+        x(FOAM, 300),
+      ],
+    }
   ),
   d(
     4,
@@ -1669,14 +2190,16 @@ const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     12,
     [6, 6],
-    $localize`:@@plan.mobility-2w.day.5.desc:Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang`
+    $localize`:@@plan.mobility-2w.day.5.desc:Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang`,
+    { exercises: [x(STRETCH, 300), x(LS, 12, [6, 6])] }
   ),
   d(
     6,
     'light',
     14,
     [7, 7],
-    $localize`:@@plan.mobility-2w.day.6.desc:Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min`
+    $localize`:@@plan.mobility-2w.day.6.desc:Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min`,
+    { exercises: [x(WARMUP, 600), x(LS, 14, [7, 7]), x(STRETCH, 300)] }
   ),
   d(7, 'rest', 0, undefined, ACTIVE_RECOVERY),
   d(
@@ -1684,21 +2207,24 @@ const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     14,
     [7, 7],
-    $localize`:@@plan.mobility-2w.day.8.desc:Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching`
+    $localize`:@@plan.mobility-2w.day.8.desc:Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching`,
+    { exercises: [x(STRETCH, 1200, [600, 600]), x(LS, 14, [7, 7])] }
   ),
   d(
     9,
     'light',
     16,
     [8, 8],
-    $localize`:@@plan.mobility-2w.day.9.desc:Yoga 20 min · 2×8 LS`
+    $localize`:@@plan.mobility-2w.day.9.desc:Yoga 20 min · 2×8 LS`,
+    { exercises: [x(YOGA, 1200), x(LS, 16, [8, 8])] }
   ),
   d(
     10,
     'light',
     16,
     [8, 8],
-    $localize`:@@plan.mobility-2w.day.10.desc:Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min`
+    $localize`:@@plan.mobility-2w.day.10.desc:Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min`,
+    { exercises: [x(FOAM, 600), x(LS, 16, [8, 8]), x(HIPOPENER, 300)] }
   ),
   d(
     11,
@@ -1712,21 +2238,24 @@ const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     18,
     [9, 9],
-    $localize`:@@plan.mobility-2w.day.12.desc:Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility`
+    $localize`:@@plan.mobility-2w.day.12.desc:Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility`,
+    { exercises: [x(LS, 18, [9, 9]), x(STRETCH, 600)] }
   ),
   d(
     13,
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.mobility-2w.day.13.desc:2×10 LS · 15 min Yoga`
+    $localize`:@@plan.mobility-2w.day.13.desc:2×10 LS · 15 min Yoga`,
+    { exercises: [x(LS, 20, [10, 10]), x(YOGA, 900)] }
   ),
   d(
     14,
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.mobility-2w.day.14.desc:Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min`
+    $localize`:@@plan.mobility-2w.day.14.desc:Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min`,
+    { exercises: [x(LS, 20, [10, 10]), x(STRETCH, 1200)] }
   ),
 ];
 
@@ -1921,9 +2450,42 @@ function d(
   kind: TrainingPlanDay['kind'],
   targetReps: number,
   sets: number[] | undefined,
-  description: string
+  description: string,
+  extra?: Pick<TrainingPlanDay, 'exercises' | 'completion'>
 ): TrainingPlanDay {
-  return sets
-    ? { dayIndex, kind, targetReps, sets, description }
-    : { dayIndex, kind, targetReps, description };
+  return {
+    dayIndex,
+    kind,
+    targetReps,
+    ...(sets ? { sets } : {}),
+    description,
+    ...extra,
+  };
+}
+
+/**
+ * One trackable exercise of a day. `target` is always in the exercise's
+ * own measurement unit — reps for rep-counted work, **seconds** for
+ * holds (Plank, Hollow Hold, Wall-Sit) and mobility blocks. Interval
+ * exercises the descriptions prescribe in seconds but the catalog
+ * measures in reps (Mountain Climbers) use the 1 rep/second cadence
+ * those intervals are written for.
+ *
+ * `target === 0` marks an exercise the plan names but doesn't quantify —
+ * the round count of a HIIT interval depends on how far the user gets.
+ * Only `completion: 'checkoff'` days may carry those; a plan-spec guard
+ * test enforces it, because a zero target can never be auto-fulfilled.
+ */
+function x(
+  exerciseId: string,
+  target: number,
+  sets?: number[],
+  variantId?: string
+): TrainingPlanExercise {
+  return {
+    exerciseId,
+    target,
+    ...(sets ? { sets } : {}),
+    ...(variantId ? { variantId } : {}),
+  };
 }

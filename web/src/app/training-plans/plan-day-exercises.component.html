@@ -1,0 +1,68 @@
+@if (exercises().length > 0) {
+  <ul class="exercise-list">
+    @for (ex of exercises(); track ex.itemIndex) {
+      <li class="exercise-row" [class.done]="ex.done">
+        <mat-checkbox
+          class="exercise-check"
+          [checked]="ex.done"
+          [disabled]="!interactive() || ex.auto"
+          [matTooltip]="
+            ex.auto ? autoTooltip : ex.done ? undoTooltip : checkTooltip
+          "
+          (change)="
+            toggleExercise.emit({
+              itemIndex: ex.itemIndex,
+              done: $event.checked,
+            })
+          "
+        >
+          <span class="exercise-name">{{ ex.name }}</span>
+        </mat-checkbox>
+
+        <div class="exercise-meta">
+          @if (ex.quantified) {
+            <span class="exercise-amount">
+              <strong>{{ ex.logged }}</strong>
+              <span class="muted">/ {{ ex.target }}</span>
+            </span>
+            @if (ex.sets) {
+              <span class="exercise-sets muted">({{ ex.sets }})</span>
+            }
+          } @else {
+            <span class="muted" i18n="@@trainingPlans.exercise.unquantified"
+              >nach Vorgabe</span
+            >
+          }
+          @if (ex.auto) {
+            <mat-icon
+              class="exercise-auto"
+              [matTooltip]="autoTooltip"
+              aria-hidden="true"
+              >bolt</mat-icon
+            >
+          }
+        </div>
+
+        @if (interactive() && ex.quantified && !ex.done) {
+          <button
+            mat-icon-button
+            class="exercise-log"
+            (click)="logExercise.emit(ex.itemIndex)"
+            [matTooltip]="logTooltip"
+            [attr.aria-label]="logTooltip + ': ' + ex.name"
+          >
+            <mat-icon>playlist_add_check</mat-icon>
+          </button>
+        }
+
+        @if (ex.quantified) {
+          <mat-progress-bar
+            class="exercise-bar"
+            mode="determinate"
+            [value]="ex.done ? 100 : ex.percent"
+          />
+        }
+      </li>
+    }
+  </ul>
+}

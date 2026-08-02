@@ -10,6 +10,8 @@ export * from './lib/models/exercise.catalog';
 export * from './lib/models/exercise-format';
 export * from './lib/models/unified-entry.models';
 export * from './lib/models/training-plan.models';
+export * from './lib/models/training-plan-schedule.models';
+export * from './lib/models/training-plan-exercise.models';
 export * from './lib/models/training-plan.catalog';
 export * from './lib/models/pushup-type.models';
 export * from './lib/models/exercise-wiki.models';

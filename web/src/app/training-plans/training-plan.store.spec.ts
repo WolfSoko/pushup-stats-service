@@ -89,6 +89,91 @@ const PLANK_PLAN: TrainingPlan = {
 };
 
 /**
+ * Multi-exercise circuit day: pushups + a reps-measured and a
+ * time-measured accessory, each individually trackable.
+ */
+const CIRCUIT_PLAN: TrainingPlan = {
+  id: 'circuit-plan',
+  slug: 'circuit-plan',
+  title: 'Circuit Plan',
+  summary: 'Test-only plan with a structured multi-exercise day.',
+  level: 'beginner',
+  totalDays: 4,
+  days: [
+    {
+      dayIndex: 1,
+      kind: 'main',
+      targetReps: 20,
+      sets: [20],
+      description: 'd1',
+    },
+    {
+      dayIndex: 2,
+      kind: 'main',
+      targetReps: 30,
+      sets: [10, 10, 10],
+      description: 'Zirkel',
+      exercises: [
+        { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] },
+        { exerciseId: 'legs.squats', target: 45, sets: [15, 15, 15] },
+        { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] },
+      ],
+    },
+    { dayIndex: 3, kind: 'rest', targetReps: 0, description: 'rest' },
+    { dayIndex: 4, kind: 'rest', targetReps: 0, description: 'rest' },
+  ],
+};
+
+/** HIIT-style interval day: ticked off by hand, one exercise unquantified. */
+const HIIT_PLAN: TrainingPlan = {
+  id: 'hiit-plan',
+  slug: 'hiit-plan',
+  title: 'HIIT Plan',
+  summary: 'Test-only plan with a check-off day.',
+  level: 'beginner',
+  totalDays: 4,
+  days: [
+    {
+      dayIndex: 1,
+      kind: 'main',
+      targetReps: 20,
+      sets: [20],
+      description: 'd1',
+    },
+    {
+      dayIndex: 2,
+      kind: 'main',
+      targetReps: 30,
+      sets: [10, 10, 10],
+      description: 'HIIT',
+      completion: 'checkoff',
+      exercises: [
+        { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] },
+        { exerciseId: 'cardio.burpees', target: 0 },
+      ],
+    },
+    { dayIndex: 3, kind: 'rest', targetReps: 0, description: 'rest' },
+    { dayIndex: 4, kind: 'rest', targetReps: 0, description: 'rest' },
+  ],
+};
+
+const circuitLookup = (id: string): TrainingPlan | null =>
+  id === 'circuit-plan' ? CIRCUIT_PLAN : findPlanById(id);
+const hiitLookup = (id: string): TrainingPlan | null =>
+  id === 'hiit-plan' ? HIIT_PLAN : findPlanById(id);
+
+/** Active plan whose day 2 maps to today, for the multi-exercise plans. */
+function planStartedYesterday(planId: string): UserTrainingPlan {
+  return {
+    userId: 'u1',
+    planId,
+    startDate: toBerlinIsoDate(new Date(Date.now() - 86_400_000)),
+    status: 'active',
+    completedDays: [],
+  };
+}
+
+/**
  * Lookup seam value: resolve the test-only plans by id, otherwise defer to
  * the real catalog so unrelated ids keep working.
  */
@@ -129,6 +214,8 @@ interface Mocks {
     updatePlan: ReturnType<typeof vitest.fn>;
     addCompletedDay: ReturnType<typeof vitest.fn>;
     removeCompletedDay: ReturnType<typeof vitest.fn>;
+    addCompletedItems: ReturnType<typeof vitest.fn>;
+    removeCompletedItems: ReturnType<typeof vitest.fn>;
     addSkippedDay: ReturnType<typeof vitest.fn>;
     removeSkippedDay: ReturnType<typeof vitest.fn>;
     jumpToDay: ReturnType<typeof vitest.fn>;
@@ -213,6 +300,32 @@ describe('TrainingPlanStore', () => {
           }
           return of(void 0);
         }),
+        addCompletedItems: vitest.fn(
+          (_uid: string, itemIds: ReadonlyArray<string>) => {
+            const cur = mocks.current as UserTrainingPlan;
+            mocks.current = {
+              ...cur,
+              completedItems: Array.from(
+                new Set([...(cur.completedItems ?? []), ...itemIds])
+              ),
+            };
+            stream.next(mocks.current);
+            return of(void 0);
+          }
+        ),
+        removeCompletedItems: vitest.fn(
+          (_uid: string, itemIds: ReadonlyArray<string>) => {
+            const cur = mocks.current as UserTrainingPlan;
+            mocks.current = {
+              ...cur,
+              completedItems: (cur.completedItems ?? []).filter(
+                (id) => !itemIds.includes(id)
+              ),
+            };
+            stream.next(mocks.current);
+            return of(void 0);
+          }
+        ),
         addSkippedDay: vitest.fn((_uid: string, dayIndex: number) => {
           const cur = mocks.current as UserTrainingPlan;
           const skippedHas = (cur.skippedDays ?? []).includes(dayIndex);
@@ -649,6 +762,8 @@ describe('TrainingPlanStore', () => {
         updatePlan: vitest.fn(),
         addCompletedDay: vitest.fn(() => of(void 0)),
         removeCompletedDay: vitest.fn(() => of(void 0)),
+        addCompletedItems: vitest.fn(() => of(void 0)),
+        removeCompletedItems: vitest.fn(() => of(void 0)),
       };
       const statsApiMock = { createPushup: vitest.fn() };
       const exerciseApiMock = { createEntry: vitest.fn() };
@@ -708,6 +823,8 @@ describe('TrainingPlanStore', () => {
         updatePlan: vitest.fn(),
         addCompletedDay: vitest.fn(() => of(void 0)),
         removeCompletedDay: vitest.fn(() => of(void 0)),
+        addCompletedItems: vitest.fn(() => of(void 0)),
+        removeCompletedItems: vitest.fn(() => of(void 0)),
       };
       const statsApiMock = { createPushup: vitest.fn() };
       const exerciseApiMock = { createEntry: vitest.fn() };
@@ -766,6 +883,8 @@ describe('TrainingPlanStore', () => {
         updatePlan: vitest.fn(),
         addCompletedDay: vitest.fn(() => of(void 0)),
         removeCompletedDay: vitest.fn(() => of(void 0)),
+        addCompletedItems: vitest.fn(() => of(void 0)),
+        removeCompletedItems: vitest.fn(() => of(void 0)),
       };
       const statsApiMock = { createPushup: vitest.fn() };
       const exerciseApiMock = {
@@ -935,7 +1054,7 @@ describe('TrainingPlanStore', () => {
       expect(result).toBe('logged');
     });
 
-    it('should no-op a non-reps (time-measured) plan day', async () => {
+    it('should log a time-measured plan day as a duration entry', async () => {
       // given — a plan whose day 2 is the time-measured plank exercise
       const plankUserPlan: UserTrainingPlan = {
         userId: 'u1',
@@ -951,11 +1070,14 @@ describe('TrainingPlanStore', () => {
       const result = await store.logPlanDay(2);
       await flush();
 
-      // then — a reps payload can't honor a time-measured day; fail closed
-      expect(mocks.exerciseApiMock.createEntry).not.toHaveBeenCalled();
-      expect(mocks.statsApiMock.createPushup).not.toHaveBeenCalled();
-      expect(mocks.apiMock.addCompletedDay).not.toHaveBeenCalled();
-      expect(result).toBe('noop');
+      // then — the hold goes in as durationSec/intervals, not reps/sets
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+      const call = mocks.exerciseApiMock.createEntry.mock.calls[0][1];
+      expect(call.exerciseId).toBe('plank.standard');
+      expect(call.durationSec).toBe(60);
+      expect(call.reps).toBeUndefined();
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+      expect(result).toBe('logged');
     });
   });
 
@@ -998,6 +1120,8 @@ describe('TrainingPlanStore', () => {
           return of(void 0);
         }),
         removeCompletedDay: vitest.fn(() => of(void 0)),
+        addCompletedItems: vitest.fn(() => of(void 0)),
+        removeCompletedItems: vitest.fn(() => of(void 0)),
       };
       const statsApiMock = {
         createPushup: vitest.fn(),
@@ -1079,6 +1203,8 @@ describe('TrainingPlanStore', () => {
           return of(void 0);
         }),
         removeCompletedDay: vitest.fn(() => of(void 0)),
+        addCompletedItems: vitest.fn(() => of(void 0)),
+        removeCompletedItems: vitest.fn(() => of(void 0)),
       };
       const statsApiMock = { createPushup: vitest.fn() };
       const exerciseApiMock = { createEntry: vitest.fn() };
@@ -1376,5 +1502,241 @@ describe('TrainingPlanStore', () => {
     await flush();
 
     expect(mocks.apiMock.removeCompletedDay).toHaveBeenCalledWith('u1', 2);
+  });
+  describe('per-exercise tracking', () => {
+    /** Entry mirror helper for a given exercise on today's date. */
+    function loggedToday(
+      exerciseId: string,
+      values: Partial<ExerciseEntry>
+    ): ExerciseEntry {
+      return {
+        _id: `${exerciseId}-e`,
+        userId: 'u1',
+        exerciseId,
+        timestamp: `${toBerlinIsoDate(new Date())}T08:00:00.000+02:00`,
+        source: 'web',
+        ...values,
+      } as ExerciseEntry;
+    }
+
+    it('should expose per-exercise fulfillment for a structured day', async () => {
+      // given — the squat portion of today's circuit is already logged
+      const { store } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [loggedToday('legs.squats', { reps: 45 })],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      const progress = store.dayProgress(2);
+
+      // then
+      expect(progress.map((p) => p.done)).toEqual([false, true, false]);
+      expect(progress[1].fulfilledByEntries).toBe(true);
+    });
+
+    it('should log one exercise of a day without touching the others', async () => {
+      // given
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [],
+        circuitLookup
+      );
+      await flush();
+
+      // when — log only the plank (item 2)
+      const result = await store.logPlanExercise(2, 2);
+      await flush();
+
+      // then — one duration entry, day not yet complete
+      expect(result).toBe('logged');
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+      const call = mocks.exerciseApiMock.createEntry.mock.calls[0][1];
+      expect(call.exerciseId).toBe('plank.standard');
+      expect(call.durationSec).toBe(90);
+      expect(call.intervals).toEqual([30, 30, 30]);
+      expect(mocks.apiMock.addCompletedItems).toHaveBeenCalledWith('u1', [
+        '2:2',
+      ]);
+      expect(mocks.apiMock.addCompletedDay).not.toHaveBeenCalled();
+    });
+
+    it('should log every exercise of the day and close it', async () => {
+      // given
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      const result = await store.logPlanDay(2);
+      await flush();
+
+      // then — one entry per exercise, then the day is marked done
+      expect(result).toBe('logged');
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(3);
+      const written = mocks.exerciseApiMock.createEntry.mock.calls.map(
+        (c) => (c[1] as ExerciseEntryCreate).exerciseId
+      );
+      expect(written).toEqual(['pushup', 'legs.squats', 'plank.standard']);
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+    });
+
+    it('should skip exercises already covered when logging the whole day', async () => {
+      // given — the squats are already in the mirror
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [loggedToday('legs.squats', { reps: 45 })],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      await store.logPlanDay(2);
+      await flush();
+
+      // then — only the two open exercises are written
+      const written = mocks.exerciseApiMock.createEntry.mock.calls.map(
+        (c) => (c[1] as ExerciseEntryCreate).exerciseId
+      );
+      expect(written).toEqual(['pushup', 'plank.standard']);
+    });
+
+    it('should close the day once the last exercise is ticked off', async () => {
+      // given — pushups and squats are logged, only the plank is open
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [
+          loggedToday('pushup', { reps: 30 }),
+          loggedToday('legs.squats', { reps: 45 }),
+        ],
+        circuitLookup
+      );
+      await flush();
+
+      // when — tick the plank off by hand instead of logging it
+      await store.setItemDone(2, 2, true);
+      await flush();
+
+      // then
+      expect(mocks.exerciseApiMock.createEntry).not.toHaveBeenCalled();
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+    });
+
+    it('should re-open the day when an exercise is un-ticked', async () => {
+      // given — a day closed by ticking every exercise off
+      const { store, mocks } = setup(
+        planStartedYesterday('hiit-plan'),
+        [],
+        [],
+        hiitLookup
+      );
+      await flush();
+      await store.setItemDone(2, 0, true);
+      await flush();
+      await store.setItemDone(2, 1, true);
+      await flush();
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+
+      // when
+      await store.setItemDone(2, 1, false);
+      await flush();
+
+      // then
+      expect(mocks.apiMock.removeCompletedItems).toHaveBeenCalledWith('u1', [
+        '2:1',
+      ]);
+      expect(mocks.apiMock.removeCompletedDay).toHaveBeenCalledWith('u1', 2);
+    });
+
+    it('should never fulfill a check-off day from logged entries', async () => {
+      // given — a HIIT day whose pushup target is already covered
+      const { store, mocks } = setup(
+        planStartedYesterday('hiit-plan'),
+        [],
+        [loggedToday('pushup', { reps: 30 })],
+        hiitLookup
+      );
+      await flush();
+
+      // when
+      const progress = store.dayProgress(2);
+
+      // then — the day stays open until the user ticks it off
+      expect(progress.every((p) => !p.done)).toBe(true);
+      expect(mocks.apiMock.addCompletedDay).not.toHaveBeenCalled();
+    });
+
+    it('should tick off an unquantified check-off exercise instead of writing an entry', async () => {
+      // given
+      const { store, mocks } = setup(
+        planStartedYesterday('hiit-plan'),
+        [],
+        [],
+        hiitLookup
+      );
+      await flush();
+
+      // when — "log" the burpee rounds the plan does not quantify
+      const result = await store.logPlanExercise(2, 1);
+      await flush();
+
+      // then
+      expect(result).toBe('already-logged');
+      expect(mocks.exerciseApiMock.createEntry).not.toHaveBeenCalled();
+      expect(mocks.apiMock.addCompletedItems).toHaveBeenCalledWith('u1', [
+        '2:1',
+      ]);
+    });
+
+    it('should clear the day check-offs when the day completion is undone', async () => {
+      // given — a fully ticked-off HIIT day
+      const { store, mocks } = setup(
+        planStartedYesterday('hiit-plan'),
+        [],
+        [],
+        hiitLookup
+      );
+      await flush();
+      await store.logPlanDay(2);
+      await flush();
+
+      // when
+      await store.unmarkDayDone(2);
+      await flush();
+
+      // then — both the day flag and its per-exercise ticks are removed
+      expect(mocks.apiMock.removeCompletedDay).toHaveBeenCalledWith('u1', 2);
+      expect(mocks.apiMock.removeCompletedItems).toHaveBeenCalledWith('u1', [
+        '2:0',
+        '2:1',
+      ]);
+    });
+
+    it('should refuse per-exercise writes for a future day', async () => {
+      // given — day 4 is still ahead of today
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      await store.setItemDone(4, 0, true);
+      await flush();
+
+      // then
+      expect(mocks.apiMock.addCompletedItems).not.toHaveBeenCalled();
+    });
   });
 });

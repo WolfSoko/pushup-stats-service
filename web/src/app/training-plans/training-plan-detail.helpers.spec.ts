@@ -39,7 +39,12 @@ function planWith(days: TrainingPlanDay[]): TrainingPlan {
 }
 
 function noProgress(): PlanProgress {
-  return { currentDay: null, completed: new Set(), skipped: new Set() };
+  return {
+    currentDay: null,
+    completed: new Set(),
+    skipped: new Set(),
+    exercisesFor: () => [],
+  };
 }
 
 describe('formatSets', () => {
@@ -138,6 +143,7 @@ describe('buildWeeks', () => {
       currentDay: 2,
       completed: new Set([1]),
       skipped: new Set([3]),
+      exercisesFor: () => [],
     };
     // when building weeks
     const rows = buildWeeks(planWith(days), progress, LOCALE)[0].rows;
@@ -181,6 +187,86 @@ describe('buildWeeks', () => {
         .filter((r) => r.day.kind === 'rest')
         .every((r) => r.pushupTypes.length === 0)
     ).toBe(true);
+  });
+
+  it('should attach per-exercise rows from the progress lookup', () => {
+    // given a structured circuit day and its fulfillment
+    const days = [
+      day({
+        dayIndex: 1,
+        targetReps: 30,
+        exercises: [
+          { exerciseId: 'pushup', target: 30 },
+          { exerciseId: 'legs.squats', target: 45 },
+        ],
+      }),
+    ];
+    const progress: PlanProgress = {
+      ...noProgress(),
+      currentDay: 1,
+      exercisesFor: (dayIndex) =>
+        dayIndex === 1
+          ? [
+              {
+                itemIndex: 0,
+                exercise: { exerciseId: 'pushup', target: 30 },
+                logged: 30,
+                fulfilledByEntries: true,
+                checkedOff: false,
+                done: true,
+              },
+              {
+                itemIndex: 1,
+                exercise: { exerciseId: 'legs.squats', target: 45 },
+                logged: 0,
+                fulfilledByEntries: false,
+                checkedOff: false,
+                done: false,
+              },
+            ]
+          : [],
+    };
+    // when building weeks
+    const [row] = buildWeeks(planWith(days), progress, LOCALE)[0].rows;
+    // then each exercise is its own row with its own state
+    expect(row.exercises.map((e) => e.done)).toEqual([true, false]);
+    expect(row.exercises[0].auto).toBe(true);
+  });
+
+  it('should show every exercise of a completed day as done', () => {
+    // given a day closed as a whole, with one exercise still open
+    const days = [day({ dayIndex: 1, targetReps: 30 })];
+    const progress: PlanProgress = {
+      ...noProgress(),
+      currentDay: 1,
+      completed: new Set([1]),
+      exercisesFor: () => [
+        {
+          itemIndex: 0,
+          exercise: { exerciseId: 'pushup', target: 30 },
+          logged: 0,
+          fulfilledByEntries: false,
+          checkedOff: false,
+          done: false,
+        },
+      ],
+    };
+    // when building weeks
+    const [row] = buildWeeks(planWith(days), progress, LOCALE)[0].rows;
+    // then the list follows the day rather than contradicting it
+    expect(row.exercises[0].done).toBe(true);
+  });
+
+  it('should flag check-off days so the UI can explain the mode', () => {
+    // given an interval day and a metrics day
+    const days = [
+      day({ dayIndex: 1, completion: 'checkoff' }),
+      day({ dayIndex: 2 }),
+    ];
+    // when building weeks
+    const rows = buildWeeks(planWith(days), noProgress(), LOCALE)[0].rows;
+    // then only the interval day is marked
+    expect(rows.map((r) => r.isCheckoff)).toEqual([true, false]);
   });
 });
 
