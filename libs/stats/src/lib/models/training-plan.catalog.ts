@@ -2239,7 +2239,7 @@ const MOBILITY_RECOVERY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     18,
     [9, 9],
     $localize`:@@plan.mobility-2w.day.12.desc:Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility`,
-    { exercises: [x(LS, 18, [9, 9]), x(STRETCH, 600)] }
+    { exercises: [x(WARMUP, 600), x(LS, 18, [9, 9]), x(STRETCH, 600)] }
   ),
   d(
     13,

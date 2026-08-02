@@ -256,6 +256,22 @@ describe('training-plan models', () => {
       }
     });
 
+    it('should never prescribe distance-time exercises as plan items', () => {
+      // given — planExerciseEntryPayload writes only the primary value, but
+      // 'distance-time' requires a durationSec companion, so such an item
+      // could never be logged (the entry validator would reject it)
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            // when / then
+            expect(
+              findExerciseDefinition(item.exerciseId)?.measurement
+            ).not.toBe('distance-time');
+          }
+        }
+      }
+    });
+
     it('should have item sets that sum to the item target', () => {
       for (const plan of TRAINING_PLANS) {
         for (const day of plan.days) {

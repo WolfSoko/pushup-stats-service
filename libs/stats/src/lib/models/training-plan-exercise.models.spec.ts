@@ -214,6 +214,43 @@ describe('training-plan exercise items', () => {
       expect(progress[1]).toMatchObject({ logged: 50, done: false });
     });
 
+    it('should not draw the pool for a hand-ticked duplicate exercise', () => {
+      // given — Plank and Side Plank share `plank.standard`; the first is
+      // ticked off by hand and the second is covered by logged time
+      const day: TrainingPlanDay = {
+        dayIndex: 15,
+        kind: 'main',
+        targetReps: 0,
+        description: '',
+        exercises: [
+          { exerciseId: 'plank.standard', target: 150 },
+          { exerciseId: 'plank.standard', target: 180, variantId: 'side' },
+        ],
+      };
+      const entries = [
+        entry('plank.standard', '2026-04-01T10:00:00+02:00', {
+          durationSec: 180,
+        }),
+      ];
+      // when
+      const progress = planDayProgress(day, 15, args(entries, ['15:0']));
+      // then — the ticked item must not swallow the seconds the second needs
+      expect(progress[0]).toMatchObject({ done: true, checkedOff: true });
+      expect(progress[1]).toMatchObject({ logged: 180, done: true });
+    });
+
+    it('should credit a hand-ticked exercise in full', () => {
+      // given
+      const progress = planDayProgress(circuitDay, 2, args([], ['2:1']));
+      // when / then — the row renders as complete, not as "0 / 45"
+      expect(progress[1]).toMatchObject({
+        logged: 45,
+        done: true,
+        checkedOff: true,
+        fulfilledByEntries: false,
+      });
+    });
+
     it('should never derive fulfillment on a checkoff day', () => {
       // given
       const day: TrainingPlanDay = {

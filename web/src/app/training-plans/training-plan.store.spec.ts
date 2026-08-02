@@ -120,7 +120,20 @@ const CIRCUIT_PLAN: TrainingPlan = {
       ],
     },
     { dayIndex: 3, kind: 'rest', targetReps: 0, description: 'rest' },
-    { dayIndex: 4, kind: 'rest', targetReps: 0, description: 'rest' },
+    // Day 4 is still in the future when day 2 is today — a real
+    // exercise-bearing day, so the future-day guard is what stops a
+    // write rather than the item simply not resolving.
+    {
+      dayIndex: 4,
+      kind: 'main',
+      targetReps: 30,
+      sets: [10, 10, 10],
+      description: 'Zirkel',
+      exercises: [
+        { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] },
+        { exerciseId: 'legs.squats', target: 45, sets: [15, 15, 15] },
+      ],
+    },
   ],
 };
 
@@ -1722,7 +1735,7 @@ describe('TrainingPlanStore', () => {
     });
 
     it('should refuse per-exercise writes for a future day', async () => {
-      // given — day 4 is still ahead of today
+      // given — day 4 prescribes exercises but is still ahead of today
       const { store, mocks } = setup(
         planStartedYesterday('circuit-plan'),
         [],

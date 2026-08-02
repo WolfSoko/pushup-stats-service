@@ -1,4 +1,4 @@
-import { DestroyRef, effect, inject } from '@angular/core';
+import { DestroyRef, effect, inject, untracked } from '@angular/core';
 import type { WritableSignal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { isPlanDayFulfilled } from '@pu-stats/models';
@@ -49,12 +49,17 @@ export function registerTrainingPlanHooks(store: HooksStore): void {
     // so every exercise gates on `exerciseEntriesLoaded`.
     if (!store._live.exerciseEntriesLoaded()) return;
     // The same in-flight lock guards manual log calls, so a fast
-    // Quick-Add + auto-mark can't double-write.
-    if (store._writingDays().has(idx)) return;
+    // Quick-Add + auto-mark can't double-write. Read and take the lock
+    // untracked: this effect writes that signal through
+    // acquire/releaseWriteLock, and a tracked read would make the
+    // release re-run the effect — on a permanently failing write (say a
+    // Firestore permission error) that is an unbounded write-and-log
+    // loop, since nothing else about the state changes.
+    if (untracked(() => store._writingDays()).has(idx)) return;
     // Establish a tick dependency so this re-runs at midnight.
     store._dayTick();
     if (!isPlanDayFulfilled(dayProgress(store, idx))) return;
-    if (!acquireWriteLock(store, idx)) return;
+    if (!untracked(() => acquireWriteLock(store, idx))) return;
     const userId = store._user.userIdSafe();
     // Use the atomic `arrayUnion` write so a concurrent manual mark for a
     // different day index (e.g. from another tab) doesn't get clobbered.

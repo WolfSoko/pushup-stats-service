@@ -140,6 +140,7 @@ export function planExerciseLoggedTotal(
  * resolve to `plank.standard`), so the logged total per exercise is a
  * pool drawn down in list order rather than being counted once per item
  * — otherwise 60 s of plank would satisfy both a 150 s and a 180 s item.
+ * Hand-ticked items are credited in full and skip the pool entirely.
  *
  * `checkoff` days never derive fulfillment from entries: their real
  * volume depends on rounds completed, so only an explicit tick counts.
@@ -157,6 +158,20 @@ export function planDayProgress(
   const metric = !isCheckoffDay(day);
   const pool = new Map<string, number>();
   return planDayExercises(day).map((exercise, itemIndex) => {
+    // A hand-ticked exercise is credited in full and draws nothing from
+    // the pool. Draining it would let a ticked Plank swallow the seconds
+    // a following Side Plank item needs, leaving that one open on a day
+    // the user has actually finished.
+    if (checked.has(planDayItemId(dayIndex, itemIndex))) {
+      return {
+        itemIndex,
+        exercise,
+        logged: exercise.target,
+        fulfilledByEntries: false,
+        checkedOff: true,
+        done: true,
+      };
+    }
     if (metric && !pool.has(exercise.exerciseId)) {
       pool.set(
         exercise.exerciseId,
@@ -168,14 +183,13 @@ export function planDayProgress(
     pool.set(exercise.exerciseId, available - logged);
     const fulfilledByEntries =
       metric && exercise.target > 0 && logged >= exercise.target;
-    const checkedOff = checked.has(planDayItemId(dayIndex, itemIndex));
     return {
       itemIndex,
       exercise,
       logged,
       fulfilledByEntries,
-      checkedOff,
-      done: fulfilledByEntries || checkedOff,
+      checkedOff: false,
+      done: fulfilledByEntries,
     };
   });
 }

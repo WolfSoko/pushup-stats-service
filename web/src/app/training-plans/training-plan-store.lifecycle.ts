@@ -6,7 +6,11 @@ import {
 } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
 import { nonRestDaysBeforeTarget } from './training-plan-store.math';
-import type { TrainingPlanActionsStore } from './training-plan-store.internals';
+import {
+  acquireWriteLock,
+  releaseWriteLock,
+  type TrainingPlanActionsStore,
+} from './training-plan-store.internals';
 
 type Store = TrainingPlanActionsStore;
 
@@ -50,9 +54,18 @@ export async function unmarkDayDone(
   const itemIds = (a.completedItems ?? []).filter(
     (id) => parsePlanDayItemId(id)?.dayIndex === dayIndex
   );
-  await firstValueFrom(store._api.removeCompletedDay(userId, dayIndex));
-  await firstValueFrom(store._api.removeCompletedItems(userId, itemIds));
-  store.activeResource.reload();
+  // Clear the ticks BEFORE the day flag, under the same lock the
+  // per-exercise writes take: between the two writes the doc would
+  // otherwise show an open day whose exercises are all still ticked —
+  // exactly the state the auto-mark effect closes again.
+  if (!acquireWriteLock(store, dayIndex)) return;
+  try {
+    await firstValueFrom(store._api.removeCompletedItems(userId, itemIds));
+    await firstValueFrom(store._api.removeCompletedDay(userId, dayIndex));
+    store.activeResource.reload();
+  } finally {
+    releaseWriteLock(store, dayIndex);
+  }
 }
 
 /**

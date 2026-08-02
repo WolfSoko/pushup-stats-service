@@ -8,6 +8,7 @@ import {
   TrainingPlanExercise,
 } from '@pu-stats/models';
 import { appendLocalOffset } from '@pu-stats/date';
+import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import {
   acquireWriteLock,
   dayProgress,
@@ -32,32 +33,55 @@ function dayIsWritable(store: Store, dayIndex: number): boolean {
   return currentIdx !== null && dayIndex <= currentIdx;
 }
 
+/** Everything an entry write needs, resolved once up front. */
+interface EntryWriter {
+  readonly api: ExerciseFirestoreService;
+  readonly userId: string;
+  /** Noon on the plan day's calendar date, so a backfill for an earlier
+   *  day still lands in the correct daily bucket. */
+  readonly timestamp: string;
+}
+
+/**
+ * Resolve the write path for a day, or null when it isn't available (no
+ * signed-in user, or a harness without the Firestore-backed service).
+ * Resolved once per action rather than per exercise: a multi-exercise day
+ * that lost the write path halfway would leave written entries behind
+ * with nothing ticked.
+ */
+function resolveEntryWriter(
+  store: Store,
+  dayIndex: number
+): EntryWriter | null {
+  const api = resolveExerciseApi(store);
+  const userId = store._user.userIdSafe();
+  if (!api || !userId) return null;
+  return {
+    api,
+    userId,
+    timestamp: appendLocalOffset(`${planDayDateFor(store, dayIndex)}T12:00`),
+  };
+}
+
 /**
  * Persist an entry that brings one plan exercise up to its target.
- * Returns `'logged'` when an entry was written, `'already-logged'` when
- * the target was already covered (or isn't writable — an unquantified
- * HIIT item), and `'noop'` when the write path isn't available.
- *
- * The entry is timestamped at noon on the plan day's calendar date so a
- * backfill for an earlier day still lands in the correct daily bucket.
+ * Returns `'logged'` when an entry was written and `'already-logged'`
+ * when the target was already covered — or when the plan doesn't
+ * quantify the exercise (an unquantified HIIT round), which leaves the
+ * tick as the only way to close it.
  */
 async function writeExerciseEntry(
-  store: Store,
-  dayIndex: number,
+  writer: EntryWriter,
   exercise: TrainingPlanExercise,
   alreadyLogged: number
 ): Promise<LogPlanDayResult> {
   const payload = planExerciseEntryPayload(exercise, alreadyLogged);
   if (!payload) return 'already-logged';
-  const exerciseApi = resolveExerciseApi(store);
-  const userId = store._user.userIdSafe();
-  if (!exerciseApi || !userId) return 'noop';
-  const dateIso = planDayDateFor(store, dayIndex);
   await firstValueFrom(
-    exerciseApi.createEntry(userId, {
+    writer.api.createEntry(writer.userId, {
       exerciseId: payload.exerciseId,
       ...(payload.variantId ? { variantId: payload.variantId } : {}),
-      timestamp: appendLocalOffset(`${dateIso}T12:00`),
+      timestamp: writer.timestamp,
       [payload.valueField]: payload.value,
       [payload.breakdownField]: payload.breakdown,
       source: 'plan',
@@ -106,13 +130,9 @@ export async function logPlanExercise(
     const item = dayProgress(store, dayIndex)[itemIndex];
     if (!item) return 'noop';
     if (item.done) return 'already-logged';
-    const result = await writeExerciseEntry(
-      store,
-      dayIndex,
-      item.exercise,
-      item.logged
-    );
-    if (result === 'noop') return 'noop';
+    const writer = resolveEntryWriter(store, dayIndex);
+    if (!writer) return 'noop';
+    const result = await writeExerciseEntry(writer, item.exercise, item.logged);
     await checkOffItems(store, dayIndex, [itemIndex]);
     return result;
   } finally {
@@ -209,18 +229,18 @@ export async function logPlanDayExercises(
   if (store._isBrowser && !store._live.exerciseEntriesLoaded()) {
     return 'not-ready';
   }
+  const writer = resolveEntryWriter(store, dayIndex);
+  if (!writer) return 'noop';
   if (!acquireWriteLock(store, dayIndex)) return 'in-flight';
   try {
     let wroteAny = false;
     for (const item of progress) {
       if (item.done) continue;
       const result = await writeExerciseEntry(
-        store,
-        dayIndex,
+        writer,
         item.exercise,
         item.logged
       );
-      if (result === 'noop') return 'noop';
       wroteAny ||= result === 'logged';
     }
     await checkOffItems(
