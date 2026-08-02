@@ -8,7 +8,10 @@ import {
   TrainingPlan,
   TrainingPlanDay,
 } from '@pu-stats/models';
-import { LogPlanDayResult } from './training-plan.store';
+import type {
+  LogPlanDayResult,
+  ResetExerciseResult,
+} from './training-plan.store';
 import {
   asCompletedRows,
   buildExerciseRows,
@@ -96,6 +99,23 @@ export function messageForLogResult(result: LogPlanDayResult): string | null {
       return $localize`:@@trainingPlans.logged:Plan-Sätze wurden eingetragen.`;
     case 'already-logged':
       return $localize`:@@trainingPlans.alreadyLogged:Tag war schon eingetragen — als erledigt markiert.`;
+    case 'not-ready':
+      return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
+    case 'in-flight':
+    case 'noop':
+      return null;
+  }
+}
+
+/** Maps a reset outcome to a user-facing snackbar message (or none). */
+export function messageForResetResult(
+  result: ResetExerciseResult
+): string | null {
+  switch (result) {
+    case 'reset':
+      return $localize`:@@trainingPlans.exercise.resetDone:Übung zurückgesetzt.`;
+    case 'kept-entries':
+      return $localize`:@@trainingPlans.exercise.resetKept:Haken entfernt — deine eigenen Einträge bleiben bestehen.`;
     case 'not-ready':
       return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
     case 'in-flight':

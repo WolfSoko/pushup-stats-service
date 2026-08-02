@@ -5,7 +5,6 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   type ComplexGoalEntry,
   complexGoalAppliesOnWeekday,
-  formatExerciseValue,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
 } from '@pu-stats/models';
@@ -17,21 +16,13 @@ import {
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { UserConfigStore } from './user-config.store';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
-
-/**
- * Per-exercise view of a single daily goal — exercise name, formatted
- * target and progress in the goal's native unit, and the completion share.
- * Shared by the dashboard goal card and the toolbar pill dropdown so both
- * surfaces render "Anzahl/Zeitziel + Übung + Anteil geschafft" identically.
- */
-export interface DailyGoalItemView {
-  readonly id: string;
-  readonly exerciseName: string;
-  readonly targetDisplay: string;
-  readonly progressDisplay: string;
-  readonly percent: number;
-  readonly reached: boolean;
-}
+import {
+  aggregateGoalPercent,
+  allGoalsReached,
+  type DailyGoalItemView,
+  dailyGoalItemViews,
+  goalProgressValues,
+} from './daily-goal.helpers';
 
 function configuredSuggestion(
   cfg: QuickAddConfig,
@@ -216,36 +207,15 @@ export class AppDataFacade {
         e.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID ? pushupRepsToday : 0
       );
     }
-    const exerciseEntries = this.live
-      .exerciseEntries()
-      .filter((e) => e.timestamp.slice(0, 10) === berlinToday);
-    return entries.map((entry) => {
-      // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`)
-      // like every other exercise, so the generic matching below handles
-      // them — no pushup short-circuit needed.
-      //
-      // When the goal pins a specific variant, count only entries of that
-      // variant. Otherwise match every entry for the exercise across all
-      // its variants — the goals page deliberately does not expose a
-      // variant picker yet (so most entries here will have no
-      // `variantId`), and a user logging "decline sit-ups" against a
-      // generic "Sit-ups" goal should still increment the progress.
-      const matching = exerciseEntries.filter((e) => {
-        if (e.exerciseId !== entry.exerciseId) return false;
-        if (!entry.variantId) return true;
-        return e.variantId === entry.variantId;
-      });
-      switch (entry.measurement) {
-        case 'reps':
-        case 'weight':
-          return matching.reduce((sum, e) => sum + (e.reps ?? 0), 0);
-        case 'time':
-          return matching.reduce((sum, e) => sum + (e.durationSec ?? 0), 0);
-        case 'distance':
-        case 'distance-time':
-          return matching.reduce((sum, e) => sum + (e.distanceM ?? 0), 0);
-      }
-    });
+    // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`)
+    // like every other exercise, so the generic scoring handles them —
+    // no pushup short-circuit needed.
+    return goalProgressValues(
+      entries,
+      this.live
+        .exerciseEntries()
+        .filter((e) => e.timestamp.slice(0, 10) === berlinToday)
+    );
   });
 
   /**
@@ -263,37 +233,17 @@ export class AppDataFacade {
    * blown-out single goal can't mask the others). Returns 0 when no
    * goals apply today.
    */
-  readonly dailyGoalAggregatedPercent = computed(() => {
-    const entries = this.todayGoalEntries();
-    if (entries.length === 0) return 0;
-    const progress = this.todayGoalProgress();
-    let pctSum = 0;
-    let counted = 0;
-    for (let i = 0; i < entries.length; i++) {
-      const target = entries[i].target;
-      if (!target || target <= 0) continue;
-      const ratio = Math.min(1, progress[i] / target);
-      pctSum += ratio * 100;
-      counted += 1;
-    }
-    if (counted === 0) return 0;
-    return Math.round(pctSum / counted);
-  });
+  readonly dailyGoalAggregatedPercent = computed(() =>
+    aggregateGoalPercent(this.todayGoalEntries(), this.todayGoalProgress())
+  );
 
   /**
    * True iff every configured exercise reached its target today. Used by
    * the toolbar pill to flag "click to replay snap animation".
    */
-  readonly dailyGoalsAllReached = computed(() => {
-    const entries = this.todayGoalEntries();
-    if (entries.length === 0) return false;
-    const progress = this.todayGoalProgress();
-    for (let i = 0; i < entries.length; i++) {
-      if (entries[i].target <= 0) continue;
-      if (progress[i] < entries[i].target) return false;
-    }
-    return true;
-  });
+  readonly dailyGoalsAllReached = computed(() =>
+    allGoalsReached(this.todayGoalEntries(), this.todayGoalProgress())
+  );
 
   /**
    * Per-exercise breakdown of today's daily goals for the dashboard card
@@ -304,33 +254,9 @@ export class AppDataFacade {
    * same way as a manually configured goal. Empty when no goal applies
    * today (callers fall back to their legacy single-line display).
    */
-  readonly dailyGoalBreakdown = computed<readonly DailyGoalItemView[]>(() => {
-    const entries = this.todayGoalEntries();
-    if (entries.length === 0) return [];
-    const progress = this.todayGoalProgress();
-    return entries.map((entry, i) => {
-      const value = progress[i] ?? 0;
-      const target = entry.target;
-      const hasTarget = target > 0;
-      // The pushup sentinel isn't in the exercise-name catalog (legacy
-      // pushups live in their own collection) — resolve it to the same
-      // "Liegestütze" label the analysis page uses.
-      const exerciseName =
-        entry.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
-          ? $localize`:@@exercise.category.pushup:Liegestütze`
-          : exerciseDisplayName(entry.exerciseId);
-      return {
-        id: entry.id,
-        exerciseName,
-        targetDisplay: formatExerciseValue(target, entry.unit),
-        progressDisplay: formatExerciseValue(value, entry.unit),
-        percent: hasTarget
-          ? Math.min(100, Math.round((value / target) * 100))
-          : 0,
-        reached: hasTarget && value >= target,
-      };
-    });
-  });
+  readonly dailyGoalBreakdown = computed<readonly DailyGoalItemView[]>(() =>
+    dailyGoalItemViews(this.todayGoalEntries(), this.todayGoalProgress())
+  );
 
   /**
    * Refreshes the SSR / cold-start fallback resources. In the browser, live

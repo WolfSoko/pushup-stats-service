@@ -36,6 +36,7 @@ import {
   buildWeeks,
   formatSets,
   messageForLogResult,
+  messageForResetResult,
 } from './training-plan-detail.helpers';
 
 @Component({
@@ -232,6 +233,15 @@ export class TrainingPlanDetailComponent {
 
   async toggleExercise(dayIndex: number, event: ExerciseToggle): Promise<void> {
     await this.store.setItemDone(dayIndex, event.itemIndex, event.done);
+  }
+
+  async resetExercise(dayIndex: number, itemIndex: number): Promise<void> {
+    const message = messageForResetResult(
+      await this.store.resetPlanExercise(dayIndex, itemIndex)
+    );
+    if (message) {
+      this.snackbar.open(message, undefined, { duration: 3000 });
+    }
   }
 
   private reportLogResult(result: LogPlanDayResult): void {

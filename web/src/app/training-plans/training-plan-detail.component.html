@@ -237,6 +237,7 @@
                   [interactive]="isThisPlanActive() && !row.isFuture"
                   (logExercise)="logExercise(row.day.dayIndex, $event)"
                   (toggleExercise)="toggleExercise(row.day.dayIndex, $event)"
+                  (resetExercise)="resetExercise(row.day.dayIndex, $event)"
                 />
                 @if (row.pushupTypes.length > 0) {
                   <div class="pushup-types">

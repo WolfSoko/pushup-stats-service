@@ -1,7 +1,6 @@
 import { firstValueFrom } from 'rxjs';
 import {
   isPlanDayFulfilled,
-  planDayByIndex,
   planDayItemId,
   planExerciseEntryPayload,
   PlanExerciseProgress,
@@ -11,6 +10,7 @@ import { appendLocalOffset } from '@pu-stats/date';
 import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import {
   acquireWriteLock,
+  dayIsWritable,
   dayProgress,
   LogPlanDayResult,
   planDayDateFor,
@@ -20,18 +20,6 @@ import {
 } from './training-plan-store.internals';
 
 type Store = TrainingPlanActionsStore;
-
-/** Whether a day index can be written to at all (active plan, real
- *  non-rest day, not in the future, live mirror synced). */
-function dayIsWritable(store: Store, dayIndex: number): boolean {
-  const plan = store.activePlan();
-  const catalog = store.activeCatalog();
-  if (!plan || !catalog || plan.status !== 'active') return false;
-  const day = planDayByIndex(catalog, dayIndex);
-  if (!day || day.kind === 'rest') return false;
-  const currentIdx = store.currentDayIndex();
-  return currentIdx !== null && dayIndex <= currentIdx;
-}
 
 /** Everything an entry write needs, resolved once up front. */
 interface EntryWriter {
