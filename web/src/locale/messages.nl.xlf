@@ -10571,75 +10571,75 @@
       </segment>
     </unit>
     <unit id="quickAdd.fab.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>Dagelijkse doelen</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalsAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele zum Abhaken anzeigen</source>
-        <target>Tagesziele zum Abhaken anzeigen</target>
+        <target>Dagelijkse doelen tonen om af te vinken</target>
       </segment>
     </unit>
     <unit id="toolbarDailyGoal.checkHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
-        <target> Teilziele abhaken kannst du auf dem Dashboard. </target>
+        <target> Deeldoelen kun je afvinken op het dashboard. </target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.reached">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel erreicht</source>
-        <target>Ziel erreicht</target>
+        <target>Doel bereikt</target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.manual">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieses Ziel braucht einen manuellen Eintrag</source>
-        <target>Dieses Ziel braucht einen manuellen Eintrag</target>
+        <target>Dit doel vereist een handmatige invoer</target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.fill">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
-        <target>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
+        <target>Rest invoeren en afvinken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
-        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</target>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> afvinken</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalItemReachedAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
-        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</target>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> al bereikt</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalItemAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
-        <target><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</target>
+        <target><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> toevoegen aan dagelijks doel</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung zurücksetzen</source>
-        <target>Übung zurücksetzen</target>
+        <target>Oefening resetten</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.resetDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung zurückgesetzt.</source>
-        <target>Übung zurückgesetzt.</target>
+        <target>Oefening gereset.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.resetKept">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
-        <target>Haken entfernt — deine eigenen Einträge bleiben bestehen.</target>
+        <target>Vinkje verwijderd — je eigen invoer blijft behouden.</target>
       </segment>
     </unit>
 </file>
