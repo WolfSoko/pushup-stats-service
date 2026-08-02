@@ -1,12 +1,18 @@
 import {
   detectPushupTypes,
+  isCheckoffDay,
   localizePushupType,
   localizePushupTypeSlug,
+  PlanExerciseProgress,
   PushupTypeInfo,
   TrainingPlan,
   TrainingPlanDay,
 } from '@pu-stats/models';
 import { LogPlanDayResult } from './training-plan.store';
+import {
+  asCompletedRows,
+  buildExerciseRows,
+} from './training-plan-detail.exercises';
 import { DayRow, DayWeek, PushupTypeChip } from './training-plan-detail.models';
 
 /** Renders a multi-set decomposition like `(15 · 12 · 10)`. */
@@ -42,6 +48,8 @@ export interface PlanProgress {
   currentDay: number | null;
   completed: ReadonlySet<number>;
   skipped: ReadonlySet<number>;
+  /** Per-exercise fulfillment of a day. Empty for an inactive plan. */
+  exercisesFor: (dayIndex: number) => ReadonlyArray<PlanExerciseProgress>;
 }
 
 /**
@@ -58,13 +66,17 @@ export function buildWeeks(
   for (const day of plan.days) {
     const weekIndex = Math.floor((day.dayIndex - 1) / 7) + 1;
     const isToday = currentDay !== null && day.dayIndex === currentDay;
+    const isCompleted = completed.has(day.dayIndex);
+    const exercises = buildExerciseRows(progress.exercisesFor(day.dayIndex));
     const row: DayRow = {
       day,
       weekIndex,
       isToday,
-      isCompleted: completed.has(day.dayIndex),
+      isCompleted,
       isSkipped: skipped.has(day.dayIndex),
       isFuture: currentDay !== null && day.dayIndex > currentDay,
+      isCheckoff: isCheckoffDay(day),
+      exercises: isCompleted ? asCompletedRows(exercises) : exercises,
       pushupTypes: pushupTypeChipsForDay(day, locale),
     };
     const list = grouped.get(weekIndex) ?? [];

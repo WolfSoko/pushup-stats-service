@@ -3,7 +3,6 @@ import {
   dayTarget,
   isDayDone,
   isDaySkipped,
-  isRepsMeasuredPlanDay,
 } from './training-plan-store.selectors';
 
 const plan: UserTrainingPlan = {
@@ -80,60 +79,5 @@ describe('dayTarget', () => {
   it('should return 0 when the day is null', () => {
     // given no day
     expect(dayTarget(null)).toBe(0);
-  });
-});
-
-describe('isRepsMeasuredPlanDay', () => {
-  it('should short-circuit pushup to true without a catalog lookup', () => {
-    // given a day with no explicit exerciseId (defaults to pushup)
-    const day: TrainingPlanDay = {
-      dayIndex: 1,
-      kind: 'main',
-      targetReps: 20,
-      description: 'd',
-    };
-    // when checking measurement eligibility
-    // then it is reps-measured
-    expect(isRepsMeasuredPlanDay(day)).toBe(true);
-  });
-
-  it('should be true for a reps-measured catalog exercise', () => {
-    // given a reps-measured exercise day
-    const day: TrainingPlanDay = {
-      dayIndex: 2,
-      kind: 'main',
-      targetReps: 30,
-      exerciseId: 'legs.squats',
-      description: 'd',
-    };
-    // when checking eligibility
-    expect(isRepsMeasuredPlanDay(day)).toBe(true);
-  });
-
-  it('should be false for a time-measured catalog exercise', () => {
-    // given a time-measured exercise day
-    const day: TrainingPlanDay = {
-      dayIndex: 2,
-      kind: 'main',
-      targetReps: 60,
-      exerciseId: 'plank.standard',
-      description: 'd',
-    };
-    // when checking eligibility
-    // then it cannot be honored with a reps payload
-    expect(isRepsMeasuredPlanDay(day)).toBe(false);
-  });
-
-  it('should be false for an unknown exercise id', () => {
-    // given an exercise id not in the catalog
-    const day: TrainingPlanDay = {
-      dayIndex: 2,
-      kind: 'main',
-      targetReps: 10,
-      exerciseId: 'does.not.exist',
-      description: 'd',
-    };
-    // when checking eligibility
-    expect(isRepsMeasuredPlanDay(day)).toBe(false);
   });
 });

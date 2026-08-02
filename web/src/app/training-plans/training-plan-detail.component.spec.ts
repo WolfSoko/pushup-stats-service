@@ -5,10 +5,17 @@ import {
   provideRouter,
 } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { of } from 'rxjs';
 import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { findPlanBySlug } from '@pu-stats/models';
+import {
+  findPlanBySlug,
+  PlanExerciseProgress,
+  TrainingPlan,
+  TrainingPlanDay,
+  UserTrainingPlan,
+} from '@pu-stats/models';
 import { TrainingPlanDetailComponent } from './training-plan-detail.component';
 import { TrainingPlanStore } from './training-plan.store';
 
@@ -18,19 +25,30 @@ function makeStoreMock(overrides: Partial<ReturnType<typeof baseStore>> = {}) {
 
 function baseStore() {
   return {
-    activeCatalog: signal(null),
-    activePlan: signal(null),
+    activeCatalog: signal<TrainingPlan | null>(null),
+    activePlan: signal<UserTrainingPlan | null>(null),
     hasActivePlan: signal(false),
     activePlanLoaded: signal(true),
-    currentDayIndex: signal(null),
+    currentDayIndex: signal<number | null>(null),
     completionPercent: signal(0),
-    todayDay: signal(null),
+    todayDay: signal<TrainingPlanDay | null>(null),
     todayDone: signal(false),
     start: vitest.fn().mockResolvedValue(undefined),
     abandon: vitest.fn().mockResolvedValue(undefined),
     markDayDone: vitest.fn().mockResolvedValue(undefined),
     unmarkDayDone: vitest.fn().mockResolvedValue(undefined),
     logPlanDay: vitest.fn().mockResolvedValue('noop' as const),
+    dayProgress: vitest.fn(
+      (dayIndex: number): ReadonlyArray<PlanExerciseProgress> => {
+        void dayIndex;
+        return [];
+      }
+    ),
+    logPlanExercise: vitest.fn().mockResolvedValue('noop' as const),
+    setItemDone: vitest.fn().mockResolvedValue(undefined),
+    skipDay: vitest.fn().mockResolvedValue(undefined),
+    unskipDay: vitest.fn().mockResolvedValue(undefined),
+    jumpToDay: vitest.fn().mockResolvedValue(undefined),
   };
 }
 
@@ -555,6 +573,82 @@ describe('TrainingPlanDetailComponent', () => {
       await fixture.whenStable();
 
       expect(container.querySelector('.plan-hero')).toBeNull();
+    });
+  });
+  describe('per-exercise tracking on an active plan', () => {
+    const PLAN = findPlanBySlug('full-body-6w') as NonNullable<
+      ReturnType<typeof findPlanBySlug>
+    >;
+
+    /** Store mock with `full-body-6w` active and day 2 (a circuit) as today. */
+    function activeStore() {
+      const day = PLAN.days[1];
+      return makeStoreMock({
+        activeCatalog: signal(PLAN),
+        activePlan: signal({
+          userId: 'u1',
+          planId: PLAN.id,
+          startDate: '2026-04-01',
+          status: 'active',
+          completedDays: [],
+        }),
+        hasActivePlan: signal(true),
+        currentDayIndex: signal(2),
+        todayDay: signal(day),
+        dayProgress: vitest.fn((dayIndex: number) =>
+          dayIndex === 2
+            ? (day.exercises ?? []).map((exercise, itemIndex) => ({
+                itemIndex,
+                exercise,
+                logged: 0,
+                fulfilledByEntries: false,
+                checkedOff: false,
+                done: false,
+              }))
+            : []
+        ),
+      });
+    }
+
+    async function renderWithStore(
+      store: ReturnType<typeof makeStoreMock>
+    ): Promise<void> {
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('full-body-6w') },
+          { provide: TrainingPlanStore, useValue: store },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+    }
+
+    it('should list every exercise of the day, not just the pushups', async () => {
+      // given a circuit day prescribing four exercises
+      const store = activeStore();
+      // when rendering the plan
+      await renderWithStore(store);
+      // then each one has its own checkbox
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(checkboxes.length).toBeGreaterThanOrEqual(
+        (PLAN.days[1].exercises ?? []).length
+      );
+    });
+
+    it('should tick a single exercise off through the store', async () => {
+      // given
+      const store = activeStore();
+      await renderWithStore(store);
+      // when checking the first exercise of today
+      await userEvent.click(screen.getAllByRole('checkbox')[0]);
+      // then only that exercise is marked, for that day
+      expect(store.setItemDone).toHaveBeenCalledWith(2, 0, true);
     });
   });
 });

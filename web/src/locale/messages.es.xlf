@@ -10524,5 +10524,47 @@
         <target> No se puede acceder a ningún agente. Comprueba el runtime AG-UI configurado. </target>
       </segment>
     </unit>
+    <unit id="trainingPlans.exercise.unquantified">
+      <segment state="initial">
+        <source>nach Vorgabe</source>
+        <target>nach Vorgabe</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.auto">
+      <segment state="initial">
+        <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
+        <target>Automatisch erfüllt — durch deine Einträge an diesem Tag.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.check">
+      <segment state="initial">
+        <source>Übung abhaken (ohne Eintrag)</source>
+        <target>Übung abhaken (ohne Eintrag)</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.undo">
+      <segment state="initial">
+        <source>Haken entfernen</source>
+        <target>Haken entfernen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.log">
+      <segment state="initial">
+        <source>Vorgabe eintragen</source>
+        <target>Vorgabe eintragen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.checkoffHint">
+      <segment state="initial">
+        <source>Intervall-Tag — Übungen einzeln abhaken.</source>
+        <target>Intervall-Tag — Übungen einzeln abhaken.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.logAllDone">
+      <segment state="initial">
+        <source>Alle Übungen eintragen &amp; abhaken</source>
+        <target>Alle Übungen eintragen &amp; abhaken</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
