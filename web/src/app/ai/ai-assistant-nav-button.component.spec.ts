@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/angular';
 import { AI_ASSISTANT_CONFIG } from './ai-assistant.config';
 import { AiAssistantNavButtonComponent } from './ai-assistant-nav-button.component';
 
-async function renderNavButton(runtimeUrl: string): Promise<void> {
+async function renderNavButton(agentUrl: string): Promise<void> {
   await render(AiAssistantNavButtonComponent, {
     providers: [
       provideRouter([]),
       {
         provide: AI_ASSISTANT_CONFIG,
-        useValue: { runtimeUrl, agentId: 'default' },
+        useValue: { agentUrl, agentId: 'default' },
       },
     ],
   });

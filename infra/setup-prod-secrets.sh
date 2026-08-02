@@ -33,6 +33,7 @@ PROJECT_ID="pushup-stats"
 # must be listed here so the runtime SA can read it at function invocation.
 # Keep in sync with data-store/functions/src/index.ts.
 SECRETS=(
+  GEMINI_API_KEY
   GITHUB_TOKEN
   VAPID_PRIVATE_KEY
   VAPID_PUBLIC_KEY

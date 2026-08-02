@@ -1,12 +1,13 @@
+import { HttpAgent } from '@ag-ui/client';
 import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import {
+  COPILOT_KIT_CONFIG,
   CopilotChat,
   CopilotKit,
   CopilotkitAgentFactory,
-  provideCopilotKit,
 } from '@copilotkit/angular';
 import { AppDataFacade } from '../core/app-data.facade';
 import { QuickAddOrchestrationService } from '../core/quick-add-orchestration.service';
@@ -16,7 +17,7 @@ import {
 } from './ai-assistant.config';
 import { AiAssistantPageComponent } from './ai-assistant-page.component';
 
-const RUNTIME_URL = 'https://agent.example.com/api/copilotkit';
+const AGENT_URL = 'https://agent.example.com/agUiAgent';
 
 const appDataMock = {
   dailyGoal: signal(100),
@@ -44,12 +45,15 @@ function renderPage(agentId: string) {
     providers: [
       provideZonelessChangeDetection(),
       provideRouter([]),
-      provideCopilotKit({ runtimeUrl: RUNTIME_URL }),
+      {
+        provide: COPILOT_KIT_CONFIG,
+        useValue: { agents: { [agentId]: new HttpAgent({ url: AGENT_URL }) } },
+      },
       CopilotKit,
       CopilotkitAgentFactory,
       {
         provide: AI_ASSISTANT_CONFIG,
-        useValue: { runtimeUrl: RUNTIME_URL, agentId },
+        useValue: { agentUrl: AGENT_URL, agentId },
       },
       { provide: AppDataFacade, useValue: appDataMock },
       { provide: QuickAddOrchestrationService, useValue: quickAddMock },
@@ -90,21 +94,5 @@ describe('AiAssistantPageComponent', () => {
     // then
     expect(stylesheetLinks().length).toBe(1);
     expect(stylesheetLinks()[0].rel).toBe('stylesheet');
-  });
-
-  it('should surface the pending handshake while the runtime connects', async () => {
-    // given / when
-    await renderPage('default');
-
-    // then — the terminal/unavailable copy is reserved for `error` and
-    // `disconnected`; see ai-assistant-status.spec.ts for the full mapping.
-    expect(
-      screen.getByText('Verbindung zum Agenten wird aufgebaut …')
-    ).toBeTruthy();
-    expect(
-      screen.queryByText(
-        'Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime.'
-      )
-    ).toBeNull();
   });
 });

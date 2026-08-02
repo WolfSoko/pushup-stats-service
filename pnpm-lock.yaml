@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@ag-ui/client':
+        specifier: 0.0.57
+        version: 0.0.57
       '@angular-devkit/build-angular':
         specifier: 22.0.8
         version: 22.0.8(c981e2b2017cd15ac09edc29b949f6dd)
@@ -150,6 +153,9 @@ importers:
         specifier: 3.25.76
         version: 3.25.76
     devDependencies:
+      '@ag-ui/core':
+        specifier: 0.0.57
+        version: 0.0.57
       '@angular-devkit/core':
         specifier: 22.0.8
         version: 22.0.8

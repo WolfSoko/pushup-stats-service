@@ -19,6 +19,7 @@
     "node": ">=24"
   },
   "devDependencies": {
+    "@ag-ui/core": "0.0.57",
     "@angular-devkit/core": "22.0.8",
     "@angular-devkit/schematics": "22.0.8",
     "@angular/build": "22.0.8",
@@ -101,6 +102,7 @@
     "yaml": "2.8.3"
   },
   "dependencies": {
+    "@ag-ui/client": "0.0.57",
     "@angular-devkit/build-angular": "22.0.8",
     "@angular/cdk": "22.0.6",
     "@angular/common": "22.0.8",

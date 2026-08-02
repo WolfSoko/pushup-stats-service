@@ -1,11 +1,12 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { HttpAgent } from '@ag-ui/client';
 import {
+  COPILOT_KIT_CONFIG,
   CopilotKit,
   CopilotkitAgentFactory,
   type FrontendToolConfig,
-  provideCopilotKit,
 } from '@copilotkit/angular';
 import { AppDataFacade } from '../core/app-data.facade';
 import { QuickAddOrchestrationService } from '../core/quick-add-orchestration.service';
@@ -40,7 +41,16 @@ function setup(): Harness {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({
     providers: [
-      provideCopilotKit({ runtimeUrl: 'https://agent.example.com/api' }),
+      {
+        provide: COPILOT_KIT_CONFIG,
+        useValue: {
+          agents: {
+            default: new HttpAgent({
+              url: 'https://agent.example.com/agUiAgent',
+            }),
+          },
+        },
+      },
       CopilotKit,
       CopilotkitAgentFactory,
       { provide: AppDataFacade, useValue: appDataMock },
