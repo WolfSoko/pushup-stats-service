@@ -10529,45 +10529,45 @@
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.unquantified">
-      <segment state="initial">
+      <segment state="translated">
         <source>nach Vorgabe</source>
-        <target>nach Vorgabe</target>
+        <target>volgens voorschrift</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.auto">
-      <segment state="initial">
+      <segment state="translated">
         <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
-        <target>Automatisch erfüllt — durch deine Einträge an diesem Tag.</target>
+        <target>Automatisch voltooid — door je invoer op deze dag.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.check">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung abhaken (ohne Eintrag)</source>
-        <target>Übung abhaken (ohne Eintrag)</target>
+        <target>Oefening afvinken (zonder invoer)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.undo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernen</source>
-        <target>Haken entfernen</target>
+        <target>Vinkje verwijderen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.log">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorgabe eintragen</source>
-        <target>Vorgabe eintragen</target>
+        <target>Voorschrift invoeren</target>
       </segment>
     </unit>
     <unit id="trainingPlans.checkoffHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
-        <target>Intervall-Tag — Übungen einzeln abhaken.</target>
+        <target>Intervaldag — vink oefeningen afzonderlijk af.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen eintragen &amp; abhaken</source>
-        <target>Alle Übungen eintragen &amp; abhaken</target>
+        <target>Alle oefeningen invoeren &amp; afvinken</target>
       </segment>
     </unit>
 </file>

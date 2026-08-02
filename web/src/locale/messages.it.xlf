@@ -10529,45 +10529,45 @@
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.unquantified">
-      <segment state="initial">
+      <segment state="translated">
         <source>nach Vorgabe</source>
-        <target>nach Vorgabe</target>
+        <target>come da programma</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.auto">
-      <segment state="initial">
+      <segment state="translated">
         <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
-        <target>Automatisch erfüllt — durch deine Einträge an diesem Tag.</target>
+        <target>Completato automaticamente — dalle tue voci di oggi.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.check">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung abhaken (ohne Eintrag)</source>
-        <target>Übung abhaken (ohne Eintrag)</target>
+        <target>Spunta esercizio (senza registrazione)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.undo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernen</source>
-        <target>Haken entfernen</target>
+        <target>Rimuovi spunta</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.log">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorgabe eintragen</source>
-        <target>Vorgabe eintragen</target>
+        <target>Registra quantità prevista</target>
       </segment>
     </unit>
     <unit id="trainingPlans.checkoffHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
-        <target>Intervall-Tag — Übungen einzeln abhaken.</target>
+        <target>Giorno a intervalli — spunta gli esercizi singolarmente.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen eintragen &amp; abhaken</source>
-        <target>Alle Übungen eintragen &amp; abhaken</target>
+        <target>Registra e spunta tutti gli esercizi</target>
       </segment>
     </unit>
 </file>
