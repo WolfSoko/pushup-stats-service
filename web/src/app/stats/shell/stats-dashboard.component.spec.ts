@@ -406,12 +406,18 @@ describe('StatsDashboardComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        // then un-ticking it is not offered — goals are scored from entries
+        // then un-ticking it is not offered — goals are scored from entries.
+        // The row stays focusable so its "Ziel erreicht" tooltip is reachable.
         const checkbox = (fixture.nativeElement as HTMLElement).querySelector(
           '[data-testid="daily-goal-check"] input'
         ) as HTMLInputElement;
         expect(checkbox.checked).toBe(true);
-        expect(checkbox.disabled).toBe(true);
+        expect(checkbox.getAttribute('aria-disabled')).toBe('true');
+        exerciseCreateSpy.mockClear();
+        checkbox.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(exerciseCreateSpy).not.toHaveBeenCalled();
       });
 
       it('Then it should offer quick add buttons for 10, 20 and 30 reps', () => {

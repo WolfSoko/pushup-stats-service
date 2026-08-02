@@ -86,6 +86,16 @@ export class QuickAddFabComponent {
     () => this.goalItems().length > 1
   );
 
+  /**
+   * The day's only goal, when there is exactly one. It replaces the legacy
+   * "+X bis zum Ziel" button so a single non-pushup goal is filled in its
+   * own measurement instead of writing pushups against it.
+   */
+  protected readonly singleGoal = computed<QuickAddGoalItem | null>(() => {
+    const items = this.goalItems();
+    return items.length === 1 ? items[0] : null;
+  });
+
   protected readonly dialItems = computed<DialItem[]>(() => {
     if (!this.fabState.open()) return [];
     const quickItems: DialItem[] = this.suggestions()
@@ -102,9 +112,9 @@ export class QuickAddFabComponent {
 
     const remaining = this.remainingToGoal();
     const reached = this.goalReached();
-    // With a submenu the dial entry stays even when the pushup-based
-    // `remainingToGoal` is 0 — the other goals of the day may still be open.
-    if (this.hasGoalSubmenu() || remaining > 0 || reached) {
+    // Goals of the day keep the dial entry alive even when the pushup-based
+    // `remainingToGoal` is 0 — a squats or plank goal may still be open.
+    if (this.goalItems().length > 0 || remaining > 0 || reached) {
       items.push({
         value: remaining,
         type: 'goal',
@@ -148,40 +158,44 @@ export class QuickAddFabComponent {
     patchState(this.fabState, { goalMenu: !this.fabState.goalMenu() });
   }
 
+  private closeDial(): void {
+    patchState(this.fabState, { open: false, goalMenu: false });
+  }
+
   protected onFillGoalItem(goal: QuickAddGoalItem): void {
     if (goal.disabled) return;
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.fillGoalItem.emit(goal.id);
   }
 
   protected onQuickAdd(suggestion: QuickAddSuggestion): void {
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.quickAdd.emit(suggestion);
   }
 
   protected onOpenDialog(): void {
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.openDialog.emit();
   }
 
   protected onOpenAutoCount(): void {
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.openAutoCount.emit();
   }
 
   protected onOpenExerciseTimer(): void {
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.openExerciseTimer.emit();
   }
 
   protected onOpenFeedback(): void {
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.openFeedback.emit();
   }
 
   protected onFillToGoal(): void {
     if (this.goalDisabled()) return;
-    patchState(this.fabState, { open: false, goalMenu: false });
+    this.closeDial();
     this.fillToGoal.emit();
   }
 }

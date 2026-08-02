@@ -1,6 +1,9 @@
 import type { QuickAddGoalItem } from '@pu-stats/quick-add';
 
-import type { DailyGoalItemView } from '../daily-goal.helpers';
+import {
+  type DailyGoalItemView,
+  goalCheckDisabled,
+} from '../daily-goal.helpers';
 
 /**
  * Maps today's goals onto the speed dial's goal submenu. A goal that is
@@ -21,6 +24,6 @@ export function toGoalDialItems(
       ? $localize`:@@quickAdd.fab.goalItemReachedAria:${item.exerciseName}:EXERCISE: bereits erreicht`
       : $localize`:@@quickAdd.fab.goalItemAria:${item.remainingDisplay}:REMAINING: ${item.exerciseName}:EXERCISE: bis zum Tagesziel hinzufügen`,
     reached: item.reached,
-    disabled: item.reached || !item.fillable || isPending(item.id),
+    disabled: goalCheckDisabled(item, isPending),
   }));
 }

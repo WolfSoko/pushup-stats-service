@@ -759,7 +759,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:104,105</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:118,119</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -767,7 +767,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:132</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:135</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -775,7 +775,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:133</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:136</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -783,7 +783,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:134</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:137</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -791,7 +791,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:135</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:138</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -799,7 +799,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:138</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:141</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -807,7 +807,7 @@
     </unit>
     <unit id="quickAdd.fab.goals">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:145</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:148</note>
       </notes>
       <segment>
         <source>Tagesziele</source>
@@ -815,7 +815,7 @@
     </unit>
     <unit id="quickAdd.fab.goalsAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:146</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:149</note>
       </notes>
       <segment>
         <source>Tagesziele zum Abhaken anzeigen</source>
@@ -4534,6 +4534,15 @@
         <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
       </segment>
     </unit>
+    <unit id="dailyGoal.check.manual">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal-actions.service.ts:56</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
+      </notes>
+      <segment>
+        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
+      </segment>
+    </unit>
     <unit id="exercise.category.pushup">
       <notes>
         <note category="location">web/src/app/core/daily-goal.helpers.ts:59</note>
@@ -4553,23 +4562,15 @@
     </unit>
     <unit id="dailyGoal.check.reached">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:53</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:56</note>
       </notes>
       <segment>
         <source>Ziel erreicht</source>
       </segment>
     </unit>
-    <unit id="dailyGoal.check.manual">
-      <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:56</note>
-      </notes>
-      <segment>
-        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
-      </segment>
-    </unit>
     <unit id="dailyGoal.check.fill">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:58</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:61</note>
       </notes>
       <segment>
         <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
@@ -4577,7 +4578,7 @@
     </unit>
     <unit id="dailyGoal.check.aria">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:62</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:65</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
@@ -4585,7 +4586,7 @@
     </unit>
     <unit id="quickAdd.fab.goalItemReachedAria">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:21</note>
+        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:24</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
@@ -4593,7 +4594,7 @@
     </unit>
     <unit id="quickAdd.fab.goalItemAria">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:22</note>
+        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:25</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
@@ -10523,6 +10524,7 @@
     <unit id="trainingPlans.notReady">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:103</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:120</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:394</note>
       </notes>
       <segment>

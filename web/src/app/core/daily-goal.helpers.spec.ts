@@ -220,6 +220,28 @@ describe('dailyGoalFillPayload', () => {
     expect(payload?.value).toBe(500);
   });
 
+  it('should raise a sub-minimum gap to the exercise minimum', () => {
+    // given a plank goal that is 1 second short (catalog min is 1 s, and
+    // a rounded-down gap of 0 would not be writable at all)
+    const [item] = dailyGoalItemViews(
+      [
+        goal({
+          exerciseId: 'plank.standard',
+          target: 120,
+          measurement: 'time',
+          unit: 's',
+        }),
+      ],
+      [119.6]
+    );
+
+    // when
+    const payload = dailyGoalFillPayload(item);
+
+    // then the smallest entry the catalog allows is written
+    expect(payload?.value).toBe(1);
+  });
+
   it('should return null for a reached goal', () => {
     // given / when
     const [item] = dailyGoalItemViews([goal()], [100]);

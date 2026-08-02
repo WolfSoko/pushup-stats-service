@@ -9,7 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import type { DailyGoalItemView } from '../daily-goal.helpers';
+import {
+  type DailyGoalItemView,
+  goalCheckDisabled,
+} from '../daily-goal.helpers';
 
 /**
  * Detailed daily-goal list: one row per goal with its exercise, progress
@@ -45,7 +48,7 @@ export class DailyGoalChecklistComponent {
   readonly complete = output<DailyGoalItemView>();
 
   protected checkDisabled(item: DailyGoalItemView): boolean {
-    return item.reached || !item.fillable || this.pending().has(item.id);
+    return goalCheckDisabled(item, (id) => this.pending().has(id));
   }
 
   protected tooltipFor(item: DailyGoalItemView): string {
@@ -63,7 +66,10 @@ export class DailyGoalChecklistComponent {
   }
 
   protected onToggle(item: DailyGoalItemView, checked: boolean): void {
-    if (!checked) return;
+    // `disabledInteractive` keeps a locked row focusable so its tooltip
+    // explains why — which also means the change event can still reach
+    // us, so the guard has to live here rather than in the template.
+    if (!checked || this.checkDisabled(item)) return;
     this.complete.emit(item);
   }
 }

@@ -351,7 +351,37 @@ describe('QuickAddFabComponent — goal submenu', () => {
     expect(fillGoalItem).not.toHaveBeenCalled();
   });
 
-  it('should keep the single fill button when only one goal applies', async () => {
+  it("should fill the day's only goal in its own measurement", async () => {
+    // given exactly one goal, and no pushup gap of its own
+    const fillGoalItem = jest.fn();
+    const fillToGoal = jest.fn();
+    const user = userEvent.setup({
+      pointerEventsCheck: PointerEventsCheckLevel.Never,
+    });
+    await render(QuickAddFabComponent, {
+      inputs: {
+        suggestions: [],
+        remainingToGoal: 0,
+        goalReached: false,
+        fillToGoalInFlight: false,
+        autoCountEnabled: false,
+        goalItems: [goal({ id: 'squats', label: 'Kniebeugen +20' })],
+      },
+      on: { fillGoalItem, fillToGoal },
+    });
+    await user.click(
+      screen.getByRole('button', { name: /Schnellerfassung öffnen/i })
+    );
+
+    // when the goal entry is used
+    await user.click(screen.getByTestId('quick-add-goal-single'));
+
+    // then the goal itself is filled, not the legacy pushup gap
+    expect(fillGoalItem).toHaveBeenCalledWith('squats');
+    expect(fillToGoal).not.toHaveBeenCalled();
+  });
+
+  it('should keep the legacy fill button when no goal breakdown is available', async () => {
     // given a single goal and an open pushup gap
     const fillToGoal = jest.fn();
     const user = userEvent.setup({
@@ -364,7 +394,7 @@ describe('QuickAddFabComponent — goal submenu', () => {
         goalReached: false,
         fillToGoalInFlight: false,
         autoCountEnabled: false,
-        goalItems: [goal()],
+        goalItems: [],
       },
       on: { fillToGoal },
     });

@@ -96,6 +96,19 @@ export function dailyGoalItemViews(
   });
 }
 
+/**
+ * Whether a one-click check-off is unavailable for this goal: already
+ * reached, not fillable at all, or a write is still in flight. Shared so
+ * the dashboard checklist and the Quick-Add submenu can never disagree
+ * about which rows are actionable.
+ */
+export function goalCheckDisabled(
+  item: Pick<DailyGoalItemView, 'id' | 'reached' | 'fillable'>,
+  isPending: (goalId: string) => boolean
+): boolean {
+  return item.reached || !item.fillable || isPending(item.id);
+}
+
 function goalIsFillable(entry: ComplexGoalEntry): boolean {
   if (entry.target <= 0) return false;
   const def = findExerciseDefinition(entry.exerciseId);

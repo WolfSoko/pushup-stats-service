@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { computed, PLATFORM_ID, signal, type Signal } from '@angular/core';
-import { BehaviorSubject, from, map, of } from 'rxjs';
+import { BehaviorSubject, from, map, of, Subject } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 import {
   ExerciseFirestoreService,
@@ -1870,6 +1870,87 @@ describe('TrainingPlanStore', () => {
       // then only the newest entry is removed — the rest stays the user's
       expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledTimes(1);
       expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledWith('pu-2');
+    });
+
+    it("should return 'not-ready' before the entry mirror has synced", async () => {
+      // given a browser context whose exerciseEntries listener hasn't
+      // emitted yet — deleting off pre-sync data would drop the tick and
+      // leave the plan's entries behind
+      const stream = new BehaviorSubject<UserTrainingPlan | null>(
+        planStartedYesterday('circuit-plan')
+      );
+      const apiMock = {
+        getActivePlan: vitest.fn(() => stream.asObservable()),
+        setPlan: vitest.fn(),
+        updatePlan: vitest.fn(),
+        addCompletedDay: vitest.fn(() => of(void 0)),
+        removeCompletedDay: vitest.fn(() => of(void 0)),
+        addCompletedItems: vitest.fn(() => of(void 0)),
+        removeCompletedItems: vitest.fn(() => of(void 0)),
+      };
+      const exerciseApiMock = {
+        createEntry: vitest.fn(),
+        deleteEntry: vitest.fn(),
+      };
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          { provide: UserTrainingPlanApiService, useValue: apiMock },
+          { provide: StatsApiService, useValue: { createPushup: vitest.fn() } },
+          { provide: ExerciseFirestoreService, useValue: exerciseApiMock },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              exerciseEntries: signal<ExerciseEntry[]>([]),
+              connected: signal(true),
+              exerciseEntriesLoaded: signal(false),
+              updateTick: signal(0),
+            },
+          },
+          { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+          { provide: TRAINING_PLAN_LOOKUP, useValue: circuitLookup },
+        ],
+      });
+      const store = TestBed.inject(TrainingPlanStore);
+      await flush();
+
+      // when
+      const result = await store.resetPlanExercise(2, 1);
+      await flush();
+
+      // then
+      expect(result).toBe('not-ready');
+      expect(exerciseApiMock.deleteEntry).not.toHaveBeenCalled();
+      expect(apiMock.removeCompletedItems).not.toHaveBeenCalled();
+      TestBed.resetTestingModule();
+    });
+
+    it("should return 'in-flight' while a reset for the same day runs", async () => {
+      // given a first reset whose delete never settles
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [planEntry('sq-1', 'legs.squats', { reps: 45 })],
+        circuitLookup
+      );
+      await flush();
+      const blocked = new Subject<{ ok: true }>();
+      mocks.exerciseApiMock.deleteEntry.mockReturnValueOnce(
+        blocked.asObservable()
+      );
+
+      // when a second reset for the same day starts before it finishes
+      const first = store.resetPlanExercise(2, 1);
+      const second = await store.resetPlanExercise(2, 1);
+
+      // then the day lock rejects it, so nothing is deleted twice
+      expect(second).toBe('in-flight');
+      blocked.next({ ok: true });
+      blocked.complete();
+      await first;
+      await flush();
+      expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledTimes(1);
     });
 
     it('should refuse a reset for a future day', async () => {

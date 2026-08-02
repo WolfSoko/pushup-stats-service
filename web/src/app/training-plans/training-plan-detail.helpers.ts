@@ -116,6 +116,8 @@ export function messageForResetResult(
       return $localize`:@@trainingPlans.exercise.resetDone:Übung zurückgesetzt.`;
     case 'kept-entries':
       return $localize`:@@trainingPlans.exercise.resetKept:Haken entfernt — deine eigenen Einträge bleiben bestehen.`;
+    case 'not-ready':
+      return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
     case 'in-flight':
     case 'noop':
       return null;

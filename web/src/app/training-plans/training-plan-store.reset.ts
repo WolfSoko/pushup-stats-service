@@ -24,10 +24,11 @@ type Store = TrainingPlanActionsStore;
  *  - `reset` — the exercise is open again
  *  - `kept-entries` — tick and plan entries are gone, but entries the user
  *    logged themselves still cover the target, so it stays fulfilled
+ *  - `not-ready` — the entry mirror hasn't synced yet
  *  - `noop` / `in-flight` — nothing was written
  */
 export type ResetExerciseResult =
-  'reset' | 'kept-entries' | 'noop' | 'in-flight';
+  'reset' | 'kept-entries' | 'noop' | 'in-flight' | 'not-ready';
 
 /**
  * The plan's own entries for one exercise on one day, newest first. Only
@@ -70,9 +71,13 @@ async function deletePlanEntries(
   let removed = 0;
   for (const entry of planWrittenEntries(store, dateIso, exercise)) {
     if (removed >= budget) break;
+    // An entry that contributes nothing to this measurement would never
+    // advance the budget, so deleting it would drain the whole day's pool.
+    const value = entry[field] ?? 0;
+    if (value <= 0) continue;
     await firstValueFrom(api.deleteEntry(entry._id));
     deleted.add(entry._id);
-    removed += entry[field] ?? 0;
+    removed += value;
   }
   return deleted;
 }
@@ -92,6 +97,12 @@ export async function resetPlanExercise(
   itemIndex: number
 ): Promise<ResetExerciseResult> {
   if (!dayIsWritable(store, dayIndex)) return 'noop';
+  // The `exerciseEntries` mirror is empty until its Firestore listener has
+  // emitted. Resetting off pre-sync data would drop the tick and leave the
+  // plan's entries in place, so the exercise would re-fulfil itself.
+  if (store._isBrowser && !store._live.exerciseEntriesLoaded()) {
+    return 'not-ready';
+  }
   if (!acquireWriteLock(store, dayIndex)) return 'in-flight';
   try {
     const item = dayProgress(store, dayIndex)[itemIndex];

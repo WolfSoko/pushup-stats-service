@@ -11,6 +11,7 @@
             class="goal-check"
             [checked]="item.reached"
             [disabled]="checkDisabled(item)"
+            [disabledInteractive]="true"
             [matTooltip]="tooltipFor(item)"
             [attr.aria-label]="ariaFor(item)"
             data-testid="daily-goal-check"

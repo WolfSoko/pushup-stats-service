@@ -48,10 +48,21 @@ export class DailyGoalActionsService {
     if (item.reached) return 'already-reached';
     if (this.isPending(item.id)) return 'noop';
     const payload = dailyGoalFillPayload(item);
+    if (!payload) {
+      // Not a failure: the goal needs a companion value only a real entry
+      // can carry, so point the user at the entry dialog instead of
+      // flashing a generic error.
+      this.snackBar.open(
+        $localize`:@@dailyGoal.check.manual:Dieses Ziel braucht einen manuellen Eintrag`,
+        '',
+        { duration: 3000 }
+      );
+      return 'noop';
+    }
     const userId = this.userContext.userIdSafe();
-    if (!payload || !userId || !this.exerciseApi) {
+    if (!userId || !this.exerciseApi) {
       notifyError(this.snackBar);
-      return payload ? 'error' : 'noop';
+      return 'error';
     }
     this.markPending(item.id, true);
     try {

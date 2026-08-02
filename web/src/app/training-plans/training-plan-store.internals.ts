@@ -71,8 +71,9 @@ export function planDayDateFor(store: Store, dayIndex: number): string {
   return planDayDate(store.activePlan()?.startDate, dayIndex);
 }
 
-/** Whether a day index can be written to at all (active plan, real
- *  non-rest day, not in the future, live mirror synced). */
+/** Whether a day index can be written to at all: active plan, real
+ *  non-rest day, not in the future. Callers that read the live entry
+ *  mirror must check `_live.exerciseEntriesLoaded()` themselves. */
 export function dayIsWritable(store: Store, dayIndex: number): boolean {
   const plan = store.activePlan();
   const catalog = store.activeCatalog();
