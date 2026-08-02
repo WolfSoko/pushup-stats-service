@@ -21,11 +21,12 @@ function row(overrides: Partial<DayExerciseRow> = {}): DayExerciseRow {
 async function setup(exercises: DayExerciseRow[], interactive = true) {
   const logExercise = vitest.fn();
   const toggleExercise = vitest.fn();
+  const resetExercise = vitest.fn();
   await render(PlanDayExercisesComponent, {
     inputs: { exercises, interactive },
-    on: { logExercise, toggleExercise },
+    on: { logExercise, toggleExercise, resetExercise },
   });
-  return { logExercise, toggleExercise };
+  return { logExercise, toggleExercise, resetExercise };
 }
 
 describe('PlanDayExercisesComponent', () => {
@@ -84,11 +85,37 @@ describe('PlanDayExercisesComponent', () => {
     expect(screen.queryByRole('button')).toBeNull();
   });
 
-  it('should hide the log action for an exercise that is already done', async () => {
+  it('should replace the log action of a done exercise with a reset action', async () => {
     // given / when
     await setup([row({ done: true })]);
     // then
-    expect(screen.queryByRole('button')).toBeNull();
+    expect(screen.queryByLabelText(/Vorgabe eintragen/)).toBeNull();
+    expect(screen.getByTestId('plan-exercise-reset')).toBeTruthy();
+  });
+
+  it('should emit a reset for the clicked exercise', async () => {
+    // given a done exercise
+    const { resetExercise } = await setup([row({ itemIndex: 3, done: true })]);
+    // when the reset action is used
+    await userEvent.click(screen.getByTestId('plan-exercise-reset'));
+    // then
+    expect(resetExercise).toHaveBeenCalledWith(3);
+  });
+
+  it('should offer a reset for an exercise fulfilled by logged entries', async () => {
+    // given an auto-fulfilled exercise whose checkbox is locked
+    const { resetExercise } = await setup([row({ done: true, auto: true })]);
+    // when
+    await userEvent.click(screen.getByTestId('plan-exercise-reset'));
+    // then the only way back is the reset, and it works
+    expect(resetExercise).toHaveBeenCalledWith(0);
+  });
+
+  it('should offer no reset on a read-only day', async () => {
+    // given / when
+    await setup([row({ done: true })], false);
+    // then
+    expect(screen.queryByTestId('plan-exercise-reset')).toBeNull();
   });
 
   it('should show a placeholder instead of numbers for an unquantified exercise', async () => {

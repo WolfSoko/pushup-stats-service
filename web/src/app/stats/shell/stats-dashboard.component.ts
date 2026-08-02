@@ -25,8 +25,6 @@ import {
   findExerciseDefinition,
   formatEntryDisplay,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
-  QUICK_LOG_REPS_MAX,
-  QUICK_LOG_REPS_MIN,
   UnifiedEntry,
 } from '@pu-stats/models';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
@@ -36,6 +34,10 @@ import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { autoCountProfileForCatalogId } from '../../core/quick-add-orchestration.helpers';
 import { AppDataFacade } from '../../core/app-data.facade';
+import { DailyGoalActionsService } from '../../core/daily-goal-actions.service';
+import type { DailyGoalItemView } from '../../core/daily-goal.helpers';
+import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-checklist.component';
+import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
@@ -57,6 +59,7 @@ import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model'
     MatProgressBarModule,
     DatePipe,
     AnalysisTeaserCardComponent,
+    DailyGoalChecklistComponent,
     PreviewBannerComponent,
     AdSlotComponent,
     RouterLink,
@@ -138,6 +141,9 @@ export class StatsDashboardComponent {
   readonly userConfiguredDailyGoal = this.store.userConfiguredDailyGoal;
   /** Per-exercise daily goal breakdown shared with the toolbar pill. */
   readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
+  private readonly goalActions = inject(DailyGoalActionsService);
+  /** Goal ids whose check-off write is still in flight. */
+  readonly dailyGoalPending = this.goalActions.pending;
   private readonly trainingPlans = inject(TrainingPlanStore);
   /**
    * Only render the "no active plan" banner once the plan resource has
@@ -192,11 +198,28 @@ export class StatsDashboardComponent {
       this.refreshCounter.update((c) => c + 1);
     });
 
+    registerDashboardDeepLinks({
+      route: this.route,
+      router: this.router,
+      openCreateDialog: () => this.openCreateDialog(),
+      // Attribute deep-link entries to the reminder so source-based analytics
+      // match the in-tab `QUICK_LOG_PUSHUPS` path (CodeRabbit/Copilot P2).
+      quickLog: (reps) => void this.addQuickEntry(reps, 'reminder'),
+    });
+
     this.store.loadQuote();
   }
 
   fillToGoal(): void {
     this.quickAdd.fillToGoal();
+  }
+
+  /** Ticking a sub-goal logs the amount still missing for it. */
+  async completeDailyGoal(item: DailyGoalItemView): Promise<void> {
+    const result = await this.goalActions.complete(item);
+    if (result !== 'logged') return;
+    this.store.refreshAll();
+    this.refreshCounter.update((c) => c + 1);
   }
 
   openCreateDialog(): void {
@@ -229,52 +252,6 @@ export class StatsDashboardComponent {
   shareDay(): void {
     void this.store.shareDay();
   }
-
-  /**
-   * Called after render — handles two notification deep-links:
-   *   - `?log=1`     → open create-entry dialog (existing behavior)
-   *   - `?quickLog=N` → silently log N pushups (notification button click
-   *                     when no app tab was open — see sw-push handlers).
-   *
-   * `quickLog` arrives via URL and is therefore untrusted: clamp into the
-   * configured `[QUICK_LOG_REPS_MIN, QUICK_LOG_REPS_MAX]` range so a tampered
-   * link can't persist absurd entries (CodeRabbit/Copilot/Codex P1, PR #249).
-   *
-   * Snooze always wins: if `?snooze=N` is also present, the user explicitly
-   * snoozed and did NOT want to log push-ups in this navigation. Skip both
-   * deep-links so a combined or stale URL can never silently create an entry
-   * alongside the snooze — App.ts consumes the snooze param separately.
-   */
-  private readonly _handleLogParam = afterNextRender(() => {
-    const params = this.route.snapshot.queryParamMap;
-    if (params.has('snooze')) return;
-    const quickLog = params.get('quickLog');
-    const quickReps = quickLog != null ? Number(quickLog) : NaN;
-    if (Number.isFinite(quickReps) && quickReps >= QUICK_LOG_REPS_MIN) {
-      const clamped = Math.min(Math.floor(quickReps), QUICK_LOG_REPS_MAX);
-      void this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { quickLog: null },
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
-      });
-      // Attribute deep-link entries to the reminder so source-based analytics
-      // match the in-tab `QUICK_LOG_PUSHUPS` path (CodeRabbit/Copilot P2).
-      void this.addQuickEntry(clamped, 'reminder');
-      return;
-    }
-    const log = params.get('log');
-    if (log === '1') {
-      // Clean up URL without re-navigating
-      void this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { log: null },
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
-      });
-      this.openCreateDialog();
-    }
-  });
 
   async createEntry(result: TrainingEntryDialogResult) {
     const userId = this.userContext.userIdSafe();

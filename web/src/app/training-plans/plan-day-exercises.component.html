@@ -55,6 +55,19 @@
           </button>
         }
 
+        @if (interactive() && ex.done) {
+          <button
+            mat-icon-button
+            class="exercise-reset"
+            data-testid="plan-exercise-reset"
+            (click)="resetExercise.emit(ex.itemIndex)"
+            [matTooltip]="resetTooltip"
+            [attr.aria-label]="resetTooltip + ': ' + ex.name"
+          >
+            <mat-icon>restart_alt</mat-icon>
+          </button>
+        }
+
         @if (ex.quantified) {
           <mat-progress-bar
             class="exercise-bar"

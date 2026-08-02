@@ -238,6 +238,7 @@ interface Mocks {
   };
   exerciseApiMock: {
     createEntry: ReturnType<typeof vitest.fn>;
+    deleteEntry: ReturnType<typeof vitest.fn>;
   };
   liveMock: {
     exerciseEntries: Signal<ExerciseEntry[]>;
@@ -426,6 +427,14 @@ describe('TrainingPlanStore', () => {
             source: payload.source ?? 'plan',
           } satisfies ExerciseEntry)
         ),
+        // Mirrors the Firestore listener: a deleted doc disappears from
+        // the live mirror the store reads its progress from.
+        deleteEntry: vitest.fn((id: string) => {
+          liveExerciseEntries.update((list) =>
+            list.filter((e) => e._id !== id)
+          );
+          return of({ ok: true as const });
+        }),
       },
       liveMock: {
         // Post-cutover pushups are exerciseEntries (`exerciseId:'pushup'`);
@@ -1750,6 +1759,137 @@ describe('TrainingPlanStore', () => {
 
       // then
       expect(mocks.apiMock.addCompletedItems).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('resetPlanExercise', () => {
+    /** Entry mirror helper for one exercise on the current plan day. */
+    function planEntry(
+      id: string,
+      exerciseId: string,
+      values: Partial<ExerciseEntry>
+    ): ExerciseEntry {
+      return {
+        _id: id,
+        userId: 'u1',
+        exerciseId,
+        timestamp: `${toBerlinIsoDate(new Date())}T12:00:00.000+02:00`,
+        source: 'plan',
+        ...values,
+      } as ExerciseEntry;
+    }
+
+    it('should delete the entries the plan wrote and re-open the exercise', async () => {
+      // given the squats item of today's circuit was logged from the plan
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [planEntry('sq-1', 'legs.squats', { reps: 45 })],
+        circuitLookup
+      );
+      await flush();
+      expect(store.dayProgress(2)[1].done).toBe(true);
+
+      // when the user resets it
+      const result = await store.resetPlanExercise(2, 1);
+      await flush();
+
+      // then the entry is gone and the exercise is open again
+      expect(result).toBe('reset');
+      expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledWith('sq-1');
+      expect(store.dayProgress(2)[1].done).toBe(false);
+    });
+
+    it('should keep entries the user logged themselves and say so', async () => {
+      // given the target is covered by the user's own workout, not the plan
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [planEntry('sq-own', 'legs.squats', { reps: 45, source: 'web' })],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      const result = await store.resetPlanExercise(2, 1);
+      await flush();
+
+      // then nothing is deleted and the caller can explain why
+      expect(result).toBe('kept-entries');
+      expect(mocks.exerciseApiMock.deleteEntry).not.toHaveBeenCalled();
+      expect(store.dayProgress(2)[1].done).toBe(true);
+    });
+
+    it('should drop a manual tick and re-open the completed day', async () => {
+      // given a day closed by ticking every exercise off
+      const { store, mocks } = setup(
+        planStartedYesterday('hiit-plan'),
+        [],
+        [],
+        hiitLookup
+      );
+      await flush();
+      await store.setItemDone(2, 0, true);
+      await store.setItemDone(2, 1, true);
+      await flush();
+      expect(store.activePlan()?.completedDays).toContain(2);
+
+      // when one of them is reset
+      const result = await store.resetPlanExercise(2, 1);
+      await flush();
+
+      // then the tick and the day completion are both undone
+      expect(result).toBe('reset');
+      expect(mocks.apiMock.removeCompletedItems).toHaveBeenCalledWith('u1', [
+        '2:1',
+      ]);
+      expect(mocks.apiMock.removeCompletedDay).toHaveBeenCalledWith('u1', 2);
+      expect(store.activePlan()?.completedDays).not.toContain(2);
+    });
+
+    it('should delete only as much as the reset exercise was credited', async () => {
+      // given two plan entries covering pushups twice over
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [
+          planEntry('pu-1', 'pushup', { reps: 30 }),
+          planEntry('pu-2', 'pushup', {
+            reps: 30,
+            timestamp: `${toBerlinIsoDate(new Date())}T18:00:00.000+02:00`,
+          }),
+        ],
+        circuitLookup
+      );
+      await flush();
+
+      // when the single pushup item (target 30) is reset
+      await store.resetPlanExercise(2, 0);
+      await flush();
+
+      // then only the newest entry is removed — the rest stays the user's
+      expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledTimes(1);
+      expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledWith('pu-2');
+    });
+
+    it('should refuse a reset for a future day', async () => {
+      // given day 4 is still ahead of today
+      const { store, mocks } = setup(
+        planStartedYesterday('circuit-plan'),
+        [],
+        [],
+        circuitLookup
+      );
+      await flush();
+
+      // when
+      const result = await store.resetPlanExercise(4, 0);
+      await flush();
+
+      // then
+      expect(result).toBe('noop');
+      expect(mocks.exerciseApiMock.deleteEntry).not.toHaveBeenCalled();
+      expect(mocks.apiMock.removeCompletedItems).not.toHaveBeenCalled();
     });
   });
 });

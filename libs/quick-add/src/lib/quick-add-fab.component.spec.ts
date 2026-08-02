@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { PointerEventsCheckLevel } from '@testing-library/user-event';
 import {
   QuickAddFabComponent,
+  type QuickAddGoalItem,
   type QuickAddSuggestion,
 } from './quick-add-fab.component';
 
@@ -23,6 +24,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
     goalReached?: boolean;
     fillToGoalInFlight?: boolean;
     autoCountEnabled?: boolean;
+    goalItems?: QuickAddGoalItem[];
   }) {
     const quickAdd = jest.fn();
     const openDialog = jest.fn();
@@ -30,6 +32,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
     const fillToGoal = jest.fn();
     const openAutoCount = jest.fn();
     const openExerciseTimer = jest.fn();
+    const fillGoalItem = jest.fn();
     const opened = jest.fn();
 
     // Material disabled buttons set pointer-events:none; skip that check so
@@ -46,6 +49,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
         goalReached: inputs.goalReached ?? false,
         fillToGoalInFlight: inputs.fillToGoalInFlight ?? false,
         autoCountEnabled: inputs.autoCountEnabled ?? false,
+        goalItems: inputs.goalItems ?? [],
       },
       on: {
         quickAdd,
@@ -54,6 +58,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
         fillToGoal,
         openAutoCount,
         openExerciseTimer,
+        fillGoalItem,
         opened,
       },
     });
@@ -72,6 +77,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
       fillToGoal,
       openAutoCount,
       openExerciseTimer,
+      fillGoalItem,
       opened,
     };
   }
@@ -254,5 +260,125 @@ describe('QuickAddFabComponent — goal dial item', () => {
     );
 
     expect(opened).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('QuickAddFabComponent — goal submenu', () => {
+  async function renderWithGoals(goalItems: QuickAddGoalItem[]) {
+    const fillGoalItem = jest.fn();
+    const fillToGoal = jest.fn();
+    const user = userEvent.setup({
+      pointerEventsCheck: PointerEventsCheckLevel.Never,
+    });
+    await render(QuickAddFabComponent, {
+      inputs: {
+        suggestions: [],
+        remainingToGoal: 0,
+        goalReached: false,
+        fillToGoalInFlight: false,
+        autoCountEnabled: false,
+        goalItems,
+      },
+      on: { fillGoalItem, fillToGoal },
+    });
+    await user.click(
+      screen.getByRole('button', { name: /Schnellerfassung öffnen/i })
+    );
+    return { user, fillGoalItem, fillToGoal };
+  }
+
+  function goal(overrides: Partial<QuickAddGoalItem> = {}): QuickAddGoalItem {
+    return {
+      id: 'g1',
+      label: 'Liegestütze +40',
+      ariaLabel: '40 Liegestütze bis zum Tagesziel hinzufügen',
+      reached: false,
+      disabled: false,
+      ...overrides,
+    };
+  }
+
+  it('should offer a submenu instead of a single fill button when several goals apply', async () => {
+    // given two daily goals
+    const { user } = await renderWithGoals([
+      goal(),
+      goal({ id: 'g2', label: 'Kniebeugen +20', ariaLabel: '20 Kniebeugen' }),
+    ]);
+
+    // when the goal entry is opened
+    expect(screen.queryByTestId('quick-add-goal-submenu')).toBeNull();
+    await user.click(screen.getByTestId('quick-add-goal-menu-toggle'));
+
+    // then every goal is listed
+    expect(screen.getByTestId('quick-add-goal-submenu')).toBeTruthy();
+    expect(screen.getAllByTestId('quick-add-goal-submenu-item').length).toBe(2);
+    expect(screen.getByText('Liegestütze +40')).toBeTruthy();
+    expect(screen.getByText('Kniebeugen +20')).toBeTruthy();
+  });
+
+  it('should emit the picked goal id and close the dial', async () => {
+    // given an open submenu
+    const { user, fillGoalItem } = await renderWithGoals([
+      goal(),
+      goal({ id: 'g2', label: 'Kniebeugen +20', ariaLabel: '20 Kniebeugen' }),
+    ]);
+    await user.click(screen.getByTestId('quick-add-goal-menu-toggle'));
+
+    // when a goal is picked
+    await user.click(screen.getByText('Kniebeugen +20'));
+
+    // then the id round-trips back and the dial closes
+    expect(fillGoalItem).toHaveBeenCalledWith('g2');
+    expect(screen.queryByTestId('quick-add-goal-submenu')).toBeNull();
+  });
+
+  it('should render a goal that cannot be filled as disabled', async () => {
+    // given one reached and one manual-entry-only goal
+    const { user, fillGoalItem } = await renderWithGoals([
+      goal({ reached: true, disabled: true }),
+      goal({ id: 'g2', label: 'Laufen +2.00 km', disabled: true }),
+    ]);
+    await user.click(screen.getByTestId('quick-add-goal-menu-toggle'));
+
+    // when a disabled goal is clicked
+    const items = screen.getAllByTestId(
+      'quick-add-goal-submenu-item'
+    ) as HTMLButtonElement[];
+    expect(items.every((b) => b.disabled)).toBe(true);
+    await user.click(items[1]);
+
+    // then nothing is emitted
+    expect(fillGoalItem).not.toHaveBeenCalled();
+  });
+
+  it('should keep the single fill button when only one goal applies', async () => {
+    // given a single goal and an open pushup gap
+    const fillToGoal = jest.fn();
+    const user = userEvent.setup({
+      pointerEventsCheck: PointerEventsCheckLevel.Never,
+    });
+    await render(QuickAddFabComponent, {
+      inputs: {
+        suggestions: [],
+        remainingToGoal: 42,
+        goalReached: false,
+        fillToGoalInFlight: false,
+        autoCountEnabled: false,
+        goalItems: [goal()],
+      },
+      on: { fillToGoal },
+    });
+    await user.click(
+      screen.getByRole('button', { name: /Schnellerfassung öffnen/i })
+    );
+
+    // when the goal entry is clicked
+    await user.click(
+      screen.getByRole('button', { name: /Liegestütze bis zum Tagesziel/i })
+    );
+
+    // then the legacy one-tap fill still runs
+    expect(fillToGoal).toHaveBeenCalledTimes(1);
+    expect(screen.queryByTestId('quick-add-goal-submenu')).toBeNull();
   });
 });

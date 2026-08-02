@@ -71,6 +71,18 @@ export function planDayDateFor(store: Store, dayIndex: number): string {
   return planDayDate(store.activePlan()?.startDate, dayIndex);
 }
 
+/** Whether a day index can be written to at all (active plan, real
+ *  non-rest day, not in the future, live mirror synced). */
+export function dayIsWritable(store: Store, dayIndex: number): boolean {
+  const plan = store.activePlan();
+  const catalog = store.activeCatalog();
+  if (!plan || !catalog || plan.status !== 'active') return false;
+  const day = planDayByIndex(catalog, dayIndex);
+  if (!day || day.kind === 'rest') return false;
+  const currentIdx = store.currentDayIndex();
+  return currentIdx !== null && dayIndex <= currentIdx;
+}
+
 /** Lazily resolve the Firestore-bound exercise API. Returns null when no
  *  provider is registered (e.g. a test harness without `Firestore`). */
 export function resolveExerciseApi(

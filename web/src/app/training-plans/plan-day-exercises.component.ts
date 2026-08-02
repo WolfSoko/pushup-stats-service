@@ -25,7 +25,8 @@ export interface ExerciseToggle {
  * amount as a real entry (so it counts towards stats and streaks), or
  * ticking it off. Exercises already covered by logged entries render as
  * done and lock their checkbox — un-ticking them would be a lie the
- * next mirror update would immediately undo.
+ * next mirror update would immediately undo. Reopening those goes
+ * through `resetExercise`, which also drops the entries the plan wrote.
  */
 @Component({
   selector: 'app-plan-day-exercises',
@@ -47,9 +48,11 @@ export class PlanDayExercisesComponent {
 
   readonly logExercise = output<number>();
   readonly toggleExercise = output<ExerciseToggle>();
+  readonly resetExercise = output<number>();
 
   protected readonly autoTooltip = $localize`:@@trainingPlans.exercise.auto:Automatisch erfüllt — durch deine Einträge an diesem Tag.`;
   protected readonly checkTooltip = $localize`:@@trainingPlans.exercise.check:Übung abhaken (ohne Eintrag)`;
   protected readonly undoTooltip = $localize`:@@trainingPlans.exercise.undo:Haken entfernen`;
   protected readonly logTooltip = $localize`:@@trainingPlans.exercise.log:Vorgabe eintragen`;
+  protected readonly resetTooltip = $localize`:@@trainingPlans.exercise.reset:Übung zurücksetzen`;
 }

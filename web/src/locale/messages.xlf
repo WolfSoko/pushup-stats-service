@@ -759,7 +759,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:69,70</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:104,105</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -767,7 +767,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:104</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:132</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -775,7 +775,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:105</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:133</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -783,7 +783,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:106</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:134</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -791,7 +791,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:107</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:135</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -799,10 +799,26 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:110</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:138</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goals">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:145</note>
+      </notes>
+      <segment>
+        <source>Tagesziele</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalsAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:146</note>
+      </notes>
+      <segment>
+        <source>Tagesziele zum Abhaken anzeigen</source>
       </segment>
     </unit>
     <unit id="plan.day.rest">
@@ -3557,8 +3573,8 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:258,260</note>
-        <note category="location">web/src/app/app.html:321,323</note>
+        <note category="location">web/src/app/app.html:249,251</note>
+        <note category="location">web/src/app/app.html:312,314</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3567,8 +3583,8 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:262,264</note>
-        <note category="location">web/src/app/app.html:325,327</note>
+        <note category="location">web/src/app/app.html:253,255</note>
+        <note category="location">web/src/app/app.html:316,318</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3577,8 +3593,8 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:43,47</note>
-        <note category="location">web/src/app/app.html:266,268</note>
-        <note category="location">web/src/app/app.html:329,331</note>
+        <note category="location">web/src/app/app.html:257,259</note>
+        <note category="location">web/src/app/app.html:320,322</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3587,8 +3603,8 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:53,56</note>
-        <note category="location">web/src/app/app.html:274,276</note>
-        <note category="location">web/src/app/app.html:337,339</note>
+        <note category="location">web/src/app/app.html:265,267</note>
+        <note category="location">web/src/app/app.html:328,330</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3597,8 +3613,8 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:63,67</note>
-        <note category="location">web/src/app/app.html:270,272</note>
-        <note category="location">web/src/app/app.html:333,335</note>
+        <note category="location">web/src/app/app.html:261,263</note>
+        <note category="location">web/src/app/app.html:324,326</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3670,15 +3686,23 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:184,185</note>
+        <note category="location">web/src/app/app.html:186,187</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.checkHint">
+      <notes>
+        <note category="location">web/src/app/app.html:219,221</note>
+      </notes>
+      <segment>
+        <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
+      </segment>
+    </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:238,239</note>
+        <note category="location">web/src/app/app.html:229,230</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -3686,7 +3710,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:249,250</note>
+        <note category="location">web/src/app/app.html:240,241</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -3694,7 +3718,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:283</note>
+        <note category="location">web/src/app/app.html:274</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -3702,7 +3726,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:288,290</note>
+        <note category="location">web/src/app/app.html:279,281</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3710,7 +3734,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:291,293</note>
+        <note category="location">web/src/app/app.html:282,284</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -3718,7 +3742,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:293,294</note>
+        <note category="location">web/src/app/app.html:284,285</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -3726,7 +3750,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:295,297</note>
+        <note category="location">web/src/app/app.html:286,288</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -3734,7 +3758,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:298,301</note>
+        <note category="location">web/src/app/app.html:289,292</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -3742,7 +3766,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:305,307</note>
+        <note category="location">web/src/app/app.html:296,298</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -3750,7 +3774,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:312,313</note>
+        <note category="location">web/src/app/app.html:303,304</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>
@@ -4046,7 +4070,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:279</note>
+        <note category="location">web/src/app/app.ts:282</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4054,7 +4078,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:389</note>
+        <note category="location">web/src/app/app.ts:371</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4062,7 +4086,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:392</note>
+        <note category="location">web/src/app/app.ts:374</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -4070,7 +4094,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/app.ts:413</note>
+        <note category="location">web/src/app/app.ts:395</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -4078,7 +4102,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/app.ts:414</note>
+        <note category="location">web/src/app/app.ts:396</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -4086,7 +4110,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:490</note>
+        <note category="location">web/src/app/app.ts:477</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4094,7 +4118,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:519</note>
+        <note category="location">web/src/app/app.ts:506</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4102,7 +4126,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:526</note>
+        <note category="location">web/src/app/app.ts:513</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4504,7 +4528,7 @@
     </unit>
     <unit id="quickAdd.fab.exerciseRepAria">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:46</note>
+        <note category="location">web/src/app/core/app-data.facade.ts:37</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
@@ -4512,7 +4536,7 @@
     </unit>
     <unit id="exercise.category.pushup">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:320</note>
+        <note category="location">web/src/app/core/daily-goal.helpers.ts:59</note>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:49</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:49</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
@@ -4525,6 +4549,54 @@
       </notes>
       <segment>
         <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.reached">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:53</note>
+      </notes>
+      <segment>
+        <source>Ziel erreicht</source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.manual">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:56</note>
+      </notes>
+      <segment>
+        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.fill">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:58</note>
+      </notes>
+      <segment>
+        <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.aria">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:62</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemReachedAria">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:21</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemAria">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:22</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">
@@ -9969,7 +10041,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:254,256</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:281</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:300,301</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:290,291</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -9985,7 +10057,7 @@
     </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:310,311</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:300,301</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -9993,7 +10065,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:319,320</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:309,310</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -10001,7 +10073,7 @@
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:344,345</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:334,335</note>
       </notes>
       <segment>
         <source>Letzten Eintrag in der Historie öffnen</source>
@@ -10009,7 +10081,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:348,349</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:338,339</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -10017,8 +10089,8 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:358,360</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:421,424</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:348,350</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:411,414</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -10026,7 +10098,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:379,383</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:369,373</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -10034,7 +10106,7 @@
     </unit>
     <unit id="dashboard.latestExercises">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:384,385</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:374,375</note>
       </notes>
       <segment>
         <source>Letzte Übungen</source>
@@ -10042,7 +10114,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:428,429</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:418,419</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -10050,7 +10122,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:433,436</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:423,426</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -10058,7 +10130,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:439</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:429</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -10066,7 +10138,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:95</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:98</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -10074,7 +10146,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:98</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:101</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -10082,7 +10154,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:99</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:102</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -10098,7 +10170,7 @@
     </unit>
     <unit id="trainingPlans.exercise.auto">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:51</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:53</note>
       </notes>
       <segment>
         <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
@@ -10106,7 +10178,7 @@
     </unit>
     <unit id="trainingPlans.exercise.check">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:52</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:54</note>
       </notes>
       <segment>
         <source>Übung abhaken (ohne Eintrag)</source>
@@ -10114,7 +10186,7 @@
     </unit>
     <unit id="trainingPlans.exercise.undo">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:53</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:55</note>
       </notes>
       <segment>
         <source>Haken entfernen</source>
@@ -10122,10 +10194,18 @@
     </unit>
     <unit id="trainingPlans.exercise.log">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:54</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:56</note>
       </notes>
       <segment>
         <source>Vorgabe eintragen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.reset">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:57</note>
+      </notes>
+      <segment>
+        <source>Übung zurücksetzen</source>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCreditPrefix">
@@ -10147,7 +10227,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:43</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:351,355</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:352,356</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -10320,7 +10400,7 @@
     </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:267,268</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:268,269</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -10328,7 +10408,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:287,289</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:288,290</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -10336,7 +10416,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:297,299</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:298,300</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
@@ -10344,7 +10424,7 @@
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:308,310</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:309,311</note>
       </notes>
       <segment>
         <source>Alle Übungen eintragen &amp; abhaken</source>
@@ -10352,7 +10432,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:315,317</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:316,318</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -10360,7 +10440,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:321,323</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:322,324</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -10368,7 +10448,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:333,335</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:334,336</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -10376,7 +10456,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:348,349</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:349,350</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -10384,7 +10464,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:165</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:172</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -10392,7 +10472,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:182</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:189</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -10400,7 +10480,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:200</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:207</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -10408,7 +10488,7 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:213</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:220</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
@@ -10424,7 +10504,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:96</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:99</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:390</note>
       </notes>
       <segment>
@@ -10433,7 +10513,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:98</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:101</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:392</note>
       </notes>
       <segment>
@@ -10442,11 +10522,27 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:100</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:103</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:394</note>
       </notes>
       <segment>
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetDone">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:116</note>
+      </notes>
+      <segment>
+        <source>Übung zurückgesetzt.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetKept">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:118</note>
+      </notes>
+      <segment>
+        <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
       </segment>
     </unit>
     <unit id="trainingPlans.title">
