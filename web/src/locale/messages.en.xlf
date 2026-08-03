@@ -10841,5 +10841,17 @@ Deine Position: # ·  Reps        </source>
         <target>Haken entfernt — deine eigenen Einträge bleiben bestehen.</target>
       </segment>
     </unit>
+    <unit id="sw.update.buttonAria">
+      <segment state="initial">
+        <source>Neue Version verfügbar – jetzt neu laden</source>
+        <target>Neue Version verfügbar – jetzt neu laden</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.unrecoverable">
+      <segment state="initial">
+        <source>App-Daten beschädigt – bitte neu laden</source>
+        <target>App-Daten beschädigt – bitte neu laden</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

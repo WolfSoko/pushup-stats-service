@@ -4,9 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwUpdate } from '@angular/service-worker';
-import { NEVER, of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import {
   ExerciseFirestoreService,
   StatsApiService,
@@ -25,6 +23,7 @@ import { VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { App } from './app';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
+import { SwUpdateService } from './core/sw-update.service';
 
 describe('App (testing-library)', () => {
   let userNameSignal: WritableSignal<string>;
@@ -1174,315 +1173,84 @@ describe('App (testing-library)', () => {
     });
   });
 
-  describe('service worker update notifications', () => {
-    function makeSwUpdateMock() {
-      const versionUpdates = new Subject<{ type: string }>();
-      return {
-        versionUpdates: versionUpdates.asObservable(),
-        isEnabled: true,
-        activateUpdate: vitest.fn().mockResolvedValue(true),
-        checkForUpdate: vitest.fn().mockResolvedValue(true),
-        emit: (event: { type: string }) => versionUpdates.next(event),
-      };
+  // The reload prompt used to live only in a MatSnackBar, which any other
+  // toast dismisses for good — VERSION_READY never fires twice. The toolbar
+  // button is the durable half of the notice; SwUpdateService owns the
+  // snackbar half and is covered in core/sw-update.service.spec.ts.
+  describe('service worker update indicator', () => {
+    function renderWithSwUpdate(swUpdateService: {
+      updateAvailable: () => boolean;
+      applyUpdate: () => Promise<void>;
+    }) {
+      return render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
+          { provide: SwUpdateService, useValue: swUpdateService },
+        ],
+      });
     }
 
-    it('shows the actionable reload snackbar on VERSION_READY', async () => {
-      const swUpdate = makeSwUpdateMock();
-      const onActionSubject = new Subject<void>();
-      const openSpy = vitest
-        .spyOn(MatSnackBar.prototype, 'open')
-        .mockReturnValue({
-          onAction: () => onActionSubject.asObservable(),
-          afterDismissed: () => of({ dismissedByAction: false }),
-        } as unknown as ReturnType<MatSnackBar['open']>);
-
-      await render(App, {
-        providers: [
-          provideRouter([]),
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          {
-            provide: UserContextService,
-            useValue: {
-              userNameSafe: userNameSignal.asReadonly(),
-              userIdSafe: () => 'u1',
-              isAdmin: () => false,
-              isGuest: () => false,
-            },
-          },
-          { provide: AuthStore, useValue: authMock },
-          { provide: AuthService, useValue: authServiceMock },
-          { provide: Auth, useValue: firebaseAuthMock },
-          { provide: UserConfigApiService, useValue: userConfigApiMock },
-          { provide: StatsApiService, useValue: statsApiMock },
-          { provide: AdsStore, useValue: adsStoreMock },
-          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-          {
-            provide: ExerciseFirestoreService,
-            useValue: exerciseFirestoreMock,
-          },
-          {
-            provide: LiveDataStore,
-            useValue: {
-              connected: liveConnectedSignal,
-              exerciseEntries: liveEntriesSignal,
-              exerciseEntriesLoaded: liveConnectedSignal,
-              updateTick: signal(0),
-            },
-          },
-          { provide: SwUpdate, useValue: swUpdate },
-        ],
+    it('should hide the reload button while no update is pending', async () => {
+      // given / when
+      await renderWithSwUpdate({
+        updateAvailable: () => false,
+        applyUpdate: vitest.fn().mockResolvedValue(undefined),
       });
 
-      swUpdate.emit({ type: 'VERSION_READY' });
+      // then
+      expect(
+        screen.queryByRole('button', {
+          name: /Neue Version verf\u00fcgbar/i,
+        })
+      ).toBeNull();
+    });
 
-      const reloadCall = openSpy.mock.calls.find(
-        ([, action]) => action === 'Neu laden'
+    it('should apply the update when the toolbar reload button is clicked', async () => {
+      // given
+      const applyUpdate = vitest.fn().mockResolvedValue(undefined);
+      const pending = signal(true);
+      await renderWithSwUpdate({
+        updateAvailable: pending,
+        applyUpdate,
+      });
+
+      // when
+      await userEvent.click(
+        screen.getByRole('button', { name: /Neue Version verf\u00fcgbar/i })
       );
-      expect(reloadCall).toBeTruthy();
-      expect(reloadCall?.[0]).toBe('Neue Version verfügbar');
-    });
 
-    // Regression: a 20s auto-dismiss + bottom anchor meant the prompt was
-    // easy to miss (mobile bottom-nav clipped it; tabbing away wiped it).
-    // The update toast must now be sticky and top-anchored so the user can
-    // always act on it, with a distinct panelClass for styling.
-    it('opens the update snackbar sticky at top-center with the sw-update panelClass', async () => {
-      const swUpdate = makeSwUpdateMock();
-      // `NEVER` (not `of(undefined)`) so the action observable never emits —
-      // an immediate emission would synchronously fire the VERSION_READY
-      // handler's `activateUpdate()` + `window.location.reload()` side
-      // effects during this config-only assertion (jsdom can't navigate).
-      const openSpy = vitest
-        .spyOn(MatSnackBar.prototype, 'open')
-        .mockReturnValue({
-          onAction: () => NEVER,
-          afterDismissed: () => of({ dismissedByAction: false }),
-        } as unknown as ReturnType<MatSnackBar['open']>);
-
-      await render(App, {
-        providers: [
-          provideRouter([]),
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          {
-            provide: UserContextService,
-            useValue: {
-              userNameSafe: userNameSignal.asReadonly(),
-              userIdSafe: () => 'u1',
-              isAdmin: () => false,
-              isGuest: () => false,
-            },
-          },
-          { provide: AuthStore, useValue: authMock },
-          { provide: AuthService, useValue: authServiceMock },
-          { provide: Auth, useValue: firebaseAuthMock },
-          { provide: UserConfigApiService, useValue: userConfigApiMock },
-          { provide: StatsApiService, useValue: statsApiMock },
-          { provide: AdsStore, useValue: adsStoreMock },
-          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-          {
-            provide: ExerciseFirestoreService,
-            useValue: exerciseFirestoreMock,
-          },
-          {
-            provide: LiveDataStore,
-            useValue: {
-              connected: liveConnectedSignal,
-              exerciseEntries: liveEntriesSignal,
-              exerciseEntriesLoaded: liveConnectedSignal,
-              updateTick: signal(0),
-            },
-          },
-          { provide: SwUpdate, useValue: swUpdate },
-        ],
-      });
-
-      swUpdate.emit({ type: 'VERSION_READY' });
-
-      const reloadCall = openSpy.mock.calls.find(
-        ([, action]) => action === 'Neu laden'
-      );
-      expect(reloadCall).toBeTruthy();
-      const config = reloadCall?.[2];
-      expect(config?.duration).toBeUndefined();
-      expect(config?.horizontalPosition).toBe('center');
-      expect(config?.verticalPosition).toBe('top');
-      expect(config?.panelClass).toBe('sw-update-snackbar');
-    });
-
-    // Regression: a non-actionable "downloading in background" toast used to
-    // fire on VERSION_DETECTED, visually replacing the actionable reload toast
-    // and leaving users with no way to apply the update.
-    it('does not show a snackbar on VERSION_DETECTED', async () => {
-      const swUpdate = makeSwUpdateMock();
-      const openSpy = vitest
-        .spyOn(MatSnackBar.prototype, 'open')
-        .mockReturnValue({
-          onAction: () => of(undefined),
-          afterDismissed: () => of({ dismissedByAction: false }),
-        } as unknown as ReturnType<MatSnackBar['open']>);
-
-      await render(App, {
-        providers: [
-          provideRouter([]),
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          {
-            provide: UserContextService,
-            useValue: {
-              userNameSafe: userNameSignal.asReadonly(),
-              userIdSafe: () => 'u1',
-              isAdmin: () => false,
-              isGuest: () => false,
-            },
-          },
-          { provide: AuthStore, useValue: authMock },
-          { provide: AuthService, useValue: authServiceMock },
-          { provide: Auth, useValue: firebaseAuthMock },
-          { provide: UserConfigApiService, useValue: userConfigApiMock },
-          { provide: StatsApiService, useValue: statsApiMock },
-          { provide: AdsStore, useValue: adsStoreMock },
-          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-          {
-            provide: ExerciseFirestoreService,
-            useValue: exerciseFirestoreMock,
-          },
-          {
-            provide: LiveDataStore,
-            useValue: {
-              connected: liveConnectedSignal,
-              exerciseEntries: liveEntriesSignal,
-              exerciseEntriesLoaded: liveConnectedSignal,
-              updateTick: signal(0),
-            },
-          },
-          { provide: SwUpdate, useValue: swUpdate },
-        ],
-      });
-
-      const callsBefore = openSpy.mock.calls.length;
-      swUpdate.emit({ type: 'VERSION_DETECTED' });
-      expect(openSpy.mock.calls.length).toBe(callsBefore);
-    });
-
-    // Regression: a plain `location.reload()` does not skip the waiting
-    // ngsw, so users would tap "Neu laden" and still get the old build.
-    // The handler must call `activateUpdate()` before the reload.
-    it('activates the waiting worker before reloading on Neu laden click', async () => {
-      const swUpdate = makeSwUpdateMock();
-      const onActionSubject = new Subject<void>();
-      vitest.spyOn(MatSnackBar.prototype, 'open').mockReturnValue({
-        onAction: () => onActionSubject.asObservable(),
-        afterDismissed: () => of({ dismissedByAction: false }),
-      } as unknown as ReturnType<MatSnackBar['open']>);
-
-      const reloadSpy = vitest.fn();
-      vitest.spyOn(window, 'location', 'get').mockReturnValue({
-        reload: reloadSpy,
-      } as unknown as Location);
-
-      await render(App, {
-        providers: [
-          provideRouter([]),
-          { provide: PLATFORM_ID, useValue: 'browser' },
-          {
-            provide: UserContextService,
-            useValue: {
-              userNameSafe: userNameSignal.asReadonly(),
-              userIdSafe: () => 'u1',
-              isAdmin: () => false,
-              isGuest: () => false,
-            },
-          },
-          { provide: AuthStore, useValue: authMock },
-          { provide: AuthService, useValue: authServiceMock },
-          { provide: Auth, useValue: firebaseAuthMock },
-          { provide: UserConfigApiService, useValue: userConfigApiMock },
-          { provide: StatsApiService, useValue: statsApiMock },
-          { provide: AdsStore, useValue: adsStoreMock },
-          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-          {
-            provide: ExerciseFirestoreService,
-            useValue: exerciseFirestoreMock,
-          },
-          {
-            provide: LiveDataStore,
-            useValue: {
-              connected: liveConnectedSignal,
-              exerciseEntries: liveEntriesSignal,
-              exerciseEntriesLoaded: liveConnectedSignal,
-              updateTick: signal(0),
-            },
-          },
-          { provide: SwUpdate, useValue: swUpdate },
-        ],
-      });
-
-      swUpdate.emit({ type: 'VERSION_READY' });
-      onActionSubject.next();
-      await Promise.resolve();
-      await Promise.resolve();
-
-      expect(swUpdate.activateUpdate).toHaveBeenCalledTimes(1);
-      expect(reloadSpy).toHaveBeenCalledTimes(1);
-      expect(swUpdate.activateUpdate.mock.invocationCallOrder[0]).toBeLessThan(
-        reloadSpy.mock.invocationCallOrder[0]
-      );
-    });
-
-    // Regression: long-lived PWA/TWA sessions never received the reload
-    // toast because ngsw only checked the manifest once at app start.
-    // Polling every 10 minutes ensures new deploys eventually surface.
-    it('polls swUpdate.checkForUpdate every 10 minutes', async () => {
-      vitest.useFakeTimers();
-      try {
-        const swUpdate = makeSwUpdateMock();
-
-        await render(App, {
-          providers: [
-            provideRouter([]),
-            { provide: PLATFORM_ID, useValue: 'browser' },
-            {
-              provide: UserContextService,
-              useValue: {
-                userNameSafe: userNameSignal.asReadonly(),
-                userIdSafe: () => 'u1',
-                isAdmin: () => false,
-                isGuest: () => false,
-              },
-            },
-            { provide: AuthStore, useValue: authMock },
-            { provide: AuthService, useValue: authServiceMock },
-            { provide: Auth, useValue: firebaseAuthMock },
-            { provide: UserConfigApiService, useValue: userConfigApiMock },
-            { provide: StatsApiService, useValue: statsApiMock },
-            { provide: AdsStore, useValue: adsStoreMock },
-            { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-            {
-              provide: ExerciseFirestoreService,
-              useValue: exerciseFirestoreMock,
-            },
-            {
-              provide: LiveDataStore,
-              useValue: {
-                connected: liveConnectedSignal,
-                exerciseEntries: liveEntriesSignal,
-                exerciseEntriesLoaded: liveConnectedSignal,
-                updateTick: signal(0),
-              },
-            },
-            { provide: SwUpdate, useValue: swUpdate },
-          ],
-        });
-
-        expect(swUpdate.checkForUpdate).not.toHaveBeenCalled();
-
-        vitest.advanceTimersByTime(10 * 60 * 1000);
-        expect(swUpdate.checkForUpdate).toHaveBeenCalledTimes(1);
-
-        vitest.advanceTimersByTime(20 * 60 * 1000);
-        expect(swUpdate.checkForUpdate).toHaveBeenCalledTimes(3);
-      } finally {
-        vitest.useRealTimers();
-      }
+      // then
+      expect(applyUpdate).toHaveBeenCalledTimes(1);
     });
   });
 
