@@ -1180,8 +1180,13 @@ describe('App (testing-library)', () => {
   describe('service worker update indicator', () => {
     function renderWithSwUpdate(swUpdateService: {
       updateAvailable: () => boolean;
+      unrecoverable?: () => boolean;
       applyUpdate: () => Promise<void>;
     }) {
+      const service = {
+        unrecoverable: () => false,
+        ...swUpdateService,
+      };
       return render(App, {
         providers: [
           provideRouter([]),
@@ -1215,7 +1220,7 @@ describe('App (testing-library)', () => {
               updateTick: signal(0),
             },
           },
-          { provide: SwUpdateService, useValue: swUpdateService },
+          { provide: SwUpdateService, useValue: service },
         ],
       });
     }
@@ -1251,6 +1256,25 @@ describe('App (testing-library)', () => {
 
       // then
       expect(applyUpdate).toHaveBeenCalledTimes(1);
+    });
+
+    // A corrupted ngsw cache is not "a new version is ready" — screen readers
+    // must not announce it as one.
+    it('should announce the corrupted-cache state instead of a new version', async () => {
+      // given / when
+      await renderWithSwUpdate({
+        updateAvailable: () => true,
+        unrecoverable: () => true,
+        applyUpdate: vitest.fn().mockResolvedValue(undefined),
+      });
+
+      // then
+      expect(
+        screen.getByRole('button', { name: /App-Daten besch\u00e4digt/i })
+      ).toBeTruthy();
+      expect(
+        screen.queryByRole('button', { name: /Neue Version verf\u00fcgbar/i })
+      ).toBeNull();
     });
   });
 

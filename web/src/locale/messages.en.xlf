@@ -10853,5 +10853,11 @@ Deine Position: # ·  Reps        </source>
         <target>App-Daten beschädigt – bitte neu laden</target>
       </segment>
     </unit>
+    <unit id="sw.update.recoverButtonAria">
+      <segment state="initial">
+        <source>App-Daten beschädigt – jetzt neu laden</source>
+        <target>App-Daten beschädigt – jetzt neu laden</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

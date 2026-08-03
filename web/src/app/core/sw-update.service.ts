@@ -56,6 +56,7 @@ export class SwUpdateService {
   readonly unrecoverable = computed(() => this.pending() === 'unrecoverable');
 
   private promptRef: MatSnackBarRef<TextOnlySnackBar> | null = null;
+  private promptKind: PendingKind | null = null;
 
   constructor() {
     const swUpdate = this.swUpdate;
@@ -122,12 +123,20 @@ export class SwUpdateService {
   }
 
   private showPrompt(): void {
-    if (this.promptRef) return;
+    const kind = this.pending();
+    if (!kind) return;
+    if (this.promptRef) {
+      // An open prompt for the same state is already saying the right thing.
+      if (this.promptKind === kind) return;
+      // Escalating from 'update' to 'unrecoverable' changes the message, so
+      // the stale one has to go.
+      this.promptRef.dismiss();
+    }
 
-    const unrecoverable = this.unrecoverable();
-    const message = unrecoverable
-      ? $localize`:@@sw.update.unrecoverable:App-Daten beschädigt – bitte neu laden`
-      : $localize`:@@sw.update.available:Neue Version verfügbar`;
+    const message =
+      kind === 'unrecoverable'
+        ? $localize`:@@sw.update.unrecoverable:App-Daten beschädigt – bitte neu laden`
+        : $localize`:@@sw.update.available:Neue Version verfügbar`;
 
     // Sticky (no `duration`) + top-center: the prompt sits at eye level and
     // stays put until the user acts. An auto-dismiss timer made the toast easy
@@ -144,6 +153,7 @@ export class SwUpdateService {
       }
     );
     this.promptRef = ref;
+    this.promptKind = kind;
 
     ref
       .onAction()
@@ -153,7 +163,11 @@ export class SwUpdateService {
       .afterDismissed()
       .pipe(take(1))
       .subscribe(() => {
+        // `dismiss()` above resolves asynchronously, so the replaced ref's
+        // event can land after the replacement is already tracked.
+        if (this.promptRef !== ref) return;
         this.promptRef = null;
+        this.promptKind = null;
       });
   }
 }

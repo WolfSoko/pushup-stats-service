@@ -142,6 +142,9 @@ export class App {
   private readonly swUpdate = inject(SwUpdateService);
   /** Drives the persistent "new version" button in the toolbar. */
   readonly swUpdateAvailable = this.swUpdate.updateAvailable;
+  readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
+  protected readonly swUpdateAriaLabel = $localize`:@@sw.update.buttonAria:Neue Version verfügbar – jetzt neu laden`;
+  protected readonly swUpdateRecoverAriaLabel = $localize`:@@sw.update.recoverButtonAria:App-Daten beschädigt – jetzt neu laden`;
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly firebaseAuth = inject(Auth, { optional: true });

@@ -8,9 +8,20 @@ import {
   SwUpdateService,
 } from './sw-update.service';
 
-interface SnackBarStub {
-  onAction: () => unknown;
-  afterDismissed: () => unknown;
+interface SnackBarOverrides {
+  onAction?: () => unknown;
+  afterDismissed?: () => unknown;
+}
+
+/**
+ * One entry per `MatSnackBar.open()` call. Each opened ref needs its own
+ * `afterDismissed` stream — the service distinguishes "my prompt was
+ * dismissed" from "a prompt I already replaced finished dismissing" by ref
+ * identity, which a single shared subject would paper over.
+ */
+interface RefStub {
+  dismiss: ReturnType<typeof vitest.fn>;
+  afterDismissed$: Subject<{ dismissedByAction: boolean }>;
 }
 
 describe('SwUpdateService', () => {
@@ -26,16 +37,26 @@ describe('SwUpdateService', () => {
     checkForUpdate: ReturnType<typeof vitest.fn>;
   };
   let openSpy: ReturnType<typeof stubSnackBar>;
+  let refs: RefStub[];
   let onActionSubject: Subject<void>;
-  let afterDismissedSubject: Subject<{ dismissedByAction: boolean }>;
   let reloadSpy: ReturnType<typeof vitest.fn>;
 
-  function stubSnackBar(overrides: Partial<SnackBarStub> = {}) {
-    return vitest.spyOn(MatSnackBar.prototype, 'open').mockReturnValue({
-      onAction: () => onActionSubject.asObservable(),
-      afterDismissed: () => afterDismissedSubject.asObservable(),
-      ...overrides,
-    } as unknown as ReturnType<MatSnackBar['open']>);
+  function stubSnackBar(overrides: SnackBarOverrides = {}) {
+    return vitest
+      .spyOn(MatSnackBar.prototype, 'open')
+      .mockImplementation(() => {
+        const stub: RefStub = {
+          dismiss: vitest.fn(),
+          afterDismissed$: new Subject(),
+        };
+        refs.push(stub);
+        return {
+          onAction: () => onActionSubject.asObservable(),
+          afterDismissed: () => stub.afterDismissed$.asObservable(),
+          dismiss: stub.dismiss,
+          ...overrides,
+        } as unknown as ReturnType<MatSnackBar['open']>;
+      });
   }
 
   function createService(platform: 'browser' | 'server' = 'browser') {
@@ -52,11 +73,23 @@ describe('SwUpdateService', () => {
     return openSpy.mock.calls.filter(([, action]) => action === 'Neu laden');
   }
 
+  /** Complete the dismiss animation of the nth opened prompt (default: last). */
+  function finishDismiss(index = refs.length - 1): void {
+    refs[index].afterDismissed$.next({ dismissedByAction: false });
+  }
+
+  function becomeVisible(): void {
+    vitest
+      .spyOn(document, 'visibilityState', 'get')
+      .mockReturnValue('visible' as DocumentVisibilityState);
+    document.dispatchEvent(new Event('visibilitychange'));
+  }
+
   beforeEach(() => {
     versionUpdates = new Subject();
     unrecoverable = new Subject();
     onActionSubject = new Subject();
-    afterDismissedSubject = new Subject();
+    refs = [];
     swUpdateMock = {
       versionUpdates: versionUpdates.asObservable(),
       unrecoverable: unrecoverable.asObservable(),
@@ -149,7 +182,7 @@ describe('SwUpdateService', () => {
     versionUpdates.next({ type: 'VERSION_READY' });
 
     // when
-    afterDismissedSubject.next({ dismissedByAction: false });
+    finishDismiss();
 
     // then
     expect(service.updateAvailable()).toBe(true);
@@ -159,13 +192,10 @@ describe('SwUpdateService', () => {
     // given
     createService();
     versionUpdates.next({ type: 'VERSION_READY' });
-    afterDismissedSubject.next({ dismissedByAction: false });
-    vitest
-      .spyOn(document, 'visibilityState', 'get')
-      .mockReturnValue('visible' as DocumentVisibilityState);
+    finishDismiss();
 
     // when
-    document.dispatchEvent(new Event('visibilitychange'));
+    becomeVisible();
 
     // then
     expect(updateCalls()).toHaveLength(2);
@@ -176,12 +206,9 @@ describe('SwUpdateService', () => {
     // given
     createService();
     versionUpdates.next({ type: 'VERSION_READY' });
-    vitest
-      .spyOn(document, 'visibilityState', 'get')
-      .mockReturnValue('visible' as DocumentVisibilityState);
 
     // when
-    document.dispatchEvent(new Event('visibilitychange'));
+    becomeVisible();
 
     // then
     expect(updateCalls()).toHaveLength(1);
@@ -190,12 +217,9 @@ describe('SwUpdateService', () => {
   it('should check for an update when a hidden tab becomes visible again', () => {
     // given
     createService();
-    vitest
-      .spyOn(document, 'visibilityState', 'get')
-      .mockReturnValue('visible' as DocumentVisibilityState);
 
     // when
-    document.dispatchEvent(new Event('visibilitychange'));
+    becomeVisible();
 
     // then
     expect(swUpdateMock.checkForUpdate).toHaveBeenCalledTimes(1);
@@ -268,6 +292,37 @@ describe('SwUpdateService', () => {
     expect(updateCalls()[0][0]).toBe('App-Daten beschädigt – bitte neu laden');
     expect(service.unrecoverable()).toBe(true);
     expect(service.updateAvailable()).toBe(true);
+  });
+
+  // Regression: the reopen guard used to check only whether a prompt was open,
+  // so an UNRECOVERABLE_STATE arriving behind an open "Neue Version verfügbar"
+  // left the wrong message on screen.
+  it('should replace an open update prompt when the state escalates to unrecoverable', () => {
+    // given
+    createService();
+    versionUpdates.next({ type: 'VERSION_READY' });
+
+    // when
+    unrecoverable.next({ type: 'UNRECOVERABLE_STATE', reason: 'gone' });
+
+    // then
+    expect(refs[0].dismiss).toHaveBeenCalledTimes(1);
+    expect(updateCalls()).toHaveLength(2);
+    expect(updateCalls()[1][0]).toBe('App-Daten beschädigt – bitte neu laden');
+  });
+
+  it('should keep tracking the replacement prompt when the replaced one finishes dismissing', () => {
+    // given
+    createService();
+    versionUpdates.next({ type: 'VERSION_READY' });
+    unrecoverable.next({ type: 'UNRECOVERABLE_STATE', reason: 'gone' });
+
+    // when
+    finishDismiss(0);
+    becomeVisible();
+
+    // then
+    expect(updateCalls()).toHaveLength(2);
   });
 
   it('should still reload when activateUpdate rejects', async () => {

@@ -3573,8 +3573,8 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:261,263</note>
-        <note category="location">web/src/app/app.html:324,326</note>
+        <note category="location">web/src/app/app.html:262,264</note>
+        <note category="location">web/src/app/app.html:325,327</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3583,8 +3583,8 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:265,267</note>
-        <note category="location">web/src/app/app.html:328,330</note>
+        <note category="location">web/src/app/app.html:266,268</note>
+        <note category="location">web/src/app/app.html:329,331</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3593,8 +3593,8 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:43,47</note>
-        <note category="location">web/src/app/app.html:269,271</note>
-        <note category="location">web/src/app/app.html:332,334</note>
+        <note category="location">web/src/app/app.html:270,272</note>
+        <note category="location">web/src/app/app.html:333,335</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3603,8 +3603,8 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:53,56</note>
-        <note category="location">web/src/app/app.html:277,279</note>
-        <note category="location">web/src/app/app.html:340,342</note>
+        <note category="location">web/src/app/app.html:278,280</note>
+        <note category="location">web/src/app/app.html:341,343</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3613,8 +3613,8 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:63,67</note>
-        <note category="location">web/src/app/app.html:273,275</note>
-        <note category="location">web/src/app/app.html:336,338</note>
+        <note category="location">web/src/app/app.html:274,276</note>
+        <note category="location">web/src/app/app.html:337,339</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3700,17 +3700,9 @@
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
       </segment>
     </unit>
-    <unit id="sw.update.buttonAria">
-      <notes>
-        <note category="location">web/src/app/app.html:228,229</note>
-      </notes>
-      <segment>
-        <source>Neue Version verfügbar – jetzt neu laden</source>
-      </segment>
-    </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:241,242</note>
+        <note category="location">web/src/app/app.html:242,243</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -3718,7 +3710,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:252,253</note>
+        <note category="location">web/src/app/app.html:253,254</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -3726,7 +3718,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:286</note>
+        <note category="location">web/src/app/app.html:287</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -3734,7 +3726,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:291,293</note>
+        <note category="location">web/src/app/app.html:292,294</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3742,7 +3734,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:294,296</note>
+        <note category="location">web/src/app/app.html:295,297</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -3750,7 +3742,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:296,297</note>
+        <note category="location">web/src/app/app.html:297,298</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -3758,7 +3750,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:298,300</note>
+        <note category="location">web/src/app/app.html:299,301</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -3766,7 +3758,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:301,304</note>
+        <note category="location">web/src/app/app.html:302,305</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -3774,7 +3766,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:308,310</note>
+        <note category="location">web/src/app/app.html:309,311</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -3782,7 +3774,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:315,316</note>
+        <note category="location">web/src/app/app.html:316,317</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>
@@ -4076,9 +4068,25 @@
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
       </segment>
     </unit>
+    <unit id="sw.update.buttonAria">
+      <notes>
+        <note category="location">web/src/app/app.ts:146</note>
+      </notes>
+      <segment>
+        <source>Neue Version verfügbar – jetzt neu laden</source>
+      </segment>
+    </unit>
+    <unit id="sw.update.recoverButtonAria">
+      <notes>
+        <note category="location">web/src/app/app.ts:147</note>
+      </notes>
+      <segment>
+        <source>App-Daten beschädigt – jetzt neu laden</source>
+      </segment>
+    </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:284</note>
+        <note category="location">web/src/app/app.ts:287</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4086,7 +4094,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:373</note>
+        <note category="location">web/src/app/app.ts:376</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4094,7 +4102,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:376</note>
+        <note category="location">web/src/app/app.ts:379</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -4102,7 +4110,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:441</note>
+        <note category="location">web/src/app/app.ts:443</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4110,7 +4118,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:470</note>
+        <note category="location">web/src/app/app.ts:472</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4118,7 +4126,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:477</note>
+        <note category="location">web/src/app/app.ts:479</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4684,7 +4692,7 @@
     </unit>
     <unit id="sw.update.unrecoverable">
       <notes>
-        <note category="location">web/src/app/core/sw-update.service.ts:129</note>
+        <note category="location">web/src/app/core/sw-update.service.ts:138</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – bitte neu laden</source>
@@ -4692,7 +4700,7 @@
     </unit>
     <unit id="sw.update.available">
       <notes>
-        <note category="location">web/src/app/core/sw-update.service.ts:130</note>
+        <note category="location">web/src/app/core/sw-update.service.ts:139</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar</source>
@@ -4700,7 +4708,7 @@
     </unit>
     <unit id="sw.update.reload">
       <notes>
-        <note category="location">web/src/app/core/sw-update.service.ts:139</note>
+        <note category="location">web/src/app/core/sw-update.service.ts:148</note>
       </notes>
       <segment>
         <source>Neu laden</source>

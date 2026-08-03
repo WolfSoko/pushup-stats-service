@@ -225,8 +225,9 @@
         mat-icon-button
         class="sw-update-button"
         data-testid="sw-update-button"
-        aria-label="Neue Version verfügbar – jetzt neu laden"
-        i18n-aria-label="@@sw.update.buttonAria"
+        [attr.aria-label]="
+          swUpdateUnrecoverable() ? swUpdateRecoverAriaLabel : swUpdateAriaLabel
+        "
         (click)="applyServiceWorkerUpdate()"
       >
         <mat-icon>system_update_alt</mat-icon>
