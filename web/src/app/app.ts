@@ -34,9 +34,8 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { filter, interval } from 'rxjs';
+import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
@@ -58,6 +57,7 @@ import { toGoalDialItems } from './core/daily-goal/goal-dial-items';
 import { createGoalPillOverlay } from './core/daily-goal/goal-pill-overlay';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
+import { SwUpdateService } from './core/sw-update.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
@@ -139,7 +139,12 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
   styleUrl: './app.scss',
 })
 export class App {
-  private readonly swUpdate = inject(SwUpdate, { optional: true });
+  private readonly swUpdate = inject(SwUpdateService);
+  /** Drives the persistent "new version" button in the toolbar. */
+  readonly swUpdateAvailable = this.swUpdate.updateAvailable;
+  readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
+  protected readonly swUpdateAriaLabel = $localize`:@@sw.update.buttonAria:Neue Version verfügbar – jetzt neu laden`;
+  protected readonly swUpdateRecoverAriaLabel = $localize`:@@sw.update.recoverButtonAria:App-Daten beschädigt – jetzt neu laden`;
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly firebaseAuth = inject(Auth, { optional: true });
@@ -377,49 +382,10 @@ export class App {
         this.seo.update(title, description, path, { noindex: data.noindex });
         this.trackAnalytics('page_view', { page_path: path });
       });
+  }
 
-    if (this.swUpdate?.isEnabled) {
-      const swUpdate = this.swUpdate;
-      swUpdate.versionUpdates
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((event) => {
-          if (event.type !== 'VERSION_READY') return;
-
-          // Sticky (no `duration`) + top-center: the prompt sits at eye level
-          // and stays put until the user clicks "Neu laden". An auto-dismiss
-          // timer made the toast easy to miss (especially when the mobile
-          // bottom-nav cropped the bottom-anchored variant). Distinct
-          // panelClass lets `styles.scss` give it its own surface colour so
-          // it doesn't get mistaken for a routine info toast.
-          const ref = this.snackBar.open(
-            $localize`:@@sw.update.available:Neue Version verfügbar`,
-            $localize`:@@sw.update.reload:Neu laden`,
-            {
-              horizontalPosition: 'center',
-              verticalPosition: 'top',
-              panelClass: 'sw-update-snackbar',
-            }
-          );
-
-          ref.onAction().subscribe(async () => {
-            // `reload()` alone keeps the old waiting worker in place; call
-            // `activateUpdate()` first so the new ngsw takes over before the
-            // browser fetches the next navigation.
-            await swUpdate.activateUpdate();
-            window.location.reload();
-          });
-        });
-
-      // Long-lived sessions (PWA / TWA users who never close the tab) only
-      // see VERSION_READY when ngsw re-checks the manifest. Default check is
-      // once on app stabilisation, so without a poll a deploy never reaches
-      // them. Ten minutes mirrors the cadence used in the SW reminder system.
-      interval(10 * 60 * 1000)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          void swUpdate.checkForUpdate();
-        });
-    }
+  applyServiceWorkerUpdate(): void {
+    void this.swUpdate.applyUpdate();
   }
 
   handleQuickAdd(suggestion: QuickAddSuggestion): void {
