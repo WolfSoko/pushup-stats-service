@@ -10639,21 +10639,21 @@
       </segment>
     </unit>
     <unit id="sw.update.buttonAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Version verfügbar – jetzt neu laden</source>
-        <target>Neue Version verfügbar – jetzt neu laden</target>
+        <target>Nueva versión disponible – recargar ahora</target>
       </segment>
     </unit>
     <unit id="sw.update.unrecoverable">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten beschädigt – bitte neu laden</source>
-        <target>App-Daten beschädigt – bitte neu laden</target>
+        <target>Datos de la aplicación dañados – recarga la página</target>
       </segment>
     </unit>
     <unit id="sw.update.recoverButtonAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten beschädigt – jetzt neu laden</source>
-        <target>App-Daten beschädigt – jetzt neu laden</target>
+        <target>Datos de la aplicación dañados – recargar ahora</target>
       </segment>
     </unit>
 </file>
