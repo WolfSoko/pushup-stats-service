@@ -109,6 +109,34 @@ Aktuelles Mapping:
 Ein Test pinnt diese Tabelle an die `localize`-Liste in `web/project.json`:
 eine neue App-Sprache ohne Play-Mapping bricht CI.
 
+Gepflegt sind aktuell **`de-DE`** (Quelle) und **`en-US`**. Die übrigen
+Codes stehen im Mapping bereit, haben aber noch kein Listing — Play fällt
+für sie auf die Default-Sprache des Store-Eintrags zurück.
+
+### Welche Sprachen sich lohnen
+
+Store-Texte laufen **nicht** über die tägliche Übersetzungs-Routine (die
+arbeitet auf XLIFF und `content/`). Jede zusätzliche Sprache ist damit
+dauerhafte Handarbeit bei jeder Textänderung — die Frage ist also nicht
+„welche können wir", sondern „welche verdienen die Pflege".
+
+- **`en-US` ist Pflicht**, weil Play für jede Sprache ohne eigenes Listing
+  auf die Default-Sprache zurückfällt. Ohne sie sieht die halbe Welt
+  deutschen Fließtext.
+- **`fr-FR`, `es-ES`, `it-IT`** sind die nächsten sinnvollen Kandidaten:
+  große Märkte, in denen ein englisches Fallback-Listing spürbar Installs
+  kostet.
+- **`nl-NL`, `no-NO`** haben sehr hohe Englisch-Kompetenz und lesen das
+  englische Listing reibungslos; `el-GR` ist ein kleiner Markt. Alle drei
+  eher nachrangig.
+- **`zh-CN` ist praktisch wertlos**: Google Play gibt es in Festlandchina
+  nicht. Wer chinesische Nutzer erreichen will, braucht `zh-TW` oder
+  `zh-HK` — die stehen bewusst nicht im Mapping, weil die App-Locale `zh`
+  nicht sagt, welche Region gemeint ist.
+
+Belastbar entscheidet das aber nur die Play Console unter **Statistiken →
+Nutzer nach Land/Sprache**, nicht diese Liste.
+
 ## Gotchas
 
 - **Review-Queue.** Ein committeter Listing-Text ist nicht sofort live,
