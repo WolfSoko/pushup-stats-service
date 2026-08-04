@@ -1,0 +1,58 @@
+A push-up counter and workout tracker that turns push-ups and 40 more exercises into a game you want to win.
+
+Whether you are starting from zero or already past your first hundred, this app keeps you going. Your camera counts reps automatically, curated training plans tell you exactly what to do today, and the leaderboard pushes you without nagging.
+
+📷 AUTOMATIC REP COUNTING
+Prop up your phone, open the auto counter, start moving: the AI recognizes push-ups, squats, pull-ups and sit-ups in real time and counts every clean rep. Planks and hollow holds get an automatic hold timer instead. Detection runs entirely on your device — no video ever leaves your phone.
+
+🏋️ MORE THAN PUSH-UPS
+• 13 push-up variations: standard, knee, incline, decline, wide, diamond, pike, archer, all the way to one-arm — each with technique instructions
+• 41 exercises across 9 categories: push-ups, push, pull, squat, hinge, lunge, core, cardio, mobility
+• Pull-ups, dips, squats, lunges, planks, hollow holds, burpees, jump rope, yoga, stretching and more
+• Distance and time cardio: running, walking, cycling, rowing, swimming — pace included
+• Every exercise in its own unit — reps, seconds or meters
+
+⚡ LOGGING IN TWO SECONDS
+• One tap on the quick button: entry done, no dialog at all
+• Adaptive suggestions learn from your history, plus six quick actions you assign yourself
+• Log sets individually (12 + 10 + 8) — the app adds them up
+• Intervals with pace for running and endurance workouts
+
+📈 TRAIN WITH A PLAN — 10 TRAINING PLANS
+• Zero to 100 — 6-week build for beginners
+• 30-Day Challenge with a max test on day 1 and day 30
+• Push-ups Over 40 — gentler 4-week plan
+• Daily 100 — 30 days to the 100 mark
+• One-Arm Push-Up — 12-week progression
+• Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
+Every day gives you the target that actually moves you forward — with rest days, light days and test days. Completed days tick themselves off the moment you hit your daily goal.
+
+🎯 GOALS, STREAKS & STATS
+• Daily, weekly and monthly goals — per exercise, with a weekday filter
+• Triple progress bar, confetti when you hit your goal, streak counter for showing up
+• Heatmap calendar across weeks and months
+• Analysis with trend charts, KPI cards and category comparison over any period
+• Personal bests: best day, best set, best single session
+
+🏆 LEADERBOARD & PROFILE
+Measure yourself against other athletes or stay private — your call. Rankings for today, the last 7 days and the last 30 days. Share your public profile with total reps, streak and personal bests by link. Plus a fresh piece of motivation every day.
+
+🔔 SMART REMINDERS
+Push notifications with a configurable interval, quiet hours, weekdays and time zone — even when the app is closed. And the fastest way to log: one tap on "Log 50" right in the notification.
+
+📚 KNOW-HOW, NOT GUESSWORK
+An exercise wiki with clean form, technique cues and the mistakes everyone makes. Plus a blog with training tips from beginner to advanced.
+
+🔒 YOUR DATA
+Try it as a guest, no account needed. Private mode whenever you want it. Adjustable cookie consent — personalized ads only with your OK. Delete your account any time — training data is kept only in anonymized form afterward. Database hosted in Frankfurt, Germany.
+
+📱 ANDROID + WEB
+The same data on your phone and in the browser, synced live across every device. Sign in with Google or email. Works offline too — entries sync as soon as you are back online. Light and dark themes.
+
+🌍 NINE LANGUAGES
+English, German, French, Spanish, Italian, Dutch, Greek, Norwegian, Chinese.
+
+Free. No subscription. No credit card.
+
+Pushup Stats is an honest app for people who actually train — not for sticker collectors.
+Download it and knock out your first one.
