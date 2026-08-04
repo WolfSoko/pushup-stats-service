@@ -10525,135 +10525,135 @@
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.unquantified">
-      <segment state="initial">
+      <segment state="translated">
         <source>nach Vorgabe</source>
-        <target>nach Vorgabe</target>
+        <target>según lo indicado</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.auto">
-      <segment state="initial">
+      <segment state="translated">
         <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
-        <target>Automatisch erfüllt — durch deine Einträge an diesem Tag.</target>
+        <target>Completado automáticamente — mediante tus entradas de este día.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.check">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung abhaken (ohne Eintrag)</source>
-        <target>Übung abhaken (ohne Eintrag)</target>
+        <target>Marcar ejercicio (sin registro)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.undo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernen</source>
-        <target>Haken entfernen</target>
+        <target>Quitar marca</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.log">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorgabe eintragen</source>
-        <target>Vorgabe eintragen</target>
+        <target>Registrar cantidad indicada</target>
       </segment>
     </unit>
     <unit id="trainingPlans.checkoffHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
-        <target>Intervall-Tag — Übungen einzeln abhaken.</target>
+        <target>Día de intervalos — marca los ejercicios uno por uno.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen eintragen &amp; abhaken</source>
-        <target>Alle Übungen eintragen &amp; abhaken</target>
+        <target>Registrar y marcar todos los ejercicios</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>Objetivos diarios</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalsAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele zum Abhaken anzeigen</source>
-        <target>Tagesziele zum Abhaken anzeigen</target>
+        <target>Mostrar objetivos diarios para marcar</target>
       </segment>
     </unit>
     <unit id="toolbarDailyGoal.checkHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
-        <target> Teilziele abhaken kannst du auf dem Dashboard. </target>
+        <target> Puedes marcar los objetivos parciales en el panel. </target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.reached">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel erreicht</source>
-        <target>Ziel erreicht</target>
+        <target>Objetivo alcanzado</target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.manual">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieses Ziel braucht einen manuellen Eintrag</source>
-        <target>Dieses Ziel braucht einen manuellen Eintrag</target>
+        <target>Este objetivo necesita un registro manual</target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.fill">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
-        <target>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
+        <target>Registra el resto y marca: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
-        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</target>
+        <target>Marcar <ph id="0" equiv="EXERCISE" disp="item.exerciseName"/></target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalItemReachedAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
-        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</target>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> ya alcanzado</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalItemAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
-        <target><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</target>
+        <target>Añadir <ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> al objetivo diario</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung zurücksetzen</source>
-        <target>Übung zurücksetzen</target>
+        <target>Restablecer ejercicio</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.resetDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung zurückgesetzt.</source>
-        <target>Übung zurückgesetzt.</target>
+        <target>Ejercicio restablecido.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.resetKept">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
-        <target>Haken entfernt — deine eigenen Einträge bleiben bestehen.</target>
+        <target>Marca eliminada — tus propios registros se conservan.</target>
       </segment>
     </unit>
     <unit id="sw.update.buttonAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Version verfügbar – jetzt neu laden</source>
-        <target>Neue Version verfügbar – jetzt neu laden</target>
+        <target>Nueva versión disponible – recargar ahora</target>
       </segment>
     </unit>
     <unit id="sw.update.unrecoverable">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten beschädigt – bitte neu laden</source>
-        <target>App-Daten beschädigt – bitte neu laden</target>
+        <target>Datos de la aplicación dañados – recarga la página</target>
       </segment>
     </unit>
     <unit id="sw.update.recoverButtonAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten beschädigt – jetzt neu laden</source>
-        <target>App-Daten beschädigt – jetzt neu laden</target>
+        <target>Datos de la aplicación dañados – recargar ahora</target>
       </segment>
     </unit>
 </file>

@@ -10529,135 +10529,135 @@
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.unquantified">
-      <segment state="initial">
+      <segment state="translated">
         <source>nach Vorgabe</source>
-        <target>nach Vorgabe</target>
+        <target>όπως προβλέπεται</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.auto">
-      <segment state="initial">
+      <segment state="translated">
         <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
-        <target>Automatisch erfüllt — durch deine Einträge an diesem Tag.</target>
+        <target>Ολοκληρώθηκε αυτόματα — από τις καταχωρήσεις σου αυτή την ημέρα.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.check">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung abhaken (ohne Eintrag)</source>
-        <target>Übung abhaken (ohne Eintrag)</target>
+        <target>Επισήμανση άσκησης (χωρίς καταχώρηση)</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.undo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernen</source>
-        <target>Haken entfernen</target>
+        <target>Αφαίρεση επισήμανσης</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.log">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorgabe eintragen</source>
-        <target>Vorgabe eintragen</target>
+        <target>Καταχώρηση προβλεπόμενης τιμής</target>
       </segment>
     </unit>
     <unit id="trainingPlans.checkoffHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
-        <target>Intervall-Tag — Übungen einzeln abhaken.</target>
+        <target>Ημέρα διαλειμμάτων — επισήμανε τις ασκήσεις μεμονωμένα.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen eintragen &amp; abhaken</source>
-        <target>Alle Übungen eintragen &amp; abhaken</target>
+        <target>Καταχώρηση &amp; επισήμανση όλων των ασκήσεων</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele</source>
-        <target>Tagesziele</target>
+        <target>Ημερήσιοι στόχοι</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalsAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziele zum Abhaken anzeigen</source>
-        <target>Tagesziele zum Abhaken anzeigen</target>
+        <target>Εμφάνιση ημερήσιων στόχων για επισήμανση</target>
       </segment>
     </unit>
     <unit id="toolbarDailyGoal.checkHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
-        <target> Teilziele abhaken kannst du auf dem Dashboard. </target>
+        <target> Μπορείς να επισημάνεις τους επιμέρους στόχους στον πίνακα ελέγχου. </target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.reached">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel erreicht</source>
-        <target>Ziel erreicht</target>
+        <target>Ο στόχος επιτεύχθηκε</target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.manual">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieses Ziel braucht einen manuellen Eintrag</source>
-        <target>Dieses Ziel braucht einen manuellen Eintrag</target>
+        <target>Αυτός ο στόχος χρειάζεται χειροκίνητη καταχώρηση</target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.fill">
-      <segment state="initial">
+      <segment state="translated">
         <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
-        <target>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
+        <target>Καταχώρησε το υπόλοιπο και επισήμανε: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
       </segment>
     </unit>
     <unit id="dailyGoal.check.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
-        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</target>
+        <target>Επισήμανση <ph id="0" equiv="EXERCISE" disp="item.exerciseName"/></target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalItemReachedAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
-        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</target>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> ήδη επιτεύχθηκε</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.goalItemAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
-        <target><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</target>
+        <target>Προσθήκη <ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> στον ημερήσιο στόχο</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung zurücksetzen</source>
-        <target>Übung zurücksetzen</target>
+        <target>Επαναφορά άσκησης</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.resetDone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung zurückgesetzt.</source>
-        <target>Übung zurückgesetzt.</target>
+        <target>Η άσκηση επαναφέρθηκε.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.exercise.resetKept">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
-        <target>Haken entfernt — deine eigenen Einträge bleiben bestehen.</target>
+        <target>Η επισήμανση αφαιρέθηκε — οι δικές σου καταχωρήσεις παραμένουν.</target>
       </segment>
     </unit>
     <unit id="sw.update.buttonAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Version verfügbar – jetzt neu laden</source>
-        <target>Neue Version verfügbar – jetzt neu laden</target>
+        <target>Διατίθεται νέα έκδοση – επαναφόρτωση τώρα</target>
       </segment>
     </unit>
     <unit id="sw.update.unrecoverable">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten beschädigt – bitte neu laden</source>
-        <target>App-Daten beschädigt – bitte neu laden</target>
+        <target>Τα δεδομένα της εφαρμογής καταστράφηκαν – παρακαλώ κάντε επαναφόρτωση</target>
       </segment>
     </unit>
     <unit id="sw.update.recoverButtonAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>App-Daten beschädigt – jetzt neu laden</source>
-        <target>App-Daten beschädigt – jetzt neu laden</target>
+        <target>Τα δεδομένα της εφαρμογής καταστράφηκαν – επαναφόρτωση τώρα</target>
       </segment>
     </unit>
 </file>
