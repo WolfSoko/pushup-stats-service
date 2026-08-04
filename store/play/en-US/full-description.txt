@@ -3,14 +3,14 @@ A push-up counter and workout tracker that turns push-ups and 40 more exercises 
 Whether you are starting from zero or already past your first hundred, this app keeps you going. Your camera counts reps automatically, curated training plans tell you exactly what to do today, and the leaderboard pushes you without nagging.
 
 📷 AUTOMATIC REP COUNTING
-Prop up your phone, open the auto counter, start moving: the AI recognises push-ups, squats, pull-ups and sit-ups in real time and counts every clean rep. Planks and hollow holds get an automatic hold timer instead. Detection runs entirely on your device — no video ever leaves your phone.
+Prop up your phone, open the auto counter, start moving: the AI recognizes push-ups, squats, pull-ups and sit-ups in real time and counts every clean rep. Planks and hollow holds get an automatic hold timer instead. Detection runs entirely on your device — no video ever leaves your phone.
 
 🏋️ MORE THAN PUSH-UPS
 • 13 push-up variations: standard, knee, incline, decline, wide, diamond, pike, archer, all the way to one-arm — each with technique instructions
 • 41 exercises across 9 categories: push-ups, push, pull, squat, hinge, lunge, core, cardio, mobility
 • Pull-ups, dips, squats, lunges, planks, hollow holds, burpees, jump rope, yoga, stretching and more
 • Distance and time cardio: running, walking, cycling, rowing, swimming — pace included
-• Every exercise in its own unit — reps, seconds or metres
+• Every exercise in its own unit — reps, seconds or meters
 
 ⚡ LOGGING IN TWO SECONDS
 • One tap on the quick button: entry done, no dialog at all
@@ -44,7 +44,7 @@ Push notifications with a configurable interval, quiet hours, weekdays and time 
 An exercise wiki with clean form, technique cues and the mistakes everyone makes. Plus a blog with training tips from beginner to advanced.
 
 🔒 YOUR DATA
-Try it as a guest, no account needed. Private mode whenever you want it. GDPR compliant with adjustable cookie consent. Delete your account any time — training data is kept only in anonymised form afterwards. Database hosted in Frankfurt, Germany.
+Try it as a guest, no account needed. Private mode whenever you want it. Adjustable cookie consent — personalized ads only with your OK. Delete your account any time — training data is kept only in anonymized form afterward. Database hosted in Frankfurt, Germany.
 
 📱 ANDROID + WEB
 The same data on your phone and in the browser, synced live across every device. Sign in with Google or email. Works offline too — entries sync as soon as you are back online. Light and dark themes.

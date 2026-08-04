@@ -65,7 +65,7 @@ Liegestütz-Varianten (`PUSHUP_TYPES`) oder die Locale-Liste in
   [`docs/play-store-publishing.md`](play-store-publishing.md#welche-sprachen-sich-lohnen).
 - **`en-US` ist kein Übersetzungs-Klon.** Titel, Kurzbeschreibung und der
   Einstieg sind eigenständig getextet, weil englisches ASO auf andere
-  Suchbegriffe zielt („push-up counter", „workout tracker") als das
+  Suchbegriffe zielt („push-up counter“, „workout tracker“) als das
   deutsche Original. Eine Änderung am deutschen Text ist deshalb **nicht**
   automatisch eine am englischen — beide Dateien wollen einzeln gepflegt
   werden, und die Beleg-Liste unten gilt für beide.
