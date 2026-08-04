@@ -96,7 +96,7 @@
     "vitest": "^4.0.18",
     "webpack": "5.107.2",
     "webpack-cli": "7.0.3",
-    "webpack-dev-server": "5.2.6",
+    "webpack-dev-server": "6.0.0",
     "whatwg-fetch": "^3.6.20",
     "yaml": "2.8.3"
   },
