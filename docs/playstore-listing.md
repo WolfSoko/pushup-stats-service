@@ -9,14 +9,15 @@ analog zu `web/src/locale/messages.xlf`.
 > direkt in die Play Console — siehe
 > [`docs/play-store-publishing.md`](play-store-publishing.md).
 >
-> | Feld                      | Datei                                    | Limit |
-> | ------------------------- | ---------------------------------------- | ----- |
-> | Titel                     | `store/play/de-DE/title.txt`             | 30    |
-> | Kurzbeschreibung          | `store/play/de-DE/short-description.txt` | 80    |
-> | Vollständige Beschreibung | `store/play/de-DE/full-description.txt`  | 4000  |
+> | Feld                      | Datei                                       | Limit |
+> | ------------------------- | ------------------------------------------- | ----- |
+> | Titel                     | `store/play/<locale>/title.txt`             | 30    |
+> | Kurzbeschreibung          | `store/play/<locale>/short-description.txt` | 80    |
+> | Vollständige Beschreibung | `store/play/<locale>/full-description.txt`  | 4000  |
 >
-> Die Limits prüft `pnpm nx test tools` — zu langer Text scheitert in CI,
-> nicht erst beim Veröffentlichen.
+> Gepflegt: `de-DE` (Quelle) und `en-US`. Die Limits prüft
+> `pnpm nx test tools` — zu langer Text scheitert in CI, nicht erst beim
+> Veröffentlichen.
 
 Diese Datei bleibt als **Beleg-Sammlung**: Der Store-Text behauptet konkrete
 Zahlen und Eigenschaften, und die veralten still, wenn sie niemand an den Code
@@ -57,9 +58,17 @@ Liegestütz-Varianten (`PUSHUP_TYPES`) oder die Locale-Liste in
 
 ## Was noch fehlt
 
-- **Übersetzungen.** Nur `de-DE` ist gepflegt. Die Store-Texte laufen bewusst
-  **nicht** über die tägliche Übersetzungs-Routine (die arbeitet auf XLIFF und
-  `content/`), also müssen weitere Sprachen von Hand ergänzt werden.
+- **Weitere Sprachen.** `de-DE` und `en-US` sind gepflegt. Die Store-Texte
+  laufen bewusst **nicht** über die tägliche Übersetzungs-Routine (die
+  arbeitet auf XLIFF und `content/`), jede weitere Sprache ist also
+  dauerhafte Handarbeit. Welche sich lohnen:
+  [`docs/play-store-publishing.md`](play-store-publishing.md#welche-sprachen-sich-lohnen).
+- **`en-US` ist kein Übersetzungs-Klon.** Titel, Kurzbeschreibung und der
+  Einstieg sind eigenständig getextet, weil englisches ASO auf andere
+  Suchbegriffe zielt („push-up counter", „workout tracker") als das
+  deutsche Original. Eine Änderung am deutschen Text ist deshalb **nicht**
+  automatisch eine am englischen — beide Dateien wollen einzeln gepflegt
+  werden, und die Beleg-Liste unten gilt für beide.
 - **KI-Coach.** Nicht im Listing erwähnt: `aiAssistantConfig.runtimeUrl` ist
   leer, im ausgelieferten Build ist der Assistent also nicht nutzbar.
 - **Grafiken.** Screenshots, Feature-Grafik und Icon pflegt weiterhin die
