@@ -10166,5 +10166,11 @@
         <target>应用数据已损坏 – 立即重新加载</target>
       </segment>
     </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <segment state="initial">
+        <source>Alle Übungen eintragen</source>
+        <target>Alle Übungen eintragen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

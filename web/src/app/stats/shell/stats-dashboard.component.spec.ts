@@ -213,6 +213,8 @@ describe('StatsDashboardComponent', () => {
     addCompletedDay: vitest.fn().mockReturnValue(of(null)),
     removeCompletedDay: vitest.fn().mockReturnValue(of(null)),
     updatePlan: vitest.fn().mockReturnValue(of(null)),
+    addCompletedItems: vitest.fn().mockReturnValue(of(null)),
+    removeCompletedItems: vitest.fn().mockReturnValue(of(null)),
   };
 
   beforeEach(async () => {
@@ -1747,6 +1749,121 @@ describe('StatsDashboardComponent', () => {
       const href = link.getAttribute('href') ?? '';
       expect(href).toContain('/training-plans/recruit-6w');
       expect(href).toContain('day=1');
+    });
+  });
+
+  describe('Given an active plan whose day prescribes more than pushups (push-pull-6w day 1: pushups + rows)', () => {
+    // Frozen date is 2025-01-15 (see top of describe). `push-pull-6w-v1`
+    // day 1 is a real catalog day with two exercises: 30 pushups and 24
+    // inverted rows — starting today puts it on day 1.
+    const multiExercisePlan = {
+      userId: 'u1',
+      planId: 'push-pull-6w-v1',
+      startDate: '2025-01-15',
+      status: 'active' as const,
+      completedDays: [] as number[],
+    };
+
+    function findQuickActionsGoalButton(
+      el: HTMLElement
+    ): HTMLButtonElement | null {
+      return el.querySelector<HTMLButtonElement>(
+        '[data-testid="dashboard-quick-actions-goal-fill"]'
+      );
+    }
+
+    beforeEach(() => {
+      trainingPlanApiMock.getActivePlan.mockReturnValue(of(multiExercisePlan));
+      TestBed.inject(TrainingPlanStore).reload();
+    });
+
+    it('Then the Zielfortschritt card lists every plan exercise instead of a single synthesized pushup goal', async () => {
+      // When
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then
+      const list = freshFixture.nativeElement.querySelector(
+        '[data-testid="dashboard-plan-exercises"]'
+      );
+      expect(list).not.toBeNull();
+      expect(list?.querySelectorAll('.exercise-row').length).toBe(2);
+      expect(
+        freshFixture.nativeElement.querySelector(
+          '[data-testid="dashboard-daily-goal-item"]'
+        )
+      ).toBeNull();
+    });
+
+    it('Then clicking the goal-fill button logs every prescribed exercise, not just pushups', async () => {
+      // Given
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+      const quickAdd = TestBed.inject(QuickAddOrchestrationService);
+      const button = findQuickActionsGoalButton(freshFixture.nativeElement);
+      expect(button).not.toBeNull();
+
+      // When
+      button?.click();
+      await freshFixture.whenStable();
+
+      // Then
+      expect(quickAdd.fillToGoal).not.toHaveBeenCalled();
+      const loggedExerciseIds = exerciseCreateSpy.mock.calls.map(
+        ([, payload]) => (payload as { exerciseId: string }).exerciseId
+      );
+      expect(loggedExerciseIds).toEqual(
+        expect.arrayContaining(['pushup', 'pull.rows'])
+      );
+    });
+
+    it('Then the FAB is disabled with "erreicht" once every exercise of the day is already logged', async () => {
+      // Given today's totals already cover both prescribed exercises
+      liveEntries.set([]);
+      liveExerciseEntries.set([
+        { _id: 'r1', exerciseId: 'pushup', timestamp: todayTs, reps: 30 },
+        { _id: 'r2', exerciseId: 'pull.rows', timestamp: todayTs, reps: 24 },
+      ]);
+
+      // When
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // Then
+      const button = findQuickActionsGoalButton(freshFixture.nativeElement);
+      expect(button).not.toBeNull();
+      expect(button?.disabled).toBe(true);
+      expect(button?.textContent ?? '').toContain('erreicht');
+    });
+
+    it("Then logPlanExercise/togglePlanExercise/resetPlanExercise delegate to the TrainingPlanStore for today's day index", async () => {
+      // Given
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      const store = TestBed.inject(TrainingPlanStore);
+      const logSpy = vi
+        .spyOn(store, 'logPlanExercise')
+        .mockResolvedValue('logged');
+      const toggleSpy = vi
+        .spyOn(store, 'setItemDone')
+        .mockResolvedValue(undefined);
+      const resetSpy = vi
+        .spyOn(store, 'resetPlanExercise')
+        .mockResolvedValue('reset');
+      const component = freshFixture.componentInstance;
+
+      // When
+      await component.logPlanExercise(1);
+      await component.togglePlanExercise({ itemIndex: 0, done: true });
+      await component.resetPlanExercise(0);
+
+      // Then — day 1 is today's plan day
+      expect(logSpy).toHaveBeenCalledWith(1, 1);
+      expect(toggleSpy).toHaveBeenCalledWith(1, 0, true);
+      expect(resetSpy).toHaveBeenCalledWith(1, 0);
     });
   });
 });

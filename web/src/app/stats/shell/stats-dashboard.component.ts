@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
@@ -49,6 +50,17 @@ import {
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
+import {
+  ExerciseToggle,
+  PlanDayExercisesComponent,
+} from '../../training-plans/plan-day-exercises.component';
+import {
+  logPlanToday,
+  logPlanTodayExercise,
+  planTodayView,
+  resetPlanTodayExercise,
+  togglePlanTodayExercise,
+} from './stats-dashboard.plan-checklist';
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -57,9 +69,11 @@ import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model'
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
+    MatSnackBarModule,
     DatePipe,
     AnalysisTeaserCardComponent,
     DailyGoalChecklistComponent,
+    PlanDayExercisesComponent,
     PreviewBannerComponent,
     AdSlotComponent,
     RouterLink,
@@ -73,6 +87,7 @@ export class StatsDashboardComponent {
   private readonly exerciseService = inject(ExerciseFirestoreService);
   private readonly userContext = inject(UserContextService);
   private readonly dialog = inject(MatDialog);
+  private readonly snackbar = inject(MatSnackBar);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -165,6 +180,21 @@ export class StatsDashboardComponent {
   /** Counter that increments on every data refresh to trigger child component reloads. */
   readonly refreshCounter = signal(0);
 
+  /**
+   * Today's plan-day checklist — one row per prescribed exercise, unlike
+   * `planTodayTarget` (the single pushup-equivalent figure mirrored into
+   * `dailyGoal`). Backs the "Zielfortschritt" card and the plan-aware
+   * "fill to goal" action when a plan is active.
+   */
+  private readonly planToday = planTodayView(this.trainingPlans);
+  readonly planTodayExerciseRows = this.planToday.exerciseRows;
+  readonly planTodayFulfilled = this.planToday.fulfilled;
+  /** In-flight guard for the plan-aware "fill to goal" action — the store
+   *  has no public signal for `logTodayPlanDay`, so tracked locally like
+   *  `QuickAddOrchestrationService.fillToGoalInFlight`. */
+  private readonly _planFillInFlight = signal(false);
+  readonly planFillInFlight = this._planFillInFlight.asReadonly();
+
   constructor() {
     let viewReady = false;
     let pendingOpenCreateDialog = false;
@@ -210,8 +240,52 @@ export class StatsDashboardComponent {
     this.store.loadQuote();
   }
 
-  fillToGoal(): void {
+  /**
+   * With an active plan, "fill to goal" means logging every exercise the
+   * day still prescribes — not just pushups. The legacy pushup-only path
+   * stays for users without an active plan.
+   */
+  async fillToGoal(): Promise<void> {
+    if (this.planActive() && !this.isPlanRestDay()) {
+      if (this._planFillInFlight()) return;
+      this._planFillInFlight.set(true);
+      try {
+        await logPlanToday(this.trainingPlans, this.snackbar);
+      } finally {
+        this._planFillInFlight.set(false);
+      }
+      return;
+    }
     this.quickAdd.fillToGoal();
+  }
+
+  /** One-click log for a single exercise of today's plan day. */
+  logPlanExercise(itemIndex: number): Promise<void> {
+    return logPlanTodayExercise(
+      this.trainingPlans,
+      this.snackbar,
+      this.planToday.dayIndex(),
+      itemIndex
+    );
+  }
+
+  /** Manual check-off (or un-check) of a single plan exercise. */
+  togglePlanExercise(event: ExerciseToggle): Promise<void> {
+    return togglePlanTodayExercise(
+      this.trainingPlans,
+      this.planToday.dayIndex(),
+      event
+    );
+  }
+
+  /** Re-opens a single plan exercise, dropping the entries it wrote. */
+  resetPlanExercise(itemIndex: number): Promise<void> {
+    return resetPlanTodayExercise(
+      this.trainingPlans,
+      this.snackbar,
+      this.planToday.dayIndex(),
+      itemIndex
+    );
   }
 
   /** Ticking a sub-goal logs the amount still missing for it. */

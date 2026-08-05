@@ -9893,7 +9893,7 @@
     <unit id="trainingPlans.kind.rest">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:262,264</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:280,282</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:202,203</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:108,109</note>
       </notes>
@@ -9924,7 +9924,7 @@
     <unit id="trainingPlans.reps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,90</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:275,277</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:293,295</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:211,212</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:217,218</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:126,128</note>
@@ -10000,15 +10000,24 @@
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:190,192</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:186,188</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,210</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
       </segment>
     </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:189,192</note>
+      </notes>
+      <segment>
+        <source>Alle Übungen eintragen</source>
+      </segment>
+    </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:193,194</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:211,212</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
@@ -10016,7 +10025,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:205,207</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:223,225</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -10024,7 +10033,7 @@
     </unit>
     <unit id="dashboard.quickActions.speedDialHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:211,215</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:229,233</note>
       </notes>
       <segment>
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
@@ -10032,7 +10041,7 @@
     </unit>
     <unit id="todayFocusAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:220,221</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:238,239</note>
       </notes>
       <segment>
         <source>Tagesfokus</source>
@@ -10040,7 +10049,7 @@
     </unit>
     <unit id="dashboard.todayTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:226,228</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:244,246</note>
       </notes>
       <segment>
         <source>Heute Gesamt</source>
@@ -10048,7 +10057,7 @@
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:237,239</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:255,257</note>
       </notes>
       <segment>
         <source>Zielfortschritt</source>
@@ -10056,7 +10065,7 @@
     </unit>
     <unit id="dashboard.goalEditAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:245,246</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:263,264</note>
       </notes>
       <segment>
         <source>Tagesziel in Einstellungen öffnen</source>
@@ -10064,9 +10073,10 @@
     </unit>
     <unit id="dashboard.dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:254,256</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:281</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:290,291</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:272,274</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:299,300</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:309</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:318,319</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -10074,7 +10084,7 @@
     </unit>
     <unit id="dashboard.restDay.configuredGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:271,273</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:289,291</note>
       </notes>
       <segment>
         <source>Konfiguriertes Tagesziel:</source>
@@ -10082,7 +10092,7 @@
     </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:300,301</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:328,329</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -10090,7 +10100,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:309,310</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:337,338</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -10098,7 +10108,7 @@
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:334,335</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
       </notes>
       <segment>
         <source>Letzten Eintrag in der Historie öffnen</source>
@@ -10106,7 +10116,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:338,339</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:366,367</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -10114,8 +10124,8 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:348,350</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:411,414</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:376,378</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:439,442</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -10123,7 +10133,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:369,373</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:397,401</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -10131,7 +10141,7 @@
     </unit>
     <unit id="dashboard.latestExercises">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:374,375</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:402,403</note>
       </notes>
       <segment>
         <source>Letzte Übungen</source>
@@ -10139,7 +10149,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:418,419</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:446,447</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -10147,7 +10157,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:423,426</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:451,454</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -10155,7 +10165,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:429</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:457</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -10163,7 +10173,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:98</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:113</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -10171,7 +10181,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:101</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:116</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -10179,7 +10189,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:102</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:117</note>
       </notes>
       <segment>
         <source>Teilen</source>

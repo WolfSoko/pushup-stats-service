@@ -10532,5 +10532,11 @@
         <target>Données de l'application corrompues – recharger maintenant</target>
       </segment>
     </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <segment state="initial">
+        <source>Alle Übungen eintragen</source>
+        <target>Alle Übungen eintragen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

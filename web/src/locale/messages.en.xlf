@@ -10859,5 +10859,11 @@ Deine Position: # ·  Reps        </source>
         <target>App data corrupted – reload now</target>
       </segment>
     </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <segment state="initial">
+        <source>Alle Übungen eintragen</source>
+        <target>Alle Übungen eintragen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

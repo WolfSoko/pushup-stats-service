@@ -172,7 +172,25 @@
           }
         </button>
       }
-      @if (
+      @if (planActive() && !isPlanRestDay()) {
+        <button
+          type="button"
+          mat-flat-button
+          class="quick-btn quick-btn--goal"
+          data-testid="dashboard-quick-actions-goal-fill"
+          [disabled]="planTodayFulfilled() || planFillInFlight()"
+          (click)="fillToGoal()"
+        >
+          <mat-icon>{{ planTodayFulfilled() ? 'check' : 'flag' }}</mat-icon>
+          @if (planTodayFulfilled()) {
+            <span i18n="@@dashboard.goalFill.reached">Ziel erreicht ✓</span>
+          } @else {
+            <span i18n="@@dashboard.goalFill.fillPlan"
+              >Alle Übungen eintragen</span
+            >
+          }
+        </button>
+      } @else if (
         !isPlanRestDay() &&
         dailyGoalConfigured() &&
         (remainingToGoal() > 0 || goalReached())
@@ -276,6 +294,16 @@
               >
             </p>
           }
+        } @else if (planActive()) {
+          <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
+          <app-plan-day-exercises
+            [exercises]="planTodayExerciseRows()"
+            [interactive]="true"
+            data-testid="dashboard-plan-exercises"
+            (logExercise)="logPlanExercise($event)"
+            (toggleExercise)="togglePlanExercise($event)"
+            (resetExercise)="resetPlanExercise($event)"
+          />
         } @else if (dailyGoalBreakdown().length > 0) {
           <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
           <app-daily-goal-checklist
