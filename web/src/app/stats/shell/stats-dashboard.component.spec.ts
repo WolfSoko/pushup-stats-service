@@ -1865,6 +1865,29 @@ describe('StatsDashboardComponent', () => {
       expect(toggleSpy).toHaveBeenCalledWith(1, 0, true);
       expect(resetSpy).toHaveBeenCalledWith(1, 0);
     });
+
+    it('Then logging a plan exercise refreshes the dashboard stats like every other write action', async () => {
+      // Given — regression: logPlanExercise/togglePlanExercise/
+      // resetPlanExercise/fillToGoal's plan branch used to skip the
+      // store.refreshAll() + refreshCounter bump every other write handler
+      // in this component performs (createEntry, addQuickEntry,
+      // completeDailyGoal), leaving the "Heute Gesamt" badges stale until
+      // an unrelated live-listener tick caught up.
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      const store = TestBed.inject(TrainingPlanStore);
+      vi.spyOn(store, 'logPlanExercise').mockResolvedValue('logged');
+      const component = freshFixture.componentInstance;
+      const refreshAllSpy = vi.spyOn(component.store, 'refreshAll');
+      const refreshCounterBefore = component.refreshCounter();
+
+      // When
+      await component.logPlanExercise(0);
+
+      // Then
+      expect(refreshAllSpy).toHaveBeenCalledTimes(1);
+      expect(component.refreshCounter()).toBe(refreshCounterBefore + 1);
+    });
   });
 });
 

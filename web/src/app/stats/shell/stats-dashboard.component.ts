@@ -251,6 +251,7 @@ export class StatsDashboardComponent {
       this._planFillInFlight.set(true);
       try {
         await logPlanToday(this.trainingPlans, this.snackbar);
+        this.refreshAfterPlanWrite();
       } finally {
         this._planFillInFlight.set(false);
       }
@@ -260,32 +261,44 @@ export class StatsDashboardComponent {
   }
 
   /** One-click log for a single exercise of today's plan day. */
-  logPlanExercise(itemIndex: number): Promise<void> {
-    return logPlanTodayExercise(
+  async logPlanExercise(itemIndex: number): Promise<void> {
+    await logPlanTodayExercise(
       this.trainingPlans,
       this.snackbar,
       this.planToday.dayIndex(),
       itemIndex
     );
+    this.refreshAfterPlanWrite();
   }
 
   /** Manual check-off (or un-check) of a single plan exercise. */
-  togglePlanExercise(event: ExerciseToggle): Promise<void> {
-    return togglePlanTodayExercise(
+  async togglePlanExercise(event: ExerciseToggle): Promise<void> {
+    await togglePlanTodayExercise(
       this.trainingPlans,
       this.planToday.dayIndex(),
       event
     );
+    this.refreshAfterPlanWrite();
   }
 
   /** Re-opens a single plan exercise, dropping the entries it wrote. */
-  resetPlanExercise(itemIndex: number): Promise<void> {
-    return resetPlanTodayExercise(
+  async resetPlanExercise(itemIndex: number): Promise<void> {
+    await resetPlanTodayExercise(
       this.trainingPlans,
       this.snackbar,
       this.planToday.dayIndex(),
       itemIndex
     );
+    this.refreshAfterPlanWrite();
+  }
+
+  /** Mirrors every other write handler in this component (createEntry,
+   *  addQuickEntry, completeDailyGoal, …): refresh the REST-precomputed
+   *  badges and bump the child-reload counter right after a plan write,
+   *  instead of waiting on the next unrelated live-listener tick. */
+  private refreshAfterPlanWrite(): void {
+    this.store.refreshAll();
+    this.refreshCounter.update((c) => c + 1);
   }
 
   /** Ticking a sub-goal logs the amount still missing for it. */
