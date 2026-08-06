@@ -10657,9 +10657,9 @@
       </segment>
     </unit>
     <unit id="dashboard.goalFill.fillPlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen eintragen</source>
-        <target>Alle Übungen eintragen</target>
+        <target>Registrar todos los ejercicios</target>
       </segment>
     </unit>
 </file>
