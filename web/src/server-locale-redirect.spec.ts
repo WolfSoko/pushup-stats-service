@@ -1,5 +1,6 @@
 import {
   computeLocaleRedirect,
+  extractLangCookie,
   pickLocale,
   type LocaleRedirectInput,
 } from './server-locale-redirect';
@@ -12,6 +13,7 @@ function input(
     path: '/u/abc123',
     url: '/u/abc123',
     acceptLanguage: undefined,
+    cookie: undefined,
     ...overrides,
   };
 }
@@ -73,10 +75,16 @@ describe('computeLocaleRedirect', () => {
       });
     });
 
-    it('Skips the root path (Angular SSR handles its own locale redirect)', () => {
+    it('Skips the root path when no lang cookie is set (Angular SSR handles its own Accept-Language redirect)', () => {
       expect(computeLocaleRedirect(input({ path: '/', url: '/' }))).toEqual({
         kind: 'pass',
       });
+    });
+
+    it('Skips the root path when the lang cookie is present but not a supported locale', () => {
+      expect(
+        computeLocaleRedirect(input({ path: '/', url: '/', cookie: 'lang=xx' }))
+      ).toEqual({ kind: 'pass' });
     });
 
     it('Skips already-prefixed paths', () => {
@@ -207,5 +215,92 @@ describe('computeLocaleRedirect', () => {
         /^\/de\/u\/abc$/
       );
     });
+  });
+
+  describe('lang cookie precedence', () => {
+    it('Redirects root to the cookie locale even without a matching Accept-Language', () => {
+      // Regression: an installed PWA relaunching at `start_url:
+      // /?source=pwa` used to re-derive locale from Accept-Language on
+      // every cold start, silently discarding a language the user
+      // explicitly picked via `setLanguage()`.
+      expect(
+        computeLocaleRedirect(
+          input({
+            path: '/',
+            url: '/',
+            acceptLanguage: 'en-US,en;q=0.9',
+            cookie: 'lang=de',
+          })
+        )
+      ).toEqual({ kind: 'redirect', location: '/de/' });
+    });
+
+    it('Preserves the query string on a cookie-driven root redirect', () => {
+      expect(
+        computeLocaleRedirect(
+          input({
+            path: '/',
+            url: '/?source=pwa',
+            cookie: 'lang=de',
+          })
+        )
+      ).toEqual({ kind: 'redirect', location: '/de/?source=pwa' });
+    });
+
+    it('Prefers the lang cookie over Accept-Language on non-root paths too', () => {
+      expect(
+        computeLocaleRedirect(
+          input({
+            path: '/u/abc',
+            url: '/u/abc',
+            acceptLanguage: 'en-US,en;q=0.9',
+            cookie: 'lang=fr',
+          })
+        )
+      ).toEqual({ kind: 'redirect', location: '/fr/u/abc' });
+    });
+
+    it('Falls back to Accept-Language when the cookie holds an unsupported locale', () => {
+      expect(
+        computeLocaleRedirect(
+          input({
+            path: '/u/abc',
+            url: '/u/abc',
+            acceptLanguage: 'fr-FR',
+            cookie: 'lang=xx',
+          })
+        )
+      ).toEqual({ kind: 'redirect', location: '/fr/u/abc' });
+    });
+
+    it('Finds lang among other cookies regardless of position', () => {
+      expect(
+        computeLocaleRedirect(
+          input({
+            path: '/u/abc',
+            url: '/u/abc',
+            cookie: 'consent=accepted; lang=es; theme=dark',
+          })
+        )
+      ).toEqual({ kind: 'redirect', location: '/es/u/abc' });
+    });
+  });
+});
+
+describe('extractLangCookie', () => {
+  it.each([
+    [undefined, undefined],
+    ['', undefined],
+    ['lang=de', 'de'],
+    ['lang=en', 'en'],
+    ['foo=bar; lang=fr; baz=qux', 'fr'],
+    ['lang=xx', undefined], // not in SUPPORTED_LOCALES
+    ['lang=', undefined],
+    ['language=de', undefined], // must match the cookie name exactly
+    ['lang=%64e', 'de'], // percent-decoded before validation
+    ['lang=%', undefined], // malformed percent-encoding doesn't throw
+    ['lang=__proto__', undefined],
+  ])('Given Cookie=%j, Then resolves %s', (cookie, expected) => {
+    expect(extractLangCookie(cookie)).toBe(expected);
   });
 });
