@@ -180,6 +180,18 @@ export interface UserTrainingPlan {
    * through Quick-Add never writes to this field.
    */
   completedItems?: string[];
+  /**
+   * ISO timestamp of the moment the *current* day slot became active —
+   * bumped on `start()` and `jumpToDay()`, the two writes that can make a
+   * day's resolved calendar date (`startDate` + offset) land on a date
+   * other days already claimed entries from. Lets `planDayProgress`
+   * exclude entries logged before this instant when a day's date matches
+   * it, so reps already spent completing day N can't also auto-fulfill
+   * day N+1 (or a different plan) just because both resolve to "today".
+   * Absent on legacy docs — fulfillment falls back to unfiltered
+   * date-matching for those.
+   */
+  dayActivatedAt?: string;
   createdAt?: string;
   updatedAt?: string;
 }

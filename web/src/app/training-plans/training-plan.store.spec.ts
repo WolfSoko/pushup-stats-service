@@ -271,7 +271,11 @@ describe('TrainingPlanStore', () => {
       apiMock: {
         getActivePlan: vitest.fn(() => stream.asObservable()),
         setPlan: vitest.fn((_uid: string, plan: UserTrainingPlan) => {
-          mocks.current = { ...plan, userId: _uid };
+          mocks.current = {
+            ...plan,
+            userId: _uid,
+            dayActivatedAt: new Date().toISOString(),
+          };
           stream.next(mocks.current);
           return new BehaviorSubject(mocks.current).asObservable();
         }),
@@ -397,6 +401,7 @@ describe('TrainingPlanStore', () => {
               ...cur,
               startDate: args.newStartDate,
               skippedDays,
+              dayActivatedAt: new Date().toISOString(),
             };
             stream.next(mocks.current);
             return of(void 0);
@@ -547,6 +552,51 @@ describe('TrainingPlanStore', () => {
     );
     expect(store.activePlan()?.planId).toBe(PLAN.id);
     expect(store.activePlan()?.completedDays).toEqual([]);
+  });
+
+  it('does not credit a freshly-started plan with entries logged before the switch', async () => {
+    // given — the clock is pinned (via an explicit UTC offset, so this is
+    // deterministic regardless of the runner's own timezone) to 18:00
+    // Berlin time. The previous plan's day 1 was already fulfilled that
+    // morning via logged pushups; switching to `circuit-plan` (whose day
+    // 1 targets 20 pushups) must not let those same reps — logged before
+    // the switch — auto-fulfill the new plan's day 1 too.
+    vitest.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vitest.setSystemTime(new Date('2026-04-15T18:00:00+02:00'));
+      const today = toBerlinIsoDate(new Date());
+      const { store } = setup(
+        {
+          userId: 'u1',
+          planId: 'recruit-6w-v1',
+          startDate: today,
+          status: 'active',
+          completedDays: [1],
+        },
+        [],
+        [
+          {
+            _id: 'a',
+            userId: 'u1',
+            exerciseId: 'pushup',
+            timestamp: '2026-04-15T09:00:00+02:00',
+            reps: CIRCUIT_PLAN.days[0].targetReps,
+            source: 'web',
+          },
+        ],
+        circuitLookup
+      );
+      await flush();
+
+      await store.start(CIRCUIT_PLAN.id);
+      await flush();
+
+      expect(store.currentDayIndex()).toBe(1);
+      const progress = store.dayProgress(1);
+      expect(progress.every((p) => p.done)).toBe(false);
+    } finally {
+      vitest.useRealTimers();
+    }
   });
 
   it('abandon() flips status to abandoned without clearing progress', async () => {
@@ -1506,6 +1556,53 @@ describe('TrainingPlanStore', () => {
       await flush();
 
       expect(mocks.apiMock.jumpToDay).not.toHaveBeenCalled();
+    });
+
+    it('does not credit the newly-jumped-to day with entries logged before the jump', async () => {
+      // given — the clock is pinned (via an explicit UTC offset, so this
+      // is deterministic regardless of the runner's own timezone) to
+      // 18:00 Berlin time. Day 1 is done, and its pushups were logged
+      // that morning. Jumping to day 2 re-anchors startDate so day 2's
+      // date becomes today — the same date those entries are stamped
+      // with — but strictly *after* the jump instant (18:00).
+      vitest.useFakeTimers({ toFake: ['Date'] });
+      try {
+        vitest.setSystemTime(new Date('2026-04-15T18:00:00+02:00'));
+        const today = toBerlinIsoDate(new Date());
+        const day2Target = PLAN.days[1].targetReps;
+        const { store } = setup(
+          {
+            userId: 'u1',
+            planId: PLAN.id,
+            startDate: today,
+            status: 'active',
+            completedDays: [1],
+          },
+          [],
+          [
+            {
+              _id: 'a',
+              userId: 'u1',
+              exerciseId: 'pushup',
+              timestamp: '2026-04-15T09:00:00+02:00',
+              reps: day2Target,
+              source: 'web',
+            },
+          ]
+        );
+        await flush();
+
+        await store.jumpToDay(2);
+        await flush();
+
+        // when / then — day 2 is "today" now, but the only entry dated
+        // today predates the jump, so it must not fulfill day 2 for free.
+        expect(store.currentDayIndex()).toBe(2);
+        const progress = store.dayProgress(2);
+        expect(progress.every((p) => p.done)).toBe(false);
+      } finally {
+        vitest.useRealTimers();
+      }
     });
   });
 

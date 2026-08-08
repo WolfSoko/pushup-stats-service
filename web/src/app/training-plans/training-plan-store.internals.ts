@@ -125,5 +125,6 @@ export function dayProgress(
     entries: store._live.exerciseEntries(),
     dateIso: planDayDateFor(store, dayIndex),
     completedItems: plan.completedItems ?? [],
+    dayActivatedAt: plan.dayActivatedAt,
   });
 }

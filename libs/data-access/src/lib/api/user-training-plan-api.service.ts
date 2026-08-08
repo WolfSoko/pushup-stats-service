@@ -173,10 +173,14 @@ export class UserTrainingPlanApiService {
       runTransaction(firestore, async (tx) => {
         const snap = await tx.get(ref);
         const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
+        const nowIso = new Date().toISOString();
         tx.update(ref, {
           startDate: args.newStartDate,
           skippedDays: nextSkippedDays(data, args),
-          updatedAt: new Date().toISOString(),
+          // Re-anchoring can shift the day now mapped to today's date away
+          // from whichever day already claimed it — see `dayActivatedAt`.
+          dayActivatedAt: nowIso,
+          updatedAt: nowIso,
         });
       })
     ).pipe(map(() => void 0));
@@ -203,6 +207,7 @@ export class UserTrainingPlanApiService {
     const payload: UserTrainingPlan = {
       ...plan,
       userId: effectiveUserId,
+      dayActivatedAt: nowIso,
       createdAt: plan.createdAt ?? nowIso,
       updatedAt: nowIso,
     };

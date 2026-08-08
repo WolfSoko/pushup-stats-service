@@ -161,6 +161,38 @@ describe('training-plan exercise items', () => {
       // then
       expect(total).toBe(0);
     });
+
+    it('should exclude entries logged before dayActivatedAt when it falls on the same date', () => {
+      // given — a jump/switch happened at 15:00; only reps logged after
+      // that instant should count toward the day that now owns this date
+      const sameDayEntries = [
+        entry('legs.squats', '2026-04-01T12:00:00+02:00', { reps: 20 }),
+        entry('legs.squats', '2026-04-01T16:00:00+02:00', { reps: 25 }),
+      ];
+      // when
+      const total = planExerciseLoggedTotal(
+        sameDayEntries,
+        '2026-04-01',
+        { exerciseId: 'legs.squats' },
+        '2026-04-01T15:00:00+02:00'
+      );
+      // then — only the post-activation entry counts
+      expect(total).toBe(25);
+    });
+
+    it('should ignore dayActivatedAt when it falls on a different date', () => {
+      // given — the plan was last (re)activated on an earlier date, so
+      // today's normal Quick-Add crediting is unaffected
+      // when
+      const total = planExerciseLoggedTotal(
+        entries,
+        '2026-04-01',
+        { exerciseId: 'legs.squats' },
+        '2026-03-30T08:00:00+02:00'
+      );
+      // then
+      expect(total).toBe(45);
+    });
   });
 
   describe('planDayProgress', () => {
@@ -264,6 +296,24 @@ describe('training-plan exercise items', () => {
       const progress = planDayProgress(day, 2, args(entries));
       // then
       expect(progress.every((p) => !p.done)).toBe(true);
+    });
+
+    it('should not fulfill a day from entries logged before it was activated today', () => {
+      // given — the circuit day's pushup target (30) was already met by an
+      // entry logged this morning, before the plan was (re)activated at
+      // noon (e.g. completing yesterday's slot then jumping to this one)
+      const entries = [
+        entry('pushup', '2026-04-01T09:00:00+02:00', { reps: 30 }),
+      ];
+      // when
+      const progress = planDayProgress(circuitDay, 2, {
+        ...args(entries),
+        dayActivatedAt: '2026-04-01T12:00:00+02:00',
+      });
+      // then — the pre-activation reps don't count; a fresh entry would
+      const [pushupItem] = progress;
+      expect(pushupItem.logged).toBe(0);
+      expect(pushupItem.done).toBe(false);
     });
 
     it('should leave an unquantified checkoff item undone until ticked', () => {

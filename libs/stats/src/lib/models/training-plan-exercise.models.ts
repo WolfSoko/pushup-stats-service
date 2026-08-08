@@ -114,21 +114,35 @@ export function planExerciseMeasurement(
  * exercise's measurement (reps / durationSec / distanceM), so a plank
  * target in seconds is honored by a hold-timer entry and a squat target
  * in reps by a Quick-Add entry.
+ *
+ * `activatedAt`, when given, excludes entries logged before that instant
+ * — but only when it falls on `dateIso` itself. `start()`/`jumpToDay()`
+ * can shift which day index a calendar date resolves to; without this
+ * cutoff, reps already spent fulfilling the day that *used to* own that
+ * date would also fulfill whichever day claims it next. On every other
+ * date (the normal case — no activation happened today) this is a no-op,
+ * so Quick-Add entries still retroactively cover the active plan day.
  */
 export function planExerciseLoggedTotal(
   entries: ReadonlyArray<PlanExerciseEntryLike>,
   dateIso: string,
-  exercise: Pick<TrainingPlanExercise, 'exerciseId'>
+  exercise: Pick<TrainingPlanExercise, 'exerciseId'>,
+  activatedAt?: string
 ): number {
   const measurement = planExerciseMeasurement(exercise);
   if (!measurement) return 0;
   const field = measurementValueField(measurement);
   if (field === 'weightKg') return 0;
+  const cutoff =
+    activatedAt && activatedAt.slice(0, 10) === dateIso
+      ? new Date(activatedAt).getTime()
+      : null;
   return entries
     .filter(
       (e) =>
         e.exerciseId === exercise.exerciseId &&
-        e.timestamp.slice(0, 10) === dateIso
+        e.timestamp.slice(0, 10) === dateIso &&
+        (cutoff === null || new Date(e.timestamp).getTime() >= cutoff)
     )
     .reduce((sum, e) => sum + (e[field] ?? 0), 0);
 }
@@ -152,6 +166,8 @@ export function planDayProgress(
     entries: ReadonlyArray<PlanExerciseEntryLike>;
     dateIso: string;
     completedItems: ReadonlyArray<string>;
+    /** See {@link planExerciseLoggedTotal}'s `activatedAt` parameter. */
+    dayActivatedAt?: string;
   }
 ): ReadonlyArray<PlanExerciseProgress> {
   const checked = new Set(args.completedItems);
@@ -175,7 +191,12 @@ export function planDayProgress(
     if (metric && !pool.has(exercise.exerciseId)) {
       pool.set(
         exercise.exerciseId,
-        planExerciseLoggedTotal(args.entries, args.dateIso, exercise)
+        planExerciseLoggedTotal(
+          args.entries,
+          args.dateIso,
+          exercise,
+          args.dayActivatedAt
+        )
       );
     }
     const available = pool.get(exercise.exerciseId) ?? 0;
