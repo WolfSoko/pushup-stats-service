@@ -41,6 +41,17 @@ just picked up a newer point release). **Pin an exact Node version in both
 range) so both sides resolve identically — see
 [`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse".
 
+**Don't pin ahead of Google's buildpack mirror.** The buildpack downloads
+the exact `engines.node` version from `dl.google.com/runtimes/...`, which
+lags behind `nodejs.org` releases by some unpredictable amount — pinning
+to the actual latest Node LTS patch (e.g. `24.19.0`, released and
+installable via `nvm`/`actions/setup-node` the same day) failed the build
+with `fetching .../nodejs-24.19.0.tar.gz returned HTTP status: 404`
+because Google hadn't mirrored it yet. Pin to a version confirmed
+downloadable in an actual App Hosting build log (grep for
+`Installing Node.js` in a recent build), not just the newest release
+upstream.
+
 Defenses for the case the cache misses:
 
 1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
