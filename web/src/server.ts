@@ -135,6 +135,11 @@ app.use(
 // `res.vary` (instead of `setHeader('Vary', ...)`) APPENDS to whatever
 // upstream middleware (compression, CORS, …) may have already set —
 // overwriting can quietly break caching semantics elsewhere.
+//
+// Vary on both Accept-Language and Cookie: the target locale can now come
+// from either, so a cached redirect must not bleed across visitors that
+// differ in either header (e.g. a `lang` cookie holder vs. a fresh visitor
+// with no cookie hitting the same path).
 if (isProduction) {
   app.use((req, res, next) => {
     const result = computeLocaleRedirect({
@@ -145,9 +150,12 @@ if (isProduction) {
         typeof req.headers['accept-language'] === 'string'
           ? req.headers['accept-language']
           : undefined,
+      cookie:
+        typeof req.headers.cookie === 'string' ? req.headers.cookie : undefined,
     });
     if (result.kind === 'pass') return next();
     res.vary('Accept-Language');
+    res.vary('Cookie');
     res.redirect(302, result.location);
   });
 }

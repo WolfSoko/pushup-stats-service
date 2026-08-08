@@ -22,6 +22,12 @@ export interface LocaleRedirectInput {
   readonly url: string;
   /** Raw `Accept-Language` header value, may be undefined. */
   readonly acceptLanguage: string | undefined;
+  /**
+   * Raw `Cookie` header value (matches Express `req.headers.cookie`), may
+   * be undefined. Only the `lang` cookie set by `app.ts` `setLanguage()`
+   * is consulted — see `extractLangCookie`.
+   */
+  readonly cookie: string | undefined;
 }
 
 export type LocaleRedirectResult =
@@ -143,12 +149,47 @@ export function pickLocale(
 }
 
 /**
+ * Read the `lang` cookie set by `app.ts` `setLanguage()` (180-day
+ * `Max-Age`) and validate it against `SUPPORTED_LOCALES`.
+ *
+ * The value is user-controlled (it round-trips through the browser), so
+ * it must be whitelisted before it can influence the `Location` header —
+ * same defense-in-depth rationale as `SAFE_REDIRECT_PATH_RE`. Malformed
+ * or unrecognised values are treated as "no preference" rather than
+ * thrown, so a stale/corrupted cookie degrades to the Accept-Language
+ * path instead of breaking navigation.
+ */
+export function extractLangCookie(
+  cookieHeader: string | undefined
+): SupportedLocale | undefined {
+  if (!cookieHeader) return undefined;
+  for (const part of cookieHeader.split(';')) {
+    const eq = part.indexOf('=');
+    if (eq === -1) continue;
+    if (part.slice(0, eq).trim() !== 'lang') continue;
+    let value: string;
+    try {
+      value = decodeURIComponent(part.slice(eq + 1).trim());
+    } catch {
+      return undefined;
+    }
+    return (SUPPORTED_LOCALES as ReadonlyArray<string>).includes(value)
+      ? (value as SupportedLocale)
+      : undefined;
+  }
+  return undefined;
+}
+
+/**
  * Decide whether a request should be redirected to its locale-prefixed
  * variant, and where to.
  *
  * Skipped (returns `pass`):
  * - non-GET/HEAD methods
- * - root path `/` (Angular SSR's own locale middleware handles it)
+ * - root path `/` **without** a `lang` cookie (Angular SSR's own
+ *   Accept-Language-based locale middleware handles that case). When a
+ *   `lang` cookie *is* present, root is redirected here instead — see
+ *   below.
  * - already-prefixed paths (`/de`, `/en`, and any subpath thereof)
  * - root files in `ROOT_FILES` (rewritten by an earlier middleware so
  *   crawlers reach them at the unprefixed URL)
@@ -158,6 +199,14 @@ export function pickLocale(
  *   verification, which fetches the file at the exact URL)
  * - paths with a file extension (static assets)
  * - paths with characters outside `SAFE_REDIRECT_PATH_RE`
+ *
+ * `lang` prefers a validated `lang` cookie over `Accept-Language`. The
+ * cookie is the visitor's explicit choice (set by `app.ts`
+ * `setLanguage()`, 180-day `Max-Age`); without this, an installed PWA
+ * relaunching at `start_url: /?source=pwa` re-derives locale from
+ * Accept-Language on every cold start and can silently override a
+ * language the user picked on purpose — see `docs/gotchas/i18n.md`
+ * "Language switching".
  *
  * The `Location` is built from `lang` (whitelisted) plus `path`
  * (regex-validated). Query/hash is preserved by way of `url.search`
@@ -171,7 +220,8 @@ export function computeLocaleRedirect(
   if (input.method !== 'GET' && input.method !== 'HEAD')
     return { kind: 'pass' };
   const path = input.path;
-  if (path === '/') return { kind: 'pass' };
+  const cookieLocale = extractLangCookie(input.cookie);
+  if (path === '/' && !cookieLocale) return { kind: 'pass' };
 
   const firstSegment = path.split('/')[1] ?? '';
   if (LOCALE_PREFIXES.has(firstSegment)) return { kind: 'pass' };
@@ -183,7 +233,7 @@ export function computeLocaleRedirect(
 
   if (!SAFE_REDIRECT_PATH_RE.test(path)) return { kind: 'pass' };
 
-  const lang = pickLocale(input.acceptLanguage);
+  const lang = cookieLocale ?? pickLocale(input.acceptLanguage);
 
   // Preserve `?returnUrl=…` and similar load-bearing query params (e.g.
   // for `/login`). We re-parse via `URL` against a synthetic base so the
