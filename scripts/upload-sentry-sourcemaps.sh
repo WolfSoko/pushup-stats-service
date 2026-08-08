@@ -7,13 +7,17 @@
 #   3. delete .map files so they don't ship to production
 #
 # Idempotent and safe to run anywhere:
-#   - skips silently if SENTRY_AUTH_TOKEN is unset (so local builds + App Hosting
-#     builds without secrets configured don't break)
+#   - skips silently if SENTRY_AUTH_TOKEN is unset (so local builds without
+#     secrets configured don't break)
 #   - skips silently if dist/web doesn't exist (run before web build)
 #
 # Used by:
 #   - GitHub Actions deploy (Firebase Hosting + Functions): pnpm sentry:sourcemaps
-#   - Firebase App Hosting build (apphosting.yaml scripts.buildCommand)
+#   - GitHub Actions CI (.github/workflows/ci.yml publish-release job): builds
+#     dist/web once, uploads sourcemaps here, then packages the result as the
+#     GitHub Release asset App Hosting's buildCommand downloads — App Hosting
+#     itself no longer runs this (or any build step) directly, see
+#     docs/ci-cd.md → "App Hosting: pre-built artifact via GitHub Releases"
 #
 # Org/project read from .sentryclirc.
 

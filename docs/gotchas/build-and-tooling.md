@@ -1,6 +1,14 @@
 # Gotchas: Build & Tooling
 
-## App Hosting prerender: worker cap, and keep the prerender list SEO-only
+## App Hosting no longer runs the Angular build at all (postmortem)
+
+**Current state:** production App Hosting's `buildCommand` is
+`bash scripts/fetch-release-artifact.sh` — it downloads a GitHub Release
+asset that CI already built, and never runs `nx build` or touches Nx Cloud.
+See [`docs/ci-cd.md`](../ci-cd.md) → "App Hosting: pre-built artifact via
+GitHub Releases" for the current mechanism. The rest of this section is the
+postmortem that led there, kept for context (staging still builds from
+source and remains subject to the same failure modes described below).
 
 The App Hosting production build prerenders ~970 routes (9 locales,
 `sourceMap: true`) on a builder with ~8 GB RAM. The main build process needs
@@ -18,45 +26,54 @@ bundle generation complete" the Node process can stall for 10+ minutes in the
 finalization phase (writing the multi-locale dist, final GC near the 6 GB heap
 cap), at which point the resident esbuild Go service panics with
 `fatal error: all goroutines are asleep - deadlock!` and fails the build. The
-structural fix is to not build there at all — the App Hosting rollout restores
-`web:build:production` from the Nx Cloud remote cache seeded by CI (see
-[`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse").
+originally-attempted structural fix was to not build there at all by having
+the App Hosting rollout restore `web:build:production` from the Nx Cloud
+remote cache seeded by CI — that never worked reliably (see below), which is
+why production now fetches a pre-built artifact instead.
 
-**Cache misses are not random — check Node version drift first.** Every
-App Hosting rollout from 2026-07-28 through 2026-08-07 hit this deadlock
-because `web:build:production` never restored from the Nx Cloud remote
-cache (`Cache: 1/3 hit (MISSING)` in every build log), forcing a fresh
-build on the memory-starved machine every time. Nx Cloud itself was
-reachable and authenticated the whole time (`sw-push:build [remote cache]`
-kept hitting in the same builds) and CI's cache entry for the exact same
-commit was retrievable from CI's own runners — so the miss was a hash
-mismatch specific to the App Hosting builder, not a connectivity/auth
-problem. The confirmed cause: `package.json` pinned `engines.node: ">=24"`
-and `.nvmrc` pinned the floating alias `lts/*`, so GitHub Actions
-(`actions/setup-node` reading `.nvmrc`) and the Google Cloud buildpack
-(reading `engines.node`) independently resolved to _different_ Node.js
-patch versions (`24.18.0` in CI vs. `24.18.1` on the buildpack, which had
-just picked up a newer point release). **Pin an exact Node version in both
-`.nvmrc` and `package.json`'s `engines.node`** (no floating alias, no open
-range) so both sides resolve identically — see
-[`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse".
+**Cache misses were not random — but Node version drift wasn't the actual
+fix either.** Every App Hosting rollout from 2026-07-28 through 2026-08-07
+hit this deadlock (or, after the Node-version fix below, just hung silently
+until Cloud Build's 1-hour timeout) because `web:build:production` never
+restored from the Nx Cloud remote cache (`Cache: 1/3 hit (MISSING)` in every
+build log), forcing a fresh build on the memory-starved machine every time.
+Nx Cloud itself was reachable and authenticated the whole time
+(`sw-push:build [remote cache]` kept hitting in the same builds) and CI's
+cache entry for the exact same commit was retrievable from CI's own
+runners — so the miss was a hash mismatch specific to the App Hosting
+builder, not a connectivity/auth problem. One contributing factor found and
+fixed: `package.json` pinned `engines.node: ">=24"` and `.nvmrc` pinned the
+floating alias `lts/*`, so GitHub Actions (`actions/setup-node` reading
+`.nvmrc`) and the Google Cloud buildpack (reading `engines.node`)
+independently resolved to _different_ Node.js patch versions (`24.18.0` in
+CI vs. `24.18.1` on the buildpack). Pinning both to the identical exact
+version (kept in place — good practice regardless) did **not** resolve the
+cache miss, though — the next rollout attempt still missed cache and hung
+for a full hour. The exact remaining cache-key discrepancy was never fully
+root-caused; rather than keep spending ~30–60 min per blind deploy attempt
+against a production-critical pipeline, the team gave up on cross-environment
+cache matching entirely in favor of the pre-built-artifact approach above.
 
-**Don't pin ahead of Google's buildpack mirror.** The buildpack downloads
-the exact `engines.node` version from `dl.google.com/runtimes/...`, which
-lags behind `nodejs.org` releases by some unpredictable amount — pinning
-to the actual latest Node LTS patch (e.g. `24.19.0`, released and
-installable via `nvm`/`actions/setup-node` the same day) failed the build
-with `fetching .../nodejs-24.19.0.tar.gz returned HTTP status: 404`
-because Google hadn't mirrored it yet. Pin to a version confirmed
-downloadable in an actual App Hosting build log (grep for
-`Installing Node.js` in a recent build), not just the newest release
-upstream.
+**Don't pin ahead of Google's buildpack mirror** (still relevant if bumping
+the pin in the future, e.g. for staging or if App Hosting is ever asked to
+build again). The buildpack downloads the exact `engines.node` version from
+`dl.google.com/runtimes/...`, which lags behind `nodejs.org` releases by some
+unpredictable amount — pinning to the actual latest Node LTS patch (e.g.
+`24.19.0`, released and installable via `nvm`/`actions/setup-node` the same
+day) failed the build with
+`fetching .../nodejs-24.19.0.tar.gz returned HTTP status: 404` because Google
+hadn't mirrored it yet. Pin to a version confirmed downloadable in an actual
+App Hosting build log (grep for `Installing Node.js` in a recent build), not
+just the newest release upstream.
 
-Defenses for the case the cache misses:
+Defenses below remain relevant to staging's build (still runs on App
+Hosting's constrained builder) and to CI's `publish-release` job if it ever
+needs to build fresh instead of restoring from cache:
 
-1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`
-   and `apphosting.staging.yaml` — keeps peak memory inside the machine.
-   (`@angular/build` defaults to `min(4, cores - 1)` workers.)
+1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in
+   `apphosting.staging.yaml` — keeps peak memory inside the machine.
+   (`@angular/build` defaults to `min(4, cores - 1)` workers.) No longer set
+   in production `apphosting.yaml` since it never builds there anymore.
 2. **Keep `app.routes.server.ts`'s `RenderMode.Prerender` list limited to
    routes that actually matter for SEO** (i.e. routes in `sitemap.xml` —
    see [`docs/consent-ads-seo.md`](../consent-ads-seo.md)). Every

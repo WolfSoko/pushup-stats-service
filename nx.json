@@ -75,6 +75,26 @@
   },
   "defaultProject": "web",
   "nxCloudId": "698bc9d62038843e829c77dd",
+  "release": {
+    "projects": ["web"],
+    "projectsRelationship": "fixed",
+    "releaseTag": {
+      "pattern": "deploy-{version}"
+    },
+    "version": {
+      "conventionalCommits": false,
+      "currentVersionResolver": "git-tag",
+      "versionActionsOptions": {
+        "skipLockFileUpdate": true
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": {
+        "file": false,
+        "createRelease": "github"
+      }
+    }
+  },
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",

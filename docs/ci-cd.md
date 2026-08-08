@@ -8,32 +8,59 @@ How code reaches production and staging. AGENTS.md keeps the high-level rule (no
 - **Agent pool:** Nx Cloud dynamic distribution — see `.nx/workflows/distribution-config.yaml`. Details in [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md).
 - **Deploy gate:** CI fast-forwards the `deploy` branch from `main` only after all checks pass (`promote-to-deploy` job). Both deployment targets watch this branch.
 
-## App Hosting Build Cache Reuse
+## App Hosting: pre-built artifact via GitHub Releases
 
 The App Hosting builder (~8 GB RAM) cannot reliably run the full production
 web build (9-locale prerender + sourcemaps) — see
-[`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md). Instead of
-rebuilding, its `buildCommand` restores `web:build:production` from the Nx
-Cloud remote cache:
+[`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md). It was
+previously supposed to restore `web:build:production` from the Nx Cloud
+remote cache instead of rebuilding, but that never worked reliably across the
+GitHub Actions ↔ Google Cloud Build environment boundary (`Cache: 1/3 hit
+(MISSING)` in every build log, even though Nx Cloud itself was reachable and
+authenticated — a task-hash mismatch specific to that cross-environment
+matching, not a connectivity/auth problem) and caused ~12 days of failed
+production deploys (2026-07-28 to 2026-08-07). Pinning the Node version
+identically on both sides did not fix it either.
 
-- **Seeding:** CI runs `nx affected -t=lint,test,build -c=production` with the
-  `NX_CLOUD_ACCESS_TOKEN_WRITE` secret on every main push. If a commit doesn't
-  affect `web`, the previous cache entry still matches (identical input hash).
-- **Ordering guarantee:** App Hosting deploys from the `deploy` branch, which
-  `promote-to-deploy` fast-forwards only after CI is green — the cache entry
-  always exists before the rollout builds.
-- **Restore:** `apphosting.yaml` binds the `NX_CLOUD_ACCESS_TOKEN` Cloud
-  Secret (a read-only Nx Cloud token) at BUILD availability, so
-  `pnpm nx run web:build -c production` in the rollout is a cache download.
-  The task hash matches CI because `web:build` inputs are file-only (no env
-  inputs) and the build reads no env vars at build time.
-- **Staging override:** `apphosting.staging.yaml` replaces the secret binding
-  with a placeholder value (same bind-time-failure pitfall as
-  `SENTRY_AUTH_TOKEN`); an invalid token only degrades to a 401 warning
-  without cache, it never fails the build.
-- **Hash stability:** every path `tools:generate-content` writes must be a declared Nx output and Prettier-ignored, otherwise the generated file's bytes differ between a machine that restored the generator from cache and one that re-ran it — and `web:build`, which hashes those files, misses the remote cache on the builder. See [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md) → "Generated `*.generated.ts` files rewrite on `nx build web`".
-- **Node version must match exactly between CI and the builder — and must be a version Google's buildpack mirror actually has.** `.nvmrc` and `package.json`'s `engines.node` must both pin the same exact Node.js patch version (no `lts/*` alias, no open `>=` range) — GitHub Actions (`actions/setup-node` reads `.nvmrc`) and the Google Cloud buildpack (reads `engines.node`) resolve independently, and any drift between them (e.g. the buildpack picking up a newer point release before GitHub's runner image does) changes the task hash on one side only, so `web:build:production` permanently misses the remote cache on App Hosting even though the exact same commit hits it in CI. This caused ~12 days of failed production deploys (2026-07-28 to 2026-08-07) — see [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md) → "App Hosting prerender: worker cap". Pinning the exact pin isn't enough on its own, either: the buildpack downloads Node from `dl.google.com/runtimes/...`, which lags `nodejs.org` releases by an unpredictable margin, so pinning to the true latest LTS patch can 404 there (`fetching .../nodejs-<version>.tar.gz returned HTTP status: 404`) even though `nvm`/`actions/setup-node` install it fine from `nodejs.org`. Before bumping the pin, confirm the target version downloads successfully in a recent App Hosting build log (`Installing Node.js <version>` with no follow-up 404) — don't just pick the newest upstream release.
-- Guard tests: `tools/src/apphosting-nx-cloud-guard.spec.js`, `tools/src/generated-content-paths.spec.js`.
+**Current approach: build once in CI, ship the artifact.** App Hosting's
+builder never runs the Angular build or depends on Nx Cloud at all anymore:
+
+- **Publish:** `.github/workflows/ci.yml`'s `publish-release` job runs after
+  `lint-test-build` + `e2e` succeed on every main push. It builds
+  `web:build:production` on a plain GitHub Actions runner (the same
+  environment family that just seeded the Nx Cloud remote cache in
+  `lint-test-build`, so this reliably restores from cache — and even a fresh
+  rebuild here runs on a 16 GB runner, never the constrained App Hosting
+  builder), runs `pnpm sentry:sourcemaps`, tars `dist/web`, and publishes it
+  as a GitHub Release asset via `nx release` (`nx.json`'s `release` config,
+  scoped to the `web` project).
+- **Deterministic tag:** the release tag is `deploy-0.0.0-<short-sha>`
+  (`git rev-parse --short=7 HEAD`), computed identically in the CI job and in
+  `scripts/fetch-release-artifact.sh` — no git-tag lookup or API call needed
+  to find the right release for a given commit.
+- **Ordering guarantee:** `promote-to-deploy` now depends on `publish-release`
+  too, so the `deploy` branch is only fast-forwarded once the matching
+  release asset already exists — App Hosting can never race ahead of it.
+- **Restore:** `apphosting.yaml`'s `buildCommand` is
+  `bash scripts/fetch-release-artifact.sh` — downloads the release asset over
+  plain HTTPS (the repo is public, no auth needed) and extracts it into
+  `dist/web`. Fails loudly on a 404 rather than falling back to a real build,
+  preserving the "no deployment path bypasses CI" rule.
+- **Staging is out of scope:** `apphosting.staging.yaml` still builds from
+  source (`pnpm nx run web:build -c staging`), unchanged. Staging wasn't
+  reported broken and PR-preview volume/urgency doesn't warrant the same
+  artifact-publishing machinery yet.
+- Guard tests: `tools/src/apphosting-release-artifact-guard.spec.js`,
+  `tools/src/apphosting-sentry-guard.spec.js`,
+  `tools/src/generated-content-paths.spec.js`.
+
+Node version pinning (`.nvmrc` / `package.json`'s `engines.node`) is kept
+exact regardless — good practice on its own, even though it turned out not to
+be the fix for the cache-miss. See
+[`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md) → "App Hosting
+prerender: worker cap" for that investigation, and the buildpack-mirror-lag
+pitfall if bumping the pin in the future
+(`dl.google.com/runtimes/...` lags `nodejs.org` releases unpredictably).
 
 ## Deployment Targets
 
