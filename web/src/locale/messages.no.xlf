@@ -9954,9 +9954,9 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="dashboard.goalFill.fillPlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Übungen eintragen</source>
-        <target>Alle Übungen eintragen</target>
+        <target>Registrer alle øvelser</target>
       </segment>
     </unit>
 </file>
