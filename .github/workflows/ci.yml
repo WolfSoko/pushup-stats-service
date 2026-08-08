@@ -177,6 +177,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # nx release changelog creates an annotated git tag, which needs a
+      # tagger identity — a fresh runner has none configured by default.
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
