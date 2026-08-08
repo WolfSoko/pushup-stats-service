@@ -22,6 +22,25 @@ structural fix is to not build there at all — the App Hosting rollout restores
 `web:build:production` from the Nx Cloud remote cache seeded by CI (see
 [`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse").
 
+**Cache misses are not random — check Node version drift first.** Every
+App Hosting rollout from 2026-07-28 through 2026-08-07 hit this deadlock
+because `web:build:production` never restored from the Nx Cloud remote
+cache (`Cache: 1/3 hit (MISSING)` in every build log), forcing a fresh
+build on the memory-starved machine every time. Nx Cloud itself was
+reachable and authenticated the whole time (`sw-push:build [remote cache]`
+kept hitting in the same builds) and CI's cache entry for the exact same
+commit was retrievable from CI's own runners — so the miss was a hash
+mismatch specific to the App Hosting builder, not a connectivity/auth
+problem. The confirmed cause: `package.json` pinned `engines.node: ">=24"`
+and `.nvmrc` pinned the floating alias `lts/*`, so GitHub Actions
+(`actions/setup-node` reading `.nvmrc`) and the Google Cloud buildpack
+(reading `engines.node`) independently resolved to _different_ Node.js
+patch versions (`24.18.0` in CI vs. `24.18.1` on the buildpack, which had
+just picked up a newer point release). **Pin an exact Node version in both
+`.nvmrc` and `package.json`'s `engines.node`** (no floating alias, no open
+range) so both sides resolve identically — see
+[`docs/ci-cd.md`](../ci-cd.md) → "App Hosting Build Cache Reuse".
+
 Defenses for the case the cache misses:
 
 1. **`NG_BUILD_MAX_WORKERS=2`** as a BUILD-time env var in `apphosting.yaml`

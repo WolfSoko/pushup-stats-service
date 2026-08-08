@@ -32,6 +32,7 @@ Cloud remote cache:
   `SENTRY_AUTH_TOKEN`); an invalid token only degrades to a 401 warning
   without cache, it never fails the build.
 - **Hash stability:** every path `tools:generate-content` writes must be a declared Nx output and Prettier-ignored, otherwise the generated file's bytes differ between a machine that restored the generator from cache and one that re-ran it — and `web:build`, which hashes those files, misses the remote cache on the builder. See [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md) → "Generated `*.generated.ts` files rewrite on `nx build web`".
+- **Node version must match exactly between CI and the builder.** `.nvmrc` and `package.json`'s `engines.node` must both pin the same exact Node.js patch version (no `lts/*` alias, no open `>=` range) — GitHub Actions (`actions/setup-node` reads `.nvmrc`) and the Google Cloud buildpack (reads `engines.node`) resolve independently, and any drift between them (e.g. the buildpack picking up a newer point release before GitHub's runner image does) changes the task hash on one side only, so `web:build:production` permanently misses the remote cache on App Hosting even though the exact same commit hits it in CI. This caused ~12 days of failed production deploys (2026-07-28 to 2026-08-07) — see [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md) → "App Hosting prerender: worker cap".
 - Guard tests: `tools/src/apphosting-nx-cloud-guard.spec.js`, `tools/src/generated-content-paths.spec.js`.
 
 ## Deployment Targets
