@@ -79,7 +79,8 @@
     "projects": ["web"],
     "projectsRelationship": "fixed",
     "releaseTag": {
-      "pattern": "deploy-{version}"
+      "pattern": "deploy-{version}",
+      "strictPreid": false
     },
     "version": {
       "conventionalCommits": false,
