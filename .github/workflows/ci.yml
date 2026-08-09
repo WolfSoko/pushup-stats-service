@@ -176,6 +176,11 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          # `fetch-depth: 0` alone does not fetch tags. Without this, `git
+          # tag` sees nothing locally and `nx release changelog` fails with
+          # "Unable to determine the previous git tag" even though the
+          # previous `deploy-*` tag exists on the remote.
+          fetch-tags: true
 
       # nx release changelog creates an annotated git tag, which needs a
       # tagger identity — a fresh runner has none configured by default.
