@@ -122,7 +122,7 @@
     "@nestjs/common": "11.1.19",
     "@nestjs/core": "11.1.19",
     "@nestjs/platform-express": "11.1.19",
-    "@nestjs/platform-socket.io": "^11.1.19",
+    "@nestjs/platform-socket.io": "^11.1.28",
     "@nestjs/websockets": "^11.1.19",
     "@ngrx/signals": "^21.0.1",
     "@sentry/angular": "^10.45.0",
