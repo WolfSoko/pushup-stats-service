@@ -114,11 +114,9 @@ export function validateAndroidTesterAddedPayload(
 }
 
 /**
- * Play Console's standard closed-test opt-in URL for this app's package id
- * (`mobile/android-twa/twa-manifest.json` → `applicationId`). Once the
- * closed track is actually published this should be double-checked against
- * the link Play Console shows on the track's "Testers" tab — see
- * `docs/android-test-program.md`.
+ * Play Console's closed-test opt-in URL for this app's package id
+ * (`mobile/android-twa/twa-manifest.json` → `applicationId`). Confirmed
+ * working against the live track — see `docs/android-test-program.md`.
  */
 export const ANDROID_TEST_OPT_IN_URL =
   'https://play.google.com/apps/testing/com.pushupstats.app';

@@ -79,11 +79,13 @@ pflegen. Deshalb bleibt dieser Schritt bewusst Handarbeit:
 
 ## Install-Link
 
-`ANDROID_TEST_OPT_IN_URL` (`android-test/logic.ts`) ist aktuell hartcodiert
-auf `https://play.google.com/apps/testing/com.pushupstats.app` — das
+`ANDROID_TEST_OPT_IN_URL` (`android-test/logic.ts`) ist hartcodiert auf
+`https://play.google.com/apps/testing/com.pushupstats.app` — das
 Standard-Opt-in-Link-Schema für den Package-Namen
-(`mobile/android-twa/twa-manifest.json` → `applicationId`). **Sobald der
-geschlossene Test tatsächlich veröffentlicht ist, den Link gegen den von
-der Play Console im Tab "Tester" des Tracks angezeigten Link prüfen** —
-Play zeigt dort manchmal einen projekt-spezifischen Link statt des
-generischen Musters.
+(`mobile/android-twa/twa-manifest.json` → `applicationId`). Der Link wurde
+am 2026-08-11 gegen den Live-Track geprüft und funktioniert.
+
+Ändert sich der Package-Name oder kommt ein zweiter geschlossener Track
+dazu, muss die Konstante gegen den Link abgeglichen werden, den die Play
+Console im Tab "Tester" des jeweiligen Tracks anzeigt — bei mehreren Tracks
+vergibt Play pro Track eine eigene URL.
