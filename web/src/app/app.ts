@@ -57,6 +57,7 @@ import { toGoalDialItems } from './core/daily-goal/goal-dial-items';
 import { createGoalPillOverlay } from './core/daily-goal/goal-pill-overlay';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
+import { AndroidTestInviteOrchestrationService } from './core/android-test-invite-orchestration.service';
 import { SwUpdateService } from './core/sw-update.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
@@ -258,6 +259,11 @@ export class App {
   // page is mounted when the user crosses a daily/weekly/monthly threshold.
   private readonly _goalReachedNotifier = inject(
     GoalReachedNotificationService
+  );
+  // Eager-inject so the Android closed-test invite popup can fire regardless
+  // of which page is mounted.
+  private readonly _androidTestInvite = inject(
+    AndroidTestInviteOrchestrationService
   );
 
   // Delegate to facade

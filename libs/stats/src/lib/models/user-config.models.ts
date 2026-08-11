@@ -225,10 +225,36 @@ export interface UserConfig {
     dayChartMode?: '24h' | '14h';
     quickAdds?: QuickAddConfig[];
     snapQuality?: SnapQuality;
+    /**
+     * ISO timestamp until which the Android closed-test invite popup
+     * ({@link UserConfig.androidTest}) should stay hidden after the user
+     * dismissed it with "Nicht jetzt". Client-writable like the rest of
+     * `ui` — only the `androidTest` status machine itself is server-only.
+     */
+    androidTestPopupDismissedUntil?: string;
   };
   createdAt?: string;
   updatedAt?: string;
   reminder?: ReminderConfig;
+  /**
+   * Android closed-test tester recruitment state machine. Server-only —
+   * writes go exclusively through the `android-test` Cloud Functions
+   * callables (`adminComputeAndroidTestCandidates`,
+   * `adminConfirmAndroidTestCandidate`, `optInAndroidTest`,
+   * `adminMarkAndroidTesterAdded`) and are blocked from direct client
+   * writes in `firestore.rules`, same as `leaderboardExcluded`.
+   *
+   * `candidate` (auto-detected) -> `confirmed`/`declined` (admin) ->
+   * `optedIn` (user, via the invite popup) -> `notified` (admin, after
+   * manually adding the tester's email in Play Console — see
+   * `docs/android-test-program.md`).
+   */
+  androidTest?: {
+    status: 'candidate' | 'confirmed' | 'declined' | 'optedIn' | 'notified';
+    confirmedAt?: string;
+    optedInAt?: string;
+    notifiedAt?: string;
+  };
 }
 
 export type UserConfigUpdate = Partial<
@@ -257,9 +283,7 @@ export const DISPLAY_NAME_MAX_LENGTH = 30;
 export const DISPLAY_NAME_PATTERN = /^[\p{L}\p{N} _.-]+$/u;
 
 export type DisplayNameViolation =
-  | 'too-short'
-  | 'too-long'
-  | 'invalid-characters';
+  'too-short' | 'too-long' | 'invalid-characters';
 
 /**
  * Returns null if the candidate passes display-name validation, otherwise

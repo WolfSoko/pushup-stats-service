@@ -2823,9 +2823,18 @@
         <source>Daten-Migrationen</source>
       </segment>
     </unit>
+    <unit id="admin.androidTest.title">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.html:22,25</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Android-App-Test</source>
+      </segment>
+    </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:19,21</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:29,31</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -2833,7 +2842,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:24,26</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:34,36</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -2841,7 +2850,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:34,37</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:44,47</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -2849,7 +2858,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:50,51</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:60,61</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -2857,7 +2866,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:58,59</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:68,69</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -2865,7 +2874,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:60,61</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:70,71</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -2873,7 +2882,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:79,81</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:89,91</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -2881,7 +2890,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:104,105</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:114,115</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -2889,7 +2898,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:119,120</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:129,130</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -2897,7 +2906,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:130,131</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:140,141</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -2905,7 +2914,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:141,142</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:151,152</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -2913,7 +2922,7 @@
     </unit>
     <unit id="admin.col.entries">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:158,160</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:168,170</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -2921,7 +2930,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:169,171</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:179,181</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -2929,7 +2938,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:182,184</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:192,194</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -2981,6 +2990,126 @@
       </notes>
       <segment>
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.subtitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:5,9</note>
+      </notes>
+      <segment>
+        <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.backToAdmin">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:12,17</note>
+      </notes>
+      <segment>
+        <source>Zurück zum Admin-Bereich</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scan">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:30,33</note>
+      </notes>
+      <segment>
+        <source>Kandidaten ermitteln</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scanResult">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:36,38</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.candidatesTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:43,45</note>
+      </notes>
+      <segment>
+        <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noCandidates">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:48,50</note>
+      </notes>
+      <segment>
+        <source>Keine offenen Kandidaten.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirm">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:63,65</note>
+      </notes>
+      <segment>
+        <source> Bestätigen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.decline">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:72,74</note>
+      </notes>
+      <segment>
+        <source> Ablehnen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.optedInTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:81,83</note>
+      </notes>
+      <segment>
+        <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noOptedIn">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:85,88</note>
+      </notes>
+      <segment>
+        <source> Noch niemand hat sich angemeldet. </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.emailsCopied">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:90,92</note>
+      </notes>
+      <segment>
+        <source>Kopiert!</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.copyEmails">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:93,96</note>
+      </notes>
+      <segment>
+        <source>Alle E-Mails kopieren</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.markAdded">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:107,109</note>
+      </notes>
+      <segment>
+        <source> Als Tester hinzugefügt (benachrichtigen) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.notifiedTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:116,118</note>
+      </notes>
+      <segment>
+        <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noPush">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.ts:111</note>
+      </notes>
+      <segment>
+        <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
       </segment>
     </unit>
     <unit id="admin.entries.delete.title">
@@ -4070,7 +4199,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:146</note>
+        <note category="location">web/src/app/app.ts:147</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4078,7 +4207,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:147</note>
+        <note category="location">web/src/app/app.ts:148</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4086,7 +4215,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:287</note>
+        <note category="location">web/src/app/app.ts:293</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4094,7 +4223,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:376</note>
+        <note category="location">web/src/app/app.ts:382</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4102,7 +4231,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:379</note>
+        <note category="location">web/src/app/app.ts:385</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -4110,7 +4239,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:443</note>
+        <note category="location">web/src/app/app.ts:449</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4118,7 +4247,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:472</note>
+        <note category="location">web/src/app/app.ts:478</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4126,7 +4255,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:479</note>
+        <note category="location">web/src/app/app.ts:485</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4524,6 +4653,70 @@
       </notes>
       <segment>
         <source>Artikel lesen</source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.title">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:34,36</note>
+      </notes>
+      <segment>
+        <source> Werde Android-App-Tester </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.body">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:38,41</note>
+      </notes>
+      <segment>
+        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.notNow">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:53,55</note>
+      </notes>
+      <segment>
+        <source> Nicht jetzt </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.join">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:62,68</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksTitle">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:71,73</note>
+      </notes>
+      <segment>
+        <source> Danke! </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksBody">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:75,78</note>
+      </notes>
+      <segment>
+        <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.close">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:86,88</note>
+      </notes>
+      <segment>
+        <source> Schließen </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.error">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:112</note>
+      </notes>
+      <segment>
+        <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
       </segment>
     </unit>
     <unit id="quickAdd.fab.exerciseRepAria">

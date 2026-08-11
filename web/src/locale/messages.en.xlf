@@ -10865,5 +10865,149 @@ Deine Position: # ·  Reps        </source>
         <target>Log all exercises</target>
       </segment>
     </unit>
+    <unit id="admin.androidTest.title">
+      <segment state="initial">
+        <source>Android-App-Test</source>
+        <target>Android-App-Test</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.subtitle">
+      <segment state="initial">
+        <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
+        <target> Tester für den geschlossenen Android-App-Test verwalten. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.backToAdmin">
+      <segment state="initial">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Zurück zum Admin-Bereich</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scan">
+      <segment state="initial">
+        <source>Kandidaten ermitteln</source>
+        <target>Kandidaten ermitteln</target>
+      </segment>
+    </unit>
+        <unit id="admin.androidTest.scanResult">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.candidatesTitle">
+      <segment state="initial">
+        <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
+        <target> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noCandidates">
+      <segment state="initial">
+        <source>Keine offenen Kandidaten.</source>
+        <target>Keine offenen Kandidaten.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirm">
+      <segment state="initial">
+        <source> Bestätigen </source>
+        <target> Bestätigen </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.decline">
+      <segment state="initial">
+        <source> Ablehnen </source>
+        <target> Ablehnen </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.optedInTitle">
+      <segment state="initial">
+        <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
+        <target> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noOptedIn">
+      <segment state="initial">
+        <source> Noch niemand hat sich angemeldet. </source>
+        <target> Noch niemand hat sich angemeldet. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.emailsCopied">
+      <segment state="initial">
+        <source>Kopiert!</source>
+        <target>Kopiert!</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.copyEmails">
+      <segment state="initial">
+        <source>Alle E-Mails kopieren</source>
+        <target>Alle E-Mails kopieren</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.markAdded">
+      <segment state="initial">
+        <source> Als Tester hinzugefügt (benachrichtigen) </source>
+        <target> Als Tester hinzugefügt (benachrichtigen) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.notifiedTitle">
+      <segment state="initial">
+        <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
+        <target> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noPush">
+      <segment state="initial">
+        <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
+        <target>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.title">
+      <segment state="initial">
+        <source> Werde Android-App-Tester </source>
+        <target> Werde Android-App-Tester </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.body">
+      <segment state="initial">
+        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.notNow">
+      <segment state="initial">
+        <source> Nicht jetzt </source>
+        <target> Nicht jetzt </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.join">
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksTitle">
+      <segment state="initial">
+        <source> Danke! </source>
+        <target> Danke! </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksBody">
+      <segment state="initial">
+        <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
+        <target> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.close">
+      <segment state="initial">
+        <source> Schließen </source>
+        <target> Schließen </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.error">
+      <segment state="initial">
+        <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
+        <target>Das hat leider nicht geklappt. Bitte versuch es später erneut.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

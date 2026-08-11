@@ -18,6 +18,13 @@ export {
 } from './functions-admin';
 
 export {
+  adminComputeAndroidTestCandidates,
+  adminConfirmAndroidTestCandidate,
+  adminMarkAndroidTesterAdded,
+  optInAndroidTest,
+} from './functions-android-test';
+
+export {
   backfillAdminUserActivity,
   updateAdminUserActivityOnEntryWrite,
 } from './functions-admin-user-activity';

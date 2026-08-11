@@ -86,7 +86,7 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.userId == userId
-                    && !request.resource.data.keys().hasAny(['role', 'leaderboardExcluded'])
+                    && !request.resource.data.keys().hasAny(['role', 'leaderboardExcluded', 'androidTest'])
                     && (!('displayName' in request.resource.data.keys())
                         || (request.resource.data.displayName is string
                             && request.resource.data.displayName.trim().size() >= 2
@@ -95,7 +95,7 @@ service cloud.firestore {
       allow update: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.userId == userId
-                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'leaderboardExcluded'])
+                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'leaderboardExcluded', 'androidTest'])
                     && (!('displayName' in request.resource.data.diff(resource.data).affectedKeys())
                         || (request.resource.data.displayName is string
                             && request.resource.data.displayName.trim().size() >= 2
