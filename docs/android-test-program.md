@@ -30,14 +30,32 @@ Die Admin-Oberfläche dafür ist `/admin/android-test`
 ## Kandidaten-Heuristik
 
 `isAndroidTestCandidate()` (`data-store/functions/src/android-test/logic.ts`)
-markiert Nutzer:innen mit mindestens `ANDROID_TEST_MIN_ENTRIES` (15)
-Einträgen und einem letzten Eintrag innerhalb von
-`ANDROID_TEST_ACTIVE_WITHIN_DAYS` (30) Tagen als Kandidat. Der Scan ist
-idempotent — bereits durchlaufene Docs (jeder Status außer "kein Feld")
-werden nie erneut überschrieben. Kein Cron: das ist ein einmaliger
-Recruiting-Lauf, kein wiederkehrender Job, daher wird per Admin-Button
-manuell ausgelöst (gleiches Muster wie
-`adminBulkDeleteInactiveAnonymous`).
+prüft zwei Stufen. Erst die harte Eignung (`canBeAndroidTester()`), dann die
+Aktivität:
+
+| Kriterium                                | Wert    | Quelle                            |
+| ---------------------------------------- | ------- | --------------------------------- |
+| Nicht anonym (verknüpfter Auth-Provider) | —       | `canBeAndroidTester`              |
+| Hat eine E-Mail-Adresse                  | —       | `canBeAndroidTester`              |
+| Einträge insgesamt                       | ≥ 15    | `ANDROID_TEST_MIN_ENTRIES`        |
+| Letzter Eintrag nicht älter als          | 30 Tage | `ANDROID_TEST_ACTIVE_WITHIN_DAYS` |
+
+Dazu im Callable: Demo-User ausgeschlossen, und wer schon einen
+`androidTest.status` trägt, wird nie erneut gestempelt.
+
+**Warum die E-Mail-Pflicht:** die Play-Console-Testerliste ist auf
+Google-Account-E-Mails aufgebaut. Ein anonymer Account (oder einer mit reiner
+Telefon-Anmeldung) hat keine — er könnte die Einladung annehmen und wäre
+danach trotzdem nicht freischaltbar. Solche Accounts dürfen das Popup daher
+gar nicht erst sehen.
+
+Der Scan ist idempotent — bereits durchlaufene Docs (jeder Status außer "kein
+Feld") werden nie erneut überschrieben. Er räumt zusätzlich `candidate`-Marken
+von Accounts ab, die die Eignungsprüfung nicht (mehr) bestehen oder gelöscht
+wurden; Status, auf die Admin oder Nutzer:in schon reagiert haben, bleiben
+unangetastet. Kein Cron: das ist ein einmaliger Recruiting-Lauf, kein
+wiederkehrender Job, daher wird per Admin-Button manuell ausgelöst (gleiches
+Muster wie `adminBulkDeleteInactiveAnonymous`).
 
 ## Das Invite-Popup
 

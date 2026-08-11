@@ -70,7 +70,7 @@ export class AndroidTestPageComponent {
     this.error.set(null);
     this.scanResult.set(null);
     try {
-      const fn = this.callables.call<void, { found: number }>(
+      const fn = this.callables.call<void, { found: number; cleaned: number }>(
         'adminComputeAndroidTestCandidates'
       );
       const result = await fn();

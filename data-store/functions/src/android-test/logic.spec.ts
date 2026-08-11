@@ -5,6 +5,7 @@ import {
   ANDROID_TEST_OPT_IN_URL,
   androidTestStatusPatch,
   buildAndroidTestInvitePayload,
+  canBeAndroidTester,
   isAndroidTestCandidate,
   validateAndroidTestConfirmPayload,
   validateAndroidTesterAddedPayload,
@@ -13,13 +14,72 @@ import {
 const DAY_MS = 24 * 60 * 60 * 1000;
 const NOW = new Date('2026-08-11T12:00:00Z').getTime();
 
+/** A signed-up account with an email — eligible on account grounds alone. */
+const ELIGIBLE = { anonymous: false, email: 'user@example.com' };
+
 describe('android-test/logic', () => {
+  describe('canBeAndroidTester', () => {
+    it('should accept a signed-up account with an email', () => {
+      // given / when
+      const result = canBeAndroidTester(ELIGIBLE);
+      // then
+      expect(result).toBe(true);
+    });
+
+    it('should reject an anonymous account', () => {
+      // given
+      const account = { anonymous: true, email: null };
+      // when
+      const result = canBeAndroidTester(account);
+      // then
+      expect(result).toBe(false);
+    });
+
+    it('should reject a signed-up account without an email (e.g. phone-only sign-in)', () => {
+      // given
+      const account = { anonymous: false, email: null };
+      // when
+      const result = canBeAndroidTester(account);
+      // then
+      expect(result).toBe(false);
+    });
+  });
+
   describe('isAndroidTestCandidate', () => {
+    // Regression guard: the first version had no eligibility gate at all, so
+    // anonymous accounts with enough entries were offered the invite even
+    // though they can never be added to the Play Console tester list.
+    it('should reject an anonymous account however active it is', () => {
+      // given
+      const account = { anonymous: true, email: null };
+      const activity = {
+        entryCount: 500,
+        lastEntry: new Date(NOW).toISOString(),
+      };
+      // when
+      const result = isAndroidTestCandidate(account, activity, NOW);
+      // then
+      expect(result).toBe(false);
+    });
+
+    it('should reject an account without an email however active it is', () => {
+      // given
+      const account = { anonymous: false, email: null };
+      const activity = {
+        entryCount: 500,
+        lastEntry: new Date(NOW).toISOString(),
+      };
+      // when
+      const result = isAndroidTestCandidate(account, activity, NOW);
+      // then
+      expect(result).toBe(false);
+    });
+
     it('should reject an undefined activity aggregate', () => {
       // given
       const activity = undefined;
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(false);
     });
@@ -31,7 +91,7 @@ describe('android-test/logic', () => {
         lastEntry: new Date(NOW).toISOString(),
       };
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(false);
     });
@@ -43,7 +103,7 @@ describe('android-test/logic', () => {
         lastEntry: new Date(NOW).toISOString(),
       };
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(true);
     });
@@ -52,7 +112,7 @@ describe('android-test/logic', () => {
       // given
       const activity = { entryCount: 50, lastEntry: null };
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(false);
     });
@@ -65,7 +125,7 @@ describe('android-test/logic', () => {
         lastEntry: new Date(staleMs).toISOString(),
       };
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(false);
     });
@@ -78,7 +138,7 @@ describe('android-test/logic', () => {
         lastEntry: new Date(boundaryMs).toISOString(),
       };
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(true);
     });
@@ -87,7 +147,7 @@ describe('android-test/logic', () => {
       // given
       const activity = { entryCount: 50, lastEntry: 'not-a-date' };
       // when
-      const result = isAndroidTestCandidate(activity, NOW);
+      const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(false);
     });

@@ -53,16 +53,37 @@ export const ANDROID_TEST_MIN_ENTRIES = 15;
 /** A candidate must have logged something within this many days. */
 export const ANDROID_TEST_ACTIVE_WITHIN_DAYS = 30;
 
+export interface AndroidTestAccount {
+  /** Firebase Auth user with no linked provider. */
+  anonymous: boolean;
+  email: string | null;
+}
+
 /**
- * Heuristic for `adminComputeAndroidTestCandidates`: engaged, still-active
- * users are worth inviting; the admin confirms/declines each one afterwards,
- * so a false positive here just costs one extra admin click, not a bad
- * invite.
+ * Hard eligibility gate, independent of how active the account is.
+ *
+ * The Play Console closed-test tester list is keyed by Google-account
+ * email addresses, so an account without one can never be added as a
+ * tester — inviting it would promise something we cannot deliver.
+ * Anonymous accounts never have an email; a non-anonymous account can
+ * still lack one (e.g. phone-only sign-in), so both are checked.
+ */
+export function canBeAndroidTester(account: AndroidTestAccount): boolean {
+  return !account.anonymous && !!account.email;
+}
+
+/**
+ * Heuristic for `adminComputeAndroidTestCandidates`: eligible, engaged,
+ * still-active users are worth inviting; the admin confirms/declines each
+ * one afterwards, so a false positive here just costs one extra admin
+ * click, not a bad invite.
  */
 export function isAndroidTestCandidate(
+  account: AndroidTestAccount,
   activity: AndroidTestActivity | undefined,
   nowMs: number
 ): boolean {
+  if (!canBeAndroidTester(account)) return false;
   if (!activity || activity.entryCount < ANDROID_TEST_MIN_ENTRIES) {
     return false;
   }

@@ -5,8 +5,10 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import webpush from 'web-push';
 
 import {
+  type AndroidTestAccount,
   androidTestStatusPatch,
   buildAndroidTestInvitePayload,
+  canBeAndroidTester,
   isAndroidTestCandidate,
   validateAndroidTestConfirmPayload,
   validateAndroidTesterAddedPayload,
@@ -34,15 +36,26 @@ export const adminComputeAndroidTestCandidates = onCall(
   async (request) => {
     assertAdmin(request);
 
-    const uids: string[] = [];
+    const accounts = new Map<string, AndroidTestAccount>();
     let pageToken: string | undefined;
     do {
       const result = await admin.auth().listUsers(1000, pageToken);
       for (const user of result.users) {
-        if (user.uid !== DEMO_USER_ID) uids.push(user.uid);
+        if (user.uid === DEMO_USER_ID) continue;
+        accounts.set(user.uid, {
+          anonymous: user.providerData.length === 0,
+          email: user.email ?? null,
+        });
       }
       pageToken = result.pageToken;
     } while (pageToken);
+
+    // Ineligible accounts (anonymous / no email) can never become testers,
+    // so they are dropped before the per-user activity and config reads —
+    // on this app they are the bulk of the user base.
+    const uids = [...accounts.keys()].filter((uid) =>
+      canBeAndroidTester(accounts.get(uid) as AndroidTestAccount)
+    );
 
     const activity = await readUserActivity(uids);
     const nowMs = Date.now();
@@ -66,8 +79,40 @@ export const adminComputeAndroidTestCandidates = onCall(
       (uid) =>
         // already went through the flow — never re-stamp
         !configMap.get(uid)?.status &&
-        isAndroidTestCandidate(activity.get(uid), nowMs)
+        isAndroidTestCandidate(
+          accounts.get(uid) as AndroidTestAccount,
+          activity.get(uid),
+          nowMs
+        )
     );
+
+    // Repair pass: an earlier version of this scan had no eligibility gate
+    // and stamped anonymous accounts as candidates. They can never become
+    // testers, so clear the stray marks instead of making the admin decline
+    // each one by hand. Only untouched `candidate` marks are cleared — a
+    // status an admin or the user already acted on is never discarded.
+    const staleSnap = await db
+      .collection('userConfigs')
+      .where('androidTest.status', '==', 'candidate')
+      .get();
+    const staleUids = staleSnap.docs
+      .map((doc) => doc.id)
+      .filter((uid) => {
+        const account = accounts.get(uid);
+        // No account at all = deleted user; also worth clearing.
+        return !account || !canBeAndroidTester(account);
+      });
+    for (const chunk of batchArray(staleUids, 500)) {
+      const batch = db.batch();
+      for (const uid of chunk) {
+        batch.set(
+          db.collection('userConfigs').doc(uid),
+          { androidTest: admin.firestore.FieldValue.delete() },
+          { merge: true }
+        );
+      }
+      await batch.commit();
+    }
 
     const patch = androidTestStatusPatch('candidate', new Date().toISOString());
     // A Firestore write batch caps at 500 operations — chunk so a large
@@ -85,10 +130,12 @@ export const adminComputeAndroidTestCandidates = onCall(
 
     logger.info('adminComputeAndroidTestCandidates', {
       found,
-      scanned: uids.length,
+      cleaned: staleUids.length,
+      eligible: uids.length,
+      accounts: accounts.size,
       by: request.auth?.uid,
     });
-    return { found };
+    return { found, cleaned: staleUids.length };
   }
 );
 
