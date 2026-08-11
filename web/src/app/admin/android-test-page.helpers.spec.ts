@@ -2,6 +2,8 @@ import { AdminUser } from './admin-page.models';
 import {
   androidTestEmailsForClipboard,
   groupByAndroidTestStatus,
+  MANUAL_ADD_MAX_MATCHES,
+  manualAddMatches,
 } from './android-test-page.helpers';
 
 function user(overrides: Partial<AdminUser> = {}): AdminUser {
@@ -45,18 +47,109 @@ describe('groupByAndroidTestStatus', () => {
     expect(result.notified).toEqual([]);
   });
 
-  it('should exclude confirmed and declined users from every bucket', () => {
+  it('should surface confirmed users so pending invites stay visible', () => {
     // given
     const users = [
       user({ uid: 'confirmed', androidTest: { status: 'confirmed' } }),
+    ];
+    // when
+    const result = groupByAndroidTestStatus(users);
+    // then
+    expect(result.confirmed.map((u) => u.uid)).toEqual(['confirmed']);
+  });
+
+  it('should exclude declined users from every bucket', () => {
+    // given
+    const users = [
       user({ uid: 'declined', androidTest: { status: 'declined' } }),
     ];
     // when
     const result = groupByAndroidTestStatus(users);
     // then
     expect(result.candidates).toEqual([]);
+    expect(result.confirmed).toEqual([]);
     expect(result.optedIn).toEqual([]);
     expect(result.notified).toEqual([]);
+  });
+});
+
+describe('manualAddMatches', () => {
+  it('should return nothing for an empty search term', () => {
+    // given
+    const users = [user({ email: 'a@example.com' })];
+    // when
+    const result = manualAddMatches(users, '   ');
+    // then
+    expect(result).toEqual([]);
+  });
+
+  it('should match on email and on display name, case-insensitively', () => {
+    // given
+    const users = [
+      user({ uid: 'byEmail', email: 'Anna@example.com' }),
+      user({ uid: 'byName', email: 'x@example.com', displayName: 'Annika' }),
+      user({ uid: 'other', email: 'bob@example.com' }),
+    ];
+    // when
+    const result = manualAddMatches(users, 'ann');
+    // then
+    expect(result.map((u) => u.uid)).toEqual(['byEmail', 'byName']);
+  });
+
+  // Mirrors the backend eligibility rule — offering these would promise an
+  // invite that Play Console can never honour.
+  it('should never offer anonymous accounts or accounts without an email', () => {
+    // given
+    const users = [
+      user({ uid: 'anon', email: 'anon@example.com', anonymous: true }),
+      user({ uid: 'noMail', email: null, displayName: 'anon-ish' }),
+    ];
+    // when
+    const result = manualAddMatches(users, 'anon');
+    // then
+    expect(result).toEqual([]);
+  });
+
+  it('should not offer users already somewhere in the flow', () => {
+    // given
+    const inFlow = ['candidate', 'confirmed', 'optedIn', 'notified'] as const;
+    const users = inFlow.map((status, i) =>
+      user({
+        uid: status,
+        email: `flow${i}@example.com`,
+        androidTest: { status },
+      })
+    );
+    // when
+    const result = manualAddMatches(users, 'flow');
+    // then
+    expect(result).toEqual([]);
+  });
+
+  it('should offer a previously declined user again, so a mistake can be corrected', () => {
+    // given
+    const users = [
+      user({
+        uid: 'declined',
+        email: 'declined@example.com',
+        androidTest: { status: 'declined' },
+      }),
+    ];
+    // when
+    const result = manualAddMatches(users, 'declined');
+    // then
+    expect(result.map((u) => u.uid)).toEqual(['declined']);
+  });
+
+  it('should cap the number of matches', () => {
+    // given
+    const users = Array.from({ length: MANUAL_ADD_MAX_MATCHES + 5 }, (_, i) =>
+      user({ uid: `u${i}`, email: `match${i}@example.com` })
+    );
+    // when
+    const result = manualAddMatches(users, 'match');
+    // then
+    expect(result).toHaveLength(MANUAL_ADD_MAX_MATCHES);
   });
 });
 

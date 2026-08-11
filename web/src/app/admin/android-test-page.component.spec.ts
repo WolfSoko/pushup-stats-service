@@ -130,6 +130,58 @@ describe('AndroidTestPageComponent', () => {
     expect(writeText).toHaveBeenCalledWith('a@example.com');
   });
 
+  it('should add a hand-picked user straight to confirmed and clear the search', async () => {
+    // given
+    await createComponent([user({ uid: 'pick', email: 'pick@example.com' })]);
+    const confirmSpy = vi.fn().mockResolvedValue({ data: { ok: true } });
+    setupCallables([
+      { name: 'adminListUsers', impl: async () => ({ data: [] }) },
+      { name: 'adminConfirmAndroidTestCandidate', impl: confirmSpy },
+    ]);
+    component.manualSearch.set('pick');
+    // when
+    await component.addManually('pick');
+    // then
+    expect(confirmSpy).toHaveBeenCalledWith({ uid: 'pick', confirmed: true });
+    expect(component.manualSearch()).toBe('');
+  });
+
+  it('should keep the search term when the manual add fails', async () => {
+    // given
+    await createComponent([user({ uid: 'pick', email: 'pick@example.com' })]);
+    setupCallables([
+      { name: 'adminListUsers', impl: async () => ({ data: [] }) },
+      {
+        name: 'adminConfirmAndroidTestCandidate',
+        impl: async () => {
+          throw new Error('nicht berechtigt');
+        },
+      },
+    ]);
+    component.manualSearch.set('pick');
+    // when
+    await component.addManually('pick');
+    // then
+    expect(component.error()).toBe('nicht berechtigt');
+    expect(component.manualSearch()).toBe('pick');
+  });
+
+  it('should offer only eligible users not yet in the flow as manual matches', async () => {
+    // given / when
+    await createComponent([
+      user({ uid: 'free', email: 'match-free@example.com' }),
+      user({ uid: 'anon', email: 'match-anon@example.com', anonymous: true }),
+      user({
+        uid: 'inFlow',
+        email: 'match-inflow@example.com',
+        androidTest: { status: 'optedIn' },
+      }),
+    ]);
+    component.manualSearch.set('match-');
+    // then
+    expect(component.manualMatches().map((u) => u.uid)).toEqual(['free']);
+  });
+
   it('should surface the error message when adminListUsers fails', async () => {
     // given / when
     await createComponent();

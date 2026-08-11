@@ -154,6 +154,33 @@ export const adminConfirmAndroidTestCandidate = onCall(
     }
     const { uid, confirmed } = result;
 
+    // Also the entry point for adding a tester by hand (the admin UI's
+    // manual picker calls this with an arbitrary uid), so eligibility is
+    // enforced here rather than only in the scan — otherwise the manual
+    // path could invite an account that can never be added in Play Console.
+    // Declining stays unconditional: it must always be possible to clear a
+    // mark, whatever the account looks like now.
+    if (confirmed) {
+      const user = await admin
+        .auth()
+        .getUser(uid)
+        .catch(() => null);
+      if (!user) {
+        throw new HttpsError('not-found', 'Benutzer nicht gefunden.');
+      }
+      if (
+        !canBeAndroidTester({
+          anonymous: user.providerData.length === 0,
+          email: user.email ?? null,
+        })
+      ) {
+        throw new HttpsError(
+          'failed-precondition',
+          'Account ohne E-Mail-Adresse kann nicht als Tester hinzugefügt werden.'
+        );
+      }
+    }
+
     await db
       .collection('userConfigs')
       .doc(uid)

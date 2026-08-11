@@ -5,8 +5,11 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
@@ -15,6 +18,7 @@ import { errorMessage } from './admin-page.helpers';
 import {
   androidTestEmailsForClipboard,
   groupByAndroidTestStatus,
+  manualAddMatches,
 } from './android-test-page.helpers';
 import { CallableFunctionsService } from './callable-functions.service';
 
@@ -22,8 +26,11 @@ import { CallableFunctionsService } from './callable-functions.service';
   selector: 'app-android-test-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    FormsModule,
     MatButtonModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatProgressSpinnerModule,
     RouterLink,
     PageHeaderComponent,
@@ -42,9 +49,14 @@ export class AndroidTestPageComponent {
   readonly scanResult = signal<number | null>(null);
   readonly emailsCopied = signal(false);
 
+  readonly manualSearch = signal('');
+
   readonly groups = computed(() => groupByAndroidTestStatus(this.users()));
   readonly clipboardEmails = computed(() =>
     androidTestEmailsForClipboard(this.groups().optedIn)
+  );
+  readonly manualMatches = computed(() =>
+    manualAddMatches(this.users(), this.manualSearch())
   );
 
   constructor() {
@@ -98,6 +110,16 @@ export class AndroidTestPageComponent {
     } finally {
       this.busyUid.set(null);
     }
+  }
+
+  /**
+   * Adds a hand-picked user straight to `confirmed` — the admin has already
+   * made the decision the candidate stage exists to capture, so routing them
+   * through `candidate` first would just be an extra click.
+   */
+  async addManually(uid: string): Promise<void> {
+    await this.confirm(uid, true);
+    if (!this.error()) this.manualSearch.set('');
   }
 
   async markAdded(uid: string): Promise<void> {

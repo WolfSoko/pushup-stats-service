@@ -3002,7 +3002,7 @@
     </unit>
     <unit id="admin.androidTest.backToAdmin">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:12,17</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:11,15</note>
       </notes>
       <segment>
         <source>Zurück zum Admin-Bereich</source>
@@ -3010,7 +3010,7 @@
     </unit>
     <unit id="admin.androidTest.scan">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:30,33</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:28,31</note>
       </notes>
       <segment>
         <source>Kandidaten ermitteln</source>
@@ -3018,7 +3018,7 @@
     </unit>
     <unit id="admin.androidTest.scanResult">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:36,38</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:34,36</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
@@ -3026,7 +3026,7 @@
     </unit>
     <unit id="admin.androidTest.candidatesTitle">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:43,45</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:41,43</note>
       </notes>
       <segment>
         <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
@@ -3034,7 +3034,7 @@
     </unit>
     <unit id="admin.androidTest.noCandidates">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:48,50</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:46,48</note>
       </notes>
       <segment>
         <source>Keine offenen Kandidaten.</source>
@@ -3042,7 +3042,7 @@
     </unit>
     <unit id="admin.androidTest.confirm">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:63,65</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:61,63</note>
       </notes>
       <segment>
         <source> Bestätigen </source>
@@ -3050,15 +3050,71 @@
     </unit>
     <unit id="admin.androidTest.decline">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:72,74</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:70,72</note>
       </notes>
       <segment>
         <source> Ablehnen </source>
       </segment>
     </unit>
+    <unit id="admin.androidTest.manualAddTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:78,79</note>
+      </notes>
+      <segment>
+        <source>Manuell hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddHint">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:80,84</note>
+      </notes>
+      <segment>
+        <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddSearch">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:86,89</note>
+      </notes>
+      <segment>
+        <source>Name oder E-Mail</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAdd">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:105,108</note>
+      </notes>
+      <segment>
+        <source> Einladen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirmedTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:113,115</note>
+      </notes>
+      <segment>
+        <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noConfirmed">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:116,118</note>
+      </notes>
+      <segment>
+        <source>Keine offenen Einladungen.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.withdraw">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:128,130</note>
+      </notes>
+      <segment>
+        <source> Zurückziehen </source>
+      </segment>
+    </unit>
     <unit id="admin.androidTest.optedInTitle">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:81,83</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:137,139</note>
       </notes>
       <segment>
         <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
@@ -3066,7 +3122,7 @@
     </unit>
     <unit id="admin.androidTest.noOptedIn">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:85,88</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:141,144</note>
       </notes>
       <segment>
         <source> Noch niemand hat sich angemeldet. </source>
@@ -3074,7 +3130,7 @@
     </unit>
     <unit id="admin.androidTest.emailsCopied">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:90,92</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:146,148</note>
       </notes>
       <segment>
         <source>Kopiert!</source>
@@ -3082,7 +3138,7 @@
     </unit>
     <unit id="admin.androidTest.copyEmails">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:93,96</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:149,152</note>
       </notes>
       <segment>
         <source>Alle E-Mails kopieren</source>
@@ -3090,7 +3146,7 @@
     </unit>
     <unit id="admin.androidTest.markAdded">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:107,109</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:163,165</note>
       </notes>
       <segment>
         <source> Als Tester hinzugefügt (benachrichtigen) </source>
@@ -3098,7 +3154,7 @@
     </unit>
     <unit id="admin.androidTest.notifiedTitle">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.html:116,118</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:172,174</note>
       </notes>
       <segment>
         <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
@@ -3106,7 +3162,7 @@
     </unit>
     <unit id="admin.androidTest.noPush">
       <notes>
-        <note category="location">web/src/app/admin/android-test-page.component.ts:111</note>
+        <note category="location">web/src/app/admin/android-test-page.component.ts:139</note>
       </notes>
       <segment>
         <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
@@ -4657,7 +4713,7 @@
     </unit>
     <unit id="androidTest.invite.title">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:34,36</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:39,41</note>
       </notes>
       <segment>
         <source> Werde Android-App-Tester </source>
@@ -4665,7 +4721,7 @@
     </unit>
     <unit id="androidTest.invite.body">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:38,41</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:43,46</note>
       </notes>
       <segment>
         <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
@@ -4673,7 +4729,7 @@
     </unit>
     <unit id="androidTest.invite.notNow">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:53,55</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:58,60</note>
       </notes>
       <segment>
         <source> Nicht jetzt </source>
@@ -4681,7 +4737,7 @@
     </unit>
     <unit id="androidTest.invite.join">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:62,68</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:67,73</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
@@ -4689,15 +4745,15 @@
     </unit>
     <unit id="androidTest.invite.thanksTitle">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:71,73</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:75,77</note>
       </notes>
       <segment>
-        <source> Danke! </source>
+        <source>Danke!</source>
       </segment>
     </unit>
     <unit id="androidTest.invite.thanksBody">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:75,78</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:78,81</note>
       </notes>
       <segment>
         <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
@@ -4705,7 +4761,7 @@
     </unit>
     <unit id="androidTest.invite.close">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:86,88</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:89,91</note>
       </notes>
       <segment>
         <source> Schließen </source>
@@ -4713,7 +4769,7 @@
     </unit>
     <unit id="androidTest.invite.error">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:112</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:115</note>
       </notes>
       <segment>
         <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>

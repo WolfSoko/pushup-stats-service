@@ -75,6 +75,64 @@
   </section>
 
   <section class="user-section">
+    <h2 i18n="@@admin.androidTest.manualAddTitle">Manuell hinzufügen</h2>
+    <p class="section-hint" i18n="@@admin.androidTest.manualAddHint">
+      Nutzer:in suchen und direkt einladen — unabhängig von den
+      Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen
+      nicht, sie können nicht als Tester eingetragen werden.
+    </p>
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@admin.androidTest.manualAddSearch"
+        >Name oder E-Mail</mat-label
+      >
+      <input
+        matInput
+        [ngModel]="manualSearch()"
+        (ngModelChange)="manualSearch.set($event)"
+      />
+    </mat-form-field>
+    @for (user of manualMatches(); track user.uid) {
+      <div class="user-row">
+        <span class="user-label">{{ user.displayName ?? user.email }}</span>
+        <span class="entry-count">{{ user.entryCount }}</span>
+        <button
+          type="button"
+          mat-stroked-button
+          [disabled]="busyUid() === user.uid"
+          (click)="addManually(user.uid)"
+          i18n="@@admin.androidTest.manualAdd"
+        >
+          Einladen
+        </button>
+      </div>
+    }
+  </section>
+
+  <section class="user-section">
+    <h2 i18n="@@admin.androidTest.confirmedTitle">
+      Eingeladen, wartet auf Zusage ({{ groups().confirmed.length }})
+    </h2>
+    @if (groups().confirmed.length === 0) {
+      <p i18n="@@admin.androidTest.noConfirmed">Keine offenen Einladungen.</p>
+    } @else {
+      @for (user of groups().confirmed; track user.uid) {
+        <div class="user-row">
+          <span class="user-label">{{ user.email ?? user.uid }}</span>
+          <button
+            type="button"
+            mat-button
+            [disabled]="busyUid() === user.uid"
+            (click)="confirm(user.uid, false)"
+            i18n="@@admin.androidTest.withdraw"
+          >
+            Zurückziehen
+          </button>
+        </div>
+      }
+    }
+  </section>
+
+  <section class="user-section">
     <h2 i18n="@@admin.androidTest.optedInTitle">
       Angemeldet ({{ groups().optedIn.length }})
     </h2>

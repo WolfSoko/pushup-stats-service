@@ -10786,10 +10786,10 @@
         <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></target>
       </segment>
     </unit>
-    <unit id="androidTest.invite.thanksTitle">
+        <unit id="androidTest.invite.thanksTitle">
       <segment state="initial">
-        <source> Danke! </source>
-        <target> Danke! </target>
+        <source>Danke!</source>
+        <target>Danke!</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.thanksBody">
@@ -10808,6 +10808,48 @@
       <segment state="initial">
         <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
         <target>Das hat leider nicht geklappt. Bitte versuch es später erneut.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddTitle">
+      <segment state="initial">
+        <source>Manuell hinzufügen</source>
+        <target>Manuell hinzufügen</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddHint">
+      <segment state="initial">
+        <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
+        <target> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddSearch">
+      <segment state="initial">
+        <source>Name oder E-Mail</source>
+        <target>Name oder E-Mail</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAdd">
+      <segment state="initial">
+        <source> Einladen </source>
+        <target> Einladen </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirmedTitle">
+      <segment state="initial">
+        <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
+        <target> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noConfirmed">
+      <segment state="initial">
+        <source>Keine offenen Einladungen.</source>
+        <target>Keine offenen Einladungen.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.withdraw">
+      <segment state="initial">
+        <source> Zurückziehen </source>
+        <target> Zurückziehen </target>
       </segment>
     </unit>
 </file>

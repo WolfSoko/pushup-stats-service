@@ -57,6 +57,23 @@ unangetastet. Kein Cron: das ist ein einmaliger Recruiting-Lauf, kein
 wiederkehrender Job, daher wird per Admin-Button manuell ausgelöst (gleiches
 Muster wie `adminBulkDeleteInactiveAnonymous`).
 
+## Manuell hinzufügen
+
+Neben dem Scan lassen sich Tester:innen auf `/admin/android-test` von Hand
+einladen (Abschnitt "Manuell hinzufügen"): suchen, "Einladen" — der Account
+springt direkt auf `confirmed`, überspringt also die Kandidatenstufe, weil
+die Entscheidung damit schon getroffen ist. Nützlich für Leute, die die
+Aktivitätskriterien nicht erfüllen (frisch registriert, persönlich bekannt).
+
+Die Eignungsprüfung gilt hier genauso: `adminConfirmAndroidTestCandidate`
+lehnt anonyme Accounts und solche ohne E-Mail mit `failed-precondition` ab,
+und der Picker bietet sie erst gar nicht an. Bereits im Ablauf befindliche
+Accounts werden ebenfalls nicht angeboten — `declined` schon, damit sich ein
+versehentliches Ablehnen korrigieren lässt.
+
+Offene Einladungen stehen im Abschnitt "Eingeladen, wartet auf Zusage" und
+lassen sich dort mit "Zurückziehen" wieder auf `declined` setzen.
+
 ## Das Invite-Popup
 
 `AndroidTestInviteOrchestrationService`
