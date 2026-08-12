@@ -16,6 +16,30 @@
   }
 
   <section class="scan-section">
+    <mat-form-field appearance="outline" class="threshold-field">
+      <mat-label i18n="@@admin.androidTest.minEntries">Einträge ab</mat-label>
+      <input
+        matInput
+        type="number"
+        [min]="thresholdLimits.minEntries.min"
+        [max]="thresholdLimits.minEntries.max"
+        [ngModel]="minEntries()"
+        (ngModelChange)="minEntries.set(+$event)"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="threshold-field">
+      <mat-label i18n="@@admin.androidTest.activeWithinDays"
+        >Aktiv in den letzten (Tage)</mat-label
+      >
+      <input
+        matInput
+        type="number"
+        [min]="thresholdLimits.activeWithinDays.min"
+        [max]="thresholdLimits.activeWithinDays.max"
+        [ngModel]="activeWithinDays()"
+        (ngModelChange)="activeWithinDays.set(+$event)"
+      />
+    </mat-form-field>
     <button
       type="button"
       mat-flat-button

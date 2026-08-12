@@ -33,15 +33,31 @@ Die Admin-Oberfläche dafür ist `/admin/android-test`
 prüft zwei Stufen. Erst die harte Eignung (`canBeAndroidTester()`), dann die
 Aktivität:
 
-| Kriterium                                | Wert    | Quelle                            |
-| ---------------------------------------- | ------- | --------------------------------- |
-| Nicht anonym (verknüpfter Auth-Provider) | —       | `canBeAndroidTester`              |
-| Hat eine E-Mail-Adresse                  | —       | `canBeAndroidTester`              |
-| Einträge insgesamt                       | ≥ 15    | `ANDROID_TEST_MIN_ENTRIES`        |
-| Letzter Eintrag nicht älter als          | 30 Tage | `ANDROID_TEST_ACTIVE_WITHIN_DAYS` |
+| Kriterium                                | Standard | Quelle                                   |
+| ---------------------------------------- | -------- | ---------------------------------------- |
+| Nicht anonym (verknüpfter Auth-Provider) | —        | `canBeAndroidTester` (fest)              |
+| Hat eine E-Mail-Adresse                  | —        | `canBeAndroidTester` (fest)              |
+| Einträge insgesamt                       | ≥ 15     | `minEntries`, pro Scan einstellbar       |
+| Letzter Eintrag nicht älter als          | 30 Tage  | `activeWithinDays`, pro Scan einstellbar |
 
 Dazu im Callable: Demo-User ausgeschlossen, und wer schon einen
 `androidTest.status` trägt, wird nie erneut gestempelt.
+
+**Die beiden Zahlen sind in der Admin-Oberfläche einstellbar** — zwei Felder
+neben "Kandidaten ermitteln", vorbelegt aus
+`DEFAULT_ANDROID_TEST_THRESHOLDS` (`@pu-stats/models`, damit Backend und Web
+dieselben Defaults sehen). Sie gelten **pro Lauf** und werden nicht
+gespeichert: der Scan ist ein Experimentierwerkzeug ("wie viele bekomme ich
+bei 10 statt 15?"), und jeder Treffer wird ohnehin einzeln bestätigt.
+
+`validateAndroidTestThresholdsPayload` prüft serverseitig auf ganze Zahlen
+innerhalb von `ANDROID_TEST_THRESHOLD_LIMITS` und **lehnt ab statt zu
+klemmen**, damit ein Tippfehler in der UI sichtbar wird, statt still mit
+einer anderen Zahl zu scannen. Fehlende Felder fallen auf die Defaults
+zurück, ein leerer Payload bleibt also gültig.
+
+Die Eignungsstufe (anonym / keine E-Mail) ist bewusst **nicht** einstellbar —
+sie ist keine Geschmacksfrage, sondern eine harte Grenze der Play Console.
 
 **Warum die E-Mail-Pflicht:** die Play-Console-Testerliste ist auf
 Google-Account-E-Mails aufgebaut. Ein anonymer Account (oder einer mit reiner

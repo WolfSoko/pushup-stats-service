@@ -12,6 +12,7 @@ import {
   isAndroidTestCandidate,
   validateAndroidTestConfirmPayload,
   validateAndroidTesterAddedPayload,
+  validateAndroidTestThresholdsPayload,
 } from './android-test';
 import { batchArray } from './admin';
 import { assertAdmin } from './functions-admin';
@@ -35,6 +36,12 @@ export const adminComputeAndroidTestCandidates = onCall(
   { region: 'europe-west3', timeoutSeconds: 120 },
   async (request) => {
     assertAdmin(request);
+
+    const thresholdResult = validateAndroidTestThresholdsPayload(request.data);
+    if (!thresholdResult.valid) {
+      throw new HttpsError('invalid-argument', thresholdResult.error);
+    }
+    const { thresholds } = thresholdResult;
 
     const accounts = new Map<string, AndroidTestAccount>();
     let pageToken: string | undefined;
@@ -82,7 +89,8 @@ export const adminComputeAndroidTestCandidates = onCall(
         isAndroidTestCandidate(
           accounts.get(uid) as AndroidTestAccount,
           activity.get(uid),
-          nowMs
+          nowMs,
+          thresholds
         )
     );
 
@@ -130,6 +138,7 @@ export const adminComputeAndroidTestCandidates = onCall(
 
     logger.info('adminComputeAndroidTestCandidates', {
       found,
+      thresholds,
       cleaned: staleUids.length,
       eligible: uids.length,
       accounts: accounts.size,

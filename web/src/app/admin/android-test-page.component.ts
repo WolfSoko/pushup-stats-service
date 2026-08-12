@@ -12,6 +12,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
+import {
+  ANDROID_TEST_THRESHOLD_LIMITS,
+  type AndroidTestThresholds,
+  DEFAULT_ANDROID_TEST_THRESHOLDS,
+} from '@pu-stats/models';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { AdminUser } from './admin-page.models';
 import { errorMessage } from './admin-page.helpers';
@@ -51,6 +56,12 @@ export class AndroidTestPageComponent {
 
   readonly manualSearch = signal('');
 
+  readonly thresholdLimits = ANDROID_TEST_THRESHOLD_LIMITS;
+  readonly minEntries = signal(DEFAULT_ANDROID_TEST_THRESHOLDS.minEntries);
+  readonly activeWithinDays = signal(
+    DEFAULT_ANDROID_TEST_THRESHOLDS.activeWithinDays
+  );
+
   readonly groups = computed(() => groupByAndroidTestStatus(this.users()));
   readonly clipboardEmails = computed(() =>
     androidTestEmailsForClipboard(this.groups().optedIn)
@@ -82,10 +93,14 @@ export class AndroidTestPageComponent {
     this.error.set(null);
     this.scanResult.set(null);
     try {
-      const fn = this.callables.call<void, { found: number; cleaned: number }>(
-        'adminComputeAndroidTestCandidates'
-      );
-      const result = await fn();
+      const fn = this.callables.call<
+        AndroidTestThresholds,
+        { found: number; cleaned: number }
+      >('adminComputeAndroidTestCandidates');
+      const result = await fn({
+        minEntries: this.minEntries(),
+        activeWithinDays: this.activeWithinDays(),
+      });
       this.scanResult.set(result.data.found);
       await this.loadUsers();
     } catch (err) {

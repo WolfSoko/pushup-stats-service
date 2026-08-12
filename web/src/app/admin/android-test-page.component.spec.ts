@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { DEFAULT_ANDROID_TEST_THRESHOLDS } from '@pu-stats/models';
 import { AndroidTestPageComponent } from './android-test-page.component';
 import { AdminUser } from './admin-page.models';
 import { CallableFunctionsService } from './callable-functions.service';
@@ -81,6 +82,39 @@ describe('AndroidTestPageComponent', () => {
     // then
     expect(computeSpy).toHaveBeenCalled();
     expect(component.scanResult()).toBe(3);
+  });
+
+  it('should seed the threshold inputs with the shared defaults', async () => {
+    // given / when
+    await createComponent([]);
+    // then
+    expect(component.minEntries()).toBe(
+      DEFAULT_ANDROID_TEST_THRESHOLDS.minEntries
+    );
+    expect(component.activeWithinDays()).toBe(
+      DEFAULT_ANDROID_TEST_THRESHOLDS.activeWithinDays
+    );
+  });
+
+  it('should send the edited thresholds to the scan callable', async () => {
+    // given
+    await createComponent([]);
+    const computeSpy = vi
+      .fn()
+      .mockResolvedValue({ data: { found: 0, cleaned: 0 } });
+    setupCallables([
+      { name: 'adminListUsers', impl: async () => ({ data: [] }) },
+      { name: 'adminComputeAndroidTestCandidates', impl: computeSpy },
+    ]);
+    component.minEntries.set(5);
+    component.activeWithinDays.set(90);
+    // when
+    await component.computeCandidates();
+    // then
+    expect(computeSpy).toHaveBeenCalledWith({
+      minEntries: 5,
+      activeWithinDays: 90,
+    });
   });
 
   it('should call adminConfirmAndroidTestCandidate with the given decision', async () => {

@@ -1,6 +1,7 @@
 export * from './lib/models/stats.models';
 export * from './lib/models/pushup.models';
 export * from './lib/models/user-config.models';
+export * from './lib/models/android-test.models';
 export * from './lib/models/reminder-config.models';
 export * from './lib/models/reminder-i18n.models';
 export * from './lib/models/user-stats.models';

@@ -3,7 +3,13 @@
  * Candidate heuristic, payload validation, push notification content.
  */
 
-import { normalizeReminderLocale, type ReminderLocale } from '@pu-stats/models';
+import {
+  ANDROID_TEST_THRESHOLD_LIMITS,
+  type AndroidTestThresholds,
+  DEFAULT_ANDROID_TEST_THRESHOLDS,
+  normalizeReminderLocale,
+  type ReminderLocale,
+} from '@pu-stats/models';
 
 export interface AndroidTestActivity {
   entryCount: number;
@@ -44,14 +50,55 @@ export function androidTestStatusPatch(
 }
 
 /**
- * Minimum total entries a user needs before being considered an Android
- * closed-test candidate — filters out brand-new accounts that haven't
- * shown real engagement yet.
+ * Reads admin-supplied scan thresholds off a callable payload. Both fields
+ * are optional — a scan without them runs on
+ * {@link DEFAULT_ANDROID_TEST_THRESHOLDS}, so an empty payload stays valid.
+ * Values must be whole numbers inside {@link ANDROID_TEST_THRESHOLD_LIMITS};
+ * anything else is rejected rather than clamped, so a typo surfaces in the
+ * UI instead of silently scanning with a number nobody asked for.
  */
-export const ANDROID_TEST_MIN_ENTRIES = 15;
+export function validateAndroidTestThresholdsPayload(
+  data: unknown
+):
+  | { valid: true; thresholds: AndroidTestThresholds }
+  | { valid: false; error: string } {
+  const obj = (data ?? {}) as Record<string, unknown>;
+  if (typeof obj !== 'object') {
+    return { valid: false, error: 'payload must be an object' };
+  }
 
-/** A candidate must have logged something within this many days. */
-export const ANDROID_TEST_ACTIVE_WITHIN_DAYS = 30;
+  const read = (
+    key: keyof AndroidTestThresholds
+  ): { value: number } | { error: string } => {
+    const raw = obj[key];
+    if (raw === undefined || raw === null) {
+      return { value: DEFAULT_ANDROID_TEST_THRESHOLDS[key] };
+    }
+    if (typeof raw !== 'number' || !Number.isInteger(raw)) {
+      return { error: `${key} must be a whole number` };
+    }
+    const { min, max } = ANDROID_TEST_THRESHOLD_LIMITS[key];
+    if (raw < min || raw > max) {
+      return { error: `${key} must be between ${min} and ${max}` };
+    }
+    return { value: raw };
+  };
+
+  const minEntries = read('minEntries');
+  if ('error' in minEntries) return { valid: false, error: minEntries.error };
+  const activeWithinDays = read('activeWithinDays');
+  if ('error' in activeWithinDays) {
+    return { valid: false, error: activeWithinDays.error };
+  }
+
+  return {
+    valid: true,
+    thresholds: {
+      minEntries: minEntries.value,
+      activeWithinDays: activeWithinDays.value,
+    },
+  };
+}
 
 export interface AndroidTestAccount {
   /** Firebase Auth user with no linked provider. */
@@ -81,16 +128,17 @@ export function canBeAndroidTester(account: AndroidTestAccount): boolean {
 export function isAndroidTestCandidate(
   account: AndroidTestAccount,
   activity: AndroidTestActivity | undefined,
-  nowMs: number
+  nowMs: number,
+  thresholds: AndroidTestThresholds = DEFAULT_ANDROID_TEST_THRESHOLDS
 ): boolean {
   if (!canBeAndroidTester(account)) return false;
-  if (!activity || activity.entryCount < ANDROID_TEST_MIN_ENTRIES) {
+  if (!activity || activity.entryCount < thresholds.minEntries) {
     return false;
   }
   if (!activity.lastEntry) return false;
   const lastEntryMs = new Date(activity.lastEntry).getTime();
   if (!Number.isFinite(lastEntryMs)) return false;
-  const activeWithinMs = ANDROID_TEST_ACTIVE_WITHIN_DAYS * 24 * 60 * 60 * 1000;
+  const activeWithinMs = thresholds.activeWithinDays * 24 * 60 * 60 * 1000;
   return nowMs - lastEntryMs <= activeWithinMs;
 }
 

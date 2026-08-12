@@ -10852,5 +10852,17 @@
         <target> Απόσυρση </target>
       </segment>
     </unit>
+    <unit id="admin.androidTest.minEntries">
+      <segment state="initial">
+        <source>Einträge ab</source>
+        <target>Einträge ab</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.activeWithinDays">
+      <segment state="initial">
+        <source>Aktiv in den letzten (Tage)</source>
+        <target>Aktiv in den letzten (Tage)</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

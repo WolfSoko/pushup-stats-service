@@ -1,7 +1,9 @@
 import { describe, it, expect } from '@jest/globals';
 import {
-  ANDROID_TEST_ACTIVE_WITHIN_DAYS,
-  ANDROID_TEST_MIN_ENTRIES,
+  ANDROID_TEST_THRESHOLD_LIMITS,
+  DEFAULT_ANDROID_TEST_THRESHOLDS,
+} from '@pu-stats/models';
+import {
   ANDROID_TEST_OPT_IN_URL,
   androidTestStatusPatch,
   buildAndroidTestInvitePayload,
@@ -9,6 +11,7 @@ import {
   isAndroidTestCandidate,
   validateAndroidTestConfirmPayload,
   validateAndroidTesterAddedPayload,
+  validateAndroidTestThresholdsPayload,
 } from './logic';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -87,7 +90,7 @@ describe('android-test/logic', () => {
     it('should reject a user below the entry-count threshold', () => {
       // given
       const activity = {
-        entryCount: ANDROID_TEST_MIN_ENTRIES - 1,
+        entryCount: DEFAULT_ANDROID_TEST_THRESHOLDS.minEntries - 1,
         lastEntry: new Date(NOW).toISOString(),
       };
       // when
@@ -99,7 +102,7 @@ describe('android-test/logic', () => {
     it('should accept a user exactly at the entry-count threshold with a recent entry', () => {
       // given
       const activity = {
-        entryCount: ANDROID_TEST_MIN_ENTRIES,
+        entryCount: DEFAULT_ANDROID_TEST_THRESHOLDS.minEntries,
         lastEntry: new Date(NOW).toISOString(),
       };
       // when
@@ -119,7 +122,9 @@ describe('android-test/logic', () => {
 
     it('should reject a user whose last entry is just past the active-within window', () => {
       // given
-      const staleMs = NOW - (ANDROID_TEST_ACTIVE_WITHIN_DAYS * DAY_MS + DAY_MS);
+      const staleMs =
+        NOW -
+        (DEFAULT_ANDROID_TEST_THRESHOLDS.activeWithinDays * DAY_MS + DAY_MS);
       const activity = {
         entryCount: 50,
         lastEntry: new Date(staleMs).toISOString(),
@@ -132,7 +137,8 @@ describe('android-test/logic', () => {
 
     it('should accept a user whose last entry is exactly at the active-within boundary', () => {
       // given
-      const boundaryMs = NOW - ANDROID_TEST_ACTIVE_WITHIN_DAYS * DAY_MS;
+      const boundaryMs =
+        NOW - DEFAULT_ANDROID_TEST_THRESHOLDS.activeWithinDays * DAY_MS;
       const activity = {
         entryCount: 50,
         lastEntry: new Date(boundaryMs).toISOString(),
@@ -150,6 +156,137 @@ describe('android-test/logic', () => {
       const result = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
       // then
       expect(result).toBe(false);
+    });
+
+    it('should apply admin-supplied thresholds instead of the defaults', () => {
+      // given a user below the default entry threshold but above a lowered one
+      const activity = {
+        entryCount: 5,
+        lastEntry: new Date(NOW).toISOString(),
+      };
+      // when
+      const withDefaults = isAndroidTestCandidate(ELIGIBLE, activity, NOW);
+      const withLowered = isAndroidTestCandidate(ELIGIBLE, activity, NOW, {
+        minEntries: 5,
+        activeWithinDays: 30,
+      });
+      // then
+      expect(withDefaults).toBe(false);
+      expect(withLowered).toBe(true);
+    });
+
+    it('should apply an admin-supplied activity window', () => {
+      // given an entry 10 days old
+      const activity = {
+        entryCount: 50,
+        lastEntry: new Date(NOW - 10 * DAY_MS).toISOString(),
+      };
+      // when
+      const wideWindow = isAndroidTestCandidate(ELIGIBLE, activity, NOW, {
+        minEntries: 15,
+        activeWithinDays: 30,
+      });
+      const narrowWindow = isAndroidTestCandidate(ELIGIBLE, activity, NOW, {
+        minEntries: 15,
+        activeWithinDays: 7,
+      });
+      // then
+      expect(wideWindow).toBe(true);
+      expect(narrowWindow).toBe(false);
+    });
+  });
+
+  describe('validateAndroidTestThresholdsPayload', () => {
+    it('should fall back to the defaults for an empty payload', () => {
+      // given / when
+      const result = validateAndroidTestThresholdsPayload({});
+      // then
+      expect(result).toEqual({
+        valid: true,
+        thresholds: DEFAULT_ANDROID_TEST_THRESHOLDS,
+      });
+    });
+
+    it('should fall back to the defaults when the payload is missing entirely', () => {
+      // given / when
+      const result = validateAndroidTestThresholdsPayload(undefined);
+      // then
+      expect(result).toEqual({
+        valid: true,
+        thresholds: DEFAULT_ANDROID_TEST_THRESHOLDS,
+      });
+    });
+
+    it('should accept admin-supplied values', () => {
+      // given
+      const data = { minEntries: 5, activeWithinDays: 90 };
+      // when
+      const result = validateAndroidTestThresholdsPayload(data);
+      // then
+      expect(result).toEqual({
+        valid: true,
+        thresholds: { minEntries: 5, activeWithinDays: 90 },
+      });
+    });
+
+    it('should default only the field that is missing', () => {
+      // given
+      const data = { minEntries: 3 };
+      // when
+      const result = validateAndroidTestThresholdsPayload(data);
+      // then
+      expect(result).toEqual({
+        valid: true,
+        thresholds: {
+          minEntries: 3,
+          activeWithinDays: DEFAULT_ANDROID_TEST_THRESHOLDS.activeWithinDays,
+        },
+      });
+    });
+
+    it('should reject a non-integer value', () => {
+      // given
+      const data = { minEntries: 2.5 };
+      // when
+      const result = validateAndroidTestThresholdsPayload(data);
+      // then
+      expect(result).toEqual({
+        valid: false,
+        error: 'minEntries must be a whole number',
+      });
+    });
+
+    it('should reject a value below the allowed minimum', () => {
+      // given
+      const data = { minEntries: 0 };
+      // when
+      const result = validateAndroidTestThresholdsPayload(data);
+      // then
+      expect(result.valid).toBe(false);
+    });
+
+    it('should reject a value above the allowed maximum', () => {
+      // given
+      const data = {
+        activeWithinDays:
+          ANDROID_TEST_THRESHOLD_LIMITS.activeWithinDays.max + 1,
+      };
+      // when
+      const result = validateAndroidTestThresholdsPayload(data);
+      // then
+      expect(result.valid).toBe(false);
+    });
+
+    it('should reject a non-numeric value', () => {
+      // given
+      const data = { minEntries: '15' };
+      // when
+      const result = validateAndroidTestThresholdsPayload(data);
+      // then
+      expect(result).toEqual({
+        valid: false,
+        error: 'minEntries must be a whole number',
+      });
     });
   });
 
