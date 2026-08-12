@@ -10681,7 +10681,7 @@
     <unit id="admin.androidTest.backToAdmin">
       <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Πίσω στη διαχείριση</target>
+        <target>Επιστροφή στη διαχείριση</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.scan">

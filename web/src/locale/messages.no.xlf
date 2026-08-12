@@ -9974,7 +9974,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="admin.androidTest.backToAdmin">
       <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Tilbake til admin</target>
+        <target>Tilbake til administrasjonsområdet</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.scan">
