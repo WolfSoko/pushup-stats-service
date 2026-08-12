@@ -9,6 +9,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 ## Git Workflow
 
 - **Trunk-based development:** Push directly to `main`. No feature branches by default.
+- **A push to `main` ships to production.** Green CI fast-forwards the `deploy` branch, which deploys Hosting, Cloud Functions, and Firestore rules & indexes — no manual step, no separate approval. Treat the pre-push checklist below as the last gate before production, and expect backend changes to go live within minutes. Details: [`docs/ci-cd.md`](docs/ci-cd.md).
 - Feature branches or worktrees only when explicitly requested.
 - **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
 - **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote. Re-read the file before further edits after a commit.
