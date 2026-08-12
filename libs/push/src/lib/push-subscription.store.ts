@@ -124,7 +124,9 @@ export const PushSubscriptionStore = signalStore(
     }
 
     async function snoozeReminder(snoozeMinutes: number): Promise<void> {
-      if (!store._functions) return;
+      if (!store._functions) {
+        throw new Error('Firebase Functions is not available');
+      }
       const callable = httpsCallable(store._functions, 'snoozeReminder');
       await callable({ snoozeMinutes });
     }
@@ -164,7 +166,17 @@ export const PushSubscriptionStore = signalStore(
       navigator.serviceWorker.addEventListener('message', (event) => {
         const data = event.data;
         if (data?.type === 'SNOOZE_REMINDER') {
-          void snoozeReminder(data.snoozeMinutes ?? 30);
+          // Acknowledge on the port the SW handed us: without a reply it
+          // falls back to opening the app with `?snooze=`, so a frozen tab
+          // or a failed callable can no longer swallow the snooze.
+          const port = event.ports?.[0];
+          void snoozeReminder(data.snoozeMinutes ?? 30).then(
+            () => port?.postMessage({ ok: true }),
+            (err: unknown) => {
+              console.error('[PushSubscriptionStore] snooze failed', err);
+              port?.postMessage({ ok: false });
+            }
+          );
           return;
         }
         if (data?.type === 'PUSH_SUBSCRIPTION_CHANGED' && data.sub) {

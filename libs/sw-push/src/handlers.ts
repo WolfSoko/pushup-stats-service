@@ -15,15 +15,6 @@ export const SW_PUSH_VERSION: string =
   typeof __SW_PUSH_VERSION__ === 'string' ? __SW_PUSH_VERSION__ : 'unversioned';
 
 /**
- * Defense-in-depth cap mirrored from `@pu-stats/models#QUICK_LOG_REPS_MAX` and
- * the dispatch CF (`data-store/functions/src/push/reminders.ts`). Inlined to
- * keep the sw-push bundle self-contained — if either value changes, update
- * here too. The CF already sanitizes before sending; this guard catches stale
- * payloads from older deployments and any payload tampering.
- */
-export const SW_QUICK_LOG_MAX = 500;
-
-/**
  * Mirrored from `@pu-stats/models#SUPPORTED_REMINDER_LOCALES`. Inlined so
  * the sw-push bundle stays self-contained (no cross-package import in the
  * SW). When adding a locale to the web project's `i18n.locales`, add it
@@ -42,7 +33,7 @@ export const SW_SUPPORTED_LOCALES = [
   'no',
   'zh',
 ] as const;
-type SwLocale = (typeof SW_SUPPORTED_LOCALES)[number];
+export type SwLocale = (typeof SW_SUPPORTED_LOCALES)[number];
 const SW_DEFAULT_LOCALE: SwLocale = 'de';
 
 export interface PushSubscriptionChangeEventLike {
@@ -56,20 +47,6 @@ export interface PushEventLike {
     json(): unknown;
     text(): string;
   } | null;
-  waitUntil(promise: Promise<unknown>): void;
-}
-
-export interface NotificationClickEventLike {
-  action: string;
-  notification: {
-    data?: {
-      locale?: string;
-      url?: string;
-      /** Set when the dispatch CF includes a `quick-log` action button. */
-      quickLogReps?: number;
-    } | null;
-    close(): void;
-  };
   waitUntil(promise: Promise<unknown>): void;
 }
 
@@ -100,7 +77,7 @@ interface PushPayload {
   actions?: Array<{ action: string; title: string }>;
 }
 
-function resolveLocale(raw: unknown): SwLocale {
+export function resolveLocale(raw: unknown): SwLocale {
   if (typeof raw !== 'string') return SW_DEFAULT_LOCALE;
   // Trim before splitting so a payload with leading/trailing whitespace
   // (e.g. " en-US ") still resolves correctly. Aligned with the
@@ -208,106 +185,6 @@ export function handlePushSubscriptionChange(
       } catch (err) {
         console.error('[sw-push] pushsubscriptionchange failed', err);
       }
-    })()
-  );
-}
-
-export function handleNotificationClick(
-  event: NotificationClickEventLike,
-  ctx: SwContext
-): void {
-  event.notification.close();
-
-  const action = event.action;
-  const locale = resolveLocale(event.notification.data?.locale);
-
-  if (action === 'snooze') {
-    event.waitUntil(
-      (async () => {
-        const clientList = await ctx.clients.matchAll({
-          type: 'window',
-          includeUncontrolled: true,
-        });
-        if (clientList.length > 0) {
-          clientList[0].postMessage({
-            type: 'SNOOZE_REMINDER',
-            snoozeMinutes: 30,
-          });
-          return;
-        }
-        await ctx.clients.openWindow(`/${locale}/app?snooze=30`);
-      })()
-    );
-    return;
-  }
-
-  if (action === 'log') {
-    event.waitUntil(ctx.clients.openWindow(`/${locale}/app?log=1`));
-    return;
-  }
-
-  if (action === 'quick-log') {
-    const repsRaw = event.notification.data?.quickLogReps;
-    const repsFloored =
-      typeof repsRaw === 'number' && Number.isFinite(repsRaw)
-        ? Math.floor(repsRaw)
-        : NaN;
-    // Clamp into [1, SW_QUICK_LOG_MAX] so a stale or tampered payload can't
-    // smuggle a 9999-rep entry past the dispatch sanitizer.
-    const reps =
-      Number.isFinite(repsFloored) && repsFloored > 0
-        ? Math.min(repsFloored, SW_QUICK_LOG_MAX)
-        : NaN;
-    event.waitUntil(
-      (async () => {
-        // No valid count → fall back to the standard log flow so the user
-        // doesn't get an unresponsive button.
-        if (!Number.isFinite(reps) || reps <= 0) {
-          await ctx.clients.openWindow(`/${locale}/app?log=1`);
-          return;
-        }
-        const clientList = await ctx.clients.matchAll({
-          type: 'window',
-          includeUncontrolled: true,
-        });
-        if (clientList.length > 0) {
-          // App is open somewhere — log silently in the existing tab so the
-          // user gets feedback without a navigation flicker.
-          clientList[0].postMessage({
-            type: 'QUICK_LOG_PUSHUPS',
-            reps,
-          });
-          if ('focus' in clientList[0]) {
-            await (clientList[0] as { focus: () => Promise<unknown> })
-              .focus()
-              .catch(() => undefined);
-          }
-          return;
-        }
-        // No open client — open a new tab with `?quickLog=N`; the dashboard
-        // creates the entry on first render.
-        await ctx.clients.openWindow(`/${locale}/app?quickLog=${reps}`);
-      })()
-    );
-    return;
-  }
-
-  const targetUrl = event.notification.data?.url || `/${locale}/app`;
-  const fullUrl = new URL(targetUrl, ctx.origin).href;
-
-  event.waitUntil(
-    (async () => {
-      const clientList = await ctx.clients.matchAll({
-        type: 'window',
-        includeUncontrolled: true,
-      });
-      for (const client of clientList) {
-        if (client.url === fullUrl && 'focus' in client) {
-          await client.focus();
-          return;
-        }
-      }
-      await ctx.clients.openWindow(fullUrl);
     })()
   );
 }

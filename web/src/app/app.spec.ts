@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import {
@@ -19,7 +19,7 @@ import {
   UserContextService,
 } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
-import { VAPID_PUBLIC_KEY } from '@pu-push/push';
+import { PushSubscriptionService, VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { App } from './app';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
@@ -1475,6 +1475,71 @@ describe('App (testing-library)', () => {
 
       fixture.componentInstance.handleOpenExerciseTimer();
       expect(openExerciseTimer).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  // Regression: the SW's snooze action deep-links to `/{locale}/app?snooze=N`
+  // when it cannot confirm the snooze in an open tab. The router has no
+  // blocking initial navigation, so the param can land after the first
+  // render — reading it from a one-shot snapshot dropped every such snooze
+  // (production: zero snoozeReminder invocations).
+  describe('snooze deep link', () => {
+    it('should call snooze when ?snooze arrives after the first render', async () => {
+      // given a rendered app with a spy on the push facade
+      const snooze = vitest.fn().mockResolvedValue(undefined);
+      const { fixture } = await render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: PushSubscriptionService,
+            useValue: {
+              snooze,
+              registerSwListener: vitest.fn(),
+              status: () => 'subscribed',
+            },
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
+        ],
+      });
+
+      // when the navigation carrying ?snooze=30 commits after that render
+      const router = TestBed.inject(Router);
+      await router.navigate([], { queryParams: { snooze: 30 } });
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      // then the snooze still reaches the backend, and the param is cleared
+      expect(snooze).toHaveBeenCalledWith(30);
+      expect(router.url).not.toContain('snooze');
     });
   });
 });

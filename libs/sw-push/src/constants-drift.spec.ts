@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { SW_QUICK_LOG_MAX, SW_SUPPORTED_LOCALES } from './handlers';
+import { SW_SUPPORTED_LOCALES } from './handlers';
+import { SW_QUICK_LOG_MAX } from './notification-click';
 
 /**
  * `sw-push` is an isolated service-worker bundle (eslint `scope:sw-push` →

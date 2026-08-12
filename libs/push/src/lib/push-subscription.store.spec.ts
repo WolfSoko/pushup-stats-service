@@ -603,6 +603,66 @@ describe('PushSubscriptionStore', () => {
       expect(callable).not.toHaveBeenCalled();
     });
 
+    // Regression: the SW hands over a MessagePort and falls back to opening
+    // the app with `?snooze=` unless it hears back. Acking only after the
+    // callable resolved is what makes that fallback trustworthy.
+    it('acknowledges the SW port after the snoozeReminder callable resolved', async () => {
+      // given the SW message bridge and a callable that succeeds
+      const { messageListeners } = setupMessageBridge();
+      const callable = jest
+        .fn()
+        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
+      const httpsCallableMock = httpsCallable as jest.Mock;
+      httpsCallableMock.mockReset();
+      httpsCallableMock.mockReturnValue(callable);
+      const port = { postMessage: jest.fn() };
+
+      // when SNOOZE_REMINDER arrives with an ack port
+      const store = setupStore();
+      store.registerSwListener();
+      for (const listener of messageListeners) {
+        listener({
+          data: { type: 'SNOOZE_REMINDER', snoozeMinutes: 30 },
+          ports: [port],
+        } as unknown as MessageEvent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      // then the SW is told the snooze is through
+      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 30 });
+      expect(port.postMessage).toHaveBeenCalledWith({ ok: true });
+    });
+
+    it('reports failure on the SW port when the snoozeReminder callable rejects', async () => {
+      // given a callable that rejects (e.g. unauthenticated)
+      const { messageListeners } = setupMessageBridge();
+      const callable = jest
+        .fn()
+        .mockRejectedValue(new Error('unauthenticated'));
+      const httpsCallableMock = httpsCallable as jest.Mock;
+      httpsCallableMock.mockReset();
+      httpsCallableMock.mockReturnValue(callable);
+      const port = { postMessage: jest.fn() };
+      const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+        // silence the expected diagnostic
+      });
+
+      // when SNOOZE_REMINDER arrives with an ack port
+      const store = setupStore();
+      store.registerSwListener();
+      for (const listener of messageListeners) {
+        listener({
+          data: { type: 'SNOOZE_REMINDER', snoozeMinutes: 30 },
+          ports: [port],
+        } as unknown as MessageEvent);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      // then the SW learns it must fall back instead of assuming success
+      expect(port.postMessage).toHaveBeenCalledWith({ ok: false });
+      errSpy.mockRestore();
+    });
+
     it('snooze() public method calls the snoozeReminder callable and nothing else', async () => {
       setupMessageBridge();
       const callable = jest

@@ -15,15 +15,17 @@
 /// <reference lib="webworker" />
 
 import {
-  handleNotificationClick,
   handlePush,
   handlePushSubscriptionChange,
   SW_PUSH_VERSION,
-  type NotificationClickEventLike,
   type PushEventLike,
   type PushSubscriptionChangeEventLike,
   type SwContext,
 } from './handlers';
+import {
+  handleNotificationClick,
+  type NotificationClickEventLike,
+} from './notification-click';
 
 declare const self: ServiceWorkerGlobalScope;
 

@@ -35,7 +35,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { filter } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
@@ -226,17 +226,30 @@ export class App {
     }
   }
 
+  // Read `?snooze=N` from the queryParamMap stream, not from a one-shot
+  // snapshot: the router has no blocking initial navigation, so on a cold
+  // start from the notification deep link the root snapshot is still empty
+  // when afterNextRender fires — a snapshot read dropped the param and the
+  // snooze never reached the backend.
   private readonly _handleSnoozeParam = afterNextRender(() => {
-    const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
-    const snoozeMinutes = snooze ? parseInt(snooze, 10) : NaN;
-    if (!isNaN(snoozeMinutes) && snoozeMinutes > 0) {
-      void this.router.navigate([], {
-        queryParams: { snooze: null },
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
+    this.activatedRoute.queryParamMap
+      .pipe(
+        map((params) => {
+          const raw = params.get('snooze');
+          return raw ? parseInt(raw, 10) : NaN;
+        }),
+        filter((minutes) => !isNaN(minutes) && minutes > 0),
+        take(1),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((snoozeMinutes) => {
+        void this.router.navigate([], {
+          queryParams: { snooze: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true,
+        });
+        this._pendingSnooze.set(snoozeMinutes);
       });
-      this._pendingSnooze.set(snoozeMinutes);
-    }
   });
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
