@@ -10667,189 +10667,189 @@
       </segment>
     </unit>
     <unit id="admin.androidTest.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Android-App-Test</source>
-        <target>Android-App-Test</target>
+        <target>Δοκιμή εφαρμογής Android</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
-        <target> Tester für den geschlossenen Android-App-Test verwalten. </target>
+        <target> Διαχείριση δοκιμαστών για την κλειστή δοκιμή της εφαρμογής Android. </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>Επιστροφή στη διαχείριση</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.scan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kandidaten ermitteln</source>
-        <target>Kandidaten ermitteln</target>
+        <target>Εύρεση υποψηφίων</target>
       </segment>
     </unit>
         <unit id="admin.androidTest.scanResult">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> νέοι υποψήφιοι βρέθηκαν.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.candidatesTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
-        <target> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
+        <target> Υποψήφιοι (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noCandidates">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine offenen Kandidaten.</source>
-        <target>Keine offenen Kandidaten.</target>
+        <target>Δεν υπάρχουν εκκρεμείς υποψήφιοι.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.confirm">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bestätigen </source>
-        <target> Bestätigen </target>
+        <target> Επιβεβαίωση </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target> Απόρριψη </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.optedInTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
-        <target> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
+        <target> Εγγεγραμμένοι (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noOptedIn">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch niemand hat sich angemeldet. </source>
-        <target> Noch niemand hat sich angemeldet. </target>
+        <target> Κανείς δεν έχει εγγραφεί ακόμα. </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.emailsCopied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopiert!</source>
-        <target>Kopiert!</target>
+        <target>Αντιγράφηκε!</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.copyEmails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle E-Mails kopieren</source>
-        <target>Alle E-Mails kopieren</target>
+        <target>Αντιγραφή όλων των email</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.markAdded">
-      <segment state="initial">
+      <segment state="translated">
         <source> Als Tester hinzugefügt (benachrichtigen) </source>
-        <target> Als Tester hinzugefügt (benachrichtigen) </target>
+        <target> Προστέθηκε ως δοκιμαστής (ειδοποίηση) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.notifiedTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
-        <target> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
+        <target> Ειδοποιήθηκαν (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noPush">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
-        <target>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</target>
+        <target>Δεν υπάρχει ενεργή συνδρομή push — παρακαλούμε ενημερώστε τον χρήστη χειροκίνητα.</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Werde Android-App-Tester </source>
-        <target> Werde Android-App-Tester </target>
+        <target> Γίνε δοκιμαστής της εφαρμογής Android </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </target>
+        <target> Αναπτύσσουμε αυτή τη στιγμή την εφαρμογή Android του PushUp Stats και αναζητούμε δοκιμαστές. Θέλεις να τη δοκιμάσεις πριν από όλους τους άλλους; </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nicht jetzt </source>
-        <target> Nicht jetzt </target>
+        <target> Όχι τώρα </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
-        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></target>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Μέσα είμαι </pc></target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Danke!</source>
-        <target>Danke!</target>
+        <target>Ευχαριστούμε!</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.thanksBody">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
-        <target> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </target>
+        <target> Θα ειδοποιηθείς μέσω push notification μόλις εγκριθείς ως δοκιμαστής. </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> Κλείσιμο </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
-        <target>Das hat leider nicht geklappt. Bitte versuch es später erneut.</target>
+        <target>Δυστυχώς κάτι πήγε στραβά. Δοκίμασε ξανά αργότερα.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Manuell hinzufügen</source>
-        <target>Manuell hinzufügen</target>
+        <target>Χειροκίνητη προσθήκη</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
-        <target> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </target>
+        <target> Αναζήτησε έναν χρήστη και προσκάλεσέ τον απευθείας — ανεξάρτητα από τα κριτήρια δραστηριότητας. Ανώνυμοι λογαριασμοί και όσοι δεν έχουν email δεν εμφανίζονται· δεν μπορούν να προστεθούν ως δοκιμαστές. </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddSearch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Name oder E-Mail</source>
-        <target>Name oder E-Mail</target>
+        <target>Όνομα ή email</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAdd">
-      <segment state="initial">
+      <segment state="translated">
         <source> Einladen </source>
-        <target> Einladen </target>
+        <target> Πρόσκληση </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.confirmedTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
-        <target> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
+        <target> Προσκεκλημένοι, αναμονή επιβεβαίωσης (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noConfirmed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine offenen Einladungen.</source>
-        <target>Keine offenen Einladungen.</target>
+        <target>Δεν υπάρχουν εκκρεμείς προσκλήσεις.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.withdraw">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurückziehen </source>
-        <target> Zurückziehen </target>
+        <target> Απόσυρση </target>
       </segment>
     </unit>
 </file>

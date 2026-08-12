@@ -10173,189 +10173,189 @@
       </segment>
     </unit>
     <unit id="admin.androidTest.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Android-App-Test</source>
-        <target>Android-App-Test</target>
+        <target>Android 应用测试</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
-        <target> Tester für den geschlossenen Android-App-Test verwalten. </target>
+        <target> 管理封闭式 Android 应用测试的测试人员。 </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>返回管理区域</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.scan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kandidaten ermitteln</source>
-        <target>Kandidaten ermitteln</target>
+        <target>查找候选人</target>
       </segment>
     </unit>
         <unit id="admin.androidTest.scanResult">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> 位新候选人。</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.candidatesTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
-        <target> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
+        <target> 候选人 (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noCandidates">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine offenen Kandidaten.</source>
-        <target>Keine offenen Kandidaten.</target>
+        <target>暂无候选人。</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.confirm">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bestätigen </source>
-        <target> Bestätigen </target>
+        <target> 确认 </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target> 拒绝 </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.optedInTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
-        <target> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
+        <target> 已报名 (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noOptedIn">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch niemand hat sich angemeldet. </source>
-        <target> Noch niemand hat sich angemeldet. </target>
+        <target> 还没有人报名。 </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.emailsCopied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopiert!</source>
-        <target>Kopiert!</target>
+        <target>已复制！</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.copyEmails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle E-Mails kopieren</source>
-        <target>Alle E-Mails kopieren</target>
+        <target>复制所有邮箱</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.markAdded">
-      <segment state="initial">
+      <segment state="translated">
         <source> Als Tester hinzugefügt (benachrichtigen) </source>
-        <target> Als Tester hinzugefügt (benachrichtigen) </target>
+        <target> 已标记为测试人员（通知） </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.notifiedTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
-        <target> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
+        <target> 已通知 (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noPush">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
-        <target>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</target>
+        <target>没有有效的推送订阅 — 请手动通知用户。</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Werde Android-App-Tester </source>
-        <target> Werde Android-App-Tester </target>
+        <target> 成为 Android 应用测试人员 </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </target>
+        <target> 我们正在开发 PushUp Stats 的 Android 应用，正在寻找测试人员。想在所有人之前抢先体验吗？ </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nicht jetzt </source>
-        <target> Nicht jetzt </target>
+        <target> 暂不 </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
-        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></target>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> 我要参加 </pc></target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Danke!</source>
-        <target>Danke!</target>
+        <target>谢谢！</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.thanksBody">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
-        <target> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </target>
+        <target> 一旦获批成为测试人员，你将通过推送通知收到提醒。 </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> 关闭 </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
-        <target>Das hat leider nicht geklappt. Bitte versuch es später erneut.</target>
+        <target>很抱歉，操作未成功。请稍后重试。</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Manuell hinzufügen</source>
-        <target>Manuell hinzufügen</target>
+        <target>手动添加</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
-        <target> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </target>
+        <target> 搜索用户并直接邀请 — 与活跃度标准无关。匿名账户和没有邮箱的账户不会显示，无法添加为测试人员。 </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddSearch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Name oder E-Mail</source>
-        <target>Name oder E-Mail</target>
+        <target>姓名或邮箱</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAdd">
-      <segment state="initial">
+      <segment state="translated">
         <source> Einladen </source>
-        <target> Einladen </target>
+        <target> 邀请 </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.confirmedTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
-        <target> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
+        <target> 已邀请，等待确认 (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noConfirmed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine offenen Einladungen.</source>
-        <target>Keine offenen Einladungen.</target>
+        <target>暂无待处理的邀请。</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.withdraw">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurückziehen </source>
-        <target> Zurückziehen </target>
+        <target> 撤回 </target>
       </segment>
     </unit>
 </file>

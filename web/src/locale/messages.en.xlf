@@ -10866,189 +10866,189 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.androidTest.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Android-App-Test</source>
-        <target>Android-App-Test</target>
+        <target>Android App Test</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
-        <target> Tester für den geschlossenen Android-App-Test verwalten. </target>
+        <target> Manage testers for the closed Android app test. </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>Back to admin area</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.scan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kandidaten ermitteln</source>
-        <target>Kandidaten ermitteln</target>
+        <target>Find candidates</target>
       </segment>
     </unit>
         <unit id="admin.androidTest.scanResult">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> new candidates found.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.candidatesTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
-        <target> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
+        <target> Candidates (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noCandidates">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine offenen Kandidaten.</source>
-        <target>Keine offenen Kandidaten.</target>
+        <target>No open candidates.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.confirm">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bestätigen </source>
-        <target> Bestätigen </target>
+        <target> Confirm </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target> Decline </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.optedInTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
-        <target> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
+        <target> Opted in (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noOptedIn">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch niemand hat sich angemeldet. </source>
-        <target> Noch niemand hat sich angemeldet. </target>
+        <target> No one has signed up yet. </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.emailsCopied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopiert!</source>
-        <target>Kopiert!</target>
+        <target>Copied!</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.copyEmails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle E-Mails kopieren</source>
-        <target>Alle E-Mails kopieren</target>
+        <target>Copy all emails</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.markAdded">
-      <segment state="initial">
+      <segment state="translated">
         <source> Als Tester hinzugefügt (benachrichtigen) </source>
-        <target> Als Tester hinzugefügt (benachrichtigen) </target>
+        <target> Marked as tester (notify) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.notifiedTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
-        <target> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
+        <target> Notified (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noPush">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
-        <target>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</target>
+        <target>No active push subscription — please inform the user manually.</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Werde Android-App-Tester </source>
-        <target> Werde Android-App-Tester </target>
+        <target> Become an Android app tester </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </target>
+        <target> We're currently building the PushUp Stats Android app and are looking for testers. Want to try it before everyone else? </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nicht jetzt </source>
-        <target> Nicht jetzt </target>
+        <target> Not now </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.join">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
-        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></target>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Count me in </pc></target>
       </segment>
     </unit>
         <unit id="androidTest.invite.thanksTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Danke!</source>
-        <target>Danke!</target>
+        <target>Thanks!</target>
       </segment>
     </unit>
     <unit id="androidTest.invite.thanksBody">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
-        <target> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </target>
+        <target> You'll be notified via push notification once you're approved as a tester. </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> Close </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
-        <target>Das hat leider nicht geklappt. Bitte versuch es später erneut.</target>
+        <target>Unfortunately that didn't work. Please try again later.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Manuell hinzufügen</source>
-        <target>Manuell hinzufügen</target>
+        <target>Add manually</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
-        <target> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </target>
+        <target> Search for a user and invite them directly — independent of the activity criteria. Anonymous accounts and those without an email don't appear; they can't be added as testers. </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAddSearch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Name oder E-Mail</source>
-        <target>Name oder E-Mail</target>
+        <target>Name or email</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.manualAdd">
-      <segment state="initial">
+      <segment state="translated">
         <source> Einladen </source>
-        <target> Einladen </target>
+        <target> Invite </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.confirmedTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
-        <target> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
+        <target> Invited, awaiting confirmation (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
       </segment>
     </unit>
     <unit id="admin.androidTest.noConfirmed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine offenen Einladungen.</source>
-        <target>Keine offenen Einladungen.</target>
+        <target>No open invitations.</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.withdraw">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurückziehen </source>
-        <target> Zurückziehen </target>
+        <target> Withdraw </target>
       </segment>
     </unit>
 </file>

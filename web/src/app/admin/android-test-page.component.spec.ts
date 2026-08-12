@@ -116,7 +116,10 @@ describe('AndroidTestPageComponent', () => {
   it('should copy opted-in emails to the clipboard', async () => {
     // given
     const writeText = vi.fn().mockResolvedValue(undefined);
-    Object.assign(navigator, { clipboard: { writeText } });
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText },
+      configurable: true,
+    });
     await createComponent([
       user({
         uid: 'o1',
