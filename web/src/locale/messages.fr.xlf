@@ -10733,7 +10733,7 @@
     <unit id="admin.androidTest.activeWithinDays">
       <segment state="translated">
         <source>Aktiv in den letzten (Tage)</source>
-        <target>Actif au cours des derniers (jours)</target>
+        <target>Actif au cours des derniers jours</target>
       </segment>
     </unit>
 </file>

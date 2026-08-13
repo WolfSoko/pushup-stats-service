@@ -10855,7 +10855,7 @@
     <unit id="admin.androidTest.minEntries">
       <segment state="translated">
         <source>Einträge ab</source>
-        <target>Εγγραφές από</target>
+        <target>Καταχωρήσεις από</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.activeWithinDays">

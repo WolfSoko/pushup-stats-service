@@ -10148,13 +10148,13 @@ Deine Position: # ·  Reps        </source>
     <unit id="admin.androidTest.minEntries">
       <segment state="translated">
         <source>Einträge ab</source>
-        <target>Innlegg fra</target>
+        <target>Oppføringer fra</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.activeWithinDays">
       <segment state="translated">
         <source>Aktiv in den letzten (Tage)</source>
-        <target>Aktiv de siste (dager)</target>
+        <target>Aktiv de siste (dagene)</target>
       </segment>
     </unit>
 </file>

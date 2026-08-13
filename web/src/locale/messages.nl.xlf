@@ -10855,7 +10855,7 @@
     <unit id="admin.androidTest.minEntries">
       <segment state="translated">
         <source>Einträge ab</source>
-        <target>Vermeldingen vanaf</target>
+        <target>Invoer vanaf</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.activeWithinDays">
