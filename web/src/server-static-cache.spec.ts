@@ -1,4 +1,5 @@
 import {
+  BUILD_INFO_CACHE_CONTROL,
   HASHED_ASSET_CACHE_CONTROL,
   SHORT_LIVED_CACHE_CONTROL,
   isHashedAsset,
@@ -72,6 +73,26 @@ describe('staticCacheControl', () => {
       SHORT_LIVED_CACHE_CONTROL
     );
     expect(SHORT_LIVED_CACHE_CONTROL).toBe('public, max-age=300');
+  });
+
+  it('Given build-info.json, Then returns the tighter build-info policy', () => {
+    // given the file whose only job is to state the currently live version
+    // when the static handler resolves its Cache-Control
+    // then it gets a shorter TTL than other stable filenames, so an admin
+    //   checking right after a rollout is not shown the previous release
+    expect(staticCacheControl('/dist/web/browser/build-info.json')).toBe(
+      BUILD_INFO_CACHE_CONTROL
+    );
+    expect(BUILD_INFO_CACHE_CONTROL).toBe('public, max-age=60');
+  });
+
+  it('Given a filename merely ending in build-info.json, Then it is not misread', () => {
+    // given an unrelated file whose name only ends with the same suffix
+    // when the static handler resolves its Cache-Control
+    // then the short-lived default applies — the match is anchored on a path segment
+    expect(staticCacheControl('/dist/web/browser/de/my-build-info.json')).toBe(
+      SHORT_LIVED_CACHE_CONTROL
+    );
   });
 
   it('Both policies start with `public,` so App Hosting`s CDN treats them as cacheable', () => {

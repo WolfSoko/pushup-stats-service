@@ -47,7 +47,8 @@ builder never runs the Angular build or depends on Nx Cloud at all anymore:
   `dist/web`. Fails loudly on a 404 rather than falling back to a real build,
   preserving the "no deployment path bypasses CI" rule.
 - **Staging is out of scope:** `apphosting.staging.yaml` still builds from
-  source (`pnpm nx run web:build -c staging`), unchanged. Staging wasn't
+  source (`pnpm nx run web:build -c staging`, plus the build-info step below).
+  Staging wasn't
   reported broken and PR-preview volume/urgency doesn't warrant the same
   artifact-publishing machinery yet.
 - Guard tests: `tools/src/apphosting-release-artifact-guard.spec.js`,
@@ -61,6 +62,34 @@ be the fix for the cache-miss. See
 prerender: worker cap" for that investigation, and the buildpack-mirror-lag
 pitfall if bumping the pin in the future
 (`dl.google.com/runtimes/...` lags `nodejs.org` releases unpredictably).
+
+## Build info / released version
+
+The admin area shows which release the deployment currently being served was
+built from (`app-release-badge` in the page header), and the same value tags
+browser + SSR Sentry events.
+
+- **Producer:** `tools/src/write-build-info.mjs` writes
+  `build-info.json` (`{ release, version, builtAt }`) into
+  `dist/web/browser/` **after** the Angular build. It must never become a
+  build input — a per-commit `define` would give every commit its own Nx hash
+  and defeat the cache restore `publish-release` depends on.
+- **Release name:** `SENTRY_RELEASE` (each workflow resolves it once from
+  `git rev-parse --short=7 HEAD`) → `version` is `0.0.0-<sha>`, i.e. the same
+  string as the `deploy-0.0.0-<sha>` release tag.
+- **Consumers:** `web/src/build-info.ts` (shared parser + fetch),
+  `web/src/server.ts` (reads the file at startup for the SSR Sentry release),
+  `BuildInfoService` (fetches `/build-info.json` with `cache: 'no-store'`).
+- **Serving:** it sits in the browser bundle, so App Hosting serves it via
+  `express.static` (`Cache-Control: public, max-age=60`, see
+  `server-static-cache.ts`) and Firebase Hosting serves it from
+  `hosting-public` (same TTL, set in `data-store/firebase.json`).
+- **Every path that produces a deployed bundle must invoke the script** — CI's
+  `publish-release`, the Hosting deploy workflow, and the staging
+  `buildCommand`. Missing it fails silently (the badge just reads
+  "unbekannt"), so `tools/src/build-info-wiring.spec.js` guards the wiring.
+- Local builds and `nx serve` have no `build-info.json`; everything degrades
+  to `unknown` / no Sentry release.
 
 ## Deployment Targets
 

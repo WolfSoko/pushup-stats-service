@@ -54,8 +54,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      # Same release name for the Sentry upload below and for build-info.json,
+      # and abbreviated like the deploy tag in ci.yml.
+      - name: Resolve release name
+        id: release
+        run: echo "sha=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
       - name: Build web app
         run: pnpm nx run web:build -c production
+      # After the build, never inside it — see web/src/build-info.ts.
+      - name: Write build info into the browser bundle
+        run: node tools/src/write-build-info.mjs
+        env:
+          SENTRY_RELEASE: ${{ steps.release.outputs.sha }}
       - name: Build Cloud Functions
         run: pnpm nx run cloud-functions:build
       # Nx esbuild emits package.json + pnpm-lock.yaml into functions-dist with
@@ -74,6 +84,7 @@ jobs:
         # so we don't need an explicit `if:` guard.
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_RELEASE: ${{ steps.release.outputs.sha }}
         run: pnpm sentry:sourcemaps
       - name: Prepare Hosting artifact
         run: |

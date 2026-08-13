@@ -28,6 +28,10 @@
 
 const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 const SHORT_TTL_SECONDS = 300;
+// `build-info.json` answers "which version is live right now" — the one file
+// whose whole value is being current, so it gets a tighter TTL than the other
+// stable filenames while still letting the CDN absorb repeat hits.
+const BUILD_INFO_TTL_SECONDS = 60;
 
 // `name-HASH.ext` (Angular esbuild chunks) and `name.HASH.ext` (legacy
 // asset hashing) are both covered by accepting `-` or `.` as the
@@ -39,12 +43,18 @@ const HASHED_ASSET_RE =
 
 export const HASHED_ASSET_CACHE_CONTROL = `public, max-age=${ONE_YEAR_SECONDS}, immutable`;
 export const SHORT_LIVED_CACHE_CONTROL = `public, max-age=${SHORT_TTL_SECONDS}`;
+export const BUILD_INFO_CACHE_CONTROL = `public, max-age=${BUILD_INFO_TTL_SECONDS}`;
 
 export function isHashedAsset(filePath: string): boolean {
   return HASHED_ASSET_RE.test(filePath);
 }
 
+export function isBuildInfo(filePath: string): boolean {
+  return /(^|\/)build-info\.json$/.test(filePath);
+}
+
 export function staticCacheControl(filePath: string): string {
+  if (isBuildInfo(filePath)) return BUILD_INFO_CACHE_CONTROL;
   return isHashedAsset(filePath)
     ? HASHED_ASSET_CACHE_CONTROL
     : SHORT_LIVED_CACHE_CONTROL;

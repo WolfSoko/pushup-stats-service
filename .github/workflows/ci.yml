@@ -204,18 +204,35 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # One release name for the whole job: the Sentry release, the
+      # build-info.json the admin area reads and the deploy tag must all
+      # name the same commit, abbreviated the same way.
+      - name: Resolve release name
+        id: release
+        run: echo "sha=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Build web:build:production
         run: pnpm exec nx run web:build:production
 
       - name: Upload Sentry source maps
         run: pnpm sentry:sourcemaps
+        env:
+          SENTRY_RELEASE: ${{ steps.release.outputs.sha }}
+
+      # After the build, never inside it: a per-commit build input would give
+      # every commit its own Nx hash and defeat the cache restore this job
+      # relies on. See web/src/build-info.ts.
+      - name: Write build info into the artifact
+        run: node tools/src/write-build-info.mjs
+        env:
+          SENTRY_RELEASE: ${{ steps.release.outputs.sha }}
 
       - name: Package build output
         run: tar -C dist/web -czf dist-web.tar.gz .
 
       - name: Version + publish GitHub Release
         run: |
-          SHA=$(git rev-parse --short=7 HEAD)
+          SHA="${{ steps.release.outputs.sha }}"
           SPECIFIER="0.0.0-${SHA}"
           TAG="deploy-${SPECIFIER}"
           FIRST_RELEASE_FLAG=""
