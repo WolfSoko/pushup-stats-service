@@ -10359,15 +10359,15 @@
       </segment>
     </unit>
     <unit id="admin.androidTest.minEntries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge ab</source>
-        <target>Einträge ab</target>
+        <target>条目数下限</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.activeWithinDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktiv in den letzten (Tage)</source>
-        <target>Aktiv in den letzten (Tage)</target>
+        <target>最近活跃（天）</target>
       </segment>
     </unit>
 </file>

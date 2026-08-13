@@ -11052,15 +11052,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.androidTest.minEntries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge ab</source>
-        <target>Einträge ab</target>
+        <target>Entries from</target>
       </segment>
     </unit>
     <unit id="admin.androidTest.activeWithinDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktiv in den letzten (Tage)</source>
-        <target>Aktiv in den letzten (Tage)</target>
+        <target>Active in the last (days)</target>
       </segment>
     </unit>
 </file>
