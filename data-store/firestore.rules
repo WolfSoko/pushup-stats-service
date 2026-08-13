@@ -355,6 +355,16 @@ service cloud.firestore {
       allow delete: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Trash bin for deleted entries — written only by the
+    // `archiveDeletedExerciseEntry` trigger via the Admin SDK, which
+    // bypasses these rules. Kept closed explicitly (the catch-all below
+    // would do it too) so the server-only intent survives a future rule
+    // that widens client access to entry data. Records self-destruct
+    // through the `expiresAt` TTL policy, see docs/cloud-functions.md.
+    match /deletedExerciseEntries/{entryId} {
+      allow read, write: if false;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;
