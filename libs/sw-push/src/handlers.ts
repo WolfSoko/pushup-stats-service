@@ -8,6 +8,8 @@
  * so jest can call them with plain mocks.
  */
 
+import type { PushIntent } from './intent-queue';
+
 /** Injected at build time by esbuild's `define` option. */
 declare const __SW_PUSH_VERSION__: string;
 
@@ -63,6 +65,13 @@ export interface SwContext {
     openWindow(url: string): Promise<unknown>;
   };
   origin: string;
+  /**
+   * Persists what the user tapped before any window is involved. Injected
+   * rather than imported so the handlers stay unit-testable without an
+   * IndexedDB runtime — see `intent-queue.ts` for why the hand-off has to be
+   * durable at all.
+   */
+  saveIntent(intent: PushIntent): Promise<void>;
 }
 
 interface PushPayload {

@@ -5,13 +5,11 @@ import {
   type Params,
   Router,
 } from '@angular/router';
-import { QUICK_LOG_REPS_MAX, QUICK_LOG_REPS_MIN } from '@pu-stats/models';
 
 import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 
 function setup(params: Params) {
   const openCreateDialog = vitest.fn();
-  const quickLog = vitest.fn();
   const navigate = vitest.fn().mockResolvedValue(true);
   const route = {
     snapshot: { queryParamMap: convertToParamMap(params) },
@@ -21,10 +19,10 @@ function setup(params: Params) {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({});
   TestBed.runInInjectionContext(() =>
-    registerDashboardDeepLinks({ route, router, openCreateDialog, quickLog })
+    registerDashboardDeepLinks({ route, router, openCreateDialog })
   );
   TestBed.tick();
-  return { openCreateDialog, quickLog, navigate };
+  return { openCreateDialog, navigate };
 }
 
 /** The `queryParams` patch of the last `router.navigate` call. */
@@ -33,51 +31,6 @@ function clearedParams(navigate: ReturnType<typeof vitest.fn>): unknown {
 }
 
 describe('registerDashboardDeepLinks', () => {
-  it('should log an in-range quickLog and clear the param', () => {
-    // given / when
-    const { quickLog, navigate } = setup({ quickLog: '20' });
-
-    // then
-    expect(quickLog).toHaveBeenCalledWith(20);
-    expect(clearedParams(navigate)).toEqual({ quickLog: null });
-  });
-
-  it('should clamp a quickLog above the maximum', () => {
-    // given a tampered deep-link
-    const { quickLog } = setup({ quickLog: '99999' });
-
-    // then the entry stays inside the configured range
-    expect(quickLog).toHaveBeenCalledWith(QUICK_LOG_REPS_MAX);
-  });
-
-  it('should floor a fractional quickLog', () => {
-    // given / when
-    const { quickLog } = setup({ quickLog: '20.9' });
-
-    // then
-    expect(quickLog).toHaveBeenCalledWith(20);
-  });
-
-  it('should ignore a quickLog below the minimum', () => {
-    // given a value under the configured floor
-    const { quickLog, navigate } = setup({
-      quickLog: String(QUICK_LOG_REPS_MIN - 1),
-    });
-
-    // then nothing is logged and the URL is left alone
-    expect(quickLog).not.toHaveBeenCalled();
-    expect(navigate).not.toHaveBeenCalled();
-  });
-
-  it('should ignore a non-numeric quickLog', () => {
-    // given / when
-    const { quickLog, navigate } = setup({ quickLog: 'drop-table' });
-
-    // then
-    expect(quickLog).not.toHaveBeenCalled();
-    expect(navigate).not.toHaveBeenCalled();
-  });
-
   it('should open the entry dialog for ?log=1 and clear the param', () => {
     // given / when
     const { openCreateDialog, navigate } = setup({ log: '1' });
@@ -87,17 +40,43 @@ describe('registerDashboardDeepLinks', () => {
     expect(clearedParams(navigate)).toEqual({ log: null });
   });
 
-  it('should let a snooze deep-link suppress both actions', () => {
-    // given a combined URL — the user snoozed, they did not ask to log
-    const { quickLog, openCreateDialog, navigate } = setup({
-      snooze: '30',
-      quickLog: '20',
-      log: '1',
-    });
+  it('should ignore a log value other than 1', () => {
+    // given / when
+    const { openCreateDialog, navigate } = setup({ log: '0' });
 
     // then
-    expect(quickLog).not.toHaveBeenCalled();
     expect(openCreateDialog).not.toHaveBeenCalled();
     expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('should do nothing without deep-link params', () => {
+    // given / when
+    const { openCreateDialog, navigate } = setup({});
+
+    // then
+    expect(openCreateDialog).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  // Regression: `?quickLog=N` used to persist an entry straight from the URL.
+  // Android keeps that URL in the resumed PWA task, so every later resume
+  // wrote another entry — one landed at 02:05, inside the user's quiet hours.
+  // Quick-log now travels through the single-use intent store instead.
+  it('should never persist an entry from a quickLog param', () => {
+    // given a stale (or tampered) deep link
+    const { openCreateDialog, navigate } = setup({ quickLog: '20' });
+
+    // then nothing happens at all
+    expect(openCreateDialog).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('should ignore a snooze param — the intent store owns that now', () => {
+    // given a deep link from an older service worker
+    const { openCreateDialog, navigate } = setup({ snooze: '30', log: '1' });
+
+    // then the log dialog still opens; the snooze is simply not this file's job
+    expect(openCreateDialog).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledTimes(1);
   });
 });

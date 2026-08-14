@@ -309,6 +309,9 @@ importers:
       eslint-plugin-playwright:
         specifier: ^2.11.0
         version: 2.11.0(eslint@10.8.0(jiti@2.4.2)(supports-color@7.2.0))
+      fake-indexeddb:
+        specifier: ^6.2.5
+        version: 6.2.5
       firebase-tools:
         specifier: ^14.27.0
         version: 14.27.0(@swc/core@1.15.47(@swc/helpers@0.5.23))(@types/node@25.9.1)(@typescript/typescript6@6.0.2)(encoding@0.1.13)(supports-color@7.2.0)
@@ -7892,6 +7895,10 @@ packages:
 
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
+
+  fake-indexeddb@6.2.5:
+    resolution: {integrity: sha512-CGnyrvbhPlWYMngksqrSSUT1BAVP49dZocrHuK0SvtR0D5TMs5wP0o3j7jexDJW01KSadjBp1M/71o/KR3nD1w==}
+    engines: {node: '>=18'}
 
   farmhash-modern@1.1.0:
     resolution: {integrity: sha512-6ypT4XfgqJk/F3Yuv4SX26I3doUjt0GTG4a+JgWxXQpxXzTBq8fPUeGHfcYMMDPHJHm3yPOSjaeBwBGAHWXCdA==}
@@ -21625,6 +21632,8 @@ snapshots:
       - supports-color
 
   extend@3.0.2: {}
+
+  fake-indexeddb@6.2.5: {}
 
   farmhash-modern@1.1.0: {}
 

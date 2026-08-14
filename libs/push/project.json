@@ -5,6 +5,8 @@
   "prefix": "lib",
   "projectType": "library",
   "tags": ["scope:push"],
+  "//": "push-intent-queue.spec reads the sw-push intent store as text (no import edge, since sw-push must stay dependency-free), so nx needs the edge spelled out or the drift guard would not re-run when sw-push changes.",
+  "implicitDependencies": ["sw-push"],
   "targets": {
     "test": {
       "options": {

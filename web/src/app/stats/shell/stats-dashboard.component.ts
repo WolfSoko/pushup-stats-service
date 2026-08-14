@@ -232,9 +232,6 @@ export class StatsDashboardComponent {
       route: this.route,
       router: this.router,
       openCreateDialog: () => this.openCreateDialog(),
-      // Attribute deep-link entries to the reminder so source-based analytics
-      // match the in-tab `QUICK_LOG_PUSHUPS` path (CodeRabbit/Copilot P2).
-      quickLog: (reps) => void this.addQuickEntry(reps, 'reminder'),
     });
 
     this.store.loadQuote();

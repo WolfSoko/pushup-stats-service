@@ -7,6 +7,7 @@
  * subscription-change handlers there, the click routing here.
  */
 import { resolveLocale, type SwContext, type SwLocale } from './handlers';
+import { newIntentId, type PushIntent } from './intent-queue';
 
 /**
  * Defense-in-depth cap mirrored from `@pu-stats/models#QUICK_LOG_REPS_MAX` and
@@ -21,17 +22,21 @@ export const SW_QUICK_LOG_MAX = 500;
 export const SNOOZE_MINUTES = 30;
 
 /**
- * How long the snooze handler waits for a client to confirm it reached the
- * `snoozeReminder` callable before falling back to the deep link.
+ * Message asking every open client to drain the intent store now. Carries no
+ * payload: what to do lives in IndexedDB, so a client that handles this late
+ * (or twice) can neither miss nor duplicate the action.
+ */
+export const DRAIN_INTENTS_MESSAGE = 'DRAIN_PUSH_INTENTS';
+
+/**
+ * How long to wait for a client to confirm it drained the intent before
+ * bringing a window to the front.
  *
  * A backgrounded tab can be frozen by the browser: `matchAll` still returns
- * it, but a posted message sits unhandled in its queue — and dies with the
- * tab when the browser discards it. Without an ack the snooze was silently
- * lost (production showed zero `snoozeReminder` invocations while reminders
- * kept being delivered). Keep this short: `waitUntil` holds the worker
- * alive for the whole window.
+ * it, but a posted message sits unhandled in its queue. Keep this short:
+ * `waitUntil` holds the worker alive for the whole window.
  */
-export const SNOOZE_ACK_TIMEOUT_MS = 2000;
+export const INTENT_ACK_TIMEOUT_MS = 2000;
 
 export interface NotificationClickEventLike {
   action: string;
@@ -50,16 +55,17 @@ export interface NotificationClickEventLike {
 type SwWindowClient = Pick<WindowClient, 'url' | 'focus' | 'postMessage'>;
 
 /**
- * Asks every open client to run the snooze and resolves as soon as one
- * confirms. Resolves `false` when there is no client, when none replies
- * within `SNOOZE_ACK_TIMEOUT_MS` (frozen tab), or when the client reports
- * the callable failed — the caller then falls back to the deep link.
+ * Asks every open client to drain the intent store and resolves as soon as
+ * one confirms. Resolves `false` when there is no client, when none replies
+ * within `INTENT_ACK_TIMEOUT_MS` (frozen tab), or when the client reports it
+ * could not act — the caller then brings a window to the front.
  *
  * All clients are messaged, not just the first: `matchAll` order carries no
- * guarantee that `[0]` is the live tab, and the callable is idempotent
- * (it writes an absolute `snoozedUntil`), so a double run is harmless.
+ * guarantee that `[0]` is the live tab, and draining is idempotent (the
+ * store is emptied in the same transaction it is read), so a double nudge is
+ * harmless.
  */
-function requestSnoozeFromClients(
+function requestDrainFromClients(
   clientList: SwWindowClient[]
 ): Promise<boolean> {
   if (clientList.length === 0) return Promise.resolve(false);
@@ -74,7 +80,7 @@ function requestSnoozeFromClients(
       for (const port of ports) port.close();
       resolve(value);
     };
-    const timer = setTimeout(() => settle(false), SNOOZE_ACK_TIMEOUT_MS);
+    const timer = setTimeout(() => settle(false), INTENT_ACK_TIMEOUT_MS);
 
     for (const client of clientList) {
       const channel = new MessageChannel();
@@ -84,12 +90,49 @@ function requestSnoozeFromClients(
         // to the timeout so another (healthy) client still gets its chance.
         if ((ev.data as { ok?: boolean } | null)?.ok === true) settle(true);
       };
-      client.postMessage(
-        { type: 'SNOOZE_REMINDER', snoozeMinutes: SNOOZE_MINUTES },
-        [channel.port2]
-      );
+      client.postMessage({ type: DRAIN_INTENTS_MESSAGE }, [channel.port2]);
     }
   });
+}
+
+/**
+ * Records the intent, then tries to get it acted on right away.
+ *
+ * The store write is what makes the action reliable; everything after it is
+ * about immediacy. When no client confirms, a window is focused (which thaws
+ * a frozen PWA) or opened — the app drains on `visibilitychange` either way,
+ * so this survives Android resuming an existing task without navigating.
+ * Better a window the user did not ask for than a snooze they believe is set
+ * while reminders keep firing.
+ */
+async function dispatchIntent(
+  intent: PushIntent,
+  ctx: SwContext,
+  locale: SwLocale
+): Promise<boolean> {
+  try {
+    await ctx.saveIntent(intent);
+  } catch (err) {
+    console.error('[sw-push] could not store intent', err);
+    return false;
+  }
+
+  const clientList = await ctx.clients.matchAll({
+    type: 'window',
+    includeUncontrolled: true,
+  });
+  if (await requestDrainFromClients(clientList)) return true;
+
+  const target = clientList[0];
+  if (target && 'focus' in target) {
+    const focused = await target.focus().then(
+      () => true,
+      () => false
+    );
+    if (focused) return true;
+  }
+  await ctx.clients.openWindow(`/${locale}/app`);
+  return true;
 }
 
 function handleSnooze(
@@ -98,17 +141,16 @@ function handleSnooze(
   locale: SwLocale
 ): void {
   event.waitUntil(
-    (async () => {
-      const clientList = await ctx.clients.matchAll({
-        type: 'window',
-        includeUncontrolled: true,
-      });
-      if (await requestSnoozeFromClients(clientList)) return;
-      // Nobody confirmed — open the app so the `?snooze=` deep link runs it.
-      // Better a tab the user did not ask for than a snooze they believe is
-      // set while reminders keep firing.
-      await ctx.clients.openWindow(`/${locale}/app?snooze=${SNOOZE_MINUTES}`);
-    })()
+    dispatchIntent(
+      {
+        id: newIntentId(),
+        type: 'snooze',
+        createdAt: Date.now(),
+        snoozeMinutes: SNOOZE_MINUTES,
+      },
+      ctx,
+      locale
+    )
   );
 }
 
@@ -137,27 +179,14 @@ function handleQuickLog(
         await ctx.clients.openWindow(`/${locale}/app?log=1`);
         return;
       }
-      const clientList = await ctx.clients.matchAll({
-        type: 'window',
-        includeUncontrolled: true,
-      });
-      if (clientList.length > 0) {
-        // App is open somewhere — log silently in the existing tab so the
-        // user gets feedback without a navigation flicker.
-        clientList[0].postMessage({
-          type: 'QUICK_LOG_PUSHUPS',
-          reps,
-        });
-        if ('focus' in clientList[0]) {
-          await (clientList[0] as { focus: () => Promise<unknown> })
-            .focus()
-            .catch(() => undefined);
-        }
-        return;
-      }
-      // No open client — open a new tab with `?quickLog=N`; the dashboard
-      // creates the entry on first render.
-      await ctx.clients.openWindow(`/${locale}/app?quickLog=${reps}`);
+      const dispatched = await dispatchIntent(
+        { id: newIntentId(), type: 'quick-log', createdAt: Date.now(), reps },
+        ctx,
+        locale
+      );
+      // Storage failed, so nothing will ever apply this tap. Silence would
+      // read as a dead button; the dialog at least lets the user log it.
+      if (!dispatched) await ctx.clients.openWindow(`/${locale}/app?log=1`);
     })()
   );
 }

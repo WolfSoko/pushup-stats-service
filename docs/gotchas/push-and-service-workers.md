@@ -92,17 +92,66 @@ const payload = JSON.stringify({
 });
 ```
 
-Defense-in-depth: clamp again in the SW handler (`libs/sw-push/src/handlers.ts`) and in the in-app listener (`QuickLogListenerService`). Stale payloads from older SW deployments stay in the push queue for `TTL: 1800` seconds and can outlive a server-side validator change.
+Defense-in-depth: clamp again in the SW handler (`libs/sw-push/src/notification-click.ts`) and in `QuickLogService`. Stale payloads from older SW deployments stay in the push queue for `TTL: 1800` seconds and can outlive a server-side validator change.
+
+## Neither postMessage nor a query param delivers a notification action
+
+Both channels the SW has to an app window lose actions on an installed Android
+PWA, and they lose them in opposite directions:
+
+- **`client.postMessage()` arrives late, not never.** A backgrounded PWA is
+  _frozen_: `matchAll` still returns it, but the message sits in its queue until
+  the tab thaws — which may be hours later, on an unrelated notification tap.
+  It is not a dropped message, it is a **delayed** one, and that is worse: the
+  handler cannot tell a fresh tap from a stale one.
+- **`openWindow('/app?quickLog=N')` replays.** Android resumes an existing PWA
+  task instead of navigating, so the param never arrives. When it does arrive,
+  it stays in the task's committed URL, and **every later resume re-runs the
+  deep link**.
+
+Production symptom (Aug 2026): tapping "⏰ 30 Min snoozen" created a 20-rep
+push-up entry. The snooze tap only _resumed_ the app; the resume replayed a
+quick-log the user had tapped earlier. Four such entries were written, one at
+02:05 — inside the user's own quiet hours, when the dispatcher had sent nothing
+at all. Meanwhile `snoozeReminder` had zero invocations for over three months.
+
+**Rule: a notification action must be recorded durably before any window is
+involved.** `libs/sw-push/src/intent-queue.ts` writes `{id, type, createdAt}`
+to IndexedDB; `PushIntentDrainService` claims intents by reading and clearing
+them in one transaction, and discards anything older than `PUSH_INTENT_MAX_AGE_MS`
+(pinned to the dispatcher's `TTL: 1800`). Two properties do the work:
+
+- **single-use** — read-and-clear share a transaction, so overlapping triggers
+  (SW nudge + `visibilitychange`) cannot double-apply. At-most-once is the
+  deliberate trade: a dropped snooze costs one reminder, a replayed quick-log
+  writes an entry the user never asked for.
+- **time-bounded** — a late drain discards instead of acting. This is what makes
+  the frozen-tab case safe rather than merely unlikely.
+
+The `postMessage` that remains is a _nudge_ carrying no payload, and the drain
+runs on three triggers because none is reliable alone: auth-resolved (cold
+start), the SW nudge (app responsive), and `visibilitychange → visible` (the
+frozen tab that Android just resumed without navigating).
+
+Corollary: **`focus()` is what thaws a frozen client.** Quick-log always called
+it and appeared to work; snooze did not, and appeared broken. Any handler that
+waits on a client answering must focus it first.
+
+Deploy rollover: the SW and the app update independently, so for up to ~24h a
+device can run an old SW against a new app (its `QUICK_LOG_PUSHUPS` message and
+`?quickLog=` link are ignored — quick-log no-ops) or a new SW against an old app
+(intents pile up unread and expire — snooze is lost). Both self-heal; neither
+writes a wrong entry.
 
 ## Notification deep-links are untrusted input
 
-When the SW falls back to `clients.openWindow('/app?quickLog=N')` (no client open), the count round-trips through the URL. Treat it like any user-controllable input: clamp into the valid range before persisting. The same handler covers two callers (legitimate notification click + URL-tampered reload), so the validation lives at the dashboard, not at the SW.
+The count no longer round-trips through the URL (see above — that link replayed), but it still round-trips through the notification payload and the intent store, so it stays untrusted: clamp into the valid range in the SW _and_ before persisting in `QuickLogService`.
 
 ## Source attribution must be consistent across paths
 
-A single user action ("tap notification button") can route through two code paths depending on whether an app tab is already open:
+A single user action ("tap notification button") reaches the app through one of two timings depending on whether a window is already open — both now end in the same `QuickLogService.logEntry`, so the attribution cannot drift:
 
-- **App open** → SW posts `QUICK_LOG_PUSHUPS` to the client; client writes `source: 'reminder'`.
-- **App closed** → SW opens `/app?quickLog=N`; dashboard writes `source: 'reminder'`.
+- **App open** → SW nudges the client, which drains the intent immediately.
+- **App closed** → SW opens `/{locale}/app`; the app drains the intent on boot.
 
-Both must set the same `source`, otherwise source-based filtering/analytics quietly drift apart. Add a regression test that asserts both paths produce the same `source`.
+Both must set the same `source`, otherwise source-based filtering/analytics quietly drift apart.

@@ -35,14 +35,14 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { filter, map, take } from 'rxjs';
+import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
 import {
+  PushIntentDrainService,
   PushSubscriptionService,
   PushSwRegistrationService,
-  QuickLogListenerService,
 } from '@pu-push/push';
 import { TcfConsentService } from '@pu-stats/ads';
 import {
@@ -170,7 +170,7 @@ export class App {
   readonly showQuickAddFab = computed(() => !!this.user.userIdSafe());
   private readonly pushService = inject(PushSubscriptionService);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
-  private readonly quickLogListener = inject(QuickLogListenerService);
+  private readonly pushIntents = inject(PushIntentDrainService);
   // Eagerly register the push service worker on boot so:
   //   - fresh visitors have the SW installed before they ever open /reminders
   //     (no cold-start race on the first `subscribe()` click), and
@@ -180,14 +180,9 @@ export class App {
   // for PUSH_SUBSCRIPTION_CHANGED events fired by the push SW.
   private readonly _initPushBridge = afterNextRender(() => {
     this.pushService.registerSwListener();
-    this.quickLogListener.init();
+    this.pushIntents.init();
     void this.pushSwRegistration.getRegistration();
   });
-  // Snooze param from SW notification click — must wait for auth to resolve
-  // before calling the Cloud Function, otherwise the request goes out without
-  // a Firebase Auth token and is rejected as 'unauthenticated'.
-  private readonly _pendingSnooze = signal<number | null>(null);
-
   private static readonly COACHMARK_SEEN_KEY = 'pus_speeddial_coachmark_seen';
 
   /** Drives the one-time tutorial bubble pointing at the speed-dial FAB. */
@@ -226,45 +221,10 @@ export class App {
     }
   }
 
-  // Read `?snooze=N` from the queryParamMap stream, not from a one-shot
-  // snapshot: the router has no blocking initial navigation, so on a cold
-  // start from the notification deep link the root snapshot is still empty
-  // when afterNextRender fires — a snapshot read dropped the param and the
-  // snooze never reached the backend.
-  private readonly _handleSnoozeParam = afterNextRender(() => {
-    this.activatedRoute.queryParamMap
-      .pipe(
-        map((params) => {
-          const raw = params.get('snooze');
-          return raw ? parseInt(raw, 10) : NaN;
-        }),
-        filter((minutes) => !isNaN(minutes) && minutes > 0),
-        take(1),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe((snoozeMinutes) => {
-        void this.router.navigate([], {
-          queryParams: { snooze: null },
-          queryParamsHandling: 'merge',
-          replaceUrl: true,
-        });
-        this._pendingSnooze.set(snoozeMinutes);
-      });
-  });
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
   private readonly authService = inject(AuthService);
-  private readonly _snoozeWhenAuthReady = effect(() => {
-    const snoozeMinutes = this._pendingSnooze();
-    if (snoozeMinutes != null && this.auth.authResolved()) {
-      this._pendingSnooze.set(null);
-      this.pushService.snooze(snoozeMinutes).catch(() => {
-        // Best-effort: if snooze fails (e.g. not authenticated),
-        // the next reminder fires at the normal interval.
-      });
-    }
-  });
   private readonly reminderOrchestration = inject(ReminderOrchestrationService);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);

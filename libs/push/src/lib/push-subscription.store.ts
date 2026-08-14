@@ -165,20 +165,6 @@ export const PushSubscriptionStore = signalStore(
       swListenerRegistered = true;
       navigator.serviceWorker.addEventListener('message', (event) => {
         const data = event.data;
-        if (data?.type === 'SNOOZE_REMINDER') {
-          // Acknowledge on the port the SW handed us: without a reply it
-          // falls back to opening the app with `?snooze=`, so a frozen tab
-          // or a failed callable can no longer swallow the snooze.
-          const port = event.ports?.[0];
-          void snoozeReminder(data.snoozeMinutes ?? 30).then(
-            () => port?.postMessage({ ok: true }),
-            (err: unknown) => {
-              console.error('[PushSubscriptionStore] snooze failed', err);
-              port?.postMessage({ ok: false });
-            }
-          );
-          return;
-        }
         if (data?.type === 'PUSH_SUBSCRIPTION_CHANGED' && data.sub) {
           // SW fired pushsubscriptionchange and produced a fresh sub — persist
           // it immediately so the user doesn't have to reload the app for

@@ -26,6 +26,7 @@ import {
   handleNotificationClick,
   type NotificationClickEventLike,
 } from './notification-click';
+import { savePushIntent, type PushIntent } from './intent-queue';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -37,6 +38,7 @@ const ctx: SwContext = {
   registration: self.registration,
   clients: self.clients,
   origin: self.location.origin,
+  saveIntent: (intent: PushIntent) => savePushIntent(intent, self.indexedDB),
 };
 
 self.addEventListener('push', (event) => {
