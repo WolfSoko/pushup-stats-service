@@ -10370,5 +10370,35 @@
         <target>最近活跃（天）</target>
       </segment>
     </unit>
+    <unit id="admin.release.label">
+      <segment state="initial">
+        <source>Release</source>
+        <target>Release</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknown">
+      <segment state="initial">
+        <source>unbekannt</source>
+        <target>unbekannt</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknownTooltip">
+      <segment state="initial">
+        <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
+        <target>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.commitTooltip">
+      <segment state="initial">
+        <source>Commit <ph id="0" equiv="release" disp="release"/></source>
+        <target>Commit <ph id="0" equiv="release" disp="release"/></target>
+      </segment>
+    </unit>
+    <unit id="admin.release.builtTooltip">
+      <segment state="initial">
+        <source>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></source>
+        <target>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -27,6 +27,7 @@ import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
+import { ReleaseBadgeComponent } from '../core/observability/release-badge.component';
 import { AdminUser, BulkDeleteResult } from './admin-page.models';
 import {
   adminUserSortValue,
@@ -52,6 +53,7 @@ import {
     MatTooltipModule,
     MatSlideToggleModule,
     PageHeaderComponent,
+    ReleaseBadgeComponent,
     RouterLink,
     AdminFeedbackSectionComponent,
   ],

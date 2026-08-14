@@ -12,6 +12,8 @@
         "{workspaceRoot}/jest.preset.js",
         "{workspaceRoot}/apphosting.yaml",
         "{workspaceRoot}/apphosting.staging.yaml",
+        "{workspaceRoot}/.github/workflows/*.yml",
+        "{workspaceRoot}/scripts/*.sh",
         "{workspaceRoot}/pnpm-workspace.yaml",
         "{workspaceRoot}/patches/**/*",
         "{workspaceRoot}/.prettierignore",

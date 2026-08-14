@@ -71,6 +71,8 @@ export {
   updateExerciseStatsOnEntryWrite,
 } from './functions-user-stats';
 
+export { archiveDeletedExerciseEntry } from './functions-entry-trash';
+
 export {
   backfillPushupPerExerciseStats,
   migratePushupsToExerciseEntries,

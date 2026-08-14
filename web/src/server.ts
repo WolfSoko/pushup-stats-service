@@ -8,11 +8,13 @@ import {
 } from '@angular/ssr/node';
 import compression from 'compression';
 import express from 'express';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
+import { resolveBuildInfo, sentryRelease } from './build-info';
 import { computeLocaleRedirect } from './server-locale-redirect';
 import { isCacheableStaticSsrPath } from './server-ssr-cache';
 import {
@@ -22,8 +24,30 @@ import {
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 
+const browserDistFolder = join(import.meta.dirname, '../browser');
+
+/**
+ * Build metadata of the deployment being served. Lives inside the browser
+ * bundle so both Firebase App Hosting (this server) and Firebase Hosting
+ * serve the identical file; read once at startup because it cannot change
+ * without a new process.
+ */
+const buildInfo = resolveBuildInfo(
+  readBuildInfoFile(),
+  process.env['GIT_SHA'] || undefined
+);
+
+function readBuildInfoFile(): string | null {
+  try {
+    return readFileSync(join(browserDistFolder, 'build-info.json'), 'utf-8');
+  } catch {
+    // Absent in `nx serve` and any build that skipped write-build-info.
+    return null;
+  }
+}
+
 if (isProduction) {
-  const release = process.env['GIT_SHA'] || undefined;
+  const release = sentryRelease(buildInfo);
 
   Sentry.init({
     dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
@@ -39,10 +63,10 @@ const logger = pino({
   level: 'info',
 });
 
-const browserDistFolder = join(import.meta.dirname, '../browser');
-
 const app = express();
 app.use(pinoHttp({ logger }));
+
+logger.info({ buildInfo }, 'build info resolved');
 
 // gzip/brotli the SSR HTML and any text asset served from the bundle.
 // Firebase App Hosting fronts Cloud Run but does not compress origin
