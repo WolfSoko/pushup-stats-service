@@ -10869,7 +10869,7 @@
     <unit id="admin.release.unknown">
       <segment state="translated">
         <source>unbekannt</source>
-        <target>desconocido</target>
+        <target>desconocida</target>
       </segment>
     </unit>
     <unit id="admin.release.unknownTooltip">

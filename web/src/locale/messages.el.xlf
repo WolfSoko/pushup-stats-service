@@ -10879,7 +10879,7 @@
     <unit id="admin.release.unknownTooltip">
       <segment state="translated">
         <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
-        <target>Αυτή η ανάπτυξη δεν περιέχει πληροφορίες build (τοπικό build ή διακομιστής ανάπτυξης).</target>
+        <target>Αυτή η εγκατάσταση δεν περιέχει πληροφορίες build (τοπικό build ή διακομιστής ανάπτυξης).</target>
       </segment>
     </unit>
     <unit id="admin.release.commitTooltip">

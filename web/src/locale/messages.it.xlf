@@ -10873,13 +10873,13 @@
     <unit id="admin.release.unknown">
       <segment state="translated">
         <source>unbekannt</source>
-        <target>sconosciuto</target>
+        <target>sconosciuta</target>
       </segment>
     </unit>
     <unit id="admin.release.unknownTooltip">
       <segment state="translated">
         <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
-        <target>Questa distribuzione non contiene informazioni di build (build locale o server di sviluppo).</target>
+        <target>Questa versione non contiene informazioni di build (build locale o server di sviluppo).</target>
       </segment>
     </unit>
     <unit id="admin.release.commitTooltip">
