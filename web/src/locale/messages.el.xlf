@@ -10865,33 +10865,33 @@
       </segment>
     </unit>
     <unit id="admin.release.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Release</source>
-        <target>Release</target>
+        <target>Έκδοση</target>
       </segment>
     </unit>
     <unit id="admin.release.unknown">
-      <segment state="initial">
+      <segment state="translated">
         <source>unbekannt</source>
-        <target>unbekannt</target>
+        <target>άγνωστο</target>
       </segment>
     </unit>
     <unit id="admin.release.unknownTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
-        <target>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</target>
+        <target>Αυτή η ανάπτυξη δεν περιέχει πληροφορίες build (τοπικό build ή διακομιστής ανάπτυξης).</target>
       </segment>
     </unit>
     <unit id="admin.release.commitTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Commit <ph id="0" equiv="release" disp="release"/></source>
         <target>Commit <ph id="0" equiv="release" disp="release"/></target>
       </segment>
     </unit>
     <unit id="admin.release.builtTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></source>
-        <target>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></target>
+        <target>Commit <ph id="0" equiv="release" disp="release"/> · χτίστηκε στις <ph id="1" equiv="built" disp="built"/></target>
       </segment>
     </unit>
 </file>

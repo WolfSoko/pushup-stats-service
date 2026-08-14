@@ -10371,33 +10371,33 @@
       </segment>
     </unit>
     <unit id="admin.release.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Release</source>
-        <target>Release</target>
+        <target>版本</target>
       </segment>
     </unit>
     <unit id="admin.release.unknown">
-      <segment state="initial">
+      <segment state="translated">
         <source>unbekannt</source>
-        <target>unbekannt</target>
+        <target>未知</target>
       </segment>
     </unit>
     <unit id="admin.release.unknownTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
-        <target>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</target>
+        <target>此部署不包含构建信息（本地构建或开发服务器）。</target>
       </segment>
     </unit>
     <unit id="admin.release.commitTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Commit <ph id="0" equiv="release" disp="release"/></source>
-        <target>Commit <ph id="0" equiv="release" disp="release"/></target>
+        <target>提交 <ph id="0" equiv="release" disp="release"/></target>
       </segment>
     </unit>
     <unit id="admin.release.builtTooltip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></source>
-        <target>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></target>
+        <target>提交 <ph id="0" equiv="release" disp="release"/> · 构建于 <ph id="1" equiv="built" disp="built"/></target>
       </segment>
     </unit>
 </file>
