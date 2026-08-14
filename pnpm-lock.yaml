@@ -343,8 +343,8 @@ importers:
         specifier: 16.2.7
         version: 16.2.7
       marked:
-        specifier: 16.4.1
-        version: 16.4.1
+        specifier: 18.0.9
+        version: 18.0.9
       node-fetch:
         specifier: 3.3.2
         version: 3.3.2
@@ -9524,6 +9524,11 @@ packages:
 
   marked@16.4.1:
     resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
+    engines: {node: '>= 20'}
+    hasBin: true
+
+  marked@18.0.9:
+    resolution: {integrity: sha512-/Sa4qiiHZxf0/FQdBBowr9q4r10krCwMvpK48FUBdXdUXScDxiQGR9zCPrFgRVR5LU3iySOiIjy09ZQvADir1w==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -23907,6 +23912,8 @@ snapshots:
   marked@13.0.3: {}
 
   marked@16.4.1: {}
+
+  marked@18.0.9: {}
 
   math-intrinsics@1.1.0: {}
 
