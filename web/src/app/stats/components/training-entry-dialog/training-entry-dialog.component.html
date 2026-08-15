@@ -7,19 +7,12 @@
 </h2>
 
 <mat-dialog-content>
-  <mat-form-field appearance="outline">
-    <mat-label i18n="@@trainingEntryDialog.category">Kategorie</mat-label>
-    <mat-select
-      [value]="category()"
-      (valueChange)="onCategoryChange($event)"
-      [disabled]="isEditMode"
-      data-testid="training-entry-category"
-    >
-      @for (option of categoryOptions; track option.value) {
-        <mat-option [value]="option.value">{{ option.label }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <app-exercise-picker
+    [exerciseId]="exerciseId()"
+    [suggestions]="suggestions"
+    [locked]="isEditMode"
+    (exerciseIdChange)="onExerciseChange($event)"
+  />
 
   <mat-form-field appearance="outline">
     <mat-label i18n="@@timestampLabel">Zeitpunkt</mat-label>
@@ -36,6 +29,7 @@
     <app-pushup-entry-fields [data]="data" />
   } @else {
     <app-exercise-entry-fields
+      [exerciseId]="exerciseId()"
       [category]="category()"
       [data]="data"
       [isEditMode]="isEditMode"

@@ -10400,5 +10400,29 @@
         <target>提交 <ph id="0" equiv="release" disp="release"/> · 构建于 <ph id="1" equiv="built" disp="built"/></target>
       </segment>
     </unit>
+    <unit id="entryDialog.picker.placeholder">
+      <segment state="initial">
+        <source>Übung suchen</source>
+        <target>Übung suchen</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.noMatch">
+      <segment state="initial">
+        <source>Keine Übung gefunden</source>
+        <target>Keine Übung gefunden</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.plannedToday">
+      <segment state="initial">
+        <source>Heute geplant</source>
+        <target>Heute geplant</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.recent">
+      <segment state="initial">
+        <source>Zuletzt genutzt</source>
+        <target>Zuletzt genutzt</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

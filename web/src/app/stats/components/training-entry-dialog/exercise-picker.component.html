@@ -1,0 +1,51 @@
+<div class="type-row">
+  <mat-form-field appearance="outline">
+    <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="control"
+      [matAutocomplete]="exerciseAuto"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      placeholder="Übung suchen"
+      i18n-placeholder="@@entryDialog.picker.placeholder"
+      data-testid="training-entry-exercise"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-autocomplete
+      #exerciseAuto="matAutocomplete"
+      requireSelection
+      [displayWith]="displayExercise"
+      (optionSelected)="onSelect($event.option.value)"
+    >
+      @for (group of filteredGroups(); track group.key) {
+        <mat-optgroup [label]="group.label">
+          @for (option of group.options; track option.id) {
+            <mat-option [value]="option.id">{{ option.label }}</mat-option>
+          }
+        </mat-optgroup>
+      }
+      @if (!hasMatches()) {
+        <mat-option disabled i18n="@@entryDialog.picker.noMatch"
+          >Keine Übung gefunden</mat-option
+        >
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  @if (showWikiLink()) {
+    <a
+      mat-icon-button
+      class="type-help"
+      [routerLink]="wikiLink()"
+      [matTooltip]="wikiTooltip()"
+      matTooltipPosition="left"
+      mat-dialog-close
+      data-testid="training-entry-exercise-wiki"
+      i18n-aria-label="@@exerciseWikiLinkAria"
+      aria-label="Anleitung zur Übung öffnen"
+    >
+      <mat-icon>help_outline</mat-icon>
+    </a>
+  }
+</div>

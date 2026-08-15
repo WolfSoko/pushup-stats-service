@@ -44,9 +44,10 @@ import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { TrainingEntryDialogComponent } from '../components/training-entry-dialog/training-entry-dialog.component';
 import {
-  TrainingEntryDialogData,
+  TrainingEntryDialogInput,
   TrainingEntryDialogResult,
 } from '../components/training-entry-dialog/training-entry-dialog.models';
+import { exerciseSuggestions } from './stats-dashboard.suggestions';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
@@ -310,11 +311,19 @@ export class StatsDashboardComponent {
     this.dialog
       .open<
         TrainingEntryDialogComponent,
-        TrainingEntryDialogData | null,
+        TrainingEntryDialogInput,
         TrainingEntryDialogResult
       >(TrainingEntryDialogComponent, {
         width: 'min(92vw, 420px)',
         maxWidth: '92vw',
+        data: {
+          kind: 'create',
+          suggestions: exerciseSuggestions({
+            planDay: this.trainingPlans.todayDay(),
+            dailyGoals: this.dailyGoalBreakdown(),
+            entries: this.live.exerciseEntries(),
+          }),
+        },
       })
       .afterClosed()
       .subscribe((result) => {

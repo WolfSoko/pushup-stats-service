@@ -127,10 +127,11 @@ UI Component  →  Signal Store  →  API Service
 
 ### Shared Entry Dialog Pattern
 
-- `CreateEntryDialogComponent` serves as the single dialog for both creating and editing entries.
-- **Create mode:** Opened without `MAT_DIALOG_DATA` — starts with empty fields, default timestamp.
-- **Edit mode:** Opened with `EntryDialogData` via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from existing entry. Preserves original timestamp format when unchanged.
-- Both modes return `CreateEntryResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
+- `TrainingEntryDialogComponent` serves as the single dialog for both creating and editing entries of every exercise.
+- **Exercise-first:** one autocomplete (`ExercisePickerComponent`) over the whole catalog is the entry point; the category and the rendered field set (pushup mode vs. exercise mode) are derived from the picked exercise, never chosen by hand. Options are grouped "Heute geplant" → "Zuletzt genutzt" → categories; typing filters on exercise **and** category name, diacritic-insensitive (`exercise-picker.groups.ts`).
+- **Create mode:** `MAT_DIALOG_DATA` is absent or carries `{kind: 'create', suggestions}`. `ExerciseSuggestions` (today's plan-day + daily-goal exercises, recently logged exercises) rank the picker and decide which exercise the dialog opens on — the dialog itself knows nothing about plans, goals or history, the opener passes them in (`stats-dashboard.suggestions.ts`).
+- **Edit mode:** Opened with a `pushup`/`exercise` payload via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from the existing entry and locks the picker (moving an entry between collections is not supported). Preserves the original timestamp format when unchanged.
+- Both modes return `TrainingEntryDialogResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
 - **Sets UX:** Starts with a single "Reps" field. A "+" button adds sets (pre-filled from previous value). Multi-set mode shows "Set 1", "Set 2", etc. with remove buttons and a total display.
 
 ### Training Plans (curated catalog + active-plan state)
