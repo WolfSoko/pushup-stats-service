@@ -86,10 +86,11 @@ jobs:
         if: always()
         run: pnpm exec nx fix-ci
 
-  # Runs in parallel to lint-test-build. Shares the Angular SSR build via
-  # Nx Cloud's remote cache: the e2e job triggers `build` as a `dependsOn`
-  # of `e2e-ci`, but if the sibling job has already pushed the build
-  # artifact to Nx Cloud it is restored from cache instead of rebuilt.
+  # Runs in parallel to lint-test-build. Every atomized `e2e-ci--<spec>`
+  # task depends on the continuous `web:serve-e2e` target (wired up by
+  # @nx/playwright/plugin from the `webServer` block in
+  # web/playwright.config.ts), so Nx boots one dev server per agent and
+  # all specs on that agent attach to it instead of spawning their own.
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30

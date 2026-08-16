@@ -231,8 +231,17 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "web:build",
-        "staticFilePath": "dist/web",
-        "spa": true
+        "spa": true,
+        "staticFilePath": "dist/web/browser/de"
+      }
+    },
+    "serve-e2e": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "buildTarget": "web:build:development",
+        "host": "127.0.0.1",
+        "port": 4300
       }
     }
   }

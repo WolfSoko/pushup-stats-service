@@ -22,11 +22,25 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
-  /* Run your local dev server before starting the tests */
+  /**
+   * Nx owns the dev server, Playwright only attaches to it. Both details
+   * below are load-bearing for that:
+   *
+   * 1. `reuseExistingServer: true` is what makes `@nx/playwright/plugin`
+   *    turn this command into a `dependsOn` on `e2e` and every
+   *    `e2e-ci--<spec>` target, so Nx starts **one** continuous server
+   *    task per run and all atomized specs share it. With it `false` (as
+   *    it was in CI) every spec spawned its own `nx serve web`, and the
+   *    second one in a process chain died on Nx's `Recursive task
+   *    invocation detected` guard.
+   * 2. The plugin only recognizes the exact `nx run <project>:<target>`
+   *    form — a command carrying flags is never parsed into a task, which
+   *    is why host and port live on the `serve-e2e` target instead.
+   */
   webServer: {
-    command: 'npx nx serve web --host=127.0.0.1 --port=4300',
+    command: 'npx nx run web:serve-e2e',
     url: 'http://127.0.0.1:4300',
-    reuseExistingServer: !process.env['CI'],
+    reuseExistingServer: true,
     cwd: workspaceRoot,
     timeout: 180_000,
   },
