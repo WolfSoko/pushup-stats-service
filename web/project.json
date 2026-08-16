@@ -237,11 +237,15 @@
     },
     "serve-e2e": {
       "continuous": true,
-      "executor": "@angular/build:dev-server",
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
       "options": {
-        "buildTarget": "web:build:development",
-        "host": "127.0.0.1",
-        "port": 4300
+        "command": "node dist/web/server/server.mjs",
+        "env": {
+          "PORT": "4300",
+          "NODE_ENV": "production",
+          "NG_ALLOWED_HOSTS": "127.0.0.1,localhost"
+        }
       }
     }
   }

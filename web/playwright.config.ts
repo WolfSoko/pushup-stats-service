@@ -19,11 +19,20 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
+    /**
+     * The specs assert German copy, and the SSR server picks the locale
+     * bundle from `Accept-Language` — without this Playwright's default
+     * `en-US` context lands on `/en/` and every text locator misses.
+     */
+    locale: 'de-DE',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
   /**
-   * Nx owns the dev server, Playwright only attaches to it. Both details
+   * `serve-e2e` runs the production SSR bundle — the same
+   * `node dist/web/server/server.mjs` App Hosting runs — so the suite
+   * exercises the localized, prerendered build instead of a dev server.
+   * Nx owns that server, Playwright only attaches to it. Both details
    * below are load-bearing for that:
    *
    * 1. `reuseExistingServer: true` is what makes `@nx/playwright/plugin`
@@ -35,14 +44,19 @@ export default defineConfig({
    *    invocation detected` guard.
    * 2. The plugin only recognizes the exact `nx run <project>:<target>`
    *    form — a command carrying flags is never parsed into a task, which
-   *    is why host and port live on the `serve-e2e` target instead.
+   *    is why port and env live on the `serve-e2e` target instead.
    */
   webServer: {
     command: 'npx nx run web:serve-e2e',
     url: 'http://127.0.0.1:4300',
     reuseExistingServer: true,
     cwd: workspaceRoot,
-    timeout: 180_000,
+    // `serve-e2e` depends on `build`, so a cold cache means waiting out a
+    // full production build (prerender included) before the server comes
+    // up. In CI Nx runs that build as part of the task graph and the
+    // server is already listening when Playwright checks — this budget
+    // only matters when Playwright starts the chain itself.
+    timeout: 900_000,
   },
   /* Run all specs in parallel within each file. For sharding across CI machines,
    * split by spec file using `--shard=1/N` CLI flag — each shard receives a

@@ -89,8 +89,13 @@ jobs:
   # Runs in parallel to lint-test-build. Every atomized `e2e-ci--<spec>`
   # task depends on the continuous `web:serve-e2e` target (wired up by
   # @nx/playwright/plugin from the `webServer` block in
-  # web/playwright.config.ts), so Nx boots one dev server per agent and
-  # all specs on that agent attach to it instead of spawning their own.
+  # web/playwright.config.ts), so Nx boots one server per agent and all
+  # specs on that agent attach to it instead of spawning their own.
+  #
+  # `serve-e2e` runs the same `node dist/web/server/server.mjs` that App
+  # Hosting runs in production, so it depends on `web:build:production` —
+  # shared with the sibling job through Nx Cloud's remote cache when that
+  # job pushed the artifact first, rebuilt here otherwise.
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30

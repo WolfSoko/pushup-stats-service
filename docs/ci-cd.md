@@ -6,6 +6,7 @@ How code reaches production and staging. AGENTS.md keeps the high-level rule (no
 
 - **Workflow** (`.github/workflows/ci.yml`): Runs lint, test, build, e2e on every push to `main` and on PRs.
 - **Agent pool:** Nx Cloud dynamic distribution — see `.nx/workflows/distribution-config.yaml`. Details in [`gotchas/build-and-tooling.md`](gotchas/build-and-tooling.md).
+- **E2E server:** the atomized `e2e-ci--<spec>` tasks depend on the continuous `web:serve-e2e` target, which runs the production SSR bundle (`node dist/web/server/server.mjs`, same command App Hosting uses) against `web:build:production`. Nx starts it once per agent; Playwright attaches via `reuseExistingServer`. Two consequences worth knowing: the suite sees the localized build, so the browser locale is pinned to `de-DE` in `web/playwright.config.ts` (otherwise the SSR locale redirect serves `/en/` and every German locator misses), and `webServer.command` must stay in the exact `nx run <project>:<target>` form — `@nx/playwright/plugin` only turns that form into the `dependsOn`, and without it every spec starts its own server and trips Nx's recursive-task-invocation guard.
 - **Deploy gate:** CI fast-forwards the `deploy` branch from `main` only after all checks pass (`promote-to-deploy` job). Both deployment targets watch this branch.
 
 ## App Hosting: pre-built artifact via GitHub Releases
