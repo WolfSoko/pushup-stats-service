@@ -10188,27 +10188,27 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="entryDialog.picker.placeholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung suchen</source>
-        <target>Übung suchen</target>
+        <target>Søk øvelse</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.noMatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Übung gefunden</source>
-        <target>Keine Übung gefunden</target>
+        <target>Ingen øvelse funnet</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.plannedToday">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute geplant</source>
-        <target>Heute geplant</target>
+        <target>Planlagt i dag</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zuletzt genutzt</source>
-        <target>Zuletzt genutzt</target>
+        <target>Nylig brukt</target>
       </segment>
     </unit>
 </file>
