@@ -10401,27 +10401,27 @@
       </segment>
     </unit>
     <unit id="entryDialog.picker.placeholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung suchen</source>
-        <target>Übung suchen</target>
+        <target>搜索练习</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.noMatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Übung gefunden</source>
-        <target>Keine Übung gefunden</target>
+        <target>未找到练习</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.plannedToday">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute geplant</source>
-        <target>Heute geplant</target>
+        <target>今日计划</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zuletzt genutzt</source>
-        <target>Zuletzt genutzt</target>
+        <target>最近使用</target>
       </segment>
     </unit>
 </file>

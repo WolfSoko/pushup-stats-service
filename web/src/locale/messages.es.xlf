@@ -10891,27 +10891,27 @@
       </segment>
     </unit>
     <unit id="entryDialog.picker.placeholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung suchen</source>
-        <target>Übung suchen</target>
+        <target>Buscar ejercicio</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.noMatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Übung gefunden</source>
-        <target>Keine Übung gefunden</target>
+        <target>No se encontró ningún ejercicio</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.plannedToday">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute geplant</source>
-        <target>Heute geplant</target>
+        <target>Planificado hoy</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zuletzt genutzt</source>
-        <target>Zuletzt genutzt</target>
+        <target>Usado recientemente</target>
       </segment>
     </unit>
 </file>

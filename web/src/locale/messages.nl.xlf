@@ -10895,27 +10895,27 @@
       </segment>
     </unit>
     <unit id="entryDialog.picker.placeholder">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung suchen</source>
-        <target>Übung suchen</target>
+        <target>Oefening zoeken</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.noMatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine Übung gefunden</source>
-        <target>Keine Übung gefunden</target>
+        <target>Geen oefening gevonden</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.plannedToday">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute geplant</source>
-        <target>Heute geplant</target>
+        <target>Vandaag gepland</target>
       </segment>
     </unit>
     <unit id="entryDialog.picker.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zuletzt genutzt</source>
-        <target>Zuletzt genutzt</target>
+        <target>Recent gebruikt</target>
       </segment>
     </unit>
 </file>
