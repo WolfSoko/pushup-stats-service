@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { AnalysisPageComponent } from './analysis-page.component';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
+import { AnalysisSegmentViewComponent } from './analysis-segment-view.component';
 import { StatsApiService, UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
@@ -26,6 +27,7 @@ import {
 } from '@angular/core';
 import { ExerciseDefinition, ExerciseEntry } from '@pu-stats/models';
 import { RangeModes } from '@pu-stats/date';
+import type { AnalysisSegment } from '../analysis/view-segments';
 
 @Component({
   selector: 'app-filter-bar',
@@ -89,6 +91,36 @@ class MockStatsChartComponent {
 })
 class MockSetsDistributionComponent {
   readonly data = input<unknown[]>([]);
+}
+
+/**
+ * The rep-measured block of the active view. The seeded dataset is
+ * rep-only, so KPI assertions that predate the per-measurement split
+ * read the same numbers off it. Falls back to an empty block for views
+ * without any rows.
+ */
+const EMPTY_SEGMENT: AnalysisSegment = {
+  measurement: 'reps',
+  hasRangeRows: false,
+  series: [],
+  chartEntries: [],
+  paceSeries: [],
+  bestEntry: null,
+  bestDay: null,
+  bestSingleSet: 0,
+  avgSetSize: 0,
+  setsDistribution: [],
+  typeBreakdown: [],
+  weekTrend: [],
+  monthTrend: [],
+};
+
+function repsSegment(store: {
+  viewSegments: () => AnalysisSegment[];
+}): AnalysisSegment {
+  return (
+    store.viewSegments().find((s) => s.measurement === 'reps') ?? EMPTY_SEGMENT
+  );
 }
 
 describe('AnalysisPageComponent', () => {
@@ -274,9 +306,12 @@ describe('AnalysisPageComponent', () => {
         add: { imports: [MockFilterBarComponent] },
       })
       .overrideComponent(AnalysisGroupViewComponent, {
+        remove: { imports: [HeatmapComponent] },
+        add: { imports: [MockHeatmapComponent] },
+      })
+      .overrideComponent(AnalysisSegmentViewComponent, {
         remove: {
           imports: [
-            HeatmapComponent,
             TypePieComponent,
             StatsChartComponent,
             SetsDistributionComponent,
@@ -284,7 +319,6 @@ describe('AnalysisPageComponent', () => {
         },
         add: {
           imports: [
-            MockHeatmapComponent,
             MockTypePieComponent,
             MockStatsChartComponent,
             MockSetsDistributionComponent,
@@ -337,7 +371,7 @@ describe('AnalysisPageComponent', () => {
 
   it('computes type breakdown, treating missing type as Standard', () => {
     const { store } = fixture.componentInstance;
-    const breakdown = store.typeBreakdown();
+    const breakdown = repsSegment(store).typeBreakdown;
 
     // The store canonicalizes the stored value (legacy entryLabel OR new
     // id) and renders the localized name. TestBed default locale is `de`
@@ -356,17 +390,17 @@ describe('AnalysisPageComponent', () => {
     // must yield exactly one Diamond bucket, not two. The mock dataset
     // above intentionally mixes both forms.
     const { store } = fixture.componentInstance;
-    const diamondBuckets = store
-      .typeBreakdown()
-      .filter((b) => b.label === 'Diamant-Liegestütze');
+    const diamondBuckets = repsSegment(store).typeBreakdown.filter(
+      (b) => b.label === 'Diamant-Liegestütze'
+    );
     expect(diamondBuckets).toHaveLength(1);
     expect(diamondBuckets[0].value).toBe(32);
   });
 
   it('computes best values', () => {
     const { store } = fixture.componentInstance;
-    expect(store.bestSingleEntry()?.reps).toBe(25);
-    expect(store.bestDay()?.total).toBe(25);
+    expect(repsSegment(store).bestEntry?.value).toBe(25);
+    expect(repsSegment(store).bestDay?.total).toBe(25);
   });
 
   it('computes streak stats', () => {
@@ -379,12 +413,12 @@ describe('AnalysisPageComponent', () => {
     const { store } = fixture.componentInstance;
     // sets: [5,5], [6,6], [10,5,5], [10,8,7], [9,9] → all sets = [5,5,6,6,10,5,5,10,8,7,9,9]
     // sum = 85, count = 12, avg = 7.1 (rounded to 1 decimal)
-    expect(store.avgSetSize()).toBe(7.1);
+    expect(repsSegment(store).avgSetSize).toBe(7.1);
   });
 
   it('computes setsDistribution grouped by set count', () => {
     const { store } = fixture.componentInstance;
-    const dist = store.setsDistribution();
+    const dist = repsSegment(store).setsDistribution;
     // 2-set entries: 3 (ids 1,2,6), 3-set entries: 2 (ids 3,5)
     // total with sets = 5
     expect(dist).toEqual([
@@ -396,12 +430,12 @@ describe('AnalysisPageComponent', () => {
   it('computes bestSingleSet from max reps in any individual set', () => {
     const { store } = fixture.componentInstance;
     // max of [5,5,6,6,10,5,5,10,8,7,9,9] = 10
-    expect(store.bestSingleSet()).toBe(10);
+    expect(repsSegment(store).bestSingleSet).toBe(10);
   });
 
   it('includes avgSetSize in typeBreakdown', () => {
     const { store } = fixture.componentInstance;
-    const breakdown = store.typeBreakdown();
+    const breakdown = repsSegment(store).typeBreakdown;
     // Standard: sets [5,5] + [10,8,7] + [9,9] = [5,5,10,8,7,9,9] → avg = 53/7 ≈ 7.6
     const standard = breakdown.find((t) => t.label === 'Standard-Liegestütze');
     expect(standard?.avgSetSize).toBeGreaterThan(0);
@@ -468,7 +502,7 @@ describe('AnalysisPageComponent', () => {
   it('keeps typeBreakdown in pushup-variant mode while no kinds filter is active', () => {
     const { store } = fixture.componentInstance;
     expect(store.kinds()).toEqual([]);
-    const labels = store.typeBreakdown().map((b) => b.label);
+    const labels = repsSegment(store).typeBreakdown.map((b) => b.label);
     // Locale-aware variant names (German source locale).
     expect(labels).toContain('Standard-Liegestütze');
     expect(labels).toContain('Diamant-Liegestütze');
@@ -480,7 +514,7 @@ describe('AnalysisPageComponent', () => {
     // Mock dataset has no exercise entries, so the breakdown collapses to
     // an empty list — no "abs.situps" bucket without source data, no
     // pushup variants either because the filter excludes pushups.
-    expect(store.typeBreakdown()).toEqual([]);
+    expect(repsSegment(store).typeBreakdown).toEqual([]);
   });
 
   describe('per-category view (activeView / viewFilteredRows)', () => {
@@ -561,23 +595,29 @@ describe('AnalysisPageComponent', () => {
     it('overview KPIs include exercise entries alongside pushups', () => {
       const { store } = fixture.componentInstance;
       // Overview = 6 pushups (max 25) + 2 exercises (max 40 legs.squats)
-      expect(store.bestSingleEntry()?.reps).toBe(40);
+      expect(repsSegment(store).bestEntry?.value).toBe(40);
       // Best day = Feb 13: 25 reps (pushup id 5) + 40 reps (legs ex)
-      expect(store.bestDay()).toEqual({ date: '2026-02-13', total: 65 });
+      expect(repsSegment(store).bestDay).toEqual({
+        date: '2026-02-13',
+        total: 65,
+      });
     });
 
     it('per-category KPIs scope to the active view (abs)', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
-      expect(store.bestSingleEntry()?.reps).toBe(30);
-      expect(store.bestDay()).toEqual({ date: '2026-02-12', total: 30 });
+      expect(repsSegment(store).bestEntry?.value).toBe(30);
+      expect(repsSegment(store).bestDay).toEqual({
+        date: '2026-02-12',
+        total: 30,
+      });
       // 1 abs entry, no consecutive day → streak length 1
       expect(store.currentStreak()).toBe(1);
       expect(store.longestStreak()).toBe(1);
       // The seeded abs entry has no sets array → distribution stays empty
-      expect(store.avgSetSize()).toBe(0);
-      expect(store.setsDistribution()).toEqual([]);
-      expect(store.bestSingleSet()).toBe(0);
+      expect(repsSegment(store).avgSetSize).toBe(0);
+      expect(repsSegment(store).setsDistribution).toEqual([]);
+      expect(repsSegment(store).bestSingleSet).toBe(0);
     });
 
     it('per-category KPIs scope to the active view (pushup)', () => {
@@ -585,23 +625,23 @@ describe('AnalysisPageComponent', () => {
       store.setActiveView('pushup');
       // Same numbers as the original pushup-only tests because the
       // seeded mock is the pushup-only dataset.
-      expect(store.bestSingleEntry()?.reps).toBe(25);
-      expect(store.bestDay()?.total).toBe(25);
+      expect(repsSegment(store).bestEntry?.value).toBe(25);
+      expect(repsSegment(store).bestDay?.total).toBe(25);
       expect(store.longestStreak()).toBe(5);
-      expect(store.avgSetSize()).toBe(7.1);
-      expect(store.bestSingleSet()).toBe(10);
+      expect(repsSegment(store).avgSetSize).toBe(7.1);
+      expect(repsSegment(store).bestSingleSet).toBe(10);
     });
 
     it('KPIs collapse to zero/null when the active view has no entries', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('mobility');
-      expect(store.bestSingleEntry()).toBeNull();
-      expect(store.bestDay()).toBeNull();
+      expect(repsSegment(store).bestEntry).toBeNull();
+      expect(repsSegment(store).bestDay).toBeNull();
       expect(store.currentStreak()).toBe(0);
       expect(store.longestStreak()).toBe(0);
-      expect(store.avgSetSize()).toBe(0);
-      expect(store.setsDistribution()).toEqual([]);
-      expect(store.bestSingleSet()).toBe(0);
+      expect(repsSegment(store).avgSetSize).toBe(0);
+      expect(repsSegment(store).setsDistribution).toEqual([]);
+      expect(repsSegment(store).bestSingleSet).toBe(0);
     });
 
     // The trend windows span 8 ISO weeks / 6 months ending on the
@@ -830,7 +870,7 @@ describe('AnalysisPageComponent', () => {
     it('typeBreakdown collapses to the active category in kind mode (abs)', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
-      const breakdown = store.typeBreakdown();
+      const breakdown = repsSegment(store).typeBreakdown;
       expect(breakdown).toHaveLength(1);
       expect(breakdown[0]).toMatchObject({
         id: 'abs.situps',
@@ -841,7 +881,7 @@ describe('AnalysisPageComponent', () => {
     it('typeBreakdown stays in pushup-variant mode when the active view is pushup', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('pushup');
-      const labels = store.typeBreakdown().map((b) => b.label);
+      const labels = repsSegment(store).typeBreakdown.map((b) => b.label);
       expect(labels).toContain('Standard-Liegestütze');
       expect(labels).toContain('Diamant-Liegestütze');
       // Wide pushups are in the seed (id=4, 8 reps); a non-pushup
@@ -852,17 +892,17 @@ describe('AnalysisPageComponent', () => {
     it('typeBreakdown is empty for a category that has no entries', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('mobility');
-      expect(store.typeBreakdown()).toEqual([]);
+      expect(repsSegment(store).typeBreakdown).toEqual([]);
     });
 
-    it('viewChartSegments aggregates pushups + exercises in overview mode', () => {
+    it('viewSegments aggregates pushups + exercises in overview mode', () => {
       // Regression for the analysis-graph-tab bug: the chart used to
       // bind to `store.chartSeries()` (pushup-only REST series) which
       // ignored exercise entries and never re-aggregated per active
       // view. The new view-scoped computed must include both source
       // collections in overview mode.
       const { store } = fixture.componentInstance;
-      const series = store.viewChartSegments()[0].series;
+      const series = store.viewSegments()[0].series;
       const byBucket = new Map(series.map((s) => [s.bucket, s.total]));
       // Feb 12: pushup id=4 (8) + abs sit-ups (30) = 38
       expect(byBucket.get('2026-02-12')).toBe(38);
@@ -873,28 +913,28 @@ describe('AnalysisPageComponent', () => {
       expect(last.dayIntegral).toBe(163);
     });
 
-    it('viewChartSegments narrows to the active category (abs)', () => {
+    it('viewSegments narrows to the active category (abs)', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
-      const series = store.viewChartSegments()[0].series;
+      const series = store.viewSegments()[0].series;
       expect(series).toEqual([
         { bucket: '2026-02-12', total: 30, dayIntegral: 30 },
       ]);
     });
 
-    it('viewChartSegments narrows to the active category (legs)', () => {
+    it('viewSegments narrows to the active category (legs)', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('squat');
-      const series = store.viewChartSegments()[0].series;
+      const series = store.viewSegments()[0].series;
       expect(series).toEqual([
         { bucket: '2026-02-13', total: 40, dayIntegral: 40 },
       ]);
     });
 
-    it('viewChartSegments scoped to pushup matches the legacy pushup-only daily totals', () => {
+    it('viewSegments scoped to pushup matches the legacy pushup-only daily totals', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('pushup');
-      const series = store.viewChartSegments()[0].series;
+      const series = store.viewSegments()[0].series;
       // Seeded pushups: Feb 9 → 15 with one skipped day, totals
       // [10,12,20,8,25,18] and cumulative dayIntegral [10,22,42,50,75,93].
       expect(series.map((s) => s.bucket)).toEqual([
@@ -911,10 +951,10 @@ describe('AnalysisPageComponent', () => {
       ]);
     });
 
-    it('viewChartSegments collapses to an empty array for a category with no entries', () => {
+    it('viewSegments collapses to an empty array for a category with no entries', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('mobility');
-      expect(store.viewChartSegments()).toEqual([]);
+      expect(store.viewSegments()).toEqual([]);
     });
 
     it('viewGranularity tracks from===to without waiting on the REST resource', () => {
@@ -930,7 +970,7 @@ describe('AnalysisPageComponent', () => {
       expect(store.viewGranularity()).toBe('daily');
     });
 
-    it('viewChartSegments switches to hourly buckets when the page filter is a single day', () => {
+    it('viewSegments switches to hourly buckets when the page filter is a single day', () => {
       // Single-day ranges flip the API to hourly granularity. The
       // view-scoped chart must mirror that bucketing on view-filtered
       // rows so the per-category tab still renders a populated chart
@@ -941,7 +981,7 @@ describe('AnalysisPageComponent', () => {
       store.setRange('2026-02-12', '2026-02-12');
       store.setActiveView('core');
       store.setDayChartMode('24h');
-      const series = store.viewChartSegments()[0].series;
+      const series = store.viewSegments()[0].series;
       expect(series).toHaveLength(24);
       // All 24 buckets sum to the single abs entry's reps.
       expect(series.reduce((acc, s) => acc + s.total, 0)).toBe(30);
@@ -949,7 +989,7 @@ describe('AnalysisPageComponent', () => {
       expect(series[series.length - 1].dayIntegral).toBe(30);
     });
 
-    it('viewChartSegments collapses 00-07 into a single night bucket in 14h mode', () => {
+    it('viewSegments collapses 00-07 into a single night bucket in 14h mode', () => {
       // 14h mode mirrors `StatsApiService.toStatsResponse`: one night
       // bucket "00-07" followed by hours 8..21 → 15 buckets total.
       // CI runs in UTC, so the abs entry's hour (08:00 UTC) lands in
@@ -958,29 +998,29 @@ describe('AnalysisPageComponent', () => {
       store.setRange('2026-02-12', '2026-02-12');
       store.setActiveView('core');
       store.setDayChartMode('14h');
-      const series = store.viewChartSegments()[0].series;
+      const series = store.viewSegments()[0].series;
       expect(series).toHaveLength(15);
       expect(series[0]).toMatchObject({ bucketLabel: '00-07' });
       expect(series[series.length - 1].dayIntegral).toBe(30);
     });
 
-    it('viewChartSegments entries shapes view-filtered rows for the chart sets-stacking layer', () => {
+    it('viewSegments entries shapes view-filtered rows for the chart sets-stacking layer', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
-      const entries = store.viewChartSegments()[0].entries;
+      const entries = store.viewSegments()[0].chartEntries;
       expect(entries).toEqual([
         { timestamp: '2026-02-12T08:00:00.000Z', reps: 30 },
       ]);
     });
 
-    it('viewChartSegments entries preserves the sets array on entries that have one', () => {
+    it('viewSegments entries preserves the sets array on entries that have one', () => {
       // The chart's stacked-bar layer keys off `entry.sets[]` to colour
       // the "with sets" portion separately. If the store dropped the
       // array on the way through, every pushup tab would silently lose
       // its purple "Mit Sets" segment.
       const { store } = fixture.componentInstance;
       store.setActiveView('pushup');
-      const entries = store.viewChartSegments()[0].entries;
+      const entries = store.viewSegments()[0].chartEntries;
       expect(
         entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
       ).toBe(true);
@@ -1095,10 +1135,10 @@ describe('AnalysisPageComponent', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
       fixture.detectChanges();
-      const groupView = fixture.debugElement.query(
-        By.directive(AnalysisGroupViewComponent)
-      ).componentInstance as AnalysisGroupViewComponent;
-      const breakdown = groupView.typeBreakdownDisplay();
+      const segmentView = fixture.debugElement.query(
+        By.directive(AnalysisSegmentViewComponent)
+      ).componentInstance as AnalysisSegmentViewComponent;
+      const breakdown = segmentView.typeBreakdownDisplay();
       expect(breakdown).toHaveLength(1);
       expect(breakdown[0]).toMatchObject({
         id: 'abs.situps',
@@ -1286,9 +1326,12 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
         add: { imports: [MockFilterBarComponent] },
       })
       .overrideComponent(AnalysisGroupViewComponent, {
+        remove: { imports: [HeatmapComponent] },
+        add: { imports: [MockHeatmapComponent] },
+      })
+      .overrideComponent(AnalysisSegmentViewComponent, {
         remove: {
           imports: [
-            HeatmapComponent,
             TypePieComponent,
             StatsChartComponent,
             SetsDistributionComponent,
@@ -1296,7 +1339,6 @@ describe('AnalysisPageComponent empty-state CTA gating', () => {
         },
         add: {
           imports: [
-            MockHeatmapComponent,
             MockTypePieComponent,
             MockStatsChartComponent,
             MockSetsDistributionComponent,

@@ -10826,5 +10826,17 @@
         <target>Sonstige</target>
       </segment>
     </unit>
+    <unit id="analysis.streaksTitle">
+      <segment state="initial">
+        <source>Streaks</source>
+        <target>Streaks</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestValuesTitle">
+      <segment state="initial">
+        <source>Bestwerte</source>
+        <target>Bestwerte</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

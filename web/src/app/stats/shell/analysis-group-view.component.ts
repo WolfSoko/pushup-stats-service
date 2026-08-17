@@ -1,4 +1,3 @@
-import { DecimalPipe } from '@angular/common';
 import {
   Component,
   computed,
@@ -9,40 +8,33 @@ import {
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import type { HeatmapMode } from '../components/heatmap/heatmap.utils';
-import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
-import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
-import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { AnalysisStore } from '../analysis.store';
-import type { ViewChartSegment } from '../analysis/chart-segments';
+import { AnalysisSegmentViewComponent } from './analysis-segment-view.component';
 import {
-  chartSegmentLabel,
   resolveHeatmapMeasurement,
   resolveHeatmapToggleLabels,
-  resolveTypeBreakdownDisplay,
 } from './analysis-group-view.helpers';
-
-type LabelledChartSegment = ViewChartSegment & { label: string };
 
 /**
  * The store's `activeView` / view-scoped computeds drive the data,
  * so this component carries no inputs — dropping it inside any tab
  * content gives the right slice without prop-drilling.
+ *
+ * Everything unit-bound (chart, best values, type shares, trends)
+ * lives in one {@link AnalysisSegmentViewComponent} per measurement;
+ * what stays here is measurement-independent: streaks count days, and
+ * the heatmap falls back to entry counts for mixed views.
  */
 @Component({
   selector: 'app-analysis-group-view',
   imports: [
-    DecimalPipe,
     MatButtonToggleModule,
     MatCardModule,
     MatIconModule,
-    MatTableModule,
     HeatmapComponent,
-    SetsDistributionComponent,
-    StatsChartComponent,
-    TypePieComponent,
+    AnalysisSegmentViewComponent,
   ],
   templateUrl: './analysis-group-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,22 +42,11 @@ type LabelledChartSegment = ViewChartSegment & { label: string };
 })
 export class AnalysisGroupViewComponent {
   readonly store = inject(AnalysisStore);
-  readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
   readonly heatmapMode = signal<HeatmapMode>('primary');
 
-  /**
-   * One chart per measurement present in the view. The title suffix is
-   * only filled in when there is more than one — a single-measurement
-   * view needs no disambiguation.
-   */
-  readonly chartSegments = computed<LabelledChartSegment[]>(() => {
-    const segments = this.store.viewChartSegments();
-    const needsLabel = segments.length > 1;
-    return segments.map((segment) => ({
-      ...segment,
-      label: needsLabel ? chartSegmentLabel(segment.measurement) : '',
-    }));
-  });
+  readonly hasMultipleSegments = computed(
+    () => this.store.viewSegments().length > 1
+  );
 
   readonly heatmapMeasurement = computed(() =>
     resolveHeatmapMeasurement(this.store.viewMeasurement())
@@ -89,13 +70,5 @@ export class AnalysisGroupViewComponent {
     () =>
       this.store.activeView() !== 'overview' &&
       this.store.viewFilteredRows().length === 0
-  );
-
-  readonly typeBreakdownDisplay = computed(() =>
-    resolveTypeBreakdownDisplay(
-      this.store.activeView(),
-      this.store.kinds(),
-      this.store.typeBreakdown()
-    )
   );
 }
