@@ -759,7 +759,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:118,119</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:120,121</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
