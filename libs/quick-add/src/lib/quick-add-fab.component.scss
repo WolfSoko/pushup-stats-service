@@ -132,16 +132,27 @@
   }
 }
 
+// Wraps the goal toggle button so the submenu can be positioned relative
+// to it without adding height to `.dial-actions`' vertical stack — the
+// submenu used to render inline above the toggle and push/overlap the
+// quick-add buttons above it.
+.goal-dial-item {
+  position: relative;
+  display: flex;
+}
+
 .goal-submenu {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 8px);
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
+  white-space: nowrap;
 
-  // Indented so the submenu reads as belonging to the goal button below
-  // it rather than as another top-level dial action.
-  padding-right: 12px;
-  animation: dial-item-in 160ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: dial-item-in-left 160ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .goal-sub-fab {
@@ -157,5 +168,16 @@
   &.reached,
   &[disabled] {
     opacity: 0.7;
+  }
+}
+
+@keyframes dial-item-in-left {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(10px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) scale(1);
   }
 }
