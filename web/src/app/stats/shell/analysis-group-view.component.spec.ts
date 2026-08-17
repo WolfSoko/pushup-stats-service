@@ -60,6 +60,7 @@ class MockStatsChartComponent {
   readonly entries = input<unknown[]>([]);
   readonly measurement = input<unknown>(null);
   readonly paceSeries = input<unknown[]>([]);
+  readonly kindLabel = input<string>('');
   readonly dayChartMode = model<string>('14h');
 }
 
@@ -227,7 +228,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
   });
 
-  it('viewChartSeries includes durationSec for time-measured exercises (regression: planks rendered as zero-height bars)', async () => {
+  it('viewChartSegments includes durationSec for time-measured exercises (regression: planks rendered as zero-height bars)', async () => {
     // Regression: time-measured exercises (`plank.standard`,
     // `core.hollowhold`, …) store their primary value on
     // `durationSec`, not `reps`. The chart aggregation used to sum
@@ -260,7 +261,7 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const series = store.viewChartSeries();
+    const series = store.viewChartSegments()[0].series;
     const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
     expect(totals['2026-02-10']).toBe(60);
     expect(totals['2026-02-12']).toBe(90);
@@ -320,7 +321,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(store.viewMeasurement()).toBe('mixed');
   });
 
-  it('viewChartSeries scales distance entries from meters to km so the bar axis reads naturally', async () => {
+  it('viewChartSegments scales distance entries from meters to km so the bar axis reads naturally', async () => {
     // Regression: distance-measured runs are stored in meters
     // (`distanceM: 5000`). Showing 5000 on the chart axis is awkward —
     // the store divides by 1000 so the bar shows 5 (km) and the
@@ -345,12 +346,12 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const series = store.viewChartSeries();
+    const series = store.viewChartSegments()[0].series;
     const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
     expect(totals['2026-02-10']).toBe(5);
   });
 
-  it('viewPaceSeries returns min/km pace for distance-time entries, aligned with the bar buckets', async () => {
+  it('viewChartSegments pace returns min/km pace for distance-time entries, aligned with the bar buckets', async () => {
     // 5 km in 25 min → 5 min/km
     liveExerciseEntries.set([
       {
@@ -372,13 +373,13 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const pace = store.viewPaceSeries();
+    const pace = store.viewChartSegments()[0].paceSeries;
     const entry = pace.find((p) => p.bucket === '2026-02-10');
     expect(entry).toBeDefined();
     expect(entry?.pace).toBeCloseTo(5, 5);
   });
 
-  it('viewPaceSeries returns pace=null for distance entries without duration so the chart does not render a bogus zero-pace line', async () => {
+  it('viewChartSegments pace returns pace=null for distance entries without duration so the chart does not render a bogus zero-pace line', async () => {
     // Regression for a distance-only carry exercise (or a future
     // `distance` exercise with no paired duration): totalSec stays 0,
     // so dividing by it would produce pace=0. The chart's paceMode()
@@ -404,11 +405,13 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const entry = store.viewPaceSeries().find((p) => p.bucket === '2026-02-10');
+    const entry = store
+      .viewChartSegments()[0]
+      .paceSeries.find((p) => p.bucket === '2026-02-10');
     expect(entry?.pace).toBeNull();
   });
 
-  it('viewPaceSeries is empty for non-distance views (reps/time) — the chart keeps the day-integral line', async () => {
+  it('viewChartSegments pace is empty for non-distance views (reps/time) — the chart keeps the day-integral line', async () => {
     liveExerciseEntries.set([
       {
         _id: 'e1',
@@ -428,7 +431,7 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(store.viewPaceSeries()).toEqual([]);
+    expect(store.viewChartSegments()[0].paceSeries).toEqual([]);
   });
 
   it('heatmap toggle shows Reps/Sets for reps-measured views', async () => {
@@ -577,7 +580,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(toggle).toBeNull();
   });
 
-  it('viewChartEntries surfaces durationSec on `reps` for time-measured rows so the stacked-bar layer also sees the volume', async () => {
+  it('viewChartSegments entries surfaces durationSec on `reps` for time-measured rows so the stacked-bar layer also sees the volume', async () => {
     liveExerciseEntries.set([
       {
         _id: 'e1',
@@ -597,9 +600,115 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const entries = store.viewChartEntries();
+    const entries = store.viewChartSegments()[0].entries;
     expect(entries).toHaveLength(1);
     expect(entries[0].reps).toBe(75);
+  });
+
+  it('renders one chart per measurement so timed and counted exercises of a category never share an axis', async () => {
+    // given a `core` range mixing sit-ups (reps) and planks (seconds)
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then the reps chart carries 30 and the time chart 60 — not 90 on one
+    const segments = store.viewChartSegments();
+    expect(segments.map((s) => s.measurement)).toEqual(['reps', 'time']);
+    expect(segments[0].series[0].total).toBe(30);
+    expect(segments[1].series[0].total).toBe(60);
+
+    const host: HTMLElement = fixture.nativeElement;
+    const charts = host.querySelectorAll('app-stats-chart');
+    expect(charts).toHaveLength(2);
+    expect(
+      host.querySelector('[data-testid="analysis-chart-reps"]')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="analysis-chart-time"]')
+    ).toBeTruthy();
+  });
+
+  it('labels each chart of a multi-measurement view and leaves a single-measurement view unlabelled', async () => {
+    // given
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    const groupView =
+      groupViewEl.componentInstance as AnalysisGroupViewComponent;
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(groupView.chartSegments().map((s) => s.label)).toEqual([
+      'Wiederholungen',
+      'Dauer',
+    ]);
+
+    // when only the plank remains, the lone chart needs no suffix
+    liveExerciseEntries.set([
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(groupView.chartSegments().map((s) => s.label)).toEqual(['']);
   });
 
   it('renders the "Keine Einträge im gewählten Zeitraum" notice when the active category has no entries in the range', async () => {

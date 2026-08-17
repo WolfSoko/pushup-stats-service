@@ -77,6 +77,7 @@ class MockStatsChartComponent {
   readonly entries = input<unknown[]>([]);
   readonly measurement = input<unknown>(null);
   readonly paceSeries = input<unknown[]>([]);
+  readonly kindLabel = input<string>('');
   readonly dayChartMode = model<string>('14h');
 }
 
@@ -854,14 +855,14 @@ describe('AnalysisPageComponent', () => {
       expect(store.typeBreakdown()).toEqual([]);
     });
 
-    it('viewChartSeries aggregates pushups + exercises in overview mode', () => {
+    it('viewChartSegments aggregates pushups + exercises in overview mode', () => {
       // Regression for the analysis-graph-tab bug: the chart used to
       // bind to `store.chartSeries()` (pushup-only REST series) which
       // ignored exercise entries and never re-aggregated per active
       // view. The new view-scoped computed must include both source
       // collections in overview mode.
       const { store } = fixture.componentInstance;
-      const series = store.viewChartSeries();
+      const series = store.viewChartSegments()[0].series;
       const byBucket = new Map(series.map((s) => [s.bucket, s.total]));
       // Feb 12: pushup id=4 (8) + abs sit-ups (30) = 38
       expect(byBucket.get('2026-02-12')).toBe(38);
@@ -872,28 +873,28 @@ describe('AnalysisPageComponent', () => {
       expect(last.dayIntegral).toBe(163);
     });
 
-    it('viewChartSeries narrows to the active category (abs)', () => {
+    it('viewChartSegments narrows to the active category (abs)', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
-      const series = store.viewChartSeries();
+      const series = store.viewChartSegments()[0].series;
       expect(series).toEqual([
         { bucket: '2026-02-12', total: 30, dayIntegral: 30 },
       ]);
     });
 
-    it('viewChartSeries narrows to the active category (legs)', () => {
+    it('viewChartSegments narrows to the active category (legs)', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('squat');
-      const series = store.viewChartSeries();
+      const series = store.viewChartSegments()[0].series;
       expect(series).toEqual([
         { bucket: '2026-02-13', total: 40, dayIntegral: 40 },
       ]);
     });
 
-    it('viewChartSeries scoped to pushup matches the legacy pushup-only daily totals', () => {
+    it('viewChartSegments scoped to pushup matches the legacy pushup-only daily totals', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('pushup');
-      const series = store.viewChartSeries();
+      const series = store.viewChartSegments()[0].series;
       // Seeded pushups: Feb 9 → 15 with one skipped day, totals
       // [10,12,20,8,25,18] and cumulative dayIntegral [10,22,42,50,75,93].
       expect(series.map((s) => s.bucket)).toEqual([
@@ -910,17 +911,17 @@ describe('AnalysisPageComponent', () => {
       ]);
     });
 
-    it('viewChartSeries collapses to an empty array for a category with no entries', () => {
+    it('viewChartSegments collapses to an empty array for a category with no entries', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('mobility');
-      expect(store.viewChartSeries()).toEqual([]);
+      expect(store.viewChartSegments()).toEqual([]);
     });
 
     it('viewGranularity tracks from===to without waiting on the REST resource', () => {
       // The REST-backed `granularity()` lags the resource during cold
       // start / filter swaps; `viewGranularity()` must derive the mode
       // from the page filter directly so the chart's axis stays in
-      // lockstep with `viewChartSeries()` bucketing.
+      // lockstep with `viewChartSegments()` bucketing.
       const { store } = fixture.componentInstance;
       expect(store.viewGranularity()).toBe('daily');
       store.setRange('2026-02-12', '2026-02-12');
@@ -929,7 +930,7 @@ describe('AnalysisPageComponent', () => {
       expect(store.viewGranularity()).toBe('daily');
     });
 
-    it('viewChartSeries switches to hourly buckets when the page filter is a single day', () => {
+    it('viewChartSegments switches to hourly buckets when the page filter is a single day', () => {
       // Single-day ranges flip the API to hourly granularity. The
       // view-scoped chart must mirror that bucketing on view-filtered
       // rows so the per-category tab still renders a populated chart
@@ -940,7 +941,7 @@ describe('AnalysisPageComponent', () => {
       store.setRange('2026-02-12', '2026-02-12');
       store.setActiveView('core');
       store.setDayChartMode('24h');
-      const series = store.viewChartSeries();
+      const series = store.viewChartSegments()[0].series;
       expect(series).toHaveLength(24);
       // All 24 buckets sum to the single abs entry's reps.
       expect(series.reduce((acc, s) => acc + s.total, 0)).toBe(30);
@@ -948,7 +949,7 @@ describe('AnalysisPageComponent', () => {
       expect(series[series.length - 1].dayIntegral).toBe(30);
     });
 
-    it('viewChartSeries collapses 00-07 into a single night bucket in 14h mode', () => {
+    it('viewChartSegments collapses 00-07 into a single night bucket in 14h mode', () => {
       // 14h mode mirrors `StatsApiService.toStatsResponse`: one night
       // bucket "00-07" followed by hours 8..21 → 15 buckets total.
       // CI runs in UTC, so the abs entry's hour (08:00 UTC) lands in
@@ -957,29 +958,29 @@ describe('AnalysisPageComponent', () => {
       store.setRange('2026-02-12', '2026-02-12');
       store.setActiveView('core');
       store.setDayChartMode('14h');
-      const series = store.viewChartSeries();
+      const series = store.viewChartSegments()[0].series;
       expect(series).toHaveLength(15);
       expect(series[0]).toMatchObject({ bucketLabel: '00-07' });
       expect(series[series.length - 1].dayIntegral).toBe(30);
     });
 
-    it('viewChartEntries shapes view-filtered rows for the chart sets-stacking layer', () => {
+    it('viewChartSegments entries shapes view-filtered rows for the chart sets-stacking layer', () => {
       const { store } = fixture.componentInstance;
       store.setActiveView('core');
-      const entries = store.viewChartEntries();
+      const entries = store.viewChartSegments()[0].entries;
       expect(entries).toEqual([
         { timestamp: '2026-02-12T08:00:00.000Z', reps: 30 },
       ]);
     });
 
-    it('viewChartEntries preserves the sets array on entries that have one', () => {
+    it('viewChartSegments entries preserves the sets array on entries that have one', () => {
       // The chart's stacked-bar layer keys off `entry.sets[]` to colour
       // the "with sets" portion separately. If the store dropped the
       // array on the way through, every pushup tab would silently lose
       // its purple "Mit Sets" segment.
       const { store } = fixture.componentInstance;
       store.setActiveView('pushup');
-      const entries = store.viewChartEntries();
+      const entries = store.viewChartSegments()[0].entries;
       expect(
         entries.some((e) => Array.isArray(e.sets) && e.sets.length > 1)
       ).toBe(true);

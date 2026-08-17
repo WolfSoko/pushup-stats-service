@@ -33,7 +33,6 @@ import type {
   AnalysisView,
   CategoryComparison,
   CategorySummary,
-  ChartFeedEntry,
   TrendPoint,
   TypeBreakdownDatum,
 } from './analysis/analysis.types';
@@ -41,12 +40,11 @@ import {
   buildCategoryComparison,
   buildCategorySummaries,
 } from './analysis/category-volume';
+import { computeViewMeasurement } from './analysis/chart-series';
 import {
-  buildViewChartEntries,
-  buildViewChartSeries,
-  buildViewPaceSeries,
-  computeViewMeasurement,
-} from './analysis/chart-series';
+  buildViewChartSegments,
+  type ViewChartSegment,
+} from './analysis/chart-segments';
 import {
   computeAvgSetSize,
   computeBestDay,
@@ -264,7 +262,7 @@ export const AnalysisStore = signalStore(
     });
 
     /**
-     * Granularity of {@link viewChartSeries}. Tracked separately from
+     * Granularity of {@link viewChartSegments}. Tracked separately from
      * the REST-derived {@link granularity} (which lags the resource
      * during cold-start / filter changes) so the chart's axis mode,
      * dayChartMode toggle visibility and sets-stacking bucket-keying
@@ -280,26 +278,18 @@ export const AnalysisStore = signalStore(
       computeViewMeasurement(viewFilteredRows())
     );
 
-    const viewChartSeries = computed(() =>
-      buildViewChartSeries(viewFilteredRows(), {
+    /**
+     * One chart per measurement in the view: a category mixing counted
+     * and timed exercises (`core`: sit-ups + planks) renders separate
+     * graphs instead of summing reps and seconds into one bar.
+     */
+    const viewChartSegments = computed<ViewChartSegment[]>(() =>
+      buildViewChartSegments(viewFilteredRows(), {
         from: store.from(),
         isDayRange: viewGranularity() === 'hourly',
         dayChartMode: resolvedDayChartMode(),
-        measurement: viewMeasurement(),
+        resolveDefinition: resolveDefinition(),
       })
-    );
-
-    const viewPaceSeries = computed(() =>
-      buildViewPaceSeries(viewFilteredRows(), viewChartSeries(), {
-        from: store.from(),
-        isDayRange: viewGranularity() === 'hourly',
-        dayChartMode: resolvedDayChartMode(),
-        measurement: viewMeasurement(),
-      })
-    );
-
-    const viewChartEntries = computed<ChartFeedEntry[]>(() =>
-      buildViewChartEntries(viewFilteredRows(), viewMeasurement())
     );
 
     /**
@@ -410,11 +400,9 @@ export const AnalysisStore = signalStore(
     );
 
     return {
-      viewChartSeries,
-      viewChartEntries,
+      viewChartSegments,
       viewGranularity,
       viewMeasurement,
-      viewPaceSeries,
       unifiedRows,
       viewFilteredRows,
       categorySummaries,

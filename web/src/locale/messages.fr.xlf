@@ -10790,5 +10790,41 @@
         <target>Utilisé récemment</target>
       </segment>
     </unit>
+    <unit id="analysis.chartSegment.reps">
+      <segment state="initial">
+        <source>Wiederholungen</source>
+        <target>Wiederholungen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.weight">
+      <segment state="initial">
+        <source>Gewicht</source>
+        <target>Gewicht</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.time">
+      <segment state="initial">
+        <source>Dauer</source>
+        <target>Dauer</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distance">
+      <segment state="initial">
+        <source>Strecke</source>
+        <target>Strecke</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distanceTime">
+      <segment state="initial">
+        <source>Strecke &amp; Tempo</source>
+        <target>Strecke &amp; Tempo</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.mixed">
+      <segment state="initial">
+        <source>Sonstige</source>
+        <target>Sonstige</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -7,6 +7,7 @@ import type {
   AnalysisView,
   TypeBreakdownDatum,
 } from '../analysis/analysis.types';
+import type { SegmentMeasurement } from '../analysis/chart-segments';
 import { kindDisplayName } from '../i18n/exercise-display-names';
 
 export interface HeatmapToggleLabels {
@@ -54,6 +55,28 @@ export function resolveHeatmapToggleLabels(
       };
     case 'mixed':
       return null;
+  }
+}
+
+/**
+ * Title suffix that tells the charts of a multi-measurement view apart
+ * ("Verlauf (Tageswerte) – Dauer"). A view with a single measurement
+ * passes `''` so its chart keeps the bare title.
+ */
+export function chartSegmentLabel(measurement: SegmentMeasurement): string {
+  switch (measurement) {
+    case 'reps':
+      return $localize`:@@analysis.chartSegment.reps:Wiederholungen`;
+    case 'weight':
+      return $localize`:@@analysis.chartSegment.weight:Gewicht`;
+    case 'time':
+      return $localize`:@@analysis.chartSegment.time:Dauer`;
+    case 'distance':
+      return $localize`:@@analysis.chartSegment.distance:Strecke`;
+    case 'distance-time':
+      return $localize`:@@analysis.chartSegment.distanceTime:Strecke & Tempo`;
+    case 'mixed':
+      return $localize`:@@analysis.chartSegment.mixed:Sonstige`;
   }
 }
 

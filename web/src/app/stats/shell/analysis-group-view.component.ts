@@ -16,11 +16,15 @@ import { SetsDistributionComponent } from '../components/sets-distribution/sets-
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { AnalysisStore } from '../analysis.store';
+import type { ViewChartSegment } from '../analysis/chart-segments';
 import {
+  chartSegmentLabel,
   resolveHeatmapMeasurement,
   resolveHeatmapToggleLabels,
   resolveTypeBreakdownDisplay,
 } from './analysis-group-view.helpers';
+
+type LabelledChartSegment = ViewChartSegment & { label: string };
 
 /**
  * The store's `activeView` / view-scoped computeds drive the data,
@@ -48,6 +52,20 @@ export class AnalysisGroupViewComponent {
   readonly store = inject(AnalysisStore);
   readonly trendColumnsWithSets = ['label', 'total', 'avgSetsPerEntry'];
   readonly heatmapMode = signal<HeatmapMode>('primary');
+
+  /**
+   * One chart per measurement present in the view. The title suffix is
+   * only filled in when there is more than one — a single-measurement
+   * view needs no disambiguation.
+   */
+  readonly chartSegments = computed<LabelledChartSegment[]>(() => {
+    const segments = this.store.viewChartSegments();
+    const needsLabel = segments.length > 1;
+    return segments.map((segment) => ({
+      ...segment,
+      label: needsLabel ? chartSegmentLabel(segment.measurement) : '',
+    }));
+  });
 
   readonly heatmapMeasurement = computed(() =>
     resolveHeatmapMeasurement(this.store.viewMeasurement())

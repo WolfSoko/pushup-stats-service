@@ -7270,8 +7270,8 @@
     <unit id="analysis.streakDays">
       <notes>
         <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:217,218</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:63,64</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:71,72</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:67,68</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:75,76</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
@@ -9245,7 +9245,7 @@
     </unit>
     <unit id="analysis.bestStreaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:29,31</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:33,35</note>
       </notes>
       <segment>
         <source>Bestwerte &amp; Streaks</source>
@@ -9253,7 +9253,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:35,38</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:39,42</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -9261,8 +9261,8 @@
     </unit>
     <unit id="analysis.repsUnitLong">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:39,41</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:47,49</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:43,45</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:51,53</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -9270,7 +9270,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:43,45</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:47,49</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -9278,7 +9278,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:52,54</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:56,58</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -9286,7 +9286,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:55,57</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:59,61</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -9294,7 +9294,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:60,62</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:64,66</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -9302,7 +9302,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:68,70</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:72,74</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -9310,7 +9310,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:81,83</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:85,87</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -9318,7 +9318,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:95,96</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:99,100</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -9326,7 +9326,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:100,101</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:104,105</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -9334,7 +9334,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:109,111</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:113,115</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
@@ -9342,7 +9342,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:124,126</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:128,130</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -9350,7 +9350,7 @@
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:131,132</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:135,136</note>
       </notes>
       <segment>
         <source>Heatmap-Modus auswählen</source>
@@ -9358,7 +9358,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:159,161</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:163,165</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -9366,7 +9366,7 @@
     </unit>
     <unit id="analysis.weekTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:162,164</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:166,168</note>
       </notes>
       <segment>
         <source>Letzte 8 Wochen</source>
@@ -9374,7 +9374,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:170,171</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:174,175</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -9382,8 +9382,8 @@
     </unit>
     <unit id="analysis.repsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:176,177</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:223,224</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:180,181</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:227,228</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -9391,8 +9391,8 @@
     </unit>
     <unit id="analysis.avgSetsCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:182,183</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:229,230</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:186,187</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:233,234</note>
       </notes>
       <segment>
         <source>⌀ Sets</source>
@@ -9400,7 +9400,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:206,208</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:210,212</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -9408,7 +9408,7 @@
     </unit>
     <unit id="analysis.monthTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:209,211</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:213,215</note>
       </notes>
       <segment>
         <source>Letzte 6 Monate</source>
@@ -9416,7 +9416,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:217,219</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:221,223</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -9424,7 +9424,7 @@
     </unit>
     <unit id="analysis.heatmapReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:41</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:42</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -9432,7 +9432,7 @@
     </unit>
     <unit id="analysis.heatmapSets">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:42</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:43</note>
       </notes>
       <segment>
         <source>Sets</source>
@@ -9440,7 +9440,7 @@
     </unit>
     <unit id="analysis.heatmapTime">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:46</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:47</note>
       </notes>
       <segment>
         <source>Zeit</source>
@@ -9448,8 +9448,8 @@
     </unit>
     <unit id="analysis.heatmapIntervals">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:47</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:53</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:48</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:54</note>
       </notes>
       <segment>
         <source>Intervalle</source>
@@ -9457,10 +9457,58 @@
     </unit>
     <unit id="analysis.heatmapDistance">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:52</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:53</note>
       </notes>
       <segment>
         <source>Strecke</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.reps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:69</note>
+      </notes>
+      <segment>
+        <source>Wiederholungen</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.weight">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:71</note>
+      </notes>
+      <segment>
+        <source>Gewicht</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.time">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:73</note>
+      </notes>
+      <segment>
+        <source>Dauer</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distance">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:75</note>
+      </notes>
+      <segment>
+        <source>Strecke</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distanceTime">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:77</note>
+      </notes>
+      <segment>
+        <source>Strecke &amp; Tempo</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:79</note>
+      </notes>
+      <segment>
+        <source>Sonstige</source>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
