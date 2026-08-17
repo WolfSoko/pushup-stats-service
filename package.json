@@ -127,7 +127,7 @@
     "@nestjs/websockets": "^11.1.19",
     "@ngrx/signals": "^21.0.1",
     "@sentry/angular": "^10.45.0",
-    "@sentry/node": "^10.45.0",
+    "@sentry/node": "^10.70.0",
     "@wolsok/thanos": "^16.0.1",
     "axios": "1.19.0",
     "chart.js": "4.5.1",
