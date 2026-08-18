@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import type { HeatmapMode } from '../components/heatmap/heatmap.utils';
 import { AnalysisStore } from '../analysis.store';
@@ -32,7 +31,6 @@ import {
   imports: [
     MatButtonToggleModule,
     MatCardModule,
-    MatIconModule,
     HeatmapComponent,
     AnalysisSegmentViewComponent,
   ],

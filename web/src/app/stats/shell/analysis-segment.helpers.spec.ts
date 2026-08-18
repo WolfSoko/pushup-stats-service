@@ -1,5 +1,6 @@
 import type { TypeBreakdownDatum } from '../analysis/analysis.types';
 import {
+  formatSegmentCell,
   formatSegmentValue,
   resolveTypeBreakdownDisplay,
   segmentHasSets,
@@ -43,6 +44,21 @@ describe('formatSegmentValue', () => {
   it('should leave the unresolvable bucket unitless', () => {
     // given / when / then
     expect(formatSegmentValue(7, 'mixed')).toBe('7');
+  });
+});
+
+describe('formatSegmentCell', () => {
+  it('should leave the reps unit to the column header', () => {
+    // given / when / then
+    expect(formatSegmentCell(42, 'reps')).toBe('42');
+  });
+
+  it('should keep symbol units that a header cannot carry', () => {
+    // given / when / then — distance flips between m and km per row
+    expect(formatSegmentCell(90, 'time')).toBe('1:30');
+    expect(formatSegmentCell(5000, 'distance-time')).toBe('5.00 km');
+    expect(formatSegmentCell(400, 'distance')).toBe('400 m');
+    expect(formatSegmentCell(80, 'weight')).toBe('80 kg');
   });
 });
 

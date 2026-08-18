@@ -318,18 +318,23 @@ export const AnalysisStore = signalStore(
       );
     };
 
+    // Memoised so the whole live feed is walked once per trend window
+    // rather than again for every consumer — the page filter and the
+    // 24h/14h toggle feed `viewSegments` but must not re-derive these.
+    const weekRows = computed<UnifiedEntry[]>(() =>
+      applyViewFilter(trendUnifiedRows(store.weekFilter()))
+    );
+
+    const monthRows = computed<UnifiedEntry[]>(() =>
+      applyViewFilter(trendUnifiedRows(store.monthFilter()))
+    );
+
     const weekTrend = computed<TrendPoint[]>(() =>
-      buildWeekTrend(
-        applyViewFilter(trendUnifiedRows(store.weekFilter())),
-        store.currentMonday()
-      )
+      buildWeekTrend(weekRows(), store.currentMonday())
     );
 
     const monthTrend = computed<TrendPoint[]>(() =>
-      buildMonthTrend(
-        applyViewFilter(trendUnifiedRows(store.monthFilter())),
-        store.currentMonthStart()
-      )
+      buildMonthTrend(monthRows(), store.currentMonthStart())
     );
 
     /**
@@ -341,8 +346,8 @@ export const AnalysisStore = signalStore(
     const viewSegments = computed<AnalysisSegment[]>(() =>
       buildAnalysisSegments({
         rangeRows: viewFilteredRows(),
-        weekRows: applyViewFilter(trendUnifiedRows(store.weekFilter())),
-        monthRows: applyViewFilter(trendUnifiedRows(store.monthFilter())),
+        weekRows: weekRows(),
+        monthRows: monthRows(),
         monday: store.currentMonday(),
         monthStart: store.currentMonthStart(),
         chart: {

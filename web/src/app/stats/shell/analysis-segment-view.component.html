@@ -106,89 +106,22 @@
   class="trends-section"
   [attr.data-testid]="'analysis-trends-' + segment().measurement"
 >
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n="@@analysis.weekTrendTitle"
-        >Wochentrend</mat-card-title
-      >
-      <mat-card-subtitle i18n="@@analysis.weekTrendSubtitle"
-        >Letzte 8 Wochen</mat-card-subtitle
-      >
-    </mat-card-header>
-    <mat-card-content>
-      @defer (on viewport) {
-        <mat-table [dataSource]="segment().weekTrend">
-          <ng-container matColumnDef="label">
-            <mat-header-cell *matHeaderCellDef i18n="@@analysis.weekCol"
-              >Woche</mat-header-cell
-            >
-            <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="total">
-            <mat-header-cell *matHeaderCellDef>{{ label() }}</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{
-              formatValue(row.total)
-            }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="avgSetsPerEntry">
-            <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
-              >&#x2300; Sets</mat-header-cell
-            >
-            <mat-cell *matCellDef="let row">{{
-              row.avgSetsPerEntry !== null && row.avgSetsPerEntry !== undefined
-                ? (row.avgSetsPerEntry | number)
-                : '—'
-            }}</mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="trendColumns()"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: trendColumns()"></mat-row>
-        </mat-table>
-      } @placeholder {
-        <div class="trend-placeholder" aria-hidden="true"></div>
-      }
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title i18n="@@analysis.monthTrendTitle"
-        >Monatstrend</mat-card-title
-      >
-      <mat-card-subtitle i18n="@@analysis.monthTrendSubtitle"
-        >Letzte 6 Monate</mat-card-subtitle
-      >
-    </mat-card-header>
-    <mat-card-content>
-      @defer (on viewport) {
-        <mat-table [dataSource]="segment().monthTrend">
-          <ng-container matColumnDef="label">
-            <mat-header-cell *matHeaderCellDef i18n="@@analysis.monthCol"
-              >Monat</mat-header-cell
-            >
-            <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="total">
-            <mat-header-cell *matHeaderCellDef>{{ label() }}</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{
-              formatValue(row.total)
-            }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="avgSetsPerEntry">
-            <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
-              >&#x2300; Sets</mat-header-cell
-            >
-            <mat-cell *matCellDef="let row">{{
-              row.avgSetsPerEntry !== null && row.avgSetsPerEntry !== undefined
-                ? (row.avgSetsPerEntry | number)
-                : '—'
-            }}</mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="trendColumns()"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: trendColumns()"></mat-row>
-        </mat-table>
-      } @placeholder {
-        <div class="trend-placeholder" aria-hidden="true"></div>
-      }
-    </mat-card-content>
-  </mat-card>
+  <app-analysis-trend-table
+    [rows]="segment().weekTrend"
+    [measurement]="segment().measurement"
+    [valueLabel]="label()"
+    [title]="weekTrendTitle"
+    [subtitle]="weekTrendSubtitle"
+    [periodLabel]="weekColLabel"
+    [showSets]="hasSets()"
+  />
+  <app-analysis-trend-table
+    [rows]="segment().monthTrend"
+    [measurement]="segment().measurement"
+    [valueLabel]="label()"
+    [title]="monthTrendTitle"
+    [subtitle]="monthTrendSubtitle"
+    [periodLabel]="monthColLabel"
+    [showSets]="hasSets()"
+  />
 </section>

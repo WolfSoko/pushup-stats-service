@@ -1,4 +1,3 @@
-import { DecimalPipe } from '@angular/common';
 import {
   Component,
   computed,
@@ -7,7 +6,6 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
 import type { StatsGranularity, UnifiedEntryFilterKey } from '@pu-stats/models';
 import type { RangeModes } from '@pu-stats/date';
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
@@ -15,6 +13,7 @@ import { StatsChartComponent } from '../components/stats-chart/stats-chart.compo
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import type { AnalysisView } from '../analysis/analysis.types';
 import type { AnalysisSegment } from '../analysis/view-segments';
+import { AnalysisTrendTableComponent } from './analysis-trend-table.component';
 import {
   formatSegmentValue,
   resolveTypeBreakdownDisplay,
@@ -35,9 +34,8 @@ import {
 @Component({
   selector: 'app-analysis-segment-view',
   imports: [
-    DecimalPipe,
     MatCardModule,
-    MatTableModule,
+    AnalysisTrendTableComponent,
     SetsDistributionComponent,
     StatsChartComponent,
     TypePieComponent,
@@ -64,9 +62,12 @@ export class AnalysisSegmentViewComponent {
   readonly chartLabel = computed(() => (this.showLabel() ? this.label() : ''));
   readonly hasSets = computed(() => segmentHasSets(this.segment().measurement));
 
-  readonly trendColumns = computed(() =>
-    this.hasSets() ? ['label', 'total', 'avgSetsPerEntry'] : ['label', 'total']
-  );
+  readonly weekTrendTitle = $localize`:@@analysis.weekTrendTitle:Wochentrend`;
+  readonly weekTrendSubtitle = $localize`:@@analysis.weekTrendSubtitle:Letzte 8 Wochen`;
+  readonly weekColLabel = $localize`:@@analysis.weekCol:Woche`;
+  readonly monthTrendTitle = $localize`:@@analysis.monthTrendTitle:Monatstrend`;
+  readonly monthTrendSubtitle = $localize`:@@analysis.monthTrendSubtitle:Letzte 6 Monate`;
+  readonly monthColLabel = $localize`:@@analysis.monthCol:Monat`;
 
   readonly typeBreakdownDisplay = computed(() =>
     resolveTypeBreakdownDisplay(

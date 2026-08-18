@@ -19,9 +19,6 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 16px;
 }
-mat-table {
-  width: 100%;
-}
 mat-card-content {
   overflow: auto;
 }
@@ -29,11 +26,6 @@ mat-card-content {
   display: grid;
   grid-template-columns: repeat(2, minmax(180px, 1fr));
   gap: 12px;
-}
-/* Reserve roughly the rendered table height so revealing the
-   deferred trend block doesn't shift the rest of the page down. */
-.trend-placeholder {
-  min-height: 320px;
 }
 .kpi-big {
   display: flex;

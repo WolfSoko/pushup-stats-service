@@ -33,18 +33,24 @@ export function segmentLabel(measurement: SegmentMeasurement): string {
 }
 
 /**
- * Formats a segment value in its own unit: reps stay counts, `time`
- * renders as `m:ss`, distances switch to km past 1000 m. The `'mixed'`
- * bucket holds rows no definition resolves, so its volume stays a bare
- * number — there is no unit to claim.
+ * Formats a segment value in its own unit: `time` renders as `m:ss`,
+ * distances switch to km past 1000 m, weights carry `kg`. The
+ * `'mixed'` bucket holds rows no definition resolves, so its volume
+ * stays a bare number — there is no unit to claim.
+ *
+ * Reps are the one dimension whose unit is a word rather than a
+ * symbol, so {@link formatSegmentValue} spells it out for standalone
+ * KPI values while {@link formatSegmentCell} leaves it to the column
+ * header instead of repeating "Reps" down a whole table.
  */
-export function formatSegmentValue(
+export function formatSegmentCell(
   value: number,
   measurement: SegmentMeasurement
 ): string {
   switch (measurement) {
     case 'reps':
-      return `${value} ${$localize`:@@analysis.repsUnitLong:Reps`}`;
+    case 'mixed':
+      return String(value);
     case 'weight':
       return formatExerciseValue(value, 'kg');
     case 'time':
@@ -52,9 +58,17 @@ export function formatSegmentValue(
     case 'distance':
     case 'distance-time':
       return formatExerciseValue(value, 'm');
-    case 'mixed':
-      return String(value);
   }
+}
+
+/** {@link formatSegmentCell} plus the spelled-out reps unit. */
+export function formatSegmentValue(
+  value: number,
+  measurement: SegmentMeasurement
+): string {
+  return measurement === 'reps'
+    ? `${value} ${$localize`:@@analysis.repsUnitLong:Reps`}`
+    : formatSegmentCell(value, measurement);
 }
 
 /** Sets are a reps concept — no other measurement logs them. */

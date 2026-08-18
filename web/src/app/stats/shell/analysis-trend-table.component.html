@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ title() }}</mat-card-title>
+    <mat-card-subtitle>{{ subtitle() }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    @defer (on viewport) {
+      <mat-table [dataSource]="rows()">
+        <ng-container [matColumnDef]="periodColumn">
+          <mat-header-cell *matHeaderCellDef>{{
+            periodLabel()
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.label }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <mat-header-cell *matHeaderCellDef>{{
+            valueLabel()
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{
+            formatValue(row.total)
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="avgSetsPerEntry">
+          <mat-header-cell *matHeaderCellDef i18n="@@analysis.avgSetsCol"
+            >&#x2300; Sets</mat-header-cell
+          >
+          <mat-cell *matCellDef="let row">{{
+            row.avgSetsPerEntry !== null && row.avgSetsPerEntry !== undefined
+              ? (row.avgSetsPerEntry | number)
+              : '—'
+          }}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columns()"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns()"></mat-row>
+      </mat-table>
+    } @placeholder {
+      <div class="trend-placeholder" aria-hidden="true"></div>
+    }
+  </mat-card-content>
+</mat-card>
