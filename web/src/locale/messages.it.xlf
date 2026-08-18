@@ -10919,51 +10919,51 @@
       </segment>
     </unit>
     <unit id="analysis.chartSegment.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Ripetizioni</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewicht</source>
-        <target>Gewicht</target>
+        <target>Peso</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer</source>
-        <target>Dauer</target>
+        <target>Durata</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke</source>
-        <target>Strecke</target>
+        <target>Distanza</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke &amp; Tempo</source>
-        <target>Strecke &amp; Tempo</target>
+        <target>Distanza e ritmo</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sonstige</source>
-        <target>Sonstige</target>
+        <target>Altro</target>
       </segment>
     </unit>
     <unit id="analysis.streaksTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Streaks</source>
-        <target>Streaks</target>
+        <target>Serie</target>
       </segment>
     </unit>
     <unit id="analysis.bestValuesTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestwerte</source>
-        <target>Bestwerte</target>
+        <target>Migliori valori</target>
       </segment>
     </unit>
 </file>
