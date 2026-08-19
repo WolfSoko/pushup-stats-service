@@ -25,22 +25,24 @@ function buildCommand(config) {
 }
 
 /**
- * Locks in the deliberate prod/staging asymmetry around Sentry source-map
- * upload in the Firebase App Hosting configs. See docs/observability/sentry.md.
+ * Locks in Sentry source-map upload configuration for the Firebase App
+ * Hosting configs. See docs/observability/sentry.md.
  *
- * Production binds the SENTRY_AUTH_TOKEN secret and runs `pnpm sentry:sourcemaps`
- * so the bundles served at pushup-stats.com carry matching debug IDs — without
- * it every production stack trace stays minified (the weeks-long bug that
- * originally motivated the upload). Staging must NOT: the staging GCP project
- * (pushup-stats-staging-867b7) has no such secret, and an App Hosting `secret:`
- * reference to a missing secret fails the rollout at bind time — before the
- * build runs — which the upload script's no-op-when-unset guard cannot catch.
+ * Production no longer runs `pnpm sentry:sourcemaps` here at all — the
+ * upload now happens once in CI (`.github/workflows/ci.yml` `publish-release`
+ * job) as part of building the pre-built artifact App Hosting downloads (see
+ * apphosting-release-artifact-guard.spec.js). Staging still builds from
+ * source and, unchanged, never uploads source maps either: the staging GCP
+ * project (pushup-stats-staging-867b7) has no SENTRY_AUTH_TOKEN secret, and
+ * an App Hosting `secret:` reference to a missing secret fails the rollout at
+ * bind time — before the build runs — which the upload script's
+ * no-op-when-unset guard cannot catch.
  *
  * App Hosting MERGES apphosting.staging.yaml onto apphosting.yaml by env
- * variable name, so base-only entries persist: simply omitting the secret from
- * staging does NOT drop the inherited prod binding. Staging must therefore
- * explicitly OVERRIDE SENTRY_AUTH_TOKEN with a literal `value:` to replace the
- * secret resolution — which is what the override test below locks in.
+ * variable name, so base-only entries persist. Production no longer defines
+ * a SENTRY_AUTH_TOKEN secret binding to inherit, but staging keeps its own
+ * literal-value override in place defensively (see apphosting.staging.yaml)
+ * in case a future prod change reintroduces one.
  */
 describe('App Hosting Sentry configuration', () => {
   describe('staging (apphosting.staging.yaml)', () => {
@@ -53,9 +55,10 @@ describe('App Hosting Sentry configuration', () => {
       expect(secretVariables(staging)).not.toContain('SENTRY_AUTH_TOKEN');
     });
 
-    it('should override the inherited SENTRY_AUTH_TOKEN with a non-empty literal value', () => {
-      // given App Hosting merges apphosting.yaml onto this file by variable name,
-      //   so prod's `secret: SENTRY_AUTH_TOKEN` would otherwise leak into staging
+    it('should override a would-be-inherited SENTRY_AUTH_TOKEN with a non-empty literal value', () => {
+      // given App Hosting merges apphosting.yaml onto this file by variable
+      //   name, so a future prod `secret: SENTRY_AUTH_TOKEN` binding would
+      //   otherwise leak into staging
       // when staging redefines the same variable with a plain value
       // then the inherited secret binding is replaced and bind-time resolution
       //   of a nonexistent staging secret can't break the rollout — and the value
@@ -80,24 +83,21 @@ describe('App Hosting Sentry configuration', () => {
   describe('production (apphosting.yaml)', () => {
     const prod = load(PROD_CONFIG);
 
-    it('should bind the SENTRY_AUTH_TOKEN secret at BUILD time', () => {
-      // given prod stack traces must de-minify against uploaded source maps
-      // when App Hosting builds the bundle served at pushup-stats.com
-      // then the SENTRY_AUTH_TOKEN secret must be available at BUILD time
+    it('should not bind the SENTRY_AUTH_TOKEN secret', () => {
+      // given the upload now happens once in CI, not in the App Hosting build
+      // when App Hosting resolves the build-time environment
+      // then no SENTRY_AUTH_TOKEN binding should exist here to go stale
       const tokenEntry = (prod.env ?? []).find(
         (entry) => entry && entry.variable === 'SENTRY_AUTH_TOKEN'
       );
-      expect(tokenEntry).toMatchObject({
-        secret: 'SENTRY_AUTH_TOKEN',
-        availability: ['BUILD'],
-      });
+      expect(tokenEntry).toBeUndefined();
     });
 
-    it('should run the Sentry source-map upload in its build command', () => {
-      // given uploaded source maps are what make prod stack traces readable
+    it('should not run the Sentry source-map upload in its build command', () => {
+      // given the upload now happens in CI's publish-release job
       // when App Hosting runs scripts.buildCommand
-      // then it must invoke sentry:sourcemaps after the web build
-      expect(buildCommand(prod)).toMatch(/sentry:sourcemaps/);
+      // then it must only fetch the pre-built artifact, never invoke nx/sentry
+      expect(buildCommand(prod)).not.toMatch(/sentry:sourcemaps/);
     });
   });
 });

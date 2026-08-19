@@ -5,7 +5,6 @@ import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   type ComplexGoalEntry,
   complexGoalAppliesOnWeekday,
-  formatExerciseValue,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   type QuickAddConfig,
 } from '@pu-stats/models';
@@ -14,24 +13,16 @@ import {
   AdaptiveQuickAddService,
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
-import { TrainingPlanStore } from '../training-plans/training-plan.store';
+import { PlanGoalsService } from './plan-goals.service';
 import { UserConfigStore } from './user-config.store';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
-
-/**
- * Per-exercise view of a single daily goal — exercise name, formatted
- * target and progress in the goal's native unit, and the completion share.
- * Shared by the dashboard goal card and the toolbar pill dropdown so both
- * surfaces render "Anzahl/Zeitziel + Übung + Anteil geschafft" identically.
- */
-export interface DailyGoalItemView {
-  readonly id: string;
-  readonly exerciseName: string;
-  readonly targetDisplay: string;
-  readonly progressDisplay: string;
-  readonly percent: number;
-  readonly reached: boolean;
-}
+import {
+  aggregateGoalPercent,
+  allGoalsReached,
+  type DailyGoalItemView,
+  dailyGoalItemViews,
+  goalProgressValues,
+} from './daily-goal.helpers';
 
 function configuredSuggestion(
   cfg: QuickAddConfig,
@@ -62,7 +53,7 @@ export class AppDataFacade {
   private readonly user = inject(UserContextService);
   private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
   private readonly userConfig = inject(UserConfigStore);
-  private readonly trainingPlan = inject(TrainingPlanStore);
+  private readonly planGoals = inject(PlanGoalsService);
   private readonly live = inject(LiveDataStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -111,17 +102,15 @@ export class AppDataFacade {
   });
 
   /**
-   * Today's prescribed plan reps when a plan is active and today is a
-   * non-rest day. Mirrors the dashboard's `planTodayTarget` so the
-   * toolbar pill and Quick-Add fill button reflect the plan target the
-   * moment a plan is activated, without waiting for a manual config edit.
+   * Today's prescribed plan reps. Mirrors the dashboard's
+   * `planTodayTarget` so the toolbar pill and Quick-Add fill button
+   * reflect the plan target the moment a plan is activated, without
+   * waiting for a manual config edit.
    */
-  private readonly planTodayTarget = computed(() => {
-    if (!this.trainingPlan.hasActivePlan()) return 0;
-    const day = this.trainingPlan.todayDay();
-    if (!day || day.kind === 'rest') return 0;
-    return day.targetReps;
-  });
+  private readonly planTodayTarget = this.planGoals.targetReps;
+
+  /** Today's plan day as goal entries — empty when no plan applies. */
+  private readonly planTodayGoalEntries = this.planGoals.entries;
 
   /**
    * Plan target if available, otherwise the user-configured goal. Kept
@@ -154,11 +143,12 @@ export class AppDataFacade {
   );
 
   readonly goalReached = computed(() => {
-    // For users on the new goals page, "reached" means every applicable
-    // exercise has hit its individual target — comparing the rep-sum to
-    // the pushup-only `todayProgress` would let the snap fire after just
-    // doing pushups even if Squats/Plank/Running were never touched.
-    if (this.userConfig.goalsConfigured()) {
+    // Where goals are scored per exercise, "reached" means every
+    // applicable one has hit its individual target — comparing the
+    // rep-sum to the pushup-only `todayProgress` would let the snap fire
+    // after just doing pushups even if Squats/Plank/Running were never
+    // touched.
+    if (this.perExerciseGoals()) {
       return this.dailyGoalsAllReached();
     }
     const goal = this.effectiveDailyGoal();
@@ -166,24 +156,14 @@ export class AppDataFacade {
   });
 
   /**
-   * Today's complex goal entries, filtered by the current weekday. A plan
-   * day target keeps superseding the user's complex goals — we synthesise
-   * a single pushup-reps entry so the toolbar stays focused on the
-   * prescribed plan workout.
+   * Today's complex goal entries, filtered by the current weekday. An
+   * active plan day keeps superseding the user's complex goals — every
+   * exercise it prescribes becomes a goal so the toolbar stays focused
+   * on the prescribed plan workout.
    */
   readonly todayGoalEntries = computed<ComplexGoalEntry[]>(() => {
-    const planTarget = this.planTodayTarget();
-    if (planTarget > 0) {
-      return [
-        {
-          id: 'plan-today',
-          exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
-          target: planTarget,
-          measurement: 'reps',
-          unit: 'reps',
-        },
-      ];
-    }
+    const planEntries = this.planTodayGoalEntries();
+    if (planEntries.length > 0) return planEntries;
     // Use the Berlin date for the weekday, matching `todayProgress` and the
     // rest of the facade. `new Date().getDay()` would read the user's local
     // timezone — for clients west of Berlin, a Saturday-night entry would
@@ -202,10 +182,17 @@ export class AppDataFacade {
    * everything else. Time and distance goals aggregate the matching
    * companion field. Falls back to 0 outside the browser (SSR has no live
    * exerciseEntries feed and the pre-fetched stats only cover pushups).
+   *
+   * Plan goals are scored by the plan itself instead: their progress has
+   * to honour manual tick-offs and the `checkoff` days that are decided
+   * by nothing else, which entries alone can't express.
    */
   readonly todayGoalProgress = computed<readonly number[]>(() => {
     const entries = this.todayGoalEntries();
     if (entries.length === 0) return [];
+    if (this.planTodayGoalEntries().length > 0) {
+      return this.planGoals.progress();
+    }
     const berlinToday = toBerlinIsoDate(new Date());
     const pushupRepsToday = this.todayProgress();
     if (!this.isBrowser || !this.live.connected()) {
@@ -216,36 +203,15 @@ export class AppDataFacade {
         e.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID ? pushupRepsToday : 0
       );
     }
-    const exerciseEntries = this.live
-      .exerciseEntries()
-      .filter((e) => e.timestamp.slice(0, 10) === berlinToday);
-    return entries.map((entry) => {
-      // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`)
-      // like every other exercise, so the generic matching below handles
-      // them — no pushup short-circuit needed.
-      //
-      // When the goal pins a specific variant, count only entries of that
-      // variant. Otherwise match every entry for the exercise across all
-      // its variants — the goals page deliberately does not expose a
-      // variant picker yet (so most entries here will have no
-      // `variantId`), and a user logging "decline sit-ups" against a
-      // generic "Sit-ups" goal should still increment the progress.
-      const matching = exerciseEntries.filter((e) => {
-        if (e.exerciseId !== entry.exerciseId) return false;
-        if (!entry.variantId) return true;
-        return e.variantId === entry.variantId;
-      });
-      switch (entry.measurement) {
-        case 'reps':
-        case 'weight':
-          return matching.reduce((sum, e) => sum + (e.reps ?? 0), 0);
-        case 'time':
-          return matching.reduce((sum, e) => sum + (e.durationSec ?? 0), 0);
-        case 'distance':
-        case 'distance-time':
-          return matching.reduce((sum, e) => sum + (e.distanceM ?? 0), 0);
-      }
-    });
+    // Post-cutover pushups live in `exerciseEntries` (`exerciseId:'pushup'`)
+    // like every other exercise, so the generic scoring handles them —
+    // no pushup short-circuit needed.
+    return goalProgressValues(
+      entries,
+      this.live
+        .exerciseEntries()
+        .filter((e) => e.timestamp.slice(0, 10) === berlinToday)
+    );
   });
 
   /**
@@ -258,79 +224,52 @@ export class AppDataFacade {
   readonly complexGoalsEnabled = this.userConfig.goalsConfigured;
 
   /**
+   * Whether today's goals are scored per exercise rather than as a
+   * single pushup-rep ratio. True once the user opted into the goals
+   * page, or the active plan day prescribes anything beyond a lone
+   * pushup target: the `X / Y` reps display would hide the other
+   * exercises of a circuit day, and would count pushup reps against a
+   * target in seconds or metres on a day that prescribes neither.
+   */
+  readonly perExerciseGoals = computed(() => {
+    if (this.complexGoalsEnabled()) return true;
+    const plan = this.planTodayGoalEntries();
+    return (
+      plan.length > 1 ||
+      plan.some((entry) => entry.exerciseId !== PUSHUP_QUICK_ADD_EXERCISE_ID)
+    );
+  });
+
+  /**
    * Aggregated 0–100 daily-goal completion percentage across all
    * configured exercises (averaged, capped per-entry at 100% so a
    * blown-out single goal can't mask the others). Returns 0 when no
    * goals apply today.
    */
-  readonly dailyGoalAggregatedPercent = computed(() => {
-    const entries = this.todayGoalEntries();
-    if (entries.length === 0) return 0;
-    const progress = this.todayGoalProgress();
-    let pctSum = 0;
-    let counted = 0;
-    for (let i = 0; i < entries.length; i++) {
-      const target = entries[i].target;
-      if (!target || target <= 0) continue;
-      const ratio = Math.min(1, progress[i] / target);
-      pctSum += ratio * 100;
-      counted += 1;
-    }
-    if (counted === 0) return 0;
-    return Math.round(pctSum / counted);
-  });
+  readonly dailyGoalAggregatedPercent = computed(() =>
+    aggregateGoalPercent(this.todayGoalEntries(), this.todayGoalProgress())
+  );
 
   /**
    * True iff every configured exercise reached its target today. Used by
    * the toolbar pill to flag "click to replay snap animation".
    */
-  readonly dailyGoalsAllReached = computed(() => {
-    const entries = this.todayGoalEntries();
-    if (entries.length === 0) return false;
-    const progress = this.todayGoalProgress();
-    for (let i = 0; i < entries.length; i++) {
-      if (entries[i].target <= 0) continue;
-      if (progress[i] < entries[i].target) return false;
-    }
-    return true;
-  });
+  readonly dailyGoalsAllReached = computed(() =>
+    allGoalsReached(this.todayGoalEntries(), this.todayGoalProgress())
+  );
 
   /**
    * Per-exercise breakdown of today's daily goals for the dashboard card
    * and the toolbar pill dropdown: exercise name, formatted progress and
    * target in the goal's native unit, and the per-entry completion share
-   * (capped at 100%). When a plan is active this lists the single
-   * synthesised plan-reps goal, so the plan's daily target renders the
-   * same way as a manually configured goal. Empty when no goal applies
-   * today (callers fall back to their legacy single-line display).
+   * (capped at 100%). When a plan is active this lists the exercises
+   * today's plan day prescribes, so plan targets render the same way as
+   * manually configured goals. Empty when no goal applies today (callers
+   * fall back to their legacy single-line display).
    */
-  readonly dailyGoalBreakdown = computed<readonly DailyGoalItemView[]>(() => {
-    const entries = this.todayGoalEntries();
-    if (entries.length === 0) return [];
-    const progress = this.todayGoalProgress();
-    return entries.map((entry, i) => {
-      const value = progress[i] ?? 0;
-      const target = entry.target;
-      const hasTarget = target > 0;
-      // The pushup sentinel isn't in the exercise-name catalog (legacy
-      // pushups live in their own collection) — resolve it to the same
-      // "Liegestütze" label the analysis page uses.
-      const exerciseName =
-        entry.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID
-          ? $localize`:@@exercise.category.pushup:Liegestütze`
-          : exerciseDisplayName(entry.exerciseId);
-      return {
-        id: entry.id,
-        exerciseName,
-        targetDisplay: formatExerciseValue(target, entry.unit),
-        progressDisplay: formatExerciseValue(value, entry.unit),
-        percent: hasTarget
-          ? Math.min(100, Math.round((value / target) * 100))
-          : 0,
-        reached: hasTarget && value >= target,
-      };
-    });
-  });
+  readonly dailyGoalBreakdown = computed<readonly DailyGoalItemView[]>(() =>
+    dailyGoalItemViews(this.todayGoalEntries(), this.todayGoalProgress())
+  );
 
   /**
    * Refreshes the SSR / cold-start fallback resources. In the browser, live

@@ -172,11 +172,13 @@
         (focusout)="scheduleCloseGoalDetails()"
       >
         <span
-          class="goal-pill"
-          [class.is-clickable]="goalReached()"
-          [attr.role]="goalReached() ? 'button' : null"
-          [attr.tabindex]="goalReached() ? 0 : null"
-          [attr.aria-label]="goalReached() ? reopenDailyAriaLabel : null"
+          class="goal-pill is-clickable"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="
+            goalReached() ? reopenDailyAriaLabel : goalDetailsAriaLabel
+          "
+          [attr.aria-expanded]="goalReached() ? null : goalDetailsOpen()"
           data-testid="toolbar-goal-pill"
           (click)="handleGoalPillClick()"
           (keydown.enter)="handleGoalPillKeydown($event)"
@@ -209,26 +211,28 @@
           (mouseenter)="openGoalDetails()"
           (mouseleave)="scheduleCloseGoalDetails()"
         >
-          @for (item of dailyGoalBreakdown(); track item.id) {
-          <div
-            class="goal-dropdown-item"
-            data-testid="toolbar-goal-dropdown-item"
-          >
-            <div class="goal-dropdown-line">
-              <span class="goal-dropdown-name">{{ item.exerciseName }}</span>
-              <span class="goal-dropdown-val"
-                >{{ item.progressDisplay }} / {{ item.targetDisplay }} · {{
-                item.percent }}%</span
-              >
-            </div>
-            <mat-progress-bar
-              mode="determinate"
-              [value]="item.percent"
-            ></mat-progress-bar>
-          </div>
-          }
+          <app-daily-goal-checklist
+            [items]="dailyGoalBreakdown()"
+            testId="toolbar-goal-dropdown-item"
+          />
+          <p class="goal-dropdown-hint" i18n="@@toolbarDailyGoal.checkHint">
+            Teilziele abhaken kannst du auf dem Dashboard.
+          </p>
         </div>
       </ng-template>
+      @if (swUpdateAvailable()) {
+      <button
+        mat-icon-button
+        class="sw-update-button"
+        data-testid="sw-update-button"
+        [attr.aria-label]="
+          swUpdateUnrecoverable() ? swUpdateRecoverAriaLabel : swUpdateAriaLabel
+        "
+        (click)="applyServiceWorkerUpdate()"
+      >
+        <mat-icon>system_update_alt</mat-icon>
+      </button>
+      }
       <app-theme-toggle />
       <app-ai-assistant-nav-button />
       @if (isAdmin()) {
@@ -347,7 +351,9 @@
   [goalReached]="goalReached()"
   [fillToGoalInFlight]="fillToGoalInFlight()"
   [autoCountEnabled]="autoCountEnabled()"
+  [goalItems]="goalDialItems()"
   (quickAdd)="handleQuickAdd($event)"
+  (fillGoalItem)="handleFillGoalItem($event)"
   (openDialog)="handleOpenDialog()"
   (openAutoCount)="handleOpenAutoCount()"
   (openExerciseTimer)="handleOpenExerciseTimer()"

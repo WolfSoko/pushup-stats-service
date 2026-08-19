@@ -21,15 +21,17 @@ Angular providers (`Sentry.createErrorHandler()`, `Sentry.TraceService`) are reg
 
 ## Release identifier
 
-Short git SHA (e.g. `abc1234`). No semantic versioning — releases are 1:1 with commits, which gives clean "Suspect Commits" linkage in Sentry without any extra coordination.
+Short git SHA, abbreviated to 7 chars (e.g. `abc1234`). No semantic versioning — releases are 1:1 with commits, which gives clean "Suspect Commits" linkage in Sentry without any extra coordination. Both deploy workflows resolve it once via `git rev-parse --short=7 HEAD` and pass it as `SENTRY_RELEASE`, so it always matches the `deploy-0.0.0-<sha>` release tag.
 
 | Surface         | How the release reaches `Sentry.init({ release })`                                                                                                                                                                      |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Browser         | `scripts/upload-sentry-sourcemaps.sh` injects `<script>globalThis.SENTRY_RELEASE="<sha>";</script>` into every `index.html` and `index.csr.html`. `main.ts` reads `globalThis.SENTRY_RELEASE`.                          |
-| SSR server      | Reads `process.env['GIT_SHA']` (set by App Hosting / Cloud Run).                                                                                                                                                        |
+| Browser         | `main.ts` reads `globalThis.SENTRY_RELEASE` (injected into the HTML by `scripts/upload-sentry-sourcemaps.sh`) and falls back to `build-info.json` — see the caveat below.                                               |
+| SSR server      | `server.ts` reads `build-info.json` from the browser bundle, falling back to `process.env['GIT_SHA']`.                                                                                                                  |
 | Cloud Functions | Reads `process.env['SENTRY_RELEASE']` from the deployed `.env` file. The upload script writes/replaces a single `SENTRY_RELEASE=<sha>` line in `data-store/functions-dist/.env` so re-runs don't accumulate duplicates. |
 
 The HTML injection is **idempotent**: the script first deletes any prior `globalThis.SENTRY_RELEASE` script tag before inserting the new one. Re-running on the same `dist/` doesn't double-tag.
+
+> **The HTML injection alone is not enough on App Hosting.** It patches `dist/web/browser/**/index*.html`, but Angular inlines the CSR shell into the server bundle (`dist/web/server/<locale>/assets-chunks/index_csr_html.mjs`), so client-rendered routes (`/admin`, `/assistant`, the `**` fallback — see `app.routes.server.ts`) are served from a copy the script never touches. Only the static Firebase Hosting path serves the patched files. `build-info.json` (written by `tools/src/write-build-info.mjs`, see [`../ci-cd.md`](../ci-cd.md#build-info--released-version)) ships in the same artifact and is reachable on both paths, which is why it is the fallback.
 
 ## The upload script (`scripts/upload-sentry-sourcemaps.sh`)
 

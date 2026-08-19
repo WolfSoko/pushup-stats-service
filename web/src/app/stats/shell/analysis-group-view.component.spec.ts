@@ -18,6 +18,7 @@ import { RangeModes } from '@pu-stats/date';
 
 import { AnalysisStore } from '../analysis.store';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
+import { AnalysisSegmentViewComponent } from './analysis-segment-view.component';
 import { HeatmapComponent } from '../components/heatmap/heatmap.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
@@ -60,6 +61,7 @@ class MockStatsChartComponent {
   readonly entries = input<unknown[]>([]);
   readonly measurement = input<unknown>(null);
   readonly paceSeries = input<unknown[]>([]);
+  readonly kindLabel = input<string>('');
   readonly dayChartMode = model<string>('14h');
 }
 
@@ -87,6 +89,15 @@ class MockSetsDistributionComponent {
   template: '<app-analysis-group-view />',
 })
 class HostComponent {}
+
+/** Chart title suffixes in DOM order, read off the mocked stats charts. */
+function segmentChartLabels(
+  fixture: ComponentFixture<HostComponent>
+): string[] {
+  return fixture.debugElement
+    .queryAll(By.directive(MockStatsChartComponent))
+    .map((el) => (el.componentInstance as MockStatsChartComponent).kindLabel());
+}
 
 describe('AnalysisGroupViewComponent', () => {
   let fixture: ComponentFixture<HostComponent>;
@@ -160,9 +171,12 @@ describe('AnalysisGroupViewComponent', () => {
       ],
     })
       .overrideComponent(AnalysisGroupViewComponent, {
+        remove: { imports: [HeatmapComponent] },
+        add: { imports: [MockHeatmapComponent] },
+      })
+      .overrideComponent(AnalysisSegmentViewComponent, {
         remove: {
           imports: [
-            HeatmapComponent,
             TypePieComponent,
             StatsChartComponent,
             SetsDistributionComponent,
@@ -170,7 +184,6 @@ describe('AnalysisGroupViewComponent', () => {
         },
         add: {
           imports: [
-            MockHeatmapComponent,
             MockTypePieComponent,
             MockStatsChartComponent,
             MockSetsDistributionComponent,
@@ -191,26 +204,28 @@ describe('AnalysisGroupViewComponent', () => {
 
   it('renders fixed-window labels for trend cards', () => {
     const host: HTMLElement = fixture.nativeElement;
-    const trends = host.querySelector(
-      '[data-testid="analysis-trends-section"]'
-    );
+    const trends = host.querySelector('[data-testid="analysis-trends-reps"]');
     expect(trends?.textContent).toContain('Wochentrend');
     expect(trends?.textContent).toContain('Letzte 8 Wochen');
     expect(trends?.textContent).toContain('Monatstrend');
     expect(trends?.textContent).toContain('Letzte 6 Monate');
   });
 
-  it('places the trend section after the heatmap card in the DOM', () => {
+  it('keeps each measurement block together and the view-wide heatmap last', () => {
     const host: HTMLElement = fixture.nativeElement;
+    const chart = host.querySelector('[data-testid="analysis-chart-reps"]');
+    const trends = host.querySelector('[data-testid="analysis-trends-reps"]');
     const heatmap = host.querySelector('.heatmap-full');
-    const trends = host.querySelector(
-      '[data-testid="analysis-trends-section"]'
-    );
-    expect(heatmap).toBeTruthy();
+    expect(chart).toBeTruthy();
     expect(trends).toBeTruthy();
-    if (!heatmap || !trends) return;
+    expect(heatmap).toBeTruthy();
+    if (!chart || !trends || !heatmap) return;
+    // chart → its own trends → heatmap
     expect(
-      heatmap.compareDocumentPosition(trends) & Node.DOCUMENT_POSITION_FOLLOWING
+      chart.compareDocumentPosition(trends) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(
+      trends.compareDocumentPosition(heatmap) & Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
 
@@ -227,7 +242,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(headerToggle?.tagName.toLowerCase()).toBe('mat-button-toggle-group');
   });
 
-  it('viewChartSeries includes durationSec for time-measured exercises (regression: planks rendered as zero-height bars)', async () => {
+  it('viewSegments includes durationSec for time-measured exercises (regression: planks rendered as zero-height bars)', async () => {
     // Regression: time-measured exercises (`plank.standard`,
     // `core.hollowhold`, …) store their primary value on
     // `durationSec`, not `reps`. The chart aggregation used to sum
@@ -260,7 +275,7 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const series = store.viewChartSeries();
+    const series = store.viewSegments()[0].series;
     const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
     expect(totals['2026-02-10']).toBe(60);
     expect(totals['2026-02-12']).toBe(90);
@@ -320,7 +335,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(store.viewMeasurement()).toBe('mixed');
   });
 
-  it('viewChartSeries scales distance entries from meters to km so the bar axis reads naturally', async () => {
+  it('viewSegments scales distance entries from meters to km so the bar axis reads naturally', async () => {
     // Regression: distance-measured runs are stored in meters
     // (`distanceM: 5000`). Showing 5000 on the chart axis is awkward —
     // the store divides by 1000 so the bar shows 5 (km) and the
@@ -345,12 +360,12 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const series = store.viewChartSeries();
+    const series = store.viewSegments()[0].series;
     const totals = Object.fromEntries(series.map((s) => [s.bucket, s.total]));
     expect(totals['2026-02-10']).toBe(5);
   });
 
-  it('viewPaceSeries returns min/km pace for distance-time entries, aligned with the bar buckets', async () => {
+  it('viewSegments pace returns min/km pace for distance-time entries, aligned with the bar buckets', async () => {
     // 5 km in 25 min → 5 min/km
     liveExerciseEntries.set([
       {
@@ -372,13 +387,13 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const pace = store.viewPaceSeries();
+    const pace = store.viewSegments()[0].paceSeries;
     const entry = pace.find((p) => p.bucket === '2026-02-10');
     expect(entry).toBeDefined();
     expect(entry?.pace).toBeCloseTo(5, 5);
   });
 
-  it('viewPaceSeries returns pace=null for distance entries without duration so the chart does not render a bogus zero-pace line', async () => {
+  it('viewSegments pace returns pace=null for distance entries without duration so the chart does not render a bogus zero-pace line', async () => {
     // Regression for a distance-only carry exercise (or a future
     // `distance` exercise with no paired duration): totalSec stays 0,
     // so dividing by it would produce pace=0. The chart's paceMode()
@@ -404,11 +419,13 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const entry = store.viewPaceSeries().find((p) => p.bucket === '2026-02-10');
+    const entry = store
+      .viewSegments()[0]
+      .paceSeries.find((p) => p.bucket === '2026-02-10');
     expect(entry?.pace).toBeNull();
   });
 
-  it('viewPaceSeries is empty for non-distance views (reps/time) — the chart keeps the day-integral line', async () => {
+  it('viewSegments pace is empty for non-distance views (reps/time) — the chart keeps the day-integral line', async () => {
     liveExerciseEntries.set([
       {
         _id: 'e1',
@@ -428,7 +445,7 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(store.viewPaceSeries()).toEqual([]);
+    expect(store.viewSegments()[0].paceSeries).toEqual([]);
   });
 
   it('heatmap toggle shows Reps/Sets for reps-measured views', async () => {
@@ -577,7 +594,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(toggle).toBeNull();
   });
 
-  it('viewChartEntries surfaces durationSec on `reps` for time-measured rows so the stacked-bar layer also sees the volume', async () => {
+  it('viewSegments entries surfaces durationSec on `reps` for time-measured rows so the stacked-bar layer also sees the volume', async () => {
     liveExerciseEntries.set([
       {
         _id: 'e1',
@@ -597,9 +614,112 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const entries = store.viewChartEntries();
+    const entries = store.viewSegments()[0].chartEntries;
     expect(entries).toHaveLength(1);
     expect(entries[0].reps).toBe(75);
+  });
+
+  it('renders one chart per measurement so timed and counted exercises of a category never share an axis', async () => {
+    // given a `core` range mixing sit-ups (reps) and planks (seconds)
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then the reps chart carries 30 and the time chart 60 — not 90 on one
+    const segments = store.viewSegments();
+    expect(segments.map((s) => s.measurement)).toEqual(['reps', 'time']);
+    expect(segments[0].series[0].total).toBe(30);
+    expect(segments[1].series[0].total).toBe(60);
+
+    const host: HTMLElement = fixture.nativeElement;
+    const charts = host.querySelectorAll('app-stats-chart');
+    expect(charts).toHaveLength(2);
+    expect(
+      host.querySelector('[data-testid="analysis-chart-reps"]')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="analysis-chart-time"]')
+    ).toBeTruthy();
+  });
+
+  it('labels each chart of a multi-measurement view and leaves a single-measurement view unlabelled', async () => {
+    // given
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(segmentChartLabels(fixture)).toEqual(['Wiederholungen', 'Dauer']);
+
+    // when only the plank remains, the lone chart needs no suffix
+    liveExerciseEntries.set([
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(segmentChartLabels(fixture)).toEqual(['']);
   });
 
   it('renders the "Keine Einträge im gewählten Zeitraum" notice when the active category has no entries in the range', async () => {
@@ -627,15 +747,51 @@ describe('AnalysisGroupViewComponent', () => {
     expect(empty?.textContent).toContain(
       'Keine Einträge im gewählten Zeitraum'
     );
-    // The trend section stays visible — it spans a fixed window
-    // independent of the page filter.
-    expect(
-      host.querySelector('[data-testid="analysis-trends-section"]')
-    ).toBeTruthy();
+    // Nothing in the range *and* nothing in either trend window, so
+    // there is no measurement to tabulate — the notice stands alone
+    // instead of a table of zeros.
+    expect(host.querySelector('[data-testid^="analysis-trends-"]')).toBeNull();
     // The chart and KPI grid are gone so the page doesn't read as
     // "0 reps everywhere".
     expect(host.querySelector('app-stats-chart')).toBeNull();
     expect(host.querySelector('.grid')).toBeNull();
+  });
+
+  it('keeps the trends of a measurement whose entries fall outside the selected range', async () => {
+    // given a plank logged inside the 8-week trend window
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-04T08:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when the filter moves past it
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then the empty notice shows, but the fixed-window trends remain
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-empty"]')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="analysis-trends-time"]')
+    ).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="analysis-chart-time"]')
+    ).toBeNull();
   });
 
   it('typeBreakdownDisplay localises bare exerciseIds in kind mode', async () => {
@@ -665,9 +821,13 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const groupView =
-      groupViewEl.componentInstance as AnalysisGroupViewComponent;
-    const breakdown = groupView.typeBreakdownDisplay();
+    fixture.detectChanges();
+    const breakdown = fixture.debugElement
+      .query(By.directive(AnalysisSegmentViewComponent))
+      .componentInstance.typeBreakdownDisplay() as Array<{
+      id: string;
+      label: string;
+    }>;
     expect(breakdown).toHaveLength(1);
     expect(breakdown[0]).toMatchObject({
       id: 'abs.situps',

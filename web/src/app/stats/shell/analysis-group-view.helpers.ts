@@ -1,13 +1,5 @@
-import {
-  type MeasurementType,
-  type UnifiedEntryFilterKey,
-} from '@pu-stats/models';
+import { type MeasurementType } from '@pu-stats/models';
 import type { HeatmapMeasurement } from '../components/heatmap/heatmap.utils';
-import type {
-  AnalysisView,
-  TypeBreakdownDatum,
-} from '../analysis/analysis.types';
-import { kindDisplayName } from '../i18n/exercise-display-names';
 
 export interface HeatmapToggleLabels {
   primary: string;
@@ -55,29 +47,4 @@ export function resolveHeatmapToggleLabels(
     case 'mixed':
       return null;
   }
-}
-
-/**
- * Resolves the bare-id labels emitted by the store's `typeBreakdown`
- * (in kind mode) into localised display names. Pushup-variant mode
- * passes through because the store already produces locale-aware
- * variant names. The gate mirrors `analysis.store` — a per-category
- * tab other than `pushup` (Liegestütze) is always kind mode, so the
- * breakdown carries exerciseIds like `abs.situps` that need
- * translating even without an explicit kinds filter.
- */
-export function resolveTypeBreakdownDisplay(
-  view: AnalysisView,
-  kinds: ReadonlyArray<UnifiedEntryFilterKey>,
-  data: TypeBreakdownDatum[]
-): TypeBreakdownDatum[] {
-  const showPushupVariants =
-    view === 'pushup' ||
-    (view === 'overview' &&
-      (kinds.length === 0 || (kinds.length === 1 && kinds[0] === 'pushup')));
-  if (showPushupVariants) return data;
-  return data.map((d) => ({
-    ...d,
-    label: kindDisplayName(d.id as UnifiedEntryFilterKey),
-  }));
 }

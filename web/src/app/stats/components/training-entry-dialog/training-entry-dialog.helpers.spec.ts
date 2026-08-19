@@ -1,5 +1,4 @@
 import {
-  buildCategoryOptions,
   formatKm,
   formatKmInput,
   inferExerciseCategory,
@@ -438,31 +437,6 @@ describe('training-entry-dialog.helpers', () => {
       expect(def.measurement).toBe('distance-time');
       expect(def.unit).toBe('m');
       expect(def.max).toBe(100_000);
-    });
-  });
-
-  describe('buildCategoryOptions', () => {
-    it('should always include the pushup category', () => {
-      // given
-      // (catalog-backed; pushup is special-cased in)
-
-      // when
-      const options = buildCategoryOptions();
-
-      // then
-      expect(options.some((o) => o.value === 'pushup')).toBe(true);
-    });
-
-    it('should produce a non-empty label for every option', () => {
-      // given
-      // (catalog-backed)
-
-      // when
-      const options = buildCategoryOptions();
-
-      // then
-      expect(options.length).toBeGreaterThan(0);
-      expect(options.every((o) => o.label.length > 0)).toBe(true);
     });
   });
 });

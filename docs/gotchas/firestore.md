@@ -1,5 +1,44 @@
 # Gotchas: Firestore (client SDK)
 
+> Most of this file is about the **client** SDK (`@angular/fire/firestore`).
+> The Admin-SDK section at the bottom is the exception — and it contradicts
+> the first section's claim, so read both before writing a nested patch.
+
+## Never use dotted field paths with `set()` (Admin SDK)
+
+`update()` expands `'a.b'` into a field **path**. `set()` does **not** — it
+writes a literal top-level field whose name contains a dot. The SDK signals
+this by backtick-quoting the field in the update mask:
+
+```ts
+batch.set(ref, { 'androidTest.status': 'candidate' }, { merge: true });
+// updateMask: ["`androidTest.status`"]   ← literal field name
+batch.set(ref, { androidTest: { status: 'candidate' } }, { merge: true });
+// updateMask: ["androidTest.status"]     ← real nested path
+```
+
+Nothing throws. Writes "succeed", and every later
+`snap.data()?.androidTest?.status` reads `undefined`. This silently killed the
+whole Android-test flow (candidates never appeared, opt-in always threw
+`failed-precondition`) until the serialization was measured directly. Reach
+for `update()` when you want dot paths, or pass a nested object to `set()`.
+
+## `set(..., { merge: true })` and nested maps (Admin SDK, measured)
+
+Measured against the `firebase-admin` version pinned in this repo: a nested
+object under `{ merge: true }` produces a **leaf-level** field mask, so
+siblings survive. Writing `{ androidTest: { status, optedInAt } }` yields the
+mask `["androidTest.optedInAt", "androidTest.status"]` — an earlier
+`androidTest.confirmedAt` is untouched.
+
+This contradicts the client-SDK claim in the next section. Both cannot be
+right about the same underlying wire format. The next section's _symptom_
+(lost `ui.*` siblings) is real and predates this note, but its stated _cause_
+was never re-verified — a likelier culprit is `UserConfigApiService.setConfig`,
+which calls `setDoc` **without** `merge` and therefore does replace the
+document. Before relying on either claim for a new write path, measure the
+update mask for your actual SDK and call shape rather than trusting this file.
+
 ## `setDoc(..., { merge: true })` replaces nested maps wholesale
 
 `{ merge: true }` only merges at the **top level**. If the patch contains a nested map (e.g. `ui: { snapQuality: 'high' }`), the entire `ui` field on the document is replaced with that object — every sibling key (`dayChartMode`, `quickAdds`, `showSourceColumn`, `hideFromLeaderboard`, …) is silently lost.

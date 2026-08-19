@@ -4,12 +4,23 @@
     <p page-subtitle i18n="@@adminHeaderSubtitle">
       Nutzerverwaltung, Feedback und Bereinigungen.
     </p>
+    <app-release-badge page-actions />
   </app-page-header>
 
   <!-- Data migrations (own page) -->
   <a mat-stroked-button routerLink="/admin/migrations" class="migrations-link">
     <mat-icon>sync_alt</mat-icon>
     <span i18n="@@admin.migrations.title">Daten-Migrationen</span>
+  </a>
+
+  <!-- Android closed-test tester recruitment (own page) -->
+  <a
+    mat-stroked-button
+    routerLink="/admin/android-test"
+    class="android-test-link"
+  >
+    <mat-icon>android</mat-icon>
+    <span i18n="@@admin.androidTest.title">Android-App-Test</span>
   </a>
 
   <!-- Bulk action card -->

@@ -97,6 +97,7 @@ describe('PushSwRegistrationService', () => {
   it('returns the existing registration from the fast path without calling register()', async () => {
     const existing = {
       scope: 'https://example.com/push/',
+      update: jest.fn().mockResolvedValue(undefined),
     } as unknown as ServiceWorkerRegistration;
     const register = jest.fn();
     const { service, swDescriptor } = setup({
@@ -109,6 +110,93 @@ describe('PushSwRegistrationService', () => {
 
     await expect(service.getRegistration()).resolves.toBe(existing);
     expect(register).not.toHaveBeenCalled();
+  });
+
+  // Regression: nothing else checks for a new sw-push.js. `getRegistration()`
+  // does not, and `/{locale}/push/` never gets a navigation that would, so an
+  // existing subscriber sat on its installed worker until Chrome's 24h soft
+  // update — every SW fix took up to a day to reach the device.
+  it('should check for a new worker on the fast path', async () => {
+    // given a device that already has the push SW installed
+    const update = jest.fn().mockResolvedValue(undefined);
+    const existing = {
+      scope: 'https://example.com/push/',
+      update,
+    } as unknown as ServiceWorkerRegistration;
+    const { service, swDescriptor } = setup({
+      serviceWorker: {
+        getRegistration: jest.fn().mockResolvedValue(existing),
+        register: jest.fn(),
+      },
+    });
+    descriptorToRestore = swDescriptor;
+
+    // when the app boots
+    await service.getRegistration();
+
+    // then the browser re-fetches the worker script
+    expect(update).toHaveBeenCalledTimes(1);
+  });
+
+  it('should check for a new worker only once per app session', async () => {
+    // given getRegistration() is called on boot, on subscribe, on tick …
+    const update = jest.fn().mockResolvedValue(undefined);
+    const existing = {
+      scope: 'https://example.com/push/',
+      update,
+    } as unknown as ServiceWorkerRegistration;
+    const { service, swDescriptor } = setup({
+      serviceWorker: {
+        getRegistration: jest.fn().mockResolvedValue(existing),
+        register: jest.fn(),
+      },
+    });
+    descriptorToRestore = swDescriptor;
+
+    // when
+    await service.getRegistration();
+    await service.getRegistration();
+    await service.getRegistration();
+
+    // then the network is not hit on every caller
+    expect(update).toHaveBeenCalledTimes(1);
+  });
+
+  // Registrations arrive as partial stubs in some test environments (see
+  // `isSwApiUsable`), and the update check must not turn that into a throw.
+  it('should tolerate a registration without an update() method', async () => {
+    // given a stub registration
+    const existing = {
+      scope: 'https://example.com/push/',
+    } as unknown as ServiceWorkerRegistration;
+    const { service, swDescriptor } = setup({
+      serviceWorker: {
+        getRegistration: jest.fn().mockResolvedValue(existing),
+        register: jest.fn(),
+      },
+    });
+    descriptorToRestore = swDescriptor;
+
+    // when / then
+    await expect(service.getRegistration()).resolves.toBe(existing);
+  });
+
+  it('should still return the registration when the update check fails', async () => {
+    // given an offline device (or a 404 mid-deploy)
+    const existing = {
+      scope: 'https://example.com/push/',
+      update: jest.fn().mockRejectedValue(new Error('offline')),
+    } as unknown as ServiceWorkerRegistration;
+    const { service, swDescriptor } = setup({
+      serviceWorker: {
+        getRegistration: jest.fn().mockResolvedValue(existing),
+        register: jest.fn(),
+      },
+    });
+    descriptorToRestore = swDescriptor;
+
+    // when / then the caller is unaffected — push still works on the old worker
+    await expect(service.getRegistration()).resolves.toBe(existing);
   });
 
   it('calls register() with locale-prefixed path + scope when no existing registration', async () => {

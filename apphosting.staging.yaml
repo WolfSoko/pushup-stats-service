@@ -61,5 +61,8 @@ scripts:
   # No Sentry source-map upload here (unlike apphosting.yaml): staging skips the
   # debug-ID upload (see the SENTRY_AUTH_TOKEN override above for why the secret
   # is replaced with a placeholder value rather than just omitted).
-  buildCommand: pnpm nx run web:build -c staging
+  #
+  # write-build-info runs after the build so the admin area on a PR preview
+  # reports the commit it is actually serving instead of "unbekannt".
+  buildCommand: pnpm nx run web:build -c staging && node tools/src/write-build-info.mjs
   runCommand: node dist/web/server/server.mjs

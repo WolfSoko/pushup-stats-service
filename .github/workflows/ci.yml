@@ -86,10 +86,16 @@ jobs:
         if: always()
         run: pnpm exec nx fix-ci
 
-  # Runs in parallel to lint-test-build. Shares the Angular SSR build via
-  # Nx Cloud's remote cache: the e2e job triggers `build` as a `dependsOn`
-  # of `e2e-ci`, but if the sibling job has already pushed the build
-  # artifact to Nx Cloud it is restored from cache instead of rebuilt.
+  # Runs in parallel to lint-test-build. Every atomized `e2e-ci--<spec>`
+  # task depends on the continuous `web:serve-e2e` target (wired up by
+  # @nx/playwright/plugin from the `webServer` block in
+  # web/playwright.config.ts), so Nx boots one server per agent and all
+  # specs on that agent attach to it instead of spawning their own.
+  #
+  # `serve-e2e` runs the same `node dist/web/server/server.mjs` that App
+  # Hosting runs in production, so it depends on `web:build:production` —
+  # shared with the sibling job through Nx Cloud's remote cache when that
+  # job pushed the artifact first, rebuilt here otherwise.
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -150,11 +156,107 @@ jobs:
         if: always()
         run: pnpm exec nx fix-ci
 
-  # After successful CI on main, fast-forward the deploy branch.
-  # Firebase App Hosting watches this branch instead of main,
-  # so it only deploys code that passed lint + test + build + e2e.
-  promote-to-deploy:
+  # Builds web:build:production once (on a plain GitHub Actions runner —
+  # the same environment family that seeded the Nx Cloud remote cache in
+  # lint-test-build, so this reliably restores from cache instead of
+  # rebuilding) and publishes it as a GitHub Release asset. App Hosting's
+  # buildCommand (scripts/fetch-release-artifact.sh) downloads this instead
+  # of ever running the Angular build itself — see docs/ci-cd.md.
+  #
+  # The release tag is deterministic from the commit SHA
+  # (deploy-0.0.0-<short-sha>) so the App Hosting build can construct the
+  # download URL directly, with no git-tag lookup or API call needed.
+  publish-release:
     needs: [lint-test-build, e2e]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN_READ }}
+      NODE_OPTIONS: --max-old-space-size=4096
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          # `fetch-depth: 0` alone does not fetch tags. Without this, `git
+          # tag` sees nothing locally and `nx release changelog` fails with
+          # "Unable to determine the previous git tag" even though the
+          # previous `deploy-*` tag exists on the remote.
+          fetch-tags: true
+
+      # nx release changelog creates an annotated git tag, which needs a
+      # tagger identity — a fresh runner has none configured by default.
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable corepack
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # One release name for the whole job: the Sentry release, the
+      # build-info.json the admin area reads and the deploy tag must all
+      # name the same commit, abbreviated the same way.
+      - name: Resolve release name
+        id: release
+        run: echo "sha=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Build web:build:production
+        run: pnpm exec nx run web:build:production
+
+      - name: Upload Sentry source maps
+        run: pnpm sentry:sourcemaps
+        env:
+          SENTRY_RELEASE: ${{ steps.release.outputs.sha }}
+
+      # After the build, never inside it: a per-commit build input would give
+      # every commit its own Nx hash and defeat the cache restore this job
+      # relies on. See web/src/build-info.ts.
+      - name: Write build info into the artifact
+        run: node tools/src/write-build-info.mjs
+        env:
+          SENTRY_RELEASE: ${{ steps.release.outputs.sha }}
+
+      - name: Package build output
+        run: tar -C dist/web -czf dist-web.tar.gz .
+
+      - name: Version + publish GitHub Release
+        run: |
+          SHA="${{ steps.release.outputs.sha }}"
+          SPECIFIER="0.0.0-${SHA}"
+          TAG="deploy-${SPECIFIER}"
+          FIRST_RELEASE_FLAG=""
+          if ! git ls-remote --tags origin "refs/tags/deploy-*" | grep -q .; then
+            FIRST_RELEASE_FLAG="--first-release"
+          fi
+          pnpm exec nx release version "$SPECIFIER" $FIRST_RELEASE_FLAG --git-commit=false --stage-changes=false
+          pnpm exec nx release changelog "$SPECIFIER" $FIRST_RELEASE_FLAG --git-commit=false --git-tag=true --git-push=true
+          gh release upload "$TAG" dist-web.tar.gz
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # After successful CI + release publishing on main, fast-forward the
+  # deploy branch. Firebase App Hosting watches this branch instead of
+  # main, so it only deploys code that passed lint + test + build + e2e
+  # AND already has a matching release artifact published.
+  promote-to-deploy:
+    needs: [lint-test-build, e2e, publish-release]
     if: github.ref == 'refs/heads/main'
     # A push failure here must not block the Firebase Hosting deploy
     # (which gates on the overall CI workflow conclusion).

@@ -17,6 +17,19 @@ import {
 import { QuickAddOrchestrationService } from './quick-add-orchestration.service';
 import { AppDataFacade } from './app-data.facade';
 
+/**
+ * These specs wait on dialogs whose components are imported lazily, so every
+ * assertion below races a dynamic import. vitest's 1s `waitFor` default is not
+ * enough when the production build runs in parallel on the same machine — the
+ * suite failed intermittently on exactly these waits, always with "expected to
+ * be called 2 times, but got 1". A longer budget costs a passing run nothing,
+ * since `waitFor` polls and returns as soon as the assertion holds.
+ */
+const DIALOG_WAIT_TIMEOUT_MS = 10_000;
+
+function waitForAssertion(assertion: () => void): Promise<void> {
+  return vitest.waitFor(assertion, { timeout: DIALOG_WAIT_TIMEOUT_MS });
+}
 const baseProviders = (params: {
   statsApiMock: { createPushup: ReturnType<typeof vitest.fn> };
   exerciseApiMock: { createEntry: ReturnType<typeof vitest.fn> };
@@ -234,7 +247,7 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
     const service = setup();
 
     service.addSuggestion(situpsSuggestion);
-    await vitest.waitFor(() =>
+    await waitForAssertion(() =>
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1)
     );
 
@@ -250,7 +263,7 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
     const service = setup({ userId: '' });
 
     service.addSuggestion(situpsSuggestion);
-    await vitest.waitFor(() =>
+    await waitForAssertion(() =>
       expect(snackBarMock.open).toHaveBeenCalledTimes(1)
     );
 
@@ -326,7 +339,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(dialogMock.open).toHaveBeenCalledTimes(2);
     });
 
@@ -345,7 +358,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(dialogMock.open).toHaveBeenCalledTimes(2);
     });
 
@@ -369,7 +382,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
       );
 
       await service.openAutoCount();
-      await vitest.waitFor(() => {
+      await waitForAssertion(() => {
         expect(dialogMock.open).toHaveBeenCalledTimes(2);
       });
 
@@ -395,7 +408,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     });
 
@@ -427,7 +440,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     });
 
@@ -457,7 +470,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     });
 
@@ -486,7 +499,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     });
 
@@ -512,7 +525,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(snackBarMock.open).toHaveBeenCalledTimes(1);
     });
 
@@ -527,7 +540,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     );
 
     await service.openAutoCount();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(dialogMock.open).toHaveBeenCalledTimes(2);
     });
 
@@ -545,8 +558,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     await service.openAutoCount('situp');
 
     const config = dialogMock.open.mock.calls[0][1] as
-      | { data?: { initialExerciseId?: string } }
-      | undefined;
+      { data?: { initialExerciseId?: string } } | undefined;
     expect(config?.data?.initialExerciseId).toBe('situp');
   });
 
@@ -556,8 +568,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     await service.openAutoCount();
 
     const config = dialogMock.open.mock.calls[0][1] as
-      | { data?: unknown }
-      | undefined;
+      { data?: unknown } | undefined;
     expect(config?.data).toBeUndefined();
   });
 });
@@ -627,7 +638,7 @@ describe('QuickAddOrchestrationService.openExerciseTimer', () => {
     );
 
     await service.openExerciseTimer();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(dialogMock.open).toHaveBeenCalledTimes(2);
     });
 
@@ -646,7 +657,7 @@ describe('QuickAddOrchestrationService.openExerciseTimer', () => {
     );
 
     await service.openExerciseTimer();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(dialogMock.open).toHaveBeenCalledTimes(2);
     });
 
@@ -672,7 +683,7 @@ describe('QuickAddOrchestrationService.openExerciseTimer', () => {
     );
 
     await service.openExerciseTimer();
-    await vitest.waitFor(() => {
+    await waitForAssertion(() => {
       expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
     });
     const [userId, payload] = exerciseApiMock.createEntry.mock.calls[0];

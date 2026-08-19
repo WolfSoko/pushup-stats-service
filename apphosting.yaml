@@ -25,67 +25,20 @@ env:
     availability:
       - RUNTIME
 
-  # Sentry auth token for source map upload during App Hosting's build.
-  # App Hosting builds independently from GitHub Actions, so the bundles served
-  # at pushup-stats.com need their own debug-ID upload — otherwise Sentry can't
-  # match runtime stack traces to source maps.
-  #
-  # Setup (one-time, requires gcloud + Firebase project owner role):
-  #   gcloud secrets create SENTRY_AUTH_TOKEN --replication-policy=automatic
-  #   echo -n "<token>" | gcloud secrets versions add SENTRY_AUTH_TOKEN --data-file=-
-  #   firebase apphosting:secrets:grantaccess SENTRY_AUTH_TOKEN \
-  #     --backend pushup-stats-service --project pushup-stats
-  - variable: SENTRY_AUTH_TOKEN
-    secret: SENTRY_AUTH_TOKEN
-    availability:
-      - BUILD
-
-  # Nx Cloud read token so the App Hosting build can restore
-  # `web:build:production` from the remote cache instead of rebuilding it.
-  # CI seeds the cache on every main push (`nx affected -t build -c production`
-  # with the write token), and App Hosting only builds commits that already
-  # passed CI (the `deploy` branch is fast-forwarded post-CI), so every rollout
-  # should be a cache hit — turning the ~16-min build that overwhelms the ~8 GB
-  # builder into an artifact download. See docs/ci-cd.md.
-  #
-  # Setup (one-time, requires gcloud + Firebase project owner role; reuse the
-  # read-only token stored as the NX_CLOUD_ACCESS_TOKEN_READ GitHub secret):
-  #   gcloud secrets create NX_CLOUD_ACCESS_TOKEN --replication-policy=automatic
-  #   echo -n "<read-only token>" | gcloud secrets versions add NX_CLOUD_ACCESS_TOKEN --data-file=-
-  #   firebase apphosting:secrets:grantaccess NX_CLOUD_ACCESS_TOKEN \
-  #     --backend pushup-stats-service --project pushup-stats
-  - variable: NX_CLOUD_ACCESS_TOKEN
-    secret: NX_CLOUD_ACCESS_TOKEN
-    availability:
-      - BUILD
-
-  # Default Node heap (~2 GB) OOMs during the Angular SSR build's
-  # Mark-Compact phase after bundle generation completes. GitHub Actions
-  # already bumps to 6144 for the Firebase deploy workflows
-  # (`.github/workflows/firebase-hosting-*.yml`); App Hosting needs the
-  # same headroom or the production build fails after ~430 s.
-  - variable: NODE_OPTIONS
-    value: '--max-old-space-size=6144'
-    availability:
-      - BUILD
-
-  # The App Hosting builder has ~8 GB RAM total; the main build process
-  # needs the 6 GB heap above, and each prerender worker thread adds its
-  # own V8 isolate on top. With the default 4 workers the ~970-route
-  # prerender thrashes into memory-pressure stalls late in the build —
-  # single routes hang > 120 s and abort the whole build (see
-  # docs/gotchas/build-and-tooling.md). Two workers keep peak memory
-  # inside the machine.
-  - variable: NG_BUILD_MAX_WORKERS
-    value: '2'
-    availability:
-      - BUILD
-
 # Grant access to secrets in Cloud Secret Manager.
 # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
 scripts:
-  # Custom build: produce the Angular SSR artifact, then upload debug IDs +
-  # source maps to Sentry. The Sentry script is a no-op if SENTRY_AUTH_TOKEN
-  # is not bound, so the build still succeeds during initial bring-up.
-  buildCommand: pnpm nx run web:build -c production && pnpm sentry:sourcemaps
+  # The App Hosting builder (~8 GB RAM) cannot reliably run the full
+  # production web build (9-locale prerender + sourcemaps) — see
+  # docs/gotchas/build-and-tooling.md. It also could never get the Nx Cloud
+  # remote cache to restore web:build:production on this specific
+  # environment (a cross-environment hash mismatch, not an auth/connectivity
+  # problem — see docs/ci-cd.md), which was the intended workaround.
+  #
+  # Structural fix: CI builds web:build:production exactly once on a plain
+  # GitHub Actions runner and publishes it as a GitHub Release asset
+  # (.github/workflows/ci.yml publish-release job). The builder here just
+  # downloads and extracts that pre-built artifact — no Angular build, no
+  # Nx Cloud, no Node heap tuning needed on this side at all.
+  buildCommand: bash scripts/fetch-release-artifact.sh
   runCommand: node dist/web/server/server.mjs

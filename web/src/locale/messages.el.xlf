@@ -10433,99 +10433,537 @@
       </segment>
     </unit>
     <unit id="admin.error.callableFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
-        <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
+        <target>Σφάλμα διακομιστή (<ph id="0" equiv="code" disp="code"/>) – δεν ήταν δυνατή η εκτέλεση της ενέργειας. Λεπτομέρειες υπάρχουν στο αρχείο καταγραφής του διακομιστή.</target>
       </segment>
     </unit>
     <unit id="nav.assistant">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Άνοιγμα προπονητή AI</target>
       </segment>
     </unit>
     <unit id="assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach</source>
-        <target>KI-Coach</target>
+        <target>Προπονητής AI</target>
       </segment>
     </unit>
     <unit id="assistant.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </source>
-        <target> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </target>
+        <target> Ρώτησε για την πρόοδό σου, κατέγραψε σετ ή περιηγήσου στην εφαρμογή. Ο βοηθός επικοινωνεί με τον διαμορφωμένο πράκτορα μέσω του ανοιχτού πρωτοκόλλου AG-UI. </target>
       </segment>
     </unit>
     <unit id="assistant.connecting">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verbindung zum Agenten wird aufgebaut … </source>
-        <target> Verbindung zum Agenten wird aufgebaut … </target>
+        <target> Σύνδεση με τον πράκτορα … </target>
       </segment>
     </unit>
     <unit id="seo.assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach – Pushup Tracker</source>
-        <target>KI-Coach – Pushup Tracker</target>
+        <target>Προπονητής AI – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
-        <target>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</target>
+        <target>Μίλα με τον προπονητή AI σου: ρώτα για την πρόοδο, κατέγραψε σετ και περιηγήσου στην εφαρμογή – μέσω του ανοιχτού πρωτοκόλλου AG-UI.</target>
       </segment>
     </unit>
     <unit id="landing.ai.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>AI ready</source>
         <target>AI ready</target>
       </segment>
     </unit>
     <unit id="landing.ai.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bereit für deinen KI-Coach </source>
-        <target> Bereit für deinen KI-Coach </target>
+        <target> Έτοιμος για τον προπονητή AI σου </target>
       </segment>
     </unit>
     <unit id="landing.ai.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
-        <target> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </target>
+        <target> Η εφαρμογή μιλά το ανοιχτό πρωτόκολλο AG-UI: ένας πράκτορας AI μπορεί να ρωτήσει για την καθημερινή σου πρόοδο, να καταγράψει σετ για εσένα και να σε καθοδηγήσει στην εφαρμογή. Το περιβάλλον βασίζεται στο CopilotKit για Angular – απλώς συνδέεις τον δικό σου πράκτορα. </target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.protocol">
-      <segment state="initial">
+      <segment state="translated">
         <source>AG-UI-Protokoll</source>
-        <target>AG-UI-Protokoll</target>
+        <target>Πρωτόκολλο AG-UI</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.copilotkit">
-      <segment state="initial">
+      <segment state="translated">
         <source>CopilotKit für Angular</source>
-        <target>CopilotKit für Angular</target>
+        <target>CopilotKit για Angular</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.tools">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen &amp; Abfragen per Tool</source>
-        <target>Eintragen &amp; Abfragen per Tool</target>
+        <target>Καταγραφή &amp; ερώτημα μέσω εργαλείου</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.onDevice">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-KI ohne Cloud</source>
-        <target>Kamera-KI ohne Cloud</target>
+        <target>AI κάμερας χωρίς cloud</target>
       </segment>
     </unit>
     <unit id="landing.ai.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Άνοιγμα προπονητή AI</target>
       </segment>
     </unit>
     <unit id="assistant.unavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </source>
-        <target> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </target>
+        <target> Δεν βρέθηκε διαθέσιμος πράκτορας. Έλεγξε το διαμορφωμένο AG-UI runtime. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.unquantified">
+      <segment state="translated">
+        <source>nach Vorgabe</source>
+        <target>όπως προβλέπεται</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.auto">
+      <segment state="translated">
+        <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
+        <target>Ολοκληρώθηκε αυτόματα — από τις καταχωρήσεις σου αυτή την ημέρα.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.check">
+      <segment state="translated">
+        <source>Übung abhaken (ohne Eintrag)</source>
+        <target>Επισήμανση άσκησης (χωρίς καταχώρηση)</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.undo">
+      <segment state="translated">
+        <source>Haken entfernen</source>
+        <target>Αφαίρεση επισήμανσης</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.log">
+      <segment state="translated">
+        <source>Vorgabe eintragen</source>
+        <target>Καταχώρηση προβλεπόμενης τιμής</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.checkoffHint">
+      <segment state="translated">
+        <source>Intervall-Tag — Übungen einzeln abhaken.</source>
+        <target>Ημέρα διαλειμμάτων — επισήμανε τις ασκήσεις μεμονωμένα.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.logAllDone">
+      <segment state="translated">
+        <source>Alle Übungen eintragen &amp; abhaken</source>
+        <target>Καταχώρηση &amp; επισήμανση όλων των ασκήσεων</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goals">
+      <segment state="translated">
+        <source>Tagesziele</source>
+        <target>Ημερήσιοι στόχοι</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalsAria">
+      <segment state="translated">
+        <source>Tagesziele zum Abhaken anzeigen</source>
+        <target>Εμφάνιση ημερήσιων στόχων για επισήμανση</target>
+      </segment>
+    </unit>
+    <unit id="toolbarDailyGoal.checkHint">
+      <segment state="translated">
+        <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
+        <target> Μπορείς να επισημάνεις τους επιμέρους στόχους στον πίνακα ελέγχου. </target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.reached">
+      <segment state="translated">
+        <source>Ziel erreicht</source>
+        <target>Ο στόχος επιτεύχθηκε</target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.manual">
+      <segment state="translated">
+        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
+        <target>Αυτός ο στόχος χρειάζεται χειροκίνητη καταχώρηση</target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.fill">
+      <segment state="translated">
+        <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
+        <target>Καταχώρησε το υπόλοιπο και επισήμανε: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.aria">
+      <segment state="translated">
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
+        <target>Επισήμανση <ph id="0" equiv="EXERCISE" disp="item.exerciseName"/></target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemReachedAria">
+      <segment state="translated">
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> ήδη επιτεύχθηκε</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemAria">
+      <segment state="translated">
+        <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
+        <target>Προσθήκη <ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> στον ημερήσιο στόχο</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.reset">
+      <segment state="translated">
+        <source>Übung zurücksetzen</source>
+        <target>Επαναφορά άσκησης</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetDone">
+      <segment state="translated">
+        <source>Übung zurückgesetzt.</source>
+        <target>Η άσκηση επαναφέρθηκε.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetKept">
+      <segment state="translated">
+        <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
+        <target>Η επισήμανση αφαιρέθηκε — οι δικές σου καταχωρήσεις παραμένουν.</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.buttonAria">
+      <segment state="translated">
+        <source>Neue Version verfügbar – jetzt neu laden</source>
+        <target>Διατίθεται νέα έκδοση – επαναφόρτωση τώρα</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.unrecoverable">
+      <segment state="translated">
+        <source>App-Daten beschädigt – bitte neu laden</source>
+        <target>Τα δεδομένα της εφαρμογής καταστράφηκαν – παρακαλώ κάντε επαναφόρτωση</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.recoverButtonAria">
+      <segment state="translated">
+        <source>App-Daten beschädigt – jetzt neu laden</source>
+        <target>Τα δεδομένα της εφαρμογής καταστράφηκαν – επαναφόρτωση τώρα</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <segment state="translated">
+        <source>Alle Übungen eintragen</source>
+        <target>Καταχώρηση όλων των ασκήσεων</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.title">
+      <segment state="translated">
+        <source>Android-App-Test</source>
+        <target>Δοκιμή εφαρμογής Android</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.subtitle">
+      <segment state="translated">
+        <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
+        <target> Διαχείριση δοκιμαστών για την κλειστή δοκιμή της εφαρμογής Android. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.backToAdmin">
+      <segment state="translated">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Επιστροφή στη διαχείριση</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scan">
+      <segment state="translated">
+        <source>Kandidaten ermitteln</source>
+        <target>Εύρεση υποψηφίων</target>
+      </segment>
+    </unit>
+        <unit id="admin.androidTest.scanResult">
+      <segment state="translated">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> νέοι υποψήφιοι βρέθηκαν.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.candidatesTitle">
+      <segment state="translated">
+        <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
+        <target> Υποψήφιοι (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noCandidates">
+      <segment state="translated">
+        <source>Keine offenen Kandidaten.</source>
+        <target>Δεν υπάρχουν εκκρεμείς υποψήφιοι.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirm">
+      <segment state="translated">
+        <source> Bestätigen </source>
+        <target> Επιβεβαίωση </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.decline">
+      <segment state="translated">
+        <source> Ablehnen </source>
+        <target> Απόρριψη </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.optedInTitle">
+      <segment state="translated">
+        <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
+        <target> Εγγεγραμμένοι (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noOptedIn">
+      <segment state="translated">
+        <source> Noch niemand hat sich angemeldet. </source>
+        <target> Κανείς δεν έχει εγγραφεί ακόμα. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.emailsCopied">
+      <segment state="translated">
+        <source>Kopiert!</source>
+        <target>Αντιγράφηκε!</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.copyEmails">
+      <segment state="translated">
+        <source>Alle E-Mails kopieren</source>
+        <target>Αντιγραφή όλων των email</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.markAdded">
+      <segment state="translated">
+        <source> Als Tester hinzugefügt (benachrichtigen) </source>
+        <target> Προστέθηκε ως δοκιμαστής (ειδοποίηση) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.notifiedTitle">
+      <segment state="translated">
+        <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
+        <target> Ειδοποιήθηκαν (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noPush">
+      <segment state="translated">
+        <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
+        <target>Δεν υπάρχει ενεργή συνδρομή push — παρακαλούμε ενημερώστε τον χρήστη χειροκίνητα.</target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.title">
+      <segment state="translated">
+        <source> Werde Android-App-Tester </source>
+        <target> Γίνε δοκιμαστής της εφαρμογής Android </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.body">
+      <segment state="translated">
+        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> Αναπτύσσουμε αυτή τη στιγμή την εφαρμογή Android του PushUp Stats και αναζητούμε δοκιμαστές. Θέλεις να τη δοκιμάσεις πριν από όλους τους άλλους; </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.notNow">
+      <segment state="translated">
+        <source> Nicht jetzt </source>
+        <target> Όχι τώρα </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.join">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Μέσα είμαι </pc></target>
+      </segment>
+    </unit>
+        <unit id="androidTest.invite.thanksTitle">
+      <segment state="translated">
+        <source>Danke!</source>
+        <target>Ευχαριστούμε!</target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksBody">
+      <segment state="translated">
+        <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
+        <target> Θα ειδοποιηθείς μέσω push notification μόλις εγκριθείς ως δοκιμαστής. </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.close">
+      <segment state="translated">
+        <source> Schließen </source>
+        <target> Κλείσιμο </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.error">
+      <segment state="translated">
+        <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
+        <target>Δυστυχώς κάτι πήγε στραβά. Δοκίμασε ξανά αργότερα.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddTitle">
+      <segment state="translated">
+        <source>Manuell hinzufügen</source>
+        <target>Χειροκίνητη προσθήκη</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddHint">
+      <segment state="translated">
+        <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
+        <target> Αναζήτησε έναν χρήστη και προσκάλεσέ τον απευθείας — ανεξάρτητα από τα κριτήρια δραστηριότητας. Ανώνυμοι λογαριασμοί και όσοι δεν έχουν email δεν εμφανίζονται· δεν μπορούν να προστεθούν ως δοκιμαστές. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddSearch">
+      <segment state="translated">
+        <source>Name oder E-Mail</source>
+        <target>Όνομα ή email</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAdd">
+      <segment state="translated">
+        <source> Einladen </source>
+        <target> Πρόσκληση </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirmedTitle">
+      <segment state="translated">
+        <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
+        <target> Προσκεκλημένοι, αναμονή επιβεβαίωσης (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noConfirmed">
+      <segment state="translated">
+        <source>Keine offenen Einladungen.</source>
+        <target>Δεν υπάρχουν εκκρεμείς προσκλήσεις.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.withdraw">
+      <segment state="translated">
+        <source> Zurückziehen </source>
+        <target> Απόσυρση </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.minEntries">
+      <segment state="translated">
+        <source>Einträge ab</source>
+        <target>Καταχωρήσεις από</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.activeWithinDays">
+      <segment state="translated">
+        <source>Aktiv in den letzten (Tage)</source>
+        <target>Ενεργός τις τελευταίες (ημέρες)</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.label">
+      <segment state="translated">
+        <source>Release</source>
+        <target>Έκδοση</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknown">
+      <segment state="translated">
+        <source>unbekannt</source>
+        <target>άγνωστο</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknownTooltip">
+      <segment state="translated">
+        <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
+        <target>Αυτή η εγκατάσταση δεν περιέχει πληροφορίες build (τοπικό build ή διακομιστής ανάπτυξης).</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.commitTooltip">
+      <segment state="translated">
+        <source>Commit <ph id="0" equiv="release" disp="release"/></source>
+        <target>Commit <ph id="0" equiv="release" disp="release"/></target>
+      </segment>
+    </unit>
+    <unit id="admin.release.builtTooltip">
+      <segment state="translated">
+        <source>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></source>
+        <target>Commit <ph id="0" equiv="release" disp="release"/> · χτίστηκε στις <ph id="1" equiv="built" disp="built"/></target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.placeholder">
+      <segment state="translated">
+        <source>Übung suchen</source>
+        <target>Αναζήτηση άσκησης</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.noMatch">
+      <segment state="translated">
+        <source>Keine Übung gefunden</source>
+        <target>Δεν βρέθηκε άσκηση</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.plannedToday">
+      <segment state="translated">
+        <source>Heute geplant</source>
+        <target>Προγραμματισμένο σήμερα</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.recent">
+      <segment state="translated">
+        <source>Zuletzt genutzt</source>
+        <target>Πρόσφατα χρησιμοποιημένο</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.reps">
+      <segment state="translated">
+        <source>Wiederholungen</source>
+        <target>Επαναλήψεις</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.weight">
+      <segment state="translated">
+        <source>Gewicht</source>
+        <target>Βάρος</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.time">
+      <segment state="translated">
+        <source>Dauer</source>
+        <target>Διάρκεια</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Απόσταση</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distanceTime">
+      <segment state="translated">
+        <source>Strecke &amp; Tempo</source>
+        <target>Απόσταση &amp; Ρυθμός</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.mixed">
+      <segment state="translated">
+        <source>Sonstige</source>
+        <target>Άλλο</target>
+      </segment>
+    </unit>
+    <unit id="analysis.streaksTitle">
+      <segment state="translated">
+        <source>Streaks</source>
+        <target>Σερί</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestValuesTitle">
+      <segment state="translated">
+        <source>Bestwerte</source>
+        <target>Καλύτερες αξίες</target>
       </segment>
     </unit>
 </file>

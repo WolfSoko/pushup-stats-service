@@ -1,34 +1,3 @@
-@if (state.showExercisePicker()) {
-  <div class="type-row">
-    <mat-form-field appearance="outline">
-      <mat-label i18n="@@trainingEntryDialog.exercise">Übung</mat-label>
-      <mat-select
-        [value]="state.exerciseId()"
-        (valueChange)="state.onExerciseChange($event)"
-        [disabled]="isEditMode()"
-        data-testid="training-entry-exercise"
-      >
-        @for (option of state.exerciseOptions(); track option.value) {
-          <mat-option [value]="option.value">{{ option.label }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <a
-      mat-icon-button
-      class="type-help"
-      [routerLink]="state.exerciseWikiLink()"
-      [matTooltip]="state.exerciseWikiTooltip()"
-      matTooltipPosition="left"
-      mat-dialog-close
-      data-testid="training-entry-exercise-wiki"
-      i18n-aria-label="@@exerciseWikiLinkAria"
-      aria-label="Anleitung zur Übung öffnen"
-    >
-      <mat-icon>help_outline</mat-icon>
-    </a>
-  </div>
-}
-
 @if (state.showVariantPicker()) {
   <mat-form-field appearance="outline">
     <mat-label i18n="@@entryDialog.variant">Variante</mat-label>

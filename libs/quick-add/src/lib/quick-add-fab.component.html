@@ -50,6 +50,57 @@
             <mat-icon>{{ item.icon }}</mat-icon>
             <span i18n="@@quickAdd.fab.customValue">Eigener Wert</span>
           </button>
+        } @else if (item.type === 'goal' && hasGoalSubmenu()) {
+          <div class="goal-dial-item">
+            @if (fabState.goalMenu()) {
+              <div class="goal-submenu" data-testid="quick-add-goal-submenu">
+                @for (goal of goalItems(); track goal.id) {
+                  <button
+                    mat-fab
+                    extended
+                    class="goal-sub-fab"
+                    [class.reached]="goal.reached"
+                    [disabled]="goal.disabled"
+                    [attr.aria-label]="goal.ariaLabel"
+                    data-testid="quick-add-goal-submenu-item"
+                    (click)="onFillGoalItem(goal)"
+                  >
+                    <mat-icon>{{ goal.reached ? 'check' : 'flag' }}</mat-icon>
+                    <span>{{ goal.label }}</span>
+                  </button>
+                }
+              </div>
+            }
+            <button
+              mat-fab
+              extended
+              class="goal-fab"
+              [attr.aria-expanded]="fabState.goalMenu()"
+              [attr.aria-label]="goalsAria"
+              data-testid="quick-add-goal-menu-toggle"
+              (click)="toggleGoalMenu()"
+            >
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <span>{{ goalsLabel }} ({{ goalItems().length }})</span>
+              <mat-icon>{{
+                fabState.goalMenu() ? 'expand_more' : 'expand_less'
+              }}</mat-icon>
+            </button>
+          </div>
+        } @else if (item.type === 'goal' && singleGoal(); as goal) {
+          <button
+            mat-fab
+            extended
+            class="goal-fab"
+            [class.reached]="goal.reached"
+            [disabled]="goal.disabled"
+            [attr.aria-label]="goal.ariaLabel"
+            data-testid="quick-add-goal-single"
+            (click)="onFillGoalItem(goal)"
+          >
+            <mat-icon>{{ goal.reached ? 'check' : 'flag' }}</mat-icon>
+            <span>{{ goal.label }}</span>
+          </button>
         } @else if (item.type === 'goal') {
           <button
             mat-fab

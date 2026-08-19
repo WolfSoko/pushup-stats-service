@@ -143,6 +143,10 @@ describe('UserTrainingPlanApiService', () => {
     expect(firestoreFns.setDoc).toHaveBeenCalled();
     expect(result?.planId).toBe('challenge-30d-v1');
     expect(result?.userId).toBe('u');
+    // Stamped so entries logged before this activation can't leak into
+    // whichever day now resolves to today's date.
+    expect(result?.dayActivatedAt).toEqual(expect.any(String));
+    expect(new Date(result?.dayActivatedAt as string).getTime()).not.toBeNaN();
   });
 
   it('merges patches via updatePlan', async () => {
@@ -312,6 +316,12 @@ describe('UserTrainingPlanApiService', () => {
     expect(capturedUpdate).not.toBeNull();
     const payload = capturedUpdate as Record<string, unknown>;
     expect(payload['startDate']).toBe('2026-04-15');
+    // Re-anchoring can hand today's date to a different day index, so the
+    // jump stamps a fresh activation instant too.
+    expect(typeof payload['dayActivatedAt']).toBe('string');
+    expect(
+      new Date(payload['dayActivatedAt'] as string).getTime()
+    ).not.toBeNaN();
     // Day 10 stays completed (preserved server-side); day 7 was the
     // concurrent skip — it's NOT in nonRestDaysBeforeTarget but IS in
     // priorSkipped, so it should be preserved as well. Days 1..6 sans
@@ -371,5 +381,86 @@ describe('UserTrainingPlanApiService', () => {
         completedDays: expect.objectContaining({ __type: 'arrayRemove' }),
       })
     );
+  });
+  it('should add per-exercise check-offs via arrayUnion', async () => {
+    // given
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    // when
+    service.addCompletedItems('u', ['5:0', '5:1']).subscribe();
+
+    // then
+    await Promise.resolve();
+    expect(firestoreFns.arrayUnion).toHaveBeenCalledWith('5:0', '5:1');
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedItems: expect.objectContaining({ __type: 'arrayUnion' }),
+      })
+    );
+  });
+
+  it('should remove per-exercise check-offs via arrayRemove', async () => {
+    // given
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    // when
+    service.removeCompletedItems('u', ['5:0']).subscribe();
+
+    // then
+    await Promise.resolve();
+    expect(firestoreFns.arrayRemove).toHaveBeenCalledWith('5:0');
+    expect(firestoreFns.updateDoc).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        completedItems: expect.objectContaining({ __type: 'arrayRemove' }),
+      })
+    );
+  });
+
+  it('should skip the write when no item ids are given', async () => {
+    // given
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    // when
+    service.addCompletedItems('u', []).subscribe();
+    service.removeCompletedItems('u', []).subscribe();
+
+    // then
+    await Promise.resolve();
+    expect(firestoreFns.updateDoc).not.toHaveBeenCalled();
   });
 });

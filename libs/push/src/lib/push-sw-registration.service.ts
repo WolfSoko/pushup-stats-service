@@ -54,6 +54,9 @@ export class PushSwRegistrationService {
     ServiceWorkerRegistration | undefined
   > | null = null;
 
+  /** Latch for `checkForUpdateOnce` — one update check per app session. */
+  private updateChecked = false;
+
   /**
    * Resolve the push SW registration, kicking off registration on first call.
    * Returns `undefined` during SSR, when the Service Worker API is missing
@@ -69,7 +72,10 @@ export class PushSwRegistrationService {
     const existing = await navigator.serviceWorker.getRegistration(
       this.paths.scope
     );
-    if (existing) return existing;
+    if (existing) {
+      this.checkForUpdateOnce(existing);
+      return existing;
+    }
 
     if (this.registrationPromise) return this.registrationPromise;
 
@@ -83,11 +89,32 @@ export class PushSwRegistrationService {
   }
 
   /**
+   * Ask the browser to re-fetch `sw-push.js` — once per app session.
+   *
+   * Nothing else triggers this for an existing subscriber: `getRegistration()`
+   * performs no update check, and the worker's scope (`/{locale}/push/`) never
+   * receives a navigation, so the usual on-navigation check never fires
+   * either. That left updates to Chrome's soft update after a functional
+   * event, which is capped at once per 24h — a fix to the SW took up to a day
+   * to reach a device that opened the app minutes after the deploy.
+   *
+   * Fire-and-forget, and rate-limited to the first call: `getRegistration()`
+   * runs on every boot plus on subscribe, and a rejected update (offline, 404
+   * mid-deploy) is not something the caller can act on.
+   */
+  private checkForUpdateOnce(registration: ServiceWorkerRegistration): void {
+    if (this.updateChecked) return;
+    this.updateChecked = true;
+    void registration.update?.().catch(() => undefined);
+  }
+
+  /**
    * Force a fresh registration regardless of memoised state — useful from
    * test setups. In production code, prefer `getRegistration()`.
    */
   async forceRegister(): Promise<ServiceWorkerRegistration | undefined> {
     this.registrationPromise = null;
+    this.updateChecked = false;
     return this.getRegistration();
   }
 

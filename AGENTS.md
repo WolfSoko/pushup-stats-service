@@ -9,6 +9,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 ## Git Workflow
 
 - **Trunk-based development:** Push directly to `main`. No feature branches by default.
+- **A push to `main` ships to production.** Green CI fast-forwards the `deploy` branch, which deploys Hosting, Cloud Functions, and Firestore rules & indexes — no manual step, no separate approval. Treat the pre-push checklist below as the last gate before production, and expect backend changes to go live within minutes. Details: [`docs/ci-cd.md`](docs/ci-cd.md).
 - Feature branches or worktrees only when explicitly requested.
 - **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
 - **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote. Re-read the file before further edits after a commit.
@@ -116,16 +117,18 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 
 ### Architecture & deployment
 
-| Area                                                     | File                                                                                                                           |
-| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Library deps, ports/adapters, state mgmt, training plans | [`docs/architecture.md`](docs/architecture.md)                                                                                 |
-| CI/CD, deploy gate, staging environment, Firestore rules | [`docs/ci-cd.md`](docs/ci-cd.md)                                                                                               |
-| Cloud Functions overview + Admin Authorization           | [`docs/cloud-functions.md`](docs/cloud-functions.md)                                                                           |
-| Translatable content workflow (blog & wiki)              | [`docs/content-workflow.md`](docs/content-workflow.md)                                                                         |
-| Consent banner, ads gating, legal pages, SEO/sitemap     | [`docs/consent-ads-seo.md`](docs/consent-ads-seo.md)                                                                           |
-| AG-UI / CopilotKit assistant, frontend tools, lazy setup | [`docs/ai-assistant.md`](docs/ai-assistant.md)                                                                                 |
-| Firebase environments + deployment                       | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
-| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup  | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
+| Area                                                                    | File                                                                                                                           |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Library deps, ports/adapters, state mgmt, training plans                | [`docs/architecture.md`](docs/architecture.md)                                                                                 |
+| CI/CD, deploy gate, staging environment, Firestore rules                | [`docs/ci-cd.md`](docs/ci-cd.md)                                                                                               |
+| Cloud Functions overview + Admin Authorization                          | [`docs/cloud-functions.md`](docs/cloud-functions.md)                                                                           |
+| Translatable content workflow (blog & wiki)                             | [`docs/content-workflow.md`](docs/content-workflow.md)                                                                         |
+| Consent banner, ads gating, legal pages, SEO/sitemap                    | [`docs/consent-ads-seo.md`](docs/consent-ads-seo.md)                                                                           |
+| AG-UI / CopilotKit assistant, frontend tools, lazy setup                | [`docs/ai-assistant.md`](docs/ai-assistant.md)                                                                                 |
+| Firebase environments + deployment                                      | [`docs/Firebase_DEPLOYMENT.md`](docs/Firebase_DEPLOYMENT.md), [`docs/firebase-environments.md`](docs/firebase-environments.md) |
+| Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup                 | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
+| Play-Store-Text: Quelldateien, Publish-Script, Setup                    | [`docs/play-store-publishing.md`](docs/play-store-publishing.md), [`docs/playstore-listing.md`](docs/playstore-listing.md)     |
+| Android Closed-Test: Kandidaten-Scan, Invite-Popup, Tester-Rekrutierung | [`docs/android-test-program.md`](docs/android-test-program.md)                                                                 |
 
 ### Push notifications
 

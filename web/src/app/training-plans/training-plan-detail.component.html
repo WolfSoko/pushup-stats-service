@@ -224,6 +224,21 @@
                   }
                 </div>
                 <div class="day-desc muted">{{ row.day.description }}</div>
+                @if (row.isCheckoff && row.day.kind !== 'rest') {
+                  <div class="checkoff-hint muted">
+                    <mat-icon aria-hidden="true">checklist</mat-icon>
+                    <span i18n="@@trainingPlans.checkoffHint"
+                      >Intervall-Tag — Übungen einzeln abhaken.</span
+                    >
+                  </div>
+                }
+                <app-plan-day-exercises
+                  [exercises]="row.exercises"
+                  [interactive]="isThisPlanActive() && !row.isFuture"
+                  (logExercise)="logExercise(row.day.dayIndex, $event)"
+                  (toggleExercise)="toggleExercise(row.day.dayIndex, $event)"
+                  (resetExercise)="resetExercise(row.day.dayIndex, $event)"
+                />
                 @if (row.pushupTypes.length > 0) {
                   <div class="pushup-types">
                     @for (type of row.pushupTypes; track type.slug) {
@@ -284,14 +299,14 @@
                           >
                         </button>
                       } @else {
-                        @if (row.day.targetReps > 0) {
+                        @if (row.exercises.length > 0) {
                           <button
                             mat-menu-item
                             (click)="logPlanDay(row.day.dayIndex)"
                           >
                             <mat-icon color="primary">check_circle</mat-icon>
-                            <span i18n="@@trainingPlans.menu.logDone"
-                              >Plan-Sätze eintragen & abhaken</span
+                            <span i18n="@@trainingPlans.menu.logAllDone"
+                              >Alle Übungen eintragen & abhaken</span
                             >
                           </button>
                         }

@@ -9,13 +9,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { provideRouter } from '@angular/router';
-import { ExerciseCategoryId } from '@pu-stats/models';
+import { ExerciseCategoryId, findExerciseDefinition } from '@pu-stats/models';
 
 // test-setup.ts also registers `fr`, but the Angular vitest builder
 // doesn't reliably pick that up for the `fr-FR` region key in this spec.
 registerLocaleData(localeFr, 'fr-FR');
 
 import { ExerciseEntryFieldsComponent } from './exercise-entry-fields.component';
+import { inferExerciseCategory } from './training-entry-dialog.helpers';
 import {
   ExerciseEntryDialogResult,
   TrainingEntryDialogData,
@@ -26,23 +27,33 @@ import {
   imports: [ExerciseEntryFieldsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
-    '<app-exercise-entry-fields [category]="category()" [data]="data" [isEditMode]="isEditMode" />',
+    '<app-exercise-entry-fields [exerciseId]="exerciseId()" [category]="category()" [data]="data" [isEditMode]="isEditMode" />',
 })
 class HostComponent {
+  readonly exerciseId = signal<string>('abs.situps');
   readonly category = signal<ExerciseCategoryId>('core');
   data: TrainingEntryDialogData | null = null;
   isEditMode = false;
 }
 
+// Mirrors how the dialog derives the category from the picked exercise.
+function categoryFor(exerciseId: string): ExerciseCategoryId {
+  return (
+    findExerciseDefinition(exerciseId)?.categoryId ??
+    inferExerciseCategory(exerciseId)
+  );
+}
+
 describe('ExerciseEntryFieldsComponent', () => {
   function render(
-    category: ExerciseCategoryId,
+    exerciseId: string,
     data: TrainingEntryDialogData | null,
     extraProviders: Provider[] = []
   ): {
     component: ExerciseEntryFieldsComponent;
     host: HostComponent;
     fixture: ComponentFixture<HostComponent>;
+    switchExercise: (id: string) => void;
   } {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -51,43 +62,47 @@ describe('ExerciseEntryFieldsComponent', () => {
     });
     const fixture = TestBed.createComponent(HostComponent);
     const host = fixture.componentInstance;
-    host.category.set(category);
+    host.exerciseId.set(exerciseId);
+    host.category.set(categoryFor(exerciseId));
     host.data = data;
     host.isEditMode = !!data;
     fixture.detectChanges();
     const component = fixture.debugElement.children[0]
       .componentInstance as ExerciseEntryFieldsComponent;
-    return { component, host, fixture };
+    const switchExercise = (id: string): void => {
+      host.exerciseId.set(id);
+      host.category.set(categoryFor(id));
+      fixture.detectChanges();
+    };
+    return { component, host, fixture, switchExercise };
   }
 
   describe('create mode', () => {
-    it('should default to the first catalog exercise of the category', () => {
+    it('should start empty for the exercise the parent selected', () => {
       // given / when
-      const { component } = render('core', null);
+      const { component } = render('abs.situps', null);
 
-      // then — first core entry is the picker default.
-      expect(component.state.exerciseId()).toBe('abs.situps');
+      // then
+      expect(component.state.currentDefinition()?.id).toBe('abs.situps');
       expect(component.state.sets()).toEqual([0]);
     });
 
-    it('should reset selection + value fields when the category changes', () => {
+    it('should reset the value fields when the parent switches exercise', () => {
       // given
-      const { component, host, fixture } = render('core', null);
+      const { component, switchExercise } = render('abs.situps', null);
       component.state.updateSet(0, '20');
 
       // when
-      host.category.set('squat');
-      fixture.detectChanges();
+      switchExercise('legs.squats');
 
       // then
-      expect(component.state.exerciseId()).toBe('legs.squats');
+      expect(component.state.currentDefinition()?.id).toBe('legs.squats');
       expect(component.state.sets()).toEqual([0]);
     });
 
     it('should emit a time result with durationSec for plank', () => {
       // given
-      const { component } = render('core', null);
-      component.state.onExerciseChange('plank.standard');
+      const { component } = render('plank.standard', null);
       component.state.durationMinutesInput.set('1');
       component.state.durationSecondsInput.set('30');
 
@@ -110,7 +125,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should emit a distance-time result for cardio.running', () => {
       // given
-      const { component } = render('cardio', null);
+      const { component } = render('cardio.running', null);
       component.state.distanceInput.set('5.25');
       component.state.durationMinutesInput.set('25');
       component.state.durationSecondsInput.set('0');
@@ -133,7 +148,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should accept a German decimal comma in the km input', () => {
       // given
-      const { component, fixture } = render('cardio', null, [
+      const { component, fixture } = render('cardio.running', null, [
         { provide: LOCALE_ID, useValue: 'de-DE' },
       ]);
 
@@ -157,13 +172,13 @@ describe('ExerciseEntryFieldsComponent', () => {
     it.each([
       ['de-DE', '1.234,56', 1234560],
       ['en-US', '1,234.56', 1234560],
-      ['fr-FR', '1 234,56', 1234560],
-      ['fr-FR', '1 234,56', 1234560],
+      ['fr-FR', '1 234,56', 1234560],
+      ['fr-FR', '1 234,56', 1234560],
     ])(
       'should parse km input with thousand separators (%s "%s")',
       (locale, input, expectedM) => {
         // given
-        const { component } = render('cardio', null, [
+        const { component } = render('cardio.running', null, [
           { provide: LOCALE_ID, useValue: locale },
         ]);
 
@@ -179,7 +194,7 @@ describe('ExerciseEntryFieldsComponent', () => {
       'should reject malformed km input %j',
       (input) => {
         // given
-        const { component } = render('cardio', null);
+        const { component } = render('cardio.running', null);
 
         // when
         component.state.distanceInput.set(input);
@@ -194,14 +209,14 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should render a locale-aware km placeholder', () => {
       // given / when
-      const { fixture: deFixture } = render('cardio', null, [
+      const { fixture: deFixture } = render('cardio.running', null, [
         { provide: LOCALE_ID, useValue: 'de-DE' },
       ]);
       const deInput: HTMLInputElement = deFixture.nativeElement.querySelector(
         'input[data-testid="training-entry-distance"]'
       );
 
-      const { fixture: enFixture } = render('cardio', null, [
+      const { fixture: enFixture } = render('cardio.running', null, [
         { provide: LOCALE_ID, useValue: 'en-US' },
       ]);
       const enInput: HTMLInputElement = enFixture.nativeElement.querySelector(
@@ -213,14 +228,14 @@ describe('ExerciseEntryFieldsComponent', () => {
       expect(enInput.placeholder).toBe('5.00');
     });
 
-    it('should clear variant + value fields when the exercise picker changes', () => {
+    it('should clear the variant when the parent switches exercise', () => {
       // given
-      const { component } = render('core', null);
+      const { component, switchExercise } = render('abs.situps', null);
       component.state.variantControl.setValue('weighted');
       component.state.updateSet(0, '12');
 
       // when
-      component.state.onExerciseChange('plank.standard');
+      switchExercise('plank.standard');
 
       // then
       expect(component.state.variantControl.value).toBe('');
@@ -229,7 +244,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should cap reps at the catalog max for the chosen exercise', () => {
       // given
-      const { component } = render('core', null);
+      const { component } = render('abs.situps', null);
 
       // when
       component.state.updateSet(0, '9999');
@@ -237,18 +252,6 @@ describe('ExerciseEntryFieldsComponent', () => {
       // then — abs.situps caps at 500.
       expect(component.state.sets()[0]).toBe(500);
       expect(component.state.overCap()).toBe(false);
-    });
-
-    it('should compute a /wiki/uebungen detail link for the selection', () => {
-      // given / when
-      const { component } = render('core', null);
-
-      // then — abs.situps maps to slug 'sit-ups'.
-      expect(component.state.exerciseId()).toBe('abs.situps');
-      expect(component.state.exerciseWikiLink()).toEqual([
-        '/wiki/uebungen',
-        'sit-ups',
-      ]);
     });
   });
 
@@ -263,12 +266,8 @@ describe('ExerciseEntryFieldsComponent', () => {
     }
 
     it('should label a single-set strength row as "Reps"', () => {
-      // given
-      const { component, fixture } = render('core', null);
-
-      // when
-      component.state.onExerciseChange('abs.situps');
-      fixture.detectChanges();
+      // given / when
+      const { fixture } = render('abs.situps', null);
 
       // then
       const labels = breakdownLabels(fixture);
@@ -278,8 +277,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should label endurance rows as "Intervall N" with two intervals', () => {
       // given
-      const { component, fixture } = render('core', null);
-      component.state.onExerciseChange('plank.standard');
+      const { component, fixture } = render('plank.standard', null);
 
       // when
       component.state.addInterval();
@@ -294,8 +292,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should submit intervals on an endurance payload', () => {
       // given
-      const { component } = render('core', null);
-      component.state.onExerciseChange('plank.standard');
+      const { component } = render('plank.standard', null);
       component.state.durationMinutesInput.set('1');
       component.state.durationSecondsInput.set('30');
       component.state.updateInterval(0, '30');
@@ -319,8 +316,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should emit empty intervals when none were entered', () => {
       // given
-      const { component } = render('core', null);
-      component.state.onExerciseChange('plank.standard');
+      const { component } = render('plank.standard', null);
       component.state.durationMinutesInput.set('1');
       component.state.durationSecondsInput.set('30');
 
@@ -334,8 +330,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should write sets only and keep intervals empty for strength', () => {
       // given
-      const { component } = render('core', null);
-      component.state.onExerciseChange('abs.situps');
+      const { component } = render('abs.situps', null);
       component.state.updateSet(0, '12');
 
       // when
@@ -352,14 +347,13 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should clear stale intervals when switching to a strength exercise', () => {
       // given
-      const { component } = render('core', null);
-      component.state.onExerciseChange('plank.standard');
+      const { component, switchExercise } = render('plank.standard', null);
       component.state.updateInterval(0, '45');
       component.state.addInterval();
       component.state.updateInterval(1, '45');
 
       // when
-      component.state.onExerciseChange('abs.situps');
+      switchExercise('abs.situps');
 
       // then
       expect(component.state.intervals()).toEqual([0]);
@@ -370,7 +364,7 @@ describe('ExerciseEntryFieldsComponent', () => {
   describe('edit mode', () => {
     it('should populate the form from a plank edit payload', () => {
       // given / when
-      const { component } = render('core', {
+      const { component } = render('plank.standard', {
         kind: 'exercise',
         exerciseId: 'plank.standard',
         timestamp: '2026-02-10T13:45:00+01:00',
@@ -378,7 +372,7 @@ describe('ExerciseEntryFieldsComponent', () => {
       });
 
       // then
-      expect(component.state.exerciseId()).toBe('plank.standard');
+      expect(component.state.currentDefinition()?.id).toBe('plank.standard');
       expect(component.state.isTimeMeasurement()).toBe(true);
       expect(component.state.durationMinutesInput()).toBe('1');
       expect(component.state.durationSecondsInput()).toBe('30');
@@ -392,7 +386,7 @@ describe('ExerciseEntryFieldsComponent', () => {
       (locale, expected) => {
         // given / when
         const { component } = render(
-          'cardio',
+          'cardio.running',
           {
             kind: 'exercise',
             exerciseId: 'cardio.running',
@@ -413,7 +407,7 @@ describe('ExerciseEntryFieldsComponent', () => {
     it('should round-trip a fr-FR formatted km value back to metres', () => {
       // given / when
       const { component } = render(
-        'cardio',
+        'cardio.running',
         {
           kind: 'exercise',
           exerciseId: 'cardio.running',
@@ -431,7 +425,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should emit a null variantId when a set variant is cleared', () => {
       // given
-      const { component } = render('core', {
+      const { component } = render('abs.situps', {
         kind: 'exercise',
         exerciseId: 'abs.situps',
         timestamp: '2026-02-10T13:45:00+01:00',
@@ -450,7 +444,7 @@ describe('ExerciseEntryFieldsComponent', () => {
 
     it('should pre-fill intervals from an endurance edit payload', () => {
       // given / when
-      const { component } = render('core', {
+      const { component } = render('plank.standard', {
         kind: 'exercise',
         exerciseId: 'plank.standard',
         timestamp: '2026-02-10T13:45:00+01:00',
@@ -470,10 +464,7 @@ describe('ExerciseEntryFieldsComponent', () => {
       'should keep a stale exercise id submittable via the synthetic def (%s)',
       (exerciseId) => {
         // given
-        const category: ExerciseCategoryId = exerciseId.startsWith('legs')
-          ? 'squat'
-          : 'core';
-        const { component } = render(category, {
+        const { component } = render(exerciseId, {
           kind: 'exercise',
           exerciseId,
           timestamp: '2026-02-10T13:45:00+01:00',
@@ -487,22 +478,5 @@ describe('ExerciseEntryFieldsComponent', () => {
         expect(result.exerciseId).toBe(exerciseId);
       }
     );
-
-    it('should not change the exercise when the category input changes in edit mode', () => {
-      // given
-      const { component, host, fixture } = render('core', {
-        kind: 'exercise',
-        exerciseId: 'plank.standard',
-        timestamp: '2026-02-10T13:45:00+01:00',
-        durationSec: 90,
-      });
-
-      // when — edit mode locks the picker; a category input change is a no-op.
-      host.category.set('squat');
-      fixture.detectChanges();
-
-      // then
-      expect(component.state.exerciseId()).toBe('plank.standard');
-    });
   });
 });

@@ -284,6 +284,14 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'admin/android-test',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/android-test-page.component').then(
+        (m) => m.AndroidTestPageComponent
+      ),
+  },
+  {
     path: 'admin/users/:uid/entries',
     canActivate: [adminGuard],
     loadComponent: () =>

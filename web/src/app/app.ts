@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { type ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { Auth } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +22,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -35,16 +34,15 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
-import { filter, interval } from 'rxjs';
+import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
 import {
+  PushIntentDrainService,
   PushSubscriptionService,
   PushSwRegistrationService,
-  QuickLogListenerService,
 } from '@pu-push/push';
 import { TcfConsentService } from '@pu-stats/ads';
 import {
@@ -53,8 +51,14 @@ import {
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
 import { UserConfigStore } from './core/user-config.store';
+import { DailyGoalActionsService } from './core/daily-goal-actions.service';
+import { DailyGoalChecklistComponent } from './core/daily-goal/daily-goal-checklist.component';
+import { toGoalDialItems } from './core/daily-goal/goal-dial-items';
+import { createGoalPillOverlay } from './core/daily-goal/goal-pill-overlay';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
+import { AndroidTestInviteOrchestrationService } from './core/android-test-invite-orchestration.service';
+import { SwUpdateService } from './core/sw-update.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
@@ -125,9 +129,9 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     QuickAddFabCoachmarkComponent,
     ThemeToggleComponent,
     AiAssistantNavButtonComponent,
+    DailyGoalChecklistComponent,
     MatDialogModule,
     MatFormFieldModule,
-    MatProgressBarModule,
     MatSelectModule,
     OverlayModule,
   ],
@@ -136,7 +140,12 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
   styleUrl: './app.scss',
 })
 export class App {
-  private readonly swUpdate = inject(SwUpdate, { optional: true });
+  private readonly swUpdate = inject(SwUpdateService);
+  /** Drives the persistent "new version" button in the toolbar. */
+  readonly swUpdateAvailable = this.swUpdate.updateAvailable;
+  readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
+  protected readonly swUpdateAriaLabel = $localize`:@@sw.update.buttonAria:Neue Version verfügbar – jetzt neu laden`;
+  protected readonly swUpdateRecoverAriaLabel = $localize`:@@sw.update.recoverButtonAria:App-Daten beschädigt – jetzt neu laden`;
   private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly firebaseAuth = inject(Auth, { optional: true });
@@ -161,7 +170,7 @@ export class App {
   readonly showQuickAddFab = computed(() => !!this.user.userIdSafe());
   private readonly pushService = inject(PushSubscriptionService);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
-  private readonly quickLogListener = inject(QuickLogListenerService);
+  private readonly pushIntents = inject(PushIntentDrainService);
   // Eagerly register the push service worker on boot so:
   //   - fresh visitors have the SW installed before they ever open /reminders
   //     (no cold-start race on the first `subscribe()` click), and
@@ -171,14 +180,9 @@ export class App {
   // for PUSH_SUBSCRIPTION_CHANGED events fired by the push SW.
   private readonly _initPushBridge = afterNextRender(() => {
     this.pushService.registerSwListener();
-    this.quickLogListener.init();
+    this.pushIntents.init();
     void this.pushSwRegistration.getRegistration();
   });
-  // Snooze param from SW notification click — must wait for auth to resolve
-  // before calling the Cloud Function, otherwise the request goes out without
-  // a Firebase Auth token and is rejected as 'unauthenticated'.
-  private readonly _pendingSnooze = signal<number | null>(null);
-
   private static readonly COACHMARK_SEEN_KEY = 'pus_speeddial_coachmark_seen';
 
   /** Drives the one-time tutorial bubble pointing at the speed-dial FAB. */
@@ -217,32 +221,10 @@ export class App {
     }
   }
 
-  private readonly _handleSnoozeParam = afterNextRender(() => {
-    const snooze = this.activatedRoute.snapshot.queryParamMap.get('snooze');
-    const snoozeMinutes = snooze ? parseInt(snooze, 10) : NaN;
-    if (!isNaN(snoozeMinutes) && snoozeMinutes > 0) {
-      void this.router.navigate([], {
-        queryParams: { snooze: null },
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
-      });
-      this._pendingSnooze.set(snoozeMinutes);
-    }
-  });
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
   private readonly authService = inject(AuthService);
-  private readonly _snoozeWhenAuthReady = effect(() => {
-    const snoozeMinutes = this._pendingSnooze();
-    if (snoozeMinutes != null && this.auth.authResolved()) {
-      this._pendingSnooze.set(null);
-      this.pushService.snooze(snoozeMinutes).catch(() => {
-        // Best-effort: if snooze fails (e.g. not authenticated),
-        // the next reminder fires at the normal interval.
-      });
-    }
-  });
   private readonly reminderOrchestration = inject(ReminderOrchestrationService);
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
@@ -250,6 +232,11 @@ export class App {
   // page is mounted when the user crosses a daily/weekly/monthly threshold.
   private readonly _goalReachedNotifier = inject(
     GoalReachedNotificationService
+  );
+  // Eager-inject so the Android closed-test invite popup can fire regardless
+  // of which page is mounted.
+  private readonly _androidTestInvite = inject(
+    AndroidTestInviteOrchestrationService
   );
 
   // Delegate to facade
@@ -260,77 +247,56 @@ export class App {
   readonly goalReached = this.appData.goalReached;
   /**
    * Aggregated daily-goal completion (0–100). Drives the toolbar pill
-   * label when the user has configured complex goals — falls back to
-   * the legacy `progress / target` reps display when no complex goals
-   * apply today.
+   * label whenever goals are scored per exercise — falls back to the
+   * legacy `progress / target` reps display when a single pushup target
+   * is all that applies today.
    */
   readonly dailyGoalAggregatedPercent = this.appData.dailyGoalAggregatedPercent;
   readonly hasComplexDailyGoals = computed(
     () =>
-      this.appData.complexGoalsEnabled() &&
+      this.appData.perExerciseGoals() &&
       this.appData.todayGoalEntries().length > 0
   );
   /**
    * Per-exercise breakdown for the toolbar pill's hover/touch dropdown.
-   * Lists every daily goal (or the active plan's prescribed reps) with its
-   * target, progress and completion share.
+   * Lists every daily goal (or every exercise the active plan day
+   * prescribes) with its target, progress and completion share.
    */
   readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
   protected readonly goalDetailsAriaLabel = $localize`:@@toolbarDailyGoal.detailsAria:Tagesziel-Einzelpositionen anzeigen`;
 
-  // The dropdown renders through a CDK overlay (body-level) instead of as a
-  // toolbar descendant: `.top-nav` carries a `mask-image` edge-fade, and a
-  // CSS mask clips descendant painting to the toolbar box, so an in-toolbar
-  // panel below the bar would be masked away.
-  protected readonly goalDetailsOpen = signal(false);
-  protected readonly goalOverlayPositions: ConnectedPosition[] = [
-    {
-      originX: 'end',
-      originY: 'bottom',
-      overlayX: 'end',
-      overlayY: 'top',
-      offsetY: 6,
-    },
-    {
-      originX: 'end',
-      originY: 'top',
-      overlayX: 'end',
-      overlayY: 'bottom',
-      offsetY: -6,
-    },
-  ];
-  // Bridges the gap between the pill and the detached panel so moving the
-  // pointer across it (or a focus bounce between origin and overlay) doesn't
-  // flicker the menu closed.
-  private goalDetailsCloseTimer: ReturnType<typeof setTimeout> | null = null;
-  private readonly _clearGoalTimerOnDestroy = this.destroyRef.onDestroy(() => {
-    if (this.goalDetailsCloseTimer) clearTimeout(this.goalDetailsCloseTimer);
-  });
+  private readonly goalOverlay = createGoalPillOverlay(
+    () => this.dailyGoalBreakdown().length > 0
+  );
+  protected readonly goalDetailsOpen = this.goalOverlay.open;
+  protected readonly goalOverlayPositions = this.goalOverlay.positions;
 
   openGoalDetails(): void {
-    if (this.goalDetailsCloseTimer) {
-      clearTimeout(this.goalDetailsCloseTimer);
-      this.goalDetailsCloseTimer = null;
-    }
-    if (this.dailyGoalBreakdown().length > 0) this.goalDetailsOpen.set(true);
+    this.goalOverlay.show();
   }
 
   scheduleCloseGoalDetails(): void {
-    if (this.goalDetailsCloseTimer) clearTimeout(this.goalDetailsCloseTimer);
-    this.goalDetailsCloseTimer = setTimeout(
-      () => this.goalDetailsOpen.set(false),
-      120
-    );
+    this.goalOverlay.scheduleHide();
   }
 
   closeGoalDetails(): void {
-    if (this.goalDetailsCloseTimer) {
-      clearTimeout(this.goalDetailsCloseTimer);
-      this.goalDetailsCloseTimer = null;
-    }
-    this.goalDetailsOpen.set(false);
+    this.goalOverlay.hide();
   }
   readonly fillToGoalInFlight = this.quickAdd.fillToGoalInFlight;
+
+  private readonly goalActions = inject(DailyGoalActionsService);
+  /** Daily goals rendered as the speed dial's goal submenu. */
+  readonly goalDialItems = computed(() =>
+    toGoalDialItems(this.dailyGoalBreakdown(), (id) =>
+      this.goalActions.isPending(id)
+    )
+  );
+
+  handleFillGoalItem(goalId: string): void {
+    const item = this.dailyGoalBreakdown().find((i) => i.id === goalId);
+    if (!item) return;
+    void this.goalActions.complete(item);
+  }
 
   private readonly tcfConsent = inject(TcfConsentService);
 
@@ -395,49 +361,10 @@ export class App {
         this.seo.update(title, description, path, { noindex: data.noindex });
         this.trackAnalytics('page_view', { page_path: path });
       });
+  }
 
-    if (this.swUpdate?.isEnabled) {
-      const swUpdate = this.swUpdate;
-      swUpdate.versionUpdates
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((event) => {
-          if (event.type !== 'VERSION_READY') return;
-
-          // Sticky (no `duration`) + top-center: the prompt sits at eye level
-          // and stays put until the user clicks "Neu laden". An auto-dismiss
-          // timer made the toast easy to miss (especially when the mobile
-          // bottom-nav cropped the bottom-anchored variant). Distinct
-          // panelClass lets `styles.scss` give it its own surface colour so
-          // it doesn't get mistaken for a routine info toast.
-          const ref = this.snackBar.open(
-            $localize`:@@sw.update.available:Neue Version verfügbar`,
-            $localize`:@@sw.update.reload:Neu laden`,
-            {
-              horizontalPosition: 'center',
-              verticalPosition: 'top',
-              panelClass: 'sw-update-snackbar',
-            }
-          );
-
-          ref.onAction().subscribe(async () => {
-            // `reload()` alone keeps the old waiting worker in place; call
-            // `activateUpdate()` first so the new ngsw takes over before the
-            // browser fetches the next navigation.
-            await swUpdate.activateUpdate();
-            window.location.reload();
-          });
-        });
-
-      // Long-lived sessions (PWA / TWA users who never close the tab) only
-      // see VERSION_READY when ngsw re-checks the manifest. Default check is
-      // once on app stabilisation, so without a poll a deploy never reaches
-      // them. Ten minutes mirrors the cadence used in the SW reminder system.
-      interval(10 * 60 * 1000)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          void swUpdate.checkForUpdate();
-        });
-    }
+  applyServiceWorkerUpdate(): void {
+    void this.swUpdate.applyUpdate();
   }
 
   handleQuickAdd(suggestion: QuickAddSuggestion): void {
@@ -472,7 +399,12 @@ export class App {
    * is showing. No-op while the pill is still counting up to the goal.
    */
   handleGoalPillClick(): void {
-    if (!this.goalReached()) return;
+    if (!this.goalReached()) {
+      // Touch devices never fire the hover that opens the dropdown, so a tap
+      // on the pill has to open the goal details itself.
+      this.goalOverlay.show();
+      return;
+    }
     this._goalReachedNotifier.reopenPrimaryGoal();
   }
 

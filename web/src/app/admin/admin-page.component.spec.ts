@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import {
@@ -15,8 +16,16 @@ import {
 } from './callable-functions.testing';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
+import { BuildInfoService } from '../core/observability/build-info.service';
+import { BuildInfo } from '../../build-info';
 
 const { callablesMock, setupCallables } = createCallablesMock();
+
+const deployedBuild: BuildInfo = {
+  release: 'e34d12c',
+  version: '0.0.0-e34d12c',
+  builtAt: '2026-08-13T09:00:00.000Z',
+};
 
 describe('AdminPageComponent', () => {
   let fixture: ComponentFixture<AdminPageComponent>;
@@ -54,6 +63,14 @@ describe('AdminPageComponent', () => {
       imports: [AdminPageComponent, MatDialogModule],
       providers: [
         { provide: CallableFunctionsService, useValue: callablesMock },
+        // The release badge would otherwise fetch /build-info.json per render.
+        {
+          provide: BuildInfoService,
+          useValue: {
+            buildInfo: signal(deployedBuild).asReadonly(),
+            isKnown: signal(true),
+          },
+        },
         provideRouter([]),
       ],
     }).compileComponents();
@@ -83,6 +100,17 @@ describe('AdminPageComponent', () => {
       // then
       expect(component.users().length).toBe(1);
       expect(callablesMock.call).toHaveBeenCalledWith('adminListUsers');
+    });
+  });
+
+  describe('release version', () => {
+    it('should show the released version of the running deployment', async () => {
+      // given the admin area is opened
+      // when it renders
+      await createComponent();
+
+      // then the header states which release is live
+      expect(fixture.nativeElement.textContent).toContain('0.0.0-e34d12c');
     });
   });
 

@@ -4,12 +4,13 @@ Shell scripts for managing the Firebase environments (staging + production).
 
 ## Scripts
 
-| Script                  | Description                                                                                                                          |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `setup-wif.sh`          | Keyless GitHub Actions → GCP auth via Workload Identity Federation for prod + staging (deploy SA, WIF pool/provider, repo variables) |
-| `setup-staging.sh`      | One-time setup of the staging Firebase project (APIs, SA, IAM, secrets)                                                              |
-| `teardown-staging.sh`   | Remove staging deploy resources (SA, secrets)                                                                                        |
-| `setup-prod-secrets.sh` | Idempotent IAM bindings for all `defineSecret()` secrets on the prod project (runs after a new secret is added)                      |
+| Script                   | Description                                                                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `setup-wif.sh`           | Keyless GitHub Actions → GCP auth via Workload Identity Federation for prod + staging (deploy SA, WIF pool/provider, repo variables) |
+| `setup-staging.sh`       | One-time setup of the staging Firebase project (APIs, SA, IAM, secrets)                                                              |
+| `teardown-staging.sh`    | Remove staging deploy resources (SA, secrets)                                                                                        |
+| `setup-prod-secrets.sh`  | Idempotent IAM bindings for all `defineSecret()` secrets on the prod project (runs after a new secret is added)                      |
+| `setup-firestore-ttl.sh` | Firestore TTL policies (deleted-entry trash bin retention) — not covered by `firebase deploy`, must be run per environment           |
 
 ## Prerequisites
 

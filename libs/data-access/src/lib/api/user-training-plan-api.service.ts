@@ -13,8 +13,25 @@ import {
 } from '@angular/fire/firestore';
 import { UserTrainingPlan, UserTrainingPlanUpdate } from '@pu-stats/models';
 import { from, map, Observable, of } from 'rxjs';
+import { nextSkippedDays } from './user-training-plan.jump';
 
 const COLLECTION = 'userTrainingPlans';
+
+/** Optimistic echo of an `updatePlan` write for callers that only need the
+ *  patched fields back (and the shape returned when there is no Firestore). */
+function patchedPlan(
+  userId: string,
+  patch: UserTrainingPlanUpdate
+): UserTrainingPlan {
+  return {
+    userId,
+    planId: '',
+    startDate: '',
+    status: 'active',
+    completedDays: [],
+    ...patch,
+  };
+}
 
 /**
  * Single-document-per-user store for the active training plan.
@@ -51,34 +68,16 @@ export class UserTrainingPlanApiService {
   ): Observable<UserTrainingPlan> {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) {
-      return of({
-        userId,
-        planId: '',
-        startDate: '',
-        status: 'active',
-        completedDays: [],
-        ...patch,
-      } as UserTrainingPlan);
+      return of(patchedPlan(userId, patch));
     }
     const ref = this.docRef(effectiveUserId);
-    const nowIso = new Date().toISOString();
     const payload: Partial<UserTrainingPlan> = {
       ...patch,
       userId: effectiveUserId,
-      updatedAt: nowIso,
+      updatedAt: new Date().toISOString(),
     };
     return from(setDoc(ref, payload, { merge: true })).pipe(
-      map(
-        () =>
-          ({
-            userId: effectiveUserId,
-            planId: '',
-            startDate: '',
-            status: 'active',
-            completedDays: [],
-            ...patch,
-          }) as UserTrainingPlan
-      )
+      map(() => patchedPlan(effectiveUserId, patch))
     );
   }
 
@@ -92,32 +91,40 @@ export class UserTrainingPlanApiService {
    * correctly server-side.
    */
   addCompletedDay(userId: string, dayIndex: number): Observable<void> {
-    const effectiveUserId = this.resolveUserId(userId);
-    if (!effectiveUserId || !this.firestore) return of(void 0);
-    const ref = this.docRef(effectiveUserId);
     // Marking done implicitly unskips: a day must be in at most one
     // of `completedDays` / `skippedDays`. The arrayRemove on a value
     // that isn't in the array is a no-op, so this is safe even when
     // the day was never skipped.
-    return from(
-      updateDoc(ref, {
-        completedDays: arrayUnion(dayIndex),
-        skippedDays: arrayRemove(dayIndex),
-        updatedAt: new Date().toISOString(),
-      })
-    ).pipe(map(() => void 0));
+    return this.patch(userId, {
+      completedDays: arrayUnion(dayIndex),
+      skippedDays: arrayRemove(dayIndex),
+    });
   }
 
   removeCompletedDay(userId: string, dayIndex: number): Observable<void> {
-    const effectiveUserId = this.resolveUserId(userId);
-    if (!effectiveUserId || !this.firestore) return of(void 0);
-    const ref = this.docRef(effectiveUserId);
-    return from(
-      updateDoc(ref, {
-        completedDays: arrayRemove(dayIndex),
-        updatedAt: new Date().toISOString(),
-      })
-    ).pipe(map(() => void 0));
+    return this.patch(userId, { completedDays: arrayRemove(dayIndex) });
+  }
+
+  /**
+   * Atomic add/remove for `completedItems` — the per-exercise check-offs
+   * inside a day, as `"<dayIndex>:<itemIndex>"` ids. Same `arrayUnion`
+   * rationale as `addCompletedDay`: ticking two exercises of the same
+   * day in quick succession must not drop either.
+   */
+  addCompletedItems(
+    userId: string,
+    itemIds: ReadonlyArray<string>
+  ): Observable<void> {
+    if (itemIds.length === 0) return of(void 0);
+    return this.patch(userId, { completedItems: arrayUnion(...itemIds) });
+  }
+
+  removeCompletedItems(
+    userId: string,
+    itemIds: ReadonlyArray<string>
+  ): Observable<void> {
+    if (itemIds.length === 0) return of(void 0);
+    return this.patch(userId, { completedItems: arrayRemove(...itemIds) });
   }
 
   /**
@@ -127,16 +134,10 @@ export class UserTrainingPlanApiService {
    * single `updateDoc` is supported by Firestore.
    */
   addSkippedDay(userId: string, dayIndex: number): Observable<void> {
-    const effectiveUserId = this.resolveUserId(userId);
-    if (!effectiveUserId || !this.firestore) return of(void 0);
-    const ref = this.docRef(effectiveUserId);
-    return from(
-      updateDoc(ref, {
-        skippedDays: arrayUnion(dayIndex),
-        completedDays: arrayRemove(dayIndex),
-        updatedAt: new Date().toISOString(),
-      })
-    ).pipe(map(() => void 0));
+    return this.patch(userId, {
+      skippedDays: arrayUnion(dayIndex),
+      completedDays: arrayRemove(dayIndex),
+    });
   }
 
   /**
@@ -172,36 +173,21 @@ export class UserTrainingPlanApiService {
       runTransaction(firestore, async (tx) => {
         const snap = await tx.get(ref);
         const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-        const completed = new Set<number>(data?.completedDays ?? []);
-        const priorSkipped: ReadonlyArray<number> = data?.skippedDays ?? [];
-        const preservedPriorSkips = priorSkipped.filter(
-          (idx) => idx < args.targetDayIndex && !completed.has(idx)
-        );
-        const newlySkipped = args.nonRestDaysBeforeTarget.filter(
-          (idx) => !completed.has(idx)
-        );
-        const skippedDays = Array.from(
-          new Set([...preservedPriorSkips, ...newlySkipped])
-        ).sort((x, y) => x - y);
+        const nowIso = new Date().toISOString();
         tx.update(ref, {
           startDate: args.newStartDate,
-          skippedDays,
-          updatedAt: new Date().toISOString(),
+          skippedDays: nextSkippedDays(data, args),
+          // Re-anchoring can shift the day now mapped to today's date away
+          // from whichever day already claimed it — see `dayActivatedAt`.
+          dayActivatedAt: nowIso,
+          updatedAt: nowIso,
         });
       })
     ).pipe(map(() => void 0));
   }
 
   removeSkippedDay(userId: string, dayIndex: number): Observable<void> {
-    const effectiveUserId = this.resolveUserId(userId);
-    if (!effectiveUserId || !this.firestore) return of(void 0);
-    const ref = this.docRef(effectiveUserId);
-    return from(
-      updateDoc(ref, {
-        skippedDays: arrayRemove(dayIndex),
-        updatedAt: new Date().toISOString(),
-      })
-    ).pipe(map(() => void 0));
+    return this.patch(userId, { skippedDays: arrayRemove(dayIndex) });
   }
 
   /**
@@ -221,10 +207,27 @@ export class UserTrainingPlanApiService {
     const payload: UserTrainingPlan = {
       ...plan,
       userId: effectiveUserId,
+      dayActivatedAt: nowIso,
       createdAt: plan.createdAt ?? nowIso,
       updatedAt: nowIso,
     };
     return from(setDoc(ref, payload)).pipe(map(() => payload));
+  }
+
+  /** Field-level `updateDoc` with the `updatedAt` stamp, or a no-op when
+   *  there is no resolvable user / Firestore provider. */
+  private patch(
+    userId: string,
+    fields: Record<string, unknown>
+  ): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    return from(
+      updateDoc(this.docRef(effectiveUserId), {
+        ...fields,
+        updatedAt: new Date().toISOString(),
+      })
+    ).pipe(map(() => void 0));
   }
 
   private resolveUserId(fallbackUserId: string): string {

@@ -19,6 +19,45 @@ export type TrainingPlanLevel = 'beginner' | 'intermediate' | 'advanced';
 export type TrainingDayKind = 'main' | 'light' | 'rest' | 'test';
 
 /**
+ * How a day's exercises are honored.
+ *
+ * - `'metrics'` (default): each exercise carries a measurable target,
+ *   so logging entries fulfills it and the auto-mark effect can close
+ *   the day without the user touching the plan page.
+ * - `'checkoff'`: the prescription is an interval/circuit structure
+ *   (HIIT, EMOM, Tabata) whose real volume depends on how many rounds
+ *   the user actually survives. Metric auto-fulfillment would either
+ *   over- or under-count, so these days are ticked off by hand — per
+ *   exercise or in one go. Logging entries is still offered where the
+ *   exercise is measurable; it just isn't what decides completion.
+ */
+export type TrainingDayCompletion = 'metrics' | 'checkoff';
+
+/**
+ * One trackable exercise inside a training day. `target` is expressed
+ * in the exercise's own measurement unit — reps for `reps`/`weight`,
+ * seconds for `time`, meters for `distance`/`distance-time` — so the
+ * same shape covers "45 Kniebeugen" and "3×40 s Plank".
+ */
+export interface TrainingPlanExercise {
+  /**
+   * Catalog exercise id. MUST be a real `ExerciseDefinition.id` (the
+   * `'pushup'` sentinel included, which resolves to `PUSHUP_DEFINITION`);
+   * a plan-spec guard test pins this to the catalog.
+   */
+  exerciseId: string;
+  /** Optional catalog variant id (e.g. a specific plank/pushup variant). */
+  variantId?: string;
+  /** Total target for the day in the exercise's measurement unit. */
+  target: number;
+  /**
+   * Optional per-set (reps) / per-interval (time, distance) breakdown.
+   * Sums to `target` — a catalog guard test enforces it.
+   */
+  sets?: number[];
+}
+
+/**
  * A single day in a plan. `dayIndex` is 1-based and contiguous from
  * `1..plan.totalDays`. `targetReps === 0` is valid for `rest` days.
  */
@@ -49,6 +88,17 @@ export interface TrainingPlanDay {
   exerciseId?: string;
   /** Optional catalog variant id (e.g. a specific plank/pushup variant). */
   variantId?: string;
+  /**
+   * Every exercise the day prescribes, each individually trackable.
+   * Absent ⇒ the day is a single-exercise day and its item is derived
+   * from `exerciseId`/`targetReps`/`sets` (see `planDayExercises`), so
+   * pure-pushup plans need no data change. When present, the pushup
+   * portion is listed like any other exercise and its target mirrors
+   * `targetReps` — the dashboard goal pill still reads `targetReps`.
+   */
+  exercises?: ReadonlyArray<TrainingPlanExercise>;
+  /** Completion mode. Absent ⇒ `'metrics'`. */
+  completion?: TrainingDayCompletion;
   /** Localized short description shown in the day card. */
   description: string;
 }
@@ -118,6 +168,30 @@ export interface UserTrainingPlan {
    * at most one of the two arrays.
    */
   skippedDays?: number[];
+  /**
+   * Per-exercise completion inside a day, as flat `"<dayIndex>:<itemIndex>"`
+   * ids (see `planDayItemId`). Flat strings rather than a nested
+   * `{day: indexes}` map so writes go through `arrayUnion`/`arrayRemove`
+   * like `completedDays` — a nested map would be clobbered wholesale by
+   * concurrent `setDoc({merge:true})` writes (docs/gotchas/firestore.md).
+   *
+   * Only *manual* check-offs live here. Items whose target is covered by
+   * logged entries are fulfilled by derivation, so a user who tracks
+   * through Quick-Add never writes to this field.
+   */
+  completedItems?: string[];
+  /**
+   * ISO timestamp of the moment the *current* day slot became active —
+   * bumped on `start()` and `jumpToDay()`, the two writes that can make a
+   * day's resolved calendar date (`startDate` + offset) land on a date
+   * other days already claimed entries from. Lets `planDayProgress`
+   * exclude entries logged before this instant when a day's date matches
+   * it, so reps already spent completing day N can't also auto-fulfill
+   * day N+1 (or a different plan) just because both resolve to "today".
+   * Absent on legacy docs — fulfillment falls back to unfiltered
+   * date-matching for those.
+   */
+  dayActivatedAt?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -125,28 +199,14 @@ export interface UserTrainingPlan {
 export type UserTrainingPlanUpdate = Partial<
   Pick<
     UserTrainingPlan,
-    'planId' | 'startDate' | 'status' | 'completedDays' | 'skippedDays'
+    | 'planId'
+    | 'startDate'
+    | 'status'
+    | 'completedDays'
+    | 'skippedDays'
+    | 'completedItems'
   >
 >;
-
-/**
- * Compute the current 1-based day number of an active plan based on
- * the calendar diff between `startDate` and `today`. Caps at
- * `plan.totalDays`. Returns `null` when the plan hasn't started yet
- * (today < startDate).
- */
-export function currentPlanDayIndex(
-  plan: Pick<TrainingPlan, 'totalDays'>,
-  startDate: string,
-  today: string
-): number | null {
-  const start = parseIsoDate(startDate);
-  const now = parseIsoDate(today);
-  if (!start || !now) return null;
-  const diff = Math.round((now.getTime() - start.getTime()) / 86_400_000);
-  if (diff < 0) return null;
-  return Math.min(diff + 1, plan.totalDays);
-}
 
 /**
  * Look up the day for a given 1-based index. Returns `null` if the
@@ -190,51 +250,4 @@ export function isPlanCompleted(
     .map((d) => d.dayIndex);
   if (required.length === 0) return false;
   return required.every((idx) => completedDays.includes(idx));
-}
-
-/**
- * 1-based day index that `jumpToDay` should re-anchor `startDate` to
- * for a given target day and "today". Returns the ISO date the
- * `UserTrainingPlan.startDate` field should be set to so that
- * `currentPlanDayIndex(plan, result, today) === targetDayIndex`.
- *
- * Returns `null` for an out-of-range target. Does not mutate.
- */
-export function startDateForTargetDay(
-  totalDays: number,
-  targetDayIndex: number,
-  today: string
-): string | null {
-  if (targetDayIndex < 1 || targetDayIndex > totalDays) return null;
-  const now = parseIsoDate(today);
-  if (!now) return null;
-  const start = new Date(now);
-  start.setDate(now.getDate() - (targetDayIndex - 1));
-  const y = start.getFullYear();
-  const m = String(start.getMonth() + 1).padStart(2, '0');
-  const d = String(start.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
-
-function parseIsoDate(value: string): Date | null {
-  // Accept `YYYY-MM-DD` (Berlin date string). Normalize to local
-  // midnight so the day diff is calendar-based, not millisecond-based.
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
-  if (!match) return null;
-  const [, y, m, d] = match;
-  const year = Number(y);
-  const month = Number(m);
-  const day = Number(d);
-  const date = new Date(year, month - 1, day);
-  // Reject impossible dates like 2026-02-30 — `Date()` would silently
-  // overflow into the next month. Round-trip the components.
-  if (
-    date.getFullYear() !== year ||
-    date.getMonth() !== month - 1 ||
-    date.getDate() !== day
-  ) {
-    return null;
-  }
-  date.setHours(0, 0, 0, 0);
-  return date;
 }
