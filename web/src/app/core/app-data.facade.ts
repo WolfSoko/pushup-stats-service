@@ -13,8 +13,7 @@ import {
   AdaptiveQuickAddService,
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
-import { TrainingPlanStore } from '../training-plans/training-plan.store';
-import { planDayGoalEntries } from './plan-goal-entries';
+import { PlanGoalsService } from './plan-goals.service';
 import { UserConfigStore } from './user-config.store';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 import {
@@ -54,7 +53,7 @@ export class AppDataFacade {
   private readonly user = inject(UserContextService);
   private readonly adaptiveQuickAdd = inject(AdaptiveQuickAddService);
   private readonly userConfig = inject(UserConfigStore);
-  private readonly trainingPlan = inject(TrainingPlanStore);
+  private readonly planGoals = inject(PlanGoalsService);
   private readonly live = inject(LiveDataStore);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -102,28 +101,16 @@ export class AppDataFacade {
     );
   });
 
-  /** Today's plan day when a plan is active and today is no rest day. */
-  private readonly planTodayDay = computed(() => {
-    if (!this.trainingPlan.hasActivePlan()) return null;
-    const day = this.trainingPlan.todayDay();
-    if (!day || day.kind === 'rest') return null;
-    return day;
-  });
-
   /**
    * Today's prescribed plan reps. Mirrors the dashboard's
    * `planTodayTarget` so the toolbar pill and Quick-Add fill button
    * reflect the plan target the moment a plan is activated, without
    * waiting for a manual config edit.
    */
-  private readonly planTodayTarget = computed(
-    () => this.planTodayDay()?.targetReps ?? 0
-  );
+  private readonly planTodayTarget = this.planGoals.targetReps;
 
   /** Today's plan day as goal entries — empty when no plan applies. */
-  private readonly planTodayGoalEntries = computed(() =>
-    planDayGoalEntries(this.planTodayDay())
-  );
+  private readonly planTodayGoalEntries = this.planGoals.entries;
 
   /**
    * Plan target if available, otherwise the user-configured goal. Kept
@@ -195,10 +182,17 @@ export class AppDataFacade {
    * everything else. Time and distance goals aggregate the matching
    * companion field. Falls back to 0 outside the browser (SSR has no live
    * exerciseEntries feed and the pre-fetched stats only cover pushups).
+   *
+   * Plan goals are scored by the plan itself instead: their progress has
+   * to honour manual tick-offs and the `checkoff` days that are decided
+   * by nothing else, which entries alone can't express.
    */
   readonly todayGoalProgress = computed<readonly number[]>(() => {
     const entries = this.todayGoalEntries();
     if (entries.length === 0) return [];
+    if (this.planTodayGoalEntries().length > 0) {
+      return this.planGoals.progress();
+    }
     const berlinToday = toBerlinIsoDate(new Date());
     const pushupRepsToday = this.todayProgress();
     if (!this.isBrowser || !this.live.connected()) {

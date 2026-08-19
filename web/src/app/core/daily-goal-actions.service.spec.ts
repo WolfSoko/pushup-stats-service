@@ -8,6 +8,7 @@ import { of, Subject, throwError } from 'rxjs';
 import { AppDataFacade } from './app-data.facade';
 import { DailyGoalActionsService } from './daily-goal-actions.service';
 import type { DailyGoalItemView } from './daily-goal.helpers';
+import { PlanGoalsService } from './plan-goals.service';
 
 function item(overrides: Partial<DailyGoalItemView> = {}): DailyGoalItemView {
   return {
@@ -34,6 +35,8 @@ describe('DailyGoalActionsService', () => {
   const snackBarOpen = vitest.fn();
   const reloadAfterMutation = vitest.fn();
   const userId = signal<string>('u1');
+  const isPlanGoal = vitest.fn();
+  const completePlanGoal = vitest.fn();
 
   function setup(): DailyGoalActionsService {
     TestBed.resetTestingModule();
@@ -52,6 +55,10 @@ describe('DailyGoalActionsService', () => {
             dailyGoalBreakdown: signal<readonly DailyGoalItemView[]>([]),
           },
         },
+        {
+          provide: PlanGoalsService,
+          useValue: { isPlanGoal, complete: completePlanGoal },
+        },
       ],
     });
     return TestBed.inject(DailyGoalActionsService);
@@ -61,7 +68,49 @@ describe('DailyGoalActionsService', () => {
     createEntry.mockReset().mockReturnValue(of({ _id: 'e1' }));
     snackBarOpen.mockReset();
     reloadAfterMutation.mockReset();
+    isPlanGoal.mockReset().mockReturnValue(false);
+    completePlanGoal.mockReset().mockResolvedValue('logged');
     userId.set('u1');
+  });
+
+  it('should close a plan goal through the plan action instead of a fill entry', async () => {
+    // given a goal that belongs to today's training plan
+    isPlanGoal.mockReturnValue(true);
+    const service = setup();
+
+    // when it is checked off
+    const result = await service.complete(item({ id: 'plan-today:pushup' }));
+
+    // then the plan logs and ticks it — no bare goal-fill entry is written
+    expect(completePlanGoal).toHaveBeenCalledWith('plan-today:pushup');
+    expect(createEntry).not.toHaveBeenCalled();
+    expect(result).toBe('logged');
+  });
+
+  it('should surface a plan write failure as an error', async () => {
+    // given
+    isPlanGoal.mockReturnValue(true);
+    completePlanGoal.mockRejectedValue(new Error('offline'));
+    const service = setup();
+
+    // when
+    const result = await service.complete(item({ id: 'plan-today:pushup' }));
+
+    // then
+    expect(result).toBe('error');
+    expect(snackBarOpen).toHaveBeenCalled();
+  });
+
+  it('should clear the pending flag after a plan check-off', async () => {
+    // given
+    isPlanGoal.mockReturnValue(true);
+    const service = setup();
+
+    // when
+    await service.complete(item({ id: 'plan-today:pushup' }));
+
+    // then
+    expect(service.isPending('plan-today:pushup')).toBe(false);
   });
 
   it('should log the missing amount for the checked goal', async () => {

@@ -5,6 +5,13 @@ import {
   type TrainingPlanDay,
 } from '@pu-stats/models';
 
+/** One daily goal derived from a plan day, with the items it covers. */
+export interface PlanDayGoal {
+  readonly entry: ComplexGoalEntry;
+  /** Positions in `planDayExercises(day)` this goal aggregates. */
+  readonly itemIndexes: readonly number[];
+}
+
 /**
  * Today's plan day expressed as daily goals, so the toolbar pill, its
  * dropdown and the Quick-Add goal submenu list every exercise the day
@@ -22,32 +29,39 @@ import {
  *   would each count the same logged seconds.
  *
  * Exercises missing from the catalog are skipped: without a measurement
- * and unit there is nothing to score or format them against.
+ * and unit there is nothing to score or format them against. So are
+ * unquantified items (a HIIT round's `target: 0`) — they carry no
+ * number a goal could be scored against, and the day's tick-off closes
+ * them instead.
  */
-export function planDayGoalEntries(
-  day: TrainingPlanDay | null
-): ComplexGoalEntry[] {
+export function planDayGoals(day: TrainingPlanDay | null): PlanDayGoal[] {
   if (!day) return [];
-  const byExercise = new Map<string, ComplexGoalEntry>();
-  for (const exercise of planDayExercises(day)) {
-    if (exercise.target <= 0) continue;
+  const byExercise = new Map<string, PlanDayGoal>();
+  planDayExercises(day).forEach((exercise, itemIndex) => {
+    if (exercise.target <= 0) return;
     const def = findExerciseDefinition(exercise.exerciseId);
-    if (!def) continue;
+    if (!def) return;
     const existing = byExercise.get(exercise.exerciseId);
     if (existing) {
       byExercise.set(exercise.exerciseId, {
-        ...existing,
-        target: existing.target + exercise.target,
+        entry: {
+          ...existing.entry,
+          target: existing.entry.target + exercise.target,
+        },
+        itemIndexes: [...existing.itemIndexes, itemIndex],
       });
-      continue;
+      return;
     }
     byExercise.set(exercise.exerciseId, {
-      id: `plan-today:${exercise.exerciseId}`,
-      exerciseId: exercise.exerciseId,
-      target: exercise.target,
-      measurement: def.measurement,
-      unit: def.unit,
+      entry: {
+        id: `plan-today:${exercise.exerciseId}`,
+        exerciseId: exercise.exerciseId,
+        target: exercise.target,
+        measurement: def.measurement,
+        unit: def.unit,
+      },
+      itemIndexes: [itemIndex],
     });
-  }
+  });
   return [...byExercise.values()];
 }

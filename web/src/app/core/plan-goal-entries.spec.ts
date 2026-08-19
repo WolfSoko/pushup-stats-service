@@ -1,8 +1,8 @@
 import type { TrainingPlanDay } from '@pu-stats/models';
 
-import { planDayGoalEntries } from './plan-goal-entries';
+import { planDayGoals } from './plan-goal-entries';
 
-describe('planDayGoalEntries', () => {
+describe('planDayGoals', () => {
   const day = (overrides: Partial<TrainingPlanDay>): TrainingPlanDay => ({
     dayIndex: 1,
     kind: 'main',
@@ -11,37 +11,40 @@ describe('planDayGoalEntries', () => {
     ...overrides,
   });
 
-  it('should return no entries without a day', () => {
+  it('should return no goals without a day', () => {
     // given / when
-    const entries = planDayGoalEntries(null);
+    const goals = planDayGoals(null);
 
     // then
-    expect(entries).toEqual([]);
+    expect(goals).toEqual([]);
   });
 
-  it('should return no entries for a rest day', () => {
+  it('should return no goals for a rest day', () => {
     // given
     const restDay = day({ kind: 'rest', targetReps: 0 });
 
     // when
-    const entries = planDayGoalEntries(restDay);
+    const goals = planDayGoals(restDay);
 
     // then
-    expect(entries).toEqual([]);
+    expect(goals).toEqual([]);
   });
 
   it('should derive a single pushup goal for a day without an exercise list', () => {
     // given / when
-    const entries = planDayGoalEntries(day({}));
+    const goals = planDayGoals(day({}));
 
     // then
-    expect(entries).toEqual([
+    expect(goals).toEqual([
       {
-        id: 'plan-today:pushup',
-        exerciseId: 'pushup',
-        target: 60,
-        measurement: 'reps',
-        unit: 'reps',
+        entry: {
+          id: 'plan-today:pushup',
+          exerciseId: 'pushup',
+          target: 60,
+          measurement: 'reps',
+          unit: 'reps',
+        },
+        itemIndexes: [0],
       },
     ]);
   });
@@ -58,10 +61,10 @@ describe('planDayGoalEntries', () => {
     });
 
     // when
-    const entries = planDayGoalEntries(circuit);
+    const goals = planDayGoals(circuit);
 
     // then
-    expect(entries).toEqual([
+    expect(goals.map((g) => g.entry)).toEqual([
       {
         id: 'plan-today:pushup',
         exerciseId: 'pushup',
@@ -84,6 +87,7 @@ describe('planDayGoalEntries', () => {
         unit: 's',
       },
     ]);
+    expect(goals.map((g) => g.itemIndexes)).toEqual([[0], [1], [2]]);
   });
 
   it('should collapse repeated exercises into one goal with the summed target', () => {
@@ -97,11 +101,12 @@ describe('planDayGoalEntries', () => {
     });
 
     // when
-    const entries = planDayGoalEntries(planks);
+    const goals = planDayGoals(planks);
 
     // then
-    expect(entries).toHaveLength(1);
-    expect(entries[0].target).toBe(330);
+    expect(goals).toHaveLength(1);
+    expect(goals[0].entry.target).toBe(330);
+    expect(goals[0].itemIndexes).toEqual([0, 1]);
   });
 
   it('should drop a pinned variant so plan fulfillment and goal progress agree', () => {
@@ -111,13 +116,13 @@ describe('planDayGoalEntries', () => {
     });
 
     // when
-    const entries = planDayGoalEntries(withVariant);
+    const goals = planDayGoals(withVariant);
 
     // then
-    expect(entries[0].variantId).toBeUndefined();
+    expect(goals[0].entry.variantId).toBeUndefined();
   });
 
-  it('should skip exercises without a target or catalog definition', () => {
+  it('should skip unquantified exercises and those missing from the catalog', () => {
     // given
     const mixed = day({
       exercises: [
@@ -128,9 +133,11 @@ describe('planDayGoalEntries', () => {
     });
 
     // when
-    const entries = planDayGoalEntries(mixed);
+    const goals = planDayGoals(mixed);
 
     // then
-    expect(entries.map((e) => e.exerciseId)).toEqual(['pushup']);
+    expect(goals.map((g) => g.entry.exerciseId)).toEqual(['pushup']);
+    // Item indexes stay anchored to the day's list, skips included.
+    expect(goals[0].itemIndexes).toEqual([2]);
   });
 });

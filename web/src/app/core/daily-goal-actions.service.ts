@@ -10,6 +10,7 @@ import {
   type DailyGoalItemView,
   dailyGoalFillPayload,
 } from './daily-goal.helpers';
+import { PlanGoalsService } from './plan-goals.service';
 import { notifyEntrySaved, notifyError } from './quick-add-notify';
 
 /** Outcome of a single check-off, for callers that report it. */
@@ -30,6 +31,7 @@ export class DailyGoalActionsService {
   private readonly userContext = inject(UserContextService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly appData = inject(AppDataFacade);
+  private readonly planGoals = inject(PlanGoalsService);
 
   private readonly _pending = signal<ReadonlySet<string>>(new Set());
 
@@ -47,6 +49,9 @@ export class DailyGoalActionsService {
   async complete(item: DailyGoalItemView): Promise<CompleteGoalResult> {
     if (item.reached) return 'already-reached';
     if (this.isPending(item.id)) return 'noop';
+    if (this.planGoals.isPlanGoal(item.id)) {
+      return this.completePlanGoal(item.id);
+    }
     const payload = dailyGoalFillPayload(item);
     if (!payload) {
       // Not a failure: the goal needs a companion value only a real entry
@@ -84,6 +89,28 @@ export class DailyGoalActionsService {
       return 'error';
     } finally {
       this.markPending(item.id, false);
+    }
+  }
+
+  /**
+   * Plan goals close through the plan's own action, which logs the
+   * prescribed sets *and* ticks the exercise off. Writing a plain fill
+   * entry instead would leave a `checkoff` day untouched — its progress
+   * is decided by the tick alone.
+   */
+  private async completePlanGoal(goalId: string): Promise<CompleteGoalResult> {
+    this.markPending(goalId, true);
+    try {
+      const result = await this.planGoals.complete(goalId);
+      if (result === 'noop') return 'noop';
+      if (result === 'logged') notifyEntrySaved(this.snackBar);
+      this.appData.reloadAfterMutation();
+      return result === 'logged' ? 'logged' : 'already-reached';
+    } catch (err) {
+      notifyError(this.snackBar, err);
+      return 'error';
+    } finally {
+      this.markPending(goalId, false);
     }
   }
 
