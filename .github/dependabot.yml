@@ -3,7 +3,7 @@
 version: 2
 updates:
   # pnpm dependencies - grouped for Nx workspace efficiency
-  - package-ecosystem: 'pnpm'
+  - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
