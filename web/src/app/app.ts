@@ -247,20 +247,20 @@ export class App {
   readonly goalReached = this.appData.goalReached;
   /**
    * Aggregated daily-goal completion (0–100). Drives the toolbar pill
-   * label when the user has configured complex goals — falls back to
-   * the legacy `progress / target` reps display when no complex goals
-   * apply today.
+   * label whenever goals are scored per exercise — falls back to the
+   * legacy `progress / target` reps display when a single pushup target
+   * is all that applies today.
    */
   readonly dailyGoalAggregatedPercent = this.appData.dailyGoalAggregatedPercent;
   readonly hasComplexDailyGoals = computed(
     () =>
-      this.appData.complexGoalsEnabled() &&
+      this.appData.perExerciseGoals() &&
       this.appData.todayGoalEntries().length > 0
   );
   /**
    * Per-exercise breakdown for the toolbar pill's hover/touch dropdown.
-   * Lists every daily goal (or the active plan's prescribed reps) with its
-   * target, progress and completion share.
+   * Lists every daily goal (or every exercise the active plan day
+   * prescribes) with its target, progress and completion share.
    */
   readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
   protected readonly goalDetailsAriaLabel = $localize`:@@toolbarDailyGoal.detailsAria:Tagesziel-Einzelpositionen anzeigen`;

@@ -14,6 +14,7 @@ import {
   type QuickAddSuggestion,
 } from '@pu-stats/quick-add';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
+import { planDayGoalEntries } from './plan-goal-entries';
 import { UserConfigStore } from './user-config.store';
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 import {
@@ -101,18 +102,28 @@ export class AppDataFacade {
     );
   });
 
-  /**
-   * Today's prescribed plan reps when a plan is active and today is a
-   * non-rest day. Mirrors the dashboard's `planTodayTarget` so the
-   * toolbar pill and Quick-Add fill button reflect the plan target the
-   * moment a plan is activated, without waiting for a manual config edit.
-   */
-  private readonly planTodayTarget = computed(() => {
-    if (!this.trainingPlan.hasActivePlan()) return 0;
+  /** Today's plan day when a plan is active and today is no rest day. */
+  private readonly planTodayDay = computed(() => {
+    if (!this.trainingPlan.hasActivePlan()) return null;
     const day = this.trainingPlan.todayDay();
-    if (!day || day.kind === 'rest') return 0;
-    return day.targetReps;
+    if (!day || day.kind === 'rest') return null;
+    return day;
   });
+
+  /**
+   * Today's prescribed plan reps. Mirrors the dashboard's
+   * `planTodayTarget` so the toolbar pill and Quick-Add fill button
+   * reflect the plan target the moment a plan is activated, without
+   * waiting for a manual config edit.
+   */
+  private readonly planTodayTarget = computed(
+    () => this.planTodayDay()?.targetReps ?? 0
+  );
+
+  /** Today's plan day as goal entries — empty when no plan applies. */
+  private readonly planTodayGoalEntries = computed(() =>
+    planDayGoalEntries(this.planTodayDay())
+  );
 
   /**
    * Plan target if available, otherwise the user-configured goal. Kept
@@ -145,11 +156,12 @@ export class AppDataFacade {
   );
 
   readonly goalReached = computed(() => {
-    // For users on the new goals page, "reached" means every applicable
-    // exercise has hit its individual target — comparing the rep-sum to
-    // the pushup-only `todayProgress` would let the snap fire after just
-    // doing pushups even if Squats/Plank/Running were never touched.
-    if (this.userConfig.goalsConfigured()) {
+    // Where goals are scored per exercise, "reached" means every
+    // applicable one has hit its individual target — comparing the
+    // rep-sum to the pushup-only `todayProgress` would let the snap fire
+    // after just doing pushups even if Squats/Plank/Running were never
+    // touched.
+    if (this.perExerciseGoals()) {
       return this.dailyGoalsAllReached();
     }
     const goal = this.effectiveDailyGoal();
@@ -157,24 +169,14 @@ export class AppDataFacade {
   });
 
   /**
-   * Today's complex goal entries, filtered by the current weekday. A plan
-   * day target keeps superseding the user's complex goals — we synthesise
-   * a single pushup-reps entry so the toolbar stays focused on the
-   * prescribed plan workout.
+   * Today's complex goal entries, filtered by the current weekday. An
+   * active plan day keeps superseding the user's complex goals — every
+   * exercise it prescribes becomes a goal so the toolbar stays focused
+   * on the prescribed plan workout.
    */
   readonly todayGoalEntries = computed<ComplexGoalEntry[]>(() => {
-    const planTarget = this.planTodayTarget();
-    if (planTarget > 0) {
-      return [
-        {
-          id: 'plan-today',
-          exerciseId: PUSHUP_QUICK_ADD_EXERCISE_ID,
-          target: planTarget,
-          measurement: 'reps',
-          unit: 'reps',
-        },
-      ];
-    }
+    const planEntries = this.planTodayGoalEntries();
+    if (planEntries.length > 0) return planEntries;
     // Use the Berlin date for the weekday, matching `todayProgress` and the
     // rest of the facade. `new Date().getDay()` would read the user's local
     // timezone — for clients west of Berlin, a Saturday-night entry would
@@ -228,6 +230,23 @@ export class AppDataFacade {
   readonly complexGoalsEnabled = this.userConfig.goalsConfigured;
 
   /**
+   * Whether today's goals are scored per exercise rather than as a
+   * single pushup-rep ratio. True once the user opted into the goals
+   * page, or the active plan day prescribes anything beyond a lone
+   * pushup target: the `X / Y` reps display would hide the other
+   * exercises of a circuit day, and would count pushup reps against a
+   * target in seconds or metres on a day that prescribes neither.
+   */
+  readonly perExerciseGoals = computed(() => {
+    if (this.complexGoalsEnabled()) return true;
+    const plan = this.planTodayGoalEntries();
+    return (
+      plan.length > 1 ||
+      plan.some((entry) => entry.exerciseId !== PUSHUP_QUICK_ADD_EXERCISE_ID)
+    );
+  });
+
+  /**
    * Aggregated 0–100 daily-goal completion percentage across all
    * configured exercises (averaged, capped per-entry at 100% so a
    * blown-out single goal can't mask the others). Returns 0 when no
@@ -249,10 +268,10 @@ export class AppDataFacade {
    * Per-exercise breakdown of today's daily goals for the dashboard card
    * and the toolbar pill dropdown: exercise name, formatted progress and
    * target in the goal's native unit, and the per-entry completion share
-   * (capped at 100%). When a plan is active this lists the single
-   * synthesised plan-reps goal, so the plan's daily target renders the
-   * same way as a manually configured goal. Empty when no goal applies
-   * today (callers fall back to their legacy single-line display).
+   * (capped at 100%). When a plan is active this lists the exercises
+   * today's plan day prescribes, so plan targets render the same way as
+   * manually configured goals. Empty when no goal applies today (callers
+   * fall back to their legacy single-line display).
    */
   readonly dailyGoalBreakdown = computed<readonly DailyGoalItemView[]>(() =>
     dailyGoalItemViews(this.todayGoalEntries(), this.todayGoalProgress())

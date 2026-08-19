@@ -524,6 +524,56 @@ describe('AppDataFacade', () => {
       expect(facade.goalReached()).toBe(true);
     });
 
+    it('Given a plan day prescribing several exercises, Then goals are scored per exercise and pushups alone do not reach the goal', async () => {
+      const circuitDay: TrainingPlanDay = {
+        ...mainDay,
+        exercises: [
+          { exerciseId: 'pushup', target: 60 },
+          { exerciseId: 'legs.squats', target: 50 },
+        ],
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 60,
+        planTodayDay: circuitDay,
+      });
+      await flushResources();
+
+      expect(facade.perExerciseGoals()).toBe(true);
+      expect(facade.goalReached()).toBe(false);
+      expect(facade.dailyGoalAggregatedPercent()).toBe(50);
+    });
+
+    it('Given a single-exercise plan day, Then the legacy reps display stays in charge', async () => {
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 60,
+        planTodayDay: mainDay,
+      });
+      await flushResources();
+
+      expect(facade.perExerciseGoals()).toBe(false);
+      expect(facade.goalReached()).toBe(true);
+    });
+
+    it('Given a plan day prescribing a single non-pushup exercise, Then goals are scored per exercise', async () => {
+      const plankDay: TrainingPlanDay = {
+        ...mainDay,
+        exerciseId: 'plank.standard',
+        targetReps: 240,
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 240,
+        planTodayDay: plankDay,
+      });
+      await flushResources();
+
+      // 240 pushups must not satisfy a 240-second plank target.
+      expect(facade.perExerciseGoals()).toBe(true);
+      expect(facade.goalReached()).toBe(false);
+    });
+
     it('Given an active plan on a rest day, Then dailyGoal falls back to the user-configured goal', async () => {
       const facade = setup({ dailyGoal: 100, planTodayDay: restDay });
       await flushResources();
@@ -593,6 +643,39 @@ describe('AppDataFacade', () => {
       expect(breakdown[0].targetDisplay).toBe('60');
       expect(breakdown[0].progressDisplay).toBe('30');
       expect(breakdown[0].percent).toBe(50);
+    });
+
+    it('Given an active plan day with several exercises, Then the breakdown lists all of them, not just pushups', async () => {
+      const circuitDay: TrainingPlanDay = {
+        ...mainDay,
+        targetReps: 40,
+        exercises: [
+          { exerciseId: 'pushup', target: 40 },
+          { exerciseId: 'legs.squats', target: 50 },
+          { exerciseId: 'plank.standard', target: 120 },
+        ],
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 40,
+        planTodayDay: circuitDay,
+      });
+      await flushResources();
+
+      const breakdown = facade.dailyGoalBreakdown();
+      expect(breakdown.map((i) => i.exerciseName)).toEqual([
+        'Liegestütze',
+        'Kniebeugen',
+        'Plank',
+      ]);
+      expect(breakdown.map((i) => i.targetDisplay)).toEqual([
+        '40',
+        '50',
+        '2:00',
+      ]);
+      expect(breakdown[0].reached).toBe(true);
+      expect(breakdown[1].reached).toBe(false);
+      expect(facade.dailyGoalsAllReached()).toBe(false);
     });
 
     it('Given no goal is configured, Then the breakdown is empty', async () => {
