@@ -11118,51 +11118,51 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Repetitions</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewicht</source>
-        <target>Gewicht</target>
+        <target>Weight</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer</source>
-        <target>Dauer</target>
+        <target>Duration</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke</source>
-        <target>Strecke</target>
+        <target>Distance</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Strecke &amp; Tempo</source>
-        <target>Strecke &amp; Tempo</target>
+        <target>Distance &amp; Pace</target>
       </segment>
     </unit>
     <unit id="analysis.chartSegment.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sonstige</source>
-        <target>Sonstige</target>
+        <target>Other</target>
       </segment>
     </unit>
     <unit id="analysis.streaksTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Streaks</source>
         <target>Streaks</target>
       </segment>
     </unit>
     <unit id="analysis.bestValuesTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestwerte</source>
-        <target>Bestwerte</target>
+        <target>Best values</target>
       </segment>
     </unit>
 </file>
