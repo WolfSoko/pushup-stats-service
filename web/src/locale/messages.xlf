@@ -9390,7 +9390,7 @@
     </unit>
     <unit id="analysis.bestValuesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:27,29</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:30,32</note>
       </notes>
       <segment>
         <source>Bestwerte</source>
@@ -9398,7 +9398,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:33,35</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:36,38</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -9406,7 +9406,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:40,41</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:43,44</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -9414,7 +9414,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:48,50</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:51,53</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -9422,7 +9422,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:51,53</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:54,56</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -9430,7 +9430,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:61,63</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:64,66</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -9438,7 +9438,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:75,76</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:78,79</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -9446,7 +9446,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:80,81</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:83,84</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -9454,7 +9454,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:89,91</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:92,94</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
@@ -9462,7 +9462,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:109,111</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:65</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -9470,7 +9470,7 @@
     </unit>
     <unit id="analysis.weekTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:112,114</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:66</note>
       </notes>
       <segment>
         <source>Letzte 8 Wochen</source>
@@ -9478,24 +9478,15 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:120,121</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:67</note>
       </notes>
       <segment>
         <source>Woche</source>
       </segment>
     </unit>
-    <unit id="analysis.avgSetsCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:132,133</note>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:175,176</note>
-      </notes>
-      <segment>
-        <source>⌀ Sets</source>
-      </segment>
-    </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:152,154</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:68</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -9503,7 +9494,7 @@
     </unit>
     <unit id="analysis.monthTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:155,157</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:69</note>
       </notes>
       <segment>
         <source>Letzte 6 Monate</source>
@@ -9511,7 +9502,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:163,165</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:70</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -9567,10 +9558,18 @@
     </unit>
     <unit id="analysis.repsUnitLong">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:47</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:70</note>
       </notes>
       <segment>
         <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="analysis.avgSetsCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-trend-table.component.html:25,26</note>
+      </notes>
+      <segment>
+        <source>⌀ Sets</source>
       </segment>
     </unit>
     <unit id="historyHeaderTitle">
