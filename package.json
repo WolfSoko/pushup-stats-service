@@ -128,7 +128,7 @@
     "@ngrx/signals": "^21.0.1",
     "@sentry/angular": "^10.70.0",
     "@sentry/node": "^10.70.0",
-    "@wolsok/thanos": "^16.0.1",
+    "@wolsok/thanos": "^17.0.18",
     "axios": "1.19.0",
     "chart.js": "4.5.1",
     "chartjs-adapter-date-fns": "^3.0.0",
