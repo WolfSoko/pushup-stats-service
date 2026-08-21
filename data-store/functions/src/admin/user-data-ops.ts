@@ -21,6 +21,7 @@ export async function deleteUserExerciseData(uid: string): Promise<void> {
       for (const doc of snap.docs) {
         batch.delete(doc.ref);
       }
+      // Non-atomic: if this commit throws, earlier pages are permanently deleted with no rollback.
       await batch.commit();
       if (snap.size < BATCH_SIZE) break;
     }
