@@ -54,7 +54,7 @@
     "@swc/helpers": "0.5.23",
     "@testing-library/angular": "^19.1.0",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/compression": "1.8.1",
     "@types/cors": "2.8.19",
