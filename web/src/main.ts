@@ -7,8 +7,25 @@ import { appBrowserConfig } from './app/app.browser.config';
 import { firebaseRuntime } from './env/firebase-runtime';
 import { AuthService } from '@pu-auth/auth';
 import { initSentryLazily } from './app/core/observability/sentry';
+import { fetchBuildInfo, sentryRelease } from './build-info';
 
 const sentryEnabled = !firebaseRuntime.useEmulators && !isDevMode();
+
+/**
+ * Release name to tag browser errors with.
+ *
+ * `globalThis.SENTRY_RELEASE` is injected into the HTML by
+ * `scripts/upload-sentry-sourcemaps.sh`, but only reaches the client on the
+ * static Firebase Hosting path: App Hosting serves client-rendered routes
+ * from the CSR shell that Angular inlines into the server bundle, which the
+ * script never touches. `build-info.json` ships in the same artifact and is
+ * reachable either way, so it is the fallback.
+ */
+async function browserRelease(): Promise<string | undefined> {
+  const injected = (globalThis as Record<string, unknown>)['SENTRY_RELEASE'];
+  if (typeof injected === 'string' && injected !== '') return injected;
+  return sentryRelease(await fetchBuildInfo());
+}
 
 type E2EWindowHelpers = {
   signInAnonymouslyForE2E?: () => Promise<void>;
@@ -32,16 +49,18 @@ bootstrapApplication(App, mergeApplicationConfig(appConfig, appBrowserConfig))
     // is the fallback.
     if (sentryEnabled) {
       const loadSentry = () =>
-        initSentryLazily(appRef, {
-          dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
-          release: (globalThis as Record<string, unknown>)['SENTRY_RELEASE'] as
-            | string
-            | undefined,
-          environment: 'production',
-          tracesSampleRate: 0.2,
-          replaysSessionSampleRate: 0.05,
-          replaysOnErrorSampleRate: 1.0,
-        }).catch((err) => console.error('Sentry init failed', err));
+        browserRelease()
+          .then((release) =>
+            initSentryLazily(appRef, {
+              dsn: 'https://084cd4acd3e626148eba3a831d0e4bee@o1384048.ingest.us.sentry.io/4511089937219584',
+              release,
+              environment: 'production',
+              tracesSampleRate: 0.2,
+              replaysSessionSampleRate: 0.05,
+              replaysOnErrorSampleRate: 1.0,
+            })
+          )
+          .catch((err) => console.error('Sentry init failed', err));
       const ric = (
         window as Window & {
           requestIdleCallback?: (cb: () => void, opts?: object) => number;

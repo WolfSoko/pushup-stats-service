@@ -16,6 +16,9 @@ allowBuilds:
   re2: true
   unrs-resolver: true
 
+minimumReleaseAgeExclude:
+  - '@wolsok/thanos@17.0.18'
+
 peerDependencyRules:
   allowedVersions:
     '@angular/common': '21'

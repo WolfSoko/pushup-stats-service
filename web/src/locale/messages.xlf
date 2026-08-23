@@ -190,7 +190,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:315,316</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:152,153</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:48,50</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:42,44</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:432,433</note>
       </notes>
       <segment>
@@ -638,9 +638,9 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:63</note>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:80</note>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:86</note>
+        <note category="location">libs/push/src/lib/quick-log.service.ts:45</note>
+        <note category="location">libs/push/src/lib/quick-log.service.ts:62</note>
+        <note category="location">libs/push/src/lib/quick-log.service.ts:69</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147</note>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:163</note>
@@ -655,7 +655,7 @@
     </unit>
     <unit id="reminder.quickLog.success">
       <notes>
-        <note category="location">libs/push/src/lib/quick-log-listener.service.ts:79</note>
+        <note category="location">libs/push/src/lib/quick-log.service.ts:61</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
@@ -759,7 +759,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:69,70</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:120,121</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -767,7 +767,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:104</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:135</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -775,7 +775,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:105</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:136</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -783,7 +783,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:106</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:137</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -791,7 +791,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:107</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:138</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -799,15 +799,31 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:110</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:141</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.goals">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:148</note>
+      </notes>
+      <segment>
+        <source>Tagesziele</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalsAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:149</note>
+      </notes>
+      <segment>
+        <source>Tagesziele zum Abhaken anzeigen</source>
+      </segment>
+    </unit>
     <unit id="plan.day.rest">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:61</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:88</note>
       </notes>
       <segment>
         <source>Ruhetag</source>
@@ -815,7 +831,7 @@
     </unit>
     <unit id="plan.day.rest.mobility">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:62</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:89</note>
       </notes>
       <segment>
         <source>Ruhetag — Mobility</source>
@@ -823,7 +839,7 @@
     </unit>
     <unit id="plan.day.rest.prepFinal">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:63</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:90</note>
       </notes>
       <segment>
         <source>Ruhetag — Vorbereitung Endtest</source>
@@ -831,7 +847,7 @@
     </unit>
     <unit id="plan.day.light">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:64</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:91</note>
       </notes>
       <segment>
         <source>Leichter Tag</source>
@@ -839,7 +855,7 @@
     </unit>
     <unit id="plan.day.activeRecovery">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:65</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:92</note>
       </notes>
       <segment>
         <source>Aktive Erholung</source>
@@ -847,7 +863,7 @@
     </unit>
     <unit id="plan.day.mobility.chestStretch">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:66</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:93</note>
       </notes>
       <segment>
         <source>Mobility &amp; Brust-Stretching</source>
@@ -855,7 +871,7 @@
     </unit>
     <unit id="plan.day.finalTest.maxNoPause">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:67</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:94</note>
       </notes>
       <segment>
         <source>Endtest: Maximale Liegestütze ohne Pause</source>
@@ -863,7 +879,7 @@
     </unit>
     <unit id="plan.day.amrap.3x">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:68</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:95</note>
       </notes>
       <segment>
         <source>3×AMRAP</source>
@@ -871,7 +887,7 @@
     </unit>
     <unit id="plan.day.amrap.3x90s">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:69</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:96</note>
       </notes>
       <segment>
         <source>3×AMRAP, 90 s Pause</source>
@@ -879,7 +895,7 @@
     </unit>
     <unit id="plan.day.amrap.4x">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:70</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:97</note>
       </notes>
       <segment>
         <source>4×AMRAP</source>
@@ -887,7 +903,7 @@
     </unit>
     <unit id="plan.day.amrap.4x60s">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:71</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:98</note>
       </notes>
       <segment>
         <source>4×AMRAP, 60 s Pause</source>
@@ -895,7 +911,7 @@
     </unit>
     <unit id="plan.day.targetReps.5">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:72</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:99</note>
       </notes>
       <segment>
         <source>5 Sätze Zielwiederholungen</source>
@@ -903,7 +919,7 @@
     </unit>
     <unit id="plan.day.sets.4x90s">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:73</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:100</note>
       </notes>
       <segment>
         <source>4 Sätze, 90 s Pause</source>
@@ -911,7 +927,7 @@
     </unit>
     <unit id="plan.day.sets.3x70pct">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:74</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:101</note>
       </notes>
       <segment>
         <source>3 Sätze à 70 %</source>
@@ -919,7 +935,7 @@
     </unit>
     <unit id="plan.day.light.2x50pct">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:75</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:102</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×50 %</source>
@@ -927,7 +943,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:85</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:112</note>
       </notes>
       <segment>
         <source>3×10 saubere Liegestütze, 90 s Pause</source>
@@ -935,7 +951,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:92</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:119</note>
       </notes>
       <segment>
         <source>Ruhetag — Stretching, Mobility</source>
@@ -943,7 +959,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:99</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:126</note>
       </notes>
       <segment>
         <source>3×AMRAP, 90 s Pause (Ziel ≈12-11-10)</source>
@@ -951,7 +967,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:108</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:135</note>
       </notes>
       <segment>
         <source>Leichter Tag — 50 % vom Maximum</source>
@@ -959,7 +975,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:149</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:176</note>
       </notes>
       <segment>
         <source>5 Sätze, volle Bewegungsamplitude</source>
@@ -967,7 +983,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.38.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:157</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:184</note>
       </notes>
       <segment>
         <source>5 Sätze, kontrolliertes Tempo</source>
@@ -975,7 +991,7 @@
     </unit>
     <unit id="plan.recruit-6w.day.40.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:165</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:192</note>
       </notes>
       <segment>
         <source>5 Sätze leicht</source>
@@ -983,7 +999,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:178</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:205</note>
       </notes>
       <segment>
         <source>Maximaltest — als Ausgangswert eintragen</source>
@@ -991,7 +1007,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:186</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:213</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×50 % vom Maximum</source>
@@ -999,7 +1015,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:199</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:226</note>
       </notes>
       <segment>
         <source>Leichter Tag — 3×60 % vom Maximum</source>
@@ -1007,7 +1023,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:212</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:239</note>
       </notes>
       <segment>
         <source>5 Sätze à ~80 % vom Maximum</source>
@@ -1015,7 +1031,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:226</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:253</note>
       </notes>
       <segment>
         <source>3 Sätze à 70 % — Qualität vor Quantität</source>
@@ -1023,7 +1039,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.27.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:237</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:264</note>
       </notes>
       <segment>
         <source>Aktive Erholung — Spaziergang, Mobility</source>
@@ -1031,7 +1047,7 @@
     </unit>
     <unit id="plan.challenge-30d.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:245</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:272</note>
       </notes>
       <segment>
         <source>Ruhe vor dem Endtest</source>
@@ -1039,7 +1055,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:257</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:284</note>
       </notes>
       <segment>
         <source>Maximaltest mit sauberer Technik</source>
@@ -1047,7 +1063,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:264</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:291</note>
       </notes>
       <segment>
         <source>3×8 Knie- oder erhöhte Liegestütze</source>
@@ -1055,7 +1071,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:272</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:299</note>
       </notes>
       <segment>
         <source>3×9 saubere Liegestütze</source>
@@ -1063,7 +1079,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:279</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:306</note>
       </notes>
       <segment>
         <source>Ruhetag — Schulter-Mobility</source>
@@ -1071,7 +1087,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:286</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:313</note>
       </notes>
       <segment>
         <source>3×10 saubere Liegestütze</source>
@@ -1079,7 +1095,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:290</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:317</note>
       </notes>
       <segment>
         <source>3×11</source>
@@ -1087,7 +1103,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:297</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:324</note>
       </notes>
       <segment>
         <source>3×12</source>
@@ -1095,7 +1111,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:305</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:332</note>
       </notes>
       <segment>
         <source>3×13</source>
@@ -1103,7 +1119,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:323</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:350</note>
       </notes>
       <segment>
         <source>4 Sätze, kontrolliertes Tempo</source>
@@ -1111,7 +1127,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:331</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:358</note>
       </notes>
       <segment>
         <source>4 Sätze, langsame Exzentrik</source>
@@ -1119,7 +1135,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.28.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:341</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:368</note>
       </notes>
       <segment>
         <source>Endtest: Maximale Liegestütze</source>
@@ -1127,7 +1143,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:355</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:382</note>
       </notes>
       <segment>
         <source>Baseline-Test: maximale Wiederholungen in einem Satz</source>
@@ -1135,7 +1151,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:362</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:389</note>
       </notes>
       <segment>
         <source>5×10 saubere Wiederholungen, 60 s Pause</source>
@@ -1143,7 +1159,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:369</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:396</note>
       </notes>
       <segment>
         <source>5×12, 60 s Pause</source>
@@ -1151,7 +1167,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:376</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:403</note>
       </notes>
       <segment>
         <source>5×12, 60 s Pause</source>
@@ -1159,7 +1175,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:383</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:410</note>
       </notes>
       <segment>
         <source>5×14, 60 s Pause</source>
@@ -1167,7 +1183,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:390</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:417</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×15 in lockerem Tempo</source>
@@ -1175,7 +1191,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:399</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:426</note>
       </notes>
       <segment>
         <source>5×16</source>
@@ -1183,7 +1199,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:406</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:433</note>
       </notes>
       <segment>
         <source>5×16</source>
@@ -1191,7 +1207,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:413</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:440</note>
       </notes>
       <segment>
         <source>5×18</source>
@@ -1199,7 +1215,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:420</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:447</note>
       </notes>
       <segment>
         <source>5×18</source>
@@ -1207,7 +1223,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:427</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:454</note>
       </notes>
       <segment>
         <source>Erstes Hundert: 5×20</source>
@@ -1215,7 +1231,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:437</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:464</note>
       </notes>
       <segment>
         <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
@@ -1223,7 +1239,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:444</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:471</note>
       </notes>
       <segment>
         <source>5×20</source>
@@ -1231,7 +1247,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:451</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:478</note>
       </notes>
       <segment>
         <source>4×25</source>
@@ -1239,7 +1255,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:458</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:485</note>
       </notes>
       <segment>
         <source>5×20</source>
@@ -1247,7 +1263,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:465</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:492</note>
       </notes>
       <segment>
         <source>4×25 — Tempo bewusst verlangsamen</source>
@@ -1255,7 +1271,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:475</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:502</note>
       </notes>
       <segment>
         <source>5×20</source>
@@ -1263,7 +1279,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:482</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:509</note>
       </notes>
       <segment>
         <source>4×25</source>
@@ -1271,7 +1287,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:489</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:516</note>
       </notes>
       <segment>
         <source>5×20</source>
@@ -1279,7 +1295,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:496</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:523</note>
       </notes>
       <segment>
         <source>4×25</source>
@@ -1287,7 +1303,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:503</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:530</note>
       </notes>
       <segment>
         <source>Letzter 100er-Tag vor dem Test</source>
@@ -1295,7 +1311,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:510</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:537</note>
       </notes>
       <segment>
         <source>Leichter Tag — Form-Check</source>
@@ -1303,7 +1319,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:518</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:545</note>
       </notes>
       <segment>
         <source>Ruhetag — Vorbereitung auf den Endtest</source>
@@ -1311,7 +1327,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.30.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:525</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:552</note>
       </notes>
       <segment>
         <source>Endtest: Maximale saubere Wiederholungen in einem Satz</source>
@@ -1319,7 +1335,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:547</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:574</note>
       </notes>
       <segment>
         <source>Archer-Liegestütze 3×6</source>
@@ -1327,7 +1343,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:555</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:582</note>
       </notes>
       <segment>
         <source>Wand-Einarmige 3×10 (langsame Exzentrik)</source>
@@ -1335,7 +1351,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:563</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:590</note>
       </notes>
       <segment>
         <source>Standard-Liegestütze 3×20 (Volumen)</source>
@@ -1343,7 +1359,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:570</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:597</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×10</source>
@@ -1351,7 +1367,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:579</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:606</note>
       </notes>
       <segment>
         <source>Archer 3×8</source>
@@ -1359,7 +1375,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:587</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:614</note>
       </notes>
       <segment>
         <source>Wand-Einarmige 3×12</source>
@@ -1367,7 +1383,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:595</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:622</note>
       </notes>
       <segment>
         <source>Standard 3×22</source>
@@ -1375,7 +1391,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:602</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:629</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×12</source>
@@ -1383,7 +1399,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:611</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:638</note>
       </notes>
       <segment>
         <source>Archer 3×10 — Phase 1 abschließen</source>
@@ -1391,7 +1407,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:619</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:646</note>
       </notes>
       <segment>
         <source>Wand-Einarmige 3×15</source>
@@ -1399,7 +1415,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:627</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:654</note>
       </notes>
       <segment>
         <source>Standard 3×25</source>
@@ -1407,7 +1423,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.20.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:634</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:661</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×14</source>
@@ -1415,7 +1431,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:644</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:671</note>
       </notes>
       <segment>
         <source>Negative Einarmige von Bank 3×5 (3 s runter)</source>
@@ -1423,7 +1439,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:652</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:679</note>
       </notes>
       <segment>
         <source>Langsame Archer 3×6 (Tempo 3-1-1)</source>
@@ -1431,7 +1447,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:660</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:687</note>
       </notes>
       <segment>
         <source>Weite Liegestütze 3×20 (Brust-Volumen)</source>
@@ -1439,7 +1455,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:670</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:697</note>
       </notes>
       <segment>
         <source>Negative Einarmige 3×5</source>
@@ -1447,7 +1463,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.31.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:678</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:705</note>
       </notes>
       <segment>
         <source>Langsame Archer 3×7</source>
@@ -1455,7 +1471,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.33.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:686</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:713</note>
       </notes>
       <segment>
         <source>Weite Liegestütze 3×20</source>
@@ -1463,7 +1479,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.34.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:693</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:720</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×11</source>
@@ -1471,7 +1487,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:702</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:729</note>
       </notes>
       <segment>
         <source>Negative Einarmige 3×6</source>
@@ -1479,7 +1495,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.38.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:710</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:737</note>
       </notes>
       <segment>
         <source>Langsame Archer 3×8 — Phase 2 abschließen</source>
@@ -1487,7 +1503,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.40.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:718</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:745</note>
       </notes>
       <segment>
         <source>Weite Liegestütze 3×~22</source>
@@ -1495,7 +1511,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.43.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:729</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:756</note>
       </notes>
       <segment>
         <source>Partielle Einarmige (niedrige Bank) 3×4</source>
@@ -1503,7 +1519,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.45.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:737</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:764</note>
       </notes>
       <segment>
         <source>Archer mit langem Tempo 3×6</source>
@@ -1511,7 +1527,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.47.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:745</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:772</note>
       </notes>
       <segment>
         <source>Diamant-Liegestütze 3×12 (Trizeps-Volumen)</source>
@@ -1519,7 +1535,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.50.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:755</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:782</note>
       </notes>
       <segment>
         <source>Partielle Einarmige 3×4</source>
@@ -1527,7 +1543,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.52.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:763</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:790</note>
       </notes>
       <segment>
         <source>Archer mit Tempo 3×6</source>
@@ -1535,7 +1551,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.54.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:771</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:798</note>
       </notes>
       <segment>
         <source>Diamant 3×13</source>
@@ -1543,7 +1559,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.57.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:781</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:808</note>
       </notes>
       <segment>
         <source>Partielle Einarmige 3×5 — Phase 3 abschließen</source>
@@ -1551,7 +1567,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.59.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:789</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:816</note>
       </notes>
       <segment>
         <source>Tempo-Archer 3×7</source>
@@ -1559,7 +1575,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.61.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:797</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:824</note>
       </notes>
       <segment>
         <source>Diamant 3×13</source>
@@ -1567,7 +1583,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.64.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:808</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:835</note>
       </notes>
       <segment>
         <source>Volle Einarmige (weiter Stand) 3×3</source>
@@ -1575,7 +1591,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.66.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:816</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:843</note>
       </notes>
       <segment>
         <source>Einarmige (etwas engerer Stand) 3×4</source>
@@ -1583,7 +1599,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.68.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:824</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:851</note>
       </notes>
       <segment>
         <source>Standard 3×25</source>
@@ -1591,7 +1607,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.71.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:834</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:861</note>
       </notes>
       <segment>
         <source>Volle Einarmige 3×3</source>
@@ -1599,7 +1615,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.73.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:842</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:869</note>
       </notes>
       <segment>
         <source>Einarmige enger Stand 3×5</source>
@@ -1607,7 +1623,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.75.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:850</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:877</note>
       </notes>
       <segment>
         <source>Standard 3×25</source>
@@ -1615,7 +1631,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.78.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:860</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:887</note>
       </notes>
       <segment>
         <source>Letzte schwere Einheit 3×3</source>
@@ -1623,7 +1639,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.80.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:868</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:895</note>
       </notes>
       <segment>
         <source>Technik-Taper 2×4 saubere Wiederholungen</source>
@@ -1631,7 +1647,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.82.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:876</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:903</note>
       </notes>
       <segment>
         <source>Mobility + 2×3 leichte Wiederholungen</source>
@@ -1639,7 +1655,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.83.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:883</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:910</note>
       </notes>
       <segment>
         <source>Ruhetag — bereit für Endtest</source>
@@ -1647,7 +1663,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.84.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:890</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:917</note>
       </notes>
       <segment>
         <source>Endtest: maximale saubere einarmige Liegestütze pro Seite</source>
@@ -1655,7 +1671,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:908</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:935</note>
       </notes>
       <segment>
         <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
@@ -1663,7 +1679,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:915</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:943</note>
       </notes>
       <segment>
         <source>Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung</source>
@@ -1671,7 +1687,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:923</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:954</note>
       </notes>
       <segment>
         <source>Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)</source>
@@ -1679,7 +1695,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:930</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:967</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×10 · 3×12 Face Pulls</source>
@@ -1687,7 +1703,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:937</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:975</note>
       </notes>
       <segment>
         <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
@@ -1695,7 +1711,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:946</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:991</note>
       </notes>
       <segment>
         <source>Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern</source>
@@ -1703,7 +1719,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:953</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:999</note>
       </notes>
       <segment>
         <source>Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS</source>
@@ -1711,7 +1727,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:961</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1013</note>
       </notes>
       <segment>
         <source>Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative</source>
@@ -1719,7 +1735,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:968</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1026</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility</source>
@@ -1727,7 +1743,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:975</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1034</note>
       </notes>
       <segment>
         <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
@@ -1735,7 +1751,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:984</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1050</note>
       </notes>
       <segment>
         <source>Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)</source>
@@ -1743,7 +1759,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.16.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:991</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1058</note>
       </notes>
       <segment>
         <source>Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS</source>
@@ -1751,7 +1767,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:999</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1072</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s</source>
@@ -1759,7 +1775,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1006</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1086</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×12 · 3×15 Face Pulls</source>
@@ -1767,7 +1783,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.20.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1013</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1094</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s</source>
@@ -1775,7 +1791,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1022</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1110</note>
       </notes>
       <segment>
         <source>Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge</source>
@@ -1783,7 +1799,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.23.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1029</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1118</note>
       </notes>
       <segment>
         <source>Pull-Tag: 5×9 Australian Rows · Push 3×11 LS</source>
@@ -1791,7 +1807,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1037</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1132</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s</source>
@@ -1799,7 +1815,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1044</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1146</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×13 · Brust- und Rücken-Mobility</source>
@@ -1807,7 +1823,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.27.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1051</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1153</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s</source>
@@ -1815,7 +1831,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1060</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1169</note>
       </notes>
       <segment>
         <source>Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause</source>
@@ -1823,7 +1839,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.30.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1067</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1182</note>
       </notes>
       <segment>
         <source>Pull-Tag: 5×10 Australian Rows · Push 3×12 LS</source>
@@ -1831,7 +1847,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.32.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1075</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1196</note>
       </notes>
       <segment>
         <source>Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s</source>
@@ -1839,7 +1855,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.33.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1082</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1210</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×14 · 4×12 Face Pulls</source>
@@ -1847,7 +1863,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.34.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1089</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1218</note>
       </notes>
       <segment>
         <source>Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s</source>
@@ -1855,7 +1871,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1098</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1234</note>
       </notes>
       <segment>
         <source>Push 5 Sätze schwer · Pull 5×10 Klimmzüge</source>
@@ -1863,7 +1879,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.37.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1105</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1247</note>
       </notes>
       <segment>
         <source>Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS</source>
@@ -1871,7 +1887,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.39.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1113</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1258</note>
       </notes>
       <segment>
         <source>Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge</source>
@@ -1879,7 +1895,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.40.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1120</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1266</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×10 · Mobility</source>
@@ -1887,7 +1903,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.42.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1128</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1274</note>
       </notes>
       <segment>
         <source>Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz</source>
@@ -1895,7 +1911,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1144</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1290</note>
       </notes>
       <segment>
         <source>Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank</source>
@@ -1903,7 +1919,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1151</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1298</note>
       </notes>
       <segment>
         <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
@@ -1911,7 +1927,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1159</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1314</note>
       </notes>
       <segment>
         <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
@@ -1919,7 +1935,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1166</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1329</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
@@ -1927,7 +1943,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1173</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1337</note>
       </notes>
       <segment>
         <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
@@ -1935,7 +1951,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1182</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1354</note>
       </notes>
       <segment>
         <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
@@ -1943,7 +1959,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1190</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1370</note>
       </notes>
       <segment>
         <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
@@ -1951,7 +1967,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1197</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1385</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
@@ -1959,7 +1975,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1204</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1393</note>
       </notes>
       <segment>
         <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
@@ -1967,7 +1983,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1214</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1411</note>
       </notes>
       <segment>
         <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
@@ -1975,7 +1991,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1222</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1427</note>
       </notes>
       <segment>
         <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
@@ -1983,7 +1999,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1229</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1442</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
@@ -1991,7 +2007,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1236</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1450</note>
       </notes>
       <segment>
         <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
@@ -1999,7 +2015,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1246</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1468</note>
       </notes>
       <segment>
         <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
@@ -2007,7 +2023,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1254</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1484</note>
       </notes>
       <segment>
         <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
@@ -2015,7 +2031,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1261</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1499</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
@@ -2023,7 +2039,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1268</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1507</note>
       </notes>
       <segment>
         <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
@@ -2031,7 +2047,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1278</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1525</note>
       </notes>
       <segment>
         <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
@@ -2039,7 +2055,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1286</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1541</note>
       </notes>
       <segment>
         <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
@@ -2047,7 +2063,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1293</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1556</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
@@ -2055,7 +2071,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1300</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1564</note>
       </notes>
       <segment>
         <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
@@ -2063,7 +2079,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1310</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1582</note>
       </notes>
       <segment>
         <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
@@ -2071,7 +2087,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1318</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1598</note>
       </notes>
       <segment>
         <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
@@ -2079,7 +2095,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1325</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1613</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×12 LS · Mobility</source>
@@ -2087,7 +2103,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.42.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1334</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1622</note>
       </notes>
       <segment>
         <source>Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt</source>
@@ -2095,7 +2111,7 @@
     </unit>
     <unit id="plan.core-4w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1350</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1639</note>
       </notes>
       <segment>
         <source>Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit</source>
@@ -2103,7 +2119,7 @@
     </unit>
     <unit id="plan.core-4w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1357</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1646</note>
       </notes>
       <segment>
         <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
@@ -2111,7 +2127,7 @@
     </unit>
     <unit id="plan.core-4w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1364</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1661</note>
       </notes>
       <segment>
         <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
@@ -2119,7 +2135,7 @@
     </unit>
     <unit id="plan.core-4w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1372</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1677</note>
       </notes>
       <segment>
         <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
@@ -2127,7 +2143,7 @@
     </unit>
     <unit id="plan.core-4w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1379</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1692</note>
       </notes>
       <segment>
         <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
@@ -2135,7 +2151,7 @@
     </unit>
     <unit id="plan.core-4w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1388</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1708</note>
       </notes>
       <segment>
         <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
@@ -2143,7 +2159,7 @@
     </unit>
     <unit id="plan.core-4w.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1395</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1723</note>
       </notes>
       <segment>
         <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
@@ -2151,7 +2167,7 @@
     </unit>
     <unit id="plan.core-4w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1403</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1739</note>
       </notes>
       <segment>
         <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
@@ -2159,7 +2175,7 @@
     </unit>
     <unit id="plan.core-4w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1410</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1753</note>
       </notes>
       <segment>
         <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
@@ -2167,7 +2183,7 @@
     </unit>
     <unit id="plan.core-4w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1417</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1761</note>
       </notes>
       <segment>
         <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
@@ -2175,7 +2191,7 @@
     </unit>
     <unit id="plan.core-4w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1426</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1778</note>
       </notes>
       <segment>
         <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
@@ -2183,7 +2199,7 @@
     </unit>
     <unit id="plan.core-4w.day.16.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1433</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1793</note>
       </notes>
       <segment>
         <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
@@ -2191,7 +2207,7 @@
     </unit>
     <unit id="plan.core-4w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1441</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1809</note>
       </notes>
       <segment>
         <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
@@ -2199,7 +2215,7 @@
     </unit>
     <unit id="plan.core-4w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1448</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1824</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
@@ -2207,7 +2223,7 @@
     </unit>
     <unit id="plan.core-4w.day.20.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1455</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1832</note>
       </notes>
       <segment>
         <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
@@ -2215,7 +2231,7 @@
     </unit>
     <unit id="plan.core-4w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1464</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1849</note>
       </notes>
       <segment>
         <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
@@ -2223,7 +2239,7 @@
     </unit>
     <unit id="plan.core-4w.day.23.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1471</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1864</note>
       </notes>
       <segment>
         <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
@@ -2231,7 +2247,7 @@
     </unit>
     <unit id="plan.core-4w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1479</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1880</note>
       </notes>
       <segment>
         <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
@@ -2239,7 +2255,7 @@
     </unit>
     <unit id="plan.core-4w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1486</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1895</note>
       </notes>
       <segment>
         <source>Leichter Tag — 2×9 LS · Mobility</source>
@@ -2247,7 +2263,7 @@
     </unit>
     <unit id="plan.core-4w.day.28.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1494</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1903</note>
       </notes>
       <segment>
         <source>Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold</source>
@@ -2255,7 +2271,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1510</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1920</note>
       </notes>
       <segment>
         <source>HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
@@ -2263,7 +2279,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1518</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1937</note>
       </notes>
       <segment>
         <source>HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank</source>
@@ -2271,7 +2287,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1525</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1953</note>
       </notes>
       <segment>
         <source>Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility</source>
@@ -2279,7 +2295,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1532</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1960</note>
       </notes>
       <segment>
         <source>Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats</source>
@@ -2287,7 +2303,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1542</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1979</note>
       </notes>
       <segment>
         <source>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</source>
@@ -2295,7 +2311,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1550</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1997</note>
       </notes>
       <segment>
         <source>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</source>
@@ -2303,7 +2319,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1557</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2011</note>
       </notes>
       <segment>
         <source>Aktive Erholung — 20 min lockeres Cardio · 2×11 LS</source>
@@ -2311,7 +2327,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1564</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2018</note>
       </notes>
       <segment>
         <source>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
@@ -2319,7 +2335,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1574</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2037</note>
       </notes>
       <segment>
         <source>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</source>
@@ -2327,7 +2343,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1582</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2054</note>
       </notes>
       <segment>
         <source>HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank</source>
@@ -2335,7 +2351,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1589</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2072</note>
       </notes>
       <segment>
         <source>Aktive Erholung — Yoga 20 min · 2×12 LS</source>
@@ -2343,7 +2359,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1596</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2080</note>
       </notes>
       <segment>
         <source>Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC</source>
@@ -2351,7 +2367,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1606</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2099</note>
       </notes>
       <segment>
         <source>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</source>
@@ -2359,7 +2375,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1614</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2116</note>
       </notes>
       <segment>
         <source>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</source>
@@ -2367,7 +2383,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1621</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2131</note>
       </notes>
       <segment>
         <source>Aktive Erholung — Mobility · 2×13 LS</source>
@@ -2375,7 +2391,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.28.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1630</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2140</note>
       </notes>
       <segment>
         <source>Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)</source>
@@ -2383,7 +2399,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1644</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2155</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching</source>
@@ -2391,7 +2407,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1651</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2163</note>
       </notes>
       <segment>
         <source>Yoga-Flow 20 min · 1×10 LS · Brust-Stretching</source>
@@ -2399,7 +2415,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1658</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2171</note>
       </notes>
       <segment>
         <source>Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling</source>
@@ -2407,7 +2423,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1665</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2186</note>
       </notes>
       <segment>
         <source>Ruhetag — Foam Rolling 15 min</source>
@@ -2415,7 +2431,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1672</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2193</note>
       </notes>
       <segment>
         <source>Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang</source>
@@ -2423,7 +2439,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1679</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2201</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min</source>
@@ -2431,7 +2447,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1687</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2210</note>
       </notes>
       <segment>
         <source>Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching</source>
@@ -2439,7 +2455,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1694</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2218</note>
       </notes>
       <segment>
         <source>Yoga 20 min · 2×8 LS</source>
@@ -2447,7 +2463,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1701</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2226</note>
       </notes>
       <segment>
         <source>Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min</source>
@@ -2455,7 +2471,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1708</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2234</note>
       </notes>
       <segment>
         <source>Ruhetag — Stretching nach Bedarf</source>
@@ -2463,7 +2479,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1715</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2241</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility</source>
@@ -2471,7 +2487,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1722</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2249</note>
       </notes>
       <segment>
         <source>2×10 LS · 15 min Yoga</source>
@@ -2479,7 +2495,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.14.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1729</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2257</note>
       </notes>
       <segment>
         <source>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</source>
@@ -2487,7 +2503,7 @@
     </unit>
     <unit id="plan.recruit-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1737</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2266</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
@@ -2495,7 +2511,7 @@
     </unit>
     <unit id="plan.recruit-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1738</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2267</note>
       </notes>
       <segment>
         <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
@@ -2503,7 +2519,7 @@
     </unit>
     <unit id="plan.recruit-6w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1748</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2277</note>
       </notes>
       <segment>
         <source>liegestuetze-steigern</source>
@@ -2511,7 +2527,7 @@
     </unit>
     <unit id="plan.challenge-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1754</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2283</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -2519,7 +2535,7 @@
     </unit>
     <unit id="plan.challenge-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1755</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2284</note>
       </notes>
       <segment>
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
@@ -2527,7 +2543,7 @@
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1765</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2294</note>
       </notes>
       <segment>
         <source>30-tage-liegestuetze-challenge</source>
@@ -2535,7 +2551,7 @@
     </unit>
     <unit id="plan.over-40-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1771</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2300</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
@@ -2543,7 +2559,7 @@
     </unit>
     <unit id="plan.over-40-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1772</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2301</note>
       </notes>
       <segment>
         <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
@@ -2551,7 +2567,7 @@
     </unit>
     <unit id="plan.over-40-4w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1782</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2311</note>
       </notes>
       <segment>
         <source>liegestuetze-ab-40</source>
@@ -2559,7 +2575,7 @@
     </unit>
     <unit id="plan.daily-100-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1788</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2317</note>
       </notes>
       <segment>
         <source>Daily 100 — 30 Tage zur 100er-Marke</source>
@@ -2567,7 +2583,7 @@
     </unit>
     <unit id="plan.daily-100-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1789</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2318</note>
       </notes>
       <segment>
         <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
@@ -2575,7 +2591,7 @@
     </unit>
     <unit id="plan.one-arm-12w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1804</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2333</note>
       </notes>
       <segment>
         <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
@@ -2583,7 +2599,7 @@
     </unit>
     <unit id="plan.one-arm-12w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1805</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2334</note>
       </notes>
       <segment>
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
@@ -2591,7 +2607,7 @@
     </unit>
     <unit id="plan.push-pull-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1820</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2349</note>
       </notes>
       <segment>
         <source>Push &amp; Pull Balance — 6-Wochen-Plan</source>
@@ -2599,7 +2615,7 @@
     </unit>
     <unit id="plan.push-pull-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1821</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2350</note>
       </notes>
       <segment>
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
@@ -2607,7 +2623,7 @@
     </unit>
     <unit id="plan.full-body-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1836</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2365</note>
       </notes>
       <segment>
         <source>Full Body Strong — 6-Wochen-Ganzkörperplan</source>
@@ -2615,7 +2631,7 @@
     </unit>
     <unit id="plan.full-body-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1837</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2366</note>
       </notes>
       <segment>
         <source>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</source>
@@ -2623,7 +2639,7 @@
     </unit>
     <unit id="plan.core-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1852</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2381</note>
       </notes>
       <segment>
         <source>Core Foundations — 4-Wochen-Rumpfplan</source>
@@ -2631,7 +2647,7 @@
     </unit>
     <unit id="plan.core-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1853</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2382</note>
       </notes>
       <segment>
         <source>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</source>
@@ -2639,7 +2655,7 @@
     </unit>
     <unit id="plan.hiit-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1868</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2397</note>
       </notes>
       <segment>
         <source>HIIT Burner — 4-Wochen-Konditionsplan</source>
@@ -2647,7 +2663,7 @@
     </unit>
     <unit id="plan.hiit-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1869</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2398</note>
       </notes>
       <segment>
         <source>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</source>
@@ -2655,7 +2671,7 @@
     </unit>
     <unit id="plan.mobility-2w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1884</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2413</note>
       </notes>
       <segment>
         <source>Mobility &amp; Recovery — 2-Wochen-Deload</source>
@@ -2663,7 +2679,7 @@
     </unit>
     <unit id="plan.mobility-2w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1885</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2414</note>
       </notes>
       <segment>
         <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
@@ -2728,7 +2744,7 @@
     <unit id="admin.refresh">
       <notes>
         <note category="location">web/src/app/admin/admin-feedback-section.component.ts:49</note>
-        <note category="location">web/src/app/admin/admin-page.component.ts:77</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:79</note>
       </notes>
       <segment>
         <source>Neu laden</source>
@@ -2800,16 +2816,25 @@
     </unit>
     <unit id="admin.migrations.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:12,15</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:13,16</note>
         <note category="location">web/src/app/admin/migrations/migrations-page.component.ts:28,29</note>
       </notes>
       <segment>
         <source>Daten-Migrationen</source>
       </segment>
     </unit>
+    <unit id="admin.androidTest.title">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.html:23,26</note>
+        <note category="location">web/src/app/admin/android-test-page.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Android-App-Test</source>
+      </segment>
+    </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:19,21</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:30,32</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -2817,7 +2842,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:24,26</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:35,37</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -2825,7 +2850,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:34,37</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:45,48</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -2833,7 +2858,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:50,51</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:61,62</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -2841,7 +2866,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:58,59</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:69,70</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -2849,7 +2874,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:60,61</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:71,72</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -2857,7 +2882,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:79,81</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:90,92</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -2865,7 +2890,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:104,105</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:115,116</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -2873,7 +2898,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:119,120</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:130,131</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -2881,7 +2906,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:130,131</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:141,142</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -2889,7 +2914,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:141,142</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:152,153</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -2897,7 +2922,7 @@
     </unit>
     <unit id="admin.col.entries">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:158,160</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:169,171</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -2905,7 +2930,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:169,171</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:180,182</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -2913,7 +2938,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:182,184</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:193,195</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -2921,7 +2946,7 @@
     </unit>
     <unit id="admin.col.anonTooltip">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:78</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:80</note>
       </notes>
       <segment>
         <source>Anonym</source>
@@ -2929,7 +2954,7 @@
     </unit>
     <unit id="admin.user.deleteTooltip">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:79</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:81</note>
       </notes>
       <segment>
         <source>Benutzer löschen</source>
@@ -2937,7 +2962,7 @@
     </unit>
     <unit id="admin.user.entriesTooltip">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:80</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:82</note>
       </notes>
       <segment>
         <source>Einträge anzeigen</source>
@@ -2945,7 +2970,7 @@
     </unit>
     <unit id="admin.row.entriesAria">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:143</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:145</note>
       </notes>
       <segment>
         <source>Einträge anzeigen für <ph id="0" equiv="identifier" disp="identifier"/></source>
@@ -2953,7 +2978,7 @@
     </unit>
     <unit id="admin.row.detailsAria">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.ts:148</note>
+        <note category="location">web/src/app/admin/admin-page.component.ts:150</note>
       </notes>
       <segment>
         <source>Details öffnen für <ph id="0" equiv="identifier" disp="identifier"/></source>
@@ -2965,6 +2990,198 @@
       </notes>
       <segment>
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.subtitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:5,9</note>
+      </notes>
+      <segment>
+        <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.backToAdmin">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:11,15</note>
+      </notes>
+      <segment>
+        <source>Zurück zum Admin-Bereich</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.minEntries">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:20,23</note>
+      </notes>
+      <segment>
+        <source>Einträge ab</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.activeWithinDays">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:32,35</note>
+      </notes>
+      <segment>
+        <source>Aktiv in den letzten (Tage)</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scan">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:52,55</note>
+      </notes>
+      <segment>
+        <source>Kandidaten ermitteln</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scanResult">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:58,60</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.candidatesTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:65,67</note>
+      </notes>
+      <segment>
+        <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noCandidates">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:70,72</note>
+      </notes>
+      <segment>
+        <source>Keine offenen Kandidaten.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirm">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:85,87</note>
+      </notes>
+      <segment>
+        <source> Bestätigen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.decline">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:94,96</note>
+      </notes>
+      <segment>
+        <source> Ablehnen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:102,103</note>
+      </notes>
+      <segment>
+        <source>Manuell hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddHint">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:104,108</note>
+      </notes>
+      <segment>
+        <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddSearch">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:110,113</note>
+      </notes>
+      <segment>
+        <source>Name oder E-Mail</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAdd">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:129,132</note>
+      </notes>
+      <segment>
+        <source> Einladen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirmedTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:137,139</note>
+      </notes>
+      <segment>
+        <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noConfirmed">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:140,142</note>
+      </notes>
+      <segment>
+        <source>Keine offenen Einladungen.</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.withdraw">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:152,154</note>
+      </notes>
+      <segment>
+        <source> Zurückziehen </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.optedInTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:161,163</note>
+      </notes>
+      <segment>
+        <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noOptedIn">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:165,168</note>
+      </notes>
+      <segment>
+        <source> Noch niemand hat sich angemeldet. </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.emailsCopied">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:170,172</note>
+      </notes>
+      <segment>
+        <source>Kopiert!</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.copyEmails">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:173,176</note>
+      </notes>
+      <segment>
+        <source>Alle E-Mails kopieren</source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.markAdded">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:187,189</note>
+      </notes>
+      <segment>
+        <source> Als Tester hinzugefügt (benachrichtigen) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.notifiedTitle">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.html:196,198</note>
+      </notes>
+      <segment>
+        <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noPush">
+      <notes>
+        <note category="location">web/src/app/admin/android-test-page.component.ts:154</note>
+      </notes>
+      <segment>
+        <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
       </segment>
     </unit>
     <unit id="admin.entries.delete.title">
@@ -3557,8 +3774,8 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:258,260</note>
-        <note category="location">web/src/app/app.html:321,323</note>
+        <note category="location">web/src/app/app.html:262,264</note>
+        <note category="location">web/src/app/app.html:325,327</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3567,8 +3784,8 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:33,36</note>
-        <note category="location">web/src/app/app.html:262,264</note>
-        <note category="location">web/src/app/app.html:325,327</note>
+        <note category="location">web/src/app/app.html:266,268</note>
+        <note category="location">web/src/app/app.html:329,331</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3577,8 +3794,8 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:43,47</note>
-        <note category="location">web/src/app/app.html:266,268</note>
-        <note category="location">web/src/app/app.html:329,331</note>
+        <note category="location">web/src/app/app.html:270,272</note>
+        <note category="location">web/src/app/app.html:333,335</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3587,8 +3804,8 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:53,56</note>
-        <note category="location">web/src/app/app.html:274,276</note>
-        <note category="location">web/src/app/app.html:337,339</note>
+        <note category="location">web/src/app/app.html:278,280</note>
+        <note category="location">web/src/app/app.html:341,343</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3597,8 +3814,8 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:63,67</note>
-        <note category="location">web/src/app/app.html:270,272</note>
-        <note category="location">web/src/app/app.html:333,335</note>
+        <note category="location">web/src/app/app.html:274,276</note>
+        <note category="location">web/src/app/app.html:337,339</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3670,15 +3887,23 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:184,185</note>
+        <note category="location">web/src/app/app.html:186,187</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
       </segment>
     </unit>
+    <unit id="toolbarDailyGoal.checkHint">
+      <notes>
+        <note category="location">web/src/app/app.html:219,221</note>
+      </notes>
+      <segment>
+        <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
+      </segment>
+    </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:238,239</note>
+        <note category="location">web/src/app/app.html:242,243</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -3686,7 +3911,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:249,250</note>
+        <note category="location">web/src/app/app.html:253,254</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -3694,7 +3919,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:283</note>
+        <note category="location">web/src/app/app.html:287</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -3702,7 +3927,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:288,290</note>
+        <note category="location">web/src/app/app.html:292,294</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3710,7 +3935,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:291,293</note>
+        <note category="location">web/src/app/app.html:295,297</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -3718,7 +3943,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:293,294</note>
+        <note category="location">web/src/app/app.html:297,298</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -3726,7 +3951,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:295,297</note>
+        <note category="location">web/src/app/app.html:299,301</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -3734,7 +3959,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:298,301</note>
+        <note category="location">web/src/app/app.html:302,305</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -3742,7 +3967,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:305,307</note>
+        <note category="location">web/src/app/app.html:309,311</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -3750,7 +3975,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:312,313</note>
+        <note category="location">web/src/app/app.html:316,317</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>
@@ -4044,9 +4269,25 @@
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
       </segment>
     </unit>
+    <unit id="sw.update.buttonAria">
+      <notes>
+        <note category="location">web/src/app/app.ts:147</note>
+      </notes>
+      <segment>
+        <source>Neue Version verfügbar – jetzt neu laden</source>
+      </segment>
+    </unit>
+    <unit id="sw.update.recoverButtonAria">
+      <notes>
+        <note category="location">web/src/app/app.ts:148</note>
+      </notes>
+      <segment>
+        <source>App-Daten beschädigt – jetzt neu laden</source>
+      </segment>
+    </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:279</note>
+        <note category="location">web/src/app/app.ts:266</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4054,7 +4295,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:389</note>
+        <note category="location">web/src/app/app.ts:355</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4062,31 +4303,15 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:392</note>
+        <note category="location">web/src/app/app.ts:358</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
       </segment>
     </unit>
-    <unit id="sw.update.available">
-      <notes>
-        <note category="location">web/src/app/app.ts:413</note>
-      </notes>
-      <segment>
-        <source>Neue Version verfügbar</source>
-      </segment>
-    </unit>
-    <unit id="sw.update.reload">
-      <notes>
-        <note category="location">web/src/app/app.ts:414</note>
-      </notes>
-      <segment>
-        <source>Neu laden</source>
-      </segment>
-    </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:490</note>
+        <note category="location">web/src/app/app.ts:422</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4094,7 +4319,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:519</note>
+        <note category="location">web/src/app/app.ts:451</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4102,7 +4327,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:526</note>
+        <note category="location">web/src/app/app.ts:458</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4502,22 +4727,94 @@
         <source>Artikel lesen</source>
       </segment>
     </unit>
+    <unit id="androidTest.invite.title">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:39,41</note>
+      </notes>
+      <segment>
+        <source> Werde Android-App-Tester </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.body">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:43,46</note>
+      </notes>
+      <segment>
+        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.notNow">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:58,60</note>
+      </notes>
+      <segment>
+        <source> Nicht jetzt </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.join">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:67,73</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksTitle">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:75,77</note>
+      </notes>
+      <segment>
+        <source>Danke!</source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksBody">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:78,81</note>
+      </notes>
+      <segment>
+        <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.close">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:89,91</note>
+      </notes>
+      <segment>
+        <source> Schließen </source>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.error">
+      <notes>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:115</note>
+      </notes>
+      <segment>
+        <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.exerciseRepAria">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:46</note>
+        <note category="location">web/src/app/core/app-data.facade.ts:37</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
       </segment>
     </unit>
+    <unit id="dailyGoal.check.manual">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal-actions.service.ts:56</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
+      </notes>
+      <segment>
+        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
+      </segment>
+    </unit>
     <unit id="exercise.category.pushup">
       <notes>
-        <note category="location">web/src/app/core/app-data.facade.ts:320</note>
+        <note category="location">web/src/app/core/daily-goal.helpers.ts:59</note>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:49</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:49</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.format.ts:71</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:56</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:24</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:211</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:296</note>
@@ -4525,6 +4822,46 @@
       </notes>
       <segment>
         <source>Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.reached">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:56</note>
+      </notes>
+      <segment>
+        <source>Ziel erreicht</source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.fill">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:61</note>
+      </notes>
+      <segment>
+        <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.aria">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:65</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemReachedAria">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:24</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemAria">
+      <notes>
+        <note category="location">web/src/app/core/daily-goal/goal-dial-items.ts:25</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">
@@ -4575,6 +4912,46 @@
         <source> Absenden </source>
       </segment>
     </unit>
+    <unit id="admin.release.label">
+      <notes>
+        <note category="location">web/src/app/core/observability/release-badge.component.ts:27,29</note>
+      </notes>
+      <segment>
+        <source>Release</source>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknown">
+      <notes>
+        <note category="location">web/src/app/core/observability/release-badge.component.ts:73</note>
+      </notes>
+      <segment>
+        <source>unbekannt</source>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknownTooltip">
+      <notes>
+        <note category="location">web/src/app/core/observability/release-badge.component.ts:78</note>
+      </notes>
+      <segment>
+        <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
+      </segment>
+    </unit>
+    <unit id="admin.release.commitTooltip">
+      <notes>
+        <note category="location">web/src/app/core/observability/release-badge.component.ts:82</note>
+      </notes>
+      <segment>
+        <source>Commit <ph id="0" equiv="release" disp="release"/></source>
+      </segment>
+    </unit>
+    <unit id="admin.release.builtTooltip">
+      <notes>
+        <note category="location">web/src/app/core/observability/release-badge.component.ts:85</note>
+      </notes>
+      <segment>
+        <source>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></source>
+      </segment>
+    </unit>
     <unit id="eyebrowTitle">
       <notes>
         <note category="location">web/src/app/core/page-header/page-header.component.ts:27,28</note>
@@ -4615,6 +4992,30 @@
       </notes>
       <segment>
         <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>
+      </segment>
+    </unit>
+    <unit id="sw.update.unrecoverable">
+      <notes>
+        <note category="location">web/src/app/core/sw-update.service.ts:138</note>
+      </notes>
+      <segment>
+        <source>App-Daten beschädigt – bitte neu laden</source>
+      </segment>
+    </unit>
+    <unit id="sw.update.available">
+      <notes>
+        <note category="location">web/src/app/core/sw-update.service.ts:139</note>
+      </notes>
+      <segment>
+        <source>Neue Version verfügbar</source>
+      </segment>
+    </unit>
+    <unit id="sw.update.reload">
+      <notes>
+        <note category="location">web/src/app/core/sw-update.service.ts:148</note>
+      </notes>
+      <segment>
+        <source>Neu laden</source>
       </segment>
     </unit>
     <unit id="theme.toggle.auto">
@@ -6869,8 +7270,8 @@
     <unit id="analysis.streakDays">
       <notes>
         <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:217,218</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:63,64</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:71,72</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:37,38</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:45,46</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
@@ -7555,7 +7956,7 @@
     <unit id="noEntriesInSelectedRange">
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:52,55</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:7,10</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:7,11</note>
       </notes>
       <segment>
         <source> Keine Einträge im gewählten Zeitraum. </source>
@@ -7649,25 +8050,9 @@
         <source>Übung</source>
       </segment>
     </unit>
-    <unit id="trainingEntryDialog.exercise">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:4,6</note>
-      </notes>
-      <segment>
-        <source>Übung</source>
-      </segment>
-    </unit>
-    <unit id="exerciseWikiLinkAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:25,27</note>
-      </notes>
-      <segment>
-        <source>Anleitung zur Übung öffnen</source>
-      </segment>
-    </unit>
     <unit id="entryDialog.variant">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:34,35</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:3,4</note>
       </notes>
       <segment>
         <source>Variante</source>
@@ -7675,7 +8060,7 @@
     </unit>
     <unit id="entryDialog.variantNone">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:36,37</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:5,6</note>
       </notes>
       <segment>
         <source>—</source>
@@ -7683,7 +8068,7 @@
     </unit>
     <unit id="entryDialog.distance">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:48,50</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:17,19</note>
       </notes>
       <segment>
         <source>Distanz (km)</source>
@@ -7691,8 +8076,8 @@
     </unit>
     <unit id="entryDialog.durationMinutes">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:62,64</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:92,94</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:31,33</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:61,63</note>
       </notes>
       <segment>
         <source>Minuten</source>
@@ -7700,8 +8085,8 @@
     </unit>
     <unit id="entryDialog.durationSeconds">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:75,77</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:105,107</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:44,46</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:74,76</note>
       </notes>
       <segment>
         <source>Sekunden</source>
@@ -7709,7 +8094,7 @@
     </unit>
     <unit id="setLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:124,125</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:93,94</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:55,56</note>
       </notes>
       <segment>
@@ -7718,7 +8103,7 @@
     </unit>
     <unit id="repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:126,128</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:95,97</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:57,59</note>
       </notes>
       <segment>
@@ -7727,7 +8112,7 @@
     </unit>
     <unit id="removeSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:145,147</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:114,116</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:76,78</note>
       </notes>
       <segment>
@@ -7736,7 +8121,7 @@
     </unit>
     <unit id="addSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:156,157</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:125,126</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:87,88</note>
       </notes>
       <segment>
@@ -7745,7 +8130,7 @@
     </unit>
     <unit id="addSetTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:158,160</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:127,129</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:89,91</note>
       </notes>
       <segment>
@@ -7754,7 +8139,7 @@
     </unit>
     <unit id="totalReps">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:167,171</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:136,140</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:98,102</note>
       </notes>
       <segment>
@@ -7763,7 +8148,7 @@
     </unit>
     <unit id="entry.interval.label">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:178,179</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:147,148</note>
       </notes>
       <segment>
         <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
@@ -7771,7 +8156,7 @@
     </unit>
     <unit id="entry.intervals.label">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:181,183</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:150,152</note>
       </notes>
       <segment>
         <source>Intervalle</source>
@@ -7779,7 +8164,7 @@
     </unit>
     <unit id="entry.intervals.remove">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:199,201</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:168,170</note>
       </notes>
       <segment>
         <source>Intervall entfernen</source>
@@ -7787,7 +8172,7 @@
     </unit>
     <unit id="entry.intervals.add">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:210,211</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:179,180</note>
       </notes>
       <segment>
         <source>Intervall hinzufügen</source>
@@ -7795,7 +8180,7 @@
     </unit>
     <unit id="entry.intervals.addTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:212,214</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:181,183</note>
       </notes>
       <segment>
         <source>Weiteres Intervall hinzufügen</source>
@@ -7803,7 +8188,7 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:225,227</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:194,196</note>
       </notes>
       <segment>
         <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedDurationMax() }}"/></source>
@@ -7811,7 +8196,7 @@
     </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:231,233</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:200,202</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedMax() }}"/></source>
@@ -7819,11 +8204,59 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:235,237</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:204,206</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:104,106</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.repsMax() }}"/> pro Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="trainingEntryDialog.exercise">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:3,6</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.placeholder">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:11,12</note>
+      </notes>
+      <segment>
+        <source>Übung suchen</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.noMatch">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:31,34</note>
+      </notes>
+      <segment>
+        <source>Keine Übung gefunden</source>
+      </segment>
+    </unit>
+    <unit id="exerciseWikiLinkAria">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:46,48</note>
+      </notes>
+      <segment>
+        <source>Anleitung zur Übung öffnen</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.plannedToday">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.groups.ts:48</note>
+      </notes>
+      <segment>
+        <source>Heute geplant</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.recent">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.groups.ts:55</note>
+      </notes>
+      <segment>
+        <source>Zuletzt genutzt</source>
       </segment>
     </unit>
     <unit id="typeLabel">
@@ -7866,17 +8299,9 @@
         <source>web / whatsapp / eigene Quelle</source>
       </segment>
     </unit>
-    <unit id="trainingEntryDialog.pushup.exercise">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:86</note>
-      </notes>
-      <segment>
-        <source>Liegestütze</source>
-      </segment>
-    </unit>
     <unit id="typeWikiLinkTooltip.generic">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:153</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:144</note>
       </notes>
       <segment>
         <source>Anleitung zu Liegestütztypen öffnen</source>
@@ -7884,7 +8309,7 @@
     </unit>
     <unit id="typeWikiLinkTooltip.specific">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:155</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.ts:146</note>
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
@@ -7906,17 +8331,9 @@
         <source>Trainingseintrag anlegen</source>
       </segment>
     </unit>
-    <unit id="trainingEntryDialog.category">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:11,13</note>
-      </notes>
-      <segment>
-        <source>Kategorie</source>
-      </segment>
-    </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:25,27</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:18,20</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -7924,7 +8341,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:58,60</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:52,54</note>
       </notes>
       <segment>
         <source> Speichern </source>
@@ -7944,102 +8361,6 @@
       </notes>
       <segment>
         <source>Anleitung öffnen</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.push">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:57</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:212</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:462</note>
-      </notes>
-      <segment>
-        <source>Drücken</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.pull">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:58</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:213</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:463</note>
-      </notes>
-      <segment>
-        <source>Ziehen</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.squat">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:59</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:214</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:464</note>
-      </notes>
-      <segment>
-        <source>Kniebeuge</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.hinge">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:60</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:215</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:465</note>
-      </notes>
-      <segment>
-        <source>Hüftstreckung</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.lunge">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:61</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:216</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:466</note>
-      </notes>
-      <segment>
-        <source>Ausfallschritt</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.carry">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:62</note>
-      </notes>
-      <segment>
-        <source>Tragen</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.core">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:63</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:217</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:467</note>
-      </notes>
-      <segment>
-        <source>Rumpf</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.cardio">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:64</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:218</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:468</note>
-      </notes>
-      <segment>
-        <source>Ausdauer</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.mobility">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:65</note>
-        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:219</note>
-        <note category="location">web/src/app/wiki/exercises-page.component.ts:469</note>
-      </notes>
-      <segment>
-        <source>Mobilität</source>
-      </segment>
-    </unit>
-    <unit id="exercise.category.strength">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.helpers.ts:66</note>
-      </notes>
-      <segment>
-        <source>Krafttraining</source>
       </segment>
     </unit>
     <unit id="pie.distributionAria">
@@ -8850,58 +9171,89 @@
         <source>Ringe</source>
       </segment>
     </unit>
-    <unit id="analysis.bestStreaksTitle">
+    <unit id="exercise.category.push">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:29,31</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:212</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:462</note>
       </notes>
       <segment>
-        <source>Bestwerte &amp; Streaks</source>
+        <source>Drücken</source>
       </segment>
     </unit>
-    <unit id="analysis.bestSingleEntry">
+    <unit id="exercise.category.pull">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:35,38</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:213</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:463</note>
       </notes>
       <segment>
-        <source>Bestwert Einzel-Eintrag:</source>
+        <source>Ziehen</source>
       </segment>
     </unit>
-    <unit id="analysis.repsUnitLong">
+    <unit id="exercise.category.squat">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:39,41</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:47,49</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:214</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:464</note>
       </notes>
       <segment>
-        <source>Reps</source>
+        <source>Kniebeuge</source>
       </segment>
     </unit>
-    <unit id="analysis.bestDay">
+    <unit id="exercise.category.hinge">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:43,45</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:215</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:465</note>
       </notes>
       <segment>
-        <source>Bester Tag:</source>
+        <source>Hüftstreckung</source>
       </segment>
     </unit>
-    <unit id="analysis.bestSingleSet">
+    <unit id="exercise.category.lunge">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:52,54</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:216</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:466</note>
       </notes>
       <segment>
-        <source>Bestes Einzel-Set:</source>
+        <source>Ausfallschritt</source>
       </segment>
     </unit>
-    <unit id="analysis.repsUnit">
+    <unit id="exercise.category.core">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:55,57</note>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:217</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:467</note>
       </notes>
       <segment>
-        <source>Wdh.</source>
+        <source>Rumpf</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.cardio">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:218</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:468</note>
+      </notes>
+      <segment>
+        <source>Ausdauer</source>
+      </segment>
+    </unit>
+    <unit id="exercise.category.mobility">
+      <notes>
+        <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:219</note>
+        <note category="location">web/src/app/wiki/exercises-page.component.ts:469</note>
+      </notes>
+      <segment>
+        <source>Mobilität</source>
+      </segment>
+    </unit>
+    <unit id="analysis.streaksTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:30,31</note>
+      </notes>
+      <segment>
+        <source>Streaks</source>
       </segment>
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:60,62</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:34,36</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -8909,47 +9261,15 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:68,70</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:42,44</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
       </segment>
     </unit>
-    <unit id="analysis.typesTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:81,83</note>
-      </notes>
-      <segment>
-        <source>Typen (Anteile)</source>
-      </segment>
-    </unit>
-    <unit id="analysis.avgSetSizeTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:95,96</note>
-      </notes>
-      <segment>
-        <source>⌀ Set-Größe</source>
-      </segment>
-    </unit>
-    <unit id="analysis.repsPerSet">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:100,101</note>
-      </notes>
-      <segment>
-        <source>Reps / Set</source>
-      </segment>
-    </unit>
-    <unit id="analysis.setsDistTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:109,111</note>
-      </notes>
-      <segment>
-        <source>Sets-Verteilung</source>
-      </segment>
-    </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:124,126</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:56,58</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -8957,81 +9277,15 @@
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:131,132</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:63,64</note>
       </notes>
       <segment>
         <source>Heatmap-Modus auswählen</source>
       </segment>
     </unit>
-    <unit id="analysis.weekTrendTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:159,161</note>
-      </notes>
-      <segment>
-        <source>Wochentrend</source>
-      </segment>
-    </unit>
-    <unit id="analysis.weekTrendSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:162,164</note>
-      </notes>
-      <segment>
-        <source>Letzte 8 Wochen</source>
-      </segment>
-    </unit>
-    <unit id="analysis.weekCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:170,171</note>
-      </notes>
-      <segment>
-        <source>Woche</source>
-      </segment>
-    </unit>
-    <unit id="analysis.repsCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:176,177</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:223,224</note>
-      </notes>
-      <segment>
-        <source>Reps</source>
-      </segment>
-    </unit>
-    <unit id="analysis.avgSetsCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:182,183</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:229,230</note>
-      </notes>
-      <segment>
-        <source>⌀ Sets</source>
-      </segment>
-    </unit>
-    <unit id="analysis.monthTrendTitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:206,208</note>
-      </notes>
-      <segment>
-        <source>Monatstrend</source>
-      </segment>
-    </unit>
-    <unit id="analysis.monthTrendSubtitle">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:209,211</note>
-      </notes>
-      <segment>
-        <source>Letzte 6 Monate</source>
-      </segment>
-    </unit>
-    <unit id="analysis.monthCol">
-      <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:217,219</note>
-      </notes>
-      <segment>
-        <source>Monat</source>
-      </segment>
-    </unit>
     <unit id="analysis.heatmapReps">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:41</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:33</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -9039,7 +9293,7 @@
     </unit>
     <unit id="analysis.heatmapSets">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:42</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:34</note>
       </notes>
       <segment>
         <source>Sets</source>
@@ -9047,7 +9301,7 @@
     </unit>
     <unit id="analysis.heatmapTime">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:46</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:38</note>
       </notes>
       <segment>
         <source>Zeit</source>
@@ -9055,8 +9309,8 @@
     </unit>
     <unit id="analysis.heatmapIntervals">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:47</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:53</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:39</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:45</note>
       </notes>
       <segment>
         <source>Intervalle</source>
@@ -9064,7 +9318,7 @@
     </unit>
     <unit id="analysis.heatmapDistance">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:52</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.helpers.ts:44</note>
       </notes>
       <segment>
         <source>Strecke</source>
@@ -9132,6 +9386,190 @@
       </notes>
       <segment>
         <source>Übersicht</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestValuesTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:30,32</note>
+      </notes>
+      <segment>
+        <source>Bestwerte</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestSingleEntry">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:36,38</note>
+      </notes>
+      <segment>
+        <source>Bestwert Einzel-Eintrag:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestDay">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:43,44</note>
+      </notes>
+      <segment>
+        <source>Bester Tag:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.bestSingleSet">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:51,53</note>
+      </notes>
+      <segment>
+        <source>Bestes Einzel-Set:</source>
+      </segment>
+    </unit>
+    <unit id="analysis.repsUnit">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:54,56</note>
+      </notes>
+      <segment>
+        <source>Wdh.</source>
+      </segment>
+    </unit>
+    <unit id="analysis.typesTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:64,66</note>
+      </notes>
+      <segment>
+        <source>Typen (Anteile)</source>
+      </segment>
+    </unit>
+    <unit id="analysis.avgSetSizeTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:78,79</note>
+      </notes>
+      <segment>
+        <source>⌀ Set-Größe</source>
+      </segment>
+    </unit>
+    <unit id="analysis.repsPerSet">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:83,84</note>
+      </notes>
+      <segment>
+        <source>Reps / Set</source>
+      </segment>
+    </unit>
+    <unit id="analysis.setsDistTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:92,94</note>
+      </notes>
+      <segment>
+        <source>Sets-Verteilung</source>
+      </segment>
+    </unit>
+    <unit id="analysis.weekTrendTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:65</note>
+      </notes>
+      <segment>
+        <source>Wochentrend</source>
+      </segment>
+    </unit>
+    <unit id="analysis.weekTrendSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:66</note>
+      </notes>
+      <segment>
+        <source>Letzte 8 Wochen</source>
+      </segment>
+    </unit>
+    <unit id="analysis.weekCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:67</note>
+      </notes>
+      <segment>
+        <source>Woche</source>
+      </segment>
+    </unit>
+    <unit id="analysis.monthTrendTitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:68</note>
+      </notes>
+      <segment>
+        <source>Monatstrend</source>
+      </segment>
+    </unit>
+    <unit id="analysis.monthTrendSubtitle">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:69</note>
+      </notes>
+      <segment>
+        <source>Letzte 6 Monate</source>
+      </segment>
+    </unit>
+    <unit id="analysis.monthCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:70</note>
+      </notes>
+      <segment>
+        <source>Monat</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.reps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:21</note>
+      </notes>
+      <segment>
+        <source>Wiederholungen</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.weight">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:23</note>
+      </notes>
+      <segment>
+        <source>Gewicht</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.time">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:25</note>
+      </notes>
+      <segment>
+        <source>Dauer</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distance">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:27</note>
+      </notes>
+      <segment>
+        <source>Strecke</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distanceTime">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:29</note>
+      </notes>
+      <segment>
+        <source>Strecke &amp; Tempo</source>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:31</note>
+      </notes>
+      <segment>
+        <source>Sonstige</source>
+      </segment>
+    </unit>
+    <unit id="analysis.repsUnitLong">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:70</note>
+      </notes>
+      <segment>
+        <source>Reps</source>
+      </segment>
+    </unit>
+    <unit id="analysis.avgSetsCol">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-trend-table.component.html:25,26</note>
+      </notes>
+      <segment>
+        <source>⌀ Sets</source>
       </segment>
     </unit>
     <unit id="historyHeaderTitle">
@@ -9796,7 +10234,7 @@
     <unit id="trainingPlans.kind.rest">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:262,264</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:280,282</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:202,203</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:108,109</note>
       </notes>
@@ -9827,7 +10265,7 @@
     <unit id="trainingPlans.reps">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,90</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:275,277</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:293,295</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:211,212</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:217,218</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:126,128</note>
@@ -9903,15 +10341,24 @@
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:190,192</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:186,188</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:208,210</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
       </segment>
     </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <notes>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:189,192</note>
+      </notes>
+      <segment>
+        <source>Alle Übungen eintragen</source>
+      </segment>
+    </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:193,194</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:211,212</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
@@ -9919,7 +10366,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:205,207</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:223,225</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -9927,7 +10374,7 @@
     </unit>
     <unit id="dashboard.quickActions.speedDialHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:211,215</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:229,233</note>
       </notes>
       <segment>
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
@@ -9935,7 +10382,7 @@
     </unit>
     <unit id="todayFocusAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:220,221</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:238,239</note>
       </notes>
       <segment>
         <source>Tagesfokus</source>
@@ -9943,7 +10390,7 @@
     </unit>
     <unit id="dashboard.todayTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:226,228</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:244,246</note>
       </notes>
       <segment>
         <source>Heute Gesamt</source>
@@ -9951,7 +10398,7 @@
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:237,239</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:255,257</note>
       </notes>
       <segment>
         <source>Zielfortschritt</source>
@@ -9959,7 +10406,7 @@
     </unit>
     <unit id="dashboard.goalEditAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:245,246</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:263,264</note>
       </notes>
       <segment>
         <source>Tagesziel in Einstellungen öffnen</source>
@@ -9967,9 +10414,10 @@
     </unit>
     <unit id="dashboard.dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:254,256</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:281</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:300,301</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:272,274</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:299,300</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:309</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:318,319</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -9977,7 +10425,7 @@
     </unit>
     <unit id="dashboard.restDay.configuredGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:271,273</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:289,291</note>
       </notes>
       <segment>
         <source>Konfiguriertes Tagesziel:</source>
@@ -9985,7 +10433,7 @@
     </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:310,311</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:328,329</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -9993,7 +10441,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:319,320</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:337,338</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -10001,7 +10449,7 @@
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:344,345</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:362,363</note>
       </notes>
       <segment>
         <source>Letzten Eintrag in der Historie öffnen</source>
@@ -10009,7 +10457,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:348,349</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:366,367</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -10017,8 +10465,8 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:358,360</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:421,424</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:376,378</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:439,442</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -10026,7 +10474,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:379,383</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:397,401</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -10034,7 +10482,7 @@
     </unit>
     <unit id="dashboard.latestExercises">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:384,385</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:402,403</note>
       </notes>
       <segment>
         <source>Letzte Übungen</source>
@@ -10042,7 +10490,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:428,429</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:446,447</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -10050,7 +10498,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:433,436</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:451,454</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -10058,7 +10506,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:439</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:457</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -10066,7 +10514,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:95</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:114</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -10074,7 +10522,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:98</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:117</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -10082,10 +10530,58 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:99</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:118</note>
       </notes>
       <segment>
         <source>Teilen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.unquantified">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.html:33,36</note>
+      </notes>
+      <segment>
+        <source>nach Vorgabe</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.auto">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:53</note>
+      </notes>
+      <segment>
+        <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.check">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:54</note>
+      </notes>
+      <segment>
+        <source>Übung abhaken (ohne Eintrag)</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.undo">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:55</note>
+      </notes>
+      <segment>
+        <source>Haken entfernen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.log">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:56</note>
+      </notes>
+      <segment>
+        <source>Vorgabe eintragen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.reset">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:57</note>
+      </notes>
+      <segment>
+        <source>Übung zurücksetzen</source>
       </segment>
     </unit>
     <unit id="trainingPlans.photoCreditPrefix">
@@ -10107,7 +10603,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:43</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:337,341</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:352,356</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -10270,9 +10766,17 @@
         <source>Woche</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.checkoffHint">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:231,233</note>
+      </notes>
+      <segment>
+        <source>Intervall-Tag — Übungen einzeln abhaken.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:253,254</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:268,269</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -10280,7 +10784,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:273,275</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:288,290</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -10288,23 +10792,23 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:283,285</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:298,300</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
       </segment>
     </unit>
-    <unit id="trainingPlans.menu.logDone">
+    <unit id="trainingPlans.menu.logAllDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:294,296</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:309,311</note>
       </notes>
       <segment>
-        <source>Plan-Sätze eintragen &amp; abhaken</source>
+        <source>Alle Übungen eintragen &amp; abhaken</source>
       </segment>
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:301,303</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:316,318</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -10312,7 +10816,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:307,309</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:322,324</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -10320,7 +10824,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:319,321</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:334,336</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -10328,23 +10832,15 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:334,335</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:349,350</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
       </segment>
     </unit>
-    <unit id="trainingPlans.autoStartFailed">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:156</note>
-      </notes>
-      <segment>
-        <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
-      </segment>
-    </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:201</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:172</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -10352,7 +10848,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:218</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:189</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -10360,7 +10856,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:236</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:207</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -10368,15 +10864,23 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:249</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:220</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.autoStartFailed">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.effects.ts:85</note>
+      </notes>
+      <segment>
+        <source>Plan-Start fehlgeschlagen — bitte erneut versuchen.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:84</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:99</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:390</note>
       </notes>
       <segment>
@@ -10385,7 +10889,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:86</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:101</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:392</note>
       </notes>
       <segment>
@@ -10394,11 +10898,28 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:88</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:103</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:120</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:394</note>
       </notes>
       <segment>
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetDone">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:116</note>
+      </notes>
+      <segment>
+        <source>Übung zurückgesetzt.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetKept">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:118</note>
+      </notes>
+      <segment>
+        <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
       </segment>
     </unit>
     <unit id="trainingPlans.title">

@@ -33,28 +33,17 @@ import type {
   AnalysisView,
   CategoryComparison,
   CategorySummary,
-  ChartFeedEntry,
   TrendPoint,
-  TypeBreakdownDatum,
 } from './analysis/analysis.types';
 import {
   buildCategoryComparison,
   buildCategorySummaries,
 } from './analysis/category-volume';
+import { computeViewMeasurement } from './analysis/chart-series';
 import {
-  buildViewChartEntries,
-  buildViewChartSeries,
-  buildViewPaceSeries,
-  computeViewMeasurement,
-} from './analysis/chart-series';
-import {
-  computeAvgSetSize,
-  computeBestDay,
-  computeBestSingleEntry,
-  computeBestSingleSet,
-  computeSetsDistribution,
-  computeTypeBreakdown,
-} from './analysis/entry-stats';
+  type AnalysisSegment,
+  buildAnalysisSegments,
+} from './analysis/view-segments';
 import {
   buildMonthTrend,
   buildWeekTrend,
@@ -264,7 +253,7 @@ export const AnalysisStore = signalStore(
     });
 
     /**
-     * Granularity of {@link viewChartSeries}. Tracked separately from
+     * Granularity of {@link viewSegments}. Tracked separately from
      * the REST-derived {@link granularity} (which lags the resource
      * during cold-start / filter changes) so the chart's axis mode,
      * dayChartMode toggle visibility and sets-stacking bucket-keying
@@ -278,28 +267,6 @@ export const AnalysisStore = signalStore(
 
     const viewMeasurement = computed<MeasurementType | 'mixed' | null>(() =>
       computeViewMeasurement(viewFilteredRows())
-    );
-
-    const viewChartSeries = computed(() =>
-      buildViewChartSeries(viewFilteredRows(), {
-        from: store.from(),
-        isDayRange: viewGranularity() === 'hourly',
-        dayChartMode: resolvedDayChartMode(),
-        measurement: viewMeasurement(),
-      })
-    );
-
-    const viewPaceSeries = computed(() =>
-      buildViewPaceSeries(viewFilteredRows(), viewChartSeries(), {
-        from: store.from(),
-        isDayRange: viewGranularity() === 'hourly',
-        dayChartMode: resolvedDayChartMode(),
-        measurement: viewMeasurement(),
-      })
-    );
-
-    const viewChartEntries = computed<ChartFeedEntry[]>(() =>
-      buildViewChartEntries(viewFilteredRows(), viewMeasurement())
     );
 
     /**
@@ -351,34 +318,50 @@ export const AnalysisStore = signalStore(
       );
     };
 
+    // Memoised so the whole live feed is walked once per trend window
+    // rather than again for every consumer — the page filter and the
+    // 24h/14h toggle feed `viewSegments` but must not re-derive these.
+    const weekRows = computed<UnifiedEntry[]>(() =>
+      applyViewFilter(trendUnifiedRows(store.weekFilter()))
+    );
+
+    const monthRows = computed<UnifiedEntry[]>(() =>
+      applyViewFilter(trendUnifiedRows(store.monthFilter()))
+    );
+
     const weekTrend = computed<TrendPoint[]>(() =>
-      buildWeekTrend(
-        applyViewFilter(trendUnifiedRows(store.weekFilter())),
-        store.currentMonday()
-      )
+      buildWeekTrend(weekRows(), store.currentMonday())
     );
 
     const monthTrend = computed<TrendPoint[]>(() =>
-      buildMonthTrend(
-        applyViewFilter(trendUnifiedRows(store.monthFilter())),
-        store.currentMonthStart()
-      )
+      buildMonthTrend(monthRows(), store.currentMonthStart())
     );
 
-    const typeBreakdown = computed<TypeBreakdownDatum[]>(() =>
-      computeTypeBreakdown(viewFilteredRows(), {
-        view: store.activeView(),
-        kinds: store.kinds(),
-        locale: store._locale,
+    /**
+     * The whole tab body, split per measurement: chart, best values,
+     * type breakdown and both trends. A category mixing counted and
+     * timed exercises (`core`: sit-ups + planks) renders one block per
+     * dimension instead of summing reps and seconds into one number.
+     */
+    const viewSegments = computed<AnalysisSegment[]>(() =>
+      buildAnalysisSegments({
+        rangeRows: viewFilteredRows(),
+        weekRows: weekRows(),
+        monthRows: monthRows(),
+        monday: store.currentMonday(),
+        monthStart: store.currentMonthStart(),
+        chart: {
+          from: store.from(),
+          isDayRange: viewGranularity() === 'hourly',
+          dayChartMode: resolvedDayChartMode(),
+        },
+        breakdown: {
+          view: store.activeView(),
+          kinds: store.kinds(),
+          locale: store._locale,
+        },
+        resolveDefinition: resolveDefinition(),
       })
-    );
-
-    const bestSingleEntry = computed<UnifiedEntry | null>(() =>
-      computeBestSingleEntry(viewFilteredRows())
-    );
-
-    const bestDay = computed<{ date: string; total: number } | null>(() =>
-      computeBestDay(viewFilteredRows())
     );
 
     const longestStreak = computed(() =>
@@ -399,22 +382,10 @@ export const AnalysisStore = signalStore(
       () => userStats()?.heatmap ?? {}
     );
 
-    const avgSetSize = computed(() => computeAvgSetSize(viewFilteredRows()));
-
-    const setsDistribution = computed(() =>
-      computeSetsDistribution(viewFilteredRows())
-    );
-
-    const bestSingleSet = computed(() =>
-      computeBestSingleSet(viewFilteredRows())
-    );
-
     return {
-      viewChartSeries,
-      viewChartEntries,
+      viewSegments,
       viewGranularity,
       viewMeasurement,
-      viewPaceSeries,
       unifiedRows,
       viewFilteredRows,
       categorySummaries,
@@ -422,16 +393,10 @@ export const AnalysisStore = signalStore(
       kindOptionsRaw,
       weekTrend,
       monthTrend,
-      typeBreakdown,
-      bestSingleEntry,
-      bestDay,
       longestStreak,
       currentStreak,
       userStats,
       heatmapData,
-      avgSetSize,
-      setsDistribution,
-      bestSingleSet,
       resolvedDayChartMode,
     };
   }),

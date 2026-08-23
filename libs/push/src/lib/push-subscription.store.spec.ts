@@ -514,7 +514,7 @@ describe('PushSubscriptionStore', () => {
   // snoozeReminder Cloud Function — never any entry-creation path. This locks
   // in that the SW message bridge keeps SNOOZE_REMINDER and QUICK_LOG_PUSHUPS
   // strictly partitioned, so a snooze click can never silently log push-ups.
-  describe('regression: snooze message never triggers entry creation', () => {
+  describe('regression: SW messages never trigger a snooze', () => {
     function setupMessageBridge(): {
       messageListeners: Array<(ev: MessageEvent) => void>;
     } {
@@ -533,77 +533,39 @@ describe('PushSubscriptionStore', () => {
       return { messageListeners };
     }
 
-    it('SNOOZE_REMINDER from the SW invokes the snoozeReminder callable with the supplied minutes', async () => {
-      const { messageListeners } = setupMessageBridge();
-      const callable = jest
-        .fn()
-        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
-      const httpsCallableMock = httpsCallable as jest.Mock;
-      httpsCallableMock.mockReset();
-      httpsCallableMock.mockReturnValue(callable);
-
-      const store = setupStore();
-      store.registerSwListener();
-
-      for (const listener of messageListeners) {
-        listener({
-          data: { type: 'SNOOZE_REMINDER', snoozeMinutes: 45 },
-        } as MessageEvent);
-      }
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
-      // Exactly one callable was created — the snoozeReminder one. No second
-      // call (e.g. createPushup, savePushSubscription) leaked through.
-      expect(httpsCallableMock).toHaveBeenCalledTimes(1);
-      expect(httpsCallableMock).toHaveBeenCalledWith(
-        expect.anything(),
-        'snoozeReminder'
-      );
-      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 45 });
-    });
-
-    it('SNOOZE_REMINDER without explicit minutes defaults to 30', async () => {
-      const { messageListeners } = setupMessageBridge();
-      const callable = jest
-        .fn()
-        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
-      const httpsCallableMock = httpsCallable as jest.Mock;
-      httpsCallableMock.mockReset();
-      httpsCallableMock.mockReturnValue(callable);
-
-      const store = setupStore();
-      store.registerSwListener();
-
-      for (const listener of messageListeners) {
-        listener({ data: { type: 'SNOOZE_REMINDER' } } as MessageEvent);
-      }
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
-      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 30 });
-    });
-
-    it('an unrelated SW message (e.g. QUICK_LOG_PUSHUPS) never reaches the snoozeReminder callable', async () => {
+    // The snooze no longer rides on a postMessage — `PushIntentDrainService`
+    // claims it from the intent store, which is single-use and time-bounded.
+    // No SW message may reach the callable through this store, otherwise a
+    // message queued in a frozen tab could still act hours later.
+    it('should ignore every SW message that is not a subscription change', async () => {
+      // given the SW message bridge
       const { messageListeners } = setupMessageBridge();
       const callable = jest.fn();
       const httpsCallableMock = httpsCallable as jest.Mock;
       httpsCallableMock.mockReset();
       httpsCallableMock.mockReturnValue(callable);
 
+      // when the legacy and current message types arrive
       const store = setupStore();
       store.registerSwListener();
-
       for (const listener of messageListeners) {
+        listener({
+          data: { type: 'SNOOZE_REMINDER', snoozeMinutes: 30 },
+        } as MessageEvent);
         listener({
           data: { type: 'QUICK_LOG_PUSHUPS', reps: 20 },
         } as MessageEvent);
+        listener({ data: { type: 'DRAIN_PUSH_INTENTS' } } as MessageEvent);
       }
       await new Promise((resolve) => setTimeout(resolve, 0));
 
+      // then none of them reaches a callable
       expect(httpsCallableMock).not.toHaveBeenCalled();
       expect(callable).not.toHaveBeenCalled();
     });
 
-    it('snooze() public method calls the snoozeReminder callable and nothing else', async () => {
+    it('should call the snoozeReminder callable and nothing else from snooze()', async () => {
+      // given
       setupMessageBridge();
       const callable = jest
         .fn()
@@ -612,9 +574,11 @@ describe('PushSubscriptionStore', () => {
       httpsCallableMock.mockReset();
       httpsCallableMock.mockReturnValue(callable);
 
+      // when
       const store = setupStore();
       await store.snooze(15);
 
+      // then
       expect(httpsCallableMock).toHaveBeenCalledTimes(1);
       expect(httpsCallableMock).toHaveBeenCalledWith(
         expect.anything(),

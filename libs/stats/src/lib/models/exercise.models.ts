@@ -108,6 +108,12 @@ export interface ExerciseDefinition {
    * Whether `variantId` may hold a value outside {@link variants}. Set for
    * exercises whose variant picker is a free-text autocomplete (pushups),
    * where a closed allowlist would reject a user-typed type on save.
+   *
+   * Absent (`undefined`) is treated the same as `false` by
+   * {@link validateExerciseEntry} — the variant-list guard runs for every
+   * exercise that does not explicitly opt in. Setting this to `true` bypasses
+   * the guard entirely: any non-empty string passes, even IDs absent from
+   * `variants`. Exercises that need strict enforcement simply omit the field.
    */
   allowsCustomVariants?: boolean;
 }

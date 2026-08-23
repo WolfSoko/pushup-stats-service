@@ -18,6 +18,13 @@ export {
 } from './functions-admin';
 
 export {
+  adminComputeAndroidTestCandidates,
+  adminConfirmAndroidTestCandidate,
+  adminMarkAndroidTesterAdded,
+  optInAndroidTest,
+} from './functions-android-test';
+
+export {
   backfillAdminUserActivity,
   updateAdminUserActivityOnEntryWrite,
 } from './functions-admin-user-activity';
@@ -63,6 +70,8 @@ export {
   rebuildUserStats,
   updateExerciseStatsOnEntryWrite,
 } from './functions-user-stats';
+
+export { archiveDeletedExerciseEntry } from './functions-entry-trash';
 
 export {
   backfillPushupPerExerciseStats,

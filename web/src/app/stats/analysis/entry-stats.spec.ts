@@ -6,6 +6,7 @@ import {
   computeBestSingleSet,
   computeSetsDistribution,
   computeTypeBreakdown,
+  showsPushupVariants,
 } from './entry-stats';
 
 function entry(
@@ -36,8 +37,20 @@ describe('computeBestSingleEntry', () => {
     ];
     const before = rows.map((r) => r.reps);
     // when / then
-    expect(computeBestSingleEntry(rows)?.reps).toBe(40);
+    expect(computeBestSingleEntry(rows)?.value).toBe(40);
     expect(rows.map((r) => r.reps)).toEqual(before);
+  });
+
+  it('should rank time-measured rows by their duration, not their reps', () => {
+    // given
+    const rows = [
+      entry({ exerciseId: 'plank.standard', durationSec: 45 }),
+      entry({ exerciseId: 'plank.standard', durationSec: 120 }),
+    ];
+    // when
+    const best = computeBestSingleEntry(rows);
+    // then
+    expect(best?.value).toBe(120);
   });
 });
 
@@ -157,5 +170,65 @@ describe('computeTypeBreakdown', () => {
     expect(breakdown).toEqual([
       { id: 'abs.situps', label: 'abs.situps', value: 25, avgSetSize: 0 },
     ]);
+  });
+
+  it('should value time-measured slices by their duration instead of dropping them to zero', () => {
+    // given
+    const rows = [
+      entry({ exerciseId: 'plank.standard', durationSec: 90 }),
+      entry({ exerciseId: 'core.hollowhold', durationSec: 30 }),
+    ];
+    // when
+    const breakdown = computeTypeBreakdown(rows, {
+      view: 'core',
+      kinds: [],
+      locale: 'en',
+      measurement: 'time',
+    });
+    // then
+    expect(breakdown.map((d) => d.value)).toEqual([90, 30]);
+  });
+
+  it('should never render pushup variants for a non-reps segment', () => {
+    // given a `pushup` view whose time segment holds no pushup rows
+    const rows = [entry({ exerciseId: 'plank.standard', durationSec: 60 })];
+    // when
+    const breakdown = computeTypeBreakdown(rows, {
+      view: 'pushup',
+      kinds: [],
+      locale: 'en',
+      measurement: 'time',
+    });
+    // then
+    expect(breakdown).toEqual([
+      {
+        id: 'plank.standard',
+        label: 'plank.standard',
+        value: 60,
+        avgSetSize: 0,
+      },
+    ]);
+  });
+});
+
+describe('showsPushupVariants', () => {
+  it('should show variants on the pushup tab', () => {
+    // given / when / then
+    expect(showsPushupVariants('pushup', [])).toBe(true);
+  });
+
+  it('should show variants in overview without a kind filter', () => {
+    // given / when / then
+    expect(showsPushupVariants('overview', [])).toBe(true);
+  });
+
+  it('should fall back to kind mode for a non-reps segment', () => {
+    // given / when / then
+    expect(showsPushupVariants('pushup', [], 'time')).toBe(false);
+  });
+
+  it('should fall back to kind mode for a non-pushup category tab', () => {
+    // given / when / then
+    expect(showsPushupVariants('core', [])).toBe(false);
   });
 });

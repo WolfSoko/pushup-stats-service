@@ -6,13 +6,13 @@ import { provideRouter } from '@angular/router';
 import { TrainingEntryDialogComponent } from './training-entry-dialog.component';
 import {
   ExerciseEntryDialogResult,
-  TrainingEntryDialogData,
+  TrainingEntryDialogInput,
   TrainingEntryDialogResult,
 } from './training-entry-dialog.models';
 
 describe('TrainingEntryDialogComponent', () => {
   function createDialog(
-    data: TrainingEntryDialogData | null,
+    data: TrainingEntryDialogInput,
     extraProviders: Provider[] = []
   ): {
     component: TrainingEntryDialogComponent;
@@ -36,22 +36,39 @@ describe('TrainingEntryDialogComponent', () => {
   }
 
   describe('create mode', () => {
-    it('should default to the pushup category', () => {
+    it('should default to pushups without suggestions', () => {
       // given / when
       const { component } = createDialog(null);
 
       // then
+      expect(component.exerciseId()).toBe('pushup');
       expect(component.category()).toBe('pushup');
       expect(component.mode()).toBe('pushup');
       expect(component.isEditMode).toBe(false);
     });
 
-    it('should switch to exercise mode when the category changes', () => {
+    it('should open on the first planned exercise', () => {
+      // given / when
+      const { component } = createDialog({
+        kind: 'create',
+        suggestions: {
+          plannedExerciseIds: ['legs.squats'],
+          recentExerciseIds: ['abs.situps'],
+        },
+      });
+
+      // then
+      expect(component.exerciseId()).toBe('legs.squats');
+      expect(component.category()).toBe('squat');
+      expect(component.mode()).toBe('exercise');
+    });
+
+    it('should switch to exercise mode when another exercise is picked', () => {
       // given
       const { component, fixture } = createDialog(null);
 
       // when
-      component.onCategoryChange('core');
+      component.onExerciseChange('abs.situps');
       fixture.detectChanges();
 
       // then
@@ -86,7 +103,7 @@ describe('TrainingEntryDialogComponent', () => {
     it('should close with an exercise result when an exercise is filled', () => {
       // given
       const { component, fixture, closeSpy } = createDialog(null);
-      component.onCategoryChange('core');
+      component.onExerciseChange('abs.situps');
       fixture.detectChanges();
       const root: HTMLElement = fixture.nativeElement;
       const repsEl: HTMLInputElement = root.querySelector(
@@ -111,10 +128,32 @@ describe('TrainingEntryDialogComponent', () => {
         intervals: [],
       });
     });
+
+    it('should drop entered reps when the exercise is switched', () => {
+      // given
+      const { component, fixture } = createDialog(null);
+      component.onExerciseChange('abs.situps');
+      fixture.detectChanges();
+      const root: HTMLElement = fixture.nativeElement;
+      const repsEl: HTMLInputElement = root.querySelector(
+        'app-exercise-entry-fields input[type="number"]'
+      ) as HTMLInputElement;
+      repsEl.value = '12';
+      repsEl.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(component.canSubmit()).toBe(true);
+
+      // when
+      component.onExerciseChange('legs.squats');
+      fixture.detectChanges();
+
+      // then
+      expect(component.canSubmit()).toBe(false);
+    });
   });
 
   describe('edit mode', () => {
-    it('should lock the category picker and stay on the original category', () => {
+    it('should lock the exercise picker and stay on the original exercise', () => {
       // given
       const { component, fixture } = createDialog({
         kind: 'pushup',
@@ -127,17 +166,17 @@ describe('TrainingEntryDialogComponent', () => {
 
       // then
       expect(component.isEditMode).toBe(true);
-      expect(component.category()).toBe('pushup');
-      const select: HTMLElement = fixture.nativeElement.querySelector(
-        '[data-testid="training-entry-category"]'
+      expect(component.exerciseId()).toBe('pushup');
+      const input: HTMLInputElement = fixture.nativeElement.querySelector(
+        '[data-testid="training-entry-exercise"]'
       );
-      expect(select.classList.contains('mat-mdc-select-disabled')).toBe(true);
+      expect(input.disabled).toBe(true);
 
-      // when — the category-change handler is a no-op in edit mode.
-      component.onCategoryChange('core');
+      // when — the change handler is a no-op in edit mode.
+      component.onExerciseChange('abs.situps');
 
       // then
-      expect(component.category()).toBe('pushup');
+      expect(component.exerciseId()).toBe('pushup');
     });
 
     it('should preserve the original ISO timestamp when untouched', () => {

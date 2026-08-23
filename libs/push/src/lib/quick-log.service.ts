@@ -1,5 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   ExerciseFirestoreService,
@@ -11,51 +10,34 @@ import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 
 /**
- * Listens for `QUICK_LOG_PUSHUPS` messages posted by the push service worker
- * (`libs/sw-push/src/handlers.ts`) when the user taps the "✅ N eintragen"
- * notification action. The message arrives only when a window client is open;
- * if it isn't, the SW navigates to `?quickLog=N` and the dashboard handles
- * it on render instead.
+ * Writes the entry behind the "✅ N eintragen" notification action.
  *
- * Idempotency: registration is guarded by a flag — calling `init()` multiple
- * times (per-page injection, route changes) installs only one listener.
+ * Called by `PushIntentDrainService` once it has claimed a `quick-log` intent
+ * from the store the push SW writes. It used to listen for a
+ * `QUICK_LOG_PUSHUPS` postMessage instead — that channel is gone: a frozen
+ * PWA processes such a message whenever it thaws, with no way to tell a fresh
+ * tap from one queued hours ago, which is how push-ups appeared in production
+ * at 02:05 on the back of an unrelated snooze tap.
  */
 @Injectable({ providedIn: 'root' })
-export class QuickLogListenerService {
+export class QuickLogService {
   private readonly exerciseApi = inject(ExerciseFirestoreService, {
     optional: true,
   });
   private readonly userContext = inject(UserContextService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly zone = inject(NgZone);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  private registered = false;
-
-  init(): void {
-    if (this.registered || !this.isBrowser || !('serviceWorker' in navigator)) {
-      return;
-    }
-    this.registered = true;
-
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      const data = (event as MessageEvent).data as {
-        type?: string;
-        reps?: number;
-      } | null;
-      if (data?.type !== 'QUICK_LOG_PUSHUPS') return;
-      const clamped = clampReps(data.reps);
-      if (clamped == null) return;
-      // SW message events fire outside Angular's zone — re-enter so any
-      // signals/snackbar triggered downstream propagate change detection.
-      this.zone.run(() => {
-        void this.logEntry(clamped);
-      });
-    });
-  }
-
-  /** Visible for testing — invokes the same flow as the SW message handler. */
-  async logEntry(reps: number): Promise<void> {
+  /**
+   * Persists `reps` push-ups. Clamps into the configured range — the count
+   * has round-tripped through the notification payload and the intent store,
+   * so it is treated as untrusted (the CF and SW clamp too).
+   *
+   * Reports success so the drain can tell the SW whether a window still needs
+   * to be brought up for the user to see the failure snackbar.
+   */
+  async logEntry(rawReps: number): Promise<boolean> {
+    const reps = clampReps(rawReps);
+    if (reps == null) return false;
     const userId = this.userContext.userIdSafe();
     if (!userId || !this.exerciseApi) {
       this.snackBar.open(
@@ -63,7 +45,7 @@ export class QuickLogListenerService {
         $localize`:@@snackbar.close:Schließen`,
         { duration: 5000 }
       );
-      return;
+      return false;
     }
     try {
       await firstValueFrom(
@@ -80,12 +62,14 @@ export class QuickLogListenerService {
         $localize`:@@snackbar.close:Schließen`,
         { duration: 3000 }
       );
+      return true;
     } catch (err) {
       this.snackBar.open(
         pushupValidationMessage(err),
         $localize`:@@snackbar.close:Schließen`,
         { duration: 5000 }
       );
+      return false;
     }
   }
 }

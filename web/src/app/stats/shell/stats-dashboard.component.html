@@ -172,7 +172,25 @@
           }
         </button>
       }
-      @if (
+      @if (planActive() && !isPlanRestDay()) {
+        <button
+          type="button"
+          mat-flat-button
+          class="quick-btn quick-btn--goal"
+          data-testid="dashboard-quick-actions-goal-fill"
+          [disabled]="planTodayFulfilled() || planFillInFlight()"
+          (click)="fillToGoal()"
+        >
+          <mat-icon>{{ planTodayFulfilled() ? 'check' : 'flag' }}</mat-icon>
+          @if (planTodayFulfilled()) {
+            <span i18n="@@dashboard.goalFill.reached">Ziel erreicht ✓</span>
+          } @else {
+            <span i18n="@@dashboard.goalFill.fillPlan"
+              >Alle Übungen eintragen</span
+            >
+          }
+        </button>
+      } @else if (
         !isPlanRestDay() &&
         dailyGoalConfigured() &&
         (remainingToGoal() > 0 || goalReached())
@@ -276,25 +294,25 @@
               >
             </p>
           }
+        } @else if (planActive()) {
+          <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
+          <app-plan-day-exercises
+            [exercises]="planTodayExerciseRows()"
+            [interactive]="true"
+            data-testid="dashboard-plan-exercises"
+            (logExercise)="logPlanExercise($event)"
+            (toggleExercise)="togglePlanExercise($event)"
+            (resetExercise)="resetPlanExercise($event)"
+          />
         } @else if (dailyGoalBreakdown().length > 0) {
           <p class="goal-subhead" i18n="@@dashboard.dailyGoalLabel">Tag</p>
-          @for (item of dailyGoalBreakdown(); track item.id) {
-            <div class="goal-item" data-testid="dashboard-daily-goal-item">
-              <div class="goal-row">
-                <small class="goal-item-exercise">{{
-                  item.exerciseName
-                }}</small>
-                <span class="goal-item-value">
-                  {{ item.progressDisplay }} / {{ item.targetDisplay }}
-                  <span class="goal-item-percent">· {{ item.percent }}%</span>
-                </span>
-              </div>
-              <mat-progress-bar
-                mode="determinate"
-                [value]="item.percent"
-              ></mat-progress-bar>
-            </div>
-          }
+          <app-daily-goal-checklist
+            [items]="dailyGoalBreakdown()"
+            [interactive]="true"
+            [pending]="dailyGoalPending()"
+            testId="dashboard-daily-goal-item"
+            (complete)="completeDailyGoal($event)"
+          />
         } @else {
           <div class="goal-row">
             <small i18n="@@dashboard.dailyGoalLabel">Tag</small>

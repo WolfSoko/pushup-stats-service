@@ -1,8 +1,4 @@
-import {
-  ExerciseCategoryId,
-  ExerciseDefinition,
-  MeasurementType,
-} from '@pu-stats/models';
+import { MeasurementType } from '@pu-stats/models';
 
 /**
  * Pushups live in their own Firestore collection (`pushups`) and have no
@@ -37,8 +33,40 @@ export interface ExerciseEntryDialogData {
 }
 
 export type TrainingEntryDialogData =
-  | PushupEntryDialogData
-  | ExerciseEntryDialogData;
+  PushupEntryDialogData | ExerciseEntryDialogData;
+
+/**
+ * Ranking context for the exercise picker. The dialog has no view on
+ * plans, goals or history, so the opener passes in what today asks for
+ * and what the user logged last, most relevant first.
+ */
+export interface ExerciseSuggestions {
+  /** Exercises today's plan day and daily goals prescribe. */
+  plannedExerciseIds?: readonly string[];
+  /** Distinct exercises from recent entries, most recent first. */
+  recentExerciseIds?: readonly string[];
+}
+
+/**
+ * Create-mode payload: no entry to prefill, only the picker ranking
+ * context. Passing nothing at all is still valid — the picker then
+ * falls back to the plain catalog order.
+ */
+export interface TrainingEntryCreateDialogData {
+  kind: 'create';
+  suggestions: ExerciseSuggestions;
+}
+
+/** Everything `MAT_DIALOG_DATA` may carry for this dialog. */
+export type TrainingEntryDialogInput =
+  TrainingEntryDialogData | TrainingEntryCreateDialogData | null;
+
+/** Narrows the dialog input to an entry the dialog should prefill and lock. */
+export function isEntryPrefill(
+  input: TrainingEntryDialogInput | undefined
+): input is TrainingEntryDialogData {
+  return input?.kind === 'pushup' || input?.kind === 'exercise';
+}
 
 export interface PushupEntryDialogResult {
   kind: 'pushup';
@@ -74,19 +102,24 @@ export interface ExerciseEntryDialogResult {
 }
 
 export type TrainingEntryDialogResult =
-  | PushupEntryDialogResult
-  | ExerciseEntryDialogResult;
+  PushupEntryDialogResult | ExerciseEntryDialogResult;
 
-export interface CategoryOption {
-  value: ExerciseCategoryId;
+/** One row of the exercise autocomplete. */
+export interface ExercisePickerOption {
+  /** Catalog id — {@link PUSHUP_EXERCISE_ID} for the pushup row. */
+  id: string;
   label: string;
+  categoryLabel: string;
+  /** Precomputed, normalized haystack for the type-ahead filter. */
+  searchText: string;
 }
 
-export interface ExerciseOption {
-  /** Catalog id, or {@link PUSHUP_EXERCISE_ID} for the pushup row. */
-  value: string;
+/** A labelled section of the autocomplete panel (`mat-optgroup`). */
+export interface ExercisePickerGroup {
+  /** Stable `@for` key: a category id or a suggestion-group name. */
+  key: string;
   label: string;
-  definition?: ExerciseDefinition;
+  options: ExercisePickerOption[];
 }
 
 export interface PushupTypeOption {

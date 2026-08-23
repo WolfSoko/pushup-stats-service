@@ -3,18 +3,13 @@ import { FormControl } from '@angular/forms';
 import {
   COMPANION_BOUNDS,
   entryBreakdownField,
-  exercisesByCategory,
   ExerciseCategoryId,
   ExerciseDefinition,
   ExerciseVariant,
   findExerciseDefinition,
 } from '@pu-stats/models';
+import { variantDisplayName } from '../../i18n/exercise-display-names';
 import {
-  exerciseDisplayName,
-  variantDisplayName,
-} from '../../i18n/exercise-display-names';
-import {
-  ExerciseOption,
   TrainingEntryDialogData,
   ExerciseEntryDialogResult,
 } from './training-entry-dialog.models';
@@ -27,8 +22,6 @@ import {
   syntheticDefinitionFor,
 } from './training-entry-dialog.helpers';
 import {
-  exerciseWikiLink,
-  exerciseWikiTooltip,
   formattedDurationMax,
   formattedExerciseMax,
 } from './training-entry-dialog.display';
@@ -45,21 +38,6 @@ import {
 // All exercise-mode form state + logic, extracted so the component stays a thin
 // shell. Inputs are supplied as signals so the state stays reactive.
 export class ExerciseFormState {
-  readonly exerciseId = signal<string>('');
-
-  readonly exerciseOptions = computed<ExerciseOption[]>(() => {
-    const defs = exercisesByCategory().get(this.category()) ?? [];
-    return defs.map((def) => ({
-      value: def.id,
-      label: this.exerciseLabel(def.id),
-      definition: def,
-    }));
-  });
-
-  readonly showExercisePicker = computed(
-    () => this.exerciseOptions().length > 0
-  );
-
   readonly currentDefinition = computed<ExerciseDefinition | null>(() => {
     const def = findExerciseDefinition(this.exerciseId());
     if (def) return def;
@@ -114,12 +92,6 @@ export class ExerciseFormState {
   readonly showVariantPicker = computed(
     () => (this.currentDefinition()?.variants?.length ?? 0) > 0
   );
-  readonly exerciseWikiLink = computed(() =>
-    exerciseWikiLink(this.exerciseId())
-  );
-  readonly exerciseWikiTooltip = computed(() =>
-    exerciseWikiTooltip(this.exerciseId())
-  );
   readonly formattedMax = computed(() =>
     formattedExerciseMax(this.currentDefinition(), this.repsMax())
   );
@@ -146,6 +118,7 @@ export class ExerciseFormState {
 
   constructor(
     private readonly locale: string,
+    private readonly exerciseId: Signal<string>,
     private readonly category: Signal<ExerciseCategoryId>,
     private readonly data: Signal<TrainingEntryDialogData | null>,
     private readonly isEditMode: Signal<boolean>
@@ -173,29 +146,23 @@ export class ExerciseFormState {
     });
   }
 
-  // Resets variant + measurement inputs so a stale variant id can't survive
-  // the switch and be rejected as `invalid-variant` by the submit validator.
-  onExerciseChange(next: string): void {
-    if (this.isEditMode()) return;
-    this.selectExercise(next);
+  /**
+   * Clears variant + measurement inputs after the parent switched the
+   * exercise, so a stale variant id can't survive the switch and be
+   * rejected as `invalid-variant` by the submit validator, and a rep
+   * count can't leak into a time-measured exercise.
+   */
+  resetForExercise(): void {
+    this.variantControl.setValue('');
+    this.sets.set([0]);
+    this.intervals.set([0]);
+    this.durationMinutesInput.set('');
+    this.durationSecondsInput.set('');
+    this.distanceInput.set('');
   }
 
-  onCategorySync(cat: ExerciseCategoryId): void {
-    if (this.isEditMode()) return;
-    const defs = exercisesByCategory().get(cat) ?? [];
-    this.selectExercise(defs[0]?.id ?? '');
-  }
-
-  seedFromData(
-    data: TrainingEntryDialogData | null,
-    cat: ExerciseCategoryId
-  ): void {
-    if (data?.kind !== 'exercise') {
-      const defs = exercisesByCategory().get(cat) ?? [];
-      this.exerciseId.set(defs[0]?.id ?? '');
-      return;
-    }
-    this.exerciseId.set(data.exerciseId);
+  seedFromData(data: TrainingEntryDialogData | null): void {
+    if (data?.kind !== 'exercise') return;
     const seed = exerciseSeedFromData(data, this.locale);
     if (seed.sets) this.sets.set(seed.sets);
     if (seed.intervals) this.intervals.set(seed.intervals);
@@ -209,10 +176,6 @@ export class ExerciseFormState {
 
   exerciseVariantLabel(variant: ExerciseVariant): string {
     return variantDisplayName(variant);
-  }
-
-  exerciseLabel(id: string): string {
-    return exerciseDisplayName(id);
   }
 
   addSet(): void {
@@ -234,15 +197,5 @@ export class ExerciseFormState {
   updateInterval(index: number, value: string): void {
     const finite = clampListValue(value);
     this.intervals.update((s) => s.map((v, i) => (i === index ? finite : v)));
-  }
-
-  private selectExercise(id: string): void {
-    this.exerciseId.set(id);
-    this.variantControl.setValue('');
-    this.sets.set([0]);
-    this.intervals.set([0]);
-    this.durationMinutesInput.set('');
-    this.durationSecondsInput.set('');
-    this.distanceInput.set('');
   }
 }

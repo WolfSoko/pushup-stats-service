@@ -1,10 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
-  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
   LOCALE_ID,
@@ -23,12 +21,22 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthStore } from '@pu-auth/auth';
 import { findPlanBySlug } from '@pu-stats/models';
+import { previewDayProgress } from './training-plan-detail.exercises';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
-import { TrainingPlanStore } from './training-plan.store';
+import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
+import {
+  ExerciseToggle,
+  PlanDayExercisesComponent,
+} from './plan-day-exercises.component';
+import {
+  registerAutoStart,
+  registerDayDeepLinkScroll,
+} from './training-plan-detail.effects';
 import {
   buildWeeks,
   formatSets,
   messageForLogResult,
+  messageForResetResult,
 } from './training-plan-detail.helpers';
 
 @Component({
@@ -43,6 +51,7 @@ import {
     MatSnackBarModule,
     MatTooltipModule,
     PageHeaderComponent,
+    PlanDayExercisesComponent,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -98,67 +107,22 @@ export class TrainingPlanDetailComponent {
       : { returnUrl: '/training-plans' };
   });
 
-  private autoStartTriggered = false;
-
   constructor() {
-    // Honour an incoming `?day=<index>` query param so deep-links from
-    // the dashboard's plan banner scroll to the active day after route
-    // hydration. Use `Element.scrollIntoView` (not `ViewportScroller`)
-    // because the app shell wraps content in `<mat-sidenav-content>`,
-    // which owns its own scroll container — `ViewportScroller` only
-    // scrolls `window` and would silently no-op.
-    //
-    // We intentionally do NOT strip `?day=` after scrolling: keeping it
-    // in the URL makes the deep-link bookmarkable and re-fires the
-    // scroll on Back/Forward navigation, matching the `?type=` pattern
-    // in the wiki pushup-types page.
-    afterRenderEffect(() => {
-      if (!this.isBrowser) return;
-      const raw = this.queryParamsSignal().get('day');
-      if (!raw) return;
-      const target = document.getElementById(`day-${raw}`);
-      if (target && this.host.nativeElement.contains(target)) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    registerDayDeepLinkScroll({
+      isBrowser: this.isBrowser,
+      host: this.host,
+      queryParams: this.queryParamsSignal,
     });
-
-    effect(() => {
-      const p = this.plan();
-      const wantsAutoStart = this.queryParamsSignal().get('autoStart') === '1';
-      // Defense-in-depth: even with `autoStart=1` (only set by the
-      // signup flow), refuse to silently replace a *different* active
-      // plan. Force the user through the manual flow that surfaces the
-      // replacement warning. Also wait until the active-plan resource
-      // has emitted at least once — otherwise during the initial-fetch
-      // window `!isThisPlanActive()` is true even for a plan that's
-      // already active, and we'd race the listener and overwrite it.
-      const wouldReplaceDifferentPlan =
-        this.store.hasActivePlan() && !this.isThisPlanActive();
-      if (
-        p &&
-        wantsAutoStart &&
-        this.authResolved() &&
-        this.isAuthenticated() &&
-        this.store.activePlanLoaded() &&
-        !this.isThisPlanActive() &&
-        !wouldReplaceDifferentPlan &&
-        !this.autoStartTriggered
-      ) {
-        this.autoStartTriggered = true;
-        // Surface failures with a snackbar so the user knows to retry
-        // manually. The flag stays set to prevent a tight retry loop
-        // inside this component instance — a manual reload will
-        // re-attempt because `?autoStart=1` is still in the URL until
-        // a successful start clears it.
-        this.start().catch((error) => {
-          console.error('Auto-start failed', error);
-          this.snackbar.open(
-            $localize`:@@trainingPlans.autoStartFailed:Plan-Start fehlgeschlagen — bitte erneut versuchen.`,
-            undefined,
-            { duration: 4000 }
-          );
-        });
-      }
+    registerAutoStart({
+      snackbar: this.snackbar,
+      queryParams: this.queryParamsSignal,
+      hasPlan: computed(() => this.plan() !== null),
+      isThisPlanActive: computed(() => this.isThisPlanActive()),
+      authResolved: this.authResolved,
+      isAuthenticated: this.isAuthenticated,
+      hasActivePlan: this.store.hasActivePlan,
+      activePlanLoaded: this.store.activePlanLoaded,
+      start: () => this.start(),
     });
   }
 
@@ -182,6 +146,13 @@ export class TrainingPlanDetailComponent {
         skipped: new Set(
           active ? (this.store.activePlan()?.skippedDays ?? []) : []
         ),
+        // An inactive plan still lists its exercises, just read-only and
+        // at zero progress — the prescription is the main thing a visitor
+        // came to see.
+        exercisesFor: (dayIndex) =>
+          active
+            ? this.store.dayProgress(dayIndex)
+            : previewDayProgress(plan, dayIndex),
       },
       this.locale
     );
@@ -253,7 +224,27 @@ export class TrainingPlanDetailComponent {
   }
 
   async logPlanDay(dayIndex: number): Promise<void> {
-    const result = await this.store.logPlanDay(dayIndex);
+    this.reportLogResult(await this.store.logPlanDay(dayIndex));
+  }
+
+  async logExercise(dayIndex: number, itemIndex: number): Promise<void> {
+    this.reportLogResult(await this.store.logPlanExercise(dayIndex, itemIndex));
+  }
+
+  async toggleExercise(dayIndex: number, event: ExerciseToggle): Promise<void> {
+    await this.store.setItemDone(dayIndex, event.itemIndex, event.done);
+  }
+
+  async resetExercise(dayIndex: number, itemIndex: number): Promise<void> {
+    const message = messageForResetResult(
+      await this.store.resetPlanExercise(dayIndex, itemIndex)
+    );
+    if (message) {
+      this.snackbar.open(message, undefined, { duration: 3000 });
+    }
+  }
+
+  private reportLogResult(result: LogPlanDayResult): void {
     const message = messageForLogResult(result);
     if (message) {
       this.snackbar.open(message, undefined, { duration: 3000 });

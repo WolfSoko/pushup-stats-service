@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { SW_QUICK_LOG_MAX, SW_SUPPORTED_LOCALES } from './handlers';
+import { SW_SUPPORTED_LOCALES } from './handlers';
+import { SW_QUICK_LOG_MAX } from './notification-click';
 
 /**
  * `sw-push` is an isolated service-worker bundle (eslint `scope:sw-push` →
@@ -10,6 +11,10 @@ import { SW_QUICK_LOG_MAX, SW_SUPPORTED_LOCALES } from './handlers';
  * This guard reads the canonical model source as text (no module import, so no
  * module-boundary violation) and fails CI if the inlined SW copies drift,
  * mirroring how `firestore.rules` is pinned to the exercise catalog.
+ *
+ * Reading via `fs` leaves no import edge for Nx to infer, so `sw-push` carries
+ * an `implicitDependencies: ["stats-models"]` entry — without it `nx affected`
+ * would skip this guard when the canonical models change.
  */
 const MODELS_DIR = join(__dirname, '..', '..', 'stats', 'src', 'lib', 'models');
 

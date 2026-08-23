@@ -1,0 +1,204 @@
+<div class="android-test-page">
+  <app-page-header icon="android" variant="admin">
+    <h1 page-title i18n="@@admin.androidTest.title">Android-App-Test</h1>
+    <p page-subtitle i18n="@@admin.androidTest.subtitle">
+      Tester für den geschlossenen Android-App-Test verwalten.
+    </p>
+  </app-page-header>
+
+  <a mat-button routerLink="/admin">
+    <mat-icon>arrow_back</mat-icon>
+    <span i18n="@@admin.androidTest.backToAdmin">Zurück zum Admin-Bereich</span>
+  </a>
+
+  @if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  }
+
+  <section class="scan-section">
+    <mat-form-field appearance="outline" class="threshold-field">
+      <mat-label i18n="@@admin.androidTest.minEntries">Einträge ab</mat-label>
+      <input
+        matInput
+        type="number"
+        [min]="thresholdLimits.minEntries.min"
+        [max]="thresholdLimits.minEntries.max"
+        [ngModel]="minEntries()"
+        (ngModelChange)="minEntries.set(+$event)"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="threshold-field">
+      <mat-label i18n="@@admin.androidTest.activeWithinDays"
+        >Aktiv in den letzten (Tage)</mat-label
+      >
+      <input
+        matInput
+        type="number"
+        [min]="thresholdLimits.activeWithinDays.min"
+        [max]="thresholdLimits.activeWithinDays.max"
+        [ngModel]="activeWithinDays()"
+        (ngModelChange)="activeWithinDays.set(+$event)"
+      />
+    </mat-form-field>
+    <button
+      type="button"
+      mat-flat-button
+      [disabled]="scanning()"
+      (click)="computeCandidates()"
+    >
+      @if (scanning()) {
+        <mat-spinner diameter="18"></mat-spinner>
+      } @else {
+        <span i18n="@@admin.androidTest.scan">Kandidaten ermitteln</span>
+      }
+    </button>
+    <!-- `!== null`, not truthiness: a scan that finds 0 must still report back. -->
+    @if (scanResult() !== null) {
+      <span class="scan-result" i18n="@@admin.androidTest.scanResult"
+        >{{ scanResult() }} neue Kandidaten gefunden.</span
+      >
+    }
+  </section>
+
+  <section class="user-section">
+    <h2 i18n="@@admin.androidTest.candidatesTitle">
+      Kandidaten ({{ groups().candidates.length }})
+    </h2>
+    @if (loading()) {
+      <mat-spinner diameter="24"></mat-spinner>
+    } @else if (groups().candidates.length === 0) {
+      <p i18n="@@admin.androidTest.noCandidates">Keine offenen Kandidaten.</p>
+    } @else {
+      @for (user of groups().candidates; track user.uid) {
+        <div class="user-row">
+          <span class="user-label">{{
+            user.displayName ?? user.email ?? user.uid
+          }}</span>
+          <span class="entry-count">{{ user.entryCount }}</span>
+          <button
+            type="button"
+            mat-stroked-button
+            [disabled]="busyUid() === user.uid"
+            (click)="confirm(user.uid, true)"
+            i18n="@@admin.androidTest.confirm"
+          >
+            Bestätigen
+          </button>
+          <button
+            type="button"
+            mat-button
+            [disabled]="busyUid() === user.uid"
+            (click)="confirm(user.uid, false)"
+            i18n="@@admin.androidTest.decline"
+          >
+            Ablehnen
+          </button>
+        </div>
+      }
+    }
+  </section>
+
+  <section class="user-section">
+    <h2 i18n="@@admin.androidTest.manualAddTitle">Manuell hinzufügen</h2>
+    <p class="section-hint" i18n="@@admin.androidTest.manualAddHint">
+      Nutzer:in suchen und direkt einladen — unabhängig von den
+      Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen
+      nicht, sie können nicht als Tester eingetragen werden.
+    </p>
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@admin.androidTest.manualAddSearch"
+        >Name oder E-Mail</mat-label
+      >
+      <input
+        matInput
+        [ngModel]="manualSearch()"
+        (ngModelChange)="manualSearch.set($event)"
+      />
+    </mat-form-field>
+    @for (user of manualMatches(); track user.uid) {
+      <div class="user-row">
+        <span class="user-label">{{ user.displayName ?? user.email }}</span>
+        <span class="entry-count">{{ user.entryCount }}</span>
+        <button
+          type="button"
+          mat-stroked-button
+          [disabled]="busyUid() === user.uid"
+          (click)="addManually(user.uid)"
+          i18n="@@admin.androidTest.manualAdd"
+        >
+          Einladen
+        </button>
+      </div>
+    }
+  </section>
+
+  <section class="user-section">
+    <h2 i18n="@@admin.androidTest.confirmedTitle">
+      Eingeladen, wartet auf Zusage ({{ groups().confirmed.length }})
+    </h2>
+    @if (groups().confirmed.length === 0) {
+      <p i18n="@@admin.androidTest.noConfirmed">Keine offenen Einladungen.</p>
+    } @else {
+      @for (user of groups().confirmed; track user.uid) {
+        <div class="user-row">
+          <span class="user-label">{{ user.email ?? user.uid }}</span>
+          <button
+            type="button"
+            mat-button
+            [disabled]="busyUid() === user.uid"
+            (click)="confirm(user.uid, false)"
+            i18n="@@admin.androidTest.withdraw"
+          >
+            Zurückziehen
+          </button>
+        </div>
+      }
+    }
+  </section>
+
+  <section class="user-section">
+    <h2 i18n="@@admin.androidTest.optedInTitle">
+      Angemeldet ({{ groups().optedIn.length }})
+    </h2>
+    @if (groups().optedIn.length === 0) {
+      <p i18n="@@admin.androidTest.noOptedIn">
+        Noch niemand hat sich angemeldet.
+      </p>
+    } @else {
+      <button type="button" mat-stroked-button (click)="copyEmails()">
+        @if (emailsCopied()) {
+          <span i18n="@@admin.androidTest.emailsCopied">Kopiert!</span>
+        } @else {
+          <span i18n="@@admin.androidTest.copyEmails"
+            >Alle E-Mails kopieren</span
+          >
+        }
+      </button>
+      @for (user of groups().optedIn; track user.uid) {
+        <div class="user-row">
+          <span class="user-label">{{ user.email ?? user.uid }}</span>
+          <button
+            type="button"
+            mat-stroked-button
+            [disabled]="busyUid() === user.uid"
+            (click)="markAdded(user.uid)"
+            i18n="@@admin.androidTest.markAdded"
+          >
+            Als Tester hinzugefügt (benachrichtigen)
+          </button>
+        </div>
+      }
+    }
+  </section>
+
+  <section class="user-section">
+    <h2 i18n="@@admin.androidTest.notifiedTitle">
+      Benachrichtigt ({{ groups().notified.length }})
+    </h2>
+    @for (user of groups().notified; track user.uid) {
+      <div class="user-row">
+        <span class="user-label">{{ user.email ?? user.uid }}</span>
+      </div>
+    }
+  </section>
+</div>

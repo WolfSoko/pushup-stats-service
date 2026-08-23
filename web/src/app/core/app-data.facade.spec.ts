@@ -6,7 +6,11 @@ import { StatsApiService, UserConfigApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import { AdaptiveQuickAddService } from '@pu-stats/quick-add';
-import type { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
+import {
+  planDayProgress,
+  type PushupRecord,
+  type TrainingPlanDay,
+} from '@pu-stats/models';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 
 function todayBerlinIsoDate(): string {
@@ -56,11 +60,26 @@ describe('AppDataFacade', () => {
 
   // Default TrainingPlanStore: no active plan. Tests that exercise the
   // plan-override path set `planTodayDay` and the mock derives `hasActivePlan`.
+  // `dayProgress` runs the real `planDayProgress` over the seeded live
+  // entries and ticks, so the facade is tested against the plan's own
+  // fulfillment rules rather than a hand-written stand-in.
   const planTodayDay = signal<TrainingPlanDay | null>(null);
   const planHasActive = signal(false);
+  const planCompletedItems = signal<string[]>([]);
   const trainingPlanStoreMock = {
     hasActivePlan: planHasActive.asReadonly(),
     todayDay: planTodayDay.asReadonly(),
+    currentDayIndex: computed(() => planTodayDay()?.dayIndex ?? null),
+    dayProgress: (dayIndex: number) => {
+      const day = planTodayDay();
+      if (!day) return [];
+      return planDayProgress(day, dayIndex, {
+        entries: liveEntries().map((r) => ({ ...r, exerciseId: 'pushup' })),
+        dateIso: todayBerlinIsoDate(),
+        completedItems: planCompletedItems(),
+      });
+    },
+    logPlanExercise: vitest.fn(),
   };
 
   function setup(
@@ -69,6 +88,7 @@ describe('AppDataFacade', () => {
       todayTotal?: number;
       live?: { connected: boolean; entries: PushupRecord[] };
       planTodayDay?: TrainingPlanDay | null;
+      planCompletedItems?: string[];
     } = {}
   ): AppDataFacade {
     vitest.clearAllMocks();
@@ -99,6 +119,7 @@ describe('AppDataFacade', () => {
     const planDay = options.planTodayDay ?? null;
     planTodayDay.set(planDay);
     planHasActive.set(planDay !== null);
+    planCompletedItems.set(options.planCompletedItems ?? []);
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -524,6 +545,56 @@ describe('AppDataFacade', () => {
       expect(facade.goalReached()).toBe(true);
     });
 
+    it('Given a plan day prescribing several exercises, Then goals are scored per exercise and pushups alone do not reach the goal', async () => {
+      const circuitDay: TrainingPlanDay = {
+        ...mainDay,
+        exercises: [
+          { exerciseId: 'pushup', target: 60 },
+          { exerciseId: 'legs.squats', target: 50 },
+        ],
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 60,
+        planTodayDay: circuitDay,
+      });
+      await flushResources();
+
+      expect(facade.perExerciseGoals()).toBe(true);
+      expect(facade.goalReached()).toBe(false);
+      expect(facade.dailyGoalAggregatedPercent()).toBe(50);
+    });
+
+    it('Given a single-exercise plan day, Then the legacy reps display stays in charge', async () => {
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 60,
+        planTodayDay: mainDay,
+      });
+      await flushResources();
+
+      expect(facade.perExerciseGoals()).toBe(false);
+      expect(facade.goalReached()).toBe(true);
+    });
+
+    it('Given a plan day prescribing a single non-pushup exercise, Then goals are scored per exercise', async () => {
+      const plankDay: TrainingPlanDay = {
+        ...mainDay,
+        exerciseId: 'plank.standard',
+        targetReps: 240,
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 240,
+        planTodayDay: plankDay,
+      });
+      await flushResources();
+
+      // 240 pushups must not satisfy a 240-second plank target.
+      expect(facade.perExerciseGoals()).toBe(true);
+      expect(facade.goalReached()).toBe(false);
+    });
+
     it('Given an active plan on a rest day, Then dailyGoal falls back to the user-configured goal', async () => {
       const facade = setup({ dailyGoal: 100, planTodayDay: restDay });
       await flushResources();
@@ -593,6 +664,77 @@ describe('AppDataFacade', () => {
       expect(breakdown[0].targetDisplay).toBe('60');
       expect(breakdown[0].progressDisplay).toBe('30');
       expect(breakdown[0].percent).toBe(50);
+    });
+
+    it('Given an active plan day with several exercises, Then the breakdown lists all of them, not just pushups', async () => {
+      const circuitDay: TrainingPlanDay = {
+        ...mainDay,
+        targetReps: 40,
+        exercises: [
+          { exerciseId: 'pushup', target: 40 },
+          { exerciseId: 'legs.squats', target: 50 },
+          { exerciseId: 'plank.standard', target: 120 },
+        ],
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 40,
+        planTodayDay: circuitDay,
+      });
+      await flushResources();
+
+      const breakdown = facade.dailyGoalBreakdown();
+      expect(breakdown.map((i) => i.exerciseName)).toEqual([
+        'Liegestütze',
+        'Kniebeugen',
+        'Plank',
+      ]);
+      expect(breakdown.map((i) => i.targetDisplay)).toEqual([
+        '40',
+        '50',
+        '2:00',
+      ]);
+      expect(breakdown[0].reached).toBe(true);
+      expect(breakdown[1].reached).toBe(false);
+      expect(facade.dailyGoalsAllReached()).toBe(false);
+    });
+
+    it('Given a checkoff day whose exercise was ticked off in the plan, Then the toolbar counts it as done', async () => {
+      const hiitDay: TrainingPlanDay = {
+        ...mainDay,
+        targetReps: 30,
+        completion: 'checkoff',
+        exercises: [
+          { exerciseId: 'pushup', target: 30 },
+          { exerciseId: 'legs.squats', target: 40 },
+        ],
+      };
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 30,
+        planTodayDay: hiitDay,
+        planCompletedItems: ['1:0'],
+      });
+      await flushResources();
+
+      const breakdown = facade.dailyGoalBreakdown();
+      // Ticked off: credited in full. Not ticked: entries alone never
+      // fulfill a checkoff day, so the 30 logged pushups don't leak
+      // into the squats goal either.
+      expect(breakdown[0].reached).toBe(true);
+      expect(breakdown[1].progressDisplay).toBe('0');
+      expect(facade.dailyGoalAggregatedPercent()).toBe(50);
+    });
+
+    it('Given a metric day whose entries cover the target, Then the toolbar counts it as done without a tick', async () => {
+      const facade = setup({
+        dailyGoal: 100,
+        todayTotal: 60,
+        planTodayDay: mainDay,
+      });
+      await flushResources();
+
+      expect(facade.dailyGoalBreakdown()[0].reached).toBe(true);
     });
 
     it('Given no goal is configured, Then the breakdown is empty', async () => {

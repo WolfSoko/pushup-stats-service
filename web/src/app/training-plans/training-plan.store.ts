@@ -23,6 +23,7 @@ import {
   findPlanById,
   isPlanCompleted,
   planDayByIndex,
+  PlanExerciseProgress,
   TrainingPlan,
   TrainingPlanDay,
   UserTrainingPlan,
@@ -36,10 +37,14 @@ import {
   isDaySkipped,
 } from './training-plan-store.selectors';
 import * as actions from './training-plan-store.actions';
+import * as items from './training-plan-store.items';
 import * as lifecycle from './training-plan-store.lifecycle';
+import { resetPlanExercise } from './training-plan-store.reset';
+import { dayProgress } from './training-plan-store.internals';
 import { registerTrainingPlanHooks } from './training-plan-store.hooks';
 
-export type { LogPlanDayResult } from './training-plan-store.actions';
+export type { LogPlanDayResult } from './training-plan-store.internals';
+export type { ResetExerciseResult } from './training-plan-store.reset';
 
 /**
  * Seam for resolving a curated plan by id so tests can drive a plan the
@@ -212,6 +217,16 @@ export const TrainingPlanStore = signalStore(
     logTodayPlanDay: () => actions.logTodayPlanDay(store),
     markDayDone: (dayIndex: number) => actions.markDayDone(store, dayIndex),
     logPlanDay: (dayIndex: number) => actions.logPlanDay(store, dayIndex),
+    /** Per-exercise fulfillment of a plan day, for the detail page. */
+    dayProgress: (dayIndex: number): ReadonlyArray<PlanExerciseProgress> =>
+      dayProgress(store, dayIndex),
+    logPlanExercise: (dayIndex: number, itemIndex: number) =>
+      items.logPlanExercise(store, dayIndex, itemIndex),
+    setItemDone: (dayIndex: number, itemIndex: number, done: boolean) =>
+      items.setItemDone(store, dayIndex, itemIndex, done),
+    /** Re-open one exercise: drop its tick and the entries the plan wrote. */
+    resetPlanExercise: (dayIndex: number, itemIndex: number) =>
+      resetPlanExercise(store, dayIndex, itemIndex),
     unmarkDayDone: (dayIndex: number) =>
       lifecycle.unmarkDayDone(store, dayIndex),
     skipDay: (dayIndex: number) => lifecycle.skipDay(store, dayIndex),

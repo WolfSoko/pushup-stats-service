@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
@@ -25,8 +26,6 @@ import {
   findExerciseDefinition,
   formatEntryDisplay,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
-  QUICK_LOG_REPS_MAX,
-  QUICK_LOG_REPS_MIN,
   UnifiedEntry,
 } from '@pu-stats/models';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
@@ -36,17 +35,33 @@ import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
 import { autoCountProfileForCatalogId } from '../../core/quick-add-orchestration.helpers';
 import { AppDataFacade } from '../../core/app-data.facade';
+import { DailyGoalActionsService } from '../../core/daily-goal-actions.service';
+import type { DailyGoalItemView } from '../../core/daily-goal.helpers';
+import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-checklist.component';
+import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { TrainingEntryDialogComponent } from '../components/training-entry-dialog/training-entry-dialog.component';
 import {
-  TrainingEntryDialogData,
+  TrainingEntryDialogInput,
   TrainingEntryDialogResult,
 } from '../components/training-entry-dialog/training-entry-dialog.models';
+import { exerciseSuggestions } from './stats-dashboard.suggestions';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
+import {
+  ExerciseToggle,
+  PlanDayExercisesComponent,
+} from '../../training-plans/plan-day-exercises.component';
+import {
+  logPlanToday,
+  logPlanTodayExercise,
+  planTodayView,
+  resetPlanTodayExercise,
+  togglePlanTodayExercise,
+} from './stats-dashboard.plan-checklist';
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -55,8 +70,11 @@ import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model'
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
+    MatSnackBarModule,
     DatePipe,
     AnalysisTeaserCardComponent,
+    DailyGoalChecklistComponent,
+    PlanDayExercisesComponent,
     PreviewBannerComponent,
     AdSlotComponent,
     RouterLink,
@@ -70,6 +88,7 @@ export class StatsDashboardComponent {
   private readonly exerciseService = inject(ExerciseFirestoreService);
   private readonly userContext = inject(UserContextService);
   private readonly dialog = inject(MatDialog);
+  private readonly snackbar = inject(MatSnackBar);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -138,6 +157,9 @@ export class StatsDashboardComponent {
   readonly userConfiguredDailyGoal = this.store.userConfiguredDailyGoal;
   /** Per-exercise daily goal breakdown shared with the toolbar pill. */
   readonly dailyGoalBreakdown = this.appData.dailyGoalBreakdown;
+  private readonly goalActions = inject(DailyGoalActionsService);
+  /** Goal ids whose check-off write is still in flight. */
+  readonly dailyGoalPending = this.goalActions.pending;
   private readonly trainingPlans = inject(TrainingPlanStore);
   /**
    * Only render the "no active plan" banner once the plan resource has
@@ -158,6 +180,21 @@ export class StatsDashboardComponent {
   );
   /** Counter that increments on every data refresh to trigger child component reloads. */
   readonly refreshCounter = signal(0);
+
+  /**
+   * Today's plan-day checklist — one row per prescribed exercise, unlike
+   * `planTodayTarget` (the single pushup-equivalent figure mirrored into
+   * `dailyGoal`). Backs the "Zielfortschritt" card and the plan-aware
+   * "fill to goal" action when a plan is active.
+   */
+  private readonly planToday = planTodayView(this.trainingPlans);
+  readonly planTodayExerciseRows = this.planToday.exerciseRows;
+  readonly planTodayFulfilled = this.planToday.fulfilled;
+  /** In-flight guard for the plan-aware "fill to goal" action — the store
+   *  has no public signal for `logTodayPlanDay`, so tracked locally like
+   *  `QuickAddOrchestrationService.fillToGoalInFlight`. */
+  private readonly _planFillInFlight = signal(false);
+  readonly planFillInFlight = this._planFillInFlight.asReadonly();
 
   constructor() {
     let viewReady = false;
@@ -192,22 +229,101 @@ export class StatsDashboardComponent {
       this.refreshCounter.update((c) => c + 1);
     });
 
+    registerDashboardDeepLinks({
+      route: this.route,
+      router: this.router,
+      openCreateDialog: () => this.openCreateDialog(),
+    });
+
     this.store.loadQuote();
   }
 
-  fillToGoal(): void {
+  /**
+   * With an active plan, "fill to goal" means logging every exercise the
+   * day still prescribes — not just pushups. The legacy pushup-only path
+   * stays for users without an active plan.
+   */
+  async fillToGoal(): Promise<void> {
+    if (this.planActive() && !this.isPlanRestDay()) {
+      if (this._planFillInFlight()) return;
+      this._planFillInFlight.set(true);
+      try {
+        await logPlanToday(this.trainingPlans, this.snackbar);
+        this.refreshAfterPlanWrite();
+      } finally {
+        this._planFillInFlight.set(false);
+      }
+      return;
+    }
     this.quickAdd.fillToGoal();
+  }
+
+  /** One-click log for a single exercise of today's plan day. */
+  async logPlanExercise(itemIndex: number): Promise<void> {
+    await logPlanTodayExercise(
+      this.trainingPlans,
+      this.snackbar,
+      this.planToday.dayIndex(),
+      itemIndex
+    );
+    this.refreshAfterPlanWrite();
+  }
+
+  /** Manual check-off (or un-check) of a single plan exercise. */
+  async togglePlanExercise(event: ExerciseToggle): Promise<void> {
+    await togglePlanTodayExercise(
+      this.trainingPlans,
+      this.planToday.dayIndex(),
+      event
+    );
+    this.refreshAfterPlanWrite();
+  }
+
+  /** Re-opens a single plan exercise, dropping the entries it wrote. */
+  async resetPlanExercise(itemIndex: number): Promise<void> {
+    await resetPlanTodayExercise(
+      this.trainingPlans,
+      this.snackbar,
+      this.planToday.dayIndex(),
+      itemIndex
+    );
+    this.refreshAfterPlanWrite();
+  }
+
+  /** Mirrors every other write handler in this component (createEntry,
+   *  addQuickEntry, completeDailyGoal, …): refresh the REST-precomputed
+   *  badges and bump the child-reload counter right after a plan write,
+   *  instead of waiting on the next unrelated live-listener tick. */
+  private refreshAfterPlanWrite(): void {
+    this.store.refreshAll();
+    this.refreshCounter.update((c) => c + 1);
+  }
+
+  /** Ticking a sub-goal logs the amount still missing for it. */
+  async completeDailyGoal(item: DailyGoalItemView): Promise<void> {
+    const result = await this.goalActions.complete(item);
+    if (result !== 'logged') return;
+    this.store.refreshAll();
+    this.refreshCounter.update((c) => c + 1);
   }
 
   openCreateDialog(): void {
     this.dialog
       .open<
         TrainingEntryDialogComponent,
-        TrainingEntryDialogData | null,
+        TrainingEntryDialogInput,
         TrainingEntryDialogResult
       >(TrainingEntryDialogComponent, {
         width: 'min(92vw, 420px)',
         maxWidth: '92vw',
+        data: {
+          kind: 'create',
+          suggestions: exerciseSuggestions({
+            planDay: this.trainingPlans.todayDay(),
+            dailyGoals: this.dailyGoalBreakdown(),
+            entries: this.live.exerciseEntries(),
+          }),
+        },
       })
       .afterClosed()
       .subscribe((result) => {
@@ -229,52 +345,6 @@ export class StatsDashboardComponent {
   shareDay(): void {
     void this.store.shareDay();
   }
-
-  /**
-   * Called after render — handles two notification deep-links:
-   *   - `?log=1`     → open create-entry dialog (existing behavior)
-   *   - `?quickLog=N` → silently log N pushups (notification button click
-   *                     when no app tab was open — see sw-push handlers).
-   *
-   * `quickLog` arrives via URL and is therefore untrusted: clamp into the
-   * configured `[QUICK_LOG_REPS_MIN, QUICK_LOG_REPS_MAX]` range so a tampered
-   * link can't persist absurd entries (CodeRabbit/Copilot/Codex P1, PR #249).
-   *
-   * Snooze always wins: if `?snooze=N` is also present, the user explicitly
-   * snoozed and did NOT want to log push-ups in this navigation. Skip both
-   * deep-links so a combined or stale URL can never silently create an entry
-   * alongside the snooze — App.ts consumes the snooze param separately.
-   */
-  private readonly _handleLogParam = afterNextRender(() => {
-    const params = this.route.snapshot.queryParamMap;
-    if (params.has('snooze')) return;
-    const quickLog = params.get('quickLog');
-    const quickReps = quickLog != null ? Number(quickLog) : NaN;
-    if (Number.isFinite(quickReps) && quickReps >= QUICK_LOG_REPS_MIN) {
-      const clamped = Math.min(Math.floor(quickReps), QUICK_LOG_REPS_MAX);
-      void this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { quickLog: null },
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
-      });
-      // Attribute deep-link entries to the reminder so source-based analytics
-      // match the in-tab `QUICK_LOG_PUSHUPS` path (CodeRabbit/Copilot P2).
-      void this.addQuickEntry(clamped, 'reminder');
-      return;
-    }
-    const log = params.get('log');
-    if (log === '1') {
-      // Clean up URL without re-navigating
-      void this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { log: null },
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
-      });
-      this.openCreateDialog();
-    }
-  });
 
   async createEntry(result: TrainingEntryDialogResult) {
     const userId = this.userContext.userIdSafe();

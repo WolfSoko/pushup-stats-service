@@ -231,8 +231,21 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "web:build",
-        "staticFilePath": "dist/web",
-        "spa": true
+        "spa": true,
+        "staticFilePath": "dist/web/browser/de"
+      }
+    },
+    "serve-e2e": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "command": "node dist/web/server/server.mjs",
+        "env": {
+          "PORT": "4300",
+          "NODE_ENV": "production",
+          "NG_ALLOWED_HOSTS": "127.0.0.1,localhost"
+        }
       }
     }
   }

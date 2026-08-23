@@ -76,15 +76,6 @@ export class PushupEntryFieldsComponent {
 
   readonly data = input<TrainingEntryDialogData | null>(null);
 
-  /**
-   * Display name for the synthetic pushup row. The pushup picker itself
-   * is never rendered (the parent shows the picker only in exercise
-   * mode), but keeping this `$localize` reference alive pins the
-   * `@@trainingEntryDialog.pushup.exercise` message so the extracted
-   * XLIFF id set stays stable.
-   */
-  readonly exerciseLabel = $localize`:@@trainingEntryDialog.pushup.exercise:Liegestütze`;
-
   readonly repsMax = PUSHUP_REPS_MAX;
 
   readonly sets = signal<number[]>([0]);

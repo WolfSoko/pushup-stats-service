@@ -64,6 +64,7 @@ export const adminListUsers = onCall(
         lastEntry: userActivity?.lastEntry ?? null,
         createdAt: user.metadata.creationTime || null,
         role: user.customClaims?.admin === true ? 'admin' : null,
+        androidTest: (config as Record<string, unknown>).androidTest ?? null,
       };
     });
   }

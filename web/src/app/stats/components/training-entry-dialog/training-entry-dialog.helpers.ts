@@ -7,10 +7,7 @@ import {
   ExerciseDefinition,
   MeasurementType,
 } from '@pu-stats/models';
-import type {
-  CategoryOption,
-  ExerciseEntryDialogData,
-} from './training-entry-dialog.models';
+import type { ExerciseEntryDialogData } from './training-entry-dialog.models';
 
 export const SECONDS_MAX = 59;
 
@@ -50,33 +47,6 @@ export function exerciseSeedFromData(
         : undefined,
     variantId: data.variantId ?? '',
   };
-}
-
-const CATEGORY_NAMES: Record<ExerciseCategoryId, () => string> = {
-  pushup: () => $localize`:@@exercise.category.pushup:Liegestütze`,
-  push: () => $localize`:@@exercise.category.push:Drücken`,
-  pull: () => $localize`:@@exercise.category.pull:Ziehen`,
-  squat: () => $localize`:@@exercise.category.squat:Kniebeuge`,
-  hinge: () => $localize`:@@exercise.category.hinge:Hüftstreckung`,
-  lunge: () => $localize`:@@exercise.category.lunge:Ausfallschritt`,
-  carry: () => $localize`:@@exercise.category.carry:Tragen`,
-  core: () => $localize`:@@exercise.category.core:Rumpf`,
-  cardio: () => $localize`:@@exercise.category.cardio:Ausdauer`,
-  mobility: () => $localize`:@@exercise.category.mobility:Mobilität`,
-  strength: () => $localize`:@@exercise.category.strength:Krafttraining`,
-};
-
-export function buildCategoryOptions(): ReadonlyArray<CategoryOption> {
-  // Filter to categories that actually have something to log in this
-  // dialog: push (always — legacy pushups handled separately) plus
-  // any catalog category with at least one ExerciseDefinition.
-  const byCategory = exercisesByCategory();
-  return EXERCISE_CATEGORIES.filter(
-    (cat) => cat.id === 'pushup' || (byCategory.get(cat.id)?.length ?? 0) > 0
-  ).map((cat) => ({
-    value: cat.id,
-    label: (CATEGORY_NAMES[cat.id] ?? (() => cat.id))(),
-  }));
 }
 
 /**

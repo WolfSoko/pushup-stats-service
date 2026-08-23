@@ -1,0 +1,42 @@
+<ul class="goal-checklist">
+  @for (item of items(); track item.id) {
+    <li
+      class="goal-item"
+      [class.reached]="item.reached"
+      [attr.data-testid]="testId()"
+    >
+      <div class="goal-line">
+        @if (interactive()) {
+          <mat-checkbox
+            class="goal-check"
+            [checked]="item.reached"
+            [disabled]="checkDisabled(item)"
+            [disabledInteractive]="true"
+            [matTooltip]="tooltipFor(item)"
+            [attr.aria-label]="ariaFor(item)"
+            data-testid="daily-goal-check"
+            (change)="onToggle(item, $event.checked)"
+          >
+            <span class="goal-name">{{ item.exerciseName }}</span>
+          </mat-checkbox>
+        } @else {
+          <span class="goal-name">
+            @if (item.reached) {
+              <mat-icon class="goal-done-icon" aria-hidden="true"
+                >check_circle</mat-icon
+              >
+            }
+            {{ item.exerciseName }}
+          </span>
+        }
+
+        <span class="goal-value">
+          {{ item.progressDisplay }} / {{ item.targetDisplay }}
+          <span class="goal-percent">· {{ item.percent }}%</span>
+        </span>
+      </div>
+
+      <mat-progress-bar mode="determinate" [value]="item.percent" />
+    </li>
+  }
+</ul>

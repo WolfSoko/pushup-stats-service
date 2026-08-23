@@ -1,11 +1,17 @@
 import {
-  currentPlanDayIndex,
   isPlanCompleted,
   planDayByIndex,
-  startDateForTargetDay,
   TrainingPlan,
   trainingPlanDayExerciseId,
 } from './training-plan.models';
+import {
+  currentPlanDayIndex,
+  startDateForTargetDay,
+} from './training-plan-schedule.models';
+import {
+  isCheckoffDay,
+  planDayExercises,
+} from './training-plan-exercise.models';
 import { findExerciseDefinition } from './exercise.catalog';
 import { findPlanById, TRAINING_PLANS } from './training-plan.catalog';
 
@@ -218,6 +224,137 @@ describe('training-plan models', () => {
           // then
           if (id === 'pushup') continue;
           expect(findExerciseDefinition(id)).not.toBeNull();
+        }
+      }
+    });
+
+    it('should list only catalog exercises in structured day prescriptions', () => {
+      // given — the per-exercise items are pinned to the exercise SSOT just
+      // like the legacy single-exercise `day.exerciseId`
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            // when / then
+            expect(findExerciseDefinition(item.exerciseId)).not.toBeNull();
+          }
+        }
+      }
+    });
+
+    it('should never prescribe weight-measured exercises the plan cannot load', () => {
+      // given — plans carry no kg, so a weight-measured item could never be
+      // written as an entry
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            // when / then
+            expect(
+              findExerciseDefinition(item.exerciseId)?.measurement
+            ).not.toBe('weight');
+          }
+        }
+      }
+    });
+
+    it('should never prescribe distance-time exercises as plan items', () => {
+      // given — planExerciseEntryPayload writes only the primary value, but
+      // 'distance-time' requires a durationSec companion, so such an item
+      // could never be logged (the entry validator would reject it)
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            // when / then
+            expect(
+              findExerciseDefinition(item.exerciseId)?.measurement
+            ).not.toBe('distance-time');
+          }
+        }
+      }
+    });
+
+    it('should have item sets that sum to the item target', () => {
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            if (!item.sets) continue;
+            // when
+            const sum = item.sets.reduce((a, b) => a + b, 0);
+            // then
+            expect(sum).toBe(item.target);
+          }
+        }
+      }
+    });
+
+    it('should mirror targetReps in the pushup item of a structured day', () => {
+      // given — the dashboard goal pill reads `targetReps`; a structured day
+      // whose pushup item disagreed would show two different daily targets
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          if (!day.exercises) continue;
+          // when
+          const pushupTotal = day.exercises
+            .filter((item) => item.exerciseId === 'pushup')
+            .reduce((sum, item) => sum + item.target, 0);
+          // then
+          expect(pushupTotal).toBe(day.targetReps);
+        }
+      }
+    });
+
+    it('should quantify every item of a metrics day', () => {
+      // given — a zero target can never be fulfilled from logged entries, so
+      // it would permanently block auto-completion of a metrics day
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          if (isCheckoffDay(day)) continue;
+          for (const item of day.exercises ?? []) {
+            // when / then
+            expect(item.target).toBeGreaterThan(0);
+          }
+        }
+      }
+    });
+
+    it('should keep item values inside the catalog bounds', () => {
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            if (item.target === 0) continue;
+            const def = findExerciseDefinition(item.exerciseId);
+            // when / then
+            expect(item.target).toBeGreaterThanOrEqual(def?.min ?? 1);
+            expect(item.target).toBeLessThanOrEqual(def?.max ?? 0);
+          }
+        }
+      }
+    });
+
+    it('should reference only known variants in structured items', () => {
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          for (const item of day.exercises ?? []) {
+            if (!item.variantId) continue;
+            const def = findExerciseDefinition(item.exerciseId);
+            // when / then
+            expect(def?.variants?.map((v) => v.id)).toContain(item.variantId);
+          }
+        }
+      }
+    });
+
+    it('should derive a single item for days without a structured list', () => {
+      // given — pure pushup days keep working off targetReps/sets
+      for (const plan of TRAINING_PLANS) {
+        for (const day of plan.days) {
+          if (day.exercises || day.kind === 'rest' || day.targetReps === 0) {
+            continue;
+          }
+          // when
+          const items = planDayExercises(day);
+          // then
+          expect(items).toHaveLength(1);
+          expect(items[0].target).toBe(day.targetReps);
         }
       }
     });

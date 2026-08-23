@@ -127,10 +127,11 @@ UI Component  →  Signal Store  →  API Service
 
 ### Shared Entry Dialog Pattern
 
-- `CreateEntryDialogComponent` serves as the single dialog for both creating and editing entries.
-- **Create mode:** Opened without `MAT_DIALOG_DATA` — starts with empty fields, default timestamp.
-- **Edit mode:** Opened with `EntryDialogData` via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from existing entry. Preserves original timestamp format when unchanged.
-- Both modes return `CreateEntryResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
+- `TrainingEntryDialogComponent` serves as the single dialog for both creating and editing entries of every exercise.
+- **Exercise-first:** one autocomplete (`ExercisePickerComponent`) over the whole catalog is the entry point; the category and the rendered field set (pushup mode vs. exercise mode) are derived from the picked exercise, never chosen by hand. Options are grouped "Heute geplant" → "Zuletzt genutzt" → categories; typing filters on exercise **and** category name, diacritic-insensitive (`exercise-picker.groups.ts`).
+- **Create mode:** `MAT_DIALOG_DATA` is absent or carries `{kind: 'create', suggestions}`. `ExerciseSuggestions` (today's plan-day + daily-goal exercises, recently logged exercises) rank the picker and decide which exercise the dialog opens on — the dialog itself knows nothing about plans, goals or history, the opener passes them in (`stats-dashboard.suggestions.ts`).
+- **Edit mode:** Opened with a `pushup`/`exercise` payload via `MAT_DIALOG_DATA` — pre-fills timestamp, sets, type, source from the existing entry and locks the picker (moving an entry between collections is not supported). Preserves the original timestamp format when unchanged.
+- Both modes return `TrainingEntryDialogResult` on submit. The stats table's `openEditDialog()` maps the result back to an update emission.
 - **Sets UX:** Starts with a single "Reps" field. A "+" button adds sets (pre-filled from previous value). Multi-set mode shows "Set 1", "Set 2", etc. with remove buttons and a total display.
 
 ### Training Plans (curated catalog + active-plan state)
@@ -138,8 +139,12 @@ UI Component  →  Signal Store  →  API Service
 - **Catalog** (`libs/stats/src/lib/models/training-plan.catalog.ts`): static, versioned plan definitions with per-day `kind` (`main`/`light`/`rest`/`test`), `targetReps`, optional `sets[]`, and bilingual descriptions (`description` / `descriptionEn`). Plan IDs carry a `-vN` suffix so old `UserTrainingPlan` docs keep resolving when targets change.
 - **Per-user state** (`userTrainingPlans/{userId}` in Firestore): `planId`, `startDate`, `status`, `completedDays[]`. Single active plan per user; starting another overwrites the doc.
 - **Locale-aware rendering:** `localizePlan(plan, LOCALE_ID)` swaps title/summary/description fields. The catalog stores both languages because plans are structured curated data — putting them in XLIFF would lose the per-day pairing.
-- **Single source of truth = `pushups` collection:** the `completedDays` flag is a UI shortcut. `logPlanDay(idx)` writes a real `pushups` entry (with `source: 'plan'`, plan-prescribed sets, noon timestamp on the plan day's calendar date) AND flips the flag. Without the entry, stats/streaks/leaderboard wouldn't reflect the workout.
-- **Auto-mark via `effect()` in `withHooks`:** when `LiveDataStore.entries()` push today's reps past the plan target, today's flag flips automatically — read-only, never creates a new entry. Lets the existing Quick-Add/dialog flows propagate plan progress without an explicit button click.
+- **Per-exercise days:** a day either lists every exercise it prescribes in `TrainingPlanDay.exercises` (`{exerciseId, target, sets?, variantId?}`, `target` in the exercise's own unit — reps, seconds, meters) or is a single-exercise day whose item is derived from `exerciseId`/`targetReps`/`sets`. Consumers always read `planDayExercises(day)` so both shapes behave identically; `targetReps` stays the pushup portion (a guard test pins it to the pushup item) because the dashboard goal pill reads it.
+- **Completion modes:** `completion: 'metrics'` (default) days are fulfilled by logged entries; `completion: 'checkoff'` days (HIIT/EMOM/Tabata) are ticked off by hand, because the real volume depends on rounds survived. Check-off days may carry unquantified items (`target: 0`); metric days may not — a zero target can never auto-fulfill.
+- **Single source of truth = the entry collections:** the `completedDays` flag is a UI shortcut. `logPlanDay(idx)` writes a real `exerciseEntries` entry per open exercise (with `source: 'plan'`, the prescribed breakdown, noon timestamp on the plan day's calendar date) AND flips the flag; `logPlanExercise(idx, item)` does the same for one exercise. Without the entries, stats/streaks/leaderboard wouldn't reflect the workout.
+- **Manual per-exercise ticks** live in `UserTrainingPlan.completedItems` as flat `"<dayIndex>:<itemIndex>"` ids written via `arrayUnion`/`arrayRemove` (a nested map would be clobbered by concurrent merge writes). Fulfillment is `checkedOff || covered by entries`; un-ticking an exercise re-opens the day.
+- **Duplicate exercises in a day** (Plank + Side Plank both resolve to `plank.standard`) draw from one logged-total pool in list order, so 60 s of plank can't satisfy both a 150 s and a 180 s item.
+- **Auto-mark via `effect()` in `withHooks`:** when `LiveDataStore.exerciseEntries()` push today's totals past every prescribed target, today's flag flips automatically — read-only, never creates a new entry. Lets the existing Quick-Add/dialog/hold-timer flows propagate plan progress without an explicit button click.
 - **Day-tick signal:** Berlin-date-based `currentDayIndex()` has no inherent signal dependency, so a long-running browser tab caches the previous calendar day past midnight. The store ticks an internal `_dayTick` signal once a minute (browser-only) so derived day state recomputes within ~60 s of midnight.
 
 ## Domain Models
@@ -152,8 +157,10 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `user-config.models.ts` - UserConfig, UserConfigUpdate
 - `reminder-config.models.ts` - ReminderConfig
 - `user-stats.models.ts` - UserStats (server-side precomputed), emptyUserStats, USERSTATS_VERSION
-- `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, UserTrainingPlan, `localizePlan()`, `currentPlanDayIndex()`, `planDayByIndex()`, `isPlanCompleted()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
-- `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariant: every plan's day indexes form a contiguous `1..totalDays` sequence and rest days have `targetReps === 0`.
+- `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, TrainingPlanExercise, UserTrainingPlan, `planDayByIndex()`, `isPlanCompleted()`
+- `training-plan-schedule.models.ts` - `currentPlanDayIndex()`, `startDateForTargetDay()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
+- `training-plan-exercise.models.ts` - `planDayExercises()`, `planDayProgress()`, `isPlanDayFulfilled()`, `planExerciseEntryPayload()`, `planDayItemId()` — the per-exercise fulfillment layer shared by the store, the auto-mark effect and the detail UI.
+- `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariants: every plan's day indexes form a contiguous `1..totalDays` sequence, rest days have `targetReps === 0`, and every structured exercise item names a real catalog exercise/variant, stays inside its bounds, and sums its sets to its target.
   - UserStats includes a `version` field for migration support. See [`gotchas/cloud-functions.md`](gotchas/cloud-functions.md) for the versioning strategy.
 
 ### Generic exercise model — measurement vs. unit vs. companion

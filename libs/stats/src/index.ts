@@ -1,6 +1,7 @@
 export * from './lib/models/stats.models';
 export * from './lib/models/pushup.models';
 export * from './lib/models/user-config.models';
+export * from './lib/models/android-test.models';
 export * from './lib/models/reminder-config.models';
 export * from './lib/models/reminder-i18n.models';
 export * from './lib/models/user-stats.models';
@@ -10,6 +11,8 @@ export * from './lib/models/exercise.catalog';
 export * from './lib/models/exercise-format';
 export * from './lib/models/unified-entry.models';
 export * from './lib/models/training-plan.models';
+export * from './lib/models/training-plan-schedule.models';
+export * from './lib/models/training-plan-exercise.models';
 export * from './lib/models/training-plan.catalog';
 export * from './lib/models/pushup-type.models';
 export * from './lib/models/exercise-wiki.models';

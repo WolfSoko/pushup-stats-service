@@ -10429,99 +10429,537 @@
       </segment>
     </unit>
     <unit id="admin.error.callableFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</source>
-        <target>Serverfehler (<ph id="0" equiv="code" disp="code"/>) – die Aktion konnte nicht ausgeführt werden. Details stehen im Server-Log.</target>
+        <target>Error del servidor (<ph id="0" equiv="code" disp="code"/>) – no se pudo ejecutar la acción. Los detalles están en el registro del servidor.</target>
       </segment>
     </unit>
     <unit id="nav.assistant">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Abrir el coach de IA</target>
       </segment>
     </unit>
     <unit id="assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach</source>
-        <target>KI-Coach</target>
+        <target>Coach de IA</target>
       </segment>
     </unit>
     <unit id="assistant.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </source>
-        <target> Frag nach deinem Fortschritt, lass Sätze eintragen oder dich durch die App navigieren. Der Assistent spricht über das offene AG-UI-Protokoll mit dem konfigurierten Agenten. </target>
+        <target> Pregunta por tu progreso, registra series o navega por la aplicación. El asistente habla con el agente configurado mediante el protocolo abierto AG-UI. </target>
       </segment>
     </unit>
     <unit id="assistant.connecting">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verbindung zum Agenten wird aufgebaut … </source>
-        <target> Verbindung zum Agenten wird aufgebaut … </target>
+        <target> Conectando con el agente … </target>
       </segment>
     </unit>
     <unit id="seo.assistant.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach – Pushup Tracker</source>
-        <target>KI-Coach – Pushup Tracker</target>
+        <target>Coach de IA – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
-        <target>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</target>
+        <target>Habla con tu coach de IA: consulta tu progreso, registra series y navega por la aplicación – mediante el protocolo abierto AG-UI.</target>
       </segment>
     </unit>
     <unit id="landing.ai.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>AI ready</source>
         <target>AI ready</target>
       </segment>
     </unit>
     <unit id="landing.ai.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bereit für deinen KI-Coach </source>
-        <target> Bereit für deinen KI-Coach </target>
+        <target> Listo para tu coach de IA </target>
       </segment>
     </unit>
     <unit id="landing.ai.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
-        <target> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </target>
+        <target> La aplicación habla el protocolo abierto AG-UI: un agente de IA puede consultar tu progreso diario, registrar series por ti y guiarte por la aplicación. La interfaz se basa en CopilotKit para Angular – solo tienes que conectar tu propio agente. </target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.protocol">
-      <segment state="initial">
+      <segment state="translated">
         <source>AG-UI-Protokoll</source>
-        <target>AG-UI-Protokoll</target>
+        <target>Protocolo AG-UI</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.copilotkit">
-      <segment state="initial">
+      <segment state="translated">
         <source>CopilotKit für Angular</source>
-        <target>CopilotKit für Angular</target>
+        <target>CopilotKit para Angular</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.tools">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen &amp; Abfragen per Tool</source>
-        <target>Eintragen &amp; Abfragen per Tool</target>
+        <target>Registrar &amp; consultar mediante herramienta</target>
       </segment>
     </unit>
     <unit id="landing.ai.chip.onDevice">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-KI ohne Cloud</source>
-        <target>Kamera-KI ohne Cloud</target>
+        <target>IA de cámara sin nube</target>
       </segment>
     </unit>
     <unit id="landing.ai.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>KI-Coach öffnen</source>
-        <target>KI-Coach öffnen</target>
+        <target>Abrir el coach de IA</target>
       </segment>
     </unit>
     <unit id="assistant.unavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </source>
-        <target> Kein Agent erreichbar. Prüfe die konfigurierte AG-UI-Runtime. </target>
+        <target> No se puede acceder a ningún agente. Comprueba el runtime AG-UI configurado. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.unquantified">
+      <segment state="translated">
+        <source>nach Vorgabe</source>
+        <target>según lo indicado</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.auto">
+      <segment state="translated">
+        <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
+        <target>Completado automáticamente — mediante tus entradas de este día.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.check">
+      <segment state="translated">
+        <source>Übung abhaken (ohne Eintrag)</source>
+        <target>Marcar ejercicio (sin registro)</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.undo">
+      <segment state="translated">
+        <source>Haken entfernen</source>
+        <target>Quitar marca</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.log">
+      <segment state="translated">
+        <source>Vorgabe eintragen</source>
+        <target>Registrar cantidad indicada</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.checkoffHint">
+      <segment state="translated">
+        <source>Intervall-Tag — Übungen einzeln abhaken.</source>
+        <target>Día de intervalos — marca los ejercicios uno por uno.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.menu.logAllDone">
+      <segment state="translated">
+        <source>Alle Übungen eintragen &amp; abhaken</source>
+        <target>Registrar y marcar todos los ejercicios</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goals">
+      <segment state="translated">
+        <source>Tagesziele</source>
+        <target>Objetivos diarios</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalsAria">
+      <segment state="translated">
+        <source>Tagesziele zum Abhaken anzeigen</source>
+        <target>Mostrar objetivos diarios para marcar</target>
+      </segment>
+    </unit>
+    <unit id="toolbarDailyGoal.checkHint">
+      <segment state="translated">
+        <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
+        <target> Puedes marcar los objetivos parciales en el panel. </target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.reached">
+      <segment state="translated">
+        <source>Ziel erreicht</source>
+        <target>Objetivo alcanzado</target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.manual">
+      <segment state="translated">
+        <source>Dieses Ziel braucht einen manuellen Eintrag</source>
+        <target>Este objetivo necesita un registro manual</target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.fill">
+      <segment state="translated">
+        <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
+        <target>Registra el resto y marca: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></target>
+      </segment>
+    </unit>
+    <unit id="dailyGoal.check.aria">
+      <segment state="translated">
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
+        <target>Marcar <ph id="0" equiv="EXERCISE" disp="item.exerciseName"/></target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemReachedAria">
+      <segment state="translated">
+        <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> bereits erreicht</source>
+        <target><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> ya alcanzado</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.goalItemAria">
+      <segment state="translated">
+        <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
+        <target>Añadir <ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> al objetivo diario</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.reset">
+      <segment state="translated">
+        <source>Übung zurücksetzen</source>
+        <target>Restablecer ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetDone">
+      <segment state="translated">
+        <source>Übung zurückgesetzt.</source>
+        <target>Ejercicio restablecido.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.exercise.resetKept">
+      <segment state="translated">
+        <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
+        <target>Marca eliminada — tus propios registros se conservan.</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.buttonAria">
+      <segment state="translated">
+        <source>Neue Version verfügbar – jetzt neu laden</source>
+        <target>Nueva versión disponible – recargar ahora</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.unrecoverable">
+      <segment state="translated">
+        <source>App-Daten beschädigt – bitte neu laden</source>
+        <target>Datos de la aplicación dañados – recarga la página</target>
+      </segment>
+    </unit>
+    <unit id="sw.update.recoverButtonAria">
+      <segment state="translated">
+        <source>App-Daten beschädigt – jetzt neu laden</source>
+        <target>Datos de la aplicación dañados – recargar ahora</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.goalFill.fillPlan">
+      <segment state="translated">
+        <source>Alle Übungen eintragen</source>
+        <target>Registrar todos los ejercicios</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.title">
+      <segment state="translated">
+        <source>Android-App-Test</source>
+        <target>Prueba de la app de Android</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.subtitle">
+      <segment state="translated">
+        <source> Tester für den geschlossenen Android-App-Test verwalten. </source>
+        <target> Gestionar testers de la prueba cerrada de la app Android. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.backToAdmin">
+      <segment state="translated">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Volver al área de administración</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.scan">
+      <segment state="translated">
+        <source>Kandidaten ermitteln</source>
+        <target>Buscar candidatos</target>
+      </segment>
+    </unit>
+        <unit id="admin.androidTest.scanResult">
+      <segment state="translated">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> neue Kandidaten gefunden.</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ scanResult() }}"/> candidatos nuevos encontrados.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.candidatesTitle">
+      <segment state="translated">
+        <source> Kandidaten (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </source>
+        <target> Candidatos (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().candidates.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noCandidates">
+      <segment state="translated">
+        <source>Keine offenen Kandidaten.</source>
+        <target>No hay candidatos pendientes.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirm">
+      <segment state="translated">
+        <source> Bestätigen </source>
+        <target> Confirmar </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.decline">
+      <segment state="translated">
+        <source> Ablehnen </source>
+        <target> Rechazar </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.optedInTitle">
+      <segment state="translated">
+        <source> Angemeldet (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </source>
+        <target> Inscritos (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().optedIn.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noOptedIn">
+      <segment state="translated">
+        <source> Noch niemand hat sich angemeldet. </source>
+        <target> Todavía nadie se ha inscrito. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.emailsCopied">
+      <segment state="translated">
+        <source>Kopiert!</source>
+        <target>¡Copiado!</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.copyEmails">
+      <segment state="translated">
+        <source>Alle E-Mails kopieren</source>
+        <target>Copiar todos los correos</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.markAdded">
+      <segment state="translated">
+        <source> Als Tester hinzugefügt (benachrichtigen) </source>
+        <target> Marcado como tester (notificar) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.notifiedTitle">
+      <segment state="translated">
+        <source> Benachrichtigt (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </source>
+        <target> Notificados (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().notified.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noPush">
+      <segment state="translated">
+        <source>Kein aktives Push-Abo — Nutzer bitte manuell informieren.</source>
+        <target>No hay suscripción push activa — por favor informa al usuario manualmente.</target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.title">
+      <segment state="translated">
+        <source> Werde Android-App-Tester </source>
+        <target> Conviértete en tester de la app Android </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.body">
+      <segment state="translated">
+        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> Estamos desarrollando la app Android de PushUp Stats y buscamos testers. ¿Te apetece probarla antes que nadie? </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.notNow">
+      <segment state="translated">
+        <source> Nicht jetzt </source>
+        <target> Ahora no </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.join">
+      <segment state="translated">
+        <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
+        <target><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Cuenta conmigo </pc></target>
+      </segment>
+    </unit>
+        <unit id="androidTest.invite.thanksTitle">
+      <segment state="translated">
+        <source>Danke!</source>
+        <target>¡Gracias!</target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.thanksBody">
+      <segment state="translated">
+        <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
+        <target> Recibirás una notificación push en cuanto seas aceptado/a como tester. </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.close">
+      <segment state="translated">
+        <source> Schließen </source>
+        <target> Cerrar </target>
+      </segment>
+    </unit>
+    <unit id="androidTest.invite.error">
+      <segment state="translated">
+        <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
+        <target>Lamentablemente no ha funcionado. Inténtalo de nuevo más tarde.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddTitle">
+      <segment state="translated">
+        <source>Manuell hinzufügen</source>
+        <target>Añadir manualmente</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddHint">
+      <segment state="translated">
+        <source> Nutzer:in suchen und direkt einladen — unabhängig von den Aktivitätskriterien. Anonyme Accounts und solche ohne E-Mail erscheinen nicht, sie können nicht als Tester eingetragen werden. </source>
+        <target> Busca un usuario e invítalo directamente — independientemente de los criterios de actividad. Las cuentas anónimas y las que no tienen correo no aparecen; no se pueden añadir como testers. </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAddSearch">
+      <segment state="translated">
+        <source>Name oder E-Mail</source>
+        <target>Nombre o correo</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.manualAdd">
+      <segment state="translated">
+        <source> Einladen </source>
+        <target> Invitar </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.confirmedTitle">
+      <segment state="translated">
+        <source> Eingeladen, wartet auf Zusage (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </source>
+        <target> Invitados, esperando confirmación (<ph id="0" equiv="INTERPOLATION" disp="{{ groups().confirmed.length }}"/>) </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.noConfirmed">
+      <segment state="translated">
+        <source>Keine offenen Einladungen.</source>
+        <target>No hay invitaciones pendientes.</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.withdraw">
+      <segment state="translated">
+        <source> Zurückziehen </source>
+        <target> Retirar </target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.minEntries">
+      <segment state="translated">
+        <source>Einträge ab</source>
+        <target>Entradas desde</target>
+      </segment>
+    </unit>
+    <unit id="admin.androidTest.activeWithinDays">
+      <segment state="translated">
+        <source>Aktiv in den letzten (Tage)</source>
+        <target>Activo en los últimos (días)</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.label">
+      <segment state="translated">
+        <source>Release</source>
+        <target>Versión</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknown">
+      <segment state="translated">
+        <source>unbekannt</source>
+        <target>desconocida</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.unknownTooltip">
+      <segment state="translated">
+        <source>Diese Auslieferung enthält keine Build-Informationen (lokaler Build oder Dev-Server).</source>
+        <target>Esta implementación no contiene información de compilación (compilación local o servidor de desarrollo).</target>
+      </segment>
+    </unit>
+    <unit id="admin.release.commitTooltip">
+      <segment state="translated">
+        <source>Commit <ph id="0" equiv="release" disp="release"/></source>
+        <target>Commit <ph id="0" equiv="release" disp="release"/></target>
+      </segment>
+    </unit>
+    <unit id="admin.release.builtTooltip">
+      <segment state="translated">
+        <source>Commit <ph id="0" equiv="release" disp="release"/> · gebaut am <ph id="1" equiv="built" disp="built"/></source>
+        <target>Commit <ph id="0" equiv="release" disp="release"/> · compilado el <ph id="1" equiv="built" disp="built"/></target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.placeholder">
+      <segment state="translated">
+        <source>Übung suchen</source>
+        <target>Buscar ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.noMatch">
+      <segment state="translated">
+        <source>Keine Übung gefunden</source>
+        <target>No se encontró ningún ejercicio</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.plannedToday">
+      <segment state="translated">
+        <source>Heute geplant</source>
+        <target>Planificado hoy</target>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.recent">
+      <segment state="translated">
+        <source>Zuletzt genutzt</source>
+        <target>Usado recientemente</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.reps">
+      <segment state="translated">
+        <source>Wiederholungen</source>
+        <target>Repeticiones</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.weight">
+      <segment state="translated">
+        <source>Gewicht</source>
+        <target>Peso</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.time">
+      <segment state="translated">
+        <source>Dauer</source>
+        <target>Duración</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distance">
+      <segment state="translated">
+        <source>Strecke</source>
+        <target>Distancia</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.distanceTime">
+      <segment state="translated">
+        <source>Strecke &amp; Tempo</source>
+        <target>Distancia y ritmo</target>
+      </segment>
+    </unit>
+    <unit id="analysis.chartSegment.mixed">
+      <segment state="translated">
+        <source>Sonstige</source>
+        <target>Otro</target>
+      </segment>
+    </unit>
+    <unit id="analysis.streaksTitle">
+      <segment state="translated">
+        <source>Streaks</source>
+        <target>Rachas</target>
+      </segment>
+    </unit>
+    <unit id="analysis.bestValuesTitle">
+      <segment state="translated">
+        <source>Bestwerte</source>
+        <target>Mejores valores</target>
       </segment>
     </unit>
 </file>

@@ -124,7 +124,9 @@ export const PushSubscriptionStore = signalStore(
     }
 
     async function snoozeReminder(snoozeMinutes: number): Promise<void> {
-      if (!store._functions) return;
+      if (!store._functions) {
+        throw new Error('Firebase Functions is not available');
+      }
       const callable = httpsCallable(store._functions, 'snoozeReminder');
       await callable({ snoozeMinutes });
     }
@@ -163,10 +165,6 @@ export const PushSubscriptionStore = signalStore(
       swListenerRegistered = true;
       navigator.serviceWorker.addEventListener('message', (event) => {
         const data = event.data;
-        if (data?.type === 'SNOOZE_REMINDER') {
-          void snoozeReminder(data.snoozeMinutes ?? 30);
-          return;
-        }
         if (data?.type === 'PUSH_SUBSCRIPTION_CHANGED' && data.sub) {
           // SW fired pushsubscriptionchange and produced a fresh sub — persist
           // it immediately so the user doesn't have to reload the app for
