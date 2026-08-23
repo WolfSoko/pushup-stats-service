@@ -1990,6 +1990,19 @@ describe('StatsDashboardComponent latest-entries light theme styling', () => {
     expect(hintBlock).toContain('color: #2563eb;');
   });
 
+  // Same class of bug as the quick-actions hint, found by auditing every
+  // dark-mode colour for a light-theme counterpart: #9fb3de renders at
+  // 2.05:1 on the light panel.
+  it('Given light mode, Then the goal subhead re-inks itself for the light panel', () => {
+    const start = lightThemeBlock.indexOf('.goal-subhead {');
+    expect(start).toBeGreaterThanOrEqual(0);
+    const block = lightThemeBlock.slice(
+      start,
+      lightThemeBlock.indexOf('\n  }', start)
+    );
+    expect(block).toContain('color: #64748b;');
+  });
+
   it('Given dark mode, Then the recent-exercise gradient is defined on the mat-card so the light override has a matching target', () => {
     const darkStart = scss.indexOf('.recent-exercise-tile {');
     expect(darkStart).toBeGreaterThanOrEqual(0);

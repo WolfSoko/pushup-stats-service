@@ -782,6 +782,13 @@ h1 {
     }
   }
 
+  // Same unpaired-ink bug as .quick-actions-hint: the dark #9fb3de sits
+  // at 2.05:1 on the light panel. Matched to .goal-row small (4.6:1) —
+  // its nearest sibling in role — so the label stays muted but legible.
+  .goal-subhead {
+    color: #64748b;
+  }
+
   .goal-row small {
     color: #64748b;
   }
