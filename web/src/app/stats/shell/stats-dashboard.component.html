@@ -420,6 +420,13 @@
                   <strong class="tile-title">{{
                     exerciseEntryLabel(entry)
                   }}</strong>
+                  @if (exerciseEntryVariant(entry); as variant) {
+                    <span
+                      class="tile-variant"
+                      data-testid="dashboard-recent-exercise-tile-variant"
+                      >{{ variant }}</span
+                    >
+                  }
                   <span
                     class="tile-value"
                     data-testid="dashboard-recent-exercise-tile-value"

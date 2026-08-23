@@ -228,18 +228,29 @@ describe('ExerciseEntryFieldsComponent', () => {
       expect(enInput.placeholder).toBe('5.00');
     });
 
-    it('should clear the variant when the parent switches exercise', () => {
+    it('should reset the variant to the new default when the parent switches exercise', () => {
       // given
       const { component, switchExercise } = render('abs.situps', null);
       component.state.variantControl.setValue('weighted');
       component.state.updateSet(0, '12');
 
-      // when
-      switchExercise('plank.standard');
+      // when a different exercise is picked
+      switchExercise('legs.squats');
 
-      // then
-      expect(component.state.variantControl.value).toBe('');
+      // then the stale variant is gone and the new exercise's default
+      // ('bodyweight' for squats) is preselected rather than an empty
+      // picker — a squat variant id could never be 'weighted' anyway.
+      expect(component.state.variantControl.value).toBe('bodyweight');
       expect(component.state.sets()).toEqual([0]);
+    });
+
+    it('should preselect the default variant for a fresh entry', () => {
+      // given / when a create-mode dialog opens with no seed data
+      const { component } = render('legs.squats', null);
+
+      // then the catalog's first variant is already selected, so a plain
+      // squat is logged with a variant instead of none.
+      expect(component.state.variantControl.value).toBe('bodyweight');
     });
 
     it('should cap reps at the catalog max for the chosen exercise', () => {
@@ -362,6 +373,22 @@ describe('ExerciseEntryFieldsComponent', () => {
   });
 
   describe('edit mode', () => {
+    it('should leave the variant empty for an entry stored without one', () => {
+      // given / when an existing entry that predates the variant picker
+      // is opened for editing
+      const { component } = render('legs.squats', {
+        kind: 'exercise',
+        exerciseId: 'legs.squats',
+        timestamp: '2026-02-10T13:45:00+01:00',
+        reps: 20,
+      });
+
+      // then no default is filled in: buildVariantPatch diffs against the
+      // seeded value, so preselecting one here would silently write a
+      // variant onto the entry the next time the user saves it.
+      expect(component.state.variantControl.value).toBe('');
+    });
+
     it('should populate the form from a plank edit payload', () => {
       // given / when
       const { component } = render('plank.standard', {
