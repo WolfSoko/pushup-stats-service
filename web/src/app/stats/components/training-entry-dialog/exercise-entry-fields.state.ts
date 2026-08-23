@@ -92,6 +92,14 @@ export class ExerciseFormState {
   readonly showVariantPicker = computed(
     () => (this.currentDefinition()?.variants?.length ?? 0) > 0
   );
+  /**
+   * The catalog has no explicit default flag — it lists the plain variant
+   * first (`standard`, `lying`, `bodyweight`, …), so position is the
+   * convention. Empty for exercises without variants.
+   */
+  readonly defaultVariantId = computed(
+    () => this.currentDefinition()?.variants?.[0]?.id ?? ''
+  );
   readonly formattedMax = computed(() =>
     formattedExerciseMax(this.currentDefinition(), this.repsMax())
   );
@@ -153,7 +161,7 @@ export class ExerciseFormState {
    * count can't leak into a time-measured exercise.
    */
   resetForExercise(): void {
-    this.variantControl.setValue('');
+    this.variantControl.setValue(this.defaultVariantId());
     this.sets.set([0]);
     this.intervals.set([0]);
     this.durationMinutesInput.set('');
@@ -162,7 +170,10 @@ export class ExerciseFormState {
   }
 
   seedFromData(data: TrainingEntryDialogData | null): void {
-    if (data?.kind !== 'exercise') return;
+    if (data?.kind !== 'exercise') {
+      this.variantControl.setValue(this.defaultVariantId());
+      return;
+    }
     const seed = exerciseSeedFromData(data, this.locale);
     if (seed.sets) this.sets.set(seed.sets);
     if (seed.intervals) this.intervals.set(seed.intervals);
@@ -171,7 +182,14 @@ export class ExerciseFormState {
     if (seed.distanceInput !== undefined) {
       this.distanceInput.set(seed.distanceInput);
     }
-    this.variantControl.setValue(seed.variantId);
+    // Edit mode must round-trip what is stored: preselecting a default
+    // over an entry saved without a variant would write that variant on
+    // the next save (buildVariantPatch diffs against the seeded value).
+    // A create-mode prefill carries no variant of its own, so it gets
+    // the default like any other new entry.
+    this.variantControl.setValue(
+      seed.variantId || (this.isEditMode() ? '' : this.defaultVariantId())
+    );
   }
 
   exerciseVariantLabel(variant: ExerciseVariant): string {

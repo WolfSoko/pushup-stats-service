@@ -597,6 +597,14 @@ h1 {
     white-space: nowrap;
   }
 
+  .tile-variant {
+    font-size: 0.78rem;
+    color: #9fb3de;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .tile-value {
     font-size: 0.85rem;
     color: #cddcf8;
@@ -762,6 +770,18 @@ h1 {
     );
   }
 
+  // The hint's dark-mode ink is a pale blue-white, which lands at 1.16:1
+  // on the light card above — legible only as a smudge. Re-inked to the
+  // same slate as .rest-day-config-hint (7.4:1); the decorative icon
+  // keeps the blue accent at a still-AA 5:1.
+  .quick-actions-hint {
+    color: #475569;
+
+    mat-icon {
+      color: #2563eb;
+    }
+  }
+
   .goal-row small {
     color: #64748b;
   }
@@ -794,6 +814,10 @@ h1 {
 
     .tile-title {
       color: #1e293b;
+    }
+
+    .tile-variant {
+      color: #64748b;
     }
 
     .tile-value {
