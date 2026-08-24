@@ -96,8 +96,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(chart.js@4.5.1)(date-fns@4.1.0)
       chartjs-chart-matrix:
-        specifier: 3.0.0
-        version: 3.0.0(chart.js@4.5.1)
+        specifier: 3.0.5
+        version: 3.0.5(chart.js@4.5.1)
       compression:
         specifier: 1.8.1
         version: 1.8.1(supports-color@7.2.0)
@@ -6916,8 +6916,8 @@ packages:
       chart.js: '>=2.8.0'
       date-fns: '>=2.0.0'
 
-  chartjs-chart-matrix@3.0.0:
-    resolution: {integrity: sha512-lUWC1UaWkxGdG02dBJ5r1ppbSYB/uWmwAh11VEs7V3ZQItNCk4am+rmacwkgeb+SQeEj2hP9Qq4oGsUmPl/1lQ==}
+  chartjs-chart-matrix@3.0.5:
+    resolution: {integrity: sha512-hVqXBEtLoYJk+iA9NajA/ArG7HlPZl3XXNsRDY3c5sCuqSrM6uTythSJh1jVR7UNVApdY9PStb84xSEjEceKaw==}
     peerDependencies:
       chart.js: '>=3.0.0'
 
@@ -20478,7 +20478,7 @@ snapshots:
       chart.js: 4.5.1
       date-fns: 4.1.0
 
-  chartjs-chart-matrix@3.0.0(chart.js@4.5.1):
+  chartjs-chart-matrix@3.0.5(chart.js@4.5.1):
     dependencies:
       chart.js: 4.5.1
 
