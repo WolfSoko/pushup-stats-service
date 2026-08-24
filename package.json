@@ -82,7 +82,7 @@
     "jest-preset-angular": "17.0.0",
     "jest-util": "30.4.1",
     "jiti": "2.7.0",
-    "lint-staged": "16.2.7",
+    "lint-staged": "17.3.0",
     "marked": "18.0.9",
     "node-fetch": "3.3.2",
     "nx": "23.1.1",
