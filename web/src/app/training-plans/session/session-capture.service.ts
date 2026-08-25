@@ -19,6 +19,7 @@ import { SessionDialogsService } from './session-dialogs.service';
 import {
   captureEntryPayload,
   entryPrefillForStep,
+  prescribedCaptureFor,
   SESSION_ENTRY_SOURCE,
   stepValueFromDialogResult,
 } from './session-capture.helpers';
@@ -76,6 +77,21 @@ export class SessionCaptureService {
   }
 
   /**
+   * Write what the step prescribes, without a dialog and without ticking
+   * the plan item off — the one-tap path for a circuit round that has
+   * later rounds of the same exercise behind it.
+   */
+  logPrescribed(step: SessionStep): Promise<SessionCaptureOutcome> {
+    return this.guard(async () => {
+      const prescribed = prescribedCaptureFor(step, nowLocalIsoTimestamp());
+      // Nothing left to write means the round is already covered — the
+      // session should move on, not sit on a step it can't advance past.
+      if (!prescribed) return { status: 'captured', value: 0 };
+      return this.write(prescribed.entry, prescribed.value);
+    });
+  }
+
+  /**
    * Turn any throw into a reported `'error'` outcome. The dialog
    * components are dynamic-imported, so a chunk that fails to load
    * rejects here — and a session step whose promise rejects would
@@ -110,7 +126,7 @@ export class SessionCaptureService {
     const profile = holdTimerProfileForCatalogId(step.exercise.exerciseId);
     if (!profile) return this.captureManual(step);
 
-    const result = await this.dialogs.openHoldTimer(profile, step.target);
+    const result = await this.dialogs.openHoldTimer(profile, step.roundTarget);
     if (!result || result.durationSec <= 0) return CANCELLED;
 
     const exerciseId = catalogIdForHoldTimerProfile(result.exerciseId);

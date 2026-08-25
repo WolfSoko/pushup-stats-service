@@ -4,6 +4,7 @@ import {
   PlanExerciseProgress,
   SESSION_REST_DEFAULT_SEC,
   SESSION_REST_MAX_SEC,
+  type SessionMode,
   TrainingPlanDay,
   TrainingPlanExercise,
 } from '@pu-stats/models';
@@ -50,7 +51,9 @@ interface Harness {
   progress: ReturnType<typeof signal<PlanExerciseProgress[]>>;
   dayIndex: ReturnType<typeof signal<number | null>>;
   restSec: ReturnType<typeof signal<number>>;
+  mode: ReturnType<typeof signal<SessionMode>>;
   saveRest: ReturnType<typeof vi.fn>;
+  saveMode: ReturnType<typeof vi.fn>;
 }
 
 function setup(
@@ -58,6 +61,7 @@ function setup(
     progress?: PlanExerciseProgress[];
     dayIndex?: number | null;
     restSec?: number;
+    mode?: SessionMode;
     platform?: string;
   } = {}
 ): { store: InstanceType<typeof TrainingSessionStore>; harness: Harness } {
@@ -69,7 +73,9 @@ function setup(
       options.dayIndex === undefined ? 3 : options.dayIndex
     ),
     restSec: signal(options.restSec ?? SESSION_REST_DEFAULT_SEC),
+    mode: signal<SessionMode>(options.mode ?? 'sequential'),
     saveRest: vi.fn().mockResolvedValue(undefined),
+    saveMode: vi.fn().mockResolvedValue(undefined),
   };
 
   TestBed.configureTestingModule({
@@ -88,6 +94,8 @@ function setup(
         useValue: {
           sessionRestSec: harness.restSec,
           saveSessionRestSec: harness.saveRest,
+          sessionMode: harness.mode,
+          saveSessionMode: harness.saveMode,
         },
       },
       TrainingSessionStore,
@@ -474,5 +482,129 @@ describe('TrainingSessionStore rest countdown', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  describe('circuit mode', () => {
+    const CIRCUIT = [
+      item(0, { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] }),
+      item(1, { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] }),
+    ];
+
+    it('should walk one set of every exercise per round', () => {
+      // given
+      const { store } = setup({ progress: CIRCUIT, mode: 'circuit' });
+
+      // when
+      const steps = store.steps();
+
+      // then
+      expect(steps.map((s) => [s.exercise.exerciseId, s.roundTarget])).toEqual([
+        ['pushup', 10],
+        ['plank.standard', 30],
+        ['pushup', 10],
+        ['plank.standard', 30],
+        ['pushup', 10],
+        ['plank.standard', 30],
+      ]);
+      expect(store.roundTotal()).toBe(3);
+    });
+
+    it('should keep the start screen at one row per exercise', () => {
+      // given
+      const { store } = setup({ progress: CIRCUIT, mode: 'circuit' });
+
+      // when
+      const overview = store.overviewSteps();
+
+      // then
+      expect(overview.map((s) => s.exercise.exerciseId)).toEqual([
+        'pushup',
+        'plank.standard',
+      ]);
+    });
+
+    it('should re-order the steps and restart when the mode is switched', () => {
+      // given
+      const { store, harness } = setup({ progress: CIRCUIT });
+      store.begin();
+      store.completeStep();
+
+      // when
+      store.setMode('circuit');
+
+      // then
+      expect(store.mode()).toBe('circuit');
+      expect(store.stepIndex()).toBe(0);
+      expect(store.steps()).toHaveLength(6);
+      expect(harness.saveMode).toHaveBeenCalledWith('circuit');
+    });
+
+    it('should keep working locally when persisting the mode fails', () => {
+      // given
+      const { store, harness } = setup({ progress: CIRCUIT });
+      harness.saveMode.mockRejectedValue(new Error('offline'));
+
+      // when
+      store.setMode('circuit');
+
+      // then
+      expect(store.mode()).toBe('circuit');
+    });
+
+    it('should ignore a switch to the mode already in use', () => {
+      // given
+      const { store, harness } = setup({ progress: CIRCUIT, mode: 'circuit' });
+
+      // when
+      store.setMode('circuit');
+
+      // then
+      expect(harness.saveMode).not.toHaveBeenCalled();
+    });
+
+    it('should start on the first round that what is logged does not cover', () => {
+      // given
+      const { store } = setup({
+        progress: [
+          item(
+            0,
+            { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] },
+            false,
+            20
+          ),
+          item(1, {
+            exerciseId: 'plank.standard',
+            target: 90,
+            sets: [30, 30, 30],
+          }),
+        ],
+        mode: 'circuit',
+      });
+
+      // when
+      store.begin();
+
+      // then
+      expect(store.currentStep()?.exercise.exerciseId).toBe('plank.standard');
+      expect(store.currentStep()?.roundIndex).toBe(0);
+    });
+
+    it('should follow the persisted config mode until the session overrides it', () => {
+      // given
+      const { store, harness } = setup({ progress: CIRCUIT });
+
+      // when
+      harness.mode.set('circuit');
+
+      // then
+      expect(store.mode()).toBe('circuit');
+
+      // when
+      store.setMode('sequential');
+      harness.mode.set('circuit');
+
+      // then
+      expect(store.mode()).toBe('sequential');
+    });
   });
 });

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthStore } from '@pu-auth/auth';
 import {
   PlanExerciseProgress,
+  type SessionMode,
   TrainingPlanDay,
   TrainingPlanExercise,
   UserTrainingPlan,
@@ -62,6 +63,7 @@ const ACTIVE_PLAN: UserTrainingPlan = {
 
 interface Options {
   progress?: PlanExerciseProgress[];
+  mode?: SessionMode;
   activePlan?: UserTrainingPlan | null;
   authenticated?: boolean;
   slug?: string;
@@ -81,6 +83,11 @@ async function setup(options: Options = {}) {
   const setItemDone = vitest.fn().mockResolvedValue(undefined);
   const navigateByUrl = vitest.fn().mockResolvedValue(true);
   const saveSessionRestSec = vitest.fn().mockResolvedValue(undefined);
+  const saveSessionMode = vitest.fn().mockResolvedValue(undefined);
+  const logPrescribed = vitest.fn().mockResolvedValue({
+    status: 'captured',
+    value: 999,
+  });
 
   const activePlan =
     options.activePlan === undefined ? ACTIVE_PLAN : options.activePlan;
@@ -132,13 +139,18 @@ async function setup(options: Options = {}) {
       },
       {
         provide: UserConfigStore,
-        useValue: { sessionRestSec: signal(60), saveSessionRestSec },
+        useValue: {
+          sessionRestSec: signal(60),
+          saveSessionRestSec,
+          sessionMode: signal<SessionMode>(options.mode ?? 'sequential'),
+          saveSessionMode,
+        },
       },
     ],
     componentProviders: [
       {
         provide: SessionCaptureService,
-        useValue: { capture, captureByHand, ...options.capture },
+        useValue: { capture, captureByHand, logPrescribed, ...options.capture },
       },
     ],
   });
@@ -146,15 +158,23 @@ async function setup(options: Options = {}) {
   return {
     capture,
     captureByHand,
+    logPrescribed,
     logPlanExercise,
     setItemDone,
     navigateByUrl,
     saveSessionRestSec,
+    saveSessionMode,
   };
 }
 
 const byTestId = (id: string): HTMLElement =>
   document.querySelector(`[data-testid="${id}"]`) as HTMLElement;
+
+/** The toggle's own button — `data-testid` lands on the Material host. */
+const modeButton = (mode: string): HTMLElement =>
+  document.querySelector(
+    `[data-testid="session-mode-${mode}"] button`
+  ) as HTMLElement;
 
 describe('TrainingSessionComponent', () => {
   it('should open on the day overview listing every exercise', async () => {
@@ -425,5 +445,86 @@ describe('TrainingSessionComponent', () => {
 
     // then
     expect(screen.getByText(/1 von 3 Übungen\s+erledigt/)).toBeTruthy();
+  });
+
+  describe('circuit mode', () => {
+    const CIRCUIT = [
+      item(0, { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] }),
+      item(1, { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] }),
+    ];
+
+    it('should walk one set of every exercise per round', async () => {
+      // given
+      await setup({ progress: CIRCUIT, mode: 'circuit' });
+
+      // when
+      await userEvent.click(byTestId('session-start'));
+
+      // then
+      expect(byTestId('session-step-round').textContent).toContain(
+        'Runde 1 von 3'
+      );
+      expect(screen.getByText('Liegestütze')).toBeTruthy();
+      expect(screen.getByText('10')).toBeTruthy();
+    });
+
+    it('should write only the round when "wie vorgegeben" would not close the exercise', async () => {
+      // given
+      const { logPrescribed, logPlanExercise } = await setup({
+        progress: CIRCUIT,
+        mode: 'circuit',
+      });
+      await userEvent.click(byTestId('session-start'));
+
+      // when
+      await userEvent.click(byTestId('session-log-prescribed'));
+
+      // then
+      expect(logPrescribed).toHaveBeenCalledTimes(1);
+      expect(logPlanExercise).not.toHaveBeenCalled();
+    });
+
+    it('should close the plan item through the store on the last round', async () => {
+      // given
+      const { logPrescribed, logPlanExercise } = await setup({
+        progress: [item(0, { exerciseId: 'pushup', target: 10, sets: [10] })],
+        mode: 'circuit',
+      });
+      await userEvent.click(byTestId('session-start'));
+
+      // when
+      await userEvent.click(byTestId('session-log-prescribed'));
+
+      // then
+      expect(logPlanExercise).toHaveBeenCalledWith(3, 0);
+      expect(logPrescribed).not.toHaveBeenCalled();
+    });
+
+    it('should count the session progress in sets', async () => {
+      // given / when
+      await setup({ progress: CIRCUIT, mode: 'circuit' });
+
+      // then
+      expect(screen.getByText(/0 von 6 Sätzen erledigt/)).toBeTruthy();
+    });
+
+    it('should still list each exercise once on the start screen', async () => {
+      // given / when
+      await setup({ progress: CIRCUIT, mode: 'circuit' });
+
+      // then
+      expect(screen.getAllByText('Liegestütze')).toHaveLength(1);
+    });
+
+    it('should persist the ordering the user picked', async () => {
+      // given
+      const { saveSessionMode } = await setup({ progress: CIRCUIT });
+
+      // when
+      await userEvent.click(modeButton('circuit'));
+
+      // then
+      expect(saveSessionMode).toHaveBeenCalledWith('circuit');
+    });
   });
 });

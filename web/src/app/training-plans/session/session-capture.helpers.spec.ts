@@ -23,6 +23,10 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     logged: 0,
     quantified: true,
     done: false,
+    roundIndex: 0,
+    roundTotal: 1,
+    roundTarget: 15,
+    finalRound: true,
     ...overrides,
   };
 }

@@ -1,8 +1,20 @@
 <section class="step" [class.busy]="busy()">
   <p class="step-position">
-    <span i18n="@@session.step.position"
-      >Übung {{ position() }} von {{ total() }}</span
-    >
+    @if (row().roundTotal > 1) {
+      <span
+        class="step-round"
+        data-testid="session-step-round"
+        i18n="@@session.step.round"
+        >Runde {{ row().round }} von {{ row().roundTotal }}</span
+      >
+      <span i18n="@@session.step.stepPosition"
+        >Schritt {{ position() }} von {{ total() }}</span
+      >
+    } @else {
+      <span i18n="@@session.step.position"
+        >Übung {{ position() }} von {{ total() }}</span
+      >
+    }
   </p>
 
   <mat-icon class="step-icon" aria-hidden="true">{{ row().icon }}</mat-icon>
@@ -10,7 +22,7 @@
 
   @if (row().quantified) {
     <p class="step-target">
-      <strong>{{ row().target }}</strong>
+      <strong>{{ row().roundTarget }}</strong>
     </p>
     @if (row().sets) {
       <p class="step-sets" i18n="@@session.step.sets">

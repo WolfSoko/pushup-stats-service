@@ -17,8 +17,16 @@ export interface SessionStepRow {
   name: string;
   /** Material icon of the exercise, for the step card and the overview. */
   icon: string;
-  /** Formatted target in the exercise's unit (`20`, `0:50`, `500 m`). */
+  /** Formatted target that closes the step, in the exercise's unit
+   *  (`20`, `0:50`, `500 m`). Cumulative across rounds in circuit mode. */
   target: string;
+  /** Formatted amount this step alone asks for. Equals `target` outside
+   *  a circuit. */
+  roundTarget: string;
+  /** 1-based round number, for the "Runde 2 von 3" line. */
+  round: number;
+  /** Rounds the session walks in total; 1 outside a circuit. */
+  roundTotal: number;
   /** Formatted amount logged towards it today, in the same unit. */
   logged: string;
   /** Formatted set/interval breakdown, empty when there is only one. */
@@ -50,9 +58,14 @@ export function buildSessionRows(
       name: variant ? `${base} · ${variantDisplayName(variant)}` : base,
       icon: def?.icon ?? DEFAULT_ICON,
       target: step.quantified ? formatExerciseValue(step.target, unit) : '',
+      roundTarget: step.quantified
+        ? formatExerciseValue(step.roundTarget, unit)
+        : '',
+      round: step.roundIndex + 1,
+      roundTotal: step.roundTotal,
       logged: step.quantified ? formatExerciseValue(step.logged, unit) : '',
       sets:
-        exercise.sets && exercise.sets.length > 1
+        step.roundTotal === 1 && exercise.sets && exercise.sets.length > 1
           ? exercise.sets.map((v) => formatExerciseValue(v, unit)).join(' · ')
           : '',
       percent: step.quantified

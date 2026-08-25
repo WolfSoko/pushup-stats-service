@@ -61,6 +61,40 @@ export function entryPrefillForStep(
   }
 }
 
+/** A prescribed entry ready to write, plus what it contributes to the step. */
+export interface PrescribedCapture {
+  entry: ExerciseEntryCreate;
+  value: number;
+}
+
+/**
+ * Entry that writes exactly what a step still needs of its prescription,
+ * with no dialog in between — the "wie vorgegeben" tap for a circuit
+ * round, which must not tick the plan item off while later rounds of the
+ * same exercise are still to come.
+ *
+ * Null when there is nothing left to write (the step is already covered,
+ * or the plan doesn't quantify it).
+ */
+export function prescribedCaptureFor(
+  step: SessionStep,
+  timestamp: string
+): PrescribedCapture | null {
+  const payload = planExerciseEntryPayload(step.exercise, step.logged);
+  if (!payload) return null;
+  return {
+    entry: {
+      exerciseId: payload.exerciseId,
+      ...(payload.variantId ? { variantId: payload.variantId } : {}),
+      timestamp,
+      source: SESSION_ENTRY_SOURCE,
+      [payload.valueField]: payload.value,
+      [payload.breakdownField]: payload.breakdown,
+    } as ExerciseEntryCreate,
+    value: payload.value,
+  };
+}
+
 /**
  * Entry for a counted or timed capture. Writes what the tool measured —
  * not the prescription — so a set that fell three reps short is recorded

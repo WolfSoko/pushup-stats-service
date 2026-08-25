@@ -12,6 +12,10 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     logged: 0,
     quantified: true,
     done: false,
+    roundIndex: 0,
+    roundTotal: 1,
+    roundTarget: 15,
+    finalRound: true,
     ...overrides,
   };
 }
@@ -130,6 +134,47 @@ describe('buildSessionRows', () => {
 
     // then
     expect(row.icon).toBe('fitness_center');
+  });
+});
+
+describe('buildSessionRows in a circuit', () => {
+  const CIRCUIT_STEP = step({
+    exercise: { exerciseId: 'pushup', target: 20, sets: [10, 10] },
+    target: 20,
+    logged: 10,
+    roundIndex: 1,
+    roundTotal: 3,
+    roundTarget: 10,
+    finalRound: false,
+  });
+
+  it('should format the round portion next to the cumulative target', () => {
+    // given / when
+    const [row] = buildSessionRows([CIRCUIT_STEP]);
+
+    // then
+    expect(row.roundTarget).toBe('10');
+    expect(row.target).toBe('20');
+    expect(row.round).toBe(2);
+    expect(row.roundTotal).toBe(3);
+  });
+
+  it('should drop the set breakdown, which the rounds already spell out', () => {
+    // given / when
+    const [row] = buildSessionRows([CIRCUIT_STEP]);
+
+    // then
+    expect(row.sets).toBe('');
+  });
+
+  it('should keep round one for a step outside a circuit', () => {
+    // given / when
+    const [row] = buildSessionRows([step()]);
+
+    // then
+    expect(row.round).toBe(1);
+    expect(row.roundTotal).toBe(1);
+    expect(row.roundTarget).toBe(row.target);
   });
 });
 

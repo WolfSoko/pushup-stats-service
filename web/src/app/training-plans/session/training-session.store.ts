@@ -10,9 +10,12 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
+  buildCircuitSteps,
   buildSessionSteps,
   firstOpenStepIndex,
   normalizeRestSec,
+  normalizeSessionMode,
+  type SessionMode,
   SessionStep,
   sessionStepsDone,
 } from '@pu-stats/models';
@@ -42,6 +45,12 @@ interface TrainingSessionState {
    */
   restOverride: number | null;
   restRemaining: number;
+  /**
+   * Ordering chosen inside this session, or `null` while the session
+   * still follows the persisted config value — same late-arriving-config
+   * guard as {@link TrainingSessionState.restOverride}.
+   */
+  modeOverride: SessionMode | null;
 }
 
 const INITIAL: TrainingSessionState = {
@@ -49,6 +58,7 @@ const INITIAL: TrainingSessionState = {
   stepIndex: 0,
   restOverride: null,
   restRemaining: 0,
+  modeOverride: null,
 };
 
 /**
@@ -71,10 +81,22 @@ export const TrainingSessionStore = signalStore(
   withComputed((store) => {
     const dayIndex = computed(() => store._plan.currentDayIndex());
 
-    const steps = computed<ReadonlyArray<SessionStep>>(() => {
+    const mode = computed<SessionMode>(() =>
+      normalizeSessionMode(store.modeOverride() ?? store._config.sessionMode())
+    );
+
+    /** The day's exercises, one step each — what the start screen lists
+     *  regardless of the ordering the session will use. */
+    const overviewSteps = computed<ReadonlyArray<SessionStep>>(() => {
       const idx = dayIndex();
       if (idx === null) return [];
       return buildSessionSteps(store._plan.dayProgress(idx));
+    });
+
+    const steps = computed<ReadonlyArray<SessionStep>>(() => {
+      const idx = dayIndex();
+      if (idx === null || mode() !== 'circuit') return overviewSteps();
+      return buildCircuitSteps(store._plan.dayProgress(idx));
     });
 
     const currentStep = computed<SessionStep | null>(
@@ -87,9 +109,13 @@ export const TrainingSessionStore = signalStore(
 
     return {
       dayIndex,
+      mode,
+      overviewSteps,
       steps,
       currentStep,
       restSec,
+      /** Rounds the circuit walks; 1 in sequential mode. */
+      roundTotal: computed(() => steps()[0]?.roundTotal ?? 1),
       day: computed(() => store._plan.todayDay()),
       stepsDone: computed(() => sessionStepsDone(steps())),
       stepsTotal: computed(() => steps().length),
@@ -184,6 +210,22 @@ export const TrainingSessionStore = signalStore(
         const rest = normalizeRestSec(seconds);
         patchState(store, { restOverride: rest });
         void store._config.saveSessionRestSec(rest).catch(() => undefined);
+      },
+
+      /**
+       * Switch between working through one exercise at a time and a
+       * circuit. Re-orders the step list wholesale, so the position is
+       * reset — a step index means something different per mode.
+       */
+      setMode(mode: SessionMode): void {
+        const next = normalizeSessionMode(mode);
+        if (next === store.mode()) return;
+        patchState(store, {
+          modeOverride: next,
+          stepIndex: 0,
+          restRemaining: 0,
+        });
+        void store._config.saveSessionMode(next).catch(() => undefined);
       },
 
       /** Back to the overview, e.g. to change the rest duration. */

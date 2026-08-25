@@ -27,9 +27,9 @@ import { TrainingSessionStore } from './training-session.store';
 import { buildSessionRows } from './training-session.rows';
 
 /**
- * Guided training session for today's plan day: one exercise at a time,
- * each handed to the capture tool that fits it, with a configurable
- * pause in between.
+ * Guided training session for today's plan day: exercise by exercise or
+ * as a circuit, each step handed to the capture tool that fits it, with
+ * a configurable pause in between.
  *
  * Nothing here is session-only state — every completed exercise is an
  * ordinary entry (or a plan tick), so leaving mid-workout and coming
@@ -100,6 +100,12 @@ export class TrainingSessionComponent {
     buildSessionRows(this.session.steps())
   );
 
+  /** The day's exercises for the start screen — one row per exercise, so
+   *  a circuit doesn't list the same exercise once per round. */
+  protected readonly overviewRows = computed(() =>
+    buildSessionRows(this.session.overviewSteps())
+  );
+
   protected readonly currentRow = computed(
     () => this.rows()[this.session.stepIndex()] ?? null
   );
@@ -124,8 +130,17 @@ export class TrainingSessionComponent {
     return this.runCapture((step) => this.capture.captureByHand(step));
   }
 
-  /** One tap: write exactly what the plan prescribes and tick the item. */
+  /**
+   * One tap: write exactly what this step prescribes.
+   *
+   * Only the round that closes the plan item goes through the store's
+   * tick-and-close path — ticking an item off after round one of a
+   * circuit would swallow the rounds still to come.
+   */
   async logAsPrescribed(): Promise<void> {
+    if (this.session.currentStep()?.finalRound === false) {
+      return this.runCapture((step) => this.capture.logPrescribed(step));
+    }
     const step = this.session.currentStep();
     const dayIndex = this.session.dayIndex();
     if (!step || dayIndex === null || this.busy()) return;
@@ -148,7 +163,8 @@ export class TrainingSessionComponent {
   }
 
   /** Close the step without an entry — the escape hatch for anything
-   *  tracked outside the app. */
+   *  tracked outside the app. Ticks off the whole plan item, so in a
+   *  circuit it closes that exercise's remaining rounds too. */
   async checkOff(): Promise<void> {
     const step = this.session.currentStep();
     const dayIndex = this.session.dayIndex();

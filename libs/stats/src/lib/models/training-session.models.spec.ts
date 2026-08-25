@@ -2,6 +2,7 @@ import {
   buildSessionSteps,
   firstOpenStepIndex,
   normalizeRestSec,
+  normalizeSessionMode,
   SESSION_REST_DEFAULT_SEC,
   SESSION_REST_MAX_SEC,
   SESSION_REST_MIN_SEC,
@@ -37,9 +38,28 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     logged: 0,
     quantified: true,
     done: false,
+    roundIndex: 0,
+    roundTotal: 1,
+    roundTarget: 10,
+    finalRound: true,
     ...overrides,
   };
 }
+
+describe('normalizeSessionMode', () => {
+  it('should keep the circuit mode', () => {
+    // given / when / then
+    expect(normalizeSessionMode('circuit')).toBe('circuit');
+  });
+
+  it('should fall back to sequential for anything else', () => {
+    // given / when / then
+    expect(normalizeSessionMode('sequential')).toBe('sequential');
+    expect(normalizeSessionMode(undefined)).toBe('sequential');
+    expect(normalizeSessionMode('zirkel')).toBe('sequential');
+    expect(normalizeSessionMode(3)).toBe('sequential');
+  });
+});
 
 describe('sessionToolFor', () => {
   it('should route a rep exercise with a detector profile to the camera counter', () => {
@@ -116,6 +136,10 @@ describe('buildSessionSteps', () => {
         logged: 20,
         quantified: true,
         done: false,
+        roundIndex: 0,
+        roundTotal: 1,
+        roundTarget: 50,
+        finalRound: true,
       },
       {
         itemIndex: 1,
@@ -125,6 +149,10 @@ describe('buildSessionSteps', () => {
         logged: 0,
         quantified: true,
         done: false,
+        roundIndex: 0,
+        roundTotal: 1,
+        roundTarget: 20,
+        finalRound: true,
       },
       {
         itemIndex: 2,
@@ -134,6 +162,10 @@ describe('buildSessionSteps', () => {
         logged: 0,
         quantified: true,
         done: true,
+        roundIndex: 0,
+        roundTotal: 1,
+        roundTarget: 15,
+        finalRound: true,
       },
     ]);
   });

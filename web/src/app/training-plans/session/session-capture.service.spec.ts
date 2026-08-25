@@ -32,6 +32,10 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     logged: 0,
     quantified: true,
     done: false,
+    roundIndex: 0,
+    roundTotal: 1,
+    roundTarget: 15,
+    finalRound: true,
     ...overrides,
   };
 }
@@ -40,6 +44,7 @@ const PLANK_STEP = step({
   exercise: { exerciseId: 'plank.standard', target: 50 },
   tool: 'hold-timer',
   target: 50,
+  roundTarget: 50,
 });
 
 const TWIST_STEP = step({
@@ -381,5 +386,88 @@ describe('SessionCaptureService', () => {
     // then
     expect(outcome).toEqual({ status: 'error', value: 0 });
     expect(createEntry).not.toHaveBeenCalled();
+  });
+
+  describe('logPrescribed', () => {
+    it('should write exactly what the round prescribes, with no dialog', async () => {
+      // given
+      const round = step({
+        exercise: { exerciseId: 'pushup', target: 20, sets: [10, 10] },
+        target: 20,
+        logged: 10,
+        roundTarget: 10,
+        roundIndex: 1,
+        finalRound: false,
+      });
+
+      // when
+      const outcome = await service.logPrescribed(round);
+
+      // then
+      expect(outcome).toEqual({ status: 'captured', value: 10 });
+      expect(createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({
+          exerciseId: 'pushup',
+          reps: 10,
+          sets: [10],
+          source: 'plan-session',
+        })
+      );
+      expect(openEntryDialog).not.toHaveBeenCalled();
+    });
+
+    it('should carry the prescribed variant', async () => {
+      // given
+      const round = step({
+        exercise: {
+          exerciseId: 'plank.standard',
+          variantId: 'side',
+          target: 30,
+          sets: [30],
+        },
+        tool: 'hold-timer',
+        target: 30,
+        roundTarget: 30,
+      });
+
+      // when
+      await service.logPrescribed(round);
+
+      // then
+      expect(createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({
+          exerciseId: 'plank.standard',
+          variantId: 'side',
+          durationSec: 30,
+          intervals: [30],
+        })
+      );
+    });
+
+    it('should write nothing for a round that is already covered', async () => {
+      // given
+      const covered = step({ logged: 15, target: 15, roundTarget: 15 });
+
+      // when
+      const outcome = await service.logPrescribed(covered);
+
+      // then
+      expect(outcome).toEqual({ status: 'captured', value: 0 });
+      expect(createEntry).not.toHaveBeenCalled();
+    });
+
+    it('should report a failed write', async () => {
+      // given
+      createEntry.mockReturnValue(throwError(() => new Error('offline')));
+
+      // when
+      const outcome = await service.logPrescribed(step());
+
+      // then
+      expect(outcome.status).toBe('error');
+      expect(snackOpen).toHaveBeenCalled();
+    });
   });
 });
