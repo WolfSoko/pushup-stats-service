@@ -1797,6 +1797,46 @@ describe('StatsDashboardComponent', () => {
       expect(href).toContain('/training-plans/recruit-6w');
       expect(href).toContain('day=1');
     });
+
+    it('And the plan banner offers the guided session for the open day', async () => {
+      // given — day 1 of recruit-6w-v1 is a main day with work left
+      trainingPlanApiMock.getActivePlan.mockReturnValue(
+        of({ ...restDayPlan, startDate: '2025-01-15' })
+      );
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // when
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // then — the session starts straight from the dashboard
+      const cta = querySelector(
+        freshFixture.nativeElement,
+        'dashboard-start-session'
+      );
+      expect(cta).not.toBeNull();
+      expect(cta?.getAttribute('href')).toBe(
+        '/training-plans/recruit-6w/session'
+      );
+    });
+
+    it('And the plan banner drops the session CTA on a rest day', async () => {
+      // given — `restDayPlan` puts today on day 2, a rest day
+      trainingPlanApiMock.getActivePlan.mockReturnValue(of(restDayPlan));
+      TestBed.inject(TrainingPlanStore).reload();
+
+      // when
+      const freshFixture = TestBed.createComponent(StatsDashboardComponent);
+      await freshFixture.whenStable();
+      freshFixture.detectChanges();
+
+      // then
+      expect(freshFixture.componentInstance.isPlanRestDay()).toBe(true);
+      expect(
+        querySelector(freshFixture.nativeElement, 'dashboard-start-session')
+      ).toBeNull();
+    });
   });
 
   describe('Given an active plan whose day prescribes more than pushups (push-pull-6w day 1: pushups + rows)', () => {

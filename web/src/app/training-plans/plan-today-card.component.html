@@ -1,0 +1,53 @@
+<mat-card class="today-card" data-testid="plan-today-card">
+  <mat-card-content>
+    <div class="today-head">
+      <mat-icon class="today-icon" aria-hidden="true">{{ icon() }}</mat-icon>
+      <div class="today-heading">
+        <span class="today-label" i18n="@@trainingPlans.today">Heute</span>
+        <h2 class="today-title">
+          <span i18n="@@trainingPlans.day">Tag</span>
+          {{ row().day.dayIndex }}
+          @if (row().day.kind === 'rest') {
+            · <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
+          } @else if (row().day.kind === 'light') {
+            · <span i18n="@@trainingPlans.kind.light">Leichter Tag</span>
+          } @else if (row().day.kind === 'test') {
+            · <span i18n="@@trainingPlans.kind.test">Maximaltest</span>
+          } @else if (row().day.targetReps > 0) {
+            · <strong>{{ row().day.targetReps }}</strong>
+            <span i18n="@@trainingPlans.reps">Wdh.</span>
+          }
+        </h2>
+      </div>
+      @if (row().isCompleted) {
+        <mat-icon class="today-done" data-testid="plan-today-done"
+          >check_circle</mat-icon
+        >
+      }
+    </div>
+
+    <p class="today-desc muted">{{ row().day.description }}</p>
+
+    @if (!isRest()) {
+      <app-plan-day-exercises
+        [exercises]="row().exercises"
+        [interactive]="interactive()"
+        (logExercise)="logExercise.emit($event)"
+        (toggleExercise)="toggleExercise.emit($event)"
+        (resetExercise)="resetExercise.emit($event)"
+      />
+    }
+
+    @if (offersSession()) {
+      <a
+        mat-flat-button
+        class="today-session"
+        data-testid="plan-today-start-session"
+        [routerLink]="sessionLink()"
+      >
+        <mat-icon>play_circle</mat-icon>
+        <span i18n="@@trainingPlans.startSession">Session starten</span>
+      </a>
+    }
+  </mat-card-content>
+</mat-card>

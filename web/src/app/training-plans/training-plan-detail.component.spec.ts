@@ -713,5 +713,85 @@ describe('TrainingPlanDetailComponent', () => {
         document.querySelector('[data-testid="start-session"]')
       ).toBeNull();
     });
+
+    it("should put today's card above the week list", async () => {
+      // given
+      const store = activeStore();
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      const card = document.querySelector('[data-testid="plan-today-card"]');
+      const firstWeek = document.querySelector('.week');
+      expect(card).toBeTruthy();
+      expect(firstWeek).toBeTruthy();
+      if (!card || !firstWeek) return;
+      const position = card.compareDocumentPosition(firstWeek);
+      expect(position & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it("should start the session from today's card at the top", async () => {
+      // given
+      const store = activeStore();
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      expect(
+        document
+          .querySelector('[data-testid="plan-today-start-session"]')
+          ?.getAttribute('href')
+      ).toBe('/training-plans/full-body-6w/session');
+    });
+
+    it('should collapse a finished day and keep the open ones expanded', async () => {
+      // given — day 1 is done, day 2 is today and still open
+      const store = activeStore();
+      store.activePlan.set({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: '2026-04-01',
+        status: 'active',
+        completedDays: [1],
+      });
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      const rows = Array.from(
+        document.querySelectorAll<HTMLElement>('.day-row')
+      );
+      const done = rows.find((r) => r.classList.contains('done'));
+      const today = rows.find((r) => r.classList.contains('today'));
+      expect(done?.querySelector('.day-desc')).toBeNull();
+      expect(today?.querySelector('.day-desc')).toBeTruthy();
+    });
+
+    it('should expand a finished day when the user opens it', async () => {
+      // given
+      const store = activeStore();
+      store.activePlan.set({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: '2026-04-01',
+        status: 'active',
+        completedDays: [1],
+      });
+      await renderWithStore(store);
+      const done = Array.from(
+        document.querySelectorAll<HTMLElement>('.day-row')
+      ).find((r) => r.classList.contains('done')) as HTMLElement;
+
+      // when
+      await userEvent.click(
+        done.querySelector('[data-testid="day-toggle"]') as HTMLElement
+      );
+
+      // then
+      expect(done.querySelector('.day-desc')).toBeTruthy();
+    });
   });
 });

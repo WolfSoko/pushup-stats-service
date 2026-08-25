@@ -21,17 +21,18 @@ export const SESSION_REST_STEP_SEC = 15;
 /**
  * How a session orders the exercises of a day.
  *
- * - `'sequential'` — finish one exercise completely, then the next.
  * - `'circuit'` — one set of every exercise, then round two, and so on
- *   ("Zirkeltraining"). See `training-session-circuit.models.ts`.
+ *   ("Zirkeltraining"). The default. See
+ *   `training-session-circuit.models.ts`.
+ * - `'sequential'` — finish one exercise completely, then the next.
  */
 export type SessionMode = 'sequential' | 'circuit';
 
-export const SESSION_MODE_DEFAULT: SessionMode = 'sequential';
+export const SESSION_MODE_DEFAULT: SessionMode = 'circuit';
 
 /** Coerce a persisted config value — user data, so anything — to a mode. */
 export function normalizeSessionMode(value: unknown): SessionMode {
-  return value === 'circuit' ? 'circuit' : SESSION_MODE_DEFAULT;
+  return value === 'sequential' ? 'sequential' : SESSION_MODE_DEFAULT;
 }
 
 /**

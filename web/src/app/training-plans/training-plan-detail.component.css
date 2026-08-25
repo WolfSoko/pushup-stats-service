@@ -222,3 +222,7 @@ app-page-header {
   margin-top: 10px;
   min-height: 44px;
 }
+
+.day-toggle {
+  margin-inline-start: auto;
+}

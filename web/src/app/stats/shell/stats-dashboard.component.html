@@ -89,14 +89,26 @@
               }
             </span>
           </div>
-          <a
-            mat-stroked-button
-            [routerLink]="['/training-plans', planSlug()]"
-            [queryParams]="{ day: planDayIndex() }"
-            i18n="@@trainingPlans.openDetail"
-          >
-            Details öffnen
-          </a>
+          <div class="plan-banner-actions">
+            @if (offersSession()) {
+              <a
+                mat-flat-button
+                data-testid="dashboard-start-session"
+                [routerLink]="sessionLink()"
+              >
+                <mat-icon>play_circle</mat-icon>
+                <span i18n="@@trainingPlans.startSession">Session starten</span>
+              </a>
+            }
+            <a
+              mat-stroked-button
+              [routerLink]="['/training-plans', planSlug()]"
+              [queryParams]="{ day: planDayIndex() }"
+              i18n="@@trainingPlans.openDetail"
+            >
+              Details öffnen
+            </a>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>

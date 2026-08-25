@@ -29,12 +29,13 @@ import {
   ExerciseToggle,
   PlanDayExercisesComponent,
 } from './plan-day-exercises.component';
+import { planDayExpansion } from './plan-day-expansion';
+import { PlanTodayCardComponent } from './plan-today-card.component';
 import {
   registerAutoStart,
   registerDayDeepLinkScroll,
 } from './training-plan-detail.effects';
 import {
-  buildWeeks,
   formatSets,
   loginParamsFor,
   messageForLogResult,
@@ -42,6 +43,8 @@ import {
   offersSession,
   sessionLinkFor,
   signupParamsFor,
+  todayRowOf,
+  weeksFor,
 } from './training-plan-detail.helpers';
 import { DayRow } from './training-plan-detail.models';
 
@@ -58,6 +61,7 @@ import { DayRow } from './training-plan-detail.models';
     MatTooltipModule,
     PageHeaderComponent,
     PlanDayExercisesComponent,
+    PlanTodayCardComponent,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -121,39 +125,35 @@ export class TrainingPlanDetailComponent {
     isPlanActive(this.plan(), this.store.activePlan())
   );
 
-  readonly weeks = computed(() => {
-    const plan = this.plan();
-    if (!plan) return [];
-    const active = this.isThisPlanActive();
-    return buildWeeks(
-      plan,
+  readonly weeks = computed(() =>
+    weeksFor(
+      this.plan(),
       {
-        currentDay: active ? this.store.currentDayIndex() : null,
-        completed: new Set(
-          active ? (this.store.activePlan()?.completedDays ?? []) : []
-        ),
-        skipped: new Set(
-          active ? (this.store.activePlan()?.skippedDays ?? []) : []
-        ),
-        // An inactive plan still lists its exercises, just read-only and
-        // at zero progress — the prescription is the main thing a visitor
-        // came to see.
-        exercisesFor: (dayIndex) =>
-          active
-            ? this.store.dayProgress(dayIndex)
-            : previewDayProgress(plan, dayIndex),
+        active: this.isThisPlanActive(),
+        currentDayIndex: this.store.currentDayIndex(),
+        completedDays: this.store.activePlan()?.completedDays ?? [],
+        skippedDays: this.store.activePlan()?.skippedDays ?? [],
+        dayProgress: (dayIndex) => this.store.dayProgress(dayIndex),
+        previewProgress: previewDayProgress,
       },
       this.locale
-    );
-  });
+    )
+  );
 
   readonly sessionLink = computed(() =>
     sessionLinkFor(this.plan()?.slug ?? null)
   );
 
-  protected showSessionCta(row: DayRow): boolean {
-    return offersSession(row, this.isThisPlanActive());
-  }
+  protected readonly detailsLabel = $localize`:@@trainingPlans.toggleDayDetails:Tagesdetails ein-/ausklappen`;
+
+  /** Collapse state of the week list's day rows. */
+  protected readonly dayExpansion = planDayExpansion();
+
+  /** Today's row, lifted out of the week list for the card at the top. */
+  readonly todayRow = computed(() => todayRowOf(this.weeks()));
+
+  protected readonly showSessionCta = (row: DayRow): boolean =>
+    offersSession(row, this.isThisPlanActive());
 
   async start(): Promise<void> {
     const p = this.plan();

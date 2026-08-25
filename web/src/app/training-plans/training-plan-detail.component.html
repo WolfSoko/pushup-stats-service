@@ -166,6 +166,18 @@
       </mat-card>
     }
 
+    @if (todayRow(); as today) {
+      <app-plan-today-card
+        [row]="today"
+        [sessionLink]="sessionLink()"
+        [interactive]="isThisPlanActive()"
+        [offersSession]="showSessionCta(today)"
+        (logExercise)="logExercise(today.day.dayIndex, $event)"
+        (toggleExercise)="toggleExercise(today.day.dayIndex, $event)"
+        (resetExercise)="resetExercise(today.day.dayIndex, $event)"
+      />
+    }
+
     @for (week of weeks(); track week.weekIndex) {
       <section class="week">
         <h2>
@@ -222,52 +234,68 @@
                       formatSets(row.day.sets)
                     }}</span>
                   }
-                </div>
-                <div class="day-desc muted">{{ row.day.description }}</div>
-                @if (row.isCheckoff && row.day.kind !== 'rest') {
-                  <div class="checkoff-hint muted">
-                    <mat-icon aria-hidden="true">checklist</mat-icon>
-                    <span i18n="@@trainingPlans.checkoffHint"
-                      >Intervall-Tag — Übungen einzeln abhaken.</span
-                    >
-                  </div>
-                }
-                <app-plan-day-exercises
-                  [exercises]="row.exercises"
-                  [interactive]="isThisPlanActive() && !row.isFuture"
-                  (logExercise)="logExercise(row.day.dayIndex, $event)"
-                  (toggleExercise)="toggleExercise(row.day.dayIndex, $event)"
-                  (resetExercise)="resetExercise(row.day.dayIndex, $event)"
-                />
-                @if (showSessionCta(row)) {
-                  <a
-                    mat-flat-button
-                    class="session-cta"
-                    data-testid="start-session"
-                    [routerLink]="sessionLink()"
+                  <button
+                    mat-icon-button
+                    class="day-toggle"
+                    data-testid="day-toggle"
+                    [attr.aria-expanded]="dayExpansion.isExpanded(row)"
+                    [attr.aria-label]="detailsLabel"
+                    (click)="dayExpansion.toggle(row.day.dayIndex)"
                   >
-                    <mat-icon>play_circle</mat-icon>
-                    <span i18n="@@trainingPlans.startSession"
-                      >Session starten</span
-                    >
-                  </a>
-                }
-                @if (row.pushupTypes.length > 0) {
-                  <div class="pushup-types">
-                    @for (type of row.pushupTypes; track type.slug) {
-                      <a
-                        class="pushup-type-chip"
-                        [routerLink]="['/wiki/liegestuetz-typen', type.slug]"
-                        [matTooltip]="type.summary"
-                        matTooltipPosition="above"
+                    <mat-icon>{{
+                      dayExpansion.isExpanded(row)
+                        ? 'expand_less'
+                        : 'expand_more'
+                    }}</mat-icon>
+                  </button>
+                </div>
+                @if (dayExpansion.isExpanded(row)) {
+                  <div class="day-desc muted">{{ row.day.description }}</div>
+                  @if (row.isCheckoff && row.day.kind !== 'rest') {
+                    <div class="checkoff-hint muted">
+                      <mat-icon aria-hidden="true">checklist</mat-icon>
+                      <span i18n="@@trainingPlans.checkoffHint"
+                        >Intervall-Tag — Übungen einzeln abhaken.</span
                       >
-                        <mat-icon class="pushup-type-icon" aria-hidden="true"
-                          >help_outline</mat-icon
+                    </div>
+                  }
+                  <app-plan-day-exercises
+                    [exercises]="row.exercises"
+                    [interactive]="isThisPlanActive() && !row.isFuture"
+                    (logExercise)="logExercise(row.day.dayIndex, $event)"
+                    (toggleExercise)="toggleExercise(row.day.dayIndex, $event)"
+                    (resetExercise)="resetExercise(row.day.dayIndex, $event)"
+                  />
+                  @if (showSessionCta(row)) {
+                    <a
+                      mat-flat-button
+                      class="session-cta"
+                      data-testid="start-session"
+                      [routerLink]="sessionLink()"
+                    >
+                      <mat-icon>play_circle</mat-icon>
+                      <span i18n="@@trainingPlans.startSession"
+                        >Session starten</span
+                      >
+                    </a>
+                  }
+                  @if (row.pushupTypes.length > 0) {
+                    <div class="pushup-types">
+                      @for (type of row.pushupTypes; track type.slug) {
+                        <a
+                          class="pushup-type-chip"
+                          [routerLink]="['/wiki/liegestuetz-typen', type.slug]"
+                          [matTooltip]="type.summary"
+                          matTooltipPosition="above"
                         >
-                        <span>{{ type.name }}</span>
-                      </a>
-                    }
-                  </div>
+                          <mat-icon class="pushup-type-icon" aria-hidden="true"
+                            >help_outline</mat-icon
+                          >
+                          <span>{{ type.name }}</span>
+                        </a>
+                      }
+                    </div>
+                  }
                 }
               </div>
               <div class="day-actions">
