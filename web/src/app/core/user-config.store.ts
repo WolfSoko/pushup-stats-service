@@ -13,6 +13,7 @@ import {
   type ComplexGoals,
   DEFAULT_SNAP_QUALITY,
   legacyNumericGoalToEntries,
+  normalizeRestSec,
   QuickAddConfig,
   SnapQuality,
   sumRepsTarget,
@@ -140,6 +141,10 @@ export const UserConfigStore = signalStore(
         () =>
           store.configResource.value()?.ui?.snapQuality ?? DEFAULT_SNAP_QUALITY
       ),
+      /** Rest between guided-session exercises, clamped to the valid range. */
+      sessionRestSec: computed<number>(() =>
+        normalizeRestSec(store.configResource.value()?.ui?.sessionRestSec)
+      ),
     };
   }),
   withMethods((store) => ({
@@ -173,6 +178,23 @@ export const UserConfigStore = signalStore(
       );
       store.configResource.reload();
       return result;
+    },
+    /**
+     * Persist the guided-session rest duration. Read-modify-writes the
+     * whole `ui` map: `setDoc({merge:true})` replaces a nested map
+     * wholesale, so patching `ui` alone would drop every sibling flag
+     * (docs/gotchas/firestore.md).
+     */
+    async saveSessionRestSec(seconds: number): Promise<void> {
+      const userId = store._user.userIdSafe();
+      if (!userId) return;
+      const ui = store.configResource.value()?.ui ?? {};
+      await firstValueFrom(
+        store._api.updateConfig(userId, {
+          ui: { ...ui, sessionRestSec: normalizeRestSec(seconds) },
+        })
+      );
+      store.configResource.reload();
     },
     reload(): void {
       store.configResource.reload();

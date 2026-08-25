@@ -4127,7 +4127,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:135</note>
+        <note category="location">web/src/app/app.routes.ts:144</note>
       </notes>
       <segment>
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
@@ -4135,7 +4135,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:136</note>
+        <note category="location">web/src/app/app.routes.ts:145</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
@@ -4143,7 +4143,7 @@
     </unit>
     <unit id="seo.wiki.exercises.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:159</note>
+        <note category="location">web/src/app/app.routes.ts:168</note>
       </notes>
       <segment>
         <source>Übungen erklärt – Pushup Tracker</source>
@@ -4151,7 +4151,7 @@
     </unit>
     <unit id="seo.wiki.exercises.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:160</note>
+        <note category="location">web/src/app/app.routes.ts:169</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
@@ -4159,7 +4159,7 @@
     </unit>
     <unit id="seo.reminders.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:180</note>
+        <note category="location">web/src/app/app.routes.ts:189</note>
       </notes>
       <segment>
         <source>Erinnerungen – Pushup Tracker</source>
@@ -4167,7 +4167,7 @@
     </unit>
     <unit id="seo.reminders.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:181</note>
+        <note category="location">web/src/app/app.routes.ts:190</note>
       </notes>
       <segment>
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
@@ -4175,7 +4175,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:191</note>
+        <note category="location">web/src/app/app.routes.ts:200</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -4183,7 +4183,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:192</note>
+        <note category="location">web/src/app/app.routes.ts:201</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4191,7 +4191,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:202</note>
+        <note category="location">web/src/app/app.routes.ts:211</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -4199,7 +4199,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:203</note>
+        <note category="location">web/src/app/app.routes.ts:212</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4207,7 +4207,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:217</note>
+        <note category="location">web/src/app/app.routes.ts:226</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4215,7 +4215,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:218</note>
+        <note category="location">web/src/app/app.routes.ts:227</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4223,7 +4223,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:235</note>
+        <note category="location">web/src/app/app.routes.ts:244</note>
       </notes>
       <segment>
         <source>Über uns – Pushup Tracker</source>
@@ -4231,7 +4231,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:236</note>
+        <note category="location">web/src/app/app.routes.ts:245</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4239,7 +4239,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:246</note>
+        <note category="location">web/src/app/app.routes.ts:255</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -4247,7 +4247,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:247</note>
+        <note category="location">web/src/app/app.routes.ts:256</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -4255,7 +4255,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:257</note>
+        <note category="location">web/src/app/app.routes.ts:266</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -4263,7 +4263,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:258</note>
+        <note category="location">web/src/app/app.routes.ts:267</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -4541,9 +4541,17 @@
         <source> Kamera nicht verfügbar </source>
       </segment>
     </unit>
+    <unit id="exerciseTimer.target">
+      <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:63,64</note>
+      </notes>
+      <segment>
+        <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></source>
+      </segment>
+    </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:67,68</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:75,76</note>
       </notes>
       <segment>
         <source>Form-Check anzeigen oder ausblenden</source>
@@ -4551,7 +4559,7 @@
     </unit>
     <unit id="exerciseTimer.formCheck.angle">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:77,79</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:85,87</note>
       </notes>
       <segment>
         <source>Winkel</source>
@@ -4559,7 +4567,7 @@
     </unit>
     <unit id="exerciseTimer.formCheck.confidence">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:87,89</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:95,97</note>
       </notes>
       <segment>
         <source>Sicherheit</source>
@@ -4567,7 +4575,7 @@
     </unit>
     <unit id="exerciseTimer.pause">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:111,113</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:119,121</note>
       </notes>
       <segment>
         <source>Pause</source>
@@ -4575,7 +4583,7 @@
     </unit>
     <unit id="exerciseTimer.start">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:113,116</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:121,124</note>
       </notes>
       <segment>
         <source>Start</source>
@@ -4583,7 +4591,7 @@
     </unit>
     <unit id="exerciseTimer.cameraHint">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:119,124</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:127,132</note>
       </notes>
       <segment>
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
@@ -4591,7 +4599,7 @@
     </unit>
     <unit id="exerciseTimer.reset">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:132,134</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:140,142</note>
       </notes>
       <segment>
         <source> Zurücksetzen </source>
@@ -4599,7 +4607,7 @@
     </unit>
     <unit id="exerciseTimer.cancel">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:135,138</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:143,146</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -4607,7 +4615,7 @@
     </unit>
     <unit id="exerciseTimer.save">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:144,146</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:152,154</note>
       </notes>
       <segment>
         <source> Übernehmen </source>
@@ -4615,8 +4623,8 @@
     </unit>
     <unit id="exerciseTimer.phase.holding">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:108</note>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:116</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:138</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:146</note>
       </notes>
       <segment>
         <source>Halten</source>
@@ -4624,7 +4632,7 @@
     </unit>
     <unit id="exerciseTimer.phase.paused">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:110</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:140</note>
       </notes>
       <segment>
         <source>Pause</source>
@@ -4632,8 +4640,8 @@
     </unit>
     <unit id="exerciseTimer.phase.ready">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:112</note>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:117</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:142</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:147</note>
       </notes>
       <segment>
         <source>Bereit</source>
@@ -4641,7 +4649,7 @@
     </unit>
     <unit id="exerciseTimer.exercise.plank">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:125</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:155</note>
       </notes>
       <segment>
         <source>Plank</source>
@@ -4649,7 +4657,7 @@
     </unit>
     <unit id="exerciseTimer.exercise.hollowhold">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:130</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:160</note>
       </notes>
       <segment>
         <source>Hollow Hold</source>
@@ -4801,7 +4809,7 @@
     </unit>
     <unit id="dailyGoal.check.manual">
       <notes>
-        <note category="location">web/src/app/core/daily-goal-actions.service.ts:56</note>
+        <note category="location">web/src/app/core/daily-goal-actions.service.ts:61</note>
         <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
       </notes>
       <segment>
@@ -10466,7 +10474,7 @@
     <unit id="dashboard.noEntryYet">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:376,378</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:439,442</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:446,449</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -10490,7 +10498,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:446,447</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:453,454</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -10498,7 +10506,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:451,454</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:458,461</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -10506,7 +10514,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:457</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:464</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -10514,7 +10522,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:114</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:126</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -10522,7 +10530,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:117</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:129</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -10530,7 +10538,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:118</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:130</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -10584,6 +10592,287 @@
         <source>Übung zurücksetzen</source>
       </segment>
     </unit>
+    <unit id="session.intro.restLabel">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:31,32</note>
+      </notes>
+      <segment>
+        <source>Pause zwischen den Übungen</source>
+      </segment>
+    </unit>
+    <unit id="session.intro.restHint">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:44,49</note>
+      </notes>
+      <segment>
+        <source> Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung sofort. </source>
+      </segment>
+    </unit>
+    <unit id="session.intro.start">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:56,59</note>
+      </notes>
+      <segment>
+        <source>Los geht&apos;s</source>
+      </segment>
+    </unit>
+    <unit id="session.rest.label">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.html:2,4</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="session.rest.next">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.html:11,12</note>
+      </notes>
+      <segment>
+        <source>Als Nächstes: <ph id="0" equiv="INTERPOLATION" disp="{{ upcoming.name }}"/></source>
+      </segment>
+    </unit>
+    <unit id="session.rest.shorten">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.html:26,27</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</source>
+      </segment>
+    </unit>
+    <unit id="session.rest.extend">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.html:35,36</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</source>
+      </segment>
+    </unit>
+    <unit id="session.rest.continue">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.html:46,49</note>
+      </notes>
+      <segment>
+        <source>Weiter</source>
+      </segment>
+    </unit>
+    <unit id="session.rest.shortenAria">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.ts:40</note>
+      </notes>
+      <segment>
+        <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verkürzen</source>
+      </segment>
+    </unit>
+    <unit id="session.rest.extendAria">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-rest.component.ts:41</note>
+      </notes>
+      <segment>
+        <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</source>
+      </segment>
+    </unit>
+    <unit id="session.step.position">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:4,6</note>
+      </notes>
+      <segment>
+        <source>Übung <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
+      </segment>
+    </unit>
+    <unit id="session.step.sets">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:17,20</note>
+      </notes>
+      <segment>
+        <source> Sätze: <ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="session.step.unquantified">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:22,26</note>
+      </notes>
+      <segment>
+        <source> nach Vorgabe </source>
+      </segment>
+    </unit>
+    <unit id="session.step.logged">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:30,32</note>
+      </notes>
+      <segment>
+        <source> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().target }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="session.action.byHand">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:55,59</note>
+      </notes>
+      <segment>
+        <source>Eintragen</source>
+      </segment>
+    </unit>
+    <unit id="session.action.asPrescribed">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:67,72</note>
+      </notes>
+      <segment>
+        <source>Wie vorgegeben</source>
+      </segment>
+    </unit>
+    <unit id="session.action.checkOff">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:80,83</note>
+      </notes>
+      <segment>
+        <source>Abhaken</source>
+      </segment>
+    </unit>
+    <unit id="session.action.skip">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:89,92</note>
+      </notes>
+      <segment>
+        <source>Überspringen</source>
+      </segment>
+    </unit>
+    <unit id="session.tool.autoCount">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.ts:53</note>
+      </notes>
+      <segment>
+        <source>Mit Kamera zählen</source>
+      </segment>
+    </unit>
+    <unit id="session.tool.holdTimer">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.ts:55</note>
+      </notes>
+      <segment>
+        <source>Timer starten</source>
+      </segment>
+    </unit>
+    <unit id="session.tool.manual">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.ts:57</note>
+      </notes>
+      <segment>
+        <source>Eintragen</source>
+      </segment>
+    </unit>
+    <unit id="session.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ p.title }}"/></source>
+      </segment>
+    </unit>
+    <unit id="session.loading">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:19,21</note>
+      </notes>
+      <segment>
+        <source> Session wird geladen … </source>
+      </segment>
+    </unit>
+    <unit id="session.inactivePlan">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:25,27</note>
+      </notes>
+      <segment>
+        <source> Für eine geführte Session muss dieser Plan aktiv sein. </source>
+      </segment>
+    </unit>
+    <unit id="session.toPlan">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:29,31</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:39,41</note>
+      </notes>
+      <segment>
+        <source>Zum Plan</source>
+      </segment>
+    </unit>
+    <unit id="session.restDay">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:35,37</note>
+      </notes>
+      <segment>
+        <source> Heute steht nichts an — Ruhetag. Genieß ihn. </source>
+      </segment>
+    </unit>
+    <unit id="session.progress">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:47,49</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </source>
+      </segment>
+    </unit>
+    <unit id="session.done.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:92,94</note>
+      </notes>
+      <segment>
+        <source> Session geschafft </source>
+      </segment>
+    </unit>
+    <unit id="session.done.text">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:95,97</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </source>
+      </segment>
+    </unit>
+    <unit id="session.done.action">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:105,107</note>
+      </notes>
+      <segment>
+        <source>Zum Plan</source>
+      </segment>
+    </unit>
+    <unit id="session.done.reopen">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:110,112</note>
+      </notes>
+      <segment>
+        <source>Offene Übungen ansehen</source>
+      </segment>
+    </unit>
+    <unit id="session.unknownPlan">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:121,123</note>
+      </notes>
+      <segment>
+        <source> Diesen Plan gibt es nicht. </source>
+      </segment>
+    </unit>
+    <unit id="session.toPlans">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:125,127</note>
+      </notes>
+      <segment>
+        <source>Zu den Trainingsplänen</source>
+      </segment>
+    </unit>
+    <unit id="session.close">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.ts:74</note>
+      </notes>
+      <segment>
+        <source>Session beenden</source>
+      </segment>
+    </unit>
+    <unit id="session.notLogged">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.ts:194</note>
+      </notes>
+      <segment>
+        <source>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.photoCreditPrefix">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:16,18</note>
@@ -10603,7 +10892,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:43</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:352,356</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:365,369</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -10774,9 +11063,17 @@
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.startSession">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:251,253</note>
+      </notes>
+      <segment>
+        <source>Session starten</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:268,269</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:281,282</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -10784,7 +11081,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:288,290</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:301,303</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -10792,7 +11089,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:298,300</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:311,313</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
@@ -10800,7 +11097,7 @@
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:309,311</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:322,324</note>
       </notes>
       <segment>
         <source>Alle Übungen eintragen &amp; abhaken</source>
@@ -10808,7 +11105,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:316,318</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:329,331</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -10816,7 +11113,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:322,324</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:335,337</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -10824,7 +11121,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:334,336</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:347,349</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -10832,7 +11129,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:349,350</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:362,363</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -10840,7 +11137,7 @@
     </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:172</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:169</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -10848,7 +11145,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:189</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:186</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -10856,7 +11153,7 @@
     </unit>
     <unit id="trainingPlans.skipped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:207</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:204</note>
       </notes>
       <segment>
         <source>Tag übersprungen.</source>
@@ -10864,7 +11161,7 @@
     </unit>
     <unit id="trainingPlans.jumped">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:220</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:217</note>
       </notes>
       <segment>
         <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
@@ -10880,7 +11177,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:99</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:151</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:390</note>
       </notes>
       <segment>
@@ -10889,7 +11186,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:101</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:153</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:392</note>
       </notes>
       <segment>
@@ -10898,8 +11195,8 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:103</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:120</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:155</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:172</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:394</note>
       </notes>
       <segment>
@@ -10908,7 +11205,7 @@
     </unit>
     <unit id="trainingPlans.exercise.resetDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:116</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:168</note>
       </notes>
       <segment>
         <source>Übung zurückgesetzt.</source>
@@ -10916,7 +11213,7 @@
     </unit>
     <unit id="trainingPlans.exercise.resetKept">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:118</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:170</note>
       </notes>
       <segment>
         <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>

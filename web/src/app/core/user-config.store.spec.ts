@@ -260,4 +260,130 @@ describe('UserConfigStore', () => {
     // Then — the signal updates without `store.reload()` ever being called.
     expect(store.dailyGoal()).toBe(222);
   });
+
+  describe('session rest duration', () => {
+    /** Store whose config doc already carries other `ui` flags. */
+    function setupWithUi(ui: NonNullable<UserConfig['ui']>): {
+      store: InstanceType<typeof UserConfigStore>;
+      updateConfig: ReturnType<typeof vitest.fn>;
+    } {
+      const updateConfig = vitest.fn((uid: string, patch: UserConfigUpdate) =>
+        of({ userId: uid, ...patch })
+      );
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: UserConfigApiService,
+            useValue: {
+              getConfig: vitest.fn((uid: string) => of({ userId: uid, ui })),
+              updateConfig,
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => 'u1' },
+          },
+        ],
+      });
+      return { store: TestBed.inject(UserConfigStore), updateConfig };
+    }
+
+    it('should default the rest duration when the config carries none', async () => {
+      // given
+      const { store } = setupWithUi({});
+
+      // when
+      await flush();
+
+      // then
+      expect(store.sessionRestSec()).toBe(60);
+    });
+
+    it('should surface the persisted rest duration', async () => {
+      // given
+      const { store } = setupWithUi({ sessionRestSec: 90 });
+
+      // when
+      await flush();
+
+      // then
+      expect(store.sessionRestSec()).toBe(90);
+    });
+
+    it('should clamp an out-of-range persisted rest duration', async () => {
+      // given
+      const { store } = setupWithUi({ sessionRestSec: 99_999 });
+
+      // when
+      await flush();
+
+      // then
+      expect(store.sessionRestSec()).toBe(300);
+    });
+
+    it('should keep every sibling ui flag when saving the rest duration', async () => {
+      // given — `setDoc({merge:true})` replaces a nested map wholesale, so a
+      // patch carrying only `sessionRestSec` would wipe these
+      const { store, updateConfig } = setupWithUi({
+        dayChartMode: '14h',
+        showSourceColumn: true,
+        snapQuality: 'high',
+      });
+      await flush();
+
+      // when
+      await store.saveSessionRestSec(45);
+
+      // then
+      expect(updateConfig).toHaveBeenCalledWith('u1', {
+        ui: {
+          dayChartMode: '14h',
+          showSourceColumn: true,
+          snapQuality: 'high',
+          sessionRestSec: 45,
+        },
+      });
+    });
+
+    it('should clamp the rest duration it persists', async () => {
+      // given
+      const { store, updateConfig } = setupWithUi({});
+      await flush();
+
+      // when
+      await store.saveSessionRestSec(-30);
+
+      // then
+      expect(updateConfig).toHaveBeenCalledWith('u1', {
+        ui: { sessionRestSec: 0 },
+      });
+    });
+
+    it('should not write without a signed-in user', async () => {
+      // given
+      const updateConfig = vitest.fn();
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: UserConfigApiService,
+            useValue: {
+              getConfig: vitest.fn(() => of({ userId: '' })),
+              updateConfig,
+            },
+          },
+          { provide: UserContextService, useValue: { userIdSafe: () => '' } },
+        ],
+      });
+      const store = TestBed.inject(UserConfigStore);
+      await flush();
+
+      // when
+      await store.saveSessionRestSec(45);
+
+      // then
+      expect(updateConfig).not.toHaveBeenCalled();
+    });
+  });
 });

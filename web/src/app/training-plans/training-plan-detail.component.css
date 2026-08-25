@@ -216,3 +216,9 @@ app-page-header {
   width: 16px;
   height: 16px;
 }
+
+.session-cta {
+  align-self: flex-start;
+  margin-top: 10px;
+  min-height: 44px;
+}

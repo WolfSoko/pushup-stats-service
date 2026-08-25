@@ -3,6 +3,7 @@ import {
   dayTarget,
   isDayDone,
   isDaySkipped,
+  isPlanActive,
 } from './training-plan-store.selectors';
 
 const plan: UserTrainingPlan = {
@@ -79,5 +80,39 @@ describe('dayTarget', () => {
   it('should return 0 when the day is null', () => {
     // given no day
     expect(dayTarget(null)).toBe(0);
+  });
+});
+
+describe('isPlanActive', () => {
+  const active = { planId: 'challenge-30d-v1', status: 'active' as const };
+
+  it('should hold when the active plan is this plan', () => {
+    // given / when / then
+    expect(isPlanActive({ id: 'challenge-30d-v1' }, active)).toBe(true);
+  });
+
+  it('should not hold for a different plan', () => {
+    // given / when / then
+    expect(isPlanActive({ id: 'recruit-6w-v1' }, active)).toBe(false);
+  });
+
+  it('should not hold when the plan was abandoned', () => {
+    // given / when / then
+    expect(
+      isPlanActive(
+        { id: 'challenge-30d-v1' },
+        { ...active, status: 'abandoned' }
+      )
+    ).toBe(false);
+  });
+
+  it('should not hold without an active plan', () => {
+    // given / when / then
+    expect(isPlanActive({ id: 'challenge-30d-v1' }, null)).toBe(false);
+  });
+
+  it('should not hold without a plan', () => {
+    // given / when / then
+    expect(isPlanActive(null, active)).toBe(false);
   });
 });

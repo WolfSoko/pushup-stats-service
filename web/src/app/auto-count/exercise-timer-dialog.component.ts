@@ -12,7 +12,11 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -28,6 +32,19 @@ export interface ExerciseTimerResult {
   readonly durationSec: number;
 }
 
+/**
+ * Optional dialog data. `initialExerciseId` selects which hold is active
+ * when the dialog opens, `targetSec` renders the prescription the caller
+ * is working towards. Used by the guided training session so a "50 s
+ * Plank" step opens on the right hold with its target in view — the
+ * timer never stops itself, because cutting a hold short at the target
+ * would throw away the seconds the user actually managed.
+ */
+export interface ExerciseTimerDialogData {
+  readonly initialExerciseId?: ExerciseTimerExerciseId;
+  readonly targetSec?: number;
+}
+
 interface ExerciseOption {
   readonly id: ExerciseTimerExerciseId;
   readonly icon: string;
@@ -36,6 +53,12 @@ interface ExerciseOption {
 
 /** How often the manual stopwatch ticks the elapsed display. */
 const STOPWATCH_TICK_MS = 100;
+
+function mmSs(totalSec: number): string {
+  const mm = Math.floor(totalSec / 60);
+  const ss = totalSec % 60;
+  return `${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`;
+}
 
 @Component({
   selector: 'app-exercise-timer-dialog',
@@ -61,11 +84,19 @@ export class ExerciseTimerDialogComponent {
   );
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly dialogData = inject<ExerciseTimerDialogData | null>(
+    MAT_DIALOG_DATA,
+    { optional: true }
+  );
 
   protected readonly videoRef =
     viewChild<ElementRef<HTMLVideoElement>>('video');
 
-  protected readonly exerciseId = signal<ExerciseTimerExerciseId>('plank');
+  protected readonly exerciseId = signal<ExerciseTimerExerciseId>(
+    this.dialogData?.initialExerciseId ?? 'plank'
+  );
+  /** Prescribed hold in seconds, or 0 when the caller named no target. */
+  protected readonly targetSec = Math.max(0, this.dialogData?.targetSec ?? 0);
   protected readonly cameraMode = signal(false);
   protected readonly isStarting = signal(false);
   protected readonly switching = signal(false);
@@ -90,12 +121,11 @@ export class ExerciseTimerDialogComponent {
       ? Math.floor(this.timer.snapshot().totalMs / 1000)
       : Math.floor(this.manualMs() / 1000)
   );
-  protected readonly totalMmSs = computed(() => {
-    const sec = this.totalSec();
-    const mm = Math.floor(sec / 60);
-    const ss = sec % 60;
-    return `${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`;
-  });
+  protected readonly totalMmSs = computed(() => mmSs(this.totalSec()));
+  protected readonly targetMmSs = mmSs(this.targetSec);
+  protected readonly targetReached = computed(
+    () => this.targetSec > 0 && this.totalSec() >= this.targetSec
+  );
   protected readonly running = computed(() =>
     this.cameraMode()
       ? this.timer.snapshot().phase === 'holding'

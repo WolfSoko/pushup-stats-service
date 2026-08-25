@@ -18,6 +18,58 @@ import {
 } from './training-plan-detail.exercises';
 import { DayRow, DayWeek, PushupTypeChip } from './training-plan-detail.models';
 
+/**
+ * Router link to the guided session for a plan. Falls back to the plan
+ * index when the route carries no slug, so the link is never dead.
+ */
+export function sessionLinkFor(slug: string | null): string[] {
+  return slug ? ['/training-plans', slug, 'session'] : ['/training-plans'];
+}
+
+/**
+ * Whether a day's card offers the guided session.
+ *
+ * Today's card alone: the session walks today's prescription, and only
+ * while something is still open — a session over a finished, skipped or
+ * rest day would have nothing to walk.
+ */
+export function offersSession(row: DayRow, planActive: boolean): boolean {
+  return (
+    planActive &&
+    row.isToday &&
+    !row.isCompleted &&
+    !row.isSkipped &&
+    row.day.kind !== 'rest' &&
+    row.exercises.length > 0
+  );
+}
+
+/**
+ * Query params for the signup CTA: come back to this plan's page and
+ * start it automatically once the account exists.
+ */
+export function signupParamsFor(
+  plan: Pick<TrainingPlan, 'id' | 'slug'> | null
+): Record<string, string> {
+  return plan
+    ? { planId: plan.id, returnUrl: `/training-plans/${plan.slug}?autoStart=1` }
+    : { returnUrl: '/training-plans' };
+}
+
+/**
+ * Query params for the login CTA. Intentionally **no** `autoStart=1`: a
+ * returning user might already have a different active plan, and
+ * silently replacing it would bypass the in-UI replacement warning shown
+ * for manual starts. Send them to the detail page to confirm instead.
+ */
+export function loginParamsFor(
+  plan: Pick<TrainingPlan, 'slug'> | null
+): Record<string, string> {
+  return plan
+    ? { returnUrl: `/training-plans/${plan.slug}` }
+    : { returnUrl: '/training-plans' };
+}
+
 /** Renders a multi-set decomposition like `(15 · 12 · 10)`. */
 export function formatSets(sets: number[]): string {
   return `(${sets.join(' · ')})`;

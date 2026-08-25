@@ -80,6 +80,28 @@ export function catalogIdForHoldTimerProfile(
 }
 
 /**
+ * Runtime allowlist for the type-only `ExerciseTimerExerciseId` union, so an
+ * unexpected catalog value can't open the timer with an invalid hold id.
+ */
+export function isHoldTimerProfile(
+  value: string | undefined
+): value is ExerciseTimerExerciseId {
+  return value === 'plank' || value === 'hollowhold';
+}
+
+/**
+ * Inverse of {@link catalogIdForHoldTimerProfile}. Returns `null` for catalog
+ * ids without a hold-timer profile, so callers fail closed instead of opening
+ * the timer on the wrong hold.
+ */
+export function holdTimerProfileForCatalogId(
+  catalogId: string
+): ExerciseTimerExerciseId | null {
+  const profile = findExerciseDefinition(catalogId)?.holdTimerProfileId;
+  return isHoldTimerProfile(profile) ? profile : null;
+}
+
+/**
  * Pushup results take the legacy `pushups` path; catalog exercises resolve
  * their profile to a catalog id, returning `null` when none exists so the
  * caller can fail closed.

@@ -1,0 +1,128 @@
+@if (plan(); as p) {
+  <app-page-header icon="play_circle" variant="training">
+    <h1 page-title i18n="@@session.title">Session · {{ p.title }}</h1>
+    <p page-subtitle>{{ dayDescription() }}</p>
+    <a
+      page-actions
+      mat-icon-button
+      [routerLink]="planUrl()"
+      [attr.aria-label]="closeLabel"
+      [matTooltip]="closeLabel"
+    >
+      <mat-icon>close</mat-icon>
+    </a>
+  </app-page-header>
+
+  @if (!authResolved() || !planLoaded()) {
+    <mat-card class="session-card">
+      <p class="session-note" i18n="@@session.loading">
+        Session wird geladen …
+      </p>
+    </mat-card>
+  } @else if (!isAuthenticated() || !isThisPlanActive()) {
+    <mat-card class="session-card">
+      <p class="session-note" i18n="@@session.inactivePlan">
+        Für eine geführte Session muss dieser Plan aktiv sein.
+      </p>
+      <a mat-flat-button [routerLink]="planUrl()">
+        <mat-icon>arrow_back</mat-icon>
+        <span i18n="@@session.toPlan">Zum Plan</span>
+      </a>
+    </mat-card>
+  } @else if (session.isEmptyDay()) {
+    <mat-card class="session-card">
+      <p class="session-note" i18n="@@session.restDay">
+        Heute steht nichts an — Ruhetag. Genieß ihn.
+      </p>
+      <a mat-flat-button [routerLink]="planUrl()">
+        <mat-icon>arrow_back</mat-icon>
+        <span i18n="@@session.toPlan">Zum Plan</span>
+      </a>
+    </mat-card>
+  } @else {
+    <mat-card class="session-card">
+      <div class="session-progress">
+        <mat-progress-bar mode="determinate" [value]="progressPercent()" />
+        <p class="session-progress-label" i18n="@@session.progress">
+          {{ session.stepsDone() }} von {{ session.stepsTotal() }} Übungen
+          erledigt
+        </p>
+      </div>
+
+      @switch (session.phase()) {
+        @case ('intro') {
+          <app-session-intro
+            [rows]="rows()"
+            [description]="dayDescription()"
+            [restSec]="session.restSec()"
+            (restSecChange)="session.setRestSec($event)"
+            (start)="session.begin()"
+          />
+        }
+        @case ('exercise') {
+          @if (currentRow(); as row) {
+            <app-session-step
+              [row]="row"
+              [position]="session.stepIndex() + 1"
+              [total]="session.stepsTotal()"
+              [busy]="busy()"
+              (capture)="captureCurrent()"
+              (enterByHand)="enterByHand()"
+              (logAsPrescribed)="logAsPrescribed()"
+              (checkOff)="checkOff()"
+              (skip)="session.skipStep()"
+            />
+          }
+        }
+        @case ('rest') {
+          <app-session-rest
+            [remainingSec]="session.restRemaining()"
+            [totalSec]="session.restSec()"
+            [next]="currentRow()"
+            (nudge)="session.nudgeRest($event)"
+            (skipRest)="session.endRest()"
+          />
+        }
+        @case ('done') {
+          <section class="session-done">
+            <mat-icon class="session-done-icon" aria-hidden="true"
+              >emoji_events</mat-icon
+            >
+            <h2 class="session-done-title" i18n="@@session.done.title">
+              Session geschafft
+            </h2>
+            <p class="session-done-text" i18n="@@session.done.text">
+              {{ session.stepsDone() }} von {{ session.stepsTotal() }}
+              Übungen sind eingetragen.
+            </p>
+            <button
+              mat-flat-button
+              class="session-done-action"
+              data-testid="session-finish"
+              (click)="finish()"
+            >
+              <mat-icon>done</mat-icon>
+              <span i18n="@@session.done.action">Zum Plan</span>
+            </button>
+            @if (!session.allDone()) {
+              <button mat-button (click)="session.backToIntro()">
+                <mat-icon>list</mat-icon>
+                <span i18n="@@session.done.reopen">Offene Übungen ansehen</span>
+              </button>
+            }
+          </section>
+        }
+      }
+    </mat-card>
+  }
+} @else {
+  <mat-card class="session-card">
+    <p class="session-note" i18n="@@session.unknownPlan">
+      Diesen Plan gibt es nicht.
+    </p>
+    <a mat-flat-button routerLink="/training-plans">
+      <mat-icon>arrow_back</mat-icon>
+      <span i18n="@@session.toPlans">Zu den Trainingsplänen</span>
+    </a>
+  </mat-card>
+}

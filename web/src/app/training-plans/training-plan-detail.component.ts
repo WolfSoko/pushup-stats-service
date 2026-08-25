@@ -24,6 +24,7 @@ import { findPlanBySlug } from '@pu-stats/models';
 import { previewDayProgress } from './training-plan-detail.exercises';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
+import { isPlanActive } from './training-plan-store.selectors';
 import {
   ExerciseToggle,
   PlanDayExercisesComponent,
@@ -35,9 +36,14 @@ import {
 import {
   buildWeeks,
   formatSets,
+  loginParamsFor,
   messageForLogResult,
   messageForResetResult,
+  offersSession,
+  sessionLinkFor,
+  signupParamsFor,
 } from './training-plan-detail.helpers';
+import { DayRow } from './training-plan-detail.models';
 
 @Component({
   selector: 'app-training-plan-detail',
@@ -88,24 +94,9 @@ export class TrainingPlanDetailComponent {
     return slug ? findPlanBySlug(slug) : null;
   });
 
-  readonly signupQueryParams = computed(() => {
-    const p = this.plan();
-    return p
-      ? { planId: p.id, returnUrl: `/training-plans/${p.slug}?autoStart=1` }
-      : { returnUrl: '/training-plans' };
-  });
+  readonly signupQueryParams = computed(() => signupParamsFor(this.plan()));
 
-  readonly loginQueryParams = computed(() => {
-    const p = this.plan();
-    // Intentionally NO `autoStart=1` here: a returning user logging back
-    // in might already have a different active plan, and silently
-    // replacing it would bypass the in-UI replacement warning shown for
-    // manual starts. Send them back to the detail page so they can
-    // explicitly confirm via "Plan starten".
-    return p
-      ? { returnUrl: `/training-plans/${p.slug}` }
-      : { returnUrl: '/training-plans' };
-  });
+  readonly loginQueryParams = computed(() => loginParamsFor(this.plan()));
 
   constructor() {
     registerDayDeepLinkScroll({
@@ -126,11 +117,9 @@ export class TrainingPlanDetailComponent {
     });
   }
 
-  readonly isThisPlanActive = computed(() => {
-    const p = this.plan();
-    const a = this.store.activePlan();
-    return !!p && !!a && a.planId === p.id && a.status === 'active';
-  });
+  readonly isThisPlanActive = computed(() =>
+    isPlanActive(this.plan(), this.store.activePlan())
+  );
 
   readonly weeks = computed(() => {
     const plan = this.plan();
@@ -157,6 +146,14 @@ export class TrainingPlanDetailComponent {
       this.locale
     );
   });
+
+  readonly sessionLink = computed(() =>
+    sessionLinkFor(this.plan()?.slug ?? null)
+  );
+
+  protected showSessionCta(row: DayRow): boolean {
+    return offersSession(row, this.isThisPlanActive());
+  }
 
   async start(): Promise<void> {
     const p = this.plan();

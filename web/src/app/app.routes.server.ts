@@ -28,6 +28,12 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
   {
+    // Auth-gated and camera-driven — there is nothing to prerender, and it
+    // must precede the `:slug` prerender rule to claim the deeper URL.
+    path: 'training-plans/:slug/session',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'training-plans/:slug',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {

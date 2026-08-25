@@ -232,6 +232,14 @@ export interface UserConfig {
      * `ui` — only the `androidTest` status machine itself is server-only.
      */
     androidTestPopupDismissedUntil?: string;
+    /**
+     * Rest between two exercises of a guided training session, in
+     * seconds. Written from the session's start screen, so the duration
+     * the user picked once carries into every later session. Absent ⇒
+     * {@link SESSION_REST_DEFAULT_SEC}; read through `normalizeRestSec`,
+     * which clamps out-of-range persisted values.
+     */
+    sessionRestSec?: number;
   };
   createdAt?: string;
   updatedAt?: string;

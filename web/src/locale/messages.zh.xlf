@@ -10472,5 +10472,227 @@
         <target>个人最佳</target>
       </segment>
     </unit>
+    <unit id="exerciseTimer.target">
+      <segment state="initial">
+        <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></source>
+        <target>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></target>
+      </segment>
+    </unit>
+    <unit id="session.intro.restLabel">
+      <segment state="initial">
+        <source>Pause zwischen den Übungen</source>
+        <target>Pause zwischen den Übungen</target>
+      </segment>
+    </unit>
+    <unit id="session.intro.restHint">
+      <segment state="initial">
+        <source> Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung sofort. </source>
+        <target> Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung sofort. </target>
+      </segment>
+    </unit>
+    <unit id="session.intro.start">
+      <segment state="initial">
+        <source>Los geht&apos;s</source>
+        <target>Los geht&apos;s</target>
+      </segment>
+    </unit>
+    <unit id="session.rest.label">
+      <segment state="initial">
+        <source>Pause</source>
+        <target>Pause</target>
+      </segment>
+    </unit>
+    <unit id="session.rest.next">
+      <segment state="initial">
+        <source>Als Nächstes: <ph id="0" equiv="INTERPOLATION" disp="{{ upcoming.name }}"/></source>
+        <target>Als Nächstes: <ph id="0" equiv="INTERPOLATION" disp="{{ upcoming.name }}"/></target>
+      </segment>
+    </unit>
+    <unit id="session.rest.shorten">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</target>
+      </segment>
+    </unit>
+    <unit id="session.rest.extend">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</target>
+      </segment>
+    </unit>
+    <unit id="session.rest.continue">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="session.step.position">
+      <segment state="initial">
+        <source>Übung <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
+        <target>Übung <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
+      </segment>
+    </unit>
+        <unit id="session.step.sets">
+      <segment state="initial">
+        <source> Sätze: <ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </source>
+        <target> Sätze: <ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="session.step.unquantified">
+      <segment state="initial">
+        <source> nach Vorgabe </source>
+        <target> nach Vorgabe </target>
+      </segment>
+    </unit>
+    <unit id="session.step.logged">
+      <segment state="initial">
+        <source> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().target }}"/> </source>
+        <target> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().target }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="session.action.byHand">
+      <segment state="initial">
+        <source>Eintragen</source>
+        <target>Eintragen</target>
+      </segment>
+    </unit>
+    <unit id="session.action.asPrescribed">
+      <segment state="initial">
+        <source>Wie vorgegeben</source>
+        <target>Wie vorgegeben</target>
+      </segment>
+    </unit>
+    <unit id="session.action.checkOff">
+      <segment state="initial">
+        <source>Abhaken</source>
+        <target>Abhaken</target>
+      </segment>
+    </unit>
+    <unit id="session.action.skip">
+      <segment state="initial">
+        <source>Überspringen</source>
+        <target>Überspringen</target>
+      </segment>
+    </unit>
+    <unit id="session.tool.autoCount">
+      <segment state="initial">
+        <source>Mit Kamera zählen</source>
+        <target>Mit Kamera zählen</target>
+      </segment>
+    </unit>
+    <unit id="session.tool.holdTimer">
+      <segment state="initial">
+        <source>Timer starten</source>
+        <target>Timer starten</target>
+      </segment>
+    </unit>
+    <unit id="session.tool.manual">
+      <segment state="initial">
+        <source>Eintragen</source>
+        <target>Eintragen</target>
+      </segment>
+    </unit>
+    <unit id="session.title">
+      <segment state="initial">
+        <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ p.title }}"/></source>
+        <target>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ p.title }}"/></target>
+      </segment>
+    </unit>
+        <unit id="session.loading">
+      <segment state="initial">
+        <source> Session wird geladen … </source>
+        <target> Session wird geladen … </target>
+      </segment>
+    </unit>
+    <unit id="session.inactivePlan">
+      <segment state="initial">
+        <source> Für eine geführte Session muss dieser Plan aktiv sein. </source>
+        <target> Für eine geführte Session muss dieser Plan aktiv sein. </target>
+      </segment>
+    </unit>
+    <unit id="session.toPlan">
+      <segment state="initial">
+        <source>Zum Plan</source>
+        <target>Zum Plan</target>
+      </segment>
+    </unit>
+    <unit id="session.restDay">
+      <segment state="initial">
+        <source> Heute steht nichts an — Ruhetag. Genieß ihn. </source>
+        <target> Heute steht nichts an — Ruhetag. Genieß ihn. </target>
+      </segment>
+    </unit>
+    <unit id="session.progress">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </target>
+      </segment>
+    </unit>
+    <unit id="session.done.title">
+      <segment state="initial">
+        <source> Session geschafft </source>
+        <target> Session geschafft </target>
+      </segment>
+    </unit>
+    <unit id="session.done.text">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </target>
+      </segment>
+    </unit>
+    <unit id="session.done.action">
+      <segment state="initial">
+        <source>Zum Plan</source>
+        <target>Zum Plan</target>
+      </segment>
+    </unit>
+    <unit id="session.done.reopen">
+      <segment state="initial">
+        <source>Offene Übungen ansehen</source>
+        <target>Offene Übungen ansehen</target>
+      </segment>
+    </unit>
+    <unit id="session.unknownPlan">
+      <segment state="initial">
+        <source> Diesen Plan gibt es nicht. </source>
+        <target> Diesen Plan gibt es nicht. </target>
+      </segment>
+    </unit>
+    <unit id="session.toPlans">
+      <segment state="initial">
+        <source>Zu den Trainingsplänen</source>
+        <target>Zu den Trainingsplänen</target>
+      </segment>
+    </unit>
+    <unit id="session.close">
+      <segment state="initial">
+        <source>Session beenden</source>
+        <target>Session beenden</target>
+      </segment>
+    </unit>
+    <unit id="session.notLogged">
+      <segment state="initial">
+        <source>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</source>
+        <target>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.startSession">
+      <segment state="initial">
+        <source>Session starten</source>
+        <target>Session starten</target>
+      </segment>
+    </unit>
+    <unit id="session.rest.shortenAria">
+      <segment state="initial">
+        <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verkürzen</source>
+        <target>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verkürzen</target>
+      </segment>
+    </unit>
+    <unit id="session.rest.extendAria">
+      <segment state="initial">
+        <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</source>
+        <target>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

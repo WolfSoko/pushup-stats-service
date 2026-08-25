@@ -55,6 +55,14 @@
     <div class="timer-display" aria-live="polite">
       <span class="timer-value">{{ totalMmSs() }}</span>
       <span class="timer-phase">{{ phaseLabel() }}</span>
+      @if (targetSec > 0) {
+        <span class="timer-target" [class.reached]="targetReached()">
+          @if (targetReached()) {
+            <mat-icon aria-hidden="true">check_circle</mat-icon>
+          }
+          <span i18n="@@exerciseTimer.target">Ziel: {{ targetMmSs }}</span>
+        </span>
+      }
     </div>
 
     @if (cameraMode() && !isStarting() && !switching() && !error()) {

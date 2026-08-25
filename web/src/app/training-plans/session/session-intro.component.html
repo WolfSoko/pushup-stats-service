@@ -1,0 +1,58 @@
+<section class="intro">
+  @if (description()) {
+    <p class="intro-description">{{ description() }}</p>
+  }
+
+  <ol class="intro-list">
+    @for (row of rows(); track row.itemIndex) {
+      <li class="intro-row" [class.done]="row.done">
+        <mat-icon class="intro-row-icon" aria-hidden="true">{{
+          row.icon
+        }}</mat-icon>
+        <span class="intro-row-name">{{ row.name }}</span>
+        @if (row.quantified) {
+          <span class="intro-row-target">{{ row.target }}</span>
+        }
+        @if (row.done) {
+          <mat-icon
+            class="intro-row-done"
+            aria-hidden="true"
+            data-testid="session-intro-done"
+            >check_circle</mat-icon
+          >
+        }
+      </li>
+    }
+  </ol>
+
+  <div class="intro-rest">
+    <label class="intro-rest-label" for="session-rest-slider">
+      <mat-icon aria-hidden="true">hourglass_bottom</mat-icon>
+      <span i18n="@@session.intro.restLabel">Pause zwischen den Übungen</span>
+      <strong>{{ formatRest(restSec()) }}</strong>
+    </label>
+    <mat-slider [min]="min" [max]="max" [step]="step" discrete>
+      <input
+        id="session-rest-slider"
+        matSliderThumb
+        data-testid="session-rest-slider"
+        [value]="restSec()"
+        (valueChange)="onRestInput($event)"
+      />
+    </mat-slider>
+    <p class="intro-rest-hint" i18n="@@session.intro.restHint">
+      Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung
+      sofort.
+    </p>
+  </div>
+
+  <button
+    mat-flat-button
+    class="intro-start"
+    data-testid="session-start"
+    (click)="start.emit()"
+  >
+    <mat-icon>play_arrow</mat-icon>
+    <span i18n="@@session.intro.start">Los geht's</span>
+  </button>
+</section>
