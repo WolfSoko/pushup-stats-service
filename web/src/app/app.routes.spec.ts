@@ -28,6 +28,7 @@ describe('appRoutes', () => {
       'settings',
       'goals',
       'training-plans',
+      'training-plans/:slug/session',
       'training-plans/:slug',
       'wiki/liegestuetz-typen',
       'wiki/uebungen',
@@ -146,6 +147,20 @@ describe('appRoutes', () => {
 
     const registerRoute = appRoutes.find((r) => r.path === 'register');
     expect(registerRoute?.canActivate).toEqual([publicOnlyGuard]);
+  });
+
+  it('matches the guided session before the plan detail route', () => {
+    // given
+    const sessionIndex = appRoutes.findIndex(
+      (r) => r.path === 'training-plans/:slug/session'
+    );
+    const detailIndex = appRoutes.findIndex(
+      (r) => r.path === 'training-plans/:slug'
+    );
+
+    // when / then
+    expect(sessionIndex).toBeGreaterThanOrEqual(0);
+    expect(sessionIndex).toBeLessThan(detailIndex);
   });
 
   it('keeps training-plans routes publicly accessible (no auth guard)', () => {

@@ -650,5 +650,68 @@ describe('TrainingPlanDetailComponent', () => {
       // then only that exercise is marked, for that day
       expect(store.setItemDone).toHaveBeenCalledWith(2, 0, true);
     });
+
+    it('should offer a guided session for today', async () => {
+      // given
+      const store = activeStore();
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      const cta = document.querySelector('[data-testid="start-session"]');
+      expect(cta).toBeTruthy();
+      expect(cta?.getAttribute('href')).toBe(
+        '/training-plans/full-body-6w/session'
+      );
+    });
+
+    it('should offer the session on today only, not on every day', async () => {
+      // given
+      const store = activeStore();
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      expect(
+        document.querySelectorAll('[data-testid="start-session"]').length
+      ).toBe(1);
+    });
+
+    it('should not offer a session once today is completed', async () => {
+      // given
+      const store = activeStore();
+      store.activePlan.set({
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: '2026-04-01',
+        status: 'active',
+        completedDays: [2],
+      });
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      expect(
+        document.querySelector('[data-testid="start-session"]')
+      ).toBeNull();
+    });
+
+    it('should not offer a session while the plan is inactive', async () => {
+      // given
+      const store = activeStore();
+      store.activePlan.set(null);
+      store.hasActivePlan.set(false);
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      expect(
+        document.querySelector('[data-testid="start-session"]')
+      ).toBeNull();
+    });
   });
 });

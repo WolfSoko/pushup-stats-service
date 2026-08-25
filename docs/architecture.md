@@ -147,6 +147,17 @@ UI Component  →  Signal Store  →  API Service
 - **Auto-mark via `effect()` in `withHooks`:** when `LiveDataStore.exerciseEntries()` push today's totals past every prescribed target, today's flag flips automatically — read-only, never creates a new entry. Lets the existing Quick-Add/dialog/hold-timer flows propagate plan progress without an explicit button click.
 - **Day-tick signal:** Berlin-date-based `currentDayIndex()` has no inherent signal dependency, so a long-running browser tab caches the previous calendar day past midnight. The store ticks an internal `_dayTick` signal once a minute (browser-only) so derived day state recomputes within ~60 s of midnight.
 
+### Guided training session (`/training-plans/:slug/session`)
+
+Walks today's plan day one exercise at a time — "50 s Plank → 20 Russian Twists → 15 Liegestütze" — and hands each to the capture tool its measurement calls for. Lives in `web/src/app/training-plans/session/`.
+
+- **Steps are derived, never stored.** `buildSessionSteps(planDayProgress(...))` (`training-session.models.ts` in `@pu-stats/models`) turns the day's per-exercise fulfillment into the step list. There is no session document: closing a step is an ordinary `exerciseEntries` write (or a plan tick), so leaving the page mid-workout and coming back resumes wherever the logged entries put the user, and stats/streaks/leaderboard see the workout like any other.
+- **Tool routing is catalog-driven.** `sessionToolFor(exercise)` reads `measurement` first, then `holdTimerProfileId` / `autoCountProfileId` — `time` + hold profile ⇒ hold timer, `reps` + detector profile ⇒ camera counter, everything else ⇒ the prefilled `TrainingEntryDialogComponent`. Adding a profile to a catalog entry is all it takes for a session step to gain that tool.
+- **`SessionDialogsService`** opens the three dialogs (each dynamic-imported, so MediaPipe stays out of the session chunk). It is a service, not module-level functions, because the Angular unit-test system rejects `vi.mock` on relative imports — tests substitute it through DI.
+- **Captures are written as measured, not as prescribed.** A capture that falls short of the target is still saved and leaves the step open at its real progress. Only `logPlanExercise` ("Wie vorgegeben") writes the prescription verbatim. All session entries carry `source: 'plan-session'`.
+- **Tool exercise switches are honoured.** The camera and timer dialogs let the user change exercise mid-flow; such an entry is saved for what it actually is and credits the current step nothing (`stepValueFromDialogResult`), so a squat logged during a pushup step doesn't close it.
+- **Rest** defaults to 60 s, is set on the session's start screen, and persists to `UserConfig.ui.sessionRestSec` (read-modify-write of the whole `ui` map — see [`gotchas/firestore.md`](gotchas/firestore.md)). `0` disables the pause. The countdown interval starts and stops with the `rest` phase rather than running for the whole session.
+
 ## Domain Models
 
 Split into focused files under `libs/stats/src/lib/models/`:
@@ -160,6 +171,7 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `training-plan.models.ts` - TrainingPlan, TrainingPlanDay, TrainingPlanExercise, UserTrainingPlan, `planDayByIndex()`, `isPlanCompleted()`
 - `training-plan-schedule.models.ts` - `currentPlanDayIndex()`, `startDateForTargetDay()`. `parseIsoDate` round-trips Y/M/D after `new Date()` to reject impossible dates like `2026-02-30`.
 - `training-plan-exercise.models.ts` - `planDayExercises()`, `planDayProgress()`, `isPlanDayFulfilled()`, `planExerciseEntryPayload()`, `planDayItemId()` — the per-exercise fulfillment layer shared by the store, the auto-mark effect and the detail UI.
+- `training-session.models.ts` - `buildSessionSteps()`, `sessionToolFor()`, `firstOpenStepIndex()`, `normalizeRestSec()`, `stepCoveredBy()` — the guided-session layer over `planDayProgress()`.
 - `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariants: every plan's day indexes form a contiguous `1..totalDays` sequence, rest days have `targetReps === 0`, and every structured exercise item names a real catalog exercise/variant, stays inside its bounds, and sums its sets to its target.
   - UserStats includes a `version` field for migration support. See [`gotchas/cloud-functions.md`](gotchas/cloud-functions.md) for the versioning strategy.
 

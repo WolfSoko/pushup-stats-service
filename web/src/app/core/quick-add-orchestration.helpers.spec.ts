@@ -5,7 +5,9 @@ import {
   buildExerciseEntryPayload,
   catalogIdForAutoCountProfile,
   catalogIdForHoldTimerProfile,
+  holdTimerProfileForCatalogId,
   isAutoCountProfile,
+  isHoldTimerProfile,
 } from './quick-add-orchestration.helpers';
 import type {
   AutoCountResult,
@@ -74,6 +76,38 @@ describe('catalogIdForHoldTimerProfile', () => {
     // given / when / then
     expect(catalogIdForHoldTimerProfile('plank')).toBe('plank.standard');
     expect(catalogIdForHoldTimerProfile('hollowhold')).toBe('core.hollowhold');
+  });
+});
+
+describe('isHoldTimerProfile', () => {
+  it('should accept the supported holds', () => {
+    // given / when / then
+    expect(isHoldTimerProfile('plank')).toBe(true);
+    expect(isHoldTimerProfile('hollowhold')).toBe(true);
+  });
+
+  it('should reject an unsupported or missing value', () => {
+    // given / when / then
+    expect(isHoldTimerProfile('pushup')).toBe(false);
+    expect(isHoldTimerProfile(undefined)).toBe(false);
+  });
+});
+
+describe('holdTimerProfileForCatalogId', () => {
+  it('should resolve a catalog id to its hold-timer profile', () => {
+    // given / when / then
+    expect(holdTimerProfileForCatalogId('plank.standard')).toBe('plank');
+    expect(holdTimerProfileForCatalogId('core.hollowhold')).toBe('hollowhold');
+  });
+
+  it('should fail closed for an exercise without a hold-timer profile', () => {
+    // given / when / then
+    expect(holdTimerProfileForCatalogId('legs.squats')).toBeNull();
+  });
+
+  it('should fail closed for an unresolvable exercise', () => {
+    // given / when / then
+    expect(holdTimerProfileForCatalogId('not.a.real.exercise')).toBeNull();
   });
 });
 

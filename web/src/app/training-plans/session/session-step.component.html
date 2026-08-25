@@ -1,0 +1,92 @@
+<section class="step" [class.busy]="busy()">
+  <p class="step-position">
+    <span i18n="@@session.step.position"
+      >Übung {{ position() }} von {{ total() }}</span
+    >
+  </p>
+
+  <mat-icon class="step-icon" aria-hidden="true">{{ row().icon }}</mat-icon>
+  <h2 class="step-name">{{ row().name }}</h2>
+
+  @if (row().quantified) {
+    <p class="step-target">
+      <strong>{{ row().target }}</strong>
+    </p>
+    @if (row().sets) {
+      <p class="step-sets" i18n="@@session.step.sets">
+        Sätze: {{ row().sets }}
+      </p>
+    }
+  } @else {
+    <p class="step-target muted" i18n="@@session.step.unquantified">
+      nach Vorgabe
+    </p>
+  }
+
+  @if (hasProgress()) {
+    <div class="step-progress">
+      <mat-progress-bar mode="determinate" [value]="row().percent" />
+      <p class="step-logged" i18n="@@session.step.logged">
+        Bereits geschafft: {{ row().logged }} / {{ row().target }}
+      </p>
+    </div>
+  }
+
+  <div class="step-actions">
+    <button
+      mat-flat-button
+      class="step-primary"
+      data-testid="session-capture"
+      [disabled]="busy()"
+      (click)="capture.emit()"
+    >
+      <mat-icon>{{ toolIcon() }}</mat-icon>
+      {{ toolLabel() }}
+    </button>
+
+    @if (showByHand()) {
+      <button
+        mat-stroked-button
+        data-testid="session-by-hand"
+        [disabled]="busy()"
+        (click)="enterByHand.emit()"
+      >
+        <mat-icon>edit</mat-icon>
+        <span i18n="@@session.action.byHand">Eintragen</span>
+      </button>
+    }
+
+    @if (row().quantified) {
+      <button
+        mat-stroked-button
+        data-testid="session-log-prescribed"
+        [disabled]="busy()"
+        (click)="logAsPrescribed.emit()"
+      >
+        <mat-icon>playlist_add_check</mat-icon>
+        <span i18n="@@session.action.asPrescribed">Wie vorgegeben</span>
+      </button>
+    }
+  </div>
+
+  <div class="step-secondary">
+    <button
+      mat-button
+      data-testid="session-check-off"
+      [disabled]="busy()"
+      (click)="checkOff.emit()"
+    >
+      <mat-icon>check</mat-icon>
+      <span i18n="@@session.action.checkOff">Abhaken</span>
+    </button>
+    <button
+      mat-button
+      data-testid="session-skip"
+      [disabled]="busy()"
+      (click)="skip.emit()"
+    >
+      <mat-icon>skip_next</mat-icon>
+      <span i18n="@@session.action.skip">Überspringen</span>
+    </button>
+  </div>
+</section>

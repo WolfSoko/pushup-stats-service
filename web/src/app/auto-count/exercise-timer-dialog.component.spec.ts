@@ -1,6 +1,6 @@
 import { PLATFORM_ID, signal, type WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   type HoldFormCheckFrame,
   type HoldSnapshot,
@@ -212,5 +212,89 @@ describe('ExerciseTimerDialogComponent', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('should open on the hold the caller preselected', async () => {
+    // given
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { initialExerciseId: 'hollowhold' },
+        },
+      ],
+    });
+    const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+
+    // when
+    await fixture.componentInstance['onModeToggle'](true);
+    await flushAsync();
+
+    // then
+    expect(timer.startSpy).toHaveBeenCalledWith({ exerciseId: 'hollowhold' });
+  });
+
+  it('should render the prescribed target and flag it once the hold reaches it', async () => {
+    // given
+    TestBed.configureTestingModule({
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: { targetSec: 50 } }],
+    });
+    const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+    const component = fixture.componentInstance as unknown as {
+      targetMmSs: string;
+      targetReached: () => boolean;
+    };
+    fixture.detectChanges();
+    await flushAsync();
+    await fixture.componentInstance['onModeToggle'](true);
+    await flushAsync();
+
+    // when
+    timer.state.set({ totalMs: 50_000, phase: 'paused', segmentStartMs: null });
+    fixture.detectChanges();
+
+    // then
+    expect(component.targetMmSs).toBe('00:50');
+    expect(component.targetReached()).toBe(true);
+  });
+
+  it('should not flag the target while the hold is still short of it', async () => {
+    // given
+    TestBed.configureTestingModule({
+      providers: [{ provide: MAT_DIALOG_DATA, useValue: { targetSec: 50 } }],
+    });
+    const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+    const component = fixture.componentInstance as unknown as {
+      targetReached: () => boolean;
+    };
+    fixture.detectChanges();
+    await flushAsync();
+    await fixture.componentInstance['onModeToggle'](true);
+    await flushAsync();
+
+    // when
+    timer.state.set({ totalMs: 30_000, phase: 'paused', segmentStartMs: null });
+    fixture.detectChanges();
+
+    // then
+    expect(component.targetReached()).toBe(false);
+  });
+
+  it('should default to plank with no target when the caller passes no data', () => {
+    // given
+    const fixture = TestBed.createComponent(ExerciseTimerDialogComponent);
+    const component = fixture.componentInstance as unknown as {
+      targetSec: number;
+      exerciseId: () => string;
+    };
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    expect(component.exerciseId()).toBe('plank');
+    expect(component.targetSec).toBe(0);
   });
 });

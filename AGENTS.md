@@ -119,7 +119,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 
 | Area                                                                    | File                                                                                                                           |
 | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Library deps, ports/adapters, state mgmt, training plans                | [`docs/architecture.md`](docs/architecture.md)                                                                                 |
+| Library deps, ports/adapters, state mgmt, training plans + sessions     | [`docs/architecture.md`](docs/architecture.md)                                                                                 |
 | CI/CD, deploy gate, staging environment, Firestore rules                | [`docs/ci-cd.md`](docs/ci-cd.md)                                                                                               |
 | Cloud Functions overview + Admin Authorization                          | [`docs/cloud-functions.md`](docs/cloud-functions.md)                                                                           |
 | Translatable content workflow (blog & wiki)                             | [`docs/content-workflow.md`](docs/content-workflow.md)                                                                         |

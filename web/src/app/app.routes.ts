@@ -119,6 +119,15 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    // Ahead of `training-plans/:slug` so the session page wins the more
+    // specific URL instead of being swallowed by the detail route.
+    path: 'training-plans/:slug/session',
+    loadComponent: () =>
+      import('./training-plans/session/training-session.component').then(
+        (m) => m.TrainingSessionComponent
+      ),
+  },
+  {
     path: 'training-plans/:slug',
     loadComponent: () =>
       import('./training-plans/training-plan-detail.component').then(

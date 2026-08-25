@@ -239,6 +239,19 @@
                   (toggleExercise)="toggleExercise(row.day.dayIndex, $event)"
                   (resetExercise)="resetExercise(row.day.dayIndex, $event)"
                 />
+                @if (showSessionCta(row)) {
+                  <a
+                    mat-flat-button
+                    class="session-cta"
+                    data-testid="start-session"
+                    [routerLink]="sessionLink()"
+                  >
+                    <mat-icon>play_circle</mat-icon>
+                    <span i18n="@@trainingPlans.startSession"
+                      >Session starten</span
+                    >
+                  </a>
+                }
                 @if (row.pushupTypes.length > 0) {
                   <div class="pushup-types">
                     @for (type of row.pushupTypes; track type.slug) {

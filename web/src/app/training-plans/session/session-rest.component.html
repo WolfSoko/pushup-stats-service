@@ -1,0 +1,48 @@
+<section class="rest">
+  <p class="rest-label" i18n="@@session.rest.label">Pause</p>
+
+  <p class="rest-countdown" aria-live="polite">{{ countdown() }}</p>
+
+  <mat-progress-bar class="rest-bar" mode="determinate" [value]="percent()" />
+
+  @if (next(); as upcoming) {
+    <p class="rest-next">
+      <mat-icon aria-hidden="true">{{ upcoming.icon }}</mat-icon>
+      <span i18n="@@session.rest.next">Als Nächstes: {{ upcoming.name }}</span>
+      @if (upcoming.quantified) {
+        <strong>{{ upcoming.target }}</strong>
+      }
+    </p>
+  }
+
+  <div class="rest-actions">
+    <button
+      mat-stroked-button
+      data-testid="session-rest-shorten"
+      [attr.aria-label]="shortenLabel"
+      (click)="nudge.emit(-nudgeSec)"
+    >
+      <mat-icon>remove</mat-icon>
+      <span i18n="@@session.rest.shorten">{{ nudgeSec }} s</span>
+    </button>
+    <button
+      mat-stroked-button
+      data-testid="session-rest-extend"
+      [attr.aria-label]="extendLabel"
+      (click)="nudge.emit(nudgeSec)"
+    >
+      <mat-icon>add</mat-icon>
+      <span i18n="@@session.rest.extend">{{ nudgeSec }} s</span>
+    </button>
+  </div>
+
+  <button
+    mat-flat-button
+    class="rest-skip"
+    data-testid="session-skip-rest"
+    (click)="skipRest.emit()"
+  >
+    <mat-icon>play_arrow</mat-icon>
+    <span i18n="@@session.rest.continue">Weiter</span>
+  </button>
+</section>

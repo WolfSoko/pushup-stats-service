@@ -29,6 +29,20 @@ describe('serverRoutes', () => {
     }
   });
 
+  it('renders the guided session client-side, ahead of the prerendered detail route', () => {
+    // given
+    const sessionIndex = serverRoutes.findIndex(
+      (r) => r.path === 'training-plans/:slug/session'
+    );
+    const detailIndex = serverRoutes.findIndex(
+      (r) => r.path === 'training-plans/:slug'
+    );
+
+    // when / then — the deeper path must be matched first
+    expect(serverRoutes[sessionIndex]?.renderMode).toBe(RenderMode.Client);
+    expect(sessionIndex).toBeLessThan(detailIndex);
+  });
+
   it('prerenders training-plans/:slug for every catalog plan', async () => {
     const route = serverRoutes.find((r) => r.path === 'training-plans/:slug');
     expect(route).toBeDefined();

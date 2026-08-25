@@ -9,7 +9,11 @@ import {
 import {
   buildWeeks,
   formatSets,
+  loginParamsFor,
   messageForLogResult,
+  offersSession,
+  sessionLinkFor,
+  signupParamsFor,
   pushupTypeChipsForDay,
   PlanProgress,
 } from './training-plan-detail.helpers';
@@ -290,5 +294,112 @@ describe('messageForLogResult', () => {
     // given / when / then
     expect(messageForLogResult('in-flight')).toBeNull();
     expect(messageForLogResult('noop')).toBeNull();
+  });
+});
+
+describe('sessionLinkFor', () => {
+  it('should link to the plan session', () => {
+    // given / when / then
+    expect(sessionLinkFor('recruit-6w')).toEqual([
+      '/training-plans',
+      'recruit-6w',
+      'session',
+    ]);
+  });
+
+  it('should fall back to the plan index without a slug', () => {
+    // given / when / then
+    expect(sessionLinkFor(null)).toEqual(['/training-plans']);
+  });
+});
+
+describe('offersSession', () => {
+  function dayRow(overrides: Record<string, unknown> = {}) {
+    return {
+      day: { dayIndex: 2, kind: 'main', targetReps: 20, description: '' },
+      weekIndex: 0,
+      isToday: true,
+      isCompleted: false,
+      isSkipped: false,
+      isFuture: false,
+      isCheckoff: false,
+      exercises: [{ itemIndex: 0 }],
+      pushupTypes: [],
+      ...overrides,
+    } as unknown as Parameters<typeof offersSession>[0];
+  }
+
+  it('should offer a session on an open day of the active plan', () => {
+    // given / when / then
+    expect(offersSession(dayRow(), true)).toBe(true);
+  });
+
+  it('should not offer a session while the plan is inactive', () => {
+    // given / when / then
+    expect(offersSession(dayRow(), false)).toBe(false);
+  });
+
+  it('should not offer a session on a day other than today', () => {
+    // given / when / then
+    expect(offersSession(dayRow({ isToday: false }), true)).toBe(false);
+  });
+
+  it('should not offer a session on a completed day', () => {
+    // given / when / then
+    expect(offersSession(dayRow({ isCompleted: true }), true)).toBe(false);
+  });
+
+  it('should not offer a session on a skipped day', () => {
+    // given / when / then
+    expect(offersSession(dayRow({ isSkipped: true }), true)).toBe(false);
+  });
+
+  it('should not offer a session on a rest day', () => {
+    // given / when / then
+    expect(
+      offersSession(
+        dayRow({
+          day: { dayIndex: 3, kind: 'rest', targetReps: 0, description: '' },
+        }),
+        true
+      )
+    ).toBe(false);
+  });
+
+  it('should not offer a session on a day with nothing trackable', () => {
+    // given / when / then
+    expect(offersSession(dayRow({ exercises: [] }), true)).toBe(false);
+  });
+});
+
+describe('signupParamsFor', () => {
+  it('should return to the plan and auto-start it after signup', () => {
+    // given / when / then
+    expect(
+      signupParamsFor({ id: 'recruit-6w-v1', slug: 'recruit-6w' })
+    ).toEqual({
+      planId: 'recruit-6w-v1',
+      returnUrl: '/training-plans/recruit-6w?autoStart=1',
+    });
+  });
+
+  it('should fall back to the plan index without a plan', () => {
+    // given / when / then
+    expect(signupParamsFor(null)).toEqual({ returnUrl: '/training-plans' });
+  });
+});
+
+describe('loginParamsFor', () => {
+  it('should return to the plan without auto-starting it', () => {
+    // given / when
+    const params = loginParamsFor({ slug: 'recruit-6w' });
+
+    // then — no autoStart: the user may already have another plan active
+    expect(params).toEqual({ returnUrl: '/training-plans/recruit-6w' });
+  });
+
+  it('should fall back to the plan index without a plan', () => {
+    // given / when / then
+    expect(loginParamsFor(null)).toEqual({ returnUrl: '/training-plans' });
   });
 });

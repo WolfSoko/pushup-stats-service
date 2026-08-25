@@ -1,6 +1,11 @@
 packages:
   - 'data-store/functions'
 
+overrides:
+  websocket-driver: '>=0.7.5'
+  tar: '>=7.5.19'
+  '@vitest/browser': '>=4.1.10'
+
 allowBuilds:
   '@firebase/util': true
   '@nestjs/core': true
