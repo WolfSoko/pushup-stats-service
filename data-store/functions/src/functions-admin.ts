@@ -1,4 +1,5 @@
-import * as admin from 'firebase-admin';
+import { getAuth, type UserRecord } from 'firebase-admin/auth';
+import { FieldPath } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
@@ -26,10 +27,10 @@ export const adminListUsers = onCall(
   async (request) => {
     assertAdmin(request);
 
-    const authUsers: admin.auth.UserRecord[] = [];
+    const authUsers: UserRecord[] = [];
     let pageToken: string | undefined;
     do {
-      const result = await admin.auth().listUsers(1000, pageToken);
+      const result = await getAuth().listUsers(1000, pageToken);
       authUsers.push(...result.users);
       pageToken = result.pageToken;
     } while (pageToken);
@@ -40,7 +41,7 @@ export const adminListUsers = onCall(
       const batch = uids.slice(i, i + 10);
       const snaps = await db
         .collection('userConfigs')
-        .where(admin.firestore.FieldPath.documentId(), 'in', batch)
+        .where(FieldPath.documentId(), 'in', batch)
         .get();
       for (const snap of snaps.docs) {
         configMap.set(snap.id, snap.data());
@@ -86,7 +87,7 @@ export const adminDeleteUser = onCall(
       );
     }
 
-    await admin.auth().deleteUser(uid);
+    await getAuth().deleteUser(uid);
 
     if (anonymize) {
       await db
@@ -163,7 +164,7 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
     const anonymousUsers: string[] = [];
     let pageToken: string | undefined;
     do {
-      const result = await admin.auth().listUsers(1000, pageToken);
+      const result = await getAuth().listUsers(1000, pageToken);
       for (const user of result.users) {
         if (user.providerData.length === 0 && user.uid !== DEMO_USER_ID) {
           anonymousUsers.push(user.uid);
@@ -196,7 +197,7 @@ export const adminBulkDeleteInactiveAnonymous = onCall(
         continue;
       }
 
-      await admin.auth().deleteUser(uid);
+      await getAuth().deleteUser(uid);
       await db.collection('userConfigs').doc(uid).delete();
       await deleteUserExerciseData(uid);
 
