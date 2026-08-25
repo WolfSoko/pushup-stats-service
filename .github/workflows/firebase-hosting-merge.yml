@@ -76,9 +76,13 @@ jobs:
       # --ignore-scripts skips postinstalls (e.g. @firebase/util, protobufjs)
       # which under CI=true would otherwise fail with ERR_PNPM_IGNORED_BUILDS;
       # we only need module resolution here — Cloud Build reinstalls in GCF.
+      # --no-frozen-lockfile: the lockfile was just generated in the build
+      # step above, but --ignore-workspace hides the root pnpm-workspace.yaml
+      # `overrides` from pnpm's config, so a frozen install here always trips
+      # ERR_PNPM_LOCKFILE_CONFIG_MISMATCH even though nothing actually drifted.
       - name: Install Cloud Functions runtime dependencies
         working-directory: data-store/functions-dist
-        run: pnpm install --frozen-lockfile --ignore-workspace --ignore-scripts
+        run: pnpm install --no-frozen-lockfile --ignore-workspace --ignore-scripts
       - name: Upload source maps to Sentry
         # Scope the secret to this step only — script no-ops if the env is empty,
         # so we don't need an explicit `if:` guard.
