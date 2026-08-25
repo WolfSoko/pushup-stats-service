@@ -240,7 +240,7 @@
                     data-testid="day-toggle"
                     [attr.aria-expanded]="dayExpansion.isExpanded(row)"
                     [attr.aria-label]="detailsLabel"
-                    (click)="dayExpansion.toggle(row.day.dayIndex)"
+                    (click)="dayExpansion.toggle(row)"
                   >
                     <mat-icon>{{
                       dayExpansion.isExpanded(row)

@@ -7,22 +7,28 @@ import { DayRow } from './training-plan-detail.models';
  *
  * A finished day is a record, not a to-do: it collapses to its title so
  * the weeks stay scannable, while everything still open stays expanded.
- * Only the days the user actually clicked are tracked — the default
- * follows `isCompleted`, so a day closing mid-visit folds itself away
- * without the list having to be re-seeded.
+ *
+ * A click stores the row's *absolute* state, not a flip of the default.
+ * Storing the flip would tie the row to `isCompleted`: unchecking an
+ * exercise inside a finished day the user just opened would snap it shut
+ * under their hands, and ticking off the last exercise of a row they
+ * collapsed would spring it back open.
  */
 export function planDayExpansion() {
-  const toggled = signal<ReadonlySet<number>>(new Set<number>());
+  const chosen = signal<ReadonlyMap<number, boolean>>(
+    new Map<number, boolean>()
+  );
+
+  function isExpanded(row: DayRow): boolean {
+    return chosen().get(row.day.dayIndex) ?? !row.isCompleted;
+  }
 
   return {
-    isExpanded(row: DayRow): boolean {
-      const openByDefault = !row.isCompleted;
-      return toggled().has(row.day.dayIndex) ? !openByDefault : openByDefault;
-    },
-    toggle(dayIndex: number): void {
-      const next = new Set(toggled());
-      if (!next.delete(dayIndex)) next.add(dayIndex);
-      toggled.set(next);
+    isExpanded,
+    toggle(row: DayRow): void {
+      const next = new Map(chosen());
+      next.set(row.day.dayIndex, !isExpanded(row));
+      chosen.set(next);
     },
   };
 }

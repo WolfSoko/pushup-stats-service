@@ -746,6 +746,21 @@ describe('TrainingPlanDetailComponent', () => {
       ).toBe('/training-plans/full-body-6w/session');
     });
 
+    it('should keep today in the week list as well as in the card', async () => {
+      // given — "auch ganz oben": the card repeats today, it doesn't move it
+      const store = activeStore();
+
+      // when
+      await renderWithStore(store);
+
+      // then
+      const todayRows = document.querySelectorAll('.day-row.today');
+      expect(todayRows.length).toBe(1);
+      expect(
+        document.querySelector('[data-testid="plan-today-card"]')
+      ).toBeTruthy();
+    });
+
     it('should collapse a finished day and keep the open ones expanded', async () => {
       // given — day 1 is done, day 2 is today and still open
       const store = activeStore();

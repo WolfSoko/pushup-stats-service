@@ -61,7 +61,7 @@ export function weeksFor(
   );
 }
 
-/** Today's row, for the card the plan page puts above the week list. */
+/** Today's row, for the card the plan page repeats above the week list. */
 export function todayRowOf(weeks: ReadonlyArray<DayWeek>): DayRow | null {
   return weeks.flatMap((w) => w.rows).find((r) => r.isToday) ?? null;
 }

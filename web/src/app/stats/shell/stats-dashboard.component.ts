@@ -208,11 +208,18 @@ export class StatsDashboardComponent {
    * Whether the banner offers the guided session — the same condition the
    * plan page's CTA uses: a session walks today's prescription, and only
    * while something on it is still open.
+   *
+   * `planTodayFulfilled` alone isn't that condition: it reads
+   * `planDayProgress`, which knows nothing about `completedDays` /
+   * `skippedDays`, so a day ticked off or skipped as a whole would still
+   * look open here while the plan page has already closed it.
    */
   readonly offersSession = computed(
     () =>
       this.planActive() &&
       !this.isPlanRestDay() &&
+      !this.trainingPlans.todayDone() &&
+      !this.trainingPlans.todaySkipped() &&
       !this.planTodayFulfilled() &&
       this.planTodayExerciseRows().length > 0
   );

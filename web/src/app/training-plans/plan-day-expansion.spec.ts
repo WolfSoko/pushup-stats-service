@@ -37,7 +37,7 @@ describe('planDayExpansion', () => {
     const expansion = planDayExpansion();
 
     // when
-    expansion.toggle(1);
+    expansion.toggle(row(1, true));
 
     // then
     expect(expansion.isExpanded(row(1, true))).toBe(true);
@@ -48,7 +48,7 @@ describe('planDayExpansion', () => {
     const expansion = planDayExpansion();
 
     // when
-    expansion.toggle(2);
+    expansion.toggle(row(2));
 
     // then
     expect(expansion.isExpanded(row(2))).toBe(false);
@@ -59,11 +59,30 @@ describe('planDayExpansion', () => {
     const expansion = planDayExpansion();
 
     // when
-    expansion.toggle(1);
-    expansion.toggle(1);
+    expansion.toggle(row(1, true));
+    expansion.toggle(row(1, true));
 
     // then
     expect(expansion.isExpanded(row(1, true))).toBe(false);
+  });
+
+  it('should hold a day the user opened open when it stops counting as completed', () => {
+    // given — the user opened a finished day and unticks an exercise in it
+    const expansion = planDayExpansion();
+    expansion.toggle(row(1, true));
+
+    // when the day is no longer completed
+    // then it must not snap shut under the user's hands
+    expect(expansion.isExpanded(row(1))).toBe(true);
+  });
+
+  it('should keep a day the user collapsed shut when it becomes completed', () => {
+    // given — the user collapsed an open day and then finishes it
+    const expansion = planDayExpansion();
+    expansion.toggle(row(2));
+
+    // when / then
+    expect(expansion.isExpanded(row(2, true))).toBe(false);
   });
 
   it('should track each day on its own', () => {
@@ -71,7 +90,7 @@ describe('planDayExpansion', () => {
     const expansion = planDayExpansion();
 
     // when
-    expansion.toggle(1);
+    expansion.toggle(row(1, true));
 
     // then
     expect(expansion.isExpanded(row(1, true))).toBe(true);

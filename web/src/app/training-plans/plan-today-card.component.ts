@@ -17,13 +17,14 @@ import {
 import { DayRow } from './training-plan-detail.models';
 
 /**
- * Today's plan day, lifted to the top of the plan page.
+ * Today's plan day, repeated at the top of the plan page.
  *
- * The week list below is a reference for the whole plan; this card is
- * what the user came for on a training day — the prescription, its live
- * progress, and the way into the guided session — without scrolling for
- * it. It renders the same exercise list as the day row and forwards the
- * same events, so both stay one behavior.
+ * The week list below stays complete — today keeps its row there — so the
+ * plan still reads as a whole. This card is the shortcut: the
+ * prescription, its live progress and the way into the guided session,
+ * without scrolling for them. It renders the same exercise list as the
+ * day row and forwards the same events, so ticking an exercise off in
+ * either place does the same thing and both update together.
  */
 @Component({
   selector: 'app-plan-today-card',

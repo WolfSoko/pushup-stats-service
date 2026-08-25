@@ -149,7 +149,7 @@ export class TrainingPlanDetailComponent {
   /** Collapse state of the week list's day rows. */
   protected readonly dayExpansion = planDayExpansion();
 
-  /** Today's row, lifted out of the week list for the card at the top. */
+  /** Today's row, repeated by the card above the week list. */
   readonly todayRow = computed(() => todayRowOf(this.weeks()));
 
   protected readonly showSessionCta = (row: DayRow): boolean =>
