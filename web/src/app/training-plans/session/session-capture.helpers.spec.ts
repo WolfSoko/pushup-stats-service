@@ -23,7 +23,13 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     logged: 0,
     quantified: true,
     done: false,
+    roundIndex: 0,
+    roundTotal: 1,
+    finalRound: true,
     ...overrides,
+    // A sequential step always asks for its whole target; deriving it
+    // keeps a fixture that overrides `target` internally consistent.
+    roundTarget: overrides.roundTarget ?? overrides.target ?? 15,
   };
 }
 

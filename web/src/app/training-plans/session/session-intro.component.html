@@ -25,6 +25,55 @@
     }
   </ol>
 
+  <div class="intro-mode">
+    <p class="intro-mode-label" id="session-mode-label">
+      <mat-icon aria-hidden="true">repeat</mat-icon>
+      <span i18n="@@session.intro.modeLabel">Ablauf</span>
+    </p>
+    <mat-button-toggle-group
+      class="intro-mode-group"
+      aria-labelledby="session-mode-label"
+      [value]="mode()"
+      (change)="modeChange.emit($event.value)"
+    >
+      <mat-button-toggle
+        value="sequential"
+        data-testid="session-mode-sequential"
+      >
+        <mat-icon>format_list_numbered</mat-icon>
+        <span i18n="@@session.intro.modeSequential">Übung für Übung</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="circuit" data-testid="session-mode-circuit">
+        <mat-icon>autorenew</mat-icon>
+        <span i18n="@@session.intro.modeCircuit">Zirkeltraining</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    @if (mode() === 'circuit') {
+      @if (roundTotal() > 1) {
+        <p
+          class="intro-mode-hint"
+          data-testid="session-mode-hint"
+          i18n="@@session.intro.modeCircuitHint"
+        >
+          {{ roundTotal() }} Runden: pro Runde ein Satz jeder Übung, dann von
+          vorn.
+        </p>
+      } @else {
+        <p
+          class="intro-mode-hint"
+          data-testid="session-mode-hint"
+          i18n="@@session.intro.modeCircuitSingleRound"
+        >
+          Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde.
+        </p>
+      }
+    } @else {
+      <p class="intro-mode-hint" i18n="@@session.intro.modeSequentialHint">
+        Eine Übung komplett abschließen, dann die nächste.
+      </p>
+    }
+  </div>
+
   <div class="intro-rest">
     <label class="intro-rest-label" for="session-rest-slider">
       <mat-icon aria-hidden="true">hourglass_bottom</mat-icon>

@@ -14,7 +14,9 @@ import {
   DEFAULT_SNAP_QUALITY,
   legacyNumericGoalToEntries,
   normalizeRestSec,
+  normalizeSessionMode,
   QuickAddConfig,
+  type SessionMode,
   SnapQuality,
   sumRepsTarget,
   UserConfig,
@@ -145,6 +147,10 @@ export const UserConfigStore = signalStore(
       sessionRestSec: computed<number>(() =>
         normalizeRestSec(store.configResource.value()?.ui?.sessionRestSec)
       ),
+      /** Sequential or circuit ordering for guided training sessions. */
+      sessionMode: computed<SessionMode>(() =>
+        normalizeSessionMode(store.configResource.value()?.ui?.sessionMode)
+      ),
     };
   }),
   withMethods((store) => ({
@@ -192,6 +198,19 @@ export const UserConfigStore = signalStore(
       await firstValueFrom(
         store._api.updateConfig(userId, {
           ui: { ...ui, sessionRestSec: normalizeRestSec(seconds) },
+        })
+      );
+      store.configResource.reload();
+    },
+    /** Persist the guided-session ordering. Same read-modify-write of the
+     *  whole `ui` map as {@link saveSessionRestSec}. */
+    async saveSessionMode(mode: SessionMode): Promise<void> {
+      const userId = store._user.userIdSafe();
+      if (!userId) return;
+      const ui = store.configResource.value()?.ui ?? {};
+      await firstValueFrom(
+        store._api.updateConfig(userId, {
+          ui: { ...ui, sessionMode: normalizeSessionMode(mode) },
         })
       );
       store.configResource.reload();

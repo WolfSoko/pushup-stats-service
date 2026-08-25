@@ -10,6 +10,9 @@ function row(overrides: Partial<SessionStepRow> = {}): SessionStepRow {
     name: 'Liegestütze',
     icon: 'fitness_center',
     target: '15',
+    roundTarget: '15',
+    round: 1,
+    roundTotal: 1,
     logged: '0',
     sets: '',
     percent: 0,
@@ -174,5 +177,24 @@ describe('SessionStepComponent', () => {
     // then
     expect(byTestId('session-capture').hasAttribute('disabled')).toBe(true);
     expect(byTestId('session-skip').hasAttribute('disabled')).toBe(true);
+  });
+
+  it('should show the round instead of the exercise position in a circuit', async () => {
+    // given / when
+    await setup({ round: 2, roundTotal: 3, roundTarget: '10', target: '20' });
+
+    // then
+    expect(byTestId('session-step-round').textContent).toContain(
+      'Runde 2 von 3'
+    );
+    expect(screen.queryByText(/Übung 2 von 3/)).toBeNull();
+  });
+
+  it('should ask for the round portion, not the whole day', async () => {
+    // given / when
+    await setup({ round: 2, roundTotal: 3, roundTarget: '10', target: '20' });
+
+    // then
+    expect(screen.getByText('10')).toBeTruthy();
   });
 });

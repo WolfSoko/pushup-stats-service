@@ -10592,9 +10592,57 @@
         <source>Übung zurücksetzen</source>
       </segment>
     </unit>
+    <unit id="session.intro.modeLabel">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:31,33</note>
+      </notes>
+      <segment>
+        <source>Ablauf</source>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeSequential">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:41,43</note>
+      </notes>
+      <segment>
+        <source>Übung für Übung</source>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeCircuit">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:45,47</note>
+      </notes>
+      <segment>
+        <source>Zirkeltraining</source>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeCircuitHint">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:51,53</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </source>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeCircuitSingleRound">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:56,60</note>
+      </notes>
+      <segment>
+        <source> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </source>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeSequentialHint">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:61,66</note>
+      </notes>
+      <segment>
+        <source> Eine Übung komplett abschließen, dann die nächste. </source>
+      </segment>
+    </unit>
     <unit id="session.intro.restLabel">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-intro.component.html:31,32</note>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:69,70</note>
       </notes>
       <segment>
         <source>Pause zwischen den Übungen</source>
@@ -10602,7 +10650,7 @@
     </unit>
     <unit id="session.intro.restHint">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-intro.component.html:44,49</note>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:82,87</note>
       </notes>
       <segment>
         <source> Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung sofort. </source>
@@ -10610,7 +10658,7 @@
     </unit>
     <unit id="session.intro.start">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-intro.component.html:56,59</note>
+        <note category="location">web/src/app/training-plans/session/session-intro.component.html:94,97</note>
       </notes>
       <segment>
         <source>Los geht&apos;s</source>
@@ -10672,9 +10720,25 @@
         <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</source>
       </segment>
     </unit>
+    <unit id="session.step.round">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:5,7</note>
+      </notes>
+      <segment>
+        <source>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></source>
+      </segment>
+    </unit>
+    <unit id="session.step.stepPosition">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:8,10</note>
+      </notes>
+      <segment>
+        <source>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
+      </segment>
+    </unit>
     <unit id="session.step.position">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:4,6</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:12,14</note>
       </notes>
       <segment>
         <source>Übung <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
@@ -10682,7 +10746,7 @@
     </unit>
     <unit id="session.step.sets">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:17,20</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:26,29</note>
       </notes>
       <segment>
         <source> Sätze: <ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </source>
@@ -10690,7 +10754,7 @@
     </unit>
     <unit id="session.step.unquantified">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:22,26</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:31,35</note>
       </notes>
       <segment>
         <source> nach Vorgabe </source>
@@ -10698,7 +10762,7 @@
     </unit>
     <unit id="session.step.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:30,32</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:39,41</note>
       </notes>
       <segment>
         <source> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().target }}"/> </source>
@@ -10706,7 +10770,7 @@
     </unit>
     <unit id="session.action.byHand">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:55,59</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:64,68</note>
       </notes>
       <segment>
         <source>Eintragen</source>
@@ -10714,7 +10778,7 @@
     </unit>
     <unit id="session.action.asPrescribed">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:67,72</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:76,81</note>
       </notes>
       <segment>
         <source>Wie vorgegeben</source>
@@ -10722,7 +10786,7 @@
     </unit>
     <unit id="session.action.checkOff">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:80,83</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:89,92</note>
       </notes>
       <segment>
         <source>Abhaken</source>
@@ -10730,7 +10794,7 @@
     </unit>
     <unit id="session.action.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/session/session-step.component.html:89,92</note>
+        <note category="location">web/src/app/training-plans/session/session-step.component.html:98,101</note>
       </notes>
       <segment>
         <source>Überspringen</source>
@@ -10801,9 +10865,17 @@
         <source> Heute steht nichts an — Ruhetag. Genieß ihn. </source>
       </segment>
     </unit>
+    <unit id="session.progressSteps">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:48,50</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </source>
+      </segment>
+    </unit>
     <unit id="session.progress">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:47,49</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:53,55</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </source>
@@ -10811,15 +10883,23 @@
     </unit>
     <unit id="session.done.title">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:92,94</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:102,104</note>
       </notes>
       <segment>
         <source> Session geschafft </source>
       </segment>
     </unit>
+    <unit id="session.done.textSteps">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:106,108</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </source>
+      </segment>
+    </unit>
     <unit id="session.done.text">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:95,97</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:111,113</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </source>
@@ -10827,7 +10907,7 @@
     </unit>
     <unit id="session.done.action">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:105,107</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:122,124</note>
       </notes>
       <segment>
         <source>Zum Plan</source>
@@ -10835,7 +10915,7 @@
     </unit>
     <unit id="session.done.reopen">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:110,112</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:127,129</note>
       </notes>
       <segment>
         <source>Offene Übungen ansehen</source>
@@ -10843,7 +10923,7 @@
     </unit>
     <unit id="session.unknownPlan">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:121,123</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:138,140</note>
       </notes>
       <segment>
         <source> Diesen Plan gibt es nicht. </source>
@@ -10851,7 +10931,7 @@
     </unit>
     <unit id="session.toPlans">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.html:125,127</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.html:142,144</note>
       </notes>
       <segment>
         <source>Zu den Trainingsplänen</source>
@@ -10867,7 +10947,7 @@
     </unit>
     <unit id="session.notLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/session/training-session.component.ts:194</note>
+        <note category="location">web/src/app/training-plans/session/training-session.component.ts:210</note>
       </notes>
       <segment>
         <source>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</source>
