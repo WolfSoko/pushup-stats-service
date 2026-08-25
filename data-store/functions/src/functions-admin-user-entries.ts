@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import {
@@ -88,12 +88,12 @@ function buildEntryUpdate(patch: AdminEntryPatch): Record<string, unknown> {
   for (const f of ['sets', 'intervals'] as const) {
     const v = patch[f];
     if (v === undefined) continue;
-    update[f] = v.length === 0 ? admin.firestore.FieldValue.delete() : v;
+    update[f] = v.length === 0 ? FieldValue.delete() : v;
   }
   if (patch.variantId !== undefined) {
     update.variantId =
       patch.variantId === null || patch.variantId === ''
-        ? admin.firestore.FieldValue.delete()
+        ? FieldValue.delete()
         : patch.variantId;
   }
   if (patch.source !== undefined) update.source = patch.source;

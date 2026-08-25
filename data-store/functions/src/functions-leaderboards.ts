@@ -3,7 +3,7 @@ import {
   type ExerciseDefinition,
   type MeasurementType,
 } from '@pu-stats/models';
-import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
@@ -215,7 +215,7 @@ async function rebuildExerciseLeaderboardsCore(opts: {
     .collection('leaderboards')
     .doc('exercises')
     .set({
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
       timezone: TZ,
       keys: {
         daily: todayKey,

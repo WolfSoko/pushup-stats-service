@@ -5,9 +5,9 @@
 // a deployed function. Keep this file export-only.
 //
 // `./firebase-app` MUST be imported first: it owns the side-effectful
-// `Sentry.init()` + `admin.initializeApp()` and exports the shared `db`
+// `Sentry.init()` + `initializeApp()` and exports the shared `db`
 // handle. Importing it ahead of the trigger modules guarantees init runs
-// before any module evaluates `admin.firestore()`.
+// before any module evaluates `getFirestore()`.
 import './firebase-app';
 
 export {

@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/node';
-import * as admin from 'firebase-admin';
+import { initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
 // Side-effectful initialization. This module is the single owner of
-// `Sentry.init` + `admin.initializeApp()` and MUST be imported (directly or
-// transitively) before any code that calls `admin.firestore()`. Every trigger
+// `Sentry.init` + `initializeApp()` and MUST be imported (directly or
+// transitively) before any code that calls `getFirestore()`. Every trigger
 // module imports `db` from here, which guarantees the init runs first because
 // ES module evaluation resolves this module's top-level statements before the
 // importing module's body.
@@ -14,8 +15,8 @@ Sentry.init({
   tracesSampleRate: 0.1,
 });
 
-admin.initializeApp();
+initializeApp();
 
-export const db = admin.firestore();
+export const db = getFirestore();
 export const TZ = 'Europe/Berlin';
 export const DEMO_USER_ID = '9CrETSHzoKcPPw0ctHKM1OiyRrp2';

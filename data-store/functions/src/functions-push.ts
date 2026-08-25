@@ -1,5 +1,5 @@
 import { normalizeReminderLocale } from '@pu-stats/models';
-import * as admin from 'firebase-admin';
+import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { defineSecret } from 'firebase-functions/params';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
@@ -258,8 +258,7 @@ export const dispatchPushReminders = onSchedule(
           .get();
         const userConfigData = userConfigSnap.data() ?? {};
         const reminder = userConfigData.reminder as
-          | Partial<ReminderConfig>
-          | undefined;
+          Partial<ReminderConfig> | undefined;
         // Prefer the explicit top-level `locale` written by recent clients.
         // Fall back to the legacy `reminder.language` field on docs created
         // before that field migrated up — without this, a user who set
@@ -301,7 +300,7 @@ export const dispatchPushReminders = onSchedule(
               dispatchRef,
               {
                 inProgress: false,
-                leaseAcquiredAt: admin.firestore.FieldValue.delete(),
+                leaseAcquiredAt: FieldValue.delete(),
               },
               { merge: true }
             );
@@ -314,7 +313,7 @@ export const dispatchPushReminders = onSchedule(
             {
               uid,
               inProgress: true,
-              leaseAcquiredAt: admin.firestore.FieldValue.serverTimestamp(),
+              leaseAcquiredAt: FieldValue.serverTimestamp(),
             },
             { merge: true }
           );
@@ -423,11 +422,10 @@ export const dispatchPushReminders = onSchedule(
           // lastSentAt write can't leave the lease open for duplicate sends.
           const releaseData: Record<string, unknown> = {
             inProgress: false,
-            leaseAcquiredAt: admin.firestore.FieldValue.delete(),
+            leaseAcquiredAt: FieldValue.delete(),
           };
           if (sentToUser) {
-            releaseData['lastSentAt'] =
-              admin.firestore.FieldValue.serverTimestamp();
+            releaseData['lastSentAt'] = FieldValue.serverTimestamp();
           }
           await dispatchRef
             .set(releaseData, { merge: true })
@@ -470,16 +468,14 @@ export const snoozeReminder = onCall(
     }
 
     const snoozeMs = snoozeMinutes * 60 * 1000;
-    const snoozeUntil = admin.firestore.Timestamp.fromMillis(
-      Date.now() + snoozeMs
-    );
+    const snoozeUntil = Timestamp.fromMillis(Date.now() + snoozeMs);
 
     const dispatchRef = db.collection('reminderDispatchState').doc(uid);
     await dispatchRef.set(
       {
         snoozedUntil: snoozeUntil,
         uid,
-        snoozedAt: admin.firestore.FieldValue.serverTimestamp(),
+        snoozedAt: FieldValue.serverTimestamp(),
         snoozeMinutes,
         inProgress: false,
       },
