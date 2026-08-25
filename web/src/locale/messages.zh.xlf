@@ -10473,285 +10473,285 @@
       </segment>
     </unit>
     <unit id="exerciseTimer.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></source>
-        <target>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></target>
+        <target>目标:<ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></target>
       </segment>
     </unit>
     <unit id="session.intro.restLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause zwischen den Übungen</source>
-        <target>Pause zwischen den Übungen</target>
+        <target>训练间的休息</target>
       </segment>
     </unit>
     <unit id="session.intro.restHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung sofort. </source>
-        <target> Gilt auch für deine nächsten Sessions. 0 s startet die nächste Übung sofort. </target>
+        <target> 同样适用于你之后的训练。0 秒表示立即开始下一个动作。 </target>
       </segment>
     </unit>
     <unit id="session.intro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Los geht&apos;s</source>
-        <target>Los geht&apos;s</target>
+        <target>开始吧</target>
       </segment>
     </unit>
     <unit id="session.rest.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
-        <target>Pause</target>
+        <target>休息</target>
       </segment>
     </unit>
     <unit id="session.rest.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Nächstes: <ph id="0" equiv="INTERPOLATION" disp="{{ upcoming.name }}"/></source>
-        <target>Als Nächstes: <ph id="0" equiv="INTERPOLATION" disp="{{ upcoming.name }}"/></target>
+        <target>接下来:<ph id="0" equiv="INTERPOLATION" disp="{{ upcoming.name }}"/></target>
       </segment>
     </unit>
     <unit id="session.rest.shorten">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> 秒</target>
       </segment>
     </unit>
     <unit id="session.rest.extend">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> s</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ nudgeSec }}"/> 秒</target>
       </segment>
     </unit>
     <unit id="session.rest.continue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>继续</target>
       </segment>
     </unit>
     <unit id="session.step.position">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
-        <target>Übung <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
+        <target>动作 <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
       </segment>
     </unit>
         <unit id="session.step.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source> Sätze: <ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </source>
-        <target> Sätze: <ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </target>
+        <target> 组数:<ph id="0" equiv="INTERPOLATION" disp="{{ row().sets }}"/> </target>
       </segment>
     </unit>
     <unit id="session.step.unquantified">
-      <segment state="initial">
+      <segment state="translated">
         <source> nach Vorgabe </source>
-        <target> nach Vorgabe </target>
+        <target> 按要求 </target>
       </segment>
     </unit>
-        <unit id="session.step.logged">
-      <segment state="initial">
-        <source> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTarget }}"/> </source>
-        <target> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTarget }}"/> </target>
+    <unit id="session.step.logged">
+      <segment state="translated">
+        <source> Bereits geschafft: <ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().target }}"/> </source>
+        <target> 已完成:<ph id="0" equiv="INTERPOLATION" disp="{{ row().logged }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().target }}"/> </target>
       </segment>
     </unit>
     <unit id="session.action.byHand">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen</source>
-        <target>Eintragen</target>
+        <target>手动记录</target>
       </segment>
     </unit>
     <unit id="session.action.asPrescribed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wie vorgegeben</source>
-        <target>Wie vorgegeben</target>
+        <target>按要求</target>
       </segment>
     </unit>
     <unit id="session.action.checkOff">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abhaken</source>
-        <target>Abhaken</target>
+        <target>打勾完成</target>
       </segment>
     </unit>
     <unit id="session.action.skip">
-      <segment state="initial">
+      <segment state="translated">
         <source>Überspringen</source>
-        <target>Überspringen</target>
+        <target>跳过</target>
       </segment>
     </unit>
     <unit id="session.tool.autoCount">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mit Kamera zählen</source>
-        <target>Mit Kamera zählen</target>
+        <target>用相机计数</target>
       </segment>
     </unit>
     <unit id="session.tool.holdTimer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Timer starten</source>
-        <target>Timer starten</target>
+        <target>开始计时</target>
       </segment>
     </unit>
     <unit id="session.tool.manual">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen</source>
-        <target>Eintragen</target>
+        <target>手动记录</target>
       </segment>
     </unit>
     <unit id="session.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ p.title }}"/></source>
-        <target>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ p.title }}"/></target>
+        <target>训练 · <ph id="0" equiv="INTERPOLATION" disp="{{ p.title }}"/></target>
       </segment>
     </unit>
         <unit id="session.loading">
-      <segment state="initial">
+      <segment state="translated">
         <source> Session wird geladen … </source>
-        <target> Session wird geladen … </target>
+        <target>正在加载训练…</target>
       </segment>
     </unit>
     <unit id="session.inactivePlan">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für eine geführte Session muss dieser Plan aktiv sein. </source>
-        <target> Für eine geführte Session muss dieser Plan aktiv sein. </target>
+        <target>此计划需处于启用状态才能开始引导训练。</target>
       </segment>
     </unit>
     <unit id="session.toPlan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Plan</source>
-        <target>Zum Plan</target>
+        <target>前往计划</target>
       </segment>
     </unit>
     <unit id="session.restDay">
-      <segment state="initial">
+      <segment state="translated">
         <source> Heute steht nichts an — Ruhetag. Genieß ihn. </source>
-        <target> Heute steht nichts an — Ruhetag. Genieß ihn. </target>
+        <target>今天没有安排——休息日,好好享受吧。</target>
       </segment>
     </unit>
     <unit id="session.progress">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </target>
+        <target>已完成 <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> 个动作</target>
       </segment>
     </unit>
     <unit id="session.done.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Session geschafft </source>
-        <target> Session geschafft </target>
+        <target>训练完成</target>
       </segment>
     </unit>
     <unit id="session.done.text">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </target>
+        <target>已记录 <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> / <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> 个动作。</target>
       </segment>
     </unit>
     <unit id="session.done.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Plan</source>
-        <target>Zum Plan</target>
+        <target>前往计划</target>
       </segment>
     </unit>
     <unit id="session.done.reopen">
-      <segment state="initial">
+      <segment state="translated">
         <source>Offene Übungen ansehen</source>
-        <target>Offene Übungen ansehen</target>
+        <target>查看未完成的动作</target>
       </segment>
     </unit>
     <unit id="session.unknownPlan">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diesen Plan gibt es nicht. </source>
-        <target> Diesen Plan gibt es nicht. </target>
+        <target>此计划不存在。</target>
       </segment>
     </unit>
     <unit id="session.toPlans">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Trainingsplänen</source>
-        <target>Zu den Trainingsplänen</target>
+        <target>前往训练计划</target>
       </segment>
     </unit>
     <unit id="session.close">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session beenden</source>
-        <target>Session beenden</target>
+        <target>结束训练</target>
       </segment>
     </unit>
     <unit id="session.notLogged">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</source>
-        <target>Konnte nicht eingetragen werden. Versuch es gleich nochmal.</target>
+        <target>无法记录,请稍后重试。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.startSession">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session starten</source>
-        <target>Session starten</target>
+        <target>开始训练</target>
       </segment>
     </unit>
     <unit id="session.rest.shortenAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verkürzen</source>
-        <target>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verkürzen</target>
+        <target>将休息缩短 <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> 秒</target>
       </segment>
     </unit>
     <unit id="session.rest.extendAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</source>
-        <target>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</target>
+        <target>将休息延长 <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> 秒</target>
       </segment>
     </unit>
     <unit id="session.intro.modeLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ablauf</source>
-        <target>Ablauf</target>
+        <target>流程</target>
       </segment>
     </unit>
     <unit id="session.intro.modeSequential">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung für Übung</source>
-        <target>Übung für Übung</target>
+        <target>逐个动作完成</target>
       </segment>
     </unit>
     <unit id="session.intro.modeCircuit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkeltraining</source>
-        <target>Zirkeltraining</target>
+        <target>循环训练</target>
       </segment>
     </unit>
     <unit id="session.intro.modeCircuitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </target>
+        <target> 共 <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> 轮：每轮完成每个动作各一组，然后从头开始。 </target>
       </segment>
     </unit>
     <unit id="session.intro.modeCircuitSingleRound">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </source>
-        <target> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </target>
+        <target> 这一天没有设定组数——只进行一轮。 </target>
       </segment>
     </unit>
     <unit id="session.intro.modeSequentialHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Eine Übung komplett abschließen, dann die nächste. </source>
-        <target> Eine Übung komplett abschließen, dann die nächste. </target>
+        <target> 完整完成一个动作，再进行下一个。 </target>
       </segment>
     </unit>
     <unit id="session.step.round">
-      <segment state="initial">
+      <segment state="translated">
         <source>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></source>
-        <target>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></target>
+        <target>第 <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> 轮，共 <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/> 轮</target>
       </segment>
     </unit>
     <unit id="session.step.stepPosition">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
-        <target>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
+        <target>第 <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> 步，共 <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/> 步</target>
       </segment>
     </unit>
     <unit id="session.progressSteps">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </target>
+        <target> 已完成 <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/>/<ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> 组 </target>
       </segment>
     </unit>
     <unit id="session.done.textSteps">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </target>
+        <target> 已记录 <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/>/<ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> 组。 </target>
       </segment>
     </unit>
     <unit id="trainingPlans.today">

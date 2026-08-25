@@ -1,4 +1,5 @@
-import * as admin from 'firebase-admin';
+import { getAuth } from 'firebase-admin/auth';
+import { FieldPath, FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { defineSecret } from 'firebase-functions/params';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
@@ -46,7 +47,7 @@ export const adminComputeAndroidTestCandidates = onCall(
     const accounts = new Map<string, AndroidTestAccount>();
     let pageToken: string | undefined;
     do {
-      const result = await admin.auth().listUsers(1000, pageToken);
+      const result = await getAuth().listUsers(1000, pageToken);
       for (const user of result.users) {
         if (user.uid === DEMO_USER_ID) continue;
         accounts.set(user.uid, {
@@ -72,7 +73,7 @@ export const adminComputeAndroidTestCandidates = onCall(
       const batch = uids.slice(i, i + 10);
       const snaps = await db
         .collection('userConfigs')
-        .where(admin.firestore.FieldPath.documentId(), 'in', batch)
+        .where(FieldPath.documentId(), 'in', batch)
         .get();
       for (const snap of snaps.docs) {
         configMap.set(
@@ -115,7 +116,7 @@ export const adminComputeAndroidTestCandidates = onCall(
       for (const uid of chunk) {
         batch.set(
           db.collection('userConfigs').doc(uid),
-          { androidTest: admin.firestore.FieldValue.delete() },
+          { androidTest: FieldValue.delete() },
           { merge: true }
         );
       }
@@ -170,8 +171,7 @@ export const adminConfirmAndroidTestCandidate = onCall(
     // Declining stays unconditional: it must always be possible to clear a
     // mark, whatever the account looks like now.
     if (confirmed) {
-      const user = await admin
-        .auth()
+      const user = await getAuth()
         .getUser(uid)
         .catch(() => null);
       if (!user) {

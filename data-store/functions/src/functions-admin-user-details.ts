@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import { getAuth, type UserRecord } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
@@ -28,9 +28,9 @@ export const adminGetUserDetails = onCall(
     }
     const { uid } = result;
 
-    let userRecord: admin.auth.UserRecord;
+    let userRecord: UserRecord;
     try {
-      userRecord = await admin.auth().getUser(uid);
+      userRecord = await getAuth().getUser(uid);
     } catch (err) {
       if ((err as { code?: string }).code === 'auth/user-not-found') {
         throw new HttpsError('not-found', 'Benutzer nicht gefunden.');
