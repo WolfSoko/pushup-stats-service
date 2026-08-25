@@ -27,11 +27,12 @@ export interface SessionStepRow {
   round: number;
   /** Rounds the session walks in total; 1 outside a circuit. */
   roundTotal: number;
-  /** Formatted amount logged towards it today, in the same unit. */
+  /** Formatted amount logged towards the step's own round, in the same
+   *  unit — the whole day's amount outside a circuit. */
   logged: string;
   /** Formatted set/interval breakdown, empty when there is only one. */
   sets: string;
-  /** 0–100 for the step's progress bar. */
+  /** 0–100 for the step's progress bar, against {@link roundTarget}. */
   percent: number;
   quantified: boolean;
   done: boolean;
@@ -53,6 +54,12 @@ export function buildSessionRows(
     const unit = def?.unit ?? 'reps';
     const variant = def?.variants?.find((v) => v.id === exercise.variantId);
     const base = exerciseDisplayName(exercise.exerciseId);
+    // The card asks for one round, so the progress under it has to count
+    // that round — not the rounds behind it, which are already closed.
+    const roundLogged = Math.max(
+      0,
+      step.logged - (step.target - step.roundTarget)
+    );
     return {
       itemIndex: step.itemIndex,
       name: variant ? `${base} · ${variantDisplayName(variant)}` : base,
@@ -63,14 +70,15 @@ export function buildSessionRows(
         : '',
       round: step.roundIndex + 1,
       roundTotal: step.roundTotal,
-      logged: step.quantified ? formatExerciseValue(step.logged, unit) : '',
+      logged: step.quantified ? formatExerciseValue(roundLogged, unit) : '',
       sets:
         step.roundTotal === 1 && exercise.sets && exercise.sets.length > 1
           ? exercise.sets.map((v) => formatExerciseValue(v, unit)).join(' · ')
           : '',
-      percent: step.quantified
-        ? Math.min(100, Math.round((step.logged / step.target) * 100))
-        : 0,
+      percent:
+        step.quantified && step.roundTarget > 0
+          ? Math.min(100, Math.round((roundLogged / step.roundTarget) * 100))
+          : 0,
       quantified: step.quantified,
       done: step.done,
       tool: step.tool,

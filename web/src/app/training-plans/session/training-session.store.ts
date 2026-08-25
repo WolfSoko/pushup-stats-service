@@ -1,4 +1,4 @@
-import { computed, inject, PLATFORM_ID } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
   patchState,
@@ -10,19 +10,16 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
-  buildCircuitSteps,
-  buildSessionSteps,
   firstOpenStepIndex,
   normalizeRestSec,
   normalizeSessionMode,
   type SessionMode,
-  SessionStep,
-  sessionStepsDone,
 } from '@pu-stats/models';
 
 import { UserConfigStore } from '../../core/user-config.store';
 import { TrainingPlanStore } from '../training-plan.store';
 import { registerRestCountdown } from './session-rest.countdown';
+import { sessionSelectors } from './training-session.selectors';
 
 /**
  * Where the session currently stands.
@@ -78,55 +75,28 @@ export const TrainingSessionStore = signalStore(
     _config: inject(UserConfigStore),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
-  withComputed((store) => {
-    const dayIndex = computed(() => store._plan.currentDayIndex());
-
-    const mode = computed<SessionMode>(() =>
-      normalizeSessionMode(store.modeOverride() ?? store._config.sessionMode())
-    );
-
-    /** The day's exercises, one step each — what the start screen lists
-     *  regardless of the ordering the session will use. */
-    const overviewSteps = computed<ReadonlyArray<SessionStep>>(() => {
-      const idx = dayIndex();
-      if (idx === null) return [];
-      return buildSessionSteps(store._plan.dayProgress(idx));
-    });
-
-    const steps = computed<ReadonlyArray<SessionStep>>(() => {
-      const idx = dayIndex();
-      if (idx === null || mode() !== 'circuit') return overviewSteps();
-      return buildCircuitSteps(store._plan.dayProgress(idx));
-    });
-
-    const currentStep = computed<SessionStep | null>(
-      () => steps()[store.stepIndex()] ?? null
-    );
-
-    const restSec = computed(() =>
-      normalizeRestSec(store.restOverride() ?? store._config.sessionRestSec())
-    );
-
-    return {
-      dayIndex,
-      mode,
-      overviewSteps,
-      steps,
-      currentStep,
-      restSec,
-      /** Rounds the circuit walks; 1 in sequential mode. */
-      roundTotal: computed(() => steps()[0]?.roundTotal ?? 1),
-      day: computed(() => store._plan.todayDay()),
-      stepsDone: computed(() => sessionStepsDone(steps())),
-      stepsTotal: computed(() => steps().length),
-      /** True when the day prescribes nothing trackable (a rest day). */
-      isEmptyDay: computed(() => steps().length === 0),
-      allDone: computed(
-        () => steps().length > 0 && firstOpenStepIndex(steps()) === -1
-      ),
-    };
-  }),
+  withComputed((store) =>
+    sessionSelectors({
+      plan: store._plan,
+      config: store._config,
+      stepIndex: store.stepIndex,
+      restOverride: store.restOverride,
+      modeOverride: store.modeOverride,
+    })
+  ),
   withMethods((store) => {
+    /**
+     * Freeze the ordering the session is about to walk. A config doc that
+     * resolves after the workout started would otherwise flip `mode()`
+     * and re-order `steps()` under a `stepIndex` that means something
+     * different per mode, dropping the user onto an unrelated step.
+     */
+    function pinMode(): void {
+      if (store.modeOverride() === null) {
+        patchState(store, { modeOverride: store.mode() });
+      }
+    }
+
     /**
      * Move to the first open step at or after `from`, entering rest
      * first when one is configured and there is somewhere to rest for.
@@ -149,6 +119,7 @@ export const TrainingSessionStore = signalStore(
     return {
       /** Start the session on the first exercise that still needs work. */
       begin(): void {
+        pinMode();
         advanceFrom(0, false);
       },
 
@@ -168,6 +139,7 @@ export const TrainingSessionStore = signalStore(
 
       /** Jump straight to a step from the overview or the summary. */
       goToStep(index: number): void {
+        pinMode();
         if (index < 0 || index >= store.steps().length) return;
         patchState(store, {
           stepIndex: index,

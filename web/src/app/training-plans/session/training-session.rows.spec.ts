@@ -14,9 +14,11 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     done: false,
     roundIndex: 0,
     roundTotal: 1,
-    roundTarget: 15,
     finalRound: true,
     ...overrides,
+    // A sequential step always asks for its whole target; deriving it
+    // keeps a fixture that overrides `target` internally consistent.
+    roundTarget: overrides.roundTarget ?? overrides.target ?? 15,
   };
 }
 
@@ -146,6 +148,25 @@ describe('buildSessionRows in a circuit', () => {
     roundTotal: 3,
     roundTarget: 10,
     finalRound: false,
+  });
+
+  it('should count progress against the round, not the rounds behind it', () => {
+    // given — round one is closed, round two untouched
+    const [row] = buildSessionRows([CIRCUIT_STEP]);
+
+    // then
+    expect(row.logged).toBe('0');
+    expect(row.percent).toBe(0);
+  });
+
+  it('should show a part-finished round against that round alone', () => {
+    // given — 4 of round two's 10 reps done
+    const [row] = buildSessionRows([step({ ...CIRCUIT_STEP, logged: 14 })]);
+
+    // then
+    expect(row.logged).toBe('4');
+    expect(row.roundTarget).toBe('10');
+    expect(row.percent).toBe(40);
   });
 
   it('should format the round portion next to the cumulative target', () => {

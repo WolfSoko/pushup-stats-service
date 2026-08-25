@@ -114,30 +114,163 @@ describe('buildCircuitSteps', () => {
 
     // then
     expect(
-      steps.map((s) => [s.itemIndex, s.roundIndex, s.roundTarget, s.target])
+      steps.map((s) => [s.itemIndex, s.roundIndex, s.roundTarget])
     ).toEqual([
-      [0, 0, 10, 10],
-      [1, 0, 30, 30],
-      [0, 1, 10, 20],
-      [1, 1, 30, 60],
-      [0, 2, 10, 30],
-      [1, 2, 30, 90],
+      [0, 0, 10],
+      [1, 0, 30],
+      [0, 1, 10],
+      [1, 1, 30],
+      [0, 2, 10],
+      [1, 2, 30],
+    ]);
+  });
+
+  it('should carry the running total a round closes at', () => {
+    // given — round one of each exercise is already logged
+    const items = [
+      progress({ itemIndex: 0, exercise: PUSHUPS, logged: 10 }),
+      progress({ itemIndex: 1, exercise: PLANK, logged: 30 }),
+    ];
+
+    // when
+    const steps = buildCircuitSteps(items);
+
+    // then
+    expect(steps.map((s) => s.target)).toEqual([10, 30, 20, 60, 20, 60]);
+    expect(steps.map((s) => s.done)).toEqual([
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
     ]);
   });
 
   it('should narrow the step prescription to the rounds walked so far', () => {
     // given
+    const items = [progress({ itemIndex: 0, exercise: PUSHUPS, logged: 10 })];
+
+    // when
+    const steps = buildCircuitSteps(items);
+
+    // then — no `sets`: a round is one set, and with a duplicated
+    // exercise the rounds behind it belong to another item.
+    expect(steps[1].exercise).toEqual({ exerciseId: 'pushup', target: 20 });
+  });
+
+  it('should not let a skipped round double what the next one asks for', () => {
+    // given — nothing logged, so round one was walked past
     const items = [progress({ itemIndex: 0, exercise: PUSHUPS })];
 
     // when
     const steps = buildCircuitSteps(items);
 
     // then
-    expect(steps[1].exercise).toEqual({
-      exerciseId: 'pushup',
-      target: 20,
-      sets: [10, 10],
-    });
+    expect(steps[1].target).toBe(10);
+    expect(steps[1].roundTarget).toBe(10);
+    expect(steps[1].done).toBe(false);
+  });
+});
+
+describe('buildCircuitSteps with the same exercise named twice', () => {
+  // core-4w-v1 prescribes Plank 3×50 s and Side Plank 6×30 s; both
+  // resolve to `plank.standard`, so they share one logged pool that
+  // `planDayProgress` drains in item order.
+  const PLANK_ITEM = {
+    exerciseId: 'plank.standard',
+    target: 150,
+    sets: [50, 50, 50],
+  };
+  const SIDE_PLANK_ITEM = {
+    exerciseId: 'plank.standard',
+    variantId: 'side',
+    target: 180,
+    sets: [30, 30, 30, 30, 30, 30],
+  };
+
+  /** The pool as `planDayProgress` hands it out: item order, capped. */
+  function pooled(total: number) {
+    const first = Math.min(total, PLANK_ITEM.target);
+    return [
+      progress({ itemIndex: 0, exercise: PLANK_ITEM, logged: first }),
+      progress({
+        itemIndex: 1,
+        exercise: SIDE_PLANK_ITEM,
+        logged: Math.min(total - first, SIDE_PLANK_ITEM.target),
+      }),
+    ];
+  }
+
+  it('should credit the second item for a round the first one did not need', () => {
+    // given — 50 s of plank done, which is exactly round one of item 0
+    const steps = buildCircuitSteps(pooled(50));
+
+    // then
+    expect(steps[0].done).toBe(true);
+    expect(steps[1].itemIndex).toBe(1);
+    expect(steps[1].done).toBe(false);
+    expect(steps[1].target).toBe(80);
+    expect(steps[1].logged).toBe(50);
+  });
+
+  it('should close a round the user just finished instead of re-offering it', () => {
+    // given — 50 s plank + 30 s side plank; item 1 still reads 0 logged
+    const items = pooled(80);
+    expect(items[1].logged).toBe(0);
+
+    // when
+    const steps = buildCircuitSteps(items);
+
+    // then
+    expect(steps.slice(0, 2).map((s) => s.done)).toEqual([true, true]);
+    expect(steps[2].done).toBe(false);
+  });
+
+  it('should spend the pool in circuit order across both items', () => {
+    // given / when
+    const steps = buildCircuitSteps(pooled(160));
+
+    // then — 50+30+50+30 covered, the next round is open
+    expect(steps.map((s) => s.done).slice(0, 5)).toEqual([
+      true,
+      true,
+      true,
+      true,
+      false,
+    ]);
+  });
+
+  it('should close every round once the whole day is logged', () => {
+    // given / when
+    const steps = buildCircuitSteps(pooled(330));
+
+    // then
+    expect(steps.every((s) => s.done)).toBe(true);
+  });
+
+  it('should keep a hand-ticked item out of the pool the other one draws from', () => {
+    // given — item 0 ticked off by hand, nothing actually logged
+    const items = [
+      progress({
+        itemIndex: 0,
+        exercise: PLANK_ITEM,
+        logged: PLANK_ITEM.target,
+        checkedOff: true,
+        done: true,
+      }),
+      progress({ itemIndex: 1, exercise: SIDE_PLANK_ITEM }),
+    ];
+
+    // when
+    const steps = buildCircuitSteps(items);
+
+    // then — the tick closes item 0's rounds and credits item 1 nothing
+    const ticked = steps.filter((s) => s.itemIndex === 0);
+    const open = steps.filter((s) => s.itemIndex === 1);
+    expect(ticked.every((s) => s.done)).toBe(true);
+    expect(open.every((s) => !s.done)).toBe(true);
+    expect(open[0].logged).toBe(0);
   });
 
   it('should flag only the round that closes a plan item as final', () => {

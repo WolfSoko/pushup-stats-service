@@ -607,4 +607,49 @@ describe('TrainingSessionStore rest countdown', () => {
       expect(store.mode()).toBe('sequential');
     });
   });
+
+  describe('late-arriving user config', () => {
+    const CIRCUIT_DAY = [
+      item(0, { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] }),
+      item(1, { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] }),
+    ];
+
+    it('should not re-order a running session when the config resolves late', () => {
+      // given — the session starts before the config doc arrives
+      const { store, harness } = setup({ progress: CIRCUIT_DAY });
+      store.begin();
+      store.completeStep();
+      const current = store.currentStep();
+
+      // when
+      harness.mode.set('circuit');
+
+      // then
+      expect(store.mode()).toBe('sequential');
+      expect(store.currentStep()).toEqual(current);
+    });
+
+    it('should still take the config mode while the user is on the start screen', () => {
+      // given
+      const { store, harness } = setup({ progress: CIRCUIT_DAY });
+
+      // when
+      harness.mode.set('circuit');
+
+      // then
+      expect(store.mode()).toBe('circuit');
+      expect(store.steps()).toHaveLength(6);
+    });
+
+    it('should keep the pinned mode out of the persisted config', () => {
+      // given
+      const { store, harness } = setup({ progress: CIRCUIT_DAY });
+
+      // when
+      store.begin();
+
+      // then — pinning is session-local, not a user choice
+      expect(harness.saveMode).not.toHaveBeenCalled();
+    });
+  });
 });

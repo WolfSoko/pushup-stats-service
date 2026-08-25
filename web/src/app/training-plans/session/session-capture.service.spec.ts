@@ -34,9 +34,11 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
     done: false,
     roundIndex: 0,
     roundTotal: 1,
-    roundTarget: 15,
     finalRound: true,
     ...overrides,
+    // A sequential step always asks for its whole target; deriving it
+    // keeps a fixture that overrides `target` internally consistent.
+    roundTarget: overrides.roundTarget ?? overrides.target ?? 15,
   };
 }
 
@@ -44,7 +46,6 @@ const PLANK_STEP = step({
   exercise: { exerciseId: 'plank.standard', target: 50 },
   tool: 'hold-timer',
   target: 50,
-  roundTarget: 50,
 });
 
 const TWIST_STEP = step({
