@@ -11061,63 +11061,63 @@
       </segment>
     </unit>
     <unit id="session.intro.modeLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ablauf</source>
-        <target>Ablauf</target>
+        <target>Déroulement</target>
       </segment>
     </unit>
     <unit id="session.intro.modeSequential">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung für Übung</source>
-        <target>Übung für Übung</target>
+        <target>Exercice par exercice</target>
       </segment>
     </unit>
     <unit id="session.intro.modeCircuit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkeltraining</source>
-        <target>Zirkeltraining</target>
+        <target>Entraînement en circuit</target>
       </segment>
     </unit>
     <unit id="session.intro.modeCircuitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> tours : une série de chaque exercice par tour, puis on recommence. </target>
       </segment>
     </unit>
     <unit id="session.intro.modeCircuitSingleRound">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </source>
-        <target> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </target>
+        <target> Ce jour ne prévoit pas de séries — il reste à un seul tour. </target>
       </segment>
     </unit>
     <unit id="session.intro.modeSequentialHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Eine Übung komplett abschließen, dann die nächste. </source>
-        <target> Eine Übung komplett abschließen, dann die nächste. </target>
+        <target> Terminer complètement un exercice, puis passer au suivant. </target>
       </segment>
     </unit>
     <unit id="session.step.round">
-      <segment state="initial">
+      <segment state="translated">
         <source>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></source>
-        <target>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></target>
+        <target>Tour <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> sur <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></target>
       </segment>
     </unit>
     <unit id="session.step.stepPosition">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
-        <target>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
+        <target>Étape <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> sur <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
       </segment>
     </unit>
     <unit id="session.progressSteps">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> sur <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> séries terminées </target>
       </segment>
     </unit>
     <unit id="session.done.textSteps">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> sur <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> séries ont été enregistrées. </target>
       </segment>
     </unit>
 </file>
