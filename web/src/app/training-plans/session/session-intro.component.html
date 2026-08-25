@@ -36,16 +36,16 @@
       [value]="mode()"
       (change)="modeChange.emit($event.value)"
     >
+      <mat-button-toggle value="circuit" data-testid="session-mode-circuit">
+        <mat-icon>autorenew</mat-icon>
+        <span i18n="@@session.intro.modeCircuit">Zirkeltraining</span>
+      </mat-button-toggle>
       <mat-button-toggle
         value="sequential"
         data-testid="session-mode-sequential"
       >
         <mat-icon>format_list_numbered</mat-icon>
         <span i18n="@@session.intro.modeSequential">Übung für Übung</span>
-      </mat-button-toggle>
-      <mat-button-toggle value="circuit" data-testid="session-mode-circuit">
-        <mat-icon>autorenew</mat-icon>
-        <span i18n="@@session.intro.modeCircuit">Zirkeltraining</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
     @if (mode() === 'circuit') {

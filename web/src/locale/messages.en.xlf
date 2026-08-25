@@ -11447,5 +11447,17 @@ Deine Position: # ·  Reps        </source>
         <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> of <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> sets have been logged. </target>
       </segment>
     </unit>
+    <unit id="trainingPlans.today">
+      <segment state="initial">
+        <source>Heute</source>
+        <target>Heute</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.toggleDayDetails">
+      <segment state="initial">
+        <source>Tagesdetails ein-/ausklappen</source>
+        <target>Tagesdetails ein-/ausklappen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

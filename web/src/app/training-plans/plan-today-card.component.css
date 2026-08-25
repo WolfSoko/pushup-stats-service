@@ -1,0 +1,49 @@
+.today-card {
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--mat-sys-primary);
+}
+
+.today-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.today-icon {
+  color: var(--mat-sys-primary);
+}
+
+.today-heading {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.today-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.today-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.today-done {
+  color: var(--mat-sys-primary);
+}
+
+.today-desc {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.today-session {
+  margin-top: 0.75rem;
+}
+
+.muted {
+  opacity: 0.75;
+}

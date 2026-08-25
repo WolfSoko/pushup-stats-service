@@ -13,6 +13,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { computed } from '@angular/core';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
+import { sessionLinkFor } from '../../training-plans/training-plan-detail.helpers';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
@@ -202,6 +203,31 @@ export class StatsDashboardComponent {
   private readonly planToday = planTodayView(this.trainingPlans);
   readonly planTodayExerciseRows = this.planToday.exerciseRows;
   readonly planTodayFulfilled = this.planToday.fulfilled;
+
+  /**
+   * Whether the banner offers the guided session — the same condition the
+   * plan page's CTA uses: a session walks today's prescription, and only
+   * while something on it is still open.
+   *
+   * `planTodayFulfilled` alone isn't that condition: it reads
+   * `planDayProgress`, which knows nothing about `completedDays` /
+   * `skippedDays`, so a day ticked off or skipped as a whole would still
+   * look open here while the plan page has already closed it.
+   */
+  readonly offersSession = computed(
+    () =>
+      this.planActive() &&
+      !this.isPlanRestDay() &&
+      !this.trainingPlans.todayDone() &&
+      !this.trainingPlans.todaySkipped() &&
+      !this.planTodayFulfilled() &&
+      this.planTodayExerciseRows().length > 0
+  );
+
+  /** Deep link into today's guided session for the active plan. */
+  readonly sessionLink = computed(() =>
+    sessionLinkFor(this.planSlug() || null)
+  );
   /** In-flight guard for the plan-aware "fill to goal" action — the store
    *  has no public signal for `logTodayPlanDay`, so tracked locally like
    *  `QuickAddOrchestrationService.fillToGoalInFlight`. */

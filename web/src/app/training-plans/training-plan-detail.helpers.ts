@@ -18,6 +18,54 @@ import {
 } from './training-plan-detail.exercises';
 import { DayRow, DayWeek, PushupTypeChip } from './training-plan-detail.models';
 
+/** What the plan page knows about the user's progress on a plan. */
+export interface WeekBuildContext {
+  /** False while this isn't the plan the user actually started. */
+  active: boolean;
+  currentDayIndex: number | null;
+  completedDays: ReadonlyArray<number>;
+  skippedDays: ReadonlyArray<number>;
+  /** Live per-exercise progress for a day of the *active* plan. */
+  dayProgress: (dayIndex: number) => ReadonlyArray<PlanExerciseProgress>;
+  /** Zero-progress preview, for a plan the user hasn't started. */
+  previewProgress: (
+    plan: TrainingPlan,
+    dayIndex: number
+  ) => ReadonlyArray<PlanExerciseProgress>;
+}
+
+/**
+ * The plan's weeks as the detail page renders them.
+ *
+ * An inactive plan still lists its exercises, just read-only and at zero
+ * progress — the prescription is the main thing a visitor came to see.
+ */
+export function weeksFor(
+  plan: TrainingPlan | null,
+  ctx: WeekBuildContext,
+  locale: string
+): DayWeek[] {
+  if (!plan) return [];
+  return buildWeeks(
+    plan,
+    {
+      currentDay: ctx.active ? ctx.currentDayIndex : null,
+      completed: new Set(ctx.active ? ctx.completedDays : []),
+      skipped: new Set(ctx.active ? ctx.skippedDays : []),
+      exercisesFor: (dayIndex) =>
+        ctx.active
+          ? ctx.dayProgress(dayIndex)
+          : ctx.previewProgress(plan, dayIndex),
+    },
+    locale
+  );
+}
+
+/** Today's row, for the card the plan page repeats above the week list. */
+export function todayRowOf(weeks: ReadonlyArray<DayWeek>): DayRow | null {
+  return weeks.flatMap((w) => w.rows).find((r) => r.isToday) ?? null;
+}
+
 /**
  * Router link to the guided session for a plan. Falls back to the plan
  * index when the route carries no slug, so the link is never dead.

@@ -47,17 +47,17 @@ function step(overrides: Partial<SessionStep> = {}): SessionStep {
 }
 
 describe('normalizeSessionMode', () => {
-  it('should keep the circuit mode', () => {
-    // given / when / then
-    expect(normalizeSessionMode('circuit')).toBe('circuit');
-  });
-
-  it('should fall back to sequential for anything else', () => {
+  it('should keep an explicit sequential choice', () => {
     // given / when / then
     expect(normalizeSessionMode('sequential')).toBe('sequential');
-    expect(normalizeSessionMode(undefined)).toBe('sequential');
-    expect(normalizeSessionMode('zirkel')).toBe('sequential');
-    expect(normalizeSessionMode(3)).toBe('sequential');
+  });
+
+  it('should default to the circuit for anything else', () => {
+    // given / when / then
+    expect(normalizeSessionMode('circuit')).toBe('circuit');
+    expect(normalizeSessionMode(undefined)).toBe('circuit');
+    expect(normalizeSessionMode('zirkel')).toBe('circuit');
+    expect(normalizeSessionMode(3)).toBe('circuit');
   });
 });
 
