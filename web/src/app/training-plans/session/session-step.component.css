@@ -86,3 +86,13 @@
   margin-top: 4px;
   opacity: 0.85;
 }
+
+.step-round {
+  display: inline-block;
+  margin-inline-end: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  font-weight: 600;
+}

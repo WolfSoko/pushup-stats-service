@@ -43,19 +43,29 @@
     <mat-card class="session-card">
       <div class="session-progress">
         <mat-progress-bar mode="determinate" [value]="progressPercent()" />
-        <p class="session-progress-label" i18n="@@session.progress">
-          {{ session.stepsDone() }} von {{ session.stepsTotal() }} Übungen
-          erledigt
-        </p>
+        @if (session.roundTotal() > 1) {
+          <p class="session-progress-label" i18n="@@session.progressSteps">
+            {{ session.stepsDone() }} von {{ session.stepsTotal() }} Sätzen
+            erledigt
+          </p>
+        } @else {
+          <p class="session-progress-label" i18n="@@session.progress">
+            {{ session.stepsDone() }} von {{ session.stepsTotal() }} Übungen
+            erledigt
+          </p>
+        }
       </div>
 
       @switch (session.phase()) {
         @case ('intro') {
           <app-session-intro
-            [rows]="rows()"
+            [rows]="overviewRows()"
             [description]="dayDescription()"
             [restSec]="session.restSec()"
+            [mode]="session.mode()"
+            [roundTotal]="session.roundTotal()"
             (restSecChange)="session.setRestSec($event)"
+            (modeChange)="session.setMode($event)"
             (start)="session.begin()"
           />
         }
@@ -91,10 +101,17 @@
             <h2 class="session-done-title" i18n="@@session.done.title">
               Session geschafft
             </h2>
-            <p class="session-done-text" i18n="@@session.done.text">
-              {{ session.stepsDone() }} von {{ session.stepsTotal() }}
-              Übungen sind eingetragen.
-            </p>
+            @if (session.roundTotal() > 1) {
+              <p class="session-done-text" i18n="@@session.done.textSteps">
+                {{ session.stepsDone() }} von {{ session.stepsTotal() }}
+                Sätzen sind eingetragen.
+              </p>
+            } @else {
+              <p class="session-done-text" i18n="@@session.done.text">
+                {{ session.stepsDone() }} von {{ session.stepsTotal() }}
+                Übungen sind eingetragen.
+              </p>
+            }
             <button
               mat-flat-button
               class="session-done-action"

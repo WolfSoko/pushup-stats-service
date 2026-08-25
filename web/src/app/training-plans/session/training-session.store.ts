@@ -1,4 +1,4 @@
-import { computed, inject, PLATFORM_ID } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
   patchState,
@@ -10,16 +10,16 @@ import {
   withState,
 } from '@ngrx/signals';
 import {
-  buildSessionSteps,
   firstOpenStepIndex,
   normalizeRestSec,
-  SessionStep,
-  sessionStepsDone,
+  normalizeSessionMode,
+  type SessionMode,
 } from '@pu-stats/models';
 
 import { UserConfigStore } from '../../core/user-config.store';
 import { TrainingPlanStore } from '../training-plan.store';
 import { registerRestCountdown } from './session-rest.countdown';
+import { sessionSelectors } from './training-session.selectors';
 
 /**
  * Where the session currently stands.
@@ -42,6 +42,12 @@ interface TrainingSessionState {
    */
   restOverride: number | null;
   restRemaining: number;
+  /**
+   * Ordering chosen inside this session, or `null` while the session
+   * still follows the persisted config value — same late-arriving-config
+   * guard as {@link TrainingSessionState.restOverride}.
+   */
+  modeOverride: SessionMode | null;
 }
 
 const INITIAL: TrainingSessionState = {
@@ -49,6 +55,7 @@ const INITIAL: TrainingSessionState = {
   stepIndex: 0,
   restOverride: null,
   restRemaining: 0,
+  modeOverride: null,
 };
 
 /**
@@ -68,39 +75,28 @@ export const TrainingSessionStore = signalStore(
     _config: inject(UserConfigStore),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
-  withComputed((store) => {
-    const dayIndex = computed(() => store._plan.currentDayIndex());
-
-    const steps = computed<ReadonlyArray<SessionStep>>(() => {
-      const idx = dayIndex();
-      if (idx === null) return [];
-      return buildSessionSteps(store._plan.dayProgress(idx));
-    });
-
-    const currentStep = computed<SessionStep | null>(
-      () => steps()[store.stepIndex()] ?? null
-    );
-
-    const restSec = computed(() =>
-      normalizeRestSec(store.restOverride() ?? store._config.sessionRestSec())
-    );
-
-    return {
-      dayIndex,
-      steps,
-      currentStep,
-      restSec,
-      day: computed(() => store._plan.todayDay()),
-      stepsDone: computed(() => sessionStepsDone(steps())),
-      stepsTotal: computed(() => steps().length),
-      /** True when the day prescribes nothing trackable (a rest day). */
-      isEmptyDay: computed(() => steps().length === 0),
-      allDone: computed(
-        () => steps().length > 0 && firstOpenStepIndex(steps()) === -1
-      ),
-    };
-  }),
+  withComputed((store) =>
+    sessionSelectors({
+      plan: store._plan,
+      config: store._config,
+      stepIndex: store.stepIndex,
+      restOverride: store.restOverride,
+      modeOverride: store.modeOverride,
+    })
+  ),
   withMethods((store) => {
+    /**
+     * Freeze the ordering the session is about to walk. A config doc that
+     * resolves after the workout started would otherwise flip `mode()`
+     * and re-order `steps()` under a `stepIndex` that means something
+     * different per mode, dropping the user onto an unrelated step.
+     */
+    function pinMode(): void {
+      if (store.modeOverride() === null) {
+        patchState(store, { modeOverride: store.mode() });
+      }
+    }
+
     /**
      * Move to the first open step at or after `from`, entering rest
      * first when one is configured and there is somewhere to rest for.
@@ -123,6 +119,7 @@ export const TrainingSessionStore = signalStore(
     return {
       /** Start the session on the first exercise that still needs work. */
       begin(): void {
+        pinMode();
         advanceFrom(0, false);
       },
 
@@ -142,6 +139,7 @@ export const TrainingSessionStore = signalStore(
 
       /** Jump straight to a step from the overview or the summary. */
       goToStep(index: number): void {
+        pinMode();
         if (index < 0 || index >= store.steps().length) return;
         patchState(store, {
           stepIndex: index,
@@ -184,6 +182,22 @@ export const TrainingSessionStore = signalStore(
         const rest = normalizeRestSec(seconds);
         patchState(store, { restOverride: rest });
         void store._config.saveSessionRestSec(rest).catch(() => undefined);
+      },
+
+      /**
+       * Switch between working through one exercise at a time and a
+       * circuit. Re-orders the step list wholesale, so the position is
+       * reset — a step index means something different per mode.
+       */
+      setMode(mode: SessionMode): void {
+        const next = normalizeSessionMode(mode);
+        if (next === store.mode()) return;
+        patchState(store, {
+          modeOverride: next,
+          stepIndex: 0,
+          restRemaining: 0,
+        });
+        void store._config.saveSessionMode(next).catch(() => undefined);
       },
 
       /** Back to the overview, e.g. to change the rest duration. */

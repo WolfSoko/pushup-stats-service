@@ -1,6 +1,7 @@
 import type { MeasurementType } from './exercise.models';
 import { ReminderConfig } from './reminder-config.models';
 import type { ReminderLocale } from './reminder-i18n.models';
+import type { SessionMode } from './training-session.models';
 
 /** Particle-count quality preset for the goal-reached snap animation. */
 export type SnapQuality = 'low' | 'middle' | 'high';
@@ -240,6 +241,13 @@ export interface UserConfig {
      * which clamps out-of-range persisted values.
      */
     sessionRestSec?: number;
+    /**
+     * Whether guided training sessions walk the day's exercises one at a
+     * time or as a circuit. Written from the session's start screen, so
+     * the choice carries into every later session. Absent ⇒
+     * {@link SESSION_MODE_DEFAULT}; read through `normalizeSessionMode`.
+     */
+    sessionMode?: SessionMode;
   };
   createdAt?: string;
   updatedAt?: string;

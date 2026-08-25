@@ -19,6 +19,22 @@ export const SESSION_REST_MAX_SEC = 300;
 export const SESSION_REST_STEP_SEC = 15;
 
 /**
+ * How a session orders the exercises of a day.
+ *
+ * - `'sequential'` — finish one exercise completely, then the next.
+ * - `'circuit'` — one set of every exercise, then round two, and so on
+ *   ("Zirkeltraining"). See `training-session-circuit.models.ts`.
+ */
+export type SessionMode = 'sequential' | 'circuit';
+
+export const SESSION_MODE_DEFAULT: SessionMode = 'sequential';
+
+/** Coerce a persisted config value — user data, so anything — to a mode. */
+export function normalizeSessionMode(value: unknown): SessionMode {
+  return value === 'circuit' ? 'circuit' : SESSION_MODE_DEFAULT;
+}
+
+/**
  * Capture tool a step offers as its primary action.
  *
  * - `'auto-count'` — the camera rep counter, for rep exercises the
@@ -34,15 +50,30 @@ export interface SessionStep {
   /** 0-based position inside the day's exercise list — the item index
    *  every `TrainingPlanStore` per-exercise method takes. */
   itemIndex: number;
+  /**
+   * The prescription this step captures against. In circuit mode this
+   * is the plan item narrowed to the rounds walked so far, so every
+   * consumer that reads `target`/`sets` off it — the entry prefill above
+   * all — sees the round's portion instead of the whole day.
+   */
   exercise: TrainingPlanExercise;
   tool: SessionToolKind;
-  /** Target in the exercise's own unit; 0 for unquantified items. */
+  /** Target in the exercise's own unit that closes the step; 0 for
+   *  unquantified items. Cumulative across rounds in circuit mode. */
   target: number;
   /** Amount already logged towards it today. */
   logged: number;
   /** False for items the plan names but doesn't quantify (HIIT rounds). */
   quantified: boolean;
   done: boolean;
+  /** 0-based round this step belongs to; always 0 in sequential mode. */
+  roundIndex: number;
+  /** Rounds the whole session walks; 1 in sequential mode. */
+  roundTotal: number;
+  /** What this step alone asks for. Equals `target` sequentially. */
+  roundTarget: number;
+  /** True when closing this step closes its plan item for the day. */
+  finalRound: boolean;
 }
 
 /**
@@ -77,6 +108,10 @@ export function buildSessionSteps(
     logged: item.logged,
     quantified: item.exercise.target > 0,
     done: item.done,
+    roundIndex: 0,
+    roundTotal: 1,
+    roundTarget: item.exercise.target,
+    finalRound: true,
   }));
 }
 

@@ -11188,5 +11188,65 @@
         <target>Pause um <ph id="0" equiv="INTERPOLATION" disp="NUDGE_SEC"/> Sekunden verlängern</target>
       </segment>
     </unit>
+    <unit id="session.intro.modeLabel">
+      <segment state="initial">
+        <source>Ablauf</source>
+        <target>Ablauf</target>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeSequential">
+      <segment state="initial">
+        <source>Übung für Übung</source>
+        <target>Übung für Übung</target>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeCircuit">
+      <segment state="initial">
+        <source>Zirkeltraining</source>
+        <target>Zirkeltraining</target>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeCircuitHint">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ roundTotal() }}"/> Runden: pro Runde ein Satz jeder Übung, dann von vorn. </target>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeCircuitSingleRound">
+      <segment state="initial">
+        <source> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </source>
+        <target> Dieser Tag gibt keine Sätze vor — es bleibt bei einer Runde. </target>
+      </segment>
+    </unit>
+    <unit id="session.intro.modeSequentialHint">
+      <segment state="initial">
+        <source> Eine Übung komplett abschließen, dann die nächste. </source>
+        <target> Eine Übung komplett abschließen, dann die nächste. </target>
+      </segment>
+    </unit>
+    <unit id="session.step.round">
+      <segment state="initial">
+        <source>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></source>
+        <target>Runde <ph id="0" equiv="INTERPOLATION" disp="{{ row().round }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ row().roundTotal }}"/></target>
+      </segment>
+    </unit>
+    <unit id="session.step.stepPosition">
+      <segment state="initial">
+        <source>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></source>
+        <target>Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ position() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ total() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="session.progressSteps">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </target>
+      </segment>
+    </unit>
+    <unit id="session.done.textSteps">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>
