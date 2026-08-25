@@ -154,6 +154,7 @@ describe('StatsDashboardComponent', () => {
       durationSec?: number;
       distanceM?: number;
       source?: string;
+      variantId?: string;
     }>
   >([]);
   const liveMock = {
@@ -674,6 +675,52 @@ describe('StatsDashboardComponent', () => {
         const text = card.textContent ?? '';
         expect(text).toContain('Plank');
         expect(text).toContain('1:30');
+      });
+
+      // The tiles previously showed only exercise + value, so two
+      // entries of the same exercise with different variants were
+      // indistinguishable on the dashboard while the history table's
+      // "Typ" column told them apart. Tiles now render the same
+      // variant label as that column.
+      it('Then each recent-exercise tile renders the entry variant', async () => {
+        // Given a pushup without an explicit variant and a squat
+        // logged with one.
+        liveConnected.set(true);
+        liveEntries.set([
+          {
+            _id: 'p1',
+            timestamp: '2025-01-15T10:00:00',
+            reps: 10,
+            source: 'web',
+          },
+        ]);
+        liveExerciseEntries.set([
+          {
+            _id: 'e1',
+            exerciseId: 'legs.squats',
+            timestamp: '2025-01-15T11:00:00',
+            reps: 20,
+            source: 'web',
+            variantId: 'Sumo',
+          },
+        ]);
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const root = fixture.nativeElement as HTMLElement;
+        const variantOf = (entryId: string) =>
+          root
+            .querySelector(
+              `[data-testid="dashboard-recent-exercise-tile"][data-entry-id="${entryId}"] ` +
+                '[data-testid="dashboard-recent-exercise-tile-variant"]'
+            )
+            ?.textContent?.trim();
+
+        // Then the stored variant shows up for the squat, and the
+        // variant-less pushup falls back to the standard label exactly
+        // like the history table's "Typ" column does.
+        expect(variantOf('e1')).toBe('Sumo');
+        expect(variantOf('p1')).toBe('Standard-Liegestütze');
       });
     });
   });
@@ -1923,6 +1970,37 @@ describe('StatsDashboardComponent latest-entries light theme styling', () => {
     // The override must reach the opaque card element that carries the dark
     // gradient in dark mode — otherwise the tile never adopts light mode.
     expect(latestBlock).toContain('.recent-exercise-tile mat-card {');
+  });
+
+  // Regression: the Schnellaktionen hint only ever declared its dark-mode
+  // ink (a pale blue-white), so on the light card it rendered at ~1.2:1 —
+  // technically painted, practically invisible.
+  it('Given light mode, Then the quick-actions hint re-inks itself for the light card', () => {
+    const hintStart = lightThemeBlock.indexOf('.quick-actions-hint {');
+    expect(hintStart).toBeGreaterThanOrEqual(0);
+    const hintBlock = lightThemeBlock.slice(
+      hintStart,
+      lightThemeBlock.indexOf('\n  }', hintStart)
+    );
+
+    // Both the text and its icon need a light-mode value; the icon's
+    // dark-mode blue sits at ~2:1 on white.
+    expect(hintBlock).toContain('color: #475569;');
+    expect(hintBlock).toContain('mat-icon {');
+    expect(hintBlock).toContain('color: #2563eb;');
+  });
+
+  // Same class of bug as the quick-actions hint, found by auditing every
+  // dark-mode colour for a light-theme counterpart: #9fb3de renders at
+  // 2.05:1 on the light panel.
+  it('Given light mode, Then the goal subhead re-inks itself for the light panel', () => {
+    const start = lightThemeBlock.indexOf('.goal-subhead {');
+    expect(start).toBeGreaterThanOrEqual(0);
+    const block = lightThemeBlock.slice(
+      start,
+      lightThemeBlock.indexOf('\n  }', start)
+    );
+    expect(block).toContain('color: #64748b;');
   });
 
   it('Given dark mode, Then the recent-exercise gradient is defined on the mat-card so the light override has a matching target', () => {
