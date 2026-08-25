@@ -6,7 +6,7 @@
  * auth/validate/log wrapper around `deleteOwnedEntries`.
  */
 
-import type * as admin from 'firebase-admin';
+import type { DocumentReference, Firestore } from 'firebase-admin/firestore';
 
 import { batchArray } from './logic';
 
@@ -87,13 +87,13 @@ export interface DeleteEntriesResult {
  * large selection across calls.
  */
 export async function deleteOwnedEntries(
-  db: admin.firestore.Firestore,
+  db: Firestore,
   collectionPath: string,
   uid: string,
   entryIds: string[]
 ): Promise<DeleteEntriesResult> {
   const collection = db.collection(collectionPath);
-  const owned: admin.firestore.DocumentReference[] = [];
+  const owned: DocumentReference[] = [];
   let skipped = 0;
 
   for (const idChunk of batchArray(entryIds, READ_CHUNK_SIZE)) {

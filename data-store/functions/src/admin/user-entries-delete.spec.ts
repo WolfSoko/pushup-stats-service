@@ -1,5 +1,5 @@
 import { describe, it, expect, jest } from '@jest/globals';
-import type * as admin from 'firebase-admin';
+import type { Firestore, WriteBatch } from 'firebase-admin/firestore';
 import {
   COMMIT_CHUNK_SIZE,
   deleteOwnedEntries,
@@ -9,7 +9,7 @@ import {
 } from './user-entries-delete';
 
 interface FakeDb {
-  db: admin.firestore.Firestore;
+  db: Firestore;
   getAllCallSizes: number[];
   commitBatchSizes: number[];
   deletedIds: string[];
@@ -53,7 +53,7 @@ function fakeDb(owners: Record<string, string | undefined>): FakeDb {
   };
 
   return {
-    db: db as unknown as admin.firestore.Firestore,
+    db: db as unknown as Firestore,
     getAllCallSizes,
     commitBatchSizes,
     deletedIds,
@@ -287,7 +287,7 @@ describe('admin/user-entries-delete', () => {
       jest.spyOn(db, 'batch').mockReturnValue({
         delete: () => undefined,
         commit: () => Promise.reject(boom),
-      } as unknown as admin.firestore.WriteBatch);
+      } as unknown as WriteBatch);
 
       // when / then
       await expect(

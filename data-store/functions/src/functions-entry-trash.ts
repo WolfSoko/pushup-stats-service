@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import { Timestamp } from 'firebase-admin/firestore';
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import * as logger from 'firebase-functions/logger';
 import { db } from './firebase-app';
@@ -41,8 +41,8 @@ export const archiveDeletedExerciseEntry = onDocumentDeleted(
       .doc(event.params.entryId)
       .set({
         ...record,
-        deletedAt: admin.firestore.Timestamp.fromMillis(deletedAtMs),
-        expiresAt: admin.firestore.Timestamp.fromMillis(expiresAtMs),
+        deletedAt: Timestamp.fromMillis(deletedAtMs),
+        expiresAt: Timestamp.fromMillis(expiresAtMs),
       });
   }
 );
