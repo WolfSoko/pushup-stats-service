@@ -11249,15 +11249,15 @@
       </segment>
     </unit>
     <unit id="trainingPlans.today">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute</source>
-        <target>Heute</target>
+        <target>Vandaag</target>
       </segment>
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesdetails ein-/ausklappen</source>
-        <target>Tagesdetails ein-/ausklappen</target>
+        <target>Dagdetails in-/uitklappen</target>
       </segment>
     </unit>
     <unit id="landing.session.eyebrow">

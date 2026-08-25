@@ -11448,15 +11448,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="trainingPlans.today">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute</source>
-        <target>Heute</target>
+        <target>Today</target>
       </segment>
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesdetails ein-/ausklappen</source>
-        <target>Tagesdetails ein-/ausklappen</target>
+        <target>Toggle day details</target>
       </segment>
     </unit>
     <unit id="landing.session.eyebrow">
