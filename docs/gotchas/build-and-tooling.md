@@ -186,6 +186,8 @@ pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.ya
 
 To scale further (bigger agents for e2e specifically, or higher ceilings), edit the YAML — the CI workflow doesn't need to change.
 
+**`--stop-agents-after` must list every target passed to the matching `nx affected -t=...`, comma-separated — not just the target you expect to finish last.** The `lint-test-build` job ran `-t=lint,test,build` but was only passed `--stop-agents-after="build"`. When `web:build:production` restored from remote cache and finished almost instantly, Nx Cloud stopped all agents before `web:test` had been dispatched, and the run failed with `web:test` shown as "Not executable" in the task summary even though 0 tasks actually failed. Fix: `--stop-agents-after="lint,test,build"`.
+
 ## Generated `*.generated.ts` files rewrite on `nx build web`
 
 `pnpm nx build web` runs the `generate-content` target first, which rewrites the build-time content files (`libs/stats/src/lib/models/*-content.generated.ts`, `web/src/app/blog/generated/`) and the sitemap from `content/**`. Never hand-edit a file whose header says `AUTO-GENERATED` — change the markdown under `content/` and re-run the generator.

@@ -77,7 +77,7 @@ jobs:
         # heavy targets (Angular SSR build, Vitest with Firebase/Material)
         # would GC-thrash or OOM only on the agent side.
         # Docs: https://nx.dev/docs/reference/nx-cloud/launch-templates
-        run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="build" --with-env-vars="NODE_OPTIONS"
+        run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="lint,test,build" --with-env-vars="NODE_OPTIONS"
 
       - name: Nx affected (lint + test + build)
         run: pnpm exec nx affected -t=lint,test,build -c=production
