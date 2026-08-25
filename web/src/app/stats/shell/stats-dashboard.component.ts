@@ -30,6 +30,7 @@ import {
 } from '@pu-stats/models';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { exerciseDisplayName } from '../i18n/exercise-display-names';
+import { typeLabel } from '../components/stats-table/stats-table.format';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
@@ -109,8 +110,19 @@ export class StatsDashboardComponent {
   readonly exerciseEntryLabel = (entry: UnifiedEntry): string =>
     exerciseDisplayName(entry.exerciseId);
 
+  // Same variant resolution as the history table's "Typ" column, so a
+  // tile and its row read identically — including the fallback that
+  // renders a pushup stored without a variant as "Standard-Liegestütze".
+  // Catalog exercises predating the variant picker have no variant to
+  // show and render no line at all.
+  readonly exerciseEntryVariant = (entry: UnifiedEntry): string =>
+    typeLabel(entry, this.locale);
+
   readonly tileAriaLabel = (entry: UnifiedEntry): string => {
-    const label = this.exerciseEntryLabel(entry);
+    const variant = this.exerciseEntryVariant(entry);
+    const label = variant
+      ? `${this.exerciseEntryLabel(entry)} · ${variant}`
+      : this.exerciseEntryLabel(entry);
     return $localize`:@@dashboard.tile.openInHistoryAria:${label}:label: in der Historie öffnen`;
   };
 
