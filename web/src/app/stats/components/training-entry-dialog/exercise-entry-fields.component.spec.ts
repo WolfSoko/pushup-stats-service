@@ -286,7 +286,7 @@ describe('ExerciseEntryFieldsComponent', () => {
       expect(labels.every((l) => !l.startsWith('Intervall'))).toBe(true);
     });
 
-    it('should label endurance rows as "Intervall N" with two intervals', () => {
+    it('should label endurance rows as "Intervall N" with two intervals, using the same Minuten/Sekunden fields as the main entry', () => {
       // given
       const { component, fixture } = render('plank.standard', null);
 
@@ -295,9 +295,16 @@ describe('ExerciseEntryFieldsComponent', () => {
       fixture.detectChanges();
 
       // then
+      const root: HTMLElement = fixture.nativeElement;
+      const headings = Array.from(root.querySelectorAll('.interval-index')).map(
+        (el) => (el.textContent ?? '').trim()
+      );
+      expect(headings).toEqual(['Intervall 1', 'Intervall 2']);
+
+      // one Minuten/Sekunden pair for the main duration entry plus one per interval
       const labels = breakdownLabels(fixture);
-      expect(labels).toContain('Intervall 1');
-      expect(labels).toContain('Intervall 2');
+      expect(labels.filter((l) => l === 'Minuten')).toHaveLength(3);
+      expect(labels.filter((l) => l === 'Sekunden')).toHaveLength(3);
       expect(labels.every((l) => !l.startsWith('Set '))).toBe(true);
     });
 
@@ -306,11 +313,11 @@ describe('ExerciseEntryFieldsComponent', () => {
       const { component } = render('plank.standard', null);
       component.state.durationMinutesInput.set('1');
       component.state.durationSecondsInput.set('30');
-      component.state.updateInterval(0, '30');
+      component.state.updateIntervalSeconds(0, '30');
       component.state.addInterval();
-      component.state.updateInterval(1, '30');
+      component.state.updateIntervalSeconds(1, '30');
       component.state.addInterval();
-      component.state.updateInterval(2, '30');
+      component.state.updateIntervalSeconds(2, '30');
 
       // when
       const result = component.buildResult('t') as ExerciseEntryDialogResult;
@@ -322,6 +329,33 @@ describe('ExerciseEntryFieldsComponent', () => {
         intervals: [30, 30, 30],
         sets: [],
         reps: 0,
+      });
+    });
+
+    it('should submit distance intervals in km for a distance-time exercise, matching the main "Distanz (km)" field', () => {
+      // given
+      const { component, fixture } = render('cardio.running', null);
+      component.state.distanceInput.set('5.25');
+      component.state.durationMinutesInput.set('25');
+      component.state.durationSecondsInput.set('0');
+      component.state.updateIntervalDistance(0, '1');
+      component.state.addInterval();
+      component.state.updateIntervalDistance(1, '1');
+      fixture.detectChanges();
+
+      // when
+      const result = component.buildResult('t') as ExerciseEntryDialogResult;
+
+      // then — no bare unlabeled number field, the interval uses the same
+      // decimal-km input as the main distance field.
+      const intervalDistanceInputs = fixture.nativeElement.querySelectorAll(
+        '.interval-fields input[inputmode="decimal"]'
+      );
+      expect(intervalDistanceInputs.length).toBe(2);
+      expect(result).toMatchObject({
+        measurement: 'distance-time',
+        distanceM: 5250,
+        intervals: [1000, 1000],
       });
     });
 
@@ -359,9 +393,9 @@ describe('ExerciseEntryFieldsComponent', () => {
     it('should clear stale intervals when switching to a strength exercise', () => {
       // given
       const { component, switchExercise } = render('plank.standard', null);
-      component.state.updateInterval(0, '45');
+      component.state.updateIntervalSeconds(0, '45');
       component.state.addInterval();
-      component.state.updateInterval(1, '45');
+      component.state.updateIntervalSeconds(1, '45');
 
       // when
       switchExercise('abs.situps');
@@ -481,6 +515,30 @@ describe('ExerciseEntryFieldsComponent', () => {
 
       // then
       expect(component.state.intervals()).toEqual([30, 30, 30]);
+    });
+
+    it('should pre-fill distance intervals in km from a running edit payload', () => {
+      // given / when
+      const { component } = render(
+        'cardio.running',
+        {
+          kind: 'exercise',
+          exerciseId: 'cardio.running',
+          timestamp: '2026-02-10T13:45:00+01:00',
+          distanceM: 5000,
+          durationSec: 1500,
+          intervals: [1000, 1000],
+        },
+        [{ provide: LOCALE_ID, useValue: 'de-DE' }]
+      );
+
+      // then — the interval inputs round-trip through the same km
+      // formatting as the main "Distanz (km)" field.
+      expect(component.state.intervalDistanceInputs()).toEqual([
+        '1,00',
+        '1,00',
+      ]);
+      expect(component.state.intervals()).toEqual([1000, 1000]);
     });
 
     it.each([

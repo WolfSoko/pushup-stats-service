@@ -139,50 +139,90 @@
 }
 
 @if (state.breakdownField() === 'intervals') {
-  @for (interval of state.intervals(); track $index) {
-    <div class="set-row">
-      <mat-form-field appearance="outline">
-        @if (state.hasMultipleIntervals()) {
-          <mat-label i18n="@@entry.interval.label"
-            >Intervall {{ $index + 1 }}</mat-label
-          >
-        } @else {
-          <mat-label i18n="@@entry.intervals.label">Intervalle</mat-label>
-        }
-        <input
-          matInput
-          type="number"
-          inputmode="numeric"
-          min="0"
-          step="1"
-          [value]="interval"
-          (input)="state.updateInterval($index, asValue($event))"
-        />
-      </mat-form-field>
+  @for (i of state.intervalIndexes(); track i) {
+    <div class="interval-row">
       @if (state.hasMultipleIntervals()) {
-        <button
-          type="button"
-          mat-icon-button
-          (click)="state.removeInterval($index)"
-          i18n-aria-label="@@entry.intervals.remove"
-          aria-label="Intervall entfernen"
+        <div
+          class="interval-index"
+          [id]="'interval-label-' + i"
+          i18n="@@entry.interval.label"
         >
-          <mat-icon>remove_circle_outline</mat-icon>
-        </button>
+          Intervall {{ i + 1 }}
+        </div>
       }
-      @if ($last) {
-        <button
-          type="button"
-          mat-icon-button
-          (click)="state.addInterval()"
-          i18n-aria-label="@@entry.intervals.add"
-          aria-label="Intervall hinzufügen"
-          i18n-matTooltip="@@entry.intervals.addTooltip"
-          matTooltip="Weiteres Intervall hinzufügen"
-        >
-          <mat-icon>add_circle_outline</mat-icon>
-        </button>
-      }
+      <div
+        class="interval-fields"
+        role="group"
+        [attr.aria-labelledby]="
+          state.hasMultipleIntervals() ? 'interval-label-' + i : null
+        "
+      >
+        @if (state.intervalKind() === 'duration') {
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="numeric"
+              placeholder="0"
+              min="0"
+              step="1"
+              [value]="state.intervalMinutesInputs()[i]"
+              (input)="state.updateIntervalMinutes(i, asValue($event))"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="numeric"
+              placeholder="30"
+              min="0"
+              [max]="state.secondsMax"
+              step="1"
+              [value]="state.intervalSecondsInputs()[i]"
+              (input)="state.updateIntervalSeconds(i, asValue($event))"
+            />
+          </mat-form-field>
+        } @else {
+          <mat-form-field appearance="outline">
+            <mat-label i18n="@@entryDialog.distance">Distanz (km)</mat-label>
+            <input
+              matInput
+              type="text"
+              inputmode="decimal"
+              [placeholder]="state.distancePlaceholder"
+              [value]="state.intervalDistanceInputs()[i]"
+              (input)="state.updateIntervalDistance(i, asValue($event))"
+            />
+          </mat-form-field>
+        }
+        @if (state.hasMultipleIntervals()) {
+          <button
+            type="button"
+            mat-icon-button
+            (click)="state.removeInterval(i)"
+            i18n-aria-label="@@entry.intervals.remove"
+            aria-label="Intervall entfernen"
+          >
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+        }
+        @if ($last) {
+          <button
+            type="button"
+            mat-icon-button
+            (click)="state.addInterval()"
+            i18n-aria-label="@@entry.intervals.add"
+            aria-label="Intervall hinzufügen"
+            i18n-matTooltip="@@entry.intervals.addTooltip"
+            matTooltip="Weiteres Intervall hinzufügen"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        }
+      </div>
     </div>
   }
 }

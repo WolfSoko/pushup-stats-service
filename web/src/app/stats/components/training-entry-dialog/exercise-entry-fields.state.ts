@@ -21,6 +21,7 @@ import {
   SECONDS_MAX,
   syntheticDefinitionFor,
 } from './training-entry-dialog.helpers';
+import { IntervalFieldsState } from './interval-fields.state';
 import {
   formattedDurationMax,
   formattedExerciseMax,
@@ -56,10 +57,26 @@ export class ExerciseFormState {
     this.sets().reduce((sum, s) => sum + (s > 0 ? s : 0), 0)
   );
 
-  // Endurance per-interval value; strength keeps `[0]` so a stale value can't
-  // leak through a measurement switch (submit picks `sets` xor `intervals`).
-  readonly intervals = signal<number[]>([0]);
-  readonly hasMultipleIntervals = computed(() => this.intervals().length > 1);
+  // Endurance per-interval breakdown, entered with the same field shape as
+  // the exercise's main measurement (mm:ss for `time`, km for `distance` /
+  // `distance-time`) rather than a bare, unit-less number.
+  readonly intervalKind = computed(() =>
+    this.isTimeMeasurement() ? ('duration' as const) : ('distance' as const)
+  );
+  private readonly intervalFields = new IntervalFieldsState(
+    () => this.intervalKind(),
+    () => this.locale
+  );
+  readonly intervalIndexes = this.intervalFields.indexes;
+  readonly intervalMinutesInputs = this.intervalFields.minutesInputs;
+  readonly intervalSecondsInputs = this.intervalFields.secondsInputs;
+  readonly intervalDistanceInputs = this.intervalFields.distanceInputs;
+  // Strength keeps `sets` populated instead; submit picks `sets` xor
+  // `intervals` based on the measurement, so this never leaks across a switch.
+  readonly intervals = this.intervalFields.values;
+  readonly hasMultipleIntervals = computed(
+    () => this.intervalFields.rowCount() > 1
+  );
   readonly breakdownField = computed<'sets' | 'intervals'>(() => {
     const def = this.currentDefinition();
     return def ? entryBreakdownField(def.measurement) : 'sets';
@@ -163,7 +180,7 @@ export class ExerciseFormState {
   resetForExercise(): void {
     this.variantControl.setValue(this.defaultVariantId());
     this.sets.set([0]);
-    this.intervals.set([0]);
+    this.intervalFields.reset();
     this.durationMinutesInput.set('');
     this.durationSecondsInput.set('');
     this.distanceInput.set('');
@@ -176,7 +193,7 @@ export class ExerciseFormState {
     }
     const seed = exerciseSeedFromData(data, this.locale);
     if (seed.sets) this.sets.set(seed.sets);
-    if (seed.intervals) this.intervals.set(seed.intervals);
+    if (seed.intervals) this.intervalFields.seed(seed.intervals);
     this.durationMinutesInput.set(seed.durationMinutes);
     this.durationSecondsInput.set(seed.durationSeconds);
     if (seed.distanceInput !== undefined) {
@@ -207,13 +224,18 @@ export class ExerciseFormState {
     this.sets.update((s) => s.map((v, i) => (i === index ? clamped : v)));
   }
   addInterval(): void {
-    this.intervals.update(appendListEntry);
+    this.intervalFields.add();
   }
   removeInterval(index: number): void {
-    this.intervals.update((s) => removeListEntry(s, index));
+    this.intervalFields.remove(index);
   }
-  updateInterval(index: number, value: string): void {
-    const finite = clampListValue(value);
-    this.intervals.update((s) => s.map((v, i) => (i === index ? finite : v)));
+  updateIntervalMinutes(index: number, value: string): void {
+    this.intervalFields.updateMinutes(index, value);
+  }
+  updateIntervalSeconds(index: number, value: string): void {
+    this.intervalFields.updateSeconds(index, value);
+  }
+  updateIntervalDistance(index: number, value: string): void {
+    this.intervalFields.updateDistance(index, value);
   }
 }

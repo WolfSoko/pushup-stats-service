@@ -8,18 +8,31 @@ import {
   PushupEntryDialogResult,
 } from './training-entry-dialog.models';
 
-export function appendListEntry(list: ReadonlyArray<number>): number[] {
-  const last = list[list.length - 1] ?? 0;
-  return [...list, last > 0 ? last : 0];
+// Shared "add/remove a row, never leave the list empty" behavior for the
+// dialog's repeatable-row fields (sets, intervals). A removed sole entry
+// collapses back to `[fallback]` instead of an empty list.
+export function appendEntry<T>(list: ReadonlyArray<T>, fallback: T): T[] {
+  return [...list, list[list.length - 1] ?? fallback];
 }
 
-// Never leaves the list empty: a removed sole entry collapses back to `[0]`.
+export function removeEntry<T>(
+  list: ReadonlyArray<T>,
+  index: number,
+  fallback: T
+): T[] {
+  const next = list.filter((_, i) => i !== index);
+  return next.length === 0 ? [fallback] : next;
+}
+
+export function appendListEntry(list: ReadonlyArray<number>): number[] {
+  return appendEntry(list, 0);
+}
+
 export function removeListEntry(
   list: ReadonlyArray<number>,
   index: number
 ): number[] {
-  const next = list.filter((_, i) => i !== index);
-  return next.length === 0 ? [0] : next;
+  return removeEntry(list, index, 0);
 }
 
 export function clampListValue(value: string, max = Infinity): number {

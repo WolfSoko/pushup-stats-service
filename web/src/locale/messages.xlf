@@ -8077,6 +8077,7 @@
     <unit id="entryDialog.distance">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:17,19</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:190,192</note>
       </notes>
       <segment>
         <source>Distanz (km)</source>
@@ -8086,6 +8087,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:31,33</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:61,63</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:162,164</note>
       </notes>
       <segment>
         <source>Minuten</source>
@@ -8095,6 +8097,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:44,46</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:74,76</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:175,177</note>
       </notes>
       <segment>
         <source>Sekunden</source>
@@ -8156,23 +8159,15 @@
     </unit>
     <unit id="entry.interval.label">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:147,148</note>
-      </notes>
-      <segment>
-        <source>Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.label">
-      <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:150,152</note>
       </notes>
       <segment>
-        <source>Intervalle</source>
+        <source> Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ i + 1 }}"/> </source>
       </segment>
     </unit>
     <unit id="entry.intervals.remove">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:168,170</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:207,209</note>
       </notes>
       <segment>
         <source>Intervall entfernen</source>
@@ -8180,7 +8175,7 @@
     </unit>
     <unit id="entry.intervals.add">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:179,180</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:218,219</note>
       </notes>
       <segment>
         <source>Intervall hinzufügen</source>
@@ -8188,7 +8183,7 @@
     </unit>
     <unit id="entry.intervals.addTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:181,183</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:220,222</note>
       </notes>
       <segment>
         <source>Weiteres Intervall hinzufügen</source>
@@ -8196,7 +8191,7 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:194,196</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:234,236</note>
       </notes>
       <segment>
         <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedDurationMax() }}"/></source>
@@ -8204,7 +8199,7 @@
     </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:200,202</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:240,242</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedMax() }}"/></source>
@@ -8212,7 +8207,7 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:204,206</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:244,246</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:104,106</note>
       </notes>
       <segment>
