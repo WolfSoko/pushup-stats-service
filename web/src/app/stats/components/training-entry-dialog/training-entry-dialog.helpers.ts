@@ -14,6 +14,7 @@ export const SECONDS_MAX = 59;
 export interface ExerciseSeed {
   sets?: number[];
   intervals?: number[];
+  intervalDurationsSec?: number[];
   durationMinutes: string;
   durationSeconds: string;
   distanceInput?: string;
@@ -39,6 +40,9 @@ export function exerciseSeedFromData(
   return {
     sets,
     intervals: data.intervals?.length ? [...data.intervals] : undefined,
+    intervalDurationsSec: data.intervalDurationsSec?.length
+      ? [...data.intervalDurationsSec]
+      : undefined,
     durationMinutes: parts.minutes,
     durationSeconds: parts.seconds,
     distanceInput:

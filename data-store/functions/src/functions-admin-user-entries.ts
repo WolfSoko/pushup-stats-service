@@ -85,7 +85,7 @@ function buildEntryUpdate(patch: AdminEntryPatch): Record<string, unknown> {
   for (const f of ['reps', 'durationSec', 'distanceM', 'weightKg'] as const) {
     if (patch[f] !== undefined) update[f] = patch[f];
   }
-  for (const f of ['sets', 'intervals'] as const) {
+  for (const f of ['sets', 'intervals', 'intervalDurationsSec'] as const) {
     const v = patch[f];
     if (v === undefined) continue;
     update[f] = v.length === 0 ? FieldValue.delete() : v;
@@ -155,6 +155,7 @@ export const adminUpdateUserEntry = onCall(
         'weightKg',
         'sets',
         'intervals',
+        'intervalDurationsSec',
         'variantId',
       ] as const
     ).some((k) => patch[k] !== undefined);

@@ -123,6 +123,22 @@ describe('user-entries.helpers', () => {
       });
     });
 
+    it('should forward per-interval split times for a running entry', () => {
+      // given / when
+      const data = entryToDialogData(
+        runningEntry({
+          intervals: [1000, 1000],
+          intervalDurationsSec: [270, 265],
+        })
+      );
+
+      // then
+      expect(data).toMatchObject({
+        intervals: [1000, 1000],
+        intervalDurationsSec: [270, 265],
+      });
+    });
+
     it('should express the timestamp in local time while preserving the instant', () => {
       // given a UTC-stored entry
       const entry = repsEntry({ timestamp: '2026-04-01T10:00:00.000Z' });
@@ -235,6 +251,7 @@ describe('user-entries.helpers', () => {
         reps: 45,
         sets: [45],
         intervals: [],
+        intervalDurationsSec: [],
         variantId: 'weighted',
       };
 
@@ -255,6 +272,7 @@ describe('user-entries.helpers', () => {
         reps: 0,
         sets: [],
         intervals: [],
+        intervalDurationsSec: [],
         distanceM: 6000,
         durationSec: 1800,
       };
@@ -264,6 +282,59 @@ describe('user-entries.helpers', () => {
 
       // then
       expect(patch).toEqual({ distanceM: 6000, durationSec: 1800 });
+    });
+
+    it('should include per-interval split times when they change on a distance-time result', () => {
+      // given
+      const result: ExerciseEntryDialogResult = {
+        kind: 'exercise',
+        timestamp: '2026-04-02T10:00:00.000+02:00', // == entry 08:00Z
+        exerciseId: 'cardio.running',
+        measurement: 'distance-time',
+        reps: 0,
+        sets: [],
+        intervals: [1000, 1000],
+        intervalDurationsSec: [270, 265],
+        distanceM: 5000,
+        durationSec: 1500,
+      };
+
+      // when
+      const patch = dialogResultToPatch(
+        runningEntry({ intervals: undefined, intervalDurationsSec: undefined }),
+        result
+      );
+
+      // then
+      expect(patch).toMatchObject({ intervalDurationsSec: [270, 265] });
+    });
+
+    it('should clear a stale intervalDurationsSec breakdown on a distance-time result', () => {
+      // given — entry had split times, the edit removes them
+      const result: ExerciseEntryDialogResult = {
+        kind: 'exercise',
+        timestamp: '2026-04-02T10:00:00.000+02:00',
+        exerciseId: 'cardio.running',
+        measurement: 'distance-time',
+        reps: 0,
+        sets: [],
+        intervals: [1000, 1000],
+        intervalDurationsSec: [],
+        distanceM: 5000,
+        durationSec: 1500,
+      };
+
+      // when
+      const patch = dialogResultToPatch(
+        runningEntry({
+          intervals: [1000, 1000],
+          intervalDurationsSec: [270, 265],
+        }),
+        result
+      );
+
+      // then — empty array signals deleteField()
+      expect(patch['intervalDurationsSec']).toEqual([]);
     });
 
     it('should keep only the timestamp for a stale (uncatalogued) exercise id', () => {
@@ -279,6 +350,7 @@ describe('user-entries.helpers', () => {
         reps: 99,
         sets: [99],
         intervals: [],
+        intervalDurationsSec: [],
       });
 
       // then

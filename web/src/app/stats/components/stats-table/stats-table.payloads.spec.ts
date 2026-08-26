@@ -34,6 +34,7 @@ function exerciseResult(
     reps: 30,
     sets: [],
     intervals: [],
+    intervalDurationsSec: [],
     ...overrides,
   };
 }
@@ -123,6 +124,39 @@ describe('toCreatePayload', () => {
     expect('intervals' in payload).toBe(false);
   });
 
+  it('should forward per-interval split times on a distance-time exercise create', () => {
+    // given
+    const result = exerciseResult({
+      measurement: 'distance-time',
+      distanceM: 3000,
+      durationSec: 815,
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [270, 265, 280],
+    });
+    // when
+    const payload = toCreatePayload(result);
+    // then
+    expect(payload).toMatchObject({
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [270, 265, 280],
+    });
+  });
+
+  it('should omit an empty intervalDurationsSec from a distance-time exercise create', () => {
+    // given
+    const result = exerciseResult({
+      measurement: 'distance-time',
+      distanceM: 3000,
+      durationSec: 815,
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [],
+    });
+    // when
+    const payload = toCreatePayload(result);
+    // then
+    expect('intervalDurationsSec' in payload).toBe(false);
+  });
+
   it('should build a pure-distance exercise create', () => {
     // given
     const result = exerciseResult({
@@ -202,6 +236,58 @@ describe('toUpdatePayload', () => {
     expect('intervals' in toUpdatePayload(row, result)).toBe(false);
   });
 
+  it('should forward per-interval split times on a distance-time update', () => {
+    // given
+    const row = entry({ exerciseId: 'cardio.running', intervals: undefined });
+    const result = exerciseResult({
+      measurement: 'distance-time',
+      distanceM: 3000,
+      durationSec: 815,
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [270, 265, 280],
+    });
+    // when
+    const payload = toUpdatePayload(row, result);
+    // then
+    expect(payload.intervalDurationsSec).toEqual([270, 265, 280]);
+  });
+
+  it('should clear a stale intervalDurationsSec breakdown on a distance-time update', () => {
+    // given
+    const row = entry({
+      exerciseId: 'cardio.running',
+      intervalDurationsSec: [270, 265],
+    });
+    const result = exerciseResult({
+      measurement: 'distance-time',
+      distanceM: 3000,
+      durationSec: 815,
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [],
+    });
+    // when
+    const payload = toUpdatePayload(row, result);
+    // then — empty array signals deleteField()
+    expect(payload.intervalDurationsSec).toEqual([]);
+  });
+
+  it('should omit intervalDurationsSec when neither result nor entry carried one', () => {
+    // given
+    const row = entry({
+      exerciseId: 'cardio.running',
+      intervalDurationsSec: undefined,
+    });
+    const result = exerciseResult({
+      measurement: 'distance-time',
+      distanceM: 3000,
+      durationSec: 815,
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [],
+    });
+    // when / then
+    expect('intervalDurationsSec' in toUpdatePayload(row, result)).toBe(false);
+  });
+
   it('should preserve the entry source rather than the dialog source', () => {
     // given
     const row = entry({ exerciseId: 'abs.situps', source: 'import' });
@@ -275,5 +361,25 @@ describe('toEditDialogData', () => {
     // then
     expect('durationSec' in data).toBe(false);
     expect('distanceM' in data).toBe(false);
+  });
+
+  it('should map a running row including its per-interval split times', () => {
+    // given
+    const row = entry({
+      exerciseId: 'cardio.running',
+      distanceM: 3000,
+      durationSec: 815,
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [270, 265, 280],
+    });
+    // when
+    const data = toEditDialogData(row);
+    // then
+    expect(data).toMatchObject({
+      kind: 'exercise',
+      exerciseId: 'cardio.running',
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [270, 265, 280],
+    });
   });
 });

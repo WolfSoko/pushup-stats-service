@@ -51,7 +51,13 @@ function violationObservable<T>(
   exerciseId: string,
   payload: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'sets' | 'intervals'
+    | 'reps'
+    | 'durationSec'
+    | 'distanceM'
+    | 'weightKg'
+    | 'sets'
+    | 'intervals'
+    | 'intervalDurationsSec'
   > & { variantId?: string | null },
   options?: { partial?: boolean }
 ): Observable<T> | null {
@@ -179,6 +185,9 @@ export class ExerciseFirestoreService {
       ...companionPatch,
       ...(payload.sets?.length ? { sets: payload.sets } : {}),
       ...(payload.intervals?.length ? { intervals: payload.intervals } : {}),
+      ...(payload.intervalDurationsSec?.length
+        ? { intervalDurationsSec: payload.intervalDurationsSec }
+        : {}),
       source: payload.source ?? 'web',
       createdAt: nowIso,
       updatedAt: nowIso,
@@ -198,6 +207,9 @@ export class ExerciseFirestoreService {
     if (payload.sets?.length) firestoreData['sets'] = payload.sets;
     if (payload.intervals?.length) {
       firestoreData['intervals'] = payload.intervals;
+    }
+    if (payload.intervalDurationsSec?.length) {
+      firestoreData['intervalDurationsSec'] = payload.intervalDurationsSec;
     }
 
     return from(setDoc(newRef, firestoreData)).pipe(map(() => record));
@@ -239,6 +251,7 @@ export class ExerciseFirestoreService {
         'variantId',
         'sets',
         'intervals',
+        'intervalDurationsSec',
       ] as const
     ).some((k) => payload[k] !== undefined);
     if (valueChanges) {
@@ -261,6 +274,7 @@ export class ExerciseFirestoreService {
     // it to `deleteField()` makes the patch actually clear the field.
     //   - `sets: []` clears the per-set breakdown.
     //   - `intervals: []` clears the per-interval breakdown.
+    //   - `intervalDurationsSec: []` clears the per-interval split times.
     //   - `variantId: null` clears a previously-set variant (the dialog
     //     forwards `null` when the user picked the "no variant" option
     //     in edit mode).
@@ -268,7 +282,7 @@ export class ExerciseFirestoreService {
     for (const [k, v] of Object.entries(patchable)) {
       if (v === undefined) continue;
       if (
-        (k === 'sets' || k === 'intervals') &&
+        (k === 'sets' || k === 'intervals' || k === 'intervalDurationsSec') &&
         Array.isArray(v) &&
         v.length === 0
       ) {

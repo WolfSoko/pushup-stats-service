@@ -461,6 +461,118 @@ describe('validateExerciseEntry — breakdown field mutex', () => {
   });
 });
 
+describe('validateExerciseEntry — intervalDurationsSec (interval split times)', () => {
+  it('accepts index-aligned split times on a distance-time exercise', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 3000,
+          durationSec: 900,
+          intervals: [1000, 1000, 1000],
+          intervalDurationsSec: [270, 265, 280],
+        },
+        distanceTimeDef
+      )
+    ).toBeNull();
+  });
+
+  it('accepts 0 as the "no split entered" sentinel for some intervals', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 2000,
+          durationSec: 600,
+          intervals: [1000, 1000],
+          intervalDurationsSec: [270, 0],
+        },
+        distanceTimeDef
+      )
+    ).toBeNull();
+  });
+
+  it('allows an empty array as the clear sentinel', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 2000,
+          durationSec: 600,
+          intervals: [1000, 1000],
+          intervalDurationsSec: [],
+        },
+        distanceTimeDef
+      )
+    ).toBeNull();
+  });
+
+  it('rejects split times on a plain time exercise (no distance to pair with)', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          durationSec: 90,
+          intervals: [30, 30, 30],
+          intervalDurationsSec: [30, 30, 30],
+        },
+        timeDef
+      )
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('rejects split times on a plain distance exercise (no aligned intervals concept)', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 1200,
+          intervals: [400, 400, 400],
+          intervalDurationsSec: [120, 120, 120],
+        },
+        distanceDef
+      )
+    ).toBe('wrong-measurement-field');
+  });
+
+  it('rejects a length mismatch against intervals', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 3000,
+          durationSec: 900,
+          intervals: [1000, 1000, 1000],
+          intervalDurationsSec: [270, 265],
+        },
+        distanceTimeDef
+      )
+    ).toBe('interval-durations-length-mismatch');
+  });
+
+  it('rejects a non-integer split time', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 1000,
+          durationSec: 300,
+          intervals: [1000],
+          intervalDurationsSec: [270.5],
+        },
+        distanceTimeDef
+      )
+    ).toBe('companion-value-invalid');
+  });
+
+  it('rejects an out-of-range split time', () => {
+    expect(
+      validateExerciseEntry(
+        {
+          distanceM: 1000,
+          durationSec: 300,
+          intervals: [1000],
+          intervalDurationsSec: [100_000],
+        },
+        distanceTimeDef
+      )
+    ).toBe('companion-value-out-of-range');
+  });
+});
+
 describe('validateExerciseEntry — variants', () => {
   const defWithVariants: Pick<
     ExerciseDefinition,

@@ -122,6 +122,7 @@ describe('StatsTableComponent', () => {
         reps: 0,
         sets: [],
         intervals: [],
+        intervalDurationsSec: [],
         durationSec: 90,
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -316,6 +317,7 @@ describe('StatsTableComponent', () => {
         reps: 35,
         sets: [12, 12, 11],
         intervals: [],
+        intervalDurationsSec: [],
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -347,6 +349,7 @@ describe('StatsTableComponent', () => {
         reps: 20,
         sets: [20],
         intervals: [],
+        intervalDurationsSec: [],
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -379,6 +382,7 @@ describe('StatsTableComponent', () => {
         reps: 30,
         sets: [30],
         intervals: [],
+        intervalDurationsSec: [],
         variantId: 'weighted',
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -412,6 +416,7 @@ describe('StatsTableComponent', () => {
         reps: 30,
         sets: [30],
         intervals: [],
+        intervalDurationsSec: [],
         variantId: null,
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -479,6 +484,7 @@ describe('StatsTableComponent', () => {
         reps: 30,
         sets: [30],
         intervals: [],
+        intervalDurationsSec: [],
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
         afterClosed: () => of(editResult),
@@ -512,6 +518,7 @@ describe('StatsTableComponent', () => {
         reps: 0,
         sets: [],
         intervals: [],
+        intervalDurationsSec: [],
         durationSec: 90,
       };
       vitest.spyOn(component.dialog, 'open').mockReturnValue({
@@ -552,6 +559,7 @@ describe('StatsTableComponent', () => {
         reps: 0,
         sets: [],
         intervals: [],
+        intervalDurationsSec: [],
         distanceM: 5250,
         durationSec: 1500,
       };

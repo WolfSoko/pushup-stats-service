@@ -3,10 +3,7 @@ import {
   ExerciseDefinition,
   MeasurementType,
 } from '@pu-stats/models';
-import {
-  ExerciseEntryDialogResult,
-  PushupEntryDialogResult,
-} from './training-entry-dialog.models';
+import { PushupEntryDialogResult } from './training-entry-dialog.models';
 
 // Shared "add/remove a row, never leave the list empty" behavior for the
 // dialog's repeatable-row fields (sets, intervals). A removed sole entry
@@ -141,16 +138,6 @@ export function canSubmitExercise(args: {
   return totalReps >= def.min && !overCap;
 }
 
-export interface BuildExerciseInput {
-  timestamp: string;
-  def: ExerciseDefinition;
-  variantPatch: { variantId?: string | null };
-  sets: ReadonlyArray<number>;
-  intervals: ReadonlyArray<number>;
-  durationSec: number | null;
-  distanceM: number | null;
-}
-
 export function buildVariantPatch(
   currentVariantId: string,
   initialVariantId: string
@@ -163,80 +150,4 @@ export function buildVariantPatch(
       : initialVariantId
         ? { variantId: null }
         : {};
-}
-
-export function buildExerciseResult(
-  input: BuildExerciseInput
-): ExerciseEntryDialogResult | null {
-  const { def, variantPatch, durationSec, distanceM } = input;
-  const measurement = def.measurement;
-  const validIntervals = input.intervals.filter((s) => s > 0);
-
-  if (measurement === 'time') {
-    if (durationSec === null || durationSec <= 0) return null;
-    return {
-      kind: 'exercise',
-      exerciseId: def.id,
-      measurement,
-      ...variantPatch,
-      timestamp: input.timestamp,
-      reps: 0,
-      sets: [],
-      intervals: validIntervals,
-      durationSec,
-    };
-  }
-
-  if (measurement === 'distance-time') {
-    if (
-      distanceM === null ||
-      distanceM <= 0 ||
-      durationSec === null ||
-      durationSec <= 0
-    )
-      return null;
-    return {
-      kind: 'exercise',
-      exerciseId: def.id,
-      measurement,
-      ...variantPatch,
-      timestamp: input.timestamp,
-      reps: 0,
-      sets: [],
-      intervals: validIntervals,
-      distanceM,
-      durationSec,
-    };
-  }
-
-  if (measurement === 'distance') {
-    // Dead today (no pure-`distance` catalog exercise), kept in lockstep with
-    // the data model so a future distance-only exercise emits `intervals`.
-    if (distanceM === null || distanceM <= 0) return null;
-    return {
-      kind: 'exercise',
-      exerciseId: def.id,
-      measurement,
-      ...variantPatch,
-      timestamp: input.timestamp,
-      reps: 0,
-      sets: [],
-      intervals: validIntervals,
-      distanceM,
-    };
-  }
-
-  const validSets = input.sets.filter((s) => s > 0);
-  const reps = validSets.reduce((sum, s) => sum + s, 0);
-  if (reps <= 0) return null;
-  return {
-    kind: 'exercise',
-    exerciseId: def.id,
-    measurement,
-    ...variantPatch,
-    timestamp: input.timestamp,
-    reps,
-    sets: validSets,
-    intervals: [],
-  };
 }

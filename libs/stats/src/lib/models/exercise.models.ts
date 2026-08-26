@@ -10,11 +10,7 @@
  */
 
 export type MeasurementType =
-  | 'reps'
-  | 'time'
-  | 'distance'
-  | 'weight'
-  | 'distance-time';
+  'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
 
 /**
  * Categories follow a movement-pattern taxonomy (Dan John / functional
@@ -153,6 +149,16 @@ export interface ExerciseEntry {
    * the exercise's measurement type via {@link entryBreakdownField}.
    */
   intervals?: number[];
+  /**
+   * Optional per-interval split time, only meaningful alongside
+   * {@link intervals} for `measurement = 'distance-time'` (running).
+   * Index-aligned with `intervals` — same length, e.g. a 3×1km session
+   * can record `intervals: [1000, 1000, 1000]` and
+   * `intervalDurationsSec: [270, 265, 280]`. `0` at an index means no
+   * split time was entered for that interval. Absent/empty when no
+   * split times were entered at all.
+   */
+  intervalDurationsSec?: number[];
   source: string;
   createdAt?: string;
   updatedAt?: string;
@@ -168,6 +174,7 @@ export interface ExerciseEntryCreate {
   weightKg?: number;
   sets?: number[];
   intervals?: number[];
+  intervalDurationsSec?: number[];
   source?: string;
 }
 
@@ -190,6 +197,7 @@ export interface ExerciseEntryUpdate {
   weightKg?: number;
   sets?: number[];
   intervals?: number[];
+  intervalDurationsSec?: number[];
   source?: string;
 }
 
@@ -202,7 +210,8 @@ export type ExerciseEntryViolation =
   | 'invalid-variant'
   | 'companion-value-missing'
   | 'companion-value-invalid'
-  | 'companion-value-out-of-range';
+  | 'companion-value-out-of-range'
+  | 'interval-durations-length-mismatch';
 
 type MeasurementValueField = 'reps' | 'durationSec' | 'distanceM' | 'weightKg';
 
@@ -379,7 +388,13 @@ export function requiredCompanionFields(
 export function validateExerciseEntry(
   entry: Pick<
     ExerciseEntry,
-    'reps' | 'durationSec' | 'distanceM' | 'weightKg' | 'sets' | 'intervals'
+    | 'reps'
+    | 'durationSec'
+    | 'distanceM'
+    | 'weightKg'
+    | 'sets'
+    | 'intervals'
+    | 'intervalDurationsSec'
   > & {
     // `null` is the patch sentinel for "clear the variant"; the
     // persisted `ExerciseEntry.variantId` is `string | undefined`
@@ -424,6 +439,34 @@ export function validateExerciseEntry(
       : entry.sets;
   if (Array.isArray(wrongBreakdown) && wrongBreakdown.length > 0) {
     return 'wrong-measurement-field';
+  }
+  // Per-interval split times are index-aligned with `intervals` and only
+  // meaningful for a tracked run (`distance-time`) — a plank has no
+  // distance to pair a split with, and a plain-`distance` entry has no
+  // interval breakdown to align against.
+  const intervalDurations = entry.intervalDurationsSec;
+  if (Array.isArray(intervalDurations) && intervalDurations.length > 0) {
+    if (def.measurement !== 'distance-time') {
+      return 'wrong-measurement-field';
+    }
+    if (intervalDurations.length !== (entry.intervals?.length ?? 0)) {
+      return 'interval-durations-length-mismatch';
+    }
+    for (const v of intervalDurations) {
+      if (
+        typeof v !== 'number' ||
+        !Number.isFinite(v) ||
+        !Number.isInteger(v)
+      ) {
+        return 'companion-value-invalid';
+      }
+      // `0` is the "no split entered for this interval" sentinel.
+      if (v === 0) continue;
+      const bounds = COMPANION_BOUNDS.durationSec;
+      if (v < bounds.min || v > bounds.max) {
+        return 'companion-value-out-of-range';
+      }
+    }
   }
   const value = entry[expectedField];
   if (value === undefined || value === null) {

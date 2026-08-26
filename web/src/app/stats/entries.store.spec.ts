@@ -174,6 +174,28 @@ describe('EntriesStore', () => {
       );
     });
 
+    it('Given a running create with per-interval split times, Then intervalDurationsSec is forwarded to the service', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.createEntry({
+        kind: 'exercise',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-27T08:00:00',
+        distanceM: 3000,
+        durationSec: 900,
+        intervals: [1000, 1000, 1000],
+        intervalDurationsSec: [270, 265, 280],
+      });
+
+      // then
+      expect(exerciseServiceMock.createEntry).toHaveBeenCalledWith(
+        'u1',
+        expect.objectContaining({ intervalDurationsSec: [270, 265, 280] })
+      );
+    });
+
     it('Given an exercise-kind create without exerciseId, Then no service is called and store.error is set', async () => {
       const store = setup();
 
@@ -341,6 +363,49 @@ describe('EntriesStore', () => {
         's42',
         'cardio.running',
         expect.objectContaining({ intervals: [400, 400, 400] })
+      );
+    });
+
+    it('Given a running update with per-interval split times, Then intervalDurationsSec is forwarded to the service', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.updateEntry({
+        kind: 'exercise',
+        id: 's42',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-27T08:00:00',
+        intervals: [1000, 1000],
+        intervalDurationsSec: [270, 265],
+      });
+
+      // then
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        's42',
+        'cardio.running',
+        expect.objectContaining({ intervalDurationsSec: [270, 265] })
+      );
+    });
+
+    it('Given a running update clearing intervalDurationsSec, Then the empty-array clear sentinel reaches the service', async () => {
+      // given
+      const store = setup();
+
+      // when
+      await store.updateEntry({
+        kind: 'exercise',
+        id: 's42',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-27T08:00:00',
+        intervalDurationsSec: [],
+      });
+
+      // then
+      expect(exerciseServiceMock.updateEntry).toHaveBeenCalledWith(
+        's42',
+        'cardio.running',
+        expect.objectContaining({ intervalDurationsSec: [] })
       );
     });
 

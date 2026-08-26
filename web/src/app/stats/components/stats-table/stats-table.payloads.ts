@@ -24,6 +24,7 @@ export function toEditDialogData(entry: UnifiedEntry): TrainingEntryDialogData {
     reps: entry.reps,
     sets: entry.sets,
     intervals: entry.intervals,
+    intervalDurationsSec: entry.intervalDurationsSec,
     ...(entry.durationSec !== undefined
       ? { durationSec: entry.durationSec }
       : {}),
@@ -63,6 +64,7 @@ function exerciseCreatePayload(
   // the field might be omitted. Default to `[]` so `.length` is
   // always safe.
   const intervals = result.intervals ?? [];
+  const intervalDurationsSec = result.intervalDurationsSec ?? [];
   return {
     kind: 'exercise',
     exerciseId: result.exerciseId,
@@ -77,6 +79,9 @@ function exerciseCreatePayload(
             distanceM: result.distanceM ?? 0,
             durationSec: result.durationSec ?? 0,
             ...(intervals.length > 0 ? { intervals } : {}),
+            ...(intervalDurationsSec.length > 0
+              ? { intervalDurationsSec }
+              : {}),
           }
         : result.measurement === 'distance'
           ? {
@@ -157,6 +162,13 @@ function exerciseUpdatePayload(
       : entry.intervals !== undefined
         ? { intervals: [] }
         : {};
+  const resultIntervalDurations = result.intervalDurationsSec ?? [];
+  const intervalDurationsPatch =
+    resultIntervalDurations.length > 0
+      ? { intervalDurationsSec: resultIntervalDurations }
+      : entry.intervalDurationsSec !== undefined
+        ? { intervalDurationsSec: [] }
+        : {};
   return {
     kind: 'exercise',
     id: entry._id,
@@ -173,6 +185,7 @@ function exerciseUpdatePayload(
             distanceM: result.distanceM ?? 0,
             durationSec: result.durationSec ?? 0,
             ...intervalsPatch,
+            ...intervalDurationsPatch,
           }
         : result.measurement === 'distance'
           ? {

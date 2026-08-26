@@ -937,6 +937,7 @@ describe('StatsDashboardComponent', () => {
           reps: 0,
           sets: [],
           intervals: [],
+          intervalDurationsSec: [],
           durationSec: 90,
         });
         await fixture.whenStable();
@@ -971,6 +972,7 @@ describe('StatsDashboardComponent', () => {
           reps: 0,
           sets: [],
           intervals: [30, 30, 30],
+          intervalDurationsSec: [],
           durationSec: 90,
         });
         await fixture.whenStable();
@@ -997,6 +999,7 @@ describe('StatsDashboardComponent', () => {
           reps: 0,
           sets: [],
           intervals: [400, 400, 400],
+          intervalDurationsSec: [],
           distanceM: 1200,
           durationSec: 360,
         });
@@ -1013,6 +1016,58 @@ describe('StatsDashboardComponent', () => {
         );
       });
 
+      it('Then per-interval split times are forwarded on a distance-time entry (cardio.running)', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'cardio.running',
+          measurement: 'distance-time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          intervals: [1000, 1000, 1000],
+          intervalDurationsSec: [270, 265, 280],
+          distanceM: 3000,
+          durationSec: 815,
+        });
+        await fixture.whenStable();
+
+        expect(exerciseCreateSpy).toHaveBeenCalledWith(
+          'u1',
+          expect.objectContaining({
+            exerciseId: 'cardio.running',
+            intervalDurationsSec: [270, 265, 280],
+          })
+        );
+      });
+
+      it('Then an empty intervalDurationsSec is not forwarded on a distance-time entry', async () => {
+        const component = fixture.componentInstance;
+        vi.clearAllMocks();
+
+        await component.createEntry({
+          kind: 'exercise',
+          exerciseId: 'cardio.running',
+          measurement: 'distance-time',
+          timestamp: '2026-02-10T13:45+01:00',
+          reps: 0,
+          sets: [],
+          intervals: [1000, 1000],
+          intervalDurationsSec: [],
+          distanceM: 2000,
+          durationSec: 550,
+        });
+        await fixture.whenStable();
+
+        const payload = exerciseCreateSpy.mock.calls[0]?.[1] as Record<
+          string,
+          unknown
+        >;
+        expect('intervalDurationsSec' in payload).toBe(false);
+      });
+
       it('Then it returns early without writing when userIdSafe() is empty', async () => {
         const component = fixture.componentInstance;
         vi.clearAllMocks();
@@ -1026,6 +1081,7 @@ describe('StatsDashboardComponent', () => {
           reps: 0,
           sets: [],
           intervals: [],
+          intervalDurationsSec: [],
           durationSec: 90,
         });
 

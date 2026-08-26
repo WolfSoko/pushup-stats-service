@@ -131,6 +131,37 @@ describe('exerciseEntryToUnified', () => {
       const out = exerciseEntryToUnified(e);
       expect('intervals' in out).toBe(false);
     });
+
+    it('forwards intervalDurationsSec verbatim (running splits)', () => {
+      const e: ExerciseEntry = {
+        _id: 'e7',
+        userId: 'u1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-15T10:00:00Z',
+        distanceM: 3000,
+        durationSec: 900,
+        intervals: [1000, 1000, 1000],
+        intervalDurationsSec: [270, 265, 280],
+        source: 'web',
+      };
+      const out = exerciseEntryToUnified(e);
+      expect(out.intervalDurationsSec).toEqual([270, 265, 280]);
+    });
+
+    it('omits intervalDurationsSec when the source doc has none', () => {
+      const e: ExerciseEntry = {
+        _id: 'e8',
+        userId: 'u1',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-04-15T10:00:00Z',
+        distanceM: 3000,
+        durationSec: 900,
+        intervals: [1000, 1000, 1000],
+        source: 'web',
+      };
+      const out = exerciseEntryToUnified(e);
+      expect('intervalDurationsSec' in out).toBe(false);
+    });
   });
 });
 

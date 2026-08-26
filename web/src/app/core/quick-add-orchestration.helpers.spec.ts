@@ -167,6 +167,7 @@ describe('buildExerciseEntryPayload', () => {
     reps: 9,
     sets: [9],
     intervals: [],
+    intervalDurationsSec: [],
   };
 
   it('should forward reps and omit single-set arrays', () => {
@@ -325,6 +326,7 @@ describe('buildConfirmedEntryPayload', () => {
       reps: 9,
       sets: [9],
       intervals: [],
+      intervalDurationsSec: [],
     };
 
     // when

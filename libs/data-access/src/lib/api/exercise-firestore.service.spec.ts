@@ -307,6 +307,38 @@ describe('ExerciseFirestoreService', () => {
       expect(data['intervals']).toEqual([30, 30, 30]);
     });
 
+    it('omits empty intervalDurationsSec array from the Firestore payload', async () => {
+      const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+      await firstValueFrom(
+        service.createEntry('u1', {
+          exerciseId: 'cardio.running',
+          timestamp: '2026-04-15T08:00:00Z',
+          distanceM: 3000,
+          durationSec: 900,
+          intervals: [1000, 1000, 1000],
+          intervalDurationsSec: [],
+        })
+      );
+      const data = setDocSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(data['intervalDurationsSec']).toBeUndefined();
+    });
+
+    it('preserves a non-empty intervalDurationsSec array on the Firestore payload', async () => {
+      const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
+      await firstValueFrom(
+        service.createEntry('u1', {
+          exerciseId: 'cardio.running',
+          timestamp: '2026-04-15T08:00:00Z',
+          distanceM: 3000,
+          durationSec: 900,
+          intervals: [1000, 1000, 1000],
+          intervalDurationsSec: [270, 265, 280],
+        })
+      );
+      const data = setDocSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(data['intervalDurationsSec']).toEqual([270, 265, 280]);
+    });
+
     it('defaults source to "web" when not provided', async () => {
       const setDocSpy = jest.spyOn(firestoreFns, 'setDoc');
       await firstValueFrom(
@@ -393,6 +425,42 @@ describe('ExerciseFirestoreService', () => {
       );
       const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
       expect(patch['intervals']).toEqual([30, 30, 30]);
+    });
+
+    it('clears the intervalDurationsSec field when the patch sends an empty array', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      const deleteFieldSpy = jest.spyOn(firestoreFns, 'deleteField');
+      await firstValueFrom(
+        service.updateEntry('s1', 'cardio.running', {
+          intervalDurationsSec: [],
+        })
+      );
+      expect(deleteFieldSpy).toHaveBeenCalled();
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(patch['intervalDurationsSec']).toBe('__deleted__');
+    });
+
+    it('preserves a non-empty intervalDurationsSec array on the update patch', async () => {
+      const updateSpy = jest.spyOn(firestoreFns, 'updateDoc');
+      await firstValueFrom(
+        service.updateEntry('s1', 'cardio.running', {
+          intervals: [1000, 1000],
+          intervalDurationsSec: [270, 265],
+        })
+      );
+      const patch = updateSpy.mock.calls[0]?.[1] as Record<string, unknown>;
+      expect(patch['intervalDurationsSec']).toEqual([270, 265]);
+    });
+
+    it('rejects an intervalDurationsSec patch on a time-measured exercise', async () => {
+      await expect(
+        firstValueFrom(
+          service.updateEntry('s1', 'plank.standard', {
+            intervals: [30, 30, 30],
+            intervalDurationsSec: [30, 30, 30],
+          })
+        )
+      ).rejects.toThrow(/wrong-measurement-field/);
     });
 
     it('rejects an intervals patch on a reps-measured exercise', async () => {

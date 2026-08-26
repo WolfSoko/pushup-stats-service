@@ -8088,6 +8088,7 @@
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:31,33</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:61,63</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:162,164</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:203,205</note>
       </notes>
       <segment>
         <source>Minuten</source>
@@ -8098,6 +8099,7 @@
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:44,46</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:74,76</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:175,177</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:220,222</note>
       </notes>
       <segment>
         <source>Sekunden</source>
@@ -8167,7 +8169,7 @@
     </unit>
     <unit id="entry.intervals.remove">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:207,209</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:244,246</note>
       </notes>
       <segment>
         <source>Intervall entfernen</source>
@@ -8175,7 +8177,7 @@
     </unit>
     <unit id="entry.intervals.add">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:218,219</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:255,256</note>
       </notes>
       <segment>
         <source>Intervall hinzufügen</source>
@@ -8183,7 +8185,7 @@
     </unit>
     <unit id="entry.intervals.addTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:220,222</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:257,259</note>
       </notes>
       <segment>
         <source>Weiteres Intervall hinzufügen</source>
@@ -8191,7 +8193,7 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:234,236</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:271,273</note>
       </notes>
       <segment>
         <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedDurationMax() }}"/></source>
@@ -8199,7 +8201,7 @@
     </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:240,242</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:277,279</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedMax() }}"/></source>
@@ -8207,7 +8209,7 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:244,246</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:281,283</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:104,106</note>
       </notes>
       <segment>

@@ -44,6 +44,7 @@ function exerciseResult(
     reps: 20,
     sets: [],
     intervals: [],
+    intervalDurationsSec: [],
     ...overrides,
   };
 }

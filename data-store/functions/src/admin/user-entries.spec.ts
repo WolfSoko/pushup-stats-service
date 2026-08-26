@@ -239,6 +239,23 @@ describe('admin/user-entries', () => {
       });
     });
 
+    it('should pass through an intervalDurationsSec breakdown', () => {
+      // given / when
+      const result = validateUpdateUserEntryPayload({
+        uid: 'u',
+        entryId: 'e',
+        patch: { intervals: [1000, 1000], intervalDurationsSec: [270, 265] },
+      });
+
+      // then
+      expect(result).toEqual({
+        valid: true,
+        uid: 'u',
+        entryId: 'e',
+        patch: { intervals: [1000, 1000], intervalDurationsSec: [270, 265] },
+      });
+    });
+
     it('should reject a non-number in a breakdown array', () => {
       // given / when
       const result = validateUpdateUserEntryPayload({
@@ -341,6 +358,27 @@ describe('admin/user-entries', () => {
         weightKg: 20,
         sets: [10, 10, 10],
       });
+    });
+
+    it('should project an intervalDurationsSec breakdown alongside intervals', () => {
+      // given
+      const data = {
+        userId: 'user-1',
+        exerciseId: 'cardio.running',
+        source: 'web',
+        timestamp: '2026-04-01T10:00:00.000Z',
+        distanceM: 2000,
+        durationSec: 600,
+        intervals: [1000, 1000],
+        intervalDurationsSec: [270, 265],
+      };
+
+      // when
+      const entry = serializeEntry('e1', data);
+
+      // then
+      expect(entry.intervals).toEqual([1000, 1000]);
+      expect(entry.intervalDurationsSec).toEqual([270, 265]);
     });
 
     it('should coerce a legacy Firestore Timestamp field to an ISO string', () => {

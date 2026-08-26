@@ -197,6 +197,43 @@
               (input)="state.updateIntervalDistance(i, asValue($event))"
             />
           </mat-form-field>
+          @if (state.hasIntervalDurationCompanion()) {
+            <mat-form-field appearance="outline">
+              <mat-label i18n="@@entryDialog.durationMinutes"
+                >Minuten</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                inputmode="numeric"
+                placeholder="0"
+                min="0"
+                step="1"
+                [value]="state.intervalCompanionMinutesInputs()[i]"
+                (input)="
+                  state.updateIntervalCompanionMinutes(i, asValue($event))
+                "
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label i18n="@@entryDialog.durationSeconds"
+                >Sekunden</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                inputmode="numeric"
+                placeholder="0"
+                min="0"
+                [max]="state.secondsMax"
+                step="1"
+                [value]="state.intervalCompanionSecondsInputs()[i]"
+                (input)="
+                  state.updateIntervalCompanionSeconds(i, asValue($event))
+                "
+              />
+            </mat-form-field>
+          }
         }
         @if (state.hasMultipleIntervals()) {
           <button

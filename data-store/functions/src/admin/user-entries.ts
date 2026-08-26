@@ -20,6 +20,7 @@ export interface AdminEntryPatch {
   weightKg?: number;
   sets?: number[];
   intervals?: number[];
+  intervalDurationsSec?: number[];
   /**
    * `string` sets the variant, `null` clears it (the callable maps this
    * to a Firestore `deleteField()`), `undefined` leaves it untouched.
@@ -39,7 +40,7 @@ const NUMERIC_FIELDS = [
   'distanceM',
   'weightKg',
 ] as const;
-const BREAKDOWN_FIELDS = ['sets', 'intervals'] as const;
+const BREAKDOWN_FIELDS = ['sets', 'intervals', 'intervalDurationsSec'] as const;
 
 const KNOWN_PATCH_FIELDS: ReadonlySet<string> = new Set<string>([
   'timestamp',

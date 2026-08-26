@@ -14,6 +14,9 @@ export interface UnifiedEntryBase {
   /** Per-interval breakdown for endurance exercises (sprints, HIIT). See
    *  `ExerciseEntry.intervals`. */
   intervals?: number[];
+  /** Per-interval split times, distance-time only. See
+   *  `ExerciseEntry.intervalDurationsSec`. */
+  intervalDurationsSec?: number[];
   source: string;
   createdAt?: string;
   updatedAt?: string;
@@ -54,6 +57,9 @@ export function exerciseEntryToUnified(e: ExerciseEntry): UnifiedExerciseEntry {
     reps: e.reps ?? 0,
     ...(e.sets ? { sets: e.sets } : {}),
     ...(e.intervals ? { intervals: e.intervals } : {}),
+    ...(e.intervalDurationsSec
+      ? { intervalDurationsSec: e.intervalDurationsSec }
+      : {}),
     source: e.source,
     exerciseId: e.exerciseId,
     ...(e.variantId ? { variantId: e.variantId } : {}),

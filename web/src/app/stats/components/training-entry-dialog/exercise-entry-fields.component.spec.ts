@@ -406,6 +406,101 @@ describe('ExerciseEntryFieldsComponent', () => {
     });
   });
 
+  describe('interval split times (distance-time only)', () => {
+    it('should show a Minuten/Sekunden split-time pair alongside each running interval', () => {
+      // given
+      const { component, fixture } = render('cardio.running', null);
+
+      // when
+      component.state.addInterval();
+      fixture.detectChanges();
+
+      // then — one Minuten/Sekunden pair per interval, matching the main
+      // duration entry's field shape.
+      const root: HTMLElement = fixture.nativeElement;
+      const labels = Array.from(root.querySelectorAll('mat-label')).map((el) =>
+        (el.textContent ?? '').trim()
+      );
+      expect(labels.filter((l) => l === 'Minuten')).toHaveLength(3);
+      expect(labels.filter((l) => l === 'Sekunden')).toHaveLength(3);
+    });
+
+    it('should not show a split-time pair for a plain time exercise (plank)', () => {
+      // given / when
+      const { fixture } = render('plank.standard', null);
+
+      // then — only the main entry's own Minuten/Sekunden pair, none extra
+      // per interval (a plank interval has no distance to pair a split with).
+      const root: HTMLElement = fixture.nativeElement;
+      const labels = Array.from(root.querySelectorAll('mat-label')).map((el) =>
+        (el.textContent ?? '').trim()
+      );
+      expect(labels.filter((l) => l === 'Minuten')).toHaveLength(2);
+    });
+
+    it('should submit index-aligned split times alongside running intervals', () => {
+      // given
+      const { component } = render('cardio.running', null);
+      component.state.distanceInput.set('3');
+      component.state.durationMinutesInput.set('13');
+      component.state.durationSecondsInput.set('35');
+      component.state.updateIntervalDistance(0, '1');
+      component.state.updateIntervalCompanionMinutes(0, '4');
+      component.state.updateIntervalCompanionSeconds(0, '30');
+      component.state.addInterval();
+      component.state.updateIntervalDistance(1, '1');
+      component.state.updateIntervalCompanionMinutes(1, '4');
+      component.state.updateIntervalCompanionSeconds(1, '25');
+
+      // when
+      const result = component.buildResult('t') as ExerciseEntryDialogResult;
+
+      // then
+      expect(result).toMatchObject({
+        intervals: [1000, 1000],
+        intervalDurationsSec: [270, 265],
+      });
+    });
+
+    it('should drop a split time whose interval distance was left empty', () => {
+      // given — first interval has only a split time, no distance
+      const { component } = render('cardio.running', null);
+      component.state.distanceInput.set('1');
+      component.state.durationMinutesInput.set('4');
+      component.state.durationSecondsInput.set('30');
+      component.state.updateIntervalCompanionMinutes(0, '4');
+      component.state.updateIntervalCompanionSeconds(0, '30');
+
+      // when
+      const result = component.buildResult('t') as ExerciseEntryDialogResult;
+
+      // then — no distance entered for the only interval row, so both
+      // arrays come back empty.
+      expect(result).toMatchObject({
+        intervals: [],
+        intervalDurationsSec: [],
+      });
+    });
+
+    it('should emit an empty intervalDurationsSec when no split times were entered', () => {
+      // given
+      const { component } = render('cardio.running', null);
+      component.state.distanceInput.set('2');
+      component.state.durationMinutesInput.set('9');
+      component.state.durationSecondsInput.set('0');
+      component.state.updateIntervalDistance(0, '1');
+      component.state.addInterval();
+      component.state.updateIntervalDistance(1, '1');
+
+      // when
+      const result = component.buildResult('t') as ExerciseEntryDialogResult;
+
+      // then
+      expect(result.intervals).toEqual([1000, 1000]);
+      expect(result.intervalDurationsSec).toEqual([]);
+    });
+  });
+
   describe('edit mode', () => {
     it('should leave the variant empty for an entry stored without one', () => {
       // given / when an existing entry that predates the variant picker
@@ -539,6 +634,31 @@ describe('ExerciseEntryFieldsComponent', () => {
         '1,00',
       ]);
       expect(component.state.intervals()).toEqual([1000, 1000]);
+    });
+
+    it('should pre-fill per-interval split times from a running edit payload', () => {
+      // given / when
+      const { component } = render('cardio.running', {
+        kind: 'exercise',
+        exerciseId: 'cardio.running',
+        timestamp: '2026-02-10T13:45:00+01:00',
+        distanceM: 2000,
+        durationSec: 535,
+        intervals: [1000, 1000],
+        intervalDurationsSec: [270, 265],
+      });
+
+      // then — the split-time inputs round-trip through the same mm:ss
+      // parts as the main duration entry.
+      expect(component.state.intervalCompanionMinutesInputs()).toEqual([
+        '4',
+        '4',
+      ]);
+      expect(component.state.intervalCompanionSecondsInputs()).toEqual([
+        '30',
+        '25',
+      ]);
+      expect(component.state.intervalDurationsSec()).toEqual([270, 265]);
     });
 
     it.each([

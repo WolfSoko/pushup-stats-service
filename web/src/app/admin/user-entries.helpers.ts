@@ -103,6 +103,7 @@ export function entryToDialogData(
     reps: entry.reps,
     sets: entry.sets,
     intervals: entry.intervals,
+    intervalDurationsSec: entry.intervalDurationsSec,
     ...(entry.durationSec !== undefined
       ? { durationSec: entry.durationSec }
       : {}),
@@ -169,11 +170,21 @@ export function dialogResultToPatch(
         proposed['durationSec'] = result.durationSec ?? 0;
         collapseBreakdown(proposed, 'intervals', intervals, entry.intervals);
         break;
-      case 'distance-time':
+      case 'distance-time': {
         proposed['distanceM'] = result.distanceM ?? 0;
         proposed['durationSec'] = result.durationSec ?? 0;
         collapseBreakdown(proposed, 'intervals', intervals, entry.intervals);
+        // Split times are index-aligned with `intervals` rather than
+        // collapsing to a single value, so they get their own clear-sentinel
+        // check instead of `collapseBreakdown`'s ">1 vs single" rule.
+        const intervalDurationsSec = result.intervalDurationsSec ?? [];
+        if (intervalDurationsSec.length > 0) {
+          proposed['intervalDurationsSec'] = intervalDurationsSec;
+        } else if (entry.intervalDurationsSec !== undefined) {
+          proposed['intervalDurationsSec'] = [];
+        }
         break;
+      }
       case 'distance':
         proposed['distanceM'] = result.distanceM ?? 0;
         collapseBreakdown(proposed, 'intervals', intervals, entry.intervals);
@@ -208,7 +219,11 @@ function fieldEquals(
   value: unknown
 ): boolean {
   if (field === 'variantId') return (entry.variantId ?? null) === value;
-  if (field === 'sets' || field === 'intervals') {
+  if (
+    field === 'sets' ||
+    field === 'intervals' ||
+    field === 'intervalDurationsSec'
+  ) {
     const cur = (entry[field] as number[] | undefined) ?? [];
     const next = (value as number[] | undefined) ?? [];
     return cur.length === next.length && cur.every((n, i) => n === next[i]);

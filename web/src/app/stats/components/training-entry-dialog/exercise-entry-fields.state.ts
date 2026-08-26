@@ -28,13 +28,13 @@ import {
 } from './training-entry-dialog.display';
 import {
   appendListEntry,
-  buildExerciseResult,
   buildVariantPatch,
   canSubmitExercise,
   clampListValue,
   exerciseOverCapKind,
   removeListEntry,
 } from './training-entry-dialog.submit';
+import { buildExerciseResult } from './exercise-result.builder';
 
 // All exercise-mode form state + logic, extracted so the component stays a thin
 // shell. Inputs are supplied as signals so the state stays reactive.
@@ -63,17 +63,29 @@ export class ExerciseFormState {
   readonly intervalKind = computed(() =>
     this.isTimeMeasurement() ? ('duration' as const) : ('distance' as const)
   );
+  // A per-interval split time only makes sense alongside a distance
+  // breakdown for a tracked run — a plank interval has no distance to
+  // pair a split with.
+  readonly hasIntervalDurationCompanion = computed(() =>
+    this.isDistanceTimeMeasurement()
+  );
   private readonly intervalFields = new IntervalFieldsState(
     () => this.intervalKind(),
+    () => this.hasIntervalDurationCompanion(),
     () => this.locale
   );
   readonly intervalIndexes = this.intervalFields.indexes;
   readonly intervalMinutesInputs = this.intervalFields.minutesInputs;
   readonly intervalSecondsInputs = this.intervalFields.secondsInputs;
   readonly intervalDistanceInputs = this.intervalFields.distanceInputs;
+  readonly intervalCompanionMinutesInputs =
+    this.intervalFields.companionMinutesInputs;
+  readonly intervalCompanionSecondsInputs =
+    this.intervalFields.companionSecondsInputs;
   // Strength keeps `sets` populated instead; submit picks `sets` xor
   // `intervals` based on the measurement, so this never leaks across a switch.
   readonly intervals = this.intervalFields.values;
+  readonly intervalDurationsSec = this.intervalFields.companionValues;
   readonly hasMultipleIntervals = computed(
     () => this.intervalFields.rowCount() > 1
   );
@@ -166,6 +178,7 @@ export class ExerciseFormState {
       ),
       sets: this.sets(),
       intervals: this.intervals(),
+      intervalDurationsSec: this.intervalDurationsSec(),
       durationSec: this.durationSec(),
       distanceM: this.distanceM(),
     });
@@ -193,7 +206,9 @@ export class ExerciseFormState {
     }
     const seed = exerciseSeedFromData(data, this.locale);
     if (seed.sets) this.sets.set(seed.sets);
-    if (seed.intervals) this.intervalFields.seed(seed.intervals);
+    if (seed.intervals) {
+      this.intervalFields.seed(seed.intervals, seed.intervalDurationsSec ?? []);
+    }
     this.durationMinutesInput.set(seed.durationMinutes);
     this.durationSecondsInput.set(seed.durationSeconds);
     if (seed.distanceInput !== undefined) {
@@ -237,5 +252,11 @@ export class ExerciseFormState {
   }
   updateIntervalDistance(index: number, value: string): void {
     this.intervalFields.updateDistance(index, value);
+  }
+  updateIntervalCompanionMinutes(index: number, value: string): void {
+    this.intervalFields.updateCompanionMinutes(index, value);
+  }
+  updateIntervalCompanionSeconds(index: number, value: string): void {
+    this.intervalFields.updateCompanionSeconds(index, value);
   }
 }

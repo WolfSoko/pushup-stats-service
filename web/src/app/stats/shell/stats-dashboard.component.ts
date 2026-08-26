@@ -399,6 +399,7 @@ export class StatsDashboardComponent {
       );
     } else {
       const intervals = result.intervals ?? [];
+      const intervalDurationsSec = result.intervalDurationsSec ?? [];
       await firstValueFrom(
         this.exerciseService.createEntry(userId, {
           exerciseId: result.exerciseId,
@@ -413,6 +414,9 @@ export class StatsDashboardComponent {
                   distanceM: result.distanceM ?? 0,
                   durationSec: result.durationSec ?? 0,
                   ...(intervals.length > 0 ? { intervals } : {}),
+                  ...(intervalDurationsSec.length > 0
+                    ? { intervalDurationsSec }
+                    : {}),
                 }
               : result.measurement === 'distance'
                 ? {

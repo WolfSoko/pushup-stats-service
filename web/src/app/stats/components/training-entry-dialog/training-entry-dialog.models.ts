@@ -27,6 +27,9 @@ export interface ExerciseEntryDialogData {
    *  picked via {@link entryBreakdownField}. */
   sets?: number[];
   intervals?: number[];
+  /** Per-interval split times, `distance-time` only. Index-aligned with
+   *  {@link intervals}. */
+  intervalDurationsSec?: number[];
   durationSec?: number;
   distanceM?: number;
   variantId?: string;
@@ -90,6 +93,13 @@ export interface ExerciseEntryDialogResult {
    */
   sets: number[];
   intervals: number[];
+  /**
+   * Per-interval split times, `distance-time` only — index-aligned with
+   * {@link intervals}, `0` at an index means no split was entered there.
+   * Empty when no splits were entered at all, mirroring the `intervals`
+   * clear-sentinel convention.
+   */
+  intervalDurationsSec: number[];
   durationSec?: number;
   distanceM?: number;
   /**

@@ -14,6 +14,9 @@ export interface StatsTableUpdate {
    * breakdown can be wiped.
    */
   intervals?: number[];
+  /** Per-interval split times, `distance-time` only — same clear-sentinel
+   *  convention as `intervals`. */
+  intervalDurationsSec?: number[];
   durationSec?: number;
   distanceM?: number;
   source: string;
@@ -46,6 +49,8 @@ export interface StatsTableCreate {
   /** Per-interval breakdown for endurance exercises. Mutually
    *  exclusive with `sets` in practice. */
   intervals?: number[];
+  /** Per-interval split times, `distance-time` only. */
+  intervalDurationsSec?: number[];
   durationSec?: number;
   distanceM?: number;
   source?: string;

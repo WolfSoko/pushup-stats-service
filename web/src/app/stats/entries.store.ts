@@ -189,6 +189,7 @@ export const EntriesStore = signalStore(
       reps?: number;
       sets?: number[];
       intervals?: number[];
+      intervalDurationsSec?: number[];
       durationSec?: number;
       distanceM?: number;
       source?: string;
@@ -218,6 +219,9 @@ export const EntriesStore = signalStore(
             ...(payload.intervals !== undefined
               ? { intervals: payload.intervals }
               : {}),
+            ...(payload.intervalDurationsSec !== undefined
+              ? { intervalDurationsSec: payload.intervalDurationsSec }
+              : {}),
             ...(payload.durationSec !== undefined
               ? { durationSec: payload.durationSec }
               : {}),
@@ -245,6 +249,7 @@ export const EntriesStore = signalStore(
       reps?: number;
       sets?: number[];
       intervals?: number[];
+      intervalDurationsSec?: number[];
       durationSec?: number;
       distanceM?: number;
       source?: string;
@@ -277,6 +282,9 @@ export const EntriesStore = signalStore(
             ...(payload.sets !== undefined ? { sets: payload.sets } : {}),
             ...(payload.intervals !== undefined
               ? { intervals: payload.intervals }
+              : {}),
+            ...(payload.intervalDurationsSec !== undefined
+              ? { intervalDurationsSec: payload.intervalDurationsSec }
               : {}),
             ...(payload.source !== undefined ? { source: payload.source } : {}),
             ...updateVariantPatch(payload),

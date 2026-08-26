@@ -207,8 +207,8 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.resource.data.keys().hasOnly([
                       'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
-                      'sets', 'intervals', 'variantId', 'timestamp', 'source',
-                      'createdAt', 'updatedAt'
+                      'sets', 'intervals', 'intervalDurationsSec', 'variantId',
+                      'timestamp', 'source', 'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.exerciseId is string
@@ -230,7 +230,8 @@ service cloud.firestore {
                         && request.resource.data.reps <= 10000
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
-                        && !('intervals' in request.resource.data.keys()))
+                        && !('intervals' in request.resource.data.keys())
+                        && !('intervalDurationsSec' in request.resource.data.keys()))
                       ||
                       // Time-measured exercises (plank, hollow hold,
                       // wall sit, dead hang, mobility holds, …). `sets`
@@ -238,13 +239,17 @@ service cloud.firestore {
                       // duration breakdown is defined yet — block it at
                       // the rule until a future phase introduces one.
                       // Cap (7200 = 2 h) matches the widest catalog max.
+                      // `intervalDurationsSec` (a split-time-per-interval
+                      // companion) only pairs with a distance breakdown,
+                      // so it's blocked here same as on the reps branch.
                       (isTimeExerciseId(request.resource.data.exerciseId)
                         && request.resource.data.durationSec is int
                         && request.resource.data.durationSec >= 1
                         && request.resource.data.durationSec <= 7200
                         && !('reps' in request.resource.data.keys())
                         && !('sets' in request.resource.data.keys())
-                        && !('distanceM' in request.resource.data.keys()))
+                        && !('distanceM' in request.resource.data.keys())
+                        && !('intervalDurationsSec' in request.resource.data.keys()))
                       ||
                       // Distance-time-measured exercises (cardio.running
                       // and friends). Both fields are required; reps /
@@ -274,13 +279,23 @@ service cloud.firestore {
                     // Same NaN-poisoning concern via future delta logic.
                     && (!('intervals' in request.resource.data.keys())
                         || (request.resource.data.intervals is list
-                            && request.resource.data.intervals.size() <= 50));
+                            && request.resource.data.intervals.size() <= 50))
+                    // `intervalDurationsSec` (per-interval split times,
+                    // distance-time only — the two branches above already
+                    // block it elsewhere) must be index-aligned with
+                    // `intervals`: same size, and `intervals` must be
+                    // present at all.
+                    && (!('intervalDurationsSec' in request.resource.data.keys())
+                        || (request.resource.data.intervalDurationsSec is list
+                            && request.resource.data.intervalDurationsSec.size() <= 50
+                            && 'intervals' in request.resource.data.keys()
+                            && request.resource.data.intervalDurationsSec.size() == request.resource.data.intervals.size()));
       allow update: if request.auth != null
                     && resource.data.userId == request.auth.uid
                     && request.resource.data.keys().hasOnly([
                       'userId', 'exerciseId', 'reps', 'durationSec', 'distanceM',
-                      'sets', 'intervals', 'variantId', 'timestamp', 'source',
-                      'createdAt', 'updatedAt'
+                      'sets', 'intervals', 'intervalDurationsSec', 'variantId',
+                      'timestamp', 'source', 'createdAt', 'updatedAt'
                     ])
                     && request.resource.data.userId == request.auth.uid
                     && request.resource.data.userId == resource.data.userId
@@ -299,17 +314,21 @@ service cloud.firestore {
                         && !('durationSec' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
                         && !('intervals' in request.resource.data.keys())
+                        && !('intervalDurationsSec' in request.resource.data.keys())
                         && (!('reps' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.reps is int
                                 && request.resource.data.reps >= 1
                                 && request.resource.data.reps <= 10000)))
                       ||
                       // Time-measured exercises: reject `reps`, `sets`,
-                      // `distanceM`; validate durationSec when changed.
+                      // `distanceM`, `intervalDurationsSec` (split times
+                      // only pair with a distance breakdown); validate
+                      // durationSec when changed.
                       (isTimeExerciseId(resource.data.exerciseId)
                         && !('reps' in request.resource.data.keys())
                         && !('sets' in request.resource.data.keys())
                         && !('distanceM' in request.resource.data.keys())
+                        && !('intervalDurationsSec' in request.resource.data.keys())
                         && (!('durationSec' in request.resource.data.diff(resource.data).affectedKeys())
                             || (request.resource.data.durationSec is int
                                 && request.resource.data.durationSec >= 1
@@ -339,7 +358,16 @@ service cloud.firestore {
                     && (!('intervals' in request.resource.data.diff(resource.data).affectedKeys())
                         || !('intervals' in request.resource.data.keys())
                         || (request.resource.data.intervals is list
-                            && request.resource.data.intervals.size() <= 50));
+                            && request.resource.data.intervals.size() <= 50))
+                    // `intervalDurationsSec` must stay index-aligned with
+                    // `intervals` whenever either side of the patch
+                    // changes it.
+                    && (!('intervalDurationsSec' in request.resource.data.diff(resource.data).affectedKeys())
+                        || !('intervalDurationsSec' in request.resource.data.keys())
+                        || (request.resource.data.intervalDurationsSec is list
+                            && request.resource.data.intervalDurationsSec.size() <= 50
+                            && 'intervals' in request.resource.data.keys()
+                            && request.resource.data.intervalDurationsSec.size() == request.resource.data.intervals.size()));
     }
 
     // Active training plan — owner-only. Single doc per user.
