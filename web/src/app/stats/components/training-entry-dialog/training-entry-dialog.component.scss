@@ -1,5 +1,11 @@
 mat-dialog-content {
   display: grid;
+  // Without an explicit min size, an implicit `auto` grid column takes the
+  // widest row's min-content as its floor — a row combining a form field
+  // with two icon buttons (e.g. an interval row with remove + add) can
+  // blow the whole grid past the dialog's width, forcing every other row
+  // to stretch with it and causing horizontal scroll.
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
 }
 mat-form-field:first-of-type {
@@ -27,6 +33,7 @@ mat-form-field:first-of-type {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
   // Own keyframe (not `clone-set`): this row can carry an extra
   // `.interval-index` heading line above the fields, which needs more
   // headroom than the single-line `.set-row`/`.duration-row` budget.
@@ -41,6 +48,10 @@ mat-form-field:first-of-type {
   display: flex;
   align-items: center;
   gap: 8px;
+  // A duration-kind row packs two form fields plus up to two icon buttons;
+  // on narrow screens that combination doesn't fit on one line even at each
+  // field's practical minimum width, so let it wrap instead of overflowing.
+  flex-wrap: wrap;
 }
 .interval-fields mat-form-field {
   flex: 1 1 0;
