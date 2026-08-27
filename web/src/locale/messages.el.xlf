@@ -11249,99 +11249,99 @@
       </segment>
     </unit>
     <unit id="trainingPlans.today">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute</source>
-        <target>Heute</target>
+        <target>Σήμερα</target>
       </segment>
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesdetails ein-/ausklappen</source>
-        <target>Tagesdetails ein-/ausklappen</target>
+        <target>Εμφάνιση/απόκρυψη λεπτομερειών ημέρας</target>
       </segment>
     </unit>
     <unit id="landing.session.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführte Sessions</source>
-        <target>Geführte Sessions</target>
+        <target>Καθοδηγούμενες συνεδρίες</target>
       </segment>
     </unit>
     <unit id="landing.session.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Plan führt dich durch das Workout. </source>
-        <target> Dein Plan führt dich durch das Workout. </target>
+        <target> Το πλάνο σου σε καθοδηγεί σε όλη τη διάρκεια της προπόνησης. </target>
       </segment>
     </unit>
     <unit id="landing.session.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </source>
-        <target> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </target>
+        <target> Ξεκίνα τη μέρα προπόνησής σου ως καθοδηγούμενη συνεδρία: η εφαρμογή σού λέει άσκηση προς άσκηση τι ακολουθεί, μετράει επαναλήψεις με τεχνητή νοημοσύνη κάμερας ή χρονομετρά το κράτημα, ρυθμίζει έπειτα το διάλειμμά σου — και καταγράφει αυτόματα κάθε σετ στα στατιστικά σου. </target>
       </segment>
     </unit>
     <unit id="landing.session.chip.mode">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkeltraining oder Übung für Übung</source>
-        <target>Zirkeltraining oder Übung für Übung</target>
+        <target>Κυκλική προπόνηση ή άσκηση προς άσκηση</target>
       </segment>
     </unit>
     <unit id="landing.session.chip.tools">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-Zähler &amp; Halte-Timer je Übung</source>
-        <target>Kamera-Zähler &amp; Halte-Timer je Übung</target>
+        <target>Μετρητής κάμερας &amp; χρονόμετρο κρατήματος ανά άσκηση</target>
       </segment>
     </unit>
     <unit id="landing.session.chip.rest">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausen-Countdown, den du selbst einstellst</source>
-        <target>Pausen-Countdown, den du selbst einstellst</target>
+        <target>Αντίστροφη μέτρηση διαλείμματος που ρυθμίζεις εσύ</target>
       </segment>
     </unit>
     <unit id="landing.session.chip.resume">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</source>
-        <target>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</target>
+        <target>Διέκοψέ την όποτε θέλεις — η συνεδρία συνεχίζει από εκεί που σταμάτησες</target>
       </segment>
     </unit>
     <unit id="landing.session.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan wählen &amp; Session starten</source>
-        <target>Plan wählen &amp; Session starten</target>
+        <target>Επίλεξε πλάνο &amp; ξεκίνα συνεδρία</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong · Tag 8</source>
-        <target>Full Body Strong · Tag 8</target>
+        <target>Full Body Strong · Ημέρα 8</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.progress">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schritt 2 von 6 · Runde 1 von 3</source>
-        <target>Schritt 2 von 6 · Runde 1 von 3</target>
+        <target>Βήμα 2 από 6 · Γύρος 1 από 3</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Plank </source>
         <target> Plank </target>
       </segment>
     </unit>
     <unit id="landing.session.mock.target">
-      <segment state="initial">
+      <segment state="translated">
         <source> 50 s halten </source>
-        <target> 50 s halten </target>
+        <target> Κράτα 50 δ </target>
       </segment>
     </unit>
     <unit id="landing.session.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halte-Timer starten</source>
-        <target>Halte-Timer starten</target>
+        <target>Ξεκίνα το χρονόμετρο κρατήματος</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.next">
-      <segment state="initial">
+      <segment state="translated">
         <source> Als Nächstes: 20 Russian Twists </source>
-        <target> Als Nächstes: 20 Russian Twists </target>
+        <target> Επόμενο: 20 Russian Twists </target>
       </segment>
     </unit>
 </file>

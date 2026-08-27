@@ -11245,99 +11245,99 @@
       </segment>
     </unit>
     <unit id="trainingPlans.today">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute</source>
-        <target>Heute</target>
+        <target>Hoy</target>
       </segment>
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesdetails ein-/ausklappen</source>
-        <target>Tagesdetails ein-/ausklappen</target>
+        <target>Mostrar/ocultar detalles del día</target>
       </segment>
     </unit>
     <unit id="landing.session.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführte Sessions</source>
-        <target>Geführte Sessions</target>
+        <target>Sesiones guiadas</target>
       </segment>
     </unit>
     <unit id="landing.session.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Plan führt dich durch das Workout. </source>
-        <target> Dein Plan führt dich durch das Workout. </target>
+        <target> Tu plan te guía a través del entrenamiento. </target>
       </segment>
     </unit>
     <unit id="landing.session.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </source>
-        <target> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </target>
+        <target> Empieza tu día de entrenamiento como una sesión guiada: la app te indica ejercicio por ejercicio qué toca, cuenta las repeticiones con IA de cámara o cronometra tu tiempo de mantenimiento, luego programa tu descanso — y registra automáticamente cada serie en tus estadísticas. </target>
       </segment>
     </unit>
     <unit id="landing.session.chip.mode">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkeltraining oder Übung für Übung</source>
-        <target>Zirkeltraining oder Übung für Übung</target>
+        <target>Entrenamiento en circuito o ejercicio por ejercicio</target>
       </segment>
     </unit>
     <unit id="landing.session.chip.tools">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-Zähler &amp; Halte-Timer je Übung</source>
-        <target>Kamera-Zähler &amp; Halte-Timer je Übung</target>
+        <target>Contador por cámara &amp; temporizador de mantenimiento por ejercicio</target>
       </segment>
     </unit>
     <unit id="landing.session.chip.rest">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausen-Countdown, den du selbst einstellst</source>
-        <target>Pausen-Countdown, den du selbst einstellst</target>
+        <target>Cuenta atrás de descanso que tú mismo configuras</target>
       </segment>
     </unit>
     <unit id="landing.session.chip.resume">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</source>
-        <target>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</target>
+        <target>Interrumpe en cualquier momento — la sesión continúa donde la dejaste</target>
       </segment>
     </unit>
     <unit id="landing.session.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan wählen &amp; Session starten</source>
-        <target>Plan wählen &amp; Session starten</target>
+        <target>Elegir plan &amp; iniciar sesión</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Full Body Strong · Tag 8</source>
-        <target>Full Body Strong · Tag 8</target>
+        <target>Full Body Strong · Día 8</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.progress">
-      <segment state="initial">
+      <segment state="translated">
         <source>Schritt 2 von 6 · Runde 1 von 3</source>
-        <target>Schritt 2 von 6 · Runde 1 von 3</target>
+        <target>Paso 2 de 6 · Ronda 1 de 3</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Plank </source>
-        <target> Plank </target>
+        <target> Plancha </target>
       </segment>
     </unit>
     <unit id="landing.session.mock.target">
-      <segment state="initial">
+      <segment state="translated">
         <source> 50 s halten </source>
-        <target> 50 s halten </target>
+        <target> Mantener 50 s </target>
       </segment>
     </unit>
     <unit id="landing.session.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Halte-Timer starten</source>
-        <target>Halte-Timer starten</target>
+        <target>Iniciar temporizador de mantenimiento</target>
       </segment>
     </unit>
     <unit id="landing.session.mock.next">
-      <segment state="initial">
+      <segment state="translated">
         <source> Als Nächstes: 20 Russian Twists </source>
-        <target> Als Nächstes: 20 Russian Twists </target>
+        <target> A continuación: 20 Russian Twists </target>
       </segment>
     </unit>
 </file>
