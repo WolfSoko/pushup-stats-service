@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { DeferBlockBehavior, DeferBlockState } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
@@ -550,8 +551,11 @@ describe('LandingPageComponent', () => {
     });
   });
   describe('guided session section', () => {
-    async function renderLanding() {
-      return render(LandingPageComponent, {
+    // The section sits in a `@defer (hydrate on viewport)` block, which stays
+    // at its placeholder in a client-only test run — render it by hand.
+    async function renderSessionSection() {
+      const view = await render(LandingPageComponent, {
+        deferBlockBehavior: DeferBlockBehavior.Manual,
         providers: [
           provideRouter([{ path: 'training-plans', children: [] }]),
           { provide: AdsStore, useValue: adsConfigMock },
@@ -559,11 +563,14 @@ describe('LandingPageComponent', () => {
           { provide: AuthStore, useValue: makeAuthStoreMock() },
         ],
       });
+      const [sessionBlock] = await view.fixture.getDeferBlocks();
+      await sessionBlock.render(DeferBlockState.Complete);
+      return view;
     }
 
     it('should advertise the guided plan session with a link to the plans', async () => {
       // given / when
-      await renderLanding();
+      await renderSessionSection();
 
       // then
       expect(
@@ -579,7 +586,7 @@ describe('LandingPageComponent', () => {
 
     it('should report the session CTA click to the analytics handler', async () => {
       // given
-      const view = await renderLanding();
+      const view = await renderSessionSection();
       const trackSpy = vitest.spyOn(
         view.fixture.componentInstance,
         'onSessionCtaClick'
