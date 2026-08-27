@@ -6,96 +6,107 @@ mat-dialog-content {
   // blow the whole grid past the dialog's width, forcing every other row
   // to stretch with it and causing horizontal scroll.
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
-mat-form-field:first-of-type {
-  margin-top: 8px;
+// An outline field's floating label sits above its own border box, so it
+// needs headroom or the scroll container's edge cuts it off. Material
+// zeroes the top padding whenever a title sits directly above the content
+// (`.mat-mdc-dialog-title + .mat-mdc-dialog-content`); matching that same
+// sibling shape is what makes this rule win.
+.mat-mdc-dialog-title + mat-dialog-content.mat-mdc-dialog-content {
+  padding-top: 8px;
+}
+// Selectors here never span a component boundary: this stylesheet is shared
+// by the dialog and its three field components, and Angular scopes every
+// rule to the component that pulls it in — a descendant selector starting
+// at `mat-dialog-content` (owned by the dialog) can never match a field in
+// a child component's template.
+mat-form-field {
+  // Same clipped label, but on the browser's scroll-into-view when a field
+  // deeper down the form takes focus.
+  scroll-margin-block: 12px;
 }
 .set-row {
+  display: grid;
+  // The actions column keeps its width whether it holds one button or two,
+  // so the input keeps the same width as sets are added and removed
+  // instead of resizing under the user's finger.
+  grid-template-columns: minmax(0, 1fr) 80px;
+  align-items: center;
+  gap: 8px;
+  animation: clone-row 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  transform-origin: top center;
+}
+// Two fixed slots, remove in the first and add in the second, whichever of
+// the two a row actually renders. Packed to one side instead, the last
+// row's "+" lands exactly where the row above shows its "−", so a second
+// tap on "+" deletes the row that tap just created.
+.set-actions,
+.interval-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 40px);
+  align-items: center;
+}
+.action-remove {
+  grid-column: 1;
+}
+.action-add {
+  grid-column: 2;
+}
+.duration-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.interval-row {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  animation: clone-row 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  transform-origin: top center;
+}
+.interval-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  animation: clone-set 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
-  transform-origin: top center;
-}
-.set-row mat-form-field {
-  flex: 1;
-}
-.duration-row {
-  display: flex;
-  gap: 8px;
-}
-.duration-row mat-form-field {
-  flex: 1 1 0;
-  min-width: 0;
-}
-.interval-row {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-  // Own keyframe (not `clone-set`): this row can carry an extra
-  // `.interval-index` heading line above the fields, which needs more
-  // headroom than the single-line `.set-row`/`.duration-row` budget.
-  animation: clone-interval 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
-  transform-origin: top center;
+  min-height: 40px;
 }
 .interval-index {
   font-size: 13px;
   color: var(--mat-sys-on-surface-variant);
 }
+// Add/remove live on the row's own header line instead of trailing the
+// fields: sharing one line with them left every field ~80px wide on a
+// phone, which turns the labels into "Distan…" / "Sekun…".
+.interval-actions {
+  margin-inline-start: auto;
+}
 .interval-fields {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  // A duration-kind row packs two form fields plus up to two icon buttons;
-  // on narrow screens that combination doesn't fit on one line even at each
-  // field's practical minimum width, so let it wrap instead of overflowing.
-  flex-wrap: wrap;
 }
-.interval-fields mat-form-field {
-  flex: 1 1 0;
-  min-width: 0;
+.interval-fields > .field-full {
+  grid-column: 1 / -1;
 }
-@keyframes clone-set {
+// Fade + scale only. An added row's height is whatever its fields need
+// (a distance interval carries a split-time pair below it), so animating
+// `max-height` needs a budget per row shape — and a budget that is too
+// small clips the row for good, since the animation keeps its end state.
+@keyframes clone-row {
   from {
     opacity: 0;
-    max-height: 0;
     transform: scaleY(0.3) translateY(-8px);
   }
   to {
     opacity: 1;
-    max-height: 80px;
-    transform: scaleY(1) translateY(0);
-  }
-}
-@keyframes clone-interval {
-  from {
-    opacity: 0;
-    max-height: 0;
-    transform: scaleY(0.3) translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    max-height: 120px;
-    transform: scaleY(1) translateY(0);
+    transform: none;
   }
 }
 .total-reps {
   font-size: 13px;
   color: var(--mat-sys-on-surface-variant);
   text-align: end;
-}
-.type-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-}
-.type-row mat-form-field {
-  flex: 1;
-}
-.type-help {
-  margin-top: 12px;
 }
 .type-option {
   display: flex;

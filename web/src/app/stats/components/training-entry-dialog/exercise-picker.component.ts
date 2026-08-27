@@ -55,6 +55,9 @@ import {
     RouterLink,
   ],
   styleUrl: './training-entry-dialog.component.scss',
+  // Transparent host so the field stays a direct item of the dialog's
+  // `mat-dialog-content` grid — an inline-flex form field in a block host
+  // would size to its content instead of the dialog width.
   styles: ':host { display: contents; }',
   templateUrl: './exercise-picker.component.html',
 })

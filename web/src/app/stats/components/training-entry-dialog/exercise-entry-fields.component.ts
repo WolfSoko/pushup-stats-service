@@ -19,6 +19,7 @@ import {
   ExerciseEntryDialogResult,
 } from './training-entry-dialog.models';
 import { ExerciseFormState } from './exercise-entry-fields.state';
+import { IntervalFieldsComponent } from './interval-fields.component';
 
 /**
  * Exercise-mode fields for the exercise the parent's picker selected:
@@ -42,10 +43,11 @@ import { ExerciseFormState } from './exercise-entry-fields.state';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    IntervalFieldsComponent,
   ],
   styleUrl: './training-entry-dialog.component.scss',
   // Transparent host so the fields stay direct items of the dialog's
-  // `mat-dialog-content` grid (preserves the 10px inter-field spacing).
+  // `mat-dialog-content` grid (preserves the inter-field spacing).
   styles: ':host { display: contents; }',
   templateUrl: './exercise-entry-fields.component.html',
 })

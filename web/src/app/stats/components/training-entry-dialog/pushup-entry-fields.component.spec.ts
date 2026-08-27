@@ -127,6 +127,33 @@ describe('PushupEntryFieldsComponent', () => {
     });
   });
 
+  describe('layout on a phone-sized dialog', () => {
+    it('should keep the type wiki link inside the field and the set actions in their own cell', () => {
+      // given
+      const { component, fixture } = render(null);
+
+      // when
+      component.addSet();
+      fixture.detectChanges();
+
+      // then — both used to sit beside the field and shrink it, leaving the
+      // rows of the dialog at visibly different widths.
+      const root: HTMLElement = fixture.nativeElement;
+      expect(
+        root.querySelector('.type-help')?.closest('mat-form-field')
+      ).not.toBeNull();
+      const rows = Array.from(root.querySelectorAll('.set-row'));
+      expect(rows).toHaveLength(2);
+      expect(
+        rows.every(
+          (row) =>
+            row.querySelector(':scope > .set-actions') !== null &&
+            row.querySelectorAll(':scope > button').length === 0
+        )
+      ).toBe(true);
+    });
+  });
+
   describe('edit mode', () => {
     it('should populate sets, type and source from a pushup payload', () => {
       // given / when

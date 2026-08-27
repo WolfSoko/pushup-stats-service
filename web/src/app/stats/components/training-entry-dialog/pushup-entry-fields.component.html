@@ -1,39 +1,15 @@
-<div class="type-row">
-  <mat-form-field appearance="outline">
-    <mat-label i18n="@@typeLabel">Typ</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="pushupTypeControl"
-      [matAutocomplete]="typeAuto"
-      placeholder="Auswählen oder eintippen"
-      i18n-placeholder="@@typePlaceholder"
-    />
-    <mat-autocomplete
-      #typeAuto="matAutocomplete"
-      [displayWith]="displayPushupType"
-    >
-      @for (option of filteredPushupTypeOptions(); track option.value) {
-        <mat-option [value]="option.value">
-          <span class="type-option">
-            <span>{{ option.label }}</span>
-            @if (pushupTooltipFor(option.value); as info) {
-              <mat-icon
-                class="type-option-info"
-                [matTooltip]="info"
-                matTooltipPosition="right"
-                [attr.aria-label]="info"
-                role="img"
-                (click)="$event.stopPropagation()"
-                >info_outline</mat-icon
-              >
-            }
-          </span>
-        </mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>
+<mat-form-field appearance="outline" subscriptSizing="dynamic">
+  <mat-label i18n="@@typeLabel">Typ</mat-label>
+  <input
+    type="text"
+    matInput
+    [formControl]="pushupTypeControl"
+    [matAutocomplete]="typeAuto"
+    placeholder="Auswählen oder eintippen"
+    i18n-placeholder="@@typePlaceholder"
+  />
   <a
+    matSuffix
     mat-icon-button
     class="type-help"
     [routerLink]="['/wiki/liegestuetz-typen']"
@@ -46,11 +22,34 @@
   >
     <mat-icon>help_outline</mat-icon>
   </a>
-</div>
+  <mat-autocomplete
+    #typeAuto="matAutocomplete"
+    [displayWith]="displayPushupType"
+  >
+    @for (option of filteredPushupTypeOptions(); track option.value) {
+      <mat-option [value]="option.value">
+        <span class="type-option">
+          <span>{{ option.label }}</span>
+          @if (pushupTooltipFor(option.value); as info) {
+            <mat-icon
+              class="type-option-info"
+              [matTooltip]="info"
+              matTooltipPosition="right"
+              [attr.aria-label]="info"
+              role="img"
+              (click)="$event.stopPropagation()"
+              >info_outline</mat-icon
+            >
+          }
+        </span>
+      </mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
 
 @for (set of sets(); track $index) {
   <div class="set-row">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
       @if (hasMultipleSets()) {
         <mat-label i18n="@@setLabel">Set {{ $index + 1 }}</mat-label>
       } @else {
@@ -67,30 +66,34 @@
         required
       />
     </mat-form-field>
-    @if (hasMultipleSets()) {
-      <button
-        type="button"
-        mat-icon-button
-        (click)="removeSet($index)"
-        i18n-aria-label="@@removeSetAria"
-        aria-label="Set entfernen"
-      >
-        <mat-icon>remove_circle_outline</mat-icon>
-      </button>
-    }
-    @if ($last) {
-      <button
-        type="button"
-        mat-icon-button
-        (click)="addSet()"
-        i18n-aria-label="@@addSetAria"
-        aria-label="Set hinzufügen"
-        i18n-matTooltip="@@addSetTooltip"
-        matTooltip="Weiteres Set hinzufügen"
-      >
-        <mat-icon>add_circle_outline</mat-icon>
-      </button>
-    }
+    <div class="set-actions">
+      @if (hasMultipleSets()) {
+        <button
+          type="button"
+          mat-icon-button
+          class="action-remove"
+          (click)="removeSet($index)"
+          i18n-aria-label="@@removeSetAria"
+          aria-label="Set entfernen"
+        >
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+      }
+      @if ($last) {
+        <button
+          type="button"
+          mat-icon-button
+          class="action-add"
+          (click)="addSet()"
+          i18n-aria-label="@@addSetAria"
+          aria-label="Set hinzufügen"
+          i18n-matTooltip="@@addSetTooltip"
+          matTooltip="Weiteres Set hinzufügen"
+        >
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+      }
+    </div>
   </div>
 }
 @if (hasMultipleSets()) {
@@ -105,7 +108,7 @@
   </div>
 }
 
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" subscriptSizing="dynamic">
   <mat-label i18n="@@sourceLabel">Quelle</mat-label>
   <input
     type="text"

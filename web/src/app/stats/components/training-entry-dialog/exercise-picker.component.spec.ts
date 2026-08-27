@@ -173,4 +173,52 @@ describe('ExercisePickerComponent', () => {
     expect(component.showWikiLink()).toBe(true);
     expect(component.wikiLink()).toEqual(['/wiki/uebungen', 'sit-ups']);
   });
+
+  it('should keep the wiki link inside the field so it stays as wide as the dialog', () => {
+    // given
+    const { host, fixture } = render();
+
+    // when
+    host.exerciseId.set('abs.situps');
+    fixture.detectChanges();
+
+    // then — a link beside the field would shrink it against every other
+    // row of the dialog.
+    const root: HTMLElement = fixture.nativeElement;
+    const link = root.querySelector(
+      '[data-testid="training-entry-exercise-wiki"]'
+    );
+    expect(link?.closest('mat-form-field')).not.toBeNull();
+  });
+
+  it('should show a single trailing icon, never the magnifier next to the wiki link', () => {
+    // given — two suffix icons wrap onto a second line on a narrow screen.
+    const { host, fixture } = render();
+
+    // when
+    host.exerciseId.set('abs.situps');
+    fixture.detectChanges();
+
+    // then
+    const root: HTMLElement = fixture.nativeElement;
+    const suffixIcons = Array.from(
+      root.querySelectorAll('mat-form-field mat-icon')
+    ).map((el) => (el.textContent ?? '').trim());
+    expect(suffixIcons).toEqual(['help_outline']);
+  });
+
+  it('should fall back to the magnifier for pushups, whose wiki link lives on the type row', () => {
+    // given / when
+    const { component, host, fixture } = render();
+    host.exerciseId.set('pushup');
+    fixture.detectChanges();
+
+    // then
+    const root: HTMLElement = fixture.nativeElement;
+    const suffixIcons = Array.from(
+      root.querySelectorAll('mat-form-field mat-icon')
+    ).map((el) => (el.textContent ?? '').trim());
+    expect(component.showWikiLink()).toBe(false);
+    expect(suffixIcons).toEqual(['search']);
+  });
 });

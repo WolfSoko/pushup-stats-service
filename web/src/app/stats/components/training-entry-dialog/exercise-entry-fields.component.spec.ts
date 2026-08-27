@@ -6,6 +6,8 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { MatFormField } from '@angular/material/form-field';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { provideRouter } from '@angular/router';
@@ -683,5 +685,89 @@ describe('ExerciseEntryFieldsComponent', () => {
         expect(result.exerciseId).toBe(exerciseId);
       }
     );
+  });
+  describe('layout on a phone-sized dialog', () => {
+    it('should keep every field the same height by dropping the reserved subscript row', () => {
+      // given / when
+      const { fixture } = render('cardio.running', null);
+
+      // then — a static subscript adds ~20px under some fields only, which
+      // reads as boxes of different heights stacked on top of each other.
+      const fields = fixture.debugElement.queryAll(By.directive(MatFormField));
+      expect(fields.length).toBeGreaterThan(0);
+      expect(
+        fields.every(
+          (f) =>
+            (f.componentInstance as MatFormField).subscriptSizing === 'dynamic'
+        )
+      ).toBe(true);
+    });
+
+    it("should keep an interval row's add/remove buttons out of the field row", () => {
+      // given
+      const { component, fixture } = render('cardio.running', null);
+
+      // when
+      component.state.addInterval();
+      fixture.detectChanges();
+
+      // then — sharing one line with the buttons squeezed each field to
+      // ~80px and cut the labels down to "Distan…" / "Sekun…".
+      const root: HTMLElement = fixture.nativeElement;
+      expect(root.querySelectorAll('.interval-fields button')).toHaveLength(0);
+      expect(
+        root.querySelectorAll('.interval-header .interval-actions button')
+      ).toHaveLength(3);
+    });
+
+    it('should span an interval distance field across the full row', () => {
+      // given / when — distance shares the row with a split-time pair, which
+      // only fits when the distance takes a row of its own.
+      const { fixture } = render('cardio.running', null);
+
+      // then
+      const root: HTMLElement = fixture.nativeElement;
+      const distance = root.querySelector(
+        '.interval-fields input[inputmode="decimal"]'
+      );
+      expect(distance?.closest('mat-form-field')?.classList).toContain(
+        'field-full'
+      );
+    });
+
+    it('should head every interval row, including a lone first one', () => {
+      // given / when
+      const { fixture } = render('cardio.running', null);
+
+      // then — without the heading the interval fields read as a second,
+      // unexplained copy of the main entry fields.
+      const root: HTMLElement = fixture.nativeElement;
+      const heading = root.querySelector('.interval-index');
+      expect((heading?.textContent ?? '').trim()).toBe('Intervall 1');
+      expect(
+        root.querySelector('.interval-fields')?.getAttribute('aria-labelledby')
+      ).toBe(heading?.id);
+    });
+
+    it('should render set actions in their own cell so the input keeps its width', () => {
+      // given
+      const { component, fixture } = render('abs.situps', null);
+
+      // when
+      component.state.addSet();
+      fixture.detectChanges();
+
+      // then — buttons inline with the input resized it on every add/remove.
+      const root: HTMLElement = fixture.nativeElement;
+      const rows = Array.from(root.querySelectorAll('.set-row'));
+      expect(rows).toHaveLength(2);
+      expect(
+        rows.every(
+          (row) =>
+            row.querySelector(':scope > .set-actions') !== null &&
+            row.querySelectorAll(':scope > button').length === 0
+        )
+      ).toBe(true);
+    });
   });
 });
