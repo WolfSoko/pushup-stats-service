@@ -140,6 +140,7 @@ reads this directly — do not hardcode the list).
 
      Then exit. When the branch already matches its remote tip (`main` did not
      move) this is a no-op and the run costs nothing.
+
    - `has_gaps=true` → continue.
 
 5. **Translate** from the German source (or, where missing, the English
@@ -175,7 +176,7 @@ reads this directly — do not hardcode the list).
       every item in `instructions`, and every item in `tips`. Keep
       numeric/code values (`3×8`, `Tempo 3-1-1`) unchanged.
 
-6. **Pre-push checks** (from `AGENTS.md` → Pre-Push Checklist):
+6. **Pre-push checks** (from `CLAUDE.md` → Pre-Push Checklist):
 
    ```bash
    pnpm nx affected -t=lint,test,build -c=production --parallel=3
@@ -218,7 +219,7 @@ reads this directly — do not hardcode the list).
 8. **Open or update the single PR** against `main` — never create a second one:
 
    - **No PR open** → create it. Title `chore(i18n): fill missing translations
-     (<count> items)`, reusing the `<count>` computed in step 7.
+(<count> items)`, reusing the `<count>` computed in step 7.
    - **PR already open** → update the existing PR's title and body in place
      (e.g. `update_pull_request`) so the count and per-locale breakdown reflect
      the new state.
@@ -226,7 +227,7 @@ reads this directly — do not hardcode the list).
    The body (new or updated) must include:
 
    - One bullet per touched locale: `- <locale>: <n> unit(s), <n> blog
-     post(s), <n> wiki entry/entries`.
+post(s), <n> wiki entry/entries`.
    - A "Skipped" section listing any item you could not translate, with
      a one-line reason each. **Never invent content** to avoid an empty
      skipped list.
@@ -234,7 +235,7 @@ reads this directly — do not hardcode the list).
 
 9. **Subscribe to the PR's activity** via `subscribe_pr_activity` (only when
    you just created it) so CI failures and review comments are picked up
-   automatically — per `AGENTS.md` → Pull Requests. When the PR finally merges,
+   automatically — per `CLAUDE.md` → Pull Requests. When the PR finally merges,
    let it **delete** the `claude/translations` branch (squash + delete branch)
    so the next run starts clean from `main`.
 
@@ -270,7 +271,7 @@ This file is the prompt only. To wire it up:
 1. Open https://claude.ai/code/routines → **New routine** → **Remote**.
 2. **Name:** `Translate XLIFF / content gaps`.
 3. **Prompt:** paste the section above (everything from `You are running
-   as an autonomous Claude Code routine` down to the trailing
+as an autonomous Claude Code routine` down to the trailing
    `---`).
 4. **Repository:** `WolfSoko/pushup-stats-service`. Leave
    **Allow unrestricted branch pushes** off — the routine only ever pushes to
@@ -294,6 +295,7 @@ This file is the prompt only. To wire it up:
    The routine is idempotent (it exits without a PR when the detector
    reports zero gaps), so back-to-back runs on the same green state cost
    nothing.
+
 8. **Run now** once after saving to confirm a green session against a
    known-empty gap state (should exit without opening a PR).
 
@@ -307,5 +309,5 @@ itself in the same session, so the dispatch hop is gone.
 
 The detector (`tools/src/detect-translation-gaps.mjs`) and the seeder
 (`tools/src/sync-xliff-locales.mjs`) are unchanged — they remain the
-single source of truth for "what counts as a gap". Only the *driver* moved
+single source of truth for "what counts as a gap". Only the _driver_ moved
 from `.github/workflows/copilot-translations.yml` to this routine.

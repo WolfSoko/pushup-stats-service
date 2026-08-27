@@ -30,7 +30,7 @@ machen — sie sind **nicht** automatisierbar.
    (`play-listing-publisher@<projekt>.iam.gserviceaccount.com`).
 
 > Die JSON-Datei ist ein Passwort. Sie gehört **nicht** ins Repo — siehe
-> `AGENTS.md`, „Never commit secrets".
+> `CLAUDE.md`, „Never commit secrets".
 
 ### 2. Dienstkonto in der Play Console berechtigen
 

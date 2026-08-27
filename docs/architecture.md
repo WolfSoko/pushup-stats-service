@@ -1,6 +1,6 @@
 # Architecture
 
-Detailed architecture reference for the Pushup Stats Service. AGENTS.md keeps the high-level rules; this doc holds the patterns, dependency graph, and domain-model layout.
+Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps the high-level rules; this doc holds the patterns, dependency graph, and domain-model layout.
 
 ## Library Dependency Graph
 

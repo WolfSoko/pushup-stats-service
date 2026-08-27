@@ -13,7 +13,7 @@
  *
  * **Migration in progress:** translatable copy is moving to per-locale
  * markdown frontmatter under `content/wiki/pushup-types/<id>.{de,en}.md`
- * (see AGENTS.md). Until every type is ported, `localizePushupType()`
+ * (see CLAUDE.md). Until every type is ported, `localizePushupType()`
  * checks the generated override first and falls back to the legacy
  * `*En` parallel fields below.
  */

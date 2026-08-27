@@ -46,7 +46,7 @@ cd data-store && firebase deploy --only firestore:rules
 cd data-store && firebase deploy --only functions
 ```
 
-Details + PR-Preview-Setup: siehe [`AGENTS.md`](AGENTS.md) Abschnitt _CI/CD & Deployment_.
+Details + PR-Preview-Setup: siehe [`CLAUDE.md`](CLAUDE.md) Abschnitt _CI/CD & Deployment_.
 
 ## i18n
 
@@ -86,7 +86,7 @@ npx nx affected -t test --codeCoverage
 
 ## Agent instructions
 
-AI-Agent-Anweisungen (Architektur, Konventionen, Gotchas, Workflow) leben in [`AGENTS.md`](AGENTS.md). Claude Code und Copilot referenzieren diese Datei als Single Source of Truth.
+AI-Agent-Anweisungen (Architektur, Konventionen, Gotchas, Workflow) leben in [`CLAUDE.md`](CLAUDE.md) — die Single Source of Truth für alle Agenten. Copilot liest sie über den Symlink `.github/copilot-instructions.md`, Gemini über `contextFileName` in `.gemini/settings.json`.
 
 ## Bekannte Probleme
 

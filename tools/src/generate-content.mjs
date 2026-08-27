@@ -11,7 +11,7 @@
 //   libs/stats/src/lib/models/exercise-wiki-content.generated.ts
 //
 // Authors translate by editing the markdown files; consumers keep
-// reading the generated TS modules. See AGENTS.md ("Translatable
+// reading the generated TS modules. See CLAUDE.md ("Translatable
 // content workflow") for the full workflow.
 
 import {

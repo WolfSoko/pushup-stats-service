@@ -38,7 +38,7 @@ export function findBlogPost(
  * `content/blog/<folder>/{de,en,...}.md` and emitted by the build-time
  * generator (`tools/src/generate-content.mjs`) into one TS module per
  * post per locale under `./generated/`. The barrel `./generated/index.ts`
- * re-exports them as `GENERATED_BLOG_POSTS`. See AGENTS.md
+ * re-exports them as `GENERATED_BLOG_POSTS`. See CLAUDE.md
  * ("Translatable content workflow").
  */
 export const BLOG_POSTS: ReadonlyArray<BlogPost> = GENERATED_BLOG_POSTS;

@@ -1,6 +1,6 @@
 # CI/CD & Deployment
 
-How code reaches production and staging. AGENTS.md keeps the high-level rule (no deploy bypasses CI); details live here.
+How code reaches production and staging. CLAUDE.md keeps the high-level rule (no deploy bypasses CI); details live here.
 
 ## CI Pipeline
 

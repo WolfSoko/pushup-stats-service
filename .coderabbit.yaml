@@ -2,7 +2,7 @@
 reviews:
   pre_merge_checks:
     docstrings:
-      # AGENTS.md mandates comment-light code ("default to no comments"), so a
+      # CLAUDE.md mandates comment-light code ("default to no comments"), so a
       # high docstring-coverage gate blocks valid PRs that intentionally omit
       # docstrings on self-explanatory code (incl. trivial spec helpers). Keep
       # the check informational (warning) at a low threshold instead of
