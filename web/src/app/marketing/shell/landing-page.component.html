@@ -189,6 +189,11 @@
     </div>
   </section>
 
+  <app-session-feature-section
+    class="scroll-reveal scroll-reveal--from-right"
+    (ctaClick)="onSessionCtaClick()"
+  ></app-session-feature-section>
+
   @defer (hydrate on viewport) {
     <app-reminder-feature-section
       class="scroll-reveal scroll-reveal--from-right"

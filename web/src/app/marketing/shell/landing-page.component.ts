@@ -13,6 +13,7 @@ import {
 } from '../../ai/ai-assistant.config';
 import { InstallPromptService } from '../../core/install-prompt.service';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
+import { SessionFeatureSectionComponent } from '../components/session-feature-section/session-feature-section.component';
 
 // Each string is 7 characters — one per day, top-to-bottom.
 // 'e' = empty, '1'..'5' = intensity buckets (matches .lp-day-* SCSS).
@@ -46,6 +47,7 @@ const HEATMAP_PATTERN: readonly string[] = [
     MatIconModule,
     AdSlotComponent,
     ReminderFeatureSectionComponent,
+    SessionFeatureSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -109,6 +111,10 @@ export class LandingPageComponent {
 
   onPlansCtaClick(target: 'overview' | 'signup'): void {
     this.track('landing_plans_cta_click', { target });
+  }
+
+  onSessionCtaClick(): void {
+    this.track('landing_session_cta_click', { target: 'plans' });
   }
 
   async onInstallClick(): Promise<void> {

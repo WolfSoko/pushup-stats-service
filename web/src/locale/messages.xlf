@@ -5639,6 +5639,118 @@
         <source> Jede Wiederholung bringt dich näher ans Ziel. Dein nächstes Set wartet auf dich! </source>
       </segment>
     </unit>
+    <unit id="landing.session.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Geführte Sessions</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.headline">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:5,7</note>
+      </notes>
+      <segment>
+        <source> Dein Plan führt dich durch das Workout. </source>
+      </segment>
+    </unit>
+    <unit id="landing.session.desc">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:8,14</note>
+      </notes>
+      <segment>
+        <source> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </source>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.mode">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:18,22</note>
+      </notes>
+      <segment>
+        <source>Zirkeltraining oder Übung für Übung</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.tools">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:24,28</note>
+      </notes>
+      <segment>
+        <source>Kamera-Zähler &amp; Halte-Timer je Übung</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.rest">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:30,34</note>
+      </notes>
+      <segment>
+        <source>Pausen-Countdown, den du selbst einstellst</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.resume">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:36,40</note>
+      </notes>
+      <segment>
+        <source>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.cta">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:48,52</note>
+      </notes>
+      <segment>
+        <source>Plan wählen &amp; Session starten</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.title">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:56,58</note>
+      </notes>
+      <segment>
+        <source>Full Body Strong · Tag 8</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.progress">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:59,61</note>
+      </notes>
+      <segment>
+        <source>Schritt 2 von 6 · Runde 1 von 3</source>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.exercise">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:69,71</note>
+      </notes>
+      <segment>
+        <source> Plank </source>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.target">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:72,74</note>
+      </notes>
+      <segment>
+        <source> 50 s halten </source>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.action">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:78,82</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">timer</pc><pc id="1" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span&gt;" dispEnd="&lt;/span&gt;">Halte-Timer starten</pc></source>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.next">
+      <notes>
+        <note category="location">web/src/app/marketing/components/session-feature-section/session-feature-section.component.html:83,85</note>
+      </notes>
+      <segment>
+        <source> Als Nächstes: 20 Russian Twists </source>
+      </segment>
+    </unit>
     <unit id="datenschutz.title">
       <notes>
         <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:7,10</note>
@@ -6085,7 +6197,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:199,203</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:206,210</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -6093,7 +6205,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:204,205</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:211,212</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -6101,7 +6213,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:211,212</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:218,219</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -6109,7 +6221,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:222,224</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:229,231</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -6117,7 +6229,7 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:226,231</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:233,238</note>
       </notes>
       <segment>
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
@@ -6125,7 +6237,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:294,296</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:301,303</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -6133,7 +6245,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:298,302</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:305,309</note>
       </notes>
       <segment>
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
@@ -6141,7 +6253,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:398,400</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:405,407</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -6149,7 +6261,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:402,405</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:409,412</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
@@ -6157,7 +6269,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:447,449</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:454,456</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -6165,7 +6277,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:451,455</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,462</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -6173,7 +6285,7 @@
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:542,544</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:549,551</note>
       </notes>
       <segment>
         <source>Sätze &amp; Intervalle</source>
@@ -6181,7 +6293,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:546,549</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:553,556</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
@@ -6189,7 +6301,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:558,560</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:565,567</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -6197,7 +6309,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,565</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:569,572</note>
       </notes>
       <segment>
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
@@ -6205,7 +6317,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:573,575</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:580,582</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -6213,7 +6325,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:577,581</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:584,588</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
@@ -6221,7 +6333,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:588,590</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:595,597</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -6229,7 +6341,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:592,595</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:599,602</note>
       </notes>
       <segment>
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
@@ -6237,7 +6349,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:600,602</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:607,609</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -6245,7 +6357,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:613,615</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:620,622</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -6253,7 +6365,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:620,623</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:627,630</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -6261,7 +6373,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:631,633</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:638,640</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -6269,7 +6381,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:635,639</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642,646</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -6277,7 +6389,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:649</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -6285,7 +6397,7 @@
     </unit>
     <unit id="landing.ai.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:650,651</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:657,658</note>
       </notes>
       <segment>
         <source>AI ready</source>
@@ -6293,7 +6405,7 @@
     </unit>
     <unit id="landing.ai.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:652,654</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:659,661</note>
       </notes>
       <segment>
         <source> Bereit für deinen KI-Coach </source>
@@ -6301,7 +6413,7 @@
     </unit>
     <unit id="landing.ai.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:655,659</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:662,666</note>
       </notes>
       <segment>
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
@@ -6309,7 +6421,7 @@
     </unit>
     <unit id="landing.ai.chip.protocol">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:663,666</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:670,673</note>
       </notes>
       <segment>
         <source>AG-UI-Protokoll</source>
@@ -6317,7 +6429,7 @@
     </unit>
     <unit id="landing.ai.chip.copilotkit">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:667,670</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:674,677</note>
       </notes>
       <segment>
         <source>CopilotKit für Angular</source>
@@ -6325,7 +6437,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:672,675</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:679,682</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -6333,7 +6445,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:677,680</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:684,687</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -6341,7 +6453,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:688,691</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:695,698</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -6349,7 +6461,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:696,698</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:703,705</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -6357,7 +6469,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:703,704</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:710,711</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -6365,7 +6477,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:844,845</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:851,852</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -6373,7 +6485,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:850,852</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:857,859</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -6381,7 +6493,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:854,857</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:861,864</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -6389,7 +6501,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:864,867</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:871,874</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -6397,7 +6509,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:873,875</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:880,882</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -6405,7 +6517,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:877,880</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:884,887</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -6413,7 +6525,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:887,889</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:894,896</note>
       </notes>
       <segment>
         <source>Zum Blog</source>

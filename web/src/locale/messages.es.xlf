@@ -11256,5 +11256,89 @@
         <target>Tagesdetails ein-/ausklappen</target>
       </segment>
     </unit>
+    <unit id="landing.session.eyebrow">
+      <segment state="initial">
+        <source>Geführte Sessions</source>
+        <target>Geführte Sessions</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.headline">
+      <segment state="initial">
+        <source> Dein Plan führt dich durch das Workout. </source>
+        <target> Dein Plan führt dich durch das Workout. </target>
+      </segment>
+    </unit>
+    <unit id="landing.session.desc">
+      <segment state="initial">
+        <source> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </source>
+        <target> Starte den Trainingstag als geführte Session: Die App sagt dir Übung für Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit, legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine Statistik. </target>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.mode">
+      <segment state="initial">
+        <source>Zirkeltraining oder Übung für Übung</source>
+        <target>Zirkeltraining oder Übung für Übung</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.tools">
+      <segment state="initial">
+        <source>Kamera-Zähler &amp; Halte-Timer je Übung</source>
+        <target>Kamera-Zähler &amp; Halte-Timer je Übung</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.rest">
+      <segment state="initial">
+        <source>Pausen-Countdown, den du selbst einstellst</source>
+        <target>Pausen-Countdown, den du selbst einstellst</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.chip.resume">
+      <segment state="initial">
+        <source>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</source>
+        <target>Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört hast</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.cta">
+      <segment state="initial">
+        <source>Plan wählen &amp; Session starten</source>
+        <target>Plan wählen &amp; Session starten</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.title">
+      <segment state="initial">
+        <source>Full Body Strong · Tag 8</source>
+        <target>Full Body Strong · Tag 8</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.progress">
+      <segment state="initial">
+        <source>Schritt 2 von 6 · Runde 1 von 3</source>
+        <target>Schritt 2 von 6 · Runde 1 von 3</target>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.exercise">
+      <segment state="initial">
+        <source> Plank </source>
+        <target> Plank </target>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.target">
+      <segment state="initial">
+        <source> 50 s halten </source>
+        <target> 50 s halten </target>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.action">
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">timer</pc><pc id="1" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span&gt;" dispEnd="&lt;/span&gt;">Halte-Timer starten</pc></source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">timer</pc><pc id="1" equivStart="START_TAG_SPAN" equivEnd="CLOSE_TAG_SPAN" type="other" dispStart="&lt;span&gt;" dispEnd="&lt;/span&gt;">Halte-Timer starten</pc></target>
+      </segment>
+    </unit>
+    <unit id="landing.session.mock.next">
+      <segment state="initial">
+        <source> Als Nächstes: 20 Russian Twists </source>
+        <target> Als Nächstes: 20 Russian Twists </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

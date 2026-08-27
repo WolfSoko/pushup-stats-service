@@ -549,4 +549,49 @@ describe('LandingPageComponent', () => {
       expect(trackSpy).toHaveBeenCalledTimes(1);
     });
   });
+  describe('guided session section', () => {
+    async function renderLanding() {
+      return render(LandingPageComponent, {
+        providers: [
+          provideRouter([{ path: 'training-plans', children: [] }]),
+          { provide: AdsStore, useValue: adsConfigMock },
+          { provide: AuthService, useValue: makeAuthServiceMock() },
+          { provide: AuthStore, useValue: makeAuthStoreMock() },
+        ],
+      });
+    }
+
+    it('should advertise the guided plan session with a link to the plans', async () => {
+      // given / when
+      await renderLanding();
+
+      // then
+      expect(
+        screen.getByRole('heading', {
+          name: 'Dein Plan führt dich durch das Workout.',
+        })
+      ).toBeTruthy();
+      const cta = screen.getByRole('link', {
+        name: 'Plan wählen & Session starten',
+      });
+      expect(cta.getAttribute('href')).toBe('/training-plans');
+    });
+
+    it('should report the session CTA click to the analytics handler', async () => {
+      // given
+      const view = await renderLanding();
+      const trackSpy = vitest.spyOn(
+        view.fixture.componentInstance,
+        'onSessionCtaClick'
+      );
+
+      // when
+      await userEvent.click(
+        screen.getByRole('link', { name: 'Plan wählen & Session starten' })
+      );
+
+      // then
+      expect(trackSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });

@@ -1,0 +1,88 @@
+<section class="session-section">
+  <div class="session-content">
+    <p class="eyebrow" i18n="@@landing.session.eyebrow">Geführte Sessions</p>
+    <h2 i18n="@@landing.session.headline">
+      Dein Plan führt dich durch das Workout.
+    </h2>
+    <p class="session-desc" i18n="@@landing.session.desc">
+      Starte den Trainingstag als geführte Session: Die App sagt dir Übung für
+      Übung, was dran ist, zählt per Kamera-KI mit oder stoppt die Haltezeit,
+      legt danach deine Pause ein — und schreibt jeden Satz automatisch in deine
+      Statistik.
+    </p>
+
+    <ul class="session-chips">
+      <li>
+        <mat-icon aria-hidden="true">autorenew</mat-icon>
+        <span i18n="@@landing.session.chip.mode"
+          >Zirkeltraining oder Übung für Übung</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">videocam</mat-icon>
+        <span i18n="@@landing.session.chip.tools"
+          >Kamera-Zähler & Halte-Timer je Übung</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">hourglass_bottom</mat-icon>
+        <span i18n="@@landing.session.chip.rest"
+          >Pausen-Countdown, den du selbst einstellst</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">bookmark_added</mat-icon>
+        <span i18n="@@landing.session.chip.resume"
+          >Jederzeit unterbrechen — die Session macht da weiter, wo du aufgehört
+          hast</span
+        >
+      </li>
+    </ul>
+
+    <a
+      mat-flat-button
+      color="primary"
+      routerLink="/training-plans"
+      (click)="ctaClick.emit()"
+      i18n="@@landing.session.cta"
+      >Plan wählen & Session starten</a
+    >
+  </div>
+
+  <div class="session-mock-wrap" aria-hidden="true">
+    <mat-card class="session-mock">
+      <mat-card-header>
+        <mat-card-title i18n="@@landing.session.mock.title"
+          >Full Body Strong · Tag 8</mat-card-title
+        >
+        <mat-card-subtitle i18n="@@landing.session.mock.progress"
+          >Schritt 2 von 6 · Runde 1 von 3</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <div class="mock-bar"><span class="mock-bar-fill"></span></div>
+
+        <div class="mock-step">
+          <mat-icon class="mock-step-icon">self_improvement</mat-icon>
+          <div class="mock-step-text">
+            <p class="mock-step-name" i18n="@@landing.session.mock.exercise">
+              Plank
+            </p>
+            <p class="mock-step-target" i18n="@@landing.session.mock.target">
+              50 s halten
+            </p>
+          </div>
+        </div>
+
+        <p class="mock-action" i18n="@@landing.session.mock.action">
+          <mat-icon>timer</mat-icon>
+          <span>Halte-Timer starten</span>
+        </p>
+
+        <p class="mock-next" i18n="@@landing.session.mock.next">
+          Als Nächstes: 20 Russian Twists
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
