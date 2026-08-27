@@ -222,6 +222,71 @@ describe('buildExerciseResult — measurement branches', () => {
   });
 });
 
+describe('buildExerciseResult — intervalDurationsSec parallel-array invariant', () => {
+  // intervalDurationsSec is index-aligned with intervals: same length, one entry per
+  // interval. Any code path that mutates one array must touch the other too. These
+  // assertions guard that contract across all builder scenarios.
+  it('should keep intervalDurationsSec.length equal to intervals.length when split times are present', () => {
+    // given — 3-interval run with all splits filled
+    // when
+    const result = buildExerciseResult({
+      timestamp: 't',
+      def: distanceTimeDef,
+      variantPatch: {},
+      sets: [],
+      intervals: [1000, 1000, 1000],
+      intervalDurationsSec: [270, 265, 280],
+      durationSec: 815,
+      distanceM: 3000,
+    });
+
+    // then
+    expect(result!.intervalDurationsSec!.length).toBe(
+      result!.intervals!.length
+    );
+  });
+
+  it('should keep intervalDurationsSec.length equal to intervals.length after blank intervals are dropped', () => {
+    // given — middle interval is blank (0), so builder drops it along with its split
+    // when
+    const result = buildExerciseResult({
+      timestamp: 't',
+      def: distanceTimeDef,
+      variantPatch: {},
+      sets: [],
+      intervals: [1000, 0, 1000],
+      intervalDurationsSec: [270, 999, 280],
+      durationSec: 550,
+      distanceM: 2000,
+    });
+
+    // then
+    expect(result!.intervalDurationsSec!.length).toBe(
+      result!.intervals!.length
+    );
+  });
+
+  it('should keep intervalDurationsSec empty when intervals is empty', () => {
+    // given — no interval breakdown
+    // when
+    const result = buildExerciseResult({
+      timestamp: 't',
+      def: distanceTimeDef,
+      variantPatch: {},
+      sets: [],
+      intervals: [],
+      intervalDurationsSec: [],
+      durationSec: 1500,
+      distanceM: 5000,
+    });
+
+    // then
+    expect(result!.intervalDurationsSec!.length).toBe(
+      result!.intervals!.length
+    );
+  });
+});
+
 describe('buildExerciseResult — variant patch threading', () => {
   it('should thread the patch through the built exercise result', () => {
     // given / when
