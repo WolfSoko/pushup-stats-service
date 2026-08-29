@@ -70,5 +70,15 @@ The general rule: a `web` spec must leave the shared world exactly as it found i
 
 ## Nx test runner quirks
 
-- **`web` test filter flags are not forwarded:** The `web:test` target uses the `@angular/build:unit-test` executor, which does NOT accept vitest CLI flags (`--testNamePattern`, `--testPathPattern`, `-t`). Running `pnpm exec vitest` directly inside `web/` also fails — it loses the Nx path aliases (`@pu-auth/auth`, `@pu-stats/models`, etc.) and every spec errors with `Cannot find package`. Either run the full `pnpm nx test web` suite, or move the spec into a library project whose test runner does accept filters. Use `--skip-nx-cache` to force a re-run when you just changed non-web code that a web spec depends on.
+- **`web` narrows via the builder's own options, not vitest's CLI flags:** The `web:test` target uses the `@angular/build:unit-test` executor, which rejects vitest CLI flags (`--testNamePattern`, `--testPathPattern`, `-t`) with `'run' is not found in schema` / `Property 'x' does not match the schema`. It has equivalents of its own:
+
+  ```bash
+  # by spec file — glob, matched against the workspace root, so it needs the leading **/
+  pnpm nx test web --coverage=false --include="**/analysis-group-view.component.spec.ts"
+  # by test name — regex over describe/it titles; non-matching tests are skipped, not dropped
+  pnpm nx test web --coverage=false --filter="segmentDescription"
+  ```
+
+  Both are repeatable and combine. A path relative to the project (`src/app/…`) does **not** match — `include` resolves from the workspace root and errors with `No tests found matching the following patterns`. Narrowing matters: three spec files run in ~30 s where the full `web` suite takes ~7 min. Running `pnpm exec vitest` directly inside `web/` is still no help — it loses the Nx path aliases (`@pu-auth/auth`, `@pu-stats/models`, etc.) and every spec errors with `Cannot find package`. Use `--skip-nx-cache` to force a re-run when you just changed non-web code that a web spec depends on, or when a narrowed run replayed a cached result.
+
 - **`tools/` Jest only transforms `.ts`/`.js`:** ESM `.mjs` scripts can be run by Nx targets but **cannot** be unit-tested by the shared Jest config. When a script needs coverage, write it as CommonJS `.js` with `module.exports = {...}`. See `tools/src/generate-sitemap.js` for the pattern.
