@@ -722,6 +722,73 @@ describe('AnalysisGroupViewComponent', () => {
     expect(segmentChartLabels(fixture)).toEqual(['']);
   });
 
+  it('should explain the measurement split only while a view actually mixes units', async () => {
+    // given
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-measurement-hint"]')
+        ?.textContent
+    ).toContain('unterschiedlichen Maßeinheiten');
+    expect(
+      host.querySelector('[data-testid="segment-note-reps"]')?.textContent
+    ).toContain('Wiederholungen und Sätze');
+    expect(
+      host.querySelector('[data-testid="segment-note-time"]')?.textContent
+    ).toContain('Sekunden, nicht Wiederholungen');
+
+    // when only the plank remains, one unit needs no disambiguation
+    liveExerciseEntries.set([
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-measurement-hint"]')
+    ).toBeNull();
+    expect(host.querySelector('[data-testid="segment-note-time"]')).toBeNull();
+  });
+
   it('renders the "Keine Einträge im gewählten Zeitraum" notice when the active category has no entries in the range', async () => {
     // Regression: when the user shifts the filter past the last entry
     // in their active category, the tab body needs an explicit empty

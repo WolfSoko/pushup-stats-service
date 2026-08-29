@@ -17,6 +17,7 @@ import { AnalysisTrendTableComponent } from './analysis-trend-table.component';
 import {
   formatSegmentValue,
   resolveTypeBreakdownDisplay,
+  segmentDescription,
   segmentHasSets,
   segmentLabel,
 } from './analysis-segment.helpers';
@@ -59,6 +60,9 @@ export class AnalysisSegmentViewComponent {
   readonly dayChartModeChange = output<'24h' | '14h'>();
 
   readonly label = computed(() => segmentLabel(this.segment().measurement));
+  readonly description = computed(() =>
+    segmentDescription(this.segment().measurement)
+  );
   readonly chartLabel = computed(() => (this.showLabel() ? this.label() : ''));
   readonly hasSets = computed(() => segmentHasSets(this.segment().measurement));
 

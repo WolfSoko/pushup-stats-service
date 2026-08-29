@@ -33,6 +33,30 @@ export function segmentLabel(measurement: SegmentMeasurement): string {
 }
 
 /**
+ * One sentence saying what a segment actually counts, shown under the
+ * segment title whenever a view holds more than one measurement. The
+ * split into per-measurement blocks is otherwise unexplained — users
+ * read "Wiederholungen" and "Dauer" as two charts of the same thing
+ * and expect the totals to relate.
+ */
+export function segmentDescription(measurement: SegmentMeasurement): string {
+  switch (measurement) {
+    case 'reps':
+      return $localize`:@@analysis.segmentDescription.reps:Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.`;
+    case 'weight':
+      return $localize`:@@analysis.segmentDescription.weight:Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.`;
+    case 'time':
+      return $localize`:@@analysis.segmentDescription.time:Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.`;
+    case 'distance':
+      return $localize`:@@analysis.segmentDescription.distance:Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.`;
+    case 'distance-time':
+      return $localize`:@@analysis.segmentDescription.distanceTime:Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.`;
+    case 'mixed':
+      return $localize`:@@analysis.segmentDescription.mixed:Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.`;
+  }
+}
+
+/**
  * Formats a segment value in its own unit: `time` renders as `m:ss`,
  * distances switch to km past 1000 m, weights carry `kg`. The
  * `'mixed'` bucket holds rows no definition resolves, so its volume

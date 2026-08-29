@@ -1,10 +1,18 @@
 @if (showLabel()) {
-  <h2
-    class="segment-title"
-    [attr.data-testid]="'segment-title-' + segment().measurement"
-  >
-    {{ label() }}
-  </h2>
+  <header class="segment-head">
+    <h2
+      class="segment-title"
+      [attr.data-testid]="'segment-title-' + segment().measurement"
+    >
+      {{ label() }}
+    </h2>
+    <p
+      class="segment-note"
+      [attr.data-testid]="'segment-note-' + segment().measurement"
+    >
+      {{ description() }}
+    </p>
+  </header>
 }
 
 @if (segment().hasRangeRows) {

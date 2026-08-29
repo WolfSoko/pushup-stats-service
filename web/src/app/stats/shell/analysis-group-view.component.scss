@@ -30,6 +30,13 @@ mat-card-content {
   opacity: 0.7;
   margin: 0;
 }
+.measurement-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.75;
+  max-width: 80ch;
+}
 @media (max-width: 900px) {
   :host {
     gap: 12px;

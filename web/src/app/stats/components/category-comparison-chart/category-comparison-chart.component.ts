@@ -39,6 +39,17 @@ import type { CategoryComparison } from '../../analysis/analysis.types';
       </p>
     </header>
 
+    <p
+      class="metric-note"
+      data-testid="category-comparison-metric-note"
+      i18n="@@analysis.overview.comparison.metricNote"
+    >
+      Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen:
+      Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und
+      Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in
+      der jeweils eigenen Einheit stehen in den Karten darunter.
+    </p>
+
     @if (rows().length === 0) {
       <p
         class="empty"
@@ -85,6 +96,13 @@ import type { CategoryComparison } from '../../analysis/analysis.types';
       opacity: 0.7;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+    }
+    .metric-note {
+      margin: 0 0 12px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      opacity: 0.7;
+      max-width: 80ch;
     }
     .bars {
       list-style: none;

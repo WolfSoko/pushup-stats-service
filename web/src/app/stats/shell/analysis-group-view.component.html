@@ -8,6 +8,18 @@
   </p>
 }
 
+@if (hasMultipleSegments()) {
+  <p
+    class="measurement-hint"
+    data-testid="analysis-group-view-measurement-hint"
+    i18n="@@analysis.measurementSplitHint"
+  >
+    Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte
+    Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb
+    getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren.
+  </p>
+}
+
 @for (segment of store.viewSegments(); track segment.measurement) {
   <app-analysis-segment-view
     [segment]="segment"

@@ -3,6 +3,7 @@ import {
   formatSegmentCell,
   formatSegmentValue,
   resolveTypeBreakdownDisplay,
+  segmentDescription,
   segmentHasSets,
   segmentLabel,
 } from './analysis-segment.helpers';
@@ -16,6 +17,29 @@ describe('segmentLabel', () => {
     expect(segmentLabel('distance-time')).toBe('Strecke & Tempo');
     expect(segmentLabel('weight')).toBe('Gewicht');
     expect(segmentLabel('mixed')).toBe('Sonstige');
+  });
+});
+
+describe('segmentDescription', () => {
+  it('should say what each measurement counts, and never repeat itself across measurements', () => {
+    // given
+    const measurements = [
+      'reps',
+      'weight',
+      'time',
+      'distance',
+      'distance-time',
+      'mixed',
+    ] as const;
+
+    // when
+    const descriptions = measurements.map((m) => segmentDescription(m));
+
+    // then
+    expect(segmentDescription('reps')).toContain('Wiederholungen und Sätze');
+    expect(segmentDescription('time')).toContain('Sekunden');
+    expect(segmentDescription('distance')).toContain('Meter');
+    expect(new Set(descriptions).size).toBe(measurements.length);
   });
 });
 

@@ -83,6 +83,25 @@ describe('CategoryComparisonChartComponent', () => {
     expect(fill.style.width).toBe('0%');
   });
 
+  it('should explain why the bars count trainings instead of volume', () => {
+    // given
+    fixture.componentInstance.data.set({
+      labels: ['Pushups', 'Cardio'],
+      entries: [3, 1],
+    });
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    const note = host.querySelector(
+      '[data-testid="category-comparison-metric-note"]'
+    );
+    expect(note?.textContent).toContain('nicht das Volumen');
+    expect(note?.textContent).toContain('60 Sekunden Plank');
+  });
+
   it('shows the metric label so users can read the axis without a legend', () => {
     fixture.componentInstance.data.set({
       labels: ['Pushups'],

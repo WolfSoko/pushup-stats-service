@@ -7263,15 +7263,23 @@
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:38,42</note>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:38,43</note>
       </notes>
       <segment>
         <source> Trainingseinheiten </source>
       </segment>
     </unit>
+    <unit id="analysis.overview.comparison.metricNote">
+      <notes>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:47,53</note>
+      </notes>
+      <segment>
+        <source> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </source>
+      </segment>
+    </unit>
     <unit id="analysis.overview.comparison.empty">
       <notes>
-        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:48,51</note>
+        <note category="location">web/src/app/stats/components/category-comparison-chart/category-comparison-chart.component.ts:59,62</note>
       </notes>
       <segment>
         <source> Keine Daten im aktuellen Zeitraum. </source>
@@ -7390,8 +7398,8 @@
     <unit id="analysis.streakDays">
       <notes>
         <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:217,218</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:37,38</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:45,46</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:49,50</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:57,58</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
@@ -8189,7 +8197,7 @@
     <unit id="entryDialog.distance">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:17,19</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:190,192</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:79,81</note>
       </notes>
       <segment>
         <source>Distanz (km)</source>
@@ -8199,8 +8207,8 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:31,33</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:61,63</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:162,164</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:203,205</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:47,49</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:91,93</note>
       </notes>
       <segment>
         <source>Minuten</source>
@@ -8210,8 +8218,8 @@
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:44,46</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:74,76</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:175,177</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:220,222</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:60,62</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:106,108</note>
       </notes>
       <segment>
         <source>Sekunden</source>
@@ -8220,7 +8228,7 @@
     <unit id="setLabel">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:93,94</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:55,56</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:54,55</note>
       </notes>
       <segment>
         <source>Set <ph id="0" equiv="INTERPOLATION" disp="{{ $index + 1 }}"/></source>
@@ -8229,7 +8237,7 @@
     <unit id="repsLabel">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:95,97</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:57,59</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:56,58</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -8237,8 +8245,8 @@
     </unit>
     <unit id="removeSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:114,116</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:76,78</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:116,118</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:77,79</note>
       </notes>
       <segment>
         <source>Set entfernen</source>
@@ -8246,8 +8254,8 @@
     </unit>
     <unit id="addSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:125,126</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:87,88</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:128,129</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:89,90</note>
       </notes>
       <segment>
         <source>Set hinzufügen</source>
@@ -8255,8 +8263,8 @@
     </unit>
     <unit id="addSetTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:127,129</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:89,91</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:130,132</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:91,93</note>
       </notes>
       <segment>
         <source>Weiteres Set hinzufügen</source>
@@ -8264,48 +8272,16 @@
     </unit>
     <unit id="totalReps">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:136,140</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:98,102</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:140,144</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:101,105</note>
       </notes>
       <segment>
         <source> Gesamt: <ph id="0" equiv="INTERPOLATION" disp="{{ state.totalReps() }}"/> Reps </source>
       </segment>
     </unit>
-    <unit id="entry.interval.label">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:150,152</note>
-      </notes>
-      <segment>
-        <source> Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ i + 1 }}"/> </source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.remove">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:244,246</note>
-      </notes>
-      <segment>
-        <source>Intervall entfernen</source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.add">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:255,256</note>
-      </notes>
-      <segment>
-        <source>Intervall hinzufügen</source>
-      </segment>
-    </unit>
-    <unit id="entry.intervals.addTooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:257,259</note>
-      </notes>
-      <segment>
-        <source>Weiteres Intervall hinzufügen</source>
-      </segment>
-    </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:271,273</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:153,155</note>
       </notes>
       <segment>
         <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedDurationMax() }}"/></source>
@@ -8313,7 +8289,7 @@
     </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:277,279</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:159,161</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedMax() }}"/></source>
@@ -8321,8 +8297,8 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:281,283</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:104,106</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:163,165</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:107,109</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.repsMax() }}"/> pro Eintrag</source>
@@ -8330,7 +8306,7 @@
     </unit>
     <unit id="trainingEntryDialog.exercise">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:3,6</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:2,5</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -8338,26 +8314,26 @@
     </unit>
     <unit id="entryDialog.picker.placeholder">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:11,12</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:10,11</note>
       </notes>
       <segment>
         <source>Übung suchen</source>
       </segment>
     </unit>
-    <unit id="entryDialog.picker.noMatch">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:31,34</note>
-      </notes>
-      <segment>
-        <source>Keine Übung gefunden</source>
-      </segment>
-    </unit>
     <unit id="exerciseWikiLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:46,48</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:28,30</note>
       </notes>
       <segment>
         <source>Anleitung zur Übung öffnen</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.picker.noMatch">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.component.html:50,53</note>
+      </notes>
+      <segment>
+        <source>Keine Übung gefunden</source>
       </segment>
     </unit>
     <unit id="entryDialog.picker.plannedToday">
@@ -8376,9 +8352,41 @@
         <source>Zuletzt genutzt</source>
       </segment>
     </unit>
+    <unit id="entry.interval.label">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:9,11</note>
+      </notes>
+      <segment>
+        <source> Intervall <ph id="0" equiv="INTERPOLATION" disp="{{ i + 1 }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.remove">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:19,21</note>
+      </notes>
+      <segment>
+        <source>Intervall entfernen</source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.add">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:31,32</note>
+      </notes>
+      <segment>
+        <source>Intervall hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="entry.intervals.addTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:33,35</note>
+      </notes>
+      <segment>
+        <source>Weiteres Intervall hinzufügen</source>
+      </segment>
+    </unit>
     <unit id="typeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:3,5</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:2,4</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -8386,7 +8394,7 @@
     </unit>
     <unit id="typePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:9,10</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:8,9</note>
       </notes>
       <segment>
         <source>Auswählen oder eintippen</source>
@@ -8394,7 +8402,7 @@
     </unit>
     <unit id="typeWikiLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:45,47</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:21,23</note>
       </notes>
       <segment>
         <source>Anleitung zum Liegestütztyp öffnen</source>
@@ -8402,7 +8410,7 @@
     </unit>
     <unit id="sourceLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:109,111</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:112,114</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -8410,7 +8418,7 @@
     </unit>
     <unit id="sourcePlaceholder">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:115,116</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:118,119</note>
       </notes>
       <segment>
         <source>web / whatsapp / eigene Quelle</source>
@@ -9360,9 +9368,17 @@
         <source>Mobilität</source>
       </segment>
     </unit>
+    <unit id="analysis.measurementSplitHint">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:17,23</note>
+      </notes>
+      <segment>
+        <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
+      </segment>
+    </unit>
     <unit id="analysis.streaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:30,31</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:42,43</note>
       </notes>
       <segment>
         <source>Streaks</source>
@@ -9370,7 +9386,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:34,36</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:46,48</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -9378,7 +9394,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:42,44</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:54,56</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -9386,7 +9402,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:56,58</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:68,70</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -9394,7 +9410,7 @@
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:63,64</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:75,76</note>
       </notes>
       <segment>
         <source>Heatmap-Modus auswählen</source>
@@ -9507,7 +9523,7 @@
     </unit>
     <unit id="analysis.bestValuesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:30,32</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:38,40</note>
       </notes>
       <segment>
         <source>Bestwerte</source>
@@ -9515,7 +9531,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:36,38</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:44,46</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -9523,7 +9539,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:43,44</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:51,52</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -9531,7 +9547,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:51,53</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:59,61</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -9539,7 +9555,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:54,56</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:62,64</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -9547,7 +9563,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:64,66</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:72,74</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -9555,7 +9571,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:78,79</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:86,87</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -9563,7 +9579,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:83,84</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:91,92</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -9571,7 +9587,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:92,94</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:100,102</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
@@ -9579,7 +9595,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:65</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:69</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -9587,7 +9603,7 @@
     </unit>
     <unit id="analysis.weekTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:66</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:70</note>
       </notes>
       <segment>
         <source>Letzte 8 Wochen</source>
@@ -9595,7 +9611,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:67</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:71</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -9603,7 +9619,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:68</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:72</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -9611,7 +9627,7 @@
     </unit>
     <unit id="analysis.monthTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:69</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:73</note>
       </notes>
       <segment>
         <source>Letzte 6 Monate</source>
@@ -9619,7 +9635,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:70</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:74</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -9673,9 +9689,57 @@
         <source>Sonstige</source>
       </segment>
     </unit>
+    <unit id="analysis.segmentDescription.reps">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:45</note>
+      </notes>
+      <segment>
+        <source>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</source>
+      </segment>
+    </unit>
+    <unit id="analysis.segmentDescription.weight">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:47</note>
+      </notes>
+      <segment>
+        <source>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</source>
+      </segment>
+    </unit>
+    <unit id="analysis.segmentDescription.time">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:49</note>
+      </notes>
+      <segment>
+        <source>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</source>
+      </segment>
+    </unit>
+    <unit id="analysis.segmentDescription.distance">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:51</note>
+      </notes>
+      <segment>
+        <source>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</source>
+      </segment>
+    </unit>
+    <unit id="analysis.segmentDescription.distanceTime">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:53</note>
+      </notes>
+      <segment>
+        <source>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</source>
+      </segment>
+    </unit>
+    <unit id="analysis.segmentDescription.mixed">
+      <notes>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:55</note>
+      </notes>
+      <segment>
+        <source>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</source>
+      </segment>
+    </unit>
     <unit id="analysis.repsUnitLong">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:70</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment.helpers.ts:94</note>
       </notes>
       <segment>
         <source>Reps</source>
