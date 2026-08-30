@@ -949,6 +949,135 @@ describe('AnalysisGroupViewComponent', () => {
     expect(coreChoices[0].color).toBe(situpsColour);
   });
 
+  it('should offer each chart only the exercises it can show', async () => {
+    // given — a core tab with two counted and two timed exercises
+    liveExerciseEntries.set([
+      {
+        _id: 'r1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'r2',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        reps: 20,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 't1',
+        userId: 'u1',
+        exerciseId: 'plank.standard',
+        timestamp: '2026-02-11T08:00:00.000Z',
+        durationSec: 60,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 't2',
+        userId: 'u1',
+        exerciseId: 'core.hollowhold',
+        timestamp: '2026-02-11T09:00:00.000Z',
+        durationSec: 45,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then — the checkbox list sits with its own chart, per measurement
+    const segments = store.viewSegments();
+    expect(segments.map((seg) => seg.measurement)).toEqual(['reps', 'time']);
+    expect(segments[0].exerciseOptionIds).toEqual([
+      'abs.crunches',
+      'abs.situps',
+    ]);
+    expect(segments[1].exerciseOptionIds).toEqual([
+      'core.hollowhold',
+      'plank.standard',
+    ]);
+
+    // and no block offers a checkbox for the other block's unit
+    const host: HTMLElement = fixture.nativeElement;
+    const blocks = host.querySelectorAll(
+      '[data-testid="exercise-breakdown-controls"]'
+    );
+    expect(blocks).toHaveLength(2);
+    expect(
+      blocks[0].querySelector(
+        '[data-testid="exercise-breakdown-choice-plank.standard"]'
+      )
+    ).toBeNull();
+    expect(
+      blocks[1].querySelector(
+        '[data-testid="exercise-breakdown-choice-abs.situps"]'
+      )
+    ).toBeNull();
+    expect(
+      blocks[1].querySelector(
+        '[data-testid="exercise-breakdown-choice-plank.standard"]'
+      )
+    ).toBeTruthy();
+  });
+
+  it('should keep a chart\u2019s checkbox after its exercise is unchecked, so the box that undoes it survives', async () => {
+    // given
+    liveExerciseEntries.set([
+      {
+        _id: 'r1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'r2',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        reps: 20,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // when
+    store.toggleExerciseVisibility('abs.crunches');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(store.viewSegments()[0].exerciseOptionIds).toContain('abs.crunches');
+    const host: HTMLElement = fixture.nativeElement;
+    const crunches = host.querySelector<HTMLInputElement>(
+      '[data-testid="exercise-breakdown-choice-abs.crunches"] input'
+    );
+    expect(crunches).toBeTruthy();
+    expect(crunches?.checked).toBe(false);
+  });
+
   it('should explain the measurement split only while a view actually mixes units', async () => {
     // given
     liveExerciseEntries.set([

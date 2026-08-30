@@ -7399,8 +7399,8 @@
     <unit id="analysis.streakDays">
       <notes>
         <note category="location">web/src/app/stats/components/category-summary-card/category-summary-card.component.html:217,218</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:59,60</note>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:67,68</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:55,56</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:63,64</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ summary().currentStreak }}"/> Tage</source>
@@ -7424,7 +7424,7 @@
     </unit>
     <unit id="analysis.breakdown.sectionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:40,41</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:44,45</note>
       </notes>
       <segment>
         <source>Darstellung der Übungen</source>
@@ -7432,7 +7432,7 @@
     </unit>
     <unit id="analysis.breakdown.modeLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:45,47</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:49,51</note>
       </notes>
       <segment>
         <source>Balken</source>
@@ -7440,7 +7440,7 @@
     </unit>
     <unit id="analysis.breakdown.modeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:52,53</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:56,57</note>
       </notes>
       <segment>
         <source>Balken gestapelt oder nebeneinander</source>
@@ -7448,7 +7448,7 @@
     </unit>
     <unit id="analysis.breakdown.stacked">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:56,58</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:62,64</note>
       </notes>
       <segment>
         <source>Gestapelt</source>
@@ -7456,7 +7456,7 @@
     </unit>
     <unit id="analysis.breakdown.grouped">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:61,63</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:67,69</note>
       </notes>
       <segment>
         <source>Nebeneinander</source>
@@ -7464,7 +7464,7 @@
     </unit>
     <unit id="analysis.breakdown.exercisesLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:68,70</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:74,76</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -7472,7 +7472,7 @@
     </unit>
     <unit id="analysis.breakdown.showAll">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:89,91</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:95,97</note>
       </notes>
       <segment>
         <source> Alle anzeigen </source>
@@ -9427,7 +9427,7 @@
     </unit>
     <unit id="analysis.measurementSplitHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:26,32</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:17,23</note>
       </notes>
       <segment>
         <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
@@ -9435,7 +9435,7 @@
     </unit>
     <unit id="analysis.streaksTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:52,53</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:48,49</note>
       </notes>
       <segment>
         <source>Streaks</source>
@@ -9443,7 +9443,7 @@
     </unit>
     <unit id="analysis.currentStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:56,58</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:52,54</note>
       </notes>
       <segment>
         <source>Aktuelle Streak:</source>
@@ -9451,7 +9451,7 @@
     </unit>
     <unit id="analysis.longestStreak">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:64,66</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:60,62</note>
       </notes>
       <segment>
         <source>Längste Streak:</source>
@@ -9459,7 +9459,7 @@
     </unit>
     <unit id="analysis.heatmapTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:78,80</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:74,76</note>
       </notes>
       <segment>
         <source>Heatmap (Wochentag/Uhrzeit)</source>
@@ -9467,7 +9467,7 @@
     </unit>
     <unit id="analysis.heatmapToggleAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:85,86</note>
+        <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:81,82</note>
       </notes>
       <segment>
         <source>Heatmap-Modus auswählen</source>
@@ -9580,7 +9580,7 @@
     </unit>
     <unit id="analysis.bestValuesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:40,42</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:49,51</note>
       </notes>
       <segment>
         <source>Bestwerte</source>
@@ -9588,7 +9588,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:46,48</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:55,57</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -9596,7 +9596,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:53,54</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:62,63</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -9604,7 +9604,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:61,63</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:70,72</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -9612,7 +9612,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:64,66</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:73,75</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -9620,7 +9620,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:74,76</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:83,85</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -9628,7 +9628,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:88,89</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:97,98</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -9636,7 +9636,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:93,94</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:102,103</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -9644,7 +9644,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:102,104</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:111,113</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
@@ -9652,7 +9652,7 @@
     </unit>
     <unit id="analysis.weekTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:88</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:116</note>
       </notes>
       <segment>
         <source>Wochentrend</source>
@@ -9660,7 +9660,7 @@
     </unit>
     <unit id="analysis.weekTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:89</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:117</note>
       </notes>
       <segment>
         <source>Letzte 8 Wochen</source>
@@ -9668,7 +9668,7 @@
     </unit>
     <unit id="analysis.weekCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:90</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:118</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -9676,7 +9676,7 @@
     </unit>
     <unit id="analysis.monthTrendTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:91</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:119</note>
       </notes>
       <segment>
         <source>Monatstrend</source>
@@ -9684,7 +9684,7 @@
     </unit>
     <unit id="analysis.monthTrendSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:92</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:120</note>
       </notes>
       <segment>
         <source>Letzte 6 Monate</source>
@@ -9692,7 +9692,7 @@
     </unit>
     <unit id="analysis.monthCol">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:93</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.ts:121</note>
       </notes>
       <segment>
         <source>Monat</source>

@@ -108,6 +108,7 @@ const EMPTY_SEGMENT: AnalysisSegment = {
   chartEntries: [],
   paceSeries: [],
   exerciseSeries: [],
+  exerciseOptionIds: [],
   bestEntry: null,
   bestDay: null,
   bestSingleSet: 0,

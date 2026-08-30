@@ -190,6 +190,13 @@ export const AnalysisStore = signalStore(
       collectExerciseIds(unifiedRows())
     );
 
+    /** Localised name + page-wide colour for one exercise id. */
+    const toExerciseChoice = (id: string, order: ReadonlyArray<string>) => ({
+      id,
+      label: kindDisplayName(id as UnifiedEntryFilterKey),
+      color: exerciseColor(id, order),
+    });
+
     /**
      * The checkbox list for the active tab: the exercises that tab
      * actually shows, named and coloured. Scoped to the view (a
@@ -201,21 +208,25 @@ export const AnalysisStore = signalStore(
      * Built from rows *before* the hidden filter, so unchecking an
      * exercise never removes the checkbox that undoes it.
      */
-    const exerciseChoices = computed(() => {
-      const order = exerciseOptions();
+    /**
+     * The active view's rows *before* the visibility filter. Feeds
+     * every list of offered exercises — a checkbox has to survive being
+     * unchecked, or there is nothing left to click to undo it.
+     */
+    const viewRowsBeforeHiding = computed<UnifiedEntry[]>(() => {
       const view = store.activeView();
-      const rows =
-        view === 'overview'
-          ? unifiedRows()
-          : unifiedRows().filter(
-              (row) => unifiedEntryCategoryId(row, resolveDefinition()) === view
-            );
-      return collectExerciseIds(rows).map((id) => ({
-        id,
-        label: kindDisplayName(id as UnifiedEntryFilterKey),
-        color: exerciseColor(id, order),
-      }));
+      if (view === 'overview') return unifiedRows();
+      const resolver = resolveDefinition();
+      return unifiedRows().filter(
+        (row) => unifiedEntryCategoryId(row, resolver) === view
+      );
     });
+
+    const exerciseChoices = computed(() =>
+      collectExerciseIds(viewRowsBeforeHiding()).map((id) =>
+        toExerciseChoice(id, exerciseOptions())
+      )
+    );
 
     /**
      * The page's working row set: the range minus the exercises the
@@ -365,6 +376,7 @@ export const AnalysisStore = signalStore(
           locale: store._locale,
         },
         exerciseOrder: exerciseOptions(),
+        optionRows: viewRowsBeforeHiding(),
         resolveDefinition: resolveDefinition(),
       })
     );

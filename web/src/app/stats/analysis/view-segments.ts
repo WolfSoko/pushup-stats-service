@@ -15,7 +15,11 @@ import {
   buildViewChartSeries,
   buildViewPaceSeries,
 } from './chart-series';
-import { buildExerciseSeries, type ExerciseSeries } from './exercise-breakdown';
+import {
+  buildExerciseSeries,
+  collectExerciseIds,
+  type ExerciseSeries,
+} from './exercise-breakdown';
 import {
   groupRowsByMeasurement,
   SEGMENT_ORDER,
@@ -50,6 +54,13 @@ export interface AnalysisSegment {
    * group the parts instead of only showing their sum.
    */
   exerciseSeries: ExerciseSeries[];
+  /**
+   * Exercises this block could show, derived from rows *before* the
+   * visibility filter — the checkbox list belongs to the chart it
+   * filters, and unchecking one must not remove the box that undoes
+   * it. A superset of {@link AnalysisSegment.exerciseSeries}.
+   */
+  exerciseOptionIds: string[];
   bestEntry: { value: number; timestamp: string } | null;
   bestDay: { date: string; total: number } | null;
   bestSingleSet: number;
@@ -81,6 +92,11 @@ export interface AnalysisSegmentInput {
    * from the unfiltered range so colours survive hiding an exercise.
    */
   exerciseOrder: ReadonlyArray<string>;
+  /**
+   * The view's rows before the visibility filter, split per
+   * measurement into each segment's `exerciseOptionIds`.
+   */
+  optionRows: ReadonlyArray<UnifiedEntry>;
   resolveDefinition?: (id: string) => ExerciseDefinition | null;
 }
 
@@ -99,6 +115,7 @@ export function buildAnalysisSegments(
   const byRange = groupRowsByMeasurement(input.rangeRows, resolveDefinition);
   const byWeek = groupRowsByMeasurement(input.weekRows, resolveDefinition);
   const byMonth = groupRowsByMeasurement(input.monthRows, resolveDefinition);
+  const byOption = groupRowsByMeasurement(input.optionRows, resolveDefinition);
 
   const segments: AnalysisSegment[] = [];
   for (const measurement of SEGMENT_ORDER) {
@@ -121,6 +138,7 @@ export function buildAnalysisSegments(
         input.exerciseOrder,
         seriesOpts
       ),
+      exerciseOptionIds: collectExerciseIds(byOption.get(measurement) ?? []),
       bestEntry: computeBestSingleEntry(rangeRows),
       bestDay: computeBestDay(rangeRows),
       bestSingleSet: computeBestSingleSet(rangeRows),

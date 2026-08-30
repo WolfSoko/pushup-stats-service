@@ -8,11 +8,15 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import type { StatsGranularity, UnifiedEntryFilterKey } from '@pu-stats/models';
 import type { RangeModes } from '@pu-stats/date';
+import {
+  ExerciseBreakdownControlsComponent,
+  type ExerciseChoice,
+} from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import type { AnalysisView } from '../analysis/analysis.types';
-import type { BarMode } from '../analysis/exercise-breakdown';
+import { type BarMode, exerciseColor } from '../analysis/exercise-breakdown';
 import { kindDisplayName } from '../i18n/exercise-display-names';
 import type { AnalysisSegment } from '../analysis/view-segments';
 import { AnalysisTrendTableComponent } from './analysis-trend-table.component';
@@ -39,6 +43,7 @@ import {
   imports: [
     MatCardModule,
     AnalysisTrendTableComponent,
+    ExerciseBreakdownControlsComponent,
     SetsDistributionComponent,
     StatsChartComponent,
     TypePieComponent,
@@ -59,8 +64,15 @@ export class AnalysisSegmentViewComponent {
   readonly view = input<AnalysisView>('overview');
   readonly kinds = input<ReadonlyArray<UnifiedEntryFilterKey>>([]);
   readonly barMode = input<BarMode>('stacked');
+  /** Page-wide colour order, so a colour means the same in every block. */
+  readonly exerciseOrder = input<ReadonlyArray<string>>([]);
+  /** Page-wide hidden set; the reset stays reachable from any block. */
+  readonly hiddenExerciseIds = input<ReadonlyArray<string>>([]);
 
   readonly dayChartModeChange = output<'24h' | '14h'>();
+  readonly barModeChange = output<BarMode>();
+  readonly toggleExercise = output<string>();
+  readonly showAll = output<void>();
 
   readonly label = computed(() => segmentLabel(this.segment().measurement));
   readonly description = computed(() =>
@@ -68,6 +80,22 @@ export class AnalysisSegmentViewComponent {
   );
   readonly chartLabel = computed(() => (this.showLabel() ? this.label() : ''));
   readonly hasSets = computed(() => segmentHasSets(this.segment().measurement));
+
+  /**
+   * The checkboxes offered next to this block's chart: only the
+   * exercises measured in its dimension. Counted and timed exercises
+   * never share a chart, so they must not share a filter either — a
+   * "Plank" checkbox above the repetitions chart would control
+   * something that chart cannot show.
+   */
+  readonly exerciseChoices = computed<ExerciseChoice[]>(() => {
+    const order = this.exerciseOrder();
+    return this.segment().exerciseOptionIds.map((id) => ({
+      id,
+      label: kindDisplayName(id as UnifiedEntryFilterKey),
+      color: exerciseColor(id, order),
+    }));
+  });
 
   /**
    * A one-exercise segment has nothing to split — its stack would be

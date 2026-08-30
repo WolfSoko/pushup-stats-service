@@ -15,6 +15,15 @@
   </header>
 }
 
+<app-exercise-breakdown-controls
+  [exercises]="exerciseChoices()"
+  [hidden]="hiddenExerciseIds()"
+  [barMode]="barMode()"
+  (barModeChange)="barModeChange.emit($event)"
+  (toggleExercise)="toggleExercise.emit($event)"
+  (showAll)="showAll.emit()"
+/>
+
 @if (segment().hasRangeRows) {
   <app-stats-chart
     [attr.data-testid]="'analysis-chart-' + segment().measurement"

@@ -29,6 +29,7 @@ function input(
     chart: { from: '2026-06-15', isDayRange: false, dayChartMode: '14h' },
     breakdown: { view: 'core', kinds: [], locale: 'en' },
     exerciseOrder: [],
+    optionRows: [],
     ...overrides,
   };
 }

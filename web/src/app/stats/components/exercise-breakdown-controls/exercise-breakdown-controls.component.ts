@@ -18,9 +18,13 @@ export interface ExerciseChoice {
 }
 
 /**
- * Bar layout switch plus the per-exercise visibility checkboxes. One
- * instance per analysis tab: the checkboxes filter the whole tab (not
- * just the chart), so a second copy would imply a second scope.
+ * Bar layout switch plus the per-exercise visibility checkboxes. Sits
+ * with the chart it belongs to, listing only the exercises that chart
+ * can draw: counted and timed exercises never share a chart, so a
+ * "Plank" checkbox above the repetitions chart would control something
+ * that chart cannot show. Unchecking still filters the whole tab —
+ * the scope of the *effect* is page-wide, the scope of the *offer* is
+ * the chart.
  *
  * Renders nothing below two exercises — a single exercise has no parts
  * to lay out and hiding it would only empty the page — *unless*
