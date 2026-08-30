@@ -11345,51 +11345,51 @@
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </source>
-        <target> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </target>
+        <target> Συγκρίνεται ο αριθμός των προπονήσεων, όχι ο όγκος: οι μετρημένες ασκήσεις δίνουν επαναλήψεις, οι διατηρημένες ασκήσεις δευτερόλεπτα και το τρέξιμο μέτρα — 60 δευτερόλεπτα πλανκ δεν είναι 60 κάμψεις. Οι τιμές στην αντίστοιχη μονάδα τους εμφανίζονται στις κάρτες παρακάτω. </target>
       </segment>
     </unit>
     <unit id="analysis.measurementSplitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
-        <target> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </target>
+        <target> Αυτή η ομάδα συνδυάζει ασκήσεις με διαφορετικές μονάδες μέτρησης. Οι μετρημένες επαναλήψεις, η διατηρημένη διάρκεια και η διανυθείσα απόσταση αξιολογούνται επομένως ξεχωριστά — δεν μπορούν να προστεθούν σε έναν ενιαίο αριθμό. </target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</source>
-        <target>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</target>
+        <target>Μετρημένες ασκήσεις όπως κάμψεις ή squats — αθροίζονται επαναλήψεις και σετ.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</source>
-        <target>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</target>
+        <target>Ασκήσεις με βάρος — αθροίζεται το φορτίο που μετακινείται σε κιλά.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</source>
-        <target>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</target>
+        <target>Διατηρημένες ασκήσεις όπως το πλανκ — αθροίζονται δευτερόλεπτα, όχι επαναλήψεις.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</source>
-        <target>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</target>
+        <target>Διανυθείσα απόσταση — αθροίζονται μέτρα, όχι επαναλήψεις.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</source>
-        <target>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</target>
+        <target>Τρέξιμο και ποδηλασία — απόσταση και διάρκεια μαζί δίνουν τον ρυθμό σου.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</source>
-        <target>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</target>
+        <target>Ασκήσεις χωρίς γνωστή μονάδα — εδώ μετράει μόνο ο αριθμός των καταχωρήσεων.</target>
       </segment>
     </unit>
 </file>

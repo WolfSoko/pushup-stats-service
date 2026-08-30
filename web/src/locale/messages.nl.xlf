@@ -11345,51 +11345,51 @@
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </source>
-        <target> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </target>
+        <target> Vergeleken wordt het aantal trainingseenheden, niet het volume: getelde oefeningen leveren herhalingen, gehouden oefeningen seconden en hardlopen meters — 60 seconden plank zijn geen 60 push-ups. De waarden in hun eigen eenheid staan in de kaarten hieronder. </target>
       </segment>
     </unit>
     <unit id="analysis.measurementSplitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
-        <target> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </target>
+        <target> Deze groep combineert oefeningen met verschillende meeteenheden. Getelde herhalingen, gehouden duur en afgelegde afstand worden daarom apart geëvalueerd — ze kunnen niet worden opgeteld tot één getal. </target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</source>
-        <target>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</target>
+        <target>Getelde oefeningen zoals push-ups of squats — herhalingen en sets worden opgeteld.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</source>
-        <target>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</target>
+        <target>Oefeningen met gewicht — de verplaatste last wordt opgeteld in kilogram.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</source>
-        <target>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</target>
+        <target>Gehouden oefeningen zoals plank — seconden worden opgeteld, geen herhalingen.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</source>
-        <target>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</target>
+        <target>Afgelegde afstand — meters worden opgeteld, geen herhalingen.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</source>
-        <target>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</target>
+        <target>Hardlopen en fietsen — afstand en duur samen geven je tempo.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</source>
-        <target>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</target>
+        <target>Oefeningen zonder bekende eenheid — hier telt alleen het aantal invoeren.</target>
       </segment>
     </unit>
 </file>

@@ -11217,51 +11217,51 @@
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </source>
-        <target> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </target>
+        <target> La comparaison porte sur le nombre de séances d'entraînement, pas sur le volume : les exercices comptés donnent des répétitions, les exercices maintenus des secondes et la course des mètres — 60 secondes de gainage ne valent pas 60 pompes. Les valeurs dans leur propre unité figurent dans les cartes ci-dessous. </target>
       </segment>
     </unit>
     <unit id="analysis.measurementSplitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
-        <target> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </target>
+        <target> Ce groupe mélange des exercices avec des unités de mesure différentes. Les répétitions comptées, la durée maintenue et la distance parcourue sont donc évaluées séparément — elles ne peuvent pas être additionnées en un seul chiffre. </target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</source>
-        <target>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</target>
+        <target>Exercices comptés comme les pompes ou les squats — les répétitions et les séries sont additionnées.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</source>
-        <target>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</target>
+        <target>Exercices avec charge — la charge déplacée est additionnée en kilogrammes.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</source>
-        <target>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</target>
+        <target>Exercices maintenus comme la planche — les secondes sont additionnées, pas les répétitions.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</source>
-        <target>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</target>
+        <target>Distance parcourue — les mètres sont additionnés, pas les répétitions.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</source>
-        <target>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</target>
+        <target>Course à pied et vélo — la distance et la durée ensemble donnent votre allure.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</source>
-        <target>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</target>
+        <target>Exercices sans unité connue — seul le nombre d'entrées compte ici.</target>
       </segment>
     </unit>
 </file>

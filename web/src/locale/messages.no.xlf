@@ -10638,51 +10638,51 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </source>
-        <target> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </target>
+        <target> Det sammenlignes antall treningsøkter, ikke volum: Tellede øvelser gir repetisjoner, holdte øvelser sekunder og løping meter — 60 sekunder planke er ikke 60 push-ups. Verdiene i sin egen enhet vises i kortene nedenfor. </target>
       </segment>
     </unit>
     <unit id="analysis.measurementSplitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
-        <target> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </target>
+        <target> Denne gruppen blander øvelser med ulike måleenheter. Tellede repetisjoner, holdt varighet og tilbakelagt distanse vurderes derfor separat — de kan ikke legges sammen til ett tall. </target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</source>
-        <target>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</target>
+        <target>Tellede øvelser som push-ups eller knebøy — repetisjoner og sett summeres.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</source>
-        <target>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</target>
+        <target>Vektøvelser — belastningen som flyttes summeres i kilo.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</source>
-        <target>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</target>
+        <target>Holdte øvelser som planke — sekunder summeres, ikke repetisjoner.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</source>
-        <target>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</target>
+        <target>Tilbakelagt distanse — meter summeres, ikke repetisjoner.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</source>
-        <target>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</target>
+        <target>Løping og sykling — distanse og varighet sammen gir tempoet ditt.</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</source>
-        <target>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</target>
+        <target>Øvelser uten kjent enhet — her teller bare antall oppføringer.</target>
       </segment>
     </unit>
 </file>

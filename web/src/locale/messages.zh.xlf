@@ -10851,51 +10851,51 @@
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </source>
-        <target> Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen Einheit stehen in den Karten darunter. </target>
+        <target> 比较的是训练次数，而不是训练量：计数类动作提供次数，保持类动作提供秒数，跑步提供米数——60秒平板支撑并不等于60个俯卧撑。各自单位的数值显示在下方的卡片中。 </target>
       </segment>
     </unit>
     <unit id="analysis.measurementSplitHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </source>
-        <target> Diese Gruppe mischt Übungen mit unterschiedlichen Maßeinheiten. Gezählte Wiederholungen, gehaltene Dauer und zurückgelegte Strecke werden deshalb getrennt ausgewertet — sie lassen sich nicht zu einer Zahl addieren. </target>
+        <target> 该分组混合了使用不同计量单位的动作。计数的次数、保持的时长和移动的距离因此会分开计算——它们无法相加为一个数字。 </target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</source>
-        <target>Gezählte Übungen wie Liegestütze oder Kniebeugen — summiert werden Wiederholungen und Sätze.</target>
+        <target>计数类动作，如俯卧撑或深蹲——统计次数和组数。</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</source>
-        <target>Gewichtete Übungen — summiert wird die bewegte Last in Kilogramm.</target>
+        <target>负重类动作——统计移动的重量（千克）。</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</source>
-        <target>Gehaltene Übungen wie Plank — summiert werden Sekunden, nicht Wiederholungen.</target>
+        <target>保持类动作，如平板支撑——统计秒数，而不是次数。</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</source>
-        <target>Zurückgelegte Strecke — summiert werden Meter, nicht Wiederholungen.</target>
+        <target>移动距离——统计米数，而不是次数。</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.distanceTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</source>
-        <target>Laufen und Radfahren — Strecke und Dauer zusammen ergeben dein Tempo.</target>
+        <target>跑步和骑行——距离和时长共同决定你的配速。</target>
       </segment>
     </unit>
     <unit id="analysis.segmentDescription.mixed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</source>
-        <target>Übungen ohne bekannte Maßeinheit — hier zählt nur die Anzahl der Einträge.</target>
+        <target>没有已知单位的动作——这里只统计条目数量。</target>
       </segment>
     </unit>
 </file>
