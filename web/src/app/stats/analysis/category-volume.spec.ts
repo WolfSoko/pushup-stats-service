@@ -190,6 +190,34 @@ describe('buildCategorySummaries', () => {
   });
 });
 
+describe('buildCategorySummaries — per-exercise counts', () => {
+  it('should count trainings per exercise, heaviest first, summing back to the category total', () => {
+    // given
+    const rows = [
+      entry({ exerciseId: 'abs.situps', reps: 10 }),
+      entry({ exerciseId: 'abs.crunches', reps: 10 }),
+      entry({ exerciseId: 'abs.situps', reps: 10 }),
+    ];
+
+    // when
+    const summaries = buildCategorySummaries(
+      rows,
+      findExerciseDefinition,
+      '2026-06-15'
+    );
+
+    // then
+    const core = summaries.find((s) => s.categoryId === 'core');
+    expect(core?.exerciseEntries).toEqual([
+      { exerciseId: 'abs.situps', entries: 2 },
+      { exerciseId: 'abs.crunches', entries: 1 },
+    ]);
+    expect(core?.exerciseEntries.reduce((sum, e) => sum + e.entries, 0)).toBe(
+      core?.entries
+    );
+  });
+});
+
 describe('buildCategoryComparison', () => {
   it('should project labels and entry counts from summaries', () => {
     // given
@@ -202,5 +230,34 @@ describe('buildCategoryComparison', () => {
     // then
     expect(comparison.entries).toEqual([3, 1]);
     expect(comparison.labels).toHaveLength(2);
+  });
+
+  it('should carry each category\u2019s exercise split index-aligned with its label', () => {
+    // given
+    const summaries = [
+      {
+        categoryId: 'pushup',
+        entries: 3,
+        exerciseEntries: [{ exerciseId: 'pushup', entries: 3 }],
+      } as unknown as CategorySummary,
+      {
+        categoryId: 'core',
+        entries: 2,
+        exerciseEntries: [
+          { exerciseId: 'abs.situps', entries: 1 },
+          { exerciseId: 'abs.crunches', entries: 1 },
+        ],
+      } as unknown as CategorySummary,
+    ];
+
+    // when
+    const comparison = buildCategoryComparison(summaries);
+
+    // then
+    expect(comparison.parts[0]).toEqual([{ exerciseId: 'pushup', entries: 3 }]);
+    expect(comparison.parts[1].map((p) => p.exerciseId)).toEqual([
+      'abs.situps',
+      'abs.crunches',
+    ]);
   });
 });

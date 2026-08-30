@@ -171,6 +171,21 @@ Walks today's plan day — "50 s Plank → 20 Russian Twists → 15 Liegestütze
 - **An exercise the plan quantifies only as a total** is split evenly across the rounds (remainder to the earlier ones, so the sum stays the target). Doing all of it in round one would defeat the circuit. Unquantified items (HIIT blocks) appear once and are ticked off.
 - **"Wie vorgegeben" splits by round.** Only the round that closes a plan item goes through `logPlanExercise` (write remainder + tick + close the day); earlier rounds write just their portion via `SessionCaptureService.logPrescribed`, because ticking the item off would swallow the rounds still to come. "Abhaken" is per-item by design and does close an exercise's remaining rounds.
 
+### Analysis page: per-exercise breakdown & visibility
+
+The analysis charts draw one bar **per exercise**, not one summed bar per group. Two pieces of `AnalysisStore` state drive it, both page-wide so the overview and the category tabs never disagree:
+
+- **`barMode`** (`'stacked' | 'grouped'`) — whether an exercise's bars share a bucket or sit side by side. Stacking answers "how much in total, and of what"; grouping answers "which exercise moved".
+- **`hiddenExerciseIds`** — the exercises unchecked in `ExerciseBreakdownControlsComponent`. It is **not** a chart-only filter: `visibleRows` applies it before `viewFilteredRows`, `categorySummaries` and the trend-window rows, so best values, streaks, type shares, trends and the heatmap all follow the checkboxes.
+
+Two invariants are easy to break:
+
+- **`unifiedRows` stays unfiltered.** The empty-state CTA, `exerciseOptions` and the overview's `hasCategorisableRows` gate all read it, so hiding every exercise renders an empty range — not "you have no data yet", and not the uncategorised-entries fallback — and a hidden exercise keeps its own checkbox. `ExerciseBreakdownControlsComponent` stays mounted while anything is hidden for the same reason: `hiddenExerciseIds` survives tab and range changes, so the reset must never go out of reach.
+- **Colours come from position, not from the id.** `exerciseColor(id, order)` indexes `EXERCISE_PALETTE` using `exerciseOptions()` — derived from the unfiltered range — so an exercise keeps its colour across the trend chart, the overview comparison and the checkbox swatches, and hiding one doesn't recolour the rest. The palette opens with the type-pie's eight colours and adds eight more: a stacked segment carries no label, so two segments in one colour are indistinguishable, where the pie can fall back to a "rest" slice. The pie still ranks colours within its own slice list, so pie and bars can disagree on a tab where those ranks differ.
+- **`exerciseOptions` ranks by training count, not volume.** A range mixes measurements; 5000 m outranking 500 reps would be an artefact of the unit. Ties fall back to the id so the order — and every colour with it — is stable across renders.
+
+`buildExerciseSeries` aligns each exercise against the buckets of the aggregate series it was handed rather than re-deriving them, which is what keeps a sparsely-logged exercise on the same x positions as the day-integral and moving-average lines. Per-exercise bars replace the aggregate bar and its sets stacking — both decompose the same volume, so drawing them together would double every bucket. Below two exercises the split, the controls and the comparison-chart legend all stay hidden: a lone exercise has no parts to lay out.
+
 ## Domain Models
 
 Split into focused files under `libs/stats/src/lib/models/`:

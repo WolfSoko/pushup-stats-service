@@ -12,6 +12,8 @@ import { SetsDistributionComponent } from '../components/sets-distribution/sets-
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import type { AnalysisView } from '../analysis/analysis.types';
+import type { BarMode } from '../analysis/exercise-breakdown';
+import { kindDisplayName } from '../i18n/exercise-display-names';
 import type { AnalysisSegment } from '../analysis/view-segments';
 import { AnalysisTrendTableComponent } from './analysis-trend-table.component';
 import {
@@ -56,6 +58,7 @@ export class AnalysisSegmentViewComponent {
   readonly dayChartMode = input<'24h' | '14h'>('14h');
   readonly view = input<AnalysisView>('overview');
   readonly kinds = input<ReadonlyArray<UnifiedEntryFilterKey>>([]);
+  readonly barMode = input<BarMode>('stacked');
 
   readonly dayChartModeChange = output<'24h' | '14h'>();
 
@@ -65,6 +68,22 @@ export class AnalysisSegmentViewComponent {
   );
   readonly chartLabel = computed(() => (this.showLabel() ? this.label() : ''));
   readonly hasSets = computed(() => segmentHasSets(this.segment().measurement));
+
+  /**
+   * A one-exercise segment has nothing to split — its stack would be
+   * the aggregate bar in a different colour — so the breakdown stays
+   * empty and the chart keeps its sets stacking.
+   */
+  readonly breakdown = computed(() => {
+    const parts = this.segment().exerciseSeries;
+    if (parts.length < 2) return [];
+    return parts.map((part) => ({
+      exerciseId: part.exerciseId,
+      label: kindDisplayName(part.exerciseId as UnifiedEntryFilterKey),
+      color: part.color,
+      values: part.values,
+    }));
+  });
 
   readonly weekTrendTitle = $localize`:@@analysis.weekTrendTitle:Wochentrend`;
   readonly weekTrendSubtitle = $localize`:@@analysis.weekTrendSubtitle:Letzte 8 Wochen`;

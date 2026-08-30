@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import type { CategoryComparison } from '../../analysis/analysis.types';
+import type { BarMode } from '../../analysis/exercise-breakdown';
+import type { ExerciseChoice } from '../exercise-breakdown-controls/exercise-breakdown-controls.component';
 import { CategoryComparisonChartComponent } from './category-comparison-chart.component';
 
 @Component({
@@ -9,13 +11,20 @@ import { CategoryComparisonChartComponent } from './category-comparison-chart.co
   standalone: true,
   imports: [CategoryComparisonChartComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-category-comparison-chart [data]="data()" />`,
+  template: `<app-category-comparison-chart
+    [data]="data()"
+    [barMode]="barMode()"
+    [exercises]="exercises()"
+  />`,
 })
 class HostComponent {
   readonly data = signal<CategoryComparison>({
     labels: [],
     entries: [],
+    parts: [],
   });
+  readonly barMode = signal<BarMode>('stacked');
+  readonly exercises = signal<ExerciseChoice[]>([]);
 }
 
 describe('CategoryComparisonChartComponent', () => {
@@ -29,7 +38,7 @@ describe('CategoryComparisonChartComponent', () => {
   });
 
   it('renders the empty state when there are no categories', () => {
-    fixture.componentInstance.data.set({ labels: [], entries: [] });
+    fixture.componentInstance.data.set({ labels: [], entries: [], parts: [] });
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
     expect(
@@ -48,6 +57,7 @@ describe('CategoryComparisonChartComponent', () => {
     fixture.componentInstance.data.set({
       labels: ['Pushups', 'Abs', 'Cardio'],
       entries: [12, 4, 2],
+      parts: [],
     });
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
@@ -76,6 +86,7 @@ describe('CategoryComparisonChartComponent', () => {
     fixture.componentInstance.data.set({
       labels: ['Pushups'],
       entries: [0],
+      parts: [],
     });
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;
@@ -88,6 +99,7 @@ describe('CategoryComparisonChartComponent', () => {
     fixture.componentInstance.data.set({
       labels: ['Pushups', 'Cardio'],
       entries: [3, 1],
+      parts: [],
     });
 
     // when
@@ -102,10 +114,126 @@ describe('CategoryComparisonChartComponent', () => {
     expect(note?.textContent).toContain('60 Sekunden Plank');
   });
 
+  it('should split a category bar into one segment per exercise when stacked', () => {
+    // given
+    fixture.componentInstance.exercises.set([
+      { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
+      { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    ]);
+    fixture.componentInstance.data.set({
+      labels: ['Rumpf'],
+      entries: [4],
+      parts: [
+        [
+          { exerciseId: 'abs.situps', entries: 3 },
+          { exerciseId: 'abs.crunches', entries: 1 },
+        ],
+      ],
+    });
+
+    // when
+    fixture.detectChanges();
+
+    // then — widths are shares of the largest bar, so they sum to it
+    const host: HTMLElement = fixture.nativeElement;
+    const situps = host.querySelector<HTMLElement>(
+      '[data-testid="category-comparison-part-abs.situps"]'
+    );
+    const crunches = host.querySelector<HTMLElement>(
+      '[data-testid="category-comparison-part-abs.crunches"]'
+    );
+    expect(situps?.style.width).toBe(`${(3 / 4) * 100}%`);
+    expect(crunches?.style.width).toBe(`${(1 / 4) * 100}%`);
+    expect(host.querySelector('.bar-track.grouped')).toBeNull();
+  });
+
+  it('should give each exercise its own bar when grouped', () => {
+    // given
+    fixture.componentInstance.exercises.set([
+      { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
+      { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    ]);
+    fixture.componentInstance.data.set({
+      labels: ['Rumpf'],
+      entries: [4],
+      parts: [
+        [
+          { exerciseId: 'abs.situps', entries: 3 },
+          { exerciseId: 'abs.crunches', entries: 1 },
+        ],
+      ],
+    });
+    fixture.componentInstance.barMode.set('grouped');
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(host.querySelector('.bar-track.grouped')).toBeTruthy();
+    expect(host.querySelectorAll('.grouped-fill')).toHaveLength(2);
+  });
+
+  it('should name and colour every exercise it drew, once', () => {
+    // given
+    fixture.componentInstance.exercises.set([
+      { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
+      { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    ]);
+    fixture.componentInstance.data.set({
+      labels: ['Rumpf', 'Beine'],
+      entries: [4, 2],
+      parts: [
+        [
+          { exerciseId: 'abs.situps', entries: 3 },
+          { exerciseId: 'abs.crunches', entries: 1 },
+        ],
+        [{ exerciseId: 'abs.situps', entries: 2 }],
+      ],
+    });
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const legend = fixture.nativeElement.querySelector(
+      '[data-testid="category-comparison-legend"]'
+    ) as HTMLElement;
+    expect(legend.textContent).toContain('Sit-ups');
+    expect(legend.textContent).toContain('Crunches');
+    expect(legend.querySelectorAll('span')).toHaveLength(2);
+  });
+
+  it('should keep the plain bar when no category holds more than one exercise', () => {
+    // given — splitting here would only recolour whole bars
+    fixture.componentInstance.exercises.set([
+      { id: 'pushup', label: 'Liegestütze', color: '#111111' },
+    ]);
+    fixture.componentInstance.data.set({
+      labels: ['Liegestütze'],
+      entries: [4],
+      parts: [[{ exerciseId: 'pushup', entries: 4 }]],
+    });
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="category-comparison-part-pushup"]')
+    ).toBeNull();
+    expect(
+      host.querySelector('[data-testid="category-comparison-legend"]')
+    ).toBeNull();
+    expect(host.querySelectorAll('.bar-fill')).toHaveLength(1);
+  });
+
   it('shows the metric label so users can read the axis without a legend', () => {
     fixture.componentInstance.data.set({
       labels: ['Pushups'],
       entries: [3],
+      parts: [],
     });
     fixture.detectChanges();
     const host: HTMLElement = fixture.nativeElement;

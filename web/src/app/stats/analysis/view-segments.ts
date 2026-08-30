@@ -15,6 +15,7 @@ import {
   buildViewChartSeries,
   buildViewPaceSeries,
 } from './chart-series';
+import { buildExerciseSeries, type ExerciseSeries } from './exercise-breakdown';
 import {
   groupRowsByMeasurement,
   SEGMENT_ORDER,
@@ -43,6 +44,12 @@ export interface AnalysisSegment {
   series: StatsSeriesEntry[];
   chartEntries: ChartFeedEntry[];
   paceSeries: Array<{ bucket: string; pace: number | null }>;
+  /**
+   * The same volume as {@link AnalysisSegment.series}, split per
+   * exercise and aligned to its buckets, so the chart can stack or
+   * group the parts instead of only showing their sum.
+   */
+  exerciseSeries: ExerciseSeries[];
   bestEntry: { value: number; timestamp: string } | null;
   bestDay: { date: string; total: number } | null;
   bestSingleSet: number;
@@ -69,6 +76,11 @@ export interface AnalysisSegmentInput {
     kinds: ReadonlyArray<UnifiedEntryFilterKey>;
     locale: string;
   };
+  /**
+   * Stable exercise order driving the per-exercise colours. Derived
+   * from the unfiltered range so colours survive hiding an exercise.
+   */
+  exerciseOrder: ReadonlyArray<string>;
   resolveDefinition?: (id: string) => ExerciseDefinition | null;
 }
 
@@ -103,6 +115,12 @@ export function buildAnalysisSegments(
       series,
       chartEntries: buildViewChartEntries(rangeRows, measurement),
       paceSeries: buildViewPaceSeries(rangeRows, series, seriesOpts),
+      exerciseSeries: buildExerciseSeries(
+        rangeRows,
+        series.map((point) => point.bucket),
+        input.exerciseOrder,
+        seriesOpts
+      ),
       bestEntry: computeBestSingleEntry(rangeRows),
       bestDay: computeBestDay(rangeRows),
       bestSingleSet: computeBestSingleSet(rangeRows),

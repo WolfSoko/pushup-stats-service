@@ -62,6 +62,8 @@ class MockStatsChartComponent {
   readonly measurement = input<unknown>(null);
   readonly paceSeries = input<unknown[]>([]);
   readonly kindLabel = input<string>('');
+  readonly breakdown = input<unknown[]>([]);
+  readonly barMode = input<string>('stacked');
   readonly dayChartMode = model<string>('14h');
 }
 
@@ -97,6 +99,20 @@ function segmentChartLabels(
   return fixture.debugElement
     .queryAll(By.directive(MockStatsChartComponent))
     .map((el) => (el.componentInstance as MockStatsChartComponent).kindLabel());
+}
+
+/** Per-exercise datasets handed to the first mocked chart. */
+function firstChartBreakdown(
+  fixture: ComponentFixture<HostComponent>
+): Array<{ label: string }> {
+  const chart = fixture.debugElement.query(
+    By.directive(MockStatsChartComponent)
+  );
+  return (
+    chart?.componentInstance as MockStatsChartComponent
+  ).breakdown() as Array<{
+    label: string;
+  }>;
 }
 
 describe('AnalysisGroupViewComponent', () => {
@@ -720,6 +736,217 @@ describe('AnalysisGroupViewComponent', () => {
 
     // then
     expect(segmentChartLabels(fixture)).toEqual(['']);
+  });
+
+  it('should split a segment into one dataset per exercise, and leave a lone exercise unsplit', async () => {
+    // given — two counted exercises in the same category and measurement
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-11T08:00:00.000Z',
+        reps: 10,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e3',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-12T08:00:00.000Z',
+        reps: 25,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then — sit-ups lead on trainings logged
+    expect(firstChartBreakdown(fixture).map((d) => d.label)).toEqual([
+      'Sit-ups',
+      'Crunches',
+    ]);
+
+    // when only one exercise is left, there is nothing to split
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(firstChartBreakdown(fixture)).toEqual([]);
+  });
+
+  it('should drop an unchecked exercise from the KPIs and streaks, not just from the bars', async () => {
+    // given — crunches hold the best single entry and the only 11th-of-Feb training
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-11T08:00:00.000Z',
+        reps: 90,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(store.viewSegments()[0].bestEntry?.value).toBe(90);
+    expect(store.viewFilteredRows()).toHaveLength(2);
+
+    // when
+    store.toggleExerciseVisibility('abs.crunches');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then — the whole tab follows the checkbox, not only the chart
+    expect(store.viewFilteredRows()).toHaveLength(1);
+    expect(store.viewSegments()[0].bestEntry?.value).toBe(30);
+    expect(store.viewSegments()[0].bestDay?.date).toBe('2026-02-10');
+
+    // and the checkbox itself stays offered so the user can undo it
+    expect(store.exerciseChoices().map((c) => c.id)).toEqual([
+      'abs.crunches',
+      'abs.situps',
+    ]);
+
+    // when
+    store.showAllExercises();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // then
+    expect(store.viewFilteredRows()).toHaveLength(2);
+  });
+
+  it('should offer only the active tab\u2019s exercises as checkboxes, coloured page-wide', async () => {
+    // given — a pushup and two core exercises in the same range
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-10T07:00:00.000Z',
+        reps: 100,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e1b',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-11T07:00:00.000Z',
+        reps: 100,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e1c',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: '2026-02-12T07:00:00.000Z',
+        reps: 100,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2b',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-11T09:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e3',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-11T08:00:00.000Z',
+        reps: 10,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // when — overview offers everything
+    const overviewChoices = store.exerciseChoices();
+
+    // then
+    expect(overviewChoices.map((c) => c.id)).toEqual([
+      'pushup',
+      'abs.situps',
+      'abs.crunches',
+    ]);
+
+    // when — the core tab drops the pushup it cannot show
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const coreChoices = store.exerciseChoices();
+
+    // then
+    expect(coreChoices.map((c) => c.id)).toEqual([
+      'abs.situps',
+      'abs.crunches',
+    ]);
+    // and the colours are the page-wide ones, not re-assigned per tab
+    const situpsColour = overviewChoices.find(
+      (c) => c.id === 'abs.situps'
+    )?.color;
+    expect(coreChoices[0].color).toBe(situpsColour);
   });
 
   it('should explain the measurement split only while a view actually mixes units', async () => {

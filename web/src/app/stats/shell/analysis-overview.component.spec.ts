@@ -17,6 +17,7 @@ type AnalysisStoreType = InstanceType<typeof AnalysisStore>;
 import { AnalysisOverviewComponent } from './analysis-overview.component';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
 import { CategoryComparisonChartComponent } from '../components/category-comparison-chart/category-comparison-chart.component';
+import { ExerciseBreakdownControlsComponent } from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
 import { CategorySummaryCardComponent } from '../components/category-summary-card/category-summary-card.component';
 
 // Replace the heavy real children with no-op stubs so the spec stays
@@ -31,7 +32,28 @@ import { CategorySummaryCardComponent } from '../components/category-summary-car
 class StubComparisonChartComponent {
   // Mirror the real component's signal input surface so the overview's
   // `[data]="..."` binding type-checks against the stub.
-  readonly data = input<CategoryComparison>({ labels: [], entries: [] });
+  readonly data = input<CategoryComparison>({
+    labels: [],
+    entries: [],
+    parts: [],
+  });
+  readonly barMode = input<string>('stacked');
+  readonly exercises = input<ReadonlyArray<unknown>>([]);
+}
+
+@Component({
+  selector: 'app-exercise-breakdown-controls',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<div data-testid="stub-breakdown-controls"></div>',
+})
+class StubBreakdownControlsComponent {
+  readonly exercises = input<ReadonlyArray<unknown>>([]);
+  readonly hidden = input<ReadonlyArray<string>>([]);
+  readonly barMode = input<string>('stacked');
+  readonly barModeChange = output<string>();
+  readonly toggleExercise = output<string>();
+  readonly showAll = output<void>();
 }
 
 @Component({
@@ -61,7 +83,14 @@ interface FakeStore {
   categoryComparison: ReturnType<typeof signal<CategoryComparison>>;
   unifiedRows: ReturnType<typeof signal<unknown[]>>;
   activeView: ReturnType<typeof signal<string>>;
+  hasCategorisableRows: ReturnType<typeof signal<boolean>>;
+  exerciseChoices: ReturnType<typeof signal<unknown[]>>;
+  hiddenExerciseIds: ReturnType<typeof signal<string[]>>;
+  barMode: ReturnType<typeof signal<string>>;
   setActiveView: (view: string) => void;
+  setBarMode: (mode: string) => void;
+  toggleExerciseVisibility: (id: string) => void;
+  showAllExercises: () => void;
 }
 
 function makeFakeStore(): FakeStore {
@@ -71,10 +100,18 @@ function makeFakeStore(): FakeStore {
     categoryComparison: signal<CategoryComparison>({
       labels: [],
       entries: [],
+      parts: [],
     }),
     unifiedRows: signal<unknown[]>([]),
     activeView,
+    hasCategorisableRows: signal(false),
+    exerciseChoices: signal<unknown[]>([]),
+    hiddenExerciseIds: signal<string[]>([]),
+    barMode: signal<string>('stacked'),
     setActiveView: (view: string) => activeView.set(view),
+    setBarMode: () => undefined,
+    toggleExerciseVisibility: () => undefined,
+    showAllExercises: () => undefined,
   };
 }
 
@@ -109,6 +146,7 @@ describe('AnalysisOverviewComponent', () => {
           imports: [
             CategoryComparisonChartComponent,
             CategorySummaryCardComponent,
+            ExerciseBreakdownControlsComponent,
             AnalysisGroupViewComponent,
           ],
         },
@@ -116,6 +154,7 @@ describe('AnalysisOverviewComponent', () => {
           imports: [
             StubComparisonChartComponent,
             StubSummaryCardComponent,
+            StubBreakdownControlsComponent,
             StubAnalysisGroupViewComponent,
           ],
         },
@@ -156,6 +195,7 @@ describe('AnalysisOverviewComponent', () => {
   });
 
   it('renders the chart and one card per summary when categories exist', () => {
+    store.hasCategorisableRows.set(true);
     store.categorySummaries.set([
       {
         categoryId: 'pushup',
@@ -164,6 +204,7 @@ describe('AnalysisOverviewComponent', () => {
         order: 10,
         entries: 5,
         currentStreak: 3,
+        exerciseEntries: [],
         volume: {
           kind: 'reps',
           totalReps: 100,
@@ -179,6 +220,7 @@ describe('AnalysisOverviewComponent', () => {
         order: 20,
         entries: 2,
         currentStreak: 1,
+        exerciseEntries: [],
         volume: {
           kind: 'reps',
           totalReps: 30,
@@ -207,6 +249,7 @@ describe('AnalysisOverviewComponent', () => {
     // comparison + cards (not the uncategorised notice) whenever any
     // category roll-up exists, regardless of whether unifiedRows also
     // carries rows.
+    store.hasCategorisableRows.set(true);
     store.categorySummaries.set([
       {
         categoryId: 'pushup',
@@ -215,6 +258,7 @@ describe('AnalysisOverviewComponent', () => {
         order: 10,
         entries: 5,
         currentStreak: 3,
+        exerciseEntries: [],
         volume: {
           kind: 'reps',
           totalReps: 100,
@@ -244,6 +288,7 @@ describe('AnalysisOverviewComponent', () => {
   });
 
   it('forwards viewSelect emissions from a summary card up to the parent', () => {
+    store.hasCategorisableRows.set(true);
     store.categorySummaries.set([
       {
         categoryId: 'pushup',
@@ -252,6 +297,7 @@ describe('AnalysisOverviewComponent', () => {
         order: 10,
         entries: 5,
         currentStreak: 3,
+        exerciseEntries: [],
         volume: {
           kind: 'reps',
           totalReps: 100,
@@ -294,6 +340,7 @@ describe('AnalysisOverviewComponent', () => {
     // shell rendered it as the default Overview view. Snapping then
     // would corrupt the deep-link intent.
     store.activeView.set('mobility');
+    store.hasCategorisableRows.set(true);
     store.categorySummaries.set([
       {
         categoryId: 'pushup',
@@ -302,6 +349,7 @@ describe('AnalysisOverviewComponent', () => {
         order: 10,
         entries: 5,
         currentStreak: 3,
+        exerciseEntries: [],
         volume: {
           kind: 'reps',
           totalReps: 100,
@@ -313,5 +361,30 @@ describe('AnalysisOverviewComponent', () => {
     ]);
     fixture.detectChanges();
     expect(store.activeView()).toBe('mobility');
+  });
+
+  it('should keep the category overview when every exercise is unchecked, instead of claiming the entries are uncategorised', () => {
+    // Regression: `categorySummaries` follows the visibility
+    // checkboxes, so gating the branch on it dropped a user who hid
+    // everything into the "belongs to no known category" fallback —
+    // with no checkboxes left to undo the hide.
+    // given — the range holds categorisable rows, but all are hidden
+    store.hasCategorisableRows.set(true);
+    store.categorySummaries.set([]);
+    store.unifiedRows.set([{}]);
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector(
+        '[data-testid="analysis-overview-uncategorised-notice"]'
+      )
+    ).toBeNull();
+    expect(
+      host.querySelector('[data-testid="stub-breakdown-controls"]')
+    ).toBeTruthy();
   });
 });

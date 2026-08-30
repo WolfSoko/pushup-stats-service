@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 
 import type { CategoryComparison } from '../../analysis/analysis.types';
+import type { BarMode } from '../../analysis/exercise-breakdown';
+import type { ExerciseChoice } from '../exercise-breakdown-controls/exercise-breakdown-controls.component';
 
 /**
  * Horizontal bar comparison across exercise categories. Sits in the
@@ -29,147 +31,59 @@ import type { CategoryComparison } from '../../analysis/analysis.types';
   selector: 'app-category-comparison-chart',
   standalone: true,
   imports: [DecimalPipe],
-  template: `
-    <header class="head">
-      <h3 class="title" i18n="@@analysis.overview.comparison.title">
-        Vergleich nach Übungsgruppe
-      </h3>
-      <p class="metric" i18n="@@analysis.overview.comparison.metricLabel">
-        Trainingseinheiten
-      </p>
-    </header>
-
-    <p
-      class="metric-note"
-      data-testid="category-comparison-metric-note"
-      i18n="@@analysis.overview.comparison.metricNote"
-    >
-      Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen:
-      Gezählte Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und
-      Laufen Meter — 60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in
-      der jeweils eigenen Einheit stehen in den Karten darunter.
-    </p>
-
-    @if (rows().length === 0) {
-      <p
-        class="empty"
-        data-testid="category-comparison-empty"
-        i18n="@@analysis.overview.comparison.empty"
-      >
-        Keine Daten im aktuellen Zeitraum.
-      </p>
-    } @else {
-      <ul class="bars" role="list" data-testid="category-comparison-bars">
-        @for (row of rows(); track row.label) {
-          <li class="bar-row">
-            <span class="bar-label">{{ row.label }}</span>
-            <span class="bar-track" aria-hidden="true">
-              <span class="bar-fill" [style.width.%]="row.fillPercent"></span>
-            </span>
-            <span class="bar-value">{{ row.value | number }}</span>
-          </li>
-        }
-      </ul>
-    }
-  `,
+  templateUrl: './category-comparison-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: `
-    :host {
-      display: block;
-    }
-    .head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-    .title {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    .metric {
-      margin: 0;
-      font-size: 0.75rem;
-      opacity: 0.7;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .metric-note {
-      margin: 0 0 12px;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      opacity: 0.7;
-      max-width: 80ch;
-    }
-    .bars {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 8px;
-    }
-    .bar-row {
-      display: grid;
-      grid-template-columns: minmax(80px, 140px) 1fr auto;
-      align-items: center;
-      gap: 12px;
-    }
-    .bar-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .bar-track {
-      position: relative;
-      height: 10px;
-      background: rgba(0, 0, 0, 0.08);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    :host-context(html:not(.light-theme)) .bar-track {
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .bar-fill {
-      position: absolute;
-      inset: 0 auto 0 0;
-      background: var(--mat-sys-primary, #1976d2);
-      border-radius: 6px;
-      transition: width 0.25s ease;
-    }
-    .bar-value {
-      font-variant-numeric: tabular-nums;
-      min-width: 4ch;
-      text-align: right;
-    }
-    .empty {
-      opacity: 0.7;
-      margin: 0;
-    }
-    @media (max-width: 600px) {
-      .bar-row {
-        grid-template-columns: minmax(64px, 100px) 1fr auto;
-        gap: 8px;
-      }
-    }
-  `,
+  styleUrl: './category-comparison-chart.component.scss',
 })
 export class CategoryComparisonChartComponent {
   readonly data = input.required<CategoryComparison>();
+  readonly barMode = input<BarMode>('stacked');
+  /** Localised name + colour per exercise id; empty keeps plain bars. */
+  readonly exercises = input<ReadonlyArray<ExerciseChoice>>([]);
 
   readonly rows = computed(() => {
     const data = this.data();
     const values = data.entries;
     const max = values.reduce((m, v) => (v > m ? v : m), 0);
+    const byId = new Map(this.exercises().map((e) => [e.id, e]));
+    // A category with a single exercise has nothing to split — its
+    // "stack" would be the whole bar in one colour, which just reads as
+    // an inconsistently coloured chart.
+    const splittable = data.parts.some((parts) => parts.length > 1);
     return data.labels.map((label, idx) => {
       const value = values[idx] ?? 0;
+      const parts = splittable ? (data.parts[idx] ?? []) : [];
       return {
         label,
         value,
         fillPercent: max > 0 ? (value / max) * 100 : 0,
+        parts: parts.map((part) => ({
+          exerciseId: part.exerciseId,
+          label: byId.get(part.exerciseId)?.label ?? part.exerciseId,
+          color: byId.get(part.exerciseId)?.color ?? '#1976d2',
+          value: part.entries,
+          fillPercent: max > 0 ? (part.entries / max) * 100 : 0,
+        })),
       };
     });
+  });
+
+  /** Only the exercises actually drawn, in bar order, deduplicated. */
+  readonly legend = computed(() => {
+    const seen = new Map<
+      string,
+      { id: string; label: string; color: string }
+    >();
+    for (const row of this.rows()) {
+      for (const part of row.parts) {
+        if (seen.has(part.exerciseId)) continue;
+        seen.set(part.exerciseId, {
+          id: part.exerciseId,
+          label: part.label,
+          color: part.color,
+        });
+      }
+    }
+    return [...seen.values()];
   });
 }

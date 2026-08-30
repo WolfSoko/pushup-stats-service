@@ -1,6 +1,11 @@
 import { StatsSeriesEntry } from '@pu-stats/models';
 import { ChartConfiguration } from 'chart.js';
-import { BucketSetsInfo, PaceSeriesEntry } from './stats-chart.models';
+import {
+  BucketSetsInfo,
+  ChartBarMode,
+  ChartBreakdownSeries,
+  PaceSeriesEntry,
+} from './stats-chart.models';
 import { bucketToTs } from './chart-helpers';
 
 export interface ChartDataLabels {
@@ -12,6 +17,9 @@ export interface ChartDataLabels {
 
 export interface ChartDataInputs {
   series: StatsSeriesEntry[];
+  /** Empty keeps the single aggregate bar (plus its sets split). */
+  breakdown: ChartBreakdownSeries[];
+  barMode: ChartBarMode;
   setsByBucket: Map<number, BucketSetsInfo>;
   hasSetsData: boolean;
   movingAvg: number[];
@@ -22,6 +30,32 @@ export interface ChartDataInputs {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type BarDataset = any;
+
+/**
+ * One bar dataset per exercise. Replaces the aggregate bar (and its
+ * sets split) rather than sitting next to it — both decompose the same
+ * volume, so rendering them together would double every bucket.
+ *
+ * `'grouped'` simply omits the shared `stack` key, which is Chart.js's
+ * side-by-side default.
+ */
+export function buildBreakdownDatasets(
+  series: StatsSeriesEntry[],
+  breakdown: ChartBreakdownSeries[],
+  barMode: ChartBarMode
+): BarDataset[] {
+  return breakdown.map((exercise) => ({
+    label: exercise.label,
+    data: series.map((d, idx) => ({
+      x: bucketToTs(d.bucket),
+      y: exercise.values[idx] ?? 0,
+    })),
+    backgroundColor: exercise.color,
+    borderRadius: barMode === 'stacked' ? 0 : 4,
+    maxBarThickness: 34,
+    ...(barMode === 'stacked' ? { stack: 'exercise' } : {}),
+  }));
+}
 
 export function buildBarDatasets(
   series: StatsSeriesEntry[],
@@ -102,13 +136,15 @@ export function buildChartData(
   const { intervalDatasetLabel, withSetsLabel, secondaryLineLabel } =
     inputs.labels;
 
-  const barDatasets = buildBarDatasets(
-    series,
-    setsByBucket,
-    hasSetsData,
-    intervalDatasetLabel,
-    withSetsLabel
-  );
+  const barDatasets = inputs.breakdown.length
+    ? buildBreakdownDatasets(series, inputs.breakdown, inputs.barMode)
+    : buildBarDatasets(
+        series,
+        setsByBucket,
+        hasSetsData,
+        intervalDatasetLabel,
+        withSetsLabel
+      );
   const secondaryLineData = buildSecondaryLineData(
     series,
     paceMode,

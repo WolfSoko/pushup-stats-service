@@ -10685,5 +10685,47 @@ Deine Position: # ·  Reps        </source>
         <target>Øvelser uten kjent enhet — her teller bare antall oppføringer.</target>
       </segment>
     </unit>
+    <unit id="analysis.breakdown.sectionAria">
+      <segment state="initial">
+        <source>Darstellung der Übungen</source>
+        <target>Darstellung der Übungen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.modeLabel">
+      <segment state="initial">
+        <source>Balken</source>
+        <target>Balken</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.modeAria">
+      <segment state="initial">
+        <source>Balken gestapelt oder nebeneinander</source>
+        <target>Balken gestapelt oder nebeneinander</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.stacked">
+      <segment state="initial">
+        <source>Gestapelt</source>
+        <target>Gestapelt</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.grouped">
+      <segment state="initial">
+        <source>Nebeneinander</source>
+        <target>Nebeneinander</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.exercisesLabel">
+      <segment state="initial">
+        <source>Übungen</source>
+        <target>Übungen</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.showAll">
+      <segment state="initial">
+        <source> Alle anzeigen </source>
+        <target> Alle anzeigen </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -24,11 +24,7 @@ import {
   unifiedEntryFilterKey,
   type UserStats,
 } from '@pu-stats/models';
-import {
-  createWeekRange,
-  inferRangeMode,
-  toLocalIsoDate,
-} from '@pu-stats/date';
+import { inferRangeMode, toLocalIsoDate } from '@pu-stats/date';
 import type {
   AnalysisView,
   CategoryComparison,
@@ -51,58 +47,22 @@ import {
   computeLongestStreak,
   startOfIsoWeek,
   startOfMonth,
-  TREND_MONTHS,
-  TREND_WEEKS,
 } from './analysis/trend-math';
-
-type AnalysisState = {
-  from: string;
-  to: string;
-  dayChartMode: '24h' | '14h' | undefined;
-  /**
-   * Active exercise-kind filter for the type-pie. In overview the
-   * empty array (default) and `['pushup']` render the pushup-variant
-   * breakdown; any other non-empty subset switches to kind-mode
-   * (pushups collapsed into one bucket, each `exerciseId` as its own
-   * slice). Streaks and best-day KPIs are no longer pushup-only —
-   * they live on {@link AnalysisStore.viewFilteredRows} and follow
-   * {@link AnalysisState.activeView} instead.
-   */
-  kinds: ReadonlyArray<UnifiedEntryFilterKey>;
-  /**
-   * Active per-category view tab. `'overview'` (default) keeps the
-   * page-wide aggregate behaviour; any other value scopes
-   * {@link AnalysisStore.viewFilteredRows} and all downstream KPIs,
-   * trends and the type-pie to entries from that category.
-   */
-  activeView: AnalysisView;
-  // Reactive dependency for the fixed-window trend filters: bumped only
-  // when the local calendar day actually changes, so a polling interval
-  // can call `tickClock()` aggressively without forcing
-  // `weekFilter`/`monthFilter` to emit new params each minute (which would
-  // otherwise re-trigger the trend resource loaders and flicker the empty
-  // CTA back to false during the reload).
-  clockTick: number;
-  lastDayKey: string;
-};
+import {
+  type BarMode,
+  collectExerciseIds,
+  exerciseColor,
+  withoutHiddenExercises,
+} from './analysis/exercise-breakdown';
+import { kindDisplayName } from './i18n/exercise-display-names';
+import { monthTrendWindow, weekTrendWindow } from './analysis/trend-windows';
+import {
+  type AnalysisState,
+  createInitialAnalysisState,
+} from './analysis/analysis.state';
 
 export const AnalysisStore = signalStore(
-  withState<AnalysisState>(() => {
-    const defaultRange = createWeekRange();
-    return {
-      from: defaultRange.from,
-      to: defaultRange.to,
-      dayChartMode: undefined as '24h' | '14h' | undefined,
-      kinds: [] as ReadonlyArray<UnifiedEntryFilterKey>,
-      activeView: 'overview' as AnalysisView,
-      clockTick: 0,
-      // Seed with today so the first `tickClock()` after construction is a
-      // no-op; otherwise the 5-minute polling interval would force a
-      // spurious reload of weekEntriesResource/monthEntriesResource on
-      // its first iteration even when the calendar day hasn't changed.
-      lastDayKey: toLocalIsoDate(new Date()),
-    };
-  }),
+  withState<AnalysisState>(createInitialAnalysisState),
   withProps(() => {
     const userStatsApi = inject(UserStatsApiService);
     const user = inject(UserContextService);
@@ -139,30 +99,8 @@ export const AnalysisStore = signalStore(
       return startOfMonth(new Date());
     });
 
-    const weekFilter = computed(() => {
-      const monday = currentMonday();
-      const sunday = new Date(monday);
-      sunday.setDate(monday.getDate() + 6);
-      const from = new Date(monday);
-      from.setDate(monday.getDate() - 7 * (TREND_WEEKS - 1));
-      return {
-        from: toLocalIsoDate(from),
-        to: toLocalIsoDate(sunday),
-      };
-    });
-    const monthFilter = computed(() => {
-      const start = currentMonthStart();
-      const from = new Date(
-        start.getFullYear(),
-        start.getMonth() - (TREND_MONTHS - 1),
-        1
-      );
-      const to = new Date(start.getFullYear(), start.getMonth() + 1, 0);
-      return {
-        from: toLocalIsoDate(from),
-        to: toLocalIsoDate(to),
-      };
-    });
+    const weekFilter = computed(() => weekTrendWindow(currentMonday()));
+    const monthFilter = computed(() => monthTrendWindow(currentMonthStart()));
 
     return {
       filter,
@@ -243,11 +181,74 @@ export const AnalysisStore = signalStore(
       return (id: string) => findExerciseDefinition(id) ?? byId.get(id) ?? null;
     });
 
+    /**
+     * Every exercise with an entry in the range, heaviest first —
+     * derived from the *unfiltered* rows so unchecking one neither
+     * removes its own checkbox nor recolours the rest.
+     */
+    const exerciseOptions = computed<string[]>(() =>
+      collectExerciseIds(unifiedRows())
+    );
+
+    /**
+     * The checkbox list for the active tab: the exercises that tab
+     * actually shows, named and coloured. Scoped to the view (a
+     * `core` tab must not offer to hide Liegestütze — unchecking it
+     * would change nothing on screen) but coloured from the page-wide
+     * {@link exerciseOptions}, so an exercise keeps its colour when
+     * the user switches tabs.
+     *
+     * Built from rows *before* the hidden filter, so unchecking an
+     * exercise never removes the checkbox that undoes it.
+     */
+    const exerciseChoices = computed(() => {
+      const order = exerciseOptions();
+      const view = store.activeView();
+      const rows =
+        view === 'overview'
+          ? unifiedRows()
+          : unifiedRows().filter(
+              (row) => unifiedEntryCategoryId(row, resolveDefinition()) === view
+            );
+      return collectExerciseIds(rows).map((id) => ({
+        id,
+        label: kindDisplayName(id as UnifiedEntryFilterKey),
+        color: exerciseColor(id, order),
+      }));
+    });
+
+    /**
+     * The page's working row set: the range minus the exercises the
+     * user unchecked. Every downstream roll-up reads this rather than
+     * {@link unifiedRows} so the checkboxes filter the whole tab.
+     * {@link unifiedRows} stays unfiltered for the empty-state gate —
+     * hiding every exercise must not read as "you have no data".
+     */
+    const visibleRows = computed<UnifiedEntry[]>(() =>
+      withoutHiddenExercises(unifiedRows(), store.hiddenExerciseIds())
+    );
+
+    /**
+     * Whether the range holds any row the catalog can place in a
+     * category — computed on the *unfiltered* rows. The overview gates
+     * its category branch on this rather than on
+     * {@link categorySummaries}, which follows the visibility
+     * checkboxes: unchecking every exercise must leave the user on an
+     * empty overview they can undo, not drop them into the
+     * "belongs to no known category" fallback.
+     */
+    const hasCategorisableRows = computed<boolean>(() => {
+      const resolver = resolveDefinition();
+      return unifiedRows().some(
+        (row) => unifiedEntryCategoryId(row, resolver) !== null
+      );
+    });
+
     const viewFilteredRows = computed<UnifiedEntry[]>(() => {
       const view = store.activeView();
-      if (view === 'overview') return unifiedRows();
+      if (view === 'overview') return visibleRows();
       const resolver = resolveDefinition();
-      return unifiedRows().filter(
+      return visibleRows().filter(
         (row) => unifiedEntryCategoryId(row, resolver) === view
       );
     });
@@ -270,17 +271,19 @@ export const AnalysisStore = signalStore(
     );
 
     /**
-     * Per-category roll-up for the overview tab. Always operates on
-     * the full unified row set in the current date range — independent
-     * of {@link AnalysisStore.activeView} — because the cards/chart in
-     * the overview show every group side-by-side.
+     * Per-category roll-up for the overview tab. Spans every category
+     * in the range — independent of {@link AnalysisStore.activeView},
+     * because the cards/chart show all groups side-by-side — but it
+     * does follow the visibility checkboxes via {@link visibleRows}.
+     * It is therefore *not* the right signal for "does this range hold
+     * any categorisable data"; that's {@link hasCategorisableRows}.
      *
      * `lastDayKey` is read so `todayReps` re-evaluates after a
      * `tickClock()` crosses midnight without forcing an extra signal.
      */
     const categorySummaries = computed<CategorySummary[]>(() =>
       buildCategorySummaries(
-        unifiedRows(),
+        visibleRows(),
         resolveDefinition(),
         store.lastDayKey()
       )
@@ -310,10 +313,11 @@ export const AnalysisStore = signalStore(
     };
 
     const applyViewFilter = (rows: UnifiedEntry[]): UnifiedEntry[] => {
+      const visible = withoutHiddenExercises(rows, store.hiddenExerciseIds());
       const view = store.activeView();
-      if (view === 'overview') return rows;
+      if (view === 'overview') return visible;
       const resolver = resolveDefinition();
-      return rows.filter(
+      return visible.filter(
         (row) => unifiedEntryCategoryId(row, resolver) === view
       );
     };
@@ -360,6 +364,7 @@ export const AnalysisStore = signalStore(
           kinds: store.kinds(),
           locale: store._locale,
         },
+        exerciseOrder: exerciseOptions(),
         resolveDefinition: resolveDefinition(),
       })
     );
@@ -387,6 +392,10 @@ export const AnalysisStore = signalStore(
       viewGranularity,
       viewMeasurement,
       unifiedRows,
+      visibleRows,
+      hasCategorisableRows,
+      exerciseOptions,
+      exerciseChoices,
       viewFilteredRows,
       categorySummaries,
       categoryComparison,
@@ -418,6 +427,20 @@ export const AnalysisStore = signalStore(
     },
     setActiveView(activeView: AnalysisView): void {
       patchState(store, { activeView });
+    },
+    setBarMode(barMode: BarMode): void {
+      patchState(store, { barMode });
+    },
+    toggleExerciseVisibility(exerciseId: string): void {
+      const hidden = store.hiddenExerciseIds();
+      patchState(store, {
+        hiddenExerciseIds: hidden.includes(exerciseId)
+          ? hidden.filter((id) => id !== exerciseId)
+          : [...hidden, exerciseId],
+      });
+    },
+    showAllExercises(): void {
+      patchState(store, { hiddenExerciseIds: [] });
     },
     refreshAll(): void {
       store.userStatsResource.reload();

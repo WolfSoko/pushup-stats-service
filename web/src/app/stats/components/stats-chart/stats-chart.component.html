@@ -35,10 +35,19 @@
       i18n-aria-label="@@chart.legendAria"
       data-testid="stats-chart-legend"
     >
-      <span><i class="dot dot-bar"></i>{{ intervalLegendText() }}</span>
+      @if (showsBreakdown()) {
+        @for (part of breakdown(); track part.exerciseId) {
+          <span data-testid="stats-chart-legend-exercise"
+            ><i class="dot" [style.background]="part.color"></i
+            >{{ part.label }}</span
+          >
+        }
+      } @else {
+        <span><i class="dot dot-bar"></i>{{ intervalLegendText() }}</span>
+      }
       <span><i class="dot dot-line"></i>{{ secondaryLegendText() }}</span>
       <span><i class="dot dot-avg"></i>{{ movingAvgLegendText() }}</span>
-      @if (hasSetsData()) {
+      @if (hasSetsData() && !showsBreakdown()) {
         <span
           ><i class="dot dot-sets-bar"></i
           ><ng-container i18n="@@chart.withSets">Mit Sets</ng-container></span

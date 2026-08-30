@@ -1,0 +1,80 @@
+<header class="head">
+  <h3 class="title" i18n="@@analysis.overview.comparison.title">
+    Vergleich nach Übungsgruppe
+  </h3>
+  <p class="metric" i18n="@@analysis.overview.comparison.metricLabel">
+    Trainingseinheiten
+  </p>
+</header>
+
+<p
+  class="metric-note"
+  data-testid="category-comparison-metric-note"
+  i18n="@@analysis.overview.comparison.metricNote"
+>
+  Verglichen wird die Anzahl der Trainingseinheiten, nicht das Volumen: Gezählte
+  Übungen liefern Wiederholungen, gehaltene Übungen Sekunden und Laufen Meter —
+  60 Sekunden Plank sind keine 60 Liegestütze. Die Werte in der jeweils eigenen
+  Einheit stehen in den Karten darunter.
+</p>
+
+@if (rows().length === 0) {
+  <p
+    class="empty"
+    data-testid="category-comparison-empty"
+    i18n="@@analysis.overview.comparison.empty"
+  >
+    Keine Daten im aktuellen Zeitraum.
+  </p>
+} @else {
+  <ul class="bars" role="list" data-testid="category-comparison-bars">
+    @for (row of rows(); track row.label) {
+      <li class="bar-row">
+        <span class="bar-label">{{ row.label }}</span>
+        @if (row.parts.length && barMode() === 'grouped') {
+          <span class="bar-track grouped" aria-hidden="true">
+            @for (part of row.parts; track part.exerciseId) {
+              <span
+                class="bar-fill grouped-fill"
+                [style.width.%]="part.fillPercent"
+                [style.background]="part.color"
+                [attr.data-testid]="
+                  'category-comparison-part-' + part.exerciseId
+                "
+              ></span>
+            }
+          </span>
+        } @else if (row.parts.length) {
+          <span class="bar-track" aria-hidden="true">
+            @for (part of row.parts; track part.exerciseId) {
+              <span
+                class="bar-fill stacked-fill"
+                [style.width.%]="part.fillPercent"
+                [style.background]="part.color"
+                [attr.data-testid]="
+                  'category-comparison-part-' + part.exerciseId
+                "
+              ></span>
+            }
+          </span>
+        } @else {
+          <span class="bar-track" aria-hidden="true">
+            <span class="bar-fill" [style.width.%]="row.fillPercent"></span>
+          </span>
+        }
+        <span class="bar-value">{{ row.value | number }}</span>
+      </li>
+    }
+  </ul>
+
+  @if (legend().length) {
+    <div class="legend" data-testid="category-comparison-legend">
+      @for (item of legend(); track item.id) {
+        <span
+          ><i class="swatch" [style.background]="item.color"></i
+          >{{ item.label }}</span
+        >
+      }
+    </div>
+  }
+}

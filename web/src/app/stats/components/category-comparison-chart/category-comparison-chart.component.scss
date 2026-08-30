@@ -1,0 +1,132 @@
+:host {
+  display: block;
+}
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.metric {
+  margin: 0;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.metric-note {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.7;
+  max-width: 80ch;
+}
+.bars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(80px, 140px) 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.bar-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bar-track {
+  position: relative;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+:host-context(html:not(.light-theme)) .bar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+.bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--mat-sys-primary, #1976d2);
+  border-radius: 6px;
+  transition: width 0.25s ease;
+}
+/* Stacked segments flow inside the track instead of each anchoring
+   to its left edge, so their widths add up to the category total. */
+.bar-track {
+  display: flex;
+}
+.stacked-fill,
+.grouped-fill {
+  position: static;
+  flex: 0 0 auto;
+  border-radius: 0;
+}
+.stacked-fill:first-child,
+.grouped-fill:first-child {
+  border-start-start-radius: 6px;
+  border-end-start-radius: 6px;
+}
+.stacked-fill:last-child,
+.grouped-fill:last-child {
+  border-start-end-radius: 6px;
+  border-end-end-radius: 6px;
+}
+/* Side-by-side: each exercise keeps its own row inside the track,
+   so bar lengths compare directly rather than by segment offset. */
+.bar-track.grouped {
+  flex-direction: column;
+  height: auto;
+  min-height: 10px;
+  gap: 2px;
+  background: none;
+  overflow: visible;
+}
+.bar-track.grouped .grouped-fill {
+  height: 6px;
+  border-radius: 3px;
+  min-width: 2px;
+}
+.bar-value {
+  font-variant-numeric: tabular-nums;
+  min-width: 4ch;
+  text-align: right;
+}
+.empty {
+  opacity: 0.7;
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .bar-row {
+    grid-template-columns: minmax(64px, 100px) 1fr auto;
+    gap: 8px;
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 6px;
+}

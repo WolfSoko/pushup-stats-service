@@ -80,6 +80,8 @@ class MockStatsChartComponent {
   readonly measurement = input<unknown>(null);
   readonly paceSeries = input<unknown[]>([]);
   readonly kindLabel = input<string>('');
+  readonly breakdown = input<unknown[]>([]);
+  readonly barMode = input<string>('stacked');
   readonly dayChartMode = model<string>('14h');
 }
 
@@ -105,6 +107,7 @@ const EMPTY_SEGMENT: AnalysisSegment = {
   series: [],
   chartEntries: [],
   paceSeries: [],
+  exerciseSeries: [],
   bestEntry: null,
   bestDay: null,
   bestSingleSet: 0,

@@ -34,6 +34,8 @@ import {
 } from './chart-helpers';
 import { buildChartOptions, readThemeColors } from './chart-options';
 import {
+  ChartBarMode,
+  ChartBreakdownSeries,
   ChartMeasurement,
   PaceSeriesEntry,
   StatsChartEntry,
@@ -72,6 +74,10 @@ export class StatsChartComponent implements AfterViewInit {
   // For `'distance'`/`'distance-time'` views with ≥1 non-null pace, swaps
   // the cumulative day-integral line for a km-pace line.
   readonly paceSeries = input<PaceSeriesEntry[]>([]);
+  // One entry per exercise splits the aggregate bar into its parts.
+  // Empty keeps the single-bar rendering (and its sets stacking).
+  readonly breakdown = input<ChartBreakdownSeries[]>([]);
+  readonly barMode = input<ChartBarMode>('stacked');
 
   readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
   readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
@@ -137,6 +143,9 @@ export class StatsChartComponent implements AfterViewInit {
   readonly hasSetsData = computed(() =>
     this.entries().some((e) => (e.sets?.length ?? 0) > 1)
   );
+
+  /** Per-exercise bars replace the aggregate bar, and its legend with it. */
+  readonly showsBreakdown = computed(() => this.breakdown().length > 0);
   private readonly viewReady = signal(false);
   private chart?: Chart;
 
@@ -149,6 +158,8 @@ export class StatsChartComponent implements AfterViewInit {
       this.dayChartMode();
       this.measurement();
       this.paceSeries();
+      this.breakdown();
+      this.barMode();
       queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
     // Destroy the chart when the component is torn down (e.g. the analysis
@@ -206,7 +217,14 @@ export class StatsChartComponent implements AfterViewInit {
 
     const bucketLabelByTs = buildBucketLabelByTs(series);
     const setsByBucket = buildSetsByBucket(entries, granularity, dayChartMode);
-    const hasSetsData = computeHasSetsData(setsByBucket);
+    const breakdown = this.breakdown();
+    const barMode = this.barMode();
+    // The per-exercise split and the sets split decompose the same
+    // volume, so the breakdown suppresses the sets stacking rather than
+    // stacking both on top of each other.
+    const hasSetsData = breakdown.length
+      ? false
+      : computeHasSetsData(setsByBucket);
 
     const intervalDatasetLabel = `${this.intervalLabel}${suffix}`;
     const secondaryLineLabel = buildSecondaryLegend(
@@ -218,6 +236,8 @@ export class StatsChartComponent implements AfterViewInit {
 
     const data = buildChartData({
       series,
+      breakdown,
+      barMode,
       setsByBucket,
       hasSetsData,
       movingAvg,
@@ -239,6 +259,7 @@ export class StatsChartComponent implements AfterViewInit {
       from: this.from(),
       to: this.to(),
       hasSetsData,
+      stackedBreakdown: breakdown.length > 0 && barMode === 'stacked',
       paceMode,
       bucketLabelByTs,
       setsByBucket,

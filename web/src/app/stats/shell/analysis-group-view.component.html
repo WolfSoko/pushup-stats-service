@@ -8,6 +8,15 @@
   </p>
 }
 
+<app-exercise-breakdown-controls
+  [exercises]="store.exerciseChoices()"
+  [hidden]="store.hiddenExerciseIds()"
+  [barMode]="store.barMode()"
+  (barModeChange)="store.setBarMode($event)"
+  (toggleExercise)="store.toggleExerciseVisibility($event)"
+  (showAll)="store.showAllExercises()"
+/>
+
 @if (hasMultipleSegments()) {
   <p
     class="measurement-hint"
@@ -31,6 +40,7 @@
     [dayChartMode]="store.resolvedDayChartMode()"
     [view]="store.activeView()"
     [kinds]="store.kinds()"
+    [barMode]="store.barMode()"
     (dayChartModeChange)="store.setDayChartMode($event)"
   />
 }

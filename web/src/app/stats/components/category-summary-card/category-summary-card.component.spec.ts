@@ -25,6 +25,7 @@ class HostComponent {
     order: 10,
     entries: 5,
     currentStreak: 3,
+    exerciseEntries: [],
     volume: {
       kind: 'reps',
       totalReps: 123,
@@ -124,6 +125,7 @@ describe('CategorySummaryCardComponent', () => {
       order: 90,
       entries: 3,
       currentStreak: 2,
+      exerciseEntries: [],
       volume: {
         kind: 'time',
         totalSec: 210,
@@ -155,6 +157,7 @@ describe('CategorySummaryCardComponent', () => {
       order: 80,
       entries: 1,
       currentStreak: 1,
+      exerciseEntries: [],
       volume: {
         kind: 'distance-time',
         totalM: 5000,
@@ -183,6 +186,7 @@ describe('CategorySummaryCardComponent', () => {
       order: 70,
       entries: 3,
       currentStreak: 1,
+      exerciseEntries: [],
       volume: {
         kind: 'mixed',
         facets: [

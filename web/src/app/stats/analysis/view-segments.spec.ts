@@ -28,6 +28,7 @@ function input(
     monthStart: new Date(2026, 5, 1),
     chart: { from: '2026-06-15', isDayRange: false, dayChartMode: '14h' },
     breakdown: { view: 'core', kinds: [], locale: 'en' },
+    exerciseOrder: [],
     ...overrides,
   };
 }

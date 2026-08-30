@@ -4,11 +4,26 @@ import {
   type ExerciseDefinition,
   type UnifiedEntry,
   unifiedEntryCategoryId,
+  unifiedEntryFilterKey,
 } from '@pu-stats/models';
 import { categoryDisplayName } from '../i18n/exercise-display-names';
 import type { CategoryComparison, CategorySummary } from './analysis.types';
 import { computeCategoryVolume } from './category-facets';
 import { computeCurrentStreak } from './trend-math';
+
+/** Trainings logged per exercise, heaviest first, ties broken by id. */
+function countEntriesPerExercise(
+  rows: ReadonlyArray<UnifiedEntry>
+): Array<{ exerciseId: string; entries: number }> {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const key = unifiedEntryFilterKey(row);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([exerciseId, entries]) => ({ exerciseId, entries }));
+}
 
 /**
  * Per-category roll-up for the overview tab, ordered by the catalog's
@@ -40,6 +55,7 @@ export function buildCategorySummaries(
       entries: catRows.length,
       currentStreak: computeCurrentStreak(catRows),
       volume: computeCategoryVolume(catRows, todayKey),
+      exerciseEntries: countEntriesPerExercise(catRows),
     });
   }
   return result.sort((a, b) => a.order - b.order);
@@ -57,5 +73,6 @@ export function buildCategoryComparison(
   return {
     labels: summaries.map((s) => categoryDisplayName(s.categoryId)),
     entries: summaries.map((s) => s.entries),
+    parts: summaries.map((s) => s.exerciseEntries),
   };
 }

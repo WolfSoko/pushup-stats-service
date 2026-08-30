@@ -91,6 +91,12 @@ export interface CategorySummary {
   entries: number;
   currentStreak: number;
   volume: CategoryVolume;
+  /**
+   * Trainings per exercise inside this category, heaviest first. The
+   * comparison chart splits each category bar along it; the counts sum
+   * back to {@link CategorySummary.entries}.
+   */
+  exerciseEntries: ReadonlyArray<{ exerciseId: string; entries: number }>;
 }
 
 /**
@@ -102,6 +108,13 @@ export interface CategorySummary {
 export interface CategoryComparison {
   labels: ReadonlyArray<string>;
   entries: ReadonlyArray<number>;
+  /**
+   * Per-category split of {@link CategoryComparison.entries} into its
+   * exercises, index-aligned with `labels`. Carries bare exercise ids —
+   * the component resolves labels and colours, as it does for the
+   * type-pie.
+   */
+  parts: ReadonlyArray<ReadonlyArray<{ exerciseId: string; entries: number }>>;
 }
 
 /**

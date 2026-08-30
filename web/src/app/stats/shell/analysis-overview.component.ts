@@ -12,6 +12,7 @@ import type { ExerciseCategoryId } from '@pu-stats/models';
 import { AnalysisStore } from '../analysis.store';
 import { CategoryComparisonChartComponent } from '../components/category-comparison-chart/category-comparison-chart.component';
 import { CategorySummaryCardComponent } from '../components/category-summary-card/category-summary-card.component';
+import { ExerciseBreakdownControlsComponent } from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
 import { AnalysisGroupViewComponent } from './analysis-group-view.component';
 
 /**
@@ -38,13 +39,27 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
     MatCardModule,
     CategoryComparisonChartComponent,
     CategorySummaryCardComponent,
+    ExerciseBreakdownControlsComponent,
     AnalysisGroupViewComponent,
   ],
   template: `
     @if (showCategoryOverview()) {
+      <app-exercise-breakdown-controls
+        [exercises]="store.exerciseChoices()"
+        [hidden]="store.hiddenExerciseIds()"
+        [barMode]="store.barMode()"
+        (barModeChange)="store.setBarMode($event)"
+        (toggleExercise)="store.toggleExerciseVisibility($event)"
+        (showAll)="store.showAllExercises()"
+      />
+
       <mat-card class="chart-card">
         <mat-card-content>
-          <app-category-comparison-chart [data]="store.categoryComparison()" />
+          <app-category-comparison-chart
+            [data]="store.categoryComparison()"
+            [barMode]="store.barMode()"
+            [exercises]="store.exerciseChoices()"
+          />
         </mat-card-content>
       </mat-card>
 
@@ -106,8 +121,14 @@ export class AnalysisOverviewComponent {
   readonly store = inject(AnalysisStore);
   readonly viewSelect = output<ExerciseCategoryId>();
 
-  readonly showCategoryOverview = computed(
-    () => this.store.categorySummaries().length > 0
+  /**
+   * Gated on the unfiltered row set, not on `categorySummaries`: with
+   * every exercise unchecked the summaries are empty, and falling
+   * through to the uncategorised branch would claim the entries belong
+   * to no known category and hide the checkboxes that undo it.
+   */
+  readonly showCategoryOverview = computed(() =>
+    this.store.hasCategorisableRows()
   );
 
   readonly hasUncategorisedRows = computed(

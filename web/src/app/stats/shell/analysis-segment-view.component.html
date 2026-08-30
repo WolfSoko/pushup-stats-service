@@ -27,6 +27,8 @@
     [measurement]="segment().measurement"
     [kindLabel]="chartLabel()"
     [paceSeries]="segment().paceSeries"
+    [breakdown]="breakdown()"
+    [barMode]="barMode()"
     [dayChartMode]="dayChartMode()"
     (dayChartModeChange)="dayChartModeChange.emit($event)"
   />

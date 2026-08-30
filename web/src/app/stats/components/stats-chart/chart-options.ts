@@ -25,6 +25,8 @@ export interface ChartOptionsInputs {
   from: string | null;
   to: string | null;
   hasSetsData: boolean;
+  /** True while per-exercise bars are drawn as one stack per bucket. */
+  stackedBreakdown: boolean;
   paceMode: boolean;
   bucketLabelByTs: Map<number, string>;
   setsByBucket: Map<number, BucketSetsInfo>;
@@ -63,6 +65,7 @@ export function buildChartOptions(
     from,
     to,
     hasSetsData,
+    stackedBreakdown,
     paceMode,
     bucketLabelByTs,
     setsByBucket,
@@ -105,7 +108,7 @@ export function buildChartOptions(
     scales: {
       x: {
         type: 'time',
-        stacked: hasSetsData,
+        stacked: hasSetsData || stackedBreakdown,
         min:
           rangeMode === 'day'
             ? undefined
@@ -140,7 +143,7 @@ export function buildChartOptions(
         grid: { color: colors.chartGridLight },
       },
       y: {
-        stacked: hasSetsData,
+        stacked: hasSetsData || stackedBreakdown,
         ticks: {
           color: colors.chartTick,
           // km bars use 1 decimal; reps/seconds stay integer.
