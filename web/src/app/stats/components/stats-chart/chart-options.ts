@@ -2,7 +2,9 @@ import { StatsGranularity } from '@pu-stats/models';
 import { ChartConfiguration, TooltipItem } from 'chart.js';
 import { BucketSetsInfo, ChartMeasurement } from './stats-chart.models';
 import {
+  axisBoundsForRange,
   barAxisPrecision,
+  bucketToTs,
   formatCustomHourBlock,
   formatHourLabel,
 } from './chart-helpers';
@@ -33,6 +35,33 @@ export interface ChartOptionsInputs {
   colors: ChartThemeColors;
   localeId: string;
   setsTooltipLabel: string;
+  /** Unit of the bar values, e.g. `'km'`; `''` hides the axis title. */
+  yAxisTitle: string;
+  /** Unit of the right-hand line, e.g. `'min/km'`; `''` hides it. */
+  ySecondaryAxisTitle: string;
+}
+
+const TIME_UNIT: Record<StatsGranularity, 'hour' | 'day' | 'week' | 'month'> = {
+  hourly: 'hour',
+  daily: 'day',
+  weekly: 'week',
+  monthly: 'month',
+};
+
+/**
+ * Month ticks carry a year as soon as the range can hold two of them —
+ * a custom span of 2025-10 to 2026-06 would otherwise print "Okt Nov
+ * Dez Jan" with nothing saying where the year turns, and a two-year
+ * span would repeat every month label.
+ */
+function tickFormatOptions(
+  granularity: StatsGranularity,
+  spansMultipleYears: boolean
+): Intl.DateTimeFormatOptions {
+  if (granularity !== 'monthly') return { day: '2-digit', month: '2-digit' };
+  return spansMultipleYears
+    ? { month: 'short', year: '2-digit' }
+    : { month: 'short' };
 }
 
 export function readThemeColors(): ChartThemeColors {
@@ -72,15 +101,17 @@ export function buildChartOptions(
     colors,
     localeId,
     setsTooltipLabel,
+    yAxisTitle,
+    ySecondaryAxisTitle,
   } = inputs;
 
   const isCompactDayMode = granularity === 'hourly' && dayChartMode === '14h';
 
+  const spansMultipleYears =
+    !!from && !!to && from.slice(0, 4) !== to.slice(0, 4);
   const xTickFormatter = new Intl.DateTimeFormat(
     localeId,
-    granularity === 'hourly'
-      ? { hour: '2-digit' }
-      : { day: '2-digit', month: '2-digit' }
+    tickFormatOptions(granularity, spansMultipleYears)
   );
   const isGermanLocale = localeId.toLowerCase().startsWith('de');
   const tooltipTitleFormatter = new Intl.DateTimeFormat(
@@ -92,13 +123,38 @@ export function buildChartOptions(
           hour: '2-digit',
           minute: '2-digit',
         }
-      : {
-          weekday: 'short',
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        }
+      : granularity === 'monthly'
+        ? { month: 'long', year: 'numeric' }
+        : {
+            weekday: 'short',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }
   );
+  // A weekly bar covers Monday–Sunday; naming only its Monday would
+  // read as a single day, so its tooltip spells the span out. The span
+  // is clipped to the filter range: a month view's first and last weeks
+  // reach outside it, and those days were filtered out of the bar's
+  // total — claiming a full week would overstate what the bar holds.
+  const weekStartFormatter = new Intl.DateTimeFormat(localeId, {
+    day: '2-digit',
+    month: '2-digit',
+  });
+  const formatBucketTitle = (ts: number): string => {
+    const date = new Date(ts);
+    if (granularity !== 'weekly') return tooltipTitleFormatter.format(date);
+    const start = from ? Math.max(ts, bucketToTs(from)) : ts;
+    const weekEnd = new Date(date);
+    weekEnd.setDate(date.getDate() + 6);
+    const end = to
+      ? Math.min(weekEnd.getTime(), bucketToTs(to))
+      : weekEnd.getTime();
+    if (start === end) return tooltipTitleFormatter.format(new Date(start));
+    return `${weekStartFormatter.format(new Date(start))} – ${tooltipTitleFormatter.format(new Date(end))}`;
+  };
+
+  const axisBounds = axisBoundsForRange(granularity, from, to);
 
   return {
     animation: false,
@@ -109,20 +165,14 @@ export function buildChartOptions(
       x: {
         type: 'time',
         stacked: hasSetsData || stackedBreakdown,
-        min:
-          rangeMode === 'day'
-            ? undefined
-            : from
-              ? new Date(`${from}T00:00:00`).getTime()
-              : undefined,
-        max:
-          rangeMode === 'day'
-            ? undefined
-            : to
-              ? new Date(`${to}T23:59:59`).getTime()
-              : undefined,
+        min: rangeMode === 'day' ? undefined : axisBounds.min,
+        max: rangeMode === 'day' ? undefined : axisBounds.max,
         time: {
-          unit: granularity === 'hourly' ? 'hour' : 'day',
+          unit: TIME_UNIT[granularity],
+          // Bars are keyed to ISO Mondays; without this Chart.js places
+          // its week gridlines and labels on Sundays, one day left of
+          // the bar each one describes.
+          isoWeekday: granularity === 'weekly',
         },
         ticks: {
           color: colors.chartTick,
@@ -144,6 +194,11 @@ export function buildChartOptions(
       },
       y: {
         stacked: hasSetsData || stackedBreakdown,
+        title: {
+          display: yAxisTitle.length > 0,
+          text: yAxisTitle,
+          color: colors.chartTick,
+        },
         ticks: {
           color: colors.chartTick,
           // km bars use 1 decimal; reps/seconds stay integer.
@@ -153,6 +208,11 @@ export function buildChartOptions(
       },
       yIntegral: {
         position: 'right',
+        title: {
+          display: ySecondaryAxisTitle.length > 0,
+          text: ySecondaryAxisTitle,
+          color: '#ffbe66',
+        },
         ticks: {
           color: '#ffbe66',
           // Pace ticks render as decimal min/km (e.g. "5.5"); when the
@@ -186,7 +246,7 @@ export function buildChartOptions(
             if (granularity === 'hourly') {
               return formatHourLabel(new Date(ts), isGermanLocale);
             }
-            return tooltipTitleFormatter.format(new Date(ts));
+            return formatBucketTitle(ts);
           },
           afterBody: (items: TooltipItem<'bar' | 'line'>[]) => {
             if (!hasSetsData) return '';

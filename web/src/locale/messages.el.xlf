@@ -4641,24 +4641,6 @@
         <target>Προσθήκη επιπλέον διαστήματος</target>
       </segment>
     </unit>
-    <unit id="chart.subtitle.reps">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Οι μπάρες δείχνουν τις επαναλήψεις σου ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.time">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Οι μπάρες δείχνουν τη διάρκεια άσκησης (δ) ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
-      </segment>
-    </unit>
     <unit id="chart.subtitle.distance">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
@@ -4666,24 +4648,6 @@
       <segment state="translated">
         <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
         <target>Οι μπάρες δείχνουν την απόστασή σου (χλμ) ανά διάστημα. Η πορτοκαλί γραμμή δείχνει τον ρυθμό σου (λεπτά/χλμ), η πράσινη την τάση απόστασης.</target>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.weight">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Οι μπάρες δείχνουν το βάρος προπόνησής σου (kg) ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.mixed">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts</note>
-      </notes>
-      <segment state="translated">
-        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-        <target>Οι μπάρες δείχνουν τον όγκο προπόνησής σου ανά διάστημα. Η πορτοκαλί γραμμή αθροίζει την ημέρα, η πράσινη δείχνει την τάση.</target>
       </segment>
     </unit>
     <unit id="chart.kmPace">
@@ -11438,6 +11402,48 @@
       <segment state="translated">
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </source>
         <target> Όλες οι ασκήσεις αυτού του διαγράμματος είναι κρυμμένες. Επιλέξτε ένα πλαίσιο παραπάνω για να τις εμφανίσετε ξανά. </target>
+      </segment>
+    </unit>
+    <unit id="chart.titleWeekly">
+      <segment state="initial">
+        <source>Verlauf (Wochenwerte)</source>
+        <target>Verlauf (Wochenwerte)</target>
+      </segment>
+    </unit>
+    <unit id="chart.titleMonthly">
+      <segment state="initial">
+        <source>Verlauf (Monatswerte)</source>
+        <target>Verlauf (Monatswerte)</target>
+      </segment>
+    </unit>
+    <unit id="chart.cumulative">
+      <segment state="initial">
+        <source>Kumuliert</source>
+        <target>Kumuliert</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.reps.range">
+      <segment state="initial">
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+        <target>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time.range">
+      <segment state="initial">
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+        <target>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight.range">
+      <segment state="initial">
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+        <target>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed.range">
+      <segment state="initial">
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+        <target>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
       </segment>
     </unit>
 </file>

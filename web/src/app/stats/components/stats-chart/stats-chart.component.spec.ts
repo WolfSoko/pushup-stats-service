@@ -1,5 +1,6 @@
 import { PLATFORM_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CHART_LABELS } from './chart-messages';
 import { StatsChartComponent } from './stats-chart.component';
 import { type PaceSeriesEntry } from './stats-chart.models';
 
@@ -51,7 +52,36 @@ describe('StatsChartComponent', () => {
     });
   });
 
+  describe('Chart title per granularity', () => {
+    it('Given granularity="weekly", Then the title reads Wochenwerte', () => {
+      // given / when
+      fixture.componentRef.setInput('granularity', 'weekly');
+      fixture.detectChanges();
+      // then
+      expect(component.chartTitle()).toBe('Verlauf (Wochenwerte)');
+    });
+
+    it('Given granularity="monthly", Then the title reads Monatswerte', () => {
+      // given / when
+      fixture.componentRef.setInput('granularity', 'monthly');
+      fixture.detectChanges();
+      // then
+      expect(component.chartTitle()).toBe('Verlauf (Monatswerte)');
+    });
+  });
+
   describe('Legend with units', () => {
+    it('Given granularity="monthly", Then the running-total legend drops the day wording', () => {
+      // given / when
+      fixture.componentRef.setInput('measurement', 'reps');
+      fixture.componentRef.setInput('granularity', 'monthly');
+      fixture.detectChanges();
+      // then
+      expect(component.secondaryLegendText()).toBe(
+        `${CHART_LABELS.cumulative} (Reps)`
+      );
+    });
+
     it('Given measurement="reps", Then the legend appends "(Reps)" to interval + moving-average labels', () => {
       fixture.componentRef.setInput('measurement', 'reps');
       fixture.detectChanges();
@@ -84,7 +114,7 @@ describe('StatsChartComponent', () => {
       fixture.componentRef.setInput('paceSeries', [] as PaceSeriesEntry[]);
       fixture.detectChanges();
       expect(component.secondaryLegendText()).toBe(
-        `${component.dayIntegralLabel} (km)`
+        `${CHART_LABELS.dayIntegral} (km)`
       );
     });
 
@@ -92,7 +122,7 @@ describe('StatsChartComponent', () => {
       fixture.componentRef.setInput('measurement', 'reps');
       fixture.detectChanges();
       expect(component.secondaryLegendText()).toBe(
-        `${component.dayIntegralLabel} (Reps)`
+        `${CHART_LABELS.dayIntegral} (Reps)`
       );
     });
 
@@ -111,7 +141,7 @@ describe('StatsChartComponent', () => {
       fixture.componentRef.setInput('measurement', 'mixed');
       fixture.detectChanges();
       expect(component.unitSuffix()).toBe('');
-      expect(component.intervalLegendText()).toBe(component.intervalLabel);
+      expect(component.intervalLegendText()).toBe(CHART_LABELS.interval);
     });
   });
 

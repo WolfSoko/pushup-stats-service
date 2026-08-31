@@ -36,6 +36,7 @@ import {
   buildCategorySummaries,
 } from './analysis/category-volume';
 import { computeViewMeasurement } from './analysis/chart-series';
+import { granularityForRange } from './analysis/chart-granularity';
 import {
   type AnalysisSegment,
   buildAnalysisSegments,
@@ -265,17 +266,19 @@ export const AnalysisStore = signalStore(
     });
 
     /**
-     * Granularity of {@link viewSegments}. Tracked separately from
-     * the REST-derived {@link granularity} (which lags the resource
-     * during cold-start / filter changes) so the chart's axis mode,
-     * dayChartMode toggle visibility and sets-stacking bucket-keying
-     * stay locked to the bucketing actually produced for the view.
+     * Granularity of {@link viewSegments}: one bucket size per filter
+     * period (day → hours, week → days, month → weeks, year → months,
+     * custom → by span), so a long range stays at a readable number of
+     * bars. Tracked
+     * separately from the REST-derived {@link granularity} (which lags
+     * the resource during cold-start / filter changes) so the chart's
+     * axis mode, dayChartMode toggle visibility and sets-stacking
+     * bucket-keying stay locked to the bucketing actually produced for
+     * the view.
      */
-    const viewGranularity = computed<StatsGranularity>(() => {
-      const from = store.from();
-      const to = store.to();
-      return !!from && !!to && from === to ? 'hourly' : 'daily';
-    });
+    const viewGranularity = computed<StatsGranularity>(() =>
+      granularityForRange(store.rangeMode(), store.from(), store.to())
+    );
 
     const viewMeasurement = computed<MeasurementType | 'mixed' | null>(() =>
       computeViewMeasurement(viewFilteredRows())
@@ -367,7 +370,7 @@ export const AnalysisStore = signalStore(
         monthStart: store.currentMonthStart(),
         chart: {
           from: store.from(),
-          isDayRange: viewGranularity() === 'hourly',
+          granularity: viewGranularity(),
           dayChartMode: resolvedDayChartMode(),
         },
         breakdown: {

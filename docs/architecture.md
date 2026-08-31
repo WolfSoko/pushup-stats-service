@@ -171,6 +171,18 @@ Walks today's plan day — "50 s Plank → 20 Russian Twists → 15 Liegestütze
 - **An exercise the plan quantifies only as a total** is split evenly across the rounds (remainder to the earlier ones, so the sum stays the target). Doing all of it in round one would defeat the circuit. Unquantified items (HIIT blocks) appear once and are ticked off.
 - **"Wie vorgegeben" splits by round.** Only the round that closes a plan item goes through `logPlanExercise` (write remainder + tick + close the day); earlier rounds write just their portion via `SessionCaptureService.logPrescribed`, because ticking the item off would swallow the rounds still to come. "Abhaken" is per-item by design and does close an exercise's remaining rounds.
 
+### Analysis page: chart bucketing per period
+
+The filter period picks the chart's bucket size — `granularityForRange` (`web/src/app/stats/analysis/chart-granularity.ts`) maps day → `hourly`, week → `daily`, month → `weekly`, year → `monthly`. `AnalysisStore.viewGranularity` derives it from `rangeMode` (i.e. from `from`/`to` via `inferRangeMode`), so no extra state stores the period. Every range therefore stays at a few dozen bars instead of stretching a year across 365 of them.
+
+Everything that keys off a bucket routes through the one `bucketKeyForTimestamp` in `chart-series.ts` — the bar series, the pace series, the per-exercise split, and `buildSetsByBucket` in `chart-helpers.ts`. The last one is not tooltip-only: `buildBarDatasets` reads its map for the stacked bar _heights_, so a second derivation that drifts by a day would stack one week's sets onto another week's bar. They share `ChartBucketOptions`; keep new bucketing behind that type rather than adding another boolean or a parallel `new Date(...)` path.
+
+Bucket keys stay sortable date strings — a week is keyed by its ISO Monday, a month by its first day — so `bucketToTs` needs no special case. The week is read off the timestamp's ISO date prefix, never off `new Date(timestamp)`, so an entry logged late at night with an explicit offset can't slide into the neighbouring week.
+
+Two things follow from Monday-keyed buckets on the Chart.js time axis: the scale needs `isoWeekday: true` or it draws its week gridlines on Sundays, one day off the bars they label; and `axisBoundsForRange` widens the axis to whole buckets so a week straddling the range edge still draws full-width. That edge bar only counts its in-range days, so the weekly tooltip clips its span to the filter range rather than claiming a full Mon–Sun week.
+
+A `custom` range has no period to read the bucket off, so its **span** picks one: up to 5 weeks stays daily, up to 26 weeks goes weekly, anything longer monthly. The thresholds are chosen to land in the same bar count the named periods produce — otherwise dragging the date pickers across two years would ask the chart for 700 daily bars.
+
 ### Analysis page: per-exercise breakdown & visibility
 
 The analysis charts draw one bar **per exercise**, not one summed bar per group. Two pieces of `AnalysisStore` state drive it, both page-wide so the overview and the category tabs never disagree:

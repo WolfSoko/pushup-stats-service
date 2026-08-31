@@ -22,15 +22,23 @@ import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { buildChartData } from './chart-data';
 import {
+  axisUnit as axisUnitForMeasurement,
+  secondaryAxisUnit as buildSecondaryAxisUnit,
   secondaryLegendText as buildSecondaryLegend,
-  selectSubtitle,
   unitSuffix as suffixForMeasurement,
 } from './chart-copy';
+import {
+  CHART_LABELS,
+  chartSubtitleFor,
+  chartTitleFor,
+  cumulativeLabelFor,
+} from './chart-messages';
 import {
   buildBucketLabelByTs,
   buildSetsByBucket,
   computeMovingAvg,
   hasSetsData as computeHasSetsData,
+  movingAvgWindow,
 } from './chart-helpers';
 import { buildChartOptions, readThemeColors } from './chart-options';
 import {
@@ -79,39 +87,11 @@ export class StatsChartComponent implements AfterViewInit {
   readonly breakdown = input<ChartBreakdownSeries[]>([]);
   readonly barMode = input<ChartBarMode>('stacked');
 
-  readonly hourlyTitle = $localize`:@@chart.titleHourly:Verlauf (Stundenwerte)`;
-  readonly dailyTitle = $localize`:@@chart.titleDaily:Verlauf (Tageswerte)`;
-  readonly chartTitle = computed(() => {
-    const base =
-      this.granularity() === 'hourly' ? this.hourlyTitle : this.dailyTitle;
-    const label = this.kindLabel().trim();
-    return label ? `${base} – ${label}` : base;
-  });
-
-  // -- Localised copy -----------------------------------------------------
-  // Subtitle variants are pre-extracted as $localize tagged templates so
-  // the i18n extractor picks every wording up; the active subtitle is
-  // selected at render time based on `measurement()`.
-  private readonly subtitleReps = $localize`:@@chart.subtitle.reps:Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
-  private readonly subtitleTime = $localize`:@@chart.subtitle.time:Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
-  private readonly subtitleDistance = $localize`:@@chart.subtitle.distance:Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.`;
-  private readonly subtitleWeight = $localize`:@@chart.subtitle.weight:Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
-  private readonly subtitleMixed = $localize`:@@chart.subtitle.mixed:Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.`;
-
-  readonly subtitleText = computed(() =>
-    selectSubtitle(this.measurement(), {
-      reps: this.subtitleReps,
-      time: this.subtitleTime,
-      distance: this.subtitleDistance,
-      weight: this.subtitleWeight,
-      mixed: this.subtitleMixed,
-    })
+  readonly chartTitle = computed(() =>
+    chartTitleFor(this.granularity(), this.kindLabel())
   );
 
-  readonly intervalLabel = $localize`:@@chart.interval:Intervallwert`;
-  readonly dayIntegralLabel = $localize`:@@chart.dayIntegral:Tages-Integral`;
-  readonly paceLabel = $localize`:@@chart.kmPace:km Tempo`;
-  readonly movingAvgLabel = $localize`:@@chart.movingAvg:Gleitender Durchschnitt`;
+  readonly subtitleText = computed(() => chartSubtitleFor(this.measurement()));
 
   readonly unitSuffix = computed(() =>
     suffixForMeasurement(this.measurement())
@@ -124,20 +104,20 @@ export class StatsChartComponent implements AfterViewInit {
   });
 
   readonly intervalLegendText = computed(
-    () => `${this.intervalLabel}${this.unitSuffix()}`
+    () => `${CHART_LABELS.interval}${this.unitSuffix()}`
   );
 
   readonly secondaryLegendText = computed(() =>
     buildSecondaryLegend(
       this.paceMode(),
-      this.paceLabel,
-      this.dayIntegralLabel,
+      CHART_LABELS.pace,
+      cumulativeLabelFor(this.granularity()),
       this.unitSuffix()
     )
   );
 
   readonly movingAvgLegendText = computed(
-    () => `${this.movingAvgLabel}${this.unitSuffix()}`
+    () => `${CHART_LABELS.movingAvg}${this.unitSuffix()}`
   );
 
   readonly hasSetsData = computed(() =>
@@ -179,9 +159,6 @@ export class StatsChartComponent implements AfterViewInit {
     }
   }
 
-  readonly setsTooltipLabel = $localize`:@@chart.setsTooltip:Sets`;
-  readonly withSetsLabel = $localize`:@@chart.withSets:Mit Sets`;
-
   private renderChart(
     series: StatsSeriesEntry[],
     entries: StatsChartEntry[] = []
@@ -207,16 +184,16 @@ export class StatsChartComponent implements AfterViewInit {
     const dayChartMode = this.dayChartMode();
     const measurement = this.measurement();
     const paceMode = this.paceMode();
-    const suffix = this.unitSuffix();
 
     const totals = series.map((d) => d.total);
-    const movingAvg = computeMovingAvg(
-      totals,
-      granularity === 'hourly' ? 3 : 7
-    );
+    const movingAvg = computeMovingAvg(totals, movingAvgWindow(granularity));
 
     const bucketLabelByTs = buildBucketLabelByTs(series);
-    const setsByBucket = buildSetsByBucket(entries, granularity, dayChartMode);
+    const setsByBucket = buildSetsByBucket(entries, {
+      granularity,
+      dayChartMode,
+      from: this.from(),
+    });
     const breakdown = this.breakdown();
     const barMode = this.barMode();
     // The per-exercise split and the sets split decompose the same
@@ -225,14 +202,6 @@ export class StatsChartComponent implements AfterViewInit {
     const hasSetsData = breakdown.length
       ? false
       : computeHasSetsData(setsByBucket);
-
-    const intervalDatasetLabel = `${this.intervalLabel}${suffix}`;
-    const secondaryLineLabel = buildSecondaryLegend(
-      paceMode,
-      this.paceLabel,
-      this.dayIntegralLabel,
-      suffix
-    );
 
     const data = buildChartData({
       series,
@@ -244,10 +213,10 @@ export class StatsChartComponent implements AfterViewInit {
       paceMode,
       paceSeries: this.paceSeries(),
       labels: {
-        intervalDatasetLabel,
-        withSetsLabel: this.withSetsLabel,
-        secondaryLineLabel,
-        movingAvgLabel: `${this.movingAvgLabel}${suffix}`,
+        intervalDatasetLabel: this.intervalLegendText(),
+        withSetsLabel: CHART_LABELS.withSets,
+        secondaryLineLabel: this.secondaryLegendText(),
+        movingAvgLabel: this.movingAvgLegendText(),
       },
     });
 
@@ -265,7 +234,9 @@ export class StatsChartComponent implements AfterViewInit {
       setsByBucket,
       colors: readThemeColors(),
       localeId: this.localeId,
-      setsTooltipLabel: this.setsTooltipLabel,
+      setsTooltipLabel: CHART_LABELS.setsTooltip,
+      yAxisTitle: axisUnitForMeasurement(measurement),
+      ySecondaryAxisTitle: buildSecondaryAxisUnit(paceMode, measurement),
     });
 
     this.chart = new Chart(context, { type: 'bar', data, options });

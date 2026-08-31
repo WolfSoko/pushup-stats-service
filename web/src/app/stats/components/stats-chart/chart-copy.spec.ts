@@ -1,4 +1,10 @@
-import { secondaryLegendText, selectSubtitle, unitSuffix } from './chart-copy';
+import {
+  axisUnit,
+  secondaryAxisUnit,
+  secondaryLegendText,
+  selectSubtitle,
+  unitSuffix,
+} from './chart-copy';
 
 const variants = {
   reps: 'REPS',
@@ -55,5 +61,40 @@ describe('secondaryLegendText', () => {
     const text = secondaryLegendText(false, 'Tempo', 'Integral', ' (Reps)');
     // then
     expect(text).toBe('Integral (Reps)');
+  });
+});
+
+describe('axisUnit', () => {
+  it('should strip the parentheses off the legend suffix', () => {
+    // given / when / then
+    expect(axisUnit('reps')).toBe('Reps');
+    expect(axisUnit('time')).toBe('s');
+    expect(axisUnit('distance')).toBe('km');
+    expect(axisUnit('distance-time')).toBe('km');
+    expect(axisUnit('weight')).toBe('kg');
+  });
+
+  it('should stay empty for mixed and unknown views', () => {
+    // given / when / then
+    expect(axisUnit('mixed')).toBe('');
+    expect(axisUnit(null)).toBe('');
+  });
+});
+
+describe('secondaryAxisUnit', () => {
+  it('should label the pace axis in min/km', () => {
+    // given / when / then
+    expect(secondaryAxisUnit(true, 'distance')).toBe('min/km');
+  });
+
+  it('should mark the cumulative axis with a sigma', () => {
+    // given / when / then
+    expect(secondaryAxisUnit(false, 'reps')).toBe('Σ Reps');
+    expect(secondaryAxisUnit(false, 'time')).toBe('Σ s');
+  });
+
+  it('should stay empty when no single unit describes the bars', () => {
+    // given / when / then
+    expect(secondaryAxisUnit(false, 'mixed')).toBe('');
   });
 });

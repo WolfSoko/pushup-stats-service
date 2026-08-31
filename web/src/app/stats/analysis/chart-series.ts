@@ -1,5 +1,7 @@
+import { toLocalIsoDate } from '@pu-stats/date';
 import {
   type MeasurementType,
+  type StatsGranularity,
   type StatsSeriesEntry,
   type UnifiedEntry,
   unifiedEntryMeasurement,
@@ -7,6 +9,24 @@ import {
 } from '@pu-stats/models';
 import type { ChartFeedEntry } from './analysis.types';
 import { measurementScale } from './category-facets';
+import { startOfIsoWeek } from './trend-math';
+
+/** Bucket options shared by every builder feeding one chart. */
+export interface ChartBucketOptions {
+  from: string | null;
+  granularity: StatsGranularity;
+  dayChartMode: '14h' | '24h';
+}
+
+/**
+ * Local midnight of the timestamp's calendar day, read off the ISO
+ * date prefix rather than via `new Date(timestamp)` so an entry logged
+ * late at night with an offset can't slide into the neighbouring day.
+ */
+function localDateOf(timestamp: string): Date {
+  const [year, month, day] = timestamp.slice(0, 10).split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
 
 /**
  * Dominant measurement type of the entries currently driving the chart.
@@ -34,9 +54,11 @@ export function computeViewMeasurement(
 
 /**
  * Maps a timestamp to the bucket-key it should fall into for the active
- * chart bucketing scheme, so pace alignment lines up 1:1 with the bar
- * series:
- *   - daily            → `YYYY-MM-DD`
+ * chart bucketing scheme, so pace alignment and the per-exercise split
+ * line up 1:1 with the bar series:
+ *   - `monthly`        → `YYYY-MM-01`
+ *   - `weekly`         → `YYYY-MM-DD` of the ISO week's Monday
+ *   - `daily`          → `YYYY-MM-DD`
  *   - hourly 24h mode  → `${from}T${HH}:00:00` (all 24 hours)
  *   - hourly 14h mode  → `${from}T00:00:00` for the merged night bucket
  *     (hours 22–07, i.e. the day's off-hours); otherwise the
@@ -48,38 +70,46 @@ export function computeViewMeasurement(
  */
 export function bucketKeyForTimestamp(
   timestamp: string,
-  opts: {
-    isDayRange: boolean;
-    dayChartMode: '14h' | '24h';
-    from: string | null;
-  }
+  opts: ChartBucketOptions
 ): string {
-  if (!opts.isDayRange) return timestamp.slice(0, 10);
-  const hour = new Date(timestamp).getHours();
-  if (opts.dayChartMode === '14h' && (hour < 8 || hour >= 22)) {
-    return `${opts.from}T00:00:00`;
+  switch (opts.granularity) {
+    case 'hourly': {
+      // Callers that chart a range rather than a day (the dashboard
+      // teaser) pass no `from`; the entry's own day keeps the key
+      // parseable instead of yielding `nullT08:00:00`.
+      const day = opts.from ?? timestamp.slice(0, 10);
+      const hour = new Date(timestamp).getHours();
+      if (opts.dayChartMode === '14h' && (hour < 8 || hour >= 22)) {
+        return `${day}T00:00:00`;
+      }
+      return `${day}T${String(hour).padStart(2, '0')}:00:00`;
+    }
+    case 'weekly':
+      return toLocalIsoDate(startOfIsoWeek(localDateOf(timestamp)));
+    case 'monthly':
+      return `${timestamp.slice(0, 7)}-01`;
+    default:
+      return timestamp.slice(0, 10);
   }
-  return `${opts.from}T${String(hour).padStart(2, '0')}:00:00`;
 }
 
 /**
- * Chart series scoped to the active view. Mirrors the daily/hourly
- * bucketing in `StatsApiService.toStatsResponse` but feeds on the
- * view-filtered unified rows so each tab's chart matches its KPIs.
+ * Chart series scoped to the active view, bucketed per
+ * {@link ChartBucketOptions.granularity}. Feeds on the view-filtered
+ * unified rows so each tab's chart matches its KPIs. Buckets without a
+ * single entry are omitted rather than zero-filled — the chart's time
+ * axis spans the whole range on its own.
  */
 export function buildViewChartSeries(
   rows: ReadonlyArray<UnifiedEntry>,
-  opts: {
-    from: string | null;
-    isDayRange: boolean;
-    dayChartMode: '14h' | '24h';
+  opts: ChartBucketOptions & {
     measurement: MeasurementType | 'mixed' | null;
   }
 ): StatsSeriesEntry[] {
-  const { from, isDayRange, dayChartMode } = opts;
+  const { from, granularity, dayChartMode } = opts;
   const scale = measurementScale(opts.measurement);
 
-  if (isDayRange) {
+  if (granularity === 'hourly') {
     const hourTotals = Array.from({ length: 24 }, () => 0);
     for (const row of rows) {
       const hour = new Date(row.timestamp).getHours();
@@ -126,18 +156,18 @@ export function buildViewChartSeries(
 
   const totals = new Map<string, number>();
   for (const row of rows) {
-    const day = row.timestamp.slice(0, 10);
+    const bucket = bucketKeyForTimestamp(row.timestamp, opts);
     totals.set(
-      day,
-      (totals.get(day) ?? 0) + unifiedEntryPrimaryValue(row) * scale
+      bucket,
+      (totals.get(bucket) ?? 0) + unifiedEntryPrimaryValue(row) * scale
     );
   }
-  const sortedDays = [...totals.keys()].sort((a, b) => a.localeCompare(b));
+  const sortedBuckets = [...totals.keys()].sort((a, b) => a.localeCompare(b));
   let cumulative = 0;
-  return sortedDays.map((day) => {
-    const total = totals.get(day) ?? 0;
+  return sortedBuckets.map((bucket) => {
+    const total = totals.get(bucket) ?? 0;
     cumulative += total;
-    return { bucket: day, total, dayIntegral: cumulative };
+    return { bucket, total, dayIntegral: cumulative };
   });
 }
 
@@ -153,10 +183,7 @@ export function buildViewChartSeries(
 export function buildViewPaceSeries(
   rows: ReadonlyArray<UnifiedEntry>,
   chartSeries: ReadonlyArray<StatsSeriesEntry>,
-  opts: {
-    from: string | null;
-    isDayRange: boolean;
-    dayChartMode: '14h' | '24h';
+  opts: ChartBucketOptions & {
     measurement: MeasurementType | 'mixed' | null;
   }
 ): Array<{ bucket: string; pace: number | null }> {
@@ -170,11 +197,7 @@ export function buildViewPaceSeries(
     const totalSec = row.durationSec ?? 0;
     const totalM = row.distanceM ?? 0;
     if (!totalSec && !totalM) continue;
-    const key = bucketKeyForTimestamp(row.timestamp, {
-      isDayRange: opts.isDayRange,
-      dayChartMode: opts.dayChartMode,
-      from: opts.from,
-    });
+    const key = bucketKeyForTimestamp(row.timestamp, opts);
     const e = stats.get(key) ?? { totalSec: 0, totalM: 0 };
     e.totalSec += totalSec;
     e.totalM += totalM;

@@ -1,5 +1,7 @@
 import { StatsSeriesEntry } from '@pu-stats/models';
+import { bucketKeyForTimestamp } from '../../analysis/chart-series';
 import {
+  axisBoundsForRange,
   barAxisPrecision,
   bucketToTs,
   buildBucketLabelByTs,
@@ -8,6 +10,7 @@ import {
   formatCustomHourBlock,
   formatHourLabel,
   hasSetsData,
+  movingAvgWindow,
 } from './chart-helpers';
 import { StatsChartEntry } from './stats-chart.models';
 
@@ -137,7 +140,11 @@ describe('buildSetsByBucket / hasSetsData', () => {
       { timestamp: '2026-02-10T18:00:00', reps: 15 },
     ];
     // when
-    const map = buildSetsByBucket(entries, 'daily', '24h');
+    const map = buildSetsByBucket(entries, {
+      granularity: 'daily',
+      dayChartMode: '24h',
+      from: null,
+    });
     const ts = new Date(2026, 1, 10).getTime();
     // then
     expect(map.get(ts)).toEqual({
@@ -149,6 +156,61 @@ describe('buildSetsByBucket / hasSetsData', () => {
     expect(hasSetsData(map)).toBe(true);
   });
 
+  it('should collapse a week onto its ISO Monday bucket', () => {
+    // given — a Wednesday and the Sunday closing the same ISO week
+    const entries: StatsChartEntry[] = [
+      { timestamp: '2026-06-17T09:00:00', reps: 30, sets: [10, 20] },
+      { timestamp: '2026-06-21T18:00:00', reps: 15 },
+    ];
+    // when
+    const map = buildSetsByBucket(entries, {
+      granularity: 'weekly',
+      dayChartMode: '24h',
+      from: null,
+    });
+    const monday = new Date(2026, 5, 15).getTime();
+    // then
+    expect(map.size).toBe(1);
+    expect(map.get(monday)).toMatchObject({ setsReps: 30, noSetsReps: 15 });
+  });
+
+  it('should key sets onto the same bucket the bar series uses', () => {
+    // given — the sets map drives the stacked bar heights, so a bucket
+    // derived differently from `bucketKeyForTimestamp` would stack one
+    // week's sets onto another week's bar. Timestamps carry an explicit
+    // offset, which is exactly where the two derivations can diverge.
+    const timestamp = '2026-06-22T01:00+02:00';
+    const opts = {
+      granularity: 'weekly' as const,
+      dayChartMode: '24h' as const,
+      from: null,
+    };
+    // when
+    const map = buildSetsByBucket([{ timestamp, reps: 10 }], opts);
+    // then
+    expect([...map.keys()]).toEqual([
+      bucketToTs(bucketKeyForTimestamp(timestamp, opts)),
+    ]);
+  });
+
+  it('should collapse a month onto its first-of-month bucket', () => {
+    // given
+    const entries: StatsChartEntry[] = [
+      { timestamp: '2026-06-02T09:00:00', reps: 10 },
+      { timestamp: '2026-06-28T09:00:00', reps: 20 },
+    ];
+    // when
+    const map = buildSetsByBucket(entries, {
+      granularity: 'monthly',
+      dayChartMode: '24h',
+      from: null,
+    });
+    const firstOfJune = new Date(2026, 5, 1).getTime();
+    // then
+    expect(map.size).toBe(1);
+    expect(map.get(firstOfJune)?.noSetsReps).toBe(30);
+  });
+
   it('should merge hours 0-7 into the midnight bucket in 14h hourly mode', () => {
     // given
     const entries: StatsChartEntry[] = [
@@ -156,7 +218,11 @@ describe('buildSetsByBucket / hasSetsData', () => {
       { timestamp: '2026-02-10T06:00:00', reps: 7 },
     ];
     // when
-    const map = buildSetsByBucket(entries, 'hourly', '14h');
+    const map = buildSetsByBucket(entries, {
+      granularity: 'hourly',
+      dayChartMode: '14h',
+      from: null,
+    });
     const midnight = new Date(2026, 1, 10, 0).getTime();
     // then
     expect(map.size).toBe(1);
@@ -170,8 +236,57 @@ describe('buildSetsByBucket / hasSetsData', () => {
       { timestamp: '2026-02-10T09:00:00', reps: 10, sets: [10] },
     ];
     // when
-    const map = buildSetsByBucket(entries, 'daily', '24h');
+    const map = buildSetsByBucket(entries, {
+      granularity: 'daily',
+      dayChartMode: '24h',
+      from: null,
+    });
     // then
     expect(hasSetsData(map)).toBe(false);
+  });
+});
+
+describe('movingAvgWindow', () => {
+  it('should only give daily buckets the wide seven-bucket window', () => {
+    // given / when / then — a month view holds 4-6 weekly bars, so a
+    // wider window would just redraw the series mean
+    expect(movingAvgWindow('daily')).toBe(7);
+    expect(movingAvgWindow('hourly')).toBe(3);
+    expect(movingAvgWindow('weekly')).toBe(3);
+    expect(movingAvgWindow('monthly')).toBe(3);
+  });
+});
+
+describe('axisBoundsForRange', () => {
+  it('should clamp daily ranges to the range itself', () => {
+    // given / when
+    const bounds = axisBoundsForRange('daily', '2026-06-15', '2026-06-21');
+    // then
+    expect(bounds.min).toBe(new Date(2026, 5, 15).getTime());
+    expect(bounds.max).toBe(new Date(2026, 5, 21, 23, 59, 59).getTime());
+  });
+
+  it('should widen weekly ranges to whole ISO weeks', () => {
+    // given — July 2026 opens on a Wednesday and ends on a Friday
+    const bounds = axisBoundsForRange('weekly', '2026-07-01', '2026-07-31');
+    // then — the partial first and last weeks are drawn in full
+    expect(bounds.min).toBe(new Date(2026, 5, 29).getTime());
+    expect(bounds.max).toBe(new Date(2026, 7, 2, 23, 59, 59).getTime());
+  });
+
+  it('should widen monthly ranges to whole calendar months', () => {
+    // given / when
+    const bounds = axisBoundsForRange('monthly', '2026-02-10', '2026-05-04');
+    // then
+    expect(bounds.min).toBe(new Date(2026, 1, 1).getTime());
+    expect(bounds.max).toBe(new Date(2026, 4, 31, 23, 59, 59).getTime());
+  });
+
+  it('should leave a bound open when its date is missing', () => {
+    // given / when
+    const bounds = axisBoundsForRange('daily', null, null);
+    // then
+    expect(bounds.min).toBeUndefined();
+    expect(bounds.max).toBeUndefined();
   });
 });

@@ -154,7 +154,7 @@ describe('exerciseColor', () => {
 describe('buildExerciseSeries', () => {
   const dailyOpts = {
     from: '2026-02-10',
-    isDayRange: false,
+    granularity: 'daily' as const,
     dayChartMode: '14h' as const,
     measurement: 'reps' as const,
   };

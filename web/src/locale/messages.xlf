@@ -7967,6 +7967,135 @@
         <source> Keine Sets-Daten vorhanden </source>
       </segment>
     </unit>
+    <unit id="chart.titleHourly">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:6</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Stundenwerte)</source>
+      </segment>
+    </unit>
+    <unit id="chart.titleDaily">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:7</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Tageswerte)</source>
+      </segment>
+    </unit>
+    <unit id="chart.titleWeekly">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:8</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Wochenwerte)</source>
+      </segment>
+    </unit>
+    <unit id="chart.titleMonthly">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:9</note>
+      </notes>
+      <segment>
+        <source>Verlauf (Monatswerte)</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.reps.range">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:18</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.time.range">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:19</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.distance">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:20</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.weight.range">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:21</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.subtitle.mixed.range">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:22</note>
+      </notes>
+      <segment>
+        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
+      </segment>
+    </unit>
+    <unit id="chart.interval">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:26</note>
+      </notes>
+      <segment>
+        <source>Intervallwert</source>
+      </segment>
+    </unit>
+    <unit id="chart.dayIntegral">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:27</note>
+      </notes>
+      <segment>
+        <source>Tages-Integral</source>
+      </segment>
+    </unit>
+    <unit id="chart.cumulative">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:28</note>
+      </notes>
+      <segment>
+        <source>Kumuliert</source>
+      </segment>
+    </unit>
+    <unit id="chart.kmPace">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:29</note>
+      </notes>
+      <segment>
+        <source>km Tempo</source>
+      </segment>
+    </unit>
+    <unit id="chart.movingAvg">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:30</note>
+      </notes>
+      <segment>
+        <source>Gleitender Durchschnitt</source>
+      </segment>
+    </unit>
+    <unit id="chart.setsTooltip">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:31</note>
+      </notes>
+      <segment>
+        <source>Sets</source>
+      </segment>
+    </unit>
+    <unit id="chart.withSets">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:32</note>
+        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.html:53,54</note>
+      </notes>
+      <segment>
+        <source>Mit Sets</source>
+      </segment>
+    </unit>
     <unit id="chart.modeToggleAria">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.html:14,15</note>
@@ -7997,111 +8126,6 @@
       </notes>
       <segment>
         <source>Legende</source>
-      </segment>
-    </unit>
-    <unit id="chart.withSets">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.html:53,54</note>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:183</note>
-      </notes>
-      <segment>
-        <source>Mit Sets</source>
-      </segment>
-    </unit>
-    <unit id="chart.titleHourly">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:82</note>
-      </notes>
-      <segment>
-        <source>Verlauf (Stundenwerte)</source>
-      </segment>
-    </unit>
-    <unit id="chart.titleDaily">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:83</note>
-      </notes>
-      <segment>
-        <source>Verlauf (Tageswerte)</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.reps">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:95</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.time">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:96</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.distance">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:97</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen deine Strecke (km) pro Zeitabschnitt. Die orange Linie zeigt dein Tempo (min/km), die grüne deinen Strecken-Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.weight">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:98</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.subtitle.mixed">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:99</note>
-      </notes>
-      <segment>
-        <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Tag, die grüne zeigt deinen Trend.</source>
-      </segment>
-    </unit>
-    <unit id="chart.interval">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:111</note>
-      </notes>
-      <segment>
-        <source>Intervallwert</source>
-      </segment>
-    </unit>
-    <unit id="chart.dayIntegral">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:112</note>
-      </notes>
-      <segment>
-        <source>Tages-Integral</source>
-      </segment>
-    </unit>
-    <unit id="chart.kmPace">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:113</note>
-      </notes>
-      <segment>
-        <source>km Tempo</source>
-      </segment>
-    </unit>
-    <unit id="chart.movingAvg">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:114</note>
-      </notes>
-      <segment>
-        <source>Gleitender Durchschnitt</source>
-      </segment>
-    </unit>
-    <unit id="chart.setsTooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.ts:182</note>
-      </notes>
-      <segment>
-        <source>Sets</source>
       </segment>
     </unit>
     <unit id="entriesTitle">

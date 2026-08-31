@@ -26,7 +26,7 @@ function input(
     monthRows: [],
     monday: new Date(2026, 5, 15),
     monthStart: new Date(2026, 5, 1),
-    chart: { from: '2026-06-15', isDayRange: false, dayChartMode: '14h' },
+    chart: { from: '2026-06-15', granularity: 'daily', dayChartMode: '14h' },
     breakdown: { view: 'core', kinds: [], locale: 'en' },
     exerciseOrder: [],
     optionRows: [],

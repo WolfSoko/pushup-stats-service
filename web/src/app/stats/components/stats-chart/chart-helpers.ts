@@ -1,5 +1,10 @@
 import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
 import {
+  bucketKeyForTimestamp,
+  type ChartBucketOptions,
+} from '../../analysis/chart-series';
+import { startOfIsoWeek } from '../../analysis/trend-math';
+import {
   BucketSetsInfo,
   ChartMeasurement,
   StatsChartEntry,
@@ -31,6 +36,68 @@ export function formatCustomHourBlock(
   return isGermanLocale ? '00-07h' : '12AM-7AM';
 }
 
+/**
+ * Trend-line window, in buckets. Coarser buckets already smooth the
+ * data, so they average over fewer of them — a 7-bucket window over the
+ * 4–6 weekly bars a month view produces would just redraw the series
+ * mean, which is the opposite of a trend.
+ */
+export function movingAvgWindow(granularity: StatsGranularity): number {
+  return granularity === 'daily' ? 7 : 3;
+}
+
+/**
+ * Time-axis bounds widened to whole buckets, so a week or month only
+ * partly covered by the filter range still gets its full bar drawn
+ * instead of being clipped at the range edge.
+ */
+export function axisBoundsForRange(
+  granularity: StatsGranularity,
+  from: string | null,
+  to: string | null
+): { min: number | undefined; max: number | undefined } {
+  return {
+    min: from
+      ? bucketStartOf(new Date(`${from}T00:00:00`), granularity).getTime()
+      : undefined,
+    max: to
+      ? bucketEndOf(new Date(`${to}T00:00:00`), granularity).getTime()
+      : undefined,
+  };
+}
+
+function bucketStartOf(date: Date, granularity: StatsGranularity): Date {
+  if (granularity === 'weekly') return startOfIsoWeek(date);
+  if (granularity === 'monthly')
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function bucketEndOf(date: Date, granularity: StatsGranularity): Date {
+  if (granularity === 'weekly') {
+    const monday = startOfIsoWeek(date);
+    return new Date(
+      monday.getFullYear(),
+      monday.getMonth(),
+      monday.getDate() + 6,
+      23,
+      59,
+      59
+    );
+  }
+  if (granularity === 'monthly') {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59);
+  }
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    23,
+    59,
+    59
+  );
+}
+
 export function computeMovingAvg(
   totals: number[],
   windowSize: number
@@ -58,32 +125,15 @@ export function buildBucketLabelByTs(
 
 export function buildSetsByBucket(
   entries: StatsChartEntry[],
-  granularity: StatsGranularity,
-  dayChartMode: '24h' | '14h'
+  opts: ChartBucketOptions
 ): Map<number, BucketSetsInfo> {
-  const isHourly = granularity === 'hourly';
-  const is14h = isHourly && dayChartMode === '14h';
   const setsByBucket = new Map<number, BucketSetsInfo>();
   for (const entry of entries) {
-    const date = new Date(entry.timestamp);
-    let bucketTs: number;
-    if (isHourly) {
-      const hour = date.getHours();
-      // In 14h mode, hours 0-7 merge into the 00:00 bucket
-      const mappedHour = is14h && hour < 8 ? 0 : hour;
-      bucketTs = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        mappedHour
-      ).getTime();
-    } else {
-      bucketTs = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
-      ).getTime();
-    }
+    // Keyed through the very function that builds the bar series: this
+    // map drives the stacked bar heights, not just the tooltip, so a
+    // bucketing that drifts by even a day would stack one week's sets
+    // onto another week's bar.
+    const bucketTs = bucketToTs(bucketKeyForTimestamp(entry.timestamp, opts));
     const info = setsByBucket.get(bucketTs) ?? {
       setsReps: 0,
       noSetsReps: 0,

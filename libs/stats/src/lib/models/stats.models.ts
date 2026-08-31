@@ -1,5 +1,5 @@
 // Domain-specific statistics types
-export type StatsGranularity = 'daily' | 'hourly';
+export type StatsGranularity = 'hourly' | 'daily' | 'weekly' | 'monthly';
 
 export interface StatsMeta {
   from: string | null;

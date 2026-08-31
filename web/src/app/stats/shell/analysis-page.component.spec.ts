@@ -974,6 +974,70 @@ describe('AnalysisPageComponent', () => {
       expect(store.viewGranularity()).toBe('daily');
     });
 
+    it('viewGranularity coarsens the buckets as the filter period grows', () => {
+      // given
+      const { store } = fixture.componentInstance;
+      // when — a full calendar month
+      store.setRange('2026-02-01', '2026-02-28');
+      // then
+      expect(store.viewGranularity()).toBe('weekly');
+
+      // when — a full calendar year
+      store.setRange('2026-01-01', '2026-12-31');
+      // then
+      expect(store.viewGranularity()).toBe('monthly');
+    });
+
+    it('viewGranularity keeps daily buckets for a short custom range', () => {
+      // given
+      const { store } = fixture.componentInstance;
+      // when — nine days, neither a whole week nor a whole month
+      store.setRange('2026-02-03', '2026-02-11');
+      // then
+      expect(store.viewGranularity()).toBe('daily');
+    });
+
+    it('viewGranularity coarsens a custom range by its span', () => {
+      // given — a custom range carries no period to read the bucket
+      // size off, so its length has to pick one.
+      const { store } = fixture.componentInstance;
+      // when — roughly three months
+      store.setRange('2026-01-05', '2026-04-04');
+      // then
+      expect(store.viewGranularity()).toBe('weekly');
+
+      // when — roughly two years
+      store.setRange('2025-01-05', '2026-12-04');
+      // then
+      expect(store.viewGranularity()).toBe('monthly');
+    });
+
+    it('viewSegments rolls a month filter up into ISO-week buckets', () => {
+      // given — every seeded entry falls in the week of 9 February
+      const { store } = fixture.componentInstance;
+      store.setActiveView('core');
+      // when
+      store.setRange('2026-02-01', '2026-02-28');
+      const series = store.viewSegments()[0].series;
+      // then
+      expect(series).toEqual([
+        { bucket: '2026-02-09', total: 30, dayIntegral: 30 },
+      ]);
+    });
+
+    it('viewSegments rolls a year filter up into month buckets', () => {
+      // given
+      const { store } = fixture.componentInstance;
+      store.setActiveView('core');
+      // when
+      store.setRange('2026-01-01', '2026-12-31');
+      const series = store.viewSegments()[0].series;
+      // then
+      expect(series).toEqual([
+        { bucket: '2026-02-01', total: 30, dayIntegral: 30 },
+      ]);
+    });
+
     it('viewSegments switches to hourly buckets when the page filter is a single day', () => {
       // Single-day ranges flip the API to hourly granularity. The
       // view-scoped chart must mirror that bucketing on view-filtered

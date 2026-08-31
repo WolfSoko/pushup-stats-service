@@ -23,7 +23,7 @@ export interface TeaserTabVm {
 
 const CHART_OPTS = {
   from: null,
-  isDayRange: false,
+  granularity: 'daily',
   dayChartMode: '14h',
 } as const;
 

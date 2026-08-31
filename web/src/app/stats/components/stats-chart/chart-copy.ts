@@ -50,6 +50,29 @@ export function unitSuffix(measurement: ChartMeasurement): string {
   }
 }
 
+/**
+ * Bare unit for the y-axis title — the same units as
+ * {@link unitSuffix} without its parentheses. `''` for mixed/unknown
+ * views, where no single unit describes the bars.
+ */
+export function axisUnit(measurement: ChartMeasurement): string {
+  return unitSuffix(measurement).replace(/^ \(|\)$/g, '');
+}
+
+/**
+ * Unit of the right-hand line: pace in `min/km`, otherwise the running
+ * total of the bars — same unit, prefixed with a sigma so the two axes
+ * stay distinguishable.
+ */
+export function secondaryAxisUnit(
+  paceMode: boolean,
+  measurement: ChartMeasurement
+): string {
+  if (paceMode) return 'min/km';
+  const unit = axisUnit(measurement);
+  return unit ? `Σ ${unit}` : '';
+}
+
 export function secondaryLegendText(
   paceMode: boolean,
   paceLabel: string,

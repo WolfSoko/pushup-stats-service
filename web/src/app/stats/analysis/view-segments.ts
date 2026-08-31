@@ -14,6 +14,7 @@ import {
   buildViewChartEntries,
   buildViewChartSeries,
   buildViewPaceSeries,
+  type ChartBucketOptions,
 } from './chart-series';
 import {
   buildExerciseSeries,
@@ -77,11 +78,7 @@ export interface AnalysisSegmentInput {
   monthRows: ReadonlyArray<UnifiedEntry>;
   monday: Date;
   monthStart: Date;
-  chart: {
-    from: string | null;
-    isDayRange: boolean;
-    dayChartMode: '14h' | '24h';
-  };
+  chart: ChartBucketOptions;
   breakdown: {
     view: AnalysisView;
     kinds: ReadonlyArray<UnifiedEntryFilterKey>;

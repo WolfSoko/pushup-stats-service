@@ -6,7 +6,7 @@ import {
 } from '@pu-stats/models';
 import { PIE_PALETTE } from '../components/type-pie/type-pie-data';
 import { measurementScale } from './category-facets';
-import { bucketKeyForTimestamp } from './chart-series';
+import { bucketKeyForTimestamp, type ChartBucketOptions } from './chart-series';
 
 /**
  * Bar colours, ordered. Opens with the type-pie's palette so the two
@@ -123,10 +123,7 @@ export function buildExerciseSeries(
   rows: ReadonlyArray<UnifiedEntry>,
   buckets: ReadonlyArray<string>,
   order: ReadonlyArray<string>,
-  opts: {
-    from: string | null;
-    isDayRange: boolean;
-    dayChartMode: '14h' | '24h';
+  opts: ChartBucketOptions & {
     measurement: MeasurementType | 'mixed' | null;
   }
 ): ExerciseSeries[] {
@@ -136,11 +133,7 @@ export function buildExerciseSeries(
 
   const byExercise = new Map<string, number[]>();
   for (const row of rows) {
-    const key = bucketKeyForTimestamp(row.timestamp, {
-      isDayRange: opts.isDayRange,
-      dayChartMode: opts.dayChartMode,
-      from: opts.from,
-    });
+    const key = bucketKeyForTimestamp(row.timestamp, opts);
     const idx = bucketIndex.get(key);
     if (idx === undefined) continue;
     const exerciseId = unifiedEntryFilterKey(row);
