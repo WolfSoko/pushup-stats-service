@@ -98,6 +98,18 @@ export class AnalysisSegmentViewComponent {
   });
 
   /**
+   * Every exercise this block could draw is unchecked. Drives the
+   * placeholder's copy: "no entries in this period" would be a lie
+   * when the entries exist and the user simply hid them.
+   */
+  readonly allHidden = computed(() => {
+    const optionIds = this.segment().exerciseOptionIds;
+    if (optionIds.length === 0) return false;
+    const hidden = this.hiddenExerciseIds();
+    return optionIds.every((id) => hidden.includes(id));
+  });
+
+  /**
    * A one-exercise segment has nothing to split — its stack would be
    * the aggregate bar in a different colour — so the breakdown stays
    * empty and the chart keeps its sets stacking.

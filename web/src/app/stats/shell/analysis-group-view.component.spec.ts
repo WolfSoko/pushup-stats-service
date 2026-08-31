@@ -1078,6 +1078,117 @@ describe('AnalysisGroupViewComponent', () => {
     expect(crunches?.checked).toBe(false);
   });
 
+  it('should keep the chart block and its checkboxes after every exercise is unchecked', async () => {
+    // Regression: the segment list was built from the *filtered* rows,
+    // so unchecking everything produced no segments at all — taking the
+    // checkboxes down with the chart and leaving no way back.
+    // given
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'e2',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        reps: 20,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // when — the user unchecks every exercise the block can draw
+    store.toggleExerciseVisibility('abs.situps');
+    store.toggleExerciseVisibility('abs.crunches');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then — the block survives with an empty chart in place of the bars
+    const host: HTMLElement = fixture.nativeElement;
+    expect(store.viewSegments()).toHaveLength(1);
+    expect(host.querySelector('app-stats-chart')).toBeNull();
+    expect(
+      host.querySelector('[data-testid="segment-chart-placeholder-reps"]')
+    ).toBeTruthy();
+
+    // and both checkboxes are still there, unchecked, to undo it
+    const situps = host.querySelector<HTMLInputElement>(
+      '[data-testid="exercise-breakdown-choice-abs.situps"] input'
+    );
+    const crunches = host.querySelector<HTMLInputElement>(
+      '[data-testid="exercise-breakdown-choice-abs.crunches"] input'
+    );
+    expect(situps?.checked).toBe(false);
+    expect(crunches?.checked).toBe(false);
+
+    // and the copy names the real reason rather than blaming the range
+    expect(
+      host.querySelector('[data-testid="segment-chart-placeholder-reps"]')
+        ?.textContent
+    ).toContain('ausgeblendet');
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-empty"]')
+    ).toBeNull();
+
+    // when — checking one back on
+    situps?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(host.querySelector('app-stats-chart')).toBeTruthy();
+    expect(
+      host.querySelector('[data-testid="segment-chart-placeholder-reps"]')
+    ).toBeNull();
+  });
+
+  it('should still blame the range when the range really is empty', async () => {
+    // given — entries exist, but outside the selected window
+    liveExerciseEntries.set([
+      {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-01-05T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+
+    // when
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    expect(
+      host.querySelector('[data-testid="analysis-group-view-empty"]')
+    ).toBeTruthy();
+  });
+
   it('should explain the measurement split only while a view actually mixes units', async () => {
     // given
     liveExerciseEntries.set([

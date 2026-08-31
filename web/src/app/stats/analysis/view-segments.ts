@@ -101,12 +101,18 @@ export interface AnalysisSegmentInput {
 }
 
 /**
- * One segment per measurement present in the visible range **or** in a
- * trend window. The trend windows are fixed (8 weeks / 6 months) and
- * independent of the page filter, so a measurement whose entries all
- * fall outside the filter still contributes its trend tables — the
- * segment then carries `hasRangeRows: false` and the caller skips its
- * chart and KPI cards.
+ * One segment per measurement present in the visible range, in a trend
+ * window, **or** merely offered by the visibility checkboxes. The trend
+ * windows are fixed (8 weeks / 6 months) and independent of the page
+ * filter, so a measurement whose entries all fall outside the filter
+ * still contributes its trend tables — the segment then carries
+ * `hasRangeRows: false` and the caller renders an empty chart in place
+ * of the bars and KPI cards.
+ *
+ * The `optionRows` arm is what keeps a block alive once the user
+ * unchecks every exercise in it: dropping the segment would drop the
+ * checkboxes with it, stranding the user with no way to check anything
+ * back on.
  */
 export function buildAnalysisSegments(
   input: AnalysisSegmentInput
@@ -122,7 +128,15 @@ export function buildAnalysisSegments(
     const rangeRows = byRange.get(measurement) ?? [];
     const weekRows = byWeek.get(measurement) ?? [];
     const monthRows = byMonth.get(measurement) ?? [];
-    if (!rangeRows.length && !weekRows.length && !monthRows.length) continue;
+    const optionRows = byOption.get(measurement) ?? [];
+    if (
+      !rangeRows.length &&
+      !weekRows.length &&
+      !monthRows.length &&
+      !optionRows.length
+    ) {
+      continue;
+    }
 
     const seriesOpts = { ...input.chart, measurement };
     const series = buildViewChartSeries(rangeRows, seriesOpts);
@@ -138,7 +152,7 @@ export function buildAnalysisSegments(
         input.exerciseOrder,
         seriesOpts
       ),
-      exerciseOptionIds: collectExerciseIds(byOption.get(measurement) ?? []),
+      exerciseOptionIds: collectExerciseIds(optionRows),
       bestEntry: computeBestSingleEntry(rangeRows),
       bestDay: computeBestDay(rangeRows),
       bestSingleSet: computeBestSingleSet(rangeRows),

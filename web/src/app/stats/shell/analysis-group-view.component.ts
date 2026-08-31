@@ -63,10 +63,16 @@ export class AnalysisGroupViewComponent {
    * `showEmptyCta` gate when the whole dataset is empty, and the
    * overview tab renders `<app-analysis-overview>` instead of this
    * component, which has its own empty-state copy.
+   *
+   * Reads the rows *before* the visibility filter on purpose: a range
+   * emptied by unchecking every exercise holds entries, and saying it
+   * doesn't would send the user hunting for a filter they never
+   * changed. Each measurement block states that case itself, next to
+   * the checkboxes that undo it.
    */
   readonly isEmptyRange = computed(
     () =>
       this.store.activeView() !== 'overview' &&
-      this.store.viewFilteredRows().length === 0
+      this.store.viewRowsBeforeHiding().length === 0
   );
 }

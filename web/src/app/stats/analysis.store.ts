@@ -405,6 +405,7 @@ export const AnalysisStore = signalStore(
       viewMeasurement,
       unifiedRows,
       visibleRows,
+      viewRowsBeforeHiding,
       hasCategorisableRows,
       exerciseOptions,
       exerciseChoices,

@@ -11306,5 +11306,11 @@
         <target> Tout afficher </target>
       </segment>
     </unit>
+    <unit id="analysis.placeholder.allHidden">
+      <segment state="initial">
+        <source> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </source>
+        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

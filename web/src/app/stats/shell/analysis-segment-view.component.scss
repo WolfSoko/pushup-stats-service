@@ -71,3 +71,28 @@ mat-card-content {
     grid-template-columns: 1fr;
   }
 }
+
+/* Placeholder for a block whose chart has nothing to draw: keeps the
+   page height and the controls above it stable, so unchecking the last
+   exercise doesn't collapse the block the checkboxes live in. */
+.chart-placeholder .placeholder-frame {
+  position: relative;
+  height: 180px;
+  border-inline-start: 1px solid rgba(148, 163, 184, 0.35);
+  border-block-end: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+.chart-placeholder .placeholder-axis {
+  position: absolute;
+  inset-block-end: 33%;
+  inset-inline: 0;
+  border-block-end: 1px dashed rgba(148, 163, 184, 0.25);
+}
+.chart-placeholder .placeholder-note {
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.75;
+  max-width: 60ch;
+}
