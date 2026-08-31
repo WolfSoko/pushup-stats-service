@@ -27,6 +27,7 @@ function optionsFor(
     },
     localeId: 'de-DE',
     setsTooltipLabel: 'Sets',
+    weekAbbrev: 'KW',
     yAxisTitle: 'Reps',
     ySecondaryAxisTitle: 'Σ Reps',
     ...overrides,
@@ -82,6 +83,24 @@ describe('buildChartOptions weekly tick alignment', () => {
   });
 });
 
+describe('buildChartOptions weekly tick labels', () => {
+  it('should label a weekly bucket with its ISO week number', () => {
+    // given — the Monday opening ISO week 25 of 2026
+    const scale = xScale(
+      optionsFor({
+        granularity: 'weekly',
+        rangeMode: 'month',
+        from: '2026-06-01',
+        to: '2026-06-30',
+      })
+    );
+    // when
+    const tick = scale.ticks.callback(new Date(2026, 5, 15).getTime());
+    // then — the Monday's date alone would read as a single day
+    expect(tick).toBe('KW 25');
+  });
+});
+
 describe('buildChartOptions monthly tick labels', () => {
   function tickFor(from: string, to: string): string {
     const scale = xScale(
@@ -89,6 +108,13 @@ describe('buildChartOptions monthly tick labels', () => {
     );
     return scale.ticks.callback(new Date(2026, 0, 1).getTime());
   }
+
+  it('should label a monthly bucket with the month name', () => {
+    // given / when
+    const tick = tickFor('2026-01-01', '2026-12-31');
+    // then
+    expect(tick).toBe('Jan');
+  });
 
   it('should print bare month names inside a single calendar year', () => {
     // given / when
@@ -146,7 +172,8 @@ describe('buildChartOptions tooltip titles', () => {
       from: '2026-06-01',
       to: '2026-06-30',
     });
-    // then
+    // then — the week number ties the tooltip back to its "KW 25" tick
+    expect(title).toContain('KW 25');
     expect(title).toContain('15.06');
     expect(title).toContain('21.06');
   });

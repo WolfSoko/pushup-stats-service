@@ -179,6 +179,8 @@ Everything that keys off a bucket routes through the one `bucketKeyForTimestamp`
 
 Bucket keys stay sortable date strings — a week is keyed by its ISO Monday, a month by its first day — so `bucketToTs` needs no special case. The week is read off the timestamp's ISO date prefix, never off `new Date(timestamp)`, so an entry logged late at night with an explicit offset can't slide into the neighbouring week.
 
+Weekly ticks are labelled `KW <n>` (`formatWeekLabel`, ISO week number) and monthly ones by month name — a weekly bar labelled with its Monday's date reads as a single day. The tooltip repeats the week number so tick and tooltip name the same thing.
+
 Two things follow from Monday-keyed buckets on the Chart.js time axis: the scale needs `isoWeekday: true` or it draws its week gridlines on Sundays, one day off the bars they label; and `axisBoundsForRange` widens the axis to whole buckets so a week straddling the range edge still draws full-width. That edge bar only counts its in-range days, so the weekly tooltip clips its span to the filter range rather than claiming a full Mon–Sun week.
 
 A `custom` range has no period to read the bucket off, so its **span** picks one: up to 5 weeks stays daily, up to 26 weeks goes weekly, anything longer monthly. The thresholds are chosen to land in the same bar count the named periods produce — otherwise dragging the date pickers across two years would ask the chart for 700 daily bars.

@@ -8087,9 +8087,17 @@
         <source>Sets</source>
       </segment>
     </unit>
-    <unit id="chart.withSets">
+    <unit id="chart.weekAbbrev">
       <notes>
         <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:32</note>
+      </notes>
+      <segment>
+        <source>KW</source>
+      </segment>
+    </unit>
+    <unit id="chart.withSets">
+      <notes>
+        <note category="location">web/src/app/stats/components/stats-chart/chart-messages.ts:33</note>
         <note category="location">web/src/app/stats/components/stats-chart/stats-chart.component.html:53,54</note>
       </notes>
       <segment>

@@ -9,6 +9,7 @@ import {
   computeMovingAvg,
   formatCustomHourBlock,
   formatHourLabel,
+  formatWeekLabel,
   hasSetsData,
   movingAvgWindow,
 } from './chart-helpers';
@@ -243,6 +244,22 @@ describe('buildSetsByBucket / hasSetsData', () => {
     });
     // then
     expect(hasSetsData(map)).toBe(false);
+  });
+});
+
+describe('formatWeekLabel', () => {
+  it('should render the ISO week number behind the localised prefix', () => {
+    // given — Monday of ISO week 25, 2026
+    const label = formatWeekLabel(new Date(2026, 5, 15), 'KW');
+    // then
+    expect(label).toBe('KW 25');
+  });
+
+  it('should count a January week into the year it belongs to', () => {
+    // given — 1 January 2026 falls into ISO week 1
+    const label = formatWeekLabel(new Date(2026, 0, 1), 'KW');
+    // then
+    expect(label).toBe('KW 1');
   });
 });
 

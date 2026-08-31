@@ -29,6 +29,7 @@ export const CHART_LABELS = {
   pace: $localize`:@@chart.kmPace:km Tempo`,
   movingAvg: $localize`:@@chart.movingAvg:Gleitender Durchschnitt`,
   setsTooltip: $localize`:@@chart.setsTooltip:Sets`,
+  weekAbbrev: $localize`:@@chart.weekAbbrev:KW`,
   withSets: $localize`:@@chart.withSets:Mit Sets`,
 };
 

@@ -10739,5 +10739,11 @@ Deine Position: # ·  Reps        </source>
         <target>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
       </segment>
     </unit>
+    <unit id="chart.weekAbbrev">
+      <segment state="initial">
+        <source>KW</source>
+        <target>KW</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

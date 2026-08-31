@@ -235,6 +235,7 @@ export class StatsChartComponent implements AfterViewInit {
       colors: readThemeColors(),
       localeId: this.localeId,
       setsTooltipLabel: CHART_LABELS.setsTooltip,
+      weekAbbrev: CHART_LABELS.weekAbbrev,
       yAxisTitle: axisUnitForMeasurement(measurement),
       ySecondaryAxisTitle: buildSecondaryAxisUnit(paceMode, measurement),
     });

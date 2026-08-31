@@ -7,6 +7,7 @@ import {
   bucketToTs,
   formatCustomHourBlock,
   formatHourLabel,
+  formatWeekLabel,
 } from './chart-helpers';
 
 export interface ChartThemeColors {
@@ -35,6 +36,8 @@ export interface ChartOptionsInputs {
   colors: ChartThemeColors;
   localeId: string;
   setsTooltipLabel: string;
+  /** Localised "calendar week" abbreviation, e.g. `KW`. */
+  weekAbbrev: string;
   /** Unit of the bar values, e.g. `'km'`; `''` hides the axis title. */
   yAxisTitle: string;
   /** Unit of the right-hand line, e.g. `'min/km'`; `''` hides it. */
@@ -101,6 +104,7 @@ export function buildChartOptions(
     colors,
     localeId,
     setsTooltipLabel,
+    weekAbbrev,
     yAxisTitle,
     ySecondaryAxisTitle,
   } = inputs;
@@ -144,14 +148,17 @@ export function buildChartOptions(
   const formatBucketTitle = (ts: number): string => {
     const date = new Date(ts);
     if (granularity !== 'weekly') return tooltipTitleFormatter.format(date);
+    const week = formatWeekLabel(date, weekAbbrev);
     const start = from ? Math.max(ts, bucketToTs(from)) : ts;
     const weekEnd = new Date(date);
     weekEnd.setDate(date.getDate() + 6);
     const end = to
       ? Math.min(weekEnd.getTime(), bucketToTs(to))
       : weekEnd.getTime();
-    if (start === end) return tooltipTitleFormatter.format(new Date(start));
-    return `${weekStartFormatter.format(new Date(start))} – ${tooltipTitleFormatter.format(new Date(end))}`;
+    if (start === end) {
+      return `${week} · ${tooltipTitleFormatter.format(new Date(start))}`;
+    }
+    return `${week} · ${weekStartFormatter.format(new Date(start))} – ${tooltipTitleFormatter.format(new Date(end))}`;
   };
 
   const axisBounds = axisBoundsForRange(granularity, from, to);
@@ -186,6 +193,9 @@ export function buildChartOptions(
             if (custom) return formatCustomHourBlock(custom, isGermanLocale);
             if (granularity === 'hourly') {
               return formatHourLabel(new Date(ts), isGermanLocale);
+            }
+            if (granularity === 'weekly') {
+              return formatWeekLabel(new Date(ts), weekAbbrev);
             }
             return xTickFormatter.format(new Date(ts));
           },

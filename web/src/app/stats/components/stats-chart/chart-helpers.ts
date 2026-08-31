@@ -3,7 +3,7 @@ import {
   bucketKeyForTimestamp,
   type ChartBucketOptions,
 } from '../../analysis/chart-series';
-import { startOfIsoWeek } from '../../analysis/trend-math';
+import { isoWeek, startOfIsoWeek } from '../../analysis/trend-math';
 import {
   BucketSetsInfo,
   ChartMeasurement,
@@ -26,6 +26,15 @@ export function formatHourLabel(value: Date, isGermanLocale: boolean): string {
   const suffix = hour < 12 ? 'AM' : 'PM';
   const hour12 = hour % 12 === 0 ? 12 : hour % 12;
   return `${hour12}${suffix}`;
+}
+
+/**
+ * `KW 25` — the bucket's ISO week number behind a localised
+ * abbreviation. A weekly bar labelled by its Monday's date reads as a
+ * single day; the week number says what the bar actually spans.
+ */
+export function formatWeekLabel(date: Date, weekAbbrev: string): string {
+  return `${weekAbbrev} ${isoWeek(date)}`;
 }
 
 export function formatCustomHourBlock(
