@@ -1441,6 +1441,7 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
       imports: [AnalysisPageComponent],
       providers: [
         provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: splitApiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
@@ -1511,6 +1512,7 @@ describe('AnalysisPageComponent empty-state vs populated trends', () => {
 
   afterEach(() => {
     vitest.useRealTimers();
+    TestBed.resetTestingModule();
   });
 
   it('hides the empty CTA when fixed-window trends have data', () => {
@@ -1551,6 +1553,7 @@ describe('AnalysisStore fixed-window trend filters', () => {
       imports: [AnalysisPageComponent],
       providers: [
         provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'server' },
         { provide: StatsApiService, useValue: apiMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
