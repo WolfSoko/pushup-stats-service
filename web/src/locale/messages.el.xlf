@@ -11435,9 +11435,9 @@
       </segment>
     </unit>
     <unit id="analysis.placeholder.allHidden">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </source>
-        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </target>
+        <target> Όλες οι ασκήσεις αυτού του διαγράμματος είναι κρυμμένες. Επιλέξτε ένα πλαίσιο παραπάνω για να τις εμφανίσετε ξανά. </target>
       </segment>
     </unit>
 </file>

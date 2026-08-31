@@ -11634,9 +11634,9 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.placeholder.allHidden">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </source>
-        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </target>
+        <target> All exercises in this chart are hidden. Check a box above to show them again. </target>
       </segment>
     </unit>
 </file>
