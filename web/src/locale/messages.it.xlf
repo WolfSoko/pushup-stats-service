@@ -11393,45 +11393,45 @@
       </segment>
     </unit>
     <unit id="analysis.breakdown.sectionAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darstellung der Übungen</source>
-        <target>Darstellung der Übungen</target>
+        <target>Visualizzazione degli esercizi</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.modeLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken</source>
-        <target>Balken</target>
+        <target>Barre</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.modeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken gestapelt oder nebeneinander</source>
-        <target>Balken gestapelt oder nebeneinander</target>
+        <target>Barre impilate o affiancate</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.stacked">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gestapelt</source>
-        <target>Gestapelt</target>
+        <target>Impilate</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.grouped">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nebeneinander</source>
-        <target>Nebeneinander</target>
+        <target>Affiancate</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.exercisesLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Esercizi</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.showAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle anzeigen </source>
-        <target> Alle anzeigen </target>
+        <target> Mostra tutto </target>
       </segment>
     </unit>
 </file>

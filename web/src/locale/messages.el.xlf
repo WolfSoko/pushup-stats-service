@@ -11393,45 +11393,45 @@
       </segment>
     </unit>
     <unit id="analysis.breakdown.sectionAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darstellung der Übungen</source>
-        <target>Darstellung der Übungen</target>
+        <target>Απεικόνιση των ασκήσεων</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.modeLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken</source>
-        <target>Balken</target>
+        <target>Ράβδοι</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.modeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken gestapelt oder nebeneinander</source>
-        <target>Balken gestapelt oder nebeneinander</target>
+        <target>Ράβδοι σε στοίβα ή δίπλα-δίπλα</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.stacked">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gestapelt</source>
-        <target>Gestapelt</target>
+        <target>Σε στοίβα</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.grouped">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nebeneinander</source>
-        <target>Nebeneinander</target>
+        <target>Δίπλα-δίπλα</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.exercisesLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Ασκήσεις</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.showAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle anzeigen </source>
-        <target> Alle anzeigen </target>
+        <target> Εμφάνιση όλων </target>
       </segment>
     </unit>
 </file>
