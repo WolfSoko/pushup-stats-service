@@ -11431,9 +11431,9 @@
       </segment>
     </unit>
     <unit id="analysis.placeholder.allHidden">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </source>
-        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein Häkchen, um sie wieder anzuzeigen. </target>
+        <target> Todos los ejercicios de este gráfico están ocultos. Marca una casilla arriba para volver a mostrarlos. </target>
       </segment>
     </unit>
 </file>
