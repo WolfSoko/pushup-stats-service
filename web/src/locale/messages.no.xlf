@@ -10686,45 +10686,45 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.breakdown.sectionAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darstellung der Übungen</source>
-        <target>Darstellung der Übungen</target>
+        <target>Visning av øvelser</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.modeLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken</source>
-        <target>Balken</target>
+        <target>Stolper</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.modeAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken gestapelt oder nebeneinander</source>
-        <target>Balken gestapelt oder nebeneinander</target>
+        <target>Stolper stablet eller side ved side</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.stacked">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gestapelt</source>
-        <target>Gestapelt</target>
+        <target>Stablet</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.grouped">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nebeneinander</source>
-        <target>Nebeneinander</target>
+        <target>Side ved side</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.exercisesLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Øvelser</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.showAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle anzeigen </source>
-        <target> Alle anzeigen </target>
+        <target> Vis alle </target>
       </segment>
     </unit>
 </file>
