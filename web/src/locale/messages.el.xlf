@@ -11453,21 +11453,21 @@
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.legendAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ein- oder ausblenden</source>
-        <target>Übungen ein- oder ausblenden</target>
+        <target>Εμφάνιση ή απόκρυψη ασκήσεων</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.exercisesAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ein- oder ausblenden</source>
-        <target>Übungen ein- oder ausblenden</target>
+        <target>Εμφάνιση ή απόκρυψη ασκήσεων</target>
       </segment>
     </unit>
     <unit id="analysis.placeholder.allHiddenLegend">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </source>
-        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </target>
+        <target> Όλες οι ασκήσεις αυτού του διαγράμματος είναι κρυφές. Πατήστε ένα όνομα άσκησης παραπάνω για να τις εμφανίσετε ξανά. </target>
       </segment>
     </unit>
 </file>

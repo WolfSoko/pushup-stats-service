@@ -10746,21 +10746,21 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.legendAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ein- oder ausblenden</source>
-        <target>Übungen ein- oder ausblenden</target>
+        <target>Vis eller skjul øvelser</target>
       </segment>
     </unit>
     <unit id="analysis.breakdown.exercisesAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen ein- oder ausblenden</source>
-        <target>Übungen ein- oder ausblenden</target>
+        <target>Vis eller skjul øvelser</target>
       </segment>
     </unit>
     <unit id="analysis.placeholder.allHiddenLegend">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </source>
-        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </target>
+        <target> Alle øvelser i dette diagrammet er skjult. Trykk på et øvelsesnavn ovenfor for å vise dem igjen. </target>
       </segment>
     </unit>
 </file>
