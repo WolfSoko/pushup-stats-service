@@ -8189,7 +8189,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:52,55</note>
         <note category="location">web/src/app/stats/shell/analysis-group-view.component.html:7,11</note>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:43,46</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:46,49</note>
       </notes>
       <segment>
         <source> Keine Einträge im gewählten Zeitraum. </source>
@@ -9628,7 +9628,7 @@
     </unit>
     <unit id="analysis.placeholder.allHiddenLegend">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:38,42</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:41,45</note>
       </notes>
       <segment>
         <source> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </source>
@@ -9636,7 +9636,7 @@
     </unit>
     <unit id="analysis.bestValuesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:74,76</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:77,79</note>
       </notes>
       <segment>
         <source>Bestwerte</source>
@@ -9644,7 +9644,7 @@
     </unit>
     <unit id="analysis.bestSingleEntry">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:80,82</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:83,85</note>
       </notes>
       <segment>
         <source>Bestwert Einzel-Eintrag:</source>
@@ -9652,7 +9652,7 @@
     </unit>
     <unit id="analysis.bestDay">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:87,88</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:90,91</note>
       </notes>
       <segment>
         <source>Bester Tag:</source>
@@ -9660,7 +9660,7 @@
     </unit>
     <unit id="analysis.bestSingleSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:95,97</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:98,100</note>
       </notes>
       <segment>
         <source>Bestes Einzel-Set:</source>
@@ -9668,7 +9668,7 @@
     </unit>
     <unit id="analysis.repsUnit">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:98,100</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:101,103</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -9676,7 +9676,7 @@
     </unit>
     <unit id="analysis.typesTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:108,110</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:111,113</note>
       </notes>
       <segment>
         <source>Typen (Anteile)</source>
@@ -9684,7 +9684,7 @@
     </unit>
     <unit id="analysis.avgSetSizeTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:122,123</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:125,126</note>
       </notes>
       <segment>
         <source>⌀ Set-Größe</source>
@@ -9692,7 +9692,7 @@
     </unit>
     <unit id="analysis.repsPerSet">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:127,128</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:130,131</note>
       </notes>
       <segment>
         <source>Reps / Set</source>
@@ -9700,7 +9700,7 @@
     </unit>
     <unit id="analysis.setsDistTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:136,138</note>
+        <note category="location">web/src/app/stats/shell/analysis-segment-view.component.html:139,141</note>
       </notes>
       <segment>
         <source>Sets-Verteilung</source>
