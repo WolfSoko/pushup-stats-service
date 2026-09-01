@@ -24,7 +24,15 @@ export const POST: BlogPost = {
     "Kniebeugen Knieschmerzen"
   ],
   "alternateSlugs": {
-    "de": "kniebeugen-richtig"
+    "de": "kniebeugen-richtig",
+    "el": "sosta-kathismata",
+    "en": "squat-technique-guide",
+    "es": "sentadillas-tecnica-correcta",
+    "fr": "squats-bonne-technique",
+    "it": "squat-tecnica-corretta",
+    "nl": "squats-juiste-techniek",
+    "no": "kneboy-riktig-teknikk",
+    "zh": "proper-squat-form"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg",
   "heroImageAlt": "Stilisierte Figur in tiefer Kniebeuge mit nach vorn gestreckten Armen, Hüfte und Gesäß leuchten orange, vor grünem Hintergrund.",

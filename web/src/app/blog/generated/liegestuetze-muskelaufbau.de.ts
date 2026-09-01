@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Progressive Overload Liegestütze"
   ],
   "alternateSlugs": {
-    "de": "liegestuetze-muskelaufbau"
+    "de": "liegestuetze-muskelaufbau",
+    "el": "myiki-anaptyxi-pieseon-ges",
+    "en": "building-muscle-with-pushups",
+    "es": "desarrollo-muscular-flexiones",
+    "fr": "developpement-musculaire-pompes",
+    "it": "piegamenti-per-massa-muscolare",
+    "nl": "spieropbouw-met-opdrukken",
+    "no": "armhevninger-muskelvekst",
+    "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
   "heroImageAlt": "Stilisierte Figur in der unteren Liegestütz-Position vor aufsteigenden Balken – Sinnbild für Muskelwachstum durch Körpergewichtstraining.",

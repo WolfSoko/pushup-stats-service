@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Liegestütze Brustmuskel Trizeps"
   ],
   "alternateSlugs": {
-    "de": "liegestuetze-muskeln-anatomie"
+    "de": "liegestuetze-muskeln-anatomie",
+    "el": "myes-anatomia-pieseon-ges",
+    "en": "pushup-muscles-anatomy",
+    "es": "musculos-flexiones-anatomia",
+    "fr": "anatomie-muscles-pompes",
+    "it": "muscoli-piegamenti-anatomia",
+    "nl": "opdrukken-spieren-anatomie",
+    "no": "armhevninger-muskler-anatomi",
+    "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
   "heroImageAlt": "Stilisierte Figur in der Liegestütz-Position, die arbeitenden Muskelgruppen an Brust, Schulter, Trizeps und Rumpf leuchten orange.",

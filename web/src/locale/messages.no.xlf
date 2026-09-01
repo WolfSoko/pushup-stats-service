@@ -10764,9 +10764,9 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="analysis.breakdown.scopeNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </source>
-        <target> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </target>
+        <target> Påvirker all statistikk. Tegnforklaringen på diagrammet skjuler kun der. </target>
       </segment>
     </unit>
 </file>

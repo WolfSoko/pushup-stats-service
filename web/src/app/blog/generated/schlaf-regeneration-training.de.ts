@@ -24,7 +24,15 @@ export const POST: BlogPost = {
     "Trainingspause wie lange"
   ],
   "alternateSlugs": {
-    "de": "schlaf-regeneration-training"
+    "de": "schlaf-regeneration-training",
+    "el": "ypnos-apokatastasi-proponisis",
+    "en": "sleep-and-recovery",
+    "es": "sueno-recuperacion-entrenamiento",
+    "fr": "sommeil-recuperation-entrainement",
+    "it": "sonno-recupero-allenamento",
+    "nl": "slaap-en-herstel-bij-training",
+    "no": "sovn-restitusjon-trening",
+    "zh": "sleep-recovery-training"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-schlaf.jpg",
   "heroImageAlt": "Nachthimmel mit Mond und Sternen, darunter eine violette Kurve, die nach einem Tief über das Ausgangsniveau ansteigt – Sinnbild für Erholung und Superkompensation.",

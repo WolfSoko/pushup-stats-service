@@ -24,7 +24,15 @@ export const POST: BlogPost = {
     "McGill Big Three"
   ],
   "alternateSlugs": {
-    "de": "rumpftraining-plank-dead-bug"
+    "de": "rumpftraining-plank-dead-bug",
+    "el": "proponisi-kormou-plank-dead-bug",
+    "en": "core-training-plank-dead-bug",
+    "es": "entrenamiento-core-plank-dead-bug",
+    "fr": "gainage-plank-dead-bug",
+    "it": "allenamento-core-plank-dead-bug",
+    "nl": "coretraining-plank-dead-bug",
+    "no": "kjernetrening-planke-dead-bug",
+    "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
   "heroImageAlt": "Stilisierte Figur im Unterarmstütz, die Körpermitte leuchtet gelb, vor petrolfarbenem Hintergrund.",

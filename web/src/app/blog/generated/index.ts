@@ -6,115 +6,195 @@
 
 import type { BlogPost } from '../blog-posts.types';
 
-import { POST as p0 } from './grundbewegungen-ganzkoerpertraining.de';
-import { POST as p1 } from './hiit-oder-zone-2-cardio.de';
-import { POST as p2 } from './klimmzuege-lernen.de';
-import { POST as p3 } from './kniebeugen-richtig.de';
-import { POST as p4 } from './rumpftraining-plank-dead-bug.de';
-import { POST as p5 } from './schlaf-regeneration-training.de';
-import { POST as p6 } from './geschichte-der-liegestuetze.de';
-import { POST as p7 } from './liegestuetze-handgelenk-schulter-schmerzen.de';
-import { POST as p8 } from './liegestuetze-muskelaufbau.de';
-import { POST as p9 } from './liegestuetze-muskeln-anatomie.de';
-import { POST as p10 } from './armhevning-feil.no';
-import { POST as p11 } from './erreurs-pompes.fr';
-import { POST as p12 } from './errores-flexiones.es';
-import { POST as p13 } from './errori-piegamenti.it';
-import { POST as p14 } from './hamartiai-pieseos-ges.el';
-import { POST as p15 } from './liegestuetze-fehler.de';
-import { POST as p16 } from './opdrukken-fouten.nl';
-import { POST as p17 } from './pushup-mistakes.en';
-import { POST as p18 } from './pushup-mistakes.zh';
-import { POST as p19 } from './armhevninger-for-kvinner.no';
-import { POST as p20 } from './flexiones-mujeres.es';
-import { POST as p21 } from './liegestuetze-frauen.de';
-import { POST as p22 } from './opdrukken-voor-vrouwen.nl';
-import { POST as p23 } from './piegamenti-per-donne.it';
-import { POST as p24 } from './pieseis-ges-gynaixin.el';
-import { POST as p25 } from './pompes-pour-femmes.fr';
-import { POST as p26 } from './pushups-for-women.en';
-import { POST as p27 } from './pushups-for-women.zh';
-import { POST as p28 } from './armhevning-pusteteknikk.no';
-import { POST as p29 } from './liegestuetze-atmung.de';
-import { POST as p30 } from './opdrukken-ademhaling.nl';
-import { POST as p31 } from './pnoe-pieseos-ges.el';
-import { POST as p32 } from './pushup-breathing.en';
-import { POST as p33 } from './pushup-breathing.zh';
-import { POST as p34 } from './respiracion-flexiones.es';
-import { POST as p35 } from './respiration-pompes.fr';
-import { POST as p36 } from './respirazione-piegamenti.it';
-import { POST as p37 } from './armhevninger-hjertestudie.no';
-import { POST as p38 } from './flexiones-salud-corazon.es';
-import { POST as p39 } from './liegestuetze-herz-studie.de';
-import { POST as p40 } from './metodo-wim-hof-flexiones.es';
-import { POST as p41 } from './metodo-wim-hof-piegamenti.it';
-import { POST as p42 } from './opdrukken-hart-studie.nl';
-import { POST as p43 } from './piegamenti-salute-cuore.it';
-import { POST as p44 } from './pieseis-ges-kardia-melete.el';
-import { POST as p45 } from './pompes-sante-cardiaque.fr';
-import { POST as p46 } from './pompes-wim-hof.fr';
-import { POST as p47 } from './pushups-heart-study.en';
-import { POST as p48 } from './pushups-heart-study.zh';
-import { POST as p49 } from './wim-hof-armhevninger.no';
-import { POST as p50 } from './wim-hof-liegestuetze.de';
-import { POST as p51 } from './wim-hof-opdrukken.nl';
-import { POST as p52 } from './wim-hof-pieseis-ges.el';
-import { POST as p53 } from './wim-hof-pushups.en';
-import { POST as p54 } from './wim-hof-pushups.zh';
-import { POST as p55 } from './armhevninger-etter-40.no';
-import { POST as p56 } from './flexiones-mayores-40.es';
-import { POST as p57 } from './liegestuetze-ab-40.de';
-import { POST as p58 } from './opdrukken-na-40.nl';
-import { POST as p59 } from './piegamenti-dopo-i-40.it';
-import { POST as p60 } from './pieseis-ges-meta-tessarakonta.el';
-import { POST as p61 } from './pompes-apres-40-ans.fr';
-import { POST as p62 } from './pushups-over-40.en';
-import { POST as p63 } from './pushups-over-40.zh';
-import { POST as p64 } from './30-dagen-opdruk-challenge.nl';
-import { POST as p65 } from './30-dagers-armhevning-utfordring.no';
-import { POST as p66 } from './30-day-pushup-challenge.en';
-import { POST as p67 } from './30-day-pushup-challenge.zh';
-import { POST as p68 } from './30-tage-liegestuetze-challenge.de';
-import { POST as p69 } from './defi-pompes-30-jours.fr';
-import { POST as p70 } from './desafio-flexiones-30-dias.es';
-import { POST as p71 } from './sfida-30-giorni-piegamenti.it';
-import { POST as p72 } from './triakonta-emerai-pieseos.el';
-import { POST as p73 } from './armhevning-varianter.no';
-import { POST as p74 } from './liegestuetze-varianten.de';
-import { POST as p75 } from './opdrukken-variaties.nl';
-import { POST as p76 } from './pieseis-ges-poikiliai.el';
-import { POST as p77 } from './pushup-variations.en';
-import { POST as p78 } from './pushup-variations.zh';
-import { POST as p79 } from './variaciones-flexiones.es';
-import { POST as p80 } from './variantes-pompes.fr';
-import { POST as p81 } from './varianti-piegamenti.it';
-import { POST as p82 } from './armhevning-tracker-guide.no';
-import { POST as p83 } from './guia-registro-flexiones.es';
-import { POST as p84 } from './guida-tracker-piegamenti.it';
-import { POST as p85 } from './guide-suivi-pompes.fr';
-import { POST as p86 } from './ichneutes-pieseos-ges.el';
-import { POST as p87 } from './liegestuetze-tracker.de';
-import { POST as p88 } from './opdruk-tracker-gids.nl';
-import { POST as p89 } from './pushup-tracker-guide.en';
-import { POST as p90 } from './pushup-tracker-guide.zh';
-import { POST as p91 } from './dagelijks-opdrukken.nl';
-import { POST as p92 } from './daglige-armhevninger.no';
-import { POST as p93 } from './daily-pushups.en';
-import { POST as p94 } from './daily-pushups.zh';
-import { POST as p95 } from './flexiones-diarias.es';
-import { POST as p96 } from './kathemerinai-pieseis-ges.el';
-import { POST as p97 } from './piegamenti-quotidiani.it';
-import { POST as p98 } from './pompes-quotidiennes.fr';
-import { POST as p99 } from './taeglich-liegestuetze.de';
-import { POST as p100 } from './liegestuetze-steigern.de';
-import { POST as p101 } from './okende-armhevninger.no';
-import { POST as p102 } from './opdrukken-progressie.nl';
-import { POST as p103 } from './pieseis-ges-anabasis.el';
-import { POST as p104 } from './progresion-flexiones.es';
-import { POST as p105 } from './progression-pompes.fr';
-import { POST as p106 } from './progressione-piegamenti.it';
-import { POST as p107 } from './pushup-progression.en';
-import { POST as p108 } from './pushup-progression.zh';
+import { POST as p0 } from './allenamento-core-plank-dead-bug.it';
+import { POST as p1 } from './apprendre-les-tractions.fr';
+import { POST as p2 } from './aprender-dominadas.es';
+import { POST as p3 } from './basisbewegingen-full-body-training.nl';
+import { POST as p4 } from './core-training-plank-dead-bug.en';
+import { POST as p5 } from './core-training-plank-dead-bug.zh';
+import { POST as p6 } from './coretraining-plank-dead-bug.nl';
+import { POST as p7 } from './ekmathisi-elxeon.el';
+import { POST as p8 } from './entrenamiento-core-plank-dead-bug.es';
+import { POST as p9 } from './full-body-fundamental-movements.en';
+import { POST as p10 } from './full-body-movement-patterns.zh';
+import { POST as p11 } from './gainage-plank-dead-bug.fr';
+import { POST as p12 } from './grundbewegungen-ganzkoerpertraining.de';
+import { POST as p13 } from './grunnbevegelser-helkroppstrening.no';
+import { POST as p14 } from './hiit-eller-sone-2-cardio.no';
+import { POST as p15 } from './hiit-i-zoni-2-kardio.el';
+import { POST as p16 } from './hiit-o-cardio-zona-2.es';
+import { POST as p17 } from './hiit-o-cardio-zona-2.it';
+import { POST as p18 } from './hiit-oder-zone-2-cardio.de';
+import { POST as p19 } from './hiit-of-zone-2-cardio.nl';
+import { POST as p20 } from './hiit-ou-cardio-zone-2.fr';
+import { POST as p21 } from './hiit-vs-zone-2-cardio.en';
+import { POST as p22 } from './hiit-vs-zone2-cardio.zh';
+import { POST as p23 } from './imparare-le-trazioni.it';
+import { POST as p24 } from './kjernetrening-planke-dead-bug.no';
+import { POST as p25 } from './klimmzuege-lernen.de';
+import { POST as p26 } from './kneboy-riktig-teknikk.no';
+import { POST as p27 } from './kniebeugen-richtig.de';
+import { POST as p28 } from './laere-pull-ups.no';
+import { POST as p29 } from './learn-pull-ups.zh';
+import { POST as p30 } from './learning-pull-ups.en';
+import { POST as p31 } from './mouvements-fondamentaux-corps-entier.fr';
+import { POST as p32 } from './movimenti-fondamentali-allenamento-completo.it';
+import { POST as p33 } from './movimientos-basicos-cuerpo-completo.es';
+import { POST as p34 } from './proper-squat-form.zh';
+import { POST as p35 } from './proponisi-kormou-plank-dead-bug.el';
+import { POST as p36 } from './pull-ups-leren.nl';
+import { POST as p37 } from './rumpftraining-plank-dead-bug.de';
+import { POST as p38 } from './schlaf-regeneration-training.de';
+import { POST as p39 } from './sentadillas-tecnica-correcta.es';
+import { POST as p40 } from './slaap-en-herstel-bij-training.nl';
+import { POST as p41 } from './sleep-and-recovery.en';
+import { POST as p42 } from './sleep-recovery-training.zh';
+import { POST as p43 } from './sommeil-recuperation-entrainement.fr';
+import { POST as p44 } from './sonno-recupero-allenamento.it';
+import { POST as p45 } from './sosta-kathismata.el';
+import { POST as p46 } from './sovn-restitusjon-trening.no';
+import { POST as p47 } from './squat-technique-guide.en';
+import { POST as p48 } from './squat-tecnica-corretta.it';
+import { POST as p49 } from './squats-bonne-technique.fr';
+import { POST as p50 } from './squats-juiste-techniek.nl';
+import { POST as p51 } from './sueno-recuperacion-entrenamiento.es';
+import { POST as p52 } from './vasikes-kineseis-somatos.el';
+import { POST as p53 } from './ypnos-apokatastasi-proponisis.el';
+import { POST as p54 } from './anatomie-muscles-pompes.fr';
+import { POST as p55 } from './armhevning-handledd-skulder-smerter.no';
+import { POST as p56 } from './armhevningenes-historie.no';
+import { POST as p57 } from './armhevninger-muskelvekst.no';
+import { POST as p58 } from './armhevninger-muskler-anatomi.no';
+import { POST as p59 } from './building-muscle-with-pushups.en';
+import { POST as p60 } from './desarrollo-muscular-flexiones.es';
+import { POST as p61 } from './developpement-musculaire-pompes.fr';
+import { POST as p62 } from './dolor-muneca-hombro-flexiones.es';
+import { POST as p63 } from './dolore-polso-spalla-piegamenti.it';
+import { POST as p64 } from './douleurs-poignet-epaule-pompes.fr';
+import { POST as p65 } from './geschichte-der-liegestuetze.de';
+import { POST as p66 } from './geschiedenis-van-opdrukken.nl';
+import { POST as p67 } from './histoire-des-pompes.fr';
+import { POST as p68 } from './historia-de-las-flexiones.es';
+import { POST as p69 } from './history-of-pushups.en';
+import { POST as p70 } from './istoria-pieseon-ges.el';
+import { POST as p71 } from './liegestuetze-handgelenk-schulter-schmerzen.de';
+import { POST as p72 } from './liegestuetze-muskelaufbau.de';
+import { POST as p73 } from './liegestuetze-muskeln-anatomie.de';
+import { POST as p74 } from './muscoli-piegamenti-anatomia.it';
+import { POST as p75 } from './musculos-flexiones-anatomia.es';
+import { POST as p76 } from './myes-anatomia-pieseon-ges.el';
+import { POST as p77 } from './myiki-anaptyxi-pieseon-ges.el';
+import { POST as p78 } from './opdrukken-pols-en-schouderpijn.nl';
+import { POST as p79 } from './opdrukken-spieren-anatomie.nl';
+import { POST as p80 } from './piegamenti-per-massa-muscolare.it';
+import { POST as p81 } from './ponoi-karpou-omou-pieseon-ges.el';
+import { POST as p82 } from './pushup-history.zh';
+import { POST as p83 } from './pushup-joint-pain.zh';
+import { POST as p84 } from './pushup-muscle-anatomy.zh';
+import { POST as p85 } from './pushup-muscle-building.zh';
+import { POST as p86 } from './pushup-muscles-anatomy.en';
+import { POST as p87 } from './pushup-wrist-shoulder-pain.en';
+import { POST as p88 } from './spieropbouw-met-opdrukken.nl';
+import { POST as p89 } from './storia-dei-piegamenti.it';
+import { POST as p90 } from './armhevning-feil.no';
+import { POST as p91 } from './erreurs-pompes.fr';
+import { POST as p92 } from './errores-flexiones.es';
+import { POST as p93 } from './errori-piegamenti.it';
+import { POST as p94 } from './hamartiai-pieseos-ges.el';
+import { POST as p95 } from './liegestuetze-fehler.de';
+import { POST as p96 } from './opdrukken-fouten.nl';
+import { POST as p97 } from './pushup-mistakes.en';
+import { POST as p98 } from './pushup-mistakes.zh';
+import { POST as p99 } from './armhevninger-for-kvinner.no';
+import { POST as p100 } from './flexiones-mujeres.es';
+import { POST as p101 } from './liegestuetze-frauen.de';
+import { POST as p102 } from './opdrukken-voor-vrouwen.nl';
+import { POST as p103 } from './piegamenti-per-donne.it';
+import { POST as p104 } from './pieseis-ges-gynaixin.el';
+import { POST as p105 } from './pompes-pour-femmes.fr';
+import { POST as p106 } from './pushups-for-women.en';
+import { POST as p107 } from './pushups-for-women.zh';
+import { POST as p108 } from './armhevning-pusteteknikk.no';
+import { POST as p109 } from './liegestuetze-atmung.de';
+import { POST as p110 } from './opdrukken-ademhaling.nl';
+import { POST as p111 } from './pnoe-pieseos-ges.el';
+import { POST as p112 } from './pushup-breathing.en';
+import { POST as p113 } from './pushup-breathing.zh';
+import { POST as p114 } from './respiracion-flexiones.es';
+import { POST as p115 } from './respiration-pompes.fr';
+import { POST as p116 } from './respirazione-piegamenti.it';
+import { POST as p117 } from './armhevninger-hjertestudie.no';
+import { POST as p118 } from './flexiones-salud-corazon.es';
+import { POST as p119 } from './liegestuetze-herz-studie.de';
+import { POST as p120 } from './metodo-wim-hof-flexiones.es';
+import { POST as p121 } from './metodo-wim-hof-piegamenti.it';
+import { POST as p122 } from './opdrukken-hart-studie.nl';
+import { POST as p123 } from './piegamenti-salute-cuore.it';
+import { POST as p124 } from './pieseis-ges-kardia-melete.el';
+import { POST as p125 } from './pompes-sante-cardiaque.fr';
+import { POST as p126 } from './pompes-wim-hof.fr';
+import { POST as p127 } from './pushups-heart-study.en';
+import { POST as p128 } from './pushups-heart-study.zh';
+import { POST as p129 } from './wim-hof-armhevninger.no';
+import { POST as p130 } from './wim-hof-liegestuetze.de';
+import { POST as p131 } from './wim-hof-opdrukken.nl';
+import { POST as p132 } from './wim-hof-pieseis-ges.el';
+import { POST as p133 } from './wim-hof-pushups.en';
+import { POST as p134 } from './wim-hof-pushups.zh';
+import { POST as p135 } from './armhevninger-etter-40.no';
+import { POST as p136 } from './flexiones-mayores-40.es';
+import { POST as p137 } from './liegestuetze-ab-40.de';
+import { POST as p138 } from './opdrukken-na-40.nl';
+import { POST as p139 } from './piegamenti-dopo-i-40.it';
+import { POST as p140 } from './pieseis-ges-meta-tessarakonta.el';
+import { POST as p141 } from './pompes-apres-40-ans.fr';
+import { POST as p142 } from './pushups-over-40.en';
+import { POST as p143 } from './pushups-over-40.zh';
+import { POST as p144 } from './30-dagen-opdruk-challenge.nl';
+import { POST as p145 } from './30-dagers-armhevning-utfordring.no';
+import { POST as p146 } from './30-day-pushup-challenge.en';
+import { POST as p147 } from './30-day-pushup-challenge.zh';
+import { POST as p148 } from './30-tage-liegestuetze-challenge.de';
+import { POST as p149 } from './defi-pompes-30-jours.fr';
+import { POST as p150 } from './desafio-flexiones-30-dias.es';
+import { POST as p151 } from './sfida-30-giorni-piegamenti.it';
+import { POST as p152 } from './triakonta-emerai-pieseos.el';
+import { POST as p153 } from './armhevning-varianter.no';
+import { POST as p154 } from './liegestuetze-varianten.de';
+import { POST as p155 } from './opdrukken-variaties.nl';
+import { POST as p156 } from './pieseis-ges-poikiliai.el';
+import { POST as p157 } from './pushup-variations.en';
+import { POST as p158 } from './pushup-variations.zh';
+import { POST as p159 } from './variaciones-flexiones.es';
+import { POST as p160 } from './variantes-pompes.fr';
+import { POST as p161 } from './varianti-piegamenti.it';
+import { POST as p162 } from './armhevning-tracker-guide.no';
+import { POST as p163 } from './guia-registro-flexiones.es';
+import { POST as p164 } from './guida-tracker-piegamenti.it';
+import { POST as p165 } from './guide-suivi-pompes.fr';
+import { POST as p166 } from './ichneutes-pieseos-ges.el';
+import { POST as p167 } from './liegestuetze-tracker.de';
+import { POST as p168 } from './opdruk-tracker-gids.nl';
+import { POST as p169 } from './pushup-tracker-guide.en';
+import { POST as p170 } from './pushup-tracker-guide.zh';
+import { POST as p171 } from './dagelijks-opdrukken.nl';
+import { POST as p172 } from './daglige-armhevninger.no';
+import { POST as p173 } from './daily-pushups.en';
+import { POST as p174 } from './daily-pushups.zh';
+import { POST as p175 } from './flexiones-diarias.es';
+import { POST as p176 } from './kathemerinai-pieseis-ges.el';
+import { POST as p177 } from './piegamenti-quotidiani.it';
+import { POST as p178 } from './pompes-quotidiennes.fr';
+import { POST as p179 } from './taeglich-liegestuetze.de';
+import { POST as p180 } from './liegestuetze-steigern.de';
+import { POST as p181 } from './okende-armhevninger.no';
+import { POST as p182 } from './opdrukken-progressie.nl';
+import { POST as p183 } from './pieseis-ges-anabasis.el';
+import { POST as p184 } from './progresion-flexiones.es';
+import { POST as p185 } from './progression-pompes.fr';
+import { POST as p186 } from './progressione-piegamenti.it';
+import { POST as p187 } from './pushup-progression.en';
+import { POST as p188 } from './pushup-progression.zh';
 
 export const GENERATED_BLOG_POSTS: ReadonlyArray<BlogPost> = [
   p0,
@@ -226,4 +306,84 @@ export const GENERATED_BLOG_POSTS: ReadonlyArray<BlogPost> = [
   p106,
   p107,
   p108,
+  p109,
+  p110,
+  p111,
+  p112,
+  p113,
+  p114,
+  p115,
+  p116,
+  p117,
+  p118,
+  p119,
+  p120,
+  p121,
+  p122,
+  p123,
+  p124,
+  p125,
+  p126,
+  p127,
+  p128,
+  p129,
+  p130,
+  p131,
+  p132,
+  p133,
+  p134,
+  p135,
+  p136,
+  p137,
+  p138,
+  p139,
+  p140,
+  p141,
+  p142,
+  p143,
+  p144,
+  p145,
+  p146,
+  p147,
+  p148,
+  p149,
+  p150,
+  p151,
+  p152,
+  p153,
+  p154,
+  p155,
+  p156,
+  p157,
+  p158,
+  p159,
+  p160,
+  p161,
+  p162,
+  p163,
+  p164,
+  p165,
+  p166,
+  p167,
+  p168,
+  p169,
+  p170,
+  p171,
+  p172,
+  p173,
+  p174,
+  p175,
+  p176,
+  p177,
+  p178,
+  p179,
+  p180,
+  p181,
+  p182,
+  p183,
+  p184,
+  p185,
+  p186,
+  p187,
+  p188,
 ];

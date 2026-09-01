@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Calisthenics Ganzkörper"
   ],
   "alternateSlugs": {
-    "de": "grundbewegungen-ganzkoerpertraining"
+    "de": "grundbewegungen-ganzkoerpertraining",
+    "el": "vasikes-kineseis-somatos",
+    "en": "full-body-fundamental-movements",
+    "es": "movimientos-basicos-cuerpo-completo",
+    "fr": "mouvements-fondamentaux-corps-entier",
+    "it": "movimenti-fondamentali-allenamento-completo",
+    "nl": "basisbewegingen-full-body-training",
+    "no": "grunnbevegelser-helkroppstrening",
+    "zh": "full-body-movement-patterns"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg",
   "heroImageAlt": "Stilisierte Figur mit erhobenen Armen, umgeben von sechs farbigen Punkten auf zwei Kreisbahnen – Sinnbild für die sechs Grundbewegungen.",

@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Cardio wie oft pro Woche"
   ],
   "alternateSlugs": {
-    "de": "hiit-oder-zone-2-cardio"
+    "de": "hiit-oder-zone-2-cardio",
+    "el": "hiit-i-zoni-2-kardio",
+    "en": "hiit-vs-zone-2-cardio",
+    "es": "hiit-o-cardio-zona-2",
+    "fr": "hiit-ou-cardio-zone-2",
+    "it": "hiit-o-cardio-zona-2",
+    "nl": "hiit-of-zone-2-cardio",
+    "no": "hiit-eller-sone-2-cardio",
+    "zh": "hiit-vs-zone2-cardio"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-cardio.jpg",
   "heroImageAlt": "Weiße EKG-Linie mit zwei Herzschlag-Zacken vor violett-orangem Verlauf, rechts ein orangefarbenes Herz.",

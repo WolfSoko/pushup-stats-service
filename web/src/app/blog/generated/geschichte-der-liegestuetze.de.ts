@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Liegestütze Militär Test"
   ],
   "alternateSlugs": {
-    "de": "geschichte-der-liegestuetze"
+    "de": "geschichte-der-liegestuetze",
+    "el": "istoria-pieseon-ges",
+    "en": "history-of-pushups",
+    "es": "historia-de-las-flexiones",
+    "fr": "histoire-des-pompes",
+    "it": "storia-dei-piegamenti",
+    "nl": "geschiedenis-van-opdrukken",
+    "no": "armhevningenes-historie",
+    "zh": "pushup-history"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-geschichte.jpg",
   "heroImageAlt": "Drei stilisierte Figuren in der Liegestütz-Position, von blass bis kräftig gezeichnet, über einem Zeitstrahl vor warmem Hintergrund.",
