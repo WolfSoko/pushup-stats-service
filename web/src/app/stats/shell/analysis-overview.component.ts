@@ -59,6 +59,8 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
             [data]="store.categoryComparison()"
             [barMode]="store.barMode()"
             [exercises]="store.exerciseChoices()"
+            [hidden]="store.hiddenExerciseIds()"
+            (toggleExercise)="store.toggleExerciseVisibility($event)"
           />
         </mat-card-content>
       </mat-card>
@@ -125,7 +127,7 @@ export class AnalysisOverviewComponent {
    * Gated on the unfiltered row set, not on `categorySummaries`: with
    * every exercise unchecked the summaries are empty, and falling
    * through to the uncategorised branch would claim the entries belong
-   * to no known category and hide the checkboxes that undo it.
+   * to no known category and hide the toggles that undo it.
    */
   readonly showCategoryOverview = computed(() =>
     this.store.hasCategorisableRows()

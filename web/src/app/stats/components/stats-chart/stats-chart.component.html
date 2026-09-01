@@ -29,30 +29,12 @@
       <canvas #chartCanvas></canvas>
     </div>
 
-    <div
+    <app-chart-legend
       class="legend"
-      aria-label="Legende"
-      i18n-aria-label="@@chart.legendAria"
-      data-testid="stats-chart-legend"
-    >
-      @if (showsBreakdown()) {
-        @for (part of breakdown(); track part.exerciseId) {
-          <span data-testid="stats-chart-legend-exercise"
-            ><i class="dot" [style.background]="part.color"></i
-            >{{ part.label }}</span
-          >
-        }
-      } @else {
-        <span><i class="dot dot-bar"></i>{{ intervalLegendText() }}</span>
-      }
-      <span><i class="dot dot-line"></i>{{ secondaryLegendText() }}</span>
-      <span><i class="dot dot-avg"></i>{{ movingAvgLegendText() }}</span>
-      @if (hasSetsData() && !showsBreakdown()) {
-        <span
-          ><i class="dot dot-sets-bar"></i
-          ><ng-container i18n="@@chart.withSets">Mit Sets</ng-container></span
-        >
-      }
-    </div>
+      [items]="legendItems()"
+      [ariaLabel]="legendAriaLabel"
+      testId="stats-chart-legend"
+      (itemToggle)="onLegendToggle($event)"
+    />
   </mat-card-content>
 </mat-card>

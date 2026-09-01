@@ -164,4 +164,83 @@ describe('StatsChartComponent', () => {
       expect(component.paceMode()).toBe(false);
     });
   });
+
+  describe('Interactive legend', () => {
+    it('Given a series switched off in the legend, Then it stays listed as an inactive entry', () => {
+      // given
+      const movingAvgId = 'series:movingAvg';
+      expect(
+        component.legendItems().find((item) => item.id === movingAvgId)?.active
+      ).toBe(true);
+
+      // when
+      component.onLegendToggle(movingAvgId);
+      fixture.detectChanges();
+
+      // then
+      expect(
+        component.legendItems().find((item) => item.id === movingAvgId)?.active
+      ).toBe(false);
+    });
+
+    it('Given the same series is clicked twice, Then it is drawn again', () => {
+      // given / when
+      component.onLegendToggle('series:secondary');
+      component.onLegendToggle('series:secondary');
+      fixture.detectChanges();
+
+      // then
+      expect(
+        component.legendItems().find((item) => item.id === 'series:secondary')
+          ?.active
+      ).toBe(true);
+    });
+
+    it('Given an exercise entry is clicked, Then the page-wide toggle is emitted instead of hiding it locally', () => {
+      // given
+      const toggled: string[] = [];
+      component.toggleExercise.subscribe((id) => toggled.push(id));
+      fixture.componentRef.setInput('breakdown', [
+        {
+          exerciseId: 'abs.situps',
+          label: 'Sit-ups',
+          color: '#111111',
+          values: [1],
+        },
+      ]);
+      fixture.detectChanges();
+
+      // when
+      component.onLegendToggle('exercise:abs.situps');
+
+      // then
+      expect(toggled).toEqual(['abs.situps']);
+    });
+
+    it('Given a hidden exercise, Then the legend still offers it as an inactive entry', () => {
+      // given / when
+      fixture.componentRef.setInput('hiddenExercises', [
+        { exerciseId: 'abs.crunches', label: 'Crunches', color: '#222222' },
+      ]);
+      fixture.detectChanges();
+
+      // then
+      const crunches = component
+        .legendItems()
+        .find((item) => item.id === 'exercise:abs.crunches');
+      expect(crunches?.active).toBe(false);
+      expect(crunches?.label).toBe('Crunches');
+    });
+
+    it('Given a legend id from neither namespace, Then nothing changes', () => {
+      // given
+      const before = component.legendItems();
+
+      // when
+      component.onLegendToggle('bogus');
+
+      // then
+      expect(component.legendItems()).toEqual(before);
+    });
+  });
 });

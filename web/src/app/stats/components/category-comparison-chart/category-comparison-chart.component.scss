@@ -116,17 +116,7 @@
 }
 
 .legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-  margin-top: 12px;
+  display: block;
+  margin-top: 8px;
   font-size: 0.8rem;
-  opacity: 0.8;
-}
-.swatch {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  margin-right: 6px;
 }

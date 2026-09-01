@@ -11324,5 +11324,23 @@
         <target>Sem.</target>
       </segment>
     </unit>
+    <unit id="analysis.overview.comparison.legendAria">
+      <segment state="initial">
+        <source>Übungen ein- oder ausblenden</source>
+        <target>Übungen ein- oder ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="analysis.breakdown.exercisesAria">
+      <segment state="initial">
+        <source>Übungen ein- oder ausblenden</source>
+        <target>Übungen ein- oder ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="analysis.placeholder.allHiddenLegend">
+      <segment state="initial">
+        <source> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </source>
+        <target> Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen Übungsnamen, um sie wieder anzuzeigen. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

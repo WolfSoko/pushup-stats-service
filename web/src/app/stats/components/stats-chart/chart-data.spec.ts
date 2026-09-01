@@ -225,4 +225,46 @@ describe('buildChartData', () => {
     const labels = data.datasets.map((d) => (d as { label: string }).label);
     expect(labels).toEqual(['Sit-ups', 'Crunches', 'Integral', 'Avg']);
   });
+
+  it('should mark the datasets the legend switched off as hidden', () => {
+    // given — Chart.js keeps a hidden dataset out of the drawing and
+    // out of the axis scale, which is the toggle the legend promises
+    const setsByBucket = new Map<number, BucketSetsInfo>([
+      [
+        bucketToTs('2026-02-10'),
+        { setsReps: 12, noSetsReps: 8, sets: [[6, 6]], totalSets: 2 },
+      ],
+    ]);
+
+    // when
+    const data = buildChartData({
+      series,
+      breakdown: [],
+      barMode: 'stacked',
+      setsByBucket,
+      hasSetsData: true,
+      movingAvg: [20, 25],
+      paceMode: false,
+      paceSeries: [],
+      hiddenSeries: new Set(['sets', 'movingAvg'] as const),
+      labels: {
+        intervalDatasetLabel: 'Interval',
+        withSetsLabel: 'Mit Sets',
+        secondaryLineLabel: 'Integral',
+        movingAvgLabel: 'Avg',
+      },
+    });
+
+    // then
+    const hiddenByLabel = new Map(
+      data.datasets.map((d) => [
+        (d as { label: string }).label,
+        (d as { hidden?: boolean }).hidden,
+      ])
+    );
+    expect(hiddenByLabel.get('Interval')).toBe(false);
+    expect(hiddenByLabel.get('Mit Sets')).toBe(true);
+    expect(hiddenByLabel.get('Integral')).toBe(false);
+    expect(hiddenByLabel.get('Avg')).toBe(true);
+  });
 });

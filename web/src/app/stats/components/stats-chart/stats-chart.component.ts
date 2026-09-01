@@ -10,6 +10,7 @@ import {
   input,
   LOCALE_ID,
   model,
+  output,
   PLATFORM_ID,
   signal,
   viewChild,
@@ -20,10 +21,9 @@ import { MatCardModule } from '@angular/material/card';
 import { StatsGranularity, StatsSeriesEntry } from '@pu-stats/models';
 import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { buildChartData } from './chart-data';
+import { ChartLegendComponent } from '../chart-legend/chart-legend.component';
+import { buildChartConfig } from './chart-config';
 import {
-  axisUnit as axisUnitForMeasurement,
-  secondaryAxisUnit as buildSecondaryAxisUnit,
   secondaryLegendText as buildSecondaryLegend,
   unitSuffix as suffixForMeasurement,
 } from './chart-copy';
@@ -34,13 +34,11 @@ import {
   cumulativeLabelFor,
 } from './chart-messages';
 import {
-  buildBucketLabelByTs,
-  buildSetsByBucket,
-  computeMovingAvg,
-  hasSetsData as computeHasSetsData,
-  movingAvgWindow,
-} from './chart-helpers';
-import { buildChartOptions, readThemeColors } from './chart-options';
+  buildLegendItems,
+  parseLegendId,
+  type ChartSeriesKey,
+  type HiddenExerciseLegendEntry,
+} from './chart-legend-items';
 import {
   ChartBarMode,
   ChartBreakdownSeries,
@@ -53,7 +51,7 @@ Chart.register(...registerables);
 
 @Component({
   selector: 'app-stats-chart',
-  imports: [MatButtonToggleModule, MatCardModule],
+  imports: [MatButtonToggleModule, MatCardModule, ChartLegendComponent],
   templateUrl: './stats-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './stats-chart.component.scss',
@@ -86,6 +84,14 @@ export class StatsChartComponent implements AfterViewInit {
   // Empty keeps the single-bar rendering (and its sets stacking).
   readonly breakdown = input<ChartBreakdownSeries[]>([]);
   readonly barMode = input<ChartBarMode>('stacked');
+  // Exercises this chart could draw but the user hid — listed in the
+  // legend as hollow rings so the click that undoes it stays in reach.
+  readonly hiddenExercises = input<ReadonlyArray<HiddenExerciseLegendEntry>>(
+    []
+  );
+
+  /** Page-wide state, so the owner of `hiddenExercises` applies it. */
+  readonly toggleExercise = output<string>();
 
   readonly chartTitle = computed(() =>
     chartTitleFor(this.granularity(), this.kindLabel())
@@ -124,8 +130,32 @@ export class StatsChartComponent implements AfterViewInit {
     this.entries().some((e) => (e.sets?.length ?? 0) > 1)
   );
 
-  /** Per-exercise bars replace the aggregate bar, and its legend with it. */
-  readonly showsBreakdown = computed(() => this.breakdown().length > 0);
+  /**
+   * Series switched off through the legend. Local rather than store
+   * state: the lines describe this chart alone, and the same chart is
+   * embedded on the dashboard teaser where no store is in reach.
+   */
+  private readonly hiddenSeries = signal<ReadonlySet<ChartSeriesKey>>(
+    new Set()
+  );
+
+  readonly legendItems = computed(() =>
+    buildLegendItems({
+      breakdown: this.breakdown(),
+      hiddenExercises: this.hiddenExercises(),
+      hiddenSeries: this.hiddenSeries(),
+      showsSetsSeries: this.hasSetsData(),
+      labels: {
+        bar: this.intervalLegendText(),
+        sets: CHART_LABELS.withSets,
+        secondary: this.secondaryLegendText(),
+        movingAvg: this.movingAvgLegendText(),
+      },
+    })
+  );
+
+  readonly legendAriaLabel = $localize`:@@chart.legendAria:Legende`;
+
   private readonly viewReady = signal(false);
   private chart?: Chart;
 
@@ -140,6 +170,7 @@ export class StatsChartComponent implements AfterViewInit {
       this.paceSeries();
       this.breakdown();
       this.barMode();
+      this.hiddenSeries();
       queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
     });
     // Destroy the chart when the component is torn down (e.g. the analysis
@@ -157,6 +188,19 @@ export class StatsChartComponent implements AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.viewReady.set(true);
     }
+  }
+
+  onLegendToggle(id: string): void {
+    const parsed = parseLegendId(id);
+    if (!parsed) return;
+    if (parsed.kind === 'exercise') {
+      this.toggleExercise.emit(parsed.key);
+      return;
+    }
+    const key = parsed.key as ChartSeriesKey;
+    const next = new Set(this.hiddenSeries());
+    if (!next.delete(key)) next.add(key);
+    this.hiddenSeries.set(next);
   }
 
   private renderChart(
@@ -180,64 +224,24 @@ export class StatsChartComponent implements AfterViewInit {
 
     this.chart?.destroy();
 
-    const granularity = this.granularity();
-    const dayChartMode = this.dayChartMode();
-    const measurement = this.measurement();
-    const paceMode = this.paceMode();
-
-    const totals = series.map((d) => d.total);
-    const movingAvg = computeMovingAvg(totals, movingAvgWindow(granularity));
-
-    const bucketLabelByTs = buildBucketLabelByTs(series);
-    const setsByBucket = buildSetsByBucket(entries, {
-      granularity,
-      dayChartMode,
-      from: this.from(),
-    });
-    const breakdown = this.breakdown();
-    const barMode = this.barMode();
-    // The per-exercise split and the sets split decompose the same
-    // volume, so the breakdown suppresses the sets stacking rather than
-    // stacking both on top of each other.
-    const hasSetsData = breakdown.length
-      ? false
-      : computeHasSetsData(setsByBucket);
-
-    const data = buildChartData({
+    const { data, options } = buildChartConfig({
       series,
-      breakdown,
-      barMode,
-      setsByBucket,
-      hasSetsData,
-      movingAvg,
-      paceMode,
-      paceSeries: this.paceSeries(),
-      labels: {
-        intervalDatasetLabel: this.intervalLegendText(),
-        withSetsLabel: CHART_LABELS.withSets,
-        secondaryLineLabel: this.secondaryLegendText(),
-        movingAvgLabel: this.movingAvgLegendText(),
-      },
-    });
-
-    const options = buildChartOptions({
-      granularity,
+      entries,
+      granularity: this.granularity(),
       rangeMode: this.rangeMode(),
-      measurement,
-      dayChartMode,
+      dayChartMode: this.dayChartMode(),
       from: this.from(),
       to: this.to(),
-      hasSetsData,
-      stackedBreakdown: breakdown.length > 0 && barMode === 'stacked',
-      paceMode,
-      bucketLabelByTs,
-      setsByBucket,
-      colors: readThemeColors(),
+      measurement: this.measurement(),
+      paceMode: this.paceMode(),
+      paceSeries: this.paceSeries(),
+      breakdown: this.breakdown(),
+      barMode: this.barMode(),
+      hiddenSeries: this.hiddenSeries(),
       localeId: this.localeId,
-      setsTooltipLabel: CHART_LABELS.setsTooltip,
-      weekAbbrev: CHART_LABELS.weekAbbrev,
-      yAxisTitle: axisUnitForMeasurement(measurement),
-      ySecondaryAxisTitle: buildSecondaryAxisUnit(paceMode, measurement),
+      intervalLabel: this.intervalLegendText(),
+      secondaryLabel: this.secondaryLegendText(),
+      movingAvgLabel: this.movingAvgLegendText(),
     });
 
     this.chart = new Chart(context, { type: 'bar', data, options });

@@ -64,47 +64,15 @@ canvas {
   }
 
   .legend {
-    gap: 10px;
     font-size: 0.78rem;
   }
 }
 
 .legend {
-  margin-top: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
+  display: block;
+  margin-top: 8px;
   color: #adc1e8;
   font-size: 0.83rem;
-
-  span {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-  }
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  display: inline-block;
-}
-
-.dot-bar {
-  background: #6b98ff;
-}
-
-.dot-line {
-  background: #ffbe66;
-}
-
-.dot-avg {
-  background: #7ef0c8;
-}
-
-.dot-sets-bar {
-  background: #ab47bc;
 }
 
 :host-context(html.light-theme) {
