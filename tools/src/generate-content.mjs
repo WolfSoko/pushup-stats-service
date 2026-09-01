@@ -420,11 +420,102 @@ export function loadExerciseWikiContent(contentRoot) {
   );
 }
 
+// ---------- Training plans ----------
+
+/**
+ * Walks `content/training-plans/<slug>.<lang>.md` and returns a
+ * `Record<slug, Record<lang, html>>` map. Unlike blog and wiki these
+ * files carry no frontmatter — the whole file is the markdown body
+ * (structural plan data lives in `training-plan.catalog.ts`; the
+ * markdown is purely the editorial long-form description).
+ *
+ * `validSlugs`, when provided, must contain every catalog slug: a
+ * content file for an unknown slug fails the build instead of silently
+ * shipping orphaned copy that no detail page ever renders.
+ */
+export function loadTrainingPlanContent(contentRoot, validSlugs) {
+  const dir = join(contentRoot, 'training-plans');
+  const files = listDirEntries(dir)
+    .filter((f) => f.endsWith('.md'))
+    .sort();
+  const out = {};
+  for (const file of files) {
+    const match = /^(.+)\.([a-z][a-z-]*)\.md$/.exec(file);
+    if (!match) {
+      throw new Error(
+        `${join(dir, file)}: filename must be <slug>.<lang>.md (lowercase locale code)`
+      );
+    }
+    const [, slug, lang] = match;
+    const path = join(dir, file);
+    assertSafeSlug(slug, path);
+    assertSafeLang(lang, path);
+    if (validSlugs && !validSlugs.includes(slug)) {
+      throw new Error(
+        `${path}: unknown training plan slug ${JSON.stringify(slug)} — not in training-plan.catalog.ts (${validSlugs.join(', ')})`
+      );
+    }
+    const body = readFileSync(path, 'utf-8').trim();
+    if (body.length === 0) {
+      throw new Error(`${path}: file is empty`);
+    }
+    out[slug] ??= {};
+    out[slug][lang] = marked.parse(body).trim();
+  }
+  return Object.fromEntries(
+    Object.keys(out)
+      .sort()
+      .map((slug) => [
+        slug,
+        Object.fromEntries(
+          Object.keys(out[slug])
+            .sort()
+            .map((lang) => [lang, out[slug][lang]])
+        ),
+      ])
+  );
+}
+
+function emitTrainingPlanModule(content) {
+  return `${HEADER}
+/**
+ * Long-form editorial copy for training plan detail pages, rendered
+ * from \`content/training-plans/<slug>.<lang>.md\`. Keys are catalog
+ * \`slug\`s; values are per-locale HTML bodies. Locales without a
+ * translation fall back \`en\` → \`de\` in \`localizeTrainingPlanContent\`.
+ */
+export const TRAINING_PLAN_CONTENT: Readonly<
+  Record<string, Readonly<Record<string, string>>>
+> = ${JSON.stringify(content, null, 2)};
+`;
+}
+
+/** Reads the catalog slugs so content files can be validated against them. */
+function readCatalogSlugs() {
+  const source = readFileSync(
+    resolve(ROOT, 'libs/stats/src/lib/models/training-plan.catalog.ts'),
+    'utf-8'
+  );
+  const slugs = [];
+  // Same pairing as `extractTrainingPlanSlugs` in generate-sitemap.js:
+  // `id:` immediately followed by `slug:` scopes matches to catalog entries.
+  const blockRegex = /\bid:\s*'[^']+',\s*\n\s*slug:\s*'([^']+)'/g;
+  let match;
+  while ((match = blockRegex.exec(source)) !== null) {
+    slugs.push(match[1]);
+  }
+  return slugs;
+}
+
 function main() {
   const contentRoot = resolve(ROOT, 'content');
   const posts = loadBlogPosts(contentRoot);
   const pushupContent = loadPushupTypeContent(contentRoot);
   const exerciseWikiContent = loadExerciseWikiContent(contentRoot);
+  const trainingPlanContent = loadTrainingPlanContent(
+    contentRoot,
+    readCatalogSlugs()
+  );
 
   // Per-post generated files + barrel. Track written filenames so two
   // posts colliding on `<slug>.<lang>` (e.g. accidental duplicate slug
@@ -456,6 +547,13 @@ function main() {
     'utf-8'
   );
 
+  const trainingPlanPath = resolve(ROOT, GENERATED_CONTENT_PATHS.trainingPlans);
+  writeFileSync(
+    trainingPlanPath,
+    emitTrainingPlanModule(trainingPlanContent),
+    'utf-8'
+  );
+
   console.log(
     `generated ${posts.length} blog post(s) → web/src/app/blog/generated/`
   );
@@ -464,6 +562,9 @@ function main() {
   );
   console.log(
     `generated ${Object.keys(exerciseWikiContent).length} exercise wiki override(s)`
+  );
+  console.log(
+    `generated ${Object.keys(trainingPlanContent).length} training plan description(s)`
   );
 }
 

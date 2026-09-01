@@ -104,6 +104,25 @@ The wiki catalog has two parts: **structural metadata** (referenced by code) liv
 
 4. **Run the generator** (`pnpm nx run tools:generate-content`) and commit the regenerated `pushup-type-content.generated.ts`.
 
+## How to add a training-plan description
+
+Long-form editorial copy for a training plan detail page (`/​<lang>/training-plans/<slug>`). Purpose: unique substance per plan — Google parked near-identical plan pages as "crawled, currently not indexed" (thin content, same weakness that caused the AdSense rejection).
+
+1. **One file per locale**, no frontmatter — the whole file is the markdown body:
+
+   ```
+   content/training-plans/<slug>.de.md   ← required (source locale)
+   content/training-plans/<slug>.en.md   ← canonical translation
+   ```
+
+   `<slug>` must match a `slug` in `training-plan.catalog.ts` — the generator fails on unknown slugs so orphaned copy can't ship silently.
+
+2. **Suggested structure** (keep each plan's content genuinely distinct): Für wen? / Wie ist die Progression aufgebaut? / Häufige Fehler / Was du am Ende kannst. Internal links use the same locale as the file.
+
+3. **Run the generator** and commit the regenerated `training-plan-content.generated.ts`. The detail page renders the section automatically; locales without a translation fall back `en` → `de` (`localizeTrainingPlanContent`), plans without any markdown simply omit the section.
+
+Not every plan has content yet — coverage is being rolled out plan by plan. The translation-gap detector does not scan this directory yet; additional locales are hand-dropped `<slug>.<lang>.md` files for now.
+
 ## How edits propagate
 
 - Edit a markdown file → run `pnpm nx run tools:generate-content` → commit both the markdown change AND the regenerated TS modules. The generator is deterministic and idempotent; reviewers should see diffs only in the files you intentionally touched.

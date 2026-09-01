@@ -14,6 +14,7 @@ export * from './lib/models/training-plan.models';
 export * from './lib/models/training-plan-schedule.models';
 export * from './lib/models/training-plan-exercise.models';
 export * from './lib/models/training-plan.catalog';
+export * from './lib/models/training-plan-content';
 export * from './lib/models/training-session.models';
 export * from './lib/models/training-session-circuit.models';
 export * from './lib/models/pushup-type.models';

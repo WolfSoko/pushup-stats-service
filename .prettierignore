@@ -15,4 +15,5 @@ pnpm-lock.yaml
 web/src/app/blog/generated/
 libs/stats/src/lib/models/pushup-type-content.generated.ts
 libs/stats/src/lib/models/exercise-wiki-content.generated.ts
+libs/stats/src/lib/models/training-plan-content.generated.ts
 

@@ -384,6 +384,10 @@
         </ul>
       </section>
     }
+
+    @if (aboutHtml(); as about) {
+      <section class="plan-about" [innerHTML]="about"></section>
+    }
   </main>
 } @else {
   <main class="page-wrap">

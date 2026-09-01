@@ -15,10 +15,12 @@ export const CONTENT_SOURCE_GLOBS = [
   'content/blog/**/*.md',
   'content/wiki/pushup-types/*.md',
   'content/wiki/exercises/*.md',
+  'content/training-plans/*.md',
 ];
 
 export const GENERATED_CONTENT_PATHS = {
   blogDir: 'web/src/app/blog/generated',
   pushupTypes: 'libs/stats/src/lib/models/pushup-type-content.generated.ts',
   exerciseWiki: 'libs/stats/src/lib/models/exercise-wiki-content.generated.ts',
+  trainingPlans: 'libs/stats/src/lib/models/training-plan-content.generated.ts',
 };

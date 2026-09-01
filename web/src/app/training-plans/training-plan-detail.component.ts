@@ -20,7 +20,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthStore } from '@pu-auth/auth';
-import { findPlanBySlug } from '@pu-stats/models';
+import { findPlanBySlug, localizeTrainingPlanContent } from '@pu-stats/models';
 import { previewDayProgress } from './training-plan-detail.exercises';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
@@ -96,6 +96,12 @@ export class TrainingPlanDetailComponent {
   readonly plan = computed(() => {
     const slug = this.slugSignal().get('slug');
     return slug ? findPlanBySlug(slug) : null;
+  });
+
+  /** Long-form editorial copy (markdown-sourced), `null` until a plan ships it. */
+  readonly aboutHtml = computed(() => {
+    const p = this.plan();
+    return p ? localizeTrainingPlanContent(p.slug, this.locale) : null;
   });
 
   readonly signupQueryParams = computed(() => signupParamsFor(this.plan()));

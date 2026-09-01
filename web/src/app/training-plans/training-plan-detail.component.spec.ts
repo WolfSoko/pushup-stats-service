@@ -809,4 +809,41 @@ describe('TrainingPlanDetailComponent', () => {
       expect(done.querySelector('.day-desc')).toBeTruthy();
     });
   });
+
+  describe('editorial about section', () => {
+    async function renderPlan(slug: string) {
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock(slug) },
+          { provide: TrainingPlanStore, useValue: makeStoreMock() },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: false,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+    }
+
+    it('should render the markdown-sourced about section for a plan that ships content', async () => {
+      // given the recruit plan, which has content/training-plans markdown
+      // when the detail page renders (test locale is the de source locale)
+      await renderPlan('recruit-6w');
+      // then the section shows the rendered HTML body
+      const about = document.querySelector('.plan-about');
+      expect(about).toBeTruthy();
+      expect(about?.textContent).toContain('Für wen ist dieser Plan?');
+    });
+
+    it('should omit the section for a plan without editorial content', async () => {
+      // given a plan with no markdown files yet
+      // when the detail page renders
+      await renderPlan('hiit-4w');
+      // then no empty section is left in the DOM
+      expect(document.querySelector('.plan-about')).toBeNull();
+    });
+  });
 });

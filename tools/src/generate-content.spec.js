@@ -30,6 +30,75 @@ function writePost(contentRoot, folder, lang, frontmatter) {
   writeFileSync(join(dir, `${lang}.md`), `---\n${yaml}\n---\n\nBody text.\n`);
 }
 
+function runLoadTrainingPlanContent(contentRoot, validSlugs) {
+  const script = `
+    import { loadTrainingPlanContent } from ${JSON.stringify(GENERATOR)};
+    process.stdout.write(JSON.stringify(loadTrainingPlanContent(${JSON.stringify(contentRoot)}, ${JSON.stringify(validSlugs)})));
+  `;
+  const out = execFileSync('node', ['--input-type=module', '-e', script], {
+    encoding: 'utf-8',
+  });
+  return JSON.parse(out);
+}
+
+describe('loadTrainingPlanContent', () => {
+  let contentRoot;
+
+  beforeEach(() => {
+    contentRoot = mkdtempSync(join(tmpdir(), 'generate-content-plans-'));
+  });
+
+  afterEach(() => {
+    rmSync(contentRoot, { recursive: true, force: true });
+  });
+
+  function writePlanContent(slug, lang, body) {
+    const dir = join(contentRoot, 'training-plans');
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, `${slug}.${lang}.md`), body);
+  }
+
+  it('should render markdown bodies to per-slug per-locale HTML', () => {
+    // given two locales of one plan, plain markdown without frontmatter
+    writePlanContent('recruit-6w', 'de', '## Für wen?\n\nEinsteiger.\n');
+    writePlanContent('recruit-6w', 'en', '## Who is it for?\n\nBeginners.\n');
+    // when the loader runs
+    const content = runLoadTrainingPlanContent(contentRoot, ['recruit-6w']);
+    // then both locales carry rendered HTML
+    expect(content['recruit-6w']['de']).toContain('<h2');
+    expect(content['recruit-6w']['de']).toContain('Einsteiger.');
+    expect(content['recruit-6w']['en']).toContain('Beginners.');
+  });
+
+  it('should fail loudly on a slug that is not in the catalog', () => {
+    // given a content file whose slug matches no catalog entry
+    writePlanContent('recriut-6w', 'de', 'Tippfehler-Slug.\n');
+    // when the loader validates against the catalog slugs
+    // then it throws instead of shipping orphaned copy
+    expect(() =>
+      runLoadTrainingPlanContent(contentRoot, ['recruit-6w'])
+    ).toThrow(/unknown training plan slug/);
+  });
+
+  it('should reject an empty content file', () => {
+    // given a file with nothing but whitespace
+    writePlanContent('recruit-6w', 'de', '   \n');
+    // when the loader runs
+    // then the empty body fails instead of rendering a blank section
+    expect(() =>
+      runLoadTrainingPlanContent(contentRoot, ['recruit-6w'])
+    ).toThrow(/file is empty/);
+  });
+
+  it('should return an empty map when the content directory does not exist', () => {
+    // given no content/training-plans directory at all
+    // when the loader runs
+    const content = runLoadTrainingPlanContent(contentRoot, ['recruit-6w']);
+    // then it yields an empty map instead of failing the build
+    expect(content).toEqual({});
+  });
+});
+
 describe('loadBlogPosts', () => {
   let contentRoot;
 

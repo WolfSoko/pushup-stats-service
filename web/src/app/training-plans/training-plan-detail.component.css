@@ -226,3 +226,37 @@ app-page-header {
 .day-toggle {
   margin-inline-start: auto;
 }
+
+.plan-about {
+  margin-top: 40px;
+  line-height: 1.75;
+  color: var(--text-body-secondary);
+}
+/* innerHTML content bypasses view encapsulation, hence ::ng-deep. */
+.plan-about ::ng-deep h2 {
+  margin: 32px 0 12px;
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  color: var(--text-heading-secondary);
+}
+.plan-about ::ng-deep p {
+  margin: 0 0 16px;
+}
+.plan-about ::ng-deep ul,
+.plan-about ::ng-deep ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.plan-about ::ng-deep li {
+  margin-bottom: 6px;
+}
+.plan-about ::ng-deep strong {
+  color: var(--text-heading-secondary);
+}
+.plan-about ::ng-deep a {
+  color: var(--mat-sys-primary, #7c4dff);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.plan-about ::ng-deep a:hover {
+  text-decoration-thickness: 2px;
+}
