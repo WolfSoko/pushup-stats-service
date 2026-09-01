@@ -134,7 +134,15 @@ export class StatsChartComponent implements AfterViewInit {
       if (!isPlatformBrowser(this.platformId) || !this.viewReady()) return;
       const currentSeries = this.series();
       const currentEntries = this.entries();
-      // Track dayChartMode + measurement-driven inputs to re-render
+      // Track every input `renderChart` reads. The axis-shaping ones
+      // (granularity, rangeMode, from, to) decide bucket labels and
+      // scale bounds without appearing in the series, so leaving them
+      // untracked lets the chart keep an axis that no longer matches
+      // the filter.
+      this.granularity();
+      this.rangeMode();
+      this.from();
+      this.to();
       this.dayChartMode();
       this.measurement();
       this.paceSeries();
