@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" role="img" aria-labelledby="t d">
+  <title id="t">Kniebeuge: Wie tief?</title>
+  <desc id="d">Drei Seitenansichten einer Figur in der Kniebeuge: Viertelkniebeuge mit wenig Muskelbeteiligung, parallele Kniebeuge mit Oberschenkel waagerecht, tiefe Kniebeuge mit Hüfte unter Kniehöhe und höchster Gesäßbeteiligung. Darunter Hinweis, dass Knie über die Zehen hinaus erlaubt sind.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+  </defs>
+  <rect width="900" height="460" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Kniebeuge: Wie tief sollst du gehen?</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Seitenansicht – die Hüfthöhe im Verhältnis zum Knie bestimmt, welche Muskeln arbeiten</text>
+
+    <!-- Panel 1: quarter squat -->
+    <g transform="translate(60,110)">
+      <rect width="240" height="260" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <line x1="30" y1="215" x2="210" y2="215" stroke="#cfc7ee" stroke-width="4" stroke-linecap="round"/>
+      <!-- foot, shin, thigh, torso -->
+      <line x1="120" y1="212" x2="160" y2="212" stroke="#b3a9de" stroke-width="12" stroke-linecap="round"/>
+      <line x1="125" y1="205" x2="135" y2="140" stroke="#7c4dff" stroke-width="22" stroke-linecap="round"/>
+      <line x1="135" y1="140" x2="105" y2="105" stroke="#ff7043" stroke-width="24" stroke-linecap="round"/>
+      <line x1="105" y1="105" x2="118" y2="42" stroke="#7c4dff" stroke-width="26" stroke-linecap="round"/>
+      <circle cx="120" cy="26" r="18" fill="#7c4dff"/>
+      <line x1="30" y1="140" x2="210" y2="140" stroke="#2b2350" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="120" y="238" font-size="15" font-weight="700" text-anchor="middle">Viertel</text>
+      <text x="120" y="254" font-size="12" fill="#6f6894" text-anchor="middle">wenig Gesäß, viel Knie</text>
+    </g>
+    <!-- Panel 2: parallel -->
+    <g transform="translate(330,110)">
+      <rect width="240" height="260" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <line x1="30" y1="215" x2="210" y2="215" stroke="#cfc7ee" stroke-width="4" stroke-linecap="round"/>
+      <line x1="120" y1="212" x2="160" y2="212" stroke="#b3a9de" stroke-width="12" stroke-linecap="round"/>
+      <line x1="125" y1="205" x2="150" y2="140" stroke="#7c4dff" stroke-width="22" stroke-linecap="round"/>
+      <line x1="150" y1="140" x2="70" y2="140" stroke="#ff7043" stroke-width="24" stroke-linecap="round"/>
+      <line x1="70" y1="140" x2="95" y2="60" stroke="#7c4dff" stroke-width="26" stroke-linecap="round"/>
+      <circle cx="100" cy="44" r="18" fill="#7c4dff"/>
+      <line x1="30" y1="140" x2="210" y2="140" stroke="#2b2350" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="120" y="238" font-size="15" font-weight="700" text-anchor="middle">Parallel</text>
+      <text x="120" y="254" font-size="12" fill="#6f6894" text-anchor="middle">Oberschenkel waagerecht</text>
+    </g>
+    <!-- Panel 3: deep -->
+    <g transform="translate(600,110)">
+      <rect width="240" height="260" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <line x1="30" y1="215" x2="210" y2="215" stroke="#cfc7ee" stroke-width="4" stroke-linecap="round"/>
+      <line x1="120" y1="212" x2="160" y2="212" stroke="#b3a9de" stroke-width="12" stroke-linecap="round"/>
+      <line x1="125" y1="205" x2="165" y2="150" stroke="#7c4dff" stroke-width="22" stroke-linecap="round"/>
+      <line x1="165" y1="150" x2="80" y2="172" stroke="#ff7043" stroke-width="24" stroke-linecap="round"/>
+      <line x1="80" y1="172" x2="105" y2="90" stroke="#7c4dff" stroke-width="26" stroke-linecap="round"/>
+      <circle cx="110" cy="74" r="18" fill="#7c4dff"/>
+      <line x1="30" y1="150" x2="210" y2="150" stroke="#2b2350" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="120" y="238" font-size="15" font-weight="700" text-anchor="middle">Tief</text>
+      <text x="120" y="254" font-size="12" fill="#2e7d32" text-anchor="middle">Hüfte unter Knie – max. Gesäß</text>
+    </g>
+    <text x="48" y="412" font-size="13" fill="#6f6894">Gestrichelte Linie = Kniehöhe. Knie dürfen über die Zehen hinaus – das Verbot ist ein Mythos aus den 1970ern.</text>
+    <text x="48" y="436" font-size="13" fill="#6f6894">So tief, wie du es mit geradem Rücken und Fersen am Boden kontrollieren kannst.</text>
+  </g>
+</svg>

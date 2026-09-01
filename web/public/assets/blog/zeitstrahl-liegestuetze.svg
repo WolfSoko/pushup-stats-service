@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" role="img" aria-labelledby="t d">
+  <title id="t">Zeitstrahl der Liegestütze</title>
+  <desc id="d">Zeitstrahl mit acht Stationen: Dand im indischen Ringen, Turnbewegung des 19. Jahrhunderts, 1905 erster Beleg des Wortes push-up, Militärtests ab den 1940ern, 1965 Weltrekord 6006 am Stück, 1980 Weltrekord 10507 am Stück, 1993 Rekord 46001 in 24 Stunden, 2019 Harvard-Studie zu Liegestützen und Herzgesundheit.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffab91"/><stop offset="1" stop-color="#5b2fe0"/></linearGradient>
+  </defs>
+  <rect width="900" height="520" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Liegestütze im Zeitraffer</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Von der Ringerschule bis zur Herzstudie</text>
+
+    <rect x="60" y="264" width="780" height="8" rx="4" fill="url(#line)"/>
+
+    <!-- stations: alternate above/below. x = 90, 195, 300, 405, 510, 615, 720, 825 -->
+    <g font-size="13" fill="#4b4470">
+      <!-- 1 above -->
+      <circle cx="90" cy="268" r="11" fill="#fff" stroke="#ff7043" stroke-width="4"/>
+      <line x1="90" y1="257" x2="90" y2="205" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="90" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">Jahrhunderte</text>
+      <text x="90" y="172" text-anchor="middle">Dand im indischen</text>
+      <text x="90" y="190" text-anchor="middle">Ringen (Pehlwani)</text>
+      <!-- 2 below -->
+      <circle cx="195" cy="268" r="11" fill="#fff" stroke="#f0805e" stroke-width="4"/>
+      <line x1="195" y1="279" x2="195" y2="330" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="195" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">19. Jh.</text>
+      <text x="195" y="378" text-anchor="middle">Turnbewegung: der</text>
+      <text x="195" y="396" text-anchor="middle">„Liegestütz“ als Stütz</text>
+      <!-- 3 above -->
+      <circle cx="300" cy="268" r="11" fill="#fff" stroke="#d98bd8" stroke-width="4"/>
+      <line x1="300" y1="257" x2="300" y2="205" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="300" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">1905</text>
+      <text x="300" y="172" text-anchor="middle">Erster Beleg des</text>
+      <text x="300" y="190" text-anchor="middle">Wortes „push-up“</text>
+      <!-- 4 below -->
+      <circle cx="405" cy="268" r="11" fill="#fff" stroke="#b58cf5" stroke-width="4"/>
+      <line x1="405" y1="279" x2="405" y2="330" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="405" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">1940er</text>
+      <text x="405" y="378" text-anchor="middle">Standardtest in</text>
+      <text x="405" y="396" text-anchor="middle">Militär und Schule</text>
+      <!-- 5 above -->
+      <circle cx="510" cy="268" r="11" fill="#fff" stroke="#9d7bf0" stroke-width="4"/>
+      <line x1="510" y1="257" x2="510" y2="205" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="510" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">1965</text>
+      <text x="510" y="172" text-anchor="middle">Charles Linster:</text>
+      <text x="510" y="190" text-anchor="middle">6.006 am Stück</text>
+      <!-- 6 below -->
+      <circle cx="615" cy="268" r="11" fill="#fff" stroke="#8a66ec" stroke-width="4"/>
+      <line x1="615" y1="279" x2="615" y2="330" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="615" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">1980</text>
+      <text x="615" y="378" text-anchor="middle">Minoru Yoshida:</text>
+      <text x="615" y="396" text-anchor="middle">10.507 am Stück</text>
+      <!-- 7 above -->
+      <circle cx="720" cy="268" r="11" fill="#fff" stroke="#7452e6" stroke-width="4"/>
+      <line x1="720" y1="257" x2="720" y2="205" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="720" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">1993</text>
+      <text x="720" y="172" text-anchor="middle">Charles Servizio:</text>
+      <text x="720" y="190" text-anchor="middle">46.001 in 24 Stunden</text>
+      <!-- 8 below -->
+      <circle cx="825" cy="268" r="11" fill="#fff" stroke="#5b2fe0" stroke-width="4"/>
+      <line x1="825" y1="279" x2="825" y2="330" stroke="#cfc7ee" stroke-width="2"/>
+      <text x="825" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#2b2350">2019</text>
+      <text x="825" y="378" text-anchor="middle">Harvard-Studie:</text>
+      <text x="825" y="396" text-anchor="middle">40+ Reps &amp; Herz</text>
+    </g>
+
+    <rect x="48" y="440" width="804" height="46" rx="10" fill="#fff" stroke="#e2dbfa"/>
+    <text x="68" y="468" font-size="14" fill="#4b4470">Rekorde laut Guinness World Records; Stundenrekorde liegen seit 2022 über <tspan font-weight="700">3.000 Wiederholungen</tspan>.</text>
+  </g>
+</svg>

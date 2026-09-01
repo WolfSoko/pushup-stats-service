@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-labelledby="t d">
+  <title id="t">Die vier Aufgaben des Rumpfes</title>
+  <desc id="d">Vier Kacheln: Anti-Extension mit Plank und Dead Bug, Anti-Rotation mit Pallof Press und einarmigem Plank, Anti-Seitneigung mit Seitstütz und Koffertragen, Beugen und Strecken mit Hollow Hold und Beinheben. Darunter der Hinweis, dass Sit-ups nur die letzte Aufgabe abdecken.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+  </defs>
+  <rect width="900" height="500" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Die vier Aufgaben des Rumpfes</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Ein starker Rumpf verhindert Bewegung genauso oft, wie er sie erzeugt</text>
+
+    <g font-size="13" fill="#4b4470">
+      <rect x="48" y="110" width="392" height="140" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <rect x="48" y="110" width="8" height="140" rx="4" fill="#7c4dff"/>
+      <text x="76" y="140" font-size="17" font-weight="700" fill="#2b2350">1 · Anti-Extension</text>
+      <text x="76" y="164">Verhindert das Hohlkreuz, wenn Arme oder Beine</text>
+      <text x="76" y="182">vom Körper weg arbeiten.</text>
+      <text x="76" y="212" font-weight="700" fill="#7c4dff">Plank · Dead Bug · Liegestütz</text>
+
+      <rect x="460" y="110" width="392" height="140" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <rect x="460" y="110" width="8" height="140" rx="4" fill="#ff7043"/>
+      <text x="488" y="140" font-size="17" font-weight="700" fill="#2b2350">2 · Anti-Rotation</text>
+      <text x="488" y="164">Hält den Oberkörper ruhig, wenn eine Seite</text>
+      <text x="488" y="182">zieht oder drückt.</text>
+      <text x="488" y="212" font-weight="700" fill="#e64a19">Pallof Press · einarmiger Plank · Archer</text>
+
+      <rect x="48" y="270" width="392" height="140" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <rect x="48" y="270" width="8" height="140" rx="4" fill="#2ec4a5"/>
+      <text x="76" y="300" font-size="17" font-weight="700" fill="#2b2350">3 · Anti-Seitneigung</text>
+      <text x="76" y="324">Stabilisiert die Wirbelsäule gegen Last von</text>
+      <text x="76" y="342">einer Seite – Einkaufstasche, Kind auf dem Arm.</text>
+      <text x="76" y="372" font-weight="700" fill="#1b9c82">Seitstütz · Koffertragen · Einbein-RDL</text>
+
+      <rect x="460" y="270" width="392" height="140" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <rect x="460" y="270" width="8" height="140" rx="4" fill="#b3a9de"/>
+      <text x="488" y="300" font-size="17" font-weight="700" fill="#2b2350">4 · Beugen &amp; Strecken</text>
+      <text x="488" y="324">Erzeugt Bewegung im Rumpf – die einzige Aufgabe,</text>
+      <text x="488" y="342">die Sit-ups und Crunches abdecken.</text>
+      <text x="488" y="372" font-weight="700" fill="#6f6894">Hollow Hold · Beinheben · Crunches</text>
+    </g>
+    <rect x="48" y="430" width="804" height="46" rx="10" fill="#fff" stroke="#e2dbfa"/>
+    <text x="68" y="458" font-size="14" fill="#4b4470">Faustregel: Drei Viertel deines Rumpftrainings sollten <tspan font-weight="700">Anti-Bewegung</tspan> sein, ein Viertel Bewegung.</text>
+  </g>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="900" height="420" role="img" aria-labelledby="t d">
+  <title id="t">Handgelenkwinkel bei drei Handpositionen</title>
+  <desc id="d">Drei Seitenansichten von Unterarm und Hand. Flache Hand: Handgelenk etwa 90 Grad gestreckt. Hände auf Griffen oder Fäusten: Handgelenk neutral, 0 Grad. Hände leicht nach außen gedreht: Streckung etwas kleiner und Last besser verteilt.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+  </defs>
+  <rect width="900" height="420" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Was dein Handgelenk im Liegestütz aushält</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Seitenansicht – der Winkel zwischen Unterarm und Handrücken bestimmt die Belastung</text>
+
+    <!-- panel 1: flat palm -->
+    <g transform="translate(60,120)">
+      <rect width="240" height="230" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <line x1="20" y1="180" x2="220" y2="180" stroke="#cfc7ee" stroke-width="4" stroke-linecap="round"/>
+      <!-- forearm vertical -->
+      <line x1="120" y1="40" x2="120" y2="165" stroke="#7c4dff" stroke-width="26" stroke-linecap="round"/>
+      <!-- hand flat -->
+      <line x1="120" y1="168" x2="200" y2="168" stroke="#ff7043" stroke-width="22" stroke-linecap="round"/>
+      <!-- angle arc -->
+      <path d="M120 120 A45 45 0 0 1 165 165" fill="none" stroke="#2b2350" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="150" y="128" font-size="15" font-weight="700">90°</text>
+      <text x="120" y="212" font-size="15" font-weight="700" text-anchor="middle">Flache Hand</text>
+      <text x="120" y="222" font-size="12" fill="#c62828" text-anchor="middle" dy="10">hohe Kompression im Gelenk</text>
+    </g>
+
+    <!-- panel 2: fist / handles neutral -->
+    <g transform="translate(330,120)">
+      <rect width="240" height="230" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <line x1="20" y1="180" x2="220" y2="180" stroke="#cfc7ee" stroke-width="4" stroke-linecap="round"/>
+      <!-- handle -->
+      <rect x="80" y="150" width="80" height="18" rx="9" fill="#b3a9de"/>
+      <!-- forearm vertical -->
+      <line x1="120" y1="30" x2="120" y2="130" stroke="#7c4dff" stroke-width="26" stroke-linecap="round"/>
+      <!-- fist -->
+      <circle cx="120" cy="150" r="22" fill="#ff7043"/>
+      <text x="175" y="110" font-size="15" font-weight="700">0°</text>
+      <text x="120" y="212" font-size="15" font-weight="700" text-anchor="middle">Griffe oder Fäuste</text>
+      <text x="120" y="232" font-size="12" fill="#2e7d32" text-anchor="middle">neutrales Handgelenk</text>
+    </g>
+
+    <!-- panel 3: turned out -->
+    <g transform="translate(600,120)">
+      <rect width="240" height="230" rx="14" fill="#fff" stroke="#e2dbfa"/>
+      <line x1="20" y1="180" x2="220" y2="180" stroke="#cfc7ee" stroke-width="4" stroke-linecap="round"/>
+      <!-- forearm slightly tilted -->
+      <line x1="110" y1="40" x2="125" y2="165" stroke="#7c4dff" stroke-width="26" stroke-linecap="round"/>
+      <!-- hand flat, spread -->
+      <line x1="120" y1="168" x2="205" y2="168" stroke="#ff7043" stroke-width="22" stroke-linecap="round"/>
+      <path d="M118 120 A45 45 0 0 1 168 165" fill="none" stroke="#2b2350" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="152" y="128" font-size="15" font-weight="700">≈ 75°</text>
+      <text x="120" y="212" font-size="15" font-weight="700" text-anchor="middle">Finger gespreizt, leicht</text>
+      <text x="120" y="232" font-size="12" fill="#2e7d32" text-anchor="middle">nach außen gedreht – Last verteilt</text>
+    </g>
+
+    <text x="48" y="392" font-size="13" fill="#6f6894">Bei ≈ 65 % Körpergewicht auf zwei Handflächen ist die flache Hand der limitierende Faktor – nicht die Kraft.</text>
+  </g>
+</svg>

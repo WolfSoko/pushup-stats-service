@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-labelledby="t d">
+  <title id="t">Superkompensation</title>
+  <desc id="d">Kurve der Leistungsfähigkeit über die Zeit: Ein Training senkt sie zunächst, in der Erholung steigt sie über das Ausgangsniveau hinaus, danach fällt sie ohne neuen Reiz wieder ab. Markiert sind der ideale Zeitpunkt für das nächste Training sowie zu früh und zu spät.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c4dff" stop-opacity="0.25"/><stop offset="1" stop-color="#7c4dff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="900" height="500" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Superkompensation</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Leistungsfähigkeit nach einer Trainingseinheit – und wann der nächste Reiz kommen sollte</text>
+
+    <!-- axes -->
+    <line x1="80" y1="400" x2="850" y2="400" stroke="#cfc7ee" stroke-width="2"/>
+    <line x1="80" y1="120" x2="80" y2="400" stroke="#cfc7ee" stroke-width="2"/>
+    <text x="838" y="424" font-size="12" fill="#6f6894" text-anchor="end">Zeit (Stunden bis Tage)</text>
+    <text x="60" y="130" font-size="12" fill="#6f6894" text-anchor="end" transform="rotate(-90 60 130)">Leistung</text>
+    <!-- baseline -->
+    <line x1="80" y1="260" x2="850" y2="260" stroke="#b3a9de" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="88" y="252" font-size="12" fill="#6f6894">Ausgangsniveau</text>
+
+    <!-- curve -->
+    <path d="M100 260 C160 260 170 350 230 350 C300 350 340 190 470 190 C560 190 650 250 850 262" fill="none" stroke="#7c4dff" stroke-width="5" stroke-linecap="round"/>
+    <path d="M100 260 C160 260 170 350 230 350 C300 350 340 190 470 190 C560 190 650 250 850 262 L850 400 L100 400 Z" fill="url(#fill)"/>
+
+    <!-- phases -->
+    <g font-size="13" text-anchor="middle" fill="#4b4470">
+      <text x="150" y="380">Training</text>
+      <text x="150" y="396">(Ermüdung)</text>
+      <text x="290" y="380">Erholung</text>
+      <text x="290" y="396">Schlaf, Protein</text>
+      <text x="500" y="380" font-weight="700" fill="#2b2350">Superkompensation</text>
+      <text x="500" y="396">Fenster für den nächsten Reiz</text>
+      <text x="700" y="380">Rückgang</text>
+      <text x="700" y="396">ohne neuen Reiz</text>
+    </g>
+    <!-- markers -->
+    <g>
+      <circle cx="230" cy="350" r="9" fill="#e64a19"/><text x="230" y="336" font-size="12" text-anchor="middle" fill="#c62828" font-weight="700">zu früh</text>
+      <circle cx="470" cy="190" r="10" fill="#2ec4a5"/><text x="470" y="172" font-size="13" text-anchor="middle" fill="#1b9c82" font-weight="700">ideal</text>
+      <circle cx="760" cy="256" r="9" fill="#ff7043"/><text x="760" y="240" font-size="12" text-anchor="middle" fill="#e64a19" font-weight="700">zu spät</text>
+    </g>
+    <text x="48" y="470" font-size="13" fill="#6f6894">Für die meisten Muskelgruppen liegt das Fenster bei 48–72 Stunden – das Modell ist eine Vereinfachung, aber eine brauchbare.</text>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" width="900" height="540" role="img" aria-labelledby="t d">
+  <title id="t">Die fünf Trainingszonen</title>
+  <desc id="d">Fünf horizontale Zonen von leicht bis maximal mit Prozent der maximalen Herzfrequenz, Sprechtest und Trainingseffekt. Zone 2 und Zone 4 bis 5 sind hervorgehoben als Grundlagenausdauer und HIIT.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+  </defs>
+  <rect width="900" height="540" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Die fünf Trainingszonen</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Prozent der maximalen Herzfrequenz (HFmax ≈ 220 − Alter, grobe Faustregel) und Sprechtest</text>
+
+    <g font-size="13" fill="#6f6894">
+      <text x="60" y="122" font-weight="700" fill="#2b2350">Zone</text>
+      <text x="250" y="122" font-weight="700" fill="#2b2350">% HFmax</text>
+      <text x="360" y="122" font-weight="700" fill="#2b2350">Sprechtest</text>
+      <text x="600" y="122" font-weight="700" fill="#2b2350">Effekt</text>
+    </g>
+
+    <!-- rows, from top Z5 to bottom Z1 -->
+    <g font-size="14">
+      <rect x="48" y="134" width="804" height="62" rx="10" fill="#e64a19"/>
+      <text x="60" y="171" fill="#fff" font-weight="700" font-size="16">Zone 5 · maximal</text>
+      <text x="250" y="171" fill="#fff">90–100 %</text>
+      <text x="360" y="171" fill="#fff">Kein Wort möglich</text>
+      <text x="600" y="171" fill="#fff">VO₂max, Sprint – nur Sekunden</text>
+
+      <rect x="48" y="204" width="804" height="62" rx="10" fill="#ff7043"/>
+      <text x="60" y="241" fill="#fff" font-weight="700" font-size="16">Zone 4 · hart</text>
+      <text x="250" y="241" fill="#fff">80–90 %</text>
+      <text x="360" y="241" fill="#fff">Einzelne Wörter</text>
+      <text x="600" y="241" fill="#fff">HIIT-Intervalle, Laktattoleranz</text>
+
+      <rect x="48" y="274" width="804" height="62" rx="10" fill="#b3a9de"/>
+      <text x="60" y="311" fill="#2b2350" font-weight="700" font-size="16">Zone 3 · zügig</text>
+      <text x="250" y="311" fill="#2b2350">70–80 %</text>
+      <text x="360" y="311" fill="#2b2350">Kurze Sätze</text>
+      <text x="600" y="311" fill="#2b2350">Tempoläufe – „Grauzone“</text>
+
+      <rect x="48" y="344" width="804" height="62" rx="10" fill="#7c4dff"/>
+      <text x="60" y="381" fill="#fff" font-weight="700" font-size="16">Zone 2 · locker</text>
+      <text x="250" y="381" fill="#fff">60–70 %</text>
+      <text x="360" y="381" fill="#fff">Ganze Sätze, Nasenatmung</text>
+      <text x="600" y="381" fill="#fff">Mitochondrien, Fettstoffwechsel</text>
+
+      <rect x="48" y="414" width="804" height="62" rx="10" fill="#e2dbfa"/>
+      <text x="60" y="451" fill="#2b2350" font-weight="700" font-size="16">Zone 1 · sehr leicht</text>
+      <text x="250" y="451" fill="#2b2350">50–60 %</text>
+      <text x="360" y="451" fill="#2b2350">Unterhaltung mühelos</text>
+      <text x="600" y="451" fill="#2b2350">Spaziergang, aktive Erholung</text>
+    </g>
+    <text x="48" y="512" font-size="13" fill="#6f6894">Faustregel für die Woche: rund 80 % der Ausdauerzeit in Zone 1–2, rund 20 % in Zone 4–5. Zone 3 möglichst sparsam.</text>
+  </g>
+</svg>

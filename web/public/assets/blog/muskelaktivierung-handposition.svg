@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" role="img" aria-labelledby="t d">
+  <title id="t">Muskelaktivierung nach Handposition</title>
+  <desc id="d">Schematische Rangfolge der EMG-Aktivierung von Trizeps und großem Brustmuskel bei enger, schulterbreiter und weiter Handposition. Enge Handposition aktiviert beide Muskeln am stärksten.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+    <linearGradient id="tri" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c4dff"/><stop offset="1" stop-color="#a98bff"/></linearGradient>
+    <linearGradient id="pec" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7043"/><stop offset="1" stop-color="#ffab91"/></linearGradient>
+  </defs>
+  <rect width="900" height="520" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Muskelaktivierung nach Handposition</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Relative Rangfolge (EMG), schematisch nach Cogley et al. 2005 – keine Absolutwerte</text>
+
+    <g font-size="14">
+      <rect x="560" y="118" width="16" height="16" rx="4" fill="url(#tri)"/><text x="584" y="131">Trizeps</text>
+      <rect x="670" y="118" width="16" height="16" rx="4" fill="url(#pec)"/><text x="694" y="131">Großer Brustmuskel</text>
+    </g>
+
+    <!-- axis labels -->
+    <g font-size="13" fill="#6f6894">
+      <text x="48" y="132">Aktivierung: höher nach rechts →</text>
+      <line x1="200" y1="140" x2="820" y2="140" stroke="#cfc7ee" stroke-width="1"/>
+    </g>
+
+    <!-- Row: eng -->
+    <g>
+      <text x="48" y="188" font-size="17" font-weight="600">Eng</text>
+      <text x="48" y="208" font-size="13" fill="#6f6894">Hände unter der Brust</text>
+      <rect x="200" y="164" width="600" height="22" rx="11" fill="url(#tri)"/>
+      <rect x="200" y="192" width="580" height="22" rx="11" fill="url(#pec)"/>
+      <text x="790" y="180" font-size="13" fill="#fff" text-anchor="end" font-weight="600">höchste</text>
+      <text x="770" y="208" font-size="13" fill="#fff" text-anchor="end" font-weight="600">höchste</text>
+    </g>
+    <!-- Row: schulterbreit -->
+    <g>
+      <text x="48" y="288" font-size="17" font-weight="600">Schulterbreit</text>
+      <text x="48" y="308" font-size="13" fill="#6f6894">Standard-Position</text>
+      <rect x="200" y="264" width="470" height="22" rx="11" fill="url(#tri)"/>
+      <rect x="200" y="292" width="500" height="22" rx="11" fill="url(#pec)"/>
+      <text x="660" y="280" font-size="13" fill="#fff" text-anchor="end" font-weight="600">mittel</text>
+      <text x="690" y="308" font-size="13" fill="#fff" text-anchor="end" font-weight="600">mittel</text>
+    </g>
+    <!-- Row: weit -->
+    <g>
+      <text x="48" y="388" font-size="17" font-weight="600">Weit</text>
+      <text x="48" y="408" font-size="13" fill="#6f6894">1,5× Schulterbreite</text>
+      <rect x="200" y="364" width="360" height="22" rx="11" fill="url(#tri)"/>
+      <rect x="200" y="392" width="420" height="22" rx="11" fill="url(#pec)"/>
+      <text x="550" y="380" font-size="13" fill="#fff" text-anchor="end" font-weight="600">niedriger</text>
+      <text x="610" y="408" font-size="13" fill="#fff" text-anchor="end" font-weight="600">niedriger</text>
+    </g>
+
+    <rect x="48" y="446" width="804" height="46" rx="10" fill="#fff" stroke="#e2dbfa"/>
+    <text x="68" y="474" font-size="13.5" fill="#4b4470">Merke: <tspan font-weight="700">Eng</tspan> ist kein reines Trizeps-Setup – auch die Brust arbeitet stärker als in der weiten Position.</text>
+  </g>
+</svg>

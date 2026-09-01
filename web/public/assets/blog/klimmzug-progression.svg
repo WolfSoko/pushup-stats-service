@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" role="img" aria-labelledby="t d">
+  <title id="t">Der Weg zum ersten Klimmzug</title>
+  <desc id="d">Fünf aufsteigende Stufen: Dead Hang und Schulterblatt-Züge, Rudern am Tisch oder an Ringen, Band-unterstützte Klimmzüge, negative Klimmzüge, erster vollständiger Klimmzug. Jede Stufe mit Zielwert.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+    <linearGradient id="step" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffab91"/><stop offset="1" stop-color="#e64a19"/></linearGradient>
+    <linearGradient id="stepTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a98bff"/><stop offset="1" stop-color="#5b2fe0"/></linearGradient>
+  </defs>
+  <rect width="900" height="520" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Der Weg zum ersten Klimmzug</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Nächste Stufe, sobald du das Ziel der aktuellen Stufe in 3 Sätzen sauber schaffst</text>
+
+    <!-- steps: 5 steps, width 150, rise 62 -->
+    <g>
+      <rect x="60"  y="420" width="150" height="50"  rx="8" fill="url(#step)"/>
+      <rect x="220" y="358" width="150" height="112" rx="8" fill="url(#step)"/>
+      <rect x="380" y="296" width="150" height="174" rx="8" fill="url(#step)"/>
+      <rect x="540" y="234" width="150" height="236" rx="8" fill="url(#step)"/>
+      <rect x="700" y="172" width="150" height="298" rx="8" fill="url(#stepTop)"/>
+    </g>
+    <g font-size="15" font-weight="700" text-anchor="middle">
+      <text x="135" y="392">1 · Dead Hang</text>
+      <text x="295" y="330">2 · Rudern</text>
+      <text x="455" y="268">3 · Band-Klimmzug</text>
+      <text x="615" y="206">4 · Negative</text>
+      <text x="775" y="144">5 · Erster Klimmzug</text>
+    </g>
+    <g font-size="12" fill="#6f6894" text-anchor="middle">
+      <text x="135" y="410">+ Schulterblatt-Züge</text>
+      <text x="295" y="348">Tisch, Ringe, Handtuch</text>
+      <text x="455" y="286">dünneres Band = schwerer</text>
+      <text x="615" y="224">hochspringen, 5 s ablassen</text>
+      <text x="775" y="162">Kinn über die Stange</text>
+    </g>
+    <g font-size="13" fill="#fff" text-anchor="middle" font-weight="600">
+      <text x="135" y="450">Ziel: 3 × 30 s</text>
+      <text x="295" y="450">Ziel: 3 × 12</text>
+      <text x="455" y="450">Ziel: 3 × 8</text>
+      <text x="615" y="450">Ziel: 3 × 5</text>
+      <text x="775" y="450">Ziel: 1 – dann 3 × 3</text>
+    </g>
+    <text x="48" y="500" font-size="12" fill="#6f6894">Typische Dauer für Einsteiger: 6–12 Wochen bei 2–3 Zug-Einheiten pro Woche.</text>
+  </g>
+</svg>

@@ -99,3 +99,71 @@ describe('BlogArticleComponent', () => {
     });
   });
 });
+
+describe('BlogArticleComponent rich content', () => {
+  const seoMock = { update: vi.fn() };
+
+  function makeRoute(slug: string): ActivatedRoute {
+    const map = convertToParamMap({ slug });
+    return { snapshot: { paramMap: map } } as unknown as ActivatedRoute;
+  }
+
+  async function setup(slug: string): Promise<HTMLElement> {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [BlogArticleComponent],
+      providers: [
+        provideRouter([]),
+        { provide: ActivatedRoute, useValue: makeRoute(slug) },
+        { provide: SeoService, useValue: seoMock },
+        { provide: LOCALE_ID, useValue: 'de' },
+      ],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(BlogArticleComponent);
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  it('should render self-hosted figures with their image and caption inside the article body', async () => {
+    // given — the anatomy post embeds infographics as <figure> blocks
+    // pointing at web/public/assets/blog/*.svg; Angular's innerHTML
+    // sanitizer must keep figure/img/figcaption intact for them to show.
+    const post = findBlogPost('liegestuetze-muskeln-anatomie', 'de');
+    expect(post).toBeDefined();
+
+    // when
+    const host = await setup('liegestuetze-muskeln-anatomie');
+
+    // then
+    const figures = host.querySelectorAll(
+      '.article-body figure.article-figure'
+    );
+    expect(figures.length).toBeGreaterThan(0);
+    for (const figure of Array.from(figures)) {
+      const img = figure.querySelector('img');
+      expect(img?.getAttribute('src')).toMatch(/^\/assets\/blog\/.+\.svg$/);
+      expect(img?.getAttribute('alt')).toBeTruthy();
+      expect(figure.querySelector('figcaption')?.textContent).toBeTruthy();
+    }
+  });
+
+  it('should render data tables inside a horizontally scrollable wrapper', async () => {
+    // given — long tables must not widen the page on narrow screens; the
+    // markdown wraps them in <div class="table-scroll">.
+    const post = findBlogPost('liegestuetze-muskeln-anatomie', 'de');
+    expect(post).toBeDefined();
+
+    // when
+    const host = await setup('liegestuetze-muskeln-anatomie');
+
+    // then
+    const tables = host.querySelectorAll('.article-body table');
+    expect(tables.length).toBeGreaterThan(0);
+    for (const table of Array.from(tables)) {
+      expect(table.parentElement?.classList.contains('table-scroll')).toBe(
+        true
+      );
+      expect(table.querySelectorAll('thead th').length).toBeGreaterThan(0);
+    }
+  });
+});
