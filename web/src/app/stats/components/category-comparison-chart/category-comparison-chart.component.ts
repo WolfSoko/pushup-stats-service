@@ -3,11 +3,16 @@ import {
   Component,
   computed,
   input,
+  output,
   ChangeDetectionStrategy,
 } from '@angular/core';
 
 import type { CategoryComparison } from '../../analysis/analysis.types';
 import type { BarMode } from '../../analysis/exercise-breakdown';
+import {
+  ChartLegendComponent,
+  type ChartLegendItem,
+} from '../chart-legend/chart-legend.component';
 import type { ExerciseChoice } from '../exercise-breakdown-controls/exercise-breakdown-controls.component';
 
 /**
@@ -30,7 +35,7 @@ import type { ExerciseChoice } from '../exercise-breakdown-controls/exercise-bre
 @Component({
   selector: 'app-category-comparison-chart',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, ChartLegendComponent],
   templateUrl: './category-comparison-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './category-comparison-chart.component.scss',
@@ -40,6 +45,12 @@ export class CategoryComparisonChartComponent {
   readonly barMode = input<BarMode>('stacked');
   /** Localised name + colour per exercise id; empty keeps plain bars. */
   readonly exercises = input<ReadonlyArray<ExerciseChoice>>([]);
+  /** Page-wide hidden set; those exercises stay in the legend, hollow. */
+  readonly hidden = input<ReadonlyArray<string>>([]);
+
+  readonly toggleExercise = output<string>();
+
+  readonly legendAriaLabel = $localize`:@@analysis.overview.comparison.legendAria:Übungen ein- oder ausblenden`;
 
   readonly rows = computed(() => {
     const data = this.data();
@@ -68,21 +79,37 @@ export class CategoryComparisonChartComponent {
     });
   });
 
-  /** Only the exercises actually drawn, in bar order, deduplicated. */
-  readonly legend = computed(() => {
-    const seen = new Map<
-      string,
-      { id: string; label: string; color: string }
-    >();
+  /**
+   * The exercises actually drawn, in bar order and deduplicated, plus
+   * the ones the user hid — those carry no bar any more, so the legend
+   * is the only place their toggle can live.
+   */
+  readonly legend = computed<ChartLegendItem[]>(() => {
+    const seen = new Map<string, ChartLegendItem>();
+    const add = (
+      id: string,
+      label: string,
+      color: string,
+      active: boolean
+    ): void => {
+      if (seen.has(id)) return;
+      seen.set(id, {
+        id,
+        label,
+        color,
+        active,
+        testId: `category-comparison-legend-${id}`,
+      });
+    };
     for (const row of this.rows()) {
       for (const part of row.parts) {
-        if (seen.has(part.exerciseId)) continue;
-        seen.set(part.exerciseId, {
-          id: part.exerciseId,
-          label: part.label,
-          color: part.color,
-        });
+        add(part.exerciseId, part.label, part.color, true);
       }
+    }
+    const hidden = this.hidden();
+    for (const choice of this.exercises()) {
+      if (!hidden.includes(choice.id)) continue;
+      add(choice.id, choice.label, choice.color, false);
     }
     return [...seen.values()];
   });

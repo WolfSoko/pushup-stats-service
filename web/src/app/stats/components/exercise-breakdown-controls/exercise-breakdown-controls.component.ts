@@ -7,8 +7,11 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
+import {
+  ChartLegendComponent,
+  type ChartLegendItem,
+} from '../chart-legend/chart-legend.component';
 import type { BarMode } from '../../analysis/exercise-breakdown';
 
 export interface ExerciseChoice {
@@ -18,13 +21,17 @@ export interface ExerciseChoice {
 }
 
 /**
- * Bar layout switch plus the per-exercise visibility checkboxes. Sits
+ * Bar layout switch plus the per-exercise visibility toggles. Sits
  * with the chart it belongs to, listing only the exercises that chart
  * can draw: counted and timed exercises never share a chart, so a
- * "Plank" checkbox above the repetitions chart would control something
- * that chart cannot show. Unchecking still filters the whole tab —
+ * "Plank" toggle above the repetitions chart would control something
+ * that chart cannot show. Hiding one still filters the whole tab —
  * the scope of the *effect* is page-wide, the scope of the *offer* is
  * the chart.
+ *
+ * The toggles are legend entries rather than checkboxes: a filled dot
+ * for a drawn exercise, a hollow ring for a hidden one. Same colour
+ * key as the chart below, a fraction of the vertical space.
  *
  * Renders nothing below two exercises — a single exercise has no parts
  * to lay out and hiding it would only empty the page — *unless*
@@ -35,7 +42,7 @@ export interface ExerciseChoice {
  */
 @Component({
   selector: 'app-exercise-breakdown-controls',
-  imports: [MatButtonModule, MatButtonToggleModule, MatCheckboxModule],
+  imports: [MatButtonModule, MatButtonToggleModule, ChartLegendComponent],
   template: `
     @if (hasChoices()) {
       <section
@@ -73,18 +80,12 @@ export interface ExerciseChoice {
           <span class="row-label" i18n="@@analysis.breakdown.exercisesLabel"
             >Übungen</span
           >
-          <div class="choices">
-            @for (choice of exercises(); track choice.id) {
-              <mat-checkbox
-                [checked]="!isHidden(choice.id)"
-                (change)="toggleExercise.emit(choice.id)"
-                [attr.data-testid]="'exercise-breakdown-choice-' + choice.id"
-              >
-                <i class="swatch" [style.background]="choice.color"></i>
-                {{ choice.label }}
-              </mat-checkbox>
-            }
-          </div>
+          <app-chart-legend
+            class="choices"
+            [items]="legendItems()"
+            [ariaLabel]="exercisesAriaLabel"
+            (itemToggle)="toggleExercise.emit($event)"
+          />
           @if (hidden().length > 0) {
             <button
               mat-button
@@ -122,17 +123,7 @@ export interface ExerciseChoice {
       min-width: 6ch;
     }
     .choices {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 16px;
-    }
-    .swatch {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-      margin-right: 6px;
-      vertical-align: baseline;
+      font-size: 0.85rem;
     }
     .mode-toggle {
       --mat-standard-button-toggle-height: 32px;
@@ -155,8 +146,20 @@ export class ExerciseBreakdownControlsComponent {
   readonly toggleExercise = output<string>();
   readonly showAll = output<void>();
 
+  readonly exercisesAriaLabel = $localize`:@@analysis.breakdown.exercisesAria:Übungen ein- oder ausblenden`;
+
   readonly hasChoices = computed(
     () => this.exercises().length > 1 || this.hidden().length > 0
+  );
+
+  readonly legendItems = computed<ChartLegendItem[]>(() =>
+    this.exercises().map((choice) => ({
+      id: choice.id,
+      label: choice.label,
+      color: choice.color,
+      active: !this.isHidden(choice.id),
+      testId: `exercise-breakdown-choice-${choice.id}`,
+    }))
   );
 
   isHidden(exerciseId: string): boolean {

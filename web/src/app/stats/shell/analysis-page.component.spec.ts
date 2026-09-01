@@ -82,7 +82,9 @@ class MockStatsChartComponent {
   readonly kindLabel = input<string>('');
   readonly breakdown = input<unknown[]>([]);
   readonly barMode = input<string>('stacked');
+  readonly hiddenExercises = input<unknown[]>([]);
   readonly dayChartMode = model<string>('14h');
+  readonly toggleExercise = output<string>();
 }
 
 @Component({

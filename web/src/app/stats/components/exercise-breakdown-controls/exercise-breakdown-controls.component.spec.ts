@@ -43,15 +43,15 @@ describe('ExerciseBreakdownControlsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should offer one checkbox per exercise, checked while the exercise is visible', () => {
+  it('should offer one legend toggle per exercise, switched on while the exercise is visible', () => {
     // given / when
     const host: HTMLElement = fixture.nativeElement;
 
     // then
-    const situps = host.querySelector<HTMLInputElement>(
-      '[data-testid="exercise-breakdown-choice-abs.situps"] input'
+    const situps = host.querySelector(
+      '[data-testid="exercise-breakdown-choice-abs.situps"]'
     );
-    expect(situps?.checked).toBe(true);
+    expect(situps?.getAttribute('aria-checked')).toBe('true');
     expect(
       host.querySelector(
         '[data-testid="exercise-breakdown-choice-abs.crunches"]'
@@ -59,7 +59,7 @@ describe('ExerciseBreakdownControlsComponent', () => {
     ).toBeTruthy();
   });
 
-  it('should uncheck an exercise the caller reports as hidden', () => {
+  it('should switch a hidden exercise off so its marker reads as a hollow ring', () => {
     // given
     fixture.componentInstance.hidden.set(['abs.crunches']);
 
@@ -68,21 +68,23 @@ describe('ExerciseBreakdownControlsComponent', () => {
 
     // then
     const host: HTMLElement = fixture.nativeElement;
-    const crunches = host.querySelector<HTMLInputElement>(
-      '[data-testid="exercise-breakdown-choice-abs.crunches"] input'
+    const crunches = host.querySelector(
+      '[data-testid="exercise-breakdown-choice-abs.crunches"]'
     );
-    expect(crunches?.checked).toBe(false);
+    expect(crunches?.getAttribute('aria-checked')).toBe('false');
+    const dot = crunches?.querySelector<HTMLElement>('.dot');
+    expect(dot?.style.background).toBe('transparent');
   });
 
-  it('should emit the exercise id when a checkbox is clicked', () => {
+  it('should emit the exercise id when a legend entry is clicked', () => {
     // given
     const host: HTMLElement = fixture.nativeElement;
-    const input = host.querySelector<HTMLInputElement>(
-      '[data-testid="exercise-breakdown-choice-abs.situps"] input'
+    const toggle = host.querySelector<HTMLButtonElement>(
+      '[data-testid="exercise-breakdown-choice-abs.situps"]'
     );
 
     // when
-    input?.click();
+    toggle?.click();
     fixture.detectChanges();
 
     // then

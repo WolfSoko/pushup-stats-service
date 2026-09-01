@@ -2,6 +2,7 @@ import {
   Component,
   input,
   model,
+  output,
   PLATFORM_ID,
   signal,
   ChangeDetectionStrategy,
@@ -64,7 +65,9 @@ class MockStatsChartComponent {
   readonly kindLabel = input<string>('');
   readonly breakdown = input<unknown[]>([]);
   readonly barMode = input<string>('stacked');
+  readonly hiddenExercises = input<unknown[]>([]);
   readonly dayChartMode = model<string>('14h');
+  readonly toggleExercise = output<string>();
 }
 
 @Component({
@@ -803,7 +806,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(firstChartBreakdown(fixture)).toEqual([]);
   });
 
-  it('should drop an unchecked exercise from the KPIs and streaks, not just from the bars', async () => {
+  it('should drop a hidden exercise from the KPIs and streaks, not just from the bars', async () => {
     // given — crunches hold the best single entry and the only 11th-of-Feb training
     liveExerciseEntries.set([
       {
@@ -841,12 +844,12 @@ describe('AnalysisGroupViewComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    // then — the whole tab follows the checkbox, not only the chart
+    // then — the whole tab follows the legend toggle, not only the chart
     expect(store.viewFilteredRows()).toHaveLength(1);
     expect(store.viewSegments()[0].bestEntry?.value).toBe(30);
     expect(store.viewSegments()[0].bestDay?.date).toBe('2026-02-10');
 
-    // and the checkbox itself stays offered so the user can undo it
+    // and the toggle itself stays offered so the user can undo it
     expect(store.exerciseChoices().map((c) => c.id)).toEqual([
       'abs.crunches',
       'abs.situps',
@@ -861,7 +864,7 @@ describe('AnalysisGroupViewComponent', () => {
     expect(store.viewFilteredRows()).toHaveLength(2);
   });
 
-  it('should offer only the active tab\u2019s exercises as checkboxes, coloured page-wide', async () => {
+  it('should offer only the active tab\u2019s exercises as legend toggles, coloured page-wide', async () => {
     // given — a pushup and two core exercises in the same range
     liveExerciseEntries.set([
       {
@@ -997,7 +1000,7 @@ describe('AnalysisGroupViewComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    // then — the checkbox list sits with its own chart, per measurement
+    // then — the toggle list sits with its own chart, per measurement
     const segments = store.viewSegments();
     expect(segments.map((seg) => seg.measurement)).toEqual(['reps', 'time']);
     expect(segments[0].exerciseOptionIds).toEqual([
@@ -1009,7 +1012,7 @@ describe('AnalysisGroupViewComponent', () => {
       'plank.standard',
     ]);
 
-    // and no block offers a checkbox for the other block's unit
+    // and no block offers a toggle for the other block's unit
     const host: HTMLElement = fixture.nativeElement;
     const blocks = host.querySelectorAll(
       '[data-testid="exercise-breakdown-controls"]'
@@ -1032,7 +1035,58 @@ describe('AnalysisGroupViewComponent', () => {
     ).toBeTruthy();
   });
 
-  it('should keep a chart\u2019s checkbox after its exercise is unchecked, so the box that undoes it survives', async () => {
+  it('should hide an exercise the chart\u2019s own legend toggled, and list it there as hidden', async () => {
+    // given
+    liveExerciseEntries.set([
+      {
+        _id: 'l1',
+        userId: 'u1',
+        exerciseId: 'abs.situps',
+        timestamp: '2026-02-10T08:00:00.000Z',
+        reps: 30,
+        source: 'web',
+      } as ExerciseEntry,
+      {
+        _id: 'l2',
+        userId: 'u1',
+        exerciseId: 'abs.crunches',
+        timestamp: '2026-02-10T09:00:00.000Z',
+        reps: 20,
+        source: 'web',
+      } as ExerciseEntry,
+    ]);
+    const groupViewEl = fixture.debugElement.query(
+      By.directive(AnalysisGroupViewComponent)
+    );
+    const store = groupViewEl.injector.get(AnalysisStore);
+    store.setRange('2026-02-09', '2026-02-15');
+    store.setActiveView('core');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // when — the click lands on the legend under the chart, not on a
+    // separate control above it
+    const chart = fixture.debugElement.query(
+      By.directive(MockStatsChartComponent)
+    );
+    (chart.componentInstance as MockStatsChartComponent).toggleExercise.emit(
+      'abs.crunches'
+    );
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(store.hiddenExerciseIds()).toEqual(['abs.crunches']);
+    const hidden = (
+      fixture.debugElement.query(By.directive(MockStatsChartComponent))
+        .componentInstance as MockStatsChartComponent
+    ).hiddenExercises() as Array<{ exerciseId: string }>;
+    expect(hidden.map((entry) => entry.exerciseId)).toEqual(['abs.crunches']);
+  });
+
+  it('should keep a chart\u2019s legend toggle after its exercise is hidden, so the click that undoes it survives', async () => {
     // given
     liveExerciseEntries.set([
       {
@@ -1071,17 +1125,17 @@ describe('AnalysisGroupViewComponent', () => {
     // then
     expect(store.viewSegments()[0].exerciseOptionIds).toContain('abs.crunches');
     const host: HTMLElement = fixture.nativeElement;
-    const crunches = host.querySelector<HTMLInputElement>(
-      '[data-testid="exercise-breakdown-choice-abs.crunches"] input'
+    const crunches = host.querySelector(
+      '[data-testid="exercise-breakdown-choice-abs.crunches"]'
     );
     expect(crunches).toBeTruthy();
-    expect(crunches?.checked).toBe(false);
+    expect(crunches?.getAttribute('aria-checked')).toBe('false');
   });
 
-  it('should keep the chart block and its checkboxes after every exercise is unchecked', async () => {
+  it('should keep the chart block and its legend toggles after every exercise is hidden', async () => {
     // Regression: the segment list was built from the *filtered* rows,
-    // so unchecking everything produced no segments at all — taking the
-    // checkboxes down with the chart and leaving no way back.
+    // so hiding everything produced no segments at all — taking the
+    // toggles down with the chart and leaving no way back.
     // given
     liveExerciseEntries.set([
       {
@@ -1111,7 +1165,7 @@ describe('AnalysisGroupViewComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    // when — the user unchecks every exercise the block can draw
+    // when — the user hides every exercise the block can draw
     store.toggleExerciseVisibility('abs.situps');
     store.toggleExerciseVisibility('abs.crunches');
     fixture.detectChanges();
@@ -1126,15 +1180,15 @@ describe('AnalysisGroupViewComponent', () => {
       host.querySelector('[data-testid="segment-chart-placeholder-reps"]')
     ).toBeTruthy();
 
-    // and both checkboxes are still there, unchecked, to undo it
-    const situps = host.querySelector<HTMLInputElement>(
-      '[data-testid="exercise-breakdown-choice-abs.situps"] input'
+    // and both legend toggles are still there, switched off, to undo it
+    const situps = host.querySelector<HTMLButtonElement>(
+      '[data-testid="exercise-breakdown-choice-abs.situps"]'
     );
-    const crunches = host.querySelector<HTMLInputElement>(
-      '[data-testid="exercise-breakdown-choice-abs.crunches"] input'
+    const crunches = host.querySelector<HTMLButtonElement>(
+      '[data-testid="exercise-breakdown-choice-abs.crunches"]'
     );
-    expect(situps?.checked).toBe(false);
-    expect(crunches?.checked).toBe(false);
+    expect(situps?.getAttribute('aria-checked')).toBe('false');
+    expect(crunches?.getAttribute('aria-checked')).toBe('false');
 
     // and the copy names the real reason rather than blaming the range
     expect(
@@ -1145,7 +1199,7 @@ describe('AnalysisGroupViewComponent', () => {
       host.querySelector('[data-testid="analysis-group-view-empty"]')
     ).toBeNull();
 
-    // when — checking one back on
+    // when — switching one back on
     situps?.click();
     fixture.detectChanges();
     await fixture.whenStable();

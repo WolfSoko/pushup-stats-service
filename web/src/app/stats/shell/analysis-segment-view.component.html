@@ -34,9 +34,12 @@
         <span class="placeholder-axis"></span>
       </div>
       @if (allHidden()) {
-        <p class="placeholder-note" i18n="@@analysis.placeholder.allHidden">
-          Alle Übungen dieses Diagramms sind ausgeblendet. Setze oben ein
-          Häkchen, um sie wieder anzuzeigen.
+        <p
+          class="placeholder-note"
+          i18n="@@analysis.placeholder.allHiddenLegend"
+        >
+          Alle Übungen dieses Diagramms sind ausgeblendet. Tippe oben auf einen
+          Übungsnamen, um sie wieder anzuzeigen.
         </p>
       } @else {
         <p class="placeholder-note" i18n="@@noEntriesInSelectedRange">
@@ -61,8 +64,10 @@
     [paceSeries]="segment().paceSeries"
     [breakdown]="breakdown()"
     [barMode]="barMode()"
+    [hiddenExercises]="hiddenChartExercises()"
     [dayChartMode]="dayChartMode()"
     (dayChartModeChange)="dayChartModeChange.emit($event)"
+    (toggleExercise)="toggleExercise.emit($event)"
   />
 
   <section class="grid">

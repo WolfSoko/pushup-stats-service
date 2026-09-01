@@ -6,6 +6,7 @@ import {
   ChartBreakdownSeries,
   PaceSeriesEntry,
 } from './stats-chart.models';
+import type { ChartSeriesKey } from './chart-legend-items';
 import { bucketToTs } from './chart-helpers';
 
 export interface ChartDataLabels {
@@ -25,6 +26,12 @@ export interface ChartDataInputs {
   movingAvg: number[];
   paceMode: boolean;
   paceSeries: PaceSeriesEntry[];
+  /**
+   * Series the user switched off in the legend. Chart.js keeps a
+   * `hidden` dataset out of the drawing and out of the axis scale,
+   * which is exactly the toggle semantics the legend promises.
+   */
+  hiddenSeries?: ReadonlySet<ChartSeriesKey>;
   labels: ChartDataLabels;
 }
 
@@ -135,6 +142,7 @@ export function buildChartData(
     inputs;
   const { intervalDatasetLabel, withSetsLabel, secondaryLineLabel } =
     inputs.labels;
+  const hidden = inputs.hiddenSeries ?? new Set<ChartSeriesKey>();
 
   const barDatasets = inputs.breakdown.length
     ? buildBreakdownDatasets(series, inputs.breakdown, inputs.barMode)
@@ -144,7 +152,10 @@ export function buildChartData(
         hasSetsData,
         intervalDatasetLabel,
         withSetsLabel
-      );
+      ).map((dataset, index) => ({
+        ...dataset,
+        hidden: hidden.has(index === 0 ? 'bar' : 'sets'),
+      }));
   const secondaryLineData = buildSecondaryLineData(
     series,
     paceMode,
@@ -157,6 +168,7 @@ export function buildChartData(
       {
         label: secondaryLineLabel,
         data: secondaryLineData,
+        hidden: hidden.has('secondary'),
         type: 'line',
         borderColor: '#ffbe66',
         backgroundColor: '#ffbe66',
@@ -172,6 +184,7 @@ export function buildChartData(
           x: bucketToTs(entry.bucket),
           y: movingAvg[index] ?? null,
         })),
+        hidden: hidden.has('movingAvg'),
         type: 'line',
         borderColor: '#7ef0c8',
         backgroundColor: '#7ef0c8',

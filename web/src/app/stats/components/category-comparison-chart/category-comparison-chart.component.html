@@ -68,13 +68,12 @@
   </ul>
 
   @if (legend().length) {
-    <div class="legend" data-testid="category-comparison-legend">
-      @for (item of legend(); track item.id) {
-        <span
-          ><i class="swatch" [style.background]="item.color"></i
-          >{{ item.label }}</span
-        >
-      }
-    </div>
+    <app-chart-legend
+      class="legend"
+      [items]="legend()"
+      [ariaLabel]="legendAriaLabel"
+      testId="category-comparison-legend"
+      (itemToggle)="toggleExercise.emit($event)"
+    />
   }
 }

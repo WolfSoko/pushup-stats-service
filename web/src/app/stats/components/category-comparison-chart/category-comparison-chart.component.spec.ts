@@ -15,6 +15,8 @@ import { CategoryComparisonChartComponent } from './category-comparison-chart.co
     [data]="data()"
     [barMode]="barMode()"
     [exercises]="exercises()"
+    [hidden]="hidden()"
+    (toggleExercise)="lastToggled.set($event)"
   />`,
 })
 class HostComponent {
@@ -25,6 +27,8 @@ class HostComponent {
   });
   readonly barMode = signal<BarMode>('stacked');
   readonly exercises = signal<ExerciseChoice[]>([]);
+  readonly hidden = signal<string[]>([]);
+  readonly lastToggled = signal<string | null>(null);
 }
 
 describe('CategoryComparisonChartComponent', () => {
@@ -201,7 +205,7 @@ describe('CategoryComparisonChartComponent', () => {
     ) as HTMLElement;
     expect(legend.textContent).toContain('Sit-ups');
     expect(legend.textContent).toContain('Crunches');
-    expect(legend.querySelectorAll('span')).toHaveLength(2);
+    expect(legend.querySelectorAll('button')).toHaveLength(2);
   });
 
   it('should keep the plain bar when no category holds more than one exercise', () => {
@@ -239,5 +243,71 @@ describe('CategoryComparisonChartComponent', () => {
     const host: HTMLElement = fixture.nativeElement;
     // German source locale.
     expect(host.textContent).toContain('Trainingseinheiten');
+  });
+
+  it('should emit the exercise id when its legend entry is clicked', () => {
+    // given
+    fixture.componentInstance.exercises.set([
+      { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
+      { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    ]);
+    fixture.componentInstance.data.set({
+      labels: ['Rumpf'],
+      entries: [4],
+      parts: [
+        [
+          { exerciseId: 'abs.situps', entries: 3 },
+          { exerciseId: 'abs.crunches', entries: 1 },
+        ],
+      ],
+    });
+    fixture.detectChanges();
+
+    // when
+    const host: HTMLElement = fixture.nativeElement;
+    host
+      .querySelector<HTMLButtonElement>(
+        '[data-testid="category-comparison-legend-abs.situps"]'
+      )
+      ?.click();
+    fixture.detectChanges();
+
+    // then
+    expect(fixture.componentInstance.lastToggled()).toBe('abs.situps');
+  });
+
+  it('should keep a hidden exercise in the legend, switched off, so the click that undoes it survives', () => {
+    // given — crunches carry no bar any more once they are hidden
+    fixture.componentInstance.exercises.set([
+      { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
+      { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    ]);
+    fixture.componentInstance.hidden.set(['abs.crunches']);
+    fixture.componentInstance.data.set({
+      labels: ['Rumpf', 'Beine'],
+      entries: [3, 2],
+      parts: [
+        [
+          { exerciseId: 'abs.situps', entries: 2 },
+          { exerciseId: 'abs.pushup', entries: 1 },
+        ],
+        [{ exerciseId: 'abs.situps', entries: 2 }],
+      ],
+    });
+
+    // when
+    fixture.detectChanges();
+
+    // then
+    const host: HTMLElement = fixture.nativeElement;
+    const crunches = host.querySelector(
+      '[data-testid="category-comparison-legend-abs.crunches"]'
+    );
+    expect(crunches?.getAttribute('aria-checked')).toBe('false');
+    expect(
+      host
+        .querySelector('[data-testid="category-comparison-legend-abs.situps"]')
+        ?.getAttribute('aria-checked')
+    ).toBe('true');
   });
 });

@@ -12,6 +12,7 @@ import {
   ExerciseBreakdownControlsComponent,
   type ExerciseChoice,
 } from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
+import type { HiddenExerciseLegendEntry } from '../components/stats-chart/chart-legend-items';
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
@@ -82,11 +83,11 @@ export class AnalysisSegmentViewComponent {
   readonly hasSets = computed(() => segmentHasSets(this.segment().measurement));
 
   /**
-   * The checkboxes offered next to this block's chart: only the
+   * The visibility toggles offered next to this block's chart: only the
    * exercises measured in its dimension. Counted and timed exercises
    * never share a chart, so they must not share a filter either — a
-   * "Plank" checkbox above the repetitions chart would control
-   * something that chart cannot show.
+   * "Plank" toggle above the repetitions chart would control something
+   * that chart cannot show.
    */
   readonly exerciseChoices = computed<ExerciseChoice[]>(() => {
     const order = this.exerciseOrder();
@@ -98,7 +99,23 @@ export class AnalysisSegmentViewComponent {
   });
 
   /**
-   * Every exercise this block could draw is unchecked. Drives the
+   * The hidden exercises the chart's own legend still lists, as hollow
+   * rings. Their bars are gone from `breakdown`, so without this the
+   * legend would silently drop the entry the user just clicked.
+   */
+  readonly hiddenChartExercises = computed<HiddenExerciseLegendEntry[]>(() => {
+    const hidden = this.hiddenExerciseIds();
+    return this.exerciseChoices()
+      .filter((choice) => hidden.includes(choice.id))
+      .map((choice) => ({
+        exerciseId: choice.id,
+        label: choice.label,
+        color: choice.color,
+      }));
+  });
+
+  /**
+   * Every exercise this block could draw is hidden. Drives the
    * placeholder's copy: "no entries in this period" would be a lie
    * when the entries exist and the user simply hid them.
    */
