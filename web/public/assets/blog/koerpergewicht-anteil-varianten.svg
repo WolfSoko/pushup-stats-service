@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" role="img" aria-labelledby="t d">
+  <title id="t">Bewegtes Körpergewicht je Liegestütz-Variante</title>
+  <desc id="d">Balkendiagramm: Anteil des Körpergewichts, den die Arme bei verschiedenen Liegestütz-Varianten tragen. Hände hoch erhöht etwa 40 Prozent, Knie etwa 50 Prozent, Hände leicht erhöht etwa 55 Prozent, Standard etwa 65 bis 75 Prozent, Füße leicht erhöht etwa 70 Prozent, Füße hoch erhöht etwa 75 Prozent.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+    <linearGradient id="bar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5b2fe0"/><stop offset="1" stop-color="#a98bff"/></linearGradient>
+    <linearGradient id="barHi" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e64a19"/><stop offset="1" stop-color="#ffab91"/></linearGradient>
+  </defs>
+  <rect width="900" height="560" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Wie viel Körpergewicht bewegst du wirklich?</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Anteil des Körpergewichts auf den Händen, gerundete Größenordnungen (Ebben et al. 2011, Suprak et al. 2011)</text>
+
+    <!-- grid -->
+    <g stroke="#d9d2f3" stroke-width="1" font-size="12" fill="#6f6894">
+      <line x1="120" y1="420" x2="852" y2="420"/><text x="108" y="424" text-anchor="end" stroke="none">0 %</text>
+      <line x1="120" y1="345" x2="852" y2="345" stroke-dasharray="4 4"/><text x="108" y="349" text-anchor="end" stroke="none">25 %</text>
+      <line x1="120" y1="270" x2="852" y2="270" stroke-dasharray="4 4"/><text x="108" y="274" text-anchor="end" stroke="none">50 %</text>
+      <line x1="120" y1="195" x2="852" y2="195" stroke-dasharray="4 4"/><text x="108" y="199" text-anchor="end" stroke="none">75 %</text>
+      <line x1="120" y1="120" x2="852" y2="120" stroke-dasharray="4 4"/><text x="108" y="124" text-anchor="end" stroke="none">100 %</text>
+    </g>
+
+    <!-- bars: x positions 150, 270, 390, 510, 630, 750 ; width 80 ; height = value*3 -->
+    <g font-size="15" font-weight="700" text-anchor="middle">
+      <rect x="150" y="300" width="80" height="120" rx="8" fill="url(#bar)"/><text x="190" y="290">≈ 40 %</text>
+      <rect x="270" y="270" width="80" height="150" rx="8" fill="url(#bar)"/><text x="310" y="260">≈ 50 %</text>
+      <rect x="390" y="255" width="80" height="165" rx="8" fill="url(#bar)"/><text x="430" y="245">≈ 55 %</text>
+      <rect x="510" y="210" width="80" height="210" rx="8" fill="url(#barHi)"/><text x="550" y="200">≈ 65–75 %</text>
+      <rect x="630" y="210" width="80" height="210" rx="8" fill="url(#bar)"/><text x="670" y="200">≈ 70 %</text>
+      <rect x="750" y="195" width="80" height="225" rx="8" fill="url(#bar)"/><text x="790" y="185">≈ 75 %</text>
+    </g>
+    <!-- x labels -->
+    <g font-size="13" text-anchor="middle" fill="#4b4470">
+      <text x="190" y="446">Hände hoch</text><text x="190" y="464">erhöht (≈ 60 cm)</text>
+      <text x="310" y="446">Knie-</text><text x="310" y="464">Liegestütz</text>
+      <text x="430" y="446">Hände leicht</text><text x="430" y="464">erhöht (≈ 30 cm)</text>
+      <text x="550" y="446" font-weight="700">Standard</text><text x="550" y="464">oben / unten</text>
+      <text x="670" y="446">Füße leicht</text><text x="670" y="464">erhöht (≈ 30 cm)</text>
+      <text x="790" y="446">Füße hoch</text><text x="790" y="464">erhöht (≈ 60 cm)</text>
+    </g>
+
+    <rect x="48" y="490" width="804" height="46" rx="10" fill="#fff" stroke="#e2dbfa"/>
+    <text x="68" y="518" font-size="13.5" fill="#4b4470">Beispiel: Bei 80 kg Körpergewicht drückst du im Standard-Liegestütz rund <tspan font-weight="700">52–60 kg</tspan> – ein mittelschwerer Bankdrück-Satz.</text>
+  </g>
+</svg>

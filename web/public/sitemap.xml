@@ -2711,6 +2711,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/30-tage-liegestuetze-challenge"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/de/blog/geschichte-der-liegestuetze</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog/geschichte-der-liegestuetze"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/geschichte-der-liegestuetze"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/blog/liegestuetze-ab-40</loc>
     <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
@@ -3287,6 +3295,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-frauen"/>
   </url>
   <url>
+    <loc>https://pushup-stats.com/de/blog/liegestuetze-handgelenk-schulter-schmerzen</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog/liegestuetze-handgelenk-schulter-schmerzen"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-handgelenk-schulter-schmerzen"/>
+  </url>
+  <url>
     <loc>https://pushup-stats.com/de/blog/liegestuetze-herz-studie</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -3429,6 +3445,22 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://pushup-stats.com/no/blog/armhevninger-hjertestudie"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog/pushups-heart-study"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-herz-studie"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/blog/liegestuetze-muskelaufbau</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog/liegestuetze-muskelaufbau"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-muskelaufbau"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/blog/liegestuetze-muskeln-anatomie</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/blog/liegestuetze-muskeln-anatomie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/liegestuetze-muskeln-anatomie"/>
   </url>
   <url>
     <loc>https://pushup-stats.com/de/blog/liegestuetze-steigern</loc>

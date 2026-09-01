@@ -44,13 +44,15 @@ All generated modules are checked in so reviewers see the diff and the build is 
 
 3. **Write the body** in GitHub-flavored markdown. Raw HTML passes through `marked` unchanged — use it for callouts (`<aside class="plan-cta">…</aside>`), figure layouts, or any styling the typography defaults don't cover.
 
-4. **Use translated slugs in cross-links.** Internal links use the same locale as the post: a French post links to `/fr/blog/<french-slug>` (not `/en/blog/<english-slug>`). The other-locale slug map is implicit from the sibling files in the folder — read them when in doubt.
+4. **Images.** External hero images (Unsplash) work as before. Self-hosted illustrations and infographics live in `web/public/assets/blog/` and are referenced as `<figure class="article-figure"><img src="/assets/blog/<name>.svg" alt="…" width="…" height="…" loading="lazy" /><figcaption>…</figcaption></figure>` — `alt` is mandatory. A `heroImage` that points at a self-hosted file must be an absolute URL (`https://pushup-stats.com/assets/blog/<name>.jpg`) because it doubles as `og:image`; use JPEG/PNG there, social crawlers ignore SVG. Data tables go inside `<div class="table-scroll"><table>…</table></div>` so they scroll instead of widening the page. `tools/src/blog-image-assets.spec.js` fails CI when a referenced asset is missing or an image has no `alt`. Figures with baked-in German labels are shared across locales as-is; if a translation needs localised labels, add a `<name>.<lang>.svg` and point the translated post at it.
 
-5. **Write the same post in every additional locale.** Drop in `<folder>/<lang>.md` for each locale you want a translation in. Per-locale `slug:` differs across files; everything else translates. Untranslated locales fall back to the locale picker on the frontend (no auto-translation).
+5. **Use translated slugs in cross-links.** Internal links use the same locale as the post: a French post links to `/fr/blog/<french-slug>` (not `/en/blog/<english-slug>`). The other-locale slug map is implicit from the sibling files in the folder — read them when in doubt.
 
-6. **Run the generator.** `pnpm nx run tools:generate-content` rebuilds the per-post TS modules + barrel + wiki content; `pnpm nx run tools:generate-sitemap` (auto-chained) refreshes `sitemap.xml`. Commit the regenerated TS modules and `sitemap.xml` alongside the markdown.
+6. **Write the same post in every additional locale.** Drop in `<folder>/<lang>.md` for each locale you want a translation in. Per-locale `slug:` differs across files; everything else translates. Untranslated locales fall back to the locale picker on the frontend (no auto-translation).
 
-7. **YAML quoting gotchas.** Single-quoted YAML scalars require `''` to escape an apostrophe (`s'entraîner` → `'s''entraîner'`) or use double quotes. The fixer at `tools/src/fix-translated-yaml.mjs` repairs the most common error class but it is safer to write the YAML correctly the first time.
+7. **Run the generator.** `pnpm nx run tools:generate-content` rebuilds the per-post TS modules + barrel + wiki content; `pnpm nx run tools:generate-sitemap` (auto-chained) refreshes `sitemap.xml`. Commit the regenerated TS modules and `sitemap.xml` alongside the markdown.
+
+8. **YAML quoting gotchas.** Single-quoted YAML scalars require `''` to escape an apostrophe (`s'entraîner` → `'s''entraîner'`) or use double quotes. The fixer at `tools/src/fix-translated-yaml.mjs` repairs the most common error class but it is safer to write the YAML correctly the first time.
 
 ## Blog Translation Policy
 

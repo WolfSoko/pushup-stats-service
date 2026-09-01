@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" role="img" aria-labelledby="t d">
+  <title id="t">Das Wiederholungs-Kontinuum für Muskelaufbau</title>
+  <desc id="d">Skala von 1 bis 40 Wiederholungen pro Satz. 1 bis 5 Wiederholungen: vor allem Maximalkraft. 6 bis 30 Wiederholungen: Muskelaufbau ähnlich gut, wenn der Satz nahe ans Muskelversagen geht. Über 30 Wiederholungen: zunehmend Kraftausdauer, Muskelaufbau lässt nach.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f4ff"/><stop offset="1" stop-color="#ece7fb"/></linearGradient>
+    <linearGradient id="zone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffab91"/><stop offset="0.2" stop-color="#a98bff"/><stop offset="0.75" stop-color="#7c4dff"/><stop offset="1" stop-color="#cfc7ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="460" rx="20" fill="url(#bg)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" fill="#2b2350">
+    <text x="48" y="58" font-size="26" font-weight="700">Wie viele Wiederholungen bauen Muskeln auf?</text>
+    <text x="48" y="86" font-size="15" fill="#6f6894">Belastungs-Kontinuum nach Schoenfeld et al. 2017 – entscheidend ist die Nähe zum Muskelversagen</text>
+
+    <!-- continuum bar -->
+    <rect x="60" y="180" width="780" height="34" rx="17" fill="url(#zone)"/>
+    <!-- tick labels -->
+    <g font-size="14" text-anchor="middle" fill="#4b4470" font-weight="600">
+      <text x="60" y="240">1</text>
+      <text x="158" y="240">5</text>
+      <text x="216" y="240">8</text>
+      <text x="372" y="240">15</text>
+      <text x="645" y="240">30</text>
+      <text x="840" y="240">40+</text>
+      <text x="450" y="264" font-size="12" font-weight="400" fill="#6f6894">Wiederholungen pro Satz (bis nahe ans Muskelversagen)</text>
+    </g>
+    <!-- zone brackets -->
+    <g stroke="#2b2350" stroke-width="2" fill="none">
+      <path d="M60 150 v-12 h98 v12"/>
+      <path d="M216 150 v-12 h429 v12"/>
+      <path d="M660 150 v-12 h180 v12"/>
+    </g>
+    <g font-size="14" text-anchor="middle" fill="#2b2350" font-weight="700">
+      <text x="109" y="126">Maximalkraft</text>
+      <text x="430" y="126">Muskelaufbau ähnlich effektiv</text>
+      <text x="750" y="126">Kraftausdauer</text>
+    </g>
+
+    <!-- callout boxes -->
+    <g font-size="13" fill="#4b4470">
+      <rect x="48" y="300" width="250" height="120" rx="12" fill="#fff" stroke="#e2dbfa"/>
+      <text x="68" y="326" font-size="15" font-weight="700" fill="#2b2350">Unter 6 Wiederholungen</text>
+      <text x="68" y="350">Schwere Varianten (Archer, Decline,</text>
+      <text x="68" y="370">Zusatzgewicht). Gut für Kraft, für</text>
+      <text x="68" y="390">Hypertrophie nicht nötig.</text>
+
+      <rect x="325" y="300" width="250" height="120" rx="12" fill="#7c4dff" stroke="none"/>
+      <text x="345" y="326" font-size="15" font-weight="700" fill="#fff">6–30 Wiederholungen</text>
+      <text x="345" y="350" fill="#fff">Die Standard-Zone für Liegestütze.</text>
+      <text x="345" y="370" fill="#fff">Satz endet mit 0–3 Wdh. in Reserve –</text>
+      <text x="345" y="390" fill="#fff">dann wächst der Muskel.</text>
+
+      <rect x="602" y="300" width="250" height="120" rx="12" fill="#fff" stroke="#e2dbfa"/>
+      <text x="622" y="326" font-size="15" font-weight="700" fill="#2b2350">Über 30 Wiederholungen</text>
+      <text x="622" y="350">Der Satz wird zur Ausdauerübung.</text>
+      <text x="622" y="370">Zeit für eine schwerere Variante</text>
+      <text x="622" y="390">oder langsameres Tempo.</text>
+    </g>
+  </g>
+</svg>
