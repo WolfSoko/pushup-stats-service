@@ -10911,51 +10911,51 @@
       </segment>
     </unit>
     <unit id="chart.titleWeekly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Verlauf (Wochenwerte)</source>
-        <target>Verlauf (Wochenwerte)</target>
+        <target>趋势（按周）</target>
       </segment>
     </unit>
     <unit id="chart.titleMonthly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Verlauf (Monatswerte)</source>
-        <target>Verlauf (Monatswerte)</target>
+        <target>趋势（按月）</target>
       </segment>
     </unit>
     <unit id="chart.cumulative">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kumuliert</source>
-        <target>Kumuliert</target>
+        <target>累计</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.reps.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>柱状图显示每个时间段的次数。橙色线累计该时间段，绿色线显示你的趋势。</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.time.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>柱状图显示每个时间段的运动时长（秒）。橙色线累计该时间段，绿色线显示你的趋势。</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.weight.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>柱状图显示每个时间段的训练重量（公斤）。橙色线累计该时间段，绿色线显示你的趋势。</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>柱状图显示每个时间段的训练量。橙色线累计该时间段，绿色线显示你的趋势。</target>
       </segment>
     </unit>
     <unit id="chart.weekAbbrev">
-      <segment state="initial">
+      <segment state="translated">
         <source>KW</source>
-        <target>KW</target>
+        <target>周</target>
       </segment>
     </unit>
 </file>
