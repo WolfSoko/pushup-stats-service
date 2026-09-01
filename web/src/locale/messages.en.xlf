@@ -11604,51 +11604,51 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="chart.titleWeekly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Verlauf (Wochenwerte)</source>
-        <target>Verlauf (Wochenwerte)</target>
+        <target>Progress (weekly values)</target>
       </segment>
     </unit>
     <unit id="chart.titleMonthly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Verlauf (Monatswerte)</source>
-        <target>Verlauf (Monatswerte)</target>
+        <target>Progress (monthly values)</target>
       </segment>
     </unit>
     <unit id="chart.cumulative">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kumuliert</source>
-        <target>Kumuliert</target>
+        <target>Cumulative</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.reps.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen deine Wiederholungen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>Bars show your reps per time slot. The orange line sums the period, the green one shows your trend.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.time.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen deine Übungsdauer (s) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>Bars show your exercise duration (s) per time slot. The orange line sums the period, the green one shows your trend.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.weight.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen dein Trainingsgewicht (kg) pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>Bars show your training weight (kg) per time slot. The orange line sums the period, the green one shows your trend.</target>
       </segment>
     </unit>
     <unit id="chart.subtitle.mixed.range">
-      <segment state="initial">
+      <segment state="translated">
         <source>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</source>
-        <target>Balken zeigen dein Trainingsvolumen pro Zeitabschnitt. Die orange Linie summiert den Zeitraum, die grüne zeigt deinen Trend.</target>
+        <target>Bars show your training volume per time slot. The orange line sums the period, the green one shows your trend.</target>
       </segment>
     </unit>
     <unit id="chart.weekAbbrev">
-      <segment state="initial">
+      <segment state="translated">
         <source>KW</source>
-        <target>KW</target>
+        <target>Wk</target>
       </segment>
     </unit>
 </file>
