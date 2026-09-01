@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Liegestütze Handgelenk Mobility"
   ],
   "alternateSlugs": {
-    "de": "liegestuetze-handgelenk-schulter-schmerzen"
+    "de": "liegestuetze-handgelenk-schulter-schmerzen",
+    "el": "ponoi-karpou-omou-pieseon-ges",
+    "en": "pushup-wrist-shoulder-pain",
+    "es": "dolor-muneca-hombro-flexiones",
+    "fr": "douleurs-poignet-epaule-pompes",
+    "it": "dolore-polso-spalla-piegamenti",
+    "nl": "opdrukken-pols-en-schouderpijn",
+    "no": "armhevning-handledd-skulder-smerter",
+    "zh": "pushup-joint-pain"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg",
   "heroImageAlt": "Stilisierte Figur in der Liegestütz-Position, Handgelenk und Schulter sind orange markiert, darüber ein grünes Schutzschild.",

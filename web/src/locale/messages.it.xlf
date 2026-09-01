@@ -11471,9 +11471,9 @@
       </segment>
     </unit>
     <unit id="analysis.breakdown.scopeNote">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </source>
-        <target> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </target>
+        <target> Interessa tutte le statistiche. La legenda del grafico nasconde solo lì. </target>
       </segment>
     </unit>
 </file>

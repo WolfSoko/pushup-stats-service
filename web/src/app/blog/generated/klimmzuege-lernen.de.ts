@@ -23,7 +23,15 @@ export const POST: BlogPost = {
     "Klimmzug Trainingsplan"
   ],
   "alternateSlugs": {
-    "de": "klimmzuege-lernen"
+    "de": "klimmzuege-lernen",
+    "el": "ekmathisi-elxeon",
+    "en": "learning-pull-ups",
+    "es": "aprender-dominadas",
+    "fr": "apprendre-les-tractions",
+    "it": "imparare-le-trazioni",
+    "nl": "pull-ups-leren",
+    "no": "laere-pull-ups",
+    "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
   "heroImageAlt": "Stilisierte Figur hängt an einer Klimmzugstange, Kinn auf Stangenhöhe, vor warmem orangefarbenem Hintergrund.",
