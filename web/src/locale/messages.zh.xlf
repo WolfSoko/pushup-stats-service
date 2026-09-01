@@ -10976,5 +10976,11 @@
         <target> 此图表中的所有训练动作均已隐藏。点击上方的训练动作名称可重新显示。 </target>
       </segment>
     </unit>
+    <unit id="analysis.breakdown.scopeNote">
+      <segment state="initial">
+        <source> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </source>
+        <target> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

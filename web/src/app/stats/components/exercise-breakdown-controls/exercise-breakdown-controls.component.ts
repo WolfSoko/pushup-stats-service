@@ -31,6 +31,11 @@ export interface ExerciseChoice {
  * for a drawn exercise, a hollow ring for a hidden one. Same colour
  * key as the chart below, a fraction of the vertical space.
  *
+ * The note under the row names its reach: this bar is the page-wide
+ * filter, while the chart legend below it looks near-identical and only
+ * touches its own chart. Without it the two rows read as one control
+ * duplicated by accident.
+ *
  * Renders nothing below two exercises — a single exercise has no parts
  * to lay out and hiding it would only empty the page — *unless*
  * something is currently hidden. `hiddenExerciseIds` is page-wide and
@@ -70,6 +75,14 @@ export interface ExerciseChoice {
             </button>
           }
         </div>
+        <p
+          class="scope-note"
+          data-testid="exercise-breakdown-scope"
+          i18n="@@analysis.breakdown.scopeNote"
+        >
+          Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort
+          aus.
+        </p>
       </section>
     }
   `,
@@ -87,6 +100,13 @@ export interface ExerciseChoice {
       align-items: center;
       flex-wrap: wrap;
       gap: 8px 12px;
+    }
+    /* The chart legend below looks the same but is chart-local; without
+       this the two rows read as one duplicated control. */
+    .scope-note {
+      margin: 0;
+      font-size: 0.75rem;
+      opacity: 0.7;
     }
     .row-label {
       font-size: 0.75rem;

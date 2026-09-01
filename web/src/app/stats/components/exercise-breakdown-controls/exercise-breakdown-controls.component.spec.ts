@@ -146,6 +146,15 @@ describe('ExerciseBreakdownControlsComponent', () => {
     ).toBeTruthy();
   });
 
+  it('should name its reach, so it is not read as the chart legend below it', () => {
+    // given / when — both rows render the same dots-and-rings widget
+    const host: HTMLElement = fixture.nativeElement;
+
+    // then
+    const note = host.querySelector('[data-testid="exercise-breakdown-scope"]');
+    expect(note?.textContent).toContain('alle Statistiken');
+  });
+
   it('should not offer the bar layout here — that belongs to each chart', () => {
     // given / when — these controls are the page-wide exercise filter;
     // stacking is a way of reading one chart, not a filter on the data

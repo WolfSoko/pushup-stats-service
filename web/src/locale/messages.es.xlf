@@ -11466,5 +11466,11 @@
         <target> Todos los ejercicios de este gráfico están ocultos. Toca el nombre de un ejercicio arriba para volver a mostrarlos. </target>
       </segment>
     </unit>
+    <unit id="analysis.breakdown.scopeNote">
+      <segment state="initial">
+        <source> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </source>
+        <target> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

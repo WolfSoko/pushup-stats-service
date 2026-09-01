@@ -7459,7 +7459,7 @@
     </unit>
     <unit id="analysis.breakdown.sectionAria">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:49,50</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:54,55</note>
       </notes>
       <segment>
         <source>Darstellung der Übungen</source>
@@ -7467,7 +7467,7 @@
     </unit>
     <unit id="analysis.breakdown.exercisesLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:54,57</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:59,62</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -7475,15 +7475,23 @@
     </unit>
     <unit id="analysis.breakdown.showAll">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:69,71</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:74,76</note>
       </notes>
       <segment>
         <source> Alle anzeigen </source>
       </segment>
     </unit>
+    <unit id="analysis.breakdown.scopeNote">
+      <notes>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:83,86</note>
+      </notes>
+      <segment>
+        <source> Wirkt auf alle Statistiken. Die Legende am Diagramm blendet nur dort aus. </source>
+      </segment>
+    </unit>
     <unit id="analysis.breakdown.exercisesAria">
       <notes>
-        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:120</note>
+        <note category="location">web/src/app/stats/components/exercise-breakdown-controls/exercise-breakdown-controls.component.ts:140</note>
       </notes>
       <segment>
         <source>Übungen ein- oder ausblenden</source>
