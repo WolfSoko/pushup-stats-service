@@ -162,7 +162,10 @@ function readBlogPosts() {
 }
 
 function buildUrl({ path, changefreq, priority, locale, lastmod, alternates }) {
-  const suffix = path === '/' ? '' : path;
+  // Locale roots keep the trailing slash (`/de/`, not `/de`): the pages
+  // declare `/<lang>/` as canonical, so a slash-less sitemap entry shows
+  // up in Search Console as a non-indexed duplicate/redirect URL.
+  const suffix = path === '/' ? '/' : path;
   const primaryLocale = locale ?? 'de';
   const loc = `${BASE_URL}/${primaryLocale}${suffix}`;
 
@@ -259,16 +262,13 @@ function buildTrainingPlanRoutes(slugs) {
  * Static public routes are prerendered for every supported locale,
  * so emit one `<loc>` per (route × locale) with a full hreflang
  * alternates set — the same shape the dynamic builders use. The `/`
- * landing page is a special case: `buildUrl` strips the path to `''`
- * for its primary `<loc>` (so URLs render as `/de`, not `/de/`), and
- * the alternates must mirror that — otherwise hreflang would point
- * at `/de/`, which the runtime redirects.
+ * landing page keeps its trailing slash (`/de/`) in both `<loc>` and
+ * alternates — that is the form the pages declare as canonical.
  */
 function buildStaticRoutes() {
   const routes = [];
   for (const route of staticRoutes) {
-    const altPath = route.path === '/' ? '' : route.path;
-    const alternates = LOCALES.map((lang) => ({ lang, path: altPath }));
+    const alternates = LOCALES.map((lang) => ({ lang, path: route.path }));
     for (const lang of LOCALES) {
       routes.push({
         path: route.path,

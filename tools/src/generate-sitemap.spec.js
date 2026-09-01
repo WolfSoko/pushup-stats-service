@@ -60,10 +60,10 @@ describe('generate-sitemap', () => {
       }
     });
 
-    it('uses empty path for `/` alternates so URLs render without trailing slash', () => {
+    it('should keep `/` as the alternate path so root URLs carry the trailing slash of the page canonical', () => {
       const routes = buildStaticRoutes();
       const rootRoute = routes.find((r) => r.path === '/');
-      expect(rootRoute.alternates.every((a) => a.path === '')).toBe(true);
+      expect(rootRoute.alternates.every((a) => a.path === '/')).toBe(true);
     });
   });
 
@@ -293,6 +293,22 @@ describe('generate-sitemap', () => {
         locale: 'de',
       });
       expect(xml).not.toContain('<lastmod>');
+    });
+
+    it('should emit locale-root <loc> and alternates with a trailing slash so they match the page canonical', () => {
+      const xml = buildUrl({
+        path: '/',
+        changefreq: 'weekly',
+        priority: '1.0',
+        locale: 'de',
+      });
+      expect(xml).toContain('<loc>https://pushup-stats.com/de/</loc>');
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/"/>'
+      );
+      expect(xml).toContain(
+        '<xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/"/>'
+      );
     });
 
     it('uses the same path for both locale alternates when `alternates` is omitted', () => {
