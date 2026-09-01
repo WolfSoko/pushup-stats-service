@@ -196,10 +196,9 @@ describe('StatsChartComponent', () => {
       ).toBe(true);
     });
 
-    it('Given an exercise entry is clicked, Then the page-wide toggle is emitted instead of hiding it locally', () => {
-      // given
-      const toggled: string[] = [];
-      component.toggleExercise.subscribe((id) => toggled.push(id));
+    it('Given an exercise entry is clicked, Then only this chart hides it', () => {
+      // given — the page-wide filter is the checkbox bar's job; the
+      // legend must not reach past its own chart
       fixture.componentRef.setInput('breakdown', [
         {
           exerciseId: 'abs.situps',
@@ -212,24 +211,39 @@ describe('StatsChartComponent', () => {
 
       // when
       component.onLegendToggle('exercise:abs.situps');
+      fixture.detectChanges();
 
-      // then
-      expect(toggled).toEqual(['abs.situps']);
+      // then — it stays in the legend, hollow, so the click is undoable
+      const situps = component
+        .legendItems()
+        .find((item) => item.id === 'exercise:abs.situps');
+      expect(situps?.active).toBe(false);
+      expect(situps?.label).toBe('Sit-ups');
     });
 
-    it('Given a hidden exercise, Then the legend still offers it as an inactive entry', () => {
-      // given / when
-      fixture.componentRef.setInput('hiddenExercises', [
-        { exerciseId: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    it('Given a hidden exercise is clicked again, Then it comes back', () => {
+      // given
+      fixture.componentRef.setInput('breakdown', [
+        {
+          exerciseId: 'abs.situps',
+          label: 'Sit-ups',
+          color: '#111111',
+          values: [1],
+        },
       ]);
+      fixture.detectChanges();
+      component.onLegendToggle('exercise:abs.situps');
+
+      // when
+      component.onLegendToggle('exercise:abs.situps');
       fixture.detectChanges();
 
       // then
-      const crunches = component
-        .legendItems()
-        .find((item) => item.id === 'exercise:abs.crunches');
-      expect(crunches?.active).toBe(false);
-      expect(crunches?.label).toBe('Crunches');
+      expect(
+        component
+          .legendItems()
+          .find((item) => item.id === 'exercise:abs.situps')?.active
+      ).toBe(true);
     });
 
     it('Given a legend id from neither namespace, Then nothing changes', () => {

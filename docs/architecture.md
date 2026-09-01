@@ -187,10 +187,12 @@ A `custom` range has no period to read the bucket off, so its **span** picks one
 
 ### Analysis page: per-exercise breakdown & visibility
 
-The analysis charts draw one bar **per exercise**, not one summed bar per group. Two pieces of `AnalysisStore` state drive it, both page-wide so the overview and the category tabs never disagree:
+The analysis charts draw one bar **per exercise**, not one summed bar per group. Two scopes drive what a chart shows, and they must not be confused:
 
-- **`barMode`** (`'stacked' | 'grouped'`) — whether an exercise's bars share a bucket or sit side by side. Stacking answers "how much in total, and of what"; grouping answers "which exercise moved".
-- **`hiddenExerciseIds`** — the exercises unchecked in `ExerciseBreakdownControlsComponent`. It is **not** a chart-only filter: `visibleRows` applies it before `viewFilteredRows`, `categorySummaries` and the trend-window rows, so best values, streaks, type shares, trends and the heatmap all follow the checkboxes.
+- **Page-wide — `hiddenExerciseIds`** in `AnalysisStore`, owned by `ExerciseBreakdownControlsComponent`. It is **not** a chart-only filter: `visibleRows` applies it before `viewFilteredRows`, `categorySummaries` and the trend-window rows, so best values, streaks, type shares, trends and the heatmap all follow it — the charts included.
+- **Chart-local — the legend.** Clicking a legend entry hides that exercise (or that line) in **that chart only**, via a signal inside `StatsChartComponent` / `CategoryComparisonChartComponent`. It answers "what do I want to look at here" and never reaches the KPIs. A locally hidden exercise keeps its legend entry as a hollow ring, since the legend is the only surface that can bring it back — **in place**, never re-appended at the end: a legend that reshuffles under the pointer makes the next click a guess.
+
+`barMode` (`'stacked' | 'grouped'`) is chart-local for the same reason: whether split bars share a bucket or sit side by side is a way of _reading_ those bars, not a filter on the data, so each chart owns its own toggle in its header. There is deliberately no page-wide bar mode — one existed and coupled every chart on the page to whichever one the user last touched.
 
 The controls sit **with each chart**, not once per tab: a category tab renders one `AnalysisSegmentViewComponent` per measurement, and each offers only its own `exerciseOptionIds` — counted and timed exercises never share a chart, so a "Plank" checkbox above the repetitions chart would control something that chart cannot draw. The scope of the _offer_ is the chart; the scope of the _effect_ stays page-wide. The overview's comparison chart compares whole categories across measurements, so its controls keep the full range list. `exerciseOptionIds` is built from `optionRows` — the view's rows **before** the visibility filter — grouped by the same `groupRowsByMeasurement` pass the segments use, so unchecking an exercise never removes the checkbox that undoes it.
 

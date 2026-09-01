@@ -12,12 +12,11 @@ import {
   ExerciseBreakdownControlsComponent,
   type ExerciseChoice,
 } from '../components/exercise-breakdown-controls/exercise-breakdown-controls.component';
-import type { HiddenExerciseLegendEntry } from '../components/stats-chart/chart-legend-items';
 import { SetsDistributionComponent } from '../components/sets-distribution/sets-distribution.component';
 import { StatsChartComponent } from '../components/stats-chart/stats-chart.component';
 import { TypePieComponent } from '../components/type-pie/type-pie.component';
 import type { AnalysisView } from '../analysis/analysis.types';
-import { type BarMode, exerciseColor } from '../analysis/exercise-breakdown';
+import { exerciseColor } from '../analysis/exercise-breakdown';
 import { kindDisplayName } from '../i18n/exercise-display-names';
 import type { AnalysisSegment } from '../analysis/view-segments';
 import { AnalysisTrendTableComponent } from './analysis-trend-table.component';
@@ -64,14 +63,12 @@ export class AnalysisSegmentViewComponent {
   readonly dayChartMode = input<'24h' | '14h'>('14h');
   readonly view = input<AnalysisView>('overview');
   readonly kinds = input<ReadonlyArray<UnifiedEntryFilterKey>>([]);
-  readonly barMode = input<BarMode>('stacked');
   /** Page-wide colour order, so a colour means the same in every block. */
   readonly exerciseOrder = input<ReadonlyArray<string>>([]);
   /** Page-wide hidden set; the reset stays reachable from any block. */
   readonly hiddenExerciseIds = input<ReadonlyArray<string>>([]);
 
   readonly dayChartModeChange = output<'24h' | '14h'>();
-  readonly barModeChange = output<BarMode>();
   readonly toggleExercise = output<string>();
   readonly showAll = output<void>();
 
@@ -96,22 +93,6 @@ export class AnalysisSegmentViewComponent {
       label: kindDisplayName(id as UnifiedEntryFilterKey),
       color: exerciseColor(id, order),
     }));
-  });
-
-  /**
-   * The hidden exercises the chart's own legend still lists, as hollow
-   * rings. Their bars are gone from `breakdown`, so without this the
-   * legend would silently drop the entry the user just clicked.
-   */
-  readonly hiddenChartExercises = computed<HiddenExerciseLegendEntry[]>(() => {
-    const hidden = this.hiddenExerciseIds();
-    return this.exerciseChoices()
-      .filter((choice) => hidden.includes(choice.id))
-      .map((choice) => ({
-        exerciseId: choice.id,
-        label: choice.label,
-        color: choice.color,
-      }));
   });
 
   /**

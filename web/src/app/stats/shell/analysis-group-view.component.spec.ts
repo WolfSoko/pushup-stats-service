@@ -2,7 +2,6 @@ import {
   Component,
   input,
   model,
-  output,
   PLATFORM_ID,
   signal,
   ChangeDetectionStrategy,
@@ -64,10 +63,7 @@ class MockStatsChartComponent {
   readonly paceSeries = input<unknown[]>([]);
   readonly kindLabel = input<string>('');
   readonly breakdown = input<unknown[]>([]);
-  readonly barMode = input<string>('stacked');
-  readonly hiddenExercises = input<unknown[]>([]);
   readonly dayChartMode = model<string>('14h');
-  readonly toggleExercise = output<string>();
 }
 
 @Component({
@@ -1035,8 +1031,10 @@ describe('AnalysisGroupViewComponent', () => {
     ).toBeTruthy();
   });
 
-  it('should hide an exercise the chart\u2019s own legend toggled, and list it there as hidden', async () => {
-    // given
+  it('should drop an exercise from the chart when the page-wide filter hides it', async () => {
+    // given — the checkbox bar is the global control: what it hides
+    // stops counting everywhere, the chart included. The chart's own
+    // legend is local and never reaches this state.
     liveExerciseEntries.set([
       {
         _id: 'l1',
@@ -1064,26 +1062,20 @@ describe('AnalysisGroupViewComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
+    expect(firstChartBreakdown(fixture).map((part) => part.label)).toHaveLength(
+      2
+    );
 
-    // when — the click lands on the legend under the chart, not on a
-    // separate control above it
-    const chart = fixture.debugElement.query(
-      By.directive(MockStatsChartComponent)
-    );
-    (chart.componentInstance as MockStatsChartComponent).toggleExercise.emit(
-      'abs.crunches'
-    );
+    // when
+    store.toggleExerciseVisibility('abs.crunches');
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
 
-    // then
+    // then — the split collapses: a lone remaining exercise has nothing
+    // to split, so the chart falls back to its aggregate bar
     expect(store.hiddenExerciseIds()).toEqual(['abs.crunches']);
-    const hidden = (
-      fixture.debugElement.query(By.directive(MockStatsChartComponent))
-        .componentInstance as MockStatsChartComponent
-    ).hiddenExercises() as Array<{ exerciseId: string }>;
-    expect(hidden.map((entry) => entry.exerciseId)).toEqual(['abs.crunches']);
+    expect(firstChartBreakdown(fixture)).toHaveLength(0);
   });
 
   it('should keep a chart\u2019s legend toggle after its exercise is hidden, so the click that undoes it survives', async () => {

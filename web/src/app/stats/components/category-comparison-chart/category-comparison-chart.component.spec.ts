@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 import type { CategoryComparison } from '../../analysis/analysis.types';
-import type { BarMode } from '../../analysis/exercise-breakdown';
 import type { ExerciseChoice } from '../exercise-breakdown-controls/exercise-breakdown-controls.component';
 import { CategoryComparisonChartComponent } from './category-comparison-chart.component';
 
@@ -13,10 +13,7 @@ import { CategoryComparisonChartComponent } from './category-comparison-chart.co
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<app-category-comparison-chart
     [data]="data()"
-    [barMode]="barMode()"
     [exercises]="exercises()"
-    [hidden]="hidden()"
-    (toggleExercise)="lastToggled.set($event)"
   />`,
 })
 class HostComponent {
@@ -25,10 +22,15 @@ class HostComponent {
     entries: [],
     parts: [],
   });
-  readonly barMode = signal<BarMode>('stacked');
   readonly exercises = signal<ExerciseChoice[]>([]);
-  readonly hidden = signal<string[]>([]);
-  readonly lastToggled = signal<string | null>(null);
+}
+
+function chart(
+  fixture: ComponentFixture<HostComponent>
+): CategoryComparisonChartComponent {
+  return fixture.debugElement.query(
+    By.directive(CategoryComparisonChartComponent)
+  ).componentInstance;
 }
 
 describe('CategoryComparisonChartComponent', () => {
@@ -167,7 +169,8 @@ describe('CategoryComparisonChartComponent', () => {
         ],
       ],
     });
-    fixture.componentInstance.barMode.set('grouped');
+    fixture.detectChanges();
+    chart(fixture).barMode.set('grouped');
 
     // when
     fixture.detectChanges();
@@ -272,8 +275,14 @@ describe('CategoryComparisonChartComponent', () => {
       ?.click();
     fixture.detectChanges();
 
-    // then
-    expect(fixture.componentInstance.lastToggled()).toBe('abs.situps');
+    // then — the click hides the exercise in this chart only; the
+    // page-wide filter belongs to the checkbox bar above it
+    expect(
+      host
+        .querySelector('[data-testid="category-comparison-legend-abs.situps"]')
+        ?.getAttribute('aria-checked')
+    ).toBe('false');
+    expect(host.querySelectorAll('.stacked-fill')).toHaveLength(1);
   });
 
   it('should keep a hidden exercise in the legend, switched off, so the click that undoes it survives', () => {
@@ -282,20 +291,23 @@ describe('CategoryComparisonChartComponent', () => {
       { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
       { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
     ]);
-    fixture.componentInstance.hidden.set(['abs.crunches']);
     fixture.componentInstance.data.set({
       labels: ['Rumpf', 'Beine'],
       entries: [3, 2],
       parts: [
         [
           { exerciseId: 'abs.situps', entries: 2 },
-          { exerciseId: 'abs.pushup', entries: 1 },
+          { exerciseId: 'abs.crunches', entries: 1 },
         ],
         [{ exerciseId: 'abs.situps', entries: 2 }],
       ],
     });
+    fixture.detectChanges();
 
     // when
+    fixture.nativeElement
+      .querySelector('[data-testid="category-comparison-legend-abs.crunches"]')
+      ?.click();
     fixture.detectChanges();
 
     // then
@@ -309,5 +321,41 @@ describe('CategoryComparisonChartComponent', () => {
         .querySelector('[data-testid="category-comparison-legend-abs.situps"]')
         ?.getAttribute('aria-checked')
     ).toBe('true');
+  });
+
+  it('should keep the legend order stable when an exercise is switched off', () => {
+    // given — hidden entries used to be appended at the end, so every
+    // click reshuffled the legend under the pointer
+    fixture.componentInstance.exercises.set([
+      { id: 'abs.situps', label: 'Sit-ups', color: '#111111' },
+      { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
+    ]);
+    fixture.componentInstance.data.set({
+      labels: ['Rumpf'],
+      entries: [3],
+      parts: [
+        [
+          { exerciseId: 'abs.situps', entries: 2 },
+          { exerciseId: 'abs.crunches', entries: 1 },
+        ],
+      ],
+    });
+    fixture.detectChanges();
+    const before = chart(fixture)
+      .legend()
+      .map((item) => item.id);
+
+    // when
+    fixture.nativeElement
+      .querySelector('[data-testid="category-comparison-legend-abs.situps"]')
+      ?.click();
+    fixture.detectChanges();
+
+    // then
+    expect(
+      chart(fixture)
+        .legend()
+        .map((item) => item.id)
+    ).toEqual(before);
   });
 });

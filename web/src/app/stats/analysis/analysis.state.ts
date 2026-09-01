@@ -1,7 +1,6 @@
 import { createWeekRange, toLocalIsoDate } from '@pu-stats/date';
 import type { UnifiedEntryFilterKey } from '@pu-stats/models';
 import type { AnalysisView } from './analysis.types';
-import type { BarMode } from './exercise-breakdown';
 
 export type AnalysisState = {
   from: string;
@@ -28,8 +27,6 @@ export type AnalysisState = {
    * Whether the per-exercise bars share a bucket (`'stacked'`) or sit
    * side by side (`'grouped'`). Page-wide rather than per-chart so the
    * overview comparison and the tab charts read the same way.
-   */
-  barMode: BarMode;
   /**
    * Exercises the user unchecked. Applied to every roll-up the page
    * derives — charts, KPIs, trends, heatmap — so a hidden exercise is
@@ -60,7 +57,6 @@ export function createInitialAnalysisState(): AnalysisState {
     dayChartMode: undefined as '24h' | '14h' | undefined,
     kinds: [] as ReadonlyArray<UnifiedEntryFilterKey>,
     activeView: 'overview' as AnalysisView,
-    barMode: 'stacked' as BarMode,
     hiddenExerciseIds: [] as ReadonlyArray<string>,
     clockTick: 0,
     // Seed with today so the first `tickClock()` after construction is a

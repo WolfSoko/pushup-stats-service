@@ -22,6 +22,23 @@
         >
       </mat-button-toggle-group>
     }
+    @if (showsBarModeToggle()) {
+      <mat-button-toggle-group
+        [value]="barMode()"
+        (change)="barMode.set($event.value)"
+        class="chart-mode-toggle"
+        data-testid="stats-chart-bar-mode"
+        aria-label="Balken gestapelt oder nebeneinander"
+        i18n-aria-label="@@analysis.breakdown.modeAria"
+      >
+        <mat-button-toggle value="stacked" i18n="@@analysis.breakdown.stacked"
+          >Gestapelt</mat-button-toggle
+        >
+        <mat-button-toggle value="grouped" i18n="@@analysis.breakdown.grouped"
+          >Nebeneinander</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    }
   </mat-card-header>
 
   <mat-card-content>

@@ -10,7 +10,6 @@ import {
   input,
   LOCALE_ID,
   model,
-  output,
   PLATFORM_ID,
   signal,
   viewChild,
@@ -37,7 +36,6 @@ import {
   buildLegendItems,
   parseLegendId,
   type ChartSeriesKey,
-  type HiddenExerciseLegendEntry,
 } from './chart-legend-items';
 import {
   ChartBarMode,
@@ -83,15 +81,13 @@ export class StatsChartComponent implements AfterViewInit {
   // One entry per exercise splits the aggregate bar into its parts.
   // Empty keeps the single-bar rendering (and its sets stacking).
   readonly breakdown = input<ChartBreakdownSeries[]>([]);
-  readonly barMode = input<ChartBarMode>('stacked');
-  // Exercises this chart could draw but the user hid — listed in the
-  // legend as hollow rings so the click that undoes it stays in reach.
-  readonly hiddenExercises = input<ReadonlyArray<HiddenExerciseLegendEntry>>(
-    []
-  );
 
-  /** Page-wide state, so the owner of `hiddenExercises` applies it. */
-  readonly toggleExercise = output<string>();
+  /**
+   * Whether the split bars share a bucket or sit side by side. Local to
+   * this chart: it is a way of reading these bars, not a filter on the
+   * data, so it has no business reshaping the other charts on the page.
+   */
+  readonly barMode = signal<ChartBarMode>('stacked');
 
   readonly chartTitle = computed(() =>
     chartTitleFor(this.granularity(), this.kindLabel())
@@ -139,6 +135,24 @@ export class StatsChartComponent implements AfterViewInit {
     new Set()
   );
 
+  /**
+   * Exercises hidden by clicking this chart's legend. Local on purpose:
+   * the legend answers "what do I want to see in *this* chart", while
+   * the page-wide exercise filter — which decides what counts towards
+   * every KPI, trend and streak — stays with the checkbox bar above.
+   */
+  private readonly hiddenExercises = signal<ReadonlySet<string>>(new Set());
+
+  /** Stacking only means something once the bars are actually split. */
+  readonly showsBarModeToggle = computed(() => this.breakdown().length > 1);
+
+  /** The split minus whatever the legend hid, i.e. what actually draws. */
+  private readonly visibleBreakdown = computed(() => {
+    const hidden = this.hiddenExercises();
+    if (hidden.size === 0) return this.breakdown();
+    return this.breakdown().filter((part) => !hidden.has(part.exerciseId));
+  });
+
   readonly legendItems = computed(() =>
     buildLegendItems({
       breakdown: this.breakdown(),
@@ -177,6 +191,7 @@ export class StatsChartComponent implements AfterViewInit {
       this.measurement();
       this.paceSeries();
       this.breakdown();
+      this.hiddenExercises();
       this.barMode();
       this.hiddenSeries();
       queueMicrotask(() => this.renderChart(currentSeries, currentEntries));
@@ -202,13 +217,12 @@ export class StatsChartComponent implements AfterViewInit {
     const parsed = parseLegendId(id);
     if (!parsed) return;
     if (parsed.kind === 'exercise') {
-      this.toggleExercise.emit(parsed.key);
+      this.hiddenExercises.update((hidden) => toggled(hidden, parsed.key));
       return;
     }
-    const key = parsed.key as ChartSeriesKey;
-    const next = new Set(this.hiddenSeries());
-    if (!next.delete(key)) next.add(key);
-    this.hiddenSeries.set(next);
+    this.hiddenSeries.update((hidden) =>
+      toggled(hidden, parsed.key as ChartSeriesKey)
+    );
   }
 
   private renderChart(
@@ -243,7 +257,7 @@ export class StatsChartComponent implements AfterViewInit {
       measurement: this.measurement(),
       paceMode: this.paceMode(),
       paceSeries: this.paceSeries(),
-      breakdown: this.breakdown(),
+      breakdown: this.visibleBreakdown(),
       barMode: this.barMode(),
       hiddenSeries: this.hiddenSeries(),
       localeId: this.localeId,
@@ -254,4 +268,11 @@ export class StatsChartComponent implements AfterViewInit {
 
     this.chart = new Chart(context, { type: 'bar', data, options });
   }
+}
+
+/** Set with `key` flipped in or out, as a fresh set for signal equality. */
+function toggled<T>(current: ReadonlySet<T>, key: T): ReadonlySet<T> {
+  const next = new Set(current);
+  if (!next.delete(key)) next.add(key);
+  return next;
 }

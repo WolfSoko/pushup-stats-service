@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
-import type { BarMode } from '../../analysis/exercise-breakdown';
 import {
   ExerciseBreakdownControlsComponent,
   type ExerciseChoice,
@@ -14,8 +13,6 @@ import {
   template: `<app-exercise-breakdown-controls
     [exercises]="exercises()"
     [hidden]="hidden()"
-    [barMode]="barMode()"
-    (barModeChange)="lastMode.set($event)"
     (toggleExercise)="lastToggled.set($event)"
     (showAll)="showAllCalls.set(showAllCalls() + 1)"
   />`,
@@ -26,8 +23,6 @@ class HostComponent {
     { id: 'abs.crunches', label: 'Crunches', color: '#222222' },
   ]);
   readonly hidden = signal<string[]>([]);
-  readonly barMode = signal<BarMode>('stacked');
-  readonly lastMode = signal<BarMode | null>(null);
   readonly lastToggled = signal<string | null>(null);
   readonly showAllCalls = signal(0);
 }
@@ -151,15 +146,14 @@ describe('ExerciseBreakdownControlsComponent', () => {
     ).toBeTruthy();
   });
 
-  it('should render both bar layouts as a choice', () => {
-    // given / when
+  it('should not offer the bar layout here — that belongs to each chart', () => {
+    // given / when — these controls are the page-wide exercise filter;
+    // stacking is a way of reading one chart, not a filter on the data
     const host: HTMLElement = fixture.nativeElement;
 
-    // then — German source locale
-    const toggle = host.querySelector(
-      '[data-testid="exercise-breakdown-mode"]'
-    );
-    expect(toggle?.textContent).toContain('Gestapelt');
-    expect(toggle?.textContent).toContain('Nebeneinander');
+    // then
+    expect(
+      host.querySelector('[data-testid="exercise-breakdown-mode"]')
+    ).toBeNull();
   });
 });

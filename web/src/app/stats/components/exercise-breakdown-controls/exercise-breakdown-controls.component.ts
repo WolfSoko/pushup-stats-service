@@ -6,13 +6,11 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import {
   ChartLegendComponent,
   type ChartLegendItem,
 } from '../chart-legend/chart-legend.component';
-import type { BarMode } from '../../analysis/exercise-breakdown';
 
 export interface ExerciseChoice {
   id: string;
@@ -42,7 +40,7 @@ export interface ExerciseChoice {
  */
 @Component({
   selector: 'app-exercise-breakdown-controls',
-  imports: [MatButtonModule, MatButtonToggleModule, ChartLegendComponent],
+  imports: [MatButtonModule, ChartLegendComponent],
   template: `
     @if (hasChoices()) {
       <section
@@ -51,31 +49,6 @@ export interface ExerciseChoice {
         aria-label="Darstellung der Übungen"
         i18n-aria-label="@@analysis.breakdown.sectionAria"
       >
-        <div class="row">
-          <span class="row-label" i18n="@@analysis.breakdown.modeLabel"
-            >Balken</span
-          >
-          <mat-button-toggle-group
-            [value]="barMode()"
-            (change)="barModeChange.emit($event.value)"
-            class="mode-toggle"
-            data-testid="exercise-breakdown-mode"
-            aria-label="Balken gestapelt oder nebeneinander"
-            i18n-aria-label="@@analysis.breakdown.modeAria"
-          >
-            <mat-button-toggle
-              value="stacked"
-              i18n="@@analysis.breakdown.stacked"
-              >Gestapelt</mat-button-toggle
-            >
-            <mat-button-toggle
-              value="grouped"
-              i18n="@@analysis.breakdown.grouped"
-              >Nebeneinander</mat-button-toggle
-            >
-          </mat-button-toggle-group>
-        </div>
-
         <div class="row">
           <span class="row-label" i18n="@@analysis.breakdown.exercisesLabel"
             >Übungen</span
@@ -140,9 +113,7 @@ export interface ExerciseChoice {
 export class ExerciseBreakdownControlsComponent {
   readonly exercises = input<ReadonlyArray<ExerciseChoice>>([]);
   readonly hidden = input<ReadonlyArray<string>>([]);
-  readonly barMode = input<BarMode>('stacked');
 
-  readonly barModeChange = output<BarMode>();
   readonly toggleExercise = output<string>();
   readonly showAll = output<void>();
 

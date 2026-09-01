@@ -5,6 +5,22 @@
   <p class="metric" i18n="@@analysis.overview.comparison.metricLabel">
     Trainingseinheiten
   </p>
+  @if (legend().length > 1) {
+    <mat-button-toggle-group
+      [value]="barMode()"
+      (change)="barMode.set($event.value)"
+      class="mode-toggle"
+      data-testid="category-comparison-bar-mode"
+      [attr.aria-label]="barModeAriaLabel"
+    >
+      <mat-button-toggle value="stacked" i18n="@@analysis.breakdown.stacked"
+        >Gestapelt</mat-button-toggle
+      >
+      <mat-button-toggle value="grouped" i18n="@@analysis.breakdown.grouped"
+        >Nebeneinander</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+  }
 </header>
 
 <p
@@ -73,7 +89,7 @@
       [items]="legend()"
       [ariaLabel]="legendAriaLabel"
       testId="category-comparison-legend"
-      (itemToggle)="toggleExercise.emit($event)"
+      (itemToggle)="onLegendToggle($event)"
     />
   }
 }

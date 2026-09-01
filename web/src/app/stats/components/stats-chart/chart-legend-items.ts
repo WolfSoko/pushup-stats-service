@@ -5,10 +5,10 @@ import type { ChartBreakdownSeries } from './stats-chart.models';
 export type ChartSeriesKey = 'bar' | 'sets' | 'secondary' | 'movingAvg';
 
 /**
- * Legend ids carry their own namespace: an exercise toggle is page-wide
- * state owned by the store, a series toggle is local to this chart, and
- * the two must never be confused because an exercise id happened to
- * read like a series key.
+ * Legend ids carry their own namespace so an exercise id that happens
+ * to read like a series key can't be mistaken for one. Both kinds are
+ * local to the chart that drew them — the page-wide exercise filter is
+ * the checkbox bar's job, not the legend's.
  */
 export const EXERCISE_LEGEND_PREFIX = 'exercise:';
 export const SERIES_LEGEND_PREFIX = 'series:';
@@ -21,21 +21,14 @@ export const SERIES_LEGEND_COLORS: Record<ChartSeriesKey, string> = {
   movingAvg: '#7ef0c8',
 };
 
-/** An exercise the chart could draw but the user hid. */
-export interface HiddenExerciseLegendEntry {
-  exerciseId: string;
-  label: string;
-  color: string;
-}
-
 export interface LegendItemsInput {
-  breakdown: ReadonlyArray<ChartBreakdownSeries>;
   /**
-   * Rendered as hollow rings next to the drawn ones. Without them a
-   * hidden exercise would vanish from the only surface that can bring
-   * it back.
+   * Every exercise this chart can draw, hidden ones included — a hidden
+   * one stays in the legend as a hollow ring, because the legend is the
+   * only surface that can bring it back.
    */
-  hiddenExercises: ReadonlyArray<HiddenExerciseLegendEntry>;
+  breakdown: ReadonlyArray<ChartBreakdownSeries>;
+  hiddenExercises: ReadonlySet<string>;
   hiddenSeries: ReadonlySet<ChartSeriesKey>;
   showsSetsSeries: boolean;
   labels: Record<ChartSeriesKey, string>;
@@ -77,22 +70,12 @@ export function buildLegendItems(input: LegendItemsInput): ChartLegendItem[] {
         id: exerciseLegendId(part.exerciseId),
         label: part.label,
         color: part.color,
-        active: true,
+        active: !input.hiddenExercises.has(part.exerciseId),
         testId: `stats-chart-legend-exercise-${part.exerciseId}`,
       });
     }
   } else {
     items.push(seriesItem('bar', input));
-  }
-
-  for (const hidden of input.hiddenExercises) {
-    items.push({
-      id: exerciseLegendId(hidden.exerciseId),
-      label: hidden.label,
-      color: hidden.color,
-      active: false,
-      testId: `stats-chart-legend-exercise-${hidden.exerciseId}`,
-    });
   }
 
   if (input.showsSetsSeries && !showsBreakdown) {

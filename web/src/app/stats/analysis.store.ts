@@ -50,7 +50,6 @@ import {
   startOfMonth,
 } from './analysis/trend-math';
 import {
-  type BarMode,
   collectExerciseIds,
   exerciseColor,
   withoutHiddenExercises,
@@ -443,9 +442,6 @@ export const AnalysisStore = signalStore(
     },
     setActiveView(activeView: AnalysisView): void {
       patchState(store, { activeView });
-    },
-    setBarMode(barMode: BarMode): void {
-      patchState(store, { barMode });
     },
     toggleExerciseVisibility(exerciseId: string): void {
       const hidden = store.hiddenExerciseIds();

@@ -47,8 +47,6 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
       <app-exercise-breakdown-controls
         [exercises]="store.exerciseChoices()"
         [hidden]="store.hiddenExerciseIds()"
-        [barMode]="store.barMode()"
-        (barModeChange)="store.setBarMode($event)"
         (toggleExercise)="store.toggleExerciseVisibility($event)"
         (showAll)="store.showAllExercises()"
       />
@@ -57,10 +55,7 @@ import { AnalysisGroupViewComponent } from './analysis-group-view.component';
         <mat-card-content>
           <app-category-comparison-chart
             [data]="store.categoryComparison()"
-            [barMode]="store.barMode()"
             [exercises]="store.exerciseChoices()"
-            [hidden]="store.hiddenExerciseIds()"
-            (toggleExercise)="store.toggleExerciseVisibility($event)"
           />
         </mat-card-content>
       </mat-card>
