@@ -23,6 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HOLD_TIMER } from '@pu-stats/auto-count';
 
+import { WakeLockService } from '../core/wake-lock.service';
 import { StopwatchSignalService } from '../stats/components/stopwatch/stopwatch-signal.service';
 import {
   formatStopwatch,
@@ -159,6 +160,9 @@ export class ExerciseTimerDialogComponent {
     const signals = inject(StopwatchSignalService);
     const target = new TargetSignal(() => signals.play());
     effect(() => target.update(this.targetReached()));
+    inject(WakeLockService).keepAwakeWhile(
+      () => this.cameraMode() || this.stopwatch.running()
+    );
     this.destroyRef.onDestroy(() => {
       void this.teardown();
     });

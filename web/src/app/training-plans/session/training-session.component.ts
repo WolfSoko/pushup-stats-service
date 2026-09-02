@@ -19,6 +19,7 @@ import { findPlanBySlug, SessionStep } from '@pu-stats/models';
 import { PageHeaderComponent } from '../../core/page-header/page-header.component';
 import { TrainingPlanStore } from '../training-plan.store';
 import { isPlanActive } from '../training-plan-store.selectors';
+import { WakeLockService } from '../../core/wake-lock.service';
 import { SessionCaptureService } from './session-capture.service';
 import { SessionIntroComponent } from './session-intro.component';
 import { SessionRestComponent } from './session-rest.component';
@@ -72,6 +73,12 @@ export class TrainingSessionComponent {
   protected readonly busy = signal(false);
 
   protected readonly closeLabel = $localize`:@@session.close:Session beenden`;
+
+  constructor() {
+    inject(WakeLockService).keepAwakeWhile(
+      () => this.session.phase() === 'rest'
+    );
+  }
 
   private readonly slugSignal = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,

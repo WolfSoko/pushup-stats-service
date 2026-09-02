@@ -11550,5 +11550,47 @@
         <target>Stoppuhr starten</target>
       </segment>
     </unit>
+    <unit id="autoCount.modePickerAria">
+      <segment state="initial">
+        <source>Erkennungsmodus wählen</source>
+        <target>Erkennungsmodus wählen</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.mode.pose">
+      <segment state="initial">
+        <source>Kamera vor dir</source>
+        <target>Kamera vor dir</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.mode.proximity">
+      <segment state="initial">
+        <source>Handy unter dir</source>
+        <target>Handy unter dir</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.instructions.proximity">
+      <segment state="initial">
+        <source> Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts- und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden die Reps gezählt. Kein Pose-Tracking nötig. </source>
+        <target> Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts- und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden die Reps gezählt. Kein Pose-Tracking nötig. </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.proximity">
+      <segment state="initial">
+        <source>Nähe</source>
+        <target>Nähe</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.formCheck.signal">
+      <segment state="initial">
+        <source>Signal</source>
+        <target>Signal</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.positionHint.proximity">
+      <segment state="initial">
+        <source> Erste Wiederholung kalibriert die Helligkeit </source>
+        <target> Erste Wiederholung kalibriert die Helligkeit </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

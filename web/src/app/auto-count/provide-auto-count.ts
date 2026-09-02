@@ -1,9 +1,11 @@
 import type { Provider } from '@angular/core';
 import {
+  FRAME_LUMA_SAMPLER,
   provideAutoCount as provideAutoCountLib,
   POSE_FRAME_SOURCE,
 } from '@pu-stats/auto-count';
 
+import { CanvasLumaSampler } from './canvas-luma-sampler';
 import { provideMediaPipePoseDetector } from './mediapipe-pose-detector';
 import {
   DEFAULT_MEDIAPIPE_POSE_CONFIG,
@@ -26,5 +28,6 @@ export function provideAutoCount(): Provider[] {
     { provide: MEDIAPIPE_POSE_CONFIG, useValue: DEFAULT_MEDIAPIPE_POSE_CONFIG },
     provideMediaPipePoseDetector(),
     { provide: POSE_FRAME_SOURCE, useExisting: VideoFrameRafSource },
+    { provide: FRAME_LUMA_SAMPLER, useExisting: CanvasLumaSampler },
   ];
 }
