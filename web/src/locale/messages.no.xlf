@@ -10794,99 +10794,99 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Stoppuhr läuft über das Ziel hinaus weiter – gespeichert wird die tatsächlich gestoppte Zeit. </source>
-        <target> Die Stoppuhr läuft über das Ziel hinaus weiter – gespeichert wird die tatsächlich gestoppte Zeit. </target>
+        <target> Stoppeklokken fortsetter å gå forbi målet – det er den faktisk stoppede tiden som lagres. </target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Avbryt </target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Bruk </target>
       </segment>
     </unit>
     <unit id="stopwatch.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></source>
-        <target>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></target>
+        <target>Mål: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></target>
       </segment>
     </unit>
     <unit id="stopwatch.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Start</source>
         <target>Start</target>
       </segment>
     </unit>
     <unit id="stopwatch.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
         <target>Pause</target>
       </segment>
     </unit>
     <unit id="stopwatch.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurücksetzen</source>
-        <target>Zurücksetzen</target>
+        <target>Tilbakestill</target>
       </segment>
     </unit>
     <unit id="entryDialog.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>Stoppeklokke</target>
       </segment>
     </unit>
     <unit id="session.tool.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr starten</source>
-        <target>Stoppuhr starten</target>
+        <target>Start stoppeklokke</target>
       </segment>
     </unit>
     <unit id="autoCount.modePickerAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erkennungsmodus wählen</source>
-        <target>Erkennungsmodus wählen</target>
+        <target>Velg registreringsmodus</target>
       </segment>
     </unit>
     <unit id="autoCount.mode.pose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera vor dir</source>
-        <target>Kamera vor dir</target>
+        <target>Kamera foran deg</target>
       </segment>
     </unit>
     <unit id="autoCount.mode.proximity">
-      <segment state="initial">
+      <segment state="translated">
         <source>Handy unter dir</source>
-        <target>Handy unter dir</target>
+        <target>Mobil under deg</target>
       </segment>
     </unit>
     <unit id="autoCount.instructions.proximity">
-      <segment state="initial">
+      <segment state="translated">
         <source> Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts- und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden die Reps gezählt. Kein Pose-Tracking nötig. </source>
-        <target> Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts- und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden die Reps gezählt. Kein Pose-Tracking nötig. </target>
+        <target> Legg mobilen med skjermen opp under brystet. Hver nedover- og oppoverbevegelse gjør kamerabildet mørkere og lysere – det er slik repetisjonene telles. Ingen posesporing nødvendig. </target>
       </segment>
     </unit>
     <unit id="autoCount.formCheck.proximity">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nähe</source>
-        <target>Nähe</target>
+        <target>Nærhet</target>
       </segment>
     </unit>
     <unit id="autoCount.formCheck.signal">
-      <segment state="initial">
+      <segment state="translated">
         <source>Signal</source>
         <target>Signal</target>
       </segment>
     </unit>
     <unit id="autoCount.positionHint.proximity">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erste Wiederholung kalibriert die Helligkeit </source>
-        <target> Erste Wiederholung kalibriert die Helligkeit </target>
+        <target> Den første repetisjonen kalibrerer lysstyrken </target>
       </segment>
     </unit>
 </file>
