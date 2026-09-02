@@ -3,6 +3,20 @@ import type { PoseSample } from './pose-sample';
 
 export type RepPhase = 'awaiting-up' | 'up' | 'down';
 
+/**
+ * The slice of a profile the state machine reads. Kept separate from
+ * {@link ExerciseAngleProfile} so a detector without joints (the
+ * brightness-based proximity counter) can drive the same machine.
+ */
+export type RepThresholds = Pick<
+  ExerciseAngleProfile,
+  | 'upAngleDeg'
+  | 'downAngleDeg'
+  | 'minDwellMs'
+  | 'minConfidence'
+  | 'maxFrameGapMs'
+>;
+
 export interface RepCountSnapshot {
   readonly count: number;
   readonly phase: RepPhase;
@@ -41,7 +55,7 @@ export class RepStateMachine {
   private lastRepAtMs: number | null = null;
   private candidate: CandidatePhase = null;
 
-  constructor(private readonly profile: ExerciseAngleProfile) {}
+  constructor(private readonly profile: RepThresholds) {}
 
   process(sample: PoseSample): RepProcessResult {
     if (sample.confidence < this.profile.minConfidence) {

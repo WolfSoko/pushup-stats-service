@@ -15,11 +15,39 @@
       </mat-button-toggle>
     }
   </mat-button-toggle-group>
-  <p class="hint" i18n="@@autoCount.instructions">
-    Halte das Gerät so, dass die relevanten Gelenke
-    (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden
-    bei sauberem Down‑Up gezählt.
-  </p>
+  <mat-button-toggle-group
+    class="mode-picker"
+    [value]="mode()"
+    (change)="onModeChange($event.value)"
+    [disabled]="switching() || isStarting()"
+    aria-label="Erkennungsmodus wählen"
+    i18n-aria-label="@@autoCount.modePickerAria"
+  >
+    <mat-button-toggle value="pose" data-testid="auto-count-mode-pose">
+      <mat-icon>accessibility_new</mat-icon>
+      <span i18n="@@autoCount.mode.pose">Kamera vor dir</span>
+    </mat-button-toggle>
+    <mat-button-toggle
+      value="proximity"
+      data-testid="auto-count-mode-proximity"
+    >
+      <mat-icon>smartphone</mat-icon>
+      <span i18n="@@autoCount.mode.proximity">Handy unter dir</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  @if (isProximity()) {
+    <p class="hint" i18n="@@autoCount.instructions.proximity">
+      Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts-
+      und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden
+      die Reps gezählt. Kein Pose-Tracking nötig.
+    </p>
+  } @else {
+    <p class="hint" i18n="@@autoCount.instructions">
+      Halte das Gerät so, dass die relevanten Gelenke
+      (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps
+      werden bei sauberem Down‑Up gezählt.
+    </p>
+  }
   <div class="video-stage">
     <video #video class="preview" autoplay playsinline muted></video>
     @if (isStarting() || switching()) {
@@ -63,26 +91,49 @@
           panel is visual telemetry for sighted users.
         -->
         <div class="form-check-panel">
-          <div class="form-check-cell">
-            <span i18n="@@autoCount.formCheck.angle">Winkel</span>
-            <strong>
-              @if (frame(); as f) {
-                {{ f.angleDeg | number: '1.0-0' }}°
-              } @else {
-                —
-              }
-            </strong>
-          </div>
-          <div class="form-check-cell">
-            <span i18n="@@autoCount.formCheck.confidence">Sicherheit</span>
-            <strong>
-              @if (frame(); as f) {
-                {{ f.confidence * 100 | number: '1.0-0' }}%
-              } @else {
-                —
-              }
-            </strong>
-          </div>
+          @if (isProximity()) {
+            <div class="form-check-cell">
+              <span i18n="@@autoCount.formCheck.proximity">Nähe</span>
+              <strong data-testid="auto-count-proximity">
+                @if (proximityPercent(); as near) {
+                  {{ near | number: '1.0-0' }}%
+                } @else {
+                  —
+                }
+              </strong>
+            </div>
+            <div class="form-check-cell">
+              <span i18n="@@autoCount.formCheck.signal">Signal</span>
+              <strong>
+                @if (frame(); as f) {
+                  {{ f.confidence >= 0.5 ? '✓' : '…' }}
+                } @else {
+                  —
+                }
+              </strong>
+            </div>
+          } @else {
+            <div class="form-check-cell">
+              <span i18n="@@autoCount.formCheck.angle">Winkel</span>
+              <strong>
+                @if (frame(); as f) {
+                  {{ f.angleDeg | number: '1.0-0' }}°
+                } @else {
+                  —
+                }
+              </strong>
+            </div>
+            <div class="form-check-cell">
+              <span i18n="@@autoCount.formCheck.confidence">Sicherheit</span>
+              <strong>
+                @if (frame(); as f) {
+                  {{ f.confidence * 100 | number: '1.0-0' }}%
+                } @else {
+                  —
+                }
+              </strong>
+            </div>
+          }
           <div class="form-check-cell">
             <span i18n="@@autoCount.formCheck.phase">Phase</span>
             <strong>{{ phaseLabel() }}</strong>
@@ -90,9 +141,15 @@
         </div>
       }
       @if (phase() === 'awaiting-up') {
-        <div class="position-hint" i18n="@@autoCount.positionHint">
-          In Startposition gehen
-        </div>
+        @if (isProximity()) {
+          <div class="position-hint" i18n="@@autoCount.positionHint.proximity">
+            Erste Wiederholung kalibriert die Helligkeit
+          </div>
+        } @else {
+          <div class="position-hint" i18n="@@autoCount.positionHint">
+            In Startposition gehen
+          </div>
+        }
       }
     }
   </div>

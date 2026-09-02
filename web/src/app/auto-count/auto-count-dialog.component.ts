@@ -19,11 +19,23 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { REP_COUNTER } from '@pu-stats/auto-count';
+import {
+  PROXIMITY_ANGLE_SPAN_DEG,
+  PROXIMITY_REP_COUNTER,
+  REP_COUNTER,
+} from '@pu-stats/auto-count';
 
+import { WakeLockService } from '../core/wake-lock.service';
 import { CameraService } from './camera.service';
 
 export type AutoCountExerciseId = 'pushup' | 'squat' | 'pullup' | 'situp';
+
+/**
+ * How reps are detected: `pose` reads joint angles with the camera
+ * facing the user, `proximity` reads the brightness swing with the
+ * phone lying face-up beneath the user.
+ */
+export type AutoCountMode = 'pose' | 'proximity';
 
 export interface AutoCountResult {
   readonly exerciseId: AutoCountExerciseId;
@@ -37,6 +49,7 @@ export interface AutoCountResult {
  */
 export interface AutoCountDialogData {
   readonly initialExerciseId?: AutoCountExerciseId;
+  readonly initialMode?: AutoCountMode;
 }
 
 interface ExerciseOption {
@@ -62,7 +75,8 @@ interface ExerciseOption {
 })
 export class AutoCountDialogComponent {
   private readonly camera = inject(CameraService);
-  protected readonly counter = inject(REP_COUNTER);
+  private readonly poseCounter = inject(REP_COUNTER);
+  private readonly proximityCounter = inject(PROXIMITY_REP_COUNTER);
   private readonly dialogRef = inject(
     MatDialogRef<AutoCountDialogComponent, AutoCountResult | null>
   );
@@ -82,10 +96,24 @@ export class AutoCountDialogComponent {
     this.dialogData?.initialExerciseId ?? 'pushup'
   );
   protected readonly formCheckOpen = signal(true);
+  protected readonly mode = signal<AutoCountMode>(
+    this.dialogData?.initialMode ?? 'pose'
+  );
+  protected readonly isProximity = computed(() => this.mode() === 'proximity');
+  /** The detector behind the active mode; the template never sees the other. */
+  protected readonly counter = computed(() =>
+    this.isProximity() ? this.proximityCounter : this.poseCounter
+  );
 
-  protected readonly count = computed(() => this.counter.snapshot().count);
-  protected readonly phase = computed(() => this.counter.snapshot().phase);
-  protected readonly frame = computed(() => this.counter.formCheckFrame());
+  protected readonly count = computed(() => this.counter().snapshot().count);
+  protected readonly phase = computed(() => this.counter().snapshot().phase);
+  protected readonly frame = computed(() => this.counter().formCheckFrame());
+  /** Near/far position as a percentage, from the proximity counter's angle. */
+  protected readonly proximityPercent = computed(() => {
+    const f = this.frame();
+    if (!f) return null;
+    return (1 - f.angleDeg / PROXIMITY_ANGLE_SPAN_DEG) * 100;
+  });
   protected readonly phaseLabel = computed(() => {
     switch (this.phase()) {
       case 'up':
@@ -123,12 +151,13 @@ export class AutoCountDialogComponent {
   private tornDown = false;
 
   constructor() {
+    inject(WakeLockService).keepAwakeWhile(() => this.counter().isActive());
     afterNextRender(async () => {
       const video = this.videoRef().nativeElement;
       try {
         await this.camera.open(video);
-        this.counter.bindVideoElement(video);
-        await this.counter.start({ exerciseId: this.exerciseId() });
+        this.counter().bindVideoElement(video);
+        await this.counter().start({ exerciseId: this.exerciseId() });
       } catch (err) {
         this.error.set(err instanceof Error ? err.message : String(err));
       } finally {
@@ -153,9 +182,34 @@ export class AutoCountDialogComponent {
     this.switching.set(true);
     this.error.set(null);
     try {
-      await this.counter.stop();
-      this.counter.reset();
-      await this.counter.start({ exerciseId: next });
+      await this.counter().stop();
+      this.counter().reset();
+      await this.counter().start({ exerciseId: next });
+    } catch (err) {
+      this.error.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.switching.set(false);
+    }
+  }
+
+  /**
+   * Swap detectors on the same camera stream: the old one is stopped
+   * and reset before the new one binds the video, so a count from the
+   * previous mode never leaks into the new one.
+   */
+  protected async onModeChange(next: AutoCountMode): Promise<void> {
+    if (next === this.mode() || this.switching()) return;
+    const previous = this.counter();
+    this.switching.set(true);
+    this.error.set(null);
+    try {
+      await previous.stop();
+      previous.reset();
+      this.mode.set(next);
+      const video = this.videoRef().nativeElement;
+      const current = this.counter();
+      current.bindVideoElement(video);
+      await current.start({ exerciseId: this.exerciseId() });
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : String(err));
     } finally {
@@ -177,7 +231,7 @@ export class AutoCountDialogComponent {
   }
 
   protected reset(): void {
-    this.counter.reset();
+    this.counter().reset();
   }
 
   protected toggleFormCheck(): void {
@@ -187,7 +241,7 @@ export class AutoCountDialogComponent {
   private async teardown(): Promise<void> {
     if (this.tornDown) return;
     this.tornDown = true;
-    await this.counter.stop();
+    await this.counter().stop();
     await this.camera.close();
   }
 }

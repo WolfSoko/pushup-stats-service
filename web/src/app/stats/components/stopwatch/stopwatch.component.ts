@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { WakeLockService } from '../../../core/wake-lock.service';
 import { StopwatchSignalService } from './stopwatch-signal.service';
 import {
   formatStopwatch,
@@ -62,5 +63,6 @@ export class StopwatchComponent {
     const target = new TargetSignal(() => signals.play());
     effect(() => target.update(this.reached()));
     effect(() => this.elapsedSecChange.emit(this.elapsedSec()));
+    inject(WakeLockService).keepAwakeWhile(() => this.running());
   }
 }

@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   type FormCheckFrame,
+  PROXIMITY_REP_COUNTER,
   REP_COUNTER,
   type RepCountSnapshot,
 } from '@pu-stats/auto-count';
@@ -52,12 +53,14 @@ const makeCounter = (
 
 describe('AutoCountDialogComponent', () => {
   let counter: ReturnType<typeof makeCounter>;
+  let proximity: ReturnType<typeof makeCounter>;
   let cameraOpen: ReturnType<typeof vi.fn>;
   let cameraClose: ReturnType<typeof vi.fn>;
   let dialogClose: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     counter = makeCounter();
+    proximity = makeCounter();
     cameraOpen = vi.fn().mockResolvedValue(undefined);
     cameraClose = vi.fn().mockResolvedValue(undefined);
     dialogClose = vi.fn();
@@ -75,6 +78,7 @@ describe('AutoCountDialogComponent', () => {
           useValue: { close: dialogClose },
         },
         { provide: REP_COUNTER, useValue: counter },
+        { provide: PROXIMITY_REP_COUNTER, useValue: proximity },
       ],
     });
   });
@@ -109,6 +113,7 @@ describe('AutoCountDialogComponent', () => {
           useValue: { initialExerciseId: 'situp' },
         },
         { provide: REP_COUNTER, useValue: counter },
+        { provide: PROXIMITY_REP_COUNTER, useValue: proximity },
       ],
     });
 
@@ -118,6 +123,79 @@ describe('AutoCountDialogComponent', () => {
     await flushAsync();
 
     expect(counter.startSpy).toHaveBeenCalledWith({ exerciseId: 'situp' });
+  });
+
+  it('should hand the same camera stream to the proximity counter when the mode is switched', async () => {
+    // given
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    const component = fixture.componentInstance as unknown as {
+      onModeChange: (mode: 'pose' | 'proximity') => Promise<void>;
+    };
+
+    // when
+    await component.onModeChange('proximity');
+    fixture.detectChanges();
+
+    // then — pose detector stopped and reset, proximity bound + started
+    expect(counter.stopSpy).toHaveBeenCalledTimes(1);
+    expect(counter.reset).toHaveBeenCalledTimes(1);
+    expect(proximity.bindSpy).toHaveBeenCalledTimes(1);
+    expect(proximity.startSpy).toHaveBeenCalledWith({ exerciseId: 'pushup' });
+    expect(cameraOpen).toHaveBeenCalledTimes(1);
+    expect(fixture.nativeElement.textContent).toContain('Handy unter dir');
+    expect(fixture.nativeElement.textContent).toContain(
+      'Leg das Handy mit dem Display nach oben'
+    );
+  });
+
+  it('should show the near/far position instead of the joint angle in proximity mode', async () => {
+    // given
+    const state = signal<RepCountSnapshot>({
+      count: 2,
+      phase: 'down',
+      lastRepAtMs: 10,
+    });
+    proximity = makeCounter(state);
+    proximity.frame.set({ angleDeg: 45, confidence: 1, timestampMs: 1 });
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [AutoCountDialogComponent],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: CameraService,
+          useValue: { open: cameraOpen, close: cameraClose },
+        },
+        { provide: MatDialogRef, useValue: { close: dialogClose } },
+        { provide: MAT_DIALOG_DATA, useValue: { initialMode: 'proximity' } },
+        { provide: REP_COUNTER, useValue: counter },
+        { provide: PROXIMITY_REP_COUNTER, useValue: proximity },
+      ],
+    });
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    fixture.detectChanges();
+
+    // then
+    expect(proximity.startSpy).toHaveBeenCalledTimes(1);
+    expect(counter.startSpy).not.toHaveBeenCalled();
+    const near = fixture.nativeElement.querySelector(
+      '[data-testid="auto-count-proximity"]'
+    ) as HTMLElement;
+    expect(near.textContent).toContain('75%');
+    expect(fixture.nativeElement.textContent).toContain('Nähe');
+    expect(fixture.nativeElement.textContent).not.toContain('Winkel');
+
+    // when
+    (fixture.componentInstance as unknown as { save: () => void }).save();
+
+    // then
+    expect(dialogClose).toHaveBeenCalledWith({ exerciseId: 'pushup', reps: 2 });
   });
 
   it('given the dialog is destroyed, when teardown runs, then counter.stop and camera.close are each called once', async () => {

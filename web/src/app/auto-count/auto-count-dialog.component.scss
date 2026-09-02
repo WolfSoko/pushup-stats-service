@@ -20,6 +20,20 @@
   }
 }
 
+.mode-picker {
+  display: flex;
+  margin-bottom: 12px;
+
+  mat-button-toggle {
+    flex: 1 1 0;
+  }
+
+  mat-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+}
+
 .hint {
   margin: 0 0 12px;
   font-size: 13px;

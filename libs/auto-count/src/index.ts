@@ -16,7 +16,23 @@ export {
   type RepCountSnapshot,
   type RepPhase,
   type RepProcessResult,
+  type RepThresholds,
 } from './lib/rep-state-machine';
+export {
+  BrightnessEnvelope,
+  DEFAULT_BRIGHTNESS_ENVELOPE,
+  type BrightnessEnvelopeOptions,
+  type ProximityPosition,
+} from './lib/brightness-envelope';
+export {
+  FRAME_LUMA_SAMPLER,
+  type FrameLumaSampler,
+} from './lib/frame-luma-sampler.port';
+export {
+  PROXIMITY_ANGLE_SPAN_DEG,
+  PROXIMITY_REP_COUNTER,
+  PROXIMITY_THRESHOLDS,
+} from './lib/proximity-rep-counter.service';
 export {
   REP_COUNTER,
   type RepCounter,
