@@ -121,6 +121,15 @@ function buildFixture() {
   writeFileSync(join(blogDir, 'mein-post/en.md'), '---\ntitle: Hello\n---\n');
   // fr.md and la.md missing → blog gaps for both.
 
+  // Simulates a brand-new blog article: only the German source exists.
+  // All target locales (en, fr, la) must be detected as gaps.
+  mkdirSync(join(blogDir, 'neuer-artikel'), { recursive: true });
+  writeFileSync(
+    join(blogDir, 'neuer-artikel/de.md'),
+    '---\ntitle: Neuer Artikel\n---\n'
+  );
+  // en.md, fr.md, la.md all missing → blog gap for every target locale.
+
   writeFileSync(join(wikiDir, 'arch.de.md'), '---\nname: Bogen\n---\n');
   writeFileSync(join(wikiDir, 'arch.en.md'), '---\nname: Arch\n---\n');
   // fr and la wiki files missing.
@@ -222,8 +231,34 @@ describe('detect-translation-gaps', () => {
           'wiki:la',
         ])
       );
-      // en has full coverage in the fixture — no gaps reported for it.
-      expect(kinds.filter((k) => k.endsWith(':en'))).toEqual([]);
+      // 'en' has real XLIFF translations and an en.md for 'mein-post' → no
+      // XLIFF, wiki, or mein-post blog gaps.  The new 'neuer-artikel' folder
+      // has no en.md, so 'blog:en' must appear; see dedicated test below.
+      const enNonBlogGaps = kinds.filter(
+        (k) => k.endsWith(':en') && !k.startsWith('blog:')
+      );
+      expect(enNonBlogGaps).toEqual([]);
+    });
+
+    it('flags every target locale when a brand-new blog article has only de.md', () => {
+      // given — 'neuer-artikel' exists only with de.md (added in buildFixture)
+
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then
+      const newArticleGaps = gaps.gaps.filter(
+        (g) => g.kind === 'blog' && g.folder === 'neuer-artikel'
+      );
+      expect(newArticleGaps.map((g) => g.locale).sort()).toEqual([
+        'en',
+        'fr',
+        'la',
+      ]);
+      // sourcePath must point back to the German source
+      for (const gap of newArticleGaps) {
+        expect(gap.sourcePath).toMatch(/neuer-artikel\/de\.md$/);
+      }
     });
   });
 });
