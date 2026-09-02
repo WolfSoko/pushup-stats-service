@@ -52,6 +52,14 @@ describe('isHashedAsset', () => {
       '/dist/ABCD1234XYZ/index.html',
       // Hash inside an unsupported extension
       'data-ABCD1234.json',
+      // Hand-authored blog assets: a lowercase word is not a hash, so
+      // these stay replaceable under the same filename
+      'hero-geschichte.jpg',
+      'hero-muskeln-anatomie.jpg',
+      'hero-ganzkoerper.jpg',
+      'zeitstrahl-liegestuetze.svg',
+      'koerpergewicht-anteil-varianten.svg',
+      '/dist/web/browser/de/assets/blog/hero-gelenke-schmerzen.jpg',
     ])('%s', (filePath) => {
       expect(isHashedAsset(filePath)).toBe(false);
     });

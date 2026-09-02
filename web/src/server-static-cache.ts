@@ -38,8 +38,15 @@ const BUILD_INFO_TTL_SECONDS = 60;
 // separator before the hash. The hash is at least 8 chars of A–Z / 0–9
 // (Angular uses uppercase base32). Anchored to the end of the path so a
 // hash-like sequence in a directory name doesn't trigger.
+//
+// Deliberately case-SENSITIVE: an `i` flag would let any lowercase word
+// of 8+ letters pass as a hash, so hand-authored assets like
+// `hero-geschichte.jpg` were served `immutable` for a year and could
+// never be replaced under the same filename. Angular emits both the
+// hash and the extension lowercase/uppercase respectively, so nothing
+// legitimate needs the flag.
 const HASHED_ASSET_RE =
-  /[-.][A-Z0-9]{8,}\.(?:js|mjs|css|map|woff2?|ttf|otf|eot|png|jpe?g|gif|svg|webp|avif|ico)$/i;
+  /[-.][A-Z0-9]{8,}\.(?:js|mjs|css|map|woff2?|ttf|otf|eot|png|jpe?g|gif|svg|webp|avif|ico)$/;
 
 export const HASHED_ASSET_CACHE_CONTROL = `public, max-age=${ONE_YEAR_SECONDS}, immutable`;
 export const SHORT_LIVED_CACHE_CONTROL = `public, max-age=${SHORT_TTL_SECONDS}`;

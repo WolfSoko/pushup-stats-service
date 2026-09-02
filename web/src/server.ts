@@ -141,6 +141,33 @@ app.use(
   })
 );
 
+// Serve `/assets/<path>` from the localised /de/ build output. The i18n
+// build emits one asset copy per locale under `<locale>/assets/`, and
+// every localised document carries `<base href="/<locale>/">` — but blog
+// content addresses its images at the domain root, because `heroImage`
+// doubles as the absolute `og:image` URL that crawlers and social
+// previews fetch, and inline infographics use root-absolute `src`
+// attributes that `<base>` does not rewrite. Without this mount those
+// paths miss the static handler below (which is rooted at the bundle,
+// not at a locale), reach the Angular SSR engine and render a 404 shell,
+// so every self-hosted blog image is broken in production while working
+// fine under `nx serve` (no locale prefix, no `<base href>`).
+//
+// The bytes are locale-independent, so the /de/ copy is correct for
+// every locale. `fallthrough: false` makes a missing file a clean 404
+// instead of handing an `<img>` tag the HTML of the SPA shell.
+app.use(
+  '/assets',
+  express.static(join(browserDistFolder, 'de', 'assets'), {
+    index: false,
+    redirect: false,
+    fallthrough: false,
+    setHeaders: (res, filePath) => {
+      res.setHeader('Cache-Control', staticCacheControl(filePath));
+    },
+  })
+);
+
 // Redirect non-locale-prefixed app routes to /<lang>/... so paths like
 // `/u/<uid>` (which only exist inside the locale-specific Angular bundles)
 // don't 404 with `Cannot GET /u/<uid>` when shared as a bare URL.
