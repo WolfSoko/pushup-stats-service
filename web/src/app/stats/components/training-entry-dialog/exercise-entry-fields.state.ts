@@ -19,6 +19,7 @@ import {
   parseDurationFromParts,
   parseKmToMeters,
   SECONDS_MAX,
+  splitDurationParts,
   syntheticDefinitionFor,
 } from './training-entry-dialog.helpers';
 import { IntervalFieldsState } from './interval-fields.state';
@@ -117,6 +118,16 @@ export class ExerciseFormState {
   readonly isDistanceTimeMeasurement = computed(
     () => this.currentDefinition()?.measurement === 'distance-time'
   );
+  /** Both timed shapes share one minutes/seconds row and the stopwatch. */
+  readonly hasDurationField = computed(
+    () => this.isTimeMeasurement() || this.isDistanceTimeMeasurement()
+  );
+  readonly durationPlaceholder = computed(() =>
+    this.isDistanceTimeMeasurement()
+      ? { minutes: '25', seconds: '0' }
+      : { minutes: '1', seconds: '30' }
+  );
+
   readonly variantControl = new FormControl<string>('', { nonNullable: true });
   readonly showVariantPicker = computed(
     () => (this.currentDefinition()?.variants?.length ?? 0) > 0
@@ -190,6 +201,14 @@ export class ExerciseFormState {
    * rejected as `invalid-variant` by the submit validator, and a rep
    * count can't leak into a time-measured exercise.
    */
+  /** Mirror a stopwatch reading into the minutes/seconds inputs. */
+  setDurationSeconds(totalSec: number): void {
+    if (totalSec <= 0) return;
+    const parts = splitDurationParts(totalSec);
+    this.durationMinutesInput.set(parts.minutes);
+    this.durationSecondsInput.set(parts.seconds);
+  }
+
   resetForExercise(): void {
     this.variantControl.setValue(this.defaultVariantId());
     this.sets.set([0]);

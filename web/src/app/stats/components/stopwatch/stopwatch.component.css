@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.stopwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container);
+}
+
+.stopwatch-value {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.stopwatch-target {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.reached .stopwatch-value,
+.reached .stopwatch-target {
+  color: var(--mat-sys-primary);
+  opacity: 1;
+}
+
+.stopwatch-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stopwatch-controls button {
+  min-width: 132px;
+}

@@ -1,0 +1,32 @@
+<h2 mat-dialog-title class="stopwatch-title">
+  <mat-icon aria-hidden="true">{{ exerciseIcon }}</mat-icon>
+  <span data-testid="stopwatch-dialog-exercise">{{ exerciseName }}</span>
+</h2>
+<mat-dialog-content>
+  <app-stopwatch [state]="stopwatch" [targetSec]="targetSec" />
+  <p class="hint" i18n="@@stopwatch.dialog.hint">
+    Die Stoppuhr läuft über das Ziel hinaus weiter – gespeichert wird die
+    tatsächlich gestoppte Zeit.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    type="button"
+    data-testid="stopwatch-dialog-cancel"
+    (click)="cancel()"
+    i18n="@@stopwatch.dialog.cancel"
+  >
+    Abbrechen
+  </button>
+  <button
+    mat-flat-button
+    type="button"
+    data-testid="stopwatch-dialog-save"
+    [disabled]="!canSave()"
+    (click)="save()"
+    i18n="@@stopwatch.dialog.save"
+  >
+    Übernehmen
+  </button>
+</mat-dialog-actions>

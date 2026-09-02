@@ -7,6 +7,10 @@ import type {
   ExerciseTimerResult,
 } from '../auto-count/exercise-timer-dialog.component';
 import type {
+  StopwatchDialogData,
+  StopwatchResult,
+} from '../stats/components/stopwatch/stopwatch-dialog.component';
+import type {
   ExerciseEntryDialogData,
   ExerciseEntryDialogResult,
   PushupEntryDialogData,
@@ -29,6 +33,11 @@ export const EXERCISE_TIMER_DIALOG_CONFIG = {
   panelClass: 'exercise-timer-dialog-panel',
 } as const;
 
+export const STOPWATCH_DIALOG_CONFIG = {
+  width: 'min(92vw, 420px)',
+  maxWidth: '92vw',
+} as const;
+
 export const TRAINING_ENTRY_DIALOG_CONFIG = {
   width: 'min(92vw, 420px)',
   maxWidth: '92vw',
@@ -43,6 +52,8 @@ export type {
   ExerciseEntryDialogResult,
   PushupEntryDialogData,
   PushupEntryDialogResult,
+  StopwatchDialogData,
+  StopwatchResult,
   TrainingEntryDialogData,
   TrainingEntryDialogResult,
 };

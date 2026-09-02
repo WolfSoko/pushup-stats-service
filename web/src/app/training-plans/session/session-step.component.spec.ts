@@ -68,6 +68,17 @@ describe('SessionStepComponent', () => {
     expect(byTestId('session-capture').textContent).toContain('Timer starten');
   });
 
+  it('should offer the stopwatch as the primary tool for a timed exercise without a hold profile', async () => {
+    // given
+    await setup({ tool: 'stopwatch', target: '0:30' });
+
+    // then
+    expect(byTestId('session-capture').textContent).toContain(
+      'Stoppuhr starten'
+    );
+    expect(byTestId('session-by-hand')).toBeTruthy();
+  });
+
   it('should not duplicate the entry dialog when it is already the primary tool', async () => {
     // given / when
     await setup({ tool: 'manual' });

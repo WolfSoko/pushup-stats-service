@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   ElementRef,
   inject,
   PLATFORM_ID,
@@ -22,6 +23,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HOLD_TIMER } from '@pu-stats/auto-count';
 
+import { StopwatchSignalService } from '../stats/components/stopwatch/stopwatch-signal.service';
+import {
+  formatStopwatch,
+  StopwatchState,
+  TargetSignal,
+} from '../stats/components/stopwatch/stopwatch.state';
 import { CameraService } from './camera.service';
 
 export type ExerciseTimerExerciseId = 'plank' | 'hollowhold';
@@ -49,15 +56,6 @@ interface ExerciseOption {
   readonly id: ExerciseTimerExerciseId;
   readonly icon: string;
   readonly label: string;
-}
-
-/** How often the manual stopwatch ticks the elapsed display. */
-const STOPWATCH_TICK_MS = 100;
-
-function mmSs(totalSec: number): string {
-  const mm = Math.floor(totalSec / 60);
-  const ss = totalSec % 60;
-  return `${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`;
 }
 
 @Component({
@@ -103,33 +101,27 @@ export class ExerciseTimerDialogComponent {
   protected readonly error = signal<string | null>(null);
   protected readonly formCheckOpen = signal(true);
 
-  /** Wall-clock millisecond total for manual mode. */
-  private readonly manualMs = signal(0);
-  private readonly manualRunning = signal(false);
-  private manualSegmentStartedAt: number | null = null;
-  /**
-   * Snapshot of `manualMs` at the moment the current segment started. The
-   * interval below sets `manualMs = manualSegmentBaseMs + delta` on every
-   * tick, so when we stop we re-compute the same expression instead of
-   * adding `delta` on top of an already-updated `manualMs`.
-   */
-  private manualSegmentBaseMs = 0;
-  private stopwatchHandle: ReturnType<typeof setInterval> | null = null;
+  /** Manual mode: the same stopwatch the session and entry dialog use. */
+  private readonly stopwatch = new StopwatchState(
+    isPlatformBrowser(this.platformId)
+  );
 
   protected readonly totalSec = computed(() =>
     this.cameraMode()
       ? Math.floor(this.timer.snapshot().totalMs / 1000)
-      : Math.floor(this.manualMs() / 1000)
+      : this.stopwatch.elapsedSec()
   );
-  protected readonly totalMmSs = computed(() => mmSs(this.totalSec()));
-  protected readonly targetMmSs = mmSs(this.targetSec);
+  protected readonly totalMmSs = computed(() =>
+    formatStopwatch(this.totalSec())
+  );
+  protected readonly targetMmSs = formatStopwatch(this.targetSec);
   protected readonly targetReached = computed(
     () => this.targetSec > 0 && this.totalSec() >= this.targetSec
   );
   protected readonly running = computed(() =>
     this.cameraMode()
       ? this.timer.snapshot().phase === 'holding'
-      : this.manualRunning()
+      : this.stopwatch.running()
   );
   protected readonly phaseLabel = computed(() => {
     if (this.cameraMode()) {
@@ -142,7 +134,7 @@ export class ExerciseTimerDialogComponent {
           return $localize`:@@exerciseTimer.phase.ready:Bereit`;
       }
     }
-    return this.manualRunning()
+    return this.stopwatch.running()
       ? $localize`:@@exerciseTimer.phase.holding:Halten`
       : $localize`:@@exerciseTimer.phase.ready:Bereit`;
   });
@@ -164,6 +156,9 @@ export class ExerciseTimerDialogComponent {
   private tornDown = false;
 
   constructor() {
+    const signals = inject(StopwatchSignalService);
+    const target = new TargetSignal(() => signals.play());
+    effect(() => target.update(this.targetReached()));
     this.destroyRef.onDestroy(() => {
       void this.teardown();
     });
@@ -174,7 +169,7 @@ export class ExerciseTimerDialogComponent {
     // Pause whichever path was active so the user always returns to a
     // clean "press to start" state after switching modes — keeps the
     // mental model symmetric between the two.
-    this.stopManualStopwatch();
+    this.stopwatch.pause();
     if (this.cameraMode()) {
       // Stop the timer first (it owns the frame subscription), then
       // close the underlying MediaStream. Without the `camera.close()`
@@ -213,19 +208,14 @@ export class ExerciseTimerDialogComponent {
 
   protected toggleManual(): void {
     if (this.cameraMode()) return;
-    if (this.manualRunning()) {
-      this.stopManualStopwatch();
-    } else {
-      this.startManualStopwatch();
-    }
+    this.stopwatch.toggle();
   }
 
   protected reset(): void {
     if (this.cameraMode()) {
       this.timer.reset();
     } else {
-      this.stopManualStopwatch();
-      this.manualMs.set(0);
+      this.stopwatch.reset();
     }
   }
 
@@ -247,32 +237,6 @@ export class ExerciseTimerDialogComponent {
 
   protected toggleFormCheck(): void {
     this.formCheckOpen.update((open) => !open);
-  }
-
-  private startManualStopwatch(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    if (this.manualRunning() || this.stopwatchHandle !== null) return;
-    this.manualSegmentStartedAt = performance.now();
-    this.manualSegmentBaseMs = this.manualMs();
-    this.manualRunning.set(true);
-    this.stopwatchHandle = setInterval(() => {
-      if (this.manualSegmentStartedAt === null) return;
-      const delta = performance.now() - this.manualSegmentStartedAt;
-      this.manualMs.set(this.manualSegmentBaseMs + delta);
-    }, STOPWATCH_TICK_MS);
-  }
-
-  private stopManualStopwatch(): void {
-    if (this.stopwatchHandle !== null) {
-      clearInterval(this.stopwatchHandle);
-      this.stopwatchHandle = null;
-    }
-    if (this.manualSegmentStartedAt !== null && this.manualRunning()) {
-      const delta = performance.now() - this.manualSegmentStartedAt;
-      this.manualMs.set(this.manualSegmentBaseMs + delta);
-    }
-    this.manualSegmentStartedAt = null;
-    this.manualRunning.set(false);
   }
 
   /**
@@ -312,7 +276,7 @@ export class ExerciseTimerDialogComponent {
   private async teardown(): Promise<void> {
     if (this.tornDown) return;
     this.tornDown = true;
-    this.stopManualStopwatch();
+    this.stopwatch.destroy();
     await this.timer.stop();
     await this.camera.close();
   }

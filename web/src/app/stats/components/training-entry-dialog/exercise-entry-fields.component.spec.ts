@@ -125,6 +125,65 @@ describe('ExerciseEntryFieldsComponent', () => {
       });
     });
 
+    it('should reveal the stopwatch behind the duration row and mirror it into the fields', () => {
+      // given
+      vi.useFakeTimers({ now: 1_000 });
+      try {
+        const { component, fixture } = render(
+          'core.mountainclimbers.time',
+          null
+        );
+        const toggle = fixture.nativeElement.querySelector(
+          '[data-testid="training-entry-stopwatch-toggle"]'
+        ) as HTMLButtonElement;
+        expect(fixture.nativeElement.querySelector('app-stopwatch')).toBeNull();
+
+        // when
+        toggle.click();
+        fixture.detectChanges();
+        component.stopwatch.start();
+        vi.advanceTimersByTime(95_000);
+        component.stopwatch.pause();
+        fixture.detectChanges();
+
+        // then
+        expect(
+          fixture.nativeElement.querySelector('app-stopwatch')
+        ).toBeTruthy();
+        expect(component.state.durationMinutesInput()).toBe('1');
+        expect(component.state.durationSecondsInput()).toBe('35');
+        expect(component.state.durationSec()).toBe(95);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('should offer the stopwatch for a tracked run as well and drop it on an exercise switch', () => {
+      // given
+      const { component, fixture, switchExercise } = render(
+        'cardio.running',
+        null
+      );
+      const toggle = fixture.nativeElement.querySelector(
+        '[data-testid="training-entry-stopwatch-toggle"]'
+      ) as HTMLButtonElement;
+      toggle.click();
+      fixture.detectChanges();
+      expect(component.stopwatchOpen()).toBe(true);
+
+      // when
+      switchExercise('legs.squats');
+
+      // then
+      expect(component.stopwatchOpen()).toBe(false);
+      expect(component.stopwatch.elapsedSec()).toBe(0);
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="training-entry-stopwatch-toggle"]'
+        )
+      ).toBeNull();
+    });
+
     it('should emit a distance-time result for cardio.running', () => {
       // given
       const { component } = render('cardio.running', null);

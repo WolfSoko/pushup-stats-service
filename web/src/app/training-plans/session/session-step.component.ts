@@ -53,6 +53,8 @@ export class SessionStepComponent {
         return $localize`:@@session.tool.autoCount:Mit Kamera zählen`;
       case 'hold-timer':
         return $localize`:@@session.tool.holdTimer:Timer starten`;
+      case 'stopwatch':
+        return $localize`:@@session.tool.stopwatch:Stoppuhr starten`;
       default:
         return $localize`:@@session.tool.manual:Eintragen`;
     }
@@ -63,6 +65,7 @@ export class SessionStepComponent {
       case 'auto-count':
         return 'photo_camera';
       case 'hold-timer':
+      case 'stopwatch':
         return 'timer';
       default:
         return 'edit';

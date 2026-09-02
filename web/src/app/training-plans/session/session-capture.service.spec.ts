@@ -12,6 +12,7 @@ import { SessionDialogsService } from './session-dialogs.service';
 
 const openAutoCount = vi.fn();
 const openHoldTimer = vi.fn();
+const openStopwatch = vi.fn();
 const openEntryDialog = vi.fn();
 
 const dialogsProvider = {
@@ -19,6 +20,7 @@ const dialogsProvider = {
   useValue: {
     openAutoCount,
     openHoldTimer,
+    openStopwatch,
     openEntryDialog,
   },
 };
@@ -63,6 +65,7 @@ describe('SessionCaptureService', () => {
   beforeEach(() => {
     openAutoCount.mockReset().mockResolvedValue(null);
     openHoldTimer.mockReset().mockResolvedValue(null);
+    openStopwatch.mockReset().mockResolvedValue(null);
     openEntryDialog.mockReset().mockResolvedValue(null);
     TestBed.resetTestingModule();
     createEntry = vi.fn().mockReturnValue(of({ id: 'e1' }));
@@ -195,6 +198,61 @@ describe('SessionCaptureService', () => {
         intervals: [52],
       })
     );
+  });
+
+  it('should open the stopwatch for a timed exercise without a hold profile and write the stopped seconds', async () => {
+    // given
+    openStopwatch.mockResolvedValue({
+      exerciseId: 'core.mountainclimbers.time',
+      durationSec: 33,
+    });
+    const climbers = step({
+      exercise: {
+        exerciseId: 'core.mountainclimbers.time',
+        target: 30,
+        variantId: 'cross-body',
+      },
+      tool: 'stopwatch',
+      target: 30,
+    });
+
+    // when
+    const outcome = await service.capture(climbers);
+
+    // then
+    expect(openStopwatch).toHaveBeenCalledWith(
+      'core.mountainclimbers.time',
+      30
+    );
+    expect(outcome).toEqual({ status: 'captured', value: 33 });
+    expect(createEntry).toHaveBeenCalledWith(
+      'u1',
+      expect.objectContaining({
+        exerciseId: 'core.mountainclimbers.time',
+        variantId: 'cross-body',
+        durationSec: 33,
+        intervals: [33],
+        source: 'plan-session',
+      })
+    );
+  });
+
+  it('should treat a dismissed stopwatch as cancelled without writing', async () => {
+    // given
+    openStopwatch.mockResolvedValue(null);
+
+    // when
+    const outcome = await service.capture(
+      step({
+        exercise: { exerciseId: 'squat.wallsit', target: 45 },
+        tool: 'stopwatch',
+        target: 45,
+      })
+    );
+
+    // then
+    expect(outcome).toEqual({ status: 'cancelled', value: 0 });
+    expect(createEntry).not.toHaveBeenCalled();
   });
 
   it('should carry the prescribed variant into a matching capture', async () => {

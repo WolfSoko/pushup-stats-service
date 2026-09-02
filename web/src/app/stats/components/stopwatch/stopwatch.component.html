@@ -1,0 +1,35 @@
+<div class="stopwatch" [class.reached]="reached()">
+  <p class="stopwatch-value" aria-live="polite" data-testid="stopwatch-value">
+    {{ display() }}
+  </p>
+  @if (targetSec() > 0) {
+    <p class="stopwatch-target" data-testid="stopwatch-target">
+      @if (reached()) {
+        <mat-icon aria-hidden="true">check_circle</mat-icon>
+      }
+      <span i18n="@@stopwatch.target">Ziel: {{ targetDisplay() }}</span>
+    </p>
+  }
+  <div class="stopwatch-controls">
+    <button
+      mat-flat-button
+      type="button"
+      data-testid="stopwatch-toggle"
+      [attr.aria-pressed]="running()"
+      (click)="state().toggle()"
+    >
+      <mat-icon>{{ running() ? 'pause' : 'play_arrow' }}</mat-icon>
+      <span>{{ running() ? pauseLabel : startLabel }}</span>
+    </button>
+    <button
+      mat-stroked-button
+      type="button"
+      data-testid="stopwatch-reset"
+      [disabled]="!canReset()"
+      (click)="state().reset()"
+    >
+      <mat-icon>restart_alt</mat-icon>
+      <span>{{ resetLabel }}</span>
+    </button>
+  </div>
+</div>

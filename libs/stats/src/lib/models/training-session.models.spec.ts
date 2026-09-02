@@ -86,6 +86,18 @@ describe('sessionToolFor', () => {
     expect(tool).toBe('hold-timer');
   });
 
+  it('should route a timed exercise without a hold profile to the stopwatch', () => {
+    // given / when
+    const climbers = sessionToolFor({
+      exerciseId: 'core.mountainclimbers.time',
+    });
+    const wallsit = sessionToolFor({ exerciseId: 'squat.wallsit' });
+
+    // then
+    expect(climbers).toBe('stopwatch');
+    expect(wallsit).toBe('stopwatch');
+  });
+
   it('should fall back to manual entry for an exercise without a profile', () => {
     // given / when
     const tool = sessionToolFor({ exerciseId: 'abs.russiantwist' });
