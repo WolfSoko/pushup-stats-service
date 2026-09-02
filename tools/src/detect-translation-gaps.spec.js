@@ -48,7 +48,7 @@ function runScript({ extraEnv = {}, args = [] } = {}) {
 // Build an isolated sandbox tree so the detector exercises every gap
 // branch deterministically, regardless of how complete the real repo's
 // translations happen to be at test time.
-function buildFixture() {
+function buildFixture({ sourceOnlyBlogFolders = [] } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'detect-gaps-fixture-'));
   const localeDir = join(root, 'web/src/locale');
   const blogDir = join(root, 'content/blog');
@@ -121,14 +121,17 @@ function buildFixture() {
   writeFileSync(join(blogDir, 'mein-post/en.md'), '---\ntitle: Hello\n---\n');
   // fr.md and la.md missing → blog gaps for both.
 
-  // Simulates a brand-new blog article: only the German source exists.
-  // All target locales (en, fr, la) must be detected as gaps.
-  mkdirSync(join(blogDir, 'neuer-artikel'), { recursive: true });
-  writeFileSync(
-    join(blogDir, 'neuer-artikel/de.md'),
-    '---\ntitle: Neuer Artikel\n---\n'
-  );
-  // en.md, fr.md, la.md all missing → blog gap for every target locale.
+  // Brand-new articles: the German source and nothing else, so every
+  // target locale must be flagged. Opt-in per fixture — the baseline
+  // tree deliberately keeps 'en' fully covered, and an article missing
+  // its en.md would blunt that assertion.
+  for (const folder of sourceOnlyBlogFolders) {
+    mkdirSync(join(blogDir, folder), { recursive: true });
+    writeFileSync(
+      join(blogDir, `${folder}/de.md`),
+      `---\ntitle: ${folder}\n---\n`
+    );
+  }
 
   writeFileSync(join(wikiDir, 'arch.de.md'), '---\nname: Bogen\n---\n');
   writeFileSync(join(wikiDir, 'arch.en.md'), '---\nname: Arch\n---\n');
@@ -231,17 +234,23 @@ describe('detect-translation-gaps', () => {
           'wiki:la',
         ])
       );
-      // 'en' has real XLIFF translations and an en.md for 'mein-post' → no
-      // XLIFF, wiki, or mein-post blog gaps.  The new 'neuer-artikel' folder
-      // has no en.md, so 'blog:en' must appear; see dedicated test below.
-      const enNonBlogGaps = kinds.filter(
-        (k) => k.endsWith(':en') && !k.startsWith('blog:')
-      );
-      expect(enNonBlogGaps).toEqual([]);
+      // en has full coverage in the fixture — no gaps reported for it.
+      expect(kinds.filter((k) => k.endsWith(':en'))).toEqual([]);
+    });
+  });
+
+  describe('against a fixture holding a brand-new blog article', () => {
+    let fixture;
+    beforeAll(() => {
+      fixture = buildFixture({ sourceOnlyBlogFolders: ['neuer-artikel'] });
+    });
+    afterAll(() => {
+      rmSync(fixture.root, { recursive: true, force: true });
     });
 
     it('should flag every target locale when a brand-new blog article has only de.md', () => {
-      // given — 'neuer-artikel' exists only with de.md (added in buildFixture)
+      // given — 'neuer-artikel' carries just its German source, the shape
+      // a freshly written article has before any translation exists
 
       // when
       const { gaps } = runScript({ extraEnv: fixture.env });
