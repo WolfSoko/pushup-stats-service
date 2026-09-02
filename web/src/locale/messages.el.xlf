@@ -11476,5 +11476,29 @@
         <target> Επηρεάζει όλα τα στατιστικά. Το υπόμνημα στο διάγραμμα κάνει απόκρυψη μόνο εκεί. </target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.heading">
+      <segment state="initial">
+        <source>Deine Planziele heute</source>
+        <target>Deine Planziele heute</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.done">
+      <segment state="initial">
+        <source>erledigt</source>
+        <target>erledigt</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.open">
+      <segment state="initial">
+        <source>offen</source>
+        <target>offen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.core.mountainclimbers.time.name">
+      <segment state="initial">
+        <source>Mountain Climbers (Zeit)</source>
+        <target>Mountain Climbers (Zeit)</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

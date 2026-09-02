@@ -12,8 +12,22 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
-import type { GoalKind } from '../stats/components/goal-reached-dialog/goal-reached-dialog.component';
+import type {
+  GoalKind,
+  GoalReachedPlanItem,
+} from '../stats/components/goal-reached-dialog/goal-reached-dialog.component';
+import { buildExerciseRows } from '../training-plans/training-plan-detail.exercises';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
+import {
+  clearFlag,
+  entryBerlinDate,
+  isoWeekKey,
+  pruneStalePeriodFlags,
+  readFlag,
+  STORAGE_PREFIX,
+  weekRange,
+  writeFlag,
+} from './goal-reached-period.helpers';
 import { UserConfigStore } from './user-config.store';
 
 interface GoalSpec {
@@ -23,7 +37,6 @@ interface GoalSpec {
   readonly periodKey: Signal<string>;
 }
 
-const STORAGE_PREFIX = 'pus_goal_reached_';
 // Monotonic counter so concurrent dialogs (daily + weekly + monthly all
 // crossing on the same entry) get unique titleId DOM ids.
 let nextDialogTitleId = 0;
@@ -136,6 +149,20 @@ export class GoalReachedNotificationService {
     if (daily > 0 && daily >= planTarget) return 0;
     return planTarget;
   });
+
+  /**
+   * Today's plan prescription with per-exercise fulfillment, for the
+   * checklist inside the daily and plan celebrations. Empty when no plan
+   * is active or today prescribes nothing (rest day, pre-start).
+   */
+  private readonly planItems = computed<ReadonlyArray<GoalReachedPlanItem>>(
+    () => {
+      if (!this.trainingPlan.hasActivePlan()) return [];
+      const idx = this.trainingPlan.currentDayIndex();
+      if (idx === null) return [];
+      return buildExerciseRows(this.trainingPlan.dayProgress(idx));
+    }
+  );
 
   private readonly specs: readonly GoalSpec[] = [
     {
@@ -254,6 +281,12 @@ export class GoalReachedNotificationService {
     // one dialog per kind.
     if (this.activeDialogs.has(kind)) return;
     const titleId = `goal-reached-dialog-title-${nextDialogTitleId++}`;
+    // Weekly/monthly celebrations are about the period total; only the
+    // two "today" dialogs show what today's plan asked for.
+    const planItems =
+      kind === 'daily' || kind === 'plan'
+        ? untracked(() => this.planItems())
+        : [];
     const ref = this.dialog.open(GoalReachedDialogComponent, {
       panelClass: 'goal-reached-dialog-panel',
       backdropClass: 'goal-reached-dialog-backdrop',
@@ -268,6 +301,7 @@ export class GoalReachedNotificationService {
         goal: snapshot.goal,
         titleId,
         maxParticleCount: snapshot.maxParticleCount,
+        planItems,
       },
     });
     this.activeDialogs.set(kind, ref);
@@ -317,116 +351,4 @@ export class GoalReachedNotificationService {
       return;
     }
   }
-}
-
-/**
- * Convert a Firestore-stored ISO timestamp to its Berlin-localised date key.
- *
- * Two timestamp shapes appear in production:
- *   - Naive (`YYYY-MM-DDTHH:mm[:ss]`) — written by older quick-add entries
- *     that the backend treats as Berlin local time. We must NOT round-trip
- *     these through `new Date()`, because that parses them in the device's
- *     local timezone and shifts the day on devices not in `Europe/Berlin`.
- *     The Cloud Function's bucketing logic also uses the literal date prefix.
- *   - TZ-aware (`...Z` or `...±HH:mm`) — written by the entry-create path
- *     via `new Date().toISOString()`. We convert these via the Berlin formatter
- *     so that an entry made at 00:30 Berlin (== 22:30 UTC the prior day)
- *     counts toward today and not yesterday.
- */
-function entryBerlinDate(timestamp: string): string {
-  if (HAS_TIMEZONE.test(timestamp)) {
-    return toBerlinIsoDate(new Date(timestamp));
-  }
-  return timestamp.slice(0, 10);
-}
-
-const HAS_TIMEZONE = /(Z|[+-]\d{2}:?\d{2})$/;
-
-function pruneStalePeriodFlags(todayBerlin: string): void {
-  // Touching `globalThis.localStorage` itself can throw `SecurityError` in
-  // sandboxed/opaque origins or with storage disabled (Safari private mode,
-  // some embedded webviews). Wrap the whole access — not just the read loop —
-  // so cleanup stays best-effort and never breaks app startup.
-  try {
-    const ls = globalThis.localStorage;
-    if (!ls) return;
-    const validKeys = new Set([
-      `${STORAGE_PREFIX}daily_${todayBerlin}`,
-      `${STORAGE_PREFIX}weekly_${isoWeekKey(todayBerlin)}`,
-      `${STORAGE_PREFIX}monthly_${todayBerlin.slice(0, 7)}`,
-      `${STORAGE_PREFIX}plan_${todayBerlin}`,
-    ]);
-    const stale: string[] = [];
-    for (let i = 0; i < ls.length; i++) {
-      const key = ls.key(i);
-      if (key && key.startsWith(STORAGE_PREFIX) && !validKeys.has(key)) {
-        stale.push(key);
-      }
-    }
-    for (const key of stale) ls.removeItem(key);
-  } catch {
-    // localStorage unavailable / SecurityError — best-effort cleanup only.
-  }
-}
-
-function readFlag(key: string): boolean {
-  try {
-    return globalThis.localStorage?.getItem(key) === '1';
-  } catch {
-    return false;
-  }
-}
-
-function writeFlag(key: string): void {
-  try {
-    globalThis.localStorage?.setItem(key, '1');
-  } catch {
-    // localStorage unavailable — best-effort; in-memory `opened` set still
-    // suppresses repeat triggers for the lifetime of the session.
-  }
-}
-
-function clearFlag(key: string): void {
-  try {
-    globalThis.localStorage?.removeItem(key);
-  } catch {
-    // localStorage unavailable — nothing to clear.
-  }
-}
-
-function isoWeekKey(berlinDate: string): string {
-  const [y, m, day] = berlinDate.split('-').map(Number);
-  const d = new Date(y, m - 1, day);
-  d.setHours(0, 0, 0, 0);
-  const weekday = (d.getDay() + 6) % 7;
-  d.setDate(d.getDate() + 3 - weekday);
-  const isoYear = d.getFullYear();
-  const firstThursday = new Date(isoYear, 0, 4);
-  firstThursday.setHours(0, 0, 0, 0);
-  const ftDay = (firstThursday.getDay() + 6) % 7;
-  firstThursday.setDate(firstThursday.getDate() + 3 - ftDay);
-  const week =
-    1 +
-    Math.round(
-      (d.getTime() - firstThursday.getTime()) / (7 * 24 * 60 * 60 * 1000)
-    );
-  return `${isoYear}-W${String(week).padStart(2, '0')}`;
-}
-
-function weekRange(berlinDate: string): { from: string; to: string } {
-  const [y, m, day] = berlinDate.split('-').map(Number);
-  const todayDate = new Date(y, m - 1, day);
-  const dayOfWeek = (todayDate.getDay() + 6) % 7;
-  const monday = new Date(todayDate);
-  monday.setDate(todayDate.getDate() - dayOfWeek);
-  const sunday = new Date(monday);
-  sunday.setDate(monday.getDate() + 6);
-  return { from: ymd(monday), to: ymd(sunday) };
-}
-
-function ymd(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
 }

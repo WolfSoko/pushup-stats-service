@@ -164,6 +164,84 @@ describe('GoalReachedDialogComponent', () => {
     });
   });
 
+  describe("Given the dialog receives today's plan items", () => {
+    it('should list every plan goal with a green check on the fulfilled ones', async () => {
+      // given
+      await setup({
+        kind: 'plan',
+        total: 50,
+        goal: 50,
+        titleId: 'test-title-plan-items',
+        planItems: [
+          {
+            name: 'Liegestütze',
+            target: '50',
+            logged: '50',
+            sets: '20 · 20 · 10',
+            quantified: true,
+            done: true,
+          },
+          {
+            name: 'Plank',
+            target: '1:30',
+            logged: '0:45',
+            sets: '',
+            quantified: true,
+            done: false,
+          },
+          {
+            name: 'HIIT',
+            target: '',
+            logged: '',
+            sets: '',
+            quantified: false,
+            done: false,
+          },
+        ],
+      });
+
+      // when
+      const items = Array.from(
+        fixture.nativeElement.querySelectorAll(
+          '[data-testid="goal-reached-plan-item"]'
+        )
+      ) as HTMLElement[];
+
+      // then
+      expect(items).toHaveLength(3);
+      expect(items[0].classList.contains('is-done')).toBe(true);
+      expect(items[0].querySelector('.plan-check')?.textContent).toContain(
+        'check_circle'
+      );
+      expect(items[0].textContent).toContain('Liegestütze');
+      expect(items[0].textContent).toContain('50 / 50');
+      expect(items[0].textContent).toContain('(20 · 20 · 10)');
+      expect(items[1].classList.contains('is-done')).toBe(false);
+      expect(items[1].querySelector('.plan-check')?.textContent).toContain(
+        'radio_button_unchecked'
+      );
+      expect(items[1].textContent).toContain('0:45 / 1:30');
+      expect(items[2].textContent).not.toContain('/');
+    });
+
+    it('should hide the plan section when no plan items are given', async () => {
+      // given
+      await setup({
+        kind: 'daily',
+        total: 100,
+        goal: 100,
+        titleId: 'test-title-no-plan',
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="goal-reached-plan-goals"]'
+        )
+      ).toBeNull();
+    });
+  });
+
   describe('Given the user clicks Snap', () => {
     it('Then it lazy-vaporizes the card element and closes the dialog on completion', async () => {
       // Given

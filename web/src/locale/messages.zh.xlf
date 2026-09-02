@@ -10982,5 +10982,29 @@
         <target> 会影响所有统计数据。图表上的图例仅在该处隐藏显示。 </target>
       </segment>
     </unit>
+    <unit id="goalReached.plan.heading">
+      <segment state="initial">
+        <source>Deine Planziele heute</source>
+        <target>Deine Planziele heute</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.done">
+      <segment state="initial">
+        <source>erledigt</source>
+        <target>erledigt</target>
+      </segment>
+    </unit>
+    <unit id="goalReached.plan.open">
+      <segment state="initial">
+        <source>offen</source>
+        <target>offen</target>
+      </segment>
+    </unit>
+    <unit id="exercise.core.mountainclimbers.time.name">
+      <segment state="initial">
+        <source>Mountain Climbers (Zeit)</source>
+        <target>Mountain Climbers (Zeit)</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

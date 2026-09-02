@@ -108,6 +108,24 @@ describe('EXERCISE_CATALOG', () => {
     expect(plank?.categoryId).toBe('core');
   });
 
+  it('should ship a time-measured mountain climbers counterpart sharing the rep variants', () => {
+    // given
+    const reps = EXERCISE_CATALOG.find((d) => d.id === 'abs.mountainclimbers');
+    const timed = EXERCISE_CATALOG.find(
+      (d) => d.id === 'core.mountainclimbers.time'
+    );
+
+    // then
+    expect(reps?.measurement).toBe('reps');
+    expect(timed?.measurement).toBe('time');
+    expect(timed?.unit).toBe('s');
+    expect(timed?.categoryId).toBe('core');
+    expect(timed?.max).toBeLessThanOrEqual(7200);
+    expect(timed?.variants?.map((v) => v.id)).toEqual(
+      reps?.variants?.map((v) => v.id)
+    );
+  });
+
   it('exposes cardio.running as the first distance-time exercise', () => {
     const running = EXERCISE_CATALOG.find((d) => d.id === 'cardio.running');
     expect(running?.measurement).toBe('distance-time');

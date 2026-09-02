@@ -46,7 +46,7 @@ service cloud.firestore {
         // squat
         'squat.wallsit',
         // core
-        'core.hollowhold', 'plank.standard',
+        'core.hollowhold', 'core.mountainclimbers.time', 'plank.standard',
         // cardio
         'cardio.highknees',
         // mobility
