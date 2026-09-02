@@ -11349,27 +11349,27 @@
       </segment>
     </unit>
     <unit id="goalReached.plan.heading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Planziele heute</source>
-        <target>Deine Planziele heute</target>
+        <target>Vos objectifs du plan aujourd'hui</target>
       </segment>
     </unit>
     <unit id="goalReached.plan.done">
-      <segment state="initial">
+      <segment state="translated">
         <source>erledigt</source>
-        <target>erledigt</target>
+        <target>terminé</target>
       </segment>
     </unit>
     <unit id="goalReached.plan.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>offen</source>
-        <target>offen</target>
+        <target>ouvert</target>
       </segment>
     </unit>
     <unit id="exercise.core.mountainclimbers.time.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers (Zeit)</source>
-        <target>Mountain Climbers (Zeit)</target>
+        <target>Mountain Climbers (Temps)</target>
       </segment>
     </unit>
 </file>
