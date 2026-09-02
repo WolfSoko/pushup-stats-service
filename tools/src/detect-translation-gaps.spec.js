@@ -240,7 +240,7 @@ describe('detect-translation-gaps', () => {
       expect(enNonBlogGaps).toEqual([]);
     });
 
-    it('flags every target locale when a brand-new blog article has only de.md', () => {
+    it('should flag every target locale when a brand-new blog article has only de.md', () => {
       // given — 'neuer-artikel' exists only with de.md (added in buildFixture)
 
       // when
