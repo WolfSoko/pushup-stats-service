@@ -11501,57 +11501,57 @@
       </segment>
     </unit>
     <unit id="stopwatch.dialog.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Die Stoppuhr läuft über das Ziel hinaus weiter – gespeichert wird die tatsächlich gestoppte Zeit. </source>
-        <target> Die Stoppuhr läuft über das Ziel hinaus weiter – gespeichert wird die tatsächlich gestoppte Zeit. </target>
+        <target> Το χρονόμετρο συνεχίζει να λειτουργεί και μετά τον στόχο – αποθηκεύεται ο χρόνος που πραγματικά χρονομετρήθηκε. </target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Ακύρωση </target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Εφαρμογή </target>
       </segment>
     </unit>
     <unit id="stopwatch.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></source>
-        <target>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></target>
+        <target>Στόχος: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></target>
       </segment>
     </unit>
     <unit id="stopwatch.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Start</source>
-        <target>Start</target>
+        <target>Έναρξη</target>
       </segment>
     </unit>
     <unit id="stopwatch.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pause</source>
-        <target>Pause</target>
+        <target>Παύση</target>
       </segment>
     </unit>
     <unit id="stopwatch.reset">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurücksetzen</source>
-        <target>Zurücksetzen</target>
+        <target>Επαναφορά</target>
       </segment>
     </unit>
     <unit id="entryDialog.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>Χρονόμετρο</target>
       </segment>
     </unit>
     <unit id="session.tool.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr starten</source>
-        <target>Stoppuhr starten</target>
+        <target>Έναρξη χρονομέτρου</target>
       </segment>
     </unit>
 </file>
