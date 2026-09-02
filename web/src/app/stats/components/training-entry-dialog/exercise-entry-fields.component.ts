@@ -1,10 +1,14 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   effect,
   inject,
   input,
   LOCALE_ID,
+  PLATFORM_ID,
+  signal,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +22,8 @@ import {
   TrainingEntryDialogData,
   ExerciseEntryDialogResult,
 } from './training-entry-dialog.models';
+import { StopwatchComponent } from '../stopwatch/stopwatch.component';
+import { StopwatchState } from '../stopwatch/stopwatch.state';
 import { ExerciseFormState } from './exercise-entry-fields.state';
 import { IntervalFieldsComponent } from './interval-fields.component';
 
@@ -44,6 +50,7 @@ import { IntervalFieldsComponent } from './interval-fields.component';
     MatSelectModule,
     MatTooltipModule,
     IntervalFieldsComponent,
+    StopwatchComponent,
   ],
   styleUrl: './training-entry-dialog.component.scss',
   // Transparent host so the fields stay direct items of the dialog's
@@ -73,9 +80,20 @@ export class ExerciseEntryFieldsComponent {
     this.isEditMode
   );
 
+  /**
+   * Stopwatch behind the duration row, so a hold or a run can be timed
+   * right in the dialog instead of typed from memory.
+   */
+  readonly stopwatch = new StopwatchState(
+    isPlatformBrowser(inject(PLATFORM_ID))
+  );
+  readonly stopwatchOpen = signal(false);
+  protected readonly stopwatchLabel = $localize`:@@entryDialog.stopwatch:Stoppuhr`;
+
   private seededFor: string | null = null;
 
   constructor() {
+    inject(DestroyRef).onDestroy(() => this.stopwatch.destroy());
     // Seed from inputs once they are bound (post-construction), then drop
     // the measurement inputs whenever the parent switches the exercise —
     // reps entered for squats must not carry over to a plank hold. Edit
@@ -90,6 +108,8 @@ export class ExerciseEntryFieldsComponent {
       }
       if (this.seededFor === id) return;
       this.seededFor = id;
+      this.stopwatch.reset();
+      this.stopwatchOpen.set(false);
       this.state.resetForExercise();
     });
   }
@@ -100,6 +120,10 @@ export class ExerciseEntryFieldsComponent {
 
   canSubmit(): boolean {
     return this.state.canSubmit();
+  }
+
+  toggleStopwatch(): void {
+    this.stopwatchOpen.update((open) => !open);
   }
 
   asValue(event: Event): string {

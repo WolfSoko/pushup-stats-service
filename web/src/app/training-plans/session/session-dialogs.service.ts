@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import {
   AUTO_COUNT_DIALOG_CONFIG,
   EXERCISE_TIMER_DIALOG_CONFIG,
+  STOPWATCH_DIALOG_CONFIG,
   TRAINING_ENTRY_DIALOG_CONFIG,
 } from '../../core/quick-add-orchestration.models';
 
@@ -13,12 +14,13 @@ import type {
   AutoCountResult,
   ExerciseTimerExerciseId,
   ExerciseTimerResult,
+  StopwatchResult,
   TrainingEntryDialogData,
   TrainingEntryDialogResult,
 } from '../../core/quick-add-orchestration.models';
 
 /**
- * Opens the three capture tools a session step can hand off to.
+ * Opens the capture tools a session step can hand off to.
  *
  * A service rather than plain functions so tests can substitute it
  * through Angular DI — the Angular unit-test system rejects module-level
@@ -54,6 +56,19 @@ export class SessionDialogsService {
     const ref = this.dialog.open(ExerciseTimerDialogComponent, {
       ...EXERCISE_TIMER_DIALOG_CONFIG,
       data: { initialExerciseId, targetSec },
+    });
+    return (await firstValueFrom(ref.afterClosed())) ?? null;
+  }
+
+  async openStopwatch(
+    exerciseId: string,
+    targetSec: number
+  ): Promise<StopwatchResult | null> {
+    const { StopwatchDialogComponent } =
+      await import('../../stats/components/stopwatch/stopwatch-dialog.component');
+    const ref = this.dialog.open(StopwatchDialogComponent, {
+      ...STOPWATCH_DIALOG_CONFIG,
+      data: { exerciseId, targetSec },
     });
     return (await firstValueFrom(ref.afterClosed())) ?? null;
   }

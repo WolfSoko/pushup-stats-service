@@ -66,6 +66,8 @@ export class SessionCaptureService {
         return this.guard(() => this.captureReps(step));
       case 'hold-timer':
         return this.guard(() => this.captureHold(step));
+      case 'stopwatch':
+        return this.guard(() => this.captureStopwatch(step));
       default:
         return this.guard(() => this.captureManual(step));
     }
@@ -134,6 +136,26 @@ export class SessionCaptureService {
     return this.persistCapture(
       step,
       exerciseId,
+      'durationSec',
+      result.durationSec
+    );
+  }
+
+  /**
+   * Plain stopwatch for timed exercises without a pose profile. The
+   * dialog has no exercise toggle, so the result always credits the step.
+   */
+  private async captureStopwatch(
+    step: SessionStep
+  ): Promise<SessionCaptureOutcome> {
+    const result = await this.dialogs.openStopwatch(
+      step.exercise.exerciseId,
+      step.roundTarget
+    );
+    if (!result || result.durationSec <= 0) return CANCELLED;
+    return this.persistCapture(
+      step,
+      result.exerciseId,
       'durationSec',
       result.durationSec
     );

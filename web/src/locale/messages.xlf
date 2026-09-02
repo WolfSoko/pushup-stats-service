@@ -4623,8 +4623,8 @@
     </unit>
     <unit id="exerciseTimer.phase.holding">
       <notes>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:130</note>
         <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:138</note>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:146</note>
       </notes>
       <segment>
         <source>Halten</source>
@@ -4632,7 +4632,7 @@
     </unit>
     <unit id="exerciseTimer.phase.paused">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:140</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:132</note>
       </notes>
       <segment>
         <source>Pause</source>
@@ -4640,8 +4640,8 @@
     </unit>
     <unit id="exerciseTimer.phase.ready">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:142</note>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:147</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:134</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:139</note>
       </notes>
       <segment>
         <source>Bereit</source>
@@ -4649,7 +4649,7 @@
     </unit>
     <unit id="exerciseTimer.exercise.plank">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:155</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:147</note>
       </notes>
       <segment>
         <source>Plank</source>
@@ -4657,7 +4657,7 @@
     </unit>
     <unit id="exerciseTimer.exercise.hollowhold">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:160</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.ts:152</note>
       </notes>
       <segment>
         <source>Hollow Hold</source>
@@ -7763,7 +7763,7 @@
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:104</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:108</note>
       </notes>
       <segment>
         <source>Erfolg vaporisieren</source>
@@ -7771,7 +7771,7 @@
     </unit>
     <unit id="goalReached.snap">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:105</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:109</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -7779,7 +7779,7 @@
     </unit>
     <unit id="goalReached.closeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:106</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -7787,7 +7787,7 @@
     </unit>
     <unit id="goalReached.shareAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:107</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
       </notes>
       <segment>
         <source>Erfolg teilen</source>
@@ -7795,7 +7795,7 @@
     </unit>
     <unit id="goalReached.share">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:108</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:112</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -7803,7 +7803,7 @@
     </unit>
     <unit id="goalReached.plan.heading">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:109</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:113</note>
       </notes>
       <segment>
         <source>Deine Planziele heute</source>
@@ -7811,7 +7811,7 @@
     </unit>
     <unit id="goalReached.plan.done">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:114</note>
       </notes>
       <segment>
         <source>erledigt</source>
@@ -7819,7 +7819,7 @@
     </unit>
     <unit id="goalReached.plan.open">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:115</note>
       </notes>
       <segment>
         <source>offen</source>
@@ -8310,6 +8310,62 @@
         <source>Übung</source>
       </segment>
     </unit>
+    <unit id="stopwatch.dialog.hint">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch-dialog.component.html:8,11</note>
+      </notes>
+      <segment>
+        <source> Die Stoppuhr läuft über das Ziel hinaus weiter – gespeichert wird die tatsächlich gestoppte Zeit. </source>
+      </segment>
+    </unit>
+    <unit id="stopwatch.dialog.cancel">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch-dialog.component.html:20,23</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="stopwatch.dialog.save">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch-dialog.component.html:30,32</note>
+      </notes>
+      <segment>
+        <source> Übernehmen </source>
+      </segment>
+    </unit>
+    <unit id="stopwatch.target">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch.component.html:10,12</note>
+      </notes>
+      <segment>
+        <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetDisplay() }}"/></source>
+      </segment>
+    </unit>
+    <unit id="stopwatch.start">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch.component.ts:56</note>
+      </notes>
+      <segment>
+        <source>Start</source>
+      </segment>
+    </unit>
+    <unit id="stopwatch.pause">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch.component.ts:57</note>
+      </notes>
+      <segment>
+        <source>Pause</source>
+      </segment>
+    </unit>
+    <unit id="stopwatch.reset">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch.component.ts:58</note>
+      </notes>
+      <segment>
+        <source>Zurücksetzen</source>
+      </segment>
+    </unit>
     <unit id="entryDialog.variant">
       <notes>
         <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:3,4</note>
@@ -8337,8 +8393,7 @@
     </unit>
     <unit id="entryDialog.durationMinutes">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:31,33</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:61,63</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:34,36</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:47,49</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:91,93</note>
       </notes>
@@ -8348,8 +8403,7 @@
     </unit>
     <unit id="entryDialog.durationSeconds">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:44,46</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:74,76</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:47,49</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:60,62</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/interval-fields.component.html:106,108</note>
       </notes>
@@ -8359,7 +8413,7 @@
     </unit>
     <unit id="setLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:93,94</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:85,86</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:54,55</note>
       </notes>
       <segment>
@@ -8368,7 +8422,7 @@
     </unit>
     <unit id="repsLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:95,97</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:87,89</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:56,58</note>
       </notes>
       <segment>
@@ -8377,7 +8431,7 @@
     </unit>
     <unit id="removeSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:116,118</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:108,110</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:77,79</note>
       </notes>
       <segment>
@@ -8386,7 +8440,7 @@
     </unit>
     <unit id="addSetAria">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:128,129</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:120,121</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:89,90</note>
       </notes>
       <segment>
@@ -8395,7 +8449,7 @@
     </unit>
     <unit id="addSetTooltip">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:130,132</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:122,124</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:91,93</note>
       </notes>
       <segment>
@@ -8404,7 +8458,7 @@
     </unit>
     <unit id="totalReps">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:140,144</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:132,136</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:101,105</note>
       </notes>
       <segment>
@@ -8413,7 +8467,7 @@
     </unit>
     <unit id="entryDialog.overCapDuration">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:153,155</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:145,147</note>
       </notes>
       <segment>
         <source>Maximum-Dauer: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedDurationMax() }}"/></source>
@@ -8421,7 +8475,7 @@
     </unit>
     <unit id="entryDialog.overCapTime">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:159,161</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:151,153</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.formattedMax() }}"/></source>
@@ -8429,11 +8483,19 @@
     </unit>
     <unit id="entryDialog.overCap">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:163,165</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.html:155,157</note>
         <note category="location">web/src/app/stats/components/training-entry-dialog/pushup-entry-fields.component.html:107,109</note>
       </notes>
       <segment>
         <source>Maximum: <ph id="0" equiv="INTERPOLATION" disp="{{ state.repsMax() }}"/> pro Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="entryDialog.stopwatch">
+      <notes>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.ts:89</note>
+      </notes>
+      <segment>
+        <source>Stoppuhr</source>
       </segment>
     </unit>
     <unit id="trainingEntryDialog.exercise">
@@ -11160,9 +11222,17 @@
         <source>Timer starten</source>
       </segment>
     </unit>
-    <unit id="session.tool.manual">
+    <unit id="session.tool.stopwatch">
       <notes>
         <note category="location">web/src/app/training-plans/session/session-step.component.ts:57</note>
+      </notes>
+      <segment>
+        <source>Stoppuhr starten</source>
+      </segment>
+    </unit>
+    <unit id="session.tool.manual">
+      <notes>
+        <note category="location">web/src/app/training-plans/session/session-step.component.ts:59</note>
       </notes>
       <segment>
         <source>Eintragen</source>

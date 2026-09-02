@@ -26,6 +26,9 @@
       required
     />
   </mat-form-field>
+}
+
+@if (state.hasDurationField()) {
   <div class="duration-row">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
@@ -33,7 +36,7 @@
         matInput
         type="number"
         inputmode="numeric"
-        placeholder="25"
+        [placeholder]="state.durationPlaceholder().minutes"
         min="0"
         step="1"
         [value]="state.durationMinutesInput()"
@@ -46,7 +49,7 @@
         matInput
         type="number"
         inputmode="numeric"
-        placeholder="0"
+        [placeholder]="state.durationPlaceholder().seconds"
         min="0"
         [max]="state.secondsMax"
         step="1"
@@ -55,37 +58,26 @@
       />
     </mat-form-field>
   </div>
-} @else if (state.isTimeMeasurement()) {
-  <div class="duration-row">
-    <mat-form-field appearance="outline" subscriptSizing="dynamic">
-      <mat-label i18n="@@entryDialog.durationMinutes">Minuten</mat-label>
-      <input
-        matInput
-        type="number"
-        inputmode="numeric"
-        placeholder="1"
-        min="0"
-        step="1"
-        [value]="state.durationMinutesInput()"
-        (input)="state.durationMinutesInput.set(asValue($event))"
-      />
-    </mat-form-field>
-    <mat-form-field appearance="outline" subscriptSizing="dynamic">
-      <mat-label i18n="@@entryDialog.durationSeconds">Sekunden</mat-label>
-      <input
-        matInput
-        type="number"
-        inputmode="numeric"
-        placeholder="30"
-        min="0"
-        [max]="state.secondsMax"
-        step="1"
-        [value]="state.durationSecondsInput()"
-        (input)="state.durationSecondsInput.set(asValue($event))"
-      />
-    </mat-form-field>
-  </div>
-} @else {
+  <button
+    mat-button
+    type="button"
+    class="stopwatch-toggle"
+    data-testid="training-entry-stopwatch-toggle"
+    [attr.aria-expanded]="stopwatchOpen()"
+    (click)="toggleStopwatch()"
+  >
+    <mat-icon>{{ stopwatchOpen() ? 'expand_less' : 'timer' }}</mat-icon>
+    <span>{{ stopwatchLabel }}</span>
+  </button>
+  @if (stopwatchOpen()) {
+    <app-stopwatch
+      [state]="stopwatch"
+      (elapsedSecChange)="state.setDurationSeconds($event)"
+    />
+  }
+}
+
+@if (!state.hasDurationField()) {
   @for (set of state.sets(); track $index) {
     <div class="set-row">
       <mat-form-field appearance="outline" subscriptSizing="dynamic">

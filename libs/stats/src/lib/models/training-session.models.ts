@@ -44,7 +44,8 @@ export function normalizeSessionMode(value: unknown): SessionMode {
  *   `holdTimerProfileId`.
  * - `'manual'` — everything else: the prefilled entry dialog.
  */
-export type SessionToolKind = 'auto-count' | 'hold-timer' | 'manual';
+export type SessionToolKind =
+  'auto-count' | 'hold-timer' | 'stopwatch' | 'manual';
 
 /** One exercise of the day, as the session walks it. */
 export interface SessionStep {
@@ -88,8 +89,8 @@ export function sessionToolFor(
 ): SessionToolKind {
   const def = findExerciseDefinition(exercise.exerciseId);
   if (!def) return 'manual';
-  if (def.measurement === 'time' && def.holdTimerProfileId) {
-    return 'hold-timer';
+  if (def.measurement === 'time') {
+    return def.holdTimerProfileId ? 'hold-timer' : 'stopwatch';
   }
   if (def.measurement === 'reps' && def.autoCountProfileId) {
     return 'auto-count';
