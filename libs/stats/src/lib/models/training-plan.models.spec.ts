@@ -241,6 +241,36 @@ describe('training-plan models', () => {
       }
     });
 
+    it('should prescribe mountain climbers as timed intervals, never as reps', () => {
+      // given — every plan describes Mountain Climbers in seconds
+      // ("3×30 s", "30/15 s"), so the items must resolve to the
+      // time-measured catalog id or the targets would read as reps.
+      const items = TRAINING_PLANS.flatMap((plan) =>
+        plan.days.flatMap((day) =>
+          (day.exercises ?? []).filter((item) =>
+            item.exerciseId.includes('mountainclimbers')
+          )
+        )
+      );
+
+      // then
+      expect(items.length).toBeGreaterThan(0);
+      for (const item of items) {
+        expect(item.exerciseId).toBe('core.mountainclimbers.time');
+        expect(findExerciseDefinition(item.exerciseId)?.measurement).toBe(
+          'time'
+        );
+      }
+      const core4wDay5 = findPlanById('core-4w-v1')?.days.find(
+        (day) => day.dayIndex === 5
+      );
+      expect(core4wDay5?.exercises).toContainEqual({
+        exerciseId: 'core.mountainclimbers.time',
+        target: 90,
+        sets: [30, 30, 30],
+      });
+    });
+
     it('should never prescribe weight-measured exercises the plan cannot load', () => {
       // given — plans carry no kg, so a weight-measured item could never be
       // written as an entry
