@@ -29,6 +29,7 @@ export const EXERCISE_DISPLAY_NAMES: Readonly<Record<string, string>> = {
   'abs.legraises': $localize`:@@exercise.abs.legraises.name:Beinheben`,
   'abs.russiantwist': $localize`:@@exercise.abs.russiantwist.name:Russian Twist`,
   'abs.mountainclimbers': $localize`:@@exercise.abs.mountainclimbers.name:Mountain Climbers`,
+  'core.mountainclimbers.time': $localize`:@@exercise.core.mountainclimbers.time.name:Mountain Climbers (Zeit)`,
   'core.deadbug': $localize`:@@exercise.core.deadbug.name:Dead Bug`,
   'core.hollowhold': $localize`:@@exercise.core.hollowhold.name:Hollow Hold`,
   'plank.standard': $localize`:@@exercise.plank.standard.name:Plank`,

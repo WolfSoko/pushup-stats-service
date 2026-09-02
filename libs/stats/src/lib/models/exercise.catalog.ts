@@ -262,6 +262,32 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
     ],
   },
   {
+    // Timed counterpart of `abs.mountainclimbers`: HIIT-style blocks
+    // ("30 s Mountain Climbers") are logged by duration, not by rep count.
+    // A catalog exercise carries exactly one measurement, so the two
+    // shapes are two ids sharing name and variants.
+    id: 'core.mountainclimbers.time',
+    categoryId: 'core',
+    measurement: 'time',
+    min: 1,
+    max: 3600,
+    unit: 's',
+    nameKey: '@@exercise.core.mountainclimbers.time.name',
+    icon: 'self_improvement',
+    variants: [
+      {
+        id: 'standard',
+        nameKey: '@@exercise.variant.mountainclimbers.standard',
+        difficulty: 'beginner',
+      },
+      {
+        id: 'cross-body',
+        nameKey: '@@exercise.variant.mountainclimbers.cross-body',
+        difficulty: 'intermediate',
+      },
+    ],
+  },
+  {
     id: 'core.deadbug',
     categoryId: 'core',
     measurement: 'reps',

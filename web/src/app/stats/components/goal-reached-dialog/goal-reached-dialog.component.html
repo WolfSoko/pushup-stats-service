@@ -25,6 +25,36 @@
       >Liegestütze</span
     >
   </p>
+  @if (planItems().length > 0) {
+    <section class="plan-goals" data-testid="goal-reached-plan-goals">
+      <h3 class="plan-heading">{{ planHeading }}</h3>
+      <ul class="plan-list">
+        @for (item of planItems(); track $index) {
+          <li
+            class="plan-item"
+            [class.is-done]="item.done"
+            data-testid="goal-reached-plan-item"
+          >
+            <span
+              class="material-icons plan-check"
+              role="img"
+              [attr.aria-label]="item.done ? planDoneLabel : planOpenLabel"
+              >{{ item.done ? 'check_circle' : 'radio_button_unchecked' }}</span
+            >
+            <span class="plan-name">{{ item.name }}</span>
+            @if (item.quantified) {
+              <span class="plan-amount"
+                >{{ item.logged }} / {{ item.target }}
+                @if (item.sets) {
+                  <span class="plan-sets"> ({{ item.sets }})</span>
+                }
+              </span>
+            }
+          </li>
+        }
+      </ul>
+    </section>
+  }
   <p class="note">{{ copy().note }}</p>
   <div class="actions">
     <button

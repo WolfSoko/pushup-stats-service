@@ -16,6 +16,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DEFAULT_SNAP_QUALITY, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { finalize } from 'rxjs';
 import { ShareService } from '../../../core/share.service';
+import {
+  type GoalCopy,
+  type GoalKind,
+  goalReachedCopy,
+} from './goal-reached-copy';
 
 const SHARE_URL = 'https://pushup-stats.com';
 
@@ -29,12 +34,32 @@ const SHARE_URL = 'https://pushup-stats.com';
  */
 export const GOAL_SNAP_DURATION_MS = 5000;
 
-export type GoalKind = 'daily' | 'weekly' | 'monthly' | 'plan';
+export type { GoalKind } from './goal-reached-copy';
+
+/**
+ * One exercise of today's training-plan day, pre-formatted in the
+ * exercise's own unit. Structurally a subset of the plan page's
+ * `DayExerciseRow`, so the notifier can hand those rows over as-is.
+ */
+export interface GoalReachedPlanItem {
+  readonly name: string;
+  readonly target: string;
+  readonly logged: string;
+  readonly sets: string;
+  readonly quantified: boolean;
+  readonly done: boolean;
+}
 
 export interface GoalReachedDialogData {
   readonly kind: GoalKind;
   readonly total: number;
   readonly goal: number;
+  /**
+   * Today's plan prescription, listed under the progress line so the
+   * user sees which plan goals the celebrated total already covers.
+   * Omitted (or empty) when no plan is active or today is a rest day.
+   */
+  readonly planItems?: ReadonlyArray<GoalReachedPlanItem>;
   /**
    * DOM id assigned to the dialog title element. Provided by the caller so
    * that `MatDialogConfig.ariaLabelledBy` can point at it. Multiple goal
@@ -49,14 +74,6 @@ export interface GoalReachedDialogData {
    * manual smoke tests).
    */
   readonly maxParticleCount?: number;
-}
-
-interface GoalCopy {
-  readonly icon: string;
-  readonly title: string;
-  readonly note: string;
-  readonly shareTitle: string;
-  readonly shareText: string;
 }
 
 @Component({
@@ -81,50 +98,21 @@ export class GoalReachedDialogComponent {
     viewChild.required<ElementRef<HTMLElement>>('card');
   protected readonly snapping = signal(false);
 
-  protected readonly copy = computed<GoalCopy>(() => {
-    const total = this.data.total;
-    const goal = this.data.goal;
-    switch (this.data.kind) {
-      case 'weekly':
-        return {
-          icon: 'military_tech',
-          title: $localize`:@@goalReached.weekly.title:Wochenziel erreicht!`,
-          note: $localize`:@@goalReached.weekly.note:Sieben Tage, ein Sieg. Du bist on fire.`,
-          shareTitle: $localize`:@@goalReached.share.weekly.title:Wochenziel geknackt!`,
-          shareText: $localize`:@@goalReached.share.weekly.text:Wochenziel von ${goal}:goal: Liegestützen geschafft – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
-        };
-      case 'monthly':
-        return {
-          icon: 'workspace_premium',
-          title: $localize`:@@goalReached.monthly.title:Monatsziel erreicht!`,
-          note: $localize`:@@goalReached.monthly.note:Ein ganzer Monat Disziplin. Legendär.`,
-          shareTitle: $localize`:@@goalReached.share.monthly.title:Monatsziel geknackt!`,
-          shareText: $localize`:@@goalReached.share.monthly.text:Monatsziel von ${goal}:goal: Liegestützen geschafft – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
-        };
-      case 'plan':
-        return {
-          icon: 'fitness_center',
-          title: $localize`:@@goalReached.plan.title:Trainingsplan-Ziel erreicht!`,
-          note: $localize`:@@goalReached.plan.note:Heutiges Plan-Pensum geschafft. Stark!`,
-          shareTitle: $localize`:@@goalReached.share.plan.title:Plan-Ziel geknackt!`,
-          shareText: $localize`:@@goalReached.share.plan.text:Heute mein Trainingsplan-Ziel von ${goal}:goal: Liegestützen erreicht – ${total}:total: insgesamt! 💪 Tracke deine Stats kostenlos:`,
-        };
-      default:
-        return {
-          icon: 'emoji_events',
-          title: $localize`:@@goalReached.daily.title:Tagesziel erreicht!`,
-          note: $localize`:@@goalReached.daily.note:Heute hast du dein Versprechen gehalten.`,
-          shareTitle: $localize`:@@goalReached.share.daily.title:Tagesziel geknackt!`,
-          shareText: $localize`:@@goalReached.share.daily.text:Heute mein Tagesziel von ${goal}:goal: Liegestützen geschafft! 💪 Tracke deine Stats kostenlos:`,
-        };
-    }
-  });
+  protected readonly copy = computed<GoalCopy>(() =>
+    goalReachedCopy(this.data.kind, this.data.total, this.data.goal)
+  );
+  protected readonly planItems = computed<ReadonlyArray<GoalReachedPlanItem>>(
+    () => this.data.planItems ?? []
+  );
 
   protected readonly snapAriaLabel = $localize`:@@goalReached.snapAria:Erfolg vaporisieren`;
   protected readonly snapLabel = $localize`:@@goalReached.snap:Snap!`;
   protected readonly closeAriaLabel = $localize`:@@goalReached.closeAria:Schließen`;
   protected readonly shareAriaLabel = $localize`:@@goalReached.shareAria:Erfolg teilen`;
   protected readonly shareLabel = $localize`:@@goalReached.share:Teilen`;
+  protected readonly planHeading = $localize`:@@goalReached.plan.heading:Deine Planziele heute`;
+  protected readonly planDoneLabel = $localize`:@@goalReached.plan.done:erledigt`;
+  protected readonly planOpenLabel = $localize`:@@goalReached.plan.open:offen`;
   protected readonly progressLabel = computed(
     () => `${this.data.total} / ${this.data.goal}`
   );

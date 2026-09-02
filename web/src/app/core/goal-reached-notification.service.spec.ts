@@ -5,7 +5,11 @@ import { UserConfigApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import { of, Subject } from 'rxjs';
-import { PushupRecord, TrainingPlanDay } from '@pu-stats/models';
+import {
+  PlanExerciseProgress,
+  PushupRecord,
+  TrainingPlanDay,
+} from '@pu-stats/models';
 import { TrainingPlanStore } from '../training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './goal-reached-notification.service';
 import { UserConfigStore } from './user-config.store';
@@ -43,9 +47,13 @@ describe('GoalReachedNotificationService', () => {
 
   const planHasActive = signal(false);
   const planTodayDay = signal<TrainingPlanDay | null>(null);
+  const planProgress = signal<ReadonlyArray<PlanExerciseProgress>>([]);
   const trainingPlanStoreMock = {
     hasActivePlan: planHasActive.asReadonly(),
     todayDay: planTodayDay.asReadonly(),
+    currentDayIndex: computed(() => planTodayDay()?.dayIndex ?? null),
+    dayProgress: (dayIndex: number) =>
+      dayIndex === planTodayDay()?.dayIndex ? planProgress() : [],
   };
 
   function setup(config: {
@@ -55,6 +63,7 @@ describe('GoalReachedNotificationService', () => {
     entries?: PushupRecord[];
     snapQuality?: 'low' | 'middle' | 'high';
     planTodayDay?: TrainingPlanDay | null;
+    planProgress?: ReadonlyArray<PlanExerciseProgress>;
   }): GoalReachedNotificationService {
     userConfigApiMock.getConfig.mockReturnValue(
       of({
@@ -71,6 +80,7 @@ describe('GoalReachedNotificationService', () => {
     const planDay = config.planTodayDay ?? null;
     planTodayDay.set(planDay);
     planHasActive.set(planDay !== null);
+    planProgress.set(config.planProgress ?? []);
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -104,6 +114,7 @@ describe('GoalReachedNotificationService', () => {
     liveEntries.set([]);
     planHasActive.set(false);
     planTodayDay.set(null);
+    planProgress.set([]);
     try {
       localStorage.clear();
     } catch {
@@ -598,6 +609,106 @@ describe('GoalReachedNotificationService', () => {
       expect(
         localStorage.getItem('pus_goal_reached_plan_2026-04-22')
       ).toBeNull();
+    });
+  });
+
+  describe('Given a plan day with several exercises is active', () => {
+    const pushupItem = { exerciseId: 'pushup', target: 50, sets: [20, 20, 10] };
+    const plankItem = { exerciseId: 'plank.standard', target: 90 };
+    const planDay: TrainingPlanDay = {
+      dayIndex: 3,
+      kind: 'main',
+      targetReps: 50,
+      description: '',
+      exercises: [pushupItem, plankItem],
+    };
+    const progress: ReadonlyArray<PlanExerciseProgress> = [
+      {
+        itemIndex: 0,
+        exercise: pushupItem,
+        logged: 50,
+        fulfilledByEntries: true,
+        checkedOff: false,
+        done: true,
+      },
+      {
+        itemIndex: 1,
+        exercise: plankItem,
+        logged: 45,
+        fulfilledByEntries: false,
+        checkedOff: false,
+        done: false,
+      },
+    ];
+
+    function dialogDataFor(kind: string): Record<string, unknown> | undefined {
+      const call = dialogOpenSpy.mock.calls.find((c) => {
+        const cfg = c[1] as { data?: { kind?: string } } | undefined;
+        return cfg?.data?.kind === kind;
+      });
+      return (call?.[1] as { data?: Record<string, unknown> } | undefined)
+        ?.data;
+    }
+
+    it('should hand the formatted plan checklist to the plan and daily dialogs', async () => {
+      // given
+      setup({
+        dailyGoal: 10,
+        weeklyGoal: 20,
+        planTodayDay: planDay,
+        planProgress: progress,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 50,
+          } as PushupRecord,
+        ],
+      });
+
+      // when
+      await flushAll();
+
+      // then
+      const expectedItems = [
+        expect.objectContaining({
+          name: 'Liegestütze',
+          target: '50',
+          logged: '50',
+          sets: '20 · 20 · 10',
+          quantified: true,
+          done: true,
+        }),
+        expect.objectContaining({
+          name: 'Plank',
+          target: '1:30',
+          logged: '0:45',
+          done: false,
+        }),
+      ];
+      expect(dialogDataFor('plan')?.['planItems']).toEqual(expectedItems);
+      expect(dialogDataFor('daily')?.['planItems']).toEqual(expectedItems);
+      expect(dialogDataFor('weekly')?.['planItems']).toEqual([]);
+    });
+
+    it('should pass no plan items when no plan is active', async () => {
+      // given
+      setup({
+        dailyGoal: 10,
+        entries: [
+          {
+            _id: '1',
+            timestamp: '2026-04-22T08:00:00',
+            reps: 10,
+          } as PushupRecord,
+        ],
+      });
+
+      // when
+      await flushAll();
+
+      // then
+      expect(dialogDataFor('daily')?.['planItems']).toEqual([]);
     });
   });
 

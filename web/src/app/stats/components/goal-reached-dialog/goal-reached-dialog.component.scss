@@ -137,6 +137,92 @@
   color: rgba(255, 248, 234, 0.85);
 }
 
+// The plan checklist sits inside the vaporized subtree, so it follows the
+// same html2canvas rule as the rest of the card: plain rgb()/rgba() only.
+.plan-goals {
+  width: 100%;
+  margin: 0;
+  padding: 0.75rem 0.9rem 0.6rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.14);
+  text-align: left;
+}
+
+.plan-heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 234, 0.85);
+}
+
+.plan-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.plan-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: rgba(255, 248, 234, 0.8);
+
+  &.is-done {
+    color: rgb(255, 252, 245);
+  }
+}
+
+.plan-check {
+  flex: 0 0 auto;
+  font-size: 30px;
+  line-height: 1;
+  color: rgba(255, 248, 234, 0.45);
+
+  .is-done & {
+    color: rgb(46, 224, 110);
+    filter: drop-shadow(0 0 6px rgba(46, 224, 110, 0.75))
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    animation: plan-check-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
+@keyframes plan-check-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.plan-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plan-amount {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.plan-sets {
+  font-weight: 400;
+  color: rgba(255, 248, 234, 0.7);
+}
+
 .note {
   margin: 0;
   font-size: 0.95rem;
