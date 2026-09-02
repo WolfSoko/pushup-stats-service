@@ -12,8 +12,8 @@ keywords:
   - hartslagzones training
   - hoe vaak cardio per week
 heroImage: 'https://pushup-stats.com/assets/blog/hero-cardio.jpg'
-heroImageAlt: Witte ECG-lijn met twee hartslagpieken tegen een paars-oranje verloop, rechts een oranje hart.
-heroImageCredit: 'Illustratie: Pushup Tracker'
+heroImageAlt: 'Iemand rent bij zonsopgang over een lege, natte landweg, van achteren gezien.'
+heroImageCredit: 'Beeld: Pushup Tracker'
 ---
 
 <h2>Het debat dat er niet had hoeven zijn</h2>

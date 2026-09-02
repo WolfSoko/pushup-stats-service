@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
-  "heroImageAlt": "Figura stilizzata in posizione di piegamento, i gruppi muscolari attivi su petto, spalla, tricipiti e core brillano arancione.",
-  "heroImageCredit": "Illustrazione: Pushup Tracker"
+  "heroImageAlt": "Vista dall'alto di una persona in posizione di piegamento, braccia tese e mani larghe.",
+  "heroImageCredit": "Immagine: Pushup Tracker"
 };

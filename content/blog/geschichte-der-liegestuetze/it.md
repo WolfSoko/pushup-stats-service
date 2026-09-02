@@ -12,8 +12,8 @@ keywords:
   - Piegamento hindu Dand
   - Test militare dei piegamenti
 heroImage: 'https://pushup-stats.com/assets/blog/hero-geschichte.jpg'
-heroImageAlt: Tre figure stilizzate in posizione di piegamento, disegnate dalla più tenue alla più intensa, sopra una linea del tempo su sfondo caldo.
-heroImageCredit: 'Illustrazione: Pushup Tracker'
+heroImageAlt: 'Una vecchia palestra con alte finestre ad arco e pavimento in legno consumato, in fondo una persona sola in posizione di piegamento.'
+heroImageCredit: 'Immagine: Pushup Tracker'
 ---
 
 <h2>Un esercizio senza inventore</h2>

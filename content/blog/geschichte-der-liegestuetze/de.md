@@ -11,8 +11,8 @@ keywords:
   - Hindu Push-up Dand
   - Liegestütze Militär Test
 heroImage: 'https://pushup-stats.com/assets/blog/hero-geschichte.jpg'
-heroImageAlt: Drei stilisierte Figuren in der Liegestütz-Position, von blass bis kräftig gezeichnet, über einem Zeitstrahl vor warmem Hintergrund.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Alte Turnhalle mit hohen Bogenfenstern und abgenutztem Holzboden, weit hinten hält eine einzelne Person einen Liegestütz.'
+heroImageCredit: 'Bild: Pushup Tracker'
 ---
 
 <h2>Eine Übung ohne Erfinder</h2>

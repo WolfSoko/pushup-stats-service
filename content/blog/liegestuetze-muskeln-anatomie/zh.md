@@ -12,8 +12,8 @@ keywords:
   - 俯卧撑手部位置
   - 俯卧撑胸肌三头肌
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg'
-heroImageAlt: '一个风格化的俯卧撑姿势人像,胸部、肩膀、三头肌和核心部位的发力肌群以橙色高亮显示。'
-heroImageCredit: '插图：Pushup Tracker'
+heroImageAlt: '俯视角度：一个人处于俯卧撑姿势，双臂伸直，双手宽距支撑。'
+heroImageCredit: '图片：Pushup Tracker'
 ---
 
 <h2>简短的答案——以及为什么它不够完整</h2>

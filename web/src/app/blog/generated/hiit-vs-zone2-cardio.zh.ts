@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "hiit-vs-zone2-cardio"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-cardio.jpg",
-  "heroImageAlt": "白色心电图线条带有两个心跳波形,背景为紫橙渐变,右侧是一个橙色心形图案。",
-  "heroImageCredit": "插图：Pushup Tracker"
+  "heroImageAlt": "日出时分，一个人沿着空旷湿润的乡村公路奔跑，从背后拍摄。",
+  "heroImageCredit": "图片：Pushup Tracker"
 };

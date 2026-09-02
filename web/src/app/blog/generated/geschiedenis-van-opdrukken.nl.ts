@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-history"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-geschichte.jpg",
-  "heroImageAlt": "Drie gestileerde figuren in opdrukpositie, van vaag tot krachtig getekend, boven een tijdlijn tegen een warme achtergrond.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Een oude gymzaal met hoge boogramen en een versleten houten vloer, achterin houdt één persoon een opdrukpositie vast.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

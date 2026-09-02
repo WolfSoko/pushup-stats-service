@@ -12,8 +12,8 @@ keywords:
   - 俯卧撑做多少次
   - 俯卧撑渐进超负荷
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg'
-heroImageAlt: '一个风格化的人像处于俯卧撑最低位置,身后是逐渐升高的柱状条形——象征通过自重训练实现肌肉增长。'
-heroImageCredit: '插图：Pushup Tracker'
+heroImageAlt: '侧面视角：一个人处于俯卧撑最低点，身体保持一条直线。'
+heroImageCredit: '图片：Pushup Tracker'
 ---
 
 <h2>"光靠体重不够"的迷思</h2>

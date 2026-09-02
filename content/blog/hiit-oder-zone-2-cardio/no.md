@@ -12,8 +12,8 @@ keywords:
   - pulssoner trening
   - hvor ofte bør man trene kondisjon
 heroImage: 'https://pushup-stats.com/assets/blog/hero-cardio.jpg'
-heroImageAlt: Hvit EKG-linje med to hjerteslagtopper mot en fiolett-oransje gradient, med et oransje hjerte til høyre.
-heroImageCredit: 'Illustrasjon: Pushup Tracker'
+heroImageAlt: 'En person løper i soloppgangen langs en tom, våt landevei, sett bakfra.'
+heroImageCredit: 'Bilde: Pushup Tracker'
 ---
 
 <h2>Debatten som ikke burde vært en debatt</h2>

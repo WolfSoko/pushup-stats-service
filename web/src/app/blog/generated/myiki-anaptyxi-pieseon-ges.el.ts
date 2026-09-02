@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Στυλιζαρισμένη φιγούρα στην κάτω θέση push-up μπροστά από ανερχόμενες μπάρες — σύμβολο μυϊκής ανάπτυξης μέσω προπόνησης με σωματικό βάρος.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Πλάγια όψη ατόμου στο χαμηλό σημείο ενός push-up, με το σώμα σε ευθεία γραμμή.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

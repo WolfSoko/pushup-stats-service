@@ -13,8 +13,8 @@ keywords:
   - lære pistol squat
   - knebøy og kneproblemer
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: Stilisert figur i dyp knebøy med armene strukket fremover, hofte og sete lyser oransje, mot en grønn bakgrunn.
-heroImageCredit: 'Illustrasjon: Pushup Tracker'
+heroImageAlt: 'En mann i dyp knebøy sett fra siden, hælene i gulvet og armene strukket fram.'
+heroImageCredit: 'Bilde: Pushup Tracker'
 ---
 
 <h2>Øvelsen som avgjør selvstendighet</h2>

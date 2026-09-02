@@ -13,8 +13,8 @@ keywords:
   - Aprender el hollow hold
   - Big Three de McGill
 heroImage: 'https://pushup-stats.com/assets/blog/hero-rumpf.jpg'
-heroImageAlt: Figura estilizada en plank sobre antebrazos, con el centro del cuerpo iluminado en amarillo, sobre fondo azul petróleo.
-heroImageCredit: 'Ilustración: Pushup Tracker'
+heroImageAlt: 'Una mujer mantiene una plancha sobre los antebrazos en una esterilla, vista de lado.'
+heroImageCredit: 'Imagen: Pushup Tracker'
 ---
 
 <h2>El malentendido sobre el entrenamiento abdominal</h2>

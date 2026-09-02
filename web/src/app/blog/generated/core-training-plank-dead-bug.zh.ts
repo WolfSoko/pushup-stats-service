@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
-  "heroImageAlt": "一个风格化的前臂支撑姿势人像,身体中段呈黄色高亮,背景为深青色。",
-  "heroImageCredit": "插图：Pushup Tracker"
+  "heroImageAlt": "侧面拍摄：一位女性在训练垫上保持小臂平板支撑。",
+  "heroImageCredit": "图片：Pushup Tracker"
 };

@@ -12,8 +12,8 @@ keywords:
   - Empujar tirar sentadilla bisagra
   - Calistenia de cuerpo completo
 heroImage: 'https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg'
-heroImageAlt: Figura estilizada con los brazos alzados, rodeada de seis puntos de colores sobre dos órbitas circulares, símbolo de los seis movimientos básicos.
-heroImageCredit: 'Ilustración: Pushup Tracker'
+heroImageAlt: 'Tres adultos de diferentes edades entrenan uno al lado del otro en una sala luminosa y vacía – flexión, sentadilla y bisagra de cadera.'
+heroImageCredit: 'Imagen: Pushup Tracker'
 ---
 
 <h2>Por qué «grupos musculares» es la pregunta equivocada</h2>

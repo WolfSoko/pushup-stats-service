@@ -12,8 +12,8 @@ keywords:
   - armhevninger impingement
   - håndleddsmobilitet armhevninger
 heroImage: 'https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg'
-heroImageAlt: Stilisert figur i armhevningsposisjon, håndledd og skulder er markert med oransje, over dem et grønt beskyttelsesskjold.
-heroImageCredit: 'Illustrasjon: Pushup Tracker'
+heroImageAlt: 'Nærbilde av en hånd og et håndledd som presses flatt mot et tregulv nederst i en armheving.'
+heroImageCredit: 'Bilde: Pushup Tracker'
 ---
 
 <h2>Smerte er et signal, ikke en fiende</h2>

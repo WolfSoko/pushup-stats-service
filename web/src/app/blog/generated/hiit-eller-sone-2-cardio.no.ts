@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "hiit-vs-zone2-cardio"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-cardio.jpg",
-  "heroImageAlt": "Hvit EKG-linje med to hjerteslagtopper mot en fiolett-oransje gradient, med et oransje hjerte til høyre.",
-  "heroImageCredit": "Illustrasjon: Pushup Tracker"
+  "heroImageAlt": "En person løper i soloppgangen langs en tom, våt landevei, sett bakfra.",
+  "heroImageCredit": "Bilde: Pushup Tracker"
 };

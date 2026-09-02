@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
-  "heroImageAlt": "Στυλιζαρισμένη φιγούρα κρεμασμένη από μπάρα έλξεων, με το πηγούνι στο ύψος της μπάρας, μπροστά από ζεστό πορτοκαλί φόντο.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Μια γυναίκα στο ψηλότερο σημείο μιας έλξης σε ατσάλινη μπάρα, με το πιγούνι στο ύψος της μπάρας.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

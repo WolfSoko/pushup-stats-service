@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "hiit-vs-zone2-cardio"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-cardio.jpg",
-  "heroImageAlt": "Weiße EKG-Linie mit zwei Herzschlag-Zacken vor violett-orangem Verlauf, rechts ein orangefarbenes Herz.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Eine Person läuft bei Sonnenaufgang auf einer leeren, nassen Landstraße, von hinten aufgenommen.",
+  "heroImageCredit": "Bild: Pushup Tracker"
 };

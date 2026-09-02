@@ -13,8 +13,8 @@ keywords:
   - How to speed up recovery
   - How long should a training break be
 heroImage: 'https://pushup-stats.com/assets/blog/hero-schlaf.jpg'
-heroImageAlt: A night sky with a moon and stars, below it a purple curve that dips and then rises above its starting level — a symbol for recovery and supercompensation.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'An empty bedroom at dawn, rumpled bedding and a pair of training shoes beside the bed.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>The underrated part of training</h2>

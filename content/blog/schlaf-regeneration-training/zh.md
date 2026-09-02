@@ -13,8 +13,8 @@ keywords:
   - 加速恢复
   - 训练休息多久合适
 heroImage: 'https://pushup-stats.com/assets/blog/hero-schlaf.jpg'
-heroImageAlt: '夜空中悬挂着月亮和星星,下方是一条紫色曲线,先下降后升至高于起点的水平——象征恢复与超量恢复。'
-heroImageCredit: '插图：Pushup Tracker'
+heroImageAlt: '黎明时分的空卧室，凌乱的床品和床边的一双训练鞋。'
+heroImageCredit: '图片：Pushup Tracker'
 ---
 
 <h2>被低估的那部分训练</h2>

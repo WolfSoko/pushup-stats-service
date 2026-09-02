@@ -13,8 +13,8 @@ keywords:
   - Aprender el pistol squat
   - Sentadillas y dolor de rodilla
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: Figura estilizada en sentadilla profunda con los brazos extendidos hacia adelante, cadera y glúteos iluminados en naranja, sobre fondo verde.
-heroImageCredit: 'Ilustración: Pushup Tracker'
+heroImageAlt: 'Un hombre en sentadilla profunda visto de lado, con los talones en el suelo y los brazos extendidos hacia delante.'
+heroImageCredit: 'Imagen: Pushup Tracker'
 ---
 
 <h2>El ejercicio que decide tu independencia</h2>

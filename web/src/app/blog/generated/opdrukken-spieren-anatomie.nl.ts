@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
-  "heroImageAlt": "Gestileerde figuur in opdrukpositie, de werkende spiergroepen bij borst, schouder, triceps en romp lichten oranje op.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Bovenaanzicht van iemand in de opdrukpositie, armen gestrekt en handen breed geplaatst.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-joint-pain"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg",
-  "heroImageAlt": "Στυλιζαρισμένη φιγούρα σε θέση push-up, καρπός και ώμος επισημασμένοι με πορτοκαλί χρώμα, από πάνω μια πράσινη ασπίδα προστασίας.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Κοντινό πλάνο χεριού και καρπού που πατούν επίπεδα σε ξύλινο δάπεδο στο χαμηλό σημείο ενός push-up.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

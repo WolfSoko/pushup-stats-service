@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
-  "heroImageAlt": "Stilisierte Figur in der Liegestütz-Position, die arbeitenden Muskelgruppen an Brust, Schulter, Trizeps und Rumpf leuchten orange.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Aufnahme von oben auf eine Person im Liegestütz, Arme gestreckt und Hände weit außen.",
+  "heroImageCredit": "Bild: Pushup Tracker"
 };

@@ -12,8 +12,8 @@ keywords:
   - zones de fréquence cardiaque
   - cardio combien de fois par semaine
 heroImage: 'https://pushup-stats.com/assets/blog/hero-cardio.jpg'
-heroImageAlt: Ligne d'ECG blanche avec deux pics de battement de cœur sur fond dégradé violet-orange, un cœur orange à droite.
-heroImageCredit: 'Illustration : Pushup Tracker'
+heroImageAlt: 'Une personne court au lever du soleil sur une route de campagne vide et mouillée, vue de dos.'
+heroImageCredit: 'Image : Pushup Tracker'
 ---
 
 <h2>Un débat qui n'aurait pas lieu d'être</h2>

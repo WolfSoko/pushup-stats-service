@@ -13,8 +13,8 @@ keywords:
   - Learning the hollow hold
   - McGill Big Three
 heroImage: 'https://pushup-stats.com/assets/blog/hero-rumpf.jpg'
-heroImageAlt: Stylized figure in a forearm plank, the midsection glowing yellow, against a teal background.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'A woman holding a forearm plank on a training mat, seen from the side.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>The misunderstanding about ab training</h2>

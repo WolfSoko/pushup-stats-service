@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
-  "heroImageAlt": "Gestileerde figuur hangt aan een pull-upstang, kin ter hoogte van de stang, tegen een warme oranje achtergrond.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Een vrouw bovenaan een optrekbeweging aan een stalen stang, kin op stanghoogte.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

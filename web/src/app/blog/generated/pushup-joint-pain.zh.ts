@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-joint-pain"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg",
-  "heroImageAlt": "一个风格化的俯卧撑姿势人像,手腕和肩膀部位以橙色标记,上方绘有一面绿色护盾。",
-  "heroImageCredit": "插图：Pushup Tracker"
+  "heroImageAlt": "特写：俯卧撑最低点时，手掌和手腕平贴在木地板上。",
+  "heroImageCredit": "图片：Pushup Tracker"
 };

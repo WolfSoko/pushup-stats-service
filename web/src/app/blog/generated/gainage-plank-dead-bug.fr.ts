@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
-  "heroImageAlt": "Silhouette stylisée en appui sur les avant-bras, le centre du corps illuminé en jaune, sur fond pétrole.",
-  "heroImageCredit": "Illustration : Pushup Tracker"
+  "heroImageAlt": "Une femme tient une planche sur les avant-bras sur un tapis d'entraînement, vue de côté.",
+  "heroImageCredit": "Image : Pushup Tracker"
 };

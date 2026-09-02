@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-history"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-geschichte.jpg",
-  "heroImageAlt": "Tre stiliserte figurer i armhevningsposisjon, tegnet fra bleik til kraftig, over en tidslinje mot en varm bakgrunn.",
-  "heroImageCredit": "Illustrasjon: Pushup Tracker"
+  "heroImageAlt": "En gammel gymsal med høye buede vinduer og slitt tregulv, langt bak holder én person en armhevingsposisjon.",
+  "heroImageCredit": "Bilde: Pushup Tracker"
 };

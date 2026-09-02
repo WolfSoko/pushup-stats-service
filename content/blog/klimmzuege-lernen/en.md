@@ -12,8 +12,8 @@ keywords:
   - Muscles used in pull-ups
   - Pull-up training plan
 heroImage: 'https://pushup-stats.com/assets/blog/hero-klimmzug.jpg'
-heroImageAlt: Stylized figure hanging from a pull-up bar, chin at bar height, against a warm orange background.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'A woman at the top of a pull-up on a steel bar, chin level with the bar.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>The most honest exercise in the world</h2>

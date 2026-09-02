@@ -13,8 +13,8 @@ keywords:
   - herstel versnellen
   - hoe lang trainingspauze
 heroImage: 'https://pushup-stats.com/assets/blog/hero-schlaf.jpg'
-heroImageAlt: Nachtelijke hemel met maan en sterren, daaronder een paarse curve die na een dip boven het uitgangsniveau uitstijgt – symbool voor herstel en superkompensatie.
-heroImageCredit: 'Illustratie: Pushup Tracker'
+heroImageAlt: 'Een lege slaapkamer bij dageraad, verkreukeld beddengoed en een paar sportschoenen naast het bed.'
+heroImageCredit: 'Beeld: Pushup Tracker'
 ---
 
 <h2>Het onderschatte deel van de training</h2>

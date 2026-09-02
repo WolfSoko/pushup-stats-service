@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
-  "heroImageAlt": "Stilisert figur henger i en pull-up-stang med haken på stanghøyde, mot en varm oransje bakgrunn.",
-  "heroImageCredit": "Illustrasjon: Pushup Tracker"
+  "heroImageAlt": "En kvinne på toppen av en pull-up i en stålstang, haken i høyde med stangen.",
+  "heroImageCredit": "Bilde: Pushup Tracker"
 };

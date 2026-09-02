@@ -12,8 +12,8 @@ keywords:
   - Pistol Squat lernen
   - Kniebeugen Knieschmerzen
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: Stilisierte Figur in tiefer Kniebeuge mit nach vorn gestreckten Armen, Hüfte und Gesäß leuchten orange, vor grünem Hintergrund.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Ein Mann in der tiefen Kniebeuge, von der Seite aufgenommen, Fersen am Boden und Arme nach vorn gestreckt.'
+heroImageCredit: 'Bild: Pushup Tracker'
 ---
 
 <h2>Die Übung, die über Selbstständigkeit entscheidet</h2>

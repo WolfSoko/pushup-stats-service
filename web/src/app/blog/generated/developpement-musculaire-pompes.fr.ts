@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Silhouette stylisée en position basse de pompe devant des barres ascendantes — symbole de la croissance musculaire par l'entraînement au poids du corps.",
-  "heroImageCredit": "Illustration : Pushup Tracker"
+  "heroImageAlt": "Vue de côté d'une personne au point bas d'une pompe, le corps aligné en une seule ligne droite.",
+  "heroImageCredit": "Image : Pushup Tracker"
 };

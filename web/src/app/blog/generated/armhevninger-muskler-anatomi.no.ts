@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
-  "heroImageAlt": "Stilisert figur i armhevningsposisjon, der de arbeidende muskelgruppene i bryst, skulder, triseps og kjerne lyser oransje.",
-  "heroImageCredit": "Illustrasjon: Pushup Tracker"
+  "heroImageAlt": "Ovenfra-bilde av en person i armhevingsposisjon, med strake armer og hendene bredt plassert.",
+  "heroImageCredit": "Bilde: Pushup Tracker"
 };

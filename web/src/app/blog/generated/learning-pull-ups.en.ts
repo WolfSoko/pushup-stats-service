@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
-  "heroImageAlt": "Stylized figure hanging from a pull-up bar, chin at bar height, against a warm orange background.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "A woman at the top of a pull-up on a steel bar, chin level with the bar.",
+  "heroImageCredit": "Image: Pushup Tracker"
 };

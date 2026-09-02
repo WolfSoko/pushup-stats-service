@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "sleep-recovery-training"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-schlaf.jpg",
-  "heroImageAlt": "Nachthimmel mit Mond und Sternen, darunter eine violette Kurve, die nach einem Tief über das Ausgangsniveau ansteigt – Sinnbild für Erholung und Superkompensation.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Leeres Schlafzimmer im Morgengrauen, zerknitterte Bettwäsche und ein Paar Trainingsschuhe neben dem Bett.",
+  "heroImageCredit": "Bild: Pushup Tracker"
 };

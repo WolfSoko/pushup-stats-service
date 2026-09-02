@@ -12,8 +12,8 @@ keywords:
   - Push pull squat hinge
   - Calisthenics full body
 heroImage: 'https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg'
-heroImageAlt: Stylized figure with raised arms, surrounded by six colored dots on two orbital rings — a symbol for the six fundamental movement patterns.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Three adults of different ages training side by side in a bright, empty room – a push-up, a squat and a hip hinge.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>Why "muscle groups" is the wrong question</h2>

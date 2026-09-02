@@ -12,8 +12,8 @@ keywords:
   - πόσες επαναλήψεις push-ups
   - προοδευτική υπερφόρτωση push-ups
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg'
-heroImageAlt: 'Στυλιζαρισμένη φιγούρα στην κάτω θέση push-up μπροστά από ανερχόμενες μπάρες — σύμβολο μυϊκής ανάπτυξης μέσω προπόνησης με σωματικό βάρος.'
-heroImageCredit: 'Εικονογράφηση: Pushup Tracker'
+heroImageAlt: 'Πλάγια όψη ατόμου στο χαμηλό σημείο ενός push-up, με το σώμα σε ευθεία γραμμή.'
+heroImageCredit: 'Εικόνα: Pushup Tracker'
 ---
 
 <h2>Ο Μύθος του «Το Σωματικό Βάρος δεν Αρκεί»</h2>

@@ -12,8 +12,8 @@ keywords:
   - opdrukken impingement
   - opdrukken pols mobility
 heroImage: 'https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg'
-heroImageAlt: Gestileerde figuur in opdrukpositie, pols en schouder zijn oranje gemarkeerd, daarboven een groen beschermschild.
-heroImageCredit: 'Illustratie: Pushup Tracker'
+heroImageAlt: 'Close-up van een hand en pols plat op een houten vloer, onderin een opdrukbeweging.'
+heroImageCredit: 'Beeld: Pushup Tracker'
 ---
 
 <h2>Pijn is een signaal, geen vijand</h2>

@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-joint-pain"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg",
-  "heroImageAlt": "Figura estilizada en posición de flexión, con la muñeca y el hombro marcados en naranja, encima un escudo protector verde.",
-  "heroImageCredit": "Ilustración: Pushup Tracker"
+  "heroImageAlt": "Primer plano de una mano y una muñeca apoyadas en el suelo de madera en el punto bajo de una flexión.",
+  "heroImageCredit": "Imagen: Pushup Tracker"
 };

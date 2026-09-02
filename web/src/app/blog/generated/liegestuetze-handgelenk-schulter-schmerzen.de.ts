@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-joint-pain"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg",
-  "heroImageAlt": "Stilisierte Figur in der Liegestütz-Position, Handgelenk und Schulter sind orange markiert, darüber ein grünes Schutzschild.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Nahaufnahme einer Hand und eines Handgelenks, die im unteren Punkt eines Liegestützes flach auf einem Holzboden aufliegen.",
+  "heroImageCredit": "Bild: Pushup Tracker"
 };

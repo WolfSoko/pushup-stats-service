@@ -12,8 +12,8 @@ keywords:
   - Ινδικό push-up Dand
   - στρατιωτικό τεστ push-ups
 heroImage: 'https://pushup-stats.com/assets/blog/hero-geschichte.jpg'
-heroImageAlt: 'Τρεις στυλιζαρισμένες φιγούρες σε θέση push-up, από αχνή έως έντονη, πάνω σε μια χρονογραμμή μπροστά από ζεστό φόντο.'
-heroImageCredit: 'Εικονογράφηση: Pushup Tracker'
+heroImageAlt: 'Παλιό γυμναστήριο με ψηλά τοξωτά παράθυρα και φθαρμένο ξύλινο δάπεδο, στο βάθος ένα άτομο κρατά στάση push-up.'
+heroImageCredit: 'Εικόνα: Pushup Tracker'
 ---
 
 <h2>Μια Άσκηση Χωρίς Εφευρέτη</h2>

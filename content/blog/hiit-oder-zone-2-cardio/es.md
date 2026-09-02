@@ -12,8 +12,8 @@ keywords:
   - Zonas de frecuencia cardíaca
   - Cuánto cardio hacer por semana
 heroImage: 'https://pushup-stats.com/assets/blog/hero-cardio.jpg'
-heroImageAlt: Línea de electrocardiograma blanca con dos picos de latido sobre un degradado violeta y naranja, a la derecha un corazón naranja.
-heroImageCredit: 'Ilustración: Pushup Tracker'
+heroImageAlt: 'Una persona corre al amanecer por una carretera rural vacía y mojada, vista desde atrás.'
+heroImageCredit: 'Imagen: Pushup Tracker'
 ---
 
 <h2>El debate que no debería serlo</h2>

@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "hiit-vs-zone2-cardio"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-cardio.jpg",
-  "heroImageAlt": "Λευκή γραμμή καρδιογραφήματος με δύο αιχμές παλμών μπροστά από βιολετί-πορτοκαλί διαβάθμιση, δεξιά μια πορτοκαλί καρδιά.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Ένα άτομο τρέχει την ώρα της ανατολής σε έναν άδειο, βρεγμένο επαρχιακό δρόμο, από πίσω.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

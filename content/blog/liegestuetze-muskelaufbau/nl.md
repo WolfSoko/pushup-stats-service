@@ -12,8 +12,8 @@ keywords:
   - opdrukken hoeveel herhalingen
   - progressive overload opdrukken
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg'
-heroImageAlt: Gestileerde figuur in de onderste opdrukpositie voor oplopende balken – symbool voor spiergroei door lichaamsgewichttraining.
-heroImageCredit: 'Illustratie: Pushup Tracker'
+heroImageAlt: 'Zijaanzicht van iemand onderin een opdrukbeweging, het lichaam in één rechte lijn.'
+heroImageCredit: 'Beeld: Pushup Tracker'
 ---
 
 <h2>De mythe van „lichaamsgewicht is niet genoeg”</h2>

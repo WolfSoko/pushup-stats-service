@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
-  "heroImageAlt": "Silhouette stylisée en position de pompe, les groupes musculaires actifs à la poitrine, l'épaule, le triceps et le gainage illuminés en orange.",
-  "heroImageCredit": "Illustration : Pushup Tracker"
+  "heroImageAlt": "Vue de dessus d'une personne en position de pompe, bras tendus et mains largement écartées.",
+  "heroImageCredit": "Image : Pushup Tracker"
 };

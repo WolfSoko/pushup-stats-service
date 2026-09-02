@@ -12,8 +12,8 @@ keywords:
   - impingement στα push-ups
   - κινητικότητα καρπού για push-ups
 heroImage: 'https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg'
-heroImageAlt: 'Στυλιζαρισμένη φιγούρα σε θέση push-up, καρπός και ώμος επισημασμένοι με πορτοκαλί χρώμα, από πάνω μια πράσινη ασπίδα προστασίας.'
-heroImageCredit: 'Εικονογράφηση: Pushup Tracker'
+heroImageAlt: 'Κοντινό πλάνο χεριού και καρπού που πατούν επίπεδα σε ξύλινο δάπεδο στο χαμηλό σημείο ενός push-up.'
+heroImageCredit: 'Εικόνα: Pushup Tracker'
 ---
 
 <h2>Ο Πόνος Είναι Σήμα, όχι Αντίπαλος</h2>

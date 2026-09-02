@@ -12,8 +12,8 @@ keywords:
   - How many push-up reps for muscle
   - Progressive overload with push-ups
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg'
-heroImageAlt: Stylized figure in the bottom position of a push-up in front of ascending bars — a symbol for muscle growth through bodyweight training.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Side view of a person at the bottom of a push-up, body held in one straight line.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>The myth of "bodyweight isn't enough"</h2>

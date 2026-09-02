@@ -12,8 +12,8 @@ keywords:
   - Posición de las manos en las flexiones
   - Flexiones pecho y tríceps
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg'
-heroImageAlt: Figura estilizada en posición de flexión con los grupos musculares activos en pecho, hombro, tríceps y core iluminados en naranja.
-heroImageCredit: 'Ilustración: Pushup Tracker'
+heroImageAlt: 'Vista cenital de una persona en posición de flexión, con los brazos estirados y las manos bien abiertas.'
+heroImageCredit: 'Imagen: Pushup Tracker'
 ---
 
 <h2>La respuesta corta, y por qué no basta</h2>

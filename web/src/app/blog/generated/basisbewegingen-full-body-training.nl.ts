@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "full-body-movement-patterns"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg",
-  "heroImageAlt": "Gestileerde figuur met geheven armen, omringd door zes gekleurde punten op twee cirkelbanen – symbool voor de zes basisbewegingen.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Drie volwassenen van verschillende leeftijden trainen naast elkaar in een lichte, lege ruimte – opdrukken, squat en hip hinge.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

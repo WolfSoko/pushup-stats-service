@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "proper-squat-form"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg",
-  "heroImageAlt": "Gestileerde figuur in diepe squat met naar voren gestrekte armen, heup en billen lichten oranje op tegen een groene achtergrond.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Een man in een diepe squat van opzij gezien, hielen op de vloer en armen naar voren gestrekt.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

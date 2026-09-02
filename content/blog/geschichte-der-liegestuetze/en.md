@@ -12,8 +12,8 @@ keywords:
   - Hindu push-up dand
   - Push-up military test
 heroImage: 'https://pushup-stats.com/assets/blog/hero-geschichte.jpg'
-heroImageAlt: Three stylized figures in push-up position, drawn from faint to bold, over a timeline against a warm background.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'An old gymnasium with tall arched windows and a worn wooden floor, a lone person holding a push-up far back in the hall.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>An exercise without an inventor</h2>

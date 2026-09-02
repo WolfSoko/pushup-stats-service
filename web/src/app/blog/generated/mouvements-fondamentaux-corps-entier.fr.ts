@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "full-body-movement-patterns"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg",
-  "heroImageAlt": "Silhouette stylisée aux bras levés, entourée de six points colorés sur deux orbites — symbole des six mouvements fondamentaux.",
-  "heroImageCredit": "Illustration : Pushup Tracker"
+  "heroImageAlt": "Trois adultes d'âges différents s'entraînent côte à côte dans une pièce claire et vide – pompe, squat et charnière de hanche.",
+  "heroImageCredit": "Image : Pushup Tracker"
 };

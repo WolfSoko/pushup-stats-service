@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "proper-squat-form"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg",
-  "heroImageAlt": "Figura stilizzata in squat profondo con braccia tese in avanti, anca e glutei che brillano arancione, su sfondo verde.",
-  "heroImageCredit": "Illustrazione: Pushup Tracker"
+  "heroImageAlt": "Un uomo in squat profondo ripreso di lato, talloni a terra e braccia tese in avanti.",
+  "heroImageCredit": "Immagine: Pushup Tracker"
 };

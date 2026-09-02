@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-history"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-geschichte.jpg",
-  "heroImageAlt": "Drei stilisierte Figuren in der Liegestütz-Position, von blass bis kräftig gezeichnet, über einem Zeitstrahl vor warmem Hintergrund.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Alte Turnhalle mit hohen Bogenfenstern und abgenutztem Holzboden, weit hinten hält eine einzelne Person einen Liegestütz.",
+  "heroImageCredit": "Bild: Pushup Tracker"
 };

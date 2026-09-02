@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Gestileerde figuur in de onderste opdrukpositie voor oplopende balken – symbool voor spiergroei door lichaamsgewichttraining.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Zijaanzicht van iemand onderin een opdrukbeweging, het lichaam in één rechte lijn.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

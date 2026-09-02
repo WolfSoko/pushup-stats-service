@@ -12,8 +12,8 @@ keywords:
   - Muscoli coinvolti nelle trazioni
   - Piano di allenamento per le trazioni
 heroImage: 'https://pushup-stats.com/assets/blog/hero-klimmzug.jpg'
-heroImageAlt: Figura stilizzata appesa a una sbarra per trazioni, mento all'altezza della sbarra, su sfondo caldo arancione.
-heroImageCredit: 'Illustrazione: Pushup Tracker'
+heroImageAlt: "Una donna al punto più alto di una trazione a una sbarra d'acciaio, mento all'altezza della sbarra."
+heroImageCredit: 'Immagine: Pushup Tracker'
 ---
 
 <h2>L'esercizio più onesto del mondo</h2>

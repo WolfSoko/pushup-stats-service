@@ -13,8 +13,8 @@ keywords:
   - Acelerar la recuperación
   - Cuánto debe durar una pausa de entrenamiento
 heroImage: 'https://pushup-stats.com/assets/blog/hero-schlaf.jpg'
-heroImageAlt: Cielo nocturno con luna y estrellas, debajo una curva violeta que tras un descenso sube por encima del nivel inicial, símbolo de la recuperación y la supercompensación.
-heroImageCredit: 'Ilustración: Pushup Tracker'
+heroImageAlt: 'Un dormitorio vacío al amanecer, sábanas arrugadas y un par de zapatillas de entrenamiento junto a la cama.'
+heroImageCredit: 'Imagen: Pushup Tracker'
 ---
 
 <h2>La parte infravalorada del entrenamiento</h2>

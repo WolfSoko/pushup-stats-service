@@ -12,8 +12,8 @@ keywords:
   - 推拉蹲铰链训练法
   - 全身徒手健身
 heroImage: 'https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg'
-heroImageAlt: '一个风格化的双臂高举人像,周围环绕着两条圆形轨道上的六个彩色圆点——象征六大基础动作模式。'
-heroImageCredit: '插图：Pushup Tracker'
+heroImageAlt: '三位不同年龄的成年人在明亮空旷的房间里并排训练——俯卧撑、深蹲和髋部铰链动作。'
+heroImageCredit: '图片：Pushup Tracker'
 ---
 
 <h2>为什么"肌肉群"是错误的提问方式</h2>

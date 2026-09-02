@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Stilisierte Figur in der unteren Liegestütz-Position vor aufsteigenden Balken – Sinnbild für Muskelwachstum durch Körpergewichtstraining.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Seitenansicht einer Person im unteren Punkt eines Liegestützes, Körper in einer geraden Linie.",
+  "heroImageCredit": "Bild: Pushup Tracker"
 };

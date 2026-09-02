@@ -11,8 +11,8 @@ keywords:
   - Push Pull Squat Hinge
   - Calisthenics Ganzkörper
 heroImage: 'https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg'
-heroImageAlt: Stilisierte Figur mit erhobenen Armen, umgeben von sechs farbigen Punkten auf zwei Kreisbahnen – Sinnbild für die sechs Grundbewegungen.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Drei Erwachsene unterschiedlichen Alters trainieren nebeneinander in einem hellen, leeren Raum – Liegestütz, Kniebeuge und Hüftbeuge.'
+heroImageCredit: 'Bild: Pushup Tracker'
 ---
 
 <h2>Warum „Muskelgruppen“ die falsche Frage ist</h2>

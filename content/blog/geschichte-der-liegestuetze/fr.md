@@ -12,8 +12,8 @@ keywords:
   - dand pompe hindoue
   - test militaire pompes
 heroImage: 'https://pushup-stats.com/assets/blog/hero-geschichte.jpg'
-heroImageAlt: Trois silhouettes stylisées en position de pompe, du plus pâle au plus vigoureux, au-dessus d'une frise chronologique sur fond chaleureux.
-heroImageCredit: 'Illustration : Pushup Tracker'
+heroImageAlt: 'Un ancien gymnase aux hautes fenêtres cintrées et au parquet usé, une personne seule en position de pompe tout au fond.'
+heroImageCredit: 'Image : Pushup Tracker'
 ---
 
 <h2>Un exercice sans inventeur</h2>

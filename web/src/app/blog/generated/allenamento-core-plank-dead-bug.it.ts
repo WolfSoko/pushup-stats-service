@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
-  "heroImageAlt": "Figura stilizzata in plank sull'avambraccio, la parte centrale del corpo brilla di giallo, su sfondo color petrolio.",
-  "heroImageCredit": "Illustrazione: Pushup Tracker"
+  "heroImageAlt": "Una donna tiene un plank sugli avambracci su un tappetino, ripresa di lato.",
+  "heroImageCredit": "Immagine: Pushup Tracker"
 };

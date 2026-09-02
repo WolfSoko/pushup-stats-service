@@ -12,8 +12,8 @@ keywords:
   - Impingement da piegamenti
   - Mobilità del polso per i piegamenti
 heroImage: 'https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg'
-heroImageAlt: Figura stilizzata in posizione di piegamento, polso e spalla evidenziati in arancione, sopra uno scudo protettivo verde.
-heroImageCredit: 'Illustrazione: Pushup Tracker'
+heroImageAlt: 'Primo piano di una mano e di un polso appoggiati sul pavimento di legno nel punto basso di un piegamento.'
+heroImageCredit: 'Immagine: Pushup Tracker'
 ---
 
 <h2>Il dolore è un segnale, non un nemico</h2>

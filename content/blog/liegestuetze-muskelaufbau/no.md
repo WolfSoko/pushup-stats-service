@@ -12,8 +12,8 @@ keywords:
   - hvor mange repetisjoner armhevninger
   - progressiv overbelastning armhevninger
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg'
-heroImageAlt: Stilisert figur i den nederste armhevningsposisjonen foran stigende søyler – et bilde på muskelvekst gjennom kroppsvektstrening.
-heroImageCredit: 'Illustrasjon: Pushup Tracker'
+heroImageAlt: 'Sidebilde av en person nederst i en armheving, med kroppen i én rett linje.'
+heroImageCredit: 'Bilde: Pushup Tracker'
 ---
 
 <h2>Myten om at «kroppsvekt ikke er nok»</h2>

@@ -11,8 +11,8 @@ keywords:
   - Herzfrequenz Trainingszonen
   - Cardio wie oft pro Woche
 heroImage: 'https://pushup-stats.com/assets/blog/hero-cardio.jpg'
-heroImageAlt: Weiße EKG-Linie mit zwei Herzschlag-Zacken vor violett-orangem Verlauf, rechts ein orangefarbenes Herz.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Eine Person läuft bei Sonnenaufgang auf einer leeren, nassen Landstraße, von hinten aufgenommen.'
+heroImageCredit: 'Bild: Pushup Tracker'
 ---
 
 <h2>Die Debatte, die keine sein müsste</h2>

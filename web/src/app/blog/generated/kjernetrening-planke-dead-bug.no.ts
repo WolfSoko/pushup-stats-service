@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
-  "heroImageAlt": "Stilisert figur i underarmsstøtte, kroppsmidten lyser gult, mot en petroleumsfarget bakgrunn.",
-  "heroImageCredit": "Illustrasjon: Pushup Tracker"
+  "heroImageAlt": "En kvinne holder en underarmsplanke på en treningsmatte, sett fra siden.",
+  "heroImageCredit": "Bilde: Pushup Tracker"
 };

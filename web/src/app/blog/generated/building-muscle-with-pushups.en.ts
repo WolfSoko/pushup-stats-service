@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Stylized figure in the bottom position of a push-up in front of ascending bars — a symbol for muscle growth through bodyweight training.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Side view of a person at the bottom of a push-up, body held in one straight line.",
+  "heroImageCredit": "Image: Pushup Tracker"
 };

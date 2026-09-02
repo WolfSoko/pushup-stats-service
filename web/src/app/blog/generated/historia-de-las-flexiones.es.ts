@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-history"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-geschichte.jpg",
-  "heroImageAlt": "Tres figuras estilizadas en posición de flexión, dibujadas de tenues a intensas, sobre una línea de tiempo con fondo cálido.",
-  "heroImageCredit": "Ilustración: Pushup Tracker"
+  "heroImageAlt": "Un gimnasio antiguo con ventanales en arco y suelo de madera desgastado, al fondo una persona sola sosteniendo una flexión.",
+  "heroImageCredit": "Imagen: Pushup Tracker"
 };

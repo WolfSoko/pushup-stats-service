@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Figura stilizzata nella posizione bassa del piegamento davanti a barre ascendenti – simbolo della crescita muscolare tramite allenamento a corpo libero.",
-  "heroImageCredit": "Illustrazione: Pushup Tracker"
+  "heroImageAlt": "Vista laterale di una persona nel punto basso di un piegamento, con il corpo in linea retta.",
+  "heroImageCredit": "Immagine: Pushup Tracker"
 };

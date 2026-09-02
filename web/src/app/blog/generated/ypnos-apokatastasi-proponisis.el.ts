@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "sleep-recovery-training"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-schlaf.jpg",
-  "heroImageAlt": "Νυχτερινός ουρανός με φεγγάρι και αστέρια, από κάτω μια βιολετί καμπύλη που ανεβαίνει μετά από πτώση πάνω από το αρχικό επίπεδο — σύμβολο αποκατάστασης και υπεραναπλήρωσης.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Ένα άδειο υπνοδωμάτιο την αυγή, τσαλακωμένα σεντόνια και ένα ζευγάρι αθλητικά παπούτσια δίπλα στο κρεβάτι.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

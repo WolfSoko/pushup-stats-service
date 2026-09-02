@@ -13,8 +13,8 @@ keywords:
   - εκμάθηση pistol squat
   - πόνος γονάτου στα καθίσματα
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: 'Στυλιζαρισμένη φιγούρα σε βαθύ κάθισμα με τεντωμένα χέρια μπροστά, γοφός και γλουτοί λάμπουν πορτοκαλί, μπροστά από πράσινο φόντο.'
-heroImageCredit: 'Εικονογράφηση: Pushup Tracker'
+heroImageAlt: 'Ένας άνδρας σε βαθύ κάθισμα από το πλάι, με τις φτέρνες στο έδαφος και τα χέρια τεντωμένα μπροστά.'
+heroImageCredit: 'Εικόνα: Pushup Tracker'
 ---
 
 <h2>Η Άσκηση που Καθορίζει την Αυτονομία</h2>

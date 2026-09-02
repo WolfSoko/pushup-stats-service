@@ -13,8 +13,8 @@ keywords:
   - Learning the pistol squat
   - Squats and knee pain
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: Stylized figure in a deep squat with arms extended forward, hips and glutes glowing orange, against a green background.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'A man in a deep squat seen from the side, heels flat on the floor and arms reaching forward.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>The exercise that decides independence</h2>

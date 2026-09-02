@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
-  "heroImageAlt": "Figura estilizada colgada de una barra de dominadas, barbilla a la altura de la barra, sobre un fondo naranja cálido.",
-  "heroImageCredit": "Ilustración: Pushup Tracker"
+  "heroImageAlt": "Una mujer en la parte alta de una dominada en una barra de acero, con la barbilla a la altura de la barra.",
+  "heroImageCredit": "Imagen: Pushup Tracker"
 };

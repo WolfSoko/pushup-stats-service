@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "full-body-movement-patterns"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg",
-  "heroImageAlt": "Στυλιζαρισμένη φιγούρα με υψωμένα χέρια, περιτριγυρισμένη από έξι χρωματιστές κουκκίδες σε δύο κυκλικές τροχιές — σύμβολο των έξι βασικών προτύπων κίνησης.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Τρεις ενήλικες διαφορετικών ηλικιών προπονούνται δίπλα δίπλα σε έναν φωτεινό, άδειο χώρο – push-up, κάθισμα και άρθρωση ισχίου.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

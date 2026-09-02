@@ -12,8 +12,8 @@ keywords:
   - Push-up shoulder impingement
   - Push-up wrist mobility
 heroImage: 'https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg'
-heroImageAlt: Stylized figure in push-up position, wrist and shoulder highlighted in orange, with a green shield above.
-heroImageCredit: 'Illustration: Pushup Tracker'
+heroImageAlt: 'Close-up of a hand and wrist pressed flat on a wooden floor at the bottom of a push-up.'
+heroImageCredit: 'Image: Pushup Tracker'
 ---
 
 <h2>Pain is a signal, not an enemy</h2>

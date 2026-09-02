@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "sleep-recovery-training"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-schlaf.jpg",
-  "heroImageAlt": "Ciel nocturne avec lune et étoiles, en dessous une courbe violette qui remonte au-dessus du niveau de départ après un creux — symbole de la récupération et de la surcompensation.",
-  "heroImageCredit": "Illustration : Pushup Tracker"
+  "heroImageAlt": "Une chambre vide à l'aube, des draps froissés et une paire de chaussures de sport à côté du lit.",
+  "heroImageCredit": "Image : Pushup Tracker"
 };

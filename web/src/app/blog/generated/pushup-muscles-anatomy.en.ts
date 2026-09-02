@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-anatomy"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg",
-  "heroImageAlt": "Stylized figure in push-up position, with the working muscle groups at the chest, shoulder, triceps, and core glowing orange.",
-  "heroImageCredit": "Illustration: Pushup Tracker"
+  "heroImageAlt": "Top-down view of a person in a push-up, arms straight and hands set wide.",
+  "heroImageCredit": "Image: Pushup Tracker"
 };

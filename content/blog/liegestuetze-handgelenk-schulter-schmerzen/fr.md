@@ -12,8 +12,8 @@ keywords:
   - impingement épaule pompes
   - mobilité du poignet pompes
 heroImage: 'https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg'
-heroImageAlt: Silhouette stylisée en position de pompe, poignet et épaule marqués en orange, avec un bouclier de protection vert au-dessus.
-heroImageCredit: 'Illustration : Pushup Tracker'
+heroImageAlt: "Gros plan d'une main et d'un poignet à plat sur un parquet, au point bas d'une pompe."
+heroImageCredit: 'Image : Pushup Tracker'
 ---
 
 <h2>La douleur est un signal, pas un adversaire</h2>

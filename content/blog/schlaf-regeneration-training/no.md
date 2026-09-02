@@ -13,8 +13,8 @@ keywords:
   - fremskynde restitusjon
   - hvor lang treningspause
 heroImage: 'https://pushup-stats.com/assets/blog/hero-schlaf.jpg'
-heroImageAlt: Nattehimmel med måne og stjerner, under den en fiolett kurve som stiger over utgangsnivået etter en bølgedal – et bilde på restitusjon og superkompensasjon.
-heroImageCredit: 'Illustrasjon: Pushup Tracker'
+heroImageAlt: 'Et tomt soverom ved daggry, krøllete sengetøy og et par treningssko ved siden av sengen.'
+heroImageCredit: 'Bilde: Pushup Tracker'
 ---
 
 <h2>Den undervurderte delen av treningen</h2>

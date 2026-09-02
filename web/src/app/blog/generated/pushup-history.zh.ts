@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-history"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-geschichte.jpg",
-  "heroImageAlt": "三个风格化的俯卧撑姿势人像,从浅到深依次排列,叠加在时间轴上,背景为暖色调。",
-  "heroImageCredit": "插图：Pushup Tracker"
+  "heroImageAlt": "一座老体育馆，高大的拱形窗户和磨损的木地板，远处有一个人保持着俯卧撑姿势。",
+  "heroImageCredit": "图片：Pushup Tracker"
 };

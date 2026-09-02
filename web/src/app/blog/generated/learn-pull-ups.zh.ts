@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "learn-pull-ups"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-klimmzug.jpg",
-  "heroImageAlt": "一个风格化的人像悬挂在单杠上,下巴与杠面齐平,背景为暖橙色。",
-  "heroImageCredit": "插图：Pushup Tracker"
+  "heroImageAlt": "一位女性在钢制单杠上完成引体向上的最高点，下巴与横杠齐平。",
+  "heroImageCredit": "图片：Pushup Tracker"
 };

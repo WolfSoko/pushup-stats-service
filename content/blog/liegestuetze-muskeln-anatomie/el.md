@@ -12,8 +12,8 @@ keywords:
   - θέση χεριών στα push-ups
   - στήθος τρικέφαλος στα push-ups
 heroImage: 'https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg'
-heroImageAlt: 'Στυλιζαρισμένη φιγούρα σε θέση push-up, οι εργαζόμενες μυϊκές ομάδες σε στήθος, ώμο, τρικέφαλο και κορμό λάμπουν πορτοκαλί.'
-heroImageCredit: 'Εικονογράφηση: Pushup Tracker'
+heroImageAlt: 'Κάτοψη ατόμου σε στάση push-up, με τεντωμένα χέρια και φαρδύ άνοιγμα παλαμών.'
+heroImageCredit: 'Εικόνα: Pushup Tracker'
 ---
 
 <h2>Η Σύντομη Απάντηση — και Γιατί δεν Αρκεί</h2>

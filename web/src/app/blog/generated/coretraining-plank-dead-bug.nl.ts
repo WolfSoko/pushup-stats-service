@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
-  "heroImageAlt": "Gestileerde figuur in onderarmplank, het middenlijf licht geel op tegen een petrolkleurige achtergrond.",
-  "heroImageCredit": "Illustratie: Pushup Tracker"
+  "heroImageAlt": "Een vrouw houdt een onderarmplank vast op een trainingsmat, van opzij gezien.",
+  "heroImageCredit": "Beeld: Pushup Tracker"
 };

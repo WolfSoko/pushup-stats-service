@@ -13,8 +13,8 @@ keywords:
   - 学习手枪式深蹲
   - 深蹲膝盖疼
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: '一个风格化的人像做深蹲,双臂向前伸展,髋部和臀部呈橙色高亮,背景为绿色。'
-heroImageCredit: '插图：Pushup Tracker'
+heroImageAlt: '侧面拍摄的男性深蹲姿势，脚跟贴地，双臂向前伸展。'
+heroImageCredit: '图片：Pushup Tracker'
 ---
 
 <h2>决定生活自理能力的训练动作</h2>

@@ -12,8 +12,8 @@ keywords:
   - muscles sollicités par les tractions
   - programme entraînement traction
 heroImage: 'https://pushup-stats.com/assets/blog/hero-klimmzug.jpg'
-heroImageAlt: Silhouette stylisée suspendue à une barre de traction, menton au niveau de la barre, sur fond orange chaleureux.
-heroImageCredit: 'Illustration : Pushup Tracker'
+heroImageAlt: "Une femme en haut d'une traction à une barre en acier, le menton à hauteur de barre."
+heroImageCredit: 'Image : Pushup Tracker'
 ---
 
 <h2>L'exercice le plus honnête du monde</h2>

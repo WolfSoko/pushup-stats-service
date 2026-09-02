@@ -13,8 +13,8 @@ keywords:
   - apprendre le pistol squat
   - squats douleurs de genou
 heroImage: 'https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg'
-heroImageAlt: Silhouette stylisée en squat profond, bras tendus vers l'avant, hanche et fessiers illuminés en orange, sur fond vert.
-heroImageCredit: 'Illustration : Pushup Tracker'
+heroImageAlt: "Un homme en squat profond vu de côté, talons au sol et bras tendus vers l'avant."
+heroImageCredit: 'Image : Pushup Tracker'
 ---
 
 <h2>L'exercice qui détermine l'autonomie</h2>

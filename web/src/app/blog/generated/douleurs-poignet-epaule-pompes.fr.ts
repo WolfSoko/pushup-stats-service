@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-joint-pain"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg",
-  "heroImageAlt": "Silhouette stylisée en position de pompe, poignet et épaule marqués en orange, avec un bouclier de protection vert au-dessus.",
-  "heroImageCredit": "Illustration : Pushup Tracker"
+  "heroImageAlt": "Gros plan d'une main et d'un poignet à plat sur un parquet, au point bas d'une pompe.",
+  "heroImageCredit": "Image : Pushup Tracker"
 };

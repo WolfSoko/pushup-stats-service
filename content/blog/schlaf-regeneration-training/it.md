@@ -13,8 +13,8 @@ keywords:
   - Accelerare il recupero
   - Quanto dura una pausa dall'allenamento
 heroImage: 'https://pushup-stats.com/assets/blog/hero-schlaf.jpg'
-heroImageAlt: Cielo notturno con luna e stelle, sotto una curva viola che sale oltre il livello iniziale dopo un calo – simbolo del recupero e della supercompensazione.
-heroImageCredit: 'Illustrazione: Pushup Tracker'
+heroImageAlt: "Una camera da letto vuota all'alba, lenzuola sgualcite e un paio di scarpe da allenamento accanto al letto."
+heroImageCredit: 'Immagine: Pushup Tracker'
 ---
 
 <h2>La parte sottovalutata dell'allenamento</h2>

@@ -35,6 +35,6 @@ export const POST: BlogPost = {
     "zh": "core-training-plank-dead-bug"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-rumpf.jpg",
-  "heroImageAlt": "Στυλιζαρισμένη φιγούρα σε στήριξη αγκώνων, το κέντρο του σώματος λάμπει κίτρινο, μπροστά από φόντο χρώματος πετρελαίου.",
-  "heroImageCredit": "Εικονογράφηση: Pushup Tracker"
+  "heroImageAlt": "Μια γυναίκα κρατά σανίδα στους πήχεις πάνω σε στρώμα προπόνησης, από το πλάι.",
+  "heroImageCredit": "Εικόνα: Pushup Tracker"
 };

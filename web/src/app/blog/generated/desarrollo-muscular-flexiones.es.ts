@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "pushup-muscle-building"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg",
-  "heroImageAlt": "Figura estilizada en la posición inferior de la flexión frente a barras ascendentes, símbolo del crecimiento muscular mediante entrenamiento con peso corporal.",
-  "heroImageCredit": "Ilustración: Pushup Tracker"
+  "heroImageAlt": "Vista lateral de una persona en el punto bajo de una flexión, con el cuerpo en línea recta.",
+  "heroImageCredit": "Imagen: Pushup Tracker"
 };

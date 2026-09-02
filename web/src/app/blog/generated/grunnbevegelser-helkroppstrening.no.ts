@@ -34,6 +34,6 @@ export const POST: BlogPost = {
     "zh": "full-body-movement-patterns"
   },
   "heroImage": "https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg",
-  "heroImageAlt": "Stilisert figur med hevede armer, omgitt av seks fargede punkter på to sirkelbaner – et bilde på de seks grunnbevegelsene.",
-  "heroImageCredit": "Illustrasjon: Pushup Tracker"
+  "heroImageAlt": "Tre voksne i ulik alder trener side om side i et lyst, tomt rom – armheving, knebøy og hoftehengsel.",
+  "heroImageCredit": "Bilde: Pushup Tracker"
 };
