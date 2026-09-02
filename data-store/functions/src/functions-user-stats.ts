@@ -2,78 +2,10 @@ import type { UserStats } from '@pu-stats/models';
 import { USERSTATS_VERSION } from '@pu-stats/models';
 import { logger } from 'firebase-functions';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
-import { onCall } from 'firebase-functions/v2/https';
 
 import { sanitizeSetsArray } from './entry-sanitize';
 import { db } from './firebase-app';
-import { assertAdmin } from './functions-admin';
 import { applyDelta, rebuildFromEntries } from './user-stats-delta';
-
-// Admin-callable backfill: recomputes userStats/{userId} from all pushup
-// entries. Accepts { userId?: string }. If userId is omitted, rebuilds for
-// ALL users.
-export const rebuildUserStats = onCall(
-  { region: 'europe-west3', timeoutSeconds: 540 },
-  async (request) => {
-    assertAdmin(request);
-
-    const targetUserId = request.data?.userId
-      ? String(request.data.userId).trim()
-      : null;
-    const nowIso = new Date().toISOString();
-
-    async function rebuildForUser(userId: string) {
-      const snap = await db
-        .collection('pushups')
-        .where('userId', '==', userId)
-        .orderBy('timestamp', 'asc')
-        .get();
-
-      const entries = snap.docs.map((d) => {
-        const data = d.data();
-        return {
-          timestamp: data.timestamp as string,
-          reps: Number(data.reps ?? 0),
-          ...(Array.isArray(data.sets) ? { sets: data.sets as number[] } : {}),
-        };
-      });
-
-      const stats = rebuildFromEntries(userId, entries, nowIso);
-      await db.collection('userStats').doc(userId).set(stats);
-      return entries.length;
-    }
-
-    if (targetUserId) {
-      const count = await rebuildForUser(targetUserId);
-      logger.info('rebuildUserStats: single user', {
-        userId: targetUserId,
-        entries: count,
-        by: request.auth?.uid,
-      });
-      return { rebuilt: 1, entries: count };
-    }
-
-    // Rebuild for ALL users
-    const allPushups = await db.collection('pushups').get();
-    const userIds = new Set<string>();
-    for (const doc of allPushups.docs) {
-      const uid = doc.data().userId;
-      if (uid) userIds.add(uid);
-    }
-
-    let totalRebuilt = 0;
-    for (const userId of userIds) {
-      await rebuildForUser(userId);
-      totalRebuilt++;
-    }
-
-    logger.info('rebuildUserStats: all users', {
-      rebuilt: totalRebuilt,
-      by: request.auth?.uid,
-    });
-    return { rebuilt: totalRebuilt };
-  }
-);
 
 // Listens on `exerciseEntries` and writes per-exercise aggregates to
 // `userStats/{userId}/perExercise/{exerciseId}`, leaving the existing
@@ -89,16 +21,14 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     const afterData = event.data?.after?.data();
 
     const userId = (afterData?.userId ?? beforeData?.userId) as
-      | string
-      | undefined;
+      string | undefined;
     if (!userId) {
       logger.warn('updateExerciseStatsOnEntryWrite: no userId found, skipping');
       return;
     }
 
     const exerciseId = (afterData?.exerciseId ?? beforeData?.exerciseId) as
-      | string
-      | undefined;
+      string | undefined;
     if (!exerciseId) {
       logger.warn(
         'updateExerciseStatsOnEntryWrite: no exerciseId found, skipping'

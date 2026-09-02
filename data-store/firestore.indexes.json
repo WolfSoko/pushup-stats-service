@@ -1,14 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "pushups",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "userId", "order": "ASCENDING" },
-        { "fieldPath": "timestamp", "order": "ASCENDING" }
-      ]
-    },
-    {
       "collectionGroup": "exerciseEntries",
       "queryScope": "COLLECTION",
       "fields": [
@@ -34,5 +26,26 @@
       ]
     }
   ],
-  "fieldOverrides": []
+  "fieldOverrides": [
+    {
+      "collectionGroup": "deletedExerciseEntries",
+      "fieldPath": "entry",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "exerciseEntries",
+      "fieldPath": "sets",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "exerciseEntries",
+      "fieldPath": "intervals",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "exerciseEntries",
+      "fieldPath": "intervalDurationsSec",
+      "indexes": []
+    }
+  ]
 }

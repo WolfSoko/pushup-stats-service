@@ -17,7 +17,7 @@ A freshly created Secret Manager secret has **zero IAM bindings** (`gcloud secre
 - **Timestamp changes on update:** When an entry's timestamp changes on update, a single delta is wrong — it must be split into undo-old + apply-new. Otherwise the old day/week/month/heatmap bucket is never decremented.
 - **Fields that can't be maintained incrementally** (like `totalDays` — counting unique days) require heuristic tracking or periodic `rebuildFromEntries()` to stay accurate.
 - **`bestDay` and `bestSingleEntry`** can only grow via deltas. When entries are deleted, a rebuild is needed to find the true new best.
-- **The first-write rebuild fetch needs a composite index.** On the first entry for a (user, exercise) — and on a `USERSTATS_VERSION` bump — the trigger rebuilds the aggregate from the user's full history with `where('userId','==').where('exerciseId','==').orderBy('timestamp')`. An equality-filtered query ordered by another field is served **only** from a composite index over `(…equality fields…, orderBy field)`. `rebuildUserStats` queries `pushups` with one equality, so `pushups (userId, timestamp)` is enough; `updateExerciseStatsOnEntryWrite` adds the `exerciseId` equality, so it needs `exerciseEntries (userId, exerciseId, timestamp)`. That second index was missing, so the trigger threw `FAILED_PRECONDITION` on the first entry of every non-pushup exercise, `userStats/{uid}/perExercise/{exerciseId}` was never written, and the per-exercise **"Alle Zeit"** leaderboard stayed empty (pushup hid it — its aggregate is seeded by `backfillPushupPerExerciseStats`, not the rebuild query). Any new `where(==)…orderBy(other)` query must ship its composite index in `firestore.indexes.json`; `firestore-indexes.spec.ts` guards the aggregation triggers' indexes.
+- **The first-write rebuild fetch needs a composite index.** On the first entry for a (user, exercise) — and on a `USERSTATS_VERSION` bump — the trigger rebuilds the aggregate from the user's full history with `where('userId','==').where('exerciseId','==').orderBy('timestamp')`. An equality-filtered query ordered by another field is served **only** from a composite index over `(…equality fields…, orderBy field)`. `updateExerciseStatsOnEntryWrite` filters on `userId` **and** `exerciseId`, so it needs `exerciseEntries (userId, exerciseId, timestamp)`. That second index was missing, so the trigger threw `FAILED_PRECONDITION` on the first entry of every non-pushup exercise, `userStats/{uid}/perExercise/{exerciseId}` was never written, and the per-exercise **"Alle Zeit"** leaderboard stayed empty (pushup hid it — its aggregate is seeded by `backfillPushupPerExerciseStats`, not the rebuild query). Any new `where(==)…orderBy(other)` query must ship its composite index in `firestore.indexes.json`; `firestore-indexes.spec.ts` guards the aggregation triggers' indexes.
 
 ## UserStats versioning system
 
@@ -85,18 +85,13 @@ All Cloud Functions in this repo share a single `index.ts` bundle, so any module
 Pattern:
 
 ```ts
-export const ogProfile = onRequest(
-  {
-    /* … */
-  },
-  async (req, res) => {
-    // …Firestore reads, validation, 404 path…
+export const ogProfile = onRequest({/* … */}, async (req, res) => {
+  // …Firestore reads, validation, 404 path…
 
-    const { renderProfileOg } = await import('./profile/og-render');
-    const png = await renderProfileOg(projection);
-    // …
-  }
-);
+  const { renderProfileOg } = await import('./profile/og-render');
+  const png = await renderProfileOg(projection);
+  // …
+});
 ```
 
 And keep the heavy module **out** of the shared `./profile/index.ts` barrel — direct path imports (`./profile/og-render`) inside the dynamic `import()` only.

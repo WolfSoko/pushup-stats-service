@@ -66,10 +66,7 @@ export {
   unsubscribeAllPushDevices,
 } from './functions-push';
 
-export {
-  rebuildUserStats,
-  updateExerciseStatsOnEntryWrite,
-} from './functions-user-stats';
+export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 
 export { archiveDeletedExerciseEntry } from './functions-entry-trash';
 
