@@ -48,7 +48,7 @@ function runScript({ extraEnv = {}, args = [] } = {}) {
 // Build an isolated sandbox tree so the detector exercises every gap
 // branch deterministically, regardless of how complete the real repo's
 // translations happen to be at test time.
-function buildFixture() {
+function buildFixture({ sourceOnlyBlogFolders = [] } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'detect-gaps-fixture-'));
   const localeDir = join(root, 'web/src/locale');
   const blogDir = join(root, 'content/blog');
@@ -120,6 +120,18 @@ function buildFixture() {
   writeFileSync(join(blogDir, 'mein-post/de.md'), '---\ntitle: Hallo\n---\n');
   writeFileSync(join(blogDir, 'mein-post/en.md'), '---\ntitle: Hello\n---\n');
   // fr.md and la.md missing → blog gaps for both.
+
+  // Brand-new articles: the German source and nothing else, so every
+  // target locale must be flagged. Opt-in per fixture — the baseline
+  // tree deliberately keeps 'en' fully covered, and an article missing
+  // its en.md would blunt that assertion.
+  for (const folder of sourceOnlyBlogFolders) {
+    mkdirSync(join(blogDir, folder), { recursive: true });
+    writeFileSync(
+      join(blogDir, `${folder}/de.md`),
+      `---\ntitle: ${folder}\n---\n`
+    );
+  }
 
   writeFileSync(join(wikiDir, 'arch.de.md'), '---\nname: Bogen\n---\n');
   writeFileSync(join(wikiDir, 'arch.en.md'), '---\nname: Arch\n---\n');
@@ -224,6 +236,38 @@ describe('detect-translation-gaps', () => {
       );
       // en has full coverage in the fixture — no gaps reported for it.
       expect(kinds.filter((k) => k.endsWith(':en'))).toEqual([]);
+    });
+  });
+
+  describe('against a fixture holding a brand-new blog article', () => {
+    let fixture;
+    beforeAll(() => {
+      fixture = buildFixture({ sourceOnlyBlogFolders: ['neuer-artikel'] });
+    });
+    afterAll(() => {
+      rmSync(fixture.root, { recursive: true, force: true });
+    });
+
+    it('should flag every target locale when a brand-new blog article has only de.md', () => {
+      // given — 'neuer-artikel' carries just its German source, the shape
+      // a freshly written article has before any translation exists
+
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then
+      const newArticleGaps = gaps.gaps.filter(
+        (g) => g.kind === 'blog' && g.folder === 'neuer-artikel'
+      );
+      expect(newArticleGaps.map((g) => g.locale).sort()).toEqual([
+        'en',
+        'fr',
+        'la',
+      ]);
+      // sourcePath must point back to the German source
+      for (const gap of newArticleGaps) {
+        expect(gap.sourcePath).toMatch(/neuer-artikel\/de\.md$/);
+      }
     });
   });
 });
