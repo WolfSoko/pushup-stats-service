@@ -1,5 +1,6 @@
 import type {
-  AutoCountExerciseId,
+  AutoCountDialogData,
+  AutoCountMode,
   AutoCountResult,
 } from '../auto-count/auto-count-dialog.component';
 import type {
@@ -44,7 +45,8 @@ export const TRAINING_ENTRY_DIALOG_CONFIG = {
 } as const;
 
 export type {
-  AutoCountExerciseId,
+  AutoCountDialogData,
+  AutoCountMode,
   AutoCountResult,
   ExerciseTimerExerciseId,
   ExerciseTimerResult,

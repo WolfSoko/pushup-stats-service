@@ -5,7 +5,6 @@ import {
   SQUAT_PROFILE,
   listProfiles,
   profileFor,
-  supportsProximityCount,
 } from './exercise-angle-profile';
 import { POSE_LANDMARK } from './pose-detector.port';
 
@@ -59,15 +58,6 @@ describe('exercise profiles — joint triplets', () => {
       POSE_LANDMARK.RIGHT_KNEE,
       POSE_LANDMARK.RIGHT_ANKLE,
     ]);
-  });
-
-  it('should offer the proximity counter only for pushups and squats', () => {
-    // given / when / then
-    expect(supportsProximityCount('pushup')).toBe(true);
-    expect(supportsProximityCount('squat')).toBe(true);
-    expect(supportsProximityCount('situp')).toBe(false);
-    expect(supportsProximityCount('pullup')).toBe(false);
-    expect(supportsProximityCount('unknown')).toBe(false);
   });
 
   it('situp profile uses the hip triplet on both sides', () => {

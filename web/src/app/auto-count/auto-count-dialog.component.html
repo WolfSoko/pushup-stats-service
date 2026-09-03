@@ -1,20 +1,27 @@
 <h2 mat-dialog-title i18n="@@autoCount.title">Übungen automatisch zählen</h2>
 <mat-dialog-content>
-  <mat-button-toggle-group
+  <mat-form-field
+    appearance="outline"
+    subscriptSizing="dynamic"
     class="exercise-picker"
-    [value]="exerciseId()"
-    (change)="onExerciseChange($event.value)"
-    [disabled]="switching()"
-    aria-label="Übung wählen"
-    i18n-aria-label="@@autoCount.exercisePickerAria"
   >
-    @for (option of exercises; track option.id) {
-      <mat-button-toggle [value]="option.id">
-        <mat-icon>{{ option.icon }}</mat-icon>
-        <span>{{ option.label }}</span>
-      </mat-button-toggle>
-    }
-  </mat-button-toggle-group>
+    <mat-label i18n="@@autoCount.exercisePickerLabel">Übung</mat-label>
+    <mat-select
+      [value]="exerciseId()"
+      (selectionChange)="onExerciseChange($event.value)"
+      [disabled]="switching()"
+      data-testid="auto-count-exercise"
+      aria-label="Übung wählen"
+      i18n-aria-label="@@autoCount.exercisePickerAria"
+    >
+      @for (option of exercises; track option.id) {
+        <mat-option [value]="option.id">
+          <mat-icon>{{ option.icon }}</mat-icon>
+          <span>{{ option.label }}</span>
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
   <mat-button-toggle-group
     class="mode-picker"
     [value]="mode()"
@@ -23,7 +30,11 @@
     aria-label="Erkennungsmodus wählen"
     i18n-aria-label="@@autoCount.modePickerAria"
   >
-    <mat-button-toggle value="pose" data-testid="auto-count-mode-pose">
+    <mat-button-toggle
+      value="pose"
+      data-testid="auto-count-mode-pose"
+      [disabled]="!poseSupported()"
+    >
       <mat-icon>accessibility_new</mat-icon>
       <span i18n="@@autoCount.mode.pose">Kamera vor dir</span>
     </mat-button-toggle>
@@ -42,8 +53,17 @@
       data-testid="auto-count-proximity-unavailable"
       i18n="@@autoCount.mode.proximityUnavailable"
     >
-      „Handy unter dir“ gibt es für Liegestütze und Kniebeugen – bei dieser
-      Übung bewegt sich der Körper nicht zum Boden hin.
+      „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum
+      Boden hin bewegt – bei dieser Übung nicht.
+    </p>
+  } @else if (!poseSupported()) {
+    <p
+      class="hint mode-hint"
+      data-testid="auto-count-pose-unavailable"
+      i18n="@@autoCount.mode.poseUnavailable"
+    >
+      Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter
+      dir.
     </p>
   }
   @if (isProximity()) {

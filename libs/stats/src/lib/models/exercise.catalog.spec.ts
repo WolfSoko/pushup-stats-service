@@ -7,7 +7,7 @@ import {
   findExerciseDefinition,
 } from './exercise.catalog';
 import { validateExerciseEntry } from './exercise.models';
-import { AUTO_COUNT_QUICK_ADD_EXERCISE_IDS } from './user-config.models';
+import { AUTO_COUNT_QUICK_ADD_EXERCISE_IDS } from './exercise-capture.models';
 import { PUSHUP_REPS_MAX, PUSHUP_REPS_MIN } from './pushup.models';
 
 describe('EXERCISE_CATEGORIES', () => {
@@ -285,14 +285,48 @@ describe('auto-count / hold-timer catalog capabilities', () => {
     }
   });
 
-  it('should keep AUTO_COUNT_QUICK_ADD_EXERCISE_IDS derivable from the catalog flags', () => {
-    // given the catalog auto-count flags, when the quick-add subset is
-    // derived, then it equals every catalog exercise that declares a camera
-    // profile — pushup is now one of them, so no hand-maintained drift.
-    const derived = EXERCISE_CATALOG.filter((d) => d.autoCountProfileId)
+  it('should derive AUTO_COUNT_QUICK_ADD_EXERCISE_IDS from every camera-countable catalog flag', () => {
+    // given the catalog capture flags, when the quick-add subset is
+    // derived, then it equals every rep exercise with a pose profile or
+    // the proximity flag — no hand-maintained drift.
+    const derived = EXERCISE_CATALOG.filter(
+      (d) =>
+        d.measurement === 'reps' &&
+        (d.autoCountProfileId || d.proximityCountable)
+    )
       .map((d) => d.id)
       .sort();
     expect([...AUTO_COUNT_QUICK_ADD_EXERCISE_IDS].sort()).toEqual(derived);
+  });
+
+  it('should flag proximity counting only on rep exercises whose torso moves toward the floor', () => {
+    // given / when
+    const flagged = EXERCISE_CATALOG.filter((d) => d.proximityCountable).map(
+      (d) => d.id
+    );
+
+    // then
+    expect(flagged.sort()).toEqual(
+      [
+        'pushup',
+        'legs.squats',
+        'legs.jumpsquats',
+        'legs.lunges',
+        'push.benchdips',
+        'hinge.goodmorning',
+        'hinge.singlelegRdl',
+        'cardio.burpees',
+      ].sort()
+    );
+    for (const id of flagged) {
+      expect(findExerciseDefinition(id)?.measurement).toBe('reps');
+    }
+    expect(
+      findExerciseDefinition('abs.situps')?.proximityCountable
+    ).toBeFalsy();
+    expect(
+      findExerciseDefinition('pull.pullups')?.proximityCountable
+    ).toBeFalsy();
   });
 });
 

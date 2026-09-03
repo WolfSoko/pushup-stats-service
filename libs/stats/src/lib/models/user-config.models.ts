@@ -33,28 +33,6 @@ export type QuickAddMode = 'reps' | 'auto-count';
 export const PUSHUP_QUICK_ADD_EXERCISE_ID = 'pushup';
 
 /**
- * Catalog (or sentinel) exercise ids the camera-based auto-counter supports.
- * Must mirror the dialog's `AutoCountExerciseId` mapping — extending the
- * camera support requires updating both. Other exercises stay rep-only.
- */
-export const AUTO_COUNT_QUICK_ADD_EXERCISE_IDS = [
-  PUSHUP_QUICK_ADD_EXERCISE_ID,
-  'legs.squats',
-  'pull.pullups',
-  'abs.situps',
-] as const;
-
-export type AutoCountQuickAddExerciseId =
-  (typeof AUTO_COUNT_QUICK_ADD_EXERCISE_IDS)[number];
-
-export function isAutoCountQuickAddExerciseId(
-  id: string | null | undefined
-): id is AutoCountQuickAddExerciseId {
-  if (!id) return false;
-  return (AUTO_COUNT_QUICK_ADD_EXERCISE_IDS as readonly string[]).includes(id);
-}
-
-/**
  * User-configurable quick-add button. Legacy configs only persisted `reps`
  * and `inSpeedDial`; readers must default `exerciseId` to
  * {@link PUSHUP_QUICK_ADD_EXERCISE_ID} and `mode` to `'reps'` so older

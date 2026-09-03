@@ -113,6 +113,7 @@ export const PUSHUP_DEFINITION: ExerciseDefinition = {
   id: 'pushup',
   categoryId: 'pushup',
   autoCountProfileId: 'pushup',
+  proximityCountable: true,
   measurement: 'reps',
   min: PUSHUP_REPS_MIN,
   max: PUSHUP_REPS_MAX,
@@ -347,6 +348,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
 
   {
     id: 'legs.squats',
+    proximityCountable: true,
     categoryId: 'squat',
     autoCountProfileId: 'squat',
     measurement: 'reps',
@@ -385,6 +387,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
   {
     id: 'legs.jumpsquats',
+    proximityCountable: true,
     categoryId: 'squat',
     measurement: 'reps',
     min: 1,
@@ -475,6 +478,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
   {
     id: 'hinge.singlelegRdl',
+    proximityCountable: true,
     categoryId: 'hinge',
     measurement: 'reps',
     min: 1,
@@ -485,6 +489,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
   {
     id: 'hinge.goodmorning',
+    proximityCountable: true,
     categoryId: 'hinge',
     measurement: 'reps',
     min: 1,
@@ -496,6 +501,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
 
   {
     id: 'legs.lunges',
+    proximityCountable: true,
     categoryId: 'lunge',
     measurement: 'reps',
     min: 1,
@@ -576,6 +582,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
   {
     id: 'push.benchdips',
+    proximityCountable: true,
     categoryId: 'push',
     measurement: 'reps',
     min: 1,
@@ -764,6 +771,7 @@ export const EXERCISE_CATALOG: ReadonlyArray<ExerciseDefinition> = [
   },
   {
     id: 'cardio.burpees',
+    proximityCountable: true,
     categoryId: 'cardio',
     measurement: 'reps',
     min: 1,

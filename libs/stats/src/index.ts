@@ -8,6 +8,7 @@ export * from './lib/models/user-stats.models';
 export * from './lib/models/public-profile.models';
 export * from './lib/models/exercise.models';
 export * from './lib/models/exercise.catalog';
+export * from './lib/models/exercise-capture.models';
 export * from './lib/models/exercise-format';
 export * from './lib/models/unified-entry.models';
 export * from './lib/models/training-plan.models';

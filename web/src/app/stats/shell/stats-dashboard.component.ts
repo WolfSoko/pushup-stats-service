@@ -26,6 +26,7 @@ import { UserContextService } from '@pu-auth/auth';
 import {
   findExerciseDefinition,
   formatEntryDisplay,
+  isAutoCountQuickAddExerciseId,
   PUSHUP_QUICK_ADD_EXERCISE_ID,
   UnifiedEntry,
 } from '@pu-stats/models';
@@ -35,7 +36,6 @@ import { typeLabel } from '../components/stats-table/stats-table.format';
 import { firstValueFrom } from 'rxjs';
 import { QuickAddBridgeService } from '@pu-stats/quick-add';
 import { QuickAddOrchestrationService } from '../../core/quick-add-orchestration.service';
-import { autoCountProfileForCatalogId } from '../../core/quick-add-orchestration.helpers';
 import { AppDataFacade } from '../../core/app-data.facade';
 import { DailyGoalActionsService } from '../../core/daily-goal-actions.service';
 import type { DailyGoalItemView } from '../../core/daily-goal.helpers';
@@ -471,9 +471,8 @@ export class StatsDashboardComponent {
    */
   async addQuickEntryFromConfig(vm: QuickAddButtonViewModel): Promise<void> {
     if (vm.mode === 'auto-count') {
-      const profile = autoCountProfileForCatalogId(vm.exerciseId);
-      if (!profile) return;
-      void this.quickAdd.openAutoCount(profile);
+      if (!isAutoCountQuickAddExerciseId(vm.exerciseId)) return;
+      void this.quickAdd.openAutoCount(vm.exerciseId);
       return;
     }
     if (vm.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {

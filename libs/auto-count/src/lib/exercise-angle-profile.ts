@@ -36,14 +36,6 @@ export interface ExerciseAngleProfile {
    * is considered stale and reset.
    */
   readonly maxFrameGapMs: number;
-  /**
-   * Whether the brightness-based proximity counter (phone lying face-up
-   * beneath the user) is a sensible alternative. True only where the
-   * torso moves toward and away from the floor on every rep; a sit-up
-   * pivots at the hip and a pull-up happens metres above the phone, so
-   * neither produces a usable brightness swing.
-   */
-  readonly proximityCapable: boolean;
 }
 
 const ELBOW_TRIPLETS = {
@@ -94,7 +86,6 @@ export const PUSHUP_PROFILE: ExerciseAngleProfile = {
   minDwellMs: 200,
   minConfidence: 0.6,
   maxFrameGapMs: 500,
-  proximityCapable: true,
 };
 
 export const SQUAT_PROFILE: ExerciseAngleProfile = {
@@ -106,7 +97,6 @@ export const SQUAT_PROFILE: ExerciseAngleProfile = {
   minDwellMs: 250,
   minConfidence: 0.5,
   maxFrameGapMs: 600,
-  proximityCapable: true,
 };
 
 export const PULLUP_PROFILE: ExerciseAngleProfile = {
@@ -118,7 +108,6 @@ export const PULLUP_PROFILE: ExerciseAngleProfile = {
   minDwellMs: 250,
   minConfidence: 0.5,
   maxFrameGapMs: 600,
-  proximityCapable: false,
 };
 
 /**
@@ -146,7 +135,6 @@ export const SITUP_PROFILE: ExerciseAngleProfile = {
   minDwellMs: 200,
   minConfidence: 0.4,
   maxFrameGapMs: 700,
-  proximityCapable: false,
 };
 
 const PROFILES: ReadonlyMap<string, ExerciseAngleProfile> = new Map([
@@ -158,11 +146,6 @@ const PROFILES: ReadonlyMap<string, ExerciseAngleProfile> = new Map([
 
 export function profileFor(exerciseId: string): ExerciseAngleProfile | null {
   return PROFILES.get(exerciseId) ?? null;
-}
-
-/** True when the proximity counter is offered for the exercise. */
-export function supportsProximityCount(exerciseId: string): boolean {
-  return profileFor(exerciseId)?.proximityCapable === true;
 }
 
 export function listProfiles(): ReadonlyArray<ExerciseAngleProfile> {

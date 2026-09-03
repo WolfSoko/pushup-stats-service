@@ -3,14 +3,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserContextService } from '@pu-auth/auth';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { ExerciseFirestoreService } from '@pu-stats/data-access';
-import type { ExerciseEntryCreate, SessionStep } from '@pu-stats/models';
+import {
+  type ExerciseEntryCreate,
+  findExerciseDefinition,
+  type SessionStep,
+  supportsCameraCount,
+} from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 
 import { AppDataFacade } from '../../core/app-data.facade';
 import {
-  autoCountProfileForCatalogId,
   buildConfirmedEntryPayload,
-  catalogIdForAutoCountProfile,
   catalogIdForHoldTimerProfile,
   holdTimerProfileForCatalogId,
 } from '../../core/quick-add-orchestration.helpers';
@@ -111,17 +114,17 @@ export class SessionCaptureService {
   }
 
   private async captureReps(step: SessionStep): Promise<SessionCaptureOutcome> {
-    const profile = autoCountProfileForCatalogId(step.exercise.exerciseId);
     // No detector for this exercise after all — the entry dialog is the
     // honest fallback rather than opening the camera on the wrong one.
-    if (!profile) return this.captureManual(step);
+    if (!supportsCameraCount(step.exercise.exerciseId)) {
+      return this.captureManual(step);
+    }
 
-    const result = await this.dialogs.openAutoCount(profile);
+    const result = await this.dialogs.openAutoCount(step.exercise.exerciseId);
     if (!result || result.reps <= 0) return CANCELLED;
 
-    const exerciseId = catalogIdForAutoCountProfile(result.exerciseId);
-    if (!exerciseId) return this.fail();
-    return this.persistCapture(step, exerciseId, 'reps', result.reps);
+    if (!findExerciseDefinition(result.exerciseId)) return this.fail();
+    return this.persistCapture(step, result.exerciseId, 'reps', result.reps);
   }
 
   private async captureHold(step: SessionStep): Promise<SessionCaptureOutcome> {

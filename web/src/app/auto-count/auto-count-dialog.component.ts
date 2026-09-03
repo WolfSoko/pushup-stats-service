@@ -17,46 +17,47 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import {
   PROXIMITY_ANGLE_SPAN_DEG,
   PROXIMITY_REP_COUNTER,
   REP_COUNTER,
-  supportsProximityCount,
 } from '@pu-stats/auto-count';
+import { PUSHUP_QUICK_ADD_EXERCISE_ID } from '@pu-stats/models';
 
 import { WakeLockService } from '../core/wake-lock.service';
+import {
+  buildExerciseOptions,
+  type ExerciseOption,
+  resolveMode,
+} from './auto-count-dialog.options';
 import { CameraService } from './camera.service';
-
-export type AutoCountExerciseId = 'pushup' | 'squat' | 'pullup' | 'situp';
 
 /**
  * How reps are detected: `pose` reads joint angles with the camera
  * facing the user, `proximity` reads the brightness swing with the
- * phone lying face-up beneath the user.
+ * phone lying face-up beneath the user. Which of the two an exercise
+ * offers comes from the catalog (`captureMethodsFor`).
  */
 export type AutoCountMode = 'pose' | 'proximity';
 
 export interface AutoCountResult {
-  readonly exerciseId: AutoCountExerciseId;
+  /** Catalog id (or the `'pushup'` sentinel) the reps were counted for. */
+  readonly exerciseId: string;
   readonly reps: number;
 }
 
 /**
- * Optional dialog data: `initialExerciseId` selects which exercise is
- * active when the camera dialog opens. Used by configurable Schnellaktionen
- * buttons so the user lands on the right detector without an extra tap.
+ * Optional dialog data: `initialExerciseId` (a catalog id) selects which
+ * exercise is active when the dialog opens, `initialMode` the detector —
+ * both fall back to what the exercise supports.
  */
 export interface AutoCountDialogData {
-  readonly initialExerciseId?: AutoCountExerciseId;
+  readonly initialExerciseId?: string;
   readonly initialMode?: AutoCountMode;
-}
-
-interface ExerciseOption {
-  readonly id: AutoCountExerciseId;
-  readonly icon: string;
-  readonly label: string;
 }
 
 @Component({
@@ -67,8 +68,10 @@ interface ExerciseOption {
     MatDialogModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatFormFieldModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
   ],
   templateUrl: './auto-count-dialog.component.html',
   styleUrl: './auto-count-dialog.component.scss',
@@ -90,22 +93,29 @@ export class AutoCountDialogComponent {
   protected readonly videoRef =
     viewChild.required<ElementRef<HTMLVideoElement>>('video');
 
+  protected readonly exercises: ReadonlyArray<ExerciseOption> =
+    buildExerciseOptions();
+
   protected readonly isStarting = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly switching = signal(false);
-  protected readonly exerciseId = signal<AutoCountExerciseId>(
-    this.dialogData?.initialExerciseId ?? 'pushup'
+  protected readonly exerciseId = signal<string>(
+    this.initialExerciseId(this.dialogData?.initialExerciseId)
   );
   protected readonly formCheckOpen = signal(true);
-  /** Proximity counting only where the body moves toward the floor. */
-  protected readonly proximitySupported = computed(() =>
-    supportsProximityCount(this.exerciseId())
+  protected readonly option = computed(
+    () =>
+      this.exercises.find((o) => o.id === this.exerciseId()) ??
+      this.exercises[0]
+  );
+  protected readonly poseSupported = computed(
+    () => this.option().poseProfile !== null
+  );
+  protected readonly proximitySupported = computed(
+    () => this.option().proximity
   );
   protected readonly mode = signal<AutoCountMode>(
-    this.dialogData?.initialMode === 'proximity' &&
-      supportsProximityCount(this.dialogData?.initialExerciseId ?? 'pushup')
-      ? 'proximity'
-      : 'pose'
+    resolveMode(this.dialogData?.initialMode ?? 'pose', this.option())
   );
   protected readonly isProximity = computed(() => this.mode() === 'proximity');
   /** The detector behind the active mode; the template never sees the other. */
@@ -133,29 +143,6 @@ export class AutoCountDialogComponent {
     }
   });
 
-  protected readonly exercises: ReadonlyArray<ExerciseOption> = [
-    {
-      id: 'pushup',
-      icon: 'fitness_center',
-      label: $localize`:@@autoCount.exercise.pushup:Liegestütze`,
-    },
-    {
-      id: 'squat',
-      icon: 'airline_seat_legroom_reduced',
-      label: $localize`:@@autoCount.exercise.squat:Kniebeugen`,
-    },
-    {
-      id: 'pullup',
-      icon: 'rowing',
-      label: $localize`:@@autoCount.exercise.pullup:Klimmzüge`,
-    },
-    {
-      id: 'situp',
-      icon: 'self_improvement',
-      label: $localize`:@@autoCount.exercise.situp:Sit-ups`,
-    },
-  ];
-
   private tornDown = false;
 
   constructor() {
@@ -165,7 +152,7 @@ export class AutoCountDialogComponent {
       try {
         await this.camera.open(video);
         this.counter().bindVideoElement(video);
-        await this.counter().start({ exerciseId: this.exerciseId() });
+        await this.counter().start({ exerciseId: this.detectorExerciseId() });
       } catch (err) {
         this.error.set(err instanceof Error ? err.message : String(err));
       } finally {
@@ -178,62 +165,28 @@ export class AutoCountDialogComponent {
     });
   }
 
-  protected async onExerciseChange(next: AutoCountExerciseId): Promise<void> {
+  /**
+   * Switch exercise on the same camera stream. The mode follows what the
+   * new exercise supports, so a proximity-only exercise (burpees) lands
+   * on the proximity detector and a pose-only one (sit-ups) on the pose
+   * detector; the previous counter is stopped + reset before the next one
+   * starts so a count never leaks across.
+   */
+  protected async onExerciseChange(next: string): Promise<void> {
     if (next === this.exerciseId() || this.switching()) return;
-    // Update the active id immediately so the toggle, the error
-    // overlay (if start fails), and a subsequent retry all agree on
-    // which exercise the user just asked for. The previous counter is
-    // stopped + reset before we kick off the new start, so the only
-    // surprise on failure is "detector idle" — which the error
-    // overlay communicates explicitly.
+    if (!this.exercises.some((o) => o.id === next)) return;
     const previous = this.counter();
     this.exerciseId.set(next);
-    // An exercise without a usable brightness swing drops back to the
-    // pose detector rather than counting nothing in proximity mode.
-    if (this.isProximity() && !supportsProximityCount(next)) {
-      this.mode.set('pose');
-    }
-    this.switching.set(true);
-    this.error.set(null);
-    try {
-      await previous.stop();
-      previous.reset();
-      const current = this.counter();
-      if (current !== previous) {
-        current.bindVideoElement(this.videoRef().nativeElement);
-      }
-      await current.start({ exerciseId: next });
-    } catch (err) {
-      this.error.set(err instanceof Error ? err.message : String(err));
-    } finally {
-      this.switching.set(false);
-    }
+    this.mode.set(resolveMode(this.mode(), this.option()));
+    await this.restart(previous);
   }
 
-  /**
-   * Swap detectors on the same camera stream: the old one is stopped
-   * and reset before the new one binds the video, so a count from the
-   * previous mode never leaks into the new one.
-   */
   protected async onModeChange(next: AutoCountMode): Promise<void> {
     if (next === this.mode() || this.switching()) return;
-    if (next === 'proximity' && !this.proximitySupported()) return;
+    if (resolveMode(next, this.option()) !== next) return;
     const previous = this.counter();
-    this.switching.set(true);
-    this.error.set(null);
-    try {
-      await previous.stop();
-      previous.reset();
-      this.mode.set(next);
-      const video = this.videoRef().nativeElement;
-      const current = this.counter();
-      current.bindVideoElement(video);
-      await current.start({ exerciseId: this.exerciseId() });
-    } catch (err) {
-      this.error.set(err instanceof Error ? err.message : String(err));
-    } finally {
-      this.switching.set(false);
-    }
+    this.mode.set(next);
+    await this.restart(previous);
   }
 
   protected save(): void {
@@ -255,6 +208,44 @@ export class AutoCountDialogComponent {
 
   protected toggleFormCheck(): void {
     this.formCheckOpen.update((open) => !open);
+  }
+
+  /** Pose profile id for the pose detector, catalog id for the proximity one. */
+  private detectorExerciseId(): string {
+    return this.isProximity()
+      ? this.option().id
+      : (this.option().poseProfile ?? this.option().id);
+  }
+
+  private initialExerciseId(requested: string | undefined): string {
+    if (requested && this.exercises.some((o) => o.id === requested)) {
+      return requested;
+    }
+    return (
+      this.exercises.find((o) => o.id === PUSHUP_QUICK_ADD_EXERCISE_ID)?.id ??
+      this.exercises[0].id
+    );
+  }
+
+  private async restart(previous: {
+    stop(): Promise<void>;
+    reset(): void;
+  }): Promise<void> {
+    this.switching.set(true);
+    this.error.set(null);
+    try {
+      await previous.stop();
+      previous.reset();
+      const current = this.counter();
+      if (current !== previous) {
+        current.bindVideoElement(this.videoRef().nativeElement);
+      }
+      await current.start({ exerciseId: this.detectorExerciseId() });
+    } catch (err) {
+      this.error.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.switching.set(false);
+    }
   }
 
   private async teardown(): Promise<void> {

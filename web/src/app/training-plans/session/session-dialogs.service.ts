@@ -10,7 +10,6 @@ import {
 } from '../../core/quick-add-orchestration.models';
 
 import type {
-  AutoCountExerciseId,
   AutoCountResult,
   ExerciseTimerExerciseId,
   ExerciseTimerResult,
@@ -36,7 +35,7 @@ export class SessionDialogsService {
   private readonly dialog = inject(MatDialog);
 
   async openAutoCount(
-    initialExerciseId: AutoCountExerciseId
+    initialExerciseId: string
   ): Promise<AutoCountResult | null> {
     const { AutoCountDialogComponent } =
       await import('../../auto-count/auto-count-dialog.component');

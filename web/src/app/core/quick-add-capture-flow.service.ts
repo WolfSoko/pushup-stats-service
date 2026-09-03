@@ -23,7 +23,7 @@ import type { AutoCountDialogComponent } from '../auto-count/auto-count-dialog.c
 import type { ExerciseTimerDialogComponent } from '../auto-count/exercise-timer-dialog.component';
 import type { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
 import type {
-  AutoCountExerciseId,
+  AutoCountDialogData,
   AutoCountResult,
   ExerciseEntryDialogData,
   ExerciseTimerResult,
@@ -54,14 +54,14 @@ export class QuickAddCaptureFlowService {
    * MediaPipe-adjacent code stays out of the initial bundle until an admin
    * opens the camera.
    */
-  async openAutoCount(preselect?: AutoCountExerciseId): Promise<void> {
+  async openAutoCount(preselect?: string): Promise<void> {
     try {
       const { AutoCountDialogComponent } =
         await import('../auto-count/auto-count-dialog.component');
       this.dialog
         .open<
           AutoCountDialogComponent,
-          { initialExerciseId?: AutoCountExerciseId } | undefined,
+          AutoCountDialogData | undefined,
           AutoCountResult | null
         >(AutoCountDialogComponent, {
           ...AUTO_COUNT_DIALOG_CONFIG,

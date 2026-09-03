@@ -119,13 +119,13 @@ describe('SessionCaptureService', () => {
     );
 
     // then
-    expect(spy).toHaveBeenCalledWith('squat');
+    expect(spy).toHaveBeenCalledWith('legs.squats');
   });
 
   it('should save a capture for a different exercise without advancing the step', async () => {
     // given — the camera dialog lets the user toggle exercise mid-flow
     openAutoCount.mockResolvedValue({
-      exerciseId: 'squat',
+      exerciseId: 'legs.squats',
       reps: 12,
     });
 
