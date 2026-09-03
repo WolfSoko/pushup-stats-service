@@ -1564,7 +1564,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
-        <target>Tracker piegamenti: piani di allenamento, streak e classifica</target>
+        <target>Conta flessioni online: piani di allenamento e classifica</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -1573,7 +1573,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
-        <target>Traccia i piegamenti con una web-app gratuita: piani di allenamento, sfida di 30 giorni, obiettivo giornaliero, streak e classifica — ora anche con sit-up, squat, plank e corsa. Mobile, offline, sincronizzazione live.</target>
+        <target>Contatore di flessioni gratuito nel browser: conta le ripetizioni, piani di allenamento, streak e classifica — anche per sit-up, squat, plank e corsa.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -2539,7 +2539,7 @@
       </notes>
       <segment state="translated">
         <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
-        <target> Traccia i piegamenti in pochi secondi — con tendenze, streak e sincronizzazione live. Più sit-up, squat, plank e corsa quando vuoi di più. </target>
+        <target> Conta le flessioni in pochi secondi — con tendenze, streak e sincronizzazione live. Più sit-up, squat, plank e corsa quando vuoi di più. </target>
       </segment>
     </unit>
     <unit id="landing.cta.dashboard">
