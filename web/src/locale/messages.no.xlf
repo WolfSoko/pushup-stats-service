@@ -10890,21 +10890,21 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
         <unit id="autoCount.mode.proximityUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </source>
-        <target> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </target>
+        <target> «Mobil under deg» finnes bare for øvelser der kroppen beveger seg mot gulvet – ikke for denne øvelsen. </target>
       </segment>
     </unit>
     <unit id="autoCount.exercisePickerLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Øvelse</target>
       </segment>
     </unit>
     <unit id="autoCount.mode.poseUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </source>
-        <target> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </target>
+        <target> Det finnes ingen positendeteksjon for denne øvelsen – tell med mobilen under deg. </target>
       </segment>
     </unit>
 </file>

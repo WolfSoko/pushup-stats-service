@@ -11597,21 +11597,21 @@
       </segment>
     </unit>
         <unit id="autoCount.mode.proximityUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </source>
-        <target> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </target>
+        <target> «Κινητό κάτω από σένα» είναι διαθέσιμο μόνο για ασκήσεις όπου το σώμα κινείται προς το πάτωμα – όχι για αυτήν την άσκηση. </target>
       </segment>
     </unit>
     <unit id="autoCount.exercisePickerLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Άσκηση</target>
       </segment>
     </unit>
     <unit id="autoCount.mode.poseUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </source>
-        <target> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </target>
+        <target> Δεν υπάρχει ανίχνευση στάσης για αυτήν την άσκηση – μέτρα με το κινητό κάτω από σένα. </target>
       </segment>
     </unit>
 </file>
