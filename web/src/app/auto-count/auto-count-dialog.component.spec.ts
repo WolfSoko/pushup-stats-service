@@ -151,6 +151,47 @@ describe('AutoCountDialogComponent', () => {
     );
   });
 
+  it('should refuse proximity mode for sit-ups and fall back to the pose detector when switching to them', async () => {
+    // given — proximity mode on pushups
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    const component = fixture.componentInstance as unknown as {
+      onModeChange: (mode: 'pose' | 'proximity') => Promise<void>;
+      onExerciseChange: (id: 'situp' | 'squat') => Promise<void>;
+      mode: () => 'pose' | 'proximity';
+    };
+    await component.onModeChange('proximity');
+    fixture.detectChanges();
+    expect(component.mode()).toBe('proximity');
+
+    // when — the user picks sit-ups
+    await component.onExerciseChange('situp');
+    fixture.detectChanges();
+
+    // then — back on the pose detector, proximity toggle disabled + explained
+    expect(component.mode()).toBe('pose');
+    expect(proximity.stopSpy).toHaveBeenCalledTimes(1);
+    expect(counter.startSpy).toHaveBeenLastCalledWith({ exerciseId: 'situp' });
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-proximity-unavailable"]'
+      )
+    ).toBeTruthy();
+    const proximityToggle = fixture.nativeElement.querySelector(
+      '[data-testid="auto-count-mode-proximity"] button'
+    ) as HTMLButtonElement;
+    expect(proximityToggle.disabled).toBe(true);
+
+    // when — proximity is requested anyway
+    await component.onModeChange('proximity');
+
+    // then
+    expect(component.mode()).toBe('pose');
+    expect(proximity.startSpy).toHaveBeenCalledTimes(1);
+  });
+
   it('should show the near/far position instead of the joint angle in proximity mode', async () => {
     // given
     const state = signal<RepCountSnapshot>({

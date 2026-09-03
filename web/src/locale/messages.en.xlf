@@ -11795,5 +11795,11 @@ Deine Position: # ·  Reps        </source>
         <target> The first rep calibrates the brightness </target>
       </segment>
     </unit>
+    <unit id="autoCount.mode.proximityUnavailable">
+      <segment state="initial">
+        <source> „Handy unter dir“ gibt es für Liegestütze und Kniebeugen – bei dieser Übung bewegt sich der Körper nicht zum Boden hin. </source>
+        <target> „Handy unter dir“ gibt es für Liegestütze und Kniebeugen – bei dieser Übung bewegt sich der Körper nicht zum Boden hin. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

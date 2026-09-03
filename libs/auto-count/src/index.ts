@@ -9,6 +9,7 @@ export {
   SITUP_PROFILE,
   listProfiles,
   profileFor,
+  supportsProximityCount,
 } from './lib/exercise-angle-profile';
 export type { PoseSample } from './lib/pose-sample';
 export {

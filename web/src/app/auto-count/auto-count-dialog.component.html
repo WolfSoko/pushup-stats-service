@@ -30,11 +30,22 @@
     <mat-button-toggle
       value="proximity"
       data-testid="auto-count-mode-proximity"
+      [disabled]="!proximitySupported()"
     >
       <mat-icon>smartphone</mat-icon>
       <span i18n="@@autoCount.mode.proximity">Handy unter dir</span>
     </mat-button-toggle>
   </mat-button-toggle-group>
+  @if (!proximitySupported()) {
+    <p
+      class="hint mode-hint"
+      data-testid="auto-count-proximity-unavailable"
+      i18n="@@autoCount.mode.proximityUnavailable"
+    >
+      „Handy unter dir“ gibt es für Liegestütze und Kniebeugen – bei dieser
+      Übung bewegt sich der Körper nicht zum Boden hin.
+    </p>
+  }
   @if (isProximity()) {
     <p class="hint" i18n="@@autoCount.instructions.proximity">
       Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts-

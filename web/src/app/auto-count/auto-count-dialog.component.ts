@@ -23,6 +23,7 @@ import {
   PROXIMITY_ANGLE_SPAN_DEG,
   PROXIMITY_REP_COUNTER,
   REP_COUNTER,
+  supportsProximityCount,
 } from '@pu-stats/auto-count';
 
 import { WakeLockService } from '../core/wake-lock.service';
@@ -96,8 +97,15 @@ export class AutoCountDialogComponent {
     this.dialogData?.initialExerciseId ?? 'pushup'
   );
   protected readonly formCheckOpen = signal(true);
+  /** Proximity counting only where the body moves toward the floor. */
+  protected readonly proximitySupported = computed(() =>
+    supportsProximityCount(this.exerciseId())
+  );
   protected readonly mode = signal<AutoCountMode>(
-    this.dialogData?.initialMode ?? 'pose'
+    this.dialogData?.initialMode === 'proximity' &&
+      supportsProximityCount(this.dialogData?.initialExerciseId ?? 'pushup')
+      ? 'proximity'
+      : 'pose'
   );
   protected readonly isProximity = computed(() => this.mode() === 'proximity');
   /** The detector behind the active mode; the template never sees the other. */
@@ -178,13 +186,23 @@ export class AutoCountDialogComponent {
     // stopped + reset before we kick off the new start, so the only
     // surprise on failure is "detector idle" — which the error
     // overlay communicates explicitly.
+    const previous = this.counter();
     this.exerciseId.set(next);
+    // An exercise without a usable brightness swing drops back to the
+    // pose detector rather than counting nothing in proximity mode.
+    if (this.isProximity() && !supportsProximityCount(next)) {
+      this.mode.set('pose');
+    }
     this.switching.set(true);
     this.error.set(null);
     try {
-      await this.counter().stop();
-      this.counter().reset();
-      await this.counter().start({ exerciseId: next });
+      await previous.stop();
+      previous.reset();
+      const current = this.counter();
+      if (current !== previous) {
+        current.bindVideoElement(this.videoRef().nativeElement);
+      }
+      await current.start({ exerciseId: next });
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : String(err));
     } finally {
@@ -199,6 +217,7 @@ export class AutoCountDialogComponent {
    */
   protected async onModeChange(next: AutoCountMode): Promise<void> {
     if (next === this.mode() || this.switching()) return;
+    if (next === 'proximity' && !this.proximitySupported()) return;
     const previous = this.counter();
     this.switching.set(true);
     this.error.set(null);
