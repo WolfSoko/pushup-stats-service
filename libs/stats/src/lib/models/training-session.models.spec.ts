@@ -78,6 +78,14 @@ describe('sessionToolFor', () => {
     expect(tool).toBe('auto-count');
   });
 
+  it('should route a proximity-only exercise to the camera counter as well', () => {
+    // given / when
+    const tool = sessionToolFor({ exerciseId: 'cardio.burpees' });
+
+    // then
+    expect(tool).toBe('auto-count');
+  });
+
   it('should route an isometric hold to the hold timer', () => {
     // given / when
     const tool = sessionToolFor({ exerciseId: 'plank.standard' });

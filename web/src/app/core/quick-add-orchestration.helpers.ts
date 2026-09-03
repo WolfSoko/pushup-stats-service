@@ -8,7 +8,6 @@ import { nowLocalIsoTimestamp } from '@pu-stats/date';
 import { createVariantPatch } from '../stats/entries.variant';
 
 import type {
-  AutoCountExerciseId,
   AutoCountResult,
   ExerciseEntryDialogData,
   ExerciseEntryDialogResult,
@@ -18,32 +17,17 @@ import type {
   TrainingEntryDialogResult,
 } from './quick-add-orchestration.models';
 
-/**
- * Mapping is derived from each catalog entry's `autoCountProfileId` so the
- * catalog stays the single source of truth (no duplicated id list here).
- * `'pushup'` has no catalog entry (legacy `pushups` collection) and maps to
- * the `PUSHUP_QUICK_ADD_EXERCISE_ID` sentinel.
- */
-export function catalogIdForAutoCountProfile(
-  profile: AutoCountExerciseId
-): string | null {
-  if (profile === 'pushup') return PUSHUP_QUICK_ADD_EXERCISE_ID;
-  // Fail closed (null) on a profile with no catalog entry rather than
-  // emitting the raw profile string as an exerciseId — a non-catalog id
-  // would only fail later at save time. Callers guard before persisting.
-  return (
-    EXERCISE_CATALOG.find((d) => d.autoCountProfileId === profile)?.id ?? null
-  );
-}
+/** Pose-detector profile ids `libs/auto-count` ships angle profiles for. */
+export type AutoCountProfileId = 'pushup' | 'squat' | 'pullup' | 'situp';
 
 /**
- * Runtime allowlist for the type-only `AutoCountExerciseId` union, so an
- * unexpected catalog value can't slip through an unchecked cast and open the
- * dialog with an invalid detector id.
+ * Runtime allowlist for the type-only {@link AutoCountProfileId} union, so
+ * an unexpected catalog value can't slip through an unchecked cast and open
+ * the detector with an invalid profile id.
  */
 export function isAutoCountProfile(
   value: string | undefined
-): value is AutoCountExerciseId {
+): value is AutoCountProfileId {
   return (
     value === 'pushup' ||
     value === 'squat' ||
@@ -53,13 +37,12 @@ export function isAutoCountProfile(
 }
 
 /**
- * Inverse of {@link catalogIdForAutoCountProfile}. Returns `null` for catalog
- * ids without a valid detector profile so the dashboard fails closed instead
- * of opening the wrong detector.
+ * Pose profile behind a catalog id, or `null` when the exercise has no
+ * joint-angle detector (it may still be proximity-countable).
  */
 export function autoCountProfileForCatalogId(
   catalogId: string
-): AutoCountExerciseId | null {
+): AutoCountProfileId | null {
   if (catalogId === PUSHUP_QUICK_ADD_EXERCISE_ID) return 'pushup';
   const profile = findExerciseDefinition(catalogId)?.autoCountProfileId;
   return isAutoCountProfile(profile) ? profile : null;
@@ -73,7 +56,7 @@ export function autoCountProfileForCatalogId(
 export function catalogIdForHoldTimerProfile(
   profile: ExerciseTimerExerciseId
 ): string | null {
-  // Same fail-closed contract as catalogIdForAutoCountProfile.
+  // Fail closed (null) rather than emitting a profile string as an id.
   return (
     EXERCISE_CATALOG.find((d) => d.holdTimerProfileId === profile)?.id ?? null
   );
@@ -102,14 +85,14 @@ export function holdTimerProfileForCatalogId(
 }
 
 /**
- * Pushup results take the legacy `pushups` path; catalog exercises resolve
- * their profile to a catalog id, returning `null` when none exists so the
- * caller can fail closed.
+ * Pushup results take the legacy `pushups` path; every other result must
+ * name a rep-measured catalog exercise, otherwise `null` so the caller can
+ * fail closed instead of saving an id the rules would reject.
  */
 export function buildAutoCountPrefill(
   result: AutoCountResult
 ): TrainingEntryDialogData | null {
-  if (result.exerciseId === 'pushup') {
+  if (result.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID) {
     return {
       kind: 'pushup',
       timestamp: nowLocalIsoTimestamp(),
@@ -119,12 +102,12 @@ export function buildAutoCountPrefill(
       type: 'standard',
     } satisfies PushupEntryDialogData;
   }
-  const exerciseId = catalogIdForAutoCountProfile(result.exerciseId);
-  if (!exerciseId) return null;
+  const def = findExerciseDefinition(result.exerciseId);
+  if (!def || def.measurement !== 'reps') return null;
   return {
     kind: 'exercise',
     timestamp: nowLocalIsoTimestamp(),
-    exerciseId,
+    exerciseId: def.id,
     reps: result.reps,
     sets: [result.reps],
   } satisfies ExerciseEntryDialogData;

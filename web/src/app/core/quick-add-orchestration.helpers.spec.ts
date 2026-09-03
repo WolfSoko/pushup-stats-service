@@ -3,7 +3,6 @@ import {
   buildAutoCountPrefill,
   buildConfirmedEntryPayload,
   buildExerciseEntryPayload,
-  catalogIdForAutoCountProfile,
   catalogIdForHoldTimerProfile,
   holdTimerProfileForCatalogId,
   isAutoCountProfile,
@@ -15,23 +14,6 @@ import type {
   PushupEntryDialogResult,
   TrainingEntryDialogResult,
 } from './quick-add-orchestration.models';
-
-describe('catalogIdForAutoCountProfile', () => {
-  it('should map the pushup profile to the legacy sentinel id', () => {
-    // given / when
-    const result = catalogIdForAutoCountProfile('pushup');
-
-    // then
-    expect(result).toBe('pushup');
-  });
-
-  it('should resolve a catalog-backed profile to its catalog id', () => {
-    // given / when / then
-    expect(catalogIdForAutoCountProfile('squat')).toBe('legs.squats');
-    expect(catalogIdForAutoCountProfile('pullup')).toBe('pull.pullups');
-    expect(catalogIdForAutoCountProfile('situp')).toBe('abs.situps');
-  });
-});
 
 describe('isAutoCountProfile', () => {
   it('should accept every known detector profile', () => {
@@ -130,9 +112,9 @@ describe('buildAutoCountPrefill', () => {
     expect(typeof (prefill as { timestamp: string }).timestamp).toBe('string');
   });
 
-  it('should build an exercise prefill resolving the catalog id', () => {
+  it('should build an exercise prefill for a catalog exercise', () => {
     // given
-    const result: AutoCountResult = { exerciseId: 'squat', reps: 8 };
+    const result: AutoCountResult = { exerciseId: 'legs.squats', reps: 8 };
 
     // when
     const prefill = buildAutoCountPrefill(result);
@@ -146,15 +128,12 @@ describe('buildAutoCountPrefill', () => {
     });
   });
 
-  it('should return null when the profile has no catalog id', () => {
-    // given: an unmapped profile value smuggled past the type
-    const result = {
-      exerciseId: 'plank',
-      reps: 5,
-    } as unknown as AutoCountResult;
-
-    // when / then
-    expect(buildAutoCountPrefill(result)).toBeNull();
+  it('should return null for an unknown id or a non-rep exercise', () => {
+    // given / when / then
+    expect(buildAutoCountPrefill({ exerciseId: 'plank', reps: 5 })).toBeNull();
+    expect(
+      buildAutoCountPrefill({ exerciseId: 'plank.standard', reps: 5 })
+    ).toBeNull();
   });
 });
 

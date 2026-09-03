@@ -94,7 +94,7 @@ describe('AutoCountDialogComponent', () => {
     expect(counter.startSpy).toHaveBeenCalledWith({ exerciseId: 'pushup' });
   });
 
-  it('given MAT_DIALOG_DATA preselects "situp", then the counter starts with situp instead of pushup', async () => {
+  it('given MAT_DIALOG_DATA preselects "abs.situps", then the pose counter starts with the situp profile', async () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       imports: [AutoCountDialogComponent],
@@ -110,7 +110,7 @@ describe('AutoCountDialogComponent', () => {
         },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: { initialExerciseId: 'situp' },
+          useValue: { initialExerciseId: 'abs.situps' },
         },
         { provide: REP_COUNTER, useValue: counter },
         { provide: PROXIMITY_REP_COUNTER, useValue: proximity },
@@ -149,6 +149,95 @@ describe('AutoCountDialogComponent', () => {
     expect(fixture.nativeElement.textContent).toContain(
       'Leg das Handy mit dem Display nach oben'
     );
+  });
+
+  it('should refuse proximity mode for sit-ups and fall back to the pose detector when switching to them', async () => {
+    // given — proximity mode on pushups
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    const component = fixture.componentInstance as unknown as {
+      onModeChange: (mode: 'pose' | 'proximity') => Promise<void>;
+      onExerciseChange: (id: string) => Promise<void>;
+      mode: () => 'pose' | 'proximity';
+    };
+    await component.onModeChange('proximity');
+    fixture.detectChanges();
+    expect(component.mode()).toBe('proximity');
+
+    // when — the user picks sit-ups
+    await component.onExerciseChange('abs.situps');
+    fixture.detectChanges();
+
+    // then — back on the pose detector, proximity toggle disabled + explained
+    expect(component.mode()).toBe('pose');
+    expect(proximity.stopSpy).toHaveBeenCalledTimes(1);
+    expect(counter.startSpy).toHaveBeenLastCalledWith({ exerciseId: 'situp' });
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-proximity-unavailable"]'
+      )
+    ).toBeTruthy();
+    const proximityToggle = fixture.nativeElement.querySelector(
+      '[data-testid="auto-count-mode-proximity"] button'
+    ) as HTMLButtonElement;
+    expect(proximityToggle.disabled).toBe(true);
+
+    // when — proximity is requested anyway
+    await component.onModeChange('proximity');
+
+    // then
+    expect(component.mode()).toBe('pose');
+    expect(proximity.startSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should open a proximity-only exercise straight on the proximity detector and hide the pose option', async () => {
+    // given — burpees have no pose profile but are proximity-countable
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [AutoCountDialogComponent],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: CameraService,
+          useValue: { open: cameraOpen, close: cameraClose },
+        },
+        { provide: MatDialogRef, useValue: { close: dialogClose } },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { initialExerciseId: 'cardio.burpees' },
+        },
+        { provide: REP_COUNTER, useValue: counter },
+        { provide: PROXIMITY_REP_COUNTER, useValue: proximity },
+      ],
+    });
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    fixture.detectChanges();
+
+    // then
+    expect(proximity.startSpy).toHaveBeenCalledWith({
+      exerciseId: 'cardio.burpees',
+    });
+    expect(counter.startSpy).not.toHaveBeenCalled();
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-pose-unavailable"]'
+      )
+    ).toBeTruthy();
+    const poseToggle = fixture.nativeElement.querySelector(
+      '[data-testid="auto-count-mode-pose"] button'
+    ) as HTMLButtonElement;
+    expect(poseToggle.disabled).toBe(true);
+
+    // when
+    (fixture.componentInstance as unknown as { save: () => void }).save();
+
+    // then — a catalog id, not a profile id, leaves the dialog
+    expect(dialogClose).toHaveBeenCalledWith(null);
   });
 
   it('should show the near/far position instead of the joint angle in proximity mode', async () => {

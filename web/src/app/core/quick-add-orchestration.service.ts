@@ -19,8 +19,6 @@ import {
   notifyGoalReached,
 } from './quick-add-notify';
 
-import type { AutoCountExerciseId } from './quick-add-orchestration.models';
-
 @Injectable({ providedIn: 'root' })
 export class QuickAddOrchestrationService {
   private readonly exerciseApi = inject(ExerciseFirestoreService, {
@@ -147,7 +145,8 @@ export class QuickAddOrchestrationService {
     }
   }
 
-  openAutoCount(preselect?: AutoCountExerciseId): Promise<void> {
+  /** `preselect` is a catalog id (or the pushup sentinel). */
+  openAutoCount(preselect?: string): Promise<void> {
     return this.captureFlow.openAutoCount(preselect);
   }
 

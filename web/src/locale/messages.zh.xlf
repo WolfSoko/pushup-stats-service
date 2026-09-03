@@ -11102,5 +11102,23 @@
         <target> 第一次动作用于校准亮度 </target>
       </segment>
     </unit>
+        <unit id="autoCount.mode.proximityUnavailable">
+      <segment state="initial">
+        <source> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </source>
+        <target> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.exercisePickerLabel">
+      <segment state="initial">
+        <source>Übung</source>
+        <target>Übung</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.mode.poseUnavailable">
+      <segment state="initial">
+        <source> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </source>
+        <target> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

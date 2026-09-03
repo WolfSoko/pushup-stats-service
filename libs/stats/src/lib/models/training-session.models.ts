@@ -1,3 +1,4 @@
+import { captureMethodsFor } from './exercise-capture.models';
 import { findExerciseDefinition } from './exercise.catalog';
 import { TrainingPlanExercise } from './training-plan.models';
 import { PlanExerciseProgress } from './training-plan-exercise.models';
@@ -79,20 +80,20 @@ export interface SessionStep {
 }
 
 /**
- * Which capture tool fits an exercise. Branches on the catalog's
- * `measurement` first and only then on the profile ids, so a definition
- * that ever carries both profiles still routes to the tool that matches
- * how the exercise is actually measured.
+ * Which capture tool fits an exercise: the most automatic of the
+ * catalog's {@link captureMethodsFor} methods. Both camera detectors
+ * (pose and proximity) open the same camera dialog, which picks the
+ * detector the exercise supports.
  */
 export function sessionToolFor(
   exercise: Pick<TrainingPlanExercise, 'exerciseId'>
 ): SessionToolKind {
   const def = findExerciseDefinition(exercise.exerciseId);
   if (!def) return 'manual';
-  if (def.measurement === 'time') {
-    return def.holdTimerProfileId ? 'hold-timer' : 'stopwatch';
-  }
-  if (def.measurement === 'reps' && def.autoCountProfileId) {
+  const methods = captureMethodsFor(def);
+  if (methods.includes('hold-timer')) return 'hold-timer';
+  if (methods.includes('stopwatch')) return 'stopwatch';
+  if (methods.includes('pose') || methods.includes('proximity')) {
     return 'auto-count';
   }
   return 'manual';

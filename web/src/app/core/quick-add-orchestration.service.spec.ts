@@ -286,7 +286,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
 
   function setup(
     autoCountResult: {
-      exerciseId: 'pushup' | 'squat' | 'pullup' | 'situp';
+      exerciseId: string;
       reps: number;
     } | null,
     trainingResult: unknown,
@@ -353,7 +353,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
 
   it('Given the camera dialog returns squat reps, Then the entry dialog opens prefilled with kind=exercise and exerciseId legs.squats', async () => {
     const { service, dialogMock } = setup(
-      { exerciseId: 'squat', reps: 8 },
+      { exerciseId: 'legs.squats', reps: 8 },
       null
     );
 
@@ -370,14 +370,11 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     expect(config.data.reps).toBe(8);
   });
 
-  it.each([
-    ['pullup', 'pull.pullups'],
-    ['situp', 'abs.situps'],
-  ] as const)(
-    'Given the camera dialog returns %s reps, Then the entry dialog uses catalog id %s',
-    async (autoId, catalogId) => {
+  it.each([['pull.pullups'], ['abs.situps']] as const)(
+    'Given the camera dialog returns reps for %s, Then the entry dialog keeps that catalog id',
+    async (catalogId) => {
       const { service, dialogMock } = setup(
-        { exerciseId: autoId, reps: 5 },
+        { exerciseId: catalogId, reps: 5 },
         null
       );
 
@@ -434,7 +431,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
       variantId: 'bodyweight',
     };
     const { service } = setup(
-      { exerciseId: 'squat', reps: 8 },
+      { exerciseId: 'legs.squats', reps: 8 },
       trainingResult,
       { userId: 'admin-uid' }
     );
@@ -464,7 +461,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
       variantId: 'standard',
     };
     const { service } = setup(
-      { exerciseId: 'squat', reps: 8 },
+      { exerciseId: 'legs.squats', reps: 8 },
       trainingResult,
       { userId: 'admin-uid' }
     );
@@ -493,7 +490,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
       distanceM: 5000,
     };
     const { service } = setup(
-      { exerciseId: 'squat', reps: 8 },
+      { exerciseId: 'legs.squats', reps: 8 },
       trainingResult,
       { userId: 'admin-uid' }
     );
@@ -519,7 +516,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
       sets: [9],
     };
     const { service } = setup(
-      { exerciseId: 'squat', reps: 8 },
+      { exerciseId: 'legs.squats', reps: 8 },
       trainingResult,
       { userId: '' }
     );
@@ -535,7 +532,7 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
 
   it('Given the entry dialog is cancelled, Then nothing is created', async () => {
     const { service, dialogMock } = setup(
-      { exerciseId: 'squat', reps: 8 },
+      { exerciseId: 'legs.squats', reps: 8 },
       null
     );
 
@@ -552,14 +549,14 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
   // openAutoCount(preselect) so the camera dialog lands on the right
   // detector without an extra tap. The orchestrator must forward
   // `preselect` into MAT_DIALOG_DATA as `initialExerciseId`.
-  it('Given openAutoCount("situp"), Then dialog.open receives data.initialExerciseId="situp"', async () => {
+  it('Given openAutoCount("abs.situps"), Then dialog.open receives data.initialExerciseId="abs.situps"', async () => {
     const { service, dialogMock } = setup(null, undefined);
 
-    await service.openAutoCount('situp');
+    await service.openAutoCount('abs.situps');
 
     const config = dialogMock.open.mock.calls[0][1] as
       { data?: { initialExerciseId?: string } } | undefined;
-    expect(config?.data?.initialExerciseId).toBe('situp');
+    expect(config?.data?.initialExerciseId).toBe('abs.situps');
   });
 
   it('Given openAutoCount() without a preselect, Then no dialog data is passed (legacy behaviour)', async () => {

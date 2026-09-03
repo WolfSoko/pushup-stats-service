@@ -99,6 +99,14 @@ export interface ExerciseDefinition {
    * adapter. Absent ⇒ no guided hold-timer entry path.
    */
   holdTimerProfileId?: string;
+  /**
+   * Whether the brightness-based proximity counter (phone lying face-up
+   * beneath the user) is a sensible way to count this exercise. True only
+   * where the torso moves toward and away from the floor on every rep —
+   * a sit-up pivots at the hip and a pull-up happens metres above the
+   * phone, so neither produces a usable brightness swing. Reps only.
+   */
+  proximityCountable?: boolean;
   variants?: readonly ExerciseVariant[];
   /**
    * Whether `variantId` may hold a value outside {@link variants}. Set for

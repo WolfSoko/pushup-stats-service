@@ -225,7 +225,7 @@ describe('QuickAddConfigDialogComponent', () => {
       const component = fixture.componentInstance as unknown as {
         setExerciseId(i: number, id: string): void;
       };
-      component.setExerciseId(0, 'hinge.goodmorning');
+      component.setExerciseId(0, 'abs.russiantwist');
       fixture.detectChanges();
 
       // checkbox for row 0 should not be present
@@ -245,7 +245,7 @@ describe('QuickAddConfigDialogComponent', () => {
       const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
       expect(patch.ui?.quickAdds?.[0]).toEqual(
         expect.objectContaining({
-          exerciseId: 'hinge.goodmorning',
+          exerciseId: 'abs.russiantwist',
           mode: 'reps',
         })
       );
@@ -264,7 +264,7 @@ describe('QuickAddConfigDialogComponent', () => {
         {
           reps: 5,
           inSpeedDial: false,
-          exerciseId: 'hinge.goodmorning',
+          exerciseId: 'abs.russiantwist',
           mode: 'auto-count',
         },
       ]);
@@ -286,7 +286,7 @@ describe('QuickAddConfigDialogComponent', () => {
       const patch = saveSpy.mock.calls[0][0] as UserConfigUpdate;
       expect(patch.ui?.quickAdds?.[0]).toEqual(
         expect.objectContaining({
-          exerciseId: 'hinge.goodmorning',
+          exerciseId: 'abs.russiantwist',
           mode: 'reps',
           reps: 5,
         })

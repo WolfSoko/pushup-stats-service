@@ -5,19 +5,13 @@
 }
 
 .exercise-picker {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+  width: 100%;
+  margin-bottom: 8px;
+}
 
-  mat-button-toggle {
-    flex: 1 1 auto;
-    min-width: 76px;
-  }
-
-  mat-icon {
-    margin-right: 4px;
-    vertical-align: middle;
-  }
+mat-option mat-icon {
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 .mode-picker {
@@ -32,6 +26,10 @@
     margin-right: 4px;
     vertical-align: middle;
   }
+}
+
+.mode-hint {
+  margin-top: -6px;
 }
 
 .hint {

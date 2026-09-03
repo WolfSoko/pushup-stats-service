@@ -822,7 +822,7 @@ describe('StatsDashboardComponent', () => {
           label: 'Auto: Kniebeugen',
         });
 
-        expect(openAutoCount).toHaveBeenCalledWith('squat');
+        expect(openAutoCount).toHaveBeenCalledWith('legs.squats');
         expect(serviceMock.createPushup).not.toHaveBeenCalled();
         expect(exerciseCreateSpy).not.toHaveBeenCalled();
       });
@@ -836,12 +836,12 @@ describe('StatsDashboardComponent', () => {
         vi.clearAllMocks();
 
         await component.addQuickEntryFromConfig({
-          key: 'auto-count:hinge.goodmorning:0',
+          key: 'auto-count:abs.russiantwist:0',
           mode: 'auto-count',
-          exerciseId: 'hinge.goodmorning',
+          exerciseId: 'abs.russiantwist',
           reps: 0,
-          exerciseLabel: 'Good Morning',
-          label: 'Auto: Good Morning',
+          exerciseLabel: 'Russian Twist',
+          label: 'Auto: Russian Twist',
         });
 
         expect(openAutoCount).not.toHaveBeenCalled();
