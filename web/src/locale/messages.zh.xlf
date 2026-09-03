@@ -11103,21 +11103,21 @@
       </segment>
     </unit>
         <unit id="autoCount.mode.proximityUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </source>
-        <target> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </target>
+        <target> “手机放在你身下”仅适用于身体朝地面移动的动作——本练习不适用。 </target>
       </segment>
     </unit>
     <unit id="autoCount.exercisePickerLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>练习</target>
       </segment>
     </unit>
     <unit id="autoCount.mode.poseUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </source>
-        <target> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </target>
+        <target> 该练习没有姿势识别——请将手机放在身下计数。 </target>
       </segment>
     </unit>
 </file>

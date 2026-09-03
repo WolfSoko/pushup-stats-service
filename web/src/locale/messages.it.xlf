@@ -11597,21 +11597,21 @@
       </segment>
     </unit>
         <unit id="autoCount.mode.proximityUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </source>
-        <target> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </target>
+        <target> “Telefono sotto di te” è disponibile solo per gli esercizi in cui il corpo si muove verso il pavimento – non per questo esercizio. </target>
       </segment>
     </unit>
     <unit id="autoCount.exercisePickerLabel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Esercizio</target>
       </segment>
     </unit>
     <unit id="autoCount.mode.poseUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </source>
-        <target> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </target>
+        <target> Per questo esercizio non è disponibile il rilevamento della posa – conta con il telefono sotto di te. </target>
       </segment>
     </unit>
 </file>
