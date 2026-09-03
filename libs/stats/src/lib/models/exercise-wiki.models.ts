@@ -369,6 +369,13 @@ export interface ExerciseWikiLocalized {
   summary: string;
   instructions: ReadonlyArray<string>;
   tips: ReadonlyArray<string>;
+  /**
+   * Long-form body for this locale, absent while the entry is
+   * frontmatter-only. Resolved per locale rather than per entry: a
+   * translation that has not caught up yet keeps its page noindexed
+   * instead of inheriting the German body.
+   */
+  article?: string;
 }
 
 /**
@@ -392,5 +399,6 @@ export function localizeExerciseWiki(
     summary: content.summary,
     instructions: content.instructions,
     tips: content.tips,
+    article: content.article,
   };
 }

@@ -104,8 +104,8 @@ describe('PushupTypeDetailComponent', () => {
       document.head.querySelector('meta[name="robots"]')?.remove();
     });
 
-    it('should emit a noindex robots meta tag for the thin detail page', async () => {
-      // given
+    it('should not emit a robots meta tag for an entry with a long-form body', async () => {
+      // given — `standard` carries an article in content/wiki/pushup-types
       document.head.querySelector('meta[name="robots"]')?.remove();
 
       // when
@@ -118,10 +118,23 @@ describe('PushupTypeDetailComponent', () => {
       });
 
       // then
-      const robots = document.head.querySelector(
-        'meta[name="robots"]'
-      ) as HTMLMetaElement | null;
-      expect(robots?.content).toBe('noindex,follow');
+      expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
+    });
+
+    it('should render the long-form body', async () => {
+      // when
+      const { container } = await render(PushupTypeDetailComponent, {
+        providers: [
+          provideRouter([]),
+          provideLocationMocks(),
+          { provide: ActivatedRoute, useValue: makeRouteMock('standard') },
+        ],
+      });
+
+      // then
+      const article = container.querySelector('.detail-article');
+      expect(article).not.toBeNull();
+      expect(article?.querySelectorAll('h2').length).toBeGreaterThan(0);
     });
   });
 });

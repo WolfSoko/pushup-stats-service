@@ -239,11 +239,13 @@ export function loadPushupTypeContent(contentRoot) {
     }
     const data = parsed.data;
     out[id] ??= {};
+    const article = optionalArticle(parsed.body);
     out[id][lang] = {
       name: requireStr(data, 'name', path),
       summary: requireStr(data, 'summary', path),
       instructions: requireStrArray(data, 'instructions', path),
       tips: data.tips == null ? [] : requireStrArray(data, 'tips', path),
+      ...(article === undefined ? {} : { article }),
     };
   }
   // Sort top-level keys (push-up type ids) and per-id locale keys so
@@ -260,6 +262,22 @@ export function loadPushupTypeContent(contentRoot) {
         ),
       ])
   );
+}
+
+/**
+ * Long-form body of a wiki entry, rendered to HTML. Empty when the file
+ * carries frontmatter only.
+ *
+ * Presence of this field is what makes a wiki detail page indexable: the
+ * components drop `noindex` and the sitemap generator emits the URL only
+ * for entries that have one. Frontmatter-only entries stay excluded —
+ * ~60-100 words read as thin content and once cost the site an AdSense
+ * review. Keeping the gate here means content and indexability can never
+ * drift apart.
+ */
+function optionalArticle(body) {
+  const html = marked.parse(body).trim();
+  return html === '' ? undefined : html;
 }
 
 function requireStrArray(data, key, path) {
@@ -325,6 +343,8 @@ export interface PushupTypeContent {
   readonly summary: string;
   readonly instructions: ReadonlyArray<string>;
   readonly tips: ReadonlyArray<string>;
+  /** Long-form body as HTML. Absent for frontmatter-only entries, which stay noindexed. */
+  readonly article?: string;
 }
 
 /**
@@ -345,6 +365,8 @@ export interface ExerciseWikiContent {
   readonly summary: string;
   readonly instructions: ReadonlyArray<string>;
   readonly tips: ReadonlyArray<string>;
+  /** Long-form body as HTML. Absent for frontmatter-only entries, which stay noindexed. */
+  readonly article?: string;
 }
 
 /**
@@ -399,11 +421,13 @@ export function loadExerciseWikiContent(contentRoot) {
     }
     const data = parsed.data;
     out[id] ??= {};
+    const article = optionalArticle(parsed.body);
     out[id][lang] = {
       name: requireStr(data, 'name', path),
       summary: requireStr(data, 'summary', path),
       instructions: requireStrArray(data, 'instructions', path),
       tips: data.tips == null ? [] : requireStrArray(data, 'tips', path),
+      ...(article === undefined ? {} : { article }),
     };
   }
   return Object.fromEntries(

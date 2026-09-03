@@ -48,7 +48,10 @@ function runScript({ extraEnv = {}, args = [] } = {}) {
 // Build an isolated sandbox tree so the detector exercises every gap
 // branch deterministically, regardless of how complete the real repo's
 // translations happen to be at test time.
-function buildFixture({ sourceOnlyBlogFolders = [] } = {}) {
+function buildFixture({
+  sourceOnlyBlogFolders = [],
+  wikiArticleIds = [],
+} = {}) {
   const root = mkdtempSync(join(tmpdir(), 'detect-gaps-fixture-'));
   const localeDir = join(root, 'web/src/locale');
   const blogDir = join(root, 'content/blog');
@@ -136,6 +139,20 @@ function buildFixture({ sourceOnlyBlogFolders = [] } = {}) {
   writeFileSync(join(wikiDir, 'arch.de.md'), '---\nname: Bogen\n---\n');
   writeFileSync(join(wikiDir, 'arch.en.md'), '---\nname: Arch\n---\n');
   // fr and la wiki files missing.
+
+  // Wiki entries whose German source has grown a long-form body while a
+  // sibling locale still holds frontmatter only. Opt-in per fixture: the
+  // baseline tree keeps 'en' fully covered, and a body gap would blunt
+  // that assertion.
+  for (const id of wikiArticleIds) {
+    writeFileSync(
+      join(wikiDir, `${id}.de.md`),
+      `---\nname: ${id}\n---\n\n<h2>Ausführung</h2>\n<p>Langtext.</p>\n`
+    );
+    writeFileSync(join(wikiDir, `${id}.en.md`), `---\nname: ${id}\n---\n`);
+    writeFileSync(join(wikiDir, `${id}.fr.md`), `---\nname: ${id}\n---\n`);
+    writeFileSync(join(wikiDir, `${id}.la.md`), `---\nname: ${id}\n---\n`);
+  }
 
   return {
     root,
@@ -236,6 +253,49 @@ describe('detect-translation-gaps', () => {
       );
       // en has full coverage in the fixture — no gaps reported for it.
       expect(kinds.filter((k) => k.endsWith(':en'))).toEqual([]);
+    });
+  });
+
+  describe('against a fixture whose wiki source grew a long-form body', () => {
+    let fixture;
+    beforeAll(() => {
+      fixture = buildFixture({ wikiArticleIds: ['stuetz'] });
+    });
+    afterAll(() => {
+      rmSync(fixture.root, { recursive: true, force: true });
+    });
+
+    it('flags every locale whose file exists but has no body', () => {
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then — the file exists, so a plain existence check sees nothing;
+      // without this the page would stay noindexed forever.
+      const articleGaps = gaps.gaps
+        .filter((g) => g.kind === 'wiki-article')
+        .map((g) => `${g.id}:${g.locale}`)
+        .sort();
+      expect(articleGaps).toEqual(['stuetz:en', 'stuetz:fr', 'stuetz:la']);
+    });
+
+    it('does not flag the entry that is frontmatter-only on both sides', () => {
+      // given — `arch` has no body in any locale, so nothing is missing
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then
+      const archArticleGaps = gaps.gaps.filter(
+        (g) => g.kind === 'wiki-article' && g.id === 'arch'
+      );
+      expect(archArticleGaps).toEqual([]);
+    });
+
+    it('counts body gaps separately in the summary env file', () => {
+      // when
+      const { summary } = runScript({ extraEnv: fixture.env });
+
+      // then
+      expect(summary).toMatch(/^wiki_article_count=3$/m);
     });
   });
 

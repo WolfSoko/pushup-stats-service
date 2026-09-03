@@ -78,15 +78,18 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   // Wiki detail pages: catalog-driven content, identical output per
-  // slug+locale until the next deploy — genuinely "static", but
-  // deliberately noindex'd (thin content, see SeoService.update calls
-  // in the components) and excluded from sitemap.xml, so they aren't
-  // "important for SEO" and don't need build-time prerendering. Moved
-  // from Prerender to Server to cut ~1400 of the ~2400 routes that
+  // slug+locale until the next deploy — genuinely "static". Server
+  // rather than Prerender to cut ~1400 of the ~2400 routes that
   // thrashed the App Hosting builder (see
   // docs/gotchas/build-and-tooling.md). `server-ssr-cache.ts` gives
   // the CDN in front of Cloud Run a short TTL for these paths so
   // repeat hits don't re-render on every request.
+  //
+  // Entries that carry a long-form body are indexed and listed in
+  // sitemap.xml; frontmatter-only ones still emit `noindex` (see the
+  // SeoService.update calls in the components). Server mode serves
+  // both the same way — crawlers get fully populated HTML either way,
+  // so indexability does not force a move back to Prerender.
   {
     path: 'wiki/liegestuetz-typen/:slug',
     renderMode: RenderMode.Server,

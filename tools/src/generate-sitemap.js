@@ -309,17 +309,147 @@ function buildBlogRoutes(posts) {
   });
 }
 
-// Wiki detail pages (`/wiki/liegestuetz-typen/<slug>`,
-// `/wiki/uebungen/<slug>`) are deliberately NOT in the sitemap: at
-// ~60-100 words each across every locale they read as thin/scaled
-// content to Google and triggered an AdSense "low value content"
-// rejection. The detail components emit `noindex`; only the two list
-// pages (in `staticRoutes`) stay indexable. Re-add per-slug emission
-// here once the entries carry substantial unique content.
+/**
+ * True when a wiki markdown file carries a long-form body below its
+ * frontmatter. This is the single signal that decides indexability:
+ * entries with a body are listed here and drop their `noindex` tag,
+ * frontmatter-only entries stay out of both. At ~60-100 words those
+ * read as thin content and once cost the site an AdSense review.
+ *
+ * The detail components gate their robots tag on the same field
+ * (`article`, produced from this body by `generate-content.mjs`), so
+ * the sitemap and the robots tag cannot drift apart.
+ */
+function hasMarkdownBody(path) {
+  const source = readFileSync(path, 'utf-8');
+  const afterOpen = source.indexOf('\n', 3) + 1;
+  const closeIdx = source.indexOf('\n---', afterOpen);
+  if (closeIdx === -1) return false;
+  return source.slice(closeIdx + 4).trim().length > 0;
+}
+
+/**
+ * Maps wiki entry id → set of locales whose file has a body. Resolved
+ * per (id, locale), not per id: a translation that has not caught up
+ * yet must not be listed, or the sitemap would advertise a page that
+ * still serves `noindex`.
+ */
+function scanWikiArticles(dir) {
+  const byId = new Map();
+  if (!existsSync(dir)) return byId;
+  for (const file of readdirSync(dir).sort()) {
+    const match = /^(.+)\.([a-z][a-z-]*)\.md$/.exec(file);
+    if (!match) continue;
+    const [, id, lang] = match;
+    if (!hasMarkdownBody(join(dir, file))) continue;
+    if (!byId.has(id)) byId.set(id, new Set());
+    byId.get(id).add(lang);
+  }
+  return byId;
+}
+
+/**
+ * Push-up type slugs are per-locale (`slugs: { en, fr, ... }` with the
+ * top-level `slug` as the German/default). Mirrors
+ * `pushupTypeSlugByLocale()` in `pushup-type.models.ts` — the same
+ * `slugs?.[lang] ?? slug` fallback the detail route resolves at
+ * runtime, so every emitted URL is one the app actually serves.
+ */
+function extractPushupTypeSlugs(source) {
+  const byId = new Map();
+  const blockRegex =
+    /\bid:\s*'([^']+)',\s*\n\s*slug:\s*'([^']+)',\s*\n\s*slugs:\s*\{([^}]*)\}/g;
+  let match;
+  while ((match = blockRegex.exec(source)) !== null) {
+    const [, id, defaultSlug, slugsBlock] = match;
+    const perLocale = {};
+    for (const entry of slugsBlock.matchAll(/([a-z][a-z-]*):\s*'([^']+)'/g)) {
+      perLocale[entry[1]] = entry[2];
+    }
+    byId.set(id, { defaultSlug, perLocale });
+  }
+  return byId;
+}
+
+/** Exercise wiki entries share one slug across locales. */
+function extractExerciseWikiSlugs(source) {
+  const byId = new Map();
+  const blockRegex =
+    /\bid:\s*'([^']+)',\s*\n\s*categoryId:\s*'[^']+',\s*\n\s*slug:\s*'([^']+)'/g;
+  let match;
+  while ((match = blockRegex.exec(source)) !== null) {
+    byId.set(match[1], match[2]);
+  }
+  return byId;
+}
+
+function readCatalogSource(relativePath) {
+  try {
+    return readFileSync(resolve(ROOT, relativePath), 'utf-8');
+  } catch (err) {
+    console.error(`Failed to read ${relativePath}: ${err.message}`);
+    return '';
+  }
+}
+
+function buildWikiRoutes(slugFor, articlesById) {
+  const routes = [];
+  for (const [id, localesWithArticle] of [...articlesById].sort()) {
+    const emitted = LOCALES.filter((lang) => localesWithArticle.has(lang));
+    if (emitted.length === 0) continue;
+    const alternates = emitted
+      .map((lang) => ({ lang, path: slugFor(id, lang) }))
+      .filter((alt) => alt.path !== null);
+    if (alternates.length === 0) continue;
+    for (const lang of emitted) {
+      const path = slugFor(id, lang);
+      if (path === null) continue;
+      routes.push({
+        path,
+        changefreq: 'monthly',
+        priority: '0.6',
+        locale: lang,
+        alternates,
+      });
+    }
+  }
+  return routes;
+}
+
+function buildPushupTypeRoutes() {
+  const slugs = extractPushupTypeSlugs(
+    readCatalogSource('libs/stats/src/lib/models/pushup-type.models.ts')
+  );
+  const articles = scanWikiArticles(resolve(ROOT, 'content/wiki/pushup-types'));
+  return buildWikiRoutes((id, lang) => {
+    const entry = slugs.get(id);
+    if (!entry) return null;
+    const slug = entry.perLocale[lang] ?? entry.defaultSlug;
+    return `/wiki/liegestuetz-typen/${slug}`;
+  }, articles);
+}
+
+function buildExerciseWikiRoutes() {
+  const slugs = extractExerciseWikiSlugs(
+    readCatalogSource('libs/stats/src/lib/models/exercise-wiki.models.ts')
+  );
+  const articles = scanWikiArticles(resolve(ROOT, 'content/wiki/exercises'));
+  return buildWikiRoutes((id) => {
+    const slug = slugs.get(id);
+    return slug ? `/wiki/uebungen/${slug}` : null;
+  }, articles);
+}
+
 function generateSitemap(posts, planSlugs = []) {
   const blogRoutes = buildBlogRoutes(posts);
   const planRoutes = buildTrainingPlanRoutes(planSlugs);
-  const allRoutes = [...buildStaticRoutes(), ...planRoutes, ...blogRoutes];
+  const allRoutes = [
+    ...buildStaticRoutes(),
+    ...planRoutes,
+    ...blogRoutes,
+    ...buildPushupTypeRoutes(),
+    ...buildExerciseWikiRoutes(),
+  ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">

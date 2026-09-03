@@ -5590,4 +5590,95 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://pushup-stats.com/zh/blog/wim-hof-pushups"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/blog/wim-hof-liegestuetze"/>
   </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/archer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/archer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/archer"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/decline</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/decline"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/decline"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/diamant"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/incline</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/incline"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/incline"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/knie</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/knie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/knie"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/faust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/faust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/faust"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/negative-einarmig</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/negative-einarmig"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/negative-einarmig"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/einarmig</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/einarmig"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/einarmig"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/partielle-einarmig</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/partielle-einarmig"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/partielle-einarmig"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/pike</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/pike"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/pike"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/standard</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/standard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/standard"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/wand-einarmig</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/wand-einarmig"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/wand-einarmig"/>
+  </url>
+  <url>
+    <loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/weit</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/weit"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pushup-stats.com/de/wiki/liegestuetz-typen/weit"/>
+  </url>
 </urlset>

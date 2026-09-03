@@ -24,7 +24,7 @@
  * locale (`de`) is filtered out automatically.
  */
 import { promises as fs } from 'node:fs';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
 
@@ -170,6 +170,7 @@ async function detectWikiGaps(targetLocales) {
   for (const id of ids) {
     const sourcePath = join(WIKI_DIR, `${id}.${SOURCE_LOCALE}.md`);
     const hasSource = existsSync(sourcePath);
+    const sourceHasArticle = hasSource && hasMarkdownBody(sourcePath);
     for (const locale of targetLocales) {
       const candidate = join(WIKI_DIR, `${id}.${locale}.md`);
       if (!existsSync(candidate)) {
@@ -180,10 +181,37 @@ async function detectWikiGaps(targetLocales) {
           path: relative(REPO_ROOT, candidate),
           sourcePath: hasSource ? relative(REPO_ROOT, sourcePath) : null,
         });
+        continue;
+      }
+      // A file that exists but lacks the German source's long-form body
+      // is invisible to a plain existence check, yet it keeps the page
+      // `noindex` and out of the sitemap — the whole point of writing
+      // the body. Report it as its own gap kind so the routine fills it.
+      if (sourceHasArticle && !hasMarkdownBody(candidate)) {
+        gaps.push({
+          locale,
+          kind: 'wiki-article',
+          id,
+          path: relative(REPO_ROOT, candidate),
+          sourcePath: relative(REPO_ROOT, sourcePath),
+        });
       }
     }
   }
   return gaps;
+}
+
+/**
+ * True when a markdown file carries a body below its frontmatter.
+ * Mirrors the check in `generate-sitemap.js`; both exist because the
+ * body is what makes a wiki page indexable.
+ */
+function hasMarkdownBody(path) {
+  const source = readFileSync(path, 'utf-8');
+  const afterOpen = source.indexOf('\n', 3) + 1;
+  const closeIdx = source.indexOf('\n---', afterOpen);
+  if (closeIdx === -1) return false;
+  return source.slice(closeIdx + 4).trim().length > 0;
 }
 
 function groupBy(items, key) {
@@ -201,6 +229,7 @@ function renderReport(allGaps, locales) {
   const xliffGaps = allGaps.filter((g) => g.kind.startsWith('xliff'));
   const blogGaps = allGaps.filter((g) => g.kind === 'blog');
   const wikiGaps = allGaps.filter((g) => g.kind === 'wiki');
+  const wikiArticleGaps = allGaps.filter((g) => g.kind === 'wiki-article');
 
   const lines = [];
   lines.push('# Translation gaps — fill in missing locales');
@@ -212,6 +241,9 @@ function renderReport(allGaps, locales) {
   lines.push(`- XLIFF units needing translation: **${xliffGaps.length}**`);
   lines.push(`- Missing blog post locale files: **${blogGaps.length}**`);
   lines.push(`- Missing wiki entry locale files: **${wikiGaps.length}**`);
+  lines.push(
+    `- Wiki entries missing the long-form body: **${wikiArticleGaps.length}**`
+  );
   lines.push('');
   lines.push('## Task for Copilot');
   lines.push('');
@@ -318,6 +350,28 @@ function renderReport(allGaps, locales) {
     }
   }
 
+  if (wikiArticleGaps.length > 0) {
+    lines.push('## Wiki push-up types — long-form body');
+    lines.push('');
+    lines.push(
+      'These files exist and their frontmatter is translated, but the German source has gained a long-form body below the frontmatter that this locale is missing. Copy the body from the German sibling and translate it, keeping the HTML structure (`<h2>`, `<p>`, `<ul>`, `<li>`, `<strong>`, `<em>`) and every link target unchanged. Leave the frontmatter as it is. Until this body exists the page stays `noindex` and out of `sitemap.xml`, so an untranslated locale simply is not indexed — never machine-paste the German text to fill the gap.'
+    );
+    lines.push('');
+    const byLocale = groupBy(wikiArticleGaps, 'locale');
+    for (const [locale, items] of [...byLocale].sort()) {
+      lines.push(
+        `### \`${locale}\` — ${items.length} body/bodies to translate`
+      );
+      lines.push('');
+      for (const g of items) {
+        lines.push(
+          `- Append the translated body to \`${g.path}\`, source \`${g.sourcePath}\` (id: \`${g.id}\`)`
+        );
+      }
+      lines.push('');
+    }
+  }
+
   if (wikiGaps.length > 0) {
     lines.push('## Wiki push-up types');
     lines.push('');
@@ -351,6 +405,9 @@ function renderSummaryEnv(allGaps) {
   const xliffCount = allGaps.filter((g) => g.kind.startsWith('xliff')).length;
   const blogCount = allGaps.filter((g) => g.kind === 'blog').length;
   const wikiCount = allGaps.filter((g) => g.kind === 'wiki').length;
+  const wikiArticleCount = allGaps.filter(
+    (g) => g.kind === 'wiki-article'
+  ).length;
   const total = allGaps.length;
   return [
     `has_gaps=${total > 0 ? 'true' : 'false'}`,
@@ -358,6 +415,7 @@ function renderSummaryEnv(allGaps) {
     `xliff_count=${xliffCount}`,
     `blog_count=${blogCount}`,
     `wiki_count=${wikiCount}`,
+    `wiki_article_count=${wikiArticleCount}`,
     '',
   ].join('\n');
 }

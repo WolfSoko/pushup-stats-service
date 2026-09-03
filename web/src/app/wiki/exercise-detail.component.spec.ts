@@ -103,7 +103,7 @@ describe('ExerciseDetailComponent', () => {
       document.head.querySelector('meta[name="robots"]')?.remove();
     });
 
-    it('should emit a noindex robots meta tag for the thin detail page', async () => {
+    it('should emit a noindex robots meta tag while the entry has no long-form body', async () => {
       // given
       document.head.querySelector('meta[name="robots"]')?.remove();
 

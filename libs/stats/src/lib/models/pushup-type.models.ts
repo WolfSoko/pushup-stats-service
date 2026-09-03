@@ -826,6 +826,13 @@ export function localizePushupType(
   summary: string;
   instructions: ReadonlyArray<string>;
   tips: ReadonlyArray<string>;
+  /**
+   * Long-form body for this locale, absent while the entry is
+   * frontmatter-only. Resolved per locale rather than per entry: a
+   * translation that has not caught up yet keeps its page noindexed
+   * instead of inheriting the German body.
+   */
+  article?: string;
 } {
   const primary = locale.toLowerCase().split(/[-_]/)[0];
   const overrides = PUSHUP_TYPE_CONTENT[type.id];
@@ -837,6 +844,7 @@ export function localizePushupType(
       summary: override.summary,
       instructions: override.instructions,
       tips: override.tips,
+      article: override.article,
     };
   }
   const isEnglish = primary === 'en';

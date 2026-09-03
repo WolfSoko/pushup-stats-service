@@ -86,7 +86,7 @@ The wiki catalog has two parts: **structural metadata** (referenced by code) liv
 
    File stem must equal the `id` from `PushupTypeInfo`. Suffix is the locale code.
 
-3. **Frontmatter shape** (no body — wiki entries are frontmatter-only):
+3. **Frontmatter shape** (the body below it is optional — see step 5):
 
    ```markdown
    ---
@@ -107,6 +107,12 @@ The wiki catalog has two parts: **structural metadata** (referenced by code) liv
    `name` and `summary` are required strings. `instructions` is required, must be a non-empty list. `tips` is optional.
 
 4. **Run the generator** (`pnpm nx run tools:generate-content`) and commit the regenerated `pushup-type-content.generated.ts`.
+
+5. **Optional: a long-form body makes the page indexable.** Anything written below the closing `---` is rendered to HTML into the `article` field and shown under the instructions card. Its presence is the _only_ switch for indexability: with a body the detail page drops `noindex` and `generate-sitemap.js` lists its URL; without one it stays excluded from both, because ~60–100 words of frontmatter read as thin content and once cost the site an AdSense review. There is no code change involved either way — add the text, run the generator, done.
+
+   Use the same raw-HTML conventions as the blog (`<h2>`, `<p>`, `<ul>`, `<strong>`); aim for roughly 250 words upward of genuinely specific content — execution detail, typical mistakes, how to program the exercise — not padding.
+
+   The gate is per **locale**: a translated file without a body stays noindexed rather than inheriting the German text. Write German only. `detect-translation-gaps.mjs` reports the others as `wiki-article` gaps and the daily translations routine fills them.
 
 ## How to add a training-plan description
 

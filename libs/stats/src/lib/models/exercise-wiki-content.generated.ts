@@ -9,6 +9,8 @@ export interface ExerciseWikiContent {
   readonly summary: string;
   readonly instructions: ReadonlyArray<string>;
   readonly tips: ReadonlyArray<string>;
+  /** Long-form body as HTML. Absent for frontmatter-only entries, which stay noindexed. */
+  readonly article?: string;
 }
 
 /**

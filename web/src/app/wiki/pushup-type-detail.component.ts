@@ -93,6 +93,10 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
           </mat-card-content>
         </mat-card>
 
+        @if (article) {
+          <section class="detail-article" [innerHTML]="article"></section>
+        }
+
         <footer class="detail-footer">
           <a
             mat-stroked-button
@@ -115,6 +119,29 @@ const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
     `
       :host {
         display: block;
+      }
+      .detail-article {
+        display: block;
+        margin-top: 28px;
+        line-height: 1.65;
+      }
+      .detail-article ::ng-deep h2 {
+        margin: 28px 0 8px;
+        font-size: 1.15rem;
+        line-height: 1.3;
+      }
+      .detail-article ::ng-deep h2:first-child {
+        margin-top: 0;
+      }
+      .detail-article ::ng-deep p {
+        margin: 0 0 14px;
+      }
+      .detail-article ::ng-deep ul {
+        margin: 0 0 14px;
+        padding-left: 22px;
+      }
+      .detail-article ::ng-deep li {
+        margin-bottom: 6px;
       }
       .detail-page {
         max-width: 760px;
@@ -208,6 +235,8 @@ export class PushupTypeDetailComponent implements OnInit {
   summary = '';
   instructions: ReadonlyArray<string> = [];
   tips: ReadonlyArray<string> = [];
+  /** Long-form body for the active locale; `null` keeps the page noindexed. */
+  article: string | null = null;
 
   constructor() {
     this.destroyRef.onDestroy(() => this.removeJsonLd());
@@ -227,6 +256,7 @@ export class PushupTypeDetailComponent implements OnInit {
     this.summary = localized.summary;
     this.instructions = localized.instructions;
     this.tips = localized.tips;
+    this.article = localized.article ?? null;
 
     // Compose SEO title as `${name} – ${titleSuffix}`. Keeping the
     // name in the leading keyword slot maximises ranking weight; the
@@ -248,13 +278,16 @@ export class PushupTypeDetailComponent implements OnInit {
     }
     const localeSlug = localizePushupTypeSlug(found, this.locale);
 
-    // Thin-content page: noindex until the entry carries substantial
-    // unique content. The list page stays indexable.
+    // Indexability follows the content: entries that carry a long-form
+    // body are indexed, frontmatter-only ones stay `noindex` because
+    // ~60-100 words read as thin content and once cost the site an
+    // AdSense review. `generate-sitemap.js` applies the same rule, so
+    // the sitemap and the robots tag can never disagree.
     this.seo.update(
       seoTitle,
       this.summary,
       `/wiki/liegestuetz-typen/${localeSlug}`,
-      { alternates, noindex: true }
+      { alternates, noindex: !this.article }
     );
     // Combine DE + EN keyword sets — the catalog only carries those
     // two, and Google ignores the keywords meta anyway, so this is a

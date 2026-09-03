@@ -531,7 +531,7 @@ describe('generate-sitemap', () => {
       );
     });
 
-    it('emits the wiki list pages but no wiki detail entries (thin content stays noindexed)', () => {
+    it('emits the wiki list pages', () => {
       const xml = generateSitemap([]);
       expect(xml).toContain(
         '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen</loc>'
@@ -539,8 +539,36 @@ describe('generate-sitemap', () => {
       expect(xml).toContain(
         '<loc>https://pushup-stats.com/de/wiki/uebungen</loc>'
       );
-      expect(xml).not.toMatch(/wiki\/liegestuetz-typen\/[^<]/);
-      expect(xml).not.toMatch(/wiki\/uebungen\/[^<]/);
+    });
+
+    it('emits a detail URL for a push-up type that carries a long-form body', () => {
+      // given — content/wiki/pushup-types/standard.de.md has a body
+      // when
+      const xml = generateSitemap([]);
+
+      // then
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.com/de/wiki/liegestuetz-typen/standard</loc>'
+      );
+    });
+
+    it('omits locales whose wiki file has no body yet', () => {
+      // given — only the German sources carry a body so far; the other
+      // locales must stay out until the translation routine fills them,
+      // because their pages still serve `noindex`.
+      // when
+      const xml = generateSitemap([]);
+
+      // then
+      expect(xml).not.toContain('/fr/wiki/liegestuetz-typen/pompe-standard');
+      expect(xml).not.toMatch(
+        /<loc>[^<]*\/(en|fr|es|it|nl|el|no|zh)\/wiki\/liegestuetz-typen\/[^<]+<\/loc>/
+      );
+    });
+
+    it('omits exercise wiki detail pages while they are frontmatter-only', () => {
+      // then
+      expect(generateSitemap([])).not.toMatch(/wiki\/uebungen\/[^<]/);
     });
   });
 });
@@ -553,9 +581,17 @@ describe('sitemap reciprocity invariants', () => {
   const sitemapPath = resolve(__dirname, '../../web/public/sitemap.xml');
   const xml = readFileSync(sitemapPath, 'utf-8');
 
-  it('contains no wiki detail URLs (noindexed thin content)', () => {
-    expect(xml).not.toMatch(/wiki\/liegestuetz-typen\/[^<]/);
-    expect(xml).not.toMatch(/wiki\/uebungen\/[^<]/);
+  it('lists only wiki detail URLs whose page is actually indexable', () => {
+    // Every emitted push-up type URL must be German for now — those are
+    // the only files carrying a long-form body, and a URL in the sitemap
+    // whose page serves `noindex` is a contradiction Google penalises.
+    const wikiLocs = [...xml.matchAll(/<loc>([^<]*wiki\/[^<]+)<\/loc>/g)]
+      .map((m) => m[1])
+      .filter((loc) => /wiki\/(liegestuetz-typen|uebungen)\/./.test(loc));
+    expect(wikiLocs.length).toBeGreaterThan(0);
+    for (const loc of wikiLocs) {
+      expect(loc).toContain('/de/wiki/liegestuetz-typen/');
+    }
   });
 
   it('contains no URLs for removed locales', () => {

@@ -74,7 +74,7 @@ describe('serverRoutes', () => {
     }
   });
 
-  it('prerenders the wiki list pages but server-renders the detail pages (thin content, noindex, excluded from sitemap — not worth prerendering)', () => {
+  it('prerenders the wiki list pages but server-renders the detail pages (~1400 routes would thrash the App Hosting builder; SSR still serves crawlers full HTML)', () => {
     const lists = ['wiki/liegestuetz-typen', 'wiki/uebungen'];
     for (const path of lists) {
       const route = serverRoutes.find((r) => r.path === path);
