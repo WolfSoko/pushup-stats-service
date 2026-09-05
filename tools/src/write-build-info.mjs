@@ -10,7 +10,9 @@
  *
  * The release name resolves as `SENTRY_RELEASE` (set by CI) →
  * `git rev-parse --short=7 HEAD`, so the admin readout, the Sentry release
- * and the `deploy-0.0.0-<sha>` tag all name the same commit.
+ * and the `deploy-0.0.0-g<sha>` tag all name the same commit. The `g`
+ * prefix keeps the semver prerelease identifier alphanumeric — an
+ * all-digit short SHA with a leading zero is invalid semver.
  *
  * Usage: node tools/src/write-build-info.mjs [browserDir]
  *        (default browserDir: dist/web/browser)
@@ -24,7 +26,7 @@ export function resolveRelease(env, gitShortSha) {
 }
 
 export function buildInfoFor(release, builtAt) {
-  return { release, version: `0.0.0-${release}`, builtAt };
+  return { release, version: `0.0.0-g${release}`, builtAt };
 }
 
 function gitShortSha() {

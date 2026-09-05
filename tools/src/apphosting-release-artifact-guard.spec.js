@@ -4,6 +4,10 @@ const { parse } = require('yaml');
 
 const ROOT = resolve(__dirname, '../..');
 
+/** Official semver 2.0.0 regex (semver.org), trimmed to what we need. */
+const SEMVER =
+  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
+
 function load(file) {
   return parse(readFileSync(resolve(ROOT, file), 'utf-8'));
 }
@@ -28,7 +32,7 @@ function envEntry(config, variable) {
  * dependency on this side at all.
  *
  * The release tag is derived the same way in both places
- * (`deploy-0.0.0-<short-sha>`) so the fetch script can construct the
+ * (`deploy-0.0.0-g<short-sha>`) so the fetch script can construct the
  * download URL without a git-tag lookup. This guard fails loudly if either
  * side drifts from that pattern.
  */
@@ -64,11 +68,33 @@ describe('App Hosting release-artifact configuration', () => {
   it('should derive the same deploy tag pattern in the fetch script and the CI publish job', () => {
     // given both sides must agree on the tag without a lookup
     // when either computes the tag for the current commit
-    // then both must use the identical `deploy-0.0.0-<short-sha>` pattern,
+    // then both must use the identical `deploy-0.0.0-g<short-sha>` pattern,
     //   with the same 7-char short-SHA abbreviation length pinned explicitly
-    expect(fetchScript).toMatch(/TAG="deploy-0\.0\.0-\$\{SHA\}"/);
+    expect(fetchScript).toMatch(/TAG="deploy-0\.0\.0-g\$\{SHA\}"/);
     expect(fetchScript).toMatch(/git rev-parse --short=7 HEAD/);
     expect(ciWorkflow).toMatch(/TAG="deploy-\$\{SPECIFIER\}"/);
     expect(ciWorkflow).toMatch(/git rev-parse --short=7 HEAD/);
+  });
+
+  it('should build a prerelease identifier that is valid semver for any short SHA', () => {
+    // given — a 7-char short SHA that is all digits with a leading zero is
+    //   invalid semver (numeric identifiers must not have leading zeroes),
+    //   and `nx release version` rejects it. It happened on 0647328 and
+    //   will recur about once every 268 commits without the letter prefix.
+    const specifier = /SPECIFIER="([^"]+)"/.exec(ciWorkflow)?.[1];
+    expect(specifier).toBeDefined();
+
+    // when the workflow substitutes each adversarial SHA
+    const shas = ['0647328', '0000000', '1234567', 'abcdef0', '0abcdef'];
+
+    // then every resulting version parses as semver
+    for (const sha of shas) {
+      const version = specifier.replace('${SHA}', sha);
+      expect({ sha, version, valid: SEMVER.test(version) }).toEqual({
+        sha,
+        version,
+        valid: true,
+      });
+    }
   });
 });

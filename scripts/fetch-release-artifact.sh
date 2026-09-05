@@ -16,7 +16,10 @@ set -euo pipefail
 
 REPO="WolfSoko/pushup-stats-service"
 SHA=$(git rev-parse --short=7 HEAD)
-TAG="deploy-0.0.0-${SHA}"
+# Must match the SPECIFIER in .github/workflows/ci.yml exactly. The `g`
+# prefix keeps the semver prerelease identifier alphanumeric — an all-digit
+# short SHA with a leading zero is invalid semver and fails the release job.
+TAG="deploy-0.0.0-g${SHA}"
 URL="https://github.com/${REPO}/releases/download/${TAG}/dist-web.tar.gz"
 
 echo "[deploy] fetching build artifact for commit ${SHA} (tag ${TAG})"

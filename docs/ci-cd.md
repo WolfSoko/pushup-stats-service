@@ -35,7 +35,7 @@ builder never runs the Angular build or depends on Nx Cloud at all anymore:
   builder), runs `pnpm sentry:sourcemaps`, tars `dist/web`, and publishes it
   as a GitHub Release asset via `nx release` (`nx.json`'s `release` config,
   scoped to the `web` project).
-- **Deterministic tag:** the release tag is `deploy-0.0.0-<short-sha>`
+- **Deterministic tag:** the release tag is `deploy-0.0.0-g<short-sha>`
   (`git rev-parse --short=7 HEAD`), computed identically in the CI job and in
   `scripts/fetch-release-artifact.sh` — no git-tag lookup or API call needed
   to find the right release for a given commit.
@@ -77,7 +77,7 @@ browser + SSR Sentry events.
   and defeat the cache restore `publish-release` depends on.
 - **Release name:** `SENTRY_RELEASE` (each workflow resolves it once from
   `git rev-parse --short=7 HEAD`) → `version` is `0.0.0-<sha>`, i.e. the same
-  string as the `deploy-0.0.0-<sha>` release tag.
+  string as the `deploy-0.0.0-g<sha>` release tag. The `g` prefix is load-bearing: a short SHA that is all digits with a leading zero (about 1 commit in 268) is invalid semver and `nx release version` rejects it outright — it happened on `0647328`.
 - **Consumers:** `web/src/build-info.ts` (shared parser + fetch),
   `web/src/server.ts` (reads the file at startup for the SSR Sentry release),
   `BuildInfoService` (fetches `/build-info.json` with `cache: 'no-store'`).

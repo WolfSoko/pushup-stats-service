@@ -15,7 +15,7 @@
 export interface BuildInfo {
   /** Short commit SHA of the deployed commit — same string as the Sentry release. */
   readonly release: string;
-  /** Release version published by `nx release` (`0.0.0-<short-sha>`). */
+  /** Release version published by `nx release` (`0.0.0-g<short-sha>`). */
   readonly version: string;
   /** ISO timestamp of when the artifact was built; empty when unknown. */
   readonly builtAt: string;

@@ -164,7 +164,7 @@ jobs:
   # of ever running the Angular build itself — see docs/ci-cd.md.
   #
   # The release tag is deterministic from the commit SHA
-  # (deploy-0.0.0-<short-sha>) so the App Hosting build can construct the
+  # (deploy-0.0.0-g<short-sha>) so the App Hosting build can construct the
   # download URL directly, with no git-tag lookup or API call needed.
   publish-release:
     needs: [lint-test-build, e2e]
@@ -239,7 +239,11 @@ jobs:
       - name: Version + publish GitHub Release
         run: |
           SHA="${{ steps.release.outputs.sha }}"
-          SPECIFIER="0.0.0-${SHA}"
+          # `g` prefix (git-describe convention) keeps the prerelease
+          # identifier alphanumeric. A bare short SHA that happens to be all
+          # digits with a leading zero — roughly 1 commit in 268 — is invalid
+          # semver, and `nx release version` rejects it outright.
+          SPECIFIER="0.0.0-g${SHA}"
           TAG="deploy-${SPECIFIER}"
           FIRST_RELEASE_FLAG=""
           if ! git ls-remote --tags origin "refs/tags/deploy-*" | grep -q .; then

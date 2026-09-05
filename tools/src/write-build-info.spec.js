@@ -36,9 +36,9 @@ describe('write-build-info', () => {
     // when the script writes the build info into the browser bundle
     const info = runAndRead(browserDir, { SENTRY_RELEASE: 'abc1234' });
 
-    // then version matches the `deploy-0.0.0-<sha>` tag the release is published under
+    // then version matches the `deploy-0.0.0-g<sha>` tag the release is published under
     expect(info.release).toBe('abc1234');
-    expect(info.version).toBe('0.0.0-abc1234');
+    expect(info.version).toBe('0.0.0-gabc1234');
     expect(Number.isNaN(Date.parse(info.builtAt))).toBe(false);
   });
 
@@ -54,7 +54,7 @@ describe('write-build-info', () => {
 
     // then it reports the commit being built, abbreviated the same way as the deploy tag
     expect(info.release).toBe(expected);
-    expect(info.version).toBe(`0.0.0-${expected}`);
+    expect(info.version).toBe(`0.0.0-g${expected}`);
   });
 
   it('should skip the file instead of failing the build when no commit is available', () => {
