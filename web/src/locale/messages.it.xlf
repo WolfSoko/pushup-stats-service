@@ -11638,6 +11638,36 @@
         <target>Erfolge</target>
       </segment>
     </unit>
+    <unit id="achievement.dialog.headline">
+      <segment state="initial">
+        <source>Geschafft!</source>
+        <target>Geschafft!</target>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.close">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.share">
+      <segment state="initial">
+        <source>Teilen</source>
+        <target>Teilen</target>
+      </segment>
+    </unit>
+    <unit id="achievement.share.title">
+      <segment state="initial">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="achievement.share.text">
+      <segment state="initial">
+        <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
+        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</target>
+      </segment>
+    </unit>
     <unit id="quickAdd.fab.stopwatchAria">
       <segment state="initial">
         <source>Stoppuhr öffnen</source>

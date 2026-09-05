@@ -1,5 +1,6 @@
 export * from './lib/api/stats-api.service';
 export * from './lib/api/user-config-api.service';
+export * from './lib/api/user-achievements-api.service';
 export * from './lib/api/user-training-plan-api.service';
 export * from './lib/api/user-stats-api.service';
 export * from './lib/api/public-profile-api.service';
