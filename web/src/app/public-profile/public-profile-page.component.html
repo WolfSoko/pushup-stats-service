@@ -6,17 +6,37 @@
       </div>
     }
     @case ('not-found') {
-      <mat-card class="status-card" data-testid="public-profile-not-found">
-        <mat-card-header>
-          <mat-card-title>{{ notFoundTitle }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{ notFoundBody }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <a mat-stroked-button routerLink="/">{{ homeLabel }}</a>
-        </mat-card-actions>
-      </mat-card>
+      @if (isOwnPrivateProfile()) {
+        <mat-card class="status-card" data-testid="public-profile-private">
+          <mat-card-header>
+            <mat-card-title>{{ privateTitle }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ privateBody }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a
+              mat-flat-button
+              color="primary"
+              routerLink="/settings/profil"
+              data-testid="public-profile-enable"
+              >{{ privateCta }}</a
+            >
+          </mat-card-actions>
+        </mat-card>
+      } @else {
+        <mat-card class="status-card" data-testid="public-profile-not-found">
+          <mat-card-header>
+            <mat-card-title>{{ notFoundTitle }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ notFoundBody }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-stroked-button routerLink="/">{{ homeLabel }}</a>
+          </mat-card-actions>
+        </mat-card>
+      }
     }
     @case ('error') {
       <mat-card class="status-card" data-testid="public-profile-error">

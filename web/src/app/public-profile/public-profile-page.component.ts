@@ -8,6 +8,7 @@ import {
   LOCALE_ID,
   signal,
 } from '@angular/core';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { FirebaseApp } from '@angular/fire/app';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -75,13 +76,40 @@ export class PublicProfilePageComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly firebaseApp = inject(FirebaseApp);
   private readonly localeId = inject(LOCALE_ID) as string;
+  /**
+   * Optional on purpose. This page is public and server-rendered for
+   * anonymous visitors; injecting `UserContextService` here would drag
+   * the whole auth chain (and a hard `Auth` dependency) into a route
+   * that must work without a signed-in user at all.
+   */
+  private readonly auth = inject(Auth, { optional: true });
 
   protected readonly state = signal<LoadState>({ kind: 'loading' });
+  /** uid from the route, kept so the not-found branch can tell an
+   *  own private profile from a stranger's missing one. */
+  private readonly routeUid = signal('');
+  /** uid of the signed-in visitor, empty while signed out or on the server. */
+  private readonly viewerUid = signal('');
   protected readonly profile = computed(() => {
     const s = this.state();
     return s.kind === 'ready' ? s.profile : null;
   });
 
+  /**
+   * True when the visitor is looking at their own profile and it came
+   * back as not-found — i.e. they have not opted in yet. Without this the
+   * "Mein Profil" entry in the user menu would send most users to a
+   * generic "does not exist" page about themselves.
+   */
+  protected readonly isOwnPrivateProfile = computed(() => {
+    if (this.state().kind !== 'not-found') return false;
+    const own = this.viewerUid();
+    return own !== '' && own === this.routeUid();
+  });
+
+  protected readonly privateTitle = $localize`:@@publicProfile.private.title:Dein Profil ist noch privat`;
+  protected readonly privateBody = $localize`:@@publicProfile.private.body:Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.`;
+  protected readonly privateCta = $localize`:@@publicProfile.private.cta:Profil öffentlich machen`;
   protected readonly notFoundTitle = $localize`:@@publicProfile.notFound.title:Profil nicht gefunden`;
   protected readonly notFoundBody = $localize`:@@publicProfile.notFound.body:Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.`;
   protected readonly errorTitle = $localize`:@@publicProfile.error.title:Profil konnte nicht geladen werden`;
@@ -113,10 +141,21 @@ export class PublicProfilePageComponent {
   private loadVersion = 0;
 
   constructor() {
+    // Auth resolves asynchronously; without the listener a visitor whose
+    // session settles after the API answered would see the generic
+    // "profile does not exist" page about their own profile.
+    if (this.auth) {
+      const stop = onAuthStateChanged(this.auth, (user) =>
+        this.viewerUid.set(user?.uid ?? '')
+      );
+      this.destroyRef.onDestroy(stop);
+    }
+
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         const uid = (params.get('uid') ?? '').trim();
+        this.routeUid.set(uid);
         if (!uid) {
           this.loadVersion++;
           this.state.set({ kind: 'not-found' });

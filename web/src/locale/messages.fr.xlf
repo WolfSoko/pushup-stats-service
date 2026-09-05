@@ -11600,5 +11600,29 @@
         <target>Confidentialité</target>
       </segment>
     </unit>
+    <unit id="user.menu.profile">
+      <segment state="initial">
+        <source>Mein Profil</source>
+        <target>Mein Profil</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.private.title">
+      <segment state="initial">
+        <source>Dein Profil ist noch privat</source>
+        <target>Dein Profil ist noch privat</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.private.body">
+      <segment state="initial">
+        <source>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</source>
+        <target>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.private.cta">
+      <segment state="initial">
+        <source>Profil öffentlich machen</source>
+        <target>Profil öffentlich machen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

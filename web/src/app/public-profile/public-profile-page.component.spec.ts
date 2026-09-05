@@ -3,9 +3,29 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { FirebaseApp } from '@angular/fire/app';
+import { Auth } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
+/**
+ * `onAuthStateChanged` is a module export, and ESM does not allow spying
+ * on those — so the module is mocked once and the emitted user is steered
+ * through `mockAuthUser` per test.
+ */
+let mockAuthUser: { uid: string } | null = null;
+vitest.mock('@angular/fire/auth', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@angular/fire/auth')>();
+  // `Object.assign` rather than a spread: `vitest.mock` factories are
+  // hoisted above esbuild's `__spreadValues` helper, which then blows up
+  // at import time with "__spreadValues is not a function".
+  return Object.assign({}, actual, {
+    onAuthStateChanged: (_auth: unknown, cb: (u: unknown) => void) => {
+      cb(mockAuthUser);
+      return () => undefined;
+    },
+  });
+});
+
 import { PublicProfilePageComponent } from './public-profile-page.component';
 import { ShareService } from '../core/share.service';
 import { SeoService } from '../core/seo.service';
@@ -49,6 +69,8 @@ describe('PublicProfilePageComponent', () => {
       uid?: string | null;
       resolve?: PublicProfile | null;
       reject?: unknown;
+      /** Provided only where ownership matters; absent = signed out / server. */
+      auth?: unknown;
     } = {}
   ): Promise<void> {
     vitest.clearAllMocks();
@@ -77,6 +99,7 @@ describe('PublicProfilePageComponent', () => {
         // (the unit-test default differs per Angular setup; pinning here
         // documents which prefix the share builder should pick).
         { provide: LOCALE_ID, useValue: 'en-US' },
+        ...(options.auth ? [{ provide: Auth, useValue: options.auth }] : []),
       ],
     }).compileComponents();
 
@@ -232,6 +255,67 @@ describe('PublicProfilePageComponent', () => {
       expect(args).toBeDefined();
       if (!args) return;
       expect(args[2]).toBe('/u/abcdef1234567890');
+    });
+  });
+
+  describe('Own private profile', () => {
+    afterEach(() => {
+      mockAuthUser = null;
+    });
+
+    it('should offer to make it public when the visitor is the owner', async () => {
+      // given — the "Mein Profil" entry sends every user here, and most
+      // have not opted in yet; a generic "does not exist" page about
+      // their own profile would be nonsense
+      mockAuthUser = { uid: 'abcdef1234567890' };
+
+      // when
+      await setup({ resolve: null, auth: {} });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        )
+      ).not.toBeNull();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-not-found"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should show the generic not-found for someone else', async () => {
+      // given
+      mockAuthUser = { uid: 'ein-anderer' };
+
+      // when
+      await setup({ resolve: null, auth: {} });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        )
+      ).toBeNull();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-not-found"]'
+        )
+      ).not.toBeNull();
+    });
+
+    it('should show the generic not-found for a signed-out visitor', async () => {
+      // given — no Auth provider at all, as on the server
+      // when
+      await setup({ resolve: null });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        )
+      ).toBeNull();
     });
   });
 

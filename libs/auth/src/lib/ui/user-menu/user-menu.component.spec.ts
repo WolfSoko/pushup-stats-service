@@ -9,6 +9,7 @@ function makeStore(opts: {
   isGuest: boolean;
   loading?: boolean;
   tryAsGuest?: jest.Mock;
+  uid?: string | undefined;
 }) {
   return {
     isAuthenticated: jest.fn().mockReturnValue(opts.isAuthenticated),
@@ -18,6 +19,7 @@ function makeStore(opts: {
     user: jest.fn().mockReturnValue(
       opts.isAuthenticated
         ? {
+            uid: 'uid' in opts ? opts.uid : 'test-uid',
             displayName: 'Test User',
             email: 'test@example.com',
             photoURL: null,
@@ -170,6 +172,59 @@ describe('UserMenuComponent', () => {
     expect(screen.queryByText('Historie')).toBeNull();
     expect(screen.queryByText('Tagesziele')).toBeNull();
     expect(screen.queryByText('Erinnerungen')).toBeNull();
+  });
+
+  it('given authenticated user, when clicking Mein Profil, then navigates to the own profile', async () => {
+    // Given
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([{ path: 'u/:uid', children: [] }]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    // When
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    fireEvent.click(screen.getByText('Mein Profil'));
+    await fixture.whenStable();
+
+    // Then
+    expect(navigateSpy).toHaveBeenCalledWith(['/u', 'test-uid']);
+  });
+
+  it('given a user whose uid has not resolved yet, when clicking Mein Profil, then falls back to the settings tab', async () => {
+    // Given — routing to `/u/` with an empty segment would 404 on the
+    // user's own profile
+    const { fixture } = await render(UserMenuComponent, {
+      providers: [
+        provideRouter([{ path: 'settings/profil', children: [] }]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({
+            isAuthenticated: true,
+            isGuest: false,
+            uid: undefined,
+          }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    const router = fixture.debugElement.injector.get(Router);
+    const navigateSpy = jest.spyOn(router, 'navigate');
+
+    // When
+    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
+    fireEvent.click(screen.getByText('Mein Profil'));
+    await fixture.whenStable();
+
+    // Then
+    expect(navigateSpy).toHaveBeenCalledWith(['/settings', 'profil']);
   });
 
   it('given authenticated user, when clicking Einstellungen, then navigates to /settings', async () => {

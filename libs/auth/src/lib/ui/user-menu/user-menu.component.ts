@@ -46,6 +46,16 @@ export class UserMenuComponent {
     await this.state.logout();
   }
 
+  /**
+   * Opens the user's own public profile. Falls back to the settings tab
+   * when there is no uid yet (auth still resolving) rather than routing
+   * to `/u/` with an empty segment.
+   */
+  async goToProfile(): Promise<void> {
+    const uid = this.user()?.uid;
+    await this.router.navigate(uid ? ['/u', uid] : ['/settings', 'profil']);
+  }
+
   async goToSettings(): Promise<void> {
     await this.router.navigate(['/settings']);
   }

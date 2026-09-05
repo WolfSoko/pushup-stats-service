@@ -22,6 +22,14 @@
     <mat-divider></mat-divider>
     <button
       mat-menu-item
+      (click)="goToProfile()"
+      data-testid="user-menu-profile"
+    >
+      <mat-icon>account_circle</mat-icon>
+      <span i18n="@@user.menu.profile">Mein Profil</span>
+    </button>
+    <button
+      mat-menu-item
       (click)="goToSettings()"
       data-testid="user-menu-settings"
     >
