@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { MeasurementType } from '@pu-stats/models';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 import {
   buildExercisePickerGroups,
@@ -64,6 +65,10 @@ import {
 export class ExercisePickerComponent {
   readonly exerciseId = input.required<string>();
   readonly suggestions = input<ExerciseSuggestions>({});
+  /** Only exercises of these measurement types are offered; absent = all. */
+  readonly measurements = input<readonly MeasurementType[] | undefined>(
+    undefined
+  );
   /** Edit mode: the entry's exercise is fixed, so the field is read-only. */
   readonly locked = input<boolean>(false);
 
@@ -75,7 +80,7 @@ export class ExercisePickerComponent {
   private readonly query = signal('');
 
   private readonly groups = computed(() =>
-    buildExercisePickerGroups(this.suggestions())
+    buildExercisePickerGroups(this.suggestions(), this.measurements())
   );
 
   readonly filteredGroups = computed(() =>

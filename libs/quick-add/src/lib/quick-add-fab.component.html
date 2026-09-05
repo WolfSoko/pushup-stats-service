@@ -38,6 +38,19 @@
             <mat-icon>{{ item.icon }}</mat-icon>
             <span i18n="@@quickAdd.fab.exerciseTimer">Plank‑Timer</span>
           </button>
+        } @else if (item.type === 'stopwatch') {
+          <button
+            mat-fab
+            extended
+            class="stopwatch-fab"
+            aria-label="Stoppuhr öffnen"
+            i18n-aria-label="@@quickAdd.fab.stopwatchAria"
+            data-testid="quick-add-stopwatch"
+            (click)="onOpenStopwatch()"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span i18n="@@quickAdd.fab.stopwatch">Stoppuhr</span>
+          </button>
         } @else if (item.type === 'custom') {
           <button
             mat-fab

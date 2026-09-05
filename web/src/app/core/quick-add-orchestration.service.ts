@@ -153,4 +153,8 @@ export class QuickAddOrchestrationService {
   openExerciseTimer(): Promise<void> {
     return this.captureFlow.openExerciseTimer();
   }
+
+  openStopwatch(): Promise<void> {
+    return this.captureFlow.openStopwatch();
+  }
 }

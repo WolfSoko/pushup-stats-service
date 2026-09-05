@@ -272,6 +272,124 @@ describe('QuickAddOrchestrationService.addSuggestion', () => {
   });
 });
 
+describe('QuickAddOrchestrationService.openStopwatch', () => {
+  const reloadAfterMutation = vitest.fn();
+  const statsApiMock = { createPushup: vitest.fn() };
+  const exerciseApiMock = { createEntry: vitest.fn() };
+  const snackBarMock = { open: vitest.fn() };
+  const routerMock = { url: '/app', navigate: vitest.fn() };
+  const bridgeMock = { requestOpenDialog: vitest.fn() };
+  const appDataMock: Partial<AppDataFacade> = {
+    remainingToGoal: signal(0).asReadonly(),
+    reloadAfterMutation,
+  };
+
+  function setup(
+    stopwatchResult: { durationSec: number } | null,
+    trainingResult: unknown
+  ) {
+    vitest.clearAllMocks();
+    exerciseApiMock.createEntry.mockReturnValue(of({ _id: 'e1' }));
+    const dialogMock = {
+      open: vitest
+        .fn()
+        .mockReturnValueOnce({ afterClosed: () => of(stopwatchResult) })
+        .mockReturnValueOnce({ afterClosed: () => of(trainingResult) }),
+    };
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: baseProviders({
+        statsApiMock,
+        exerciseApiMock,
+        snackBarMock,
+        routerMock,
+        bridgeMock,
+        appDataMock,
+        dialogMock,
+      }),
+    });
+    return {
+      service: TestBed.inject(QuickAddOrchestrationService),
+      dialogMock,
+    };
+  }
+
+  it('should open the entry dialog narrowed to timed exercises with the stopped seconds prefilled', async () => {
+    // given
+    const { service, dialogMock } = setup({ durationSec: 95 }, undefined);
+
+    // when
+    await service.openStopwatch();
+    await waitForAssertion(() => {
+      expect(dialogMock.open).toHaveBeenCalledTimes(2);
+    });
+
+    // then — no exercise handed to the stopwatch, create mode afterwards
+    const stopwatchConfig = dialogMock.open.mock.calls[0][1] as {
+      data?: { exerciseId?: string };
+    };
+    expect(stopwatchConfig.data?.exerciseId).toBeUndefined();
+    const entryConfig = dialogMock.open.mock.calls[1][1] as {
+      data: {
+        kind: string;
+        measurements?: string[];
+        durationSec?: number;
+      };
+    };
+    expect(entryConfig.data.kind).toBe('create');
+    expect(entryConfig.data.measurements).toEqual(['time', 'distance-time']);
+    expect(entryConfig.data.durationSec).toBe(95);
+  });
+
+  it('should persist the confirmed timed entry with source stopwatch', async () => {
+    // given
+    const { service } = setup(
+      { durationSec: 95 },
+      {
+        kind: 'exercise',
+        timestamp: '2026-09-05T10:00:00+02:00',
+        exerciseId: 'core.mountainclimbers.time',
+        measurement: 'time',
+        reps: 0,
+        sets: [],
+        intervals: [],
+        intervalDurationsSec: [],
+        durationSec: 95,
+      }
+    );
+
+    // when
+    await service.openStopwatch();
+    await waitForAssertion(() => {
+      expect(exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+    });
+
+    // then
+    expect(exerciseApiMock.createEntry).toHaveBeenCalledWith(
+      'u1',
+      expect.objectContaining({
+        exerciseId: 'core.mountainclimbers.time',
+        durationSec: 95,
+        source: 'stopwatch',
+      })
+    );
+    expect(reloadAfterMutation).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not open the entry dialog when the stopwatch is dismissed', async () => {
+    // given
+    const { service, dialogMock } = setup(null, undefined);
+
+    // when
+    await service.openStopwatch();
+    await Promise.resolve();
+
+    // then
+    expect(dialogMock.open).toHaveBeenCalledTimes(1);
+    expect(exerciseApiMock.createEntry).not.toHaveBeenCalled();
+  });
+});
+
 describe('QuickAddOrchestrationService.openAutoCount', () => {
   const reloadAfterMutation = vitest.fn();
   const statsApiMock = { createPushup: vitest.fn() };

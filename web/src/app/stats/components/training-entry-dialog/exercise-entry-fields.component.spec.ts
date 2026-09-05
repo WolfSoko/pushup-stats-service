@@ -29,13 +29,14 @@ import {
   imports: [ExerciseEntryFieldsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template:
-    '<app-exercise-entry-fields [exerciseId]="exerciseId()" [category]="category()" [data]="data" [isEditMode]="isEditMode" />',
+    '<app-exercise-entry-fields [exerciseId]="exerciseId()" [category]="category()" [data]="data" [isEditMode]="isEditMode" [durationPrefillSec]="durationPrefillSec" />',
 })
 class HostComponent {
   readonly exerciseId = signal<string>('abs.situps');
   readonly category = signal<ExerciseCategoryId>('core');
   data: TrainingEntryDialogData | null = null;
   isEditMode = false;
+  durationPrefillSec: number | undefined = undefined;
 }
 
 // Mirrors how the dialog derives the category from the picked exercise.
@@ -123,6 +124,34 @@ describe('ExerciseEntryFieldsComponent', () => {
         reps: 0,
         sets: [],
       });
+    });
+
+    it('should prefill the duration from a stopped stopwatch and re-apply it after an exercise switch', () => {
+      // given
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [HostComponent],
+        providers: [provideRouter([])],
+      });
+      const fixture = TestBed.createComponent(HostComponent);
+      const host = fixture.componentInstance;
+      host.exerciseId.set('plank.standard');
+      host.category.set('core');
+      host.durationPrefillSec = 95;
+      fixture.detectChanges();
+      const component = fixture.debugElement.children[0]
+        .componentInstance as ExerciseEntryFieldsComponent;
+
+      // then
+      expect(component.state.durationSec()).toBe(95);
+
+      // when
+      host.exerciseId.set('cardio.running');
+      host.category.set('cardio');
+      fixture.detectChanges();
+
+      // then
+      expect(component.state.durationSec()).toBe(95);
     });
 
     it('should reveal the stopwatch behind the duration row and mirror it into the fields', () => {

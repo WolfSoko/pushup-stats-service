@@ -63,6 +63,39 @@ describe('TrainingEntryDialogComponent', () => {
       expect(component.mode()).toBe('exercise');
     });
 
+    it('should open on a timed exercise with the stopped seconds prefilled and keep them across a switch', () => {
+      // given
+      const { component, fixture } = createDialog({
+        kind: 'create',
+        suggestions: {},
+        measurements: ['time', 'distance-time'],
+        durationSec: 95,
+      });
+      const durationOf = (): number | null | undefined =>
+        (
+          fixture.debugElement.query(
+            (el) => el.name === 'app-exercise-entry-fields'
+          )?.componentInstance as {
+            state: { durationSec: () => number | null };
+          }
+        )?.state.durationSec();
+
+      // then — a timed exercise, not pushups, and the time is in the fields
+      expect(component.isEditMode).toBe(false);
+      expect(component.mode()).toBe('exercise');
+      expect(component.measurements).toEqual(['time', 'distance-time']);
+      expect(durationOf()).toBe(95);
+
+      // when
+      component.onExerciseChange('core.mountainclimbers.time');
+      fixture.detectChanges();
+
+      // then
+      expect(component.exerciseId()).toBe('core.mountainclimbers.time');
+      expect(durationOf()).toBe(95);
+      expect(component.canSubmit()).toBe(true);
+    });
+
     it('should switch to exercise mode when another exercise is picked', () => {
       // given
       const { component, fixture } = createDialog(null);

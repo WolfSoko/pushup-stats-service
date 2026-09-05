@@ -71,6 +71,12 @@ export class ExerciseEntryFieldsComponent {
   readonly category = input.required<ExerciseCategoryId>();
   readonly data = input<TrainingEntryDialogData | null>(null);
   readonly isEditMode = input<boolean>(false);
+  /**
+   * Create-mode seconds (a stopped stopwatch) written into the duration
+   * row on first render and again after every exercise switch, so picking
+   * the exercise after timing it never throws the time away.
+   */
+  readonly durationPrefillSec = input<number | undefined>(undefined);
 
   readonly state = new ExerciseFormState(
     this.locale,
@@ -104,6 +110,7 @@ export class ExerciseEntryFieldsComponent {
       if (this.seededFor === null) {
         this.seededFor = id;
         this.state.seedFromData(this.data());
+        this.applyDurationPrefill();
         return;
       }
       if (this.seededFor === id) return;
@@ -111,6 +118,7 @@ export class ExerciseEntryFieldsComponent {
       this.stopwatch.reset();
       this.stopwatchOpen.set(false);
       this.state.resetForExercise();
+      this.applyDurationPrefill();
     });
   }
 
@@ -120,6 +128,11 @@ export class ExerciseEntryFieldsComponent {
 
   canSubmit(): boolean {
     return this.state.canSubmit();
+  }
+
+  private applyDurationPrefill(): void {
+    const seconds = this.durationPrefillSec();
+    if (seconds && seconds > 0) this.state.setDurationSeconds(seconds);
   }
 
   toggleStopwatch(): void {

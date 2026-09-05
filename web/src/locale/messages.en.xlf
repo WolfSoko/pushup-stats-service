@@ -11837,5 +11837,23 @@ Deine Position: # ·  Reps        </source>
         <target>Erfolge</target>
       </segment>
     </unit>
+    <unit id="quickAdd.fab.stopwatchAria">
+      <segment state="initial">
+        <source>Stoppuhr öffnen</source>
+        <target>Stoppuhr öffnen</target>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.stopwatch">
+      <segment state="initial">
+        <source>Stoppuhr</source>
+        <target>Stoppuhr</target>
+      </segment>
+    </unit>
+    <unit id="stopwatch.dialog.title">
+      <segment state="initial">
+        <source>Stoppuhr</source>
+        <target>Stoppuhr</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

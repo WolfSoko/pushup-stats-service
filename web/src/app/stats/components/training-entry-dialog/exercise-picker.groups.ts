@@ -3,6 +3,7 @@ import {
   ExerciseCategoryId,
   exercisesByCategory,
   findExerciseDefinition,
+  MeasurementType,
 } from '@pu-stats/models';
 import {
   categoryDisplayName,
@@ -32,13 +33,19 @@ const RECENT_GROUP_KEY = 'recent';
  * Suggested exercises stay listed in their category group too — the
  * category sections are the mental model for browsing, and dropping a
  * row from "Rumpf" just because it is also suggested reads as a bug.
+ *
+ * `measurements` narrows every group to exercises of those measurement
+ * types; categories left empty by the filter are dropped.
  */
 export function buildExercisePickerGroups(
-  suggestions: ExerciseSuggestions = {}
+  suggestions: ExerciseSuggestions = {},
+  measurements?: readonly MeasurementType[]
 ): ExercisePickerGroup[] {
-  const planned = knownIds(suggestions.plannedExerciseIds);
+  const allowed = measurementFilter(measurements);
+  const planned = knownIds(suggestions.plannedExerciseIds).filter(allowed);
   const recent = knownIds(suggestions.recentExerciseIds)
     .filter((id) => !planned.includes(id))
+    .filter(allowed)
     .slice(0, RECENT_SUGGESTION_LIMIT);
 
   const groups: ExercisePickerGroup[] = [];
@@ -59,7 +66,9 @@ export function buildExercisePickerGroups(
 
   const byCategory = exercisesByCategory();
   for (const category of EXERCISE_CATEGORIES) {
-    const defs = byCategory.get(category.id) ?? [];
+    const defs = (byCategory.get(category.id) ?? []).filter((def) =>
+      allowed(def.id)
+    );
     if (defs.length === 0) continue;
     groups.push({
       key: category.id,
@@ -96,15 +105,33 @@ export function filterExercisePickerGroups(
  * Exercise the dialog opens on: today's first prescribed exercise, else
  * the most recently logged one, else pushups — the app's headline
  * workout and the safest default when nothing is known about the user.
+ * Under a measurement filter every candidate must pass it, and the
+ * fallback is the first catalog exercise that does.
  */
 export function initialSuggestedExerciseId(
-  suggestions: ExerciseSuggestions = {}
+  suggestions: ExerciseSuggestions = {},
+  measurements?: readonly MeasurementType[]
 ): string {
+  const allowed = measurementFilter(measurements);
+  const suggested =
+    knownIds(suggestions.plannedExerciseIds).find(allowed) ??
+    knownIds(suggestions.recentExerciseIds).find(allowed);
+  if (suggested) return suggested;
+  if (allowed(PUSHUP_EXERCISE_ID)) return PUSHUP_EXERCISE_ID;
   return (
-    knownIds(suggestions.plannedExerciseIds)[0] ??
-    knownIds(suggestions.recentExerciseIds)[0] ??
+    buildExercisePickerGroups({}, measurements)[0]?.options[0]?.id ??
     PUSHUP_EXERCISE_ID
   );
+}
+
+function measurementFilter(
+  measurements: readonly MeasurementType[] | undefined
+): (id: string) => boolean {
+  if (!measurements || measurements.length === 0) return () => true;
+  return (id) => {
+    const measurement = findExerciseDefinition(id)?.measurement;
+    return measurement !== undefined && measurements.includes(measurement);
+  };
 }
 
 /**

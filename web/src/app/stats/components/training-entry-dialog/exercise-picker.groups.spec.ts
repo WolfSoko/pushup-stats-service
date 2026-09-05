@@ -86,6 +86,26 @@ describe('buildExercisePickerGroups', () => {
   });
 });
 
+describe('buildExercisePickerGroups with a measurement filter', () => {
+  it('should offer only exercises of the given measurements and drop emptied categories', () => {
+    // given / when
+    const groups = buildExercisePickerGroups(
+      { plannedExerciseIds: ['legs.squats', 'plank.standard'] },
+      ['time', 'distance-time']
+    );
+    const ids = groups.flatMap((g) => g.options.map((o) => o.id));
+
+    // then
+    expect(groups[0].key).toBe('planned');
+    expect(groups[0].options.map((o) => o.id)).toEqual(['plank.standard']);
+    expect(ids).toContain('core.mountainclimbers.time');
+    expect(ids).toContain('cardio.running');
+    expect(ids).not.toContain('pushup');
+    expect(ids).not.toContain('legs.squats');
+    expect(groups.map((g) => g.key)).not.toContain('pushup');
+  });
+});
+
 describe('filterExercisePickerGroups', () => {
   const groups = buildExercisePickerGroups({
     plannedExerciseIds: ['legs.squats'],
@@ -157,6 +177,25 @@ describe('initialSuggestedExerciseId', () => {
 
     // then
     expect(id).toBe('abs.situps');
+  });
+
+  it('should honour the measurement filter for suggestions and fall back to the first matching catalog exercise', () => {
+    // given / when / then
+    expect(
+      initialSuggestedExerciseId(
+        { plannedExerciseIds: ['legs.squats', 'squat.wallsit'] },
+        ['time']
+      )
+    ).toBe('squat.wallsit');
+    const fallback = initialSuggestedExerciseId({}, ['time', 'distance-time']);
+    expect(fallback).not.toBe('pushup');
+    expect(['time', 'distance-time']).toContain(
+      buildExercisePickerGroups({}, ['time', 'distance-time'])
+        .flatMap((g) => g.options)
+        .find((o) => o.id === fallback)
+        ? 'time'
+        : 'none'
+    );
   });
 
   it('should fall back to pushups without any suggestion', () => {

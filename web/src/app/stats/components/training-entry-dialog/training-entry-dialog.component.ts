@@ -14,7 +14,11 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ExerciseCategoryId, findExerciseDefinition } from '@pu-stats/models';
+import {
+  ExerciseCategoryId,
+  findExerciseDefinition,
+  MeasurementType,
+} from '@pu-stats/models';
 import { appendLocalOffset } from '@pu-stats/date';
 import {
   ExerciseSuggestions,
@@ -90,6 +94,18 @@ export class TrainingEntryDialogComponent {
   readonly suggestions: ExerciseSuggestions =
     this.dialogInput?.kind === 'create' ? this.dialogInput.suggestions : {};
 
+  /** Create-mode picker restriction, e.g. timed exercises after a stopwatch. */
+  readonly measurements: readonly MeasurementType[] | undefined =
+    this.dialogInput?.kind === 'create'
+      ? this.dialogInput.measurements
+      : undefined;
+
+  /** Create-mode duration prefill that survives switching the exercise. */
+  readonly durationPrefillSec: number | undefined =
+    this.dialogInput?.kind === 'create'
+      ? this.dialogInput.durationSec
+      : undefined;
+
   readonly exerciseId = signal<string>(this.initialExerciseId());
 
   readonly mode = computed<'pushup' | 'exercise'>(() =>
@@ -149,7 +165,9 @@ export class TrainingEntryDialogComponent {
 
   private initialExerciseId(): string {
     const data = this.data;
-    if (!data) return initialSuggestedExerciseId(this.suggestions);
+    if (!data) {
+      return initialSuggestedExerciseId(this.suggestions, this.measurements);
+    }
     return data.kind === 'pushup' ? PUSHUP_EXERCISE_ID : data.exerciseId;
   }
 

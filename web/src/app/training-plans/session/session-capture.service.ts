@@ -158,7 +158,7 @@ export class SessionCaptureService {
     if (!result || result.durationSec <= 0) return CANCELLED;
     return this.persistCapture(
       step,
-      result.exerciseId,
+      result.exerciseId ?? step.exercise.exerciseId,
       'durationSec',
       result.durationSec
     );

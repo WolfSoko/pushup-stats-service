@@ -72,6 +72,27 @@ describe('StopwatchDialogComponent', () => {
     });
   });
 
+  it('should run as a free-standing stopwatch without an exercise', async () => {
+    // given
+    await setup({});
+    byTestId('stopwatch-toggle').click();
+    vi.advanceTimersByTime(7_000);
+    byTestId('stopwatch-toggle').click();
+    fixture.detectChanges();
+
+    // then
+    expect(byTestId('stopwatch-dialog-exercise').textContent).toContain(
+      'Stoppuhr'
+    );
+    expect(byTestId('stopwatch-target')).toBeNull();
+
+    // when
+    byTestId('stopwatch-dialog-save').click();
+
+    // then — no exercise echoed back
+    expect(close).toHaveBeenCalledWith({ durationSec: 7 });
+  });
+
   it('should close with null on cancel and hide the target line without one', async () => {
     // given
     await setup({ exerciseId: 'cardio.highknees' });
