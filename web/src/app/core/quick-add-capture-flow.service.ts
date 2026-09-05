@@ -16,20 +16,27 @@ import { notifyEntrySaved, notifyError } from './quick-add-notify';
 import {
   AUTO_COUNT_DIALOG_CONFIG,
   EXERCISE_TIMER_DIALOG_CONFIG,
+  STOPWATCH_DIALOG_CONFIG,
   TRAINING_ENTRY_DIALOG_CONFIG,
 } from './quick-add-orchestration.models';
 
 import type { AutoCountDialogComponent } from '../auto-count/auto-count-dialog.component';
 import type { ExerciseTimerDialogComponent } from '../auto-count/exercise-timer-dialog.component';
+import type { StopwatchDialogComponent } from '../stats/components/stopwatch/stopwatch-dialog.component';
 import type { TrainingEntryDialogComponent } from '../stats/components/training-entry-dialog/training-entry-dialog.component';
+import type { TrainingEntryDialogInput } from '../stats/components/training-entry-dialog/training-entry-dialog.models';
 import type {
   AutoCountDialogData,
   AutoCountResult,
   ExerciseEntryDialogData,
   ExerciseTimerResult,
-  TrainingEntryDialogData,
+  StopwatchDialogData,
+  StopwatchResult,
   TrainingEntryDialogResult,
 } from './quick-add-orchestration.models';
+
+/** What a stopped stopwatch can be logged as: any exercise carrying a duration. */
+const STOPWATCH_MEASUREMENTS = ['time', 'distance-time'] as const;
 
 /**
  * Camera / timer capture flow: opens a pose-detection dialog, then chains
@@ -100,6 +107,40 @@ export class QuickAddCaptureFlowService {
     }
   }
 
+  /**
+   * Free-standing stopwatch from the quick-add menu: time first, pick the
+   * exercise afterwards. The entry dialog opens in create mode with the
+   * picker narrowed to timed and distance-time exercises and the stopped
+   * seconds prefilled.
+   */
+  async openStopwatch(): Promise<void> {
+    try {
+      const { StopwatchDialogComponent } =
+        await import('../stats/components/stopwatch/stopwatch-dialog.component');
+      this.dialog
+        .open<
+          StopwatchDialogComponent,
+          StopwatchDialogData,
+          StopwatchResult | null
+        >(StopwatchDialogComponent, { ...STOPWATCH_DIALOG_CONFIG, data: {} })
+        .afterClosed()
+        .subscribe((result) => {
+          if (!result || result.durationSec <= 0) return;
+          void this.openTrainingEntryDialog(
+            {
+              kind: 'create',
+              suggestions: {},
+              measurements: STOPWATCH_MEASUREMENTS,
+              durationSec: result.durationSec,
+            },
+            'stopwatch'
+          );
+        });
+    } catch (err) {
+      notifyError(this.snackBar, err);
+    }
+  }
+
   private async confirmExerciseTimer(
     result: ExerciseTimerResult
   ): Promise<void> {
@@ -127,7 +168,7 @@ export class QuickAddCaptureFlowService {
   }
 
   private async openTrainingEntryDialog(
-    data: TrainingEntryDialogData,
+    data: TrainingEntryDialogInput,
     exerciseSource: string
   ): Promise<void> {
     try {
@@ -136,7 +177,7 @@ export class QuickAddCaptureFlowService {
       this.dialog
         .open<
           TrainingEntryDialogComponent,
-          TrainingEntryDialogData,
+          TrainingEntryDialogInput,
           TrainingEntryDialogResult
         >(TrainingEntryDialogComponent, {
           data,

@@ -21,14 +21,19 @@ import { StopwatchComponent } from './stopwatch.component';
 import { StopwatchState } from './stopwatch.state';
 
 export interface StopwatchDialogData {
-  /** Catalog id of the timed exercise the seconds are for. */
-  readonly exerciseId: string;
+  /**
+   * Catalog id of the timed exercise the seconds are for. Absent for the
+   * free-standing stopwatch from the quick-add menu, where the exercise
+   * is picked afterwards in the entry dialog.
+   */
+  readonly exerciseId?: string;
   /** Prescribed seconds, rendered as the target; absent or 0 for none. */
   readonly targetSec?: number;
 }
 
 export interface StopwatchResult {
-  readonly exerciseId: string;
+  /** Echo of the exercise the dialog was opened for, if any. */
+  readonly exerciseId?: string;
   /** Stopped time in whole seconds. */
   readonly durationSec: number;
 }
@@ -56,13 +61,17 @@ export class StopwatchDialogComponent {
   private readonly dialogRef = inject(
     MatDialogRef<StopwatchDialogComponent, StopwatchResult | null>
   );
-  private readonly data = inject<StopwatchDialogData>(MAT_DIALOG_DATA);
+  private readonly data =
+    inject<StopwatchDialogData | null>(MAT_DIALOG_DATA, { optional: true }) ??
+    {};
 
   protected readonly stopwatch = new StopwatchState(
     isPlatformBrowser(inject(PLATFORM_ID))
   );
   protected readonly targetSec = Math.max(0, this.data.targetSec ?? 0);
-  protected readonly exerciseName = exerciseDisplayName(this.data.exerciseId);
+  protected readonly exerciseName = this.data.exerciseId
+    ? exerciseDisplayName(this.data.exerciseId)
+    : $localize`:@@stopwatch.dialog.title:Stoppuhr`;
   protected readonly exerciseIcon =
     findExerciseDefinition(this.data.exerciseId)?.icon ?? 'timer';
   protected readonly canSave = computed(() => this.stopwatch.elapsedSec() > 0);
@@ -77,7 +86,10 @@ export class StopwatchDialogComponent {
       this.dialogRef.close(null);
       return;
     }
-    this.dialogRef.close({ exerciseId: this.data.exerciseId, durationSec });
+    this.dialogRef.close({
+      ...(this.data.exerciseId ? { exerciseId: this.data.exerciseId } : {}),
+      durationSec,
+    });
   }
 
   protected cancel(): void {

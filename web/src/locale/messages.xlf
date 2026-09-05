@@ -190,7 +190,7 @@
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:315,316</note>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:96,97</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:152,153</note>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:42,44</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:44,46</note>
         <note category="location">web/src/app/stats/shell/settings-page.component.html:432,433</note>
       </notes>
       <segment>
@@ -741,9 +741,25 @@
         <source>Plank‑Timer</source>
       </segment>
     </unit>
-    <unit id="quickAdd.fab.customValueAria">
+    <unit id="quickAdd.fab.stopwatchAria">
       <notes>
         <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:46,47</note>
+      </notes>
+      <segment>
+        <source>Stoppuhr öffnen</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.stopwatch">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:52,54</note>
+      </notes>
+      <segment>
+        <source>Stoppuhr</source>
+      </segment>
+    </unit>
+    <unit id="quickAdd.fab.customValueAria">
+      <notes>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:59,60</note>
       </notes>
       <segment>
         <source>Eigenen Wert eingeben</source>
@@ -751,7 +767,7 @@
     </unit>
     <unit id="quickAdd.fab.customValue">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:51,53</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:64,66</note>
       </notes>
       <segment>
         <source>Eigener Wert</source>
@@ -759,7 +775,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoal">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:120,121</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.html:133,134</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ item.value }}"/> bis zum Ziel</source>
@@ -767,7 +783,7 @@
     </unit>
     <unit id="quickAdd.fab.open">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:135</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:143</note>
       </notes>
       <segment>
         <source>Schnellerfassung öffnen</source>
@@ -775,7 +791,7 @@
     </unit>
     <unit id="quickAdd.fab.close">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:136</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:144</note>
       </notes>
       <segment>
         <source>Schnellerfassung schließen</source>
@@ -783,7 +799,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReached">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:137</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:145</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -791,7 +807,7 @@
     </unit>
     <unit id="quickAdd.fab.goalReachedAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:138</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:146</note>
       </notes>
       <segment>
         <source>Tagesziel bereits erreicht</source>
@@ -799,7 +815,7 @@
     </unit>
     <unit id="quickAdd.fab.fillToGoalAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:141</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:149</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="GAP" disp="gap"/> Liegestütze bis zum Tagesziel hinzufügen</source>
@@ -807,7 +823,7 @@
     </unit>
     <unit id="quickAdd.fab.goals">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:148</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:156</note>
       </notes>
       <segment>
         <source>Tagesziele</source>
@@ -815,7 +831,7 @@
     </unit>
     <unit id="quickAdd.fab.goalsAria">
       <notes>
-        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:149</note>
+        <note category="location">libs/quick-add/src/lib/quick-add-fab.component.ts:157</note>
       </notes>
       <segment>
         <source>Tagesziele zum Abhaken anzeigen</source>
@@ -2687,7 +2703,7 @@
     </unit>
     <unit id="achievement.dialog.headline">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:81</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:85</note>
       </notes>
       <segment>
         <source>Geschafft!</source>
@@ -2695,7 +2711,7 @@
     </unit>
     <unit id="achievement.dialog.close">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:82</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:86</note>
       </notes>
       <segment>
         <source>Weiter</source>
@@ -2703,7 +2719,7 @@
     </unit>
     <unit id="achievement.dialog.share">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:83</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:87</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -2711,7 +2727,7 @@
     </unit>
     <unit id="achievement.share.title">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:91</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:95</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -2719,7 +2735,7 @@
     </unit>
     <unit id="achievement.share.text">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:92</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:96</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
@@ -4351,7 +4367,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:427</note>
+        <note category="location">web/src/app/app.ts:431</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4359,7 +4375,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:456</note>
+        <note category="location">web/src/app/app.ts:460</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4367,7 +4383,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:463</note>
+        <note category="location">web/src/app/app.ts:467</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -8454,6 +8470,14 @@
         <source> Übernehmen </source>
       </segment>
     </unit>
+    <unit id="stopwatch.dialog.title">
+      <notes>
+        <note category="location">web/src/app/stats/components/stopwatch/stopwatch-dialog.component.ts:74</note>
+      </notes>
+      <segment>
+        <source>Stoppuhr</source>
+      </segment>
+    </unit>
     <unit id="stopwatch.target">
       <notes>
         <note category="location">web/src/app/stats/components/stopwatch/stopwatch.component.html:10,12</note>
@@ -8612,7 +8636,7 @@
     </unit>
     <unit id="entryDialog.stopwatch">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.ts:91</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-entry-fields.component.ts:97</note>
       </notes>
       <segment>
         <source>Stoppuhr</source>
@@ -8652,7 +8676,7 @@
     </unit>
     <unit id="entryDialog.picker.plannedToday">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.groups.ts:48</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.groups.ts:55</note>
       </notes>
       <segment>
         <source>Heute geplant</source>
@@ -8660,7 +8684,7 @@
     </unit>
     <unit id="entryDialog.picker.recent">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.groups.ts:55</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/exercise-picker.groups.ts:62</note>
       </notes>
       <segment>
         <source>Zuletzt genutzt</source>
@@ -8772,7 +8796,7 @@
     </unit>
     <unit id="timestampLabel">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:18,20</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:19,21</note>
       </notes>
       <segment>
         <source>Zeitpunkt</source>
@@ -8780,7 +8804,7 @@
     </unit>
     <unit id="saveEntry">
       <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:52,54</note>
+        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.component.html:54,56</note>
       </notes>
       <segment>
         <source> Speichern </source>

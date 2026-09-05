@@ -388,6 +388,10 @@ export class App {
     this.quickAdd.openExerciseTimer();
   }
 
+  handleOpenStopwatch(): void {
+    this.quickAdd.openStopwatch();
+  }
+
   handleFillToGoal(): void {
     this.quickAdd.fillToGoal();
   }

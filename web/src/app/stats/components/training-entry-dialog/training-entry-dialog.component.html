@@ -10,6 +10,7 @@
   <app-exercise-picker
     [exerciseId]="exerciseId()"
     [suggestions]="suggestions"
+    [measurements]="measurements"
     [locked]="isEditMode"
     (exerciseIdChange)="onExerciseChange($event)"
   />
@@ -33,6 +34,7 @@
       [category]="category()"
       [data]="data"
       [isEditMode]="isEditMode"
+      [durationPrefillSec]="durationPrefillSec"
     />
   }
 </mat-dialog-content>

@@ -58,6 +58,17 @@ export interface ExerciseSuggestions {
 export interface TrainingEntryCreateDialogData {
   kind: 'create';
   suggestions: ExerciseSuggestions;
+  /**
+   * Restrict the picker to these measurement types — e.g. a stopped
+   * stopwatch offers only timed and distance-time exercises. Absent means
+   * the whole catalog.
+   */
+  measurements?: readonly MeasurementType[];
+  /**
+   * Seconds to prefill the duration field with, kept across exercise
+   * switches so a stopped time survives picking the exercise afterwards.
+   */
+  durationSec?: number;
 }
 
 /** Everything `MAT_DIALOG_DATA` may carry for this dialog. */

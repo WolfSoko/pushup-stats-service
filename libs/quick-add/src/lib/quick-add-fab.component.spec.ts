@@ -32,6 +32,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
     const fillToGoal = jest.fn();
     const openAutoCount = jest.fn();
     const openExerciseTimer = jest.fn();
+    const openStopwatch = jest.fn();
     const fillGoalItem = jest.fn();
     const opened = jest.fn();
 
@@ -58,6 +59,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
         fillToGoal,
         openAutoCount,
         openExerciseTimer,
+        openStopwatch,
         fillGoalItem,
         opened,
       },
@@ -77,6 +79,7 @@ describe('QuickAddFabComponent — goal dial item', () => {
       fillToGoal,
       openAutoCount,
       openExerciseTimer,
+      openStopwatch,
       fillGoalItem,
       opened,
     };
@@ -227,6 +230,21 @@ describe('QuickAddFabComponent — goal dial item', () => {
       screen.queryByRole('button', {
         name: /Liegestütze automatisch zählen/i,
       })
+    ).toBeNull();
+  });
+
+  it('should emit openStopwatch and close the dial when the stopwatch item is clicked', async () => {
+    // given
+    const { user, openStopwatch, openExerciseTimer } = await renderFab({});
+
+    // when
+    await user.click(screen.getByRole('button', { name: /Stoppuhr öffnen/i }));
+
+    // then
+    expect(openStopwatch).toHaveBeenCalledTimes(1);
+    expect(openExerciseTimer).not.toHaveBeenCalled();
+    expect(
+      screen.queryByRole('button', { name: /Stoppuhr öffnen/i })
     ).toBeNull();
   });
 

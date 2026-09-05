@@ -41,7 +41,13 @@ export interface QuickAddGoalItem {
 interface DialItem {
   readonly value: number;
   readonly type:
-    'quick' | 'custom' | 'feedback' | 'goal' | 'auto-count' | 'exercise-timer';
+    | 'quick'
+    | 'custom'
+    | 'feedback'
+    | 'goal'
+    | 'auto-count'
+    | 'exercise-timer'
+    | 'stopwatch';
   /** Functional glyph for the fixed dial items; quick-add items render label-only. */
   readonly icon?: string;
   readonly label?: string;
@@ -78,6 +84,7 @@ export class QuickAddFabComponent {
   readonly fillGoalItem = output<string>();
   readonly openAutoCount = output<void>();
   readonly openExerciseTimer = output<void>();
+  readonly openStopwatch = output<void>();
   readonly opened = output<void>();
 
   protected readonly fabState = signalState({ open: false, goalMenu: false });
@@ -125,7 +132,8 @@ export class QuickAddFabComponent {
     if (this.autoCountEnabled()) {
       items.push({ value: 0, type: 'auto-count', icon: 'videocam' });
     }
-    items.push({ value: 0, type: 'exercise-timer', icon: 'timer' });
+    items.push({ value: 0, type: 'exercise-timer', icon: 'horizontal_rule' });
+    items.push({ value: 0, type: 'stopwatch', icon: 'timer' });
     items.push({ value: 0, type: 'custom', icon: 'edit_note' });
     items.push({ value: 0, type: 'feedback', icon: 'feedback' });
 
@@ -186,6 +194,11 @@ export class QuickAddFabComponent {
   protected onOpenExerciseTimer(): void {
     this.closeDial();
     this.openExerciseTimer.emit();
+  }
+
+  protected onOpenStopwatch(): void {
+    this.closeDial();
+    this.openStopwatch.emit();
   }
 
   protected onOpenFeedback(): void {
