@@ -571,10 +571,10 @@ describe('generate-sitemap', () => {
       }
     });
 
-    it('still omits locales of an entry whose translation has no body', () => {
-      // given — the exercise wiki has German bodies only so far, so the
-      // gate must hold per locale even though the push-up types above are
-      // fully translated.
+    it('emits a detail URL for every locale once an exercise wiki file carries a body', () => {
+      // given — the translation routine has filled in a long-form body
+      // for every exercise across every supported locale, same as the
+      // push-up types above.
       // when
       const xml = generateSitemap([]);
 
@@ -582,9 +582,13 @@ describe('generate-sitemap', () => {
       expect(xml).toContain(
         '<loc>https://pushup-stats.com/de/wiki/uebungen/plank</loc>'
       );
-      expect(xml).not.toMatch(
-        /<loc>[^<]*\/(en|fr|es|it|nl|el|no|zh)\/wiki\/uebungen\/[^<]+<\/loc>/
-      );
+      for (const lang of ['en', 'fr', 'es', 'it', 'nl', 'el', 'no', 'zh']) {
+        expect(xml).toMatch(
+          new RegExp(
+            `<loc>https://pushup-stats\\.com/${lang}/wiki/uebungen/[^<]+</loc>`
+          )
+        );
+      }
     });
 
     it('emits a detail URL for an exercise that carries a long-form body', () => {
@@ -609,12 +613,9 @@ describe('sitemap reciprocity invariants', () => {
 
   it('lists only wiki detail URLs whose page is actually indexable', () => {
     // A URL in the sitemap whose page serves `noindex` is a contradiction
-    // Google penalises, so the two families are asserted separately by
-    // how far their translations have come:
-    //   - push-up types carry a body in every supported locale, so every
-    //     locale must appear;
-    //   - exercise wiki entries have German bodies only, so nothing else
-    //     may appear until the translations routine catches up.
+    // Google penalises. Both wiki families — push-up types and exercises —
+    // now carry a body in every supported locale, so every locale must
+    // appear for both.
     const { LOCALES } = require('./generate-sitemap');
     const wikiLocs = [...xml.matchAll(/<loc>([^<]*wiki\/[^<]+)<\/loc>/g)]
       .map((m) => m[1])
@@ -622,18 +623,21 @@ describe('sitemap reciprocity invariants', () => {
     expect(wikiLocs.length).toBeGreaterThan(0);
 
     const typePattern = new RegExp(
-      `/(${LOCALES.join('|')})/wiki/liegestuetz-typen/`
+      `/(${LOCALES.join('|')})/wiki/(liegestuetz-typen|uebungen)/`
     );
     const typeLocales = new Set();
+    const exerciseLocales = new Set();
     for (const loc of wikiLocs) {
-      if (loc.includes('/wiki/uebungen/')) {
-        expect(loc).toMatch(/\/de\/wiki\/uebungen\//);
-        continue;
-      }
       expect(loc).toMatch(typePattern);
-      typeLocales.add(loc.match(typePattern)[1]);
+      const [, locale] = loc.match(typePattern);
+      if (loc.includes('/wiki/uebungen/')) {
+        exerciseLocales.add(locale);
+      } else {
+        typeLocales.add(locale);
+      }
     }
     expect(typeLocales.size).toBe(LOCALES.length);
+    expect(exerciseLocales.size).toBe(LOCALES.length);
   });
 
   it('contains no URLs for removed locales', () => {

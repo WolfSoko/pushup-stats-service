@@ -2379,17 +2379,17 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
-      <target>俯卧撑追踪器：训练计划、连续天数与排行榜</target></segment>
+      <target>用摄像头数俯卧撑 — 浏览器内免费使用</target></segment>
     </unit>
     <unit id="seo.landing.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
-      <target>用免费网页应用追踪俯卧撑：训练计划、30 天挑战、每日目标、连续天数与排行榜 — 现在也支持仰卧起坐、深蹲、平板支撑与跑步。手机端、离线可用、实时同步。</target></segment>
+      <target>摄像头自动计数你的俯卧撑 — 在浏览器中进行，无需上传。此外还有训练计划、连续天数和排行榜，现在也支持深蹲和引体向上。</target></segment>
     </unit>
     <unit id="seo.dashboard.title">
       <notes>
@@ -11121,75 +11121,75 @@
       </segment>
     </unit>
     <unit id="publicProfile.badge.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan abgeschlossen</source>
-        <target>Trainingsplan abgeschlossen</target>
+        <target>训练计划已完成</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.firstPlanDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Plantag</source>
-        <target>Erster Plantag</target>
+        <target>首个训练日</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+        <target><ph id="0" equiv="days" disp="days"/> 个训练日</target>
       </segment>
     </unit>
     <unit id="publicProfile.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfolge</source>
-        <target>Erfolge</target>
+        <target>成就</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geschafft!</source>
-        <target>Geschafft!</target>
+        <target>完成！</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.close">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>继续</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>分享</target>
       </segment>
     </unit>
     <unit id="achievement.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <target>俯卧撑追踪器</target>
       </segment>
     </unit>
     <unit id="achievement.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
-        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</target>
+        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — 完成！💪</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.stopwatchAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr öffnen</source>
-        <target>Stoppuhr öffnen</target>
+        <target>打开秒表</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>秒表</target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>秒表</target>
       </segment>
     </unit>
     <unit id="nav.more">
