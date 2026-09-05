@@ -11559,45 +11559,45 @@
       </segment>
     </unit>
     <unit id="nav.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>Plus</target>
       </segment>
     </unit>
     <unit id="settings.nav.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einstellungen</source>
-        <target>Einstellungen</target>
+        <target>Paramètres</target>
       </segment>
     </unit>
     <unit id="settings.nav.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil</source>
         <target>Profil</target>
       </segment>
     </unit>
     <unit id="settings.nav.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziele</source>
-        <target>Ziele</target>
+        <target>Objectifs</target>
       </segment>
     </unit>
     <unit id="settings.nav.reminders">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerungen</source>
-        <target>Erinnerungen</target>
+        <target>Rappels</target>
       </segment>
     </unit>
     <unit id="settings.nav.display">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darstellung</source>
-        <target>Darstellung</target>
+        <target>Affichage</target>
       </segment>
     </unit>
     <unit id="settings.nav.privacy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenschutz</source>
-        <target>Datenschutz</target>
+        <target>Confidentialité</target>
       </segment>
     </unit>
 </file>

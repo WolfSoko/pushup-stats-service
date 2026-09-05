@@ -11687,45 +11687,45 @@
       </segment>
     </unit>
     <unit id="nav.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>Altro</target>
       </segment>
     </unit>
     <unit id="settings.nav.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einstellungen</source>
-        <target>Einstellungen</target>
+        <target>Impostazioni</target>
       </segment>
     </unit>
     <unit id="settings.nav.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil</source>
-        <target>Profil</target>
+        <target>Profilo</target>
       </segment>
     </unit>
     <unit id="settings.nav.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziele</source>
-        <target>Ziele</target>
+        <target>Obiettivi</target>
       </segment>
     </unit>
     <unit id="settings.nav.reminders">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerungen</source>
-        <target>Erinnerungen</target>
+        <target>Promemoria</target>
       </segment>
     </unit>
     <unit id="settings.nav.display">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darstellung</source>
-        <target>Darstellung</target>
+        <target>Visualizzazione</target>
       </segment>
     </unit>
     <unit id="settings.nav.privacy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenschutz</source>
-        <target>Datenschutz</target>
+        <target>Privacy</target>
       </segment>
     </unit>
 </file>

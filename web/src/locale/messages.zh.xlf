@@ -11193,45 +11193,45 @@
       </segment>
     </unit>
     <unit id="nav.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mehr</source>
-        <target>Mehr</target>
+        <target>更多</target>
       </segment>
     </unit>
     <unit id="settings.nav.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einstellungen</source>
-        <target>Einstellungen</target>
+        <target>设置</target>
       </segment>
     </unit>
     <unit id="settings.nav.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil</source>
-        <target>Profil</target>
+        <target>个人资料</target>
       </segment>
     </unit>
     <unit id="settings.nav.goals">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziele</source>
-        <target>Ziele</target>
+        <target>目标</target>
       </segment>
     </unit>
     <unit id="settings.nav.reminders">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erinnerungen</source>
-        <target>Erinnerungen</target>
+        <target>提醒</target>
       </segment>
     </unit>
     <unit id="settings.nav.display">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darstellung</source>
-        <target>Darstellung</target>
+        <target>显示</target>
       </segment>
     </unit>
     <unit id="settings.nav.privacy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Datenschutz</source>
-        <target>Datenschutz</target>
+        <target>隐私</target>
       </segment>
     </unit>
 </file>
