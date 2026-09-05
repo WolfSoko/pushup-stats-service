@@ -83,6 +83,28 @@
         "command": "node tools/src/generate-content.mjs",
         "cwd": "{workspaceRoot}"
       }
+    },
+    "generate-feeds": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{workspaceRoot}/content/blog/**/*.md",
+        "{workspaceRoot}/web/src/server-locale-redirect.ts",
+        "{workspaceRoot}/tools/src/generate-feeds.js",
+        "{workspaceRoot}/tools/src/generate-sitemap.js"
+      ],
+      "outputs": ["{workspaceRoot}/web/public/feed.*.xml"],
+      "options": {
+        "command": "node tools/src/generate-feeds.js",
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "submit-indexnow": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "options": {
+        "command": "node tools/src/submit-indexnow.js",
+        "cwd": "{workspaceRoot}"
+      }
     }
   }
 }

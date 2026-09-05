@@ -37,6 +37,15 @@
       content="https://pushup-stats.com/pushup-stats-og.png"
     />
     <link rel="canonical" href="https://pushup-stats.com/de/" />
+    <!-- Relative href on purpose: `<base href="/<locale>/">` in the
+         localised build resolves this to the reader's own language
+         feed, which `server.ts` maps onto `feed.<lang>.xml`. -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Pushup Tracker Blog"
+      href="feed.xml"
+    />
     <link rel="alternate" hreflang="de" href="https://pushup-stats.com/de/" />
     <link rel="alternate" hreflang="en" href="https://pushup-stats.com/en/" />
     <link

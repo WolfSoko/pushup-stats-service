@@ -50,6 +50,7 @@
       "dependsOn": [
         "tools:generate-content",
         "tools:generate-sitemap",
+        "tools:generate-feeds",
         "sw-push:build"
       ],
       "outputs": ["{options.outputPath}"],

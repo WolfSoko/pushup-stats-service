@@ -15,7 +15,10 @@ import { pino } from 'pino';
 import { pinoHttp } from 'pino-http';
 
 import { resolveBuildInfo, sentryRelease } from './build-info';
-import { computeLocaleRedirect } from './server-locale-redirect';
+import {
+  SUPPORTED_LOCALES,
+  computeLocaleRedirect,
+} from './server-locale-redirect';
 import { isCacheableStaticSsrPath } from './server-ssr-cache';
 import {
   SHORT_LIVED_CACHE_CONTROL,
@@ -140,6 +143,40 @@ app.use(
     },
   })
 );
+
+// IndexNow verifies ownership by fetching `https://<host>/<key>.txt`
+// from the domain root. The key file lives in `web/public`, which the
+// i18n build only exposes under `/<locale>/`, so without this rewrite
+// verification fails with a 404 and every submission is rejected.
+// Narrow on purpose: hex basename plus `.txt`, which is exactly the
+// IndexNow key format and nothing else in the bundle.
+app.use((req, res, next) => {
+  const match = /^\/([0-9a-f]{8,128})\.txt$/.exec(req.path);
+  if (!match) return next();
+  req.url = `/de/${match[1]}.txt`;
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  next();
+});
+
+// Map the conventional feed URLs onto the generated per-locale files.
+// `generate-feeds.js` emits `feed.<lang>.xml` into `web/public`, which
+// the i18n build copies into every locale bundle — so the file is read
+// from `/de/` like the other root files, and the URL a reader
+// subscribes to stays `/<locale>/feed.xml`.
+//
+// One feed per locale rather than a single German one: the blog ships
+// all nine, and a reader in Italy has no use for German items.
+const FEED_LOCALES: ReadonlySet<string> = new Set(SUPPORTED_LOCALES);
+app.use((req, res, next) => {
+  const match = /^\/(?:([a-z]{2})\/)?feed\.xml$/.exec(req.path);
+  if (!match) return next();
+  const lang = match[1] ?? 'de';
+  if (!FEED_LOCALES.has(lang)) return next();
+  req.url = `/de/feed.${lang}.xml`;
+  res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  next();
+});
 
 // Serve `/assets/<path>` from the localised /de/ build output. The i18n
 // build emits one asset copy per locale under `<locale>/assets/`, and

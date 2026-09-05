@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pushup Tracker Blog</title>
+    <link>https://pushup-stats.com/es/blog</link>
+    <description>Entrenamiento, técnica y conocimientos.</description>
+    <language>es</language>
+    <atom:link href="https://pushup-stats.com/es/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Entrenamiento de cuerpo completo sin material: los seis movimientos básicos que necesitas cada semana</title>
+      <link>https://pushup-stats.com/es/blog/movimientos-basicos-cuerpo-completo</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/movimientos-basicos-cuerpo-completo</guid>
+      <pubDate>Wed, 02 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Empujar, tirar, sentadilla, bisagra de cadera, core, resistencia: quien cubre estos seis patrones entrena de forma completa. Por qué este modelo viene de la ciencia del movimiento, cómo aplicarlo sin gimnasio y cómo es una semana equilibrada.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-ganzkoerper.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>¿HIIT o zona 2? Qué entrenamiento de resistencia mejora realmente tu salud</title>
+      <link>https://pushup-stats.com/es/blog/hiit-o-cardio-zona-2</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/hiit-o-cardio-zona-2</guid>
+      <pubDate>Wed, 02 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Intervalos o entrenamiento continuo suave: el debate es viejo, la respuesta es ambos. Qué dice el VO₂max sobre tu esperanza de vida, qué pasa en el músculo en zona 2, por qué el HIIT es tan eficiente y cómo combinar ambos en una semana.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-cardio.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Aprender dominadas: de cero a la primera repetición en cinco etapas</title>
+      <link>https://pushup-stats.com/es/blog/aprender-dominadas</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/aprender-dominadas</guid>
+      <pubDate>Wed, 02 Sep 2026 08:00:00 GMT</pubDate>
+      <description>La dominada es el ejercicio rey para espalda, brazos y fuerza de agarre, y para la mayoría de principiantes, al principio, inalcanzable. Anatomía, por qué es tan difícil, las cinco etapas de progresión y una hoja de ruta de 8 semanas.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-klimmzug.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Sentadillas: la técnica correcta, la profundidad, el ángulo de rodilla y los mitos que te frenan</title>
+      <link>https://pushup-stats.com/es/blog/sentadillas-tecnica-correcta</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/sentadillas-tecnica-correcta</guid>
+      <pubDate>Wed, 02 Sep 2026 08:00:00 GMT</pubDate>
+      <description>La sentadilla es el ejercicio más importante para piernas, cadera y la vida diaria en la vejez. Anatomía, qué dice la investigación sobre la profundidad y la «rodilla sobre la punta del pie», los errores más frecuentes y una progresión desde la sentadilla en silla hasta la variante a una pierna, sin material.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-kniebeuge.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Entrenamiento de core bien hecho: por qué el plank y el dead bug rinden más que 100 abdominales</title>
+      <link>https://pushup-stats.com/es/blog/entrenamiento-core-plank-dead-bug</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/entrenamiento-core-plank-dead-bug</guid>
+      <pubDate>Wed, 02 Sep 2026 08:00:00 GMT</pubDate>
+      <description>El core no es un six pack, sino un sistema de estabilización. Qué dice la investigación sobre la columna acerca de los abdominales tradicionales, las cuatro funciones del core, los «Big Three» de Stuart McGill y una progresión desde el primer segundo de plank hasta el hollow hold.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-rumpf.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Sueño y recuperación: por qué tu progreso surge entre las sesiones de entrenamiento</title>
+      <link>https://pushup-stats.com/es/blog/sueno-recuperacion-entrenamiento</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/sueno-recuperacion-entrenamiento</guid>
+      <pubDate>Wed, 02 Sep 2026 08:00:00 GMT</pubDate>
+      <description>El entrenamiento es el estímulo, la recuperación es la adaptación. Qué le hace la falta de sueño al desarrollo muscular, la fuerza y el riesgo de lesión, cómo funciona la supercompensación, cómo reconocer el sobreentrenamiento, y un protocolo de recuperación para deportistas con vida diaria.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-schlaf.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Historia de las flexiones: de las escuelas de lucha india al récord mundial</title>
+      <link>https://pushup-stats.com/es/blog/historia-de-las-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/historia-de-las-flexiones</guid>
+      <pubDate>Tue, 01 Sep 2026 08:00:00 GMT</pubDate>
+      <description>¿Quién inventó las flexiones? Un recorrido desde las escuelas de lucha india, pasando por el movimiento gimnástico alemán y las pruebas militares del siglo XX, hasta las 46.001 repeticiones en 24 horas y el estudio de Harvard de 2019.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-geschichte.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Dolor al hacer flexiones: cómo proteger muñecas, hombros y codos</title>
+      <link>https://pushup-stats.com/es/blog/dolor-muneca-hombro-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/dolor-muneca-hombro-flexiones</guid>
+      <pubDate>Tue, 01 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Muñeca, hombro, codo o zona lumbar: casi cualquier dolor al hacer flexiones tiene una causa mecánica. Anatomía, los desencadenantes más frecuentes, un semáforo del dolor y una rutina de prehabilitación de 10 minutos.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-gelenke-schmerzen.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Desarrollo muscular con flexiones: lo que la investigación dice realmente sobre el entrenamiento con peso corporal</title>
+      <link>https://pushup-stats.com/es/blog/desarrollo-muscular-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/desarrollo-muscular-flexiones</guid>
+      <pubDate>Tue, 01 Sep 2026 08:00:00 GMT</pubDate>
+      <description>¿Se puede ganar músculo sin mancuernas? Sí, con tres condiciones. Los estudios sobre flexiones frente a press de banca, el continuo de repeticiones y un plan concreto de sobrecarga progresiva sin pesas.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-muskelaufbau.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>¿Qué músculos trabajan las flexiones? Anatomía, datos de EMG y posiciones de las manos</title>
+      <link>https://pushup-stats.com/es/blog/musculos-flexiones-anatomia</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/musculos-flexiones-anatomia</guid>
+      <pubDate>Tue, 01 Sep 2026 08:00:00 GMT</pubDate>
+      <description>Pecho, tríceps, hombro, y media docena de ayudantes silenciosos. Lo que la investigación sabe realmente sobre activación muscular, peso corporal en movimiento y posiciones de las manos en las flexiones.</description>
+      <enclosure url="https://pushup-stats.com/assets/blog/hero-muskeln-anatomie.jpg" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Los 7 errores más comunes en las flexiones — y cómo corregir cada uno</title>
+      <link>https://pushup-stats.com/es/blog/errores-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/errores-flexiones</guid>
+      <pubDate>Thu, 30 Apr 2026 08:00:00 GMT</pubDate>
+      <description>Una mala técnica te cuesta repeticiones, progreso y, a veces, el hombro. Los errores más comunes en las flexiones, con correcciones concretas para cada uno.</description>
+      <enclosure url="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Flexiones para mujeres: mitos, anatomía y un plan inicial de 4 semanas</title>
+      <link>https://pushup-stats.com/es/blog/flexiones-mujeres</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/flexiones-mujeres</guid>
+      <pubDate>Wed, 29 Apr 2026 08:00:00 GMT</pubDate>
+      <description>Las mujeres pueden hacer las mismas flexiones que los hombres — la progresión simplemente suele verse diferente. Anatomía, mitos y un plan inicial realista de 4 semanas.</description>
+      <enclosure url="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Respiración en las flexiones: bracing, ritmo y qué cambia al máximo esfuerzo</title>
+      <link>https://pushup-stats.com/es/blog/respiracion-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/respiracion-flexiones</guid>
+      <pubDate>Tue, 28 Apr 2026 08:00:00 GMT</pubDate>
+      <description>La respiración está infravalorada en las flexiones. Cuándo inhalar, cuándo exhalar, qué significa el bracing — y por qué las series al máximo necesitan una regla distinta.</description>
+      <enclosure url="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>El estudio de Harvard que hizo famosas las flexiones: más de 40 y salud cardíaca</title>
+      <link>https://pushup-stats.com/es/blog/flexiones-salud-corazon</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/flexiones-salud-corazon</guid>
+      <pubDate>Thu, 23 Apr 2026 08:00:00 GMT</pubDate>
+      <description>Un estudio de JAMA de 2019 puso la capacidad de flexiones en el mapa del riesgo cardiovascular. Aquí está lo que los datos realmente decían, lo que no decían, y cómo usarlo para tu entrenamiento.</description>
+      <enclosure url="https://images.unsplash.com/photo-1514512364185-4c2b0985be01?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>El método Wim Hof para las flexiones: respiración, exposición al frío y rendimiento</title>
+      <link>https://pushup-stats.com/es/blog/metodo-wim-hof-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/metodo-wim-hof-flexiones</guid>
+      <pubDate>Thu, 23 Apr 2026 08:00:00 GMT</pubDate>
+      <description>¿Puede el método Wim Hof mejorar realmente el rendimiento y la recuperación en flexiones? Un análisis basado en investigación del protocolo de respiración, la exposición al frío y lo que dice la evidencia.</description>
+      <enclosure url="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Flexiones después de los 40: cómo entrenar de forma segura y eficaz</title>
+      <link>https://pushup-stats.com/es/blog/flexiones-mayores-40</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/flexiones-mayores-40</guid>
+      <pubDate>Tue, 20 Jan 2026 08:00:00 GMT</pubDate>
+      <description>Tu cuerpo cambia después de los 40, pero las flexiones siguen siendo uno de los mejores ejercicios. Aprende a desarrollar fuerza de forma segura con los ajustes adecuados.</description>
+      <enclosure url="https://images.unsplash.com/photo-1638820858482-800bd51f63f1?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Reto de flexiones de 30 días: tu plan para el máximo progreso</title>
+      <link>https://pushup-stats.com/es/blog/desafio-flexiones-30-dias</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/desafio-flexiones-30-dias</guid>
+      <pubDate>Tue, 04 Nov 2025 08:00:00 GMT</pubDate>
+      <description>Este reto estructurado de 30 días te ayuda a aumentar tu número de flexiones paso a paso, desde la primera semana hasta la prueba final del día 30.</description>
+      <enclosure url="https://images.unsplash.com/photo-1596079306903-9164c205f400?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>10 variaciones de flexiones para todos los niveles de condición física</title>
+      <link>https://pushup-stats.com/es/blog/variaciones-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/variaciones-flexiones</guid>
+      <pubDate>Mon, 22 Sep 2025 08:00:00 GMT</pubDate>
+      <description>Desde flexiones de rodillas hasta flexiones de arquero: estas 10 variaciones trabajan pecho, tríceps y hombros — y rompen cualquier estancamiento.</description>
+      <enclosure url="https://images.unsplash.com/photo-1731341400836-baaa5535b8d5?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Cómo un tracker te ayuda a batir tus récords personales de flexiones</title>
+      <link>https://pushup-stats.com/es/blog/guia-registro-flexiones</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/guia-registro-flexiones</guid>
+      <pubDate>Mon, 10 Mar 2025 08:00:00 GMT</pubDate>
+      <description>Por qué un rastreador digital de flexiones marca la diferencia — y cómo Pushup Tracker te ayuda a alcanzar récords personales y mantener la constancia.</description>
+      <enclosure url="https://images.unsplash.com/photo-1717821681365-36b0da044a75?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+    <item>
+      <title>Por qué las flexiones diarias cambiarán tu vida</title>
+      <link>https://pushup-stats.com/es/blog/flexiones-diarias</link>
+      <guid isPermaLink="true">https://pushup-stats.com/es/blog/flexiones-diarias</guid>
+      <pubDate>Mon, 03 Feb 2025 08:00:00 GMT</pubDate>
+      <description>Las flexiones diarias mejoran la fuerza, la postura y el bienestar. Descubre los beneficios científicamente probados y cómo construir el hábito de forma definitiva.</description>
+      <enclosure url="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" type="image/jpeg" length="0"/>
+    </item>
+  </channel>
+</rss>
