@@ -40,6 +40,13 @@ const BLOG_DIR =
 const WIKI_DIR =
   process.env.DETECT_GAPS_WIKI_DIR ||
   join(REPO_ROOT, 'content', 'wiki', 'pushup-types');
+// The exercise wiki was never scanned — its 40 entries × 8 locales were
+// invisible to the routine. Derived from REPO_ROOT like the others so a
+// sandbox fixture that relocates the root does not reach into the real
+// repository.
+const WIKI_EXERCISES_DIR =
+  process.env.DETECT_GAPS_WIKI_EXERCISES_DIR ||
+  join(REPO_ROOT, 'content', 'wiki', 'exercises');
 const LOCALE_CONST_FILE =
   process.env.DETECT_GAPS_LOCALE_CONST_FILE ||
   join(REPO_ROOT, 'web', 'src', 'server-locale-redirect.ts');
@@ -158,8 +165,16 @@ async function detectBlogGaps(targetLocales) {
 }
 
 async function detectWikiGaps(targetLocales) {
-  if (!existsSync(WIKI_DIR)) return [];
-  const files = await fs.readdir(WIKI_DIR);
+  const [types, exercises] = await Promise.all([
+    scanWikiDir(WIKI_DIR, targetLocales),
+    scanWikiDir(WIKI_EXERCISES_DIR, targetLocales),
+  ]);
+  return [...types, ...exercises];
+}
+
+async function scanWikiDir(dir, targetLocales) {
+  if (!existsSync(dir)) return [];
+  const files = await fs.readdir(dir);
   const ids = new Set(
     files
       .map((f) => /^(.+)\.([a-z]{2})\.md$/.exec(f))
@@ -168,11 +183,11 @@ async function detectWikiGaps(targetLocales) {
   );
   const gaps = [];
   for (const id of ids) {
-    const sourcePath = join(WIKI_DIR, `${id}.${SOURCE_LOCALE}.md`);
+    const sourcePath = join(dir, `${id}.${SOURCE_LOCALE}.md`);
     const hasSource = existsSync(sourcePath);
     const sourceHasArticle = hasSource && hasMarkdownBody(sourcePath);
     for (const locale of targetLocales) {
-      const candidate = join(WIKI_DIR, `${id}.${locale}.md`);
+      const candidate = join(dir, `${id}.${locale}.md`);
       if (!existsSync(candidate)) {
         gaps.push({
           locale,
@@ -384,7 +399,7 @@ function renderReport(allGaps, locales) {
       lines.push(`### \`${locale}\` — ${items.length} entry/entries to create`);
       lines.push('');
       for (const g of items) {
-        const src = g.sourcePath ?? `content/wiki/pushup-types/${g.id}.en.md`;
+        const src = g.sourcePath ?? g.path.replace(/\.[a-z]{2}\.md$/, '.en.md');
         lines.push(`- Create \`${g.path}\` from \`${src}\` (id: \`${g.id}\`)`);
       }
       lines.push('');

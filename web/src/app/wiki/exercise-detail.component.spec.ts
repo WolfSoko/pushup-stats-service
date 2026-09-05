@@ -1,4 +1,5 @@
 import { provideLocationMocks } from '@angular/common/testing';
+import { LOCALE_ID } from '@angular/core';
 import {
   ActivatedRoute,
   convertToParamMap,
@@ -103,8 +104,8 @@ describe('ExerciseDetailComponent', () => {
       document.head.querySelector('meta[name="robots"]')?.remove();
     });
 
-    it('should emit a noindex robots meta tag while the entry has no long-form body', async () => {
-      // given
+    it('should not emit a robots meta tag for a locale that has a long-form body', async () => {
+      // given — the German source of `squats` carries an article
       document.head.querySelector('meta[name="robots"]')?.remove();
 
       // when
@@ -112,6 +113,26 @@ describe('ExerciseDetailComponent', () => {
         providers: [
           provideRouter([]),
           provideLocationMocks(),
+          { provide: LOCALE_ID, useValue: 'de' },
+          { provide: ActivatedRoute, useValue: makeRouteMock('squats') },
+        ],
+      });
+
+      // then
+      expect(document.head.querySelector('meta[name="robots"]')).toBeNull();
+    });
+
+    it('should emit noindex for a locale whose translation has no body yet', async () => {
+      // given — the gate is per locale, not per entry: a translation that
+      // has not caught up must not be advertised as indexable.
+      document.head.querySelector('meta[name="robots"]')?.remove();
+
+      // when
+      await render(ExerciseDetailComponent, {
+        providers: [
+          provideRouter([]),
+          provideLocationMocks(),
+          { provide: LOCALE_ID, useValue: 'fr' },
           { provide: ActivatedRoute, useValue: makeRouteMock('squats') },
         ],
       });

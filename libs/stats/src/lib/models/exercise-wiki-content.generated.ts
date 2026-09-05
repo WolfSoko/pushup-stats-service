@@ -35,7 +35,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kinn locker zur Brust, aber nicht aktiv ziehen — der Bauch macht die Arbeit, nicht der Hals.",
         "Bei jeder Wiederholung kurz oben pausieren (1 s) für mehr Reiz bei gleicher Wiederholungszahl."
-      ]
+      ],
+      "article": "<h2>Der kleine Bruder des Sit-ups — und der bessere</h2>\n<p>\n  Beim Crunch hebt sich nur der obere Rücken vom Boden, die Lendenwirbelsäule bleibt aufliegen. Genau\n  darin liegt der Unterschied: Der Bewegungsumfang ist klein, die Kompressionskräfte auf die\n  Bandscheiben liegen deutlich unter denen des vollen Sit-ups, und der gerade Bauchmuskel wird trotzdem\n  in seiner einzigen echten Aufgabe trainiert — der Rumpfbeugung.\n</p>\n<p>\n  Der Rumpf hat vier Aufgaben, und Beugung ist nur eine davon. Crunches sind deshalb keine vollständige\n  Rumpfübung, sondern eine sinnvolle Ergänzung zu stabilisierender Arbeit wie Plank und Dead Bug.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Rückenlage, Knie gebeugt, Füße flach. Die Hände liegen locker an den Schläfen oder überkreuzt auf der\n  Brust — nicht im Nacken verschränkt und ziehend. Das Brustbein bewegt sich Richtung Becken, die\n  Schulterblätter heben knapp vom Boden ab, mehr nicht. Oben kurz halten, dann kontrolliert ablegen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Am Kopf ziehen.</strong> Der häufigste Fehler. Er verlagert die Last in die Halswirbelsäule und macht die Übung wirkungslos.</li>\n  <li><strong>Zu weit hochkommen.</strong> Ab etwa 30 Grad übernimmt der Hüftbeuger. Dann ist es ein Sit-up mit dessen Nachteilen.</li>\n  <li><strong>Schwung nehmen.</strong> Ohne Kontrolle in der Rückbewegung fehlt die halbe Arbeit.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Zwei bis drei Sätze mit 12 bis 20 Wiederholungen, langsam ausgeführt, reichen völlig. Wer mehr als\n  25 schafft, sollte nicht die Zahl erhöhen, sondern die Ausführung verlangsamen oder in eine schwerere\n  Beugeübung wechseln — Hollow Hold oder Beinheben.\n</p>"
     },
     "el": {
       "name": "Κρανίαλ (Crunches)",
@@ -163,7 +164,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progression: Knie angezogen → Knie zum Brustkorb → gestreckte Beine waagerecht.",
         "Schulterblätter im Hang aktiv nach unten ziehen, sonst macht der Schultergürtel die Arbeit."
-      ]
+      ],
+      "article": "<h2>Was Beinheben wirklich trainiert</h2>\n<p>\n  Beinheben gilt als „Übung für den unteren Bauch“. Diese Vorstellung ist anatomisch nicht ganz sauber:\n  Der gerade Bauchmuskel ist ein durchgehender Muskel, den man nicht in obere und untere Hälfte\n  aufteilen kann. Was stimmt: Bei der Beinbewegung arbeitet der untere Anteil stärker mit, und der\n  Hüftbeuger ist deutlich beteiligt.\n</p>\n<p>\n  Der eigentliche Trainingsinhalt ist ein anderer und wird oft übersehen — es ist eine\n  Anti-Extensions-Aufgabe. Wenn die Beine sinken, will das Becken nach vorn kippen und ein Hohlkreuz\n  entstehen. Genau das zu verhindern, ist die Arbeit.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Im Liegen: Rückenlage, Hände neben oder unter dem Gesäß. Der untere Rücken bleibt während der\n  gesamten Bewegung in Kontakt mit dem Boden — das ist die Bedingung, nicht die Kür. Die Beine\n  kontrolliert senken, nur so weit, wie der Rücken unten bleibt, dann wieder anheben.\n</p>\n<p>\n  Im Hang an der Stange ist die Übung deutlich schwerer und trainiert zusätzlich die Griffkraft.\n  Einsteiger heben angewinkelte Knie statt gestreckter Beine.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Hohlkreuz beim Absenken.</strong> Der Fehler, der die Übung von nützlich zu schädlich kippt. Reichweite verkürzen, bis der Rücken hält.</li>\n  <li><strong>Beine fallen lassen.</strong> Der Abwärtsweg ist der wertvollere Teil.</li>\n  <li><strong>Im Hang schwingen.</strong> Schwung ersetzt Kraft und macht die Übung wirkungslos.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 8 bis 15 kontrollierten Wiederholungen. Steigerung läuft über den Hebel: angewinkelte\n  Knie, dann halb gestreckt, dann gestreckt, dann im Hang.\n</p>"
     },
     "el": {
       "name": "Ανύψωση ποδιών",
@@ -291,7 +293,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Zähle \"links + rechts = 1 Wiederholung\" für konsistente Trainingsprotokolle.",
         "Variante: Cross-Body (Knie zum gegenüberliegenden Ellenbogen) trifft die schrägen Bauchmuskeln stärker."
-      ]
+      ],
+      "article": "<h2>Zwei Übungen in einer</h2>\n<p>\n  Mountain Climbers sind eine Mischung: unten eine Plank-Position, die der Rumpf gegen die Schwerkraft\n  stabilisieren muss, oben ein schneller Kniewechsel, der den Puls hochtreibt. Damit sind sie sowohl\n  Rumpfarbeit als auch Konditionsreiz — und genau deshalb schwer sauber auszuführen, weil das Tempo die\n  Stabilität untergräbt.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Ausgangsposition ist der hohe Stütz: Hände unter den Schultern, Körper in einer Linie. Ein Knie zieht\n  Richtung Brust, dann zurück, dann das andere. Die Schultern bleiben über den Händen, die Hüfte bleibt\n  auf Höhe — sie darf weder hochschnellen noch durchhängen.\n</p>\n<p>\n  Wer die Übung als Zeitintervall macht, sollte das Tempo so wählen, dass die Hüfte ruhig bleibt.\n  Langsam und stabil ist hier deutlich wertvoller als schnell und wackelig.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Gesäß wandert nach oben.</strong> Der häufigste Fehler bei hohem Tempo — die Übung wird zum Hüpfen und der Rumpf steigt aus.</li>\n  <li><strong>Hände wandern nach vorn.</strong> Belastet die Handgelenke unnötig. Sie gehören unter die Schultern.</li>\n  <li><strong>Fuß aufsetzen.</strong> Das Knie zieht nach vorn, der Fuß berührt den Boden nicht — sonst wird es ein Ausfallschritt.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Als Konditionselement in Intervallen: drei bis fünf Runden von 20 bis 40 Sekunden mit gleich langer\n  Pause. Als Rumpfübung: langsame, kontrollierte Wiederholungen, bei denen jedes Knie kurz oben gehalten\n  wird.\n</p>"
     },
     "el": {
       "name": "Mountain Climbers",
@@ -419,7 +422,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Schwerer machen mit einer Hantel, Kettlebell oder Wasserflasche.",
         "Eine Wiederholung = einmal links und einmal rechts."
-      ]
+      ],
+      "article": "<h2>Rotation als vierte Rumpfaufgabe</h2>\n<p>\n  Der Rumpf hat vier Aufgaben: Beugung verhindern, Streckung verhindern, seitliches Kippen verhindern —\n  und Rotation kontrollieren. Der Russian Twist adressiert die letzte. Die schrägen Bauchmuskeln\n  arbeiten dabei sowohl erzeugend als auch bremsend, und genau das Bremsen ist im Sport der häufigere\n  Fall.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Im Sitzen, Knie gebeugt, Oberkörper etwa 45 Grad zurückgelehnt und dort stabil gehalten. Der\n  Oberkörper dreht kontrolliert zu einer Seite, dann zur anderen. Der Blick folgt den Händen, die\n  Wirbelsäule bleibt lang — kein Rundrücken.\n</p>\n<p>\n  Wichtig: Die Drehung kommt aus dem Brustkorb, nicht aus den Armen. Wer nur die Hände von links nach\n  rechts bewegt, während der Oberkörper starr bleibt, trainiert nichts.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Rundrücken.</strong> Rotation unter Last bei gebeugter Wirbelsäule ist die ungünstigste Kombination für die Bandscheiben. Brustbein hoch, Rücken lang.</li>\n  <li><strong>Tempo statt Kontrolle.</strong> Schnelles Hin-und-Her sieht anstrengend aus, arbeitet aber mit Schwung statt mit Muskel.</li>\n  <li><strong>Füße festhalten lassen.</strong> Dann übernimmt der Hüftbeuger einen Großteil der Arbeit.</li>\n</ul>\n<h2>Dosierung und Alternativen</h2>\n<p>\n  Zwei bis drei Sätze mit 10 bis 16 langsamen Drehungen je Seite. Wer Rückenbeschwerden hat, ist mit\n  Anti-Rotations-Übungen besser bedient — etwa dem Pallof Press oder einem Seitstütz mit angehobenem\n  Arm: dieselbe Muskulatur, ohne Rotation unter Last.\n</p>"
     },
     "el": {
       "name": "Ρωσική περιστροφή",
@@ -547,7 +551,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Bei Nackenproblemen lieber Crunches oder Dead Bug wählen.",
         "Decline-Variante (Beine erhöht) macht es spürbar härter."
-      ]
+      ],
+      "article": "<h2>Was die Wirbelsäulenforschung zum Sit-up sagt</h2>\n<p>\n  Der Sit-up ist die bekannteste Bauchübung überhaupt — und die am schlechtesten gealterte. Der\n  Biomechaniker Stuart McGill hat über Jahrzehnte gemessen, welche Kräfte Rumpfübungen auf die\n  Lendenwirbelsäule ausüben. Der klassische Sit-up erzeugt Kompressionskräfte auf die Bandscheiben von\n  deutlich über 3.000 Newton — ein Wert, der in der Arbeitsmedizin als Grenzwert für wiederholte\n  Belastung gilt. Die wiederholte Beugung unter Last ist genau der Mechanismus, der in Laborstudien\n  Bandscheiben schädigt.\n</p>\n<p>\n  Für die meisten Menschen ist der Sit-up damit ein schlechter Tausch: hohes Risiko für die\n  Bandscheiben, wenig Nutzen für das, was der Rumpf tatsächlich leisten muss — nämlich stabilisieren,\n  nicht beugen.\n</p>\n<h2>Wann er trotzdem Sinn ergibt</h2>\n<p>\n  Beugen ist nicht verboten. Ein gesunder Rücken darf sich beugen, und wer für einen Fitnesstest\n  trainiert, bei dem Sit-ups abgefragt werden, muss sie üben. Auch als kleiner Teil eines\n  Gesamtprogramms sind niedrige Wiederholungszahlen unproblematisch. Was nicht sinnvoll ist: hundert\n  Sit-ups am Tag als Hauptrumpftraining.\n</p>\n<h2>Ausführung, wenn du sie machst</h2>\n<p>\n  Knie gebeugt, Füße flach am Boden, Hände vor der Brust statt im Nacken — Zug am Kopf verschiebt die\n  Belastung in die Halswirbelsäule. Kontrolliert aufrollen, Wirbel für Wirbel, und genauso kontrolliert\n  zurück. Kein Schwung aus den Armen, keine ruckartige Bewegung aus der Hüfte.\n</p>\n<h2>Die besseren Alternativen</h2>\n<p>\n  Für Stabilität: Plank, Dead Bug und Seitstütz. Für gezielte Beugearbeit mit weniger Belastung:\n  Hollow Hold, Beinheben und Crunches mit kleinem Bewegungsumfang. Wer zehn Minuten am Tag hat, kommt\n  mit diesen weiter als mit Sit-ups.\n</p>"
     },
     "el": {
       "name": "Sit-ups",
@@ -675,7 +680,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tempo nach Trainingsstand wählen — Form schlägt Geschwindigkeit.",
         "Skalierung: Liegestütze weglassen, Sprung durch Aufstehen ersetzen — beides macht es zugänglicher."
-      ]
+      ],
+      "article": "<h2>Warum Burpees so hart sind</h2>\n<p>\n  Der Burpee kombiniert vier Bewegungen — Hocke, Liegestütz, Rückkehr in die Hocke, Strecksprung — und\n  bringt dabei den Körper zweimal pro Wiederholung vom Boden in die Senkrechte. Genau dieser\n  Höhenwechsel treibt die Herzfrequenz schneller nach oben als fast jede andere Übung: Der Kreislauf\n  muss das Blut permanent umverteilen.\n</p>\n<p>\n  Damit ist er ein hervorragender Konditionsreiz und ein mittelmäßiges Krafttraining. Wer Kraft aufbauen\n  will, ist mit getrennten Übungen besser bedient; wer in zehn Minuten außer Atem sein will, hier.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Aus dem Stand in die Hocke, Hände am Boden, Füße nach hinten in den hohen Stütz springen. Ein\n  Liegestütz mit Brustkontakt zum Boden, dann die Füße zurück zu den Händen und explosiv nach oben\n  strecken. Der Rumpf bleibt in der Stützphase fest — genau dort verlieren die meisten unter Ermüdung\n  die Form.\n</p>\n<h2>Anpassungen</h2>\n<ul>\n  <li><strong>Ohne Sprung.</strong> Nach oben nur strecken statt abspringen — deutlich gelenkschonender bei gleichem Kreislaufreiz.</li>\n  <li><strong>Ohne Liegestütz.</strong> Für Einsteiger; die Belastung bleibt hoch genug.</li>\n  <li><strong>Schritt statt Sprung.</strong> Die Füße einzeln nach hinten setzen schont den unteren Rücken.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  In Intervallen statt in langen Sätzen: 20 bis 40 Sekunden Arbeit, gleich lange Pause, sechs bis zehn\n  Runden. Sobald die Liegestützphase unsauber wird — durchhängende Hüfte, halber Bewegungsumfang —\n  endet der Satz.\n</p>"
     },
     "el": {
       "name": "Burpees",
@@ -803,7 +809,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Geschätzte Belastung über Wattmessung oder Herzfrequenz — reines \"Gefühl\" ist trügerisch.",
         "Klick-Pedale erhöhen Effizienz, brauchen aber Eingewöhnung."
-      ]
+      ],
+      "article": "<h2>Gelenkschonend und exakt dosierbar</h2>\n<p>\n  Radfahren hat gegenüber dem Laufen zwei Vorteile. Erstens fehlt die Stoßbelastung — das Körpergewicht\n  ruht auf dem Sattel, nicht auf Knie und Sprunggelenk. Zweitens lässt sich die Intensität sehr genau\n  steuern, gerade auf dem Indoor-Bike. Beides macht das Rad zur ersten Wahl für lange Einheiten im\n  lockeren Bereich.\n</p>\n<p>\n  Genau dort liegt sein Hauptnutzen: Zone 2 bei 60 bis 70 Prozent der maximalen Herzfrequenz, wo die\n  Mitochondrien und der Fettstoffwechsel am stärksten profitieren. Solche Einheiten sind auf dem Rad\n  deutlich leichter durchzuhalten als beim Laufen.\n</p>\n<h2>Sitzposition</h2>\n<p>\n  Die häufigste Ursache für Knieschmerzen beim Radfahren ist eine zu niedrige Sattelhöhe. Als\n  Anhaltspunkt: Am untersten Punkt der Kurbel sollte das Knie noch leicht gebeugt sein, etwa 25 bis 30\n  Grad. Ein zu hoher Sattel wiederum lässt die Hüfte bei jeder Umdrehung kippen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zu schwerer Gang.</strong> Niedrige Trittfrequenz mit hohem Widerstand belastet die Knie und trainiert weniger Ausdauer. 80 bis 95 Umdrehungen pro Minute sind ein guter Bereich.</li>\n  <li><strong>Immer dasselbe mittlere Tempo.</strong> Auch hier gilt: überwiegend locker, gelegentlich hart, selten dazwischen.</li>\n  <li><strong>Nur Rad fahren.</strong> Ohne Stoßbelastung fehlt der Reiz für die Knochendichte — eine Kraft- oder Sprungkomponente gehört dazu.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Zwei bis vier Einheiten pro Woche, locker 45 bis 90 Minuten, intensiv als Intervalle deutlich kürzer.\n</p>"
     },
     "el": {
       "name": "Ποδηλασία",
@@ -931,7 +938,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Als Cardio-Burst zwischen Sätzen (30-60 s) eingesetzt — kein Equipment, viel Reiz.",
         "Wenn die Knie nicht hoch kommen, ist es Joggen auf der Stelle — keine Übung."
-      ]
+      ],
+      "article": "<h2>Puls hoch, Hüftbeuger aktiv</h2>\n<p>\n  High Knees sind Laufen auf der Stelle mit übertrieben hohem Kniehub. Sie treiben die Herzfrequenz\n  schnell nach oben und aktivieren dabei die Hüftbeuger — eine Muskelgruppe, die bei sitzender\n  Tätigkeit zwar verkürzt, aber selten kräftig ist.\n</p>\n<p>\n  Ihr eigentlicher Wert liegt im Aufwärmen vor Lauf- und Sprungeinheiten: Sie bereiten genau das\n  Bewegungsmuster vor, das danach gebraucht wird, und das bei höherer Frequenz als im lockeren\n  Dauerlauf.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Aufrechter Stand, dann abwechselnd die Knie auf Hüfthöhe ziehen. Der Kontakt zum Boden ist kurz und\n  über den Fußballen, die Fersen kommen kaum herunter. Der Oberkörper bleibt aufrecht — er darf nicht\n  nach hinten ausweichen, um die Knie höher wirken zu lassen.\n</p>\n<p>\n  Die Arme laufen gegengleich mit, wie beim Sprint.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zurücklehnen.</strong> Der häufigste Fehler. Er täuscht Kniehöhe vor und belastet den unteren Rücken.</li>\n  <li><strong>Auf den Fersen landen.</strong> Laut, hart und langsam. Der Kontakt gehört auf den Fußballen.</li>\n  <li><strong>Knie zu tief.</strong> Unter Hüfthöhe wird daraus Traben auf der Stelle ohne den eigentlichen Reiz.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Im Aufwärmen zwei bis drei Runden zu 20 Sekunden. Als Konditionselement 30 bis 45 Sekunden mit\n  gleich langer Pause, sechs bis acht Runden.\n</p>"
     },
     "el": {
       "name": "Ψηλά γόνατα",
@@ -1059,7 +1067,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfektes Aufwärmen vor Pushup- oder Lauf-Einheit — 2-3 Minuten reichen.",
         "Knieprobleme? Step-Touch-Variante (statt springen seitlich treten) bietet niedrigeren Impact."
-      ]
+      ],
+      "article": "<h2>Der Klassiker im Aufwärmen</h2>\n<p>\n  Hampelmänner bringen in kurzer Zeit Kreislauf, Schultern und Hüfte in Gang und brauchen weder Geräte\n  noch Platz. Genau das macht sie zum Standard-Einstieg fast jedes Aufwärmprogramms: Sie bewegen mehrere\n  Gelenke durch einen großen Bereich und erhöhen die Herzfrequenz allmählich statt sprunghaft.\n</p>\n<p>\n  Als eigenständiges Ausdauertraining sind sie weniger geeignet — der Reiz ist für Trainierte zu gering,\n  um Zone 2 dauerhaft zu halten. Als Element in einem Zirkel oder Intervall funktionieren sie gut.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Aus dem Stand springen die Beine seitlich auseinander, während die Arme über den Kopf geführt werden.\n  Zurück in einer fließenden Bewegung. Gelandet wird weich über die Fußballen mit leicht gebeugten\n  Knien — nicht mit gestreckten Beinen auf den Fersen.\n</p>\n<h2>Varianten und Anpassung</h2>\n<ul>\n  <li><strong>Ohne Sprung.</strong> Ein Bein nach dem anderen zur Seite tippen, Arme wie gewohnt. Für Gelenkprobleme und als Einstieg.</li>\n  <li><strong>Halbe Arme.</strong> Wer die Schultern nicht schmerzfrei über den Kopf bringt, führt die Arme nur bis Schulterhöhe.</li>\n  <li><strong>Als Intervall.</strong> 30 Sekunden zügig, 30 Sekunden Pause, mehrere Runden.</li>\n</ul>\n<h2>Häufige Fehler</h2>\n<p>\n  Der verbreitetste ist eine harte Landung mit durchgestreckten Beinen; sie belastet Knie und\n  Sprunggelenk unnötig. Der zweite ist ein unvollständiger Armweg — wenn die Hände nur bis Kopfhöhe\n  kommen, entfällt der Beweglichkeitsanteil, der die Übung im Aufwärmen wertvoll macht.\n</p>"
     },
     "el": {
       "name": "Jumping Jacks",
@@ -1187,7 +1196,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfänger zählen Sprünge in Sätzen (3 × 50); Fortgeschrittene über Zeit (3 × 60 s).",
         "Doppeltakt nicht erzwingen — erst sauberer Grund-Rhythmus, dann Tempo."
-      ]
+      ],
+      "article": "<h2>Viel Reiz auf wenig Fläche</h2>\n<p>\n  Seilspringen erzeugt in kürzester Zeit eine hohe Herzfrequenz, braucht zwei Quadratmeter Platz und\n  kostet fast nichts. Dazu trainiert es Wadenkraft, Sprunggelenkstabilität und Rhythmusgefühl —\n  Eigenschaften, die beim Laufen direkt weiterhelfen.\n</p>\n<p>\n  Der Preis ist die Stoßbelastung: Sie liegt pro Sprung in ähnlicher Größenordnung wie beim Laufen, nur\n  konzentriert auf Waden und Achillessehne. Wer damit einsteigt, sollte das Volumen sehr behutsam\n  steigern.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Die Sprünge sind klein — zwei bis drei Zentimeter reichen, das Seil ist dünn. Gelandet wird über den\n  Fußballen, die Fersen berühren den Boden kaum. Die Ellbogen bleiben nah am Körper, die Rotation kommt\n  aus den Handgelenken, nicht aus den Schultern.\n</p>\n<p>\n  Die richtige Seillänge: Auf die Mitte treten, die Griffe sollten etwa bis zur Achsel reichen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zu hoch springen.</strong> Kostet Kraft und erhöht die Belastung ohne Nutzen.</li>\n  <li><strong>Aus den Schultern kurbeln.</strong> Ermüdet schnell und macht den Rhythmus unruhig.</li>\n  <li><strong>Zu viel am Anfang.</strong> Die Waden melden sich verzögert. Fünf Minuten in der ersten Woche sind genug.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Als Intervalle: 30 bis 60 Sekunden springen, gleich lang pausieren, sechs bis zehn Runden. Als\n  Aufwärmen drei bis fünf Minuten locker.\n</p>"
     },
     "el": {
       "name": "Σχοινί άλματος",
@@ -1315,7 +1325,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70 % der Kraft kommt aus den Beinen — nicht zu viel mit den Armen ziehen.",
         "Ziel-Schlagfrequenz 18-26 Züge pro Minute für Ausdauer; höher für Intervalle."
-      ]
+      ],
+      "article": "<h2>Kraft und Ausdauer in einer Bewegung</h2>\n<p>\n  Rudern ist unter den Ausdauergeräten das mit dem größten Muskelanteil: Etwa 60 Prozent der Arbeit\n  kommt aus den Beinen, der Rest aus Rumpf und Rücken. Damit lässt sich in kurzer Zeit ein hoher\n  Kreislaufreiz erzeugen, und gleichzeitig wird die Ziehmuskulatur mitbedient — die in den meisten\n  Programmen zu kurz kommt.\n</p>\n<p>\n  Wie beim Radfahren fehlt die Stoßbelastung, was das Rudergerät für Gelenkprobleme geeignet macht.\n</p>\n<h2>Die Reihenfolge ist alles</h2>\n<p>\n  Der Zug läuft in einer festen Abfolge: <strong>Beine, Rumpf, Arme</strong> — und rückwärts genauso:\n  Arme, Rumpf, Beine. Wer gleichzeitig mit allem zieht, verliert Kraft und belastet den unteren Rücken.\n</p>\n<p>\n  Der Rücken bleibt dabei durchgehend gerade. Die Neigung kommt aus der Hüfte, nicht aus der\n  Wirbelsäule.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Rundrücken beim Zug.</strong> Der Fehler mit dem größten Schadenspotenzial. Brustbein hoch, Bewegung aus der Hüfte.</li>\n  <li><strong>Zuerst mit den Armen ziehen.</strong> Die Beine liefern den Großteil der Leistung; sie starten die Bewegung.</li>\n  <li><strong>Zu hoher Widerstand.</strong> Stufe 10 ist nicht „besser“, sondern langsamer und rückenlastiger. Die meisten fahren mit 3 bis 5 besser.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Locker 20 bis 40 Minuten gleichmäßig, intensiv als Intervalle — etwa 500 Meter hart mit gleich langer\n  Pause, vier bis sechs Runden.\n</p>"
     },
     "el": {
       "name": "Κωπηλασία (Εσωτερικά)",
@@ -1443,7 +1454,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfänger starten mit Walk/Run-Intervallen (1 min Lauf, 1 min Gehen).",
         "Schuhe und Laufgürtel-Tracker helfen, aber Konsistenz schlägt jedes Equipment."
-      ]
+      ],
+      "article": "<h2>Warum Laufen so wirksam ist</h2>\n<p>\n  Die kardiorespiratorische Fitness — gemessen als maximale Sauerstoffaufnahme, VO₂max — ist einer der\n  aussagekräftigsten Einzelwerte für die Gesundheit. Sie sinkt ab dem dreißigsten Lebensjahr um etwa\n  zehn Prozent pro Jahrzehnt, wenn man nichts tut. Laufen ist der direkteste und am wenigsten\n  ausrüstungsabhängige Weg, dagegenzuhalten.\n</p>\n<h2>Die Verteilung ist wichtiger als die Menge</h2>\n<p>\n  Der häufigste Fehler ist nicht zu wenig Training, sondern zu viel mittleres Tempo. Wer immer zügig\n  läuft, landet in Zone 3 — zu hart für die Anpassungen der Grundlagenausdauer, zu leicht für den Reiz\n  intensiver Intervalle. Sinnvoller ist eine Aufteilung: der Großteil locker in Zone 2, bei 60 bis 70\n  Prozent der maximalen Herzfrequenz, ein kleiner Teil deutlich härter.\n</p>\n<p>\n  Die Kontrolle braucht keine Pulsuhr: In Zone 2 kannst du in ganzen Sätzen sprechen und durch die Nase\n  atmen, aber nicht singen. Wer beim Laufen keine zusammenhängenden Sätze mehr schafft, ist zu schnell\n  unterwegs.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zu schnell einsteigen.</strong> Herz und Kreislauf passen sich schneller an als Sehnen und Knochen. Das Tempo verträgt der Körper, die Struktur oft nicht.</li>\n  <li><strong>Umfang zu schnell steigern.</strong> Eine grobe Faustregel sind zehn Prozent mehr pro Woche.</li>\n  <li><strong>Keine lockeren Tage.</strong> Die Anpassung entsteht in der Erholung, nicht im Reiz.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei bis vier Einheiten pro Woche, davon zwei bis drei locker und höchstens eine intensiv. Für\n  Einsteiger ist ein Wechsel aus Gehen und Laufen der belastbarere Start als durchgehendes Laufen.\n</p>"
     },
     "el": {
       "name": "Τρέξιμο",
@@ -1571,7 +1583,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfangs lieber kürzere Strecken (4 × 50 m) mit Pausen als ein einziger Versuch über 200 m.",
         "Schwimmbrille reduziert Reibung und Reizung erheblich — Pflichtausstattung."
-      ]
+      ],
+      "article": "<h2>Ganzkörper und schwerelos</h2>\n<p>\n  Schwimmen ist die einzige verbreitete Ausdauersportart ohne jede Stoßbelastung — der Auftrieb nimmt\n  dem Körper praktisch das gesamte Gewicht ab. Für Menschen mit Gelenkbeschwerden, starkem Übergewicht\n  oder in der Rehabilitation ist es deshalb oft die einzige Form, die überhaupt schmerzfrei geht.\n</p>\n<p>\n  Gleichzeitig ist es fordernder für die Atmung als jede Landsportart: Der Wasserdruck auf den Brustkorb\n  erschwert das Einatmen, und der Atemrhythmus ist an die Bewegung gekoppelt statt frei wählbar.\n</p>\n<h2>Technik schlägt Kondition</h2>\n<p>\n  Anders als beim Laufen begrenzt beim Schwimmen fast immer die Technik, nicht die Ausdauer. Wer nach\n  fünfzig Metern außer Atem ist, hat meist kein Konditionsproblem, sondern eine zu hohe Wasserlage und\n  zu viel Widerstand. Ein paar Technikstunden bringen hier mehr als zusätzliche Bahnen.\n</p>\n<h2>Was zu beachten ist</h2>\n<ul>\n  <li><strong>Die Herzfrequenz liegt niedriger.</strong> In der Waagerechten und im kühlen Wasser schlägt das Herz bei gleicher Belastung um etwa zehn Schläge langsamer als an Land. Zonen aus dem Laufen lassen sich nicht direkt übertragen.</li>\n  <li><strong>Kein Knochenreiz.</strong> Wie beim Radfahren fehlt die Stoßbelastung für die Knochendichte — Krafttraining gehört daneben.</li>\n  <li><strong>Nacken beim Brustschwimmen.</strong> Der dauerhaft überstreckte Kopf ist eine häufige Beschwerdequelle. Kopf regelmäßig ins Wasser nehmen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Zwei bis drei Einheiten von 30 bis 45 Minuten. Intervalle über 50 oder 100 Meter mit klaren Pausen\n  sind meist wirksamer als durchgehendes Bahnenziehen.\n</p>"
     },
     "el": {
       "name": "Κολύμβηση",
@@ -1699,7 +1712,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/h auf flachem Terrain; Steigungen erhöhen den Trainingsreiz spürbar.",
         "Schuhwerk wichtiger als Tempo — unbequeme Schuhe ruinieren die Mobilität nach 30 Minuten."
-      ]
+      ],
+      "article": "<h2>Der unterschätzteste Cardioreiz</h2>\n<p>\n  Gehen wirkt zu banal, um zu zählen — und ist für die meisten Menschen der wirksamste Einstieg. Es\n  liegt bei zügigem Tempo für Untrainierte bereits in Zone 2, also im Bereich, in dem Mitochondrien und\n  Fettstoffwechsel am stärksten profitieren. Und es hat einen Vorteil, den keine intensivere Form\n  bietet: Man kann es täglich machen, ohne dass die Erholung zum Engpass wird.\n</p>\n<h2>Was „zügig“ bedeutet</h2>\n<p>\n  Der Unterschied zwischen Spazieren und Training ist das Tempo. Als Anhaltspunkt: Die Atmung ist\n  deutlich hörbar, ganze Sätze gehen noch, Singen nicht mehr. Wer nach zehn Minuten nicht leicht warm\n  ist, geht zu langsam.\n</p>\n<p>\n  Steigungen sind der einfachste Weg, das Ganze zu intensivieren, ohne schneller werden zu müssen —\n  gerade für Menschen mit Knie- oder Hüftproblemen oft angenehmer als Laufen.\n</p>\n<h2>Wofür es besonders taugt</h2>\n<ul>\n  <li><strong>Einstieg nach langer Pause.</strong> Gelenkbelastung minimal, Anpassung trotzdem real.</li>\n  <li><strong>Aktive Erholung.</strong> Am Tag nach einer harten Einheit fördert lockeres Gehen die Regeneration, statt sie zu bremsen.</li>\n  <li><strong>Alltagsintegration.</strong> Der Weg zur Arbeit, das Telefonat im Gehen — Training, das keine zusätzliche Zeit kostet, wird tatsächlich gemacht.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  30 bis 60 Minuten an den meisten Tagen. Wer daraus mehr machen will, erhöht zuerst die Dauer, dann\n  die Steigung, dann das Tempo — in dieser Reihenfolge.\n</p>"
     },
     "el": {
       "name": "Περπάτημα",
@@ -1827,7 +1841,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Wenn der Rücken abhebt, Arm/Bein weniger weit absenken oder Knie höher beugt halten.",
         "Tempo wichtiger als ROM — 3-4 s pro Seite ist besser als hektisches Hin-und-Her."
-      ]
+      ],
+      "article": "<h2>Die unscheinbarste der Big Three</h2>\n<p>\n  Der Dead Bug sieht nach nichts aus und ist eine der wirksamsten Rumpfübungen überhaupt. Er gehört zu\n  den drei Übungen, die der Biomechaniker Stuart McGill aus jahrzehntelangen Messungen destilliert hat,\n  weil sie die Aufgaben des Rumpfes bei minimaler Wirbelsäulenbelastung abdecken.\n</p>\n<p>\n  Die Aufgabe ist eine Anti-Extensions-Aufgabe mit Koordinationsanteil: Während Arm und gegenüberliegendes\n  Bein sich vom Körper wegbewegen, will das Becken nach vorn kippen. Der Bauch muss das verhindern — und\n  zwar während sich die Gliedmaßen unabhängig voneinander bewegen. Genau dieses Muster braucht der Körper\n  beim Gehen, Laufen und Werfen.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Rückenlage, Arme senkrecht nach oben, Hüfte und Knie in 90 Grad. Der untere Rücken hat Kontakt zum\n  Boden und behält ihn während der ganzen Übung. Jetzt einen Arm nach hinten über den Kopf und\n  gleichzeitig das gegenüberliegende Bein strecken, bis beide knapp über dem Boden sind. Kontrolliert\n  zurück, dann die andere Seite.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Rücken hebt ab.</strong> Das einzige echte Fehlerkriterium. Sobald ein Spalt zwischen Rücken und Boden entsteht, ist die Reichweite zu groß — Arm und Bein weniger weit strecken.</li>\n  <li><strong>Luft anhalten.</strong> Ruhig weiteratmen; der Bauch bleibt trotzdem fest.</li>\n  <li><strong>Zu schnell.</strong> Drei bis vier Sekunden pro Wiederholung sind angemessen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 6 bis 10 langsamen Wiederholungen je Seite. Zusammen mit Plank und Seitstütz ergibt das\n  ein vollständiges Rumpfprogramm in etwa zehn Minuten.\n</p>"
     },
     "el": {
       "name": "Νεκρό σκαθάρι",
@@ -1955,7 +1970,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Skalierung von leicht nach schwer: Tuck (Knie angezogen) → Halb-Hollow (Knie 90°) → Voll-Hollow (gestreckt).",
         "Anfänger: 3 × 15-20 s; Fortgeschrittene 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>Die Grundposition aus dem Turnen</h2>\n<p>\n  Der Hollow Hold ist ein Halten in leichter Beugung — der Körper formt eine flache Schale, Arme und\n  Beine sind vom Boden abgehoben. Im Turnen ist das die Grundposition, aus der viele Elemente entstehen,\n  weil sie den ganzen Körper zu einer festen Einheit macht.\n</p>\n<p>\n  Er deckt die Beugeaufgabe des Rumpfes ab, ohne die wiederholte Beugung unter Last, die den Sit-up\n  problematisch macht: Die Position wird gehalten, nicht durchlaufen. Für die meisten ist er die bessere\n  Wahl, wenn es um gezielte Arbeit am geraden Bauchmuskel geht.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Rückenlage, unterer Rücken fest in den Boden gedrückt — das ist die Bedingung. Kopf, Schultern und\n  Beine heben ab, die Arme liegen neben den Ohren oder an den Seiten. Der Blick geht zu den Zehen. Wenn\n  der Rücken abhebt, ist die Position zu schwer.\n</p>\n<h2>Progression</h2>\n<p>\n  Die Übung wird über den Hebel dosiert, nicht über die Zeit. In aufsteigender Schwierigkeit: Knie\n  angewinkelt und Arme an den Seiten, dann Beine gestreckt und Arme an den Seiten, dann Beine gestreckt\n  und Arme über dem Kopf. Erst wenn eine Stufe 30 Sekunden mit flach liegendem Rücken gelingt, kommt\n  die nächste.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Hohlkreuz.</strong> Der einzige Fehler, der zählt — und der Grund, die Stufe zu senken statt durchzuhalten.</li>\n  <li><strong>Kinn auf die Brust ziehen.</strong> Spannt den Hals statt den Bauch.</li>\n  <li><strong>Zu lange Sätze.</strong> Vier Sätze zu 20 Sekunden mit voller Spannung bringen mehr als einer über 80.</li>\n</ul>"
     },
     "el": {
       "name": "Hollow Hold",
@@ -2083,7 +2099,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beweglichkeit limitiert die Tiefe — kein Hohlkreuz oder runder Rücken erzwingen.",
         "3-1-1 Tempo (3 s runter, 1 s unten, 1 s hoch) maximiert den Trainingsreiz mit wenig Gewicht."
-      ]
+      ],
+      "article": "<h2>Das Hüftbeuge-Muster lernen</h2>\n<p>\n  Die Hüftbeuge ist eines der sechs Grundbewegungsmuster und zugleich das am schlechtesten beherrschte.\n  Die meisten heben Dinge vom Boden mit rundem Rücken auf, statt die Hüfte nach hinten zu schieben. Das\n  Good Morning ist die Übung, an der sich dieses Muster ohne Last am besten lernen lässt.\n</p>\n<p>\n  Trainiert wird die hintere Kette: Oberschenkelrückseite, Gesäß und der Rückenstrecker, der dabei\n  isometrisch arbeitet, um die Wirbelsäule gerade zu halten.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Aufrechter Stand, Füße hüftbreit, Hände an den Schläfen oder vor der Brust. Die Knie bleiben leicht\n  gebeugt und behalten diesen Winkel. Die Hüfte schiebt nach hinten, der Oberkörper senkt sich dabei\n  nach vorn — die Bewegung kommt aus der Hüfte, nicht aus dem Rücken. Bis etwa in die Waagerechte oder\n  so weit, wie der Rücken gerade bleibt, dann über das Gesäß zurückkommen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Rundrücken.</strong> Das Abbruchkriterium. Sobald sich der untere Rücken rundet, ist der Punkt überschritten.</li>\n  <li><strong>Kniebeuge statt Hüftbeuge.</strong> Wer die Knie mitbeugt, macht eine schlechte Kniebeuge. Der Kniewinkel bleibt konstant.</li>\n  <li><strong>Zu weit.</strong> Die Beweglichkeit der Oberschenkelrückseite setzt die Grenze, nicht der Ehrgeiz.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 10 bis 15 langsamen Wiederholungen, gern im Aufwärmen. Ein Stock oder Besenstiel entlang\n  der Wirbelsäule gehalten — er sollte Kopf, Brustwirbel und Kreuzbein gleichzeitig berühren — macht\n  jeden Rundrücken sofort spürbar.\n</p>"
     },
     "el": {
       "name": "Good Morning",
@@ -2211,7 +2228,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mit Gewicht (Kurzhantel, Wasserflasche) in der gegenüberliegenden Hand wird die Stabilität gefordert.",
         "Anfangs einen Fingerkontakt mit der Wand erlauben — Balance braucht Übung."
-      ]
+      ],
+      "article": "<h2>Hüftbeuge, Balance und Hüftstabilität in einem</h2>\n<p>\n  Das einbeinige Kreuzheben kombiniert das Hüftbeuge-Muster mit einer Balanceaufgabe. Dadurch trainiert\n  es neben der hinteren Kette vor allem die kleinen Hüftstabilisatoren, die verhindern, dass das Becken\n  zur Seite kippt — genau die Muskulatur, deren Schwäche sich beim Laufen als Knieschmerz äußert.\n</p>\n<p>\n  Weil das Gleichgewicht die Last begrenzt, ist die Übung auch ohne Gewicht sinnvoll und für Einsteiger\n  gut geeignet.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Auf einem Bein stehen, das Knie minimal gebeugt. Die Hüfte schiebt nach hinten, der Oberkörper senkt\n  sich nach vorn, und das freie Bein streckt sich als Gegengewicht nach hinten — Oberkörper und\n  hinteres Bein bilden am Ende annähernd eine Linie. Der Rücken bleibt gerade, die Hüfte bleibt\n  waagerecht: Das Becken darf nicht zur Seite aufdrehen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Becken dreht auf.</strong> Der zentrale Fehler. Die Hüftknochen zeigen die ganze Zeit zum Boden, nicht zur Seite.</li>\n  <li><strong>Standbein durchgestreckt.</strong> Ein leicht gebeugtes Knie ist stabiler und schont das Gelenk.</li>\n  <li><strong>Zu schnell.</strong> Balance braucht Zeit — drei Sekunden nach unten, drei nach oben.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 6 bis 10 Wiederholungen je Seite. Ein Fingerkontakt an der Wand ist zu Beginn völlig\n  in Ordnung; er fällt weg, sobald die Bewegung sitzt.\n</p>"
     },
     "el": {
       "name": "Single-Leg Romanian Deadlift",
@@ -2339,7 +2357,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Auf einer Stufe stehen (Ferse hängt in der Luft) für deutlich mehr Dehnung und Reiz.",
         "Hohe Wiederholungszahlen funktionieren besser für die Waden — 15-25 pro Satz."
-      ]
+      ],
+      "article": "<h2>Die unterschätzte Übung für Knöchel und Sprungkraft</h2>\n<p>\n  Die Wade wird selten gezielt trainiert und ist trotzdem an fast jeder Fortbewegung beteiligt. Sie\n  liefert den letzten Impuls beim Abstoßen, federt bei jedem Schritt die Landung ab und stabilisiert\n  das Sprunggelenk. Läufer profitieren doppelt: mehr Vortrieb und deutlich weniger Anfälligkeit für\n  Achillessehnen- und Schienbeinprobleme.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Im Stand, Füße hüftbreit, Gewicht auf den Fußballen. Langsam so hoch wie möglich auf die Zehenspitzen,\n  oben eine Sekunde halten, dann kontrolliert absenken — und zwar tiefer als die Ausgangsposition, wenn\n  du auf einer Stufe stehst. Genau dieser gedehnte Bereich am unteren Ende bringt den größten Teil des\n  Effekts.\n</p>\n<p>\n  Mit gestrecktem Knie arbeitet vor allem der zweiköpfige Wadenmuskel, mit gebeugtem Knie der darunter\n  liegende Schollenmuskel. Beide Varianten haben ihre Berechtigung.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Wippen.</strong> Die Wade ist schnellkräftig und federt gern. Ohne Tempokontrolle passiert kaum Trainingsreiz.</li>\n  <li><strong>Zu kleiner Bewegungsumfang.</strong> Der untere, gedehnte Bereich ist der wertvollste — eine Stufe oder ein Brett lohnt sich.</li>\n  <li><strong>Zu wenige Wiederholungen.</strong> Die Wade verträgt und braucht mehr Volumen als die meisten Muskeln.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei bis vier Sätze mit 15 bis 25 Wiederholungen, langsam. Einbeinig ausgeführt wird die Übung\n  deutlich anspruchsvoller und deckt gleichzeitig Seitenunterschiede auf.\n</p>"
     },
     "el": {
       "name": "Ανύψωση γάμπας",
@@ -2467,7 +2486,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Druck kommt aus den Fersen, nicht aus den Zehenspitzen — sonst übernimmt die vordere Oberschenkelmuskulatur.",
         "Bei sehr starken Trainierenden Hüftheben mit einbeiniger Variante oder Gewicht progressieren."
-      ]
+      ],
+      "article": "<h2>Die direkteste Gesäßübung ohne Geräte</h2>\n<p>\n  Das Hüftheben trainiert die Hüftstreckung isoliert — also genau die Bewegung, die der große\n  Gesäßmuskel erzeugt. Es ist damit die naheliegende Ergänzung zu Kniebeuge und Ausfallschritt, wo das\n  Gesäß zwar mitarbeitet, aber immer im Verbund mit dem Oberschenkel.\n</p>\n<p>\n  Besonders wertvoll ist die Übung für Menschen mit Sitzberuf: Langes Sitzen hält den Hüftbeuger kurz\n  und das Gesäß träge. Das Hüftheben adressiert beides — es streckt die Hüfte und aktiviert den\n  Gegenspieler.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Rückenlage, Knie gebeugt, Füße hüftbreit und flach am Boden, etwa eine Handbreit vom Gesäß entfernt.\n  Die Hüfte hebt, bis Knie, Hüfte und Schultern eine Linie bilden. Oben eine Sekunde halten und das\n  Gesäß bewusst fest anspannen, dann kontrolliert ablegen.\n</p>\n<p>\n  Der Punkt ist das Anspannen oben, nicht die Höhe. Wer nur schwungvoll hoch und runter geht, trainiert\n  wenig.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Überstrecken ins Hohlkreuz.</strong> Die Bewegung endet in der Linie, nicht darüber hinaus. Rippen unten lassen.</li>\n  <li><strong>Füße zu weit weg.</strong> Dann übernimmt die Oberschenkelrückseite und das Gesäß bleibt unterfordert.</li>\n  <li><strong>Knie fallen nach innen.</strong> Knie über den Füßen halten, aktiv nach außen denken.</li>\n</ul>\n<h2>Steigerung</h2>\n<p>\n  Drei Sätze mit 12 bis 20 Wiederholungen. Wird es zu leicht: Füße erhöht, ein Bein angehoben, oder mit\n  Pause von drei Sekunden in der oberen Position.\n</p>"
     },
     "el": {
       "name": "Glute Bridge",
@@ -2595,7 +2615,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nicht aus dem Vollbad-Stand starten — die Vorspannung im Squat erzeugt die Sprunghöhe.",
         "Hartes Aufkommen schadet den Gelenken; eine Matte oder weiche Schuhe helfen."
-      ]
+      ],
+      "article": "<h2>Von Kraft zu Schnellkraft</h2>\n<p>\n  Die Sprungkniebeuge ist keine schwerere Kniebeuge, sondern eine andere Qualität: Statt eine Last\n  langsam zu bewegen, geht es um die Geschwindigkeit der Kraftentwicklung. Genau diese Fähigkeit geht\n  mit dem Alter zuerst verloren — schneller als reine Maximalkraft — und sie ist es, die beim Stolpern\n  darüber entscheidet, ob man sich noch abfängt.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Aus einer halben bis dreiviertel tiefen Kniebeuge explosiv nach oben abspringen. Die Arme\n  unterstützen den Schwung. Entscheidend ist die Landung: weich, über den Fußballen abrollend, Knie\n  federn nach und zeigen nach außen. Die Landung ist der Teil, an dem sich Verletzungen entscheiden,\n  nicht der Absprung.\n</p>\n<p>\n  Zwischen den Wiederholungen darf kurz zurückgesetzt werden. Sauber und mit Pause ist besser als\n  schnell und wackelig.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Harte Landung mit gestreckten Beinen.</strong> Der gefährlichste Fehler — die Stoßkräfte gehen direkt ins Knie.</li>\n  <li><strong>Knie kippen bei der Landung nach innen.</strong> Sofortiges Abbruchkriterium für den Satz.</li>\n  <li><strong>Zu viele Wiederholungen.</strong> Schnellkraft trainiert man frisch, nicht müde.</li>\n</ul>\n<h2>Dosierung und Voraussetzung</h2>\n<p>\n  Erst wenn die normale Kniebeuge mit gutem Bewegungsumfang sitzt. Dann vier bis sechs Sätze mit nur\n  3 bis 6 Wiederholungen und vollständiger Pause — am besten früh in der Einheit, nicht am Ende.\n</p>"
     },
     "el": {
       "name": "Jump Squats",
@@ -2723,7 +2744,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Aufrecht bleiben — der Oberkörper darf nicht nach vorn klappen.",
         "Variante: Rückwärts (Reverse Lunge) ist gelenkfreundlicher, Walking Lunges sind anspruchsvoller in Balance."
-      ]
+      ],
+      "article": "<h2>Warum einbeinig trainieren</h2>\n<p>\n  Fast alles, was der Mensch im Alltag mit den Beinen tut, passiert einbeinig: gehen, laufen, Treppen\n  steigen, sich abstoßen. Zweibeinige Übungen wie die Kniebeuge lassen zu, dass die stärkere Seite die\n  schwächere kaschiert — beim Ausfallschritt geht das nicht. Er deckt Seitenunterschiede auf und gleicht\n  sie aus.\n</p>\n<p>\n  Dazu kommt der Balanceanteil. Die Hüftstabilisatoren müssen verhindern, dass das Becken zur Seite\n  kippt, was in der Kniebeuge kaum gefordert ist.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Aus dem Stand einen kontrollierten Schritt nach vorn. Beide Knie beugen sich auf etwa 90 Grad, das\n  hintere Knie sinkt Richtung Boden, ohne aufzusetzen. Der Oberkörper bleibt aufrecht, das Gewicht liegt\n  überwiegend auf dem vorderen Bein. Über die vordere Ferse zurückdrücken.\n</p>\n<p>\n  Varianten: nach vorn (mehr Oberschenkelvorderseite), nach hinten (gelenkschonender, mehr Gesäß) und im\n  Gehen (mehr Koordination und Kondition).\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zu kurzer Schritt.</strong> Dann steht das vordere Knie weit über dem Fuß und die Übung wird unnötig knielastig.</li>\n  <li><strong>Vorderes Knie kippt nach innen.</strong> Häufig ein Zeichen schwacher Hüftabduktoren.</li>\n  <li><strong>Oberkörper fällt nach vorn.</strong> Brustbein hoch, Blick geradeaus.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 8 bis 12 Wiederholungen je Seite. Immer beide Seiten gleich oft, auch wenn eine\n  deutlich stärker ist — der Ausgleich ist der Hauptzweck.\n</p>"
     },
     "el": {
       "name": "Lunges",
@@ -2851,7 +2873,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Knie folgen der Linie der Fußspitzen — nicht nach innen kippen.",
         "Beim Hochkommen Po aktiv anspannen, sonst übernimmt der Rücken zu viel."
-      ]
+      ],
+      "article": "<h2>Warum die Kniebeuge die wichtigste Beinübung ist</h2>\n<p>\n  Aufstehen, hinsetzen, Treppen steigen, etwas vom Boden aufheben — die Kniebeuge ist kein Fitnessgerät,\n  sondern ein Alltagsmuster. Sie trainiert Oberschenkelvorderseite, Gesäß und Rumpf in einer Bewegung\n  und ist die Übung mit der höchsten Übertragbarkeit ins spätere Leben: Wer mit siebzig noch ohne\n  Abstützen aus einem tiefen Sessel kommt, hat dieses Muster erhalten.\n</p>\n<h2>Tiefe und der Mythos vom Knie über den Zehen</h2>\n<p>\n  Zwei Regeln halten sich hartnäckig und stimmen beide nicht. Erstens: „Nie tiefer als 90 Grad.“ Für den\n  Trainingseffekt zählt gerade die Tiefe — in Untersuchungen zum Bewegungsumfang beim Beugen zeigte die\n  tiefe Ausführung die deutlich besseren Anpassungen an Muskel und Sehne. Zweitens: „Die Knie dürfen\n  nicht über die Zehen.“ Das ist ein Mythos aus den 1970ern. Beim natürlichen Beugen wandern die Knie\n  nach vorn, und das ist unproblematisch, solange die Ferse am Boden bleibt.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Füße etwa schulterbreit, Zehen leicht nach außen. Die Bewegung beginnt mit Hüfte und Knien\n  gleichzeitig, nicht mit dem Oberkörper. Die Knie folgen der Richtung der Füße und werden aktiv nach\n  außen gedrückt. So tief, wie es ohne Rundrücken und ohne abhebende Fersen geht, dann kontrolliert\n  hochdrücken.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Knie kippen nach innen.</strong> Der einzige Kniefehler, der wirklich zählt. Aktiv nach außen denken.</li>\n  <li><strong>Fersen heben ab.</strong> Meist verkürzte Waden. Übergangsweise mit erhöhten Fersen arbeiten und parallel die Beweglichkeit angehen.</li>\n  <li><strong>Rundrücken unten.</strong> Wenn das Becken am tiefsten Punkt nach hinten kippt, ist die Tiefe noch zu groß.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei bis fünf Sätze mit 8 bis 20 Wiederholungen. Wer über 25 saubere schafft, wechselt auf eine\n  schwerere Variante statt die Zahl zu erhöhen: einbeinige Formen, Sprungkniebeugen oder Zusatzgewicht.\n</p>"
     },
     "el": {
       "name": "Squats",
@@ -2979,7 +3002,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Erhöhungshöhe wählen, sodass das vordere Knie ca. 90° beugt — sonst übernimmt der Schwung.",
         "Nicht mit dem hinteren Bein \"abdrücken\" — der Reiz kommt aus dem vorderen Bein."
-      ]
+      ],
+      "article": "<h2>Die alltagsnächste Beinübung</h2>\n<p>\n  Der Step-up bildet exakt nach, was beim Treppensteigen passiert: einbeiniges Strecken gegen das eigene\n  Körpergewicht. Das macht ihn zur Übung mit der direktesten Alltagsübertragung, und es macht ihn zu\n  einem guten Test — wer eine kniehohe Stufe ohne Nachdrücken mit dem hinteren Fuß schafft, hat eine\n  brauchbare einbeinige Basis.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Einen Fuß vollständig auf die Erhöhung setzen. Das Gewicht verlagert sich auf diesen Fuß, dann drückt\n  das vordere Bein den Körper nach oben. Das hintere Bein darf dabei nicht mitschieben — der häufigste\n  und wirkungsvollste Fehler. Oben kurz stabilisieren, dann kontrolliert absenken.\n</p>\n<p>\n  Die Höhe steuert die Schwierigkeit: Kniehoch ist der Standard, niedriger für den Einstieg, höher als\n  Steigerung.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Abdrücken mit dem hinteren Fuß.</strong> Macht aus der einbeinigen Übung eine zweibeinige. Die Zehen des hinteren Fußes gehören entlastet.</li>\n  <li><strong>Fallen lassen beim Absenken.</strong> Der Abwärtsweg ist trainingswirksam — drei Sekunden nach unten.</li>\n  <li><strong>Knie kippt nach innen.</strong> Meist ein Zeichen, dass die Stufe zu hoch ist.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 8 bis 12 Wiederholungen je Seite. Für ältere Trainierende und nach Knieverletzungen\n  ist der Step-up oft der bessere Einstieg als der Ausfallschritt, weil die Höhe fein dosierbar ist.\n</p>"
     },
     "el": {
       "name": "Step-ups",
@@ -3107,7 +3131,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfekt vor und nach langem Sitzen — mobilisiert die gesamte Wirbelsäule.",
         "Bewegung soll fließen, nicht ruckartig zwischen Endpositionen springen."
-      ]
+      ],
+      "article": "<h2>Die einfachste Wirbelsäulenmobilisation</h2>\n<p>\n  Katze-Kuh bewegt die Wirbelsäule zwischen den beiden Endpositionen, die sie beherrschen sollte: voller\n  Rundrücken und volle Streckung. Für Menschen, die den Tag sitzend verbringen, ist das die\n  wirkungsvollste Minute Bewegung überhaupt — Sitzen hält die Wirbelsäule stundenlang in einer einzigen\n  Stellung, und genau das mag sie am wenigsten.\n</p>\n<p>\n  Die Übung ist zugleich ein guter Test: Wer beim Rundrücken keinen Bogen zustande bringt oder in der\n  Streckung nur im unteren Rücken einknickt, hat eine steife Brustwirbelsäule — der häufigste\n  Beweglichkeitsengpass überhaupt.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Vierfüßlerstand, Hände unter den Schultern, Knie unter der Hüfte. Beim Ausatmen den Rücken nach oben\n  runden, das Kinn zur Brust, das Becken kippt nach hinten. Beim Einatmen umgekehrt: Brustbein nach\n  vorn, Becken nach vorn gekippt, Blick leicht nach oben.\n</p>\n<p>\n  Entscheidend ist, dass die Bewegung über die gesamte Wirbelsäule läuft — Wirbel für Wirbel, nicht nur\n  im Nacken und im unteren Rücken.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Nur die Enden bewegen.</strong> Kopf hoch, Po hoch, Mitte starr — das ist der Normalfall und genau der Bereich, der Bewegung braucht.</li>\n  <li><strong>Zu schnell.</strong> Vier bis sechs Sekunden pro Richtung, an den Atem gekoppelt.</li>\n  <li><strong>In den Schmerz.</strong> Die Bewegung soll angenehm sein; Endgradigkeit ist kein Ziel.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  8 bis 12 langsame Wechsel, im Aufwärmen oder als Pause im Arbeitstag. Täglich möglich und sinnvoll.\n</p>"
     },
     "el": {
       "name": "Cat-Cow",
@@ -3235,7 +3260,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Vor Kraft-/Sprunglast immer dynamisch, kein statisches Dehnen — beeinträchtigt sonst die Leistung.",
         "Im Winter Aufwärmen verlängern; bei Hitze geht es schneller."
-      ]
+      ],
+      "article": "<h2>Warum bewegt statt gehalten</h2>\n<p>\n  Aufwärmen hat drei Aufgaben: die Muskeltemperatur erhöhen, die Gelenke durch ihren Bewegungsbereich\n  führen und das Nervensystem auf die kommende Belastung vorbereiten. Bewegtes Aufwärmen erfüllt alle\n  drei. Statisches Dehnen vor dem Training erfüllt keine davon gut und senkt kurzfristig sogar die\n  Schnell- und Maximalkraft — es gehört ans Ende der Einheit, nicht an den Anfang.\n</p>\n<h2>Wie ein Aufwärmen aufgebaut ist</h2>\n<p>\n  Fünf bis zehn Minuten reichen, in drei Schritten:\n</p>\n<ul>\n  <li><strong>Allgemein.</strong> Zwei bis drei Minuten leichtes Cardio — Gehen, Hampelmänner, Seilspringen — bis die Atmung merklich tiefer wird.</li>\n  <li><strong>Gelenke mobilisieren.</strong> Arm- und Hüftkreisen, Katze-Kuh, Beinpendel, Ausfallschritte mit Rotation. Jeweils 8 bis 10 Wiederholungen, ohne zu federn.</li>\n  <li><strong>Spezifisch.</strong> Die erste Übung der Einheit mit leichter Last: vor Liegestützen ein paar an einer Erhöhung, vor Kniebeugen ein paar ohne Gewicht.</li>\n</ul>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Ganz weglassen.</strong> Der häufigste. Die ersten Sätze werden dann selbst zum Aufwärmen — mit schlechterer Technik.</li>\n  <li><strong>Zu lang.</strong> Zwanzig Minuten Mobilisation ermüden, statt vorzubereiten.</li>\n  <li><strong>Statisch dehnen.</strong> Vor Kraft- oder Sprungeinheiten kontraproduktiv.</li>\n</ul>\n<h2>Einordnung</h2>\n<p>\n  Der spezifische Teil ist der wichtigste und wird am häufigsten übersprungen. Ein Aufwärmen, das nicht\n  auf die Übungen der Einheit hinführt, ist nur Bewegung.\n</p>"
     },
     "el": {
       "name": "Dynamic Warm-up",
@@ -3363,7 +3389,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Vor dem Training kurz (1-2 Min. pro Stelle), nach dem Training länger und entspannender.",
         "Keine direkten Knochen oder Gelenke rollen — nur Muskelbäuche."
-      ]
+      ],
+      "article": "<h2>Was die Faszienrolle tatsächlich bewirkt</h2>\n<p>\n  Die Rolle verbessert kurzfristig den Bewegungsumfang — das ist gut belegt. Weniger belegt ist die\n  gängige Erklärung dafür. Faszien „lösen“ oder mechanisch verformen lässt sich mit dem Druck einer\n  Schaumstoffrolle nicht; das Gewebe ist dafür zu belastbar. Wahrscheinlicher wirkt die Rolle über das\n  Nervensystem: Der Druck senkt die Schmerzempfindlichkeit und die Muskelspannung vorübergehend.\n</p>\n<p>\n  Praktisch ist das kein Widerspruch — der Effekt ist real, nur der Mechanismus ein anderer als oft\n  behauptet. Für Muskelkater und Regeneration ist die Wirkung dagegen bestenfalls gering.\n</p>\n<h2>Anwendung</h2>\n<p>\n  Langsam über den Muskel rollen, etwa ein bis zwei Zentimeter pro Sekunde. An empfindlichen Stellen 20\n  bis 30 Sekunden verweilen und ruhig weiteratmen. 60 bis 90 Sekunden pro Bereich reichen; mehr bringt\n  nichts.\n</p>\n<p>\n  Sinnvoll vor dem Training als Ergänzung zum bewegten Aufwärmen, oder an trainingsfreien Tagen.\n</p>\n<h2>Wo nicht rollen</h2>\n<ul>\n  <li><strong>Unterer Rücken.</strong> Ohne stützenden Bauchmuskel wird die Lendenwirbelsäule in Streckung gedrückt. Stattdessen Gesäß und Brustwirbelsäule bearbeiten.</li>\n  <li><strong>Direkt über Gelenken und Knochen.</strong> Nur Muskelbäuche.</li>\n  <li><strong>Kniekehle, Leiste, Halsseiten.</strong> Nervenbahnen und Gefäße liegen dort oberflächlich.</li>\n</ul>\n<h2>Einordnung</h2>\n<p>\n  Die Rolle ist ein nützliches Hilfsmittel, kein Ersatz für Beweglichkeitstraining. Der Zugewinn hält\n  Minuten bis Stunden — dauerhafte Veränderung kommt aus regelmäßigem Dehnen und Krafttraining über den\n  vollen Bewegungsumfang.\n</p>"
     },
     "el": {
       "name": "Foam Rolling",
@@ -3491,7 +3518,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Lieber täglich 5 Minuten als einmal pro Woche 30.",
         "Atmung in die Dehnung — beim Ausatmen bewusst loslassen."
-      ]
+      ],
+      "article": "<h2>Warum die Hüfte zuerst leidet</h2>\n<p>\n  Sitzen hält die Hüfte über Stunden in etwa 90 Grad Beugung. Der Hüftbeuger verkürzt, das Gesäß wird\n  träge, und die Hüftstreckung — die Bewegung, die beim Gehen, Laufen und Aufstehen gebraucht wird —\n  verliert an Reichweite. Die Folgen zeigen sich selten in der Hüfte selbst, sondern eine Etage darüber\n  oder darunter: als Rückenbeschwerden oder als Knieschmerz.\n</p>\n<p>\n  Auch die tiefe Kniebeuge scheitert häufiger an der Hüfte als an Knie oder Sprunggelenk.\n</p>\n<h2>Eine kurze Routine</h2>\n<ul>\n  <li><strong>Hüftbeuger im Halbknien.</strong> Ein Knie am Boden, das andere vorn. Das Becken nach hinten kippen und die Hüfte nach vorn schieben — die Streckung entsteht durch das Beckenkippen, nicht durch ein Hohlkreuz. 45 Sekunden je Seite.</li>\n  <li><strong>Taubenstellung.</strong> Vorderes Bein angewinkelt vor dem Körper, hinteres gestreckt. Für die Außenrotatoren. 45 Sekunden je Seite.</li>\n  <li><strong>Tiefe Hocke.</strong> So tief wie möglich, Fersen am Boden, Ellbogen drücken die Knie nach außen. 60 Sekunden.</li>\n  <li><strong>90/90-Wechsel.</strong> Im Sitzen beide Knie 90 Grad, von Seite zu Seite wechseln. 10 Wechsel.</li>\n</ul>\n<h2>Häufiger Fehler</h2>\n<p>\n  Beim Hüftbeuger ins Hohlkreuz auszuweichen. Dann fühlt sich die Dehnung stark an, findet aber im\n  unteren Rücken statt und nicht in der Hüfte. Das Becken muss aktiv nach hinten kippen — Gesäß\n  anspannen hilft dabei.\n</p>\n<h2>Dosierung</h2>\n<p>\n  Fünf bis acht Minuten, an den meisten Tagen. Beweglichkeit reagiert auf Häufigkeit stärker als auf\n  Dauer.\n</p>"
     },
     "el": {
       "name": "Hip Opener",
@@ -3619,7 +3647,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Statisches Dehnen vor harten Kraft-/Schnellkraftübungen kurz vermeiden (10-20 Min. Abstand).",
         "Beweglichkeit braucht Wochen — Geduld schlägt Intensität."
-      ]
+      ],
+      "article": "<h2>Was Dehnen leistet — und was nicht</h2>\n<p>\n  Statisches Dehnen verbessert nachweislich den Bewegungsumfang, wenn es regelmäßig über Wochen\n  betrieben wird. Ein großer Teil dieses Gewinns entsteht nicht dadurch, dass der Muskel länger wird,\n  sondern dadurch, dass die Toleranz gegenüber der Dehnspannung steigt — der Körper lässt mehr zu.\n</p>\n<p>\n  Was Dehnen nicht zuverlässig leistet: Muskelkater verhindern, Verletzungen vorbeugen oder die\n  Regeneration beschleunigen. Diese Erwartungen halten der Datenlage nicht stand. Als Mittel für mehr\n  Beweglichkeit ist es dagegen wirksam.\n</p>\n<h2>Wann dehnen</h2>\n<p>\n  Nach dem Training oder in einer eigenen Einheit. Vor Kraft- und Sprungtraining senkt statisches Dehnen\n  kurzfristig die Kraftentwicklung — dort gehört bewegtes Aufwärmen hin.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Die Position langsam bis zu einer deutlichen, aber nicht schmerzhaften Spannung einnehmen und dort 30\n  bis 60 Sekunden halten. Ruhig weiteratmen; mit jedem Ausatmen lässt die Spannung etwas nach. Nicht\n  federn — das löst einen Schutzreflex aus, der genau das Gegenteil bewirkt.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zu kurz.</strong> Zehn Sekunden reichen nicht für eine Anpassung. Unter 30 Sekunden passiert wenig.</li>\n  <li><strong>In den Schmerz hinein.</strong> Spannung ja, Schmerz nein. Schmerz führt zu Gegenspannung.</li>\n  <li><strong>Unregelmäßig.</strong> Beweglichkeit reagiert auf Häufigkeit. Fünfmal zehn Minuten pro Woche schlagen einmal fünfzig.</li>\n</ul>"
     },
     "el": {
       "name": "Τέντωμα",
@@ -3747,7 +3776,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfänger profitieren mehr von einer geführten Klasse (Studio oder Video) als von Improvisation.",
         "20-30 Minuten 3× pro Woche bringen schon spürbare Beweglichkeitsgewinne."
-      ]
+      ],
+      "article": "<h2>Was Yoga im Trainingsplan leistet</h2>\n<p>\n  Yoga verbindet Haltungsarbeit, Atmung und Konzentration. Für den Trainingsplan bedeutet das drei\n  konkrete Beiträge: mehr Bewegungsumfang in Hüfte, Schulter und Wirbelsäule, isometrische Kraft in\n  Positionen, die im Krafttraining selten vorkommen, und ein Regulationseffekt über die Atmung, der bei\n  Stress und Schlafqualität messbar hilft.\n</p>\n<p>\n  Was Yoga nicht ersetzt: progressive Kraftbelastung und intensives Ausdauertraining. Als Ergänzung ist\n  es wertvoll, als alleiniges Programm unvollständig.\n</p>\n<h2>Wohin es in der Woche gehört</h2>\n<p>\n  An trainingsfreie Tage oder nach der Krafteinheit. Vor schweren Kraft- oder Sprungeinheiten ist eine\n  lange, dehnungslastige Praxis ungünstig — sie senkt kurzfristig die Kraftentwicklung, genau wie\n  statisches Dehnen.\n</p>\n<h2>Worauf zu achten ist</h2>\n<ul>\n  <li><strong>Handgelenke.</strong> Viele Positionen stützen auf der flachen Hand in starker Streckung. Wer dort Beschwerden hat, arbeitet auf den Fäusten oder mit Blöcken.</li>\n  <li><strong>Nicht in Endpositionen zwingen.</strong> Beweglichkeit entsteht über Wochen. Eine Position, die man nur mit Ausweichbewegung erreicht, trainiert die Ausweichbewegung.</li>\n  <li><strong>Stil wählen.</strong> Kräftigende Formen wie Ashtanga oder Vinyasa sind fordernd, Yin und Hatha ruhig und dehnungsbetont. Beides hat seinen Platz, aber sie leisten Unterschiedliches.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Ein bis drei Einheiten pro Woche von 20 bis 60 Minuten. Auch zehn Minuten täglich wirken — bei\n  Beweglichkeit zählt Regelmäßigkeit mehr als Länge.\n</p>"
     },
     "el": {
       "name": "Yoga",
@@ -3875,7 +3905,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Gleichmäßig weiteratmen — nicht die Luft anhalten.",
         "Anfänger: 3 × 20-30 s, Fortgeschrittene 3 × 60-90 s; bei Formverlust sofort abbrechen."
-      ]
+      ],
+      "article": "<h2>Wofür der Plank gut ist</h2>\n<p>\n  Der Rumpf ist kein Muskel, den man zum Wachsen bringt, sondern ein Stabilisierungssystem. Seine\n  Hauptaufgabe ist nicht, den Oberkörper zu beugen, sondern ihn gegen Kräfte von außen zu sichern.\n  Genau das trainiert der Plank: Er ist eine Anti-Extensions-Übung — der Körper widersteht dem Zug der\n  Schwerkraft, die die Hüfte nach unten ziehen will.\n</p>\n<p>\n  Damit deckt er die Aufgabe ab, die im Alltag und beim Training tatsächlich zählt, und tut das bei\n  minimaler Belastung der Lendenwirbelsäule. Er ist Teil der „Big Three“, die der Biomechaniker Stuart\n  McGill aus jahrzehntelangen Messungen destilliert hat.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Unterarme unter den Schultern, Ellbogen etwa schulterbreit. Der Körper bildet eine Linie von Kopf bis\n  Ferse. Entscheidend sind zwei Dinge, die man von außen kaum sieht: Das Gesäß ist fest angespannt, und\n  die Rippen ziehen leicht nach unten, sodass kein Hohlkreuz entsteht. Wer beides tut, spürt den Plank\n  nach zwanzig Sekunden deutlich stärker als jemand, der ihn nur „aushält“.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Hüfte hängt durch.</strong> Der klassische Fehler und der einzige, der wirklich schadet — er verlagert die Last auf den unteren Rücken.</li>\n  <li><strong>Gesäß zu hoch.</strong> Sieht sauber aus, nimmt dem Rumpf aber die Arbeit ab.</li>\n  <li><strong>Minutenlanges Halten.</strong> Über zwei Minuten trainiert man Ausdauer in einer Position, nicht Stabilität. Besser mehrere kurze, wirklich angespannte Sätze.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei bis fünf Sätze von 20 bis 45 Sekunden mit maximaler Spannung schlagen einen einzelnen Satz über\n  drei Minuten deutlich. Wer länger halten kann, sollte die Übung schwerer machen statt länger:\n  ein Arm oder ein Bein angehoben, Unterarme auf einer instabilen Unterlage, oder der Übergang zum\n  seitlichen Plank für die schrägen Bauchmuskeln.\n</p>"
     },
     "el": {
       "name": "Plank",
@@ -4003,7 +4034,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfänger: 3 × 15-20 s; Fortgeschrittene 3 × 45-60 s — Endziel 1-2 Minuten am Stück.",
         "Bei sensiblen Schultern aktiver Hang (mit gezogenen Schulterblättern) statt passivem."
-      ]
+      ],
+      "article": "<h2>Passiv hängen als eigenständige Übung</h2>\n<p>\n  Der Dead Hang sieht aus wie Nichtstun und leistet drei Dinge gleichzeitig: Er baut Griffkraft auf,\n  öffnet die Schulter in eine Position, die im Alltag fast nie vorkommt, und entlastet die\n  Wirbelsäule durch Zug statt Druck.\n</p>\n<p>\n  Als erste Stufe der Klimmzug-Progression ist er zudem der Einstieg für alle, die noch keine\n  Wiederholung schaffen. Wer nicht 30 Sekunden hängen kann, wird sich auch nicht hochziehen — die\n  Griffkraft ist der erste Flaschenhals, nicht der Rücken.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Schulterbreiter Griff, Handrücken zum Gesicht, Arme gestreckt, Füße frei. Die Schultern dürfen\n  passiv bis an die Ohren gleiten — das ist beim echten Dead Hang gewollt und der Grund für den\n  Dehneffekt. Ruhig weiteratmen, Körper nicht schwingen lassen.\n</p>\n<p>\n  Die aktive Variante mit nach unten gezogenen Schulterblättern ist eine andere Übung\n  (Schulterblatt-Klimmzug) und die logische nächste Stufe.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Verkrampfter Griff von Anfang an.</strong> Locker beginnen; die Hand ermüdet sonst vorzeitig.</li>\n  <li><strong>Schwingen.</strong> Kostet Griffkraft und bringt nichts.</li>\n  <li><strong>Bei Schulterbeschwerden durchhalten.</strong> Ziehen im Schultergelenk ist ein Abbruchsignal, kein Trainingsreiz.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei bis fünf Sätze bis knapp vor dem Loslassen, meist 15 bis 60 Sekunden. Täglich möglich — die\n  Griffkraft erholt sich schnell. Ein realistisches Zwischenziel ist eine Minute am Stück.\n</p>"
     },
     "el": {
       "name": "Dead Hang",
@@ -4131,7 +4163,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Schultern bleiben unten — kein Nach-Oben-Ziehen der Schulterblätter.",
         "Idealer Begleiter für jede Drück-Einheit; 15-25 Wiederholungen pro Satz."
-      ]
+      ],
+      "article": "<h2>Die Übung gegen den Schreibtisch</h2>\n<p>\n  Der Face Pull trainiert die hintere Schultermuskulatur und die Muskeln zwischen den Schulterblättern —\n  also genau die Bereiche, die bei sitzender Tätigkeit und drucklastigem Training verkümmern. Er ist\n  weniger eine Aufbauübung als eine Ausgleichs- und Vorbeugeübung, und in dieser Rolle eine der\n  wertvollsten überhaupt.\n</p>\n<p>\n  Wer viel Liegestütze, Dips und Bankdrücken macht, ohne die Rückseite der Schulter zu bedienen,\n  landet mittelfristig mit Beschwerden im vorderen Schultergelenk. Der Face Pull kostet zwei Minuten\n  und verhindert genau das.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Ein Band auf Gesichtshöhe befestigen, Enden mit beiden Händen greifen. Die Hände ziehen zum Gesicht\n  und dabei auseinander, die Ellbogen bleiben hoch auf Schulterhöhe. Am Endpunkt zeigen die Handrücken\n  nach außen, die Schulterblätter sind zusammengezogen. Kontrolliert zurück.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Ellbogen sinken ab.</strong> Dann wird daraus ein Ruderzug und die hintere Schulter bleibt unbeteiligt. Ellbogen auf Schulterhöhe halten.</li>\n  <li><strong>Zu viel Widerstand.</strong> Die Übung lebt von sauberer Ausführung, nicht von Last. Ein zu straffes Band erzwingt Ausweichbewegungen.</li>\n  <li><strong>Kopf nach vorn schieben.</strong> Der Kopf bleibt, wo er ist — die Hände kommen zu ihm.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Zwei bis drei Sätze mit 15 bis 20 Wiederholungen, gern am Ende jeder Einheit oder als Aufwärmen vor\n  Drückübungen. Häufigkeit schlägt hier Intensität — dreimal pro Woche leicht ist besser als einmal\n  schwer.\n</p>"
     },
     "el": {
       "name": "Face Pull",
@@ -4259,7 +4292,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Vorstufe: Negative Klimmzüge (hochspringen, langsam ablassen) oder mit Therapieband.",
         "Voller Bewegungsumfang — Kinn über die Stange, unten Ellenbogen ganz strecken."
-      ]
+      ],
+      "article": "<h2>Warum der Klimmzug so schwer ist</h2>\n<p>\n  Beim Liegestütz bewegst du 65 bis 75 Prozent deines Körpergewichts. Beim Klimmzug sind es hundert\n  Prozent, gehalten von einer Muskelgruppe, die im Alltag kaum gefordert wird. Deshalb scheitern viele\n  Einsteiger an der ersten Wiederholung — nicht aus mangelndem Willen, sondern weil der Sprung von null\n  auf voll zu groß ist.\n</p>\n<p>\n  Trainiert werden breiter Rückenmuskel, Bizeps, Unterarme und der gesamte Schultergürtel. Als\n  vertikales Ziehen ist er das direkte Gegenstück zum Drücken und damit unverzichtbar für eine\n  ausgeglichene Schulter.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Griff etwa schulterbreit bis leicht darüber, Handrücken zum Gesicht. Vor dem Ziehen die Schulterblätter\n  nach unten und hinten ziehen — dieser erste Millimeter entscheidet, ob der Rücken oder nur der Arm\n  arbeitet. Dann hochziehen, bis das Kinn über der Stange ist, und kontrolliert bis zur fast gestreckten\n  Armhaltung absenken.\n</p>\n<h2>Der Weg zur ersten Wiederholung</h2>\n<p>\n  Die Progression läuft in fünf Stufen: passives Hängen, Schulterblatt-Klimmzüge, schräges Rudern unter\n  einer Stange, negative Klimmzüge mit langsamem Absenken und schließlich unterstützte Klimmzüge mit\n  Band oder Fuß. Erst wenn eine Stufe drei saubere Sätze trägt, kommt die nächste. Rechne in Wochen bis\n  Monaten, nicht in Tagen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Schwung aus der Hüfte.</strong> Erzeugt Wiederholungen ohne Trainingsreiz.</li>\n  <li><strong>Halber Bewegungsumfang.</strong> Unten fast strecken, oben Kinn über die Stange — alles dazwischen zählt nur halb.</li>\n  <li><strong>Nur mit dem Arm ziehen.</strong> Ohne die Schulterblattbewegung am Anfang wird der Bizeps zum Flaschenhals.</li>\n</ul>"
     },
     "el": {
       "name": "Pull-ups",
@@ -4387,7 +4421,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Stange/Hantel zur unteren Rippe (Lat-Fokus) oder Brust (Mitte des Rückens) ziehen.",
         "Keine Schwungbewegung — Rumpf bleibt stabil, Bewegung kommt nur aus den Armen + oberen Rücken."
-      ]
+      ],
+      "article": "<h2>Das horizontale Gegenstück zum Drücken</h2>\n<p>\n  Die meisten Trainingspläne haben ein Ungleichgewicht: viel Drücken, wenig Ziehen. Das Ergebnis sind\n  nach vorn gezogene Schultern und mit der Zeit Beschwerden im vorderen Schultergelenk. Der Ruderzug ist\n  das direkte Gegenmittel — er trainiert die Muskulatur, die die Schulterblätter zurück- und nach unten\n  zieht.\n</p>\n<p>\n  Als Faustregel gilt: mindestens so viel Ziehvolumen wie Drückvolumen. Wer drei Sätze Liegestütze\n  macht, sollte drei Sätze Rudern dagegensetzen.\n</p>\n<h2>Ausführung ohne Geräte</h2>\n<p>\n  Schräges Rudern unter einer stabilen Stange, einem Tisch oder mit Ringen: Der Körper hängt gestreckt\n  unter dem Griff, die Fersen am Boden. Zuerst die Schulterblätter zusammenziehen, dann die Brust zur\n  Stange ziehen. Der Körper bleibt eine gerade Linie — die Hüfte darf nicht durchhängen.\n</p>\n<p>\n  Die Schwierigkeit steuerst du über den Körperwinkel: je waagerechter, desto schwerer. Füße erhöht\n  macht die Übung deutlich anspruchsvoller.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Nur mit den Armen ziehen.</strong> Ohne Schulterblattbewegung bleibt der Rücken unbeteiligt.</li>\n  <li><strong>Hüfte hängt durch.</strong> Genau wie beim Plank — Gesäß fest, Rippen unten.</li>\n  <li><strong>Ellbogen weit abgespreizt.</strong> Etwa 45 Grad zum Rumpf ist auch hier die schulterfreundliche Position.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Drei bis vier Sätze mit 8 bis 15 Wiederholungen. Oben eine Sekunde halten und die Schulterblätter\n  bewusst zusammendrücken bringt mehr als zusätzliche Wiederholungen.\n</p>"
     },
     "el": {
       "name": "Rows",
@@ -4515,7 +4550,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Schultergelenk schonen — nicht zu tief gehen, wenn es zwickt.",
         "Schwerer machen mit gestreckten Beinen, Füßen auf einer zweiten Bank oder Zusatzgewicht auf dem Oberschenkel."
-      ]
+      ],
+      "article": "<h2>Einstieg in die Dip-Bewegung</h2>\n<p>\n  Bei Bankdips liegen die Hände hinter dem Körper auf einer Bank, die Füße am Boden. Weil ein Teil des\n  Gewichts über die Beine abgetragen wird, ist die Übung deutlich leichter als der freie Dip und über\n  die Fußposition fein dosierbar: Knie angewinkelt und nah am Körper ist leicht, Beine gestreckt und\n  weit vorn schwerer, Füße erhöht am schwersten.\n</p>\n<p>\n  Trainiert wird vor allem der Trizeps, dazu die vordere Schulter.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Hände etwa schulterbreit auf der Bankkante, Finger zeigen nach vorn. Der Rücken bleibt nah an der\n  Bank — je weiter der Körper von ihr wegwandert, desto ungünstiger der Zug auf die Schulter. Absenken,\n  bis der Ellbogen etwa 90 Grad erreicht, dann hochdrücken.\n</p>\n<h2>Der Schulterhaken</h2>\n<p>\n  Bankdips bringen die Schulter in Innenrotation und gleichzeitig in Streckung — eine Kombination, die\n  bei zu großer Tiefe unangenehm werden kann. Zwei Regeln entschärfen das: nicht tiefer als 90 Grad, und\n  den Körper dicht an der Bank führen. Wer vorn in der Schulter zieht, sollte auf Liegestütze mit enger\n  Handposition ausweichen, die denselben Muskel treffen.\n</p>\n<h2>Dosierung</h2>\n<p>\n  Drei Sätze mit 8 bis 15 Wiederholungen. Als Steigerung zunächst die Beine strecken, dann die Füße auf\n  eine zweite Bank legen — und wenn das sitzt, auf freie Dips wechseln.\n</p>"
     },
     "el": {
       "name": "Bench Dips",
@@ -4643,7 +4679,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Brust-Fokus durch leichten Vorlehnen, Trizeps-Fokus durch aufrechten Oberkörper.",
         "Anfänger: zuerst Bankdips, dann negative Dips (nur die Absenkphase), dann volle Dips."
-      ]
+      ],
+      "article": "<h2>Die härteste Drückübung mit Körpergewicht</h2>\n<p>\n  Dips bewegen nahezu das volle Körpergewicht und sind damit deutlich schwerer als der Liegestütz. Sie\n  treffen Brust, Trizeps und die vordere Schulter gleichzeitig. Der Oberkörperwinkel steuert die\n  Verteilung: Aufrecht arbeitet vor allem der Trizeps, nach vorn geneigt verschiebt sich die Last zur\n  Brust.\n</p>\n<h2>Ausführung</h2>\n<p>\n  An parallelen Holmen aufstützen, Arme gestreckt, Beine leicht angewinkelt. Kontrolliert absenken, bis\n  Ober- und Unterarm etwa 90 Grad bilden, dann hochdrücken. Die Ellbogen bleiben nah am Körper und\n  zeigen nach hinten, nicht nach außen.\n</p>\n<h2>Die Schulter im Blick behalten</h2>\n<p>\n  Dips sind die Übung mit dem größten Verletzungspotenzial für die Schulter, und zwar aus einem\n  konkreten Grund: In der tiefen Position gerät das Gelenk in eine stark gestreckte Stellung. Wer zu\n  tief geht, belastet die Gelenkkapsel statt der Muskulatur.\n</p>\n<p>\n  Praktische Regel: 90 Grad im Ellbogen sind tief genug. Wer vorn in der Schulter zieht statt Muskeln\n  zu spüren, geht zu tief oder ist noch nicht bereit für die Übung.\n</p>\n<h2>Voraussetzung und Dosierung</h2>\n<p>\n  Vor den ersten Dips sollten Liegestütze mit gutem Bewegungsumfang und ausreichend Ziehvolumen im\n  Programm stehen. Einstieg über Bankdips oder mit Bandunterstützung. Dann drei bis vier Sätze mit 5 bis\n  12 Wiederholungen.\n</p>"
     },
     "el": {
       "name": "Dips",
@@ -4771,7 +4808,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfänger: Pike-Liegestütze und Wall Walks vorher beherrschen, dann erst halten lernen.",
         "Schultern aktiv \"in die Ohren\" pressen — keine eingesunkene Position."
-      ]
+      ],
+      "article": "<h2>Vom Drücken zum Tragen</h2>\n<p>\n  Der Handstand-Hold ist keine Drückübung, sondern eine Halteübung: Die Schulter trägt das volle\n  Körpergewicht in Überkopfposition, während Rumpf und Handgelenke die Linie stabilisieren. Er baut\n  Schulterstabilität auf, die keine andere Körpergewichtsübung so erzeugt, und ist die Voraussetzung für\n  den Handstand-Liegestütz.\n</p>\n<p>\n  Der Weg dorthin führt über den Pike-Liegestütz: Je höher die Füße dort stehen, desto senkrechter wird\n  die Belastung — der Handstand ist der Endpunkt dieser Linie.\n</p>\n<h2>Ausführung an der Wand</h2>\n<p>\n  Zwei Varianten. Mit dem Bauch zur Wand hochlaufen ergibt die geradere und ehrlichere Linie, ist aber\n  schwerer einzunehmen. Mit dem Rücken zur Wand ist der einfachere Einstieg, verleitet aber zum\n  Hohlkreuz.\n</p>\n<p>\n  In beiden Fällen: Hände schulterbreit, Finger gespreizt und aktiv in den Boden greifend, Arme\n  gestreckt, Schultern zu den Ohren geschoben. Gesäß und Bauch fest, Rippen unten — der Körper ist eine\n  Linie, kein Bogen.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Hohlkreuz.</strong> Der häufigste Fehler und der Grund, warum viele die Position nicht halten können — sie kämpfen gegen ihre eigene Statik.</li>\n  <li><strong>Schultern eingesunken.</strong> Aktiv nach oben schieben, sonst hängt das Gewicht in den Gelenken.</li>\n  <li><strong>Handgelenke ungewärmt.</strong> Vor der ersten Wiederholung kreisen und dehnen; die Belastung ist ungewohnt hoch.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Vier bis sechs Sätze von 15 bis 45 Sekunden mit reichlich Pause. Frisch trainieren, nicht am Ende der\n  Einheit.\n</p>"
     },
     "el": {
       "name": "Handstand Hold",
@@ -4899,7 +4937,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Wähle eine Höhe, die du sicher schaffst — Verletzungen passieren meist beim zu Hohen.",
         "Nicht herunterspringen — die Belastung beim Landen ist hoch; immer absteigen."
-      ]
+      ],
+      "article": "<h2>Sprungkraft ohne harte Landung</h2>\n<p>\n  Der Box Jump hat gegenüber anderen Sprungübungen einen Vorteil, der oft übersehen wird: Man landet\n  höher, als man abspringt. Die Fallhöhe ist dadurch klein und die Stoßbelastung auf Knie und\n  Achillessehne deutlich geringer als beim Sprung auf den Boden zurück. Für Menschen mit\n  Knieproblemen ist er oft die verträglichste Schnellkraftübung.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Vor der Kiste stehen, in eine halbe Kniebeuge, dann explosiv abspringen und beide Füße vollständig auf\n  der Fläche aufsetzen. Wichtig ist, in einer leicht gebeugten Position weich zu landen und sich dann\n  aufzurichten — nicht mit durchgestreckten Beinen aufzuschlagen.\n</p>\n<p>\n  Der Rückweg gehört heruntergestiegen, nicht gesprungen. Wiederholte Sprünge von der Kiste herunter\n  sind die Hauptquelle für Achillessehnenbeschwerden bei dieser Übung.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Zu hohe Kiste.</strong> Eine Höhe, die nur mit maximalem Anziehen der Knie erreicht wird, misst Beweglichkeit, nicht Sprungkraft — und Schienbeine zahlen den Preis beim Verfehlen.</li>\n  <li><strong>Herunterspringen.</strong> Immer heruntersteigen.</li>\n  <li><strong>Ermüdet weitermachen.</strong> Der Satz endet, wenn die Landungen unsauber werden.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Vier bis sechs Sätze mit 3 bis 5 Sprüngen und vollständiger Pause, früh in der Einheit. Wähle eine\n  Höhe, die du sicher beherrschst — Selbstvertrauen ist bei dieser Übung ein Sicherheitsfaktor.\n</p>"
     },
     "el": {
       "name": "Box Jumps",
@@ -5027,7 +5066,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Anfänger: 3 × 20-30 s; Fortgeschrittene 3 × 60-90 s.",
         "Bei Knieschmerzen die Hüfte etwas höher halten — 90° muss nicht erzwungen werden."
-      ]
+      ],
+      "article": "<h2>Isometrie mit spürbarer Wirkung</h2>\n<p>\n  Der Wandsitz ist eine isometrische Übung: Die Muskeln arbeiten, ohne sich zu verkürzen. Das klingt\n  nach weniger, hat aber zwei konkrete Vorteile. Erstens erzeugt es Ermüdung in der\n  Oberschenkelvorderseite ohne jede Gelenkbewegung, was ihn nach Knieproblemen oft zur ersten\n  belastbaren Übung macht. Zweitens ist er exakt dosierbar über Zeit und Kniewinkel.\n</p>\n<p>\n  Isometrisches Halten hat zudem einen gut belegten Nebeneffekt auf den Blutdruck — regelmäßige Sätze\n  über ein bis zwei Minuten senken ihn messbar.\n</p>\n<h2>Ausführung</h2>\n<p>\n  Mit dem Rücken flach an der Wand nach unten gleiten, bis Ober- und Unterschenkel etwa 90 Grad bilden.\n  Die Füße stehen so weit vorn, dass die Knie senkrecht über den Knöcheln bleiben. Rücken, Schultern und\n  Kopf haben Wandkontakt, die Arme hängen locker oder liegen an der Wand.\n</p>\n<h2>Häufige Fehler</h2>\n<ul>\n  <li><strong>Hände auf den Oberschenkeln abstützen.</strong> Nimmt genau die Last weg, um die es geht.</li>\n  <li><strong>Knie über den Zehen.</strong> Hier — anders als bei der freien Kniebeuge — ein echter Fehler, weil die Position statisch gehalten wird. Füße weiter nach vorn setzen.</li>\n  <li><strong>Luft anhalten.</strong> Bei isometrischer Arbeit besonders verbreitet und für den Blutdruck ungünstig. Ruhig weiteratmen.</li>\n</ul>\n<h2>Dosierung</h2>\n<p>\n  Vier Sätze von 30 bis 90 Sekunden mit gleich langer Pause. Steigerung über die Zeit, einen tieferen\n  Winkel oder einbeinig.\n</p>"
     },
     "el": {
       "name": "Wall Sit",

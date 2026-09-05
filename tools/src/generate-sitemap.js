@@ -464,11 +464,13 @@ function main() {
   const xml = generateSitemap(posts, planSlugs);
   const outPath = resolve(ROOT, 'web/public/sitemap.xml');
   writeFileSync(outPath, xml, 'utf-8');
-  const total =
-    staticRoutes.length * LOCALES.length +
-    planSlugs.length * LOCALES.length +
-    posts.length;
-  console.log(`sitemap.xml written (${total} URLs)`);
+  // Counted from the emitted XML rather than re-derived from the inputs:
+  // the wiki builders emit a content-dependent number of URLs, and a
+  // hand-maintained sum silently drifts from what was actually written.
+  const total = (xml.match(/<loc>/g) ?? []).length;
+  const wikiTotal = (xml.match(/<loc>[^<]*\/wiki\/[^<]*\/[^<]*<\/loc>/g) ?? [])
+    .length;
+  console.log(`sitemap.xml written (${total} URLs, ${wikiTotal} wiki detail)`);
   const coverage = Object.fromEntries(LOCALES.map((lang) => [lang, 0]));
   for (const post of posts) {
     if (post.lang in coverage) coverage[post.lang] += 1;

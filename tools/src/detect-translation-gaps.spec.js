@@ -51,11 +51,13 @@ function runScript({ extraEnv = {}, args = [] } = {}) {
 function buildFixture({
   sourceOnlyBlogFolders = [],
   wikiArticleIds = [],
+  wikiExerciseArticleIds = [],
 } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'detect-gaps-fixture-'));
   const localeDir = join(root, 'web/src/locale');
   const blogDir = join(root, 'content/blog');
   const wikiDir = join(root, 'content/wiki/pushup-types');
+  const wikiExercisesDir = join(root, 'content/wiki/exercises');
   const localeConstPath = join(root, 'web/src/server-locale-redirect.ts');
   mkdirSync(localeDir, { recursive: true });
   mkdirSync(join(blogDir, 'mein-post'), { recursive: true });
@@ -152,6 +154,22 @@ function buildFixture({
     writeFileSync(join(wikiDir, `${id}.en.md`), `---\nname: ${id}\n---\n`);
     writeFileSync(join(wikiDir, `${id}.fr.md`), `---\nname: ${id}\n---\n`);
     writeFileSync(join(wikiDir, `${id}.la.md`), `---\nname: ${id}\n---\n`);
+  }
+
+  // The exercise wiki lives beside the push-up types and is resolved from
+  // REPO_ROOT, so the fixture must create it explicitly to be seen.
+  if (wikiExerciseArticleIds.length > 0) {
+    mkdirSync(wikiExercisesDir, { recursive: true });
+    for (const id of wikiExerciseArticleIds) {
+      writeFileSync(
+        join(wikiExercisesDir, `${id}.de.md`),
+        `---\nname: ${id}\n---\n\n<h2>Ausführung</h2>\n<p>Langtext.</p>\n`
+      );
+      writeFileSync(
+        join(wikiExercisesDir, `${id}.en.md`),
+        `---\nname: ${id}\n---\n`
+      );
+    }
   }
 
   return {
@@ -296,6 +314,40 @@ describe('detect-translation-gaps', () => {
 
       // then
       expect(summary).toMatch(/^wiki_article_count=3$/m);
+    });
+  });
+
+  describe('against a fixture with an exercise-wiki body', () => {
+    let fixture;
+    beforeAll(() => {
+      fixture = buildFixture({ wikiExerciseArticleIds: ['plank.standard'] });
+    });
+    afterAll(() => {
+      rmSync(fixture.root, { recursive: true, force: true });
+    });
+
+    it('scans content/wiki/exercises, not just the push-up types', () => {
+      // given — this directory was never scanned before, so its 40 entries
+      // were invisible to the translations routine.
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then
+      const articleGaps = gaps.gaps
+        .filter((g) => g.kind === 'wiki-article')
+        .map((g) => `${g.id}:${g.locale}`);
+      expect(articleGaps).toContain('plank.standard:en');
+    });
+
+    it('keeps the dotted exercise id intact in the reported path', () => {
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then
+      const gap = gaps.gaps.find(
+        (g) => g.kind === 'wiki-article' && g.id === 'plank.standard'
+      );
+      expect(gap.path).toContain('content/wiki/exercises/plank.standard.en.md');
     });
   });
 

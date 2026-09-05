@@ -571,9 +571,30 @@ describe('generate-sitemap', () => {
       }
     });
 
-    it('omits exercise wiki detail pages while they are frontmatter-only', () => {
+    it('still omits locales of an entry whose translation has no body', () => {
+      // given — the exercise wiki has German bodies only so far, so the
+      // gate must hold per locale even though the push-up types above are
+      // fully translated.
+      // when
+      const xml = generateSitemap([]);
+
       // then
-      expect(generateSitemap([])).not.toMatch(/wiki\/uebungen\/[^<]/);
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.com/de/wiki/uebungen/plank</loc>'
+      );
+      expect(xml).not.toMatch(
+        /<loc>[^<]*\/(en|fr|es|it|nl|el|no|zh)\/wiki\/uebungen\/[^<]+<\/loc>/
+      );
+    });
+
+    it('emits a detail URL for an exercise that carries a long-form body', () => {
+      // when
+      const xml = generateSitemap([]);
+
+      // then
+      expect(xml).toContain(
+        '<loc>https://pushup-stats.com/de/wiki/uebungen/plank</loc>'
+      );
     });
   });
 });
@@ -587,27 +608,32 @@ describe('sitemap reciprocity invariants', () => {
   const xml = readFileSync(sitemapPath, 'utf-8');
 
   it('lists only wiki detail URLs whose page is actually indexable', () => {
-    // Push-up types now carry a long-form body in every supported locale,
-    // so every one of those locales is expected here. Exercise wiki pages
-    // stay frontmatter-only (see `omits exercise wiki detail pages...`
-    // above), so none of their detail URLs should appear — a URL in the
-    // sitemap whose page serves `noindex` is a contradiction Google
-    // penalises.
+    // A URL in the sitemap whose page serves `noindex` is a contradiction
+    // Google penalises, so the two families are asserted separately by
+    // how far their translations have come:
+    //   - push-up types carry a body in every supported locale, so every
+    //     locale must appear;
+    //   - exercise wiki entries have German bodies only, so nothing else
+    //     may appear until the translations routine catches up.
     const { LOCALES } = require('./generate-sitemap');
     const wikiLocs = [...xml.matchAll(/<loc>([^<]*wiki\/[^<]+)<\/loc>/g)]
       .map((m) => m[1])
       .filter((loc) => /wiki\/(liegestuetz-typen|uebungen)\/./.test(loc));
     expect(wikiLocs.length).toBeGreaterThan(0);
-    const localePattern = new RegExp(
+
+    const typePattern = new RegExp(
       `/(${LOCALES.join('|')})/wiki/liegestuetz-typen/`
     );
-    const locales = new Set();
+    const typeLocales = new Set();
     for (const loc of wikiLocs) {
-      expect(loc).toMatch(localePattern);
-      expect(loc).not.toMatch(/\/wiki\/uebungen\//);
-      locales.add(loc.match(localePattern)[1]);
+      if (loc.includes('/wiki/uebungen/')) {
+        expect(loc).toMatch(/\/de\/wiki\/uebungen\//);
+        continue;
+      }
+      expect(loc).toMatch(typePattern);
+      typeLocales.add(loc.match(typePattern)[1]);
     }
-    expect(locales.size).toBe(LOCALES.length);
+    expect(typeLocales.size).toBe(LOCALES.length);
   });
 
   it('contains no URLs for removed locales', () => {
