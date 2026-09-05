@@ -21,16 +21,6 @@ Disallow: /nl/settings
 Disallow: /el/settings
 Disallow: /no/settings
 Disallow: /zh/settings
-Disallow: /reminders
-Disallow: /de/reminders
-Disallow: /en/reminders
-Disallow: /fr/reminders
-Disallow: /es/reminders
-Disallow: /it/reminders
-Disallow: /nl/reminders
-Disallow: /el/reminders
-Disallow: /no/reminders
-Disallow: /zh/reminders
 Disallow: /assistant
 Disallow: /de/assistant
 Disallow: /en/assistant

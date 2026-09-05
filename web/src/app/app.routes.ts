@@ -8,6 +8,7 @@ import {
 } from '@pu-auth/auth';
 import { AI_ASSISTANT_ROUTE } from './ai/ai-assistant.config';
 import { aiAssistantEnabledGuard } from './ai/ai-assistant.guard';
+import { SettingsFacade } from './stats/shell/settings.facade';
 
 export const appRoutes: Routes = [
   {
@@ -86,26 +87,63 @@ export const appRoutes: Routes = [
   {
     path: 'settings',
     canActivate: [authGuard],
+    // One facade for the whole section: switching tabs must not restart
+    // the autosave debounce or drop an in-flight write.
+    providers: [SettingsFacade],
     data: {
       seoTitle: $localize`:@@seo.settings.title:Einstellungen – Pushup Tracker`,
       seoDescription: $localize`:@@seo.settings.description:Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.`,
     },
     loadComponent: () =>
-      import('./stats/shell/settings-page.component').then(
-        (m) => m.SettingsPageComponent
+      import('./settings/settings-shell.component').then(
+        (m) => m.SettingsShellComponent
       ),
-  },
-  {
-    path: 'goals',
-    canActivate: [authGuard],
-    data: {
-      seoTitle: $localize`:@@seo.goals.title:Tagesziele – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.goals.description:Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.`,
-    },
-    loadComponent: () =>
-      import('./goals/shell/goals-page.component').then(
-        (m) => m.GoalsPageComponent
-      ),
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'profil' },
+      {
+        path: 'profil',
+        loadComponent: () =>
+          import('./settings/settings-profile.component').then(
+            (m) => m.SettingsProfileComponent
+          ),
+      },
+      {
+        path: 'ziele',
+        data: {
+          seoTitle: $localize`:@@seo.goals.title:Tagesziele – Pushup Tracker`,
+          seoDescription: $localize`:@@seo.goals.description:Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.`,
+        },
+        loadComponent: () =>
+          import('./goals/shell/goals-page.component').then(
+            (m) => m.GoalsPageComponent
+          ),
+      },
+      {
+        path: 'erinnerungen',
+        data: {
+          seoTitle: $localize`:@@seo.reminders.title:Erinnerungen – Pushup Tracker`,
+          seoDescription: $localize`:@@seo.reminders.description:Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.`,
+        },
+        loadComponent: () =>
+          import('./reminders/shell/reminders-page.component').then(
+            (m) => m.RemindersPageComponent
+          ),
+      },
+      {
+        path: 'darstellung',
+        loadComponent: () =>
+          import('./settings/settings-display.component').then(
+            (m) => m.SettingsDisplayComponent
+          ),
+      },
+      {
+        path: 'datenschutz',
+        loadComponent: () =>
+          import('./settings/settings-privacy.component').then(
+            (m) => m.SettingsPrivacyComponent
+          ),
+      },
+    ],
   },
   {
     path: 'training-plans',
@@ -181,18 +219,6 @@ export const appRoutes: Routes = [
           ),
       },
     ],
-  },
-  {
-    path: 'reminders',
-    canActivate: [authGuard],
-    data: {
-      seoTitle: $localize`:@@seo.reminders.title:Erinnerungen – Pushup Tracker`,
-      seoDescription: $localize`:@@seo.reminders.description:Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.`,
-    },
-    loadComponent: () =>
-      import('./reminders/shell/reminders-page.component').then(
-        (m) => m.RemindersPageComponent
-      ),
   },
   {
     path: 'leaderboard',

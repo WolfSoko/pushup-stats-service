@@ -1,0 +1,120 @@
+<main class="page-wrap">
+  <app-page-header icon="tune" variant="settings">
+    <h1 page-title i18n="@@settingsHeaderTitle">Einstellungen</h1>
+    <p page-subtitle i18n="@@settingsHeaderSubtitle">
+      Profil, Ziele und Sichtbarkeit nach deinem Geschmack.
+    </p>
+    <div
+      page-actions
+      class="save-status"
+      role="status"
+      aria-live="polite"
+      [attr.data-status]="facade.saveStatus()"
+      data-testid="settings-save-status"
+    >
+      @switch (facade.saveStatus()) {
+        @case ('saving') {
+          <mat-progress-spinner
+            diameter="16"
+            mode="indeterminate"
+          ></mat-progress-spinner>
+          <span i18n="@@settings.status.saving">Speichert…</span>
+        }
+        @case ('saved') {
+          <mat-icon class="status-icon ok">check_circle</mat-icon>
+          <span i18n="@@settings.status.saved">Gespeichert</span>
+        }
+        @case ('error') {
+          <mat-icon class="status-icon err">error</mat-icon>
+          <span i18n="@@settings.status.error">Fehler beim Speichern</span>
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="facade.retrySave()"
+            i18n="@@settings.status.retry"
+          >
+            Erneut versuchen
+          </button>
+        }
+        @case ('pending') {
+          <mat-icon class="status-icon">edit</mat-icon>
+          <span i18n="@@settings.status.pending"
+            >Ungespeicherte Änderungen…</span
+          >
+        }
+        @default {
+          <mat-icon class="status-icon ok">cloud_done</mat-icon>
+          <span i18n="@@settings.status.synced"
+            >Alle Änderungen gespeichert</span
+          >
+        }
+      }
+    </div>
+  </app-page-header>
+
+  @if (facade.isGuest()) {
+    <div class="guest-banner">
+      <mat-icon>info</mat-icon>
+      <span i18n="@@guest.banner.text"
+        >Du nutzt die App als Gast. Erstelle ein Konto um alle Funktionen zu
+        nutzen.</span
+      >
+      <a mat-stroked-button routerLink="/register" i18n="@@guest.banner.cta"
+        >Konto erstellen</a
+      >
+    </div>
+  }
+
+  <nav
+    class="settings-tabs"
+    aria-label="Einstellungen"
+    i18n-aria-label="@@settings.nav.aria"
+  >
+    <a
+      mat-button
+      routerLink="profil"
+      routerLinkActive="active"
+      data-testid="settings-tab-profil"
+    >
+      <mat-icon>person</mat-icon
+      ><span i18n="@@settings.nav.profile">Profil</span>
+    </a>
+    <a
+      mat-button
+      routerLink="ziele"
+      routerLinkActive="active"
+      data-testid="settings-tab-ziele"
+    >
+      <mat-icon>flag</mat-icon><span i18n="@@settings.nav.goals">Ziele</span>
+    </a>
+    <a
+      mat-button
+      routerLink="erinnerungen"
+      routerLinkActive="active"
+      data-testid="settings-tab-erinnerungen"
+    >
+      <mat-icon>notifications</mat-icon
+      ><span i18n="@@settings.nav.reminders">Erinnerungen</span>
+    </a>
+    <a
+      mat-button
+      routerLink="darstellung"
+      routerLinkActive="active"
+      data-testid="settings-tab-darstellung"
+    >
+      <mat-icon>palette</mat-icon
+      ><span i18n="@@settings.nav.display">Darstellung</span>
+    </a>
+    <a
+      mat-button
+      routerLink="datenschutz"
+      routerLinkActive="active"
+      data-testid="settings-tab-datenschutz"
+    >
+      <mat-icon>privacy_tip</mat-icon
+      ><span i18n="@@settings.nav.privacy">Datenschutz</span>
+    </a>
+  </nav>
+
+  <router-outlet />
+</main>

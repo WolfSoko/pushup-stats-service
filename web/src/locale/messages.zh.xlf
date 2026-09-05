@@ -11192,5 +11192,47 @@
         <target>Stoppuhr</target>
       </segment>
     </unit>
+    <unit id="nav.more">
+      <segment state="initial">
+        <source>Mehr</source>
+        <target>Mehr</target>
+      </segment>
+    </unit>
+    <unit id="settings.nav.aria">
+      <segment state="initial">
+        <source>Einstellungen</source>
+        <target>Einstellungen</target>
+      </segment>
+    </unit>
+    <unit id="settings.nav.profile">
+      <segment state="initial">
+        <source>Profil</source>
+        <target>Profil</target>
+      </segment>
+    </unit>
+    <unit id="settings.nav.goals">
+      <segment state="initial">
+        <source>Ziele</source>
+        <target>Ziele</target>
+      </segment>
+    </unit>
+    <unit id="settings.nav.reminders">
+      <segment state="initial">
+        <source>Erinnerungen</source>
+        <target>Erinnerungen</target>
+      </segment>
+    </unit>
+    <unit id="settings.nav.display">
+      <segment state="initial">
+        <source>Darstellung</source>
+        <target>Darstellung</target>
+      </segment>
+    </unit>
+    <unit id="settings.nav.privacy">
+      <segment state="initial">
+        <source>Datenschutz</source>
+        <target>Datenschutz</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

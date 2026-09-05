@@ -167,10 +167,19 @@ describe('NAVIGATION_TARGETS', () => {
 
   it('should stay in lockstep with the routes the app actually declares', () => {
     // given — a renamed route in app.routes.ts would otherwise leave the agent
-    // navigating to a dead path with no test failing.
-    const declaredPaths = new Set(
-      appRoutes.map((route) => `/${route.path ?? ''}`)
-    );
+    // navigating to a dead path with no test failing. Children count as
+    // declared routes: the settings section moved its pages under
+    // `settings/…`, and a guard that only walked the top level would have
+    // called those valid targets missing.
+    const collect = (routes: typeof appRoutes, prefix = ''): string[] =>
+      routes.flatMap((route) => {
+        const path = `${prefix}/${route.path ?? ''}`.replace(/\/+$/, '');
+        return [
+          path === '' ? '/' : path,
+          ...(route.children ? collect(route.children, path) : []),
+        ];
+      });
+    const declaredPaths = new Set(collect(appRoutes));
 
     // when
     const missing = Object.values(NAVIGATION_TARGETS).filter(

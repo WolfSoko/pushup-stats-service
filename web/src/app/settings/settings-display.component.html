@@ -1,0 +1,42 @@
+<mat-card id="display" class="section-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>tune</mat-icon>
+    <mat-card-title i18n="@@settings.section.display.title"
+      >Anzeige</mat-card-title
+    >
+    <mat-card-subtitle i18n="@@settings.section.display.subtitle">
+      Animationen und Darstellung.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="snap-quality-field">
+      <span
+        id="snap-quality-label"
+        class="snap-quality-label"
+        i18n="@@settings.snapQualityLabel"
+        >Snap-Animation Qualität</span
+      >
+      <mat-button-toggle-group
+        hideSingleSelectionIndicator
+        [value]="facade.snapQualityDraft()"
+        (change)="facade.snapQualityDraft.set($event.value)"
+        aria-labelledby="snap-quality-label"
+        data-testid="settings-snap-quality"
+      >
+        <mat-button-toggle value="low" i18n="@@settings.snapQuality.low"
+          >Niedrig</mat-button-toggle
+        >
+        <mat-button-toggle value="middle" i18n="@@settings.snapQuality.middle"
+          >Mittel</mat-button-toggle
+        >
+        <mat-button-toggle value="high" i18n="@@settings.snapQuality.high"
+          >Hoch</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+      <p class="muted" i18n="@@settings.snapQualityHint">
+        Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k /
+        200k).
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>

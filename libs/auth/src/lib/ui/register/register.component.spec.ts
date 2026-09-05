@@ -294,7 +294,7 @@ describe('RegisterComponent', () => {
       await user.click(screen.getByTestId('register-success-daily-goal'));
 
       expect(analyticsMock.trackSuccessCta).toHaveBeenCalledWith('daily_goal');
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/goals');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/settings/ziele');
     });
 
     it('Given success When "Zum Dashboard" is clicked Then tracks the CTA and navigates to /app', async () => {

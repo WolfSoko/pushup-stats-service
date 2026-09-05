@@ -22,7 +22,6 @@
         <mat-icon matListItemIcon>dashboard</mat-icon>
         <span matListItemTitle i18n="@@nav.dashboard">Dashboard</span>
       </a>
-
       <a
         mat-list-item
         routerLink="/analysis"
@@ -32,7 +31,6 @@
         <mat-icon matListItemIcon>insights</mat-icon>
         <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
       </a>
-
       <a
         mat-list-item
         routerLink="/leaderboard"
@@ -42,17 +40,6 @@
         <mat-icon matListItemIcon>leaderboard</mat-icon>
         <span matListItemTitle i18n="@@nav.leaderboard">Bestenliste</span>
       </a>
-
-      <a
-        mat-list-item
-        routerLink="/blog"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>article</mat-icon>
-        <span matListItemTitle i18n="@@nav.blog">Blog</span>
-      </a>
-
       <a
         mat-list-item
         routerLink="/training-plans"
@@ -62,7 +49,26 @@
         <mat-icon matListItemIcon>fitness_center</mat-icon>
         <span matListItemTitle i18n="@@nav.trainingPlans">Trainingspläne</span>
       </a>
-
+      <a
+        mat-list-item
+        routerLink="/blog"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>article</mat-icon>
+        <span matListItemTitle i18n="@@nav.blog">Blog</span>
+      </a>
+      <mat-divider></mat-divider>
+      <div class="sidenav-subheader" i18n="@@nav.more">Mehr</div>
+      <a
+        mat-list-item
+        routerLink="/history"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>list</mat-icon>
+        <span matListItemTitle i18n="@@nav.history">Historie</span>
+      </a>
       <a
         mat-list-item
         routerLink="/wiki/liegestuetz-typen"
@@ -72,7 +78,6 @@
         <mat-icon matListItemIcon>menu_book</mat-icon>
         <span matListItemTitle i18n="@@nav.pushupTypes">Liegestütztypen</span>
       </a>
-
       <a
         mat-list-item
         routerLink="/wiki/uebungen"
@@ -83,27 +88,7 @@
         <span matListItemTitle i18n="@@nav.exercises">Übungen</span>
       </a>
 
-      <a
-        mat-list-item
-        routerLink="/history"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>list</mat-icon>
-        <span matListItemTitle i18n="@@nav.history">Historie</span>
-      </a>
-
-      @if (isLoggedIn()) {
-      <a
-        mat-list-item
-        routerLink="/reminders"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>notifications</mat-icon>
-        <span matListItemTitle i18n="@@nav.reminders">Erinnerungen</span>
-      </a>
-      }
+      @if (isLoggedIn()) { }
 
       <mat-divider></mat-divider>
 

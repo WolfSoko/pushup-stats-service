@@ -64,9 +64,10 @@ describe('serverRoutes', () => {
       'app',
       'history',
       'analysis',
-      'settings',
-      'goals',
-      'reminders',
+      // A wildcard: the settings section is a shell with child tabs
+      // (profil, ziele, erinnerungen, darstellung, datenschutz), and the
+      // former top-level `goals` / `reminders` moved in there.
+      'settings/**',
     ];
     for (const path of serverPaths) {
       const route = serverRoutes.find((r) => r.path === path);

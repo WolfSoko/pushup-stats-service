@@ -239,6 +239,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   async goToDailyGoalSettings(): Promise<void> {
     this.analytics.trackSuccessCta('daily_goal');
-    await this.router.navigateByUrl('/goals');
+    await this.router.navigateByUrl('/settings/ziele');
   }
 }

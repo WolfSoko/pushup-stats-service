@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
+import { Analytics, logEvent } from '@angular/fire/analytics';
 import {
-  ChangeDetectionStrategy,
-  Component,
+  Injectable,
   LOCALE_ID,
   OnDestroy,
   PLATFORM_ID,
@@ -11,19 +12,9 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { RouterLink, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
-import { Analytics, logEvent } from '@angular/fire/analytics';
 import { PushSubscriptionService } from '@pu-push/push';
 import {
   DEFAULT_SNAP_QUALITY,
@@ -31,39 +22,33 @@ import {
   SnapQuality,
   validateDisplayName,
 } from '@pu-stats/models';
-import { UserConfigStore } from '../../core/user-config.store';
-import { ShareService } from '../../core/share.service';
+
 import { buildProfileShareUrl } from '../../core/profile-share-url';
-import { PageHeaderComponent } from '../../core/page-header/page-header.component';
+import { ShareService } from '../../core/share.service';
+import { UserConfigStore } from '../../core/user-config.store';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
-import type { DraftSnapshot, ResolvedConfig } from './settings-page.models';
+import { SettingsAutoSaveController } from './settings-autosave.controller';
 import {
   eventValue,
   isAnalyticsConsentGranted,
   resolveConfig,
 } from './settings-page.helpers';
-import { SettingsAutoSaveController } from './settings-autosave.controller';
+import type { DraftSnapshot, ResolvedConfig } from './settings-page.models';
 
-@Component({
-  selector: 'app-settings-page',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatButtonToggleModule,
-    PageHeaderComponent,
-    RouterLink,
-  ],
-  templateUrl: './settings-page.component.html',
-  styleUrl: './settings-page.component.scss',
-})
-export class SettingsPageComponent implements OnDestroy {
+/**
+ * Owns every settings draft plus the autosave lifecycle.
+ *
+ * Extracted from `SettingsPageComponent` because the section is being
+ * split into routed child pages, and routed children cannot receive
+ * inputs from a parent — they need a shared instance to inject. Provided
+ * on the `settings` route so one facade spans the whole section and the
+ * autosave debounce survives navigation between its tabs; leaving the
+ * section destroys it and drains pending writes.
+ *
+ * Matches the repo rule that stores own state and components only bind.
+ */
+@Injectable()
+export class SettingsFacade implements OnDestroy {
   private readonly user = inject(UserContextService);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);

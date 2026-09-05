@@ -20,20 +20,11 @@
       <span class="email">{{ user()?.email }}</span>
     </div>
     <mat-divider></mat-divider>
-    <button mat-menu-item (click)="goToHistory()">
-      <mat-icon>list</mat-icon>
-      <span i18n="@@user.menu.history">Historie</span>
-    </button>
-    <button mat-menu-item (click)="goToGoals()" data-testid="user-menu-goals">
-      <mat-icon>flag</mat-icon>
-      <span i18n="@@user.menu.goals">Tagesziele</span>
-    </button>
-    <button mat-menu-item (click)="goToReminders()">
-      <mat-icon>notifications</mat-icon>
-      <span i18n="@@user.menu.reminders">Erinnerungen</span>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="goToSettings()">
+    <button
+      mat-menu-item
+      (click)="goToSettings()"
+      data-testid="user-menu-settings"
+    >
       <mat-icon>settings</mat-icon>
       <span i18n="@@user.menu.settings">Einstellungen</span>
     </button>

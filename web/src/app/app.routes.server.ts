@@ -117,15 +117,9 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'settings',
-    renderMode: RenderMode.Server,
-  },
-  {
-    path: 'goals',
-    renderMode: RenderMode.Server,
-  },
-  {
-    path: 'reminders',
+    // Covers every settings child (profil, ziele, erinnerungen,
+    // darstellung, datenschutz) — they are all auth-only and noindexed.
+    path: 'settings/**',
     renderMode: RenderMode.Server,
   },
 

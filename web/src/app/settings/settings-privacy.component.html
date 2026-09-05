@@ -1,0 +1,104 @@
+<mat-card id="ads" class="section-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>campaign</mat-icon>
+    <mat-card-title i18n="@@settings.section.ads.title">Werbung</mat-card-title>
+    <mat-card-subtitle i18n="@@settings.section.ads.subtitle">
+      Personalisierung der Werbe-Slots.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="stack">
+    <mat-slide-toggle
+      [checked]="facade.adsConsentDraft()"
+      (change)="facade.adsConsentDraft.set($event.checked)"
+      i18n="@@settings.adsConsentOptIn"
+    >
+      Personalisierte Werbung aktivieren
+    </mat-slide-toggle>
+    <p class="muted">
+      <span i18n="@@settings.adsConsentHint"
+        >Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.</span
+      >
+      <a
+        routerLink="/datenschutz"
+        class="inline-link"
+        i18n="@@settings.adsConsent.privacyLink"
+        >Datenschutzerklärung</a
+      >
+    </p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card id="danger-zone" class="section-card danger-zone">
+  <mat-card-header>
+    <mat-icon mat-card-avatar class="danger-icon">warning</mat-icon>
+    <mat-card-title i18n="@@settings.dangerZoneTitle"
+      >Danger Zone</mat-card-title
+    >
+    <mat-card-subtitle i18n="@@settings.dangerZoneBody">
+      Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische
+      Auswertung anonymisiert erhalten.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions>
+    <button
+      type="button"
+      mat-stroked-button
+      color="warn"
+      [disabled]="facade.deletingAccount()"
+      (click)="facade.openDeleteDialog(deleteDialogTpl)"
+      i18n="@@settings.deleteAccount"
+    >
+      <mat-icon>warning</mat-icon>
+      Konto löschen
+    </button>
+    @if (facade.deletingAccount()) {
+      <span class="muted" i18n="@@settings.deletingAccount"
+        >Konto wird gelöscht…</span
+      >
+    }
+  </mat-card-actions>
+</mat-card>
+
+<ng-template #deleteDialogTpl>
+  <h2 mat-dialog-title i18n="@@settings.deleteDialogTitle">
+    Account wirklich löschen?
+  </h2>
+  <mat-dialog-content class="delete-dialog-content">
+    <p i18n="@@settings.deleteDialogWarning">
+      Achtung: Diese Aktion ist nicht rückgängig.
+    </p>
+    <p i18n="@@settings.deleteDialogInfo">
+      Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische
+      Auswertung anonymisiert erhalten.
+    </p>
+    <mat-form-field appearance="outline">
+      <mat-label i18n="@@settings.deleteDialogPhraseLabel"
+        >Bestätigungswort eingeben</mat-label
+      >
+      <input
+        matInput
+        [value]="facade.deletePhraseInput()"
+        (input)="facade.deletePhraseInput.set(facade.asValue($event))"
+        i18n-placeholder="@@settings.delete.confirmPlaceholder"
+        placeholder="löschen"
+      />
+      <mat-hint i18n="@@settings.deleteDialogPhraseHint"
+        >Bitte exakt „löschen“ eingeben.</mat-hint
+      >
+    </mat-form-field>
+    @if (facade.deleteDialogError()) {
+      <p class="error" role="alert">{{ facade.deleteDialogError() }}</p>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close i18n="@@cancel">Abbrechen</button>
+    <button
+      mat-flat-button
+      color="warn"
+      (click)="facade.confirmDeleteFromDialog()"
+      i18n="@@settings.deleteConfirmFinal"
+    >
+      Final löschen
+    </button>
+  </mat-dialog-actions>
+</ng-template>

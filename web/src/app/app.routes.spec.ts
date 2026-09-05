@@ -8,7 +8,7 @@ import { appRoutes } from './app.routes';
 import { LandingPageComponent } from './marketing/shell/landing-page.component';
 import { AnalysisPageComponent } from './stats/shell/analysis-page.component';
 import { EntriesPageComponent } from './stats/shell/entries-page.component';
-import { SettingsPageComponent } from './stats/shell/settings-page.component';
+import { SettingsShellComponent } from './settings/settings-shell.component';
 import { StatsDashboardComponent } from './stats/shell/stats-dashboard.component';
 import { LeaderboardPageComponent } from './leaderboard/shell/leaderboard-page.component';
 import { TrainingPlanDetailComponent } from './training-plans/training-plan-detail.component';
@@ -26,13 +26,11 @@ describe('appRoutes', () => {
       'history',
       'analysis',
       'settings',
-      'goals',
       'training-plans',
       'training-plans/:slug/session',
       'training-plans/:slug',
       'wiki/liegestuetz-typen',
       'wiki/uebungen',
-      'reminders',
       'leaderboard',
       'u/:uid',
       'blog',
@@ -72,10 +70,32 @@ describe('appRoutes', () => {
     expect(component).toBe(AnalysisPageComponent);
   });
 
-  it('lazy-loads settings component', async () => {
+  it('lazy-loads the settings shell', async () => {
     const route = appRoutes.find((r) => r.path === 'settings');
     const component = await route?.loadComponent?.();
-    expect(component).toBe(SettingsPageComponent);
+    expect(component).toBe(SettingsShellComponent);
+  });
+
+  it('exposes every settings tab as a child route', () => {
+    // given — the section replaced the former top-level /goals and
+    // /reminders, so a missing child would be a dead nav entry
+    const route = appRoutes.find((r) => r.path === 'settings');
+
+    // then
+    expect(route?.children?.map((c) => c.path)).toEqual([
+      '',
+      'profil',
+      'ziele',
+      'erinnerungen',
+      'darstellung',
+      'datenschutz',
+    ]);
+  });
+
+  it('no longer exposes the former top-level goals and reminders routes', () => {
+    // then
+    expect(appRoutes.find((r) => r.path === 'goals')).toBeUndefined();
+    expect(appRoutes.find((r) => r.path === 'reminders')).toBeUndefined();
   });
 
   it('lazy-loads public leaderboard component', async () => {
@@ -117,12 +137,24 @@ describe('appRoutes', () => {
     expect(settings?.data?.['seoDescription']).toContain('Tagesziel');
   });
 
-  it('lazy-loads the goals page on /goals', async () => {
-    const route = appRoutes.find((r) => r.path === 'goals');
-    const component = await route?.loadComponent?.();
+  it('lazy-loads the goals page as the settings/ziele child', async () => {
+    const child = appRoutes
+      .find((r) => r.path === 'settings')
+      ?.children?.find((c) => c.path === 'ziele');
+    const component = await child?.loadComponent?.();
     const { GoalsPageComponent } =
       await import('./goals/shell/goals-page.component');
     expect(component).toBe(GoalsPageComponent);
+  });
+
+  it('lazy-loads the reminders page as the settings/erinnerungen child', async () => {
+    const child = appRoutes
+      .find((r) => r.path === 'settings')
+      ?.children?.find((c) => c.path === 'erinnerungen');
+    const component = await child?.loadComponent?.();
+    const { RemindersPageComponent } =
+      await import('./reminders/shell/reminders-page.component');
+    expect(component).toBe(RemindersPageComponent);
   });
 
   it('protects app routes and keeps landing/login/register public-only', () => {
@@ -131,7 +163,6 @@ describe('appRoutes', () => {
       'history',
       'analysis',
       'settings',
-      'goals',
       'assistant',
     ];
     for (const path of protectedPaths) {

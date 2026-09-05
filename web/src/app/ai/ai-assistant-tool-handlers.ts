@@ -19,10 +19,10 @@ export const NAVIGATION_TARGETS = {
   dashboard: '/app',
   analysis: '/analysis',
   history: '/history',
-  goals: '/goals',
+  goals: '/settings/ziele',
   trainingPlans: '/training-plans',
   leaderboard: '/leaderboard',
-  reminders: '/reminders',
+  reminders: '/settings/erinnerungen',
   settings: '/settings',
 } as const;
 

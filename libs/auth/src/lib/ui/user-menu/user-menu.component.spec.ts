@@ -146,8 +146,10 @@ describe('UserMenuComponent', () => {
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
-  it('given authenticated user, when opening menu, then shows Historie and Erinnerungen', async () => {
-    // Given
+  it('given authenticated user, when opening menu, then shows only account actions', async () => {
+    // Given — Historie, Tagesziele und Erinnerungen sind keine
+    // Kontoaktionen; sie leben jetzt in der Navigation bzw. unter
+    // Einstellungen. Das Menü darf sie nicht doppeln.
     await render(UserMenuComponent, {
       providers: [
         provideRouter([]),
@@ -163,15 +165,18 @@ describe('UserMenuComponent', () => {
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
 
     // Then
-    expect(screen.getByText('Historie')).toBeTruthy();
-    expect(screen.getByText('Erinnerungen')).toBeTruthy();
+    expect(screen.getByText('Einstellungen')).toBeTruthy();
+    expect(screen.getByText('Abmelden')).toBeTruthy();
+    expect(screen.queryByText('Historie')).toBeNull();
+    expect(screen.queryByText('Tagesziele')).toBeNull();
+    expect(screen.queryByText('Erinnerungen')).toBeNull();
   });
 
-  it('given authenticated user, when clicking Historie, then navigates to /history', async () => {
+  it('given authenticated user, when clicking Einstellungen, then navigates to /settings', async () => {
     // Given
     const { fixture } = await render(UserMenuComponent, {
       providers: [
-        provideRouter([{ path: 'history', children: [] }]),
+        provideRouter([{ path: 'settings', children: [] }]),
         {
           provide: AuthStore,
           useValue: makeStore({ isAuthenticated: true, isGuest: false }),
@@ -184,35 +189,11 @@ describe('UserMenuComponent', () => {
 
     // When
     fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
-    fireEvent.click(screen.getByText('Historie'));
+    fireEvent.click(screen.getByText('Einstellungen'));
     await fixture.whenStable();
 
     // Then
-    expect(navigateSpy).toHaveBeenCalledWith(['/history']);
-  });
-
-  it('given authenticated user, when clicking Erinnerungen, then navigates to /reminders', async () => {
-    // Given
-    const { fixture } = await render(UserMenuComponent, {
-      providers: [
-        provideRouter([{ path: 'reminders', children: [] }]),
-        {
-          provide: AuthStore,
-          useValue: makeStore({ isAuthenticated: true, isGuest: false }),
-        },
-        { provide: Auth, useValue: {} },
-      ],
-    });
-    const router = fixture.debugElement.injector.get(Router);
-    const navigateSpy = jest.spyOn(router, 'navigate');
-
-    // When
-    fireEvent.click(screen.getByLabelText('Nutzerkonto-Menü'));
-    fireEvent.click(screen.getByText('Erinnerungen'));
-    await fixture.whenStable();
-
-    // Then
-    expect(navigateSpy).toHaveBeenCalledWith(['/reminders']);
+    expect(navigateSpy).toHaveBeenCalledWith(['/settings']);
   });
 
   it('shows spinner when loading', async () => {

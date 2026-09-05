@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Analytics } from '@angular/fire/analytics';
@@ -7,16 +7,15 @@ import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-push/push';
 import { UserConfig, UserConfigUpdate } from '@pu-stats/models';
 import { makeAuthStoreMock } from '@pu-stats/testing';
-import { SettingsPageComponent } from './settings-page.component';
+import { SettingsFacade } from './settings.facade';
 import { UserConfigStore } from '../../core/user-config.store';
 import { ShareService } from '../../core/share.service';
 
 const DEBOUNCE_MS = 600;
 const SAVED_INDICATOR_MS = 1800;
 
-describe('SettingsPageComponent — auto-save', () => {
-  let fixture: ComponentFixture<SettingsPageComponent>;
-  let component: SettingsPageComponent;
+describe('SettingsFacade — auto-save', () => {
+  let component: SettingsFacade;
   let saveSpy: ReturnType<
     typeof vitest.fn<(patch: UserConfigUpdate) => Promise<UserConfig>>
   >;
@@ -31,8 +30,8 @@ describe('SettingsPageComponent — auto-save', () => {
     saveSpy = vitest.fn(saveImpl);
 
     TestBed.configureTestingModule({
-      imports: [SettingsPageComponent],
       providers: [
+        SettingsFacade,
         {
           provide: UserConfigStore,
           useValue: {
@@ -59,9 +58,8 @@ describe('SettingsPageComponent — auto-save', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(SettingsPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = TestBed.inject(SettingsFacade);
+    TestBed.tick();
   }
 
   afterEach(() => {
@@ -76,7 +74,7 @@ describe('SettingsPageComponent — auto-save', () => {
   it('Given a clean form, When initialising, Then no save is triggered and status is idle', async () => {
     setup();
     await flushMicrotasks();
-    fixture.detectChanges();
+    TestBed.tick();
 
     expect(saveSpy).not.toHaveBeenCalled();
     expect(component.saveStatus()).toBe('idle');
@@ -88,7 +86,7 @@ describe('SettingsPageComponent — auto-save', () => {
 
     await flushMicrotasks();
     component.displayNameDraft.set('Wolf42');
-    fixture.detectChanges();
+    TestBed.tick();
 
     expect(component.saveStatus()).toBe('pending');
     expect(saveSpy).not.toHaveBeenCalled();
@@ -109,15 +107,15 @@ describe('SettingsPageComponent — auto-save', () => {
 
     await flushMicrotasks();
     component.displayNameDraft.set('Wolf-A');
-    fixture.detectChanges();
+    TestBed.tick();
     vitest.advanceTimersByTime(DEBOUNCE_MS - 100);
 
     component.displayNameDraft.set('Wolf-B');
-    fixture.detectChanges();
+    TestBed.tick();
     vitest.advanceTimersByTime(DEBOUNCE_MS - 100);
 
     component.displayNameDraft.set('Wolf-C');
-    fixture.detectChanges();
+    TestBed.tick();
     vitest.advanceTimersByTime(DEBOUNCE_MS);
     await flushMicrotasks();
 
@@ -134,7 +132,7 @@ describe('SettingsPageComponent — auto-save', () => {
 
     await flushMicrotasks();
     component.displayNameDraft.set('WolfX');
-    fixture.detectChanges();
+    TestBed.tick();
 
     vitest.advanceTimersByTime(DEBOUNCE_MS);
     await flushMicrotasks();
@@ -149,7 +147,7 @@ describe('SettingsPageComponent — auto-save', () => {
 
     await flushMicrotasks();
     component.displayNameDraft.set('Wolf2');
-    fixture.detectChanges();
+    TestBed.tick();
 
     vitest.advanceTimersByTime(DEBOUNCE_MS);
     await flushMicrotasks();
@@ -167,7 +165,7 @@ describe('SettingsPageComponent — auto-save', () => {
     await flushMicrotasks();
 
     component.displayNameDraft.set('Wolf-edited');
-    fixture.detectChanges();
+    TestBed.tick();
     expect(component.saveStatus()).toBe('pending');
 
     // Simulate another tab/server pushing a new config while user is typing.
@@ -175,7 +173,7 @@ describe('SettingsPageComponent — auto-save', () => {
       userId: 'u1',
       displayName: 'OtherDevice',
     });
-    fixture.detectChanges();
+    TestBed.tick();
     await flushMicrotasks();
 
     expect(component.displayNameDraft()).toBe('Wolf-edited');
@@ -194,7 +192,7 @@ describe('SettingsPageComponent — auto-save', () => {
     await flushMicrotasks();
 
     configSignal.set({ userId: 'u1', displayName: 'WolfRemote' });
-    fixture.detectChanges();
+    TestBed.tick();
     await flushMicrotasks();
 
     expect(component.displayNameDraft()).toBe('WolfRemote');
@@ -218,7 +216,7 @@ describe('SettingsPageComponent — auto-save', () => {
     await flushMicrotasks();
 
     component.displayNameDraft.set('WolfY');
-    fixture.detectChanges();
+    TestBed.tick();
     vitest.advanceTimersByTime(DEBOUNCE_MS);
     await flushMicrotasks();
 
@@ -238,38 +236,17 @@ describe('SettingsPageComponent — auto-save', () => {
     await flushMicrotasks();
 
     component.displayNameDraft.set('WolfX');
-    fixture.detectChanges();
+    TestBed.tick();
     expect(component.saveStatus()).toBe('pending');
 
     component.displayNameDraft.set('Wolf');
-    fixture.detectChanges();
+    TestBed.tick();
 
     vitest.advanceTimersByTime(DEBOUNCE_MS);
     await flushMicrotasks();
 
     expect(saveSpy).not.toHaveBeenCalled();
     expect(component.saveStatus()).toBe('idle');
-  });
-
-  it('Renders a link to the dedicated goals page instead of inline goal inputs', async () => {
-    setup({ userId: 'u1', displayName: 'Wolf' });
-    await flushMicrotasks();
-    fixture.detectChanges();
-
-    const link = fixture.nativeElement.querySelector(
-      '[data-testid="settings-goals-link"]'
-    ) as HTMLAnchorElement | null;
-    expect(link).not.toBeNull();
-    expect(link?.getAttribute('href') ?? link?.getAttribute('routerLink')).toBe(
-      '/goals'
-    );
-
-    // Sanity: the inline daily-goal input must be gone.
-    expect(
-      fixture.nativeElement.querySelector(
-        'input[type="number"][placeholder="10"]'
-      )
-    ).toBeNull();
   });
 
   describe('account deletion', () => {
@@ -299,8 +276,8 @@ describe('SettingsPageComponent — auto-save', () => {
         displayName: 'Wolf',
       });
       TestBed.configureTestingModule({
-        imports: [SettingsPageComponent],
         providers: [
+          SettingsFacade,
           {
             provide: UserConfigStore,
             useValue: {
@@ -331,9 +308,8 @@ describe('SettingsPageComponent — auto-save', () => {
           { provide: ShareService, useValue: { share: vitest.fn() } },
         ],
       });
-      const localFixture = TestBed.createComponent(SettingsPageComponent);
-      const localComponent = localFixture.componentInstance;
-      localFixture.detectChanges();
+      const localComponent = TestBed.inject(SettingsFacade);
+      TestBed.tick();
       await flushMicrotasks();
       localComponent.deletePhraseInput.set('delete');
 
@@ -356,7 +332,7 @@ describe('SettingsPageComponent — auto-save', () => {
       await flushMicrotasks();
 
       component.displayNameDraft.set('Wolf🚀');
-      fixture.detectChanges();
+      TestBed.tick();
 
       expect(component.displayNameViolation()).toBe('invalid-characters');
       expect(component.saveStatus()).toBe('pending');
@@ -365,11 +341,6 @@ describe('SettingsPageComponent — auto-save', () => {
       await flushMicrotasks();
 
       expect(saveSpy).not.toHaveBeenCalled();
-
-      const error = fixture.nativeElement.querySelector(
-        '[data-testid="settings-displayname-error"]'
-      ) as HTMLElement | null;
-      expect(error).not.toBeNull();
     });
 
     it('Given a too-short displayName Then save is blocked', async () => {
@@ -378,7 +349,7 @@ describe('SettingsPageComponent — auto-save', () => {
       await flushMicrotasks();
 
       component.displayNameDraft.set('A');
-      fixture.detectChanges();
+      TestBed.tick();
 
       expect(component.displayNameViolation()).toBe('too-short');
 
@@ -394,13 +365,13 @@ describe('SettingsPageComponent — auto-save', () => {
       await flushMicrotasks();
 
       component.displayNameDraft.set('Wolf🚀');
-      fixture.detectChanges();
+      TestBed.tick();
       vitest.advanceTimersByTime(DEBOUNCE_MS);
       await flushMicrotasks();
       expect(saveSpy).not.toHaveBeenCalled();
 
       component.displayNameDraft.set('Wolf');
-      fixture.detectChanges();
+      TestBed.tick();
       vitest.advanceTimersByTime(DEBOUNCE_MS);
       await flushMicrotasks();
 

@@ -12,7 +12,11 @@ const LOCALE_SOURCE_PATH = resolve(ROOT, 'web/src/server-locale-redirect.ts');
  * forces the corresponding robots.txt entries to appear in the same
  * commit — the regression vector this test exists to close.
  */
-const AUTH_ROUTES = ['/admin', '/settings', '/reminders', '/assistant'];
+// `/settings` covers its children (profil, ziele, erinnerungen,
+// darstellung, datenschutz) by prefix — the former top-level /goals and
+// /reminders moved in there, which also closed a gap: /goals was
+// auth-only but had no robots entry at all.
+const AUTH_ROUTES = ['/admin', '/settings', '/assistant'];
 
 function readSupportedLocales() {
   const source = readFileSync(LOCALE_SOURCE_PATH, 'utf-8');
