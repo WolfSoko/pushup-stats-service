@@ -13,6 +13,7 @@
  * upstream rather than a silently broken card.
  */
 
+import { findAchievementDefinition } from '@pu-stats/models';
 import satori from 'satori';
 import { Resvg, initWasm } from '@resvg/resvg-wasm';
 import { readFile } from 'node:fs/promises';
@@ -101,6 +102,12 @@ interface OgCopy {
   headline: string;
   /** Footer call-to-action (e.g. "Track yours – pushup-stats.com"). */
   cta: string;
+  /** Badge label for a finished training plan. */
+  planCompleted: string;
+  /** Badge label for the very first completed plan day. */
+  firstPlanDay: string;
+  /** `%d` is replaced with the milestone, e.g. "10 Plantage". */
+  planDays: string;
 }
 
 const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
@@ -109,17 +116,90 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
     daysLabel: 'Tage',
     headline: 'Pushup-Profil',
     cta: 'Selbst tracken — kostenlos auf pushup-stats.com',
+    planCompleted: 'Plan abgeschlossen',
+    firstPlanDay: 'Erster Plantag',
+    planDays: '%d Plantage',
   },
   en: {
     numberLocale: 'en-US',
     daysLabel: 'days',
     headline: 'Push-up profile',
     cta: 'Track yours — free at pushup-stats.com',
+    planCompleted: 'Plan completed',
+    firstPlanDay: 'First plan day',
+    planDays: '%d plan days',
   },
 };
 
 function copyFor(locale: OgLocale | string | undefined): OgCopy {
   return OG_COPY[locale === 'en' ? 'en' : 'de'];
+}
+
+/**
+ * How many badges fit on the card before it looks cluttered. Anything
+ * beyond is summarised as "+N" rather than shrunk — an OG card is read
+ * at thumbnail size.
+ */
+const MAX_OG_BADGES = 3;
+
+function badgeLabel(id: string, copy: OgCopy): string | null {
+  const definition = findAchievementDefinition(id);
+  if (!definition) return null;
+  if (definition.kind === 'plan-completed') return copy.planCompleted;
+  const days = definition.threshold ?? 0;
+  return days === 1
+    ? copy.firstPlanDay
+    : copy.planDays.replace('%d', String(days));
+}
+
+/**
+ * Badge row, or `null` when the user has none — satori has no notion of
+ * an empty node, so the caller filters it out instead of rendering a
+ * gap.
+ */
+function badgeRow(
+  achievements: ReadonlyArray<string>,
+  copy: OgCopy
+): SatoriElement | null {
+  const labels = achievements
+    .map((id) => badgeLabel(id, copy))
+    .filter((label): label is string => label !== null);
+  if (labels.length === 0) return null;
+
+  const shown = labels.slice(0, MAX_OG_BADGES);
+  const rest = labels.length - shown.length;
+  const chips = shown.map((label) =>
+    el('div', {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '8px 20px',
+        borderRadius: '999px',
+        backgroundColor: 'rgba(244, 248, 255, 0.14)',
+        fontSize: '28px',
+        color: '#f4f8ff',
+      },
+      children: label,
+    })
+  );
+  if (rest > 0) {
+    chips.push(
+      el('div', {
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+          padding: '8px 20px',
+          fontSize: '28px',
+          color: '#9fb3de',
+        },
+        children: `+${rest}`,
+      })
+    );
+  }
+  return el('div', {
+    style: { display: 'flex', gap: '12px', marginTop: '6px' },
+    children: chips,
+  });
 }
 
 /** Build the satori-friendly element tree for the profile OG card. */
@@ -173,6 +253,9 @@ export function buildOgTree(
             },
             children: `${profile.total.toLocaleString(copy.numberLocale)} Reps · Streak ${profile.currentStreak} · ${profile.totalDays} ${copy.daysLabel}`,
           }),
+          ...[badgeRow(profile.achievements ?? [], copy)].filter(
+            (node): node is SatoriElement => node !== null
+          ),
         ],
       }),
       el('div', {

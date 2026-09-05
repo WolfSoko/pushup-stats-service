@@ -126,3 +126,90 @@ describe('_resetOgCachesForTesting', () => {
     }).not.toThrow();
   });
 });
+
+describe('buildOgTree achievements', () => {
+  const base = {
+    uid: 'abc',
+    displayName: 'Wolfi',
+    total: 5000,
+    totalEntries: 200,
+    totalDays: 90,
+    currentStreak: 14,
+    bestSingleEntry: 50,
+    bestDayTotal: 250,
+    achievements: [] as string[],
+    updatedAt: '2026-04-29T08:30:00.000Z',
+  };
+
+  function labels(tree: unknown): string[] {
+    const out: string[] = [];
+    const walk = (node: unknown): void => {
+      if (!node || typeof node !== 'object') return;
+      const children = (node as { props?: { children?: unknown } }).props
+        ?.children;
+      if (typeof children === 'string') out.push(children);
+      else if (Array.isArray(children)) children.forEach(walk);
+      else if (children) walk(children);
+    };
+    walk(tree);
+    return out;
+  }
+
+  it('should render a chip per earned badge', () => {
+    // when
+    const tree = buildOgTree(
+      { ...base, achievements: ['plan-completed-core-4w-v1', 'plan-days-10'] },
+      'de'
+    );
+
+    // then
+    expect(labels(tree)).toEqual(
+      expect.arrayContaining(['Plan abgeschlossen', '10 Plantage'])
+    );
+  });
+
+  it('should localise the badge labels', () => {
+    // when
+    const tree = buildOgTree({ ...base, achievements: ['plan-days-1'] }, 'en');
+
+    // then
+    expect(labels(tree)).toContain('First plan day');
+  });
+
+  it('should summarise beyond the third badge instead of shrinking them', () => {
+    // given — an OG card is read at thumbnail size
+    const tree = buildOgTree(
+      {
+        ...base,
+        achievements: [
+          'plan-days-1',
+          'plan-days-10',
+          'plan-days-25',
+          'plan-days-50',
+          'plan-days-100',
+        ],
+      },
+      'de'
+    );
+
+    // then
+    expect(labels(tree)).toContain('+2');
+  });
+
+  it('should skip ids the catalog no longer knows', () => {
+    // when
+    const tree = buildOgTree({ ...base, achievements: ['plan-days-7'] }, 'de');
+
+    // then — no empty chip, no crash
+    expect(labels(tree).filter((l) => l.trim() === '')).toEqual([]);
+  });
+
+  it('should render unchanged when nothing is earned', () => {
+    // then — satori has no empty node, so the row must be absent entirely
+    const withNone = JSON.stringify(buildOgTree(base, 'de'));
+    const withUndefined = JSON.stringify(
+      buildOgTree({ ...base, achievements: undefined as never }, 'de')
+    );
+    expect(withNone).toBe(withUndefined);
+  });
+});
