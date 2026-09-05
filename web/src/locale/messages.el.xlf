@@ -1562,18 +1562,18 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
-        <target>Tracker κάμψεων: προγράμματα προπόνησης, σερί &amp; πίνακας κατάταξης</target>
+        <target>Μέτρησε τις κάμψεις σου με την κάμερα – δωρεάν στο πρόγραμμα περιήγησης</target>
       </segment>
     </unit>
     <unit id="seo.landing.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
-        <target>Κατέγραψε τις κάμψεις με δωρεάν web-app: προγράμματα προπόνησης, πρόκληση 30 ημερών, ημερήσιος στόχος, σερί και πίνακας κατάταξης — τώρα και με sit-ups, καθίσματα, plank και τρέξιμο. Mobile, χωρίς δίκτυο, με live συγχρονισμό.</target>
+        <target>Η κάμερα μετράει αυτόματα τις κάμψεις σου – στο πρόγραμμα περιήγησης, χωρίς μεταφόρτωση. Επιπλέον προγράμματα προπόνησης, σερί και πίνακας κατάταξης, επίσης για καθίσματα και έλξεις.</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -11615,75 +11615,75 @@
       </segment>
     </unit>
     <unit id="publicProfile.badge.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan abgeschlossen</source>
-        <target>Trainingsplan abgeschlossen</target>
+        <target>Πρόγραμμα προπόνησης ολοκληρώθηκε</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.firstPlanDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Plantag</source>
-        <target>Erster Plantag</target>
+        <target>Πρώτη ημέρα προγράμματος</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+        <target><ph id="0" equiv="days" disp="days"/> ημέρες προγράμματος</target>
       </segment>
     </unit>
     <unit id="publicProfile.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfolge</source>
-        <target>Erfolge</target>
+        <target>Επιτεύγματα</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geschafft!</source>
-        <target>Geschafft!</target>
+        <target>Έγινε!</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.close">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Συνέχεια</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>Κοινή χρήση</target>
       </segment>
     </unit>
     <unit id="achievement.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="achievement.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
-        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</target>
+        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — έγινε! 💪</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.stopwatchAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr öffnen</source>
-        <target>Stoppuhr öffnen</target>
+        <target>Άνοιγμα χρονόμετρου</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>Χρονόμετρο</target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>Χρονόμετρο</target>
       </segment>
     </unit>
 </file>

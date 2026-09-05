@@ -3742,9 +3742,9 @@ Deine Position: # ·  Reps        </source>
       
         </unit>
     <unit id="seo.landing.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
-        <target>Track push-ups with a free web app: training plans, 30-day challenge, daily goal, streaks and global leaderboard – now also with sit-ups, squats, planks and running. Mobile, offline-capable, live-synced.</target>
+        <target>Your camera counts your push-ups automatically – in the browser, no upload. Plus training plans, streaks and a leaderboard, also for squats and pull-ups.</target>
 
 
 
@@ -3753,9 +3753,9 @@ Deine Position: # ·  Reps        </source>
 
         </unit>
     <unit id="seo.landing.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
-        <target>Push-Up Tracker: Training Plans, Streaks &amp; Leaderboard</target>
+        <target>Count push-ups with your camera – free in the browser</target>
 
 
 
@@ -11814,75 +11814,75 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="publicProfile.badge.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan abgeschlossen</source>
-        <target>Trainingsplan abgeschlossen</target>
+        <target>Training plan completed</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.firstPlanDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Plantag</source>
-        <target>Erster Plantag</target>
+        <target>First training day</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+        <target><ph id="0" equiv="days" disp="days"/> training days</target>
       </segment>
     </unit>
     <unit id="publicProfile.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfolge</source>
-        <target>Erfolge</target>
+        <target>Achievements</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geschafft!</source>
-        <target>Geschafft!</target>
+        <target>Done!</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.close">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Continue</target>
       </segment>
     </unit>
     <unit id="achievement.dialog.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>Share</target>
       </segment>
     </unit>
     <unit id="achievement.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="achievement.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
-        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</target>
+        <target><ph id="0" equiv="badge" disp="this.data.badge.label"/> — done! 💪</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.stopwatchAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr öffnen</source>
-        <target>Stoppuhr öffnen</target>
+        <target>Open stopwatch</target>
       </segment>
     </unit>
     <unit id="quickAdd.fab.stopwatch">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>Stopwatch</target>
       </segment>
     </unit>
     <unit id="stopwatch.dialog.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stoppuhr</source>
-        <target>Stoppuhr</target>
+        <target>Stopwatch</target>
       </segment>
     </unit>
 </file>
