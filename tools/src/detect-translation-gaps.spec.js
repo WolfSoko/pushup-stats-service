@@ -97,6 +97,14 @@ function buildFixture({
       '        <target>Hallo Welt</target>',
       '      </segment>',
       '    </unit>',
+      // German source was edited: the old translation is deliberately kept
+      // so the page does not fall back to German, and only the state flips.
+      '    <unit id="source.changed">',
+      '      <segment state="initial">',
+      '        <source>Neuer deutscher Text</source>',
+      '        <target>Vetus textus</target>',
+      '      </segment>',
+      '    </unit>',
       '  </file>',
       '</xliff>',
       '',
@@ -253,7 +261,31 @@ describe('detect-translation-gaps', () => {
           unitId: 'needs.translation',
           source: 'Hallo Welt',
         }),
+        expect.objectContaining({
+          locale: 'la',
+          kind: 'xliff-unit',
+          unitId: 'source.changed',
+          source: 'Neuer deutscher Text',
+        }),
       ]);
+    });
+
+    it('flags an initial unit even when it still carries a usable target', () => {
+      // given — the German source changed; the old translation is kept so
+      // the page does not fall back to German, which makes it invisible to
+      // a target-vs-source comparison.
+      // when
+      const { gaps } = runScript({ extraEnv: fixture.env });
+
+      // then
+      expect(gaps.gaps).toContainEqual(
+        expect.objectContaining({
+          locale: 'la',
+          kind: 'xliff-unit',
+          unitId: 'source.changed',
+          source: 'Neuer deutscher Text',
+        })
+      );
     });
 
     it('reports missing xliff files, blog files, and wiki files', () => {

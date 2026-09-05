@@ -122,17 +122,20 @@ async function detectXliffGaps(targetLocales) {
       const isInitial = /state="initial"/.test(unit);
       if (!isInitial) continue;
       const source = extractTagText(unit, 'source').trim();
-      const target = extractTagText(unit, 'target').trim();
-      // Missing target tag counts as a gap too.
-      if (!target || target === source) {
-        gaps.push({
-          locale,
-          kind: 'xliff-unit',
-          path: relative(REPO_ROOT, path),
-          unitId: id,
-          source,
-        });
-      }
+      // `state="initial"` is XLIFF's own "needs translation" marker, so
+      // every such unit is a gap — including one that still carries a
+      // usable target. That case arises when the German source is
+      // edited: the old translation stays live (better than showing
+      // German) but now renders outdated text, and comparing target to
+      // source cannot see it. Leaving the stale target in place and
+      // flipping the state is what makes it visible here.
+      gaps.push({
+        locale,
+        kind: 'xliff-unit',
+        path: relative(REPO_ROOT, path),
+        unitId: id,
+        source,
+      });
     }
   }
   return gaps;

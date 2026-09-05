@@ -2379,16 +2379,16 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+      <segment state="initial">
+        <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
       <target>俯卧撑追踪器：训练计划、连续天数与排行榜</target></segment>
     </unit>
     <unit id="seo.landing.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+      <segment state="initial">
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
       <target>用免费网页应用追踪俯卧撑：训练计划、30 天挑战、每日目标、连续天数与排行榜 — 现在也支持仰卧起坐、深蹲、平板支撑与跑步。手机端、离线可用、实时同步。</target></segment>
     </unit>
     <unit id="seo.dashboard.title">

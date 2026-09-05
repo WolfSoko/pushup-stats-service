@@ -1562,8 +1562,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+      <segment state="initial">
+        <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
         <target>Tracker de pompes : plans d'entraînement, séries &amp; classement</target>
       </segment>
     </unit>
@@ -1571,8 +1571,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+      <segment state="initial">
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
         <target>Suivez vos pompes avec une web-app gratuite : plans d'entraînement, défi 30 jours, objectif quotidien, séries et classement mondial — désormais aussi avec abdos, squats, gainage et course. Mobile, hors-ligne, sync en direct.</target>
       </segment>
     </unit>

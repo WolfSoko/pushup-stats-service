@@ -1563,7 +1563,7 @@
         <note category="location">web/src/app/app.routes.ts:15</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
         <target>Conta flessioni online: piani di allenamento e classifica</target>
       </segment>
     </unit>
@@ -1572,7 +1572,7 @@
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
         <target>Contatore di flessioni gratuito nel browser: conta le ripetizioni, piani di allenamento, streak e classifica — anche per sit-up, squat, plank e corsa.</target>
       </segment>
     </unit>

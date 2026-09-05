@@ -1,3 +1,6 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+
 import {
   EXERCISE_CATALOG,
   EXERCISE_CATEGORIES,
@@ -383,4 +386,42 @@ describe('PUSHUP_DEFINITION', () => {
       expect(violation).toBeNull();
     }
   );
+});
+
+/**
+ * The Play Store listing quotes the catalog size in prose. Nothing else
+ * connects the two, so the number silently went stale once already — the
+ * text said 41 while the catalog had grown to 42. Adding an exercise now
+ * fails here until the listing is updated with it.
+ */
+describe('Play Store listing stays in sync with the catalog', () => {
+  const repoRoot = resolve(__dirname, '../../../../..');
+
+  it.each([
+    ['de-DE', /• (\d+) Übungen in (\d+) Kategorien/],
+    ['en-US', /• (\d+) exercises across (\d+) categories/],
+  ])('should quote the real counts in %s', (locale, pattern) => {
+    // given
+    const path = join(
+      repoRoot,
+      'store',
+      'play',
+      locale,
+      'full-description.txt'
+    );
+    expect(existsSync(path)).toBe(true);
+
+    // when
+    const match = pattern.exec(readFileSync(path, 'utf-8'));
+
+    // then
+    expect(match).not.toBeNull();
+    expect({
+      exercises: Number(match?.[1]),
+      categories: Number(match?.[2]),
+    }).toEqual({
+      exercises: EXERCISE_CATALOG.length,
+      categories: EXERCISE_CATEGORIES.length,
+    });
+  });
 });

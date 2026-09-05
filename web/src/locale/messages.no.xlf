@@ -3064,16 +3064,16 @@ Deine Position: # ·  Reps        </source>
 
         </unit>
     <unit id="seo.landing.description">
-      <segment state="translated">
-        <source>Liegestütze tracken mit kostenloser Web-App: Trainingspläne, 30-Tage-Challenge, Tagesziel, Streaks und Bestenliste – jetzt auch mit Sit-ups, Kniebeugen, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+      <segment state="initial">
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
         <target>Spor push-ups med en gratis nettapp: treningsplaner, 30-dagers utfordring, daglig mål, streaks og topplister — nå også med sit-ups, knebøy, plank og løping. Mobil, offline, live-sync.</target>
 
             </segment>
 
         </unit>
     <unit id="seo.landing.title">
-      <segment state="translated">
-        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+      <segment state="initial">
+        <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
         <target>Push-up-tracker: treningsplaner, streaks &amp; topplister</target>
 
             </segment>

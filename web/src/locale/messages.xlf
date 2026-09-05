@@ -3986,7 +3986,7 @@
         <note category="location">web/src/app/app.routes.ts:17</note>
       </notes>
       <segment>
-        <source>Liegestütze Tracker: Trainingsplan, Streaks &amp; Bestenliste</source>
+        <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
       </segment>
     </unit>
     <unit id="seo.landing.description">
@@ -3994,7 +3994,7 @@
         <note category="location">web/src/app/app.routes.ts:18</note>
       </notes>
       <segment>
-        <source>Kostenlose Web-App für Liegestütze und mehr: Reps per Kamera-KI im Browser automatisch zählen, plus Trainingspläne, 30-Tage-Challenge, Heatmap, Streaks, Tagesziele und Bestenliste – auch für Sit-ups, Kniebeugen, Klimmzüge, Plank und Laufen. Mobil, offline-fähig, mit Live-Sync.</source>
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -11914,7 +11914,7 @@
     </unit>
     <unit id="wiki.exercise.detail.toList">
       <notes>
-        <note category="location">web/src/app/wiki/exercise-detail.component.ts:97,100</note>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:101,104</note>
       </notes>
       <segment>
         <source>Alle Übungen</source>
@@ -11922,7 +11922,7 @@
     </unit>
     <unit id="wiki.exercise.detail.cta">
       <notes>
-        <note category="location">web/src/app/wiki/exercise-detail.component.ts:104,107</note>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:108,111</note>
       </notes>
       <segment>
         <source>Zu den Trainingsplänen</source>
@@ -11930,7 +11930,7 @@
     </unit>
     <unit id="seo.wiki.exercise.titleSuffix">
       <notes>
-        <note category="location">web/src/app/wiki/exercise-detail.component.ts:231</note>
+        <note category="location">web/src/app/wiki/exercise-detail.component.ts:261</note>
       </notes>
       <segment>
         <source>Anleitung &amp; Technik | Pushup Tracker</source>
@@ -12034,7 +12034,7 @@
     </unit>
     <unit id="wiki.pushupType.detail.toList">
       <notes>
-        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:101,104</note>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:105,108</note>
       </notes>
       <segment>
         <source>Alle Liegestütztypen</source>
@@ -12042,7 +12042,7 @@
     </unit>
     <unit id="wiki.pushupType.detail.cta">
       <notes>
-        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:108,111</note>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:112,115</note>
       </notes>
       <segment>
         <source>Zu den Trainingsplänen</source>
@@ -12050,7 +12050,7 @@
     </unit>
     <unit id="seo.wiki.pushupType.titleSuffix">
       <notes>
-        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:236</note>
+        <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:266</note>
       </notes>
       <segment>
         <source>Anleitung &amp; Technik | Pushup Tracker</source>
