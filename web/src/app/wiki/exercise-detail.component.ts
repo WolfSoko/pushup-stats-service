@@ -4,6 +4,7 @@ import {
   Component,
   DestroyRef,
   inject,
+  InjectionToken,
   LOCALE_ID,
   OnInit,
 } from '@angular/core';
@@ -14,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   type ExerciseWikiEntry,
+  type ExerciseWikiLocalized,
   findExerciseWikiEntryBySlug,
   localizeExerciseWiki,
 } from '@pu-stats/models';
@@ -21,6 +23,25 @@ import { SeoService } from '../core/seo.service';
 
 const BASE_URL = 'https://pushup-stats.com';
 const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
+
+// `vi.mock` cannot intercept this workspace-internal import in the `web`
+// esbuild unit-test build (see docs/gotchas/testing.md), so the noindex
+// gate for a locale whose translation body hasn't caught up yet — no
+// longer reachable through any real catalog entry now that every locale
+// carries a body — is tested via this DI seam instead.
+export const EXERCISE_WIKI_ENTRY_LOOKUP = new InjectionToken<
+  typeof findExerciseWikiEntryBySlug
+>('EXERCISE_WIKI_ENTRY_LOOKUP', {
+  providedIn: 'root',
+  factory: () => findExerciseWikiEntryBySlug,
+});
+
+export const EXERCISE_WIKI_LOCALIZER = new InjectionToken<
+  (entry: ExerciseWikiEntry, locale: string) => ExerciseWikiLocalized | null
+>('EXERCISE_WIKI_LOCALIZER', {
+  providedIn: 'root',
+  factory: () => localizeExerciseWiki,
+});
 
 @Component({
   selector: 'app-exercise-detail',
@@ -224,6 +245,8 @@ export class ExerciseDetailComponent implements OnInit {
   private readonly document = inject(DOCUMENT);
   private readonly locale = inject(LOCALE_ID) as string;
   private readonly destroyRef = inject(DestroyRef);
+  private readonly findEntryBySlug = inject(EXERCISE_WIKI_ENTRY_LOOKUP);
+  private readonly localizeEntry = inject(EXERCISE_WIKI_LOCALIZER);
 
   entry: ExerciseWikiEntry | null = null;
   name = '';
@@ -239,13 +262,13 @@ export class ExerciseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
-    const found = (slug && findExerciseWikiEntryBySlug(slug)) ?? null;
+    const found = (slug && this.findEntryBySlug(slug)) ?? null;
     if (!found) {
       this.router.navigateByUrl('/wiki/uebungen');
       return;
     }
 
-    const localized = localizeExerciseWiki(found, this.locale);
+    const localized = this.localizeEntry(found, this.locale);
     if (!localized) {
       this.router.navigateByUrl('/wiki/uebungen');
       return;

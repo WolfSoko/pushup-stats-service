@@ -9,7 +9,11 @@ import {
 import { render } from '@testing-library/angular';
 import { of } from 'rxjs';
 import { vi } from 'vitest';
-import { ExerciseDetailComponent } from './exercise-detail.component';
+import {
+  EXERCISE_WIKI_ENTRY_LOOKUP,
+  EXERCISE_WIKI_LOCALIZER,
+  ExerciseDetailComponent,
+} from './exercise-detail.component';
 
 function makeRouteMock(slug: string) {
   return {
@@ -124,7 +128,11 @@ describe('ExerciseDetailComponent', () => {
 
     it('should emit noindex for a locale whose translation has no body yet', async () => {
       // given — the gate is per locale, not per entry: a translation that
-      // has not caught up must not be advertised as indexable.
+      // has not caught up must not be advertised as indexable. Every real
+      // exercise now carries a body in every supported locale, so this
+      // case is exercised via the DI lookup seams instead of depending on
+      // incidental content gaps (`vi.mock` cannot intercept this
+      // workspace-internal import — see docs/gotchas/testing.md).
       document.head.querySelector('meta[name="robots"]')?.remove();
 
       // when
@@ -134,6 +142,26 @@ describe('ExerciseDetailComponent', () => {
           provideLocationMocks(),
           { provide: LOCALE_ID, useValue: 'fr' },
           { provide: ActivatedRoute, useValue: makeRouteMock('squats') },
+          {
+            provide: EXERCISE_WIKI_ENTRY_LOOKUP,
+            useValue: () => ({
+              id: 'test.no-body-fixture',
+              categoryId: 'core',
+              slug: 'squats',
+              difficulty: 'beginner',
+              icon: 'fitness_center',
+            }),
+          },
+          {
+            provide: EXERCISE_WIKI_LOCALIZER,
+            useValue: () => ({
+              name: 'Test Exercise',
+              summary: 'Test summary',
+              instructions: ['Step one', 'Step two', 'Step three'],
+              tips: ['A tip'],
+              article: undefined,
+            }),
+          },
         ],
       });
 
