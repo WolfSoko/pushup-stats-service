@@ -50,7 +50,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Το σαγόνι ευθεία προς το στήθος χωρίς να τραβήξεις ενεργά — η κοιλιά κάνει τη δουλειά, όχι ο λαιμός.",
         "Προσθήκη 1 δευτερολέπτου κρατήματος στην κορυφή αυξάνει το ερέθισμα με τον ίδιο αριθμό επαναλήψεων."
-      ]
+      ],
+      "article": "<h2>Ο μικρός αδερφός του sit-up — και ο καλύτερος</h2>\n<p>\n  Στο crunch σηκώνεται από το έδαφος μόνο το ανώτερο τμήμα της ράχης, ενώ η οσφυϊκή μοίρα της σπονδυλικής\n  στήλης παραμένει ακουμπισμένη. Εκεί ακριβώς βρίσκεται η διαφορά: το εύρος κίνησης είναι μικρό, οι\n  συμπιεστικές δυνάμεις στους μεσοσπονδύλιους δίσκους είναι σαφώς χαμηλότερες από αυτές του πλήρους\n  sit-up, και ο ορθός κοιλιακός μυς εξακολουθεί να εκπαιδεύεται στο μοναδικό πραγματικό του καθήκον —\n  την κάμψη του κορμού.\n</p>\n<p>\n  Ο κορμός έχει τέσσερα καθήκοντα, και η κάμψη είναι μόνο ένα από αυτά. Τα crunches δεν αποτελούν\n  επομένως πλήρη άσκηση κορμού, αλλά χρήσιμο συμπλήρωμα σε σταθεροποιητική δουλειά όπως το plank και\n  το dead bug.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Ύπτια θέση, γόνατα λυγισμένα, πόδια ακίνητα στο έδαφος. Τα χέρια ακουμπούν χαλαρά στους κροτάφους ή\n  σταυρωτά στο στήθος — όχι πλεγμένα πίσω από τον αυχένα και τραβώντας. Το στέρνο κινείται προς τη\n  λεκάνη, οι ωμοπλάτες σηκώνονται μόλις λίγο από το έδαφος, τίποτα παραπάνω. Κράτημα για λίγο στην\n  κορυφή, μετά κατέβασμα υπό έλεγχο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Τράβηγμα από το κεφάλι.</strong> Το πιο συχνό λάθος. Μεταφέρει το φορτίο στην αυχενική μοίρα της σπονδυλικής στήλης και καθιστά την άσκηση αναποτελεσματική.</li>\n  <li><strong>Υπερβολική ανύψωση.</strong> Από περίπου 30 μοίρες και πάνω αναλαμβάνουν οι κάμπτορες του ισχίου. Τότε πρόκειται ουσιαστικά για sit-up, με τα μειονεκτήματά του.</li>\n  <li><strong>Χρήση φόρας.</strong> Χωρίς έλεγχο στην κατάβαση χάνεται το μισό όφελος της άσκησης.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Δύο έως τρία σετ με 12 έως 20 επαναλήψεις, εκτελεσμένες αργά, είναι απόλυτα αρκετά. Όποιος καταφέρνει\n  πάνω από 25, δεν χρειάζεται να αυξήσει τον αριθμό αλλά να επιβραδύνει την εκτέλεση ή να μεταβεί σε\n  πιο απαιτητική άσκηση κάμψης — hollow hold ή leg raises.\n</p>"
     },
     "en": {
       "name": "Crunches",
@@ -64,7 +65,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Chin loose toward the chest, but do not actively pull — the abs do the work, not the neck.",
         "Add a 1-second hold at the top to increase the stimulus at the same rep count."
-      ]
+      ],
+      "article": "<h2>The sit-up's little sibling — and the better one</h2>\n<p>\n  In a crunch, only the upper back lifts off the floor while the lumbar spine stays down. That's exactly\n  where the difference lies: the range of motion is small, the compressive forces on the discs sit well\n  below those of a full sit-up, and the rectus abdominis still gets trained in its one real job —\n  flexing the trunk.\n</p>\n<p>\n  The trunk has four jobs, and flexion is only one of them. Crunches are therefore not a complete core\n  exercise, just a useful complement to stabilizing work like the plank and the dead bug.\n</p>\n<h2>Execution</h2>\n<p>\n  Lie on your back, knees bent, feet flat. Hands rest loosely at the temples or crossed over the chest —\n  not clasped and pulling behind the neck. The sternum moves toward the pelvis, the shoulder blades lift\n  barely off the floor, nothing more. Hold briefly at the top, then lower under control.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Pulling on the head.</strong> The most common mistake. It shifts the load into the cervical spine and makes the exercise pointless.</li>\n  <li><strong>Coming up too far.</strong> Past roughly 30 degrees, the hip flexors take over. At that point it's a sit-up with all its downsides.</li>\n  <li><strong>Using momentum.</strong> Without control on the way down, half the work is missing.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Two to three sets of 12 to 20 reps, performed slowly, are plenty. If you can do more than 25, don't add\n  more reps — slow the tempo down instead, or move to a harder flexion exercise like the hollow hold or\n  leg raises.\n</p>"
     },
     "es": {
       "name": "Abdominales",
@@ -78,7 +80,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "La barbilla relajada hacia el pecho, pero sin tirar activamente — los abdominales hacen el trabajo, no el cuello.",
         "Agrega una pausa de 1 segundo en la parte superior para aumentar el estímulo sin aumentar las repeticiones."
-      ]
+      ],
+      "article": "<h2>El hermano pequeño del sit-up — y el mejor</h2>\n<p>\n  En el crunch solo se levanta la parte superior de la espalda, la columna lumbar permanece apoyada. Ahí\n  está precisamente la diferencia: el rango de movimiento es pequeño, las fuerzas de compresión sobre\n  los discos intervertebrales quedan claramente por debajo de las de un sit-up completo, y el recto\n  abdominal se entrena igualmente en su única función real: la flexión del tronco.\n</p>\n<p>\n  El tronco tiene cuatro funciones, y la flexión es solo una de ellas. Por eso los crunches no son un\n  ejercicio completo de tronco, sino un complemento útil al trabajo estabilizador como el plank y el\n  dead bug.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Boca arriba, rodillas dobladas, pies planos. Las manos descansan suavemente en las sienes o cruzadas\n  sobre el pecho — no entrelazadas en la nuca tirando de ella. El esternón se mueve hacia la pelvis, los\n  omóplatos se despegan apenas del suelo, nada más. Mantén brevemente arriba, luego baja bajo control.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Tirar de la cabeza.</strong> El error más común. Traslada la carga a la columna cervical y anula el efecto del ejercicio.</li>\n  <li><strong>Subir demasiado.</strong> A partir de unos 30 grados entran los flexores de la cadera. Entonces se convierte en un sit-up con sus mismos inconvenientes.</li>\n  <li><strong>Tomar impulso.</strong> Sin control en el descenso falta la mitad del trabajo.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Dos o tres series de 12 a 20 repeticiones, ejecutadas despacio, son más que suficientes. Quien supere\n  las 25 no debería aumentar el número, sino ralentizar la ejecución o pasar a un ejercicio de flexión\n  más exigente — hollow hold o elevaciones de piernas.\n</p>"
     },
     "fr": {
       "name": "Crunch",
@@ -92,7 +95,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Menton détendu vers la poitrine, sans tirer activement — les abdominaux font le travail, pas le cou.",
         "Ajoutez une pause de 1 seconde en haut pour augmenter le stimulus au même nombre de répétitions."
-      ]
+      ],
+      "article": "<h2>Le petit frère du sit-up — et le meilleur</h2>\n<p>\n  Dans le crunch, seul le haut du dos se soulève du sol, le bas du dos reste au contact. C'est\n  précisément là que réside la différence : l'amplitude de mouvement est réduite, les forces de\n  compression sur les disques intervertébraux sont nettement inférieures à celles du sit-up complet, et\n  le grand droit de l'abdomen est malgré tout sollicité dans sa seule véritable fonction — la flexion du\n  tronc.\n</p>\n<p>\n  Le tronc a quatre fonctions, et la flexion n'en est qu'une seule. Le crunch n'est donc pas un exercice\n  de gainage complet, mais un complément utile au travail de stabilisation comme le plank et le dead bug.\n</p>\n<h2>Exécution</h2>\n<p>\n  Allongé sur le dos, genoux fléchis, pieds à plat. Les mains reposent légèrement sur les tempes ou\n  croisées sur la poitrine — pas entrelacées derrière la nuque pour tirer. Le sternum se rapproche du\n  bassin, les omoplates se soulèvent à peine du sol, pas plus. Marquez une courte pause en haut, puis\n  redescendez de façon contrôlée.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Tirer sur la tête.</strong> L'erreur la plus fréquente. Elle reporte la charge sur les cervicales et rend l'exercice inefficace.</li>\n  <li><strong>Monter trop haut.</strong> À partir d'environ 30 degrés, les fléchisseurs de la hanche prennent le relais. On se retrouve alors avec un sit-up et ses inconvénients.</li>\n  <li><strong>Prendre de l'élan.</strong> Sans contrôle dans le mouvement de retour, la moitié du travail manque.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Deux à trois séries de 12 à 20 répétitions, exécutées lentement, suffisent amplement. Qui parvient à en\n  faire plus de 25 ne devrait pas augmenter le nombre, mais ralentir l'exécution ou passer à un exercice\n  de flexion plus exigeant — le hollow hold ou le relevé de jambes.\n</p>"
     },
     "it": {
       "name": "Addominali crunch",
@@ -106,7 +110,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Il mento verso il petto (naturalmente), senza tirare il collo — sono gli addominali che lavorano.",
         "Aggiungi una pausa di 1 secondo in alto per aumentare lo stimolo a parità di ripetizioni."
-      ]
+      ],
+      "article": "<h2>Il fratello minore del sit-up — e quello migliore</h2>\n<p>\n  Nel crunch si solleva da terra solo la parte superiore della schiena, mentre la colonna lombare resta\n  appoggiata. È proprio questa la differenza: l'ampiezza del movimento è ridotta, le forze di\n  compressione sui dischi intervertebrali sono nettamente inferiori a quelle del sit-up completo, e il\n  retto addominale viene comunque allenato nella sua unica vera funzione — la flessione del busto.\n</p>\n<p>\n  Il tronco ha quattro compiti, e la flessione è solo uno di questi. I crunch non sono quindi un\n  esercizio completo per il core, ma un utile complemento al lavoro di stabilizzazione come il plank e\n  il dead bug.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Sdraiato sulla schiena, ginocchia piegate, piedi appoggiati a terra. Le mani restano leggere sulle\n  tempie oppure incrociate sul petto — non intrecciate dietro la nuca a tirare. Lo sterno si muove verso\n  il bacino, le scapole si sollevano appena da terra, niente di più. Mantieni brevemente la posizione in\n  alto, poi torna giù in modo controllato.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Tirare la testa.</strong> L'errore più comune. Sposta il carico sulla colonna cervicale e rende l'esercizio inefficace.</li>\n  <li><strong>Salire troppo in alto.</strong> Oltre circa 30 gradi subentra il flessore dell'anca. A quel punto è un sit-up, con gli stessi svantaggi.</li>\n  <li><strong>Usare lo slancio.</strong> Senza controllo nella fase di discesa manca metà del lavoro.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Bastano due o tre serie da 12 a 20 ripetizioni, eseguite lentamente. Chi riesce a farne più di 25 non\n  dovrebbe aumentare il numero, ma rallentare l'esecuzione oppure passare a un esercizio di flessione più\n  impegnativo — Hollow Hold o alzate gambe.\n</p>"
     },
     "nl": {
       "name": "Crunches",
@@ -120,7 +125,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kin losjes naar de borst, maar trek niet actief — de buikspierin doen het werk, niet de nek.",
         "Voeg een 1-seconde pauze bovenaan toe om de stimulus bij dezelfde herhalingen te vergroten."
-      ]
+      ],
+      "article": "<h2>De kleine broer van de sit-up — en de betere</h2>\n<p>\n  Bij de crunch komt alleen de bovenrug van de vloer, de lendenwervelkolom blijft liggen. Precies\n  daarin zit het verschil: het bewegingsbereik is klein, de compressiekrachten op de\n  tussenwervelschijven liggen duidelijk onder die van de volledige sit-up, en de rechte buikspier wordt\n  toch getraind in zijn enige echte taak — de rompbuiging.\n</p>\n<p>\n  De romp heeft vier taken, en buiging is er maar één van. Crunches zijn daarom geen volledige\n  rompoefening, maar een zinvolle aanvulling op stabiliserend werk zoals plank en dead bug.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Ruglig, knieën gebogen, voeten plat. De handen liggen losjes tegen de slapen of gekruist op de\n  borst — niet achter het hoofd verstrengeld en trekkend. Het borstbeen beweegt richting het bekken, de\n  schouderblaadjes komen net los van de vloer, meer niet. Boven kort vasthouden, dan gecontroleerd\n  laten zakken.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Aan het hoofd trekken.</strong> De meest voorkomende fout. Hij verplaatst de belasting naar de halswervelkolom en maakt de oefening krachteloos.</li>\n  <li><strong>Te ver omhoog komen.</strong> Vanaf ongeveer 30 graden neemt de heupflexor het over. Dan is het een sit-up met diens nadelen.</li>\n  <li><strong>Zwaai nemen.</strong> Zonder controle in de terugbeweging ontbreekt de helft van het werk.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Twee tot drie sets van 12 tot 20 herhalingen, langzaam uitgevoerd, zijn ruim voldoende. Wie er meer\n  dan 25 haalt, moet niet het aantal verhogen, maar de uitvoering vertragen of overstappen op een\n  zwaardere buigoefening — hollow hold of beenraises.\n</p>"
     },
     "no": {
       "name": "Crunches",
@@ -134,7 +140,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Haken løst mot brystet, men ikke trekk aktivt – abdomene gjør arbeidet, ikke halsen.",
         "Legg til 1 sekunds pause øverst for å øke stimulansen med samme antall repetisjoner."
-      ]
+      ],
+      "article": "<h2>Sit-upens lillebror – og den beste versjonen</h2>\n<p>\n  Ved crunch løftes bare den øvre delen av ryggen fra gulvet, mens korsryggen blir liggende. Nettopp der\n  ligger forskjellen: bevegelsesutslaget er lite, kompresjonskreftene på mellomvirvelskivene er betydelig\n  lavere enn ved en full sit-up, og rectus abdominis trenes likevel i sin eneste egentlige oppgave –\n  å bøye overkroppen.\n</p>\n<p>\n  Kroppens midtparti har fire oppgaver, og bøying er bare én av dem. Crunches er derfor ikke en komplett\n  øvelse for midtpartiet, men et fornuftig supplement til stabiliserende arbeid som plank og dead bug.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Ligg på ryggen med bøyde knær og flate føtter. Hendene ligger løst ved tinningene eller krysset over\n  brystet – ikke flettet sammen bak nakken og trekkende. Brystbenet beveger seg mot bekkenet, skulderbladene\n  løftes så vidt fra gulvet, ikke mer. Hold kort på toppen, senk deretter kontrollert.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å dra i hodet.</strong> Den vanligste feilen. Den flytter belastningen til nakkevirvlene og gjør øvelsen virkningsløs.</li>\n  <li><strong>Å komme for høyt opp.</strong> Fra rundt 30 grader overtar hoftefleksorene. Da blir det en sit-up med samme ulemper.</li>\n  <li><strong>Å ta fart.</strong> Uten kontroll i tilbakebevegelsen mangler halve arbeidet.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  To til tre sett med 12 til 20 repetisjoner, utført sakte, er fullt nok. Den som klarer mer enn 25, bør\n  ikke øke antallet, men heller senke tempoet eller bytte til en tyngre bøyeøvelse – hollow hold eller\n  beinheving.\n</p>"
     },
     "zh": {
       "name": "仰卧起坐（卷腹）",
@@ -148,7 +155,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "下巴放松地靠近胸部，但不要主动拉扯——腹肌做功，不是颈部。",
         "在顶部停顿1秒钟可以在相同的次数内增加刺激。"
-      ]
+      ],
+      "article": "<h2>仰卧起坐的小兄弟——而且更好</h2>\n<p>\n  卷腹时只有上背部离开地面，腰椎始终贴地。这正是它与仰卧起坐的区别所在：动作幅度小，椎间盘承受的\n  压缩力明显低于完整的仰卧起坐，而腹直肌依然能在其唯一真正的功能——躯干屈曲——中得到训练。\n</p>\n<p>\n  躯干共有四项功能，屈曲只是其中之一。因此卷腹并不是一项完整的核心训练，而是对平板支撑、死虫式\n  等稳定性训练的有益补充。\n</p>\n<h2>动作要领</h2>\n<p>\n  仰卧，膝盖弯曲，双脚平放在地面上。双手轻轻放在太阳穴旁，或交叉放在胸前——不要交扣在颈后向上拉。\n  胸骨向骨盆方向靠近，肩胛骨刚刚离地即可，不必更多。顶部稍作停留，然后控制着放回原位。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>拉扯头部。</strong>最常见的错误。它会把负荷转移到颈椎上，让动作失去效果。</li>\n  <li><strong>抬得太高。</strong>大约超过30度后，髂腰肌就会接管发力，变成带有仰卧起坐所有缺点的动作。</li>\n  <li><strong>借助惯性。</strong>如果下降阶段没有控制，就等于少做了一半的功。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  两到三组、每组12到20次，动作放慢完成即可，完全足够。如果能轻松做到25次以上，不应该继续增加次数，\n  而应该放慢速度，或换成难度更高的屈曲动作——比如空心支撑或抬腿。\n</p>"
     }
   },
   "abs.legraises": {
@@ -179,7 +187,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Εξέλιξη: γόνατα λυγισμένα → γόνατα στο στήθος → ίσια πόδια στο οριζόντιο.",
         "Στο κρέμασμα, δρέπε ενεργά τις λεπίδες των ώμων ή ο ώμιος τραβά τη δουλειά."
-      ]
+      ],
+      "article": "<h2>Τι εκπαιδεύει πραγματικά η ανύψωση ποδιών</h2>\n<p>\n  Η ανύψωση ποδιών θεωρείται «άσκηση για τον κάτω κοιλιακό». Αυτή η αντίληψη δεν είναι εντελώς ακριβής\n  ανατομικά: ο ορθός κοιλιακός μυς είναι ένας ενιαίος μυς που δεν μπορεί να χωριστεί σε πάνω και κάτω\n  μισό. Αυτό που ισχύει: κατά την κίνηση των ποδιών το κάτω τμήμα συμμετέχει πιο έντονα, και οι κάμπτορες\n  του ισχίου εμπλέκονται σημαντικά.\n</p>\n<p>\n  Το πραγματικό αντικείμενο της προπόνησης είναι κάτι άλλο και συχνά παραβλέπεται — πρόκειται για\n  εργασία αντι-έκτασης. Όταν τα πόδια κατεβαίνουν, η λεκάνη τείνει να γείρει προς τα εμπρός και να\n  δημιουργηθεί οσφυϊκή κύρτωση. Το να το αποτρέψουμε αυτό είναι η ουσιαστική δουλειά.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Ξαπλωμένος: ύπτια θέση, χέρια δίπλα ή κάτω από τους γλουτούς. Η κάτω μέση παραμένει σε επαφή με το\n  έδαφος καθ' όλη τη διάρκεια της κίνησης — αυτό είναι προϋπόθεση, όχι προαιρετικό. Τα πόδια κατεβαίνουν\n  υπό έλεγχο, μόνο μέχρι το σημείο όπου η μέση παραμένει κάτω, και μετά ανασηκώνονται ξανά.\n</p>\n<p>\n  Στο κρέμασμα από τη μπάρα η άσκηση είναι σημαντικά δυσκολότερη και εκπαιδεύει επιπλέον τη δύναμη\n  λαβής. Οι αρχάριοι ανυψώνουν λυγισμένα γόνατα αντί για ίσια πόδια.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Οσφυϊκή κύρτωση κατά την κατάβαση.</strong> Το λάθος που μετατρέπει την άσκηση από ωφέλιμη σε επιβλαβή. Μείωσε το εύρος μέχρι η μέση να παραμένει σταθερή.</li>\n  <li><strong>Ελεύθερη πτώση των ποδιών.</strong> Η καθοδική πορεία είναι το πιο πολύτιμο τμήμα.</li>\n  <li><strong>Ταλάντευση στο κρέμασμα.</strong> Η φόρα αντικαθιστά τη δύναμη και καθιστά την άσκηση αναποτελεσματική.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 8 έως 15 ελεγχόμενες επαναλήψεις. Η πρόοδος γίνεται μέσω του μοχλού: λυγισμένα γόνατα,\n  μετά μισολυγισμένα, μετά ίσια, μετά στο κρέμασμα.\n</p>"
     },
     "en": {
       "name": "Leg Raises",
@@ -193,7 +202,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progression: knees tucked → knees to chest → straight legs to horizontal.",
         "In the hang, actively depress the shoulder blades or the shoulder girdle ends up doing the work."
-      ]
+      ],
+      "article": "<h2>What leg raises actually train</h2>\n<p>\n  Leg raises are billed as an \"exercise for the lower abs.\" Anatomically that's not quite accurate: the\n  rectus abdominis is one continuous muscle that can't be split into an upper and lower half. What is\n  true is that the lower portion works harder during the leg movement, and the hip flexors are\n  substantially involved.\n</p>\n<p>\n  The real training content is something else, and it's often overlooked — it's an anti-extension task.\n  As the legs lower, the pelvis wants to tip forward and create a lower-back arch. Preventing exactly\n  that is the actual work.\n</p>\n<h2>Execution</h2>\n<p>\n  Lying: on your back, hands beside or under the glutes. The lower back stays in contact with the floor\n  for the entire movement — that's the requirement, not an optional extra. Lower the legs under control,\n  only as far as the back stays down, then raise them again.\n</p>\n<p>\n  Hanging from a bar makes the exercise noticeably harder and also trains grip strength. Beginners raise\n  bent knees instead of straight legs.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Arching the lower back on the way down.</strong> The mistake that tips the exercise from useful to harmful. Shorten the range until the back stays down.</li>\n  <li><strong>Letting the legs drop.</strong> The lowering phase is the more valuable part.</li>\n  <li><strong>Swinging in the hang.</strong> Momentum replaces strength and makes the exercise pointless.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three sets of 8 to 15 controlled reps. Progression works through leverage: bent knees, then half\n  straight, then fully straight, then hanging.\n</p>"
     },
     "es": {
       "name": "Elevaciones de piernas",
@@ -207,7 +217,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progresión: rodillas metidas → rodillas al pecho → piernas rectas hasta la horizontal.",
         "En la posición colgada, deprime activamente los omóplatos o los hombros terminan haciendo el trabajo."
-      ]
+      ],
+      "article": "<h2>Lo que realmente entrenan las elevaciones de piernas</h2>\n<p>\n  Las elevaciones de piernas pasan por ser un \"ejercicio para el abdomen inferior\". Esa idea no es del\n  todo correcta anatómicamente: el recto abdominal es un músculo continuo que no se puede dividir en una\n  mitad superior y otra inferior. Lo que sí es cierto es que en el movimiento de piernas participa más\n  la porción inferior, y el flexor de la cadera interviene de forma notable.\n</p>\n<p>\n  El verdadero contenido del entrenamiento es otro y suele pasarse por alto — es una tarea\n  anti-extensión. Cuando las piernas descienden, la pelvis tiende a bascular hacia adelante y a generar\n  hiperlordosis. Impedir precisamente eso es el trabajo real.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Tumbado: boca arriba, manos junto a o bajo los glúteos. La zona lumbar permanece en contacto con el\n  suelo durante todo el movimiento — es la condición, no un extra. Baja las piernas de forma controlada,\n  solo hasta donde la espalda se mantenga apoyada, y vuelve a subir.\n</p>\n<p>\n  Colgado de la barra, el ejercicio es notablemente más exigente y entrena además la fuerza de agarre.\n  Los principiantes elevan las rodillas flexionadas en lugar de las piernas rectas.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Hiperlordosis al bajar.</strong> El error que convierte el ejercicio de útil en perjudicial. Reduce el recorrido hasta que la espalda se mantenga apoyada.</li>\n  <li><strong>Dejar caer las piernas.</strong> El recorrido descendente es la parte más valiosa.</li>\n  <li><strong>Balancearse en el hang.</strong> El impulso sustituye a la fuerza y anula el ejercicio.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 8 a 15 repeticiones controladas. La progresión avanza por la palanca: rodillas\n  flexionadas, luego semirrectas, luego rectas, luego colgado de la barra.\n</p>"
     },
     "fr": {
       "name": "Montées de jambes",
@@ -221,7 +232,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progression : genoux fléchis → genoux vers la poitrine → jambes tendues à l'horizontale.",
         "En suspension, déprimez activement les omoplates ou la ceinture scapulaire fait tout le travail."
-      ]
+      ],
+      "article": "<h2>Ce que le relevé de jambes entraîne vraiment</h2>\n<p>\n  Le relevé de jambes passe pour un « exercice pour le bas des abdominaux ». Cette idée n'est pas tout à\n  fait exacte sur le plan anatomique : le grand droit de l'abdomen est un muscle continu qu'on ne peut\n  pas diviser en une moitié supérieure et une moitié inférieure. Ce qui est vrai, en revanche, c'est que\n  la partie inférieure travaille davantage lors du mouvement des jambes, et que les fléchisseurs de la\n  hanche sont nettement sollicités.\n</p>\n<p>\n  Le véritable enjeu de l'exercice est ailleurs et souvent négligé — c'est un travail anti-extension.\n  Quand les jambes descendent, le bassin tend à basculer vers l'avant et à créer une cambrure lombaire.\n  Empêcher précisément cela, voilà le vrai travail.\n</p>\n<h2>Exécution</h2>\n<p>\n  Au sol : allongé sur le dos, mains à côté ou sous le bassin. Le bas du dos reste en contact avec le sol\n  pendant tout le mouvement — c'est une condition, pas une option. Abaissez les jambes de façon\n  contrôlée, uniquement jusqu'où le dos reste au sol, puis relevez-les.\n</p>\n<p>\n  En suspension à la barre, l'exercice est nettement plus difficile et sollicite en plus la force de\n  préhension. Les débutants relèvent les genoux fléchis plutôt que les jambes tendues.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Cambrure lombaire à la descente.</strong> L'erreur qui fait basculer l'exercice d'utile à nocif. Réduisez l'amplitude jusqu'à ce que le dos tienne.</li>\n  <li><strong>Laisser tomber les jambes.</strong> La phase descendante est la partie la plus précieuse.</li>\n  <li><strong>Se balancer en suspension.</strong> L'élan remplace la force et rend l'exercice inefficace.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 8 à 15 répétitions contrôlées. La progression passe par le levier : genoux fléchis,\n  puis mi-tendus, puis tendus, puis en suspension.\n</p>"
     },
     "it": {
       "name": "Alzate gambe",
@@ -235,7 +247,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progressione: ginocchia piegate — ginocchia al petto — gambe dritte in orizzontale.",
         "In sospensione, attiva consapevolmente la depressione scapolare altrimenti i deltoidi fanno il lavoro."
-      ]
+      ],
+      "article": "<h2>Cosa allenano davvero le alzate gambe</h2>\n<p>\n  Le alzate gambe sono considerate un \"esercizio per la parte bassa dell'addome\". Questa idea non è del\n  tutto corretta dal punto di vista anatomico: il retto addominale è un muscolo continuo, che non si può\n  dividere in una metà superiore e una inferiore. Ciò che è vero è che nel movimento delle gambe la\n  parte inferiore lavora maggiormente, e il flessore dell'anca è chiaramente coinvolto.\n</p>\n<p>\n  Il vero contenuto allenante è un altro, e viene spesso trascurato — è un compito anti-estensione.\n  Quando le gambe scendono, il bacino tende a inclinarsi in avanti e a creare un'iperlordosi. Impedire\n  esattamente questo è il lavoro da svolgere.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Da sdraiato: posizione supina, mani accanto o sotto i glutei. La parte bassa della schiena resta a\n  contatto con il pavimento per tutto il movimento — questa è la condizione, non un dettaglio opzionale.\n  Abbassa le gambe in modo controllato, solo fino al punto in cui la schiena resta appoggiata, poi\n  risolleva.\n</p>\n<p>\n  In sospensione alla sbarra l'esercizio è nettamente più difficile e allena in aggiunta la forza di\n  presa. I principianti sollevano le ginocchia piegate invece delle gambe distese.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Iperlordosi durante la discesa.</strong> L'errore che trasforma l'esercizio da utile a dannoso. Riduci l'ampiezza finché la schiena non tiene.</li>\n  <li><strong>Lasciar cadere le gambe.</strong> La fase di discesa è la parte più preziosa.</li>\n  <li><strong>Oscillare in sospensione.</strong> Lo slancio sostituisce la forza e rende l'esercizio inefficace.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 8 a 15 ripetizioni controllate. La progressione avviene tramite la leva: prima ginocchia\n  piegate, poi mezze distese, poi completamente distese, infine in sospensione.\n</p>"
     },
     "nl": {
       "name": "Beenraises",
@@ -249,7 +262,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progressie: knieën getrokken → knieën naar borst → benen recht tot horizontaal.",
         "Zet in de hang actief de schouderblaadjes neer of het schoudergordel eindigt ermee het werk te doen."
-      ]
+      ],
+      "article": "<h2>Wat beenraises echt trainen</h2>\n<p>\n  Beenraises gelden als „oefening voor de onderbuik”. Dat beeld klopt anatomisch niet helemaal:\n  de rechte buikspier is één doorlopende spier die niet in een boven- en onderhelft op te delen is.\n  Wat wel klopt: bij de beenbeweging werkt het onderste deel sterker mee, en de heupflexor is\n  duidelijk betrokken.\n</p>\n<p>\n  De eigenlijke trainingsinhoud is een andere en wordt vaak over het hoofd gezien — het is een\n  anti-extensietaak. Wanneer de benen zakken, wil het bekken naar voren kantelen en een holle rug\n  ontstaan. Precies dat voorkomen is het werk.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Liggend: ruglig, handen naast of onder de billen. De onderrug blijft gedurende de hele beweging\n  in contact met de vloer — dat is de voorwaarde, geen keuze. De benen gecontroleerd laten zakken,\n  alleen zo ver als de rug beneden blijft, dan weer optillen.\n</p>\n<p>\n  Hangend aan de pull-up balk is de oefening aanzienlijk zwaarder en traint bovendien de grijpkracht.\n  Beginners tillen gebogen knieën in plaats van gestrekte benen.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Holle rug bij het zakken.</strong> De fout die de oefening van nuttig naar schadelijk doet kantelen. Bewegingsbereik verkleinen tot de rug standhoudt.</li>\n  <li><strong>Benen laten vallen.</strong> De neerwaartse fase is het waardevollere deel.</li>\n  <li><strong>Zwaaien in de hang.</strong> Zwaai vervangt kracht en maakt de oefening krachteloos.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 8 tot 15 gecontroleerde herhalingen. Opbouw verloopt via de hefboom: gebogen knieën,\n  dan half gestrekt, dan gestrekt, dan hangend.\n</p>"
     },
     "no": {
       "name": "Leg Raises",
@@ -263,7 +277,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progresjon: knær tuklet → knær til bryst → rette bein til horisontal.",
         "I hengende stilling, deprimer aktivt skulderbladene eller skulderleddet gjør hele arbeidet."
-      ]
+      ],
+      "article": "<h2>Hva beinheving egentlig trener</h2>\n<p>\n  Beinheving regnes som «en øvelse for nedre mage». Denne forestillingen er ikke helt anatomisk presis:\n  rectus abdominis er én sammenhengende muskel som ikke kan deles inn i en øvre og en nedre halvdel. Det\n  som stemmer, er at den nedre delen jobber mer under beinbevegelsen, og at hoftefleksorene er tydelig\n  involvert.\n</p>\n<p>\n  Det egentlige treningsinnholdet er noe annet, og blir ofte oversett – det er en anti-ekstensjonsoppgave.\n  Når beina senkes, vil bekkenet vippe fremover og skape en hul rygg. Å forhindre nettopp dette er selve\n  arbeidet.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Liggende: rygglig med hendene ved siden av eller under setet. Korsryggen holder kontakt med gulvet\n  gjennom hele bevegelsen – det er en forutsetning, ikke en tilleggsutfordring. Senk beina kontrollert,\n  bare så langt som ryggen forblir nede, og løft dem så opp igjen.\n</p>\n<p>\n  Hengende i stangen er øvelsen betydelig tyngre, og trener i tillegg grepsstyrken. Nybegynnere løfter\n  bøyde knær i stedet for strake bein.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Hul rygg ved senking.</strong> Feilen som gjør øvelsen skadelig i stedet for nyttig. Kort ned bevegelsesutslaget til ryggen holder seg nede.</li>\n  <li><strong>Å la beina falle.</strong> Nedoverbevegelsen er den mest verdifulle delen.</li>\n  <li><strong>Å svinge i hengende posisjon.</strong> Sving erstatter kraft og gjør øvelsen virkningsløs.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 8 til 15 kontrollerte repetisjoner. Progresjonen går via vektarmen: bøyde knær, deretter\n  halvveis strake, så helt strake bein, og til slutt hengende i stangen.\n</p>"
     },
     "zh": {
       "name": "悬垂腿举",
@@ -277,7 +292,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "进阶：膝盖卷曲→膝盖靠近胸部→直腿至水平。",
         "在悬垂时，主动压低肩胛骨，否则肩关节会承担过多压力。"
-      ]
+      ],
+      "article": "<h2>抬腿真正训练的是什么</h2>\n<p>\n  抬腿常被称为\"下腹训练\"。这种说法在解剖学上并不完全准确：腹直肌是一整块连续的肌肉，无法真正\n  分成上下两部分。但可以肯定的是：在抬腿动作中，下部区域参与更多，髂腰肌也明显参与其中。\n</p>\n<p>\n  真正的训练内容其实是另一回事，而且常被忽视——这是一项抗伸展任务。当双腿下放时，骨盆会倾向于\n  前倾，形成腰部过度前凸。而防止这种情况发生，正是这个动作的核心工作。\n</p>\n<h2>动作要领</h2>\n<p>\n  仰卧版本：躺在地上，双手放在臀部旁边或下方。整个动作过程中，下背部必须始终贴地——这是硬性\n  条件，不是可选项。双腿有控制地下放，只放到下背部仍能贴地的幅度，然后再抬起。\n</p>\n<p>\n  悬垂版本（在单杠上）明显更难，还能额外锻炼握力。初学者可以抬起弯曲的膝盖，而不是伸直的双腿。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>下放时腰部过度前凸。</strong>这是让动作从有益变为有害的关键错误。应缩小下放幅度，直到下背部能保持贴地。</li>\n  <li><strong>让双腿自由下落。</strong>下降阶段其实是更有价值的部分。</li>\n  <li><strong>悬垂时借助摆动。</strong>惯性代替了力量输出，会让动作失去效果。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三组，每组8到15次可控重复。难度提升通过改变杠杆长度实现：先是屈膝，然后半伸直，接着完全\n  伸直，最后进阶到悬垂版本。\n</p>"
     }
   },
   "abs.mountainclimbers": {
@@ -308,7 +324,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Μέτρησε «αριστερά + δεξιά = 1 επανάληψη» για συνέπεια της καταγραφής.",
         "Παραλλαγή: διασταυρωμένο (γόνατο προς αντίθετο αγκώνα) χτυπά περισσότερο τους πλάγιους."
-      ]
+      ],
+      "article": "<h2>Δύο ασκήσεις σε μία</h2>\n<p>\n  Το mountain climbers είναι ένα μείγμα: από κάτω μια θέση plank, την οποία ο κορμός πρέπει να\n  σταθεροποιεί ενάντια στη βαρύτητα, από πάνω μια γρήγορη εναλλαγή γονάτων που ανεβάζει τον καρδιακό\n  ρυθμό. Έτσι αποτελεί ταυτόχρονα δουλειά κορμού και καρδιαγγειακό ερέθισμα — και ακριβώς γι' αυτό είναι\n  δύσκολο να εκτελεστεί σωστά, καθώς ο ρυθμός υπονομεύει τη σταθερότητα.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Η αρχική θέση είναι το ψηλό plank: χέρια κάτω από τους ώμους, σώμα σε ευθεία γραμμή. Ένα γόνατο\n  τραβιέται προς το στήθος, μετά επιστρέφει, μετά το άλλο. Οι ώμοι παραμένουν πάνω από τα χέρια, τα\n  ισχία παραμένουν στο ίδιο ύψος — δεν πρέπει ούτε να ανεβαίνουν απότομα ούτε να κρεμάνε.\n</p>\n<p>\n  Όποιος εκτελεί την άσκηση ως χρονικό διάστημα θα πρέπει να επιλέγει τέτοιο ρυθμό ώστε τα ισχία να\n  παραμένουν ήρεμα. Αργά και σταθερά είναι εδώ σαφώς πιο πολύτιμα από γρήγορα και ασταθή.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Οι γλουτοί ανεβαίνουν.</strong> Το πιο συχνό λάθος σε υψηλό ρυθμό — η άσκηση μετατρέπεται σε πήδημα και ο κορμός χάνει τη θέση του.</li>\n  <li><strong>Τα χέρια μετακινούνται μπροστά.</strong> Επιβαρύνει άσκοπα τους καρπούς. Πρέπει να παραμένουν κάτω από τους ώμους.</li>\n  <li><strong>Το πόδι ακουμπά στο έδαφος.</strong> Το γόνατο τραβιέται προς τα εμπρός, το πόδι δεν αγγίζει το έδαφος — αλλιώς γίνεται lunge.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Ως καρδιαγγειακό στοιχείο σε διαστήματα: τρεις έως πέντε γύροι των 20 έως 40 δευτερολέπτων με ίσης\n  διάρκειας διάλειμμα. Ως άσκηση κορμού: αργές, ελεγχόμενες επαναλήψεις, με κάθε γόνατο να κρατιέται\n  για λίγο στην κορυφή.\n</p>"
     },
     "en": {
       "name": "Mountain Climbers",
@@ -322,7 +339,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Count \"left + right = 1 rep\" so logs stay consistent.",
         "Variant: cross-body (knee to the opposite elbow) hits the obliques more."
-      ]
+      ],
+      "article": "<h2>Two exercises in one</h2>\n<p>\n  Mountain climbers are a hybrid: underneath, a plank position the trunk has to stabilize against\n  gravity; on top, a fast knee drive that pushes the heart rate up. That makes them both core work and a\n  conditioning stimulus — and exactly why they're hard to perform cleanly, since speed undermines\n  stability.\n</p>\n<h2>Execution</h2>\n<p>\n  The starting position is a high plank: hands under the shoulders, body in a straight line. One knee\n  drives toward the chest, then returns, then the other. The shoulders stay over the hands, and the hips\n  stay level — they should neither pop up nor sag.\n</p>\n<p>\n  If you're doing this as a timed interval, pick a tempo that keeps the hips still. Slow and stable is\n  far more valuable here than fast and shaky.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Hips rise up.</strong> The most common mistake at high tempo — the exercise turns into hopping and the core checks out.</li>\n  <li><strong>Hands creep forward.</strong> Puts unnecessary strain on the wrists. They belong under the shoulders.</li>\n  <li><strong>Setting the foot down.</strong> The knee drives forward and the foot never touches the ground — otherwise it becomes a lunge.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  As a conditioning element in intervals: three to five rounds of 20 to 40 seconds with an equal rest.\n  As a core exercise: slow, controlled reps with a brief hold at the top of each knee drive.\n</p>"
     },
     "es": {
       "name": "Escaladores de montaña",
@@ -336,7 +354,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Cuenta izquierda + derecha = 1 repetición para que los registros sean consistentes.",
         "Variante: diagonal (rodilla al codo opuesto) enfatiza más los oblicuos."
-      ]
+      ],
+      "article": "<h2>Dos ejercicios en uno</h2>\n<p>\n  Los escaladores de montaña son una mezcla: abajo, una posición de plank que el tronco debe estabilizar\n  contra la gravedad; arriba, un cambio rápido de rodillas que dispara el pulso. Son así, a la vez,\n  trabajo de tronco y estímulo cardiovascular — y precisamente por eso son difíciles de ejecutar bien,\n  porque el ritmo compromete la estabilidad.\n</p>\n<h2>Ejecución</h2>\n<p>\n  La posición inicial es el apoyo alto: manos bajo los hombros, cuerpo en línea recta. Una rodilla se\n  lleva hacia el pecho, luego regresa, y después la otra. Los hombros permanecen sobre las manos, la\n  cadera se mantiene a la misma altura — no debe dispararse hacia arriba ni hundirse.\n</p>\n<p>\n  Quien haga el ejercicio como intervalo de tiempo debería elegir un ritmo que mantenga la cadera\n  estable. Lento y estable vale claramente más aquí que rápido e inestable.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>El glúteo sube.</strong> El error más frecuente a ritmo alto — el ejercicio se convierte en un salto y el tronco se desconecta.</li>\n  <li><strong>Las manos avanzan hacia adelante.</strong> Sobrecarga innecesariamente las muñecas. Deben quedar bajo los hombros.</li>\n  <li><strong>Apoyar el pie.</strong> La rodilla avanza hacia adelante, el pie no debe tocar el suelo — de lo contrario se convierte en una zancada.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Como elemento de acondicionamiento en intervalos: de tres a cinco rondas de 20 a 40 segundos con una\n  pausa de igual duración. Como ejercicio de tronco: repeticiones lentas y controladas, manteniendo\n  brevemente cada rodilla arriba.\n</p>"
     },
     "fr": {
       "name": "Mountain Climbers",
@@ -350,7 +369,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Comptez « gauche + droite = 1 répétition » pour que les logs restent cohérents.",
         "Variante : corps croisé (genou vers le coude opposé) sollicite plus les obliques."
-      ]
+      ],
+      "article": "<h2>Deux exercices en un</h2>\n<p>\n  Le mountain climber est un mélange : en bas, une position de planche que le tronc doit stabiliser\n  contre la gravité, en haut, une alternance rapide des genoux qui fait grimper le pouls. Il combine donc\n  travail de gainage et stimulus cardio — et c'est justement pour cela qu'il est difficile à exécuter\n  proprement, car le rythme sape la stabilité.\n</p>\n<h2>Exécution</h2>\n<p>\n  La position de départ est la planche haute : mains sous les épaules, corps aligné. Un genou tire vers\n  la poitrine, puis revient, ensuite l'autre. Les épaules restent au-dessus des mains, les hanches\n  restent à niveau — elles ne doivent ni remonter ni s'affaisser.\n</p>\n<p>\n  Pour qui exécute l'exercice en intervalles chronométrés, il faut choisir un rythme qui laisse les\n  hanches stables. Lent et stable vaut ici nettement mieux que rapide et instable.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Le bassin remonte.</strong> L'erreur la plus fréquente à rythme élevé — l'exercice devient un simple sautillement et le tronc décroche.</li>\n  <li><strong>Les mains avancent.</strong> Cela sollicite inutilement les poignets. Elles doivent rester sous les épaules.</li>\n  <li><strong>Poser le pied.</strong> Le genou tire vers l'avant, le pied ne touche pas le sol — sinon cela devient une fente.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Comme élément cardio en intervalles : trois à cinq tours de 20 à 40 secondes avec une pause de même\n  durée. Comme exercice de gainage : répétitions lentes et contrôlées, chaque genou étant brièvement\n  maintenu en haut.\n</p>"
     },
     "it": {
       "name": "Mountain climbers",
@@ -364,7 +384,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Conta 'sinistra + destra = 1 rep' per mantenere coerenza nei registri.",
         "Variante: ginocchio al gomito opposto colpisce più gli obliqui."
-      ]
+      ],
+      "article": "<h2>Due esercizi in uno</h2>\n<p>\n  I mountain climbers sono un mix: in basso una posizione da plank, che il tronco deve stabilizzare\n  contro la gravità, in alto un cambio rapido di ginocchia che fa salire il battito cardiaco. Sono quindi\n  sia lavoro per il core sia stimolo cardiovascolare — ed è proprio per questo difficili da eseguire in\n  modo pulito, perché il ritmo mette a rischio la stabilità.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  La posizione di partenza è il plank alto: mani sotto le spalle, corpo in linea retta. Un ginocchio si\n  porta verso il petto, poi torna indietro, poi l'altro. Le spalle restano sopra le mani, i fianchi\n  restano all'altezza giusta — non devono né scattare verso l'alto né cedere verso il basso.\n</p>\n<p>\n  Chi esegue l'esercizio a intervalli di tempo dovrebbe scegliere un ritmo che mantenga i fianchi stabili.\n  Lento e stabile qui vale molto di più che veloce e traballante.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Il bacino sale verso l'alto.</strong> L'errore più comune a ritmo elevato — l'esercizio si trasforma in un saltello e il tronco esce dalla linea.</li>\n  <li><strong>Le mani avanzano in avanti.</strong> Sovraccarica inutilmente i polsi. Devono restare sotto le spalle.</li>\n  <li><strong>Appoggiare il piede.</strong> Il ginocchio si porta in avanti, il piede non tocca terra — altrimenti diventa un affondo.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Come elemento cardiovascolare a intervalli: da tre a cinque round da 20 a 40 secondi con pausa di pari\n  durata. Come esercizio per il core: ripetizioni lente e controllate, con ogni ginocchio mantenuto\n  brevemente in alto.\n</p>"
     },
     "nl": {
       "name": "Mountain Climbers",
@@ -378,7 +399,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tel \"links + rechts = 1 herhaling\" dus logs blijven consistent.",
         "Variant: lichaamsoversteking (knie naar tegenovergestelde elleboog) raakt schuin meer."
-      ]
+      ],
+      "article": "<h2>Twee oefeningen in één</h2>\n<p>\n  Mountain climbers zijn een mix: onderin een plankpositie die de romp tegen de zwaartekracht moet\n  stabiliseren, bovenop een snelle kniewisseling die de hartslag opjaagt. Daarmee zijn ze zowel\n  rompwerk als conditieprikkel — en juist daarom lastig zuiver uit te voeren, want het tempo\n  ondermijnt de stabiliteit.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Startpositie is de hoge plank: handen onder de schouders, lichaam in één lijn. Eén knie trekt\n  richting de borst, dan terug, dan de andere. De schouders blijven boven de handen, de heupen\n  blijven op hoogte — ze mogen niet omhoogschieten en niet doorzakken.\n</p>\n<p>\n  Wie de oefening als tijdsinterval doet, kiest het tempo zo dat de heup rustig blijft. Langzaam en\n  stabiel is hier veel waardevoller dan snel en wankel.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Billen gaan omhoog.</strong> De meest voorkomende fout bij hoog tempo — de oefening wordt een gehup en de romp valt uit.</li>\n  <li><strong>Handen schuiven naar voren.</strong> Belast de polsen onnodig. Ze horen onder de schouders.</li>\n  <li><strong>Voet neerzetten.</strong> De knie trekt naar voren, de voet raakt de vloer niet — anders wordt het een uitvalspas.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Als conditie-element in intervallen: drie tot vijf rondes van 20 tot 40 seconden met een even\n  lange pauze. Als rompoefening: langzame, gecontroleerde herhalingen waarbij elke knie kort boven\n  wordt gehouden.\n</p>"
     },
     "no": {
       "name": "Mountain Climbers",
@@ -392,7 +414,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tell venstre + høyre = 1 repetisjonsrekke for konsistens.",
         "Variant: cross-body (kne til motsatt albue) treffer obliquene hardere."
-      ]
+      ],
+      "article": "<h2>To øvelser i én</h2>\n<p>\n  Mountain climbers er en blanding: nederst en plankeposisjon som midtpartiet må stabilisere mot\n  tyngdekraften, øverst et raskt knevekslende tempo som driver pulsen opp. Dermed er de både styrkearbeid\n  for kjernen og en kondisjonsøvelse – og nettopp derfor vanskelige å utføre rent, fordi tempoet undergraver\n  stabiliteten.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Utgangsposisjonen er høy planke: hendene under skuldrene, kroppen i én rett linje. Ett kne trekkes mot\n  brystet, så tilbake, deretter det andre. Skuldrene forblir over hendene, hoftene holder seg i høyde –\n  de skal verken skyte opp eller henge ned.\n</p>\n<p>\n  Den som gjør øvelsen som et tidsintervall, bør velge et tempo der hoftene forblir rolige. Sakte og\n  stabilt er her klart mer verdifullt enn raskt og vaklende.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Setet vandrer oppover.</strong> Den vanligste feilen ved høyt tempo – øvelsen blir til hopping, og midtpartiet kobler ut.</li>\n  <li><strong>Hendene vandrer fremover.</strong> Belaster håndleddene unødvendig. De hører hjemme under skuldrene.</li>\n  <li><strong>Å sette foten ned.</strong> Kneet trekkes fremover, men foten berører ikke gulvet – ellers blir det et utfall.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Som kondisjonselement i intervaller: tre til fem runder på 20 til 40 sekunder med like lang pause. Som\n  kjerneøvelse: sakte, kontrollerte repetisjoner der hvert kne holdes kort oppe.\n</p>"
     },
     "zh": {
       "name": "爬山式",
@@ -406,7 +429,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "计数\"左+右=1次\"使记录保持一致。",
         "变式：跨身爬山（膝盖朝向对侧肘部）更多地锻炼斜肌。"
-      ]
+      ],
+      "article": "<h2>二合一的训练动作</h2>\n<p>\n  爬山式是一种混合动作：下半身是平板支撑姿势，核心必须对抗重力保持稳定；上半身则是快速的\n  交替抬膝，让心率迅速上升。因此它既是核心训练，也是有氧刺激——也正因如此难以做得标准，\n  因为速度会削弱稳定性。\n</p>\n<h2>动作要领</h2>\n<p>\n  起始姿势为高平板支撑：双手在肩膀正下方，身体保持一条直线。一侧膝盖向胸部拉动，然后收回，\n  接着换另一侧。肩膀始终保持在双手正上方，髋部保持在同一高度——既不能翘起，也不能塌陷。\n</p>\n<p>\n  如果以时间间隔的方式训练，应选择能让髋部保持稳定的节奏。在这里，慢而稳定远比快而摇晃更有\n  价值。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>臀部向上翘起。</strong>高速时最常见的错误——动作变成了单纯的跳跃，核心不再发力。</li>\n  <li><strong>双手向前移动。</strong>会给手腕带来不必要的负担。双手应始终保持在肩膀正下方。</li>\n  <li><strong>脚踩到地面。</strong>应该是膝盖向前拉动，脚不接触地面——否则动作就变成了弓步。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  作为间歇训练中的体能环节：三到五轮，每轮20到40秒，休息时间相同。作为核心训练：动作放慢、\n  控制良好，每次抬膝后短暂停留。\n</p>"
     }
   },
   "abs.russiantwist": {
@@ -437,7 +461,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Φόρτωση με αλτήρα, kettlebell ή μπουκάλι νερού για αύξηση της δυσκολίας.",
         "Μία επανάληψη = μία περιστροφή αριστερά ΚΑΙ μία προς τα δεξιά."
-      ]
+      ],
+      "article": "<h2>Η περιστροφή ως τέταρτο καθήκον του κορμού</h2>\n<p>\n  Ο κορμός έχει τέσσερα καθήκοντα: να αποτρέπει την κάμψη, να αποτρέπει την έκταση, να αποτρέπει την\n  πλάγια κλίση — και να ελέγχει την περιστροφή. Το Russian twist απευθύνεται στο τελευταίο. Οι πλάγιοι\n  κοιλιακοί εργάζονται εδώ τόσο παράγοντας όσο και τροχοπεδώντας την κίνηση, και ακριβώς αυτή η\n  τροχοπέδηση είναι η πιο συχνή περίπτωση στον αθλητισμό.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Καθιστός, γόνατα λυγισμένα, ο κορμός γερμένος περίπου 45 μοίρες προς τα πίσω και κρατημένος σταθερός\n  εκεί. Ο κορμός περιστρέφεται υπό έλεγχο προς τη μία πλευρά, μετά προς την άλλη. Το βλέμμα ακολουθεί\n  τα χέρια, η σπονδυλική στήλη παραμένει επιμήκης — χωρίς καμπούρα.\n</p>\n<p>\n  Σημαντικό: η περιστροφή προέρχεται από τον θώρακα, όχι από τα χέρια. Όποιος απλώς μετακινεί τα χέρια\n  από αριστερά προς τα δεξιά ενώ ο κορμός παραμένει ακίνητος, δεν εκπαιδεύει τίποτα.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Καμπούρα στη ράχη.</strong> Περιστροφή υπό φόρτιση με λυγισμένη σπονδυλική στήλη είναι ο πιο δυσμενής συνδυασμός για τους μεσοσπονδύλιους δίσκους. Στέρνο ψηλά, ράχη επιμήκης.</li>\n  <li><strong>Ρυθμός αντί ελέγχου.</strong> Το γρήγορο πηγαινέλα φαίνεται κοπιαστικό, αλλά δουλεύει με φόρα αντί για μυ.</li>\n  <li><strong>Πόδια σταθεροποιημένα από άλλον.</strong> Τότε οι κάμπτορες του ισχίου αναλαμβάνουν μεγάλο μέρος της δουλειάς.</li>\n</ul>\n<h2>Δοσολογία και εναλλακτικές</h2>\n<p>\n  Δύο έως τρία σετ με 10 έως 16 αργές περιστροφές ανά πλευρά. Όποιος έχει προβλήματα στη μέση εξυπηρετείται\n  καλύτερα με ασκήσεις αντι-περιστροφής — όπως το Pallof press ή ένα πλάγιο plank με ανυψωμένο χέρι:\n  ίδιοι μύες, χωρίς περιστροφή υπό φόρτιση.\n</p>"
     },
     "en": {
       "name": "Russian Twist",
@@ -451,7 +476,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Load with a dumbbell, kettlebell or water bottle to scale up.",
         "One rep = one twist to the left AND one to the right."
-      ]
+      ],
+      "article": "<h2>Rotation as the trunk's fourth job</h2>\n<p>\n  The trunk has four jobs: resisting flexion, resisting extension, resisting lateral bending — and\n  controlling rotation. The Russian twist addresses the last one. The obliques work here both to\n  generate rotation and to brake it, and braking is actually the more common demand in sport.\n</p>\n<h2>Execution</h2>\n<p>\n  Sit with knees bent, torso leaned back roughly 45 degrees and held steady there. The torso rotates\n  under control to one side, then the other. The gaze follows the hands, the spine stays long — no\n  rounding.\n</p>\n<p>\n  Important: the rotation comes from the ribcage, not the arms. If you only move your hands from left to\n  right while the torso stays rigid, you're training nothing.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Rounded back.</strong> Rotating under load with a flexed spine is the worst possible combination for the discs. Sternum up, back long.</li>\n  <li><strong>Speed instead of control.</strong> Fast back-and-forth looks demanding but runs on momentum instead of muscle.</li>\n  <li><strong>Having your feet held down.</strong> That lets the hip flexors take over most of the work.</li>\n</ul>\n<h2>Programming and alternatives</h2>\n<p>\n  Two to three sets of 10 to 16 slow rotations per side. If you have back issues, you're better served\n  by anti-rotation exercises instead — such as the Pallof press or a side plank with a raised arm: the\n  same musculature, without rotating under load.\n</p>"
     },
     "es": {
       "name": "Giro ruso",
@@ -465,7 +491,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Agrega carga con una mancuerna, kettlebell o botella de agua para aumentar la dificultad.",
         "Una repetición = un giro a la izquierda Y uno a la derecha."
-      ]
+      ],
+      "article": "<h2>La rotación como cuarta función del tronco</h2>\n<p>\n  El tronco tiene cuatro funciones: impedir la flexión, impedir la extensión, impedir la inclinación\n  lateral — y controlar la rotación. El giro ruso aborda esta última. Los oblicuos trabajan tanto\n  generando el movimiento como frenándolo, y precisamente el frenado es el caso más frecuente en el\n  deporte.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Sentado, rodillas dobladas, torso inclinado hacia atrás unos 45 grados y mantenido estable en esa\n  posición. El torso gira de forma controlada hacia un lado, luego hacia el otro. La mirada sigue a las\n  manos, la columna permanece larga — sin espalda redondeada.\n</p>\n<p>\n  Importante: el giro proviene de la caja torácica, no de los brazos. Quien solo mueve las manos de\n  izquierda a derecha mientras el torso permanece rígido no está entrenando nada.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Espalda redondeada.</strong> Rotar bajo carga con la columna flexionada es la combinación más desfavorable para los discos intervertebrales. Esternón arriba, espalda larga.</li>\n  <li><strong>Velocidad en lugar de control.</strong> El vaivén rápido parece exigente, pero trabaja con impulso en lugar de con músculo.</li>\n  <li><strong>Dejar que sujeten los pies.</strong> Entonces el flexor de la cadera asume gran parte del trabajo.</li>\n</ul>\n<h2>Dosificación y alternativas</h2>\n<p>\n  Dos o tres series de 10 a 16 giros lentos por lado. Quien tenga molestias de espalda está mejor\n  servido con ejercicios anti-rotación — como el pallof press o un side plank con el brazo elevado: la\n  misma musculatura, sin rotación bajo carga.\n</p>"
     },
     "fr": {
       "name": "Rotation russe",
@@ -479,7 +506,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Chargez avec un haltère, une kettlebell ou une bouteille d'eau pour progresser.",
         "Une répétition = une rotation à gauche ET une à droite."
-      ]
+      ],
+      "article": "<h2>La rotation, quatrième fonction du tronc</h2>\n<p>\n  Le tronc a quatre fonctions : empêcher la flexion, empêcher l'extension, empêcher l'inclinaison\n  latérale — et contrôler la rotation. La rotation russe s'attaque à cette dernière. Les obliques y\n  travaillent à la fois en générant et en freinant la rotation, et c'est justement le freinage qui est le\n  cas le plus fréquent en sport.\n</p>\n<h2>Exécution</h2>\n<p>\n  Assis, genoux fléchis, torse incliné vers l'arrière d'environ 45 degrés et maintenu stable dans cette\n  position. Le torse tourne de façon contrôlée d'un côté, puis de l'autre. Le regard suit les mains, la\n  colonne reste longue — pas de dos rond.\n</p>\n<p>\n  Important : la rotation vient de la cage thoracique, pas des bras. Qui se contente de déplacer les\n  mains de gauche à droite pendant que le torse reste figé n'entraîne rien.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Dos rond.</strong> Une rotation sous charge avec la colonne fléchie est la combinaison la plus défavorable pour les disques intervertébraux. Sternum haut, dos long.</li>\n  <li><strong>Vitesse au lieu de contrôle.</strong> Un va-et-vient rapide paraît intense mais fonctionne à l'élan plutôt qu'au muscle.</li>\n  <li><strong>Se faire tenir les pieds.</strong> Les fléchisseurs de la hanche prennent alors en charge une grande partie du travail.</li>\n</ul>\n<h2>Dosage et alternatives</h2>\n<p>\n  Deux à trois séries de 10 à 16 rotations lentes de chaque côté. En cas de douleurs dorsales, les\n  exercices anti-rotation conviennent mieux — comme le Pallof press ou la planche latérale avec bras\n  levé : les mêmes muscles, sans rotation sous charge.\n</p>"
     },
     "it": {
       "name": "Russian twist",
@@ -493,7 +521,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Carica con un manubrio, kettlebell o bottiglia d'acqua per aumentare la difficoltà.",
         "Una ripetizione = una torsione a sinistra E una a destra."
-      ]
+      ],
+      "article": "<h2>La rotazione come quarto compito del core</h2>\n<p>\n  Il tronco ha quattro compiti: impedire la flessione, impedire l'estensione, impedire l'inclinazione\n  laterale — e controllare la rotazione. Il Russian Twist affronta l'ultimo. Gli obliqui lavorano sia in\n  modo generativo sia in modo frenante, ed è proprio la frenata il caso più frequente nello sport.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Da seduto, ginocchia piegate, busto inclinato all'indietro di circa 45 gradi e mantenuto stabile in\n  quella posizione. Il busto ruota in modo controllato verso un lato, poi verso l'altro. Lo sguardo segue\n  le mani, la colonna resta lunga — niente schiena arrotondata.\n</p>\n<p>\n  Importante: la rotazione parte dal torace, non dalle braccia. Chi si limita a spostare le mani da\n  sinistra a destra mentre il busto resta rigido non allena nulla.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Schiena arrotondata.</strong> Ruotare sotto carico con la colonna flessa è la combinazione più sfavorevole per i dischi intervertebrali. Sterno in alto, schiena lunga.</li>\n  <li><strong>Ritmo invece di controllo.</strong> Un va e vieni veloce sembra faticoso, ma lavora con lo slancio invece che con il muscolo.</li>\n  <li><strong>Farsi tenere i piedi.</strong> A quel punto il flessore dell'anca si assume gran parte del lavoro.</li>\n</ul>\n<h2>Dosaggio e alternative</h2>\n<p>\n  Due o tre serie da 10 a 16 rotazioni lente per lato. Chi soffre di disturbi alla schiena è meglio\n  servito da esercizi anti-rotazione — come il Pallof Press o un plank laterale con braccio sollevato:\n  stessa muscolatura, senza rotazione sotto carico.\n</p>"
     },
     "nl": {
       "name": "Russian Twist",
@@ -507,7 +536,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Laad met een halter, kettlebell of waterfles om schaal omhoog te gaan.",
         "Eén herhaling = één draai naar links EN één naar rechts."
-      ]
+      ],
+      "article": "<h2>Rotatie als vierde romptaak</h2>\n<p>\n  De romp heeft vier taken: buiging voorkomen, strekking voorkomen, zijwaarts kantelen voorkomen —\n  en rotatie beheersen. De Russian twist richt zich op de laatste. De schuine buikspieren werken\n  daarbij zowel opwekkend als afremmend, en juist het afremmen is in de sport het vaakst het geval.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Zittend, knieën gebogen, romp ongeveer 45 graden achterovergeleund en daar stabiel gehouden. De\n  romp draait gecontroleerd naar de ene kant, dan naar de andere. De blik volgt de handen, de\n  wervelkolom blijft lang — geen ronde rug.\n</p>\n<p>\n  Belangrijk: de draai komt uit de borstkas, niet uit de armen. Wie alleen de handen van links naar\n  rechts beweegt terwijl de romp star blijft, traint niets.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Ronde rug.</strong> Rotatie onder belasting met een gebogen wervelkolom is de ongunstigste combinatie voor de tussenwervelschijven. Borstbeen omhoog, rug lang.</li>\n  <li><strong>Tempo in plaats van controle.</strong> Snel heen en weer ziet er inspannend uit, maar werkt met zwaai in plaats van met spierkracht.</li>\n  <li><strong>Voeten laten vasthouden.</strong> Dan neemt de heupflexor een groot deel van het werk over.</li>\n</ul>\n<h2>Dosering en alternatieven</h2>\n<p>\n  Twee tot drie sets met 10 tot 16 langzame draaien per kant. Wie rugklachten heeft, is beter af\n  met anti-rotatieoefeningen — zoals de Pallof press of een zijplank met opgeheven arm: dezelfde\n  spieren, zonder rotatie onder belasting.\n</p>"
     },
     "no": {
       "name": "Russian Twist",
@@ -521,7 +551,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Laster med håndvekt, kettlebell eller vannflaske for å skalere opp.",
         "En rep = en vridning til venstre OG en til høyre."
-      ]
+      ],
+      "article": "<h2>Rotasjon som midtpartiets fjerde oppgave</h2>\n<p>\n  Midtpartiet har fire oppgaver: forhindre bøying, forhindre strekking, forhindre sidebøying – og\n  kontrollere rotasjon. Russian twist retter seg mot den siste. De skrå bukmusklene jobber her både ved\n  å skape rotasjon og ved å bremse den, og det er nettopp bremsingen som er det vanligste tilfellet i\n  idrett.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Sittende, med bøyde knær og overkroppen lent omtrent 45 grader bakover og holdt stabilt der. Overkroppen\n  roterer kontrollert til én side, deretter til den andre. Blikket følger hendene, ryggraden holdes lang –\n  ingen rundrygg.\n</p>\n<p>\n  Viktig: rotasjonen kommer fra brystkassen, ikke fra armene. Den som bare beveger hendene fra venstre til\n  høyre mens overkroppen forblir stiv, trener ingenting.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Rundrygg.</strong> Rotasjon under belastning med bøyd ryggrad er den mest ugunstige kombinasjonen for mellomvirvelskivene. Hold brystbenet høyt og ryggen lang.</li>\n  <li><strong>Tempo i stedet for kontroll.</strong> Rask fram-og-tilbake-bevegelse ser krevende ut, men jobber med sving i stedet for muskelkraft.</li>\n  <li><strong>Å la noen holde føttene fast.</strong> Da overtar hoftefleksorene mesteparten av arbeidet.</li>\n</ul>\n<h2>Dosering og alternativer</h2>\n<p>\n  To til tre sett med 10 til 16 langsomme rotasjoner per side. Den som har ryggplager, er bedre tjent med\n  anti-rotasjonsøvelser – for eksempel Pallof press eller sideplanke med løftet arm: samme muskulatur,\n  uten rotasjon under belastning.\n</p>"
     },
     "zh": {
       "name": "俄罗斯转体",
@@ -535,7 +566,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "用哑铃、壶铃或水瓶增加负荷以提升难度。",
         "一次重复=向左转一次且向右转一次。"
-      ]
+      ],
+      "article": "<h2>旋转：躯干的第四项功能</h2>\n<p>\n  躯干共有四项功能：防止屈曲、防止伸展、防止侧向倾斜——以及控制旋转。俄罗斯转体针对的正是\n  最后一项。腹外斜肌和腹内斜肌在这个动作中既产生旋转力，也起到制动作用，而在运动实践中，\n  制动其实是更常见的情形。\n</p>\n<h2>动作要领</h2>\n<p>\n  坐姿，膝盖弯曲，上半身向后倾斜约45度并保持稳定。上半身有控制地转向一侧，然后转向另一侧。\n  目光跟随双手，脊柱始终保持挺直——不要弓背。\n</p>\n<p>\n  重要的是：旋转的动力来自胸廓，而不是手臂。如果只是让双手左右摆动，而上半身保持僵硬不动，\n  那么这个动作就毫无训练效果。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>弓背。</strong>脊柱弯曲状态下的负重旋转，是对椎间盘最不利的组合。应挺起胸骨，保持脊柱伸长。</li>\n  <li><strong>用速度代替控制。</strong>快速左右摆动看起来很费力，实际上靠的是惯性而不是肌肉发力。</li>\n  <li><strong>让人按住双脚。</strong>这样会让髂腰肌承担大部分工作。</li>\n</ul>\n<h2>训练量与替代方案</h2>\n<p>\n  两到三组，每侧10到16次慢速旋转。有背部不适的人，更适合选择抗旋转训练——例如帕洛夫推举\n  或抬臂侧平板支撑：锻炼相同的肌群，但不涉及负重下的旋转。\n</p>"
     }
   },
   "abs.situps": {
@@ -566,7 +598,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αν ο λαιμός παραπονιέται, χρησιμοποίησε crunches ή dead bugs αντί αυτού.",
         "Η παραλλαγή decline (πόδια ανυψωμένα) καθιστά πολύ δυσκολότερη."
-      ]
+      ],
+      "article": "<h2>Τι λέει η έρευνα για τη σπονδυλική στήλη σχετικά με το sit-up</h2>\n<p>\n  Το sit-up είναι η πιο γνωστή κοιλιακή άσκηση — και αυτή που έχει «γεράσει» χειρότερα. Ο βιομηχανικός\n  Stuart McGill μέτρησε επί δεκαετίες ποιες δυνάμεις ασκούν οι ασκήσεις κορμού στην οσφυϊκή μοίρα της\n  σπονδυλικής στήλης. Το κλασικό sit-up παράγει συμπιεστικές δυνάμεις στους μεσοσπονδύλιους δίσκους\n  σαφώς πάνω από 3.000 Newton — μια τιμή που στην ιατρική εργασίας θεωρείται όριο για επαναλαμβανόμενη\n  φόρτιση. Η επαναλαμβανόμενη κάμψη υπό φόρτιση είναι ακριβώς ο μηχανισμός που, σε εργαστηριακές\n  μελέτες, βλάπτει τους μεσοσπονδύλιους δίσκους.\n</p>\n<p>\n  Για τους περισσότερους ανθρώπους το sit-up αποτελεί έτσι κακή συναλλαγή: υψηλός κίνδυνος για τους\n  μεσοσπονδύλιους δίσκους, λίγο όφελος για αυτό που πραγματικά χρειάζεται να επιτελεί ο κορμός — δηλαδή\n  να σταθεροποιεί, όχι να κάμπτεται.\n</p>\n<h2>Πότε έχει παρ' όλα αυτά νόημα</h2>\n<p>\n  Η κάμψη δεν απαγορεύεται. Μια υγιής ράχη επιτρέπεται να κάμπτεται, και όποιος προπονείται για ένα\n  τεστ φυσικής κατάστασης όπου ζητούνται sit-ups πρέπει να τα εξασκεί. Επίσης ως μικρό τμήμα ενός\n  συνολικού προγράμματος, χαμηλός αριθμός επαναλήψεων δεν προβληματίζει. Αυτό που δεν έχει νόημα: εκατό\n  sit-ups την ημέρα ως κύρια προπόνηση κορμού.\n</p>\n<h2>Εκτέλεση, αν τα κάνεις</h2>\n<p>\n  Γόνατα λυγισμένα, πόδια ακίνητα στο έδαφος, χέρια μπροστά στο στήθος αντί στον αυχένα — το τράβηγμα\n  από το κεφάλι μεταφέρει το φορτίο στην αυχενική μοίρα της σπονδυλικής στήλης. Ελεγχόμενη ανύψωση,\n  σπόνδυλο-σπόνδυλο, και εξίσου ελεγχόμενη επιστροφή. Καμία φόρα από τα χέρια, καμία απότομη κίνηση από\n  το ισχίο.\n</p>\n<h2>Οι καλύτερες εναλλακτικές</h2>\n<p>\n  Για σταθερότητα: plank, dead bug και πλάγιο plank. Για στοχευμένη εργασία κάμψης με λιγότερη\n  επιβάρυνση: hollow hold, ανύψωση ποδιών και crunches με μικρό εύρος κίνησης. Όποιος έχει δέκα λεπτά\n  την ημέρα, προχωρά περισσότερο με αυτά παρά με sit-ups.\n</p>"
     },
     "en": {
       "name": "Sit-ups",
@@ -580,7 +613,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "If your neck complains, use crunches or dead bugs instead.",
         "The decline variant (feet elevated) makes it noticeably harder."
-      ]
+      ],
+      "article": "<h2>What spine research says about the sit-up</h2>\n<p>\n  The sit-up is the most famous ab exercise there is — and the one that has aged worst. Biomechanist\n  Stuart McGill spent decades measuring the forces core exercises place on the lumbar spine. The classic\n  sit-up produces compressive forces on the discs well above 3,000 newtons — a figure that occupational\n  medicine treats as the threshold for repeated loading. Repeated flexion under load is exactly the\n  mechanism that damages discs in lab studies.\n</p>\n<p>\n  For most people, the sit-up is therefore a bad trade: high risk to the discs for little benefit toward\n  what the trunk actually needs to do — stabilize, not flex.\n</p>\n<h2>When it still makes sense</h2>\n<p>\n  Flexion isn't forbidden. A healthy back is allowed to flex, and if you're training for a fitness test\n  that includes sit-ups, you need to practice them. As a small part of an overall program, low rep\n  counts are also unproblematic. What doesn't make sense: a hundred sit-ups a day as your main core\n  training.\n</p>\n<h2>Execution, if you do them</h2>\n<p>\n  Knees bent, feet flat on the floor, hands in front of the chest rather than behind the head — pulling\n  on the head shifts the load into the cervical spine. Curl up under control, vertebra by vertebra, and\n  lower back down with the same control. No momentum from the arms, no jerky movement from the hips.\n</p>\n<h2>The better alternatives</h2>\n<p>\n  For stability: the plank, dead bug and side plank. For targeted flexion work with less load: the\n  hollow hold, leg raises and small-range crunches. If you have ten minutes a day, you'll get further\n  with these than with sit-ups.\n</p>"
     },
     "es": {
       "name": "Abdominales tradicionales",
@@ -594,7 +628,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Si el cuello se queja, usa abdominales o ejercicios muertos en su lugar.",
         "La variante declinada (pies elevados) la hace notablemente más difícil."
-      ]
+      ],
+      "article": "<h2>Lo que dice la investigación sobre la columna acerca del sit-up</h2>\n<p>\n  El sit-up es el ejercicio abdominal más conocido de todos — y el que peor ha envejecido. El biomecánico\n  Stuart McGill pasó décadas midiendo qué fuerzas ejercen los ejercicios de tronco sobre la columna\n  lumbar. El sit-up clásico genera fuerzas de compresión sobre los discos intervertebrales claramente\n  por encima de los 3.000 newtons — un valor que en medicina laboral se considera el límite para carga\n  repetida. La flexión repetida bajo carga es exactamente el mecanismo que, en estudios de laboratorio,\n  daña los discos intervertebrales.\n</p>\n<p>\n  Para la mayoría de las personas, el sit-up es por tanto un mal intercambio: alto riesgo para los\n  discos intervertebrales, poco beneficio para lo que el tronco realmente debe hacer — es decir,\n  estabilizar, no flexionarse.\n</p>\n<h2>Cuándo tiene sentido de todos modos</h2>\n<p>\n  Flexionarse no está prohibido. Una espalda sana puede flexionarse, y quien entrena para un test físico\n  en el que se piden sit-ups debe practicarlos. También como pequeña parte de un programa global, unas\n  pocas repeticiones no son problemáticas. Lo que no tiene sentido es hacer cien sit-ups al día como\n  entrenamiento principal de tronco.\n</p>\n<h2>Ejecución, si los haces</h2>\n<p>\n  Rodillas dobladas, pies planos en el suelo, manos delante del pecho en lugar de en la nuca — tirar de\n  la cabeza traslada la carga a la columna cervical. Sube de forma controlada, vértebra a vértebra, y\n  baja con el mismo control. Sin impulso de los brazos, sin movimiento brusco de la cadera.\n</p>\n<h2>Las mejores alternativas</h2>\n<p>\n  Para estabilidad: plank, dead bug y side plank. Para trabajo de flexión específico con menos carga:\n  hollow hold, elevaciones de piernas y crunches de recorrido corto. Quien tenga diez minutos al día\n  avanza más con estos que con sit-ups.\n</p>"
     },
     "fr": {
       "name": "Redressements assis",
@@ -608,7 +643,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Si votre cou vous gêne, utilisez plutôt des crunches ou du dead bug.",
         "La variante déclinée (pieds surélevés) est notablement plus difficile."
-      ]
+      ],
+      "article": "<h2>Ce que dit la recherche sur la colonne vertébrale à propos du sit-up</h2>\n<p>\n  Le sit-up est l'exercice abdominal le plus connu de tous — et celui qui a le plus mal vieilli. Le\n  biomécanicien Stuart McGill a mesuré pendant des décennies les forces que les exercices de tronc\n  exercent sur la colonne lombaire. Le sit-up classique génère des forces de compression sur les disques\n  intervertébraux nettement supérieures à 3 000 newtons — une valeur considérée en médecine du travail\n  comme le seuil limite pour une charge répétée. La flexion répétée sous charge est exactement le\n  mécanisme qui, dans les études en laboratoire, endommage les disques intervertébraux.\n</p>\n<p>\n  Pour la plupart des gens, le sit-up est donc un mauvais compromis : risque élevé pour les disques\n  intervertébraux, faible bénéfice pour ce que le tronc doit réellement accomplir — c'est-à-dire\n  stabiliser, pas fléchir.\n</p>\n<h2>Quand il garde malgré tout un intérêt</h2>\n<p>\n  Fléchir n'est pas interdit. Un dos en bonne santé a le droit de se fléchir, et qui s'entraîne pour un\n  test de forme physique qui inclut des sit-ups doit les pratiquer. En petite quantité, dans le cadre\n  d'un programme global, un faible nombre de répétitions ne pose pas problème. Ce qui n'a pas de sens :\n  cent sit-ups par jour comme entraînement principal du tronc.\n</p>\n<h2>Exécution, si vous en faites</h2>\n<p>\n  Genoux fléchis, pieds à plat sur le sol, mains devant la poitrine plutôt que derrière la nuque — tirer\n  sur la tête reporte la charge sur les cervicales. Enroulez-vous de façon contrôlée, vertèbre par\n  vertèbre, et redescendez avec le même contrôle. Pas d'élan avec les bras, pas de mouvement brusque de\n  la hanche.\n</p>\n<h2>Les meilleures alternatives</h2>\n<p>\n  Pour la stabilité : plank, dead bug et planche latérale. Pour un travail de flexion ciblé avec moins de\n  charge : hollow hold, relevé de jambes et crunches à faible amplitude. Qui dispose de dix minutes par\n  jour progresse davantage avec ceux-ci qu'avec les sit-ups.\n</p>"
     },
     "it": {
       "name": "Addominali crunch completo",
@@ -622,7 +658,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Se il collo protesta, usa i crunch o il dead bug al suo posto.",
         "La variante declinata (piedi elevati) la rende notevolmente più difficile."
-      ]
+      ],
+      "article": "<h2>Cosa dice la ricerca sulla colonna vertebrale riguardo al sit-up</h2>\n<p>\n  Il sit-up è l'esercizio addominale più conosciuto in assoluto — e quello che ha retto peggio alla prova\n  del tempo. Il biomeccanico Stuart McGill ha misurato per decenni quali forze gli esercizi per il core\n  esercitano sulla colonna lombare. Il sit-up classico genera forze di compressione sui dischi\n  intervertebrali ben oltre i 3.000 Newton — un valore che nella medicina del lavoro è considerato il\n  limite per un carico ripetuto. La flessione ripetuta sotto carico è esattamente il meccanismo che, negli\n  studi di laboratorio, danneggia i dischi intervertebrali.\n</p>\n<p>\n  Per la maggior parte delle persone il sit-up è quindi uno scambio svantaggioso: rischio elevato per i\n  dischi intervertebrali, poco beneficio per ciò che il tronco deve realmente fare — cioè stabilizzare,\n  non flettersi.\n</p>\n<h2>Quando ha comunque senso</h2>\n<p>\n  Flettersi non è vietato. Una schiena sana può flettersi, e chi si allena per un test di fitness che\n  prevede i sit-up deve esercitarli. Anche come piccola parte di un programma complessivo, un numero\n  ridotto di ripetizioni non crea problemi. Ciò che non ha senso è fare cento sit-up al giorno come\n  allenamento principale del core.\n</p>\n<h2>Esecuzione, se li fai</h2>\n<p>\n  Ginocchia piegate, piedi appoggiati a terra, mani davanti al petto invece che dietro la nuca — tirare\n  la testa sposta il carico sulla colonna cervicale. Arrotolati verso l'alto in modo controllato,\n  vertebra per vertebra, e torna giù con lo stesso controllo. Niente slancio dalle braccia, nessun\n  movimento a scatti dai fianchi.\n</p>\n<h2>Le alternative migliori</h2>\n<p>\n  Per la stabilità: plank, dead bug e plank laterale. Per un lavoro di flessione mirato con meno carico:\n  Hollow Hold, alzate gambe e crunch con ampiezza di movimento ridotta. Chi ha dieci minuti al giorno\n  ottiene di più con questi esercizi che con i sit-up.\n</p>"
     },
     "nl": {
       "name": "Sit-ups",
@@ -636,7 +673,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Als je nek klaagt, gebruik crunches of dead bugs in plaats daarvan.",
         "De decline variant (voeten verhoogd) maakt het merkbaar harder."
-      ]
+      ],
+      "article": "<h2>Wat de wervelkolomwetenschap over de sit-up zegt</h2>\n<p>\n  De sit-up is de bekendste buikoefening die er is — en degene die het slechtst ouder is geworden. Biomechanicus Stuart\n  McGill heeft tientallen jaren gemeten welke krachten rompoefeningen op de lendenwervelkolom\n  uitoefenen. De klassieke sit-up genereert compressiekrachten op de tussenwervelschijven van ruim\n  boven de 3.000 Newton — een waarde die in de arbeidsgeneeskunde geldt als grenswaarde voor\n  herhaalde belasting. De herhaalde buiging onder belasting is precies het mechanisme dat in\n  laboratoriumstudies tussenwervelschijven beschadigt.\n</p>\n<p>\n  Voor de meeste mensen is de sit-up daarmee een slechte ruil: hoog risico voor de\n  tussenwervelschijven, weinig nut voor wat de romp eigenlijk moet doen — namelijk stabiliseren,\n  niet buigen.\n</p>\n<h2>Wanneer hij toch zinvol is</h2>\n<p>\n  Buigen is niet verboden. Een gezonde rug mag buigen, en wie traint voor een fitnesstest waarin\n  sit-ups worden getest, moet ze oefenen. Ook als klein onderdeel van een breder programma zijn\n  lage herhalingsaantallen onproblematisch. Wat niet zinvol is: honderd sit-ups per dag als\n  hoofdmoot van je romptraining.\n</p>\n<h2>Uitvoering, als je ze doet</h2>\n<p>\n  Knieën gebogen, voeten plat op de vloer, handen voor de borst in plaats van in de nek — trekken\n  aan het hoofd verplaatst de belasting naar de halswervelkolom. Gecontroleerd oprollen, wervel voor\n  wervel, en even gecontroleerd terug. Geen zwaai uit de armen, geen schokkerige beweging vanuit de\n  heup.\n</p>\n<h2>De betere alternatieven</h2>\n<p>\n  Voor stabiliteit: plank, dead bug en zijplank. Voor gerichte buigarbeid met minder belasting:\n  hollow hold, beenraises en crunches met een klein bewegingsbereik. Wie tien minuten per dag heeft,\n  komt hiermee verder dan met sit-ups.\n</p>"
     },
     "no": {
       "name": "Sit-ups",
@@ -650,7 +688,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Hvis halsen klager, bruk crunches eller dead bugs i stedet.",
         "Decline variant (føtter høyt) gjør det merkbart vanskeligere."
-      ]
+      ],
+      "article": "<h2>Hva ryggradsforskningen sier om sit-upen</h2>\n<p>\n  Sit-upen er den mest kjente magemuskeløvelsen som finnes – og den som har eldes dårligst. Biomekanikeren\n  Stuart McGill har i flere tiår målt hvilke krefter kjerneøvelser påfører korsryggen. Den klassiske\n  sit-upen skaper kompresjonskrefter på mellomvirvelskivene på godt over 3000 newton – en verdi som i\n  arbeidsmedisin regnes som grenseverdien for gjentatt belastning. Gjentatt bøying under belastning er\n  nettopp den mekanismen som i laboratoriestudier skader mellomvirvelskiver.\n</p>\n<p>\n  For de fleste er sit-upen dermed en dårlig byttehandel: høy risiko for mellomvirvelskivene, liten\n  gevinst for det midtpartiet faktisk må klare – nemlig å stabilisere, ikke å bøye seg.\n</p>\n<h2>Når den likevel gir mening</h2>\n<p>\n  Å bøye seg er ikke forbudt. En frisk rygg kan bøyes, og den som trener til en fysisk test der sit-ups\n  inngår, må øve på dem. Også som en liten del av et helhetlig program er lave repetisjonstall\n  uproblematisk. Det som ikke gir mening, er hundre sit-ups om dagen som hovedtrening for midtpartiet.\n</p>\n<h2>Utførelse, hvis du gjør dem</h2>\n<p>\n  Bøyde knær, flate føtter på gulvet, hendene foran brystet i stedet for bak nakken – å dra i hodet\n  flytter belastningen til nakkevirvlene. Rull opp kontrollert, virvel for virvel, og like kontrollert\n  tilbake igjen. Ingen sving fra armene, ingen rykkvis bevegelse fra hoften.\n</p>\n<h2>De bedre alternativene</h2>\n<p>\n  For stabilitet: plank, dead bug og sideplanke. For målrettet bøyearbeid med mindre belastning: hollow\n  hold, leg raises og crunches med lite bevegelsesutslag. Den som har ti minutter om dagen, kommer lenger\n  med disse enn med sit-ups.\n</p>"
     },
     "zh": {
       "name": "仰卧起坐",
@@ -664,7 +703,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "如果颈部感到不适，改做卷腹或死虫式。",
         "下斜式变体（脚部抬高）难度会明显增加。"
-      ]
+      ],
+      "article": "<h2>脊柱研究对仰卧起坐怎么说</h2>\n<p>\n  仰卧起坐是最广为人知的腹肌训练动作——也是经不起时间考验的一个。生物力学专家Stuart McGill\n  数十年来一直在测量各种核心训练动作对腰椎施加的力。经典的仰卧起坐会给椎间盘带来远超3000牛顿\n  的压缩力——这一数值在职业医学中被视为重复负荷的临界值。负重下的反复屈曲，正是实验室研究中\n  导致椎间盘损伤的机制。\n</p>\n<p>\n  对大多数人来说，仰卧起坐因此是一笔不划算的交易：椎间盘承受高风险，而收益却很小——因为躯干\n  真正需要完成的任务是稳定，而不是屈曲。\n</p>\n<h2>什么情况下它仍然有意义</h2>\n<p>\n  屈曲动作本身并非禁忌。健康的背部完全可以做屈曲运动，如果要为包含仰卧起坐项目的体能测试做\n  准备，就必须练习它。作为整体训练计划中的一小部分，低次数的仰卧起坐也没有问题。真正不合理\n  的是：把每天上百个仰卧起坐当作核心训练的主要内容。\n</p>\n<h2>如果你要做，动作要领是</h2>\n<p>\n  膝盖弯曲，双脚平放在地面，双手放在胸前而不是脑后——拉扯头部会把负荷转移到颈椎上。有控制地\n  一节一节卷起脊柱，再以同样的控制方式放回。不要借助手臂的摆动，也不要用髋部做出突然的猛烈\n  动作。\n</p>\n<h2>更好的替代方案</h2>\n<p>\n  追求稳定性：平板支撑、死虫式和侧平板支撑。想要负担更小的定向屈曲训练：空心支撑、抬腿以及\n  小幅度的卷腹。如果每天只有十分钟时间，用这些动作训练的效果会比仰卧起坐更好。\n</p>"
     }
   },
   "cardio.burpees": {
@@ -695,7 +735,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Επιλογή ρυθμού ανάλογα με την εμπειρία εκπαίδευσης — η μορφή νικά την ταχύτητα.",
         "Κλιμάκωση: παράλειψη του push-up· αντικατάσταση του άλματος με όρθιο — και τα δύο καθιστούν προσιτό."
-      ]
+      ],
+      "article": "<h2>Γιατί τα burpees είναι τόσο σκληρά</h2>\n<p>\n  Το burpee συνδυάζει τέσσερις κινήσεις — squat, push-up, επιστροφή σε squat, εκρηκτικό άλμα — και\n  μεταφέρει το σώμα δύο φορές ανά επανάληψη από το έδαφος στην κάθετη θέση. Ακριβώς αυτή η αλλαγή\n  ύψους ανεβάζει τον καρδιακό ρυθμό πιο γρήγορα από σχεδόν κάθε άλλη άσκηση: το κυκλοφορικό σύστημα\n  πρέπει να ανακατανέμει διαρκώς το αίμα.\n</p>\n<p>\n  Έτσι αποτελεί εξαιρετικό καρδιαγγειακό ερέθισμα και μέτρια προπόνηση δύναμης. Όποιος θέλει να χτίσει\n  δύναμη εξυπηρετείται καλύτερα με ξεχωριστές ασκήσεις· όποιος θέλει να λαχανιάσει σε δέκα λεπτά, εδώ.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Από όρθια θέση σε squat, χέρια στο έδαφος, άλμα των ποδιών προς τα πίσω σε ψηλό plank. Ένα push-up με\n  επαφή του στήθους στο έδαφος, μετά τα πόδια επιστρέφουν κοντά στα χέρια και εκτείνεσαι εκρηκτικά προς\n  τα πάνω. Ο κορμός παραμένει σταθερός στη φάση του plank — ακριβώς εκεί οι περισσότεροι χάνουν τη\n  φόρμα υπό κόπωση.\n</p>\n<h2>Προσαρμογές</h2>\n<ul>\n  <li><strong>Χωρίς άλμα.</strong> Απλή έκταση προς τα πάνω αντί για άλμα — σαφώς πιο φιλικό στις αρθρώσεις με το ίδιο καρδιαγγειακό ερέθισμα.</li>\n  <li><strong>Χωρίς push-up.</strong> Για αρχάριους· η επιβάρυνση παραμένει αρκετά υψηλή.</li>\n  <li><strong>Βήμα αντί άλματος.</strong> Τοποθέτηση των ποδιών ένα-ένα προς τα πίσω προστατεύει την κάτω μέση.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Σε διαστήματα αντί σε μεγάλα σετ: 20 έως 40 δευτερόλεπτα δουλειάς, ίσης διάρκειας διάλειμμα, έξι έως\n  δέκα γύροι. Μόλις η φάση του push-up γίνει ακαθόριστη — ισχία που κρεμούν, μισό εύρος κίνησης — το\n  σετ τελειώνει.\n</p>"
     },
     "en": {
       "name": "Burpees",
@@ -709,7 +750,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Choose tempo by training age — form beats speed.",
         "Scaling: skip the push-up; replace the jump with standing up — both make it accessible."
-      ]
+      ],
+      "article": "<h2>Why burpees are so tough</h2>\n<p>\n  The burpee combines four movements — squat, push-up, return to squat, jump — and moves the body from\n  the floor to fully vertical twice per rep. It's exactly this change in elevation that drives the heart\n  rate up faster than almost any other exercise: the cardiovascular system has to constantly\n  redistribute blood.\n</p>\n<p>\n  That makes it an excellent conditioning stimulus and a mediocre strength exercise. If you want to\n  build strength, separate exercises serve you better; if you want to be out of breath in ten minutes,\n  this is it.\n</p>\n<h2>Execution</h2>\n<p>\n  From standing into a squat, hands on the floor, feet jumping back into a high plank. One push-up with\n  the chest touching the floor, then the feet jump back to the hands and extend explosively upward. The\n  trunk stays firm through the plank phase — exactly where most people lose form under fatigue.\n</p>\n<h2>Adjustments</h2>\n<ul>\n  <li><strong>No jump.</strong> Just stand up tall instead of jumping — noticeably easier on the joints for the same cardio stimulus.</li>\n  <li><strong>No push-up.</strong> For beginners; the load stays high enough.</li>\n  <li><strong>Step instead of jump.</strong> Stepping the feet back one at a time is easier on the lower back.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  In intervals rather than long sets: 20 to 40 seconds of work, an equal rest, six to ten rounds. As soon\n  as the push-up phase gets sloppy — sagging hips, half range of motion — end the set.\n</p>"
     },
     "es": {
       "name": "Burpees",
@@ -723,7 +765,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Elige el tempo según tu nivel de entrenamiento — la forma vence la velocidad.",
         "Escaladas: omite la flexión; reemplaza el salto por ponerse de pie — ambas la hacen más accesible."
-      ]
+      ],
+      "article": "<h2>Por qué los burpees son tan exigentes</h2>\n<p>\n  El burpee combina cuatro movimientos — sentadilla, flexión, vuelta a la sentadilla, salto — y con ello\n  lleva el cuerpo del suelo a la vertical dos veces por repetición. Precisamente ese cambio de altura\n  eleva la frecuencia cardíaca más rápido que casi cualquier otro ejercicio: el sistema circulatorio\n  debe redistribuir la sangre de forma constante.\n</p>\n<p>\n  Con eso es un excelente estímulo de acondicionamiento y un entrenamiento de fuerza mediocre. Quien\n  quiera ganar fuerza está mejor servido con ejercicios separados; quien quiera quedarse sin aliento en\n  diez minutos, aquí lo consigue.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Desde de pie a la sentadilla, manos en el suelo, saltar los pies hacia atrás hasta el apoyo alto. Una\n  flexión con contacto del pecho en el suelo, luego llevar los pies de vuelta a las manos y estirarse\n  explosivamente hacia arriba. El tronco permanece firme durante la fase de apoyo — justo ahí es donde\n  la mayoría pierde la forma con la fatiga.\n</p>\n<h2>Adaptaciones</h2>\n<ul>\n  <li><strong>Sin salto.</strong> Estirarse hacia arriba en lugar de saltar — mucho más suave para las articulaciones con el mismo estímulo circulatorio.</li>\n  <li><strong>Sin flexión.</strong> Para principiantes; la carga sigue siendo suficientemente alta.</li>\n  <li><strong>Paso en lugar de salto.</strong> Llevar los pies hacia atrás uno a uno protege la zona lumbar.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  En intervalos en lugar de series largas: 20 a 40 segundos de trabajo, pausa de igual duración, de seis\n  a diez rondas. En cuanto la fase de flexión se vuelve imprecisa — cadera hundida, recorrido a medias —\n  termina la serie.\n</p>"
     },
     "fr": {
       "name": "Burpees",
@@ -737,7 +780,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Choisissez le tempo selon votre expérience — la forme prime sur la vitesse.",
         "Scaling : omettez la pompe ; remplacez le saut par un relevé — les deux le rendent plus accessible."
-      ]
+      ],
+      "article": "<h2>Pourquoi les burpees sont si difficiles</h2>\n<p>\n  Le burpee combine quatre mouvements — squat, pompe, retour au squat, saut vertical — et fait passer le\n  corps du sol à la verticale deux fois par répétition. C'est précisément ce changement d'altitude qui\n  fait grimper la fréquence cardiaque plus vite que presque n'importe quel autre exercice : le système\n  cardiovasculaire doit redistribuer le sang en permanence.\n</p>\n<p>\n  Il constitue donc un excellent stimulus cardio et un entraînement de force moyen. Qui veut développer\n  sa force est mieux servi par des exercices séparés ; qui veut être essoufflé en dix minutes trouve son\n  bonheur ici.\n</p>\n<h2>Exécution</h2>\n<p>\n  Depuis la position debout, passez en squat, mains au sol, puis sautez les pieds vers l'arrière en\n  position de planche haute. Une pompe avec contact de la poitrine au sol, puis ramenez les pieds vers\n  les mains et tendez-vous explosivement vers le haut. Le tronc reste ferme pendant la phase de gainage —\n  c'est précisément là que la plupart perdent la forme sous la fatigue.\n</p>\n<h2>Adaptations</h2>\n<ul>\n  <li><strong>Sans saut.</strong> Se contenter de se redresser au lieu de sauter — nettement plus doux pour les articulations, pour un stimulus cardio équivalent.</li>\n  <li><strong>Sans pompe.</strong> Pour les débutants ; la charge reste suffisamment élevée.</li>\n  <li><strong>Pas au lieu de saut.</strong> Reculer les pieds un par un ménage le bas du dos.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  En intervalles plutôt qu'en longues séries : 20 à 40 secondes d'effort, pause de même durée, six à dix\n  tours. Dès que la phase de pompe devient imprécise — hanches qui s'affaissent, amplitude réduite de\n  moitié — la série s'arrête.\n</p>"
     },
     "it": {
       "name": "Burpees",
@@ -751,7 +795,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Scegli il ritmo in base alla tua esperienza — forma prima di velocità.",
         "Varianti più semplici: salta il piegamento, sostituisci il salto con alzarsi in piedi."
-      ]
+      ],
+      "article": "<h2>Perché i burpees sono così duri</h2>\n<p>\n  Il burpee combina quattro movimenti — squat, piegamento, ritorno allo squat, salto in estensione — e\n  porta il corpo due volte per ripetizione dal pavimento alla verticale. È proprio questo cambio di\n  altezza a far salire la frequenza cardiaca più rapidamente di quasi ogni altro esercizio: il sistema\n  cardiocircolatorio deve ridistribuire il sangue in continuazione.\n</p>\n<p>\n  È quindi un eccellente stimolo cardiovascolare e un allenamento della forza mediocre. Chi vuole\n  costruire forza è meglio servito da esercizi separati; chi vuole restare senza fiato in dieci minuti,\n  qui.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Dalla posizione eretta allo squat, mani a terra, piedi che saltano indietro nel plank alto. Un\n  piegamento con il petto che tocca il pavimento, poi i piedi tornano verso le mani ed esplosione verso\n  l'alto. Il tronco resta saldo nella fase di plank — è proprio lì che la maggior parte perde la forma\n  con la fatica.\n</p>\n<h2>Adattamenti</h2>\n<ul>\n  <li><strong>Senza salto.</strong> Solo estendersi verso l'alto invece di saltare — molto più delicato per le articolazioni, con lo stesso stimolo cardiovascolare.</li>\n  <li><strong>Senza piegamento.</strong> Per i principianti; il carico resta comunque sufficientemente alto.</li>\n  <li><strong>Passo invece di salto.</strong> Portare i piedi indietro uno alla volta protegge la parte bassa della schiena.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  A intervalli invece che in serie lunghe: 20-40 secondi di lavoro, pausa di pari durata, da sei a dieci\n  round. Non appena la fase di piegamento diventa scorretta — fianchi ceduti, ampiezza dimezzata — la\n  serie termina.\n</p>"
     },
     "nl": {
       "name": "Burpees",
@@ -765,7 +810,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kies tempo op basis van trainingsleeftijd — vorm slaat snelheid.",
         "Schaal: sla de opdruk over; vervang de sprong door rechtop staan — beide maken het toegankelijker."
-      ]
+      ],
+      "article": "<h2>Waarom burpees zo zwaar zijn</h2>\n<p>\n  De burpee combineert vier bewegingen — squat, opdruk, terugkeer naar de squat, strecksprong — en\n  brengt het lichaam daarbij twee keer per herhaling van de vloer naar rechtop. Precies deze\n  hoogtewisseling jaagt de hartslag sneller omhoog dan bijna elke andere oefening: de bloedsomloop\n  moet het bloed voortdurend herverdelen.\n</p>\n<p>\n  Daarmee is het een uitstekende conditieprikkel en een middelmatige krachttraining. Wie kracht wil\n  opbouwen, is beter af met losse oefeningen; wie in tien minuten buiten adem wil zijn, hier.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Vanuit stand naar de squat, handen op de vloer, voeten naar achteren springen in de hoge plank.\n  Eén opdruk met borstcontact met de vloer, dan de voeten terug naar de handen en explosief omhoog\n  strekken. De romp blijft vast tijdens de plankfase — precies daar verliezen de meesten onder\n  vermoeidheid hun vorm.\n</p>\n<h2>Aanpassingen</h2>\n<ul>\n  <li><strong>Zonder sprong.</strong> Alleen omhoog strekken in plaats van afzetten — aanzienlijk gewrichtsvriendelijker bij dezelfde cardioprikkel.</li>\n  <li><strong>Zonder opdruk.</strong> Voor beginners; de belasting blijft hoog genoeg.</li>\n  <li><strong>Stap in plaats van sprong.</strong> De voeten één voor één naar achteren zetten ontziet de onderrug.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  In intervallen in plaats van lange sets: 20 tot 40 seconden werk, even lange pauze, zes tot tien\n  rondes. Zodra de opdrukfase onzuiver wordt — doorzakkende heup, halve bewegingsuitslag — eindigt\n  de set.\n</p>"
     },
     "no": {
       "name": "Burpees",
@@ -779,7 +825,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Velg tempo etter treningserfarelse – form slår hastighet.",
         "Skalering: hopp over push-up; erstatt hopp med å stå opp – begge gjør det tilgjengelig."
-      ]
+      ],
+      "article": "<h2>Hvorfor burpees er så tøffe</h2>\n<p>\n  Burpeen kombinerer fire bevegelser – knebøy, push-up, tilbake til knebøy, strekksprang – og bringer\n  dermed kroppen fra gulvet til loddrett to ganger per repetisjon. Nettopp dette høydeskiftet driver\n  pulsen raskere opp enn nesten alle andre øvelser: kretsløpet må hele tiden omfordele blodet.\n</p>\n<p>\n  Dermed er den et utmerket kondisjonsstimulus og en middelmådig styrkeøvelse. Den som vil bygge styrke,\n  er bedre tjent med separate øvelser; den som vil bli andpusten på ti minutter, finner det her.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Fra stående ned i knebøy, hendene i gulvet, føttene hoppes bakover til høy planke. En push-up med\n  brystkontakt mot gulvet, deretter føttene tilbake til hendene og eksplosiv strekk oppover. Midtpartiet\n  holdes fast gjennom plankefasen – det er nettopp der de fleste mister formen under tretthet.\n</p>\n<h2>Tilpasninger</h2>\n<ul>\n  <li><strong>Uten hopp.</strong> Bare strekk deg oppover i stedet for å hoppe – betydelig skånsommere for leddene med samme kretsløpsstimulus.</li>\n  <li><strong>Uten push-up.</strong> For nybegynnere; belastningen forblir høy nok.</li>\n  <li><strong>Steg i stedet for hopp.</strong> Å sette føttene bakover én om gangen skåner korsryggen.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  I intervaller i stedet for lange sett: 20 til 40 sekunder arbeid, like lang pause, seks til ti runder.\n  Så snart push-up-fasen blir uren – hengende hofte, halvt bevegelsesutslag – avsluttes settet.\n</p>"
     },
     "zh": {
       "name": "波比跳",
@@ -793,7 +840,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "根据训练年龄选择速度——形式优于速度。",
         "缩放：跳过俯卧撑；用站立代替跳跃——两者都可以让它更容易接受。"
-      ]
+      ],
+      "article": "<h2>波比跳为什么这么累人</h2>\n<p>\n  波比跳把四个动作组合在一起——深蹲、俯卧撑、回到深蹲、垂直跳跃——每次重复都要让身体在地面和\n  直立之间往返两次。正是这种高度的反复变化，让心率上升的速度快过几乎所有其他动作：循环系统\n  必须不断重新分配血液。\n</p>\n<p>\n  因此它是极佳的体能训练动作，但作为力量训练只能算中等水平。想增长力量的人，用分开的动作训练\n  效果更好；而想在十分钟内气喘吁吁，波比跳正合适。\n</p>\n<h2>动作要领</h2>\n<p>\n  从站立蹲下，双手撑地，双脚向后跳入高平板支撑。做一个胸部触地的俯卧撑，然后双脚跳回双手位置，\n  爆发式向上伸展起立。在支撑阶段核心必须保持稳固——这正是大多数人在疲劳时最容易失去动作标准\n  的环节。\n</p>\n<h2>调整方式</h2>\n<ul>\n  <li><strong>不跳跃。</strong>只是向上站直而不是跳起——对关节明显更友好，同时保持相近的心肺刺激。</li>\n  <li><strong>不做俯卧撑。</strong>适合初学者；强度依然足够高。</li>\n  <li><strong>用迈步代替跳跃。</strong>双脚依次向后迈步，能减轻下背部的负担。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  以间歇形式训练，而不是长时间连续做组：工作20到40秒，休息时间相同，共六到十轮。一旦俯卧撑\n  阶段动作变形——比如髋部下塌、幅度减半——就应该结束这一组。\n</p>"
     }
   },
   "cardio.cycling": {
@@ -824,7 +872,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Μέτρηση προσπάθειας με watts ή καρδιακό ρυθμό — αγνό «αίσθημα» είναι παραπλανητικό.",
         "Clips πεντάλ αυξάνουν την αποδοτικότητα αλλά χρειάζονται λίγα δρομολόγια για συνήθεια."
-      ]
+      ],
+      "article": "<h2>Φιλικό προς τις αρθρώσεις και ακριβώς δοσολογήσιμο</h2>\n<p>\n  Η ποδηλασία έχει δύο πλεονεκτήματα σε σχέση με το τρέξιμο. Πρώτον, λείπει η κρουστική επιβάρυνση —\n  το βάρος του σώματος στηρίζεται στη σέλα, όχι στο γόνατο και στον αστράγαλο. Δεύτερον, η ένταση\n  ρυθμίζεται πολύ ακριβώς, ειδικά στο ποδήλατο εσωτερικού χώρου. Και τα δύο κάνουν το ποδήλατο την\n  πρώτη επιλογή για μεγάλες προπονήσεις σε ήπια ένταση.\n</p>\n<p>\n  Ακριβώς εκεί βρίσκεται το κύριο όφελός της: Ζώνη 2, στο 60 έως 70 τοις εκατό του μέγιστου καρδιακού\n  ρυθμού, όπου τα μιτοχόνδρια και ο μεταβολισμός λίπους ωφελούνται περισσότερο. Τέτοιες προπονήσεις\n  διατηρούνται πολύ πιο εύκολα στο ποδήλατο απ' ό,τι στο τρέξιμο.\n</p>\n<h2>Θέση κάθισης</h2>\n<p>\n  Η πιο συχνή αιτία πόνου στο γόνατο κατά την ποδηλασία είναι πολύ χαμηλό ύψος σέλας. Ως σημείο\n  αναφοράς: στο κατώτατο σημείο της περιστροφής το γόνατο πρέπει να παραμένει ελαφρώς λυγισμένο,\n  περίπου 25 έως 30 μοίρες. Μια πολύ ψηλή σέλα, αντίθετα, κάνει τη λεκάνη να γέρνει σε κάθε περιστροφή.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πολύ βαριά ταχύτητα.</strong> Χαμηλή συχνότητα περιστροφής με υψηλή αντίσταση επιβαρύνει τα γόνατα και εκπαιδεύει λιγότερο την αντοχή. 80 έως 95 rpm είναι καλό εύρος.</li>\n  <li><strong>Πάντα ο ίδιος μέτριος ρυθμός.</strong> Και εδώ ισχύει: κατά κύριο λόγο ήπια, περιστασιακά έντονα, σπάνια κάτι ενδιάμεσο.</li>\n  <li><strong>Μόνο ποδήλατο.</strong> Χωρίς κρουστική επιβάρυνση λείπει το ερέθισμα για την οστική πυκνότητα — χρειάζεται ένα στοιχείο δύναμης ή άλματος.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Δύο έως τέσσερις προπονήσεις την εβδομάδα, ήπια 45 έως 90 λεπτά, έντονα σε διαστήματα σαφώς πιο σύντομα.\n</p>"
     },
     "en": {
       "name": "Cycling",
@@ -838,7 +887,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Gauge effort with power (watts) or heart rate — pure \"feel\" is misleading.",
         "Clip pedals raise efficiency but need a few rides to get used to."
-      ]
+      ],
+      "article": "<h2>Joint-friendly and precisely dosable</h2>\n<p>\n  Cycling has two advantages over running. First, there's no impact loading — body weight rests on the\n  saddle, not on the knee and ankle. Second, intensity can be controlled very precisely, especially on an\n  indoor bike. Both make the bike the first choice for long sessions in the easy range.\n</p>\n<p>\n  That's exactly where its main benefit lies: zone 2, at 60 to 70 percent of max heart rate, where\n  mitochondria and fat metabolism benefit the most. Sessions like that are noticeably easier to sustain\n  on the bike than while running.\n</p>\n<h2>Riding position</h2>\n<p>\n  The most common cause of knee pain from cycling is a saddle set too low. As a rule of thumb: at the\n  lowest point of the pedal stroke, the knee should still be slightly bent, about 25 to 30 degrees. A\n  saddle that's too high, in turn, makes the hips rock with every revolution.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Too heavy a gear.</strong> Low cadence with high resistance strains the knees and trains less endurance. 80 to 95 rpm is a good range.</li>\n  <li><strong>Always the same medium pace.</strong> The same rule applies here: mostly easy, occasionally hard, rarely in between.</li>\n  <li><strong>Only cycling.</strong> Without impact loading, there's no stimulus for bone density — a strength or jumping component belongs alongside it.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Two to four sessions a week, 45 to 90 minutes easy, noticeably shorter when done as intense intervals.\n</p>"
     },
     "es": {
       "name": "Ciclismo",
@@ -852,7 +902,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mide el esfuerzo con potencia (vatios) o frecuencia cardíaca — la «sensación» es engañosa.",
         "Los pedales automáticos aumentan la eficiencia pero requieren algunos paseos para acostumbrarse."
-      ]
+      ],
+      "article": "<h2>Suave con las articulaciones y muy dosificable</h2>\n<p>\n  El ciclismo tiene dos ventajas frente a correr. Primero, no hay impacto — el peso del cuerpo descansa\n  sobre el sillín, no sobre la rodilla ni el tobillo. Segundo, la intensidad se puede controlar con\n  mucha precisión, especialmente en la bicicleta estática. Ambas cosas convierten a la bici en la\n  primera opción para sesiones largas en zona suave.\n</p>\n<p>\n  Ahí reside precisamente su mayor beneficio: la zona 2, entre el 60 y el 70 por ciento de la frecuencia\n  cardíaca máxima, donde las mitocondrias y el metabolismo de las grasas se benefician más. Estas\n  sesiones son notablemente más fáciles de sostener en bicicleta que corriendo.\n</p>\n<h2>Posición en el sillín</h2>\n<p>\n  La causa más frecuente de dolor de rodilla al pedalear es un sillín demasiado bajo. Como referencia:\n  en el punto más bajo de la biela, la rodilla debería seguir ligeramente doblada, unos 25 a 30 grados.\n  Un sillín demasiado alto, por su parte, hace que la cadera bascule en cada pedalada.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Marcha demasiado pesada.</strong> Una cadencia baja con alta resistencia sobrecarga las rodillas y entrena menos resistencia. De 80 a 95 rpm es un buen rango.</li>\n  <li><strong>Siempre el mismo ritmo medio.</strong> Aquí también aplica: mayormente suave, ocasionalmente duro, rara vez en el medio.</li>\n  <li><strong>Solo montar en bici.</strong> Sin impacto falta el estímulo para la densidad ósea — hace falta un componente de fuerza o de salto.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Dos a cuatro sesiones por semana, suaves de 45 a 90 minutos; intensas como intervalos, notablemente\n  más cortas.\n</p>"
     },
     "fr": {
       "name": "Cyclisme",
@@ -866,7 +917,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mesurez l'effort avec la puissance (watts) ou la fréquence cardiaque — la perception seule trompe.",
         "Les pédales automatiques augmentent l'efficacité mais demandent quelques sorties pour s'y habituer."
-      ]
+      ],
+      "article": "<h2>Doux pour les articulations et précisément dosable</h2>\n<p>\n  Le vélo présente deux avantages par rapport à la course à pied. D'abord, l'absence d'impact — le poids\n  du corps repose sur la selle, pas sur les genoux et les chevilles. Ensuite, l'intensité peut être\n  régulée très précisément, en particulier sur home-trainer. Ces deux atouts font du vélo le premier\n  choix pour les longues séances en endurance fondamentale.\n</p>\n<p>\n  C'est précisément là que réside son principal intérêt : la zone 2, à 60-70 % de la fréquence cardiaque\n  maximale, où les mitochondries et le métabolisme des graisses profitent le plus. Ces séances sont\n  nettement plus faciles à tenir à vélo qu'en course à pied.\n</p>\n<h2>Position d'assise</h2>\n<p>\n  La cause la plus fréquente des douleurs au genou à vélo est une selle réglée trop bas. Repère utile :\n  au point le plus bas du pédalier, le genou doit encore être légèrement fléchi, environ 25 à 30 degrés.\n  À l'inverse, une selle trop haute fait basculer le bassin à chaque tour de pédale.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Braquet trop lourd.</strong> Une cadence basse avec une résistance élevée sollicite les genoux et entraîne moins l'endurance. 80 à 95 tours par minute constituent une bonne plage.</li>\n  <li><strong>Toujours la même allure moyenne.</strong> Ici aussi : majoritairement en endurance fondamentale, occasionnellement intense, rarement entre les deux.</li>\n  <li><strong>Ne faire que du vélo.</strong> Sans impact, le stimulus pour la densité osseuse manque — une composante de force ou de saut est nécessaire en complément.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Deux à quatre séances par semaine, 45 à 90 minutes en endurance fondamentale, nettement plus court en\n  intervalles intensifs.\n</p>"
     },
     "it": {
       "name": "Ciclismo",
@@ -880,7 +932,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Valuta lo sforzo con la potenza (watt) o la frequenza cardiaca — il puro 'intuito' è ingannevole.",
         "I pedali a scatto aumentano l'efficienza ma richiedono qualche uscita per abituarsi."
-      ]
+      ],
+      "article": "<h2>Delicato per le articolazioni e dosabile con precisione</h2>\n<p>\n  Il ciclismo ha due vantaggi rispetto alla corsa. Primo, manca il carico d'impatto — il peso corporeo\n  poggia sulla sella, non su ginocchio e caviglia. Secondo, l'intensità si può regolare con molta\n  precisione, soprattutto sulla bici indoor. Entrambi gli aspetti rendono la bicicletta la prima scelta\n  per sessioni lunghe a intensità leggera.\n</p>\n<p>\n  È proprio lì che sta il suo beneficio principale: la zona 2, al 60-70% della frequenza cardiaca\n  massima, dove i mitocondri e il metabolismo dei grassi traggono i maggiori benefici. Sessioni di\n  questo tipo sono nettamente più facili da sostenere in bicicletta che di corsa.\n</p>\n<h2>Posizione in sella</h2>\n<p>\n  La causa più comune di dolore al ginocchio nel ciclismo è una sella troppo bassa. Come punto di\n  riferimento: nel punto più basso della pedalata il ginocchio dovrebbe restare ancora leggermente\n  piegato, circa 25-30 gradi. Una sella troppo alta, al contrario, fa oscillare il bacino a ogni\n  pedalata.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Rapporto troppo pesante.</strong> Una cadenza bassa con resistenza alta sovraccarica le ginocchia e allena meno resistenza. 80-95 rpm sono un buon intervallo.</li>\n  <li><strong>Sempre lo stesso ritmo medio.</strong> Anche qui vale la regola: prevalentemente leggero, occasionalmente intenso, raramente nel mezzo.</li>\n  <li><strong>Solo bicicletta.</strong> Senza carico d'impatto manca lo stimolo per la densità ossea — serve una componente di forza o di salto.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Due o quattro sessioni a settimana, leggere da 45 a 90 minuti, intense come intervalli nettamente più\n  brevi.\n</p>"
     },
     "nl": {
       "name": "Fietsen",
@@ -894,7 +947,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beoordeel inspanning met vermogen (watt) of hartslag — puur \"voelen\" is misleidend.",
         "Clippedale verbeteren efficiëntie maar kosten een paar ritten om aan te wennen."
-      ]
+      ],
+      "article": "<h2>Gewrichtsvriendelijk en precies te doseren</h2>\n<p>\n  Fietsen heeft ten opzichte van hardlopen twee voordelen. Ten eerste ontbreekt de stootbelasting —\n  het lichaamsgewicht rust op het zadel, niet op knie en enkel. Ten tweede is de intensiteit heel\n  nauwkeurig te sturen, zeker op de hometrainer. Beide maken de fiets de eerste keuze voor lange\n  rustige eenheden.\n</p>\n<p>\n  Precies daar zit het grootste nut: zone 2, bij 60 tot 70 procent van de maximale hartslag, waar\n  de mitochondriën en de vetstofwisseling het meest profiteren. Zulke eenheden zijn op de fiets\n  duidelijk beter vol te houden dan bij het hardlopen.\n</p>\n<h2>Zitpositie</h2>\n<p>\n  De meest voorkomende oorzaak van kniepijn bij het fietsen is een te lage zadelhoogte. Als\n  richtlijn: op het laagste punt van de trapas moet de knie nog licht gebogen zijn, ongeveer 25 tot\n  30 graden. Een te hoog zadel laat de heup dan weer bij elke omwenteling kantelen.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Te zware versnelling.</strong> Lage cadans met hoge weerstand belast de knieën en traint minder uithoudingsvermogen. 80 tot 95 tpm is een goed bereik.</li>\n  <li><strong>Altijd hetzelfde middelmatige tempo.</strong> Ook hier geldt: overwegend rustig, af en toe hard, zelden ertussenin.</li>\n  <li><strong>Alleen fietsen.</strong> Zonder stootbelasting ontbreekt de prikkel voor de botdichtheid — een kracht- of sprongcomponent hoort erbij.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Twee tot vier eenheden per week, rustig 45 tot 90 minuten, intensief als intervallen aanzienlijk\n  korter.\n</p>"
     },
     "no": {
       "name": "Cycling",
@@ -908,7 +962,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Måle innsats med watt eller pulsfrekvens – ren «følelse» er villedende.",
         "Klips-pedaler øker effektivitet men trenger noen turer å vende seg til."
-      ]
+      ],
+      "article": "<h2>Leddskånsomt og presist doserbart</h2>\n<p>\n  Sykling har to fordeler sammenlignet med løping. For det første mangler støtbelastningen – kroppsvekten\n  hviler på setet, ikke på kne og ankel. For det andre kan intensiteten styres svært nøyaktig, spesielt\n  på en innendørssykkel. Begge deler gjør sykkelen til førstevalget for lange økter i det rolige feltet.\n</p>\n<p>\n  Nettopp der ligger hovednytten: sone 2 ved 60 til 70 prosent av maksimal pulsfrekvens, der mitokondriene\n  og fettforbrenningen har mest å hente. Slike økter er betydelig lettere å gjennomføre på sykkel enn til\n  fots.\n</p>\n<h2>Sittestilling</h2>\n<p>\n  Den vanligste årsaken til kneplager ved sykling er for lav setehøyde. Som holdepunkt: ved det nederste\n  punktet i pedalomdreiningen bør kneet fortsatt være litt bøyd, omtrent 25 til 30 grader. Et for høyt\n  sete gjør på sin side at hoftene vipper ved hver omdreining.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>For tungt gir.</strong> Lav kadens med høy motstand belaster knærne og trener mindre utholdenhet. 80 til 95 omdreininger per minutt er et godt område.</li>\n  <li><strong>Alltid samme middels tempo.</strong> Også her gjelder: hovedsakelig rolig, av og til hardt, sjelden noe midt imellom.</li>\n  <li><strong>Kun sykling.</strong> Uten støtbelastning mangler stimulansen for beintetthet – en styrke- eller hoppkomponent bør inngå.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  To til fire økter per uke, rolig 45 til 90 minutter, intensivt som intervaller betydelig kortere.\n</p>"
     },
     "zh": {
       "name": "自行车骑行",
@@ -922,7 +977,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "用功率（瓦数）或心率衡量努力——纯粹的感觉欺骗性很强。",
         "脚踏夹板提高效率但需要几次骑行才能适应。"
-      ]
+      ],
+      "article": "<h2>关节友好，强度可精准控制</h2>\n<p>\n  相比跑步，骑行有两个优势。第一，没有冲击性负荷——体重由车座承担，而不是膝盖和踝关节。第二，\n  强度可以非常精确地控制，尤其是在室内自行车上。这两点让自行车成为长时间轻松训练的首选。\n</p>\n<p>\n  这正是它的主要价值所在：在最大心率60%到70%的二区强度下，线粒体和脂肪代谢获益最大。这类训练\n  在自行车上比跑步更容易坚持下来。\n</p>\n<h2>坐姿</h2>\n<p>\n  骑行时膝盖疼痛最常见的原因是车座太低。一个参考标准是：曲柄转到最低点时，膝盖应仍保持轻微\n  弯曲，大约25到30度。而车座太高则会让髋部在每一圈蹬踏中都发生倾斜。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>齿轮比过重。</strong>低踏频配合高阻力会加重膝盖负担，对耐力的锻炼效果也更差。80到95转/分钟是比较合适的范围。</li>\n  <li><strong>始终保持同一种中等强度。</strong>这里同样适用：大部分时间轻松骑行，偶尔高强度冲刺，很少停留在中间地带。</li>\n  <li><strong>只骑自行车。</strong>没有冲击性负荷，骨密度就缺乏必要的刺激——应该搭配力量训练或跳跃类动作。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  每周两到四次训练，轻松骑行45到90分钟，高强度间歇训练时间则明显更短。\n</p>"
     }
   },
   "cardio.highknees": {
@@ -953,7 +1009,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Μεγάλη καρδιακή ριπή μεταξύ σειρών (30-60 δ.) — χωρίς εξοπλισμό, αρκετό ερέθισμα.",
         "Αν τα γόνατα δεν ανέρχονται, είναι τρέξιμο στη θέση — όχι η άσκηση."
-      ]
+      ],
+      "article": "<h2>Καρδιακός ρυθμός ψηλά, κάμπτορες ισχίου ενεργοί</h2>\n<p>\n  Τα high knees είναι τρέξιμο στη θέση με υπερβολικά ψηλό χτύπημα γόνατος. Ανεβάζουν γρήγορα τον\n  καρδιακό ρυθμό και ταυτόχρονα ενεργοποιούν τους κάμπτορες του ισχίου — μια μυϊκή ομάδα που στην\n  καθιστική ζωή είναι μεν βραχυσμένη, σπάνια όμως δυνατή.\n</p>\n<p>\n  Η πραγματική της αξία βρίσκεται στη θέρμανση πριν από προπονήσεις τρεξίματος και άλματος: προετοιμάζει\n  ακριβώς το κινητικό μοτίβο που χρειάζεται στη συνέχεια, και μάλιστα σε υψηλότερη συχνότητα απ' ό,τι\n  στο ήπιο τρέξιμο αντοχής.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Όρθια στάση, μετά εναλλάξ τράβηγμα των γονάτων στο ύψος του ισχίου. Η επαφή με το έδαφος είναι σύντομη\n  και πάνω στις μπάλες των ποδιών, οι φτέρνες σχεδόν δεν αγγίζουν το έδαφος. Ο κορμός παραμένει όρθιος\n  — δεν επιτρέπεται να γέρνει προς τα πίσω για να φανούν τα γόνατα ψηλότερα.\n</p>\n<p>\n  Τα χέρια κινούνται αντίθετα, όπως στο σπριντ.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Γείρσιμο προς τα πίσω.</strong> Το πιο συχνό λάθος. Δίνει την ψευδαίσθηση ύψους γόνατος και επιβαρύνει την κάτω μέση.</li>\n  <li><strong>Προσγείωση στις φτέρνες.</strong> Θορυβώδης, σκληρή και αργή. Η επαφή ανήκει στις μπάλες των ποδιών.</li>\n  <li><strong>Γόνατα πολύ χαμηλά.</strong> Κάτω από το ύψος του ισχίου γίνεται τζόκινγκ στη θέση χωρίς το πραγματικό ερέθισμα.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Στη θέρμανση δύο έως τρεις γύροι των 20 δευτερολέπτων. Ως καρδιαγγειακό στοιχείο 30 έως 45\n  δευτερόλεπτα με ίσης διάρκειας διάλειμμα, έξι έως οκτώ γύροι.\n</p>"
     },
     "en": {
       "name": "High Knees",
@@ -967,7 +1024,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Great cardio burst between sets (30-60 s) — no gear, plenty of stimulus.",
         "If the knees don't come up, it's jogging in place — not the exercise."
-      ]
+      ],
+      "article": "<h2>Heart rate up, hip flexors active</h2>\n<p>\n  High knees are running in place with an exaggerated knee drive. They push the heart rate up quickly\n  while activating the hip flexors — a muscle group that gets shortened by sitting but is rarely\n  actually strong.\n</p>\n<p>\n  Their real value lies in warming up before running and jumping sessions: they prime exactly the\n  movement pattern needed afterward, at a higher frequency than an easy steady run.\n</p>\n<h2>Execution</h2>\n<p>\n  Stand tall, then alternate driving the knees up to hip height. Ground contact is brief and over the\n  balls of the feet, the heels barely come down. The torso stays upright — it must not lean back to make\n  the knees look higher.\n</p>\n<p>\n  The arms drive opposite to the legs, as in a sprint.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Leaning back.</strong> The most common mistake. It fakes knee height and strains the lower back.</li>\n  <li><strong>Landing on the heels.</strong> Loud, hard and slow. Contact belongs on the balls of the feet.</li>\n  <li><strong>Knees too low.</strong> Below hip height it turns into jogging in place without the actual stimulus.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  In the warm-up: two to three rounds of 20 seconds. As a conditioning element: 30 to 45 seconds with an\n  equal rest, six to eight rounds.\n</p>"
     },
     "es": {
       "name": "Rodillas altas",
@@ -981,7 +1039,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Excelente explosión cardio entre series (30-60 s) — sin equipamiento, mucho estímulo.",
         "Si las rodillas no suben, es trotar en el lugar — no es el ejercicio."
-      ]
+      ],
+      "article": "<h2>Pulso alto, flexores de cadera activos</h2>\n<p>\n  Las rodillas altas son carrera en el lugar con un impulso de rodilla exageradamente alto. Elevan\n  rápidamente la frecuencia cardíaca y activan al mismo tiempo los flexores de cadera — un grupo\n  muscular que con el trabajo sentado se acorta, pero rara vez se fortalece.\n</p>\n<p>\n  Su verdadero valor está en el calentamiento antes de sesiones de carrera y salto: preparan exactamente\n  el patrón de movimiento que se necesitará después, y a una frecuencia más alta que en la carrera\n  continua suave.\n</p>\n<h2>Ejecución</h2>\n<p>\n  De pie erguido, luego alterna llevando las rodillas a la altura de la cadera. El contacto con el suelo\n  es breve y sobre la punta del pie, los talones apenas bajan. El torso permanece erguido — no debe\n  echarse hacia atrás para hacer parecer las rodillas más altas.\n</p>\n<p>\n  Los brazos se mueven en oposición, como en un sprint.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Echarse hacia atrás.</strong> El error más frecuente. Simula altura de rodilla y carga la zona lumbar.</li>\n  <li><strong>Aterrizar sobre los talones.</strong> Ruidoso, duro y lento. El contacto debe ser sobre la punta del pie.</li>\n  <li><strong>Rodillas demasiado bajas.</strong> Por debajo de la altura de la cadera se convierte en un trote en el lugar sin el estímulo real.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  En el calentamiento, dos o tres rondas de 20 segundos. Como elemento de acondicionamiento, 30 a 45\n  segundos con pausa de igual duración, seis a ocho rondas.\n</p>"
     },
     "fr": {
       "name": "Montées de genoux",
@@ -995,7 +1054,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Excellent burst cardio entre les séries (30-60 s) — aucun équipement, beaucoup de stimulus.",
         "Si les genoux ne montent pas, c'est du jogging sur place — pas l'exercice."
-      ]
+      ],
+      "article": "<h2>Cœur qui s'emballe, fléchisseurs de hanche actifs</h2>\n<p>\n  Les high knees consistent à courir sur place avec une montée de genoux exagérée. Ils font grimper\n  rapidement la fréquence cardiaque et activent en même temps les fléchisseurs de la hanche — un groupe\n  musculaire qui, chez les personnes sédentaires, est certes raccourci mais rarement fort.\n</p>\n<p>\n  Leur véritable valeur réside dans l'échauffement avant les séances de course ou de saut : ils préparent\n  exactement le schéma de mouvement dont on aura besoin ensuite, et ce à une fréquence plus élevée que\n  lors d'un footing tranquille.\n</p>\n<h2>Exécution</h2>\n<p>\n  Debout, tirez les genoux en alternance jusqu'à hauteur des hanches. Le contact au sol est bref et se\n  fait sur l'avant du pied, les talons touchent à peine terre. Le buste reste droit — il ne doit pas se\n  pencher en arrière pour donner l'illusion de genoux plus hauts.\n</p>\n<p>\n  Les bras bougent en opposition, comme au sprint.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Se pencher en arrière.</strong> L'erreur la plus fréquente. Elle simule une hauteur de genou et sollicite le bas du dos.</li>\n  <li><strong>Atterrir sur les talons.</strong> Bruyant, dur et lent. Le contact doit se faire sur l'avant du pied.</li>\n  <li><strong>Genoux trop bas.</strong> En dessous de la hauteur des hanches, cela devient un simple trot sur place sans le véritable stimulus.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  En échauffement : deux à trois tours de 20 secondes. Comme élément cardio : 30 à 45 secondes avec une\n  pause de même durée, six à huit tours.\n</p>"
     },
     "it": {
       "name": "High knees",
@@ -1009,7 +1069,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Ottima esplosione cardio tra le serie (30-60 s) — nessun attrezzo, molto stimolo.",
         "Se le ginocchia non salgono alto, è jogging sul posto — non è questo esercizio."
-      ]
+      ],
+      "article": "<h2>Battito su, flessori dell'anca attivi</h2>\n<p>\n  Gli high knees sono una corsa sul posto con un sollevamento delle ginocchia esagerato. Fanno salire\n  rapidamente la frequenza cardiaca e attivano al contempo i flessori dell'anca — un gruppo muscolare\n  che nella vita sedentaria è spesso accorciato, ma raramente forte.\n</p>\n<p>\n  Il loro vero valore sta nel riscaldamento prima delle sessioni di corsa e salto: preparano esattamente\n  lo schema di movimento che servirà dopo, e a una frequenza più alta rispetto alla corsa lenta e\n  continua.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posizione eretta, poi solleva le ginocchia alternativamente all'altezza dell'anca. Il contatto con il\n  terreno è breve e sulla pianta del piede, i talloni toccano appena terra. Il busto resta eretto — non\n  deve inclinarsi indietro per far sembrare le ginocchia più alte.\n</p>\n<p>\n  Le braccia si muovono in modo alternato, come nello sprint.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Inclinarsi indietro.</strong> L'errore più comune. Simula un'altezza delle ginocchia maggiore e sovraccarica la parte bassa della schiena.</li>\n  <li><strong>Atterrare sui talloni.</strong> Rumoroso, duro e lento. Il contatto va sulla pianta del piede.</li>\n  <li><strong>Ginocchia troppo basse.</strong> Sotto l'altezza dell'anca diventa un trotto sul posto senza il vero stimolo.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Nel riscaldamento due o tre round da 20 secondi. Come elemento cardiovascolare 30-45 secondi con\n  pausa di pari durata, sei-otto round.\n</p>"
     },
     "nl": {
       "name": "High Knees",
@@ -1023,7 +1084,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Geweldige cardio burst tussen series (30-60 s) — geen uitrusting, veel stimulus.",
         "Als de knieën niet omhoog komen, is het joggen op plaats — niet deze oefening."
-      ]
+      ],
+      "article": "<h2>Hartslag omhoog, heupflexor actief</h2>\n<p>\n  High knees is hardlopen op de plaats met overdreven hoge kniedrijf. Ze jagen de hartslag snel\n  omhoog en activeren daarbij de heupflexoren — een spiergroep die bij zittend werk wel verkort\n  raakt, maar zelden krachtig is.\n</p>\n<p>\n  Hun echte waarde zit in het opwarmen voor loop- en sprongeenheden: ze bereiden precies het\n  bewegingspatroon voor dat daarna nodig is, en dat bij een hogere frequentie dan bij een rustige\n  duurloop.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Rechtop staan, dan afwisselend de knieën naar heuphoogte trekken. Het contact met de vloer is kort\n  en op de bal van de voet, de hielen komen nauwelijks naar beneden. De romp blijft rechtop — hij\n  mag niet naar achteren uitwijken om de knieën hoger te doen lijken.\n</p>\n<p>\n  De armen bewegen tegengesteld mee, zoals bij het sprinten.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Achterover leunen.</strong> De meest voorkomende fout. Hij suggereert kniehoogte en belast de onderrug.</li>\n  <li><strong>Op de hielen landen.</strong> Luid, hard en traag. Het contact hoort op de bal van de voet.</li>\n  <li><strong>Knie te laag.</strong> Onder heuphoogte wordt het draven op de plaats zonder de eigenlijke prikkel.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Als warming-up twee tot drie rondes van 20 seconden. Als conditie-element 30 tot 45 seconden met\n  even lange pauze, zes tot acht rondes.\n</p>"
     },
     "no": {
       "name": "High Knees",
@@ -1037,7 +1099,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Flott kardio-burst mellom sett (30-60 s) – ingen utstyr, mye stimuli.",
         "Hvis knærne ikke kommer opp, er det jogging på stedet – ikke øvelsen."
-      ]
+      ],
+      "article": "<h2>Høy puls, aktive hoftefleksorer</h2>\n<p>\n  High knees er løping på stedet med overdrevent høyt kneløft. De driver pulsen raskt opp og aktiverer\n  samtidig hoftefleksorene – en muskelgruppe som ved stillesittende arbeid ofte er forkortet, men sjelden\n  sterk.\n</p>\n<p>\n  Den egentlige verdien ligger i oppvarming før løpe- og hoppøkter: de forbereder nettopp det\n  bevegelsesmønsteret som trengs etterpå, og det med høyere frekvens enn i rolig langdistanseløping.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Stå oppreist, trekk deretter vekselvis knærne opp til hoftehøyde. Kontakten med bakken er kort og skjer\n  over fotballen, hælene kommer knapt ned. Overkroppen forblir oppreist – den skal ikke lene seg bakover\n  for å få knærne til å se høyere ut.\n</p>\n<p>\n  Armene beveger seg motsatt, som ved sprint.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å lene seg bakover.</strong> Den vanligste feilen. Den later til å gi høyere kneløft og belaster korsryggen.</li>\n  <li><strong>Å lande på hælene.</strong> Høylytt, hardt og tregt. Kontakten hører hjemme på fotballen.</li>\n  <li><strong>For lavt kneløft.</strong> Under hoftehøyde blir det til traving på stedet uten den egentlige effekten.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  I oppvarmingen to til tre runder à 20 sekunder. Som kondisjonselement 30 til 45 sekunder med like lang\n  pause, seks til åtte runder.\n</p>"
     },
     "zh": {
       "name": "高抬腿",
@@ -1051,7 +1114,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "非常适合组间有氧冲刺（30-60秒）——无需器械，刺激充足。",
         "如果膝盖没有抬高，那就只是原地慢跑——不是这个动作。"
-      ]
+      ],
+      "article": "<h2>心率提升，髂腰肌激活</h2>\n<p>\n  高抬腿是原地跑步的一种，膝盖抬得比平时夸张得多。它能快速拉高心率，同时激活髂腰肌——这块\n  肌群在久坐生活中虽然容易缩短，力量却往往不足。\n</p>\n<p>\n  它真正的价值在于跑步和跳跃训练前的热身：它能以比轻松慢跑更高的频率，预先激活之后所需要的\n  动作模式。\n</p>\n<h2>动作要领</h2>\n<p>\n  身体直立站好，然后交替将膝盖抬至髋部高度。脚掌前部短暂触地，脚跟几乎不落地。上半身保持\n  竖直——不能靠向后仰来让膝盖看起来抬得更高。\n</p>\n<p>\n  双臂像冲刺跑一样，与双腿交替摆动。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>向后仰。</strong>最常见的错误。它会制造出膝盖抬得更高的假象，同时给下背部带来负担。</li>\n  <li><strong>用脚跟着地。</strong>声音大、冲击硬，速度也慢。接触地面应该用脚掌前部。</li>\n  <li><strong>膝盖抬得太低。</strong>低于髋部高度，动作就变成了原地慢跑，失去了真正的训练效果。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  作为热身：两到三轮，每轮20秒。作为体能训练环节：30到45秒，休息时间相同，共六到八轮。\n</p>"
     }
   },
   "cardio.jumpingjacks": {
@@ -1077,12 +1141,13 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
         "Όρθιος, πόδια μαζί, χέρια κατά τα πλάγια.",
         "Σε ένα άλμα, άνοιγμα ποδιών στο πλάι ενώ ανύψωση χεριών πάνω από το κεφάλι.",
         "Στο επόμενο άλμα, επιστροφή στην αρχική θέση.",
-        "Ρυθμική κίνηση, προσγείωση부드 στα μπάλες των ποδιών."
+        "Ρυθμική κίνηση, απαλή προσγείωση στις μπάλες των ποδιών."
       ],
       "tips": [
         "Τέλεια θέρμανση πριν από push-up ή περιόδους τρεξίματος — 2-3 λεπτά αρκούν.",
         "Τα γόνατα παραπονιέται; Βήμα-αγγίζουν αντί άλματος για παραλλαγή χαμηλού αντικτύπου."
-      ]
+      ],
+      "article": "<h2>Ο κλασικός της θέρμανσης</h2>\n<p>\n  Τα jumping jacks θέτουν σε λίγο χρόνο σε κίνηση την κυκλοφορία, τους ώμους και τα ισχία, χωρίς να\n  χρειάζονται όργανα ή χώρο. Ακριβώς αυτό τα καθιστά τυπική αρχή σχεδόν κάθε προγράμματος θέρμανσης:\n  κινούν πολλές αρθρώσεις σε μεγάλο εύρος και ανεβάζουν τον καρδιακό ρυθμό σταδιακά αντί απότομα.\n</p>\n<p>\n  Ως αυτόνομη προπόνηση αντοχής είναι λιγότερο κατάλληλα — το ερέθισμα είναι πολύ χαμηλό για\n  προπονημένους ανθρώπους ώστε να διατηρήσουν σταθερά τη Ζώνη 2. Ως στοιχείο σε κύκλωμα ή διάστημα\n  λειτουργούν καλά.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Από όρθια στάση τα πόδια πηδούν πλάγια ανοιχτά, ενώ τα χέρια ανεβαίνουν πάνω από το κεφάλι. Επιστροφή\n  σε μια ρευστή κίνηση. Η προσγείωση είναι μαλακή, στις μπάλες των ποδιών, με τα γόνατα ελαφρώς\n  λυγισμένα — όχι με τεντωμένα πόδια στις φτέρνες.\n</p>\n<h2>Παραλλαγές και προσαρμογή</h2>\n<ul>\n  <li><strong>Χωρίς άλμα.</strong> Άγγιγμα με το ένα πόδι στο πλάι μετά το άλλο, χέρια όπως συνήθως. Για προβλήματα αρθρώσεων και ως αρχικό στάδιο.</li>\n  <li><strong>Μισά χέρια.</strong> Όποιος δεν μπορεί να φέρει τους ώμους πάνω από το κεφάλι χωρίς πόνο, ανεβάζει τα χέρια μόνο μέχρι το ύψος των ώμων.</li>\n  <li><strong>Ως διάστημα.</strong> 30 δευτερόλεπτα γρήγορα, 30 δευτερόλεπτα διάλειμμα, πολλοί γύροι.</li>\n</ul>\n<h2>Συνήθη λάθη</h2>\n<p>\n  Το πιο διαδεδομένο είναι σκληρή προσγείωση με τεντωμένα πόδια· επιβαρύνει άσκοπα γόνατα και\n  αστράγαλο. Το δεύτερο είναι ελλιπής πορεία των χεριών — όταν τα χέρια φτάνουν μόνο μέχρι το ύψος του\n  κεφαλιού, χάνεται το τμήμα ευλυγισίας που κάνει την άσκηση πολύτιμη στη θέρμανση.\n</p>"
     },
     "en": {
       "name": "Jumping Jacks",
@@ -1096,7 +1161,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfect warm-up before push-up or running sessions — 2-3 minutes is enough.",
         "Knees complaining? Step-touch instead of jumping for a low-impact variant."
-      ]
+      ],
+      "article": "<h2>The warm-up classic</h2>\n<p>\n  Jumping jacks get the heart, shoulders and hips going in a short time and need neither equipment nor\n  much space. That's exactly what makes them the standard opener for almost every warm-up routine: they\n  move several joints through a large range and raise the heart rate gradually rather than abruptly.\n</p>\n<p>\n  As standalone endurance training they're less suited — the stimulus is too low for a trained person to\n  hold zone 2 for long. As an element in a circuit or interval, they work well.\n</p>\n<h2>Execution</h2>\n<p>\n  From standing, the legs jump apart sideways while the arms are raised overhead. Back to start in one\n  flowing motion. Land softly over the balls of the feet with slightly bent knees — not with straight\n  legs on the heels.\n</p>\n<h2>Variants and adjustments</h2>\n<ul>\n  <li><strong>No jump.</strong> Tap one leg out to the side at a time, arms as usual. For joint issues and as an entry point.</li>\n  <li><strong>Half arms.</strong> If raising the shoulders overhead isn't pain-free, bring the arms only to shoulder height.</li>\n  <li><strong>As an interval.</strong> 30 seconds brisk, 30 seconds rest, several rounds.</li>\n</ul>\n<h2>Common mistakes</h2>\n<p>\n  The most widespread is a hard landing with straight legs; it strains the knee and ankle unnecessarily.\n  The second is an incomplete arm path — if the hands only reach head height, the mobility component\n  that makes the exercise valuable as a warm-up is lost.\n</p>"
     },
     "es": {
       "name": "Saltadores",
@@ -1110,7 +1176,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Calentamiento perfecto antes de sesiones de flexiones o carrera — 2-3 minutos es suficiente.",
         "Las rodillas se quejan? Haz step-touch en lugar de saltar para una variante de bajo impacto."
-      ]
+      ],
+      "article": "<h2>El clásico del calentamiento</h2>\n<p>\n  Los saltadores activan en poco tiempo el sistema circulatorio, los hombros y la cadera, y no necesitan\n  ni equipamiento ni espacio. Precisamente eso los convierte en el inicio estándar de casi cualquier\n  programa de calentamiento: mueven varias articulaciones por un rango amplio y elevan la frecuencia\n  cardíaca de forma progresiva en lugar de brusca.\n</p>\n<p>\n  Como entrenamiento de resistencia independiente son menos adecuados — el estímulo es demasiado bajo\n  para personas entrenadas como para mantener la zona 2 de forma sostenida. Como elemento dentro de un\n  circuito o intervalo funcionan bien.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Desde de pie, las piernas saltan separándose lateralmente mientras los brazos se elevan por encima de\n  la cabeza. Vuelta en un movimiento fluido. El aterrizaje es suave, sobre la punta de los pies, con las\n  rodillas ligeramente dobladas — no con las piernas rectas sobre los talones.\n</p>\n<h2>Variantes y adaptación</h2>\n<ul>\n  <li><strong>Sin salto.</strong> Toca hacia el lado con una pierna tras otra, brazos como de costumbre. Para problemas articulares y como inicio.</li>\n  <li><strong>Medio recorrido de brazos.</strong> Quien no pueda llevar los hombros por encima de la cabeza sin dolor, eleva los brazos solo hasta la altura de los hombros.</li>\n  <li><strong>Como intervalo.</strong> 30 segundos a buen ritmo, 30 segundos de pausa, varias rondas.</li>\n</ul>\n<h2>Errores frecuentes</h2>\n<p>\n  El más común es un aterrizaje duro con las piernas totalmente extendidas; sobrecarga innecesariamente\n  la rodilla y el tobillo. El segundo es un recorrido de brazos incompleto — si las manos solo llegan\n  hasta la altura de la cabeza, se pierde el componente de movilidad que hace valioso al ejercicio en el\n  calentamiento.\n</p>"
     },
     "fr": {
       "name": "Jumping Jacks",
@@ -1124,7 +1191,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Échauffement parfait avant des séances de pompes ou de course — 2-3 minutes suffisent.",
         "Les genoux se plaignent ? Faites du pas-touche au lieu de sauter pour une variante sans impact."
-      ]
+      ],
+      "article": "<h2>Le classique de l'échauffement</h2>\n<p>\n  Les jumping jacks mettent en route en peu de temps le système cardiovasculaire, les épaules et les\n  hanches, sans nécessiter ni matériel ni espace. C'est précisément ce qui en fait l'entrée en matière\n  standard de presque tous les programmes d'échauffement : ils mobilisent plusieurs articulations sur\n  une grande amplitude et augmentent la fréquence cardiaque progressivement plutôt que brutalement.\n</p>\n<p>\n  Comme entraînement d'endurance à part entière, ils sont moins adaptés — le stimulus est trop faible\n  pour une personne entraînée pour maintenir durablement la zone 2. Comme élément d'un circuit ou d'un\n  intervalle, ils fonctionnent bien.\n</p>\n<h2>Exécution</h2>\n<p>\n  Depuis la position debout, les jambes s'écartent sur les côtés en un saut, tandis que les bras montent\n  au-dessus de la tête. Retour en un mouvement fluide. L'atterrissage se fait en douceur sur l'avant du\n  pied, genoux légèrement fléchis — pas jambes tendues sur les talons.\n</p>\n<h2>Variantes et adaptations</h2>\n<ul>\n  <li><strong>Sans saut.</strong> Touchez le sol sur le côté avec une jambe puis l'autre, bras comme d'habitude. Pour les problèmes articulaires et comme entrée en matière.</li>\n  <li><strong>Bras à mi-hauteur.</strong> Qui ne peut pas lever les bras au-dessus de la tête sans douleur les monte seulement jusqu'à hauteur d'épaule.</li>\n  <li><strong>En intervalles.</strong> 30 secondes soutenues, 30 secondes de pause, plusieurs tours.</li>\n</ul>\n<h2>Erreurs fréquentes</h2>\n<p>\n  La plus répandue est un atterrissage brutal jambes tendues ; elle sollicite inutilement les genoux et\n  les chevilles. La seconde est une amplitude de bras incomplète — si les mains ne montent qu'à hauteur\n  de la tête, la composante de mobilité qui rend l'exercice précieux en échauffement disparaît.\n</p>"
     },
     "it": {
       "name": "Saltelli",
@@ -1138,7 +1206,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfetto riscaldamento prima di sessioni di piegamenti o corsa — 2-3 minuti sono sufficienti.",
         "Le ginocchia non sopportano i salti? Fai step-touch al posto dei salti per una variante a basso impatto."
-      ]
+      ],
+      "article": "<h2>Il classico del riscaldamento</h2>\n<p>\n  I jumping jacks attivano in breve tempo circolazione, spalle e fianchi e non richiedono né attrezzi né\n  spazio. È proprio questo che li rende l'apertura standard di quasi ogni programma di riscaldamento:\n  muovono più articolazioni attraverso un'ampia gamma di movimento e alzano la frequenza cardiaca in\n  modo graduale invece che brusco.\n</p>\n<p>\n  Come allenamento di resistenza a sé stante sono meno adatti — lo stimolo è troppo basso per chi è\n  allenato per mantenere stabilmente la zona 2. Come elemento in un circuito o in un intervallo\n  funzionano bene.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Dalla posizione eretta, le gambe saltano aperte lateralmente mentre le braccia vengono portate sopra\n  la testa. Ritorno in un movimento fluido. L'atterraggio è morbido sulla pianta del piede con ginocchia\n  leggermente piegate — non a gambe tese sui talloni.\n</p>\n<h2>Varianti e adattamenti</h2>\n<ul>\n  <li><strong>Senza salto.</strong> Tocca lateralmente con una gamba dopo l'altra, braccia come al solito. Per problemi articolari e come punto di partenza.</li>\n  <li><strong>Braccia a metà.</strong> Chi non riesce a portare le spalle sopra la testa senza dolore, porta le braccia solo fino all'altezza delle spalle.</li>\n  <li><strong>Come intervallo.</strong> 30 secondi veloci, 30 secondi di pausa, più round.</li>\n</ul>\n<h2>Errori comuni</h2>\n<p>\n  Il più diffuso è un atterraggio duro a gambe tese; sovraccarica inutilmente ginocchia e caviglie. Il\n  secondo è un percorso delle braccia incompleto — se le mani arrivano solo all'altezza della testa,\n  manca la componente di mobilità che rende utile l'esercizio nel riscaldamento.\n</p>"
     },
     "nl": {
       "name": "Jumping Jacks",
@@ -1152,7 +1221,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfect opwarmbeweging voor opdruk- of hardloopsessies — 2-3 minuten volstaat.",
         "Klagen je knieën? Doe in plaats van springen step-touch voor een low-impact variant."
-      ]
+      ],
+      "article": "<h2>De klassieker onder de warming-ups</h2>\n<p>\n  Jumping jacks brengen in korte tijd hartslag, schouders en heupen op gang en vergen geen\n  toestellen of ruimte. Precies dat maakt ze tot de standaardopening van bijna elk\n  opwarmprogramma: ze bewegen meerdere gewrichten door een groot bereik en verhogen de hartslag\n  geleidelijk in plaats van sprongsgewijs.\n</p>\n<p>\n  Als zelfstandige duurtraining zijn ze minder geschikt — de prikkel is voor getrainde mensen te\n  klein om zone 2 blijvend te houden. Als onderdeel van een circuit of interval werken ze goed.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Vanuit stand springen de benen zijwaarts uit elkaar terwijl de armen boven het hoofd worden\n  gebracht. Terug in één vloeiende beweging. Er wordt zacht geland op de bal van de voet met licht\n  gebogen knieën — niet met gestrekte benen op de hielen.\n</p>\n<h2>Varianten en aanpassing</h2>\n<ul>\n  <li><strong>Zonder sprong.</strong> Eén been na het andere zijwaarts tikken, armen zoals gewoonlijk. Voor gewrichtsklachten en als instap.</li>\n  <li><strong>Halve armen.</strong> Wie de schouders niet pijnvrij boven het hoofd krijgt, brengt de armen alleen tot schouderhoogte.</li>\n  <li><strong>Als interval.</strong> 30 seconden vlot, 30 seconden pauze, meerdere rondes.</li>\n</ul>\n<h2>Veelgemaakte fouten</h2>\n<p>\n  De meest voorkomende is een harde landing met gestrekte benen; dat belast knie en enkel\n  onnodig. De tweede is een onvolledige armbeweging — als de handen maar tot hoofdhoogte komen,\n  vervalt het mobiliteitsdeel dat de oefening waardevol maakt in de warming-up.\n</p>"
     },
     "no": {
       "name": "Jumping Jacks",
@@ -1166,7 +1236,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfekt oppvarming før push-up eller løpinger – 2-3 minutter er nok.",
         "Klager knærne? Skritt-touch i stedet for hopping for low-impact variant."
-      ]
+      ],
+      "article": "<h2>Klassikeren i oppvarmingen</h2>\n<p>\n  Jumping jacks setter kretsløp, skuldre og hofter i gang på kort tid, og krever verken utstyr eller\n  plass. Nettopp det gjør dem til standardstarten i nesten ethvert oppvarmingsprogram: de beveger flere\n  ledd gjennom et stort bevegelsesutslag og øker pulsen gradvis i stedet for brått.\n</p>\n<p>\n  Som selvstendig utholdenhetstrening er de mindre egnet – stimulansen er for lav til at trente utøvere\n  kan holde sone 2 over tid. Som element i en sirkel eller et intervall fungerer de godt.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Fra stående hopper beina ut til siden mens armene føres over hodet. Tilbake i én flytende bevegelse.\n  Landingen skjer mykt over fotballen med lett bøyde knær – ikke med strake bein på hælene.\n</p>\n<h2>Varianter og tilpasning</h2>\n<ul>\n  <li><strong>Uten hopp.</strong> Tipp ett bein etter det andre til siden, armene som vanlig. For leddplager og som innstegsvariant.</li>\n  <li><strong>Halv armbevegelse.</strong> Den som ikke får skuldrene smertefritt over hodet, fører armene bare opp til skulderhøyde.</li>\n  <li><strong>Som intervall.</strong> 30 sekunder i raskt tempo, 30 sekunder pause, flere runder.</li>\n</ul>\n<h2>Vanlige feil</h2>\n<p>\n  Den vanligste er en hard landing med strake bein; den belaster kne og ankel unødvendig. Den andre er en\n  ufullstendig armbevegelse – når hendene bare når opp til hodehøyde, forsvinner bevegelighetsdelen som\n  gjør øvelsen verdifull i oppvarmingen.\n</p>"
     },
     "zh": {
       "name": "开合跳",
@@ -1180,7 +1251,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "在俯卧撑或跑步前的完美热身——2-3分钟足够。",
         "膝盖不适？用踏步触碰代替跳跃作为低冲击变式。"
-      ]
+      ],
+      "article": "<h2>热身中的经典动作</h2>\n<p>\n  开合跳能在短时间内让心肺、肩膀和髋部都活动起来，而且不需要任何器械或场地。正因如此，它几乎\n  是所有热身流程的标准开场动作：它让多个关节在较大幅度内活动，并让心率逐渐上升，而不是骤然\n  飙升。\n</p>\n<p>\n  作为独立的耐力训练，它并不太合适——对于有一定训练基础的人来说，强度不足以持续维持在二区\n  心率。但作为循环训练或间歇训练中的一个环节，它的效果很好。\n</p>\n<h2>动作要领</h2>\n<p>\n  从站立姿势起跳，双腿向两侧分开，同时双臂举过头顶。再以流畅的动作跳回起始位置。落地时应用\n  脚掌前部轻柔缓冲，膝盖微屈——而不是伸直双腿用脚跟着地。\n</p>\n<h2>变式与调整</h2>\n<ul>\n  <li><strong>不跳跃。</strong>双腿依次向侧面点地，手臂动作照常。适合关节有问题的人，也适合作为入门方式。</li>\n  <li><strong>半程手臂。</strong>如果肩膀无法无痛举过头顶，可以只把手臂抬到肩膀高度。</li>\n  <li><strong>作为间歇训练。</strong>快速进行30秒，休息30秒，重复多轮。</li>\n</ul>\n<h2>常见错误</h2>\n<p>\n  最常见的是双腿伸直硬着地，这会给膝盖和踝关节带来不必要的负担。第二个常见错误是手臂动作\n  不完整——如果双手只抬到头部高度，就失去了让这个动作在热身中具有价值的活动度部分。\n</p>"
     }
   },
   "cardio.jumprope": {
@@ -1211,7 +1283,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αρχάριοι, μέτρησε σειρές σε σετ (3 × 50)· προχωρημένοι κατά τη διάρκεια (3 × 60 δ.).",
         "Μη αναγκάζεις double-unders — πρώτα καθαρό βασικό ρυθμό, κατόπιν προσθήκη ταχύτητας."
-      ]
+      ],
+      "article": "<h2>Πολύ ερέθισμα σε λίγο χώρο</h2>\n<p>\n  Το σχοινί άλματος δημιουργεί σε ελάχιστο χρόνο υψηλό καρδιακό ρυθμό, χρειάζεται δύο τετραγωνικά μέτρα\n  χώρο και κοστίζει σχεδόν τίποτα. Παράλληλα εκπαιδεύει δύναμη γάμπας, σταθερότητα αστραγάλου και\n  αίσθηση ρυθμού — ιδιότητες που βοηθούν άμεσα στο τρέξιμο.\n</p>\n<p>\n  Το τίμημα είναι η κρουστική επιβάρυνση: ανά άλμα βρίσκεται σε παρόμοιο μέγεθος με το τρέξιμο, μόνο\n  που συγκεντρώνεται στις γάμπες και τον αχίλλειο τένοντα. Όποιος ξεκινά, πρέπει να αυξάνει τον όγκο\n  πολύ προσεκτικά.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Τα άλματα είναι μικρά — δύο έως τρία εκατοστά αρκούν, το σχοινί είναι λεπτό. Η προσγείωση γίνεται στις\n  μπάλες των ποδιών, οι φτέρνες μόλις αγγίζουν το έδαφος. Οι αγκώνες παραμένουν κοντά στο σώμα, η\n  περιστροφή προέρχεται από τους καρπούς, όχι από τους ώμους.\n</p>\n<p>\n  Το σωστό μήκος σχοινιού: πατώντας στη μέση, οι λαβές πρέπει να φτάνουν περίπου μέχρι τη μασχάλη.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πολύ ψηλό άλμα.</strong> Κοστίζει δύναμη και αυξάνει την επιβάρυνση χωρίς όφελος.</li>\n  <li><strong>Περιστροφή από τους ώμους.</strong> Κουράζει γρήγορα και κάνει τον ρυθμό ασταθή.</li>\n  <li><strong>Πολύ ένταση στην αρχή.</strong> Οι γάμπες αντιδρούν με καθυστέρηση. Πέντε λεπτά την πρώτη εβδομάδα είναι αρκετά.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Ως διαστήματα: 30 έως 60 δευτερόλεπτα άλμα, ίσης διάρκειας διάλειμμα, έξι έως δέκα γύροι. Ως θέρμανση\n  τρία έως πέντε λεπτά ήπια.\n</p>"
     },
     "en": {
       "name": "Jump Rope",
@@ -1225,7 +1298,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners count reps in sets (3 × 50); advanced over time (3 × 60 s).",
         "Don't force double-unders — get a clean basic rhythm first, then add speed."
-      ]
+      ],
+      "article": "<h2>A lot of stimulus in a small space</h2>\n<p>\n  Jump rope raises the heart rate quickly, needs about two square meters of space, and costs almost\n  nothing. It also trains calf strength, ankle stability and a sense of rhythm — qualities that carry\n  directly over to running.\n</p>\n<p>\n  The cost is impact loading: per jump it's in a similar range to running, just concentrated on the\n  calves and Achilles tendon. Anyone starting out should ramp up volume very cautiously.\n</p>\n<h2>Execution</h2>\n<p>\n  The hops are small — two to three centimeters is enough, the rope is thin. Land over the balls of the\n  feet, the heels barely touch the ground. The elbows stay close to the body, the rotation comes from the\n  wrists, not the shoulders.\n</p>\n<p>\n  The right rope length: stand on the middle of it, the handles should reach roughly to the armpit.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Jumping too high.</strong> Costs energy and increases the load without benefit.</li>\n  <li><strong>Cranking from the shoulders.</strong> Fatigues quickly and makes the rhythm unsteady.</li>\n  <li><strong>Too much too soon.</strong> The calves respond with a delay. Five minutes in the first week is enough.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  As intervals: 30 to 60 seconds of jumping, an equal rest, six to ten rounds. As a warm-up: three to\n  five minutes easy.\n</p>"
     },
     "es": {
       "name": "Saltar la cuerda",
@@ -1239,7 +1313,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Los principiantes cuentan en series (3 × 50); avanzados en tiempo (3 × 60 s).",
         "No fuerces dobles — primero consigue un ritmo básico limpio, luego agrega velocidad."
-      ]
+      ],
+      "article": "<h2>Mucho estímulo en poco espacio</h2>\n<p>\n  Saltar la cuerda genera en muy poco tiempo una frecuencia cardíaca alta, necesita dos metros cuadrados\n  de espacio y cuesta casi nada. Además entrena la fuerza de pantorrilla, la estabilidad del tobillo y\n  el sentido del ritmo — cualidades que ayudan directamente en la carrera.\n</p>\n<p>\n  El precio es el impacto: por salto se sitúa en un orden de magnitud similar al de correr, solo que\n  concentrado en las pantorrillas y el tendón de Aquiles. Quien empiece con esto debería aumentar el\n  volumen con mucha cautela.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Los saltos son pequeños — dos o tres centímetros bastan, la cuerda es delgada. Se aterriza sobre la\n  punta del pie, los talones apenas tocan el suelo. Los codos permanecen cerca del cuerpo, la rotación\n  proviene de las muñecas, no de los hombros.\n</p>\n<p>\n  La longitud correcta de la cuerda: pisando el centro, los mangos deberían llegar aproximadamente hasta\n  la axila.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Saltar demasiado alto.</strong> Cuesta fuerza y aumenta la carga sin ningún beneficio.</li>\n  <li><strong>Girar desde los hombros.</strong> Fatiga rápido y desestabiliza el ritmo.</li>\n  <li><strong>Demasiado al principio.</strong> Las pantorrillas se resienten con retraso. Cinco minutos en la primera semana son suficientes.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  En intervalos: 30 a 60 segundos saltando, pausa de igual duración, de seis a diez rondas. Como\n  calentamiento, de tres a cinco minutos suaves.\n</p>"
     },
     "fr": {
       "name": "Corde à sauter",
@@ -1253,7 +1328,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Les débutants comptent les répétitions en séries (3 × 50) ; les avancés sur le temps (3 × 60 s).",
         "Ne forcez pas les double unders — maîtrisez d'abord un rythme de base propre, puis ajoutez la vitesse."
-      ]
+      ],
+      "article": "<h2>Beaucoup de stimulus sur peu d'espace</h2>\n<p>\n  La corde à sauter fait grimper la fréquence cardiaque en très peu de temps, ne demande que deux mètres\n  carrés d'espace et ne coûte presque rien. Elle entraîne en plus la force des mollets, la stabilité de\n  la cheville et le sens du rythme — des qualités qui profitent directement à la course à pied.\n</p>\n<p>\n  Le prix à payer est l'impact : il est, par saut, d'un ordre de grandeur comparable à la course à pied,\n  mais concentré sur les mollets et le tendon d'Achille. Qui débute doit augmenter le volume très\n  progressivement.\n</p>\n<h2>Exécution</h2>\n<p>\n  Les sauts sont petits — deux à trois centimètres suffisent, la corde est fine. L'atterrissage se fait\n  sur l'avant du pied, les talons touchent à peine le sol. Les coudes restent près du corps, la rotation\n  vient des poignets, pas des épaules.\n</p>\n<p>\n  La bonne longueur de corde : posez le pied au milieu, les poignées doivent arriver à peu près à hauteur\n  d'aisselle.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Sauter trop haut.</strong> Coûte de l'énergie et augmente la charge sans bénéfice.</li>\n  <li><strong>Tourner à partir des épaules.</strong> Fatigue rapidement et déstabilise le rythme.</li>\n  <li><strong>Trop de volume au début.</strong> Les mollets se manifestent avec retard. Cinq minutes la première semaine suffisent.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  En intervalles : 30 à 60 secondes de saut, pause de même durée, six à dix tours. En échauffement :\n  trois à cinq minutes tranquilles.\n</p>"
     },
     "it": {
       "name": "Corda per saltare",
@@ -1267,7 +1343,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "I principianti contino le ripetizioni in serie (3 × 50); avanzati nel tempo (3 × 60 s).",
         "Non forzare i doppi salti — prima una base solida e ritmica, poi aumenta la velocità."
-      ]
+      ],
+      "article": "<h2>Molto stimolo su poco spazio</h2>\n<p>\n  La corda per saltare genera in pochissimo tempo una frequenza cardiaca elevata, richiede due metri\n  quadrati di spazio e costa quasi nulla. Allena inoltre la forza del polpaccio, la stabilità della\n  caviglia e il senso del ritmo — qualità che aiutano direttamente nella corsa.\n</p>\n<p>\n  Il prezzo da pagare è il carico d'impatto: per ogni salto è di ordine di grandezza simile a quello\n  della corsa, ma concentrato su polpacci e tendine d'Achille. Chi comincia dovrebbe aumentare il volume\n  con molta cautela.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  I salti sono piccoli — bastano due o tre centimetri, la corda è sottile. L'atterraggio avviene sulla\n  pianta del piede, i talloni toccano il pavimento appena. I gomiti restano vicini al corpo, la\n  rotazione parte dai polsi, non dalle spalle.\n</p>\n<p>\n  La lunghezza corretta della corda: mettiti in piedi al centro, i manici dovrebbero arrivare circa\n  all'altezza dell'ascella.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Saltare troppo in alto.</strong> Costa energia e aumenta il carico senza alcun beneficio.</li>\n  <li><strong>Ruotare dalle spalle.</strong> Affatica rapidamente e rende il ritmo irregolare.</li>\n  <li><strong>Troppo carico all'inizio.</strong> I polpacci si fanno sentire con ritardo. Cinque minuti nella prima settimana sono sufficienti.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Come intervalli: 30-60 secondi di salti, pausa di pari durata, da sei a dieci round. Come\n  riscaldamento, tre-cinque minuti a ritmo leggero.\n</p>"
     },
     "nl": {
       "name": "Springtouw",
@@ -1281,7 +1358,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners tellen herhalingen in series (3 × 50); gevorderden na verloop van tijd (3 × 60 s).",
         "Forceer geen double-unders — krijg eerst een schoon basisritme, voeg dan snelheid toe."
-      ]
+      ],
+      "article": "<h2>Veel prikkel op weinig oppervlak</h2>\n<p>\n  Springtouw creëert in zeer korte tijd een hoge hartslag, vergt twee vierkante meter ruimte en\n  kost bijna niets. Daarbij traint het kuitkracht, enkelstabiliteit en ritmegevoel — eigenschappen\n  die direct doorwerken bij het hardlopen.\n</p>\n<p>\n  De prijs is de stootbelasting: die ligt per sprong in dezelfde orde van grootte als bij het\n  hardlopen, alleen geconcentreerd op kuiten en achillespees. Wie hiermee begint, moet het volume\n  heel behoedzaam opbouwen.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  De sprongen zijn klein — twee tot drie centimeter volstaan, het touw is dun. Er wordt geland op\n  de bal van de voet, de hielen raken de vloer nauwelijks. De ellebogen blijven dicht bij het\n  lichaam, de rotatie komt uit de polsen, niet uit de schouders.\n</p>\n<p>\n  De juiste touwlengte: op het midden gaan staan, de handvatten moeten ongeveer tot de oksel reiken.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Te hoog springen.</strong> Kost kracht en verhoogt de belasting zonder nut.</li>\n  <li><strong>Vanuit de schouders draaien.</strong> Vermoeit snel en maakt het ritme onrustig.</li>\n  <li><strong>Te veel aan het begin.</strong> De kuiten melden zich met vertraging. Vijf minuten in de eerste week is genoeg.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Als intervallen: 30 tot 60 seconden springen, even lang pauzeren, zes tot tien rondes. Als\n  warming-up drie tot vijf minuten rustig.\n</p>"
     },
     "no": {
       "name": "Jump Rope",
@@ -1295,7 +1373,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nybegynnere teller repetisjoner i sett (3 × 50); avansert over tid (3 × 60 s).",
         "Ikke tving double-unders – få først en ren grunnrhytme, så legg til hastighet."
-      ]
+      ],
+      "article": "<h2>Mye stimulans på lite plass</h2>\n<p>\n  Hopping med tau gir høy puls på svært kort tid, krever to kvadratmeter plass og koster nesten\n  ingenting. I tillegg trener det leggstyrke, ankelstabilitet og rytmesans – egenskaper som er direkte\n  nyttige ved løping.\n</p>\n<p>\n  Prisen er støtbelastningen: den ligger per hopp på omtrent samme nivå som ved løping, men konsentrert\n  om leggene og akillessenen. Den som er nybegynner, bør øke volumet svært forsiktig.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Hoppene er små – to til tre centimeter er nok, tauet er tynt. Landingen skjer over fotballen, hælene\n  berører knapt gulvet. Albuene holdes nær kroppen, rotasjonen kommer fra håndleddene, ikke fra\n  skuldrene.\n</p>\n<p>\n  Riktig taulengde: tråkk på midten av tauet, håndtakene bør nå omtrent til armhulen.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å hoppe for høyt.</strong> Koster krefter og øker belastningen uten gevinst.</li>\n  <li><strong>Å veive fra skuldrene.</strong> Gir rask utmattelse og gjør rytmen urolig.</li>\n  <li><strong>For mye i starten.</strong> Leggene melder seg med forsinkelse. Fem minutter den første uken er nok.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Som intervaller: 30 til 60 sekunder hopping, like lang pause, seks til ti runder. Som oppvarming tre\n  til fem minutter i rolig tempo.\n</p>"
     },
     "zh": {
       "name": "跳绳",
@@ -1309,7 +1388,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "初学者以组数计数（3×50下）；进阶者按时间（3×60秒）。",
         "不要强行做二重跳——先掌握基本节奏，再加速。"
-      ]
+      ],
+      "article": "<h2>在很小的空间里获得很高的刺激</h2>\n<p>\n  跳绳能在极短时间内把心率拉高，只需要两平方米的空间，花费也几乎为零。同时它还能锻炼小腿\n  力量、踝关节稳定性和节奏感——这些能力对跑步都有直接帮助。\n</p>\n<p>\n  代价是冲击负荷：每一跳产生的冲击力与跑步大致相当，只是更集中在小腿和跟腱上。刚开始接触\n  跳绳的人，应该非常谨慎地逐步增加训练量。\n</p>\n<h2>动作要领</h2>\n<p>\n  跳跃幅度要小——两到三厘米就足够，绳子本身也很细。落地时用脚掌前部，脚跟几乎不接触地面。\n  肘部始终贴近身体，转动的力量来自手腕，而不是肩膀。\n</p>\n<p>\n  正确的绳长：站在绳子中间，手柄大约应该到达腋下的高度。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>跳得太高。</strong>白白消耗力气，还会增加负荷却没有额外好处。</li>\n  <li><strong>用肩膀甩绳。</strong>很快就会疲劳，还会打乱节奏。</li>\n  <li><strong>一开始练得太多。</strong>小腿的反应会延迟出现。第一周每次五分钟就足够了。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  作为间歇训练：跳30到60秒，休息时间相同，共六到十轮。作为热身：轻松跳三到五分钟。\n</p>"
     }
   },
   "cardio.rowing": {
@@ -1340,7 +1420,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70% της δύναμης προέρχεται από τα πόδια — μη υπερβολική τράβηξη με τα χέρια.",
         "Στόχος ρυθμό κυπέλλου 18-26 spm για αντοχή· υψηλότερο για διαστήματα."
-      ]
+      ],
+      "article": "<h2>Δύναμη και αντοχή σε μία κίνηση</h2>\n<p>\n  Η κωπηλασία είναι ανάμεσα στα όργανα αντοχής αυτό με το μεγαλύτερο μυϊκό ποσοστό: περίπου 60 τοις\n  εκατό της δουλειάς προέρχεται από τα πόδια, το υπόλοιπο από κορμό και πλάτη. Έτσι μπορεί σε σύντομο\n  χρόνο να δημιουργηθεί υψηλό καρδιαγγειακό ερέθισμα, ενώ ταυτόχρονα εξυπηρετείται και η μυϊκή ομάδα\n  έλξης — που στα περισσότερα προγράμματα παραμελείται.\n</p>\n<p>\n  Όπως στην ποδηλασία, λείπει η κρουστική επιβάρυνση, γεγονός που καθιστά το ergometer κατάλληλο για\n  προβλήματα αρθρώσεων.\n</p>\n<h2>Η σειρά είναι το παν</h2>\n<p>\n  Το τράβηγμα εκτελείται σε σταθερή αλληλουχία: <strong>πόδια, κορμός, χέρια</strong> — και αντίστροφα\n  το ίδιο: χέρια, κορμός, πόδια. Όποιος τραβά ταυτόχρονα με όλα χάνει δύναμη και επιβαρύνει την κάτω μέση.\n</p>\n<p>\n  Η πλάτη παραμένει σε όλη τη διάρκεια ίσια. Η κλίση προέρχεται από το ισχίο, όχι από τη σπονδυλική\n  στήλη.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Καμπούρα κατά το τράβηγμα.</strong> Το λάθος με τη μεγαλύτερη πιθανότητα βλάβης. Στέρνο ψηλά, κίνηση από το ισχίο.</li>\n  <li><strong>Τράβηγμα πρώτα με τα χέρια.</strong> Τα πόδια παρέχουν το μεγαλύτερο μέρος της ισχύος· αυτά ξεκινούν την κίνηση.</li>\n  <li><strong>Πολύ υψηλή αντίσταση.</strong> Το επίπεδο 10 δεν είναι «καλύτερο», απλώς πιο αργό και πιο επιβαρυντικό για την πλάτη. Οι περισσότεροι τα πάνε καλύτερα με 3 έως 5.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Ήπια 20 έως 40 λεπτά ομοιόμορφα, έντονα ως διαστήματα — περίπου 500 μέτρα σκληρά με ίσης διάρκειας\n  διάλειμμα, τέσσερις έως έξι γύροι.\n</p>"
     },
     "en": {
       "name": "Rowing (Indoor)",
@@ -1354,7 +1435,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70 % of the power comes from the legs — don't over-pull with the arms.",
         "Target stroke rate 18-26 spm for endurance; higher for intervals."
-      ]
+      ],
+      "article": "<h2>Strength and endurance in one movement</h2>\n<p>\n  Among endurance machines, rowing recruits the most muscle mass: about 60 percent of the work comes\n  from the legs, the rest from the trunk and back. That produces a high cardiovascular stimulus in a\n  short time while also working the pulling muscles — a group most programs neglect.\n</p>\n<p>\n  As with cycling, there's no impact loading, which makes the rower suitable for joint issues.\n</p>\n<h2>Sequence is everything</h2>\n<p>\n  The stroke runs in a fixed order: <strong>legs, trunk, arms</strong> — and in reverse on the way back:\n  arms, trunk, legs. Pulling with everything at once loses power and strains the lower back.\n</p>\n<p>\n  The back stays straight throughout. The lean comes from the hips, not the spine.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Rounding the back on the drive.</strong> The mistake with the biggest damage potential. Sternum up, movement from the hips.</li>\n  <li><strong>Pulling with the arms first.</strong> The legs supply most of the power; they start the movement.</li>\n  <li><strong>Resistance set too high.</strong> Level 10 isn't \"better,\" just slower and harder on the back. Most people do better at 3 to 5.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  20 to 40 minutes steady and easy, or as intense intervals — roughly 500 meters hard with an equal\n  rest, four to six rounds.\n</p>"
     },
     "es": {
       "name": "Remo (Interior)",
@@ -1368,7 +1450,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "El 60-70 % de la potencia proviene de las piernas — no tires excesivamente con los brazos.",
         "Ritmo de golpe objetivo 18-26 golpes por minuto para resistencia; más alto para intervalos."
-      ]
+      ],
+      "article": "<h2>Fuerza y resistencia en un solo movimiento</h2>\n<p>\n  Entre los aparatos de resistencia, el remo es el que implica mayor masa muscular: aproximadamente el\n  60 por ciento del trabajo proviene de las piernas, el resto del tronco y la espalda. Con eso se puede\n  generar un estímulo cardiovascular alto en poco tiempo, y al mismo tiempo se involucra la musculatura\n  de tracción — que en la mayoría de los programas queda desatendida.\n</p>\n<p>\n  Como en el ciclismo, no hay impacto, lo que hace del ergómetro una opción adecuada para problemas\n  articulares.\n</p>\n<h2>El orden lo es todo</h2>\n<p>\n  El impulso sigue una secuencia fija: <strong>piernas, tronco, brazos</strong> — y a la inversa\n  igualmente: brazos, tronco, piernas. Quien tira con todo a la vez pierde potencia y sobrecarga la\n  zona lumbar.\n</p>\n<p>\n  La espalda permanece recta durante todo el movimiento. La inclinación proviene de la cadera, no de la\n  columna.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Espalda redondeada durante el impulso.</strong> El error con mayor potencial de daño. Esternón arriba, movimiento desde la cadera.</li>\n  <li><strong>Tirar primero con los brazos.</strong> Las piernas aportan la mayor parte de la potencia; son las que inician el movimiento.</li>\n  <li><strong>Resistencia demasiado alta.</strong> El nivel 10 no es \"mejor\", sino más lento y más exigente para la espalda. A la mayoría le va mejor entre 3 y 5.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Suave de 20 a 40 minutos a ritmo constante, intenso como intervalos — por ejemplo 500 metros fuertes\n  con una pausa de igual duración, de cuatro a seis rondas.\n</p>"
     },
     "fr": {
       "name": "Aviron (intérieur)",
@@ -1382,7 +1465,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70 % de la puissance vient des jambes — ne tirez pas trop avec les bras.",
         "Visez une cadence de coup 18-26 spm pour l'endurance ; plus pour les intervals."
-      ]
+      ],
+      "article": "<h2>Force et endurance en un seul mouvement</h2>\n<p>\n  Parmi les appareils d'endurance, l'aviron est celui qui sollicite le plus de masse musculaire :\n  environ 60 % du travail vient des jambes, le reste du tronc et du dos. Cela permet de générer un fort\n  stimulus cardio en peu de temps, tout en sollicitant les muscles tracteurs — souvent négligés dans la\n  plupart des programmes.\n</p>\n<p>\n  Comme à vélo, l'impact est absent, ce qui rend l'ergomètre adapté en cas de problèmes articulaires.\n</p>\n<h2>L'ordre, c'est tout</h2>\n<p>\n  La traction suit un ordre fixe : <strong>jambes, tronc, bras</strong> — et à l'inverse dans l'autre\n  sens : bras, tronc, jambes. Qui tire tout en même temps perd de la puissance et sollicite le bas du\n  dos.\n</p>\n<p>\n  Le dos reste droit tout du long. L'inclinaison vient de la hanche, pas de la colonne vertébrale.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Dos rond pendant la traction.</strong> L'erreur au plus grand potentiel de dommage. Sternum haut, mouvement depuis la hanche.</li>\n  <li><strong>Tirer d'abord avec les bras.</strong> Les jambes fournissent l'essentiel de la puissance ; ce sont elles qui lancent le mouvement.</li>\n  <li><strong>Résistance trop élevée.</strong> Le niveau 10 n'est pas « meilleur », juste plus lent et plus contraignant pour le dos. La plupart s'en sortent mieux avec 3 à 5.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  En endurance fondamentale : 20 à 40 minutes régulières. En intensif : par intervalles — environ 500\n  mètres soutenus avec une pause de même durée, quatre à six tours.\n</p>"
     },
     "it": {
       "name": "Canottaggio indoor",
@@ -1396,7 +1480,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70% della potenza viene dalle gambe — non tirare eccessivamente con le braccia.",
         "Mira a una frequenza di colpi 18-26 spm per la resistenza; più alta per gli intervalli."
-      ]
+      ],
+      "article": "<h2>Forza e resistenza in un unico movimento</h2>\n<p>\n  Il canottaggio è, tra gli attrezzi cardio, quello con la maggiore componente muscolare: circa il 60\n  per cento del lavoro proviene dalle gambe, il resto da tronco e schiena. Questo permette di generare\n  in poco tempo uno stimolo cardiovascolare elevato, mentre allena contemporaneamente la muscolatura di\n  trazione — spesso trascurata nella maggior parte dei programmi.\n</p>\n<p>\n  Come nel ciclismo, manca il carico d'impatto, il che rende l'ergometro adatto a chi ha problemi\n  articolari.\n</p>\n<h2>La sequenza è tutto</h2>\n<p>\n  Il colpo segue una sequenza fissa: <strong>gambe, tronco, braccia</strong> — e all'indietro allo stesso\n  modo: braccia, tronco, gambe. Chi tira con tutto contemporaneamente perde forza e sovraccarica la\n  parte bassa della schiena.\n</p>\n<p>\n  La schiena resta dritta per tutto il movimento. L'inclinazione parte dal bacino, non dalla colonna.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Schiena arrotondata durante il colpo.</strong> L'errore con il maggior potenziale di danno. Sterno in alto, movimento dal bacino.</li>\n  <li><strong>Tirare prima con le braccia.</strong> Le gambe forniscono la maggior parte della potenza; sono loro ad avviare il movimento.</li>\n  <li><strong>Resistenza troppo alta.</strong> Il livello 10 non è \"migliore\", solo più lento e più gravoso per la schiena. La maggior parte va meglio con 3-5.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Leggero da 20 a 40 minuti a ritmo costante, intenso come intervalli — ad esempio 500 metri intensi con\n  pausa di pari durata, da quattro a sei round.\n</p>"
     },
     "nl": {
       "name": "Roeien (Indoor)",
@@ -1410,7 +1495,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70% van de kracht komt van de benen — trek niet te veel met de armen.",
         "Richt slagfrequentie op 18-26 spm voor duurvermogen; hoger voor intervaltraining."
-      ]
+      ],
+      "article": "<h2>Kracht en uithoudingsvermogen in één beweging</h2>\n<p>\n  Roeien is onder de conditieapparaten het toestel met het grootste spieraandeel: ongeveer 60\n  procent van het werk komt uit de benen, de rest uit romp en rug. Daarmee is in korte tijd een\n  hoge cardioprikkel te creëren, terwijl tegelijk de trekspieren worden meegetraind — die in de\n  meeste programma's tekortkomen.\n</p>\n<p>\n  Net als bij het fietsen ontbreekt de stootbelasting, wat de roeiergometer geschikt maakt bij\n  gewrichtsklachten.\n</p>\n<h2>De volgorde is alles</h2>\n<p>\n  De haal verloopt in een vaste volgorde: <strong>benen, romp, armen</strong> — en achteruit\n  precies zo: armen, romp, benen. Wie tegelijk met alles trekt, verliest kracht en belast de\n  onderrug.\n</p>\n<p>\n  De rug blijft daarbij de hele tijd recht. De kanteling komt uit de heup, niet uit de\n  wervelkolom.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Ronde rug tijdens de haal.</strong> De fout met het grootste schadelijke potentieel. Borstbeen omhoog, beweging uit de heup.</li>\n  <li><strong>Eerst met de armen trekken.</strong> De benen leveren het grootste deel van het vermogen; zij starten de beweging.</li>\n  <li><strong>Te hoge weerstand.</strong> Stand 10 is niet \"beter\", maar trager en zwaarder voor de rug. De meesten varen beter bij 3 tot 5.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Rustig 20 tot 40 minuten gelijkmatig, intensief als intervallen — bijvoorbeeld 500 meter hard met\n  even lange pauze, vier tot zes rondes.\n</p>"
     },
     "no": {
       "name": "Rowing (Indoor)",
@@ -1424,7 +1510,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70 % av kraften kommer fra bena – ikke overtrekk med armene.",
         "Målslang 18-26 spm for utholdenhet; høyere for intervaller."
-      ]
+      ],
+      "article": "<h2>Styrke og utholdenhet i én bevegelse</h2>\n<p>\n  Roing er blant utholdenhetsapparatene det med størst muskelinvolvering: omtrent 60 prosent av arbeidet\n  kommer fra beina, resten fra midtparti og rygg. Dermed kan man skape en høy kretsløpsstimulans på kort\n  tid, samtidig som trekkmuskulaturen får jobbe – noe som ofte blir forsømt i de fleste programmer.\n</p>\n<p>\n  Som ved sykling mangler støtbelastningen, noe som gjør ergometeret godt egnet ved leddplager.\n</p>\n<h2>Rekkefølgen er alt</h2>\n<p>\n  Draget følger en fast rekkefølge: <strong>bein, midtparti, armer</strong> – og bakover akkurat like\n  systematisk: armer, midtparti, bein. Den som drar med alt samtidig, mister kraft og belaster korsryggen.\n</p>\n<p>\n  Ryggen holdes rett gjennom hele bevegelsen. Vippingen kommer fra hoften, ikke fra ryggraden.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Rundrygg under draget.</strong> Feilen med størst skadepotensial. Hold brystbenet høyt, bevegelsen kommer fra hoften.</li>\n  <li><strong>Å dra med armene først.</strong> Beina leverer mesteparten av kraften; de starter bevegelsen.</li>\n  <li><strong>For høy motstand.</strong> Nivå 10 er ikke «bedre», bare tregere og mer belastende for ryggen. De fleste kommer bedre ut av det med nivå 3 til 5.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Rolig 20 til 40 minutter jevnt, intensivt som intervaller – for eksempel 500 meter hardt med like lang\n  pause, fire til seks runder.\n</p>"
     },
     "zh": {
       "name": "室内划船",
@@ -1438,7 +1525,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "60-70%的力量来自腿部——不要过度用双臂拉动。",
         "目标划水速率18-26次/分用于耐力；高强度训练时更高。"
-      ]
+      ],
+      "article": "<h2>一个动作，兼顾力量与耐力</h2>\n<p>\n  在所有耐力训练器械中，划船机调动的肌肉比例最高：大约60%的功来自腿部，其余来自躯干和\n  背部。这样既能在短时间内产生很高的心肺刺激，又能同时锻炼到大多数训练计划中常被忽视的\n  拉类肌群。\n</p>\n<p>\n  和骑行一样，划船没有冲击性负荷，因此对有关节问题的人也很友好。\n</p>\n<h2>顺序决定一切</h2>\n<p>\n  划水动作遵循固定顺序：<strong>腿、躯干、手臂</strong>——回程则反过来：手臂、躯干、腿。如果\n  同时用所有部位发力，既会损失力量输出，也会给下背部带来负担。\n</p>\n<p>\n  整个过程中背部应始终保持平直。身体的前后倾斜来自髋部，而不是脊柱。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>划水时弓背。</strong>危害最大的错误。应挺起胸骨，动作来自髋部。</li>\n  <li><strong>先用手臂发力。</strong>腿部才是主要力量来源，动作应该从腿部开始。</li>\n  <li><strong>阻力设置过高。</strong>档位10并不代表\"更好\"，只会让动作变慢，并把更多负荷压在背部上。大多数人用3到5档效果更好。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  轻松匀速划船20到40分钟；高强度训练则以间歇形式进行——大约500米全力划，休息时间相同，\n  共四到六轮。\n</p>"
     }
   },
   "cardio.running": {
@@ -1469,7 +1557,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αρχάριοι ξεκινήστε με περπατ/τρέχοντα διαστήματα (1 λεπ. τρέχω, 1 λεπ. περπάτημα).",
         "Παπούτσια και ρολόι τρεξίματος βοηθούν, αλλά συνέπεια νικά οποιοδήποτε εξοπλισμό."
-      ]
+      ],
+      "article": "<h2>Γιατί το τρέξιμο είναι τόσο αποτελεσματικό</h2>\n<p>\n  Η καρδιοαναπνευστική φυσική κατάσταση — μετρημένη ως μέγιστη πρόσληψη οξυγόνου, VO₂max — είναι μία\n  από τις πιο ενδεικτικές μεμονωμένες τιμές για την υγεία. Μειώνεται από την ηλικία των τριάντα ετών\n  κατά περίπου δέκα τοις εκατό ανά δεκαετία, αν δεν κάνεις τίποτα. Το τρέξιμο είναι ο πιο άμεσος και\n  λιγότερο εξαρτημένος από εξοπλισμό τρόπος να το αντιμετωπίσεις.\n</p>\n<h2>Η κατανομή είναι πιο σημαντική από την ποσότητα</h2>\n<p>\n  Το πιο συχνό λάθος δεν είναι η λίγη προπόνηση, αλλά ο πολύς μέτριος ρυθμός. Όποιος τρέχει πάντα\n  γρήγορα καταλήγει στη Ζώνη 3 — πολύ σκληρά για τις προσαρμογές της βασικής αντοχής, πολύ ελαφρά για\n  το ερέθισμα έντονων διαστημάτων. Πιο λογική είναι μια κατανομή: το μεγαλύτερο μέρος ήπια στη Ζώνη 2,\n  στο 60 έως 70 τοις εκατό του μέγιστου καρδιακού ρυθμού, ένα μικρό μέρος σαφώς πιο έντονο.\n</p>\n<p>\n  Ο έλεγχος δεν χρειάζεται καρδιοσυχνόμετρο: στη Ζώνη 2 μπορείς να μιλάς σε ολόκληρες προτάσεις και να\n  αναπνέεις από τη μύτη, αλλά όχι να τραγουδάς. Όποιος δεν καταφέρνει πια συνεκτικές προτάσεις ενώ\n  τρέχει, πηγαίνει πολύ γρήγορα.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πολύ γρήγορη εκκίνηση.</strong> Η καρδιά και η κυκλοφορία προσαρμόζονται πιο γρήγορα από τους τένοντες και τα οστά. Ο ρυθμός τον αντέχει το σώμα, η δομή συχνά όχι.</li>\n  <li><strong>Πολύ γρήγορη αύξηση όγκου.</strong> Ένας γενικός εμπειρικός κανόνας είναι δέκα τοις εκατό περισσότερο ανά εβδομάδα.</li>\n  <li><strong>Καμία ήπια μέρα.</strong> Η προσαρμογή προκύπτει στην ανάρρωση, όχι στο ερέθισμα.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρεις έως τέσσερις προπονήσεις την εβδομάδα, από αυτές δύο έως τρεις ήπιες και το πολύ μία έντονη. Για\n  αρχάριους, η εναλλαγή περπατήματος και τρεξίματος είναι πιο ανθεκτική αρχή από το συνεχές τρέξιμο.\n</p>"
     },
     "en": {
       "name": "Running",
@@ -1483,7 +1572,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners start with walk/run intervals (1 min run, 1 min walk).",
         "Shoes and a running watch help, but consistency beats any gear."
-      ]
+      ],
+      "article": "<h2>Why running works so well</h2>\n<p>\n  Cardiorespiratory fitness — measured as maximal oxygen uptake, VO₂max — is one of the most predictive\n  single markers for health. It drops by roughly ten percent per decade starting in your thirties if you\n  do nothing. Running is the most direct, least equipment-dependent way to push back against that.\n</p>\n<h2>Distribution matters more than volume</h2>\n<p>\n  The most common mistake isn't too little training but too much medium pace. Always running at a brisk\n  clip lands you in zone 3 — too hard for the adaptations of base endurance, too easy for the stimulus\n  of hard intervals. A better split: most of it easy in zone 2, at 60 to 70 percent of max heart rate,\n  with a small portion noticeably harder.\n</p>\n<p>\n  You don't need a heart rate monitor to check this: in zone 2 you can speak in full sentences and\n  breathe through your nose, but not sing. If you can't hold a conversation while running, you're going\n  too fast.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Starting too fast.</strong> The heart and circulatory system adapt faster than tendons and bones. The body can handle the pace; the structures often can't.</li>\n  <li><strong>Increasing volume too quickly.</strong> A rough rule of thumb is ten percent more per week.</li>\n  <li><strong>No easy days.</strong> Adaptation happens during recovery, not during the stimulus.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three to four sessions a week, two to three of them easy and at most one intense. For beginners, a\n  walk/run mix is a more sustainable start than continuous running.\n</p>"
     },
     "es": {
       "name": "Carrera",
@@ -1497,7 +1587,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Los principiantes comienzan con intervalos caminar/correr (1 min corriendo, 1 min caminando).",
         "Los zapatos y un reloj deportivo ayudan, pero la consistencia vence cualquier equipamiento."
-      ]
+      ],
+      "article": "<h2>Por qué correr es tan eficaz</h2>\n<p>\n  La aptitud cardiorrespiratoria — medida como consumo máximo de oxígeno, VO₂max — es uno de los\n  valores individuales más significativos para la salud. A partir de los treinta años disminuye\n  aproximadamente un diez por ciento por década si no se hace nada. Correr es el camino más directo y\n  menos dependiente del equipamiento para contrarrestarlo.\n</p>\n<h2>La distribución importa más que el volumen</h2>\n<p>\n  El error más frecuente no es entrenar poco, sino correr demasiado a ritmo medio. Quien siempre corre\n  a buen ritmo termina en la zona 3 — demasiado duro para las adaptaciones de la resistencia base,\n  demasiado suave para el estímulo de los intervalos intensos. Es más sensato repartir: la mayor parte\n  suave en zona 2, entre el 60 y el 70 por ciento de la frecuencia cardíaca máxima, y una pequeña parte\n  claramente más dura.\n</p>\n<p>\n  El control no necesita un pulsómetro: en zona 2 puedes hablar en frases completas y respirar por la\n  nariz, pero no cantar. Quien ya no logra frases completas al correr va demasiado rápido.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Empezar demasiado rápido.</strong> El corazón y el sistema circulatorio se adaptan más rápido que los tendones y los huesos. El cuerpo tolera el ritmo, la estructura muchas veces no.</li>\n  <li><strong>Aumentar el volumen demasiado rápido.</strong> Una regla general aproximada es un diez por ciento más por semana.</li>\n  <li><strong>Ningún día suave.</strong> La adaptación surge en la recuperación, no en el estímulo.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres a cuatro sesiones por semana, de las cuales dos o tres suaves y como máximo una intensa. Para\n  principiantes, alternar caminar y correr es un inicio más sostenible que correr sin parar.\n</p>"
     },
     "fr": {
       "name": "Course à pied",
@@ -1511,7 +1602,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Les débutants commencent avec des intervalles marche/course (1 min course, 1 min marche).",
         "Les chaussures et une montre de course aident, mais la régularité prime sur l'équipement."
-      ]
+      ],
+      "article": "<h2>Pourquoi la course à pied est si efficace</h2>\n<p>\n  La forme cardiorespiratoire — mesurée par la consommation maximale d'oxygène, la VO₂max — est l'un\n  des indicateurs isolés les plus révélateurs de l'état de santé. Elle diminue d'environ dix pour cent\n  par décennie à partir de trente ans si l'on ne fait rien. La course à pied est le moyen le plus direct\n  et le moins dépendant du matériel pour contrer cette baisse.\n</p>\n<h2>La répartition compte plus que le volume</h2>\n<p>\n  L'erreur la plus fréquente n'est pas un manque d'entraînement, mais un rythme moyen trop souvent\n  adopté. Qui court toujours à allure soutenue se retrouve en zone 3 — trop dur pour les adaptations de\n  l'endurance fondamentale, trop léger pour le stimulus des intervalles intenses. Une répartition est\n  plus judicieuse : l'essentiel en endurance fondamentale, en zone 2, à 60-70 % de la fréquence cardiaque\n  maximale, et une petite partie nettement plus intense.\n</p>\n<p>\n  Pas besoin de cardiofréquencemètre pour contrôler cela : en zone 2, on peut parler par phrases\n  complètes et respirer par le nez, mais pas chanter. Qui ne parvient plus à formuler des phrases\n  cohérentes en courant va trop vite.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Démarrer trop vite.</strong> Le cœur et le système cardiovasculaire s'adaptent plus vite que les tendons et les os. Le corps supporte le rythme, la structure souvent non.</li>\n  <li><strong>Augmenter le volume trop vite.</strong> Une règle empirique approximative est dix pour cent de plus par semaine.</li>\n  <li><strong>Aucun jour de récupération.</strong> L'adaptation se produit pendant la récupération, pas pendant le stimulus.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois à quatre séances par semaine, dont deux à trois en endurance fondamentale et au maximum une\n  intensive. Pour les débutants, une alternance marche-course constitue un départ plus tenable qu'une\n  course continue.\n</p>"
     },
     "it": {
       "name": "Corsa",
@@ -1525,7 +1617,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "I principianti iniziano con intervalli camminata/corsa (1 min corsa, 1 min camminata).",
         "Scarpe e orologio da corsa aiutano, ma la coerenza batte qualsiasi attrezzo."
-      ]
+      ],
+      "article": "<h2>Perché la corsa è così efficace</h2>\n<p>\n  La forma fisica cardiorespiratoria — misurata come massimo consumo di ossigeno, VO₂max — è uno dei\n  valori singoli più significativi per la salute. Dai trent'anni in poi diminuisce di circa il dieci per\n  cento per decennio se non si fa nulla. La corsa è il modo più diretto e meno dipendente da attrezzatura\n  per contrastarla.\n</p>\n<h2>La distribuzione conta più del volume</h2>\n<p>\n  L'errore più comune non è allenarsi troppo poco, ma correre troppo spesso a ritmo medio. Chi corre\n  sempre a passo sostenuto finisce in zona 3 — troppo intensa per gli adattamenti della resistenza di\n  base, troppo leggera per lo stimolo di intervalli intensi. Più sensata è una suddivisione: la maggior\n  parte leggera in zona 2, al 60-70% della frequenza cardiaca massima, una piccola parte nettamente più\n  intensa.\n</p>\n<p>\n  Il controllo non richiede un cardiofrequenzimetro: in zona 2 riesci a parlare per frasi intere e a\n  respirare dal naso, ma non a cantare. Chi durante la corsa non riesce più a formulare frasi complete\n  sta andando troppo veloce.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Iniziare troppo velocemente.</strong> Cuore e circolazione si adattano più rapidamente di tendini e ossa. Il ritmo il corpo lo tollera, la struttura spesso no.</li>\n  <li><strong>Aumentare il volume troppo in fretta.</strong> Una regola empirica approssimativa è il dieci per cento in più a settimana.</li>\n  <li><strong>Nessuna giornata leggera.</strong> L'adattamento avviene nel recupero, non nello stimolo.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre o quattro sessioni a settimana, di cui due o tre leggere e al massimo una intensa. Per i\n  principianti, un'alternanza di camminata e corsa è un inizio più sostenibile della corsa continua.\n</p>"
     },
     "nl": {
       "name": "Hardlopen",
@@ -1539,7 +1632,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners beginnen met loop/wandel intervallen (1 min hardlopen, 1 min wandelen).",
         "Schoenen en een hardloophorloge helpen, maar consistentie slaat alle uitrusting."
-      ]
+      ],
+      "article": "<h2>Waarom hardlopen zo effectief is</h2>\n<p>\n  De cardiorespiratoire fitheid — gemeten als maximale zuurstofopname, VO₂max — is een van de\n  meest zeggende afzonderlijke waarden voor de gezondheid. Ze daalt vanaf het dertigste levensjaar\n  met ongeveer tien procent per decennium als je niets doet. Hardlopen is de meest directe en\n  minst uitrustingsafhankelijke manier om daartegen in te gaan.\n</p>\n<h2>De verdeling is belangrijker dan de hoeveelheid</h2>\n<p>\n  De meest voorkomende fout is niet te weinig training, maar te veel middelmatig tempo. Wie altijd\n  vlot loopt, belandt in zone 3 — te zwaar voor de aanpassingen van het basisuithoudingsvermogen,\n  te licht voor de prikkel van intensieve intervallen. Zinvoller is een verdeling: het grootste\n  deel rustig in zone 2, bij 60 tot 70 procent van de maximale hartslag, een klein deel duidelijk\n  harder.\n</p>\n<p>\n  Voor de controle is geen hartslagmeter nodig: in zone 2 kun je in volledige zinnen praten en door\n  de neus ademen, maar niet zingen. Wie tijdens het lopen geen samenhangende zinnen meer uit\n  krijgt, is te snel onderweg.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Te snel beginnen.</strong> Hart en bloedsomloop passen zich sneller aan dan pezen en botten. Het tempo verdraagt het lichaam, de structuur vaak niet.</li>\n  <li><strong>Volume te snel opbouwen.</strong> Een ruwe vuistregel is tien procent meer per week.</li>\n  <li><strong>Geen rustige dagen.</strong> De aanpassing ontstaat in het herstel, niet in de prikkel.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie tot vier eenheden per week, waarvan twee tot drie rustig en hoogstens één intensief. Voor\n  beginners is een afwisseling van wandelen en hardlopen de draaglijkere start dan doorlopend\n  hardlopen.\n</p>"
     },
     "no": {
       "name": "Running",
@@ -1553,7 +1647,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nybegynnere starter med gå/løp-intervaller (1 min løp, 1 min gå).",
         "Sko og løpevifte hjelper, men konsistens slår alt utstyr."
-      ]
+      ],
+      "article": "<h2>Hvorfor løping er så effektivt</h2>\n<p>\n  Den kardiorespiratoriske formen – målt som maksimalt oksygenopptak, VO₂max – er en av de mest talende\n  enkeltverdiene for helsen. Den synker fra rundt tretti års alder med omtrent ti prosent per tiår hvis\n  man ikke gjør noe. Løping er den mest direkte veien til å motvirke dette, og den som krever minst\n  utstyr.\n</p>\n<h2>Fordelingen er viktigere enn mengden</h2>\n<p>\n  Den vanligste feilen er ikke for lite trening, men for mye middels tempo. Den som alltid løper i raskt\n  tempo, havner i sone 3 – for hardt for tilpasningene i grunnutholdenheten, for lett for stimulansen fra\n  intensive intervaller. Mer fornuftig er en fordeling: mesteparten rolig i sone 2, ved 60 til 70 prosent\n  av maksimal pulsfrekvens, en liten del betydelig hardere.\n</p>\n<p>\n  Kontrollen krever ingen pulsklokke: i sone 2 kan du snakke i fulle setninger og puste gjennom nesen,\n  men ikke synge. Den som ikke klarer å si sammenhengende setninger mens man løper, er for rask.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å starte for raskt.</strong> Hjerte og kretsløp tilpasser seg raskere enn sener og knokler. Kroppen tåler tempoet, men strukturen ofte ikke.</li>\n  <li><strong>Å øke volumet for raskt.</strong> En grov tommelfingerregel er ti prosent mer per uke.</li>\n  <li><strong>Ingen rolige dager.</strong> Tilpasningen skjer i restitusjonen, ikke i selve stimulansen.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre til fire økter per uke, hvorav to til tre rolige og maksimalt én intensiv. For nybegynnere er en\n  veksling mellom gange og løping en tåligere start enn sammenhengende løping.\n</p>"
     },
     "zh": {
       "name": "跑步",
@@ -1567,7 +1662,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "初学者从走/跑交替开始（1分钟跑，1分钟走）。",
         "跑鞋和跑步手表很有帮助，但坚持比任何装备都重要。"
-      ]
+      ],
+      "article": "<h2>跑步为什么如此有效</h2>\n<p>\n  心肺适能——以最大摄氧量VO₂max衡量——是反映健康状况最有说服力的单一指标之一。从三十岁\n  开始，如果不加干预，它每十年会下降约10%。而跑步是对抗这一趋势最直接、对器械依赖最小的\n  方式。\n</p>\n<h2>分配方式比训练量更重要</h2>\n<p>\n  最常见的错误不是训练量太少，而是总以中等速度跑步。总是保持较快节奏的人，往往落在\n  三区——对基础耐力的适应来说太强，对高强度间歇的刺激来说又太弱。更合理的做法是明确分配：\n  大部分训练保持在二区、最大心率的60%到70%的轻松强度，小部分训练则明显更高强度。\n</p>\n<p>\n  判断强度并不需要心率表：在二区，你能用完整的句子说话，用鼻子呼吸，但唱不了歌。如果跑步\n  时已经说不出连贯的句子，说明速度太快了。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>一开始就跑得太快。</strong>心肺系统的适应速度快于肌腱和骨骼。身体本身能承受这个速度，但结构组织往往跟不上。</li>\n  <li><strong>训练量增加得太快。</strong>一个大致的经验法则是每周增幅不超过10%。</li>\n  <li><strong>没有轻松日。</strong>身体的适应发生在恢复阶段，而不是训练刺激本身。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  每周三到四次训练，其中两到三次轻松跑，最多一次高强度。对初学者来说，走跑交替是比连续\n  跑步更稳妥的开始方式。\n</p>"
     }
   },
   "cardio.swimming": {
@@ -1598,7 +1694,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Ξεκίνησε με σύντομες αποστάσεις (4 × 50 μ.) και ανάπαυσης, αντί της ακολουθίας σε ένα 200 μ. απόπειρα.",
         "Γυαλιά κοπής τριβής και ερεθισμού δραματικά — μη διαπραγματεύσιμος εξοπλισμός."
-      ]
+      ],
+      "article": "<h2>Πλήρες σώμα και αβαρές</h2>\n<p>\n  Η κολύμβηση είναι το μοναδικό διαδεδομένο άθλημα αντοχής χωρίς καμία κρουστική επιβάρυνση — η άνωση\n  αφαιρεί από το σώμα σχεδόν ολόκληρο το βάρος του. Για ανθρώπους με προβλήματα αρθρώσεων, έντονη\n  παχυσαρκία ή σε αποκατάσταση αποτελεί συχνά τη μοναδική μορφή που είναι καθόλου ανώδυνη.\n</p>\n<p>\n  Ταυτόχρονα είναι πιο απαιτητική για την αναπνοή από κάθε χερσαίο άθλημα: η πίεση του νερού στον\n  θώρακα δυσκολεύει την εισπνοή, και ο ρυθμός αναπνοής είναι δεμένος με την κίνηση αντί να επιλέγεται\n  ελεύθερα.\n</p>\n<h2>Η τεχνική νικά την αντοχή</h2>\n<p>\n  Σε αντίθεση με το τρέξιμο, στην κολύμβηση σχεδόν πάντα ο περιοριστικός παράγοντας είναι η τεχνική,\n  όχι η αντοχή. Όποιος λαχανιάζει μετά από πενήντα μέτρα συνήθως δεν έχει πρόβλημα φυσικής κατάστασης,\n  αλλά πολύ ψηλή θέση στο νερό και πολύ μεγάλη αντίσταση. Λίγα μαθήματα τεχνικής προσφέρουν εδώ\n  περισσότερα από επιπλέον διαδρομές.\n</p>\n<h2>Τι πρέπει να προσέχεις</h2>\n<ul>\n  <li><strong>Ο καρδιακός ρυθμός είναι χαμηλότερος.</strong> Σε οριζόντια θέση και σε δροσερό νερό η καρδιά χτυπά στην ίδια επιβάρυνση περίπου δέκα παλμούς πιο αργά απ' ό,τι στη στεριά. Οι ζώνες από το τρέξιμο δεν μεταφέρονται απευθείας.</li>\n  <li><strong>Κανένα οστικό ερέθισμα.</strong> Όπως στην ποδηλασία, λείπει η κρουστική επιβάρυνση για την οστική πυκνότητα — δίπλα χρειάζεται προπόνηση δύναμης.</li>\n  <li><strong>Αυχένας στο πρόσθιο κολύμπι.</strong> Το διαρκώς υπερεκτεταμένο κεφάλι είναι συχνή πηγή ενοχλήσεων. Βύθιζε το κεφάλι τακτικά στο νερό.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Δύο έως τρεις προπονήσεις των 30 έως 45 λεπτών. Διαστήματα των 50 ή 100 μέτρων με σαφή διαλείμματα\n  είναι συνήθως πιο αποτελεσματικά από συνεχή κολύμβηση διαδρομών.\n</p>"
     },
     "en": {
       "name": "Swimming",
@@ -1612,7 +1709,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Start with short distances (4 × 50 m) and rest, rather than chasing one 200 m attempt.",
         "Goggles cut friction and irritation dramatically — non-negotiable kit."
-      ]
+      ],
+      "article": "<h2>Full body and weightless</h2>\n<p>\n  Swimming is the only widespread endurance sport with zero impact loading — buoyancy takes essentially\n  all the body's weight off. For people with joint issues, significant excess weight, or in\n  rehabilitation, it's often the only form that's pain-free at all.\n</p>\n<p>\n  At the same time, it's more demanding on breathing than any land-based sport: water pressure on the\n  chest makes inhaling harder, and the breathing rhythm is locked to the stroke rather than freely\n  chosen.\n</p>\n<h2>Technique beats conditioning</h2>\n<p>\n  Unlike running, in swimming it's almost always technique that limits you, not endurance. If you're out\n  of breath after fifty meters, it's usually not a conditioning problem but a body position sitting too\n  low with too much drag. A few technique lessons help more here than extra laps.\n</p>\n<h2>What to keep in mind</h2>\n<ul>\n  <li><strong>Heart rate runs lower.</strong> Lying horizontal in cool water, the heart beats roughly ten beats slower than on land at the same effort. Running zones don't transfer directly.</li>\n  <li><strong>No bone stimulus.</strong> As with cycling, there's no impact loading for bone density — strength training belongs alongside it.</li>\n  <li><strong>Neck in breaststroke.</strong> A constantly hyperextended head is a common source of complaints. Dip the head into the water regularly.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Two to three sessions of 30 to 45 minutes. Intervals over 50 or 100 meters with clear rest periods are\n  usually more effective than continuous laps.\n</p>"
     },
     "es": {
       "name": "Natación",
@@ -1626,7 +1724,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Comienza con distancias cortas (4 × 50 m) y descansa, en lugar de perseguir un intento de 200 m.",
         "Las gafas reducen la fricción e irritación dramáticamente — equipo innegociable."
-      ]
+      ],
+      "article": "<h2>Cuerpo completo y sin peso</h2>\n<p>\n  La natación es el único deporte de resistencia extendido sin ningún impacto — la flotabilidad le quita\n  al cuerpo prácticamente todo el peso. Para personas con molestias articulares, sobrepeso considerable\n  o en rehabilitación, suele ser por eso la única forma que resulta totalmente indolora.\n</p>\n<p>\n  Al mismo tiempo es más exigente para la respiración que cualquier deporte terrestre: la presión del\n  agua sobre el pecho dificulta la inhalación, y el ritmo respiratorio está ligado al movimiento en\n  lugar de ser libremente elegible.\n</p>\n<h2>La técnica vence al acondicionamiento</h2>\n<p>\n  A diferencia de correr, en la natación casi siempre el factor limitante es la técnica, no la\n  resistencia. Quien se queda sin aliento después de cincuenta metros normalmente no tiene un problema\n  de acondicionamiento, sino una posición demasiado hundida en el agua y demasiada resistencia. Unas\n  cuantas clases de técnica aportan aquí más que largos adicionales.\n</p>\n<h2>Qué tener en cuenta</h2>\n<ul>\n  <li><strong>La frecuencia cardíaca es más baja.</strong> En posición horizontal y en agua fría, el corazón late con la misma carga unos diez latidos más lento que en tierra. Las zonas de la carrera no se pueden trasladar directamente.</li>\n  <li><strong>Sin estímulo óseo.</strong> Como en el ciclismo, falta el impacto necesario para la densidad ósea — el entrenamiento de fuerza debe complementarlo.</li>\n  <li><strong>Cuello en el estilo braza.</strong> La cabeza permanentemente hiperextendida es una fuente frecuente de molestias. Sumerge la cabeza en el agua con regularidad.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Dos a tres sesiones de 30 a 45 minutos. Los intervalos de 50 o 100 metros con pausas claras suelen ser\n  más eficaces que nadar largos de forma continua.\n</p>"
     },
     "fr": {
       "name": "Natation",
@@ -1640,7 +1739,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Commencez par des courtes distances (4 × 50 m) avec repos, plutôt que d'essayer 200 m d'un coup.",
         "Les lunettes réduisent drastiquement friction et irritation — équipement indispensable."
-      ]
+      ],
+      "article": "<h2>Tout le corps et sans poids</h2>\n<p>\n  La natation est le seul sport d'endurance répandu totalement dépourvu d'impact — la flottabilité\n  soulage le corps de pratiquement tout son poids. Pour les personnes souffrant de problèmes\n  articulaires, en fort surpoids ou en rééducation, c'est donc souvent la seule forme d'exercice possible\n  sans douleur.\n</p>\n<p>\n  En même temps, elle est plus exigeante pour la respiration que n'importe quel sport terrestre : la\n  pression de l'eau sur la cage thoracique complique l'inspiration, et le rythme respiratoire est lié au\n  mouvement plutôt que librement choisi.\n</p>\n<h2>La technique prime sur le conditionnement</h2>\n<p>\n  Contrairement à la course à pied, c'est presque toujours la technique, et non l'endurance, qui limite\n  en natation. Qui est essoufflé après cinquante mètres n'a généralement pas de problème de condition\n  physique, mais une position dans l'eau trop haute et trop de résistance. Quelques cours de technique\n  apportent ici plus que des longueurs supplémentaires.\n</p>\n<h2>Ce qu'il faut savoir</h2>\n<ul>\n  <li><strong>La fréquence cardiaque est plus basse.</strong> En position horizontale et dans l'eau fraîche, le cœur bat, à effort égal, environ dix battements plus lentement qu'à terre. Les zones établies en course à pied ne se transposent pas directement.</li>\n  <li><strong>Pas de stimulus osseux.</strong> Comme à vélo, l'impact nécessaire à la densité osseuse fait défaut — un travail de renforcement musculaire doit venir en complément.</li>\n  <li><strong>Nuque en brasse.</strong> La tête en hyperextension permanente est une source fréquente de gêne. Immergez régulièrement la tête.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Deux à trois séances de 30 à 45 minutes. Des intervalles sur 50 ou 100 mètres avec des pauses nettes\n  sont généralement plus efficaces que des longueurs enchaînées sans interruption.\n</p>"
     },
     "it": {
       "name": "Nuoto",
@@ -1654,7 +1754,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Inizia con distanze brevi (4 × 50 m) e ripresa, piuttosto che inseguire un tentativo di 200 m.",
         "Gli occhialini riducono notevolmente l'attrito e l'irritazione — attrezzo indispensabile."
-      ]
+      ],
+      "article": "<h2>Corpo intero e senza peso</h2>\n<p>\n  Il nuoto è l'unico sport di resistenza diffuso senza alcun carico d'impatto — la spinta idrostatica\n  toglie al corpo praticamente tutto il peso. Per chi ha problemi articolari, forte sovrappeso o è in\n  riabilitazione, è spesso l'unica forma di attività possibile senza dolore.\n</p>\n<p>\n  Allo stesso tempo è più impegnativo per la respirazione di qualsiasi sport terrestre: la pressione\n  dell'acqua sul torace rende più difficile l'inspirazione, e il ritmo respiratorio è vincolato al\n  movimento invece che libero.\n</p>\n<h2>La tecnica conta più della condizione</h2>\n<p>\n  A differenza della corsa, nel nuoto è quasi sempre la tecnica a porre il limite, non la resistenza. Chi\n  dopo cinquanta metri è senza fiato di solito non ha un problema di condizione, ma un assetto in acqua\n  troppo alto e troppa resistenza. Qualche lezione di tecnica porta più benefici di vasche aggiuntive.\n</p>\n<h2>Cosa tenere presente</h2>\n<ul>\n  <li><strong>La frequenza cardiaca è più bassa.</strong> In posizione orizzontale e in acqua fresca, a parità di sforzo il cuore batte circa dieci pulsazioni più lentamente rispetto a terra. Le zone della corsa non si possono trasferire direttamente.</li>\n  <li><strong>Nessuno stimolo osseo.</strong> Come nel ciclismo manca il carico d'impatto per la densità ossea — l'allenamento della forza va aggiunto a parte.</li>\n  <li><strong>Il collo nella rana.</strong> La testa costantemente iperestesa è una fonte frequente di disturbi. Immergi la testa regolarmente.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Due o tre sessioni da 30 a 45 minuti. Intervalli su 50 o 100 metri con pause definite sono in genere\n  più efficaci del nuoto continuo.\n</p>"
     },
     "nl": {
       "name": "Zwemmen",
@@ -1668,7 +1769,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Begin met korte afstanden (4 × 50 m) en rust, in plaats van naar één 200 m poging te streven.",
         "Zwembril vermindert wrijving en irritatie dramatisch — niet-onderhandelbare uitrusting."
-      ]
+      ],
+      "article": "<h2>Full-body en gewichtloos</h2>\n<p>\n  Zwemmen is de enige veelbeoefende duursport zonder enige stootbelasting — de opwaartse kracht\n  neemt het lichaam vrijwel het volledige gewicht af. Voor mensen met gewrichtsklachten, sterk\n  overgewicht of in revalidatie is het daardoor vaak de enige vorm die überhaupt pijnvrij lukt.\n</p>\n<p>\n  Tegelijk is het veeleisender voor de ademhaling dan elke landsport: de waterdruk op de borstkas\n  bemoeilijkt het inademen, en het ademritme is gekoppeld aan de beweging in plaats van vrij te\n  kiezen.\n</p>\n<h2>Techniek slaat conditie</h2>\n<p>\n  Anders dan bij het hardlopen wordt bij het zwemmen bijna altijd de techniek de beperkende factor,\n  niet het uithoudingsvermogen. Wie na vijftig meter buiten adem is, heeft meestal geen\n  conditieprobleem, maar een te hoge waterligging en te veel weerstand. Een paar technieklessen\n  brengen hier meer dan extra baantjes.\n</p>\n<h2>Waar je op moet letten</h2>\n<ul>\n  <li><strong>De hartslag ligt lager.</strong> In horizontale positie en in koel water klopt het hart bij gelijke belasting ongeveer tien slagen langzamer dan op het land. Zones uit het hardlopen zijn niet direct over te nemen.</li>\n  <li><strong>Geen botprikkel.</strong> Net als bij het fietsen ontbreekt de stootbelasting voor de botdichtheid — krachttraining hoort erbij.</li>\n  <li><strong>Nek bij de schoolslag.</strong> Het permanent overstrekte hoofd is een veelvoorkomende bron van klachten. Neem het hoofd regelmatig onder water.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Twee tot drie eenheden van 30 tot 45 minuten. Intervallen over 50 of 100 meter met duidelijke\n  pauzes zijn meestal effectiever dan doorlopend baantjes trekken.\n</p>"
     },
     "no": {
       "name": "Swimming",
@@ -1682,7 +1784,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Start med kort distanser (4 × 50 m) og hvil, i stedet for å jage en 200 m forsøk.",
         "Svømmebrilller reduserer friksjon og irritasjon drastisk – ikke-forhandlbart utstyr."
-      ]
+      ],
+      "article": "<h2>Hele kroppen og vektløs</h2>\n<p>\n  Svømming er den eneste vanlige utholdenhetsidretten helt uten støtbelastning – oppdriften fjerner\n  praktisk talt hele kroppsvekten. For mennesker med leddplager, sterk overvekt eller i rehabilitering er\n  det derfor ofte den eneste formen som i det hele tatt går smertefritt.\n</p>\n<p>\n  Samtidig er det mer krevende for pusten enn enhver landidrett: vanntrykket mot brystkassen gjør innpust\n  vanskeligere, og pusterytmen er koblet til bevegelsen i stedet for fritt valgbar.\n</p>\n<h2>Teknikk slår kondisjon</h2>\n<p>\n  I motsetning til løping er det nesten alltid teknikken, ikke utholdenheten, som setter grensen ved\n  svømming. Den som blir andpusten etter femti meter, har som regel ikke et kondisjonsproblem, men en for\n  høy vannlinje og for mye motstand. Noen få teknikktimer gir her mer enn ekstra lengder.\n</p>\n<h2>Hva du bør være oppmerksom på</h2>\n<ul>\n  <li><strong>Pulsen ligger lavere.</strong> I horisontal stilling og i kjølig vann slår hjertet ved samme belastning omtrent ti slag saktere enn på land. Soner fra løping kan ikke overføres direkte.</li>\n  <li><strong>Ingen beinstimulans.</strong> Som ved sykling mangler støtbelastningen som gir beintetthet – styrketrening bør inngå i tillegg.</li>\n  <li><strong>Nakken ved brystsvømming.</strong> Det vedvarende overstrekte hodet er en vanlig kilde til plager. Ta hodet regelmessig ned i vannet.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  To til tre økter på 30 til 45 minutter. Intervaller over 50 eller 100 meter med klare pauser er som\n  regel mer effektivt enn sammenhengende lengder.\n</p>"
     },
     "zh": {
       "name": "游泳",
@@ -1696,7 +1799,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "从短距离（4×50米）加休息开始，而不是尝试一次200米。",
         "泳镜大幅减少摩擦和刺激——必须配备的装备。"
-      ]
+      ],
+      "article": "<h2>全身运动，近乎失重</h2>\n<p>\n  游泳是少数几乎完全没有冲击负荷的常见耐力运动——浮力几乎卸去了身体的全部重量。因此，\n  对于有关节问题、体重严重超标或正处于康复期的人来说，游泳往往是唯一能够无痛进行的运动\n  形式。\n</p>\n<p>\n  与此同时，游泳对呼吸系统的要求比任何陆上运动都更高：水对胸腔的压力增加了吸气的难度，\n  而呼吸节奏又必须与动作同步，不能自由选择。\n</p>\n<h2>技术胜过体能</h2>\n<p>\n  与跑步不同，游泳的瓶颈几乎总是技术，而不是耐力。游五十米就气喘吁吁的人，通常问题不在\n  体能，而是身体在水中位置过高、阻力过大。上几堂技术课，往往比多游几趟更有效。\n</p>\n<h2>需要注意的事项</h2>\n<ul>\n  <li><strong>心率会更低。</strong>在水平姿势和较凉的水温下，相同强度时心跳会比陆上大约慢十次。跑步时划定的心率区间不能直接套用到游泳上。</li>\n  <li><strong>没有骨骼刺激。</strong>和骑行一样，缺乏对骨密度有益的冲击性负荷——应该搭配力量训练。</li>\n  <li><strong>蛙泳时的颈部问题。</strong>头部长时间过度后仰是常见的不适来源。应定期把头埋入水中。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  每周两到三次训练，每次30到45分钟。以50米或100米为单位、间隔明确的间歇训练，通常比\n  不间断地连续游泳更有效。\n</p>"
     }
   },
   "cardio.walking": {
@@ -1727,7 +1831,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 χλμ./ώρα σε επίπεδο έδαφος· λόφοι αυξάνουν το ερέθισμα σημαντικά.",
         "Παπουτσάκια σημαίνουν περισσότερο από ρυθμό — κακά παπούτσια κατάστρεφαν τη βάδιση μετά από 30 λεπτά."
-      ]
+      ],
+      "article": "<h2>Το πιο υποτιμημένο καρδιαγγειακό ερέθισμα</h2>\n<p>\n  Το περπάτημα φαίνεται πολύ απλό για να μετράει — και είναι για τους περισσότερους ανθρώπους η πιο\n  αποτελεσματική αρχή. Σε γρήγορο ρυθμό βρίσκεται για μη προπονημένους ήδη στη Ζώνη 2, δηλαδή στην\n  περιοχή όπου τα μιτοχόνδρια και ο μεταβολισμός λίπους ωφελούνται περισσότερο. Και έχει ένα\n  πλεονέκτημα που καμία πιο έντονη μορφή δεν προσφέρει: μπορεί να γίνεται καθημερινά, χωρίς η ανάρρωση\n  να γίνεται εμπόδιο.\n</p>\n<h2>Τι σημαίνει «γρήγορο»</h2>\n<p>\n  Η διαφορά ανάμεσα στη βόλτα και στην προπόνηση είναι ο ρυθμός. Ως σημείο αναφοράς: η αναπνοή είναι\n  σαφώς ακουστή, ολόκληρες προτάσεις είναι ακόμη εφικτές, το τραγούδι όχι πια. Όποιος δεν έχει ζεσταθεί\n  ελαφρά μετά από δέκα λεπτά, περπατά πολύ αργά.\n</p>\n<p>\n  Οι ανηφόρες είναι ο ευκολότερος τρόπος να εντείνεις το όλο πράγμα χωρίς να χρειάζεται να πάς πιο\n  γρήγορα — ειδικά για ανθρώπους με προβλήματα γονάτου ή ισχίου συχνά πιο ευχάριστο από το τρέξιμο.\n</p>\n<h2>Σε τι εξυπηρετεί ιδιαίτερα</h2>\n<ul>\n  <li><strong>Επανεκκίνηση μετά από μεγάλη παύση.</strong> Ελάχιστη επιβάρυνση αρθρώσεων, η προσαρμογή όμως πραγματική.</li>\n  <li><strong>Ενεργή ανάρρωση.</strong> Την ημέρα μετά από σκληρή προπόνηση, το ήπιο περπάτημα ενισχύει την αποκατάσταση αντί να την επιβραδύνει.</li>\n  <li><strong>Ενσωμάτωση στην καθημερινότητα.</strong> Η διαδρομή προς τη δουλειά, η τηλεφωνική κλήση περπατώντας — προπόνηση που δεν κοστίζει επιπλέον χρόνο γίνεται πράγματι.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  30 έως 60 λεπτά τις περισσότερες μέρες. Όποιος θέλει να κάνει περισσότερα, αυξάνει πρώτα τη διάρκεια,\n  μετά την κλίση, μετά τον ρυθμό — με αυτή τη σειρά.\n</p>"
     },
     "en": {
       "name": "Walking",
@@ -1741,7 +1846,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/h on flat ground; hills bump the stimulus significantly.",
         "Footwear matters more than pace — bad shoes wreck your gait after 30 minutes."
-      ]
+      ],
+      "article": "<h2>The most underrated cardio stimulus</h2>\n<p>\n  Walking seems too mundane to count — and for most people, it's the most effective way to start. At a\n  brisk pace it already sits in zone 2 for untrained people, exactly the range where mitochondria and fat\n  metabolism benefit the most. And it has an advantage no more intense form offers: you can do it every\n  day without recovery becoming the bottleneck.\n</p>\n<h2>What \"brisk\" means</h2>\n<p>\n  The difference between strolling and training is pace. As a rule of thumb: breathing is clearly\n  audible, full sentences are still possible, singing is not. If you're not slightly warm after ten\n  minutes, you're going too slow.\n</p>\n<p>\n  Hills are the simplest way to raise the intensity without having to go faster — often more comfortable\n  than running for people with knee or hip issues.\n</p>\n<h2>What it's especially good for</h2>\n<ul>\n  <li><strong>Getting started after a long break.</strong> Minimal joint load, real adaptation nonetheless.</li>\n  <li><strong>Active recovery.</strong> The day after a hard session, an easy walk supports recovery instead of slowing it down.</li>\n  <li><strong>Fitting into daily life.</strong> The commute, a phone call while walking — training that costs no extra time actually gets done.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  30 to 60 minutes on most days. To do more, increase duration first, then incline, then pace — in that\n  order.\n</p>"
     },
     "es": {
       "name": "Caminar",
@@ -1755,7 +1861,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/h en terreno plano; las colinas aumentan el estímulo significativamente.",
         "El calzado importa más que el ritmo — los zapatos malos arruinan tu marcha después de 30 minutos."
-      ]
+      ],
+      "article": "<h2>El estímulo cardio más subestimado</h2>\n<p>\n  Caminar parece demasiado trivial como para contar — y para la mayoría de las personas es el punto de\n  partida más eficaz. A un ritmo rápido, para alguien no entrenado ya se sitúa en zona 2, es decir, en\n  el rango donde las mitocondrias y el metabolismo de las grasas se benefician más. Y tiene una ventaja\n  que ninguna forma más intensa ofrece: se puede hacer a diario sin que la recuperación se convierta en\n  un cuello de botella.\n</p>\n<h2>Qué significa \"rápido\"</h2>\n<p>\n  La diferencia entre pasear y entrenar es el ritmo. Como referencia: la respiración es claramente\n  audible, frases completas siguen siendo posibles, cantar ya no. Quien no entra en calor con facilidad\n  tras diez minutos va demasiado lento.\n</p>\n<p>\n  Las pendientes son la forma más sencilla de intensificar todo sin necesidad de ir más rápido —\n  precisamente para personas con problemas de rodilla o cadera suele ser más agradable que correr.\n</p>\n<h2>Para qué sirve especialmente</h2>\n<ul>\n  <li><strong>Reincorporación tras una pausa larga.</strong> Carga articular mínima, adaptación real de todos modos.</li>\n  <li><strong>Recuperación activa.</strong> Al día siguiente de una sesión dura, caminar suave favorece la regeneración en lugar de frenarla.</li>\n  <li><strong>Integración en el día a día.</strong> El trayecto al trabajo, la llamada mientras caminas — el entrenamiento que no cuesta tiempo extra realmente se hace.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  30 a 60 minutos la mayoría de los días. Quien quiera sacar más de esto, aumenta primero la duración,\n  luego la pendiente, luego el ritmo — en ese orden.\n</p>"
     },
     "fr": {
       "name": "Marche",
@@ -1769,7 +1876,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/h en plat ; les côtes augmentent le stimulus de façon significative.",
         "L'équipement compte plus que le rythme — les mauvaises chaussures ruinent votre marche après 30 minutes."
-      ]
+      ],
+      "article": "<h2>Le stimulus cardio le plus sous-estimé</h2>\n<p>\n  La marche paraît trop banale pour compter — et pourtant, elle est pour la plupart des gens l'entrée en\n  matière la plus efficace. À rythme soutenu, elle se situe déjà en zone 2 pour une personne non\n  entraînée, c'est-à-dire dans la plage où les mitochondries et le métabolisme des graisses profitent le\n  plus. Et elle a un avantage qu'aucune forme plus intense n'offre : on peut la pratiquer tous les jours\n  sans que la récupération ne devienne un facteur limitant.\n</p>\n<h2>Ce que signifie « rapide »</h2>\n<p>\n  La différence entre se promener et s'entraîner, c'est le rythme. Repère utile : la respiration est\n  nettement audible, on peut encore parler par phrases complètes, mais plus chanter. Qui n'a pas\n  légèrement chaud après dix minutes marche trop lentement.\n</p>\n<p>\n  Les côtes sont le moyen le plus simple d'intensifier la marche sans avoir à accélérer — souvent plus\n  agréable que la course à pied pour les personnes ayant des problèmes de genou ou de hanche.\n</p>\n<h2>Pour quoi elle convient particulièrement</h2>\n<ul>\n  <li><strong>Reprise après une longue pause.</strong> Sollicitation articulaire minimale, adaptation pourtant bien réelle.</li>\n  <li><strong>Récupération active.</strong> Le lendemain d'une séance intense, une marche tranquille favorise la récupération au lieu de la freiner.</li>\n  <li><strong>Intégration au quotidien.</strong> Le trajet vers le travail, l'appel téléphonique en marchant — un entraînement qui ne coûte pas de temps supplémentaire est un entraînement qu'on fait vraiment.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  30 à 60 minutes la plupart des jours. Qui veut aller plus loin augmente d'abord la durée, puis la\n  pente, puis le rythme — dans cet ordre.\n</p>"
     },
     "it": {
       "name": "Camminata",
@@ -1783,7 +1891,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/h su terreno piatto; le colline aumentano lo stimolo in modo significativo.",
         "Le scarpe contano più del ritmo — scarpe scadenti distruggono il tuo andatura dopo 30 minuti."
-      ]
+      ],
+      "article": "<h2>Lo stimolo cardio più sottovalutato</h2>\n<p>\n  Camminare sembra troppo banale per contare — ed è per la maggior parte delle persone l'ingresso più\n  efficace. A ritmo sostenuto rientra già in zona 2 per chi non è allenato, cioè nella fascia in cui i\n  mitocondri e il metabolismo dei grassi traggono i maggiori benefici. E ha un vantaggio che nessuna\n  forma più intensa offre: si può fare ogni giorno senza che il recupero diventi un collo di bottiglia.\n</p>\n<h2>Cosa significa \"veloce\"</h2>\n<p>\n  La differenza tra passeggiare e allenarsi è il ritmo. Come riferimento: il respiro è chiaramente\n  udibile, si riesce ancora a dire frasi intere, ma non a cantare. Chi dopo dieci minuti non si è\n  leggermente scaldato sta andando troppo piano.\n</p>\n<p>\n  Le salite sono il modo più semplice per intensificare il tutto senza dover andare più veloce — spesso\n  più piacevole della corsa per chi ha problemi al ginocchio o all'anca.\n</p>\n<h2>Per cosa è particolarmente adatta</h2>\n<ul>\n  <li><strong>Ripresa dopo una lunga pausa.</strong> Carico articolare minimo, adattamento comunque reale.</li>\n  <li><strong>Recupero attivo.</strong> Il giorno dopo una sessione intensa, una camminata leggera favorisce la rigenerazione invece di ostacolarla.</li>\n  <li><strong>Integrazione nella quotidianità.</strong> Il tragitto verso il lavoro, la telefonata fatta camminando — un allenamento che non richiede tempo extra viene effettivamente svolto.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Da 30 a 60 minuti la maggior parte dei giorni. Chi vuole fare di più aumenta prima la durata, poi la\n  pendenza, poi il ritmo — in questo ordine.\n</p>"
     },
     "nl": {
       "name": "Wandelen",
@@ -1797,7 +1906,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/u op vlak terrein; heuvels vergroten de stimulus aanzienlijk.",
         "Schoeisel telt meer dan tempo — slechte schoenen verpesten je pas na 30 minuten."
-      ]
+      ],
+      "article": "<h2>De meest onderschatte cardiostimulus</h2>\n<p>\n  Wandelen lijkt te alledaags om mee te tellen — en is voor de meeste mensen de effectiefste\n  instap. Bij stevig tempo zit het voor ongetrainden al in zone 2, dus precies het bereik waarin\n  mitochondriën en vetstofwisseling het meest profiteren. En het heeft een voordeel dat geen\n  intensievere vorm biedt: je kunt het dagelijks doen zonder dat herstel een knelpunt wordt.\n</p>\n<h2>Wat \"stevig\" betekent</h2>\n<p>\n  Het verschil tussen slenteren en trainen is het tempo. Als richtlijn: de ademhaling is duidelijk\n  hoorbaar, volledige zinnen lukken nog, zingen niet meer. Wie na tien minuten niet licht warm is,\n  loopt te langzaam.\n</p>\n<p>\n  Hellingen zijn de eenvoudigste manier om het geheel te intensiveren zonder sneller te hoeven\n  worden — juist voor mensen met knie- of heupklachten vaak aangenamer dan hardlopen.\n</p>\n<h2>Waar het bijzonder geschikt voor is</h2>\n<ul>\n  <li><strong>Instap na een lange pauze.</strong> Gewrichtsbelasting minimaal, aanpassing toch reëel.</li>\n  <li><strong>Actief herstel.</strong> De dag na een zware sessie bevordert rustig wandelen het herstel in plaats van het af te remmen.</li>\n  <li><strong>Integratie in het dagelijks leven.</strong> De weg naar het werk, het telefoongesprek al wandelend — training die geen extra tijd kost, wordt ook echt gedaan.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  30 tot 60 minuten op de meeste dagen. Wie meer wil, verhoogt eerst de duur, dan de helling, dan\n  het tempo — in die volgorde.\n</p>"
     },
     "no": {
       "name": "Walking",
@@ -1811,7 +1921,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "6-10 km/t på flatt terreng; bakker øker stimulansen betydelig.",
         "Fotøy betyr mer enn tempo – dårlige sko ødelegger gangarten etter 30 minutter."
-      ]
+      ],
+      "article": "<h2>Den mest undervurderte kardiostimulansen</h2>\n<p>\n  Gange virker for banalt til å telle – og er for de fleste den mest effektive starten. I raskt tempo\n  ligger den for utrente allerede i sone 2, altså området der mitokondriene og fettforbrenningen har mest\n  å hente. Og den har en fordel som ingen mer intensiv form kan by på: man kan gjøre den daglig, uten at\n  restitusjonen blir en flaskehals.\n</p>\n<h2>Hva «raskt» betyr</h2>\n<p>\n  Forskjellen mellom en spasertur og trening er tempoet. Som holdepunkt: pusten er tydelig hørbar, hele\n  setninger går fortsatt, men ikke sang. Den som ikke er lett svett etter ti minutter, går for sakte.\n</p>\n<p>\n  Bakker er den enkleste måten å intensivere det hele på uten å måtte gå raskere – og ofte mer behagelig\n  enn løping for folk med kne- eller hofteplager.\n</p>\n<h2>Hva den egner seg spesielt godt til</h2>\n<ul>\n  <li><strong>Gjenstart etter en lang pause.</strong> Minimal leddbelastning, men likevel reell tilpasning.</li>\n  <li><strong>Aktiv restitusjon.</strong> Dagen etter en hard økt fremmer rolig gange restitusjonen i stedet for å bremse den.</li>\n  <li><strong>Integrering i hverdagen.</strong> Turen til jobb, telefonsamtalen mens man går – trening som ikke koster ekstra tid, blir faktisk gjennomført.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  30 til 60 minutter de fleste dager. Den som vil gjøre mer ut av det, øker først varigheten, deretter\n  stigningen, så tempoet – i denne rekkefølgen.\n</p>"
     },
     "zh": {
       "name": "快走",
@@ -1825,7 +1936,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "平地上6-10公里/小时；山坡会大幅增加刺激。",
         "鞋类比速度更重要——质量差的鞋子30分钟后就会破坏步态。"
-      ]
+      ],
+      "article": "<h2>最被低估的有氧刺激</h2>\n<p>\n  走路看起来太过平常，仿佛不值一提——但对大多数人来说，它恰恰是效果最好的入门方式。对未经\n  训练的人来说，快走的强度已经处于二区，也就是线粒体和脂肪代谢获益最大的区间。而且它还有一个\n  更强烈的训练形式所不具备的优势：可以每天进行，而不会让恢复成为瓶颈。\n</p>\n<h2>什么才算\"快\"</h2>\n<p>\n  散步和训练之间的区别在于速度。一个参考标准是：呼吸变得明显可闻，还能说出完整的句子，但\n  唱不了歌。如果走了十分钟身体还没有微微发热，说明速度太慢了。\n</p>\n<p>\n  利用坡度是提高强度而不必加快速度的最简单方式——对有膝盖或髋部问题的人来说，这通常比跑步\n  更舒适。\n</p>\n<h2>尤其适合哪些情况</h2>\n<ul>\n  <li><strong>长期停训后的重新起步。</strong>关节负担极小，身体的适应效果却是真实的。</li>\n  <li><strong>积极恢复。</strong>在高强度训练后的第二天，轻松走路能促进恢复，而不是拖慢它。</li>\n  <li><strong>融入日常生活。</strong>上班路上、边走边打电话——不占用额外时间的训练，才真正会被坚持下来。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  大多数日子里走30到60分钟。想进一步提升效果的人，应先增加时长，再增加坡度，最后才提高\n  速度——按这个顺序来。\n</p>"
     }
   },
   "core.deadbug": {
@@ -1856,7 +1968,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αν η κάτω μέση ανυψωθεί, συντόμευσε το εύρος ή κράτησε το γόνατο λυγισμένο ψηλότερα.",
         "Ο ρυθμός σημαίνει περισσότερο από εύρος — 3-4 δ. ανά πλευρά νικά μια βιαστική πρόσθιο-όπισθεν."
-      ]
+      ],
+      "article": "<h2>Η πιο ασήμαντη από τις Big Three</h2>\n<p>\n  Το dead bug δεν φαίνεται να είναι τίποτα ιδιαίτερο, και είναι μία από τις πιο αποτελεσματικές ασκήσεις\n  κορμού που υπάρχουν. Ανήκει στις τρεις ασκήσεις που ο βιομηχανικός Stuart McGill απέσταξε από δεκαετίες\n  μετρήσεων, επειδή καλύπτουν τα καθήκοντα του κορμού με ελάχιστη επιβάρυνση της σπονδυλικής στήλης.\n</p>\n<p>\n  Το καθήκον είναι εργασία αντι-έκτασης με στοιχείο συντονισμού: ενώ το χέρι και το αντίθετο πόδι\n  απομακρύνονται από το σώμα, η λεκάνη τείνει να γείρει προς τα εμπρός. Η κοιλιά πρέπει να το αποτρέψει\n  — και μάλιστα ενώ τα άκρα κινούνται ανεξάρτητα το ένα από το άλλο. Ακριβώς αυτό το μοτίβο χρειάζεται\n  το σώμα στο περπάτημα, στο τρέξιμο και στη ρίψη.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Ύπτια θέση, χέρια ίσια προς τα πάνω, ισχίο και γόνατα σε 90 μοίρες. Η κάτω μέση έχει επαφή με το\n  έδαφος και τη διατηρεί καθ' όλη την άσκηση. Τώρα ένα χέρι πηγαίνει προς τα πίσω πάνω από το κεφάλι και\n  ταυτόχρονα το αντίθετο πόδι εκτείνεται, μέχρι και τα δύο να βρίσκονται λίγο πάνω από το έδαφος.\n  Επιστροφή υπό έλεγχο, μετά η άλλη πλευρά.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Η πλάτη ανασηκώνεται.</strong> Το μοναδικό πραγματικό κριτήριο λάθους. Μόλις δημιουργηθεί χάσμα ανάμεσα στην πλάτη και το έδαφος, το εύρος είναι πολύ μεγάλο — τέντωσε λιγότερο χέρι και πόδι.</li>\n  <li><strong>Κράτημα της αναπνοής.</strong> Συνέχισε να αναπνέεις ήρεμα· η κοιλιά παραμένει σφιχτή παρ' όλα αυτά.</li>\n  <li><strong>Πολύ γρήγορα.</strong> Τρία έως τέσσερα δευτερόλεπτα ανά επανάληψη είναι κατάλληλα.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 6 έως 10 αργές επαναλήψεις ανά πλευρά. Μαζί με plank και πλάγιο plank προκύπτει ένα\n  πλήρες πρόγραμμα κορμού σε περίπου δέκα λεπτά.\n</p>"
     },
     "en": {
       "name": "Dead Bug",
@@ -1870,7 +1983,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "If the lower back lifts off, shorten the range or keep the knee bent higher.",
         "Tempo matters more than range — 3-4 s per side beats a rushed back-and-forth."
-      ]
+      ],
+      "article": "<h2>The most unassuming of the big three</h2>\n<p>\n  The dead bug looks like nothing and is one of the most effective core exercises there is. It's one of\n  three exercises biomechanist Stuart McGill distilled from decades of measurements, because together\n  they cover the trunk's jobs with minimal spinal load.\n</p>\n<p>\n  The task is an anti-extension task with a coordination component: as the arm and opposite leg move\n  away from the body, the pelvis wants to tip forward. The abs have to prevent that — while the limbs\n  move independently of each other. That's exactly the pattern the body needs for walking, running and\n  throwing.\n</p>\n<h2>Execution</h2>\n<p>\n  Lie on your back, arms pointing straight up, hips and knees at 90 degrees. The lower back is in\n  contact with the floor and stays that way for the entire exercise. Now extend one arm back overhead\n  while simultaneously straightening the opposite leg, until both are just above the floor. Return under\n  control, then switch sides.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Back lifting off.</strong> The one real error criterion. As soon as a gap opens between back and floor, the range is too big — shorten the arm and leg extension.</li>\n  <li><strong>Holding your breath.</strong> Keep breathing normally; the abs stay braced regardless.</li>\n  <li><strong>Too fast.</strong> Three to four seconds per rep is the right pace.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three sets of 6 to 10 slow reps per side. Together with the plank and side plank, that makes a\n  complete core program in about ten minutes.\n</p>"
     },
     "es": {
       "name": "Insecto muerto",
@@ -1884,7 +1998,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Si la zona lumbar se levanta, acorta el rango o mantén la rodilla doblada más alto.",
         "El tempo importa más que el rango — 3-4 s por lado vence un movimiento apresurado de ida y vuelta."
-      ]
+      ],
+      "article": "<h2>El más discreto de los Big Three</h2>\n<p>\n  El dead bug no parece gran cosa y es uno de los ejercicios de tronco más eficaces que existen.\n  Pertenece a las tres pruebas que el biomecánico Stuart McGill destiló de décadas de mediciones, porque\n  cubren las funciones del tronco con una carga mínima sobre la columna.\n</p>\n<p>\n  La tarea es anti-extensión con un componente de coordinación: mientras el brazo y la pierna opuesta se\n  alejan del cuerpo, la pelvis tiende a bascular hacia adelante. El abdomen debe impedirlo — y\n  precisamente mientras las extremidades se mueven de forma independiente entre sí. Es exactamente el\n  patrón que el cuerpo necesita al caminar, correr y lanzar.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Boca arriba, brazos apuntando hacia arriba, cadera y rodillas a 90 grados. La zona lumbar tiene\n  contacto con el suelo y lo mantiene durante todo el ejercicio. Ahora, lleva un brazo hacia atrás por\n  encima de la cabeza y al mismo tiempo estira la pierna opuesta, hasta que ambos queden justo por\n  encima del suelo. Vuelve bajo control, luego el otro lado.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>La espalda se despega.</strong> El único criterio de error real. En cuanto aparece un hueco entre la espalda y el suelo, el rango es demasiado amplio — estira menos el brazo y la pierna.</li>\n  <li><strong>Contener la respiración.</strong> Sigue respirando con calma; el abdomen se mantiene firme de todos modos.</li>\n  <li><strong>Demasiado rápido.</strong> Tres a cuatro segundos por repetición es lo apropiado.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 6 a 10 repeticiones lentas por lado. Junto con el plank y el side plank, esto forma un\n  programa de tronco completo en unos diez minutos.\n</p>"
     },
     "fr": {
       "name": "Dead Bug",
@@ -1898,7 +2013,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Si le bas du dos se soulève, raccourcissez l'amplitude ou gardez le genou plus haut.",
         "Le tempo compte plus que l'amplitude — 3-4 s par côté vaut mieux qu'un va-et-vient rapide."
-      ]
+      ],
+      "article": "<h2>La plus discrète des trois grandes</h2>\n<p>\n  Le dead bug n'a l'air de rien et pourtant c'est l'un des exercices de gainage les plus efficaces qui\n  soient. Il fait partie des trois exercices que le biomécanicien Stuart McGill a distillés à partir de\n  décennies de mesures, parce qu'ils couvrent les fonctions du tronc avec une charge minimale sur la\n  colonne vertébrale.\n</p>\n<p>\n  C'est un travail anti-extension avec une composante de coordination : pendant que le bras et la jambe\n  opposée s'éloignent du corps, le bassin tend à basculer vers l'avant. Les abdominaux doivent l'en\n  empêcher — et cela pendant que les membres bougent indépendamment les uns des autres. C'est exactement\n  ce schéma dont le corps a besoin pour marcher, courir et lancer.\n</p>\n<h2>Exécution</h2>\n<p>\n  Allongé sur le dos, bras tendus vers le plafond, hanches et genoux à 90 degrés. Le bas du dos est en\n  contact avec le sol et le reste pendant tout l'exercice. Tendez maintenant un bras vers l'arrière\n  au-dessus de la tête tout en tendant la jambe opposée, jusqu'à ce que les deux soient juste au-dessus\n  du sol. Revenez de façon contrôlée, puis passez de l'autre côté.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Le dos se soulève.</strong> Le seul vrai critère d'erreur. Dès qu'un espace apparaît entre le dos et le sol, l'amplitude est trop grande — tendez moins loin le bras et la jambe.</li>\n  <li><strong>Retenir sa respiration.</strong> Continuez à respirer calmement ; les abdominaux restent fermes malgré tout.</li>\n  <li><strong>Trop rapide.</strong> Trois à quatre secondes par répétition sont appropriées.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 6 à 10 répétitions lentes de chaque côté. Associé au plank et à la planche latérale,\n  cela forme un programme de gainage complet en une dizaine de minutes.\n</p>"
     },
     "it": {
       "name": "Dead bug",
@@ -1912,7 +2028,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Se la parte bassa della schiena si solleva, accorcia l'ampiezza di movimento o mantieni il ginocchio più piegato.",
         "Il tempo conta più dell'ampiezza — 3-4 s per lato batte un movimento affrettato."
-      ]
+      ],
+      "article": "<h2>Il più discreto dei \"Big Three\"</h2>\n<p>\n  Il dead bug non sembra un granché e in realtà è uno degli esercizi per il core più efficaci in\n  assoluto. Fa parte dei tre esercizi che il biomeccanico Stuart McGill ha distillato da decenni di\n  misurazioni, perché coprono i compiti del tronco con un carico minimo sulla colonna vertebrale.\n</p>\n<p>\n  Il compito è anti-estensione con una componente di coordinazione: mentre il braccio e la gamba opposta\n  si allontanano dal corpo, il bacino tende a inclinarsi in avanti. L'addome deve impedirlo — proprio\n  mentre gli arti si muovono in modo indipendente l'uno dall'altro. È esattamente questo lo schema di cui\n  il corpo ha bisogno per camminare, correre e lanciare.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posizione supina, braccia puntate verso l'alto, anche e ginocchia a 90 gradi. La parte bassa della\n  schiena è a contatto con il pavimento e lo mantiene per tutto l'esercizio. Ora porta un braccio\n  all'indietro sopra la testa e contemporaneamente estendi la gamba opposta, finché entrambi non sono\n  appena sopra il pavimento. Ritorna in modo controllato, poi cambia lato.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>La schiena si solleva.</strong> L'unico vero criterio di errore. Non appena si crea uno spazio tra schiena e pavimento, l'ampiezza è troppo grande — estendi braccio e gamba meno lontano.</li>\n  <li><strong>Trattenere il respiro.</strong> Continua a respirare con calma; l'addome resta comunque saldo.</li>\n  <li><strong>Troppo veloce.</strong> Da tre a quattro secondi per ripetizione sono appropriati.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 6 a 10 ripetizioni lente per lato. Insieme a plank e plank laterale forma un programma\n  completo per il core in circa dieci minuti.\n</p>"
     },
     "nl": {
       "name": "Dead Bug",
@@ -1926,7 +2043,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Als de onderrug afkomt, verkort het bereik of houd de knie hoger gebogen.",
         "Tempo telt meer dan bereik — 3-4 s per kant slaat een haastig heen-en-weer."
-      ]
+      ],
+      "article": "<h2>De onopvallendste van de Big Three</h2>\n<p>\n  De dead bug oogt naar niets en is een van de meest effectieve rompoefeningen die er zijn. Hij\n  hoort bij de drie oefeningen die biomechanicus Stuart McGill uit tientallen jaren aan metingen\n  heeft gedestilleerd, omdat ze de taken van de romp dekken bij minimale belasting van de\n  wervelkolom.\n</p>\n<p>\n  De taak is een anti-extensietaak met een coördinatiecomponent: terwijl arm en het\n  tegenoverliggende been van het lichaam wegbewegen, wil het bekken naar voren kantelen. De buik\n  moet dat voorkomen — en wel terwijl de ledematen onafhankelijk van elkaar bewegen. Precies dit\n  patroon heeft het lichaam nodig bij lopen, hardlopen en gooien.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Ruglig, armen recht omhoog, heup en knie in 90 graden. De onderrug heeft contact met de vloer en\n  behoudt dat tijdens de hele oefening. Nu één arm naar achteren over het hoofd en tegelijk het\n  tegenoverliggende been strekken, tot beide net boven de vloer zijn. Gecontroleerd terug, dan de\n  andere kant.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Rug komt los.</strong> Het enige echte foutcriterium. Zodra er een gat ontstaat tussen rug en vloer, is het bereik te groot — arm en been minder ver strekken.</li>\n  <li><strong>Adem inhouden.</strong> Rustig doorademen; de buik blijft toch stevig.</li>\n  <li><strong>Te snel.</strong> Drie tot vier seconden per herhaling is passend.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 6 tot 10 langzame herhalingen per kant. Samen met plank en zijplank vormt dit een\n  compleet rompprogramma in ongeveer tien minuten.\n</p>"
     },
     "no": {
       "name": "Dead Bug",
@@ -1940,7 +2058,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Hvis nedre rygg løftes, korta rekkevidden eller hold kneet bøyd høyere.",
         "Tempo betyr mer enn rekkevidde – 3-4 s per side slår et forhastet fram-og-tilbake."
-      ]
+      ],
+      "article": "<h2>Den mest uanselige av de tre store</h2>\n<p>\n  Dead bug ser ut som ingenting, men er en av de mest effektive kjerneøvelsene som finnes. Den er én av\n  de tre øvelsene biomekanikeren Stuart McGill har destillert fram etter flere tiår med målinger, fordi\n  de dekker midtpartiets oppgaver med minimal belastning på ryggraden.\n</p>\n<p>\n  Oppgaven er en anti-ekstensjonsoppgave med et koordinasjonselement: mens armen og det motsatte beinet\n  beveger seg bort fra kroppen, vil bekkenet vippe fremover. Magen må forhindre dette – samtidig som\n  lemmene beveger seg uavhengig av hverandre. Nettopp dette mønsteret trenger kroppen ved gange, løping\n  og kasting.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Rygglig, armene rett opp, hofte og kne i 90 grader. Korsryggen har kontakt med gulvet og beholder den\n  gjennom hele øvelsen. Strekk nå én arm bakover over hodet og samtidig det motsatte beinet, til begge er\n  like over gulvet. Kontrollert tilbake, deretter den andre siden.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Ryggen løftes.</strong> Det eneste egentlige feilkriteriet. Så snart det oppstår et gap mellom rygg og gulv, er bevegelsesutslaget for stort – strekk arm og bein kortere.</li>\n  <li><strong>Å holde pusten.</strong> Fortsett å puste rolig; magen holder seg fast likevel.</li>\n  <li><strong>For raskt.</strong> Tre til fire sekunder per repetisjon er passende.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 6 til 10 langsomme repetisjoner per side. Sammen med plank og sideplanke gir dette et\n  komplett kjerneprogram på omtrent ti minutter.\n</p>"
     },
     "zh": {
       "name": "死虫式",
@@ -1954,7 +2073,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "如果下背部抬起，缩短范围或保持膝盖弯曲更高。",
         "节奏比范围更重要——每侧3-4秒优于仓促的往返。"
-      ]
+      ],
+      "article": "<h2>三大核心动作中最不起眼的一个</h2>\n<p>\n  死虫式看起来毫不起眼，却是最有效的核心训练动作之一。它是生物力学专家Stuart McGill经过\n  数十年测量研究后，提炼出的三个核心动作之一，因为它们能以最小的脊柱负荷，覆盖躯干需要\n  完成的各项功能。\n</p>\n<p>\n  这是一项带有协调性成分的抗伸展任务：当手臂和对侧腿向外伸展时，骨盆会倾向于前倾。腹部\n  必须阻止这种倾向——而且是在四肢各自独立运动的同时完成。走路、跑步和投掷动作中，身体\n  正需要这种模式。\n</p>\n<h2>动作要领</h2>\n<p>\n  仰卧，双臂垂直向上伸直，髋部和膝盖各成90度角。下背部贴地，并在整个动作过程中保持贴地。\n  现在把一只手臂向后伸过头顶，同时伸直对侧的腿，直到两者都接近地面。有控制地收回，然后\n  换另一侧。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>背部离地。</strong>唯一真正需要警惕的错误标准。一旦背部与地面之间出现空隙，说明动作幅度过大——应缩小手臂和腿的伸展范围。</li>\n  <li><strong>屏住呼吸。</strong>应持续平稳呼吸；腹部依然可以保持收紧。</li>\n  <li><strong>速度太快。</strong>每次重复三到四秒是比较合适的节奏。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三组，每侧6到10次慢速重复。搭配平板支撑和侧平板支撑，大约十分钟就能完成一套完整的核心\n  训练。\n</p>"
     }
   },
   "core.hollowhold": {
@@ -1985,7 +2105,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Κλιμάκωση από εύκολη σε δύσκολη: tucked (γόνατα τραβηγμένα) → ημι-κοίλη (γόνατα 90°) → πλήρης κοίλη (εκτεταμένη).",
         "Αρχάριοι: 3 × 15-20 δ.· προχωρημένοι 3 × 45-60 δ.."
-      ]
+      ],
+      "article": "<h2>Η βασική θέση από τη γυμναστική</h2>\n<p>\n  Το hollow hold είναι ένα κράτημα σε ελαφριά κάμψη — το σώμα σχηματίζει ένα επίπεδο «κοίλο σκάφος»,\n  χέρια και πόδια είναι ανυψωμένα από το έδαφος. Στη γυμναστική είναι η βασική θέση από την οποία\n  προκύπτουν πολλά στοιχεία, επειδή καθιστά ολόκληρο το σώμα μια σταθερή ενότητα.\n</p>\n<p>\n  Καλύπτει το καθήκον κάμψης του κορμού, χωρίς την επαναλαμβανόμενη κάμψη υπό φόρτιση που καθιστά το\n  sit-up προβληματικό: η θέση κρατιέται, δεν διατρέχεται. Για τους περισσότερους είναι η καλύτερη\n  επιλογή όταν πρόκειται για στοχευμένη δουλειά στον ορθό κοιλιακό μυ.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Ύπτια θέση, η κάτω μέση σφιχτά πιεσμένη στο έδαφος — αυτή είναι η προϋπόθεση. Κεφάλι, ώμοι και πόδια\n  ανασηκώνονται, τα χέρια βρίσκονται δίπλα στα αυτιά ή στα πλευρά. Το βλέμμα πηγαίνει στα δάχτυλα των\n  ποδιών. Αν η πλάτη ανασηκωθεί, η θέση είναι πολύ δύσκολη.\n</p>\n<h2>Εξέλιξη</h2>\n<p>\n  Η άσκηση δοσολογείται μέσω του μοχλού, όχι μέσω του χρόνου. Σε αυξανόμενη δυσκολία: γόνατα λυγισμένα\n  και χέρια στα πλευρά, μετά πόδια ίσια και χέρια στα πλευρά, μετά πόδια ίσια και χέρια πάνω από το\n  κεφάλι. Μόνο όταν ένα στάδιο πετυχαίνει 30 δευτερόλεπτα με την πλάτη επίπεδη στο έδαφος, προστίθεται\n  το επόμενο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Οσφυϊκή κύρτωση.</strong> Το μοναδικό λάθος που μετράει — και ο λόγος να μειώσεις το στάδιο αντί να επιμείνεις.</li>\n  <li><strong>Τράβηγμα του πηγουνιού στο στήθος.</strong> Εντείνει τον λαιμό αντί για την κοιλιά.</li>\n  <li><strong>Πολύ μεγάλα σετ.</strong> Τέσσερα σετ των 20 δευτερολέπτων με πλήρη τάση αποδίδουν περισσότερα από ένα άνω των 80.</li>\n</ul>"
     },
     "en": {
       "name": "Hollow Hold",
@@ -1999,7 +2120,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Scale from easy to hard: tuck (knees pulled in) → half-hollow (knees 90°) → full hollow (extended).",
         "Beginners: 3 × 15-20 s; advanced 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>The base position from gymnastics</h2>\n<p>\n  The hollow hold is a hold in slight flexion — the body forms a shallow dish, arms and legs lifted off\n  the floor. In gymnastics this is the base position many elements build from, because it makes the\n  whole body into one rigid unit.\n</p>\n<p>\n  It covers the trunk's flexion job without the repeated flexion under load that makes the sit-up\n  problematic: the position is held, not cycled through. For most people it's the better choice for\n  targeted work on the rectus abdominis.\n</p>\n<h2>Execution</h2>\n<p>\n  Lie on your back, lower back pressed firmly into the floor — that's the requirement. The head,\n  shoulders and legs lift, arms resting beside the ears or at the sides. The gaze goes to the toes. If\n  the back lifts off, the position is too hard.\n</p>\n<h2>Progression</h2>\n<p>\n  The exercise is scaled through leverage, not through time. In ascending difficulty: knees bent with\n  arms at the sides, then legs straight with arms at the sides, then legs straight with arms overhead.\n  Only move to the next stage once one holds for 30 seconds with the back flat.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Lower-back arch.</strong> The one mistake that counts — and the reason to drop a level instead of gutting it out.</li>\n  <li><strong>Pulling the chin to the chest.</strong> Tenses the neck instead of the abs.</li>\n  <li><strong>Sets that are too long.</strong> Four sets of 20 seconds with full tension beat one set past 80.</li>\n</ul>"
     },
     "es": {
       "name": "Posición hueca",
@@ -2013,7 +2135,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Escala de fácil a difícil: posición metida (rodillas adentro) → semi-hueca (rodillas 90°) → hueca completa (extendida).",
         "Principiantes: 3 × 15-20 s; avanzados 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>La posición básica de la gimnasia</h2>\n<p>\n  El hollow hold es un mantenimiento en ligera flexión — el cuerpo forma una cáscara plana, brazos y\n  piernas despegados del suelo. En gimnasia es la posición básica de la que surgen muchos elementos,\n  porque convierte todo el cuerpo en una unidad firme.\n</p>\n<p>\n  Cubre la tarea de flexión del tronco sin la flexión repetida bajo carga que hace problemático al\n  sit-up: la posición se mantiene, no se recorre. Para la mayoría es la mejor opción cuando se trata de\n  trabajo específico sobre el recto abdominal.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Boca arriba, zona lumbar firmemente presionada contra el suelo — esa es la condición. Cabeza, hombros\n  y piernas se elevan, los brazos quedan junto a las orejas o a los lados. La mirada va hacia los pies.\n  Si la espalda se despega, la posición es demasiado exigente.\n</p>\n<h2>Progresión</h2>\n<p>\n  El ejercicio se dosifica mediante la palanca, no mediante el tiempo. En dificultad ascendente: rodillas\n  flexionadas y brazos a los lados, luego piernas extendidas y brazos a los lados, luego piernas\n  extendidas y brazos sobre la cabeza. Solo cuando un nivel se logra durante 30 segundos con la espalda\n  plana en el suelo, se pasa al siguiente.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Hiperlordosis.</strong> El único error que cuenta — y la razón para bajar de nivel en lugar de aguantar.</li>\n  <li><strong>Tirar de la barbilla hacia el pecho.</strong> Tensa el cuello en lugar del abdomen.</li>\n  <li><strong>Series demasiado largas.</strong> Cuatro series de 20 segundos con tensión completa rinden más que una de 80.</li>\n</ul>"
     },
     "fr": {
       "name": "Hollow Hold",
@@ -2027,7 +2150,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Progression du facile au difficile : genoux fléchis (tuck) → mi-hollow (genoux 90°) → full hollow (tendu).",
         "Débutants : 3 × 15-20 s ; avancés 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>La position de base issue de la gymnastique</h2>\n<p>\n  Le hollow hold est un maintien en légère flexion — le corps forme une coque plate, bras et jambes\n  décollés du sol. En gymnastique, c'est la position de base d'où naissent de nombreux éléments, car elle\n  transforme tout le corps en une unité solide.\n</p>\n<p>\n  Il couvre la fonction de flexion du tronc sans la flexion répétée sous charge qui pose problème au\n  sit-up : la position est maintenue, pas parcourue. Pour la plupart des gens, c'est le meilleur choix\n  quand il s'agit de travailler spécifiquement le grand droit de l'abdomen.\n</p>\n<h2>Exécution</h2>\n<p>\n  Allongé sur le dos, bas du dos fermement pressé contre le sol — c'est la condition. La tête, les\n  épaules et les jambes se soulèvent, les bras se placent le long des oreilles ou le long du corps. Le\n  regard se dirige vers les orteils. Si le dos se soulève, la position est trop difficile.\n</p>\n<h2>Progression</h2>\n<p>\n  L'exercice se dose par le levier, pas par le temps. Par difficulté croissante : genoux fléchis et bras\n  le long du corps, puis jambes tendues et bras le long du corps, puis jambes tendues et bras au-dessus\n  de la tête. Ce n'est que lorsqu'un niveau tient 30 secondes avec le dos bien à plat qu'on passe au\n  suivant.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Cambrure lombaire.</strong> La seule erreur qui compte — et la raison de baisser de niveau plutôt que de s'entêter.</li>\n  <li><strong>Tirer le menton vers la poitrine.</strong> Tend le cou au lieu des abdominaux.</li>\n  <li><strong>Séries trop longues.</strong> Quatre séries de 20 secondes avec une tension complète apportent plus qu'une seule série de 80 secondes.</li>\n</ul>"
     },
     "it": {
       "name": "Hollow hold",
@@ -2041,7 +2165,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Scala da facile a difficile: ginocchia piegate — mezza hollow (ginocchia 90°) — hollow completo (esteso).",
         "Principianti: 3 × 15-20 s; avanzati 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>La posizione base della ginnastica</h2>\n<p>\n  L'hollow hold è un mantenimento in leggera flessione — il corpo forma una conchiglia piatta, braccia e\n  gambe sono sollevate da terra. Nella ginnastica è la posizione di base da cui nascono molti elementi,\n  perché rende tutto il corpo un'unità solida.\n</p>\n<p>\n  Copre il compito di flessione del tronco senza la flessione ripetuta sotto carico che rende\n  problematico il sit-up: la posizione viene mantenuta, non percorsa. Per la maggior parte delle persone\n  è la scelta migliore quando si tratta di lavoro mirato sul retto addominale.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posizione supina, parte bassa della schiena premuta saldamente contro il pavimento — questa è la\n  condizione. Testa, spalle e gambe si sollevano, le braccia restano accanto alle orecchie o lungo i\n  fianchi. Lo sguardo va verso le dita dei piedi. Se la schiena si solleva, la posizione è troppo\n  difficile.\n</p>\n<h2>Progressione</h2>\n<p>\n  L'esercizio si dosa tramite la leva, non tramite il tempo. In ordine crescente di difficoltà: ginocchia\n  piegate e braccia lungo i fianchi, poi gambe distese e braccia lungo i fianchi, poi gambe distese e\n  braccia sopra la testa. Solo quando un livello riesce per 30 secondi con la schiena piatta a terra si\n  passa al successivo.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Iperlordosi.</strong> L'unico errore che conta davvero — e il motivo per abbassare il livello invece di resistere.</li>\n  <li><strong>Tirare il mento verso il petto.</strong> Tende il collo invece dell'addome.</li>\n  <li><strong>Serie troppo lunghe.</strong> Quattro serie da 20 secondi con tensione piena rendono più di una da 80.</li>\n</ul>"
     },
     "nl": {
       "name": "Hollow Hold",
@@ -2055,7 +2180,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Schaal van gemakkelijk naar moeilijk: getrokken (knieën getrokken in) → half-hollow (knieën 90°) → volledige hollow (gestrekt).",
         "Beginners: 3 × 15-20 s; gevorderden 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>De basispositie uit de turnsport</h2>\n<p>\n  De hollow hold is een houding in lichte buiging — het lichaam vormt een platte schaal, armen en\n  benen zijn van de vloer opgetild. In de turnsport is dit de basispositie waaruit veel elementen\n  ontstaan, omdat ze het hele lichaam tot één stevige eenheid maakt.\n</p>\n<p>\n  Hij dekt de buigtaak van de romp zonder de herhaalde buiging onder belasting die de sit-up\n  problematisch maakt: de positie wordt vastgehouden, niet doorlopen. Voor de meesten is dit de\n  betere keuze als het om gerichte arbeid aan de rechte buikspier gaat.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Ruglig, onderrug stevig in de vloer gedrukt — dat is de voorwaarde. Hoofd, schouders en benen\n  komen los, de armen liggen naast de oren of langs het lichaam. De blik gaat naar de tenen. Als\n  de rug loskomt, is de positie te zwaar.\n</p>\n<h2>Opbouw</h2>\n<p>\n  De oefening wordt via de hefboom gedoseerd, niet via de tijd. In oplopende moeilijkheid: knieën\n  gebogen en armen langs het lichaam, dan benen gestrekt en armen langs het lichaam, dan benen\n  gestrekt en armen boven het hoofd. Pas als een niveau 30 seconden lukt met een vlak liggende rug,\n  komt de volgende stap.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Holle rug.</strong> De enige fout die telt — en de reden om een niveau lager te gaan in plaats van vol te houden.</li>\n  <li><strong>Kin naar de borst trekken.</strong> Spant de nek in plaats van de buik.</li>\n  <li><strong>Te lange sets.</strong> Vier sets van 20 seconden met volle spanning brengen meer op dan één set van boven de 80.</li>\n</ul>"
     },
     "no": {
       "name": "Hollow Hold",
@@ -2069,7 +2195,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Skaler fra lett til hard: tuklet (knær trukket inn) → half-hollow (knær 90°) → full hollow (strukket).",
         "Nybegynnere: 3 × 15-20 s; avansert 3 × 45-60 s."
-      ]
+      ],
+      "article": "<h2>Grunnposisjonen fra turn</h2>\n<p>\n  Hollow hold er en statisk holdning i lett bøyning – kroppen former en flat skål, armer og bein er\n  løftet fra gulvet. I turn er dette grunnposisjonen mange elementer bygger på, fordi den gjør hele\n  kroppen til én fast enhet.\n</p>\n<p>\n  Den dekker midtpartiets bøyeoppgave uten den gjentatte bøyingen under belastning som gjør sit-upen\n  problematisk: posisjonen holdes, den gjennomføres ikke som en bevegelse. For de fleste er den det\n  bedre valget når det gjelder målrettet arbeid for rectus abdominis.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Rygglig, korsryggen presset fast i gulvet – det er forutsetningen. Hode, skuldre og bein løftes, armene\n  ligger ved ørene eller langs sidene. Blikket rettes mot tærne. Hvis ryggen løftes, er posisjonen for\n  tung.\n</p>\n<h2>Progresjon</h2>\n<p>\n  Øvelsen doseres via vektarmen, ikke via tiden. I stigende vanskelighetsgrad: bøyde knær og armer langs\n  sidene, deretter strake bein og armer langs sidene, så strake bein og armer over hodet. Først når ett\n  nivå lykkes i 30 sekunder med flat rygg mot gulvet, går man videre til neste.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Hul rygg.</strong> Den eneste feilen som teller – og grunnen til å senke nivået i stedet for å presse seg gjennom.</li>\n  <li><strong>Å dra haken mot brystet.</strong> Spenner nakken i stedet for magen.</li>\n  <li><strong>For lange sett.</strong> Fire sett à 20 sekunder med full spenning gir mer enn ett sett på 80.</li>\n</ul>"
     },
     "zh": {
       "name": "凹陷身体保持",
@@ -2083,7 +2210,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "从易到难的缩放：卷膝（膝盖拉入）→半凹陷（膝盖90°）→完全凹陷（伸展）。",
         "初学者：3×15-20秒；进阶3×45-60秒。"
-      ]
+      ],
+      "article": "<h2>源自体操的基础姿势</h2>\n<p>\n  空心支撑是一种轻度屈曲状态下的静态保持——身体呈现出一个扁平的\"凹形\"，手臂和双腿都离开\n  地面。在体操运动中，这是许多动作的出发姿势，因为它能让全身形成一个稳固的整体。\n</p>\n<p>\n  它覆盖了躯干的屈曲功能，却不需要像仰卧起坐那样在负重下反复屈曲——这里是保持姿势，而不是\n  往复运动。对大多数人来说，如果想针对性地训练腹直肌，这是更好的选择。\n</p>\n<h2>动作要领</h2>\n<p>\n  仰卧，下背部用力压向地面——这是必须满足的条件。头部、肩膀和双腿离地，手臂放在耳朵两侧\n  或身体两侧。目光看向脚趾方向。如果下背部离地，说明当前姿势的难度太高。\n</p>\n<h2>进阶方式</h2>\n<p>\n  这个动作的难度通过杠杆长度调节，而不是通过时间。难度由低到高依次是：屈膝、手臂放在身体\n  两侧；然后双腿伸直、手臂放在身体两侧；最后双腿伸直、手臂举过头顶。只有当某一阶段能保持\n  下背部贴地30秒，才进入下一阶段。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>腰部过度前凸。</strong>唯一真正重要的错误——出现时应该降低难度阶段，而不是硬撑下去。</li>\n  <li><strong>下巴用力贴向胸部。</strong>这会让颈部而不是腹部发力紧绷。</li>\n  <li><strong>单组时间太长。</strong>四组每组20秒并全程保持张力，效果胜过一组撑满80秒。</li>\n</ul>"
     }
   },
   "hinge.goodmorning": {
@@ -2114,7 +2242,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Τα όρια κινητικότητας καθορίζουν το βάθος — ποτέ πρόσφυση κάτω μέσης ή στρογγυλεμένη πλάτη.",
         "Ρυθμός 3-1-1 (3 δ. κάτω, 1 δ. παύση, 1 δ. πάνω) μεγιστοποιεί ερέθισμα με λίγο βάρος."
-      ]
+      ],
+      "article": "<h2>Εκμάθηση του μοτίβου κύρτωσης ισχίου</h2>\n<p>\n  Η κύρτωση ισχίου είναι ένα από τα έξι βασικά κινητικά μοτίβα και ταυτόχρονα το λιγότερο καλά\n  κατεχόμενο. Οι περισσότεροι σηκώνουν αντικείμενα από το έδαφος με στρογγυλεμένη πλάτη αντί να σπρώχνουν\n  το ισχίο προς τα πίσω. Το Good Morning είναι η άσκηση με την οποία αυτό το μοτίβο μαθαίνεται καλύτερα\n  χωρίς φορτίο.\n</p>\n<p>\n  Εκπαιδεύεται η οπίσθια αλυσίδα: το οπίσθιο μηριαίο, οι γλουτοί και ο εκτείνων της ράχης μυς, ο οποίος\n  εργάζεται εδώ ισομετρικά για να διατηρεί τη σπονδυλική στήλη ίσια.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Όρθια στάση, πόδια στο πλάτος του ισχίου, χέρια στους κροτάφους ή μπροστά στο στήθος. Τα γόνατα\n  παραμένουν ελαφρώς λυγισμένα και διατηρούν αυτή τη γωνία. Το ισχίο σπρώχνεται προς τα πίσω, ο κορμός\n  κατεβαίνει ταυτόχρονα προς τα εμπρός — η κίνηση προέρχεται από το ισχίο, όχι από την πλάτη. Μέχρι\n  περίπου την οριζόντια θέση ή όσο η πλάτη παραμένει ίσια, μετά επιστροφή μέσω των γλουτών.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Καμπούρα στην πλάτη.</strong> Το κριτήριο διακοπής. Μόλις η κάτω μέση στρογγυλέψει, το όριο έχει ξεπεραστεί.</li>\n  <li><strong>Squat αντί για κύρτωση ισχίου.</strong> Όποιος λυγίζει και τα γόνατα κάνει ένα κακό squat. Η γωνία γόνατος παραμένει σταθερή.</li>\n  <li><strong>Πολύ βαθιά.</strong> Η κινητικότητα του οπίσθιου μηριαίου θέτει το όριο, όχι η φιλοδοξία.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 10 έως 15 αργές επαναλήψεις, ιδανικά στη θέρμανση. Ένα ραβδί ή στειλιάρι σκούπας κρατημένο\n  κατά μήκος της σπονδυλικής στήλης — πρέπει να αγγίζει ταυτόχρονα το κεφάλι, τη θωρακική μοίρα και το\n  ιερό οστό — κάνει κάθε καμπούρα αμέσως αισθητή.\n</p>"
     },
     "en": {
       "name": "Good Morning",
@@ -2128,7 +2257,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mobility limits depth — never force a lower-back arch or rounded back.",
         "3-1-1 tempo (3 s down, 1 s pause, 1 s up) maximises stimulus with little weight."
-      ]
+      ],
+      "article": "<h2>Learning the hip hinge pattern</h2>\n<p>\n  The hip hinge is one of the six fundamental movement patterns and also the worst mastered. Most people\n  pick things up off the floor with a rounded back instead of sending the hips back. The good morning is\n  the exercise where this pattern is easiest to learn without any load.\n</p>\n<p>\n  It trains the posterior chain: hamstrings, glutes, and the spinal erectors, which work isometrically\n  here to keep the spine straight.\n</p>\n<h2>Execution</h2>\n<p>\n  Stand tall, feet hip-width, hands at the temples or in front of the chest. The knees stay slightly bent\n  and hold that angle throughout. The hips push back, and the torso lowers forward as a result — the\n  movement comes from the hips, not the back. Go to roughly horizontal, or as far as the back stays flat,\n  then return by driving the hips forward.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Rounded back.</strong> The stop signal. As soon as the lower back rounds, you've gone past the limit.</li>\n  <li><strong>Squatting instead of hinging.</strong> Bending the knees along with it makes a bad squat. The knee angle stays constant.</li>\n  <li><strong>Going too deep.</strong> Hamstring flexibility sets the limit, not ambition.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three sets of 10 to 15 slow reps, great in a warm-up. A stick or broom handle held along the spine — it\n  should touch the head, upper back and sacrum at the same time — makes any rounding instantly obvious.\n</p>"
     },
     "es": {
       "name": "Buenos días",
@@ -2142,7 +2272,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "La movilidad limita la profundidad — nunca fuerces un arqueamiento de la zona lumbar o una espalda redondeada.",
         "Tempo 3-1-1 (3 s abajo, 1 s pausa, 1 s arriba) maximiza el estímulo con poco peso."
-      ]
+      ],
+      "article": "<h2>Aprender el patrón de bisagra de cadera</h2>\n<p>\n  La bisagra de cadera es uno de los seis patrones de movimiento básicos y a la vez el peor dominado. La\n  mayoría levanta cosas del suelo con la espalda redondeada, en lugar de empujar la cadera hacia atrás.\n  El good morning es el ejercicio con el que mejor se aprende este patrón sin carga.\n</p>\n<p>\n  Entrena la cadena posterior: los isquiotibiales, el glúteo y el erector espinal, que trabaja de forma\n  isométrica para mantener la columna recta.\n</p>\n<h2>Ejecución</h2>\n<p>\n  De pie erguido, pies a la anchura de la cadera, manos en las sienes o delante del pecho. Las rodillas\n  permanecen ligeramente dobladas y mantienen ese ángulo. La cadera empuja hacia atrás, mientras el\n  torso desciende hacia adelante — el movimiento viene de la cadera, no de la espalda. Baja hasta más o\n  menos la horizontal o hasta donde la espalda se mantenga recta, luego vuelve a través del glúteo.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Espalda redondeada.</strong> El criterio de interrupción. En cuanto la zona lumbar se redondea, se ha superado el límite.</li>\n  <li><strong>Sentadilla en lugar de bisagra.</strong> Quien dobla también las rodillas hace una mala sentadilla. El ángulo de la rodilla se mantiene constante.</li>\n  <li><strong>Ir demasiado lejos.</strong> La movilidad de los isquiotibiales marca el límite, no la ambición.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 10 a 15 repeticiones lentas, ideal en el calentamiento. Un palo o mango de escoba\n  sostenido a lo largo de la columna — debería tocar cabeza, vértebras torácicas y sacro al mismo tiempo\n  — hace que cualquier redondeo de la espalda se note al instante.\n</p>"
     },
     "fr": {
       "name": "Good Morning",
@@ -2156,7 +2287,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "La mobilité limite la profondeur — ne forcez jamais une cambrure du bas du dos ou un dos arrondi.",
         "Le tempo 3-1-1 (3 s en bas, 1 s pause, 1 s en haut) maximise le stimulus avec peu de poids."
-      ]
+      ],
+      "article": "<h2>Apprendre le schéma de la charnière de hanche</h2>\n<p>\n  La charnière de hanche est l'un des six schémas de mouvement fondamentaux, et aussi le moins bien\n  maîtrisé. La plupart des gens ramassent les objets au sol avec le dos rond au lieu de repousser les\n  hanches vers l'arrière. Le good morning est l'exercice où ce schéma s'apprend le mieux, sans charge.\n</p>\n<p>\n  Il entraîne la chaîne postérieure : les ischio-jambiers, les fessiers et les érecteurs du rachis, qui\n  travaillent ici de façon isométrique pour maintenir la colonne droite.\n</p>\n<h2>Exécution</h2>\n<p>\n  Debout, pieds écartés à la largeur des hanches, mains sur les tempes ou devant la poitrine. Les genoux\n  restent légèrement fléchis et conservent cet angle. Les hanches reculent, le torse s'incline en avant —\n  le mouvement vient de la hanche, pas du dos. Jusqu'à environ l'horizontale, ou aussi loin que le dos\n  reste droit, puis remontez en contractant les fessiers.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Dos rond.</strong> Le critère d'arrêt. Dès que le bas du dos s'arrondit, la limite est dépassée.</li>\n  <li><strong>Squat au lieu de charnière de hanche.</strong> Qui fléchit davantage les genoux fait un mauvais squat. L'angle du genou reste constant.</li>\n  <li><strong>Aller trop loin.</strong> C'est la souplesse des ischio-jambiers qui fixe la limite, pas l'ambition.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 10 à 15 répétitions lentes, volontiers en échauffement. Un bâton ou un manche à balai\n  tenu le long de la colonne — il doit toucher simultanément la tête, les vertèbres dorsales et le\n  sacrum — rend immédiatement perceptible le moindre arrondi du dos.\n</p>"
     },
     "it": {
       "name": "Good morning",
@@ -2170,7 +2302,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "La mobilità limita la profondità — non forzare mai un'arco della parte bassa della schiena o schiena arrotondata.",
         "Ritmo 3-1-1 (3 s giù, 1 s pausa, 1 s su) massimizza lo stimolo con poco peso."
-      ]
+      ],
+      "article": "<h2>Imparare lo schema dell'hip hinge</h2>\n<p>\n  L'hip hinge è uno dei sei schemi di movimento fondamentali ed è al tempo stesso quello meno\n  padroneggiato. La maggior parte delle persone solleva gli oggetti da terra con la schiena arrotondata\n  invece di spingere i fianchi indietro. Il good morning è l'esercizio con cui questo schema si impara\n  meglio senza carico.\n</p>\n<p>\n  Si allena la catena posteriore: femorali, glutei e l'estensore della schiena, che lavora in modo\n  isometrico per mantenere la colonna dritta.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posizione eretta, piedi a larghezza dell'anca, mani sulle tempie o davanti al petto. Le ginocchia\n  restano leggermente piegate e mantengono questo angolo. I fianchi si spingono indietro, il busto si\n  abbassa in avanti di conseguenza — il movimento parte dall'anca, non dalla schiena. Fino a circa\n  l'orizzontale o finché la schiena resta dritta, poi si torna indietro spingendo con i glutei.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Schiena arrotondata.</strong> Il criterio di interruzione. Non appena la parte bassa della schiena si arrotonda, il limite è superato.</li>\n  <li><strong>Squat invece di hip hinge.</strong> Chi piega anche le ginocchia fa uno squat scorretto. L'angolo del ginocchio resta costante.</li>\n  <li><strong>Troppo in profondità.</strong> È la mobilità dei femorali a fissare il limite, non l'ambizione.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 10 a 15 ripetizioni lente, ideali nel riscaldamento. Un bastone tenuto lungo la colonna —\n  dovrebbe toccare contemporaneamente testa, vertebre toraciche e sacro — rende subito percepibile ogni\n  arrotondamento della schiena.\n</p>"
     },
     "nl": {
       "name": "Good Morning",
@@ -2184,7 +2317,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mobiliteit bepaalt de diepte — dwing nooit onderrug-boogvorming of afgeronde rug.",
         "Tempo 3-1-1 (3 s omlaag, 1 s pauze, 1 s omhoog) maximalisert stimulus met weinig gewicht."
-      ]
+      ],
+      "article": "<h2>Het heupscharnierpatroon leren</h2>\n<p>\n  Het heupscharnier is een van de zes basisbewegingspatronen en tegelijk het slechtst beheerste. De\n  meeste mensen tillen dingen van de vloer op met een ronde rug in plaats van de heup naar achteren\n  te schuiven. De good morning is de oefening waarmee dit patroon zonder belasting het best te\n  leren is.\n</p>\n<p>\n  Getraind wordt de achterste keten: hamstrings, billen en de rugstrekker, die daarbij isometrisch\n  werkt om de wervelkolom recht te houden.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Rechtop staand, voeten heupbreed, handen tegen de slapen of voor de borst. De knieën blijven\n  licht gebogen en behouden die hoek. De heup schuift naar achteren, de romp zakt daarbij naar\n  voren — de beweging komt uit de heup, niet uit de rug. Tot ongeveer horizontaal of zo ver als de\n  rug recht blijft, dan via de billen terugkomen.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Ronde rug.</strong> Het afbreekcriterium. Zodra de onderrug rondt, is het punt overschreden.</li>\n  <li><strong>Kniebuiging in plaats van heupscharnier.</strong> Wie de knieën meebuigt, maakt een slechte squat. De kniehoek blijft constant.</li>\n  <li><strong>Te ver.</strong> De mobiliteit van de hamstrings bepaalt de grens, niet de ambitie.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 10 tot 15 langzame herhalingen, graag in de warming-up. Een stok of bezemsteel\n  langs de wervelkolom gehouden — hij moet hoofd, borstwervels en heiligbeen tegelijk raken — maakt\n  elke ronde rug direct voelbaar.\n</p>"
     },
     "no": {
       "name": "Good Morning",
@@ -2198,7 +2332,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mobilitet begrenser dybde – aldri tving lenderyggarking eller rundkurving.",
         "3-1-1 tempo (3 s ned, 1 s pause, 1 s opp) maksimerer stimuli med lite vekt."
-      ]
+      ],
+      "article": "<h2>Å lære hoftehengingsmønsteret</h2>\n<p>\n  Hoftehenging er ett av de seks grunnleggende bevegelsesmønstrene, og samtidig det som beherskes\n  dårligst. De fleste plukker opp ting fra gulvet med rund rygg i stedet for å skyve hoftene bakover.\n  Good morning er øvelsen der dette mønsteret lar seg lære best uten belastning.\n</p>\n<p>\n  Det som trenes, er posterior chain: hamstrings, setemuskulatur og ryggstrekkeren, som jobber isometrisk\n  for å holde ryggraden rett.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Stå oppreist med føttene i hoftebredde, hendene ved tinningene eller foran brystet. Knærne holdes lett\n  bøyd og beholder denne vinkelen gjennom hele bevegelsen. Hoftene skyves bakover, mens overkroppen\n  senkes fremover – bevegelsen kommer fra hoften, ikke fra ryggen. Ned til omtrent vannrett, eller så\n  langt som ryggen forblir rett, deretter tilbake ved å drive gjennom setet.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Rundrygg.</strong> Avbruddskriteriet. Så snart korsryggen runder seg, er grensen nådd.</li>\n  <li><strong>Knebøy i stedet for hoftehenging.</strong> Den som bøyer knærne mer, gjør en dårlig knebøy. Knevinkelen holdes konstant.</li>\n  <li><strong>For dypt.</strong> Det er bevegeligheten i hamstrings som setter grensen, ikke ambisjonsnivået.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 10 til 15 langsomme repetisjoner, gjerne i oppvarmingen. En stav eller kost holdt langs\n  ryggraden – den bør berøre hode, brystvirvler og korsbein samtidig – gjør enhver rundrygg umiddelbart\n  merkbar.\n</p>"
     },
     "zh": {
       "name": "早安式",
@@ -2212,7 +2347,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "活动能力限制深度——从不强制下背部拱起或圆背。",
         "3-1-1节奏（3秒下，1秒停顿，1秒上）用最少的重量最大化刺激。"
-      ]
+      ],
+      "article": "<h2>学习髋关节铰链模式</h2>\n<p>\n  髋关节铰链是六大基本动作模式之一，同时也是掌握得最差的一个。大多数人从地上捡东西时都是\n  弓着背，而不是把髋部向后推。早安式正是最适合在不负重的情况下学习这一动作模式的练习。\n</p>\n<p>\n  训练的目标是后链肌群：腘绳肌、臀肌，以及在此过程中做等长收缩、以保持脊柱挺直的竖脊肌。\n</p>\n<h2>动作要领</h2>\n<p>\n  直立站姿，双脚与髋同宽，双手放在太阳穴旁或胸前。膝盖保持轻微弯曲，并始终维持这个角度。\n  髋部向后推，上半身随之向前下沉——动作来自髋部，而不是背部。大约下沉到与地面平行，或者\n  背部仍能保持平直的最大幅度，然后通过臀部发力回到起始位置。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>弓背。</strong>这是必须停止的信号。一旦下背部开始弓起，就已经超出了安全幅度。</li>\n  <li><strong>把动作做成深蹲而不是髋关节铰链。</strong>如果膝盖跟着继续弯曲，就变成了一个糟糕的深蹲。膝盖角度应始终保持不变。</li>\n  <li><strong>幅度过大。</strong>决定下沉幅度的应该是腘绳肌的柔韧度，而不是求胜心切。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三组，每组10到15次慢速重复，很适合放在热身中进行。沿脊柱贴放一根木棍或扫帚柄——它应该\n  同时接触头部、胸椎和骶骨——能让任何弓背动作立刻被察觉。\n</p>"
     }
   },
   "hinge.singlelegRdl": {
@@ -2243,7 +2379,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Κράτησε ένα βάρος (αλτήρα, μπουκάλι νερού) στο αντίθετο χέρι αυξάνει τη ζήτηση σταθερότητας.",
         "Επιτρέπεται ένα άγγιγμα δακτύλου σε τοίχο στην αρχή — ισορροπία ενός σκέλους χρειάζεται εξάσκηση."
-      ]
+      ],
+      "article": "<h2>Κύρτωση ισχίου, ισορροπία και σταθερότητα ισχίου σε μία</h2>\n<p>\n  Το single-leg RDL συνδυάζει το μοτίβο κύρτωσης ισχίου με μια πρόκληση ισορροπίας. Έτσι εκπαιδεύει\n  εκτός από την οπίσθια αλυσίδα κυρίως τους μικρούς σταθεροποιητές του ισχίου, που αποτρέπουν τη λεκάνη\n  να γείρει προς το πλάι — ακριβώς τη μυϊκή ομάδα της οποίας η αδυναμία εκδηλώνεται στο τρέξιμο ως πόνος\n  στο γόνατο.\n</p>\n<p>\n  Επειδή η ισορροπία περιορίζει το φορτίο, η άσκηση έχει νόημα ακόμη και χωρίς βάρος και είναι\n  κατάλληλη για αρχάριους.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Στέκεσαι σε ένα πόδι, το γόνατο ελάχιστα λυγισμένο. Το ισχίο σπρώχνεται προς τα πίσω, ο κορμός\n  κατεβαίνει προς τα εμπρός, και το ελεύθερο πόδι τεντώνεται προς τα πίσω ως αντίβαρο — κορμός και πίσω\n  πόδι σχηματίζουν στο τέλος περίπου μια ευθεία γραμμή. Η πλάτη παραμένει ίσια, το ισχίο παραμένει\n  οριζόντιο: η λεκάνη δεν επιτρέπεται να στρίψει προς το πλάι.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Η λεκάνη στρίβει.</strong> Το κεντρικό λάθος. Τα οστά του ισχίου δείχνουν συνέχεια προς το έδαφος, όχι προς το πλάι.</li>\n  <li><strong>Τεντωμένο γόνατο στήριξης.</strong> Ένα ελαφρώς λυγισμένο γόνατο είναι πιο σταθερό και προστατεύει την άρθρωση.</li>\n  <li><strong>Πολύ γρήγορα.</strong> Η ισορροπία χρειάζεται χρόνο — τρία δευτερόλεπτα προς τα κάτω, τρία προς τα πάνω.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 6 έως 10 επαναλήψεις ανά πλευρά. Ένα άγγιγμα δακτύλου στον τοίχο είναι απόλυτα φυσιολογικό\n  στην αρχή· φεύγει μόλις η κίνηση εδραιωθεί.\n</p>"
     },
     "en": {
       "name": "Single-Leg Romanian Deadlift",
@@ -2257,7 +2394,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Holding a weight (dumbbell, water bottle) in the opposite hand raises the stability demand.",
         "Allow a fingertip on a wall in the beginning — single-leg balance takes practice."
-      ]
+      ],
+      "article": "<h2>Hip hinge, balance and hip stability in one</h2>\n<p>\n  The single-leg Romanian deadlift combines the hip hinge pattern with a balance task. That means it\n  trains not just the posterior chain but especially the small hip stabilizers that keep the pelvis from\n  tipping sideways — exactly the muscles whose weakness shows up as knee pain when running.\n</p>\n<p>\n  Because balance limits the load, the exercise is worthwhile even without weight and works well for\n  beginners.\n</p>\n<h2>Execution</h2>\n<p>\n  Stand on one leg, knee slightly bent. The hips push back, the torso lowers forward, and the free leg\n  extends back as a counterweight — by the end, torso and rear leg form roughly a straight line. The back\n  stays flat, and the hips stay level: the pelvis must not rotate open to the side.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Pelvis rotates open.</strong> The central mistake. The hip bones should point at the floor the whole time, not sideways.</li>\n  <li><strong>Standing knee locked straight.</strong> A slightly bent knee is more stable and easier on the joint.</li>\n  <li><strong>Moving too fast.</strong> Balance takes time — three seconds down, three up.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three sets of 6 to 10 reps per side. A fingertip against a wall is perfectly fine at the start; drop it\n  once the movement feels solid.\n</p>"
     },
     "es": {
       "name": "Levantamiento de una sola pierna",
@@ -2271,7 +2409,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Sostener un peso (mancuerna, botella de agua) en la mano opuesta aumenta la demanda de estabilidad.",
         "Permite una punta de dedo en la pared al principio — el equilibrio de una pierna requiere práctica."
-      ]
+      ],
+      "article": "<h2>Bisagra de cadera, equilibrio y estabilidad de cadera en uno</h2>\n<p>\n  El levantamiento a una pierna combina el patrón de bisagra de cadera con una tarea de equilibrio. Con\n  eso entrena, además de la cadena posterior, sobre todo los pequeños estabilizadores de la cadera que\n  impiden que la pelvis se incline hacia el lado — precisamente la musculatura cuya debilidad se\n  manifiesta como dolor de rodilla al correr.\n</p>\n<p>\n  Como el equilibrio limita la carga, el ejercicio tiene sentido incluso sin peso y es muy adecuado para\n  principiantes.\n</p>\n<h2>Ejecución</h2>\n<p>\n  De pie sobre una pierna, con la rodilla mínimamente doblada. La cadera empuja hacia atrás, el torso\n  desciende hacia adelante, y la pierna libre se extiende hacia atrás como contrapeso — al final, torso\n  y pierna trasera forman aproximadamente una línea. La espalda permanece recta, la cadera se mantiene\n  horizontal: la pelvis no debe girar hacia el lado.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>La pelvis gira.</strong> El error central. Los huesos de la cadera apuntan todo el tiempo hacia el suelo, no hacia el lado.</li>\n  <li><strong>Pierna de apoyo totalmente extendida.</strong> Una rodilla ligeramente doblada es más estable y protege la articulación.</li>\n  <li><strong>Demasiado rápido.</strong> El equilibrio necesita tiempo — tres segundos hacia abajo, tres hacia arriba.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 6 a 10 repeticiones por lado. Apoyar un dedo en la pared al principio está perfectamente\n  bien; se elimina en cuanto el movimiento queda dominado.\n</p>"
     },
     "fr": {
       "name": "Soulevé de terre roumain sur une jambe",
@@ -2285,7 +2424,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tenez un poids (haltère, bouteille d'eau) à la main opposée pour augmenter la demande de stabilité.",
         "Autorisez le bout du doigt sur un mur au départ — l'équilibre sur une jambe demande de la pratique."
-      ]
+      ],
+      "article": "<h2>Charnière de hanche, équilibre et stabilité de hanche en un seul exercice</h2>\n<p>\n  Le soulevé de terre roumain sur une jambe combine le schéma de charnière de hanche avec une tâche\n  d'équilibre. Il entraîne ainsi, en plus de la chaîne postérieure, surtout les petits stabilisateurs de\n  hanche qui empêchent le bassin de basculer sur le côté — précisément les muscles dont la faiblesse se\n  traduit, en course à pied, par des douleurs au genou.\n</p>\n<p>\n  Parce que l'équilibre limite la charge, l'exercice reste utile même sans poids et convient bien aux\n  débutants.\n</p>\n<h2>Exécution</h2>\n<p>\n  Debout sur une jambe, genou légèrement fléchi. La hanche recule, le torse s'incline vers l'avant, et\n  la jambe libre s'étend vers l'arrière comme contrepoids — à la fin, le torse et la jambe arrière\n  forment presque une ligne droite. Le dos reste plat, les hanches restent horizontales : le bassin ne\n  doit pas pivoter sur le côté.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Le bassin pivote.</strong> L'erreur centrale. Les os iliaques doivent rester orientés vers le sol en permanence, pas vers le côté.</li>\n  <li><strong>Jambe d'appui tendue.</strong> Un genou légèrement fléchi est plus stable et ménage l'articulation.</li>\n  <li><strong>Trop rapide.</strong> L'équilibre demande du temps — trois secondes en descente, trois en remontée.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 6 à 10 répétitions de chaque côté. Un doigt posé contre un mur est tout à fait\n  acceptable au début ; il disparaît dès que le mouvement est maîtrisé.\n</p>"
     },
     "it": {
       "name": "Stacco da terra su una gamba",
@@ -2299,7 +2439,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tenere un peso (manubrio, bottiglia d'acqua) nella mano opposta aumenta la richiesta di stabilità.",
         "Consenti le dita su un muro all'inizio — l'equilibrio su una gamba richiede pratica."
-      ]
+      ],
+      "article": "<h2>Hip hinge, equilibrio e stabilità dell'anca in uno</h2>\n<p>\n  Lo stacco da terra su una gamba combina lo schema dell'hip hinge con un compito di equilibrio. In\n  questo modo allena, oltre alla catena posteriore, soprattutto i piccoli stabilizzatori dell'anca, che\n  impediscono al bacino di inclinarsi lateralmente — proprio la muscolatura la cui debolezza si\n  manifesta nella corsa come dolore al ginocchio.\n</p>\n<p>\n  Poiché l'equilibrio limita il carico, l'esercizio ha senso anche senza peso ed è ben adatto ai\n  principianti.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  In piedi su una gamba, ginocchio leggermente piegato. I fianchi si spingono indietro, il busto si\n  abbassa in avanti, e la gamba libera si estende all'indietro come contrappeso — alla fine busto e\n  gamba posteriore formano quasi una linea. La schiena resta dritta, i fianchi restano orizzontali: il\n  bacino non deve ruotare lateralmente.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Il bacino ruota.</strong> L'errore centrale. Le ossa dell'anca devono restare rivolte verso il pavimento per tutto il tempo, non lateralmente.</li>\n  <li><strong>Gamba d'appoggio tesa.</strong> Un ginocchio leggermente piegato è più stabile e protegge l'articolazione.</li>\n  <li><strong>Troppo veloce.</strong> L'equilibrio richiede tempo — tre secondi in discesa, tre in salita.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 6 a 10 ripetizioni per lato. Un contatto con un dito sul muro è del tutto accettabile\n  all'inizio; scompare non appena il movimento è acquisito.\n</p>"
     },
     "nl": {
       "name": "Single-Leg Romanian Deadlift",
@@ -2313,7 +2454,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Houd een gewicht (halter, waterfles) in de tegenovergestelde hand verhoogt de stabiliteitsvraag.",
         "Zet een vinger op een muur in het begin — eenbenige balans vergt oefening."
-      ]
+      ],
+      "article": "<h2>Heupscharnier, balans en heupstabiliteit in één</h2>\n<p>\n  De single-leg Romanian deadlift combineert het heupscharnierpatroon met een balanstaak. Daardoor\n  traint hij naast de achterste keten vooral de kleine heupstabilisatoren, die voorkomen dat het\n  bekken zijwaarts kantelt — precies de spieren waarvan de zwakte zich bij het hardlopen als\n  kniepijn uit.\n</p>\n<p>\n  Omdat het evenwicht de belasting begrenst, is de oefening ook zonder gewicht zinvol en goed\n  geschikt voor beginners.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Op één been staan, de knie minimaal gebogen. De heup schuift naar achteren, de romp zakt naar\n  voren, en het vrije been strekt zich als contragewicht naar achteren — romp en achterste been\n  vormen aan het einde ongeveer één lijn. De rug blijft recht, de heup blijft horizontaal: het\n  bekken mag niet zijwaarts opendraaien.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Bekken draait open.</strong> De centrale fout. De heupbotten wijzen de hele tijd naar de vloer, niet zijwaarts.</li>\n  <li><strong>Standbeen volledig gestrekt.</strong> Een licht gebogen knie is stabieler en ontziet het gewricht.</li>\n  <li><strong>Te snel.</strong> Balans kost tijd — drie seconden naar beneden, drie naar boven.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 6 tot 10 herhalingen per kant. Een vinger tegen de muur is aan het begin volkomen\n  in orde; die valt weg zodra de beweging goed zit.\n</p>"
     },
     "no": {
       "name": "Single-Leg Romanian Deadlift",
@@ -2327,7 +2469,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Holde en vekt (håndvekt, vannflaske) i motsatt hånd øker stabilitetskravet.",
         "Tillat fingerspiss på en vegg til å begynne – enbeint balanse tar øving."
-      ]
+      ],
+      "article": "<h2>Hoftehenging, balanse og hoftestabilitet i ett</h2>\n<p>\n  Enbeint RDL kombinerer hoftehengingsmønsteret med en balanseoppgave. Dermed trener den, i tillegg til\n  posterior chain, først og fremst de små hoftestabilisatorene som hindrer bekkenet i å vippe til siden –\n  nettopp den muskulaturen som viser seg som knesmerter ved løping når den er svak.\n</p>\n<p>\n  Fordi balansen begrenser belastningen, gir øvelsen mening også uten vekt, og er godt egnet for\n  nybegynnere.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Stå på ett bein med kneet lett bøyd. Hoften skyves bakover, overkroppen senkes fremover, og det frie\n  beinet strekkes bakover som motvekt – mot slutten danner overkropp og bakre bein tilnærmet én linje.\n  Ryggen holdes rett, hoftene forblir vannrette: bekkenet skal ikke vri seg til siden.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Bekkenet vrir seg opp.</strong> Hovedfeilen. Hoftebeina peker hele tiden mot gulvet, ikke til siden.</li>\n  <li><strong>Strak standfot.</strong> Et lett bøyd kne er mer stabilt og skåner leddet.</li>\n  <li><strong>For raskt.</strong> Balanse tar tid – tre sekunder ned, tre opp.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 6 til 10 repetisjoner per side. Et lett fingerkontakt mot veggen er helt greit i starten;\n  det forsvinner så snart bevegelsen sitter.\n</p>"
     },
     "zh": {
       "name": "单腿硬拉",
@@ -2341,7 +2484,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "在对侧手中握住重物（哑铃、水瓶）提高稳定性要求。",
         "开始时允许一根手指轻触墙壁——单腿平衡需要练习。"
-      ]
+      ],
+      "article": "<h2>髋关节铰链、平衡与髋部稳定，一次训练</h2>\n<p>\n  单腿硬拉把髋关节铰链模式与平衡挑战结合在一起。除了后链之外，它主要锻炼的是那些防止骨盆\n  向侧面倾斜的小型髋部稳定肌群——正是这些肌肉力量不足，往往会在跑步中表现为膝盖疼痛。\n</p>\n<p>\n  由于平衡本身就限制了负荷，即使不加重量，这个动作也很有训练价值，也非常适合初学者。\n</p>\n<h2>动作要领</h2>\n<p>\n  单腿站立，膝盖保持轻微弯曲。髋部向后推，上半身随之向前下沉，另一条腿则向后伸展作为\n  配重——最终上半身和后伸的腿应大致形成一条直线。背部保持平直，髋部保持水平：骨盆不能\n  向侧面转动。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>骨盆转动。</strong>这是核心错误。髋骨应始终朝向地面，而不是朝向侧面。</li>\n  <li><strong>支撑腿完全伸直锁死。</strong>膝盖保持轻微弯曲会更稳定，也能保护关节。</li>\n  <li><strong>速度太快。</strong>保持平衡需要时间——下降三秒，上升三秒。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三组，每侧6到10次。刚开始时用手指轻扶墙壁完全没问题；等动作熟练后自然就不再需要了。\n</p>"
     }
   },
   "legs.calfraises": {
@@ -2372,7 +2516,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Όρθιο σε σκαλοπάτι (φτέρνες κρεμασμένες) για πολύ περισσότερο τέντωμα και ερέθισμα.",
         "Υψηλές επαναλήψεις λειτουργούν καλύτερα για γάμπες — στοχεύστε 15-25 ανά σετ."
-      ]
+      ],
+      "article": "<h2>Η υποτιμημένη άσκηση για αστράγαλο και δύναμη άλματος</h2>\n<p>\n  Η γάμπα σπάνια εκπαιδεύεται στοχευμένα και συμμετέχει παρ' όλα αυτά σε σχεδόν κάθε μετακίνηση. Δίνει\n  την τελευταία ώθηση στην απώθηση, απορροφά την προσγείωση σε κάθε βήμα και σταθεροποιεί τον\n  αστράγαλο. Οι δρομείς ωφελούνται διπλά: περισσότερη προώθηση και σαφώς λιγότερη ευαλωτότητα σε\n  προβλήματα αχίλλειου τένοντα και κνήμης.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Όρθιος, πόδια στο πλάτος του ισχίου, βάρος στις μπάλες των ποδιών. Αργά όσο πιο ψηλά γίνεται στα\n  δάχτυλα, κράτημα ένα δευτερόλεπτο στην κορυφή, μετά κατέβασμα υπό έλεγχο — και μάλιστα πιο χαμηλά από\n  την αρχική θέση, αν στέκεσαι σε σκαλοπάτι. Ακριβώς αυτή η τεντωμένη περιοχή στο κάτω σημείο φέρνει το\n  μεγαλύτερο μέρος του αποτελέσματος.\n</p>\n<p>\n  Με τεντωμένο γόνατο εργάζεται κυρίως ο δικέφαλος γαστροκνήμιος, με λυγισμένο γόνατο ο υποκείμενος\n  υποκνημίδιος μυς. Και οι δύο παραλλαγές έχουν τη θέση τους.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Ταλάντωση.</strong> Η γάμπα είναι ταχυδύναμη και της αρέσει να αναπηδά. Χωρίς έλεγχο ρυθμού συμβαίνει ελάχιστο προπονητικό ερέθισμα.</li>\n  <li><strong>Πολύ μικρό εύρος κίνησης.</strong> Η κάτω, τεντωμένη περιοχή είναι η πιο πολύτιμη — ένα σκαλοπάτι ή σανίδα αξίζει τον κόπο.</li>\n  <li><strong>Πολύ λίγες επαναλήψεις.</strong> Η γάμπα αντέχει και χρειάζεται περισσότερο όγκο απ' ό,τι οι περισσότεροι μύες.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία έως τέσσερα σετ με 15 έως 25 επαναλήψεις, αργά. Εκτελεσμένη με το ένα πόδι, η άσκηση γίνεται\n  σαφώς πιο απαιτητική και αποκαλύπτει ταυτόχρονα διαφορές μεταξύ των πλευρών.\n</p>"
     },
     "en": {
       "name": "Calf Raises",
@@ -2386,7 +2531,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Stand on a step (heels hanging) for much more stretch and stimulus.",
         "High reps work better for calves — aim for 15-25 per set."
-      ]
+      ],
+      "article": "<h2>The underrated exercise for ankles and jump power</h2>\n<p>\n  The calves rarely get trained directly, yet they're involved in almost every form of locomotion. They\n  supply the final push-off, cushion the landing on every step, and stabilize the ankle. Runners benefit\n  twice over: more propulsion and noticeably less susceptibility to Achilles tendon and shin problems.\n</p>\n<h2>Execution</h2>\n<p>\n  Standing, feet hip-width, weight on the balls of the feet. Press slowly up onto the toes as high as\n  possible, hold for a second at the top, then lower under control — deeper than the starting position if\n  you're standing on a step. That stretched range at the bottom is where most of the effect comes from.\n</p>\n<p>\n  With the knee straight, the two-headed gastrocnemius does most of the work; with the knee bent, the\n  soleus underneath takes over. Both variants earn their place.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Bouncing.</strong> The calf is fast-twitch and loves to spring. Without tempo control, hardly any training stimulus happens.</li>\n  <li><strong>Range too small.</strong> The lower, stretched range is the most valuable part — a step or a board is worth using.</li>\n  <li><strong>Too few reps.</strong> The calf tolerates and needs more volume than most muscles.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three to four sets of 15 to 25 reps, slow. Performed single-leg, the exercise gets noticeably harder\n  and also reveals side-to-side differences.\n</p>"
     },
     "es": {
       "name": "Elevaciones de pantorrilla",
@@ -2400,7 +2546,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Estar de pie en un escalón (talones colgando) para mucho más estiramiento y estímulo.",
         "Las repeticiones altas funcionan mejor para las pantorrillas — apunta a 15-25 por serie."
-      ]
+      ],
+      "article": "<h2>El ejercicio subestimado para el tobillo y la potencia de salto</h2>\n<p>\n  La pantorrilla rara vez se entrena de forma específica y aun así participa en casi todos los\n  desplazamientos. Aporta el último impulso al despegar, amortigua la aterrizada en cada paso y\n  estabiliza el tobillo. Los corredores se benefician doblemente: más propulsión y notablemente menos\n  vulnerabilidad a problemas de tendón de Aquiles y de espinilla.\n</p>\n<h2>Ejecución</h2>\n<p>\n  De pie, pies a la anchura de la cadera, peso sobre la punta de los pies. Sube lentamente lo más alto\n  posible sobre los dedos, mantén un segundo arriba, luego baja bajo control — más abajo que la posición\n  inicial si estás de pie sobre un escalón. Precisamente ese rango estirado en la parte inferior aporta\n  la mayor parte del efecto.\n</p>\n<p>\n  Con la rodilla extendida trabaja sobre todo el gastrocnemio; con la rodilla flexionada, el sóleo, que\n  está debajo. Ambas variantes tienen su razón de ser.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Rebotar.</strong> La pantorrilla es de contracción rápida y le gusta rebotar. Sin control del ritmo apenas se produce estímulo de entrenamiento.</li>\n  <li><strong>Rango de movimiento demasiado pequeño.</strong> La zona inferior, estirada, es la más valiosa — un escalón o una tabla merecen la pena.</li>\n  <li><strong>Muy pocas repeticiones.</strong> La pantorrilla tolera y necesita más volumen que la mayoría de los músculos.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres a cuatro series de 15 a 25 repeticiones, lentas. Ejecutado a una sola pierna, el ejercicio se\n  vuelve notablemente más exigente y a la vez revela diferencias entre lados.\n</p>"
     },
     "fr": {
       "name": "Montées de mollets",
@@ -2414,7 +2561,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Placez-vous sur une marche (talons qui dépassent) pour beaucoup plus d'étirement et de stimulus.",
         "Les répétitions hautes fonctionnent mieux pour les mollets — visez 15-25 par série."
-      ]
+      ],
+      "article": "<h2>L'exercice sous-estimé pour la cheville et la puissance de saut</h2>\n<p>\n  Le mollet est rarement entraîné de façon ciblée et pourtant il intervient dans presque tous les\n  déplacements. Il fournit la dernière impulsion à la poussée, amortit l'atterrissage à chaque pas et\n  stabilise la cheville. Les coureurs en profitent doublement : plus de propulsion et une nettement\n  moindre vulnérabilité aux problèmes de tendon d'Achille et de tibia.\n</p>\n<h2>Exécution</h2>\n<p>\n  Debout, pieds écartés à la largeur des hanches, poids sur l'avant du pied. Montez lentement le plus\n  haut possible sur les orteils, tenez une seconde en haut, puis redescendez de façon contrôlée — plus\n  bas que la position de départ si vous êtes sur une marche. C'est précisément cette zone étirée en bas\n  qui apporte l'essentiel de l'effet.\n</p>\n<p>\n  Genou tendu, c'est surtout le gastrocnémien (le muscle à deux chefs) qui travaille ; genou fléchi,\n  c'est le soléaire situé en dessous. Les deux variantes ont leur utilité.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Rebondir.</strong> Le mollet est un muscle explosif qui aime rebondir. Sans contrôle du tempo, il ne se passe quasiment aucun stimulus d'entraînement.</li>\n  <li><strong>Amplitude trop réduite.</strong> La zone basse et étirée est la plus précieuse — une marche ou une planchette en vaut la peine.</li>\n  <li><strong>Trop peu de répétitions.</strong> Le mollet supporte et nécessite plus de volume que la plupart des muscles.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois à quatre séries de 15 à 25 répétitions, lentement. Exécuté sur une jambe, l'exercice devient\n  nettement plus exigeant et révèle en même temps les différences entre les côtés.\n</p>"
     },
     "it": {
       "name": "Alzate polpacci",
@@ -2428,7 +2576,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Stai su uno scalino (talloni penzolanti) per molto più allungamento e stimolo.",
         "Le alte ripetizioni funzionano meglio per i polpacci — mira a 15-25 per serie."
-      ]
+      ],
+      "article": "<h2>L'esercizio sottovalutato per caviglie e potenza di salto</h2>\n<p>\n  Il polpaccio viene allenato raramente in modo mirato, eppure è coinvolto in quasi ogni movimento di\n  locomozione. Fornisce l'impulso finale nella spinta, ammortizza l'atterraggio a ogni passo e\n  stabilizza la caviglia. I corridori ne traggono un doppio beneficio: più spinta in avanti e una\n  vulnerabilità nettamente minore per problemi al tendine d'Achille e alla tibia.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  In piedi, piedi a larghezza dell'anca, peso sulla pianta del piede. Sali lentamente il più in alto\n  possibile sulle punte, mantieni un secondo in alto, poi abbassa in modo controllato — più in basso\n  della posizione di partenza se sei su un gradino. È proprio questa fascia allungata in basso a portare\n  la maggior parte dell'effetto.\n</p>\n<p>\n  Con il ginocchio disteso lavora soprattutto il gastrocnemio, con il ginocchio piegato il soleo\n  sottostante. Entrambe le varianti hanno la loro utilità.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Rimbalzare.</strong> Il polpaccio è esplosivo e ama rimbalzare. Senza controllo del ritmo lo stimolo allenante è quasi nullo.</li>\n  <li><strong>Ampiezza di movimento troppo ridotta.</strong> La fascia inferiore allungata è la più preziosa — un gradino o un'assicella valgono la pena.</li>\n  <li><strong>Troppe poche ripetizioni.</strong> Il polpaccio tollera e richiede più volume della maggior parte dei muscoli.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre o quattro serie da 15 a 25 ripetizioni, lente. Eseguito su una gamba sola l'esercizio diventa\n  nettamente più impegnativo e mette contemporaneamente in luce eventuali differenze tra i due lati.\n</p>"
     },
     "nl": {
       "name": "Kuitraises",
@@ -2442,7 +2591,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Sta op een trede (hakken bungelen) voor veel meer stretch en stimulus.",
         "Hoge herhalingen werken beter voor kuiten — richt op 15-25 per serie."
-      ]
+      ],
+      "article": "<h2>De onderschatte oefening voor enkels en sprongkracht</h2>\n<p>\n  De kuit wordt zelden gericht getraind en is toch bij vrijwel elke voortbeweging betrokken. Ze\n  levert de laatste impuls bij het afzetten, vangt bij elke stap de landing op en stabiliseert de\n  enkel. Hardlopers profiteren dubbel: meer voortstuwing en aanzienlijk minder gevoeligheid voor\n  achillespees- en scheenbeenklachten.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Staand, voeten heupbreed, gewicht op de bal van de voet. Langzaam zo hoog mogelijk op de tenen,\n  bovenaan één seconde vasthouden, dan gecontroleerd laten zakken — en wel dieper dan de\n  startpositie als je op een trede staat. Precies dat gerekte bereik onderaan levert het grootste\n  deel van het effect.\n</p>\n<p>\n  Met gestrekte knie werkt vooral de tweekoppige kuitspier, met gebogen knie de eronder liggende\n  soleus. Beide varianten hebben hun bestaansrecht.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Wippen.</strong> De kuit is snelkrachtig en veert graag mee. Zonder tempocontrole gebeurt er nauwelijks trainingsprikkel.</li>\n  <li><strong>Te klein bewegingsbereik.</strong> Het onderste, gerekte deel is het waardevolst — een trede of plank is de moeite waard.</li>\n  <li><strong>Te weinig herhalingen.</strong> De kuit verdraagt en heeft meer volume nodig dan de meeste spieren.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie tot vier sets met 15 tot 25 herhalingen, langzaam. Eenbenig uitgevoerd wordt de oefening\n  aanzienlijk veeleisender en legt tegelijk verschillen tussen de kanten bloot.\n</p>"
     },
     "no": {
       "name": "Calf Raises",
@@ -2456,7 +2606,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Stå på trinn (hæler hengende) for mye mer strekk og stimuli.",
         "Høye repetisjoner fungerer bedre for laft – målstreben 15-25 per sett."
-      ]
+      ],
+      "article": "<h2>Den undervurderte øvelsen for ankel og hoppkraft</h2>\n<p>\n  Leggen trenes sjelden målrettet, men er likevel involvert i nesten all fremdrift. Den gir det siste\n  avsettet ved frasparket, demper landingen ved hvert steg og stabiliserer ankelen. Løpere får dobbel\n  gevinst: mer fremdrift og betydelig lavere risiko for akilles- og leggbeinplager.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Stående, føttene i hoftebredde, vekten på fotballen. Press deg sakte så høyt som mulig opp på tærne,\n  hold ett sekund øverst, senk deretter kontrollert – og dypere enn utgangsposisjonen hvis du står på en\n  trinnkant. Nettopp dette utstrakte området nederst gir mesteparten av effekten.\n</p>\n<p>\n  Med strakt kne jobber først og fremst den tohodede leggmuskelen (gastrocnemius), med bøyd kne den\n  underliggende soleusmuskelen. Begge variantene har sin berettigelse.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å gynge.</strong> Leggen er hurtig og fjærer gjerne. Uten tempokontroll skjer det knapt noen treningsstimulans.</li>\n  <li><strong>For lite bevegelsesutslag.</strong> Det nedre, utstrakte området er det mest verdifulle – en trinnkant eller planke er verdt det.</li>\n  <li><strong>For få repetisjoner.</strong> Leggen tåler og trenger mer volum enn de fleste andre muskler.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre til fire sett med 15 til 25 repetisjoner, i sakte tempo. Utført enbeint blir øvelsen betydelig mer\n  krevende, og avdekker samtidig sideforskjeller.\n</p>"
     },
     "zh": {
       "name": "提踵",
@@ -2470,7 +2621,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "站在台阶上（足跟悬垂）可以获得更多的伸展和刺激。",
         "高次数对小腿效果更好——每组争取15-25次。"
-      ]
+      ],
+      "article": "<h2>被低估的踝关节与弹跳力训练动作</h2>\n<p>\n  小腿很少被专门训练，却几乎参与所有形式的移动。它在每次蹬地时提供最后的推进力，在每一步\n  落地时起到缓冲作用，还能稳定踝关节。跑者尤其能从中获得双重好处：推进力更强，跟腱和胫骨\n  问题的风险也明显更低。\n</p>\n<h2>动作要领</h2>\n<p>\n  站立，双脚与髋同宽，重心放在脚掌前部。缓慢尽量高地踮起脚尖，在顶部保持一秒，然后有控制\n  地下放——如果站在台阶上，下放的位置应低于起始位置。正是底部这段被拉伸的区间，带来了\n  大部分训练效果。\n</p>\n<p>\n  膝盖伸直时，主要锻炼的是腓肠肌；膝盖弯曲时，则主要锻炼下方的比目鱼肌。两种做法都各有\n  价值。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>借助反弹发力。</strong>小腿本身爆发力强，很容易靠弹动完成动作。如果不控制速度，几乎产生不了训练刺激。</li>\n  <li><strong>动作幅度太小。</strong>下方被拉伸的区间价值最大——用一个台阶或木板来增加幅度是值得的。</li>\n  <li><strong>次数太少。</strong>小腿比大多数肌肉更能承受、也更需要较大的训练量。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三到四组，每组15到25次，动作放慢。改为单腿进行会明显更具挑战性，同时也能暴露出左右两侧\n  的差异。\n</p>"
     }
   },
   "legs.glutebridge": {
@@ -2501,7 +2653,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Σπρώξιμο από τις φτέρνες, όχι τα δάχτυλα — πίεση δακτύλου μετακινεί φορτίο στα τετράκερα.",
         "Εξέλιξη με παραλλαγή ενός σκέλους ή προστιθέμενο βάρος όταν το βάρος σώματος είναι πολύ εύκολο."
-      ]
+      ],
+      "article": "<h2>Η πιο άμεση άσκηση γλουτών χωρίς όργανα</h2>\n<p>\n  Το glute bridge εκπαιδεύει την έκταση του ισχίου απομονωμένα — δηλαδή ακριβώς την κίνηση που παράγει\n  ο μεγάλος γλουτιαίος μυς. Είναι έτσι το προφανές συμπλήρωμα στο squat και στο lunge, όπου οι γλουτοί\n  μεν συμμετέχουν, αλλά πάντα σε συνδυασμό με τον μηρό.\n</p>\n<p>\n  Ιδιαίτερα πολύτιμη είναι η άσκηση για ανθρώπους με καθιστική εργασία: το παρατεταμένο κάθισμα κρατά\n  τους κάμπτορες του ισχίου κοντούς και τους γλουτούς αδρανείς. Το glute bridge αντιμετωπίζει και τα\n  δύο — εκτείνει το ισχίο και ενεργοποιεί τον ανταγωνιστή μυ.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Ύπτια θέση, γόνατα λυγισμένα, πόδια στο πλάτος του ισχίου και ακίνητα στο έδαφος, περίπου μια\n  παλάμη μακριά από τους γλουτούς. Το ισχίο ανασηκώνεται μέχρι γόνατα, ισχίο και ώμοι να σχηματίζουν\n  ευθεία γραμμή. Κράτημα ένα δευτερόλεπτο στην κορυφή με συνειδητό σφίξιμο των γλουτών, μετά κατέβασμα\n  υπό έλεγχο.\n</p>\n<p>\n  Το σημαντικό είναι το σφίξιμο στην κορυφή, όχι το ύψος. Όποιος απλώς ανεβοκατεβαίνει με φόρα,\n  εκπαιδεύει λίγο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Υπερβολική έκταση σε οσφυϊκή κύρτωση.</strong> Η κίνηση τελειώνει στην ευθεία γραμμή, όχι πέρα από αυτήν. Κράτησε τα πλευρά χαμηλά.</li>\n  <li><strong>Πόδια πολύ μακριά.</strong> Τότε αναλαμβάνει το οπίσθιο μηριαίο και οι γλουτοί μένουν ανεπαρκώς φορτισμένοι.</li>\n  <li><strong>Τα γόνατα πέφτουν προς τα μέσα.</strong> Κράτησε τα γόνατα πάνω από τα πόδια, σκέψου ενεργά προς τα έξω.</li>\n</ul>\n<h2>Εξέλιξη</h2>\n<p>\n  Τρία σετ με 12 έως 20 επαναλήψεις. Αν γίνει πολύ εύκολο: πόδια ανυψωμένα, ένα πόδι σηκωμένο, ή με\n  παύση τριών δευτερολέπτων στην πάνω θέση.\n</p>"
     },
     "en": {
       "name": "Glute Bridge",
@@ -2515,7 +2668,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Drive through the heels, not the toes — toe-pressure shifts the load to the quads.",
         "Progress with a single-leg variant or added weight once bodyweight is too easy."
-      ]
+      ],
+      "article": "<h2>The most direct glute exercise without equipment</h2>\n<p>\n  The glute bridge trains hip extension in isolation — exactly the movement the glutes produce. That\n  makes it the natural complement to the squat and the lunge, where the glutes contribute but always\n  alongside the thighs.\n</p>\n<p>\n  The exercise is especially valuable for people with desk jobs: prolonged sitting keeps the hip flexors\n  short and the glutes sluggish. The glute bridge addresses both — it extends the hip and activates its\n  antagonist.\n</p>\n<h2>Execution</h2>\n<p>\n  Lie on your back, knees bent, feet hip-width and flat on the floor, roughly a hand's width from the\n  glutes. The hips rise until knees, hips and shoulders form a line. Hold for a second at the top and\n  deliberately squeeze the glutes, then lower under control.\n</p>\n<p>\n  The point is the squeeze at the top, not the height. Swinging up and down with momentum trains little.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Overextending into a lower-back arch.</strong> The movement ends at the line, not beyond it. Keep the ribs down.</li>\n  <li><strong>Feet too far away.</strong> Then the hamstrings take over and the glutes stay underworked.</li>\n  <li><strong>Knees caving in.</strong> Keep the knees over the feet, actively think outward.</li>\n</ul>\n<h2>Progression</h2>\n<p>\n  Three sets of 12 to 20 reps. If it gets too easy: elevate the feet, lift one leg, or add a three-second\n  pause at the top.\n</p>"
     },
     "es": {
       "name": "Puente de glúteos",
@@ -2529,7 +2683,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Impulsa a través de los talones, no los dedos — la presión en los dedos desplaza la carga hacia los cuádriceps.",
         "Progresa con una variante de una sola pierna o peso añadido una vez que el peso corporal sea demasiado fácil."
-      ]
+      ],
+      "article": "<h2>El ejercicio de glúteo más directo sin equipamiento</h2>\n<p>\n  El puente de glúteos entrena la extensión de cadera de forma aislada — es decir, exactamente el\n  movimiento que genera el glúteo mayor. Es así el complemento natural de la sentadilla y la zancada,\n  donde el glúteo participa, pero siempre en conjunto con el muslo.\n</p>\n<p>\n  El ejercicio es especialmente valioso para personas con trabajo sedentario: estar sentado mucho tiempo\n  mantiene acortado el flexor de la cadera y perezoso el glúteo. El puente de glúteos aborda ambas\n  cosas — extiende la cadera y activa a su antagonista.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Boca arriba, rodillas dobladas, pies a la anchura de la cadera y planos en el suelo, aproximadamente a\n  un palmo de los glúteos. La cadera se eleva hasta que rodillas, cadera y hombros formen una línea.\n  Mantén un segundo arriba y aprieta conscientemente el glúteo con firmeza, luego baja bajo control.\n</p>\n<p>\n  El punto clave es la contracción en la parte superior, no la altura. Quien solo sube y baja con\n  impulso entrena poco.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Hiperextender hacia la hiperlordosis.</strong> El movimiento termina en la línea, no más allá. Mantén las costillas abajo.</li>\n  <li><strong>Pies demasiado lejos.</strong> Entonces los isquiotibiales toman el control y el glúteo queda poco exigido.</li>\n  <li><strong>Las rodillas caen hacia adentro.</strong> Mantén las rodillas sobre los pies, piensa activamente en llevarlas hacia afuera.</li>\n</ul>\n<h2>Progresión</h2>\n<p>\n  Tres series de 12 a 20 repeticiones. Si se vuelve demasiado fácil: pies elevados, una pierna levantada,\n  o con una pausa de tres segundos en la posición superior.\n</p>"
     },
     "fr": {
       "name": "Pont des fessiers",
@@ -2543,7 +2698,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Poussez par les talons, pas par les orteils — la pression des orteils décale la charge vers les quadriceps.",
         "Progressez avec une variante sur une jambe ou du poids ajouté une fois le poids du corps trop facile."
-      ]
+      ],
+      "article": "<h2>L'exercice fessier le plus direct sans matériel</h2>\n<p>\n  Le pont des fessiers isole l'extension de hanche — c'est-à-dire précisément le mouvement que génère le\n  grand fessier. C'est donc le complément naturel du squat et de la fente, où les fessiers participent,\n  certes, mais toujours en association avec les cuisses.\n</p>\n<p>\n  L'exercice est particulièrement précieux pour les personnes qui travaillent assises : une position\n  assise prolongée maintient les fléchisseurs de hanche raccourcis et les fessiers inactifs. Le pont des\n  fessiers s'attaque aux deux — il étend la hanche et active l'antagoniste.\n</p>\n<h2>Exécution</h2>\n<p>\n  Allongé sur le dos, genoux fléchis, pieds à plat écartés à la largeur des hanches, à environ une\n  largeur de main du bassin. Les hanches se soulèvent jusqu'à ce que genoux, hanches et épaules forment\n  une ligne. Tenez une seconde en haut en contractant fermement les fessiers, puis reposez-vous de façon\n  contrôlée.\n</p>\n<p>\n  Ce qui compte, c'est la contraction en haut, pas la hauteur. Qui se contente de monter et descendre\n  avec de l'élan n'entraîne pas grand-chose.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Hyperextension en cambrure lombaire.</strong> Le mouvement s'arrête à la ligne, pas au-delà. Gardez les côtes basses.</li>\n  <li><strong>Pieds trop éloignés.</strong> Les ischio-jambiers prennent alors le relais et les fessiers restent sous-sollicités.</li>\n  <li><strong>Les genoux tombent vers l'intérieur.</strong> Gardez les genoux au-dessus des pieds, pensez activement à les pousser vers l'extérieur.</li>\n</ul>\n<h2>Progression</h2>\n<p>\n  Trois séries de 12 à 20 répétitions. Si c'est devenu trop facile : pieds surélevés, une jambe levée, ou\n  avec une pause de trois secondes en position haute.\n</p>"
     },
     "it": {
       "name": "Ponte glutei",
@@ -2557,7 +2713,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Spingi attraverso i talloni, non le dita dei piedi — la pressione sulle dita sposta il carico ai quadricipiti.",
         "Progredisci con una variante su una gamba o peso aggiunto una volta che il peso corporeo è troppo facile."
-      ]
+      ],
+      "article": "<h2>L'esercizio per i glutei più diretto senza attrezzi</h2>\n<p>\n  Il ponte glutei allena l'estensione dell'anca in modo isolato — esattamente il movimento generato dal\n  grande gluteo. È quindi il complemento naturale a squat e affondo, dove i glutei collaborano ma sempre\n  insieme alla coscia.\n</p>\n<p>\n  L'esercizio è particolarmente utile per chi svolge un lavoro sedentario: stare seduti a lungo tiene\n  accorciato il flessore dell'anca e pigri i glutei. Il ponte glutei affronta entrambi i problemi —\n  estende l'anca e attiva l'antagonista.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posizione supina, ginocchia piegate, piedi a larghezza dell'anca e appoggiati a terra, a circa un\n  palmo di distanza dai glutei. I fianchi si sollevano finché ginocchia, anche e spalle non formano una\n  linea. Mantieni un secondo in alto e contrai consapevolmente i glutei, poi torna giù in modo\n  controllato.\n</p>\n<p>\n  Il punto chiave è la contrazione in alto, non l'altezza. Chi si limita a salire e scendere con slancio\n  allena poco.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Iperestensione.</strong> Il movimento termina sulla linea, non oltre. Tieni le costole in basso.</li>\n  <li><strong>Piedi troppo distanti.</strong> A quel punto subentrano i femorali e i glutei restano sottosollecitati.</li>\n  <li><strong>Ginocchia che cadono verso l'interno.</strong> Tieni le ginocchia sopra i piedi, pensa attivamente a spingerle verso l'esterno.</li>\n</ul>\n<h2>Progressione</h2>\n<p>\n  Tre serie da 12 a 20 ripetizioni. Se diventa troppo facile: piedi rialzati, una gamba sollevata, oppure\n  con una pausa di tre secondi nella posizione superiore.\n</p>"
     },
     "nl": {
       "name": "Glute Bridge",
@@ -2571,7 +2728,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Zet jezelf via de hakken, niet via de tenen — teendruk verschuift belasting naar de quadriceps.",
         "Maak voortgang met een eenbenig variant of toegevoegd gewicht zodra lichaamsgewicht te gemakkelijk is."
-      ]
+      ],
+      "article": "<h2>De meest directe bilspieroefening zonder toestellen</h2>\n<p>\n  De glute bridge traint de heupextensie geïsoleerd — dus precies de beweging die de grote\n  bilspier opwekt. Het is daarmee de logische aanvulling op squat en uitvalspas, waar de billen\n  wel meewerken, maar altijd samen met de bovenbeenspieren.\n</p>\n<p>\n  Bijzonder waardevol is de oefening voor mensen met een zittend beroep: lang zitten houdt de\n  heupflexor kort en de billen traag. De glute bridge pakt beide aan — hij strekt de heup en\n  activeert de tegenspeler.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Ruglig, knieën gebogen, voeten heupbreed en plat op de vloer, ongeveer een handbreedte van de\n  billen verwijderd. De heup komt omhoog tot knie, heup en schouders één lijn vormen. Bovenaan één\n  seconde vasthouden en de billen bewust hard aanspannen, dan gecontroleerd laten zakken.\n</p>\n<p>\n  Het punt is het aanspannen bovenaan, niet de hoogte. Wie alleen zwaaierig op en neer gaat, traint\n  weinig.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Overstrekken in een holle rug.</strong> De beweging eindigt in de lijn, niet erboven. Ribben naar beneden houden.</li>\n  <li><strong>Voeten te ver weg.</strong> Dan neemt de hamstring het over en blijven de billen onderbelast.</li>\n  <li><strong>Knieën vallen naar binnen.</strong> Knieën boven de voeten houden, actief naar buiten denken.</li>\n</ul>\n<h2>Opbouw</h2>\n<p>\n  Drie sets met 12 tot 20 herhalingen. Wordt het te licht: voeten verhoogd, één been opgetild, of\n  met een pauze van drie seconden in de bovenpositie.\n</p>"
     },
     "no": {
       "name": "Glute Bridge",
@@ -2585,7 +2743,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kjør gjennom hælene, ikke tærne – trykk på tær flytter lasten til quads.",
         "Framgang med enbeint variant eller added vekt når kroppsvekt er for lett."
-      ]
+      ],
+      "article": "<h2>Den mest direkte seteøvelsen uten utstyr</h2>\n<p>\n  Glute bridge trener hofteekstensjon isolert – altså nettopp den bevegelsen den store setemuskelen\n  skaper. Den er dermed et naturlig supplement til knebøy og utfall, der setet riktignok jobber med, men\n  alltid sammen med lårmuskulaturen.\n</p>\n<p>\n  Øvelsen er spesielt verdifull for folk med stillesittende yrker: langvarig sitting holder\n  hoftefleksorene korte og setet passivt. Glute bridge adresserer begge deler – den strekker hoften og\n  aktiverer motspilleren.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Rygglig, bøyde knær, føttene i hoftebredde og flate mot gulvet, omtrent en håndsbredde fra setet.\n  Hoften løftes til kne, hofte og skuldre danner én linje. Hold ett sekund øverst og spenn setet bevisst\n  hardt, senk deretter kontrollert.\n</p>\n<p>\n  Poenget er spenningen på toppen, ikke høyden. Den som bare svinger opp og ned, trener lite.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å overstrekke til hul rygg.</strong> Bevegelsen slutter ved linjen, ikke lenger. Hold ribbeina nede.</li>\n  <li><strong>Føttene for langt unna.</strong> Da overtar hamstrings, og setet blir ikke tilstrekkelig utfordret.</li>\n  <li><strong>Knærne faller innover.</strong> Hold knærne over føttene, tenk aktivt utover.</li>\n</ul>\n<h2>Progresjon</h2>\n<p>\n  Tre sett med 12 til 20 repetisjoner. Blir det for lett: hev føttene, løft ett bein, eller hold en pause\n  på tre sekunder i toppstillingen.\n</p>"
     },
     "zh": {
       "name": "臀桥",
@@ -2599,7 +2758,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "通过足跟驱动，不是脚尖——脚尖压力会将负荷转移到股四头肌。",
         "一旦体重太轻，用单腿变式或增加重量来进阶。"
-      ]
+      ],
+      "article": "<h2>无需器械、最直接的臀部训练动作</h2>\n<p>\n  臀桥能够孤立地训练髋关节伸展——也就是臀大肌所产生的核心动作。因此它是深蹲和弓步的天然\n  补充：在那些动作中，臀部虽然参与，但始终与大腿协同工作。\n</p>\n<p>\n  这个动作对久坐办公的人尤其有价值：长时间坐着会让髂腰肌保持缩短状态，臀部则变得迟钝。\n  臀桥同时解决了这两个问题——它伸展髋部，并激活相对应的拮抗肌。\n</p>\n<h2>动作要领</h2>\n<p>\n  仰卧，膝盖弯曲，双脚与髋同宽、平放在地面上，距离臀部大约一掌宽。抬起髋部，直到膝盖、\n  髋部和肩膀连成一条线。在顶部保持一秒，有意识地用力收紧臀部，然后有控制地放下。\n</p>\n<p>\n  关键在于顶部的收紧，而不是抬高的高度。如果只是靠惯性上下摆动，训练效果会很有限。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>过度伸展形成腰部前凸。</strong>动作应该止于身体成一条直线，而不是继续向上。肋骨应保持下沉，不要外翻。</li>\n  <li><strong>双脚离臀部太远。</strong>这样会让腘绳肌接管发力，臀部得不到充分刺激。</li>\n  <li><strong>膝盖向内塌陷。</strong>膝盖应保持在脚的正上方，主动想着向外推。</li>\n</ul>\n<h2>进阶方式</h2>\n<p>\n  三组，每组12到20次。如果感觉太轻松：可以把双脚垫高、改为单腿进行，或者在顶部停留三秒钟。\n</p>"
     }
   },
   "legs.jumpsquats": {
@@ -2630,7 +2790,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Μη ξεκίνησης από ψηλή στάση — η προ-τέντωμα στο κάτω μέρος του squat είναι αυτό που δημιουργεί ύψος άλματος.",
         "Σκληρές προσγειώσεις είναι δύσκολες στις αρθρώσεις· ένα στρώμα ή μαξιλαρωτά παπούτσια βοηθούν."
-      ]
+      ],
+      "article": "<h2>Από δύναμη σε ταχύ-δύναμη</h2>\n<p>\n  Το jump squat δεν είναι ένα πιο βαρύ squat, αλλά μια διαφορετική ποιότητα: αντί να κινείς αργά ένα\n  φορτίο, το θέμα είναι η ταχύτητα ανάπτυξης δύναμης. Ακριβώς αυτή η ικανότητα χάνεται πρώτη με την\n  ηλικία — πιο γρήγορα από την καθαρή μέγιστη δύναμη — και είναι αυτή που αποφασίζει, σε περίπτωση\n  παραπατήματος, αν θα προλάβεις να συγκρατηθείς.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Από ένα μισό έως τριών τετάρτων βαθύ squat, εκρηκτικό άλμα προς τα πάνω. Τα χέρια υποστηρίζουν τη\n  φόρα. Καθοριστική είναι η προσγείωση: μαλακή, με κύλισμα από τις μπάλες των ποδιών, τα γόνατα\n  απορροφούν και δείχνουν προς τα έξω. Η προσγείωση είναι το σημείο όπου κρίνονται οι τραυματισμοί, όχι\n  η απώθηση.\n</p>\n<p>\n  Ανάμεσα στις επαναλήψεις επιτρέπεται σύντομη επανατοποθέτηση. Καθαρό και με παύση είναι καλύτερο από\n  γρήγορο και ασταθές.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Σκληρή προσγείωση με τεντωμένα πόδια.</strong> Το πιο επικίνδυνο λάθος — οι κρουστικές δυνάμεις πηγαίνουν κατευθείαν στο γόνατο.</li>\n  <li><strong>Τα γόνατα γέρνουν προς τα μέσα στην προσγείωση.</strong> Άμεσο κριτήριο διακοπής του σετ.</li>\n  <li><strong>Πολλές επαναλήψεις.</strong> Η ταχύ-δύναμη εκπαιδεύεται φρέσκια, όχι κουρασμένη.</li>\n</ul>\n<h2>Δοσολογία και προϋπόθεση</h2>\n<p>\n  Μόνο αφού το κανονικό squat εδραιωθεί με καλό εύρος κίνησης. Μετά τέσσερα έως έξι σετ με μόλις 3 έως 6\n  επαναλήψεις και πλήρη ανάπαυση — καλύτερα νωρίς στην προπόνηση, όχι στο τέλος.\n</p>"
     },
     "en": {
       "name": "Jump Squats",
@@ -2644,7 +2805,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Don't start from a tall stance — the pre-stretch at the bottom of the squat is what creates jump height.",
         "Hard landings are tough on joints; a mat or cushioned shoes help."
-      ]
+      ],
+      "article": "<h2>From strength to speed-strength</h2>\n<p>\n  The jump squat isn't a harder squat, it's a different quality altogether: instead of moving a load\n  slowly, it's about the speed of force production. That's exactly the capacity that fades first with\n  age — faster than raw maximal strength — and it's what decides whether you catch yourself when you\n  stumble.\n</p>\n<h2>Execution</h2>\n<p>\n  From a half to three-quarter depth squat, jump up explosively. The arms assist the drive. What matters\n  most is the landing: soft, rolling through the balls of the feet, knees absorbing and tracking\n  outward. The landing is the part where injuries happen, not the take-off.\n</p>\n<p>\n  A brief reset between reps is fine. Clean with a pause beats fast and shaky.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Hard landing with straight legs.</strong> The most dangerous mistake — impact forces go straight into the knee.</li>\n  <li><strong>Knees caving inward on landing.</strong> An immediate stop signal for the set.</li>\n  <li><strong>Too many reps.</strong> Speed-strength is trained fresh, not fatigued.</li>\n</ul>\n<h2>Programming and prerequisite</h2>\n<p>\n  Only once the regular squat is solid with a good range of motion. Then four to six sets of just 3 to 6\n  reps with full rest — ideally early in the session, not at the end.\n</p>"
     },
     "es": {
       "name": "Sentadillas con salto",
@@ -2658,7 +2820,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "No comiences desde una postura erguida — el pre-estiramiento en la parte inferior de la sentadilla es lo que crea la altura del salto.",
         "Los aterrizajes duros son difíciles para las articulaciones; una colchoneta o zapatos acolchados ayudan."
-      ]
+      ],
+      "article": "<h2>De fuerza a fuerza-velocidad</h2>\n<p>\n  La sentadilla con salto no es una sentadilla más pesada, sino una cualidad distinta: en lugar de mover\n  una carga despacio, se trata de la velocidad de desarrollo de la fuerza. Precisamente esa capacidad es\n  la primera que se pierde con la edad — más rápido que la fuerza máxima pura — y es la que decide, al\n  tropezar, si uno todavía logra recuperar el equilibrio.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Desde una sentadilla de media a tres cuartos de profundidad, saltar hacia arriba explosivamente. Los\n  brazos apoyan el impulso. Lo decisivo es la aterrizada: suave, rodando sobre la punta del pie, con las\n  rodillas amortiguando y apuntando hacia afuera. La aterrizada es la parte donde se deciden las\n  lesiones, no el despegue.\n</p>\n<p>\n  Entre repeticiones se puede reiniciar brevemente. Limpio y con pausa es mejor que rápido e inestable.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Aterrizada dura con las piernas extendidas.</strong> El error más peligroso — las fuerzas de impacto van directamente a la rodilla.</li>\n  <li><strong>Las rodillas se hunden hacia adentro al aterrizar.</strong> Criterio de interrupción inmediata de la serie.</li>\n  <li><strong>Demasiadas repeticiones.</strong> La fuerza-velocidad se entrena en fresco, no fatigado.</li>\n</ul>\n<h2>Dosificación y requisito previo</h2>\n<p>\n  Solo cuando la sentadilla normal se domina con un buen rango de movimiento. Luego, cuatro a seis\n  series de solo 3 a 6 repeticiones con descanso completo — idealmente al principio de la sesión, no al\n  final.\n</p>"
     },
     "fr": {
       "name": "Fentes sautées",
@@ -2672,7 +2835,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Ne partez pas d'une position debout — la pré-étirement en bas du squat crée la hauteur du saut.",
         "Les atterrissages durs sont durs pour les articulations ; un tapis ou des chaussures amorties aident."
-      ]
+      ],
+      "article": "<h2>De la force à la force vitesse</h2>\n<p>\n  Le squat sauté n'est pas un squat plus difficile, c'est une qualité différente : au lieu de déplacer\n  lentement une charge, il s'agit de la vitesse de production de force. C'est précisément cette capacité\n  qui se perd en premier avec l'âge — plus vite que la force maximale pure — et c'est elle qui détermine,\n  en cas de trébuchement, si l'on parvient encore à se rattraper.\n</p>\n<h2>Exécution</h2>\n<p>\n  Depuis un squat mi-profond aux trois quarts, sautez explosivement vers le haut. Les bras accompagnent\n  l'élan. Ce qui compte, c'est l'atterrissage : en douceur, en déroulant sur l'avant du pied, les genoux\n  absorbant et pointant vers l'extérieur. C'est l'atterrissage, et non l'impulsion, qui détermine le\n  risque de blessure.\n</p>\n<p>\n  Vous pouvez marquer une courte pause entre les répétitions. Propre et avec une pause vaut mieux que\n  rapide et instable.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Atterrissage brutal jambes tendues.</strong> L'erreur la plus dangereuse — les forces d'impact vont directement dans le genou.</li>\n  <li><strong>Les genoux rentrent vers l'intérieur à l'atterrissage.</strong> Critère d'arrêt immédiat de la série.</li>\n  <li><strong>Trop de répétitions.</strong> La force vitesse s'entraîne à froid, pas fatigué.</li>\n</ul>\n<h2>Dosage et prérequis</h2>\n<p>\n  Seulement une fois que le squat classique est maîtrisé avec une bonne amplitude. Ensuite, quatre à six\n  séries de seulement 3 à 6 répétitions avec une récupération complète — de préférence en début de\n  séance, pas à la fin.\n</p>"
     },
     "it": {
       "name": "Squat con salto",
@@ -2686,7 +2850,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Non iniziare da una postura eretta — il pre-allungamento in fondo allo squat è ciò che crea l'altezza del salto.",
         "Gli atterraggi forti sono difficili per le articolazioni; un tappetino o scarpe ammortizzate aiutano."
-      ]
+      ],
+      "article": "<h2>Dalla forza alla potenza esplosiva</h2>\n<p>\n  Lo squat con salto non è uno squat più pesante, ma una qualità diversa: invece di muovere un carico\n  lentamente, si tratta della velocità con cui si sviluppa la forza. È proprio questa capacità a\n  perdersi per prima con l'età — più rapidamente della pura forza massimale — ed è quella che, in caso\n  di inciampo, decide se riesci ancora a recuperare l'equilibrio.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Da uno squat a metà o a tre quarti di profondità, salta verso l'alto in modo esplosivo. Le braccia\n  accompagnano lo slancio. Decisiva è l'atterraggio: morbido, con rullata sulla pianta del piede, le\n  ginocchia assorbono e restano rivolte verso l'esterno. È l'atterraggio la fase in cui si decidono gli\n  infortuni, non lo stacco.\n</p>\n<p>\n  Tra una ripetizione e l'altra è consentito riposizionarsi brevemente. Pulito e con pausa è meglio che\n  veloce e traballante.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Atterraggio duro a gambe tese.</strong> L'errore più pericoloso — le forze d'impatto arrivano direttamente al ginocchio.</li>\n  <li><strong>Le ginocchia cadono verso l'interno all'atterraggio.</strong> Criterio di interruzione immediata della serie.</li>\n  <li><strong>Troppe ripetizioni.</strong> La potenza esplosiva si allena da freschi, non affaticati.</li>\n</ul>\n<h2>Dosaggio e prerequisiti</h2>\n<p>\n  Solo quando lo squat normale è ben padroneggiato con una buona ampiezza di movimento. Poi quattro-sei\n  serie da sole 3-6 ripetizioni con recupero completo — meglio all'inizio della sessione che alla fine.\n</p>"
     },
     "nl": {
       "name": "Jump Squats",
@@ -2700,7 +2865,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Begin niet van een rechtopstaande houding — de pre-stretch onderaan de squat creëert spronghoogte.",
         "Harde landingen zijn moeilijk voor gewrichten; een mat of gevoerde schoenen helpen."
-      ]
+      ],
+      "article": "<h2>Van kracht naar snelheidskracht</h2>\n<p>\n  De jump squat is geen zwaardere squat, maar een andere kwaliteit: in plaats van een belasting\n  langzaam te bewegen, draait het om de snelheid van krachtontwikkeling. Precies dit vermogen gaat\n  met het ouder worden als eerste verloren — sneller dan pure maximale kracht — en het is\n  bepalend voor de vraag of je je bij een struikeling nog kunt opvangen.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Vanuit een halve tot driekwart diepe squat explosief omhoog afzetten. De armen ondersteunen de\n  zwaai. Doorslaggevend is de landing: zacht, afrollend over de bal van de voet, knieën absorberen\n  en wijzen naar buiten. De landing is het deel waarop blessures worden beslist, niet de afzet.\n</p>\n<p>\n  Tussen de herhalingen mag kort worden gereset. Zuiver en met pauze is beter dan snel en wankel.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Harde landing met gestrekte benen.</strong> De gevaarlijkste fout — de stootkrachten gaan direct de knie in.</li>\n  <li><strong>Knieën kantelen bij de landing naar binnen.</strong> Direct afbreekcriterium voor de set.</li>\n  <li><strong>Te veel herhalingen.</strong> Snelheidskracht train je fris, niet vermoeid.</li>\n</ul>\n<h2>Dosering en voorwaarde</h2>\n<p>\n  Pas als de normale squat met een goede bewegingsuitslag goed zit. Dan vier tot zes sets met\n  slechts 3 tot 6 herhalingen en volledige pauze — het best vroeg in de sessie, niet aan het einde.\n</p>"
     },
     "no": {
       "name": "Jump Squats",
@@ -2714,7 +2880,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Ikke start fra høy stance – pre-strekken nederst i squat er det som skaper hopphøyde.",
         "Hardt landing er tøft for leddene; matte eller dempe sko hjelper."
-      ]
+      ],
+      "article": "<h2>Fra styrke til hurtighetsstyrke</h2>\n<p>\n  Jump squat er ikke en tyngre knebøy, men en annen kvalitet: i stedet for å bevege en last sakte,\n  handler det om hastigheten på kraftutviklingen. Nettopp denne evnen forsvinner først med alderen –\n  raskere enn ren maksimalstyrke – og det er den som avgjør om man klarer å fange seg selv ved en\n  snubling.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Fra en halv til tre firedels dyp knebøy hopper du eksplosivt oppover. Armene støtter svinget.\n  Avgjørende er landingen: mykt, rullende over fotballen, knærne fjærer med og peker utover. Det er\n  landingen, ikke avspranget, som avgjør om det blir skader.\n</p>\n<p>\n  Mellom repetisjonene kan man gjerne resette seg kort. Rent og med pause er bedre enn raskt og\n  vaklende.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Hard landing med strake bein.</strong> Den farligste feilen – støtkreftene går rett inn i kneet.</li>\n  <li><strong>Knærne faller innover ved landing.</strong> Umiddelbart avbruddskriterium for settet.</li>\n  <li><strong>For mange repetisjoner.</strong> Hurtighetsstyrke trener man uthvilt, ikke sliten.</li>\n</ul>\n<h2>Dosering og forutsetning</h2>\n<p>\n  Først når den vanlige knebøyen sitter med godt bevegelsesutslag. Deretter fire til seks sett med bare\n  3 til 6 repetisjoner og full pause – helst tidlig i økten, ikke på slutten.\n</p>"
     },
     "zh": {
       "name": "跳跃深蹲",
@@ -2728,7 +2895,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "不要从竖直站姿开始——深蹲底部的预拉伸是产生跳跃高度的原因。",
         "重着陆对关节很难；垫子或缓冲鞋很有帮助。"
-      ]
+      ],
+      "article": "<h2>从力量到爆发力</h2>\n<p>\n  跳跃深蹲不是更重的深蹲，而是另一种训练品质：重点不再是缓慢移动负荷，而是发力的速度。\n  而恰恰是这种能力，会随年龄增长最先流失——比单纯的最大力量流失得更快——也正是它，决定了\n  在绊倒的瞬间能否及时稳住身体。\n</p>\n<h2>动作要领</h2>\n<p>\n  从半蹲到四分之三深度的下蹲位置爆发式向上跳起。双臂配合摆动助力。关键在于落地：要轻柔，\n  从脚掌前部滚动缓冲，膝盖顺势弯曲并朝向外侧。真正决定是否受伤的是落地阶段，而不是起跳\n  阶段。\n</p>\n<p>\n  每次重复之间可以短暂停顿重新调整。动作标准并有停顿，胜过快速却摇晃不稳。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>双腿伸直硬着地。</strong>最危险的错误——冲击力会直接传导到膝盖。</li>\n  <li><strong>落地时膝盖向内塌陷。</strong>一旦出现，应立即停止这一组。</li>\n  <li><strong>次数太多。</strong>爆发力训练应该在身体新鲜的状态下进行，而不是在疲劳时。</li>\n</ul>\n<h2>训练量与前提条件</h2>\n<p>\n  只有在标准深蹲的动作幅度和质量都过关之后才适合练习。之后可以做四到六组，每组只做3到6\n  次，并充分休息——最好安排在训练课的前段，而不是最后。\n</p>"
     }
   },
   "legs.lunges": {
@@ -2759,7 +2927,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Παραμένει όρθιος — κορμός δεν πρέπει να κατακλίνεται μπροστά.",
         "Παραλλαγές: ανάστροφες lunges είναι ευκολότερες στα γόνατα, περπατώντας lunges προσθέτουν ζήτηση ισορροπίας."
-      ]
+      ],
+      "article": "<h2>Γιατί να προπονείσαι με ένα σκέλος</h2>\n<p>\n  Σχεδόν όλα όσα κάνει ο άνθρωπος στην καθημερινότητα με τα πόδια συμβαίνουν με ένα σκέλος: περπάτημα,\n  τρέξιμο, ανέβασμα σκαλοπατιών, απώθηση. Ασκήσεις με δύο σκέλη όπως το squat επιτρέπουν στην πιο δυνατή\n  πλευρά να καλύπτει την πιο αδύναμη — στο lunge αυτό δεν γίνεται. Αποκαλύπτει διαφορές μεταξύ των\n  πλευρών και τις εξισορροπεί.\n</p>\n<p>\n  Επιπλέον υπάρχει το στοιχείο ισορροπίας. Οι σταθεροποιητές του ισχίου πρέπει να αποτρέψουν τη λεκάνη\n  από το να γείρει στο πλάι, κάτι που στο squat σχεδόν δεν απαιτείται.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Από όρθια θέση, ελεγχόμενο βήμα προς τα εμπρός. Και τα δύο γόνατα λυγίζουν σε περίπου 90 μοίρες, το\n  πίσω γόνατο κατεβαίνει προς το έδαφος χωρίς να ακουμπά. Ο κορμός παραμένει όρθιος, το βάρος βρίσκεται\n  κυρίως στο μπροστινό πόδι. Σπρώξιμο πίσω μέσω της μπροστινής φτέρνας.\n</p>\n<p>\n  Παραλλαγές: μπροστά (περισσότερο τετρακέφαλος), πίσω (πιο φιλικό στις αρθρώσεις, περισσότερο\n  γλουτιαίος) και περπατώντας (περισσότερος συντονισμός και κατάσταση).\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πολύ μικρό βήμα.</strong> Τότε το μπροστινό γόνατο βρίσκεται πολύ μπροστά από το πόδι και η άσκηση επιβαρύνει άσκοπα το γόνατο.</li>\n  <li><strong>Το μπροστινό γόνατο γέρνει προς τα μέσα.</strong> Συχνά ένδειξη αδύναμων απαγωγέων ισχίου.</li>\n  <li><strong>Ο κορμός πέφτει μπροστά.</strong> Στέρνο ψηλά, βλέμμα ευθεία.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 8 έως 12 επαναλήψεις ανά πλευρά. Πάντα και οι δύο πλευρές τον ίδιο αριθμό φορών, ακόμη κι\n  αν η μία είναι σαφώς πιο δυνατή — η εξισορρόπηση είναι ο κύριος σκοπός.\n</p>"
     },
     "en": {
       "name": "Lunges",
@@ -2773,7 +2942,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Stay upright — torso must not collapse forward.",
         "Variants: reverse lunges are easier on the knees, walking lunges add a balance demand."
-      ]
+      ],
+      "article": "<h2>Why train single-leg</h2>\n<p>\n  Almost everything the body does with the legs day to day happens on one leg: walking, running, climbing\n  stairs, pushing off. Two-legged exercises like the squat let the stronger side compensate for the\n  weaker one — with the lunge that isn't possible. It exposes side-to-side differences and evens them\n  out.\n</p>\n<p>\n  There's also a balance component. The hip stabilizers have to prevent the pelvis from tipping sideways,\n  something the squat barely demands.\n</p>\n<h2>Execution</h2>\n<p>\n  From standing, take a controlled step forward. Both knees bend to roughly 90 degrees, the back knee\n  sinks toward the floor without touching down. The torso stays upright, most of the weight sits on the\n  front leg. Push back through the front heel.\n</p>\n<p>\n  Variants: forward (more quads), backward (easier on the joints, more glutes), and walking (more\n  coordination and conditioning).\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Step too short.</strong> Then the front knee sits far past the foot and the exercise becomes unnecessarily knee-dominant.</li>\n  <li><strong>Front knee caves inward.</strong> Often a sign of weak hip abductors.</li>\n  <li><strong>Torso falls forward.</strong> Sternum up, eyes forward.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three sets of 8 to 12 reps per side. Always match both sides in volume, even if one is clearly\n  stronger — evening things out is the main point.\n</p>"
     },
     "es": {
       "name": "Zancadas",
@@ -2787,7 +2957,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mantente erguido — el torso no debe colapsar hacia adelante.",
         "Variantes: las zancadas invertidas son más fáciles para las rodillas, las zancadas caminando agregan una demanda de equilibrio."
-      ]
+      ],
+      "article": "<h2>Por qué entrenar a una sola pierna</h2>\n<p>\n  Casi todo lo que el ser humano hace con las piernas en el día a día ocurre a una sola pierna: caminar,\n  correr, subir escaleras, impulsarse. Los ejercicios bilaterales como la sentadilla permiten que el\n  lado más fuerte compense al más débil — en la zancada eso no es posible. Revela las diferencias entre\n  lados y las equilibra.\n</p>\n<p>\n  A esto se suma el componente de equilibrio. Los estabilizadores de cadera deben impedir que la pelvis\n  se incline hacia el lado, algo que en la sentadilla apenas se exige.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Desde de pie, un paso controlado hacia adelante. Ambas rodillas se doblan hasta unos 90 grados, la\n  rodilla trasera desciende hacia el suelo sin tocarlo. El torso permanece erguido, el peso recae\n  principalmente sobre la pierna delantera. Vuelve empujando a través del talón delantero.\n</p>\n<p>\n  Variantes: hacia adelante (más cuádriceps), hacia atrás (más suave para las articulaciones, más\n  glúteo) y caminando (más coordinación y acondicionamiento).\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Paso demasiado corto.</strong> Entonces la rodilla delantera queda muy adelantada sobre el pie y el ejercicio recarga innecesariamente la rodilla.</li>\n  <li><strong>La rodilla delantera se hunde hacia adentro.</strong> Suele ser señal de abductores de cadera débiles.</li>\n  <li><strong>El torso cae hacia adelante.</strong> Esternón arriba, mirada al frente.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 8 a 12 repeticiones por lado. Siempre el mismo número de repeticiones en ambos lados,\n  incluso si uno es claramente más fuerte — el equilibrio es el propósito principal.\n</p>"
     },
     "fr": {
       "name": "Fentes",
@@ -2801,7 +2972,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Restez droit — le torse ne doit pas s'effondrer en avant.",
         "Variantes : les fentes inverses sont plus faciles pour les genoux, les fentes marchantes ajoutent une demande d'équilibre."
-      ]
+      ],
+      "article": "<h2>Pourquoi s'entraîner sur une jambe</h2>\n<p>\n  Presque tout ce que l'être humain fait avec ses jambes au quotidien se produit sur une seule jambe :\n  marcher, courir, monter les escaliers, se propulser. Les exercices bipodaux comme le squat permettent\n  au côté le plus fort de masquer le plus faible — avec la fente, c'est impossible. Elle révèle les\n  différences entre les côtés et les corrige.\n</p>\n<p>\n  S'y ajoute la composante d'équilibre. Les stabilisateurs de hanche doivent empêcher le bassin de\n  basculer sur le côté, ce qui n'est guère sollicité dans le squat.\n</p>\n<h2>Exécution</h2>\n<p>\n  Depuis la position debout, faites un pas contrôlé vers l'avant. Les deux genoux se fléchissent à\n  environ 90 degrés, le genou arrière descend vers le sol sans le toucher. Le torse reste droit, le poids\n  repose principalement sur la jambe avant. Repoussez par le talon avant pour revenir.\n</p>\n<p>\n  Variantes : vers l'avant (plus de quadriceps), vers l'arrière (plus doux pour les articulations, plus\n  de fessiers) et en marchant (plus de coordination et de conditionnement).\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Pas trop court.</strong> Le genou avant se retrouve alors loin devant le pied et l'exercice sollicite inutilement le genou.</li>\n  <li><strong>Le genou avant rentre vers l'intérieur.</strong> Souvent le signe d'abducteurs de hanche faibles.</li>\n  <li><strong>Le torse tombe vers l'avant.</strong> Sternum haut, regard droit devant.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 8 à 12 répétitions de chaque côté. Toujours le même nombre des deux côtés, même si\n  l'un est nettement plus fort — le rééquilibrage est l'objectif principal.\n</p>"
     },
     "it": {
       "name": "Affondi",
@@ -2815,7 +2987,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Rimani eretto — il busto non deve crollare in avanti.",
         "Varianti: gli affondi all'indietro sono più delicati per le ginocchia, gli affondi in movimento aggiungono una richiesta di equilibrio."
-      ]
+      ],
+      "article": "<h2>Perché allenarsi su una gamba sola</h2>\n<p>\n  Quasi tutto ciò che l'essere umano fa con le gambe nella vita quotidiana avviene su una gamba sola:\n  camminare, correre, salire le scale, spingersi via da terra. Gli esercizi bipodalici come lo squat\n  permettono al lato più forte di compensare quello più debole — con l'affondo questo non è possibile.\n  Mette in luce le differenze tra i lati e le compensa.\n</p>\n<p>\n  A questo si aggiunge la componente di equilibrio. Gli stabilizzatori dell'anca devono impedire che il\n  bacino si inclini lateralmente, cosa che nello squat viene richiesta a malapena.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Dalla posizione eretta, un passo controllato in avanti. Entrambe le ginocchia si piegano fino a circa\n  90 gradi, il ginocchio posteriore scende verso il pavimento senza toccarlo. Il busto resta eretto, il\n  peso poggia prevalentemente sulla gamba anteriore. Spingi indietro attraverso il tallone anteriore.\n</p>\n<p>\n  Varianti: in avanti (più coscia), all'indietro (più delicato per le articolazioni, più glutei) e in\n  movimento (più coordinazione e condizionamento).\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Passo troppo corto.</strong> Il ginocchio anteriore finisce ben oltre il piede e l'esercizio diventa inutilmente gravoso per il ginocchio.</li>\n  <li><strong>Il ginocchio anteriore cade verso l'interno.</strong> Spesso segno di abduttori dell'anca deboli.</li>\n  <li><strong>Il busto cade in avanti.</strong> Sterno in alto, sguardo dritto davanti.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 8 a 12 ripetizioni per lato. Sempre entrambi i lati con la stessa frequenza, anche se uno\n  è nettamente più forte — il riequilibrio è lo scopo principale.\n</p>"
     },
     "nl": {
       "name": "Lunges",
@@ -2829,7 +3002,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Blijf rechtop — romp mag niet naar voren ineenzakken.",
         "Varianten: reverse lunges zijn gemakkelijker op de knieën, walking lunges voegen balansvereiste toe."
-      ]
+      ],
+      "article": "<h2>Waarom eenbenig trainen</h2>\n<p>\n  Vrijwel alles wat mensen in het dagelijks leven met hun benen doen, gebeurt eenbenig: lopen,\n  hardlopen, traplopen, afzetten. Tweebenige oefeningen zoals de squat laten toe dat de sterkere\n  kant de zwakkere verbergt — bij de lunge kan dat niet. Hij legt verschillen tussen de kanten bloot\n  en gelijkt ze uit.\n</p>\n<p>\n  Daar komt het balansdeel bij. De heupstabilisatoren moeten voorkomen dat het bekken zijwaarts\n  kantelt, iets wat bij de squat nauwelijks wordt aangesproken.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Vanuit stand een gecontroleerde stap naar voren. Beide knieën buigen tot ongeveer 90 graden, de\n  achterste knie zakt richting de vloer zonder te raken. De romp blijft rechtop, het gewicht rust\n  vooral op het voorste been. Via de voorste hiel terugduwen.\n</p>\n<p>\n  Varianten: naar voren (meer voorkant bovenbeen), naar achteren (gewrichtsvriendelijker, meer\n  billen) en lopend (meer coördinatie en conditie).\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Te korte stap.</strong> Dan staat de voorste knie ver over de voet en wordt de oefening onnodig belastend voor de knie.</li>\n  <li><strong>Voorste knie kantelt naar binnen.</strong> Vaak een teken van zwakke heupabductoren.</li>\n  <li><strong>Romp valt naar voren.</strong> Borstbeen omhoog, blik naar voren.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 8 tot 12 herhalingen per kant. Altijd beide kanten even vaak, ook als één duidelijk\n  sterker is — de compensatie is het hoofddoel.\n</p>"
     },
     "no": {
       "name": "Lunges",
@@ -2843,7 +3017,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Forbli oppreist – torso må ikke kollapse fremover.",
         "Varianter: reverse lunges er lettere på knærne, walking lunges legger til balansekrav."
-      ]
+      ],
+      "article": "<h2>Hvorfor trene enbeint</h2>\n<p>\n  Nesten alt mennesket gjør med beina i hverdagen, skjer enbeint: å gå, løpe, gå i trapper, ta avspark.\n  Tobeinte øvelser som knebøy lar den sterkeste siden skjule den svakeste – det går ikke ved utfall.\n  Øvelsen avdekker sideforskjeller og jevner dem ut.\n</p>\n<p>\n  I tillegg kommer balanseelementet. Hoftestabilisatorene må hindre bekkenet i å vippe til siden, noe som\n  knebøyen knapt utfordrer.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Fra stående et kontrollert steg fremover. Begge knær bøyes til omtrent 90 grader, det bakre kneet\n  senkes mot gulvet uten å berøre det. Overkroppen forblir oppreist, vekten hviler hovedsakelig på det\n  fremre beinet. Press deg tilbake gjennom den fremre hælen.\n</p>\n<p>\n  Varianter: fremover (mer quadriceps), bakover (skånsommere for leddene, mer sete) og gående (mer\n  koordinasjon og kondisjon).\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>For kort steg.</strong> Da havner det fremre kneet langt foran foten, og øvelsen blir unødvendig knebelastende.</li>\n  <li><strong>Det fremre kneet faller innover.</strong> Ofte et tegn på svake hofteabduktorer.</li>\n  <li><strong>Overkroppen faller fremover.</strong> Hold brystbenet høyt, blikket rett frem.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 8 til 12 repetisjoner per side. Alltid begge sider like mange ganger, selv om den ene er\n  tydelig sterkere – utjevningen er hovedhensikten.\n</p>"
     },
     "zh": {
       "name": "弓步",
@@ -2857,7 +3032,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "保持竖直——躯干不能向前折叠。",
         "变式：反向弓步对膝盖更温和，行走弓步增加平衡要求。"
-      ]
+      ],
+      "article": "<h2>为什么要练单腿动作</h2>\n<p>\n  人在日常生活中用腿完成的动作，几乎都是单腿完成的：走路、跑步、上下楼梯、蹬地发力。像\n  深蹲这样的双腿动作，会让较强的一侧掩盖较弱的一侧——弓步则做不到这一点。它能暴露左右\n  两侧的差异，并帮助纠正这种不平衡。\n</p>\n<p>\n  此外还有平衡的成分。髋部稳定肌群必须防止骨盆向侧面倾斜，而这在深蹲中几乎用不上。\n</p>\n<h2>动作要领</h2>\n<p>\n  从站立开始，向前迈出有控制的一大步。两个膝盖都弯曲到大约90度，后膝朝地面下沉但不触地。\n  上半身保持竖直，重心主要落在前腿上。通过前脚跟发力推回起始位置。\n</p>\n<p>\n  变式：向前弓步（更多锻炼股四头肌）、向后弓步（对关节更友好，更多锻炼臀部）以及行走\n  弓步（更考验协调性和体能）。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>步幅太小。</strong>这会让前膝远远超过脚尖，让动作对膝盖产生不必要的负担。</li>\n  <li><strong>前膝向内塌陷。</strong>通常是髋外展肌力量不足的表现。</li>\n  <li><strong>上半身前倾。</strong>应挺起胸骨，目光平视前方。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三组，每侧8到12次。即使某一侧明显更强，也要保持两侧次数相同——平衡左右差异正是这个\n  动作的主要目的。\n</p>"
     }
   },
   "legs.squats": {
@@ -2888,7 +3064,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Καταπάλαιση γονάτων πάνω από τα δάχτυλα — μην αφήνεις να προσέγγιση προς τα μέσα.",
         "Σφίξιμο των γλουτών στο ανήφορο ή η κάτω μέση τελειώνει overworking."
-      ]
+      ],
+      "article": "<h2>Γιατί το squat είναι η πιο σημαντική άσκηση ποδιών</h2>\n<p>\n  Σηκώνομαι, κάθομαι, ανεβαίνω σκαλοπάτια, σηκώνω κάτι από το έδαφος — το squat δεν είναι όργανο\n  γυμναστηρίου, αλλά μοτίβο της καθημερινότητας. Εκπαιδεύει τετρακέφαλο, γλουτούς και κορμό σε μία\n  κίνηση και είναι η άσκηση με τη μεγαλύτερη μεταφορά στη μετέπειτα ζωή: όποιος στα εβδομήντα ακόμη\n  σηκώνεται από μια βαθιά πολυθρόνα χωρίς να στηριχτεί, έχει διατηρήσει αυτό το μοτίβο.\n</p>\n<h2>Βάθος και ο μύθος του γόνατος πάνω από τα δάχτυλα</h2>\n<p>\n  Δύο κανόνες επιμένουν με πείσμα και κανένας από τους δύο δεν ισχύει. Πρώτον: «Ποτέ πιο βαθιά από 90\n  μοίρες.» Για το προπονητικό αποτέλεσμα μετράει ακριβώς το βάθος — σε έρευνες για το εύρος κίνησης στην\n  κάμψη, η βαθιά εκτέλεση έδειξε σαφώς καλύτερες προσαρμογές σε μυ και τένοντα. Δεύτερον: «Τα γόνατα δεν\n  επιτρέπεται να προσπερνούν τα δάχτυλα.» Πρόκειται για μύθο της δεκαετίας του 1970. Στη φυσική κάμψη τα\n  γόνατα κινούνται προς τα εμπρός, και αυτό δεν είναι πρόβλημα, όσο η φτέρνα παραμένει στο έδαφος.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Πόδια περίπου στο πλάτος των ώμων, δάχτυλα ελαφρώς προς τα έξω. Η κίνηση ξεκινά ταυτόχρονα από το\n  ισχίο και τα γόνατα, όχι από τον κορμό. Τα γόνατα ακολουθούν την κατεύθυνση των ποδιών και σπρώχνονται\n  ενεργά προς τα έξω. Όσο βαθιά γίνεται χωρίς καμπούρα και χωρίς να σηκώνονται οι φτέρνες, μετά\n  ελεγχόμενη ανύψωση.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Τα γόνατα γέρνουν προς τα μέσα.</strong> Το μοναδικό λάθος γόνατος που πραγματικά μετράει. Σκέψου ενεργά προς τα έξω.</li>\n  <li><strong>Οι φτέρνες σηκώνονται.</strong> Συνήθως βραχυσμένες γάμπες. Προσωρινά δούλεψε με ανυψωμένες φτέρνες και παράλληλα βελτίωσε την κινητικότητα.</li>\n  <li><strong>Καμπούρα στο κάτω σημείο.</strong> Όταν η λεκάνη στο βαθύτερο σημείο γέρνει προς τα πίσω, το βάθος είναι ακόμη πολύ μεγάλο.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία έως πέντε σετ με 8 έως 20 επαναλήψεις. Όποιος καταφέρνει πάνω από 25 καθαρές, μεταβαίνει σε πιο\n  απαιτητική παραλλαγή αντί να αυξήσει τον αριθμό: μονόποδες μορφές, jump squats ή πρόσθετο βάρος.\n</p>"
     },
     "en": {
       "name": "Squats",
@@ -2902,7 +3079,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Track the knees over the toes — do not let them cave inward.",
         "Squeeze the glutes on the way up or the lower back ends up overworking."
-      ]
+      ],
+      "article": "<h2>Why the squat is the most important leg exercise</h2>\n<p>\n  Standing up, sitting down, climbing stairs, picking something up off the floor — the squat isn't a gym\n  exercise, it's a daily-life pattern. It trains the quads, glutes and core in a single movement and is\n  the exercise with the highest carry-over to later life: anyone who can still get out of a low chair\n  without pushing off at seventy has kept this pattern.\n</p>\n<h2>Depth and the myth of knees over toes</h2>\n<p>\n  Two rules persist stubbornly and both are wrong. First: \"never below 90 degrees.\" For the training\n  effect, depth is exactly what counts — studies on range of motion in flexion show deeper squats produce\n  noticeably better adaptations in muscle and tendon. Second: \"the knees must not go past the toes.\" That's\n  a myth from the 1970s. In a natural squat the knees travel forward, and that's unproblematic as long as\n  the heel stays on the floor.\n</p>\n<h2>Execution</h2>\n<p>\n  Feet roughly shoulder-width, toes turned slightly out. The movement starts with the hips and knees\n  together, not with the torso. The knees track the direction of the feet and are actively pressed\n  outward. Go as deep as possible without rounding the back or lifting the heels, then drive up under\n  control.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Knees caving inward.</strong> The one knee fault that really matters. Actively think outward.</li>\n  <li><strong>Heels lifting off.</strong> Usually tight calves. Work with heels elevated in the meantime while addressing mobility in parallel.</li>\n  <li><strong>Rounded back at the bottom.</strong> If the pelvis tucks under at the lowest point, the depth is still too much.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three to five sets of 8 to 20 reps. If you can do more than 25 clean reps, switch to a harder variant\n  instead of adding more reps: single-leg forms, jump squats, or added weight.\n</p>"
     },
     "es": {
       "name": "Sentadillas",
@@ -2916,7 +3094,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Controla las rodillas sobre los dedos de los pies — no dejes que se cierren hacia adentro.",
         "Aprieta los glúteos en el ascenso o la zona lumbar terminará trabajando en exceso."
-      ]
+      ],
+      "article": "<h2>Por qué la sentadilla es el ejercicio de piernas más importante</h2>\n<p>\n  Levantarse, sentarse, subir escaleras, recoger algo del suelo — la sentadilla no es un aparato de\n  gimnasio, sino un patrón cotidiano. Entrena cuádriceps, glúteo y tronco en un solo movimiento y es el\n  ejercicio con mayor transferencia a la vida futura: quien a los setenta años todavía logra levantarse\n  de un sillón bajo sin apoyarse ha conservado este patrón.\n</p>\n<h2>La profundidad y el mito de la rodilla sobre los dedos</h2>\n<p>\n  Dos reglas persisten obstinadamente y ninguna es correcta. Primero: \"nunca más profundo de 90 grados\".\n  Para el efecto del entrenamiento cuenta precisamente la profundidad — en estudios sobre el rango de\n  movimiento en la flexión, la ejecución profunda mostró adaptaciones claramente mejores en músculo y\n  tendón. Segundo: \"las rodillas no deben pasar de los dedos de los pies\". Es un mito de los años setenta.\n  En la flexión natural las rodillas avanzan hacia adelante, y eso no es problemático mientras el talón\n  permanezca en el suelo.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Pies aproximadamente a la anchura de los hombros, dedos ligeramente hacia afuera. El movimiento\n  comienza con la cadera y las rodillas al mismo tiempo, no con el torso. Las rodillas siguen la\n  dirección de los pies y se empujan activamente hacia afuera. Baja tan profundo como sea posible sin\n  redondear la espalda y sin que los talones se levanten, luego sube de forma controlada.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Las rodillas se hunden hacia adentro.</strong> El único error de rodilla que realmente importa. Piensa activamente en llevarlas hacia afuera.</li>\n  <li><strong>Los talones se levantan.</strong> Suele deberse a pantorrillas acortadas. Trabaja provisionalmente con los talones elevados y aborda la movilidad en paralelo.</li>\n  <li><strong>Espalda redondeada abajo.</strong> Si la pelvis bascula hacia atrás en el punto más bajo, la profundidad todavía es excesiva.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres a cinco series de 8 a 20 repeticiones. Quien logre más de 25 limpias cambia a una variante más\n  exigente en lugar de aumentar el número: formas a una pierna, sentadillas con salto o peso añadido.\n</p>"
     },
     "fr": {
       "name": "Squats",
@@ -2930,7 +3109,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Suivez les genoux sur les orteils — ne les laissez pas s'affaisser vers l'intérieur.",
         "Serrez les fessiers en remontant ou le bas du dos se surcharge."
-      ]
+      ],
+      "article": "<h2>Pourquoi le squat est l'exercice de jambes le plus important</h2>\n<p>\n  Se lever, s'asseoir, monter des escaliers, ramasser quelque chose au sol — le squat n'est pas un\n  exercice de salle de sport, c'est un schéma du quotidien. Il entraîne les quadriceps, les fessiers et\n  le tronc en un seul mouvement, et c'est l'exercice au plus fort transfert vers la vie future : qui, à\n  soixante-dix ans, peut encore se relever d'un fauteuil profond sans s'appuyer a préservé ce schéma.\n</p>\n<h2>Profondeur et le mythe du genou au-delà des orteils</h2>\n<p>\n  Deux règles ont la vie dure, et aucune n'est vraie. Premièrement : « jamais plus bas que 90 degrés ».\n  Pour l'effet d'entraînement, c'est justement la profondeur qui compte — dans les études sur l'amplitude\n  de flexion, l'exécution profonde a montré des adaptations nettement meilleures du muscle et du tendon.\n  Deuxièmement : « les genoux ne doivent jamais dépasser les orteils ». C'est un mythe datant des années\n  1970. Lors d'une flexion naturelle, les genoux avancent, et cela ne pose aucun problème tant que le\n  talon reste au sol.\n</p>\n<h2>Exécution</h2>\n<p>\n  Pieds à peu près à la largeur des épaules, orteils légèrement tournés vers l'extérieur. Le mouvement\n  commence simultanément à la hanche et aux genoux, pas au niveau du torse. Les genoux suivent la\n  direction des pieds et sont activement poussés vers l'extérieur. Descendez aussi profond que possible\n  sans arrondir le dos ni décoller les talons, puis remontez de façon contrôlée.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Les genoux rentrent vers l'intérieur.</strong> La seule vraie erreur de genou qui compte. Pensez activement à les pousser vers l'extérieur.</li>\n  <li><strong>Les talons se décollent.</strong> Généralement des mollets raccourcis. Travaillez temporairement avec les talons surélevés tout en travaillant la mobilité en parallèle.</li>\n  <li><strong>Dos rond en bas.</strong> Si le bassin bascule vers l'arrière au point le plus bas, la profondeur est encore trop grande.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois à cinq séries de 8 à 20 répétitions. Qui parvient à en faire plus de 25 proprement passe à une\n  variante plus exigeante plutôt que d'augmenter le nombre : formes sur une jambe, squats sautés ou\n  charge additionnelle.\n</p>"
     },
     "it": {
       "name": "Squat",
@@ -2944,7 +3124,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Traccia le ginocchia sopra le dita dei piedi — non lasciarle crollare verso l'interno.",
         "Stringi i glutei mentre sali o la parte bassa della schiena finisce per lavorare eccessivamente."
-      ]
+      ],
+      "article": "<h2>Perché lo squat è l'esercizio per le gambe più importante</h2>\n<p>\n  Alzarsi, sedersi, salire le scale, raccogliere qualcosa da terra — lo squat non è un attrezzo da\n  palestra, ma uno schema quotidiano. Allena quadricipiti, glutei e core in un unico movimento ed è\n  l'esercizio con la maggiore trasferibilità alla vita futura: chi a settant'anni riesce ancora ad\n  alzarsi da una poltrona profonda senza appoggiarsi ha mantenuto questo schema.\n</p>\n<h2>La profondità e il mito del ginocchio oltre le dita dei piedi</h2>\n<p>\n  Due regole persistono ostinatamente e sono entrambe sbagliate. Primo: \"Mai più in basso di 90 gradi.\"\n  Per l'effetto allenante conta proprio la profondità — negli studi sull'ampiezza di movimento nella\n  flessione, l'esecuzione profonda ha mostrato adattamenti nettamente migliori a muscolo e tendine.\n  Secondo: \"Le ginocchia non devono superare le dita dei piedi.\" È un mito degli anni '70. Nella\n  flessione naturale le ginocchia avanzano, e questo non è un problema finché il tallone resta a terra.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Piedi a larghezza spalle circa, punte leggermente verso l'esterno. Il movimento inizia\n  contemporaneamente da anca e ginocchia, non dal busto. Le ginocchia seguono la direzione dei piedi e\n  vengono spinte attivamente verso l'esterno. Scendi il più possibile senza arrotondare la schiena e\n  senza sollevare i talloni, poi risali in modo controllato.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Le ginocchia cadono verso l'interno.</strong> L'unico vero errore riguardante il ginocchio. Pensa attivamente a spingerle verso l'esterno.</li>\n  <li><strong>I talloni si sollevano.</strong> Spesso polpacci accorciati. Nel frattempo lavora con i talloni rialzati e affronta parallelamente la mobilità.</li>\n  <li><strong>Schiena arrotondata in basso.</strong> Se il bacino si inclina all'indietro nel punto più basso, la profondità è ancora eccessiva.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre-cinque serie da 8 a 20 ripetizioni. Chi ne riesce a fare più di 25 in modo pulito passa a una\n  variante più impegnativa invece di aumentare il numero: forme su una gamba sola, squat con salto o\n  peso aggiuntivo.\n</p>"
     },
     "nl": {
       "name": "Squats",
@@ -2958,7 +3139,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Hou knieën boven de tenen — laat ze niet naar binnen buigen.",
         "Spann de billen omhoog of de onderrug eindigt ermee overbelast te zijn."
-      ]
+      ],
+      "article": "<h2>Waarom de squat de belangrijkste beenoefening is</h2>\n<p>\n  Opstaan, gaan zitten, traplopen, iets van de vloer oprapen — de squat is geen fitnessapparaat,\n  maar een dagelijks bewegingspatroon. Hij traint quadriceps, billen en romp in één beweging en is\n  de oefening met de hoogste overdracht naar het latere leven: wie op zijn zeventigste nog zonder\n  steun uit een diepe stoel komt, heeft dit patroon behouden.\n</p>\n<h2>Diepte en de mythe van de knie over de tenen</h2>\n<p>\n  Twee regels houden hardnekkig stand en kloppen allebei niet. Ten eerste: \"Nooit dieper dan 90\n  graden.\" Voor het trainingseffect telt juist de diepte — in onderzoek naar de bewegingsuitslag\n  bij het buigen toonde de diepe uitvoering de duidelijk betere aanpassingen aan spier en pees. Ten\n  tweede: \"De knieën mogen niet over de tenen.\" Dat is een mythe uit de jaren zeventig. Bij het\n  natuurlijke buigen bewegen de knieën naar voren, en dat is onproblematisch zolang de hiel op de\n  vloer blijft.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Voeten ongeveer schouderbreedte, tenen licht naar buiten. De beweging begint met heup en knieën\n  tegelijk, niet met de romp. De knieën volgen de richting van de voeten en worden actief naar\n  buiten gedrukt. Zo diep als het gaat zonder ronde rug en zonder loskomende hielen, dan\n  gecontroleerd omhoog drukken.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Knieën kantelen naar binnen.</strong> De enige kniefout die echt telt. Actief naar buiten denken.</li>\n  <li><strong>Hielen komen los.</strong> Meestal verkorte kuiten. Tijdelijk met verhoogde hielen werken en parallel de mobiliteit aanpakken.</li>\n  <li><strong>Ronde rug onderin.</strong> Als het bekken op het diepste punt naar achteren kantelt, is de diepte nog te groot.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie tot vijf sets met 8 tot 20 herhalingen. Wie er meer dan 25 zuiver haalt, stapt over op een\n  zwaardere variant in plaats van het aantal te verhogen: eenbenige vormen, jump squats of extra\n  gewicht.\n</p>"
     },
     "no": {
       "name": "Squats",
@@ -2972,7 +3154,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Spor knærne over tærne – ikke la dem brette innover.",
         "Klem setemusklene på vei opp eller nedre rygg ender opp med overarbeid."
-      ]
+      ],
+      "article": "<h2>Hvorfor knebøyen er den viktigste benøvelsen</h2>\n<p>\n  Å reise seg, sette seg, gå i trapper, plukke opp noe fra gulvet – knebøyen er ikke et treningsapparat,\n  men et hverdagsmønster. Den trener quadriceps, sete og midtparti i én bevegelse, og er øvelsen med\n  høyest overføringsverdi til senere i livet: den som fortsatt kommer seg opp av en dyp stol uten å\n  støtte seg som syttiåring, har bevart dette mønsteret.\n</p>\n<h2>Dybde og myten om kneet over tærne</h2>\n<p>\n  To regler henger igjen hardnakket, og begge er feil. For det første: «Aldri dypere enn 90 grader.» For\n  treningseffekten teller nettopp dybden – i studier av bevegelsesutslag ved bøying viste den dype\n  utførelsen klart bedre tilpasninger i muskel og sene. For det andre: «Knærne skal ikke gå forbi tærne.»\n  Det er en myte fra 1970-tallet. Ved naturlig bøying vandrer knærne fremover, og det er uproblematisk så\n  lenge hælen blir værende på gulvet.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Føttene omtrent i skulderbredde, tærne litt utover. Bevegelsen starter med hofte og knær samtidig, ikke\n  med overkroppen. Knærne følger retningen til føttene og presses aktivt utover. Så dypt som mulig uten\n  rundrygg og uten at hælene løftes, deretter press deg kontrollert opp igjen.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Knærne faller innover.</strong> Den eneste knefeilen som virkelig teller. Tenk aktivt utover.</li>\n  <li><strong>Hælene løftes.</strong> Som regel korte legger. Jobb midlertidig med hevet hæl og angrip bevegeligheten parallelt.</li>\n  <li><strong>Rundrygg nederst.</strong> Hvis bekkenet vipper bakover på det dypeste punktet, er dybden fortsatt for stor.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre til fem sett med 8 til 20 repetisjoner. Den som klarer over 25 rene, bytter til en tyngre variant i\n  stedet for å øke antallet: enbeinte former, jump squats eller ekstra vekt.\n</p>"
     },
     "zh": {
       "name": "深蹲",
@@ -2986,7 +3169,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "跟踪膝盖在脚趾上方——不要让它们向内塌陷。",
         "在向上时收紧臀部，否则下背部会过度工作。"
-      ]
+      ],
+      "article": "<h2>深蹲为什么是最重要的腿部训练动作</h2>\n<p>\n  站起来、坐下去、上下楼梯、从地上捡东西——深蹲不是健身房里的动作，而是一种日常生活\n  模式。它在一个动作中同时训练股四头肌、臀部和核心，是对晚年生活迁移价值最高的训练\n  动作：一个七十岁还能不靠扶手从矮沙发上站起来的人，正是保留了这一动作模式的能力。\n</p>\n<h2>深度，以及\"膝盖不能超过脚尖\"的迷思</h2>\n<p>\n  有两条说法一直流传，但都不准确。第一条：\"永远不要蹲得比90度更深。\"事实上，训练效果\n  恰恰取决于深度——关于屈膝活动范围的研究显示，深蹲对肌肉和肌腱的适应效果明显更好。\n  第二条：\"膝盖不能超过脚尖。\"这是源自20世纪70年代的一个误区。在自然的下蹲动作中，\n  膝盖本就会向前移动，只要脚跟始终贴地，这完全没有问题。\n</p>\n<h2>动作要领</h2>\n<p>\n  双脚与肩同宽，脚尖略微外展。动作应由髋部和膝盖同时发起，而不是由上半身带动。膝盖\n  顺着脚尖的方向，主动向外推。下蹲到不出现弓背、脚跟也不离地的最大深度，然后有控制地\n  站起。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>膝盖向内塌陷。</strong>唯一真正需要重视的膝盖错误。要主动想着向外推。</li>\n  <li><strong>脚跟离地。</strong>通常是小腿柔韧度不足所致。可以暂时垫高脚跟训练，同时逐步改善活动度。</li>\n  <li><strong>底部弓背。</strong>如果骨盆在最低点向后翻转，说明下蹲深度已经超出了当前能力范围。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三到五组，每组8到20次。如果能标准完成超过25次，应该换成难度更高的变式——比如单腿\n  深蹲、跳跃深蹲或增加负重——而不是继续增加次数。\n</p>"
     }
   },
   "lunge.stepup": {
@@ -3017,7 +3201,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Επιλογή ύψος όπου το μπροστά γόνατο λυγίζει περίπου 90° — διαφορετικά ορμή παίρνει.",
         "Μη πίεση του πίσω σκέλους — ερέθισμα πρέπει να έρχεται από το εργαζόμενο (μπροστά) πόδι."
-      ]
+      ],
+      "article": "<h2>Η άσκηση ποδιών πιο κοντά στην καθημερινότητα</h2>\n<p>\n  Το step-up αναπαράγει ακριβώς αυτό που συμβαίνει στο ανέβασμα σκάλας: επέκταση ενός σκέλους ενάντια\n  στο ίδιο το βάρος του σώματος. Αυτό το καθιστά την άσκηση με την πιο άμεση μεταφορά στην\n  καθημερινότητα, και το καθιστά επίσης καλό τεστ — όποιος καταφέρνει ένα σκαλοπάτι στο ύψος του\n  γόνατος χωρίς να σπρώχνει με το πίσω πόδι, διαθέτει μια χρήσιμη βάση σε ένα σκέλος.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Τοποθέτησε ένα πόδι εξολοκλήρου στην ανύψωση. Το βάρος μεταφέρεται σε αυτό το πόδι, μετά το μπροστινό\n  σκέλος σπρώχνει το σώμα προς τα πάνω. Το πίσω σκέλος δεν επιτρέπεται να συνδράμει σπρώχνοντας — το πιο\n  συχνό και πιο σημαντικό λάθος. Σταθεροποίηση σύντομα στην κορυφή, μετά κατέβασμα υπό έλεγχο.\n</p>\n<p>\n  Το ύψος καθορίζει τη δυσκολία: το ύψος γόνατος είναι το πρότυπο, χαμηλότερο για αρχή, ψηλότερο ως\n  εξέλιξη.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Σπρώξιμο με το πίσω πόδι.</strong> Μετατρέπει τη μονόποδη άσκηση σε δίποδη. Τα δάχτυλα του πίσω ποδιού πρέπει να είναι αφορτωτα.</li>\n  <li><strong>Ελεύθερη πτώση στην κατάβαση.</strong> Η καθοδική πορεία είναι προπονητικά αποτελεσματική — τρία δευτερόλεπτα προς τα κάτω.</li>\n  <li><strong>Το γόνατο γέρνει προς τα μέσα.</strong> Συνήθως ένδειξη ότι το σκαλοπάτι είναι πολύ ψηλό.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 8 έως 12 επαναλήψεις ανά πλευρά. Για μεγαλύτερους σε ηλικία ασκούμενους και μετά από\n  τραυματισμούς γόνατος, το step-up είναι συχνά η καλύτερη αρχή από το lunge, επειδή το ύψος\n  δοσολογείται με ακρίβεια.\n</p>"
     },
     "en": {
       "name": "Step-ups",
@@ -3031,7 +3216,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Pick a height where the front knee bends to about 90° — otherwise momentum takes over.",
         "Don't push off the back leg — the stimulus has to come from the working (front) leg."
-      ]
+      ],
+      "article": "<h2>The leg exercise closest to daily life</h2>\n<p>\n  The step-up exactly reproduces what happens when climbing stairs: single-leg extension against your\n  own body weight. That makes it the exercise with the most direct carry-over to daily life, and it makes\n  it a good test — if you can manage a knee-high step without pushing off with the back foot, you have a\n  usable single-leg base.\n</p>\n<h2>Execution</h2>\n<p>\n  Place one foot fully on the elevation. The weight shifts onto that foot, then the front leg drives the\n  body up. The back leg must not assist — the most common and most effective mistake to avoid. Stabilize\n  briefly at the top, then step down under control.\n</p>\n<p>\n  Height controls the difficulty: knee height is the standard, lower to start, higher to progress.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Pushing off with the back foot.</strong> Turns the single-leg exercise into a two-legged one. The back toes should carry no weight.</li>\n  <li><strong>Dropping on the way down.</strong> The lowering phase is where the training effect happens — three seconds down.</li>\n  <li><strong>Knee caves inward.</strong> Usually a sign the step is too high.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three sets of 8 to 12 reps per side. For older trainees and after knee injuries, the step-up is often\n  the better entry point than the lunge, because the height is easy to fine-tune.\n</p>"
     },
     "es": {
       "name": "Subidas a paso",
@@ -3045,7 +3231,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Elige una altura donde la rodilla delantera se doble aproximadamente a 90° — de lo contrario, el impulso toma el control.",
         "No empujes con la pierna trasera — el estímulo debe provenir de la pierna que trabaja (delantera)."
-      ]
+      ],
+      "article": "<h2>El ejercicio de pierna más cercano a la vida diaria</h2>\n<p>\n  La subida a paso reproduce exactamente lo que ocurre al subir escaleras: extensión a una sola pierna\n  contra el propio peso corporal. Eso lo convierte en el ejercicio con la transferencia más directa a la\n  vida diaria, y también en una buena prueba — quien logra subir un escalón a la altura de la rodilla\n  sin empujar con el pie trasero tiene una base sólida a una sola pierna.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Coloca un pie completamente sobre la elevación. El peso se traslada a ese pie, luego la pierna\n  delantera empuja el cuerpo hacia arriba. La pierna trasera no debe ayudar a empujar — el error más\n  frecuente y más determinante. Estabiliza brevemente arriba, luego baja bajo control.\n</p>\n<p>\n  La altura controla la dificultad: a la altura de la rodilla es el estándar, más baja para empezar, más\n  alta como progresión.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Empujar con el pie trasero.</strong> Convierte el ejercicio a una sola pierna en uno de dos piernas. Los dedos del pie trasero deben quedar descargados.</li>\n  <li><strong>Dejarse caer al bajar.</strong> El recorrido descendente es efectivo para el entrenamiento — tres segundos hacia abajo.</li>\n  <li><strong>La rodilla se hunde hacia adentro.</strong> Suele ser señal de que el escalón es demasiado alto.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 8 a 12 repeticiones por lado. Para personas mayores y tras lesiones de rodilla, la\n  subida a paso suele ser un mejor punto de partida que la zancada, porque la altura se puede dosificar\n  con precisión.\n</p>"
     },
     "fr": {
       "name": "Montées de marches",
@@ -3059,7 +3246,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Choisissez une hauteur où le genou avant fléchit à environ 90° — sinon l'élan prend le dessus.",
         "Ne poussez pas avec la jambe arrière — le stimulus doit venir de la jambe travaillante (avant)."
-      ]
+      ],
+      "article": "<h2>L'exercice de jambes le plus proche du quotidien</h2>\n<p>\n  La montée de marche reproduit exactement ce qui se passe en montant un escalier : une extension sur\n  une jambe contre son propre poids de corps. C'est ce qui en fait l'exercice au transfert le plus\n  direct vers le quotidien, et c'est aussi un bon test — qui parvient à monter une marche à hauteur de\n  genou sans pousser avec le pied arrière a une base unipodale correcte.\n</p>\n<h2>Exécution</h2>\n<p>\n  Posez un pied entièrement sur l'élévation. Le poids se transfère sur ce pied, puis la jambe avant\n  pousse le corps vers le haut. La jambe arrière ne doit pas pousser en même temps — l'erreur la plus\n  fréquente et la plus dommageable. Stabilisez brièvement en haut, puis redescendez de façon contrôlée.\n</p>\n<p>\n  La hauteur détermine la difficulté : à hauteur de genou est le standard, plus bas pour débuter, plus\n  haut pour progresser.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Pousser avec le pied arrière.</strong> Transforme l'exercice unipodal en exercice bipodal. Les orteils du pied arrière doivent rester déchargés.</li>\n  <li><strong>Se laisser tomber à la descente.</strong> La phase descendante est efficace pour l'entraînement — trois secondes vers le bas.</li>\n  <li><strong>Le genou rentre vers l'intérieur.</strong> Signe le plus souvent que la marche est trop haute.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 8 à 12 répétitions de chaque côté. Pour les personnes âgées et après une blessure au\n  genou, la montée de marche est souvent une meilleure entrée en matière que la fente, car la hauteur se\n  dose finement.\n</p>"
     },
     "it": {
       "name": "Salita su scalino",
@@ -3073,7 +3261,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Scegli un'altezza dove il ginocchio anteriore si piega a circa 90° — altrimenti la quantità di moto prende il sopravvento.",
         "Non spingere con la gamba posteriore — lo stimolo deve venire dalla gamba che lavora (anteriore)."
-      ]
+      ],
+      "article": "<h2>L'esercizio per le gambe più vicino alla vita quotidiana</h2>\n<p>\n  Lo step-up riproduce esattamente ciò che accade salendo le scale: estensione su una gamba contro il\n  proprio peso corporeo. Questo lo rende l'esercizio con il trasferimento più diretto alla vita\n  quotidiana, e ne fa anche un buon test — chi riesce a salire su un gradino all'altezza del ginocchio\n  senza spingere con il piede posteriore ha una base monopodalica solida.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posiziona un piede completamente sull'elevazione. Il peso si sposta su quel piede, poi la gamba\n  anteriore spinge il corpo verso l'alto. La gamba posteriore non deve contribuire a spingere —\n  l'errore più comune ed efficace. Stabilizza brevemente in alto, poi scendi in modo controllato.\n</p>\n<p>\n  L'altezza determina la difficoltà: all'altezza del ginocchio è lo standard, più bassa per iniziare, più\n  alta come progressione.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Spingere con il piede posteriore.</strong> Trasforma l'esercizio monopodalico in uno bipodalico. Le dita del piede posteriore vanno scaricate.</li>\n  <li><strong>Lasciarsi cadere in discesa.</strong> La fase di discesa è allenante — tre secondi verso il basso.</li>\n  <li><strong>Il ginocchio cade verso l'interno.</strong> Di solito segno che il gradino è troppo alto.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 8 a 12 ripetizioni per lato. Per chi si allena in età avanzata e dopo infortuni al\n  ginocchio, lo step-up è spesso un punto di partenza migliore dell'affondo, perché l'altezza è\n  regolabile con precisione.\n</p>"
     },
     "nl": {
       "name": "Step-ups",
@@ -3087,7 +3276,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kies hoogte waarbij voorste knie naar ongeveer 90° buigt — anders neemt momentum het over.",
         "Duw niet af met achterste been — stimulus moet van werkend (voorste) been komen."
-      ]
+      ],
+      "article": "<h2>De beenoefening die het dichtst bij het dagelijks leven staat</h2>\n<p>\n  De step-up bootst precies na wat er bij het traplopen gebeurt: eenbenig strekken tegen het eigen\n  lichaamsgewicht in. Dat maakt hem tot de oefening met de meest directe overdracht naar het\n  dagelijks leven, en het maakt hem tot een goede test — wie een knie hoge trede haalt zonder na te\n  duwen met de achterste voet, heeft een bruikbare eenbenige basis.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Eén voet volledig op de verhoging zetten. Het gewicht verschuift naar die voet, dan drukt het\n  voorste been het lichaam omhoog. Het achterste been mag daarbij niet meeduwen — de meest\n  voorkomende en meest verzwakkende fout. Bovenaan kort stabiliseren, dan gecontroleerd laten\n  zakken.\n</p>\n<p>\n  De hoogte bepaalt de moeilijkheid: knie hoog is de standaard, lager voor de instap, hoger als\n  progressie.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Afzetten met de achterste voet.</strong> Maakt van de eenbenige oefening een tweebenige. De tenen van de achterste voet horen ontlast te zijn.</li>\n  <li><strong>Laten vallen bij het zakken.</strong> De neerwaartse fase is trainingswaardevol — drie seconden naar beneden.</li>\n  <li><strong>Knie kantelt naar binnen.</strong> Meestal een teken dat de trede te hoog is.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 8 tot 12 herhalingen per kant. Voor oudere sporters en na knieblessures is de\n  step-up vaak de betere instap dan de lunge, omdat de hoogte fijn te doseren is.\n</p>"
     },
     "no": {
       "name": "Step-ups",
@@ -3101,7 +3291,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Velg høyde der forkneet bøyer til rundt 90° – ellers tar momentum over.",
         "Ikke skyv av bakerste ben – stimulansen må komme fra arbeidsbenene (front)."
-      ]
+      ],
+      "article": "<h2>Den mest hverdagsnære benøvelsen</h2>\n<p>\n  Step-up gjenskaper nøyaktig det som skjer i trapper: enbeint strekk mot egen kroppsvekt. Det gjør den\n  til øvelsen med mest direkte overføring til hverdagen, og til en god test – den som klarer et knehøyt\n  trinn uten å skyve fra med det bakre beinet, har et brukbart enbeint fundament.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Sett én fot helt oppå forhøyningen. Vekten flyttes over på denne foten, deretter presser det fremre\n  beinet kroppen oppover. Det bakre beinet skal ikke skyve med – den vanligste og mest utslagsgivende\n  feilen. Stabiliser kort på toppen, senk deretter kontrollert.\n</p>\n<p>\n  Høyden styrer vanskelighetsgraden: knehøyt er standarden, lavere som innsteg, høyere som progresjon.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å skyve fra med den bakre foten.</strong> Gjør den enbeinte øvelsen tobeint. Tærne på den bakre foten bør avlastes.</li>\n  <li><strong>Å slippe seg ned.</strong> Nedoverveien er treningsmessig verdifull – tre sekunder ned.</li>\n  <li><strong>Kneet faller innover.</strong> Som regel et tegn på at trinnet er for høyt.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 8 til 12 repetisjoner per side. For eldre utøvere og etter kneskader er step-up ofte en\n  bedre start enn utfall, fordi høyden kan doseres nøyaktig.\n</p>"
     },
     "zh": {
       "name": "踏步上升",
@@ -3115,7 +3306,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "选择前膝盖弯曲到约90°的高度——否则动量会接管。",
         "不要推后腿——刺激必须来自工作（前）腿。"
-      ]
+      ],
+      "article": "<h2>最贴近日常生活的腿部训练动作</h2>\n<p>\n  踏步上升精确还原了上楼梯时发生的情况：单腿对抗自身体重完成伸展。这让它成为迁移价值\n  最直接的训练动作之一，也让它成为一个很好的测试：如果能在不借助后脚推蹬的情况下踏上\n  一个膝盖高度的台阶，说明具备了扎实的单腿力量基础。\n</p>\n<h2>动作要领</h2>\n<p>\n  将一只脚完全踏在台阶上。重心转移到这只脚上，然后由前腿把身体推向上方。后腿不能借力\n  蹬地——这是最常见、也最容易削弱训练效果的错误。到达顶部后短暂稳定，再有控制地下降。\n</p>\n<p>\n  台阶高度决定难度：与膝盖同高是标准配置，更低适合入门，更高则作为进阶。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>用后脚蹬地借力。</strong>这会把单腿动作变成双腿动作。应该让后脚脚尖不承重。</li>\n  <li><strong>下降时直接放任身体下落。</strong>下降阶段同样具有训练效果——应该用三秒时间控制下降。</li>\n  <li><strong>膝盖向内塌陷。</strong>通常说明台阶高度选得太高了。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三组，每侧8到12次。对年长训练者和膝盖受伤后的人来说，踏步上升往往比弓步更适合作为\n  起步动作，因为台阶高度可以非常精细地调节。\n</p>"
     }
   },
   "mobility.catcow": {
@@ -3146,7 +3338,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Τέλειο πριν και μετά το μακρύ κάθισμα — κινητοποιεί ολόκληρη τη σπονδυλική στήλη.",
         "Κίνηση πρέπει να ροέται, όχι κόψιμο μεταξύ τελικών θέσεων."
-      ]
+      ],
+      "article": "<h2>Η απλούστερη κινητοποίηση σπονδυλικής στήλης</h2>\n<p>\n  Το cat-cow κινεί τη σπονδυλική στήλη ανάμεσα στις δύο ακραίες θέσεις που πρέπει να κατέχει: πλήρη\n  στρογγύλεμα και πλήρη έκταση. Για ανθρώπους που περνούν τη μέρα καθιστοί, αυτό είναι το πιο\n  αποτελεσματικό λεπτό κίνησης που υπάρχει — το κάθισμα κρατά τη σπονδυλική στήλη επί ώρες σε μία και\n  μόνη θέση, και ακριβώς αυτό της αρέσει λιγότερο.\n</p>\n<p>\n  Η άσκηση είναι ταυτόχρονα ένα καλό τεστ: όποιος στο στρογγύλεμα δεν καταφέρνει καμπύλη ή στην έκταση\n  «λυγίζει» μόνο στην κάτω μέση, έχει άκαμπτη θωρακική μοίρα — το πιο συχνό εμπόδιο κινητικότητας που\n  υπάρχει.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Θέση τετρακτύ, χέρια κάτω από τους ώμους, γόνατα κάτω από το ισχίο. Στην εκπνοή στρογγύλεψε την πλάτη\n  προς τα πάνω, το πηγούνι προς το στήθος, η λεκάνη γέρνει προς τα πίσω. Στην εισπνοή αντίστροφα: το\n  στέρνο προς τα εμπρός, η λεκάνη γέρνει προς τα εμπρός, το βλέμμα ελαφρώς προς τα πάνω.\n</p>\n<p>\n  Καθοριστικό είναι η κίνηση να διατρέχει ολόκληρη τη σπονδυλική στήλη — σπόνδυλο-σπόνδυλο, όχι μόνο\n  στον αυχένα και στην κάτω μέση.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Κίνηση μόνο στα άκρα.</strong> Κεφάλι ψηλά, γλουτοί ψηλά, μέση ακίνητη — αυτή είναι η συνηθισμένη περίπτωση και ακριβώς η περιοχή που χρειάζεται κίνηση.</li>\n  <li><strong>Πολύ γρήγορα.</strong> Τέσσερα έως έξι δευτερόλεπτα ανά κατεύθυνση, συνδεδεμένα με την αναπνοή.</li>\n  <li><strong>Μέχρι τον πόνο.</strong> Η κίνηση πρέπει να είναι ευχάριστη· το ακραίο σημείο δεν είναι στόχος.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  8 έως 12 αργές εναλλαγές, στη θέρμανση ή ως διάλειμμα μέσα στην εργάσιμη μέρα. Καθημερινά εφικτό και\n  ωφέλιμο.\n</p>"
     },
     "en": {
       "name": "Cat-Cow",
@@ -3160,7 +3353,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfect before and after long sitting — mobilises the whole spine.",
         "Movement should flow, not snap between end positions."
-      ]
+      ],
+      "article": "<h2>The simplest spinal mobilization</h2>\n<p>\n  Cat-cow moves the spine between the two end positions it should master: full rounding and full\n  extension. For people who spend the day sitting, this is the single most effective minute of movement\n  there is — sitting holds the spine in one position for hours, and that's exactly what it likes least.\n</p>\n<p>\n  The exercise doubles as a good test: if you can't round your back into an arch, or if extending only\n  bends at the lower back, you have a stiff thoracic spine — the most common mobility bottleneck of all.\n</p>\n<h2>Execution</h2>\n<p>\n  Quadruped position, hands under the shoulders, knees under the hips. On the exhale, round the back\n  upward, chin to chest, pelvis tucking under. On the inhale, reverse it: sternum forward, pelvis tilting\n  forward, gaze lifting slightly.\n</p>\n<p>\n  What matters is that the movement travels through the entire spine — vertebra by vertebra, not just at\n  the neck and lower back.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Only moving the ends.</strong> Head up, hips up, middle rigid — the usual pattern, and exactly the area that needs the movement.</li>\n  <li><strong>Too fast.</strong> Four to six seconds per direction, paced with the breath.</li>\n  <li><strong>Pushing into pain.</strong> The movement should feel good; reaching the absolute end range isn't the goal.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  8 to 12 slow cycles, in a warm-up or as a break during the workday. Fine and useful to do daily.\n</p>"
     },
     "es": {
       "name": "Gato-Vaca",
@@ -3174,7 +3368,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfecto antes y después de estar sentado mucho tiempo — moviliza toda la columna.",
         "El movimiento debe fluir, no chasquear entre posiciones finales."
-      ]
+      ],
+      "article": "<h2>La movilización de columna más sencilla</h2>\n<p>\n  Gato-vaca mueve la columna entre las dos posiciones extremas que debería dominar: la flexión completa\n  y la extensión completa. Para las personas que pasan el día sentadas, es el minuto de movimiento más\n  eficaz que existe — estar sentado mantiene la columna durante horas en una sola postura, y eso es\n  precisamente lo que menos tolera.\n</p>\n<p>\n  El ejercicio es a la vez una buena prueba: quien al redondear la espalda no logra formar un arco, o al\n  extenderla solo se dobla por la zona lumbar, tiene una columna torácica rígida — el cuello de botella\n  de movilidad más frecuente que existe.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Posición de manos y rodillas, manos bajo los hombros, rodillas bajo las caderas. Al exhalar, redondea\n  la espalda hacia arriba, barbilla al pecho, la pelvis bascula hacia atrás. Al inhalar, a la inversa:\n  esternón hacia adelante, pelvis basculada hacia adelante, mirada ligeramente hacia arriba.\n</p>\n<p>\n  Lo decisivo es que el movimiento recorra toda la columna — vértebra a vértebra, no solo en el cuello y\n  la zona lumbar.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Mover solo los extremos.</strong> Cabeza arriba, cola arriba, centro rígido — es el caso habitual y precisamente la zona que necesita movimiento.</li>\n  <li><strong>Demasiado rápido.</strong> Cuatro a seis segundos por dirección, acoplado a la respiración.</li>\n  <li><strong>Hacia el dolor.</strong> El movimiento debe ser agradable; el rango máximo no es el objetivo.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  8 a 12 repeticiones lentas, en el calentamiento o como pausa en la jornada laboral. Posible y\n  recomendable a diario.\n</p>"
     },
     "fr": {
       "name": "Chat-Vache",
@@ -3188,7 +3383,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Parfait avant et après une longue assise — mobilise toute la colonne vertébrale.",
         "Le mouvement doit s'écouler, pas basculer entre les positions extrêmes."
-      ]
+      ],
+      "article": "<h2>La mobilisation spinale la plus simple</h2>\n<p>\n  Chat-vache déplace la colonne vertébrale entre les deux positions extrêmes qu'elle devrait maîtriser :\n  l'arrondi complet et l'extension complète. Pour les personnes qui passent la journée assises, c'est la\n  minute de mouvement la plus efficace qui soit — la position assise maintient la colonne dans une seule\n  posture pendant des heures, et c'est justement ce qu'elle supporte le moins.\n</p>\n<p>\n  L'exercice est aussi un bon test : qui n'arrive pas à former un arrondi ou qui, en extension, ne plie\n  qu'au niveau du bas du dos a une colonne dorsale raide — la restriction de mobilité la plus fréquente\n  de toutes.\n</p>\n<h2>Exécution</h2>\n<p>\n  À quatre pattes, mains sous les épaules, genoux sous les hanches. En expirant, arrondissez le dos vers\n  le haut, menton vers la poitrine, bassin qui bascule vers l'arrière. En inspirant, l'inverse : sternum\n  vers l'avant, bassin basculé vers l'avant, regard légèrement relevé.\n</p>\n<p>\n  L'essentiel est que le mouvement parcoure toute la colonne — vertèbre par vertèbre, pas seulement au\n  niveau de la nuque et du bas du dos.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Ne bouger que les extrémités.</strong> Tête haute, bassin haut, milieu rigide — c'est le cas le plus courant, et c'est justement cette zone qui a besoin de mouvement.</li>\n  <li><strong>Trop rapide.</strong> Quatre à six secondes par direction, en lien avec la respiration.</li>\n  <li><strong>Aller jusqu'à la douleur.</strong> Le mouvement doit rester agréable ; atteindre l'amplitude maximale n'est pas un objectif.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  8 à 12 cycles lents, en échauffement ou comme pause dans la journée de travail. Possible et bénéfique\n  tous les jours.\n</p>"
     },
     "it": {
       "name": "Cat-Cow",
@@ -3202,7 +3398,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfetto prima e dopo lunghe sedute — mobilizza l'intera colonna vertebrale.",
         "Il movimento deve scorrere, non scattare tra le posizioni finali."
-      ]
+      ],
+      "article": "<h2>La mobilizzazione spinale più semplice</h2>\n<p>\n  Cat-cow muove la colonna vertebrale tra le due posizioni finali che dovrebbe saper controllare:\n  schiena completamente arrotondata e completa estensione. Per chi trascorre la giornata seduto, è il\n  minuto di movimento più efficace in assoluto — stare seduti mantiene la colonna per ore in un'unica\n  posizione, ed è proprio questo che tollera meno.\n</p>\n<p>\n  L'esercizio è al tempo stesso un buon test: chi arrotondando la schiena non riesce a formare una vera\n  curva, o in estensione si piega solo nella parte bassa della schiena, ha una colonna toracica rigida —\n  il blocco di mobilità più comune in assoluto.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Posizione quadrupede, mani sotto le spalle, ginocchia sotto i fianchi. Espirando, arrotonda la schiena\n  verso l'alto, il mento verso il petto, il bacino si inclina all'indietro. Inspirando, il contrario:\n  sterno in avanti, bacino inclinato in avanti, sguardo leggermente verso l'alto.\n</p>\n<p>\n  È fondamentale che il movimento percorra l'intera colonna vertebrale — vertebra per vertebra, non solo\n  a livello di collo e parte bassa della schiena.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Muovere solo le estremità.</strong> Testa in alto, bacino in alto, centro rigido — è il caso più comune ed è proprio l'area che ha bisogno di movimento.</li>\n  <li><strong>Troppo veloce.</strong> Quattro-sei secondi per direzione, sincronizzati con il respiro.</li>\n  <li><strong>Fino al dolore.</strong> Il movimento deve essere piacevole; l'ampiezza massima non è l'obiettivo.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  8-12 cicli lenti, nel riscaldamento o come pausa durante la giornata lavorativa. Possibile e utile\n  ogni giorno.\n</p>"
     },
     "nl": {
       "name": "Cat-Cow",
@@ -3216,7 +3413,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfect voor en na lang zitten — mobiliseert hele ruggengraat.",
         "Beweging moet stromen, niet snappen tussen eindposities."
-      ]
+      ],
+      "article": "<h2>De eenvoudigste wervelkolommobilisatie</h2>\n<p>\n  Cat-cow beweegt de wervelkolom tussen de twee uitersten die ze moet beheersen: volledige\n  afronding en volledige strekking. Voor mensen die de dag zittend doorbrengen, is dit de\n  effectiefste minuut beweging die er is — zitten houdt de wervelkolom urenlang in één en dezelfde\n  stand, en precies dat lust ze het minst.\n</p>\n<p>\n  De oefening is tegelijk een goede test: wie bij het afronden geen bocht voor elkaar krijgt of bij\n  het strekken alleen in de onderrug doorbuigt, heeft een stijve borstwervelkolom — het meest\n  voorkomende mobiliteitsknelpunt dat er is.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Handen-en-knieën-positie, handen onder de schouders, knieën onder de heupen. Bij het uitademen de\n  rug naar boven afronden, de kin naar de borst, het bekken kantelt naar achteren. Bij het inademen\n  omgekeerd: borstbeen naar voren, bekken naar voren gekanteld, blik licht omhoog.\n</p>\n<p>\n  Doorslaggevend is dat de beweging door de hele wervelkolom loopt — wervel voor wervel, niet\n  alleen in de nek en de onderrug.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Alleen de uiteinden bewegen.</strong> Hoofd omhoog, staart omhoog, midden star — dat is de normale situatie en precies het gebied dat beweging nodig heeft.</li>\n  <li><strong>Te snel.</strong> Vier tot zes seconden per richting, gekoppeld aan de adem.</li>\n  <li><strong>Tot in de pijn.</strong> De beweging moet aangenaam zijn; de uiterste hoek is geen doel.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  8 tot 12 langzame wisselingen, in de warming-up of als pauze tijdens de werkdag. Dagelijks\n  mogelijk en zinvol.\n</p>"
     },
     "no": {
       "name": "Cat-Cow",
@@ -3230,7 +3428,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Perfekt før og etter lang sitting – mobiliserer hele ryggraden.",
         "Bevegelse skal flyte, ikke knipse mellom endeposisjoner."
-      ]
+      ],
+      "article": "<h2>Den enkleste ryggradsmobiliseringen</h2>\n<p>\n  Cat-cow beveger ryggraden mellom de to ytterposisjonene den bør beherske: full rundrygg og full strekk.\n  For folk som tilbringer dagen sittende, er dette det mest virkningsfulle minuttet med bevegelse som\n  finnes – sitting holder ryggraden i én eneste stilling i timevis, og nettopp det liker den dårligst.\n</p>\n<p>\n  Øvelsen er samtidig en god test: den som ikke får til en bue ved rundrygg, eller som bare knekker i\n  korsryggen ved strekk, har en stiv brystrygg – den vanligste bevegelighetsflaskehalsen som finnes.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Firfotstilling, hendene under skuldrene, knærne under hoftene. Ved utpust rundes ryggen oppover, haken\n  mot brystet, bekkenet vipper bakover. Ved innpust omvendt: brystbenet fremover, bekkenet vippet\n  fremover, blikket lett oppover.\n</p>\n<p>\n  Avgjørende er at bevegelsen går gjennom hele ryggraden – virvel for virvel, ikke bare i nakken og\n  korsryggen.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å bare bevege endene.</strong> Hodet opp, setet opp, midten stiv – det er normaltilfellet, og nettopp det området som trenger bevegelse.</li>\n  <li><strong>For raskt.</strong> Fire til seks sekunder per retning, koblet til pusten.</li>\n  <li><strong>Inn i smerte.</strong> Bevegelsen skal føles behagelig; ytterstilling er ikke et mål i seg selv.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  8 til 12 langsomme vekslinger, i oppvarmingen eller som en pause i arbeidsdagen. Kan og bør gjøres\n  daglig.\n</p>"
     },
     "zh": {
       "name": "猫式-牛式",
@@ -3244,7 +3443,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "长时间坐前后的完美动作——活动整个脊椎。",
         "运动应该流畅，不是在终点位置间摇晃。"
-      ]
+      ],
+      "article": "<h2>最简单的脊柱活动动作</h2>\n<p>\n  猫式-牛式让脊柱在它应该能够掌控的两个极端姿势之间来回运动：完全的弓背和完全的伸展。\n  对整天久坐的人来说，这可能是最有效的一分钟运动——久坐会让脊柱连续数小时保持在同一个\n  姿势，而这恰恰是脊柱最不喜欢的状态。\n</p>\n<p>\n  这个动作同时也是一项很好的测试：如果做弓背时无法形成明显的弧度，或者做伸展时只有下\n  背部在发力弯曲，说明胸椎僵硬——这是最常见的活动度瓶颈。\n</p>\n<h2>动作要领</h2>\n<p>\n  四点跪姿，双手在肩膀正下方，膝盖在髋部正下方。呼气时把背部向上拱起，下巴收向胸部，\n  骨盆向后翻转。吸气时则相反：胸骨向前打开，骨盆向前倾斜，目光略微向上看。\n</p>\n<p>\n  关键在于动作要贯穿整条脊柱——一节一节地活动，而不是只发生在颈部和下背部。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>只活动两端。</strong>头抬起、臀部抬起，中段却一动不动——这是最常见的情况，而这个中段部位恰恰最需要活动。</li>\n  <li><strong>速度太快。</strong>每个方向应保持四到六秒，并与呼吸节奏配合。</li>\n  <li><strong>做到疼痛的程度。</strong>这个动作应该让人感觉舒适；追求极限幅度并不是目标。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  8到12次缓慢的往返，可以放在热身中，也可以作为工作日中的休息片段。每天都可以做，也\n  很有意义。\n</p>"
     }
   },
   "mobility.dynamicwarmup": {
@@ -3275,7 +3475,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Πριν από δύναμη ή άλμα πάντα πάει δυναμικό, ποτέ στατικό — στατικό τέντωμα ματώνει την απόδοση.",
         "Επέκταση της θέρμανσης το χειμώνα· συντόμευση σε ζεστό καιρό."
-      ]
+      ],
+      "article": "<h2>Γιατί κινητό αντί για στατικό</h2>\n<p>\n  Η θέρμανση έχει τρία καθήκοντα: να ανεβάσει τη θερμοκρασία των μυών, να περάσει τις αρθρώσεις μέσα\n  από το εύρος κίνησής τους και να προετοιμάσει το νευρικό σύστημα για την επερχόμενη επιβάρυνση. Η\n  κινητική θέρμανση εκπληρώνει και τα τρία. Το στατικό τέντωμα πριν την προπόνηση δεν εκπληρώνει κανένα\n  από αυτά καλά και μάλιστα μειώνει βραχυπρόθεσμα την ταχύ-δύναμη και τη μέγιστη δύναμη — ανήκει στο\n  τέλος της προπόνησης, όχι στην αρχή.\n</p>\n<h2>Πώς δομείται μια θέρμανση</h2>\n<p>\n  Πέντε έως δέκα λεπτά αρκούν, σε τρία βήματα:\n</p>\n<ul>\n  <li><strong>Γενικά.</strong> Δύο έως τρία λεπτά ελαφρύ καρδιαγγειακό — περπάτημα, jumping jacks, σχοινί άλματος — μέχρι η αναπνοή να γίνει αισθητά βαθύτερη.</li>\n  <li><strong>Κινητοποίηση αρθρώσεων.</strong> Περιστροφές χεριών και ισχίου, cat-cow, ταλαντεύσεις ποδιού, lunges με περιστροφή. Από 8 έως 10 επαναλήψεις η καθεμία, χωρίς αναπηδήσεις.</li>\n  <li><strong>Ειδικά.</strong> Η πρώτη άσκηση της προπόνησης με ελαφρύ φορτίο: πριν από push-ups μερικά σε ανύψωση, πριν από squats μερικά χωρίς βάρος.</li>\n</ul>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πλήρης παράλειψη.</strong> Το πιο συχνό. Τα πρώτα σετ γίνονται τότε τα ίδια η θέρμανση — με χειρότερη τεχνική.</li>\n  <li><strong>Πολύ μεγάλη διάρκεια.</strong> Είκοσι λεπτά κινητοποίησης κουράζουν αντί να προετοιμάζουν.</li>\n  <li><strong>Στατικό τέντωμα.</strong> Πριν από προπονήσεις δύναμης ή άλματος είναι αντιπαραγωγικό.</li>\n</ul>\n<h2>Τοποθέτηση</h2>\n<p>\n  Το ειδικό τμήμα είναι το πιο σημαντικό και παραλείπεται πιο συχνά. Μια θέρμανση που δεν οδηγεί στις\n  ασκήσεις της προπόνησης είναι απλώς κίνηση.\n</p>"
     },
     "en": {
       "name": "Dynamic Warm-up",
@@ -3289,7 +3490,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Before strength or jumping always go dynamic, never static — static stretching dulls performance.",
         "Extend the warm-up in winter; shorten it in hot weather."
-      ]
+      ],
+      "article": "<h2>Why moving beats holding</h2>\n<p>\n  A warm-up has three jobs: raise muscle temperature, take the joints through their range of motion, and\n  prime the nervous system for the load to come. A moving warm-up covers all three. Static stretching\n  before training covers none of them well and even briefly lowers speed- and maximal-strength output —\n  it belongs at the end of a session, not the start.\n</p>\n<h2>How a warm-up is structured</h2>\n<p>\n  Five to ten minutes is enough, in three steps:\n</p>\n<ul>\n  <li><strong>General.</strong> Two to three minutes of easy cardio — walking, jumping jacks, jump rope — until breathing noticeably deepens.</li>\n  <li><strong>Mobilize the joints.</strong> Arm and hip circles, cat-cow, leg swings, lunges with rotation. 8 to 10 reps each, without bouncing.</li>\n  <li><strong>Specific.</strong> The session's first exercise with light load: a few push-ups on an elevated surface before push-ups, a few unloaded squats before squats.</li>\n</ul>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Skipping it entirely.</strong> The most common one. The first sets then become the warm-up themselves — with worse technique.</li>\n  <li><strong>Too long.</strong> Twenty minutes of mobilization tires you out instead of preparing you.</li>\n  <li><strong>Static stretching.</strong> Counterproductive before strength or jumping sessions.</li>\n</ul>\n<h2>Putting it in context</h2>\n<p>\n  The specific part is the most important and the most often skipped. A warm-up that doesn't lead into\n  the session's exercises is just movement.\n</p>"
     },
     "es": {
       "name": "Calentamiento dinámico",
@@ -3303,7 +3505,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Antes de fuerza o saltos siempre ve dinámico, nunca estático — el estiramiento estático embota el rendimiento.",
         "Extiende el calentamiento en invierno; acórtalo en clima caluroso."
-      ]
+      ],
+      "article": "<h2>Por qué en movimiento y no mantenido</h2>\n<p>\n  El calentamiento tiene tres funciones: elevar la temperatura muscular, llevar las articulaciones a\n  través de su rango de movimiento y preparar el sistema nervioso para la carga que viene. El\n  calentamiento en movimiento cumple las tres. El estiramiento estático antes del entrenamiento no\n  cumple bien ninguna de ellas, y a corto plazo incluso reduce la fuerza rápida y la fuerza máxima —\n  pertenece al final de la sesión, no al inicio.\n</p>\n<h2>Cómo se estructura un calentamiento</h2>\n<p>\n  Cinco a diez minutos son suficientes, en tres pasos:\n</p>\n<ul>\n  <li><strong>General.</strong> Dos a tres minutos de cardio suave — caminar, saltadores, saltar la cuerda — hasta que la respiración se vuelva notablemente más profunda.</li>\n  <li><strong>Movilizar las articulaciones.</strong> Círculos de brazos y cadera, gato-vaca, péndulos de pierna, zancadas con rotación. De 8 a 10 repeticiones cada una, sin rebotar.</li>\n  <li><strong>Específico.</strong> El primer ejercicio de la sesión con carga ligera: antes de flexiones, unas cuantas con las manos elevadas; antes de sentadillas, unas cuantas sin peso.</li>\n</ul>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Omitirlo por completo.</strong> El más frecuente. Las primeras series se convierten entonces en el propio calentamiento — con peor técnica.</li>\n  <li><strong>Demasiado largo.</strong> Veinte minutos de movilización fatigan en lugar de preparar.</li>\n  <li><strong>Estirar de forma estática.</strong> Contraproducente antes de sesiones de fuerza o salto.</li>\n</ul>\n<h2>Valoración</h2>\n<p>\n  La parte específica es la más importante y la que más se salta. Un calentamiento que no conduce a los\n  ejercicios de la sesión es solo movimiento.\n</p>"
     },
     "fr": {
       "name": "Échauffement dynamique",
@@ -3317,7 +3520,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Avant la force ou les sauts, toujours dynamique, jamais statique — l'étirement statique émoussit la performance.",
         "Prolongez l'échauffement en hiver ; raccourcissez-le par temps chaud."
-      ]
+      ],
+      "article": "<h2>Pourquoi en mouvement plutôt qu'en position tenue</h2>\n<p>\n  L'échauffement a trois fonctions : augmenter la température musculaire, faire parcourir aux\n  articulations toute leur amplitude et préparer le système nerveux à l'effort à venir. L'échauffement\n  dynamique remplit les trois. Les étirements statiques avant l'entraînement n'en remplissent bien\n  aucune, et diminuent même à court terme la force explosive et la force maximale — ils ont leur place\n  en fin de séance, pas au début.\n</p>\n<h2>Comment structurer un échauffement</h2>\n<p>\n  Cinq à dix minutes suffisent, en trois étapes :\n</p>\n<ul>\n  <li><strong>Général.</strong> Deux à trois minutes de cardio léger — marche, jumping jacks, corde à sauter — jusqu'à ce que la respiration se creuse nettement.</li>\n  <li><strong>Mobiliser les articulations.</strong> Rotations de bras et de hanches, chat-vache, balancés de jambe, fentes avec rotation. 8 à 10 répétitions chacune, sans rebondir.</li>\n  <li><strong>Spécifique.</strong> Le premier exercice de la séance avec une charge légère : quelques pompes surélevées avant des pompes classiques, quelques squats sans charge avant des squats chargés.</li>\n</ul>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>L'omettre complètement.</strong> L'erreur la plus fréquente. Les premières séries deviennent alors elles-mêmes l'échauffement — avec une moins bonne technique.</li>\n  <li><strong>Trop long.</strong> Vingt minutes de mobilisation fatiguent au lieu de préparer.</li>\n  <li><strong>Étirements statiques.</strong> Contre-productifs avant une séance de force ou de saut.</li>\n</ul>\n<h2>Mise en perspective</h2>\n<p>\n  La partie spécifique est la plus importante et c'est celle qu'on saute le plus souvent. Un échauffement\n  qui ne mène pas aux exercices de la séance n'est que du mouvement.\n</p>"
     },
     "it": {
       "name": "Riscaldamento dinamico",
@@ -3331,7 +3535,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Prima della forza o dei salti sempre dinamico, mai statico — lo stretching statico riduce la prestazione.",
         "Estendi il riscaldamento in inverno; accorcialo al caldo."
-      ]
+      ],
+      "article": "<h2>Perché in movimento invece che statico</h2>\n<p>\n  Il riscaldamento ha tre compiti: aumentare la temperatura muscolare, portare le articolazioni\n  attraverso la loro ampiezza di movimento e preparare il sistema nervoso al carico imminente. Il\n  riscaldamento dinamico assolve tutti e tre. Lo stretching statico prima dell'allenamento non ne\n  assolve nessuno bene e riduce persino, a breve termine, la potenza esplosiva e la forza massimale —\n  appartiene alla fine della sessione, non all'inizio.\n</p>\n<h2>Come si struttura un riscaldamento</h2>\n<p>\n  Bastano cinque-dieci minuti, in tre fasi:\n</p>\n<ul>\n  <li><strong>Generale.</strong> Due-tre minuti di cardio leggero — camminata, saltelli, corda per saltare — finché il respiro non diventa percettibilmente più profondo.</li>\n  <li><strong>Mobilizzare le articolazioni.</strong> Rotazioni di braccia e fianchi, cat-cow, pendoli delle gambe, affondi con rotazione. Otto-dieci ripetizioni ciascuno, senza rimbalzare.</li>\n  <li><strong>Specifico.</strong> Il primo esercizio della sessione con carico leggero: prima dei piegamenti qualche ripetizione su un'elevazione, prima degli squat qualche ripetizione senza peso.</li>\n</ul>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Saltarlo del tutto.</strong> Il più comune. Le prime serie diventano allora esse stesse il riscaldamento — con una tecnica peggiore.</li>\n  <li><strong>Troppo lungo.</strong> Venti minuti di mobilizzazione affaticano invece di preparare.</li>\n  <li><strong>Stretching statico.</strong> Controproducente prima di sessioni di forza o di salto.</li>\n</ul>\n<h2>Inquadramento</h2>\n<p>\n  La parte specifica è la più importante ed è quella che viene saltata più spesso. Un riscaldamento che\n  non conduce agli esercizi della sessione è solo movimento.\n</p>"
     },
     "nl": {
       "name": "Dynamic Warm-up",
@@ -3345,7 +3550,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Zet altijd dynamisch voordat kracht of springen, nooit statisch — statisch uitrekken dempt prestatie.",
         "Verleng opwarming in winter; verkort in warm weer."
-      ]
+      ],
+      "article": "<h2>Waarom bewegend in plaats van vastgehouden</h2>\n<p>\n  Opwarmen heeft drie taken: de spiertemperatuur verhogen, de gewrichten door hun bewegingsbereik\n  voeren en het zenuwstelsel voorbereiden op de komende belasting. Bewegend opwarmen vervult alle\n  drie. Statisch rekken voor de training vervult geen van drie goed en verlaagt zelfs op korte\n  termijn de snelheids- en maximaalkracht — het hoort aan het einde van de sessie, niet aan het\n  begin.\n</p>\n<h2>Hoe een opwarming is opgebouwd</h2>\n<p>\n  Vijf tot tien minuten volstaan, in drie stappen:\n</p>\n<ul>\n  <li><strong>Algemeen.</strong> Twee tot drie minuten lichte cardio — wandelen, jumping jacks, springtouw — tot de ademhaling merkbaar dieper wordt.</li>\n  <li><strong>Gewrichten mobiliseren.</strong> Arm- en heupcirkels, cat-cow, beenpendels, lunges met rotatie. Telkens 8 tot 10 herhalingen, zonder te veren.</li>\n  <li><strong>Specifiek.</strong> De eerste oefening van de sessie met lichte belasting: voor push-ups een paar op een verhoging, voor squats een paar zonder gewicht.</li>\n</ul>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Helemaal overslaan.</strong> De meest voorkomende. De eerste sets worden dan zelf de opwarming — met slechtere techniek.</li>\n  <li><strong>Te lang.</strong> Twintig minuten mobilisatie vermoeien in plaats van voor te bereiden.</li>\n  <li><strong>Statisch rekken.</strong> Voor kracht- of sprongsessies contraproductief.</li>\n</ul>\n<h2>Duiding</h2>\n<p>\n  Het specifieke deel is het belangrijkst en wordt het vaakst overgeslagen. Een opwarming die niet\n  toeleidt naar de oefeningen van de sessie, is slechts beweging.\n</p>"
     },
     "no": {
       "name": "Dynamic Warm-up",
@@ -3359,7 +3565,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Før styrke eller hopping alltid dynamisk, aldri statisk – statisk strekking slukker prestasjon.",
         "Forleng oppvarmingen på vinteren; fork den i varmt vær."
-      ]
+      ],
+      "article": "<h2>Hvorfor bevegelse i stedet for hold</h2>\n<p>\n  Oppvarming har tre oppgaver: å heve muskeltemperaturen, føre leddene gjennom sitt bevegelsesutslag og\n  forberede nervesystemet på belastningen som kommer. Bevegelsesoppvarming dekker alle tre. Statisk\n  tøying før trening dekker ingen av dem godt, og senker til og med hurtighets- og maksimalstyrken på\n  kort sikt – den hører hjemme på slutten av økten, ikke i starten.\n</p>\n<h2>Hvordan en oppvarming er bygd opp</h2>\n<p>\n  Fem til ti minutter er nok, i tre trinn:\n</p>\n<ul>\n  <li><strong>Generelt.</strong> To til tre minutter lett kardio – gange, jumping jacks, hopptau – til pusten merkbart blir dypere.</li>\n  <li><strong>Mobilisere ledd.</strong> Arm- og hoftesirkler, cat-cow, beinpendel, utfall med rotasjon. 8 til 10 repetisjoner hver, uten å fjære.</li>\n  <li><strong>Spesifikt.</strong> Øktens første øvelse med lett belastning: noen push-ups mot en forhøyning før vanlige push-ups, noen knebøy uten vekt før belastede knebøy.</li>\n</ul>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å hoppe over det helt.</strong> Den vanligste. De første settene blir da selve oppvarmingen – med dårligere teknikk.</li>\n  <li><strong>For lenge.</strong> Tjue minutter med mobilisering gjør deg sliten i stedet for klar.</li>\n  <li><strong>Statisk tøying.</strong> Kontraproduktivt før styrke- eller hoppøkter.</li>\n</ul>\n<h2>Vurdering</h2>\n<p>\n  Den spesifikke delen er den viktigste, og den som oftest blir hoppet over. En oppvarming som ikke leder\n  frem til øktens øvelser, er bare bevegelse.\n</p>"
     },
     "zh": {
       "name": "动态热身",
@@ -3373,7 +3580,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "力量或跳跃前总是动态，从不静态——静态拉伸会削弱表现。",
         "冬季延长热身；热天缩短。"
-      ]
+      ],
+      "article": "<h2>为什么动态而不是静态</h2>\n<p>\n  热身有三项任务：提高肌肉温度、让关节活动到其应有的活动范围，以及让神经系统为即将到来\n  的负荷做好准备。动态热身能同时满足这三项任务。而训练前的静态拉伸对这三项都起不到什么\n  作用，甚至会短暂降低爆发力和最大力量——它应该放在训练课的结尾，而不是开头。\n</p>\n<h2>热身应该如何安排</h2>\n<p>\n  五到十分钟就足够，分三个步骤进行：\n</p>\n<ul>\n  <li><strong>整体激活。</strong>两到三分钟的轻度有氧运动——走路、开合跳、跳绳——直到呼吸明显变深。</li>\n  <li><strong>关节活动。</strong>手臂和髋部画圈、猫式-牛式、腿部摆动、带转体的弓步。每个动作8到10次，不要借助反弹。</li>\n  <li><strong>专项激活。</strong>用轻负荷提前演练训练课的第一个动作：俯卧撑前先在高处做几个，深蹲前先做几个徒手深蹲。</li>\n</ul>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>完全跳过热身。</strong>最常见的错误。这样一来，正式训练的前几组就变成了热身——而且动作质量更差。</li>\n  <li><strong>热身太长。</strong>二十分钟的活动度训练只会让身体疲劳，而不是做好准备。</li>\n  <li><strong>做静态拉伸。</strong>在力量或跳跃训练前，这样做适得其反。</li>\n</ul>\n<h2>如何看待这件事</h2>\n<p>\n  专项激活部分是最重要的，却也是最常被省略的一环。一个不针对训练课具体动作的热身，只是\n  单纯的运动，起不到真正的准备作用。\n</p>"
     }
   },
   "mobility.foamrolling": {
@@ -3404,7 +3612,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Σύντομο (1-2 λεπ. ανά περιοχή) πριν την εκπαίδευση, μακρύτερο και πιο χαλαρωτικό μετά.",
         "Μη κύλιση απευθείας στα οστά ή αρθρώσεις — μόνο μυϊκές κοιλότητες."
-      ]
+      ],
+      "article": "<h2>Τι πραγματικά κάνει ο κύλινδρος αφρού</h2>\n<p>\n  Ο κύλινδρος βελτιώνει βραχυπρόθεσμα το εύρος κίνησης — αυτό είναι καλά τεκμηριωμένο. Λιγότερο\n  τεκμηριωμένη είναι η συνηθισμένη εξήγηση γι' αυτό. Η περιτονία δεν «απελευθερώνεται» ούτε παραμορφώνεται\n  μηχανικά με την πίεση ενός κυλίνδρου αφρού· ο ιστός είναι πολύ ανθεκτικός γι' αυτό. Πιο πιθανό είναι\n  ότι ο κύλινδρος δρα μέσω του νευρικού συστήματος: η πίεση μειώνει προσωρινά την ευαισθησία στον πόνο\n  και τη μυϊκή ένταση.\n</p>\n<p>\n  Στην πράξη αυτό δεν είναι αντίφαση — το αποτέλεσμα είναι πραγματικό, μόνο ο μηχανισμός είναι\n  διαφορετικός από αυτόν που συχνά υποστηρίζεται. Για τον μυϊκό πόνο και την αποκατάσταση, αντίθετα, η\n  επίδραση είναι στην καλύτερη περίπτωση μικρή.\n</p>\n<h2>Εφαρμογή</h2>\n<p>\n  Κύλιση αργά πάνω στον μυ, περίπου ένα έως δύο εκατοστά ανά δευτερόλεπτο. Σε ευαίσθητα σημεία παραμονή\n  20 έως 30 δευτερόλεπτα με ήρεμη συνέχιση της αναπνοής. 60 έως 90 δευτερόλεπτα ανά περιοχή αρκούν·\n  περισσότερο δεν προσφέρει τίποτα.\n</p>\n<p>\n  Χρήσιμο πριν την προπόνηση ως συμπλήρωμα στην κινητική θέρμανση, ή τις μέρες χωρίς προπόνηση.\n</p>\n<h2>Πού να μην κυλάς</h2>\n<ul>\n  <li><strong>Κάτω μέση.</strong> Χωρίς την υποστήριξη του κοιλιακού μυ, η οσφυϊκή μοίρα σπρώχνεται σε έκταση. Αντ' αυτού δούλεψε γλουτούς και θωρακική μοίρα.</li>\n  <li><strong>Απευθείας πάνω από αρθρώσεις και οστά.</strong> Μόνο μυϊκές κοιλότητες.</li>\n  <li><strong>Πίσω γόνατο, βουβώνας, πλαϊνά αυχένα.</strong> Εκεί βρίσκονται επιφανειακά νευρικές οδοί και αγγεία.</li>\n</ul>\n<h2>Τοποθέτηση</h2>\n<p>\n  Ο κύλινδρος είναι ένα χρήσιμο βοήθημα, όχι υποκατάστατο της προπόνησης ευλυγισίας. Το κέρδος διαρκεί\n  λεπτά έως ώρες — η μόνιμη αλλαγή προκύπτει από τακτικό τέντωμα και προπόνηση δύναμης σε πλήρες εύρος\n  κίνησης.\n</p>"
     },
     "en": {
       "name": "Foam Rolling",
@@ -3418,7 +3627,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Short (1-2 min per area) before training, longer and more relaxing afterwards.",
         "Don't roll directly on bones or joints — muscle bellies only."
-      ]
+      ],
+      "article": "<h2>What foam rolling actually does</h2>\n<p>\n  The roller improves range of motion in the short term — that's well established. What's less\n  established is the usual explanation for it. Fascia can't be \"released\" or mechanically reshaped by the\n  pressure of a foam roller; the tissue is far too resilient for that. The roller more likely works\n  through the nervous system: the pressure temporarily lowers pain sensitivity and muscle tension.\n</p>\n<p>\n  Practically, that's no contradiction — the effect is real, just the mechanism is different from what's\n  often claimed. For muscle soreness and recovery, on the other hand, the effect is at best small.\n</p>\n<h2>How to use it</h2>\n<p>\n  Roll slowly over the muscle, roughly one to two centimeters per second. Linger 20 to 30 seconds on\n  tender spots and keep breathing calmly. 60 to 90 seconds per area is enough; more doesn't add anything.\n</p>\n<p>\n  Useful before training as a complement to a moving warm-up, or on rest days.\n</p>\n<h2>Where not to roll</h2>\n<ul>\n  <li><strong>Lower back.</strong> Without a bracing abdomen, the lumbar spine gets pressed into extension. Work the glutes and thoracic spine instead.</li>\n  <li><strong>Directly over joints and bones.</strong> Muscle bellies only.</li>\n  <li><strong>Back of the knee, groin, sides of the neck.</strong> Nerves and blood vessels sit close to the surface there.</li>\n</ul>\n<h2>Putting it in context</h2>\n<p>\n  The roller is a useful tool, not a substitute for mobility training. The gain lasts minutes to hours —\n  lasting change comes from regular stretching and strength training through the full range of motion.\n</p>"
     },
     "es": {
       "name": "Rodillo de espuma",
@@ -3432,7 +3642,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Corto (1-2 min por área) antes del entrenamiento, más largo y relajante después.",
         "No ruedes directamente sobre huesos o articulaciones — solo vientres musculares."
-      ]
+      ],
+      "article": "<h2>Lo que realmente hace el rodillo de espuma</h2>\n<p>\n  El rodillo mejora a corto plazo el rango de movimiento — eso está bien documentado. Lo que está menos\n  documentado es la explicación habitual de por qué. Las fascias no se pueden \"liberar\" ni deformar\n  mecánicamente con la presión de un rodillo de espuma; el tejido es demasiado resistente para eso. Es\n  más probable que el rodillo actúe a través del sistema nervioso: la presión reduce temporalmente la\n  sensibilidad al dolor y la tensión muscular.\n</p>\n<p>\n  En la práctica esto no es una contradicción — el efecto es real, solo el mecanismo es otro del que\n  suele afirmarse. Para el dolor muscular y la regeneración, en cambio, el efecto es en el mejor de los\n  casos pequeño.\n</p>\n<h2>Aplicación</h2>\n<p>\n  Rueda lentamente sobre el músculo, aproximadamente uno a dos centímetros por segundo. En puntos\n  sensibles, detente de 20 a 30 segundos y sigue respirando con calma. De 60 a 90 segundos por zona son\n  suficientes; más no aporta nada.\n</p>\n<p>\n  Tiene sentido antes del entrenamiento como complemento al calentamiento en movimiento, o en días sin\n  entrenamiento.\n</p>\n<h2>Dónde no rodar</h2>\n<ul>\n  <li><strong>Zona lumbar.</strong> Sin el apoyo del abdomen, la columna lumbar se empuja hacia la extensión. En su lugar, trabaja el glúteo y la columna torácica.</li>\n  <li><strong>Directamente sobre articulaciones y huesos.</strong> Solo vientres musculares.</li>\n  <li><strong>Hueco poplíteo, ingle, laterales del cuello.</strong> Ahí los nervios y vasos sanguíneos son superficiales.</li>\n</ul>\n<h2>Valoración</h2>\n<p>\n  El rodillo es una herramienta útil, no un sustituto del entrenamiento de movilidad. La ganancia dura\n  minutos u horas — el cambio duradero proviene del estiramiento regular y del entrenamiento de fuerza\n  en todo el rango de movimiento.\n</p>"
     },
     "fr": {
       "name": "Roulement à mousse (Foam Rolling)",
@@ -3446,7 +3657,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Court (1-2 min par zone) avant l'entraînement, plus long et plus relaxant après.",
         "Ne roulez pas directement sur les os ou les articulations — les ventres musculaires seulement."
-      ]
+      ],
+      "article": "<h2>Ce que le rouleau de massage fait réellement</h2>\n<p>\n  Le rouleau améliore l'amplitude de mouvement à court terme — c'est bien démontré. L'explication\n  courante de ce phénomène l'est moins. On ne peut pas « libérer » ou déformer mécaniquement le fascia\n  avec la pression d'un rouleau en mousse ; le tissu est trop résistant pour cela. Il est plus probable\n  que le rouleau agisse via le système nerveux : la pression réduit temporairement la sensibilité à la\n  douleur et la tension musculaire.\n</p>\n<p>\n  En pratique, ce n'est pas contradictoire — l'effet est réel, seul le mécanisme diffère de ce qu'on\n  avance souvent. Pour les courbatures et la récupération, en revanche, l'effet est au mieux limité.\n</p>\n<h2>Utilisation</h2>\n<p>\n  Roulez lentement sur le muscle, environ un à deux centimètres par seconde. Sur les points sensibles,\n  marquez une pause de 20 à 30 secondes en continuant à respirer calmement. 60 à 90 secondes par zone\n  suffisent ; au-delà, cela n'apporte rien de plus.\n</p>\n<p>\n  Utile avant l'entraînement en complément de l'échauffement dynamique, ou les jours sans entraînement.\n</p>\n<h2>Où ne pas rouler</h2>\n<ul>\n  <li><strong>Bas du dos.</strong> Sans le soutien des abdominaux, la colonne lombaire est poussée en extension. Travaillez plutôt les fessiers et la colonne dorsale.</li>\n  <li><strong>Directement sur les articulations et les os.</strong> Uniquement les ventres musculaires.</li>\n  <li><strong>Creux du genou, aine, côtés du cou.</strong> Les nerfs et les vaisseaux y sont superficiels.</li>\n</ul>\n<h2>Mise en perspective</h2>\n<p>\n  Le rouleau est un outil utile, pas un substitut à un travail de mobilité. Le gain dure de quelques\n  minutes à quelques heures — un changement durable vient d'étirements réguliers et d'un entraînement de\n  force sur toute l'amplitude de mouvement.\n</p>"
     },
     "it": {
       "name": "Foam rolling",
@@ -3460,7 +3672,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Breve (1-2 min per area) prima dell'allenamento, più lungo e più rilassante dopo.",
         "Non rollare direttamente su ossa o articolazioni — solo sui corpi muscolari."
-      ]
+      ],
+      "article": "<h2>Cosa fa davvero il foam roller</h2>\n<p>\n  Il roller migliora a breve termine l'ampiezza di movimento — questo è ben documentato. Meno\n  documentata è la spiegazione comune di questo effetto. Le fasce non si possono \"sciogliere\" o\n  deformare meccanicamente con la pressione di un foam roller; il tessuto è troppo resistente per\n  questo. È più probabile che il roller agisca attraverso il sistema nervoso: la pressione riduce\n  temporaneamente la sensibilità al dolore e la tensione muscolare.\n</p>\n<p>\n  In pratica non è una contraddizione — l'effetto è reale, solo il meccanismo è diverso da quanto spesso\n  affermato. Per i dolori muscolari e il recupero, invece, l'effetto è nella migliore delle ipotesi\n  modesto.\n</p>\n<h2>Applicazione</h2>\n<p>\n  Rotola lentamente sul muscolo, circa uno-due centimetri al secondo. Sui punti sensibili sosta 20-30\n  secondi e continua a respirare con calma. Bastano 60-90 secondi per area; di più non porta benefici\n  aggiuntivi.\n</p>\n<p>\n  Utile prima dell'allenamento come complemento al riscaldamento dinamico, oppure nei giorni senza\n  allenamento.\n</p>\n<h2>Dove non rotolare</h2>\n<ul>\n  <li><strong>Parte bassa della schiena.</strong> Senza il sostegno degli addominali, la colonna lombare viene spinta in estensione. Lavora invece su glutei e colonna toracica.</li>\n  <li><strong>Direttamente su articolazioni e ossa.</strong> Solo sui corpi muscolari.</li>\n  <li><strong>Cavo popliteo, inguine, lati del collo.</strong> Lì nervi e vasi sono superficiali.</li>\n</ul>\n<h2>Inquadramento</h2>\n<p>\n  Il roller è uno strumento utile, non un sostituto dell'allenamento della mobilità. Il guadagno dura da\n  minuti a ore — un cambiamento duraturo viene da stretching regolare e allenamento della forza\n  nell'intera ampiezza di movimento.\n</p>"
     },
     "nl": {
       "name": "Foam Rolling",
@@ -3474,7 +3687,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kort (1-2 min per gebied) vóór training, langer en meer ontspannend daarna.",
         "Rol niet rechtstreeks op botten of gewrichten — alleen spierbuiken."
-      ]
+      ],
+      "article": "<h2>Wat de foamroller werkelijk doet</h2>\n<p>\n  De roller verbetert op korte termijn het bewegingsbereik — dat is goed onderbouwd. Minder\n  onderbouwd is de gangbare verklaring daarvoor. Fascia \"losmaken\" of mechanisch vervormen lukt\n  niet met de druk van een schuimrol; het weefsel is daarvoor te belastbaar. Waarschijnlijker werkt\n  de roller via het zenuwstelsel: de druk verlaagt tijdelijk de pijngevoeligheid en de\n  spierspanning.\n</p>\n<p>\n  Praktisch is dat geen tegenspraak — het effect is echt, alleen het mechanisme is anders dan vaak\n  wordt beweerd. Voor spierpijn en herstel is de werking daarentegen hoogstens gering.\n</p>\n<h2>Toepassing</h2>\n<p>\n  Langzaam over de spier rollen, ongeveer één tot twee centimeter per seconde. Op gevoelige plekken\n  20 tot 30 seconden verblijven en rustig doorademen. 60 tot 90 seconden per gebied volstaat; meer\n  levert niets op.\n</p>\n<p>\n  Zinvol voor de training als aanvulling op het bewegende opwarmen, of op trainingsvrije dagen.\n</p>\n<h2>Waar niet rollen</h2>\n<ul>\n  <li><strong>Onderrug.</strong> Zonder ondersteunende buikspier wordt de lendenwervelkolom in strekking gedrukt. Werk in plaats daarvan aan billen en borstwervelkolom.</li>\n  <li><strong>Direct over gewrichten en botten.</strong> Alleen spierbuiken.</li>\n  <li><strong>Knieholte, lies, zijkanten van de nek.</strong> Zenuwbanen en bloedvaten liggen daar oppervlakkig.</li>\n</ul>\n<h2>Duiding</h2>\n<p>\n  De roller is een nuttig hulpmiddel, geen vervanging voor mobiliteitstraining. De winst houdt\n  minuten tot uren aan — blijvende verandering komt van regelmatig rekken en krachttraining over\n  het volledige bewegingsbereik.\n</p>"
     },
     "no": {
       "name": "Foam Rolling",
@@ -3488,7 +3702,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kort (1-2 min per område) før trening, lengre og mer avslappende etterpå.",
         "Ikke rull direkte på bein eller ledd – kun muskelbuker."
-      ]
+      ],
+      "article": "<h2>Hva skumrullen faktisk gjør</h2>\n<p>\n  Rullen bedrer bevegelsesutslaget på kort sikt – det er godt dokumentert. Mindre godt dokumentert er den\n  vanlige forklaringen på hvorfor. Å «løse opp» eller mekanisk deformere fascier lar seg ikke gjøre med\n  trykket fra en skumrull; vevet tåler for mye til det. Mer sannsynlig virker rullen via nervesystemet:\n  trykket senker smerteterskelen og muskelspenningen midlertidig.\n</p>\n<p>\n  I praksis er ikke dette noen motsigelse – effekten er reell, bare mekanismen en annen enn ofte hevdet.\n  For muskelstølhet og restitusjon er derimot effekten i beste fall liten.\n</p>\n<h2>Bruk</h2>\n<p>\n  Rull sakte over muskelen, omtrent én til to centimeter per sekund. På ømme steder blir du 20 til 30\n  sekunder og puster rolig videre. 60 til 90 sekunder per område er nok; mer gir ingen ekstra effekt.\n</p>\n<p>\n  Fornuftig før trening som et supplement til bevegelsesoppvarmingen, eller på treningsfrie dager.\n</p>\n<h2>Hvor du ikke bør rulle</h2>\n<ul>\n  <li><strong>Korsryggen.</strong> Uten støttende magemuskulatur presses korsryggen inn i strekk. Bearbeid heller setet og brystryggen i stedet.</li>\n  <li><strong>Direkte over ledd og knokler.</strong> Kun muskelbuker.</li>\n  <li><strong>Knehase, lyske, sidene av halsen.</strong> Der ligger nervebaner og blodårer overfladisk.</li>\n</ul>\n<h2>Vurdering</h2>\n<p>\n  Rullen er et nyttig hjelpemiddel, ikke en erstatning for bevegelighetstrening. Gevinsten varer minutter\n  til timer – varig endring kommer fra regelmessig tøying og styrketrening gjennom hele\n  bevegelsesutslaget.\n</p>"
     },
     "zh": {
       "name": "泡沫轴放松",
@@ -3502,7 +3717,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "训练前短（每区域1-2分钟），训练后更长和更放松。",
         "不要直接在骨头或关节上滚动——仅肌肉腹部。"
-      ]
+      ],
+      "article": "<h2>泡沫轴究竟起什么作用</h2>\n<p>\n  泡沫轴能够短期改善活动范围——这一点有充分证据支持。但常见的解释却缺乏足够依据。泡沫轴\n  的压力并不能\"松解\"筋膜或让其发生机械形变——这类组织的韧性远超这种压力所能改变的程度。\n  更可能的作用机制是通过神经系统：压力会暂时降低痛觉敏感度和肌肉张力。\n</p>\n<p>\n  从实际效果来看这并不矛盾——效果是真实存在的，只是作用机制与常见说法不同。而对于缓解\n  肌肉酸痛和促进恢复，它的效果充其量很有限。\n</p>\n<h2>使用方法</h2>\n<p>\n  缓慢地在肌肉上滚动，大约每秒一到两厘米。在压痛点停留20到30秒，同时保持平稳呼吸。每个\n  部位60到90秒就足够，滚动更久也不会带来额外效果。\n</p>\n<p>\n  适合作为训练前动态热身的补充，也适合安排在不训练的日子里进行。\n</p>\n<h2>哪些部位不应该滚动</h2>\n<ul>\n  <li><strong>下背部。</strong>没有腹肌支撑的情况下，腰椎会被压向过度伸展的状态。应该改为放松臀部和胸椎。</li>\n  <li><strong>关节和骨骼正上方。</strong>只应该滚动肌肉腹部。</li>\n  <li><strong>膝窝、腹股沟、颈部两侧。</strong>这些部位的神经和血管走行较为表浅。</li>\n</ul>\n<h2>如何看待这件事</h2>\n<p>\n  泡沫轴是一个有用的辅助工具，但不能替代柔韧性训练。它带来的效果只能维持几分钟到几\n  小时——真正持久的改变，来自规律的拉伸和全活动范围的力量训练。\n</p>"
     }
   },
   "mobility.hipopener": {
@@ -3533,7 +3749,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 λεπτά καθημερινά νικά 30 λεπτά μία φορά την εβδομάδα.",
         "Αναπνοή προς το τέντωμα — απελευθέρωση λίγο περισσότερο σε κάθε εκπνοή."
-      ]
+      ],
+      "article": "<h2>Γιατί το ισχίο υποφέρει πρώτο</h2>\n<p>\n  Το κάθισμα κρατά το ισχίο επί ώρες σε περίπου 90 μοίρες κάμψη. Ο κάμπτορας του ισχίου βραχύνεται, ο\n  γλουτιαίος γίνεται αδρανής, και η έκταση του ισχίου — η κίνηση που χρειάζεται στο περπάτημα, στο\n  τρέξιμο και στο σηκωμό — χάνει εύρος. Οι συνέπειες φαίνονται σπάνια στο ίδιο το ισχίο, αλλά έναν\n  όροφο πάνω ή κάτω: ως πόνος στη μέση ή ως πόνος στο γόνατο.\n</p>\n<p>\n  Ακόμη και το βαθύ squat αποτυγχάνει συχνότερα λόγω του ισχίου παρά λόγω γόνατος ή αστραγάλου.\n</p>\n<h2>Μια σύντομη ρουτίνα</h2>\n<ul>\n  <li><strong>Κάμπτορας ισχίου σε ημι-γονυπετή θέση.</strong> Ένα γόνατο στο έδαφος, το άλλο μπροστά. Γείρε τη λεκάνη προς τα πίσω και σπρώξε το ισχίο προς τα εμπρός — η έκταση προκύπτει από την κλίση της λεκάνης, όχι από οσφυϊκή κύρτωση. 45 δευτερόλεπτα ανά πλευρά.</li>\n  <li><strong>Θέση περιστεριού.</strong> Το μπροστινό πόδι λυγισμένο μπροστά στο σώμα, το πίσω τεντωμένο. Για τους έξω στροφείς. 45 δευτερόλεπτα ανά πλευρά.</li>\n  <li><strong>Βαθιά κάθισμα.</strong> Όσο πιο βαθιά γίνεται, φτέρνες στο έδαφος, οι αγκώνες σπρώχνουν τα γόνατα προς τα έξω. 60 δευτερόλεπτα.</li>\n  <li><strong>Εναλλαγή 90/90.</strong> Καθιστός με και τα δύο γόνατα σε 90 μοίρες, εναλλαγή από πλευρά σε πλευρά. 10 εναλλαγές.</li>\n</ul>\n<h2>Συνήθες λάθος</h2>\n<p>\n  Στο τέντωμα του κάμπτορα ισχίου, να καταφεύγεις σε οσφυϊκή κύρτωση. Τότε το τέντωμα αισθάνεται έντονο,\n  αλλά συμβαίνει στην κάτω μέση και όχι στο ισχίο. Η λεκάνη πρέπει να γέρνει ενεργά προς τα πίσω —\n  το σφίξιμο των γλουτών βοηθά σε αυτό.\n</p>\n<h2>Δοσολογία</h2>\n<p>\n  Πέντε έως οκτώ λεπτά, τις περισσότερες μέρες. Η ευλυγισία ανταποκρίνεται περισσότερο στη συχνότητα\n  παρά στη διάρκεια.\n</p>"
     },
     "en": {
       "name": "Hip Opener",
@@ -3547,7 +3764,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 minutes daily beats 30 minutes once a week.",
         "Breathe into the stretch — release a little more on every exhale."
-      ]
+      ],
+      "article": "<h2>Why the hips suffer first</h2>\n<p>\n  Sitting holds the hips at roughly 90 degrees of flexion for hours. The hip flexors shorten, the glutes\n  go sluggish, and hip extension — the movement needed for walking, running and standing up — loses\n  range. The consequences rarely show up in the hip itself, but a level above or below it: as back pain\n  or as knee pain.\n</p>\n<p>\n  Even the deep squat more often fails at the hip than at the knee or ankle.\n</p>\n<h2>A short routine</h2>\n<ul>\n  <li><strong>Half-kneeling hip flexor stretch.</strong> One knee on the floor, the other in front. Tuck the pelvis under and push the hip forward — the stretch comes from the pelvic tuck, not from arching the lower back. 45 seconds per side.</li>\n  <li><strong>Pigeon pose.</strong> Front leg bent in front of the body, back leg extended. For the external rotators. 45 seconds per side.</li>\n  <li><strong>Deep squat hold.</strong> As deep as possible, heels on the floor, elbows pressing the knees outward. 60 seconds.</li>\n  <li><strong>90/90 switches.</strong> Sitting with both knees at 90 degrees, switch side to side. 10 switches.</li>\n</ul>\n<h2>Common mistake</h2>\n<p>\n  Compensating into a lower-back arch during the hip flexor stretch. It feels like a strong stretch but\n  it's happening in the lower back instead of the hip. The pelvis has to actively tuck under — squeezing\n  the glutes helps with that.\n</p>\n<h2>Programming</h2>\n<p>\n  Five to eight minutes, on most days. Mobility responds more to frequency than to duration.\n</p>"
     },
     "es": {
       "name": "Apertura de cadera",
@@ -3561,7 +3779,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 minutos diarios vencen 30 minutos una vez a la semana.",
         "Respira en el estiramiento — libera un poco más en cada exhalación."
-      ]
+      ],
+      "article": "<h2>Por qué la cadera sufre primero</h2>\n<p>\n  Estar sentado mantiene la cadera durante horas en aproximadamente 90 grados de flexión. El flexor de\n  cadera se acorta, el glúteo se vuelve perezoso, y la extensión de cadera — el movimiento necesario al\n  caminar, correr y levantarse — pierde recorrido. Las consecuencias rara vez se manifiestan en la\n  cadera misma, sino un piso más arriba o más abajo: como molestias de espalda o como dolor de rodilla.\n</p>\n<p>\n  Incluso la sentadilla profunda falla con más frecuencia por la cadera que por la rodilla o el tobillo.\n</p>\n<h2>Una rutina breve</h2>\n<ul>\n  <li><strong>Flexor de cadera en semiarrodillado.</strong> Una rodilla en el suelo, la otra adelante. Bascula la pelvis hacia atrás y empuja la cadera hacia adelante — la extensión surge de la báscula pélvica, no de la hiperlordosis. 45 segundos por lado.</li>\n  <li><strong>Postura de la paloma.</strong> Pierna delantera flexionada frente al cuerpo, la trasera extendida. Para los rotadores externos. 45 segundos por lado.</li>\n  <li><strong>Sentadilla profunda.</strong> Lo más profundo posible, talones en el suelo, los codos empujan las rodillas hacia afuera. 60 segundos.</li>\n  <li><strong>Cambios 90/90.</strong> Sentado con ambas rodillas a 90 grados, alterna de lado a lado. 10 cambios.</li>\n</ul>\n<h2>Error frecuente</h2>\n<p>\n  Compensar en el flexor de cadera con hiperlordosis. Entonces el estiramiento se siente intenso, pero\n  ocurre en la zona lumbar y no en la cadera. La pelvis debe bascular activamente hacia atrás — apretar\n  el glúteo ayuda a lograrlo.\n</p>\n<h2>Dosificación</h2>\n<p>\n  Cinco a ocho minutos, la mayoría de los días. La movilidad responde más a la frecuencia que a la\n  duración.\n</p>"
     },
     "fr": {
       "name": "Ouverture des hanches",
@@ -3575,7 +3794,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 minutes quotidiennes valent mieux que 30 minutes une fois par semaine.",
         "Respirez dans l'étirement — relâchez un peu plus à chaque expiration."
-      ]
+      ],
+      "article": "<h2>Pourquoi la hanche souffre en premier</h2>\n<p>\n  La position assise maintient la hanche à environ 90 degrés de flexion pendant des heures. Le\n  fléchisseur de hanche se raccourcit, les fessiers deviennent inactifs, et l'extension de hanche — le\n  mouvement nécessaire pour marcher, courir et se lever — perd en amplitude. Les conséquences se\n  manifestent rarement dans la hanche elle-même, mais un étage au-dessus ou en dessous : sous forme de\n  douleurs dorsales ou de douleurs au genou.\n</p>\n<p>\n  Le squat profond échoue également plus souvent à cause de la hanche que du genou ou de la cheville.\n</p>\n<h2>Une courte routine</h2>\n<ul>\n  <li><strong>Fléchisseur de hanche en fente à genoux.</strong> Un genou au sol, l'autre devant. Basculez le bassin vers l'arrière et poussez la hanche vers l'avant — l'extension vient de la bascule du bassin, pas d'une cambrure lombaire. 45 secondes de chaque côté.</li>\n  <li><strong>Posture du pigeon.</strong> Jambe avant fléchie devant le corps, jambe arrière tendue. Pour les rotateurs externes. 45 secondes de chaque côté.</li>\n  <li><strong>Squat profond.</strong> Aussi profond que possible, talons au sol, coudes qui poussent les genoux vers l'extérieur. 60 secondes.</li>\n  <li><strong>Alternance 90/90.</strong> Assis, les deux genoux à 90 degrés, alternez d'un côté à l'autre. 10 changements.</li>\n</ul>\n<h2>Erreurs fréquentes</h2>\n<p>\n  Compenser en cambrant le bas du dos pendant l'étirement du fléchisseur de hanche. L'étirement paraît\n  alors intense, mais il se produit dans le bas du dos et non dans la hanche. Le bassin doit basculer\n  activement vers l'arrière — contracter les fessiers y aide.\n</p>\n<h2>Dosage</h2>\n<p>\n  Cinq à huit minutes, la plupart des jours. La mobilité réagit davantage à la fréquence qu'à la durée.\n</p>"
     },
     "it": {
       "name": "Hip opener",
@@ -3589,7 +3809,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 minuti al giorno battono 30 minuti una volta a settimana.",
         "Respira nello stretching — rilascia un po' di più a ogni espirazione."
-      ]
+      ],
+      "article": "<h2>Perché l'anca soffre per prima</h2>\n<p>\n  Stare seduti mantiene l'anca per ore in circa 90 gradi di flessione. Il flessore dell'anca si accorcia,\n  i glutei diventano pigri, e l'estensione dell'anca — il movimento necessario per camminare, correre e\n  alzarsi in piedi — perde ampiezza. Le conseguenze si manifestano raramente nell'anca stessa, ma un\n  livello sopra o sotto: come disturbi alla schiena o dolore al ginocchio.\n</p>\n<p>\n  Anche lo squat profondo fallisce più spesso per colpa dell'anca che del ginocchio o della caviglia.\n</p>\n<h2>Una breve routine</h2>\n<ul>\n  <li><strong>Flessore dell'anca in mezzo inginocchiamento.</strong> Un ginocchio a terra, l'altro davanti. Inclina il bacino all'indietro e spingi l'anca in avanti — l'allungamento nasce dall'inclinazione del bacino, non da un'iperlordosi. 45 secondi per lato.</li>\n  <li><strong>Posizione del piccione.</strong> Gamba anteriore piegata davanti al corpo, posteriore distesa. Per i rotatori esterni. 45 secondi per lato.</li>\n  <li><strong>Accosciata profonda.</strong> Il più in basso possibile, talloni a terra, i gomiti spingono le ginocchia verso l'esterno. 60 secondi.</li>\n  <li><strong>Alternanza 90/90.</strong> Da seduto con entrambe le ginocchia a 90 gradi, alterna da un lato all'altro. 10 alternanze.</li>\n</ul>\n<h2>Errore comune</h2>\n<p>\n  Compensare con un'iperlordosi durante lo stretching del flessore dell'anca. In quel caso l'allungamento\n  sembra intenso, ma avviene nella parte bassa della schiena e non nell'anca. Il bacino deve inclinarsi\n  attivamente all'indietro — contrarre i glutei aiuta.\n</p>\n<h2>Dosaggio</h2>\n<p>\n  Cinque-otto minuti, la maggior parte dei giorni. La mobilità risponde più alla frequenza che alla\n  durata.\n</p>"
     },
     "nl": {
       "name": "Hip Opener",
@@ -3603,7 +3824,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 minuten dagelijks slaat 30 minuten eenmaal per week.",
         "Adem in de stretch — ontspan een beetje meer bij elke uitademing."
-      ]
+      ],
+      "article": "<h2>Waarom de heup het eerst lijdt</h2>\n<p>\n  Zitten houdt de heup uren lang in ongeveer 90 graden buiging. De heupflexor verkort, de billen\n  worden traag, en de heupextensie — de beweging die nodig is bij lopen, hardlopen en opstaan —\n  verliest bereik. De gevolgen tonen zich zelden in de heup zelf, maar een verdieping hoger of\n  lager: als rugklachten of als kniepijn.\n</p>\n<p>\n  Ook de diepe squat strandt vaker op de heup dan op knie of enkel.\n</p>\n<h2>Een korte routine</h2>\n<ul>\n  <li><strong>Heupflexor in halve knielhouding.</strong> Eén knie op de vloer, de andere vooraan. Het bekken naar achteren kantelen en de heup naar voren duwen — de strekking ontstaat door de bekkenkanteling, niet door een holle rug. 45 seconden per kant.</li>\n  <li><strong>Duivenhouding.</strong> Voorste been gebogen voor het lichaam, achterste gestrekt. Voor de buitenwaartse rotatoren. 45 seconden per kant.</li>\n  <li><strong>Diepe hurkzit.</strong> Zo diep mogelijk, hielen op de vloer, ellebogen duwen de knieën naar buiten. 60 seconden.</li>\n  <li><strong>90/90-wissel.</strong> Zittend beide knieën 90 graden, van kant naar kant wisselen. 10 wisselingen.</li>\n</ul>\n<h2>Veelgemaakte fouten</h2>\n<p>\n  Bij de heupflexor uitwijken naar een holle rug. Dan voelt de rek sterk aan, maar vindt plaats in\n  de onderrug in plaats van in de heup. Het bekken moet actief naar achteren kantelen — de billen\n  aanspannen helpt daarbij.\n</p>\n<h2>Dosering</h2>\n<p>\n  Vijf tot acht minuten, op de meeste dagen. Mobiliteit reageert sterker op frequentie dan op duur.\n</p>"
     },
     "no": {
       "name": "Hip Opener",
@@ -3617,7 +3839,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "5 minutter daglig slår 30 minutter en gang i uka.",
         "Pust inn i strekket – slipp litt mer på hver utpust."
-      ]
+      ],
+      "article": "<h2>Hvorfor hoften lider først</h2>\n<p>\n  Sitting holder hoften i omtrent 90 graders bøy i timevis. Hoftefleksorene forkortes, setet blir\n  passivt, og hofteekstensjonen – bevegelsen som trengs ved gange, løping og oppreisning – mister\n  bevegelsesutslag. Konsekvensene viser seg sjelden i selve hoften, men en etasje over eller under: som\n  ryggplager eller knesmerter.\n</p>\n<p>\n  Også den dype knebøyen stopper oftere på grunn av hoften enn på grunn av kne eller ankel.\n</p>\n<h2>En kort rutine</h2>\n<ul>\n  <li><strong>Hoftefleksor i halvknestående.</strong> Ett kne på gulvet, det andre foran. Vipp bekkenet bakover og skyv hoften fremover – strekket oppstår gjennom bekkenvippingen, ikke gjennom en hul rygg. 45 sekunder per side.</li>\n  <li><strong>Due-stilling (pigeon).</strong> Fremre bein bøyd foran kroppen, bakre bein strakt. For utadrotatorene. 45 sekunder per side.</li>\n  <li><strong>Dyp hukesitting.</strong> Så dypt som mulig, hælene i gulvet, albuene presser knærne utover. 60 sekunder.</li>\n  <li><strong>90/90-veksling.</strong> Sittende med begge knær i 90 grader, veksle fra side til side. 10 vekslinger.</li>\n</ul>\n<h2>Vanlig feil</h2>\n<p>\n  Å vike ut i hul rygg ved hoftefleksor-strekket. Da føles strekket sterkt, men det skjer i korsryggen og\n  ikke i hoften. Bekkenet må vippes aktivt bakover – å spenne setet hjelper med det.\n</p>\n<h2>Dosering</h2>\n<p>\n  Fem til åtte minutter, de fleste dager. Bevegelighet reagerer sterkere på hyppighet enn på varighet.\n</p>"
     },
     "zh": {
       "name": "髋部开放",
@@ -3631,7 +3854,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "每天5分钟优于每周30分钟一次。",
         "向伸展中呼吸——在每次呼气时放松一点。"
-      ]
+      ],
+      "article": "<h2>为什么髋部总是首当其冲</h2>\n<p>\n  久坐会让髋部连续数小时保持在大约90度的屈曲状态。髂腰肌因此缩短，臀部变得迟钝，而髋\n  关节伸展——走路、跑步和起身站立时都需要的动作——的活动范围也随之缩小。这种后果很少\n  表现在髋部本身，而是出现在它的上一层或下一层：变成背部不适，或是膝盖疼痛。\n</p>\n<p>\n  就连深蹲深度不足的问题，也往往出在髋部，而不是膝盖或踝关节。\n</p>\n<h2>一套简短的训练流程</h2>\n<ul>\n  <li><strong>半跪位髂腰肌拉伸。</strong>一侧膝盖着地，另一侧膝盖在前。骨盆向后翻转，同时把髋部向前推——伸展感应来自骨盆的翻转，而不是腰部的过度前凸。每侧45秒。</li>\n  <li><strong>鸽式。</strong>前腿弯曲放在身体前方，后腿伸直。针对髋外旋肌群。每侧45秒。</li>\n  <li><strong>深蹲蹲坐。</strong>尽量蹲到最低，脚跟贴地，用肘部把膝盖向外顶开。保持60秒。</li>\n  <li><strong>90/90交替。</strong>坐姿，两个膝盖都呈90度，左右两侧交替切换。共做10次交替。</li>\n</ul>\n<h2>常见错误</h2>\n<p>\n  拉伸髂腰肌时用腰部过度前凸来代偿。这样虽然感觉拉伸很强烈，但实际发生在下背部，而不是\n  髋部。骨盆必须主动向后翻转——收紧臀部有助于做到这一点。\n</p>\n<h2>训练量</h2>\n<p>\n  大多数日子里做五到八分钟。柔韧性对训练频率的反应，比对单次时长的反应更明显。\n</p>"
     }
   },
   "mobility.stretching": {
@@ -3662,7 +3886,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αποφυγή στατικού τεντώματος ακριβώς πριν από βαρέία δύναμη ή ταχύ δουλειά (αφήνοντας 10-20 λεπ.).",
         "Ευλυγισία παίρνει εβδομάδες — υπομονή νικά ένταση."
-      ]
+      ],
+      "article": "<h2>Τι πετυχαίνει το τέντωμα — και τι όχι</h2>\n<p>\n  Το στατικό τέντωμα βελτιώνει αποδεδειγμένα το εύρος κίνησης, όταν εφαρμόζεται τακτικά επί εβδομάδες.\n  Ένα μεγάλο μέρος αυτού του κέρδους δεν προκύπτει επειδή ο μυς γίνεται πιο μακρύς, αλλά επειδή αυξάνεται\n  η ανοχή στην τάση του τεντώματος — το σώμα επιτρέπει περισσότερα.\n</p>\n<p>\n  Τι δεν πετυχαίνει αξιόπιστα το τέντωμα: να αποτρέψει τον μυϊκό πόνο, να προλάβει τραυματισμούς ή να\n  επιταχύνει την αποκατάσταση. Αυτές οι προσδοκίες δεν επιβεβαιώνονται από τα δεδομένα. Ως μέσο για\n  περισσότερη ευλυγισία, αντίθετα, είναι αποτελεσματικό.\n</p>\n<h2>Πότε να τεντώνεσαι</h2>\n<p>\n  Μετά την προπόνηση ή σε ξεχωριστή περίοδο. Πριν από προπόνηση δύναμης και άλματος, το στατικό τέντωμα\n  μειώνει βραχυπρόθεσμα την ανάπτυξη δύναμης — εκεί ανήκει η κινητική θέρμανση.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Πήγαινε αργά στη θέση μέχρι μια σαφή αλλά όχι επώδυνη τάση και κράτησέ τη εκεί 30 έως 60 δευτερόλεπτα.\n  Συνέχισε να αναπνέεις ήρεμα· με κάθε εκπνοή η τάση υποχωρεί λίγο. Μην αναπηδάς — αυτό προκαλεί\n  αντανακλαστικό προστασίας που παράγει ακριβώς το αντίθετο αποτέλεσμα.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πολύ σύντομο.</strong> Δέκα δευτερόλεπτα δεν αρκούν για προσαρμογή. Κάτω από 30 δευτερόλεπτα συμβαίνει ελάχιστο.</li>\n  <li><strong>Μέχρι τον πόνο.</strong> Τάση ναι, πόνος όχι. Ο πόνος οδηγεί σε αντιτάση.</li>\n  <li><strong>Ακανόνιστο.</strong> Η ευλυγισία ανταποκρίνεται στη συχνότητα. Πέντε φορές δέκα λεπτά την εβδομάδα νικούν μία φορά πενήντα.</li>\n</ul>"
     },
     "en": {
       "name": "Stretching",
@@ -3676,7 +3901,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Avoid static stretching right before heavy strength or speed work (leave 10-20 min).",
         "Flexibility takes weeks — patience beats intensity."
-      ]
+      ],
+      "article": "<h2>What stretching does — and doesn't do</h2>\n<p>\n  Static stretching demonstrably improves range of motion when done regularly over weeks. A large part of\n  that gain doesn't come from the muscle getting longer, but from an increased tolerance to the stretch\n  sensation — the body allows more.\n</p>\n<p>\n  What stretching doesn't reliably do: prevent muscle soreness, prevent injuries, or speed up recovery.\n  Those expectations don't hold up against the data. As a tool for more mobility, though, it works.\n</p>\n<h2>When to stretch</h2>\n<p>\n  After training, or in its own session. Before strength and jump training, static stretching briefly\n  lowers force output — that's where a moving warm-up belongs instead.\n</p>\n<h2>Execution</h2>\n<p>\n  Move into the position slowly until you feel a clear but not painful tension, and hold it there for 30\n  to 60 seconds. Keep breathing calmly; the tension eases a little with every exhale. Don't bounce — that\n  triggers a protective reflex that does the opposite of what you want.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Too short.</strong> Ten seconds isn't enough for an adaptation. Under 30 seconds, little happens.</li>\n  <li><strong>Pushing into pain.</strong> Tension yes, pain no. Pain triggers counter-tension.</li>\n  <li><strong>Irregular.</strong> Mobility responds to frequency. Five times ten minutes a week beats one session of fifty.</li>\n</ul>"
     },
     "es": {
       "name": "Estiramientos",
@@ -3690,7 +3916,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Evita estiramientos estáticos justo antes de trabajo de fuerza pesada o velocidad (espera 10-20 min).",
         "La flexibilidad lleva semanas — la paciencia vence la intensidad."
-      ]
+      ],
+      "article": "<h2>Lo que el estiramiento logra — y lo que no</h2>\n<p>\n  El estiramiento estático mejora demostrablemente el rango de movimiento cuando se practica con\n  regularidad durante semanas. Gran parte de esa ganancia no se debe a que el músculo se alargue, sino a\n  que aumenta la tolerancia a la tensión del estiramiento — el cuerpo permite más recorrido.\n</p>\n<p>\n  Lo que el estiramiento no logra de forma fiable: prevenir el dolor muscular, prevenir lesiones o\n  acelerar la regeneración. Estas expectativas no se sostienen frente a los datos. Como medio para\n  ganar movilidad, en cambio, es eficaz.\n</p>\n<h2>Cuándo estirar</h2>\n<p>\n  Después del entrenamiento o en una sesión propia. Antes del entrenamiento de fuerza y salto, el\n  estiramiento estático reduce a corto plazo el desarrollo de fuerza — ahí corresponde el calentamiento\n  en movimiento.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Adopta la posición lentamente hasta una tensión clara pero no dolorosa y mantenla ahí de 30 a 60\n  segundos. Sigue respirando con calma; con cada exhalación la tensión cede un poco. No rebotes — eso\n  desencadena un reflejo de protección que provoca exactamente lo contrario.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Demasiado corto.</strong> Diez segundos no bastan para una adaptación. Por debajo de 30 segundos ocurre poco.</li>\n  <li><strong>Hacia el dolor.</strong> Tensión sí, dolor no. El dolor genera contracción defensiva.</li>\n  <li><strong>Irregular.</strong> La movilidad responde a la frecuencia. Cinco veces diez minutos a la semana rinden más que una sola vez de cincuenta.</li>\n</ul>"
     },
     "fr": {
       "name": "Étirements",
@@ -3704,7 +3931,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Évitez les étirements statiques juste avant la force lourde ou le travail de vitesse (attendez 10-20 min).",
         "La flexibilité prend des semaines — la patience prime sur l'intensité."
-      ]
+      ],
+      "article": "<h2>Ce que l'étirement apporte — et ce qu'il n'apporte pas</h2>\n<p>\n  Les étirements statiques améliorent de façon démontrée l'amplitude de mouvement lorsqu'ils sont\n  pratiqués régulièrement pendant des semaines. Une grande partie de ce gain ne vient pas d'un\n  allongement du muscle, mais d'une tolérance accrue à la tension d'étirement — le corps en laisse passer\n  davantage.\n</p>\n<p>\n  Ce que l'étirement n'apporte pas de manière fiable : prévenir les courbatures, prévenir les blessures\n  ou accélérer la récupération. Ces attentes ne résistent pas aux données. En revanche, comme outil pour\n  gagner en mobilité, il est efficace.\n</p>\n<h2>Quand s'étirer</h2>\n<p>\n  Après l'entraînement ou lors d'une séance dédiée. Avant un entraînement de force ou de saut, les\n  étirements statiques diminuent à court terme la production de force — c'est là que l'échauffement\n  dynamique a sa place.\n</p>\n<h2>Exécution</h2>\n<p>\n  Prenez lentement la position jusqu'à une tension nette mais non douloureuse, et maintenez-la pendant\n  30 à 60 secondes. Continuez à respirer calmement ; à chaque expiration, la tension se relâche un peu.\n  Ne rebondissez pas — cela déclenche un réflexe de protection qui produit exactement l'effet inverse.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Trop court.</strong> Dix secondes ne suffisent pas pour une adaptation. En dessous de 30 secondes, il ne se passe pas grand-chose.</li>\n  <li><strong>Aller jusqu'à la douleur.</strong> Tension oui, douleur non. La douleur entraîne une contre-tension.</li>\n  <li><strong>Irrégulier.</strong> La mobilité réagit à la fréquence. Cinq fois dix minutes par semaine valent mieux qu'une seule fois cinquante.</li>\n</ul>"
     },
     "it": {
       "name": "Stretching",
@@ -3718,7 +3946,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Evita lo stretching statico subito prima di lavoro di forza pesante o velocità (lascia 10-20 min).",
         "La flessibilità richiede settimane — la pazienza batte l'intensità."
-      ]
+      ],
+      "article": "<h2>Cosa fa lo stretching — e cosa non fa</h2>\n<p>\n  Lo stretching statico migliora dimostrabilmente l'ampiezza di movimento, se praticato regolarmente per\n  settimane. Gran parte di questo guadagno non deriva dal fatto che il muscolo si allunga, ma dal fatto\n  che aumenta la tolleranza alla tensione dello stiramento — il corpo permette di più.\n</p>\n<p>\n  Ciò che lo stretching non ottiene in modo affidabile: prevenire i dolori muscolari, prevenire gli\n  infortuni o accelerare il recupero. Queste aspettative non reggono di fronte ai dati. Come mezzo per\n  aumentare la mobilità, invece, è efficace.\n</p>\n<h2>Quando fare stretching</h2>\n<p>\n  Dopo l'allenamento o in una sessione dedicata. Prima dell'allenamento di forza e di salto, lo\n  stretching statico riduce a breve termine lo sviluppo della forza — lì è il riscaldamento dinamico a\n  essere indicato.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Assumi la posizione lentamente fino a una tensione chiara ma non dolorosa e mantienila per 30-60\n  secondi. Continua a respirare con calma; a ogni espirazione la tensione diminuisce un po'. Non\n  rimbalzare — questo scatena un riflesso protettivo che produce esattamente l'effetto opposto.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Troppo breve.</strong> Dieci secondi non bastano per un adattamento. Sotto i 30 secondi succede poco.</li>\n  <li><strong>Fino al dolore.</strong> Tensione sì, dolore no. Il dolore genera contro-tensione.</li>\n  <li><strong>Irregolare.</strong> La mobilità risponde alla frequenza. Cinque volte dieci minuti a settimana battono una volta cinquanta.</li>\n</ul>"
     },
     "nl": {
       "name": "Stretching",
@@ -3732,7 +3961,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Vermijd statisch uitrekken vlak voor zware kracht- of snelheidswerk (laat 10-20 min).",
         "Flexibiliteit kost weken — geduld slaat intensiteit."
-      ]
+      ],
+      "article": "<h2>Wat stretching oplevert — en wat niet</h2>\n<p>\n  Statisch stretchen verbetert aantoonbaar het bewegingsbereik als het regelmatig, over weken,\n  wordt toegepast. Een groot deel van die winst ontstaat niet doordat de spier langer wordt, maar\n  doordat de tolerantie voor de rekspanning toeneemt — het lichaam staat meer toe.\n</p>\n<p>\n  Wat stretchen niet betrouwbaar oplevert: spierpijn voorkomen, blessures voorkomen of het herstel\n  versnellen. Die verwachtingen houden geen stand tegen de data. Als middel voor meer beweeglijkheid\n  is het daarentegen effectief.\n</p>\n<h2>Wanneer stretchen</h2>\n<p>\n  Na de training of in een aparte sessie. Voor kracht- en sprongtraining verlaagt statisch\n  stretchen op korte termijn de krachtontwikkeling — daar hoort bewegend opwarmen thuis.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  De positie langzaam innemen tot een duidelijke maar niet pijnlijke spanning, en daar 30 tot 60\n  seconden vasthouden. Rustig doorademen; bij elke uitademing neemt de spanning wat af. Niet veren\n  — dat lokt een beschermingsreflex uit die precies het tegenovergestelde bewerkstelligt.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Te kort.</strong> Tien seconden zijn niet genoeg voor een aanpassing. Onder de 30 seconden gebeurt er weinig.</li>\n  <li><strong>Tot in de pijn.</strong> Spanning ja, pijn nee. Pijn leidt tot tegenspanning.</li>\n  <li><strong>Onregelmatig.</strong> Beweeglijkheid reageert op frequentie. Vijf keer tien minuten per week slaat één keer vijftig.</li>\n</ul>"
     },
     "no": {
       "name": "Stretching",
@@ -3746,7 +3976,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Unngå statisk strekking rett før tung styrke eller hastighetsarbeid (vente 10-20 min).",
         "Fleksibilitet tar uker – tålmodighet slår intensitet."
-      ]
+      ],
+      "article": "<h2>Hva tøying gir – og hva det ikke gir</h2>\n<p>\n  Statisk tøying gir dokumentert bedre bevegelsesutslag når det gjøres regelmessig over uker. En stor del\n  av denne gevinsten skyldes ikke at muskelen blir lengre, men at toleransen for tøyningsspenningen øker\n  – kroppen tillater mer.\n</p>\n<p>\n  Det tøying ikke pålitelig gir: forebygging av muskelstølhet, forebygging av skader eller raskere\n  restitusjon. Disse forventningene holder ikke mål mot dataene. Som middel for økt bevegelighet er det\n  derimot effektivt.\n</p>\n<h2>Når man bør tøye</h2>\n<p>\n  Etter trening eller som en egen økt. Før styrke- og hoppøkter senker statisk tøying kraftutviklingen på\n  kort sikt – der hører bevegelsesoppvarming hjemme.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Gå sakte inn i posisjonen til en tydelig, men ikke smertefull spenning, og hold den der i 30 til 60\n  sekunder. Fortsett å puste rolig; for hver utpust slipper spenningen litt. Ikke fjær – det utløser en\n  beskyttelsesrefleks som gir motsatt effekt.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>For kort.</strong> Ti sekunder er ikke nok for en tilpasning. Under 30 sekunder skjer det lite.</li>\n  <li><strong>Inn i smerte.</strong> Spenning ja, smerte nei. Smerte fører til motspenning.</li>\n  <li><strong>Uregelmessig.</strong> Bevegelighet reagerer på hyppighet. Fem ganger ti minutter i uken slår én gang femti.</li>\n</ul>"
     },
     "zh": {
       "name": "静态拉伸",
@@ -3760,7 +3991,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "避免在大负荷力量或速度工作前进行静态拉伸（保持10-20分钟）。",
         "灵活性需要几周——耐心优于强度。"
-      ]
+      ],
+      "article": "<h2>拉伸能做到什么——又做不到什么</h2>\n<p>\n  如果坚持数周规律进行，静态拉伸确实能明确改善活动范围。这种改善很大一部分并不是因为\n  肌肉真的变长了，而是因为身体对拉伸张力的耐受度提高了——身体愿意让出更多空间。\n</p>\n<p>\n  拉伸无法可靠做到的：预防肌肉酸痛、预防受伤，或加速恢复。这些期待并没有得到数据的支持。\n  但作为提升柔韧性的手段，它确实有效。\n</p>\n<h2>什么时候拉伸</h2>\n<p>\n  在训练之后，或者单独安排一次拉伸课。在力量和跳跃训练之前，静态拉伸会短暂降低发力能\n  力——那个时段应该安排动态热身。\n</p>\n<h2>动作要领</h2>\n<p>\n  缓慢进入拉伸姿势，直到感受到明显但不疼痛的张力，然后保持30到60秒。持续平稳呼吸；每次\n  呼气时张力会略微放松。不要借助反弹——这会触发保护性反射，效果恰恰相反。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>时间太短。</strong>十秒钟不足以产生适应。低于30秒基本没什么效果。</li>\n  <li><strong>拉到疼痛的程度。</strong>可以有张力感，但不能疼痛。疼痛会引发反射性的对抗张力。</li>\n  <li><strong>不规律。</strong>柔韧性对频率更敏感。一周五次、每次十分钟，效果胜过一周一次、一次五十分钟。</li>\n</ul>"
     }
   },
   "mobility.yoga": {
@@ -3791,7 +4023,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αρχάριοι ωφελούνται περισσότερο από μια οδηγούμενη τάξη (στούντιο ή βίντεο) από ότι από αυτοσχέδιασμα.",
         "20-30 λεπτά, 3× ανά εβδομάδα, ήδη παράγει αισθητή κέρδη κινητοποίησης."
-      ]
+      ],
+      "article": "<h2>Τι προσφέρει η γιόγκα στο πρόγραμμα προπόνησης</h2>\n<p>\n  Η γιόγκα συνδυάζει δουλειά στάσης, αναπνοή και συγκέντρωση. Για το πρόγραμμα προπόνησης αυτό σημαίνει\n  τρεις συγκεκριμένες συνεισφορές: περισσότερο εύρος κίνησης στο ισχίο, στον ώμο και στη σπονδυλική\n  στήλη, ισομετρική δύναμη σε θέσεις που σπάνια εμφανίζονται στην προπόνηση δύναμης, και ένα ρυθμιστικό\n  αποτέλεσμα μέσω της αναπνοής που βοηθά μετρήσιμα στο στρες και στην ποιότητα του ύπνου.\n</p>\n<p>\n  Τι δεν αντικαθιστά η γιόγκα: προοδευτική επιβάρυνση δύναμης και έντονη προπόνηση αντοχής. Ως\n  συμπλήρωμα είναι πολύτιμη, ως αποκλειστικό πρόγραμμα ελλιπής.\n</p>\n<h2>Πού ανήκει μέσα στην εβδομάδα</h2>\n<p>\n  Τις μέρες χωρίς προπόνηση ή μετά την προπόνηση δύναμης. Πριν από βαριές προπονήσεις δύναμης ή άλματος\n  μια μεγάλη πρακτική με έμφαση στο τέντωμα είναι δυσμενής — μειώνει βραχυπρόθεσμα την ανάπτυξη δύναμης,\n  ακριβώς όπως το στατικό τέντωμα.\n</p>\n<h2>Τι πρέπει να προσέχεις</h2>\n<ul>\n  <li><strong>Καρποί.</strong> Πολλές θέσεις στηρίζονται στην ανοιχτή παλάμη σε έντονη έκταση. Όποιος έχει ενοχλήσεις εκεί, δουλεύει στις γροθιές ή με τουβλάκια.</li>\n  <li><strong>Μην εξαναγκάζεσαι σε τελικές θέσεις.</strong> Η ευλυγισία προκύπτει μέσα σε εβδομάδες. Μια θέση που επιτυγχάνεται μόνο με αντισταθμιστική κίνηση εκπαιδεύει την αντισταθμιστική κίνηση.</li>\n  <li><strong>Επιλογή στυλ.</strong> Δυναμικές μορφές όπως το Ashtanga ή το Vinyasa είναι απαιτητικές, το Yin και το Hatha ήρεμα και με έμφαση στο τέντωμα. Και τα δύο έχουν τη θέση τους, αλλά προσφέρουν διαφορετικά πράγματα.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Μία έως τρεις προπονήσεις την εβδομάδα των 20 έως 60 λεπτών. Ακόμη και δέκα λεπτά καθημερινά έχουν\n  αποτέλεσμα — στην ευλυγισία η κανονικότητα μετράει περισσότερο από τη διάρκεια.\n</p>"
     },
     "en": {
       "name": "Yoga",
@@ -3805,7 +4038,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners benefit more from a guided class (studio or video) than from improvising.",
         "20-30 minutes, 3× a week, already produces noticeable mobility gains."
-      ]
+      ],
+      "article": "<h2>What yoga contributes to a training plan</h2>\n<p>\n  Yoga combines postural work, breathing and focus. For a training plan that means three concrete\n  contributions: more range of motion in the hips, shoulders and spine, isometric strength in positions\n  that rarely show up in strength training, and a regulatory effect through breathing that measurably\n  helps with stress and sleep quality.\n</p>\n<p>\n  What yoga doesn't replace: progressive strength loading and intense endurance training. As a\n  complement it's valuable; as a standalone program it's incomplete.\n</p>\n<h2>Where it fits in the week</h2>\n<p>\n  On rest days or after a strength session. A long, stretch-heavy practice before heavy strength or\n  jumping sessions is unfavorable — it briefly lowers force output, just like static stretching.\n</p>\n<h2>What to watch for</h2>\n<ul>\n  <li><strong>Wrists.</strong> Many poses load the flat hand in strong extension. If that's uncomfortable, work on the fists or with blocks.</li>\n  <li><strong>Don't force end positions.</strong> Mobility builds over weeks. A position reached only through a compensation trains the compensation.</li>\n  <li><strong>Choose the style.</strong> Strengthening forms like Ashtanga or Vinyasa are demanding, Yin and Hatha are calm and stretch-focused. Both have their place, but they deliver different things.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  One to three sessions a week of 20 to 60 minutes. Even ten minutes daily works — for mobility,\n  consistency matters more than length.\n</p>"
     },
     "es": {
       "name": "Yoga",
@@ -3819,7 +4053,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Los principiantes se benefician más de una clase guiada (estudio o video) que de improvisar.",
         "20-30 minutos, 3× a la semana, ya producen ganancias notables de movilidad."
-      ]
+      ],
+      "article": "<h2>Lo que aporta el yoga al plan de entrenamiento</h2>\n<p>\n  El yoga combina el trabajo postural, la respiración y la concentración. Para el plan de entrenamiento\n  eso significa tres aportes concretos: más rango de movimiento en cadera, hombro y columna, fuerza\n  isométrica en posiciones que rara vez aparecen en el entrenamiento de fuerza, y un efecto regulador a\n  través de la respiración que ayuda de forma medible frente al estrés y la calidad del sueño.\n</p>\n<p>\n  Lo que el yoga no sustituye: la carga de fuerza progresiva y el entrenamiento de resistencia intenso.\n  Como complemento es valioso, como programa único es incompleto.\n</p>\n<h2>Dónde encaja en la semana</h2>\n<p>\n  En días sin entrenamiento o después de la sesión de fuerza. Antes de sesiones de fuerza o salto\n  exigentes, una práctica larga y cargada de estiramiento es desfavorable — reduce a corto plazo el\n  desarrollo de fuerza, igual que el estiramiento estático.\n</p>\n<h2>Qué tener en cuenta</h2>\n<ul>\n  <li><strong>Muñecas.</strong> Muchas posiciones se apoyan sobre la palma abierta en fuerte extensión. Quien tenga molestias ahí puede trabajar sobre los puños o con bloques.</li>\n  <li><strong>No forzar las posiciones finales.</strong> La movilidad se desarrolla a lo largo de semanas. Una posición que solo se alcanza con un movimiento compensatorio entrena ese movimiento compensatorio.</li>\n  <li><strong>Elegir el estilo.</strong> Las formas más fortalecedoras como Ashtanga o Vinyasa son exigentes; Yin y Hatha son tranquilas y centradas en el estiramiento. Ambas tienen su lugar, pero aportan cosas distintas.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Una a tres sesiones por semana de 20 a 60 minutos. Incluso diez minutos diarios funcionan — en\n  movilidad, la regularidad cuenta más que la duración.\n</p>"
     },
     "fr": {
       "name": "Yoga",
@@ -3833,7 +4068,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Les débutants bénéficient plus d'un cours guidé (studio ou vidéo) que de l'improvisation.",
         "20-30 minutes, 3× par semaine, produit déjà des gains de mobilité notables."
-      ]
+      ],
+      "article": "<h2>Ce que le yoga apporte dans un plan d'entraînement</h2>\n<p>\n  Le yoga combine travail postural, respiration et concentration. Pour le plan d'entraînement, cela se\n  traduit par trois apports concrets : plus d'amplitude de mouvement à la hanche, à l'épaule et à la\n  colonne vertébrale, de la force isométrique dans des positions rares en musculation, et un effet\n  régulateur via la respiration qui aide de façon mesurable le stress et la qualité du sommeil.\n</p>\n<p>\n  Ce que le yoga ne remplace pas : la charge progressive en force et l'entraînement d'endurance intense.\n  En complément, il est précieux ; comme programme unique, il est incomplet.\n</p>\n<h2>Où le placer dans la semaine</h2>\n<p>\n  Les jours sans entraînement ou après la séance de force. Avant une séance lourde de force ou de saut,\n  une pratique longue et centrée sur l'étirement est défavorable — elle diminue à court terme la\n  production de force, tout comme les étirements statiques.\n</p>\n<h2>Ce à quoi il faut faire attention</h2>\n<ul>\n  <li><strong>Poignets.</strong> De nombreuses postures s'appuient sur la paume à plat en forte extension. En cas de gêne, travaillez sur les poings ou avec des blocs.</li>\n  <li><strong>Ne pas forcer les positions extrêmes.</strong> La mobilité se développe sur des semaines. Une position atteinte uniquement par une compensation entraîne cette compensation.</li>\n  <li><strong>Choisir un style.</strong> Les formes toniques comme l'Ashtanga ou le Vinyasa sont exigeantes, le Yin et le Hatha sont calmes et centrés sur l'étirement. Les deux ont leur place, mais ils n'apportent pas la même chose.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Une à trois séances par semaine de 20 à 60 minutes. Dix minutes par jour fonctionnent aussi — pour la\n  mobilité, la régularité compte plus que la durée.\n</p>"
     },
     "it": {
       "name": "Yoga",
@@ -3847,7 +4083,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "I principianti traggono più vantaggio da una classe guidata (studio o video) che dall'improvvisazione.",
         "20-30 minuti, 3× a settimana, già produce guadagni di mobilità notevoli."
-      ]
+      ],
+      "article": "<h2>Cosa apporta lo yoga a un piano di allenamento</h2>\n<p>\n  Lo yoga unisce lavoro posturale, respirazione e concentrazione. Per il piano di allenamento questo\n  significa tre contributi concreti: maggiore ampiezza di movimento in anca, spalla e colonna vertebrale,\n  forza isometrica in posizioni che nell'allenamento della forza compaiono raramente, e un effetto di\n  regolazione tramite il respiro che aiuta in modo misurabile con lo stress e la qualità del sonno.\n</p>\n<p>\n  Ciò che lo yoga non sostituisce: il carico di forza progressivo e l'allenamento di resistenza intenso.\n  Come complemento è prezioso, come programma esclusivo è incompleto.\n</p>\n<h2>Dove collocarlo nella settimana</h2>\n<p>\n  Nei giorni senza allenamento o dopo la sessione di forza. Prima di sessioni pesanti di forza o di\n  salto, una pratica lunga e incentrata sullo stretching è sfavorevole — riduce a breve termine lo\n  sviluppo della forza, proprio come lo stretching statico.\n</p>\n<h2>A cosa fare attenzione</h2>\n<ul>\n  <li><strong>Polsi.</strong> Molte posizioni si appoggiano sul palmo della mano in forte estensione. Chi ha disturbi in quella zona lavora sui pugni o con dei blocchi.</li>\n  <li><strong>Non forzare le posizioni finali.</strong> La mobilità si sviluppa nell'arco di settimane. Una posizione raggiunta solo con un movimento compensatorio allena proprio il movimento compensatorio.</li>\n  <li><strong>Scegliere lo stile.</strong> Le forme più energiche come Ashtanga o Vinyasa sono impegnative, Yin e Hatha sono tranquille e incentrate sullo stretching. Entrambe hanno il loro spazio, ma ottengono risultati diversi.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Una-tre sessioni a settimana da 20 a 60 minuti. Anche dieci minuti al giorno hanno effetto — per la\n  mobilità la regolarità conta più della durata.\n</p>"
     },
     "nl": {
       "name": "Yoga",
@@ -3861,7 +4098,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners profiteren meer van een geleide les (studio of video) dan improvisatie.",
         "20-30 minuten, 3× per week, produceert al merkbare mobiliteitsverhogingen."
-      ]
+      ],
+      "article": "<h2>Wat yoga in het trainingsplan oplevert</h2>\n<p>\n  Yoga combineert houdingswerk, ademhaling en concentratie. Voor het trainingsplan betekent dat\n  drie concrete bijdragen: meer bewegingsbereik in heup, schouder en wervelkolom, isometrische\n  kracht in posities die in krachttraining zelden voorkomen, en een regulerend effect via de adem\n  dat meetbaar helpt bij stress en slaapkwaliteit.\n</p>\n<p>\n  Wat yoga niet vervangt: progressieve krachtbelasting en intensieve duurtraining. Als aanvulling\n  is het waardevol, als enig programma onvolledig.\n</p>\n<h2>Waar het in de week thuishoort</h2>\n<p>\n  Op trainingsvrije dagen of na de krachtsessie. Voor zware kracht- of sprongsessies is een lange,\n  rekgerichte praktijk ongunstig — ze verlaagt op korte termijn de krachtontwikkeling, net als\n  statisch stretchen.\n</p>\n<h2>Waar op te letten</h2>\n<ul>\n  <li><strong>Polsen.</strong> Veel posities steunen op de platte hand in sterke strekking. Wie daar klachten heeft, werkt op de vuisten of met blokken.</li>\n  <li><strong>Niet forceren in eindposities.</strong> Beweeglijkheid ontstaat over weken. Een positie die alleen met een uitwijkbeweging wordt bereikt, traint de uitwijkbeweging.</li>\n  <li><strong>Stijl kiezen.</strong> Krachtige vormen zoals Ashtanga of Vinyasa zijn veeleisend, Yin en Hatha rustig en rekgericht. Beide hebben hun plaats, maar leveren iets anders op.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Eén tot drie eenheden per week van 20 tot 60 minuten. Ook tien minuten per dag werken —\n  bij beweeglijkheid telt regelmaat meer dan duur.\n</p>"
     },
     "no": {
       "name": "Yoga",
@@ -3875,7 +4113,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nybegynnere gagnes mer av guidet klasse (studio eller video) enn improvisering.",
         "20-30 minutter, 3× i uka, produserer allerede merkbar mobilitetsgain."
-      ]
+      ],
+      "article": "<h2>Hva yoga bidrar med i treningsplanen</h2>\n<p>\n  Yoga forener holdningsarbeid, pust og konsentrasjon. For treningsplanen betyr det tre konkrete bidrag:\n  økt bevegelsesutslag i hofte, skulder og ryggrad, isometrisk styrke i posisjoner som sjelden forekommer\n  i styrketrening, og en reguleringseffekt via pusten som målbart hjelper mot stress og for søvnkvaliteten.\n</p>\n<p>\n  Det yoga ikke erstatter: progressiv styrkebelastning og intensiv utholdenhetstrening. Som supplement er\n  det verdifullt, som eneste program ufullstendig.\n</p>\n<h2>Hvor det hører hjemme i uken</h2>\n<p>\n  På treningsfrie dager eller etter styrkeøkten. Før tunge styrke- eller hoppøkter er en lang,\n  tøyningstung praksis ugunstig – den senker kraftutviklingen på kort sikt, akkurat som statisk tøying.\n</p>\n<h2>Hva du bør være oppmerksom på</h2>\n<ul>\n  <li><strong>Håndledd.</strong> Mange posisjoner støtter på flat hånd i sterk strekk. Den som har plager der, jobber på knyttnevene eller med klosser.</li>\n  <li><strong>Ikke tving deg inn i ytterposisjoner.</strong> Bevegelighet oppstår over uker. En posisjon man bare når med en unnamanøver, trener unnamanøveren.</li>\n  <li><strong>Velg stil.</strong> Krevende former som ashtanga eller vinyasa er utfordrende, yin og hatha rolige og tøyningsfokuserte. Begge har sin plass, men de gir ulikt utbytte.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Én til tre økter i uken på 20 til 60 minutter. Også ti minutter daglig virker – ved bevegelighet teller\n  regelmessighet mer enn lengde.\n</p>"
     },
     "zh": {
       "name": "瑜伽",
@@ -3889,7 +4128,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "初学者从导师课程（工作室或视频）获益更多，而不是即兴。",
         "每周20-30分钟3次，已经产生明显的活动增益。"
-      ]
+      ],
+      "article": "<h2>瑜伽在训练计划中的作用</h2>\n<p>\n  瑜伽把体式练习、呼吸和专注力结合在一起。对训练计划来说，这具体带来三方面贡献：增加\n  髋部、肩部和脊柱的活动范围；在力量训练中很少出现的姿势下锻炼等长力量；以及通过呼吸\n  产生的调节效应，对压力水平和睡眠质量有可测量的帮助。\n</p>\n<p>\n  瑜伽无法替代：渐进式力量训练和高强度耐力训练。作为补充，它很有价值；但作为唯一的\n  训练方式，则并不完整。\n</p>\n<h2>应该安排在一周中的哪个时段</h2>\n<p>\n  安排在不训练的日子，或力量训练之后。在高强度力量或跳跃训练之前，进行一次长时间、\n  以拉伸为主的练习并不合适——它会像静态拉伸一样，短暂降低发力能力。\n</p>\n<h2>需要注意的事项</h2>\n<ul>\n  <li><strong>手腕。</strong>许多体式需要用手掌撑地，并处于强烈的伸展状态。如果手腕有不适，可以改用拳头撑地或借助瑜伽砖。</li>\n  <li><strong>不要强行做到极限体式。</strong>柔韧性的提升需要数周时间。如果只能靠代偿动作才能达到某个体式，训练到的其实是那个代偿动作本身。</li>\n  <li><strong>选择适合的流派。</strong>阿斯汤加、流瑜伽等强化型流派强度较高，阴瑜伽和哈他瑜伽则更平静、更侧重拉伸。两者都有其价值，但作用各不相同。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  每周一到三次，每次20到60分钟。每天十分钟同样有效——对柔韧性来说，规律性比单次时长\n  更重要。\n</p>"
     }
   },
   "plank.standard": {
@@ -3920,7 +4160,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Παραμονή αναπνοής ομαλή — μη κράτησης της αναπνοής.",
         "Αρχάριοι: 3 × 20-30 δ., προχωρημένοι 3 × 60-90 δ.· σταματήστε τη στιγμή που η μορφή σπάει."
-      ]
+      ],
+      "article": "<h2>Σε τι χρησιμεύει το plank</h2>\n<p>\n  Ο κορμός δεν είναι μυς που τον κάνεις να μεγαλώσει, αλλά ένα σύστημα σταθεροποίησης. Το κύριο καθήκον\n  του δεν είναι να λυγίζει τον κορμό, αλλά να τον προστατεύει από εξωτερικές δυνάμεις. Ακριβώς αυτό\n  εκπαιδεύει το plank: είναι μια άσκηση αντι-έκτασης — το σώμα αντιστέκεται στην έλξη της βαρύτητας που\n  θέλει να τραβήξει το ισχίο προς τα κάτω.\n</p>\n<p>\n  Έτσι καλύπτει το καθήκον που πραγματικά μετράει στην καθημερινότητα και στην προπόνηση, και το κάνει\n  με ελάχιστη επιβάρυνση της οσφυϊκής μοίρας. Ανήκει στις «Big Three» που ο βιομηχανικός Stuart McGill\n  απέσταξε από δεκαετίες μετρήσεων.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Αντιβράχιοι κάτω από τους ώμους, αγκώνες περίπου στο πλάτος των ώμων. Το σώμα σχηματίζει μια γραμμή\n  από το κεφάλι έως τη φτέρνα. Καθοριστικά είναι δύο πράγματα που δύσκολα φαίνονται απ' έξω: οι γλουτοί\n  είναι σφιχτά σφιγμένοι, και τα πλευρά τραβιούνται ελαφρώς προς τα κάτω, ώστε να μη δημιουργείται\n  οσφυϊκή κύρτωση. Όποιος κάνει και τα δύο, νιώθει το plank μετά από είκοσι δευτερόλεπτα σαφώς πιο έντονα\n  από κάποιον που απλώς «το αντέχει».\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Το ισχίο κρεμάει.</strong> Το κλασικό λάθος και το μοναδικό που πραγματικά βλάπτει — μεταφέρει το φορτίο στην κάτω μέση.</li>\n  <li><strong>Οι γλουτοί πολύ ψηλά.</strong> Φαίνεται καθαρό, αλλά αφαιρεί τη δουλειά από τον κορμό.</li>\n  <li><strong>Κράτημα επί λεπτά.</strong> Πάνω από δύο λεπτά εκπαιδεύεις αντοχή σε μία θέση, όχι σταθερότητα. Καλύτερα περισσότερα σύντομα, πραγματικά τεντωμένα σετ.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία έως πέντε σετ των 20 έως 45 δευτερολέπτων με μέγιστη τάση νικούν σαφώς ένα μόνο σετ των τριών\n  λεπτών. Όποιος μπορεί να κρατήσει περισσότερο, θα πρέπει να δυσκολέψει την άσκηση αντί να την\n  παρατείνει: ένα χέρι ή ένα πόδι ανυψωμένο, αντιβράχιοι σε ασταθή επιφάνεια, ή μετάβαση στο πλάγιο\n  plank για τους πλάγιους κοιλιακούς.\n</p>"
     },
     "en": {
       "name": "Plank",
@@ -3934,7 +4175,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Keep breathing evenly — do not hold your breath.",
         "Beginners: 3 × 20-30 s, advanced 3 × 60-90 s; stop the moment form breaks."
-      ]
+      ],
+      "article": "<h2>What the plank is good for</h2>\n<p>\n  The trunk isn't a muscle you make grow, it's a stabilization system. Its main job isn't to flex the\n  torso, it's to brace it against outside forces. That's exactly what the plank trains: it's an\n  anti-extension exercise — the body resists gravity's pull on the hips.\n</p>\n<p>\n  That covers the job that actually matters in daily life and in training, and it does so with minimal\n  load on the lumbar spine. It's part of the \"big three\" biomechanist Stuart McGill distilled from\n  decades of measurements.\n</p>\n<h2>Execution</h2>\n<p>\n  Forearms under the shoulders, elbows roughly shoulder-width apart. The body forms a line from head to\n  heels. Two things matter that are hard to see from outside: the glutes are firmly braced, and the ribs\n  pull down slightly so no lower-back arch forms. Do both and you'll feel the plank noticeably harder\n  after twenty seconds than someone who's just \"surviving\" it.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Hips sagging.</strong> The classic mistake and the only one that really causes harm — it shifts the load onto the lower back.</li>\n  <li><strong>Glutes too high.</strong> Looks clean but takes the work away from the trunk.</li>\n  <li><strong>Holding for minutes.</strong> Past two minutes you're training endurance in a position, not stability. Several shorter, genuinely braced sets are better.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three to five sets of 20 to 45 seconds at maximum tension clearly beat a single three-minute set. If\n  you can hold longer, make the exercise harder instead of longer: raise one arm or one leg, put the\n  forearms on an unstable surface, or move to the side plank for the obliques.\n</p>"
     },
     "es": {
       "name": "Plancha",
@@ -3948,7 +4190,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Respira de forma pareja — no retenga la respiración.",
         "Principiantes: 3 × 20-30 s, avanzados 3 × 60-90 s; detente en cuanto la forma se quiebre."
-      ]
+      ],
+      "article": "<h2>Para qué sirve la plancha</h2>\n<p>\n  El tronco no es un músculo que se haga crecer, sino un sistema de estabilización. Su función principal\n  no es flexionar el torso, sino asegurarlo contra fuerzas externas. Eso es exactamente lo que entrena\n  la plancha: es un ejercicio anti-extensión — el cuerpo resiste la tracción de la gravedad, que quiere\n  tirar la cadera hacia abajo.\n</p>\n<p>\n  Con eso cubre la función que realmente importa en el día a día y en el entrenamiento, y lo hace con una\n  carga mínima sobre la columna lumbar. Forma parte de los \"Big Three\" que el biomecánico Stuart McGill\n  destiló de décadas de mediciones.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Antebrazos bajo los hombros, codos aproximadamente a la anchura de los hombros. El cuerpo forma una\n  línea de la cabeza a los talones. Dos cosas son decisivas, aunque apenas se vean desde fuera: el\n  glúteo está firmemente contraído, y las costillas se llevan ligeramente hacia abajo, de modo que no\n  aparezca hiperlordosis. Quien hace ambas cosas siente la plancha notablemente más intensa a los veinte\n  segundos que alguien que solo \"la aguanta\".\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>La cadera se hunde.</strong> El error clásico y el único que realmente perjudica — traslada la carga a la zona lumbar.</li>\n  <li><strong>Glúteo demasiado alto.</strong> Se ve limpio, pero le quita el trabajo al tronco.</li>\n  <li><strong>Mantener durante minutos.</strong> Por encima de dos minutos se entrena la resistencia en una posición, no la estabilidad. Es mejor hacer varias series cortas y realmente tensas.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres a cinco series de 20 a 45 segundos con tensión máxima superan claramente a una sola serie de tres\n  minutos. Quien pueda aguantar más tiempo debería hacer el ejercicio más difícil en lugar de más largo:\n  un brazo o una pierna elevados, antebrazos sobre una superficie inestable, o la transición al side\n  plank para los oblicuos.\n</p>"
     },
     "fr": {
       "name": "Planche",
@@ -3962,7 +4205,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Respirez régulièrement — ne retenez jamais votre souffle.",
         "Débutants : 3 × 20-30 s, avancés 3 × 60-90 s ; arrêtez dès que la forme s'effondre."
-      ]
+      ],
+      "article": "<h2>À quoi sert le plank</h2>\n<p>\n  Le tronc n'est pas un muscle qu'on fait grossir, mais un système de stabilisation. Sa fonction\n  principale n'est pas de fléchir le torse, mais de le sécuriser contre des forces extérieures. C'est\n  exactement ce que le plank entraîne : c'est un exercice anti-extension — le corps résiste à la traction\n  de la gravité qui veut faire tomber les hanches vers le bas.\n</p>\n<p>\n  Il couvre ainsi la fonction qui compte réellement au quotidien et à l'entraînement, tout en sollicitant\n  au minimum la colonne lombaire. Il fait partie des « Big Three » que le biomécanicien Stuart McGill a\n  distillés à partir de décennies de mesures.\n</p>\n<h2>Exécution</h2>\n<p>\n  Avant-bras sous les épaules, coudes à peu près à la largeur des épaules. Le corps forme une ligne de la\n  tête aux talons. Deux choses comptent, à peine visibles de l'extérieur : les fessiers sont fermement\n  contractés, et les côtes s'abaissent légèrement pour éviter toute cambrure lombaire. Qui fait les deux\n  ressent le plank nettement plus fort après vingt secondes que quelqu'un qui se contente de « tenir ».\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Les hanches s'affaissent.</strong> L'erreur classique et la seule qui soit vraiment nocive — elle reporte la charge sur le bas du dos.</li>\n  <li><strong>Bassin trop haut.</strong> Paraît propre, mais décharge le tronc de son travail.</li>\n  <li><strong>Tenir plusieurs minutes.</strong> Au-delà de deux minutes, on entraîne l'endurance dans une position, pas la stabilité. Mieux vaut plusieurs séries courtes et réellement gainées.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois à cinq séries de 20 à 45 secondes en tension maximale surpassent nettement une seule série de\n  trois minutes. Qui peut tenir plus longtemps devrait rendre l'exercice plus difficile plutôt que plus\n  long : un bras ou une jambe levés, avant-bras sur une surface instable, ou passer à la planche latérale\n  pour les obliques.\n</p>"
     },
     "it": {
       "name": "Plank",
@@ -3976,7 +4220,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Mantieni la respirazione uniforme — non trattenere il respiro.",
         "Principianti: 3 × 20-30 s, avanzati 3 × 60-90 s; ferma quando la forma si rompe."
-      ]
+      ],
+      "article": "<h2>A cosa serve il plank</h2>\n<p>\n  Il tronco non è un muscolo da far crescere, ma un sistema di stabilizzazione. Il suo compito\n  principale non è flettere il busto, ma proteggerlo contro le forze esterne. È esattamente questo che\n  allena il plank: è un esercizio anti-estensione — il corpo resiste alla trazione della gravità, che\n  vuole tirare il bacino verso il basso.\n</p>\n<p>\n  Copre quindi il compito che conta davvero nella vita quotidiana e nell'allenamento, e lo fa con un\n  carico minimo sulla colonna lombare. Fa parte dei \"Big Three\" che il biomeccanico Stuart McGill ha\n  distillato da decenni di misurazioni.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Avambracci sotto le spalle, gomiti a larghezza spalle circa. Il corpo forma una linea da testa a\n  talloni. Decisive sono due cose che dall'esterno si vedono a malapena: i glutei sono saldamente\n  contratti, e le costole si tirano leggermente verso il basso, in modo che non si formi un'iperlordosi.\n  Chi fa entrambe le cose sente il plank molto più intensamente dopo venti secondi rispetto a chi si\n  limita a \"resistere\".\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>I fianchi cedono.</strong> L'errore classico, e l'unico che fa davvero danno — sposta il carico sulla parte bassa della schiena.</li>\n  <li><strong>Bacino troppo alto.</strong> Sembra pulito, ma toglie lavoro al tronco.</li>\n  <li><strong>Tenere per minuti interi.</strong> Oltre i due minuti si allena la resistenza in una posizione, non la stabilità. Meglio più serie brevi e davvero tese.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre-cinque serie da 20 a 45 secondi con tensione massima battono nettamente una singola serie di tre\n  minuti. Chi riesce a tenere più a lungo dovrebbe rendere l'esercizio più difficile invece che più\n  lungo: un braccio o una gamba sollevati, avambracci su una superficie instabile, oppure il passaggio\n  al plank laterale per gli obliqui.\n</p>"
     },
     "nl": {
       "name": "Plank",
@@ -3990,7 +4235,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Houd adem gelijkmatig — hou niet in.",
         "Beginners: 3 × 20-30 s, gevorderden 3 × 60-90 s; stop zodra vorm bezwijkt."
-      ]
+      ],
+      "article": "<h2>Waar de plank goed voor is</h2>\n<p>\n  De romp is geen spier die je laat groeien, maar een stabilisatiesysteem. Zijn hoofdtaak is niet\n  om de romp te buigen, maar om hem te beveiligen tegen krachten van buitenaf. Precies dat traint\n  de plank: het is een anti-extensieoefening — het lichaam weerstaat de trek van de zwaartekracht\n  die de heup naar beneden wil trekken.\n</p>\n<p>\n  Daarmee dekt hij de taak die in het dagelijks leven en tijdens de training daadwerkelijk telt, en\n  doet dat bij minimale belasting van de lendenwervelkolom. Hij is onderdeel van de \"Big Three\" die\n  biomechanicus Stuart McGill uit tientallen jaren aan metingen heeft gedestilleerd.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Onderarmen onder de schouders, ellebogen ongeveer schouderbreed. Het lichaam vormt een lijn van\n  hoofd tot hiel. Doorslaggevend zijn twee dingen die van buitenaf nauwelijks te zien zijn: de\n  billen zijn stevig aangespannen, en de ribben trekken licht naar beneden, zodat er geen holle rug\n  ontstaat. Wie beide doet, voelt de plank na twintig seconden duidelijk sterker dan iemand die hem\n  alleen \"uitzit\".\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Heup zakt door.</strong> De klassieke fout en de enige die echt schaadt — hij verplaatst de belasting naar de onderrug.</li>\n  <li><strong>Billen te hoog.</strong> Ziet er zuiver uit, maar ontneemt de romp het werk.</li>\n  <li><strong>Minutenlang volhouden.</strong> Boven twee minuten train je uithoudingsvermogen in een positie, geen stabiliteit. Beter meerdere korte, echt aangespannen sets.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie tot vijf sets van 20 tot 45 seconden met maximale spanning verslaan één enkele set van drie\n  minuten duidelijk. Wie langer kan volhouden, moet de oefening zwaarder maken in plaats van\n  langer: één arm of één been opgetild, onderarmen op een instabiele ondergrond, of de overstap\n  naar de zijplank voor de schuine buikspieren.\n</p>"
     },
     "no": {
       "name": "Plank",
@@ -4004,7 +4250,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Hold pusten jevnt – ikke hold pusten.",
         "Nybegynnere: 3 × 20-30 s, avansert 3 × 60-90 s; stopp øyeblikket form brytes."
-      ]
+      ],
+      "article": "<h2>Hva planken er god for</h2>\n<p>\n  Midtpartiet er ikke en muskel man får til å vokse, men et stabiliseringssystem. Hovedoppgaven er ikke å\n  bøye overkroppen, men å sikre den mot krefter utenfra. Nettopp det trener planken: den er en\n  anti-ekstensjonsøvelse – kroppen motstår tyngdekraftens drag, som vil trekke hoften nedover.\n</p>\n<p>\n  Dermed dekker den oppgaven som faktisk teller i hverdagen og under trening, og gjør det med minimal\n  belastning på korsryggen. Den er én av «de tre store» som biomekanikeren Stuart McGill har destillert\n  fram etter flere tiår med målinger.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Underarmene under skuldrene, albuene omtrent i skulderbredde. Kroppen danner en linje fra hode til hæl.\n  Avgjørende er to ting man knapt kan se utenfra: setet er hardt spent, og ribbeina trekkes lett nedover,\n  slik at det ikke oppstår hul rygg. Den som gjør begge deler, kjenner planken tydelig sterkere etter\n  tjue sekunder enn den som bare «holder ut».\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Hoften synker.</strong> Den klassiske feilen, og den eneste som virkelig gjør skade – den flytter belastningen til korsryggen.</li>\n  <li><strong>Setet for høyt.</strong> Ser rent ut, men fjerner arbeidet fra midtpartiet.</li>\n  <li><strong>Å holde i flere minutter.</strong> Over to minutter trener man utholdenhet i én posisjon, ikke stabilitet. Bedre med flere korte, virkelig spente sett.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre til fem sett på 20 til 45 sekunder med maksimal spenning slår klart ett enkelt sett over tre\n  minutter. Den som klarer å holde lenger, bør gjøre øvelsen tyngre i stedet for lengre: løft en arm\n  eller et bein, legg underarmene på et ustabilt underlag, eller gå over til sideplanke for de skrå\n  bukmusklene.\n</p>"
     },
     "zh": {
       "name": "平板支撑",
@@ -4018,7 +4265,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "保持均匀呼吸——不要屏气。",
         "初学者：3×20-30秒，进阶3×60-90秒；形式破裂时停止。"
-      ]
+      ],
+      "article": "<h2>平板支撑的价值所在</h2>\n<p>\n  躯干核心不是一块用来练大的肌肉，而是一套稳定系统。它的主要任务不是弯曲上半身，而是\n  抵抗来自外部的力。这正是平板支撑训练的内容：它是一项抗伸展动作——身体要对抗重力想把\n  髋部向下拉的趋势。\n</p>\n<p>\n  因此它覆盖了日常生活和训练中真正重要的功能，同时对腰椎的负荷降到最低。它是生物力学\n  专家Stuart McGill经过数十年测量研究提炼出的\"三大核心动作\"之一。\n</p>\n<h2>动作要领</h2>\n<p>\n  前臂放在肩膀正下方，肘部大约与肩同宽。身体从头到脚跟呈一条直线。有两点从外表几乎看\n  不出来，却至关重要：臀部要用力收紧，肋骨要略微下沉，以避免出现腰部过度前凸。做到这\n  两点的人，在二十秒后会明显比只是\"硬撑\"的人感受更强烈。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>髋部下沉。</strong>最经典的错误，也是唯一真正有害的一个——它会把负荷转移到下背部。</li>\n  <li><strong>臀部抬得太高。</strong>看起来很标准，但实际上减轻了核心的负担。</li>\n  <li><strong>撑好几分钟。</strong>超过两分钟练的其实是在这个姿势下的耐力，而不是稳定性。多组短时间、真正保持张力的训练效果更好。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三到五组、每组20到45秒并保持最大张力，效果明显胜过单组撑满三分钟。如果能撑更久，\n  应该增加难度而不是延长时间：比如抬起一只手臂或一条腿、把前臂放在不稳定的支撑面上，\n  或者改做侧平板支撑来锻炼腹外斜肌。\n</p>"
     }
   },
   "pull.deadhang": {
@@ -4049,7 +4297,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αρχάριοι: 3 × 15-20 δ.· προχωρημένοι 3 × 45-60 δ. — μακροπρόθεσμος στόχος 1-2 λεπτά ίσια.",
         "Ευαίσθητοι ώμοι; Χρησιμοποίησε ενεργά κράτημα (scapulae δρεπάνισμα) αντί παθητικού."
-      ]
+      ],
+      "article": "<h2>Παθητικό κρέμασμα ως αυτόνομη άσκηση</h2>\n<p>\n  Το dead hang φαίνεται σαν να μην κάνεις τίποτα και προσφέρει τρία πράγματα ταυτόχρονα: χτίζει δύναμη\n  λαβής, ανοίγει τον ώμο σε μια θέση που σχεδόν ποτέ δεν εμφανίζεται στην καθημερινότητα, και αποσυμπιέζει\n  τη σπονδυλική στήλη μέσω έλξης αντί πίεσης.\n</p>\n<p>\n  Ως πρώτο στάδιο της εξέλιξης προς το pull-up είναι επίσης η αρχή για όποιον δεν καταφέρνει ακόμη ούτε\n  μία επανάληψη. Όποιος δεν μπορεί να κρεμαστεί 30 δευτερόλεπτα, δεν θα καταφέρει ούτε να τραβηχτεί προς\n  τα πάνω — η δύναμη λαβής είναι το πρώτο εμπόδιο, όχι η πλάτη.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Λαβή στο πλάτος των ώμων, η ράχη του χεριού προς το πρόσωπο, χέρια τεντωμένα, πόδια ελεύθερα. Οι ώμοι\n  επιτρέπεται να γλιστρήσουν παθητικά μέχρι τα αυτιά — αυτό επιδιώκεται στο πραγματικό dead hang και\n  είναι ο λόγος για το αποτέλεσμα τεντώματος. Συνέχισε να αναπνέεις ήρεμα, μην αφήνεις το σώμα να\n  ταλαντεύεται.\n</p>\n<p>\n  Η ενεργή παραλλαγή με τραβηγμένες προς τα κάτω ωμοπλάτες είναι διαφορετική άσκηση (τράβηγμα ωμοπλάτης)\n  και το λογικό επόμενο στάδιο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Σφιγμένη λαβή εξαρχής.</strong> Ξεκίνα χαλαρά· διαφορετικά το χέρι κουράζεται πρόωρα.</li>\n  <li><strong>Ταλάντευση.</strong> Κοστίζει δύναμη λαβής και δεν προσφέρει τίποτα.</li>\n  <li><strong>Επιμονή παρά τις ενοχλήσεις στον ώμο.</strong> Το τράβηγμα στην άρθρωση του ώμου είναι σήμα διακοπής, όχι προπονητικό ερέθισμα.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία έως πέντε σετ μέχρι λίγο πριν την αφή, συνήθως 15 έως 60 δευτερόλεπτα. Καθημερινά εφικτό — η\n  δύναμη λαβής ανακάμπτει γρήγορα. Ένας ρεαλιστικός ενδιάμεσος στόχος είναι ένα λεπτό συνεχόμενα.\n</p>"
     },
     "en": {
       "name": "Dead Hang",
@@ -4063,7 +4312,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners: 3 × 15-20 s; advanced 3 × 45-60 s — long-term target 1-2 minutes straight.",
         "Sensitive shoulders? Use an active hang (scapulae depressed) instead of passive."
-      ]
+      ],
+      "article": "<h2>Passive hanging as a standalone exercise</h2>\n<p>\n  The dead hang looks like doing nothing and delivers three things at once: it builds grip strength,\n  opens the shoulder into a position that almost never occurs in daily life, and decompresses the spine\n  through traction instead of compression.\n</p>\n<p>\n  As the first stage of the pull-up progression, it's also the entry point for anyone who can't yet do a\n  single rep. If you can't hang for 30 seconds, you won't be pulling yourself up either — grip strength\n  is the first bottleneck, not the back.\n</p>\n<h2>Execution</h2>\n<p>\n  Shoulder-width grip, backs of the hands facing you, arms extended, feet off the ground. The shoulders\n  are allowed to drift passively up toward the ears — that's intended in a true dead hang and the reason\n  for the stretch effect. Keep breathing calmly, don't let the body swing.\n</p>\n<p>\n  The active variant with the shoulder blades pulled down is a different exercise (scapular pull-up) and\n  the logical next stage.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Gripping too hard from the start.</strong> Start relaxed; otherwise the hand fatigues prematurely.</li>\n  <li><strong>Swinging.</strong> Costs grip strength and adds nothing.</li>\n  <li><strong>Pushing through shoulder discomfort.</strong> Pulling pain in the shoulder joint is a stop signal, not a training stimulus.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three to five sets held just short of letting go, usually 15 to 60 seconds. Fine to do daily — grip\n  strength recovers quickly. A realistic milestone is one minute straight.\n</p>"
     },
     "es": {
       "name": "Cuelgue muerto",
@@ -4077,7 +4327,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Principiantes: 3 × 15-20 s; avanzados 3 × 45-60 s — objetivo a largo plazo 1-2 minutos seguidos.",
         "Hombros sensibles? Usa un cuelgue activo (escápulas deprimidas) en lugar de pasivo."
-      ]
+      ],
+      "article": "<h2>Colgar de forma pasiva como ejercicio propio</h2>\n<p>\n  El cuelgue muerto parece no hacer nada y en realidad logra tres cosas a la vez: desarrolla la fuerza de\n  agarre, abre el hombro hacia una posición que casi nunca ocurre en el día a día, y descomprime la\n  columna mediante tracción en lugar de presión.\n</p>\n<p>\n  Como primer escalón de la progresión hacia la dominada, es además el punto de partida para quienes\n  todavía no logran ni una repetición. Quien no puede colgarse durante 30 segundos tampoco logrará\n  subir — la fuerza de agarre es el primer cuello de botella, no la espalda.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Agarre a la anchura de los hombros, dorso de la mano hacia la cara, brazos extendidos, pies libres. Los\n  hombros pueden deslizarse pasivamente hasta las orejas — eso es deseado en el cuelgue muerto real y es\n  la razón del efecto de estiramiento. Sigue respirando con calma, no dejes que el cuerpo se balancee.\n</p>\n<p>\n  La variante activa con las escápulas llevadas hacia abajo es otro ejercicio (dominada escapular) y el\n  siguiente escalón lógico.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Agarre crispado desde el principio.</strong> Empieza relajado; de lo contrario la mano se fatiga prematuramente.</li>\n  <li><strong>Balancearse.</strong> Cuesta fuerza de agarre y no aporta nada.</li>\n  <li><strong>Aguantar con molestias en el hombro.</strong> Un tirón en la articulación del hombro es señal de interrupción, no un estímulo de entrenamiento.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres a cinco series hasta justo antes de soltarse, normalmente entre 15 y 60 segundos. Posible a diario\n  — la fuerza de agarre se recupera rápido. Una meta intermedia realista es un minuto seguido.\n</p>"
     },
     "fr": {
       "name": "Suspension passive",
@@ -4091,7 +4342,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Débutants : 3 × 15-20 s ; avancés 3 × 45-60 s — l'objectif à long terme 1-2 minutes d'affilée.",
         "Les épaules sensibles ? Utilisez une suspension active (scapulae déprimées) au lieu de passive."
-      ]
+      ],
+      "article": "<h2>La suspension passive comme exercice à part entière</h2>\n<p>\n  La suspension passive ressemble à ne rien faire et accomplit pourtant trois choses à la fois : elle\n  développe la force de préhension, ouvre l'épaule dans une position presque jamais atteinte au\n  quotidien, et décharge la colonne vertébrale par traction plutôt que par compression.\n</p>\n<p>\n  Comme première étape de la progression vers la traction, c'est aussi le point de départ pour tous ceux\n  qui n'arrivent pas encore à en faire une seule. Qui ne peut pas tenir 30 secondes en suspension ne\n  pourra pas non plus se tirer vers le haut — la force de préhension est le premier goulot\n  d'étranglement, pas le dos.\n</p>\n<h2>Exécution</h2>\n<p>\n  Prise à la largeur des épaules, dos des mains face au visage, bras tendus, pieds décollés. Les épaules\n  peuvent remonter passivement jusqu'aux oreilles — c'est voulu dans une vraie suspension passive et\n  c'est la raison de l'effet d'étirement. Continuez à respirer calmement, ne laissez pas le corps se\n  balancer.\n</p>\n<p>\n  La variante active, avec les omoplates tirées vers le bas, est un exercice différent (scapular pull-up)\n  et l'étape logique suivante.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Prise crispée dès le départ.</strong> Commencez de façon détendue ; la main fatigue sinon prématurément.</li>\n  <li><strong>Se balancer.</strong> Coûte de la force de préhension et n'apporte rien.</li>\n  <li><strong>Persister malgré une gêne à l'épaule.</strong> Un tiraillement dans l'articulation de l'épaule est un signal d'arrêt, pas un stimulus d'entraînement.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois à cinq séries jusqu'à juste avant de lâcher, généralement 15 à 60 secondes. Possible tous les\n  jours — la force de préhension récupère vite. Un objectif intermédiaire réaliste est une minute\n  d'affilée.\n</p>"
     },
     "it": {
       "name": "Dead hang",
@@ -4105,7 +4357,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Principianti: 3 × 15-20 s; avanzati 3 × 45-60 s — target a lungo termine 1-2 minuti di fila.",
         "Spalle sensibili? Usa una sospensione attiva (scapolari depresse) invece che passiva."
-      ]
+      ],
+      "article": "<h2>Restare appesi passivamente come esercizio a sé</h2>\n<p>\n  Il dead hang sembra non fare nulla e in realtà svolge tre funzioni contemporaneamente: costruisce\n  forza di presa, apre la spalla in una posizione che nella vita quotidiana non si presenta quasi mai, e\n  scarica la colonna vertebrale grazie alla trazione invece che alla compressione.\n</p>\n<p>\n  Come primo gradino della progressione verso le trazioni è anche il punto di partenza per chi non\n  riesce ancora a fare una sola ripetizione. Chi non riesce a rimanere appeso per 30 secondi non riuscirà\n  nemmeno a tirarsi su — la forza di presa è il primo collo di bottiglia, non la schiena.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Presa a larghezza spalle, dorso delle mani rivolto verso il viso, braccia distese, piedi liberi. Le\n  spalle possono salire passivamente fino alle orecchie — nel vero dead hang questo è voluto ed è il\n  motivo dell'effetto di allungamento. Continua a respirare con calma, non far oscillare il corpo.\n</p>\n<p>\n  La variante attiva con le scapole tirate verso il basso è un esercizio diverso (trazione scapolare) ed\n  è il gradino successivo logico.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Presa contratta fin dall'inizio.</strong> Inizia rilassato; altrimenti la mano si affatica prematuramente.</li>\n  <li><strong>Oscillare.</strong> Consuma forza di presa e non porta benefici.</li>\n  <li><strong>Insistere con dolore alla spalla.</strong> Una tirata nell'articolazione della spalla è un segnale di stop, non uno stimolo allenante.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre-cinque serie fino a poco prima di dover mollare la presa, di solito 15-60 secondi. Possibile ogni\n  giorno — la forza di presa recupera velocemente. Un obiettivo intermedio realistico è un minuto di\n  fila.\n</p>"
     },
     "nl": {
       "name": "Dead Hang",
@@ -4119,7 +4372,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners: 3 × 15-20 s; gevorderden 3 × 45-60 s — lange-termijn doel 1-2 minuten recht.",
         "Gevoelige schouders? Gebruik actief hangen (scapulae neergedrukt) in plaats van passief."
-      ]
+      ],
+      "article": "<h2>Passief hangen als zelfstandige oefening</h2>\n<p>\n  De dead hang oogt als niets doen en levert drie dingen tegelijk op: hij bouwt greepkracht op,\n  opent de schouder in een positie die in het dagelijks leven vrijwel nooit voorkomt, en ontlast\n  de wervelkolom door trek in plaats van druk.\n</p>\n<p>\n  Als eerste stap van de pull-up-progressie is hij bovendien de instap voor iedereen die nog geen\n  enkele herhaling haalt. Wie geen 30 seconden kan hangen, trekt zich ook niet op — de greepkracht\n  is het eerste knelpunt, niet de rug.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Schouderbrede grip, handruggen naar het gezicht, armen gestrekt, voeten vrij. De schouders mogen\n  passief tot bij de oren glijden — dat is bij de echte dead hang gewenst en de reden voor het\n  rekeffect. Rustig doorademen, het lichaam niet laten zwaaien.\n</p>\n<p>\n  De actieve variant met naar beneden getrokken schouderbladen is een andere oefening\n  (schouderbladophaling aan de stang) en de logische volgende stap.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Vanaf het begin een verkrampte grip.</strong> Losjes beginnen; de hand vermoeit anders voortijdig.</li>\n  <li><strong>Zwaaien.</strong> Kost greepkracht en levert niets op.</li>\n  <li><strong>Volhouden bij schouderklachten.</strong> Trekken in het schoudergewricht is een stopsignaal, geen trainingsprikkel.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie tot vijf sets tot net voor het loslaten, meestal 15 tot 60 seconden. Dagelijks mogelijk — de\n  greepkracht herstelt snel. Een realistisch tussendoel is één minuut aan één stuk.\n</p>"
     },
     "no": {
       "name": "Dead Hang",
@@ -4133,7 +4387,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nybegynnere: 3 × 15-20 s; avansert 3 × 45-60 s – langsiktig mål 1-2 minutter rett.",
         "Ømfintlige skuldre? Bruk aktivt hang (scapulae deprimer) i stedet for passivt."
-      ]
+      ],
+      "article": "<h2>Passiv henging som en selvstendig øvelse</h2>\n<p>\n  Dead hang ser ut som å ikke gjøre noe, men utfører tre ting samtidig: den bygger grepsstyrke, åpner\n  skulderen i en posisjon som nesten aldri forekommer i hverdagen, og avlaster ryggraden gjennom trekk i\n  stedet for trykk.\n</p>\n<p>\n  Som første trinn i pull-up-progresjonen er den også innsteget for alle som ennå ikke klarer én\n  repetisjon. Den som ikke klarer å henge i 30 sekunder, vil heller ikke klare å dra seg opp –\n  grepsstyrken er den første flaskehalsen, ikke ryggen.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Grep i skulderbredde, håndbaken mot ansiktet, armene strake, føttene fritt i luften. Skuldrene får\n  passivt gli opp mot ørene – det er ønsket ved den ekte dead hang, og grunnen til tøyeeffekten. Fortsett\n  å puste rolig, ikke la kroppen svinge.\n</p>\n<p>\n  Den aktive varianten med nedtrukne skulderblad er en annen øvelse (scapula-pull) og det logiske neste\n  trinnet.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Krampaktig grep fra start.</strong> Begynn avslappet; ellers blir hånden sliten for tidlig.</li>\n  <li><strong>Å svinge.</strong> Koster grepsstyrke og gir ingenting.</li>\n  <li><strong>Å presse seg gjennom ved skulderplager.</strong> Sting i skulderleddet er et avbruddssignal, ikke en treningsstimulans.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre til fem sett til like før du må slippe taket, som regel 15 til 60 sekunder. Kan gjøres daglig –\n  grepsstyrken restituerer raskt. Et realistisk delmål er ett minutt sammenhengende.\n</p>"
     },
     "zh": {
       "name": "死亡悬垂",
@@ -4147,7 +4402,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "初学者：3×15-20秒；进阶3×45-60秒——长期目标1-2分钟直接。",
         "肩膀敏感？使用主动悬垂（肩胛骨压低）而不是被动。"
-      ]
+      ],
+      "article": "<h2>被动悬垂作为一项独立训练</h2>\n<p>\n  死亡悬垂看起来像什么都没做，实际上同时完成了三件事：增强握力，把肩关节打开到日常\n  生活中几乎不会出现的姿势，并通过牵引而不是压缩来减轻脊柱的负担。\n</p>\n<p>\n  作为引体向上进阶训练的第一步，它也是所有还做不了一个完整引体向上的人的入门动作。\n  如果连悬垂30秒都做不到，也就更谈不上把身体拉上去——握力才是第一个瓶颈，而不是\n  背部力量。\n</p>\n<h2>动作要领</h2>\n<p>\n  双手与肩同宽握杆，手背朝向脸部，手臂伸直，双脚离地悬空。肩膀可以被动地上滑靠近\n  耳朵——这在真正的死亡悬垂中是被允许的，也正是它产生拉伸效果的原因。持续平稳呼吸，\n  身体不要摆动。\n</p>\n<p>\n  把肩胛骨主动下拉的主动悬垂是另一个动作（肩胛骨引体），是顺理成章的下一个进阶阶段。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>一开始就握得太紧。</strong>应该放松开始；否则手部会过早疲劳。</li>\n  <li><strong>身体摆动。</strong>会白白消耗握力，却没有任何训练效果。</li>\n  <li><strong>肩部不适时仍然硬撑。</strong>肩关节的牵拉感是需要停止的信号，而不是训练刺激。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三到五组，坚持到即将脱手前为止，通常在15到60秒之间。可以每天进行——握力恢复得很快。\n  一个现实的阶段性目标是连续悬垂一分钟。\n</p>"
     }
   },
   "pull.facepull": {
@@ -4178,7 +4434,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Ώμοι μένουν κάτω — χωρίς σήκωμα των λεπίδων ώμων προς τα πάνω.",
         "Ιδανικός σύντροφος σε οποιαδήποτε περίοδο πίεσης· 15-25 επαναλήψεις ανά σετ."
-      ]
+      ],
+      "article": "<h2>Η άσκηση ενάντια στο γραφείο</h2>\n<p>\n  Το face pull εκπαιδεύει την οπίσθια ωμική μυϊκή ομάδα και τους μύες ανάμεσα στις ωμοπλάτες — δηλαδή\n  ακριβώς τις περιοχές που ατροφούν στην καθιστική εργασία και σε προπόνηση με έμφαση στην πίεση. Είναι\n  λιγότερο άσκηση οικοδόμησης και περισσότερο άσκηση εξισορρόπησης και πρόληψης, και σε αυτόν τον ρόλο\n  μία από τις πιο πολύτιμες που υπάρχουν.\n</p>\n<p>\n  Όποιος κάνει πολλά push-ups, dips και πιέσεις πάγκου χωρίς να εξυπηρετεί την πίσω πλευρά του ώμου,\n  καταλήγει μεσοπρόθεσμα με ενοχλήσεις στην μπροστινή άρθρωση του ώμου. Το face pull κοστίζει δύο λεπτά\n  και αποτρέπει ακριβώς αυτό.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Στερέωσε ένα λαστιχάκι σε ύψος προσώπου, πιάσε τα άκρα με τα δύο χέρια. Τα χέρια τραβούν προς το\n  πρόσωπο και ταυτόχρονα ανοίγουν, οι αγκώνες παραμένουν ψηλά στο ύψος των ώμων. Στο τελικό σημείο η\n  ράχη των χεριών δείχνει προς τα έξω, οι ωμοπλάτες είναι μαζεμένες. Επιστροφή υπό έλεγχο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Οι αγκώνες πέφτουν.</strong> Τότε γίνεται κωπηλατική έλξη και η πίσω πλευρά του ώμου παραμένει ανεμπλεκή. Κράτησε τους αγκώνες στο ύψος των ώμων.</li>\n  <li><strong>Πολλή αντίσταση.</strong> Η άσκηση βασίζεται σε καθαρή εκτέλεση, όχι σε φορτίο. Ένα πολύ σφιχτό λαστιχάκι εξαναγκάζει σε αντισταθμιστικές κινήσεις.</li>\n  <li><strong>Το κεφάλι σπρώχνεται μπροστά.</strong> Το κεφάλι μένει εκεί που είναι — τα χέρια έρχονται σε αυτό.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Δύο έως τρία σετ με 15 έως 20 επαναλήψεις, ιδανικά στο τέλος κάθε προπόνησης ή ως θέρμανση πριν από\n  ασκήσεις πίεσης. Η συχνότητα νικά εδώ την ένταση — τρεις φορές την εβδομάδα ελαφρά είναι καλύτερο από\n  μία φορά βαριά.\n</p>"
     },
     "en": {
       "name": "Face Pull",
@@ -4192,7 +4449,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Shoulders stay down — no shrugging the shoulder blades up.",
         "Ideal companion to any pressing session; 15-25 reps per set."
-      ]
+      ],
+      "article": "<h2>The exercise against the desk</h2>\n<p>\n  The face pull trains the rear deltoids and the muscles between the shoulder blades — exactly the areas\n  that waste away from sitting and from pressing-heavy training. It's less a mass-building exercise than\n  a balancing and prevention exercise, and in that role one of the most valuable there is.\n</p>\n<p>\n  Anyone doing a lot of push-ups, dips and bench pressing without addressing the back of the shoulder\n  eventually ends up with front-shoulder-joint issues. The face pull costs two minutes and prevents\n  exactly that.\n</p>\n<h2>Execution</h2>\n<p>\n  Anchor a band at face height, grip the ends with both hands. The hands pull toward the face while\n  spreading apart, the elbows stay high at shoulder level. At the end point the backs of the hands point\n  outward and the shoulder blades are squeezed together. Return under control.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Elbows drop.</strong> That turns it into a row and the rear shoulder stays uninvolved. Keep the elbows at shoulder height.</li>\n  <li><strong>Too much resistance.</strong> The exercise lives on clean execution, not load. A band that's too stiff forces compensations.</li>\n  <li><strong>Head pushes forward.</strong> The head stays put — the hands come to it.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Two to three sets of 15 to 20 reps, ideally at the end of every session or as a warm-up before pressing\n  work. Frequency beats intensity here — light three times a week beats heavy once.\n</p>"
     },
     "es": {
       "name": "Tirón al rostro",
@@ -4206,7 +4464,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Los hombros se mantienen hacia abajo — sin encogimiento de los omóplatos hacia arriba.",
         "Complemento ideal para cualquier sesión de presión; 15-25 repeticiones por serie."
-      ]
+      ],
+      "article": "<h2>El ejercicio contra el escritorio</h2>\n<p>\n  El tirón al rostro entrena la musculatura posterior del hombro y los músculos entre los omóplatos — es\n  decir, exactamente las zonas que se atrofian con el trabajo sentado y el entrenamiento cargado de\n  presión. Es menos un ejercicio de desarrollo que uno de equilibrio y prevención, y en ese papel, uno\n  de los más valiosos que existen.\n</p>\n<p>\n  Quien hace muchas flexiones, fondos y press de banca sin trabajar la parte posterior del hombro,\n  termina a medio plazo con molestias en la articulación anterior del hombro. El tirón al rostro cuesta\n  dos minutos y evita exactamente eso.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Ancla una banda a la altura de la cara, agarra los extremos con ambas manos. Las manos tiran hacia la\n  cara y al mismo tiempo se separan, los codos se mantienen altos, a la altura de los hombros. Al final\n  del recorrido, el dorso de las manos apunta hacia afuera, los omóplatos están juntos. Vuelve bajo\n  control.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Los codos bajan.</strong> Entonces se convierte en un remo y el hombro posterior queda sin trabajar. Mantén los codos a la altura del hombro.</li>\n  <li><strong>Demasiada resistencia.</strong> El ejercicio depende de una ejecución limpia, no de la carga. Una banda demasiado tensa fuerza movimientos compensatorios.</li>\n  <li><strong>La cabeza avanza hacia adelante.</strong> La cabeza se queda donde está — las manos vienen hacia ella.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Dos a tres series de 15 a 20 repeticiones, idealmente al final de cada sesión o como calentamiento\n  antes de ejercicios de empuje. Aquí la frecuencia vence a la intensidad — tres veces por semana ligero\n  es mejor que una vez pesado.\n</p>"
     },
     "fr": {
       "name": "Tirage au visage",
@@ -4220,7 +4479,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Les épaules restent basses — pas de haussement des omoplates.",
         "Compagnon idéal de toute séance de poussée ; 15-25 répétitions par série."
-      ]
+      ],
+      "article": "<h2>L'exercice contre le bureau</h2>\n<p>\n  Le face pull entraîne les muscles arrière de l'épaule et les muscles entre les omoplates —\n  c'est-à-dire précisément les zones qui s'atrophient avec le travail assis et un entraînement axé sur la\n  poussée. C'est moins un exercice de développement qu'un exercice d'équilibrage et de prévention, et\n  dans ce rôle, l'un des plus précieux qui soient.\n</p>\n<p>\n  Qui fait beaucoup de pompes, de dips et de développé couché sans solliciter l'arrière de l'épaule\n  finit, à moyen terme, avec des douleurs à l'avant de l'articulation de l'épaule. Le face pull ne coûte\n  que deux minutes et l'évite précisément.\n</p>\n<h2>Exécution</h2>\n<p>\n  Fixez une bande à hauteur de visage, saisissez les extrémités des deux mains. Les mains tirent vers le\n  visage tout en s'écartant, les coudes restent hauts, à hauteur d'épaule. Au point final, le dos des\n  mains pointe vers l'extérieur, les omoplates sont rapprochées. Revenez de façon contrôlée.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Les coudes s'affaissent.</strong> Cela devient alors un rowing et l'arrière de l'épaule reste inactif. Gardez les coudes à hauteur d'épaule.</li>\n  <li><strong>Trop de résistance.</strong> L'exercice repose sur une exécution propre, pas sur la charge. Une bande trop tendue force des mouvements de compensation.</li>\n  <li><strong>Pousser la tête vers l'avant.</strong> La tête reste où elle est — ce sont les mains qui viennent à elle.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Deux à trois séries de 15 à 20 répétitions, volontiers en fin de séance ou en échauffement avant des\n  exercices de poussée. Ici, la fréquence prime sur l'intensité — trois fois par semaine léger vaut mieux\n  qu'une fois lourd.\n</p>"
     },
     "it": {
       "name": "Face pull",
@@ -4234,7 +4494,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Le spalle rimangono giù — niente sollevamento dei trapezi.",
         "Compagno ideale a qualsiasi sessione di pressione; 15-25 ripetizioni per serie."
-      ]
+      ],
+      "article": "<h2>L'esercizio contro la scrivania</h2>\n<p>\n  Il face pull allena la muscolatura posteriore della spalla e i muscoli tra le scapole — proprio le\n  zone che si atrofizzano con il lavoro sedentario e l'allenamento incentrato sulla spinta. È meno un\n  esercizio di sviluppo che un esercizio di riequilibrio e prevenzione, e in questo ruolo è tra i più\n  preziosi in assoluto.\n</p>\n<p>\n  Chi fa molti piegamenti, dip e panca senza allenare la parte posteriore della spalla finisce a medio\n  termine con disturbi nell'articolazione anteriore della spalla. Il face pull costa due minuti e\n  previene esattamente questo.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Fissa una band all'altezza del viso, afferra le estremità con entrambe le mani. Le mani tirano verso\n  il viso allontanandosi tra loro, i gomiti restano alti all'altezza delle spalle. Al punto finale il\n  dorso delle mani è rivolto verso l'esterno, le scapole sono ravvicinate. Torna in modo controllato.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>I gomiti si abbassano.</strong> A quel punto diventa un rematore e la spalla posteriore resta inattiva. Tieni i gomiti all'altezza delle spalle.</li>\n  <li><strong>Troppa resistenza.</strong> L'esercizio vive di esecuzione pulita, non di carico. Una band troppo tesa forza movimenti compensatori.</li>\n  <li><strong>La testa si sposta in avanti.</strong> La testa resta dov'è — sono le mani a raggiungerla.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Due-tre serie da 15 a 20 ripetizioni, ideali alla fine di ogni sessione o come riscaldamento prima\n  degli esercizi di spinta. Qui la frequenza conta più dell'intensità — tre volte a settimana leggero è\n  meglio di una volta pesante.\n</p>"
     },
     "nl": {
       "name": "Face Pull",
@@ -4248,7 +4509,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Schouders blijven omlaag — geen schouderblaadjes ophaligen.",
         "Ideale metgezel voor elke drukkingsessie; 15-25 herhalingen per serie."
-      ]
+      ],
+      "article": "<h2>De oefening tegen het bureau</h2>\n<p>\n  De face pull traint de achterste schouderspieren en de spieren tussen de schouderbladen — dus\n  precies de gebieden die bij zittend werk en drukgerichte training verkommeren. Het is minder een\n  opbouwoefening dan een compensatie- en preventie-oefening, en in die rol een van de waardevolste\n  die er zijn.\n</p>\n<p>\n  Wie veel push-ups, dips en bench press doet zonder de achterkant van de schouder te bedienen,\n  belandt op middellange termijn met klachten in het voorste schoudergewricht. De face pull kost\n  twee minuten en voorkomt precies dat.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Een band op gezichtshoogte bevestigen, uiteinden met beide handen grijpen. De handen trekken naar\n  het gezicht en daarbij uit elkaar, de ellebogen blijven hoog op schouderhoogte. Op het eindpunt\n  wijzen de handruggen naar buiten, de schouderbladen zijn samengetrokken. Gecontroleerd terug.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Ellebogen zakken.</strong> Dan wordt het een roeibeweging en blijft de achterste schouder onbetrokken. Ellebogen op schouderhoogte houden.</li>\n  <li><strong>Te veel weerstand.</strong> De oefening leeft van zuivere uitvoering, niet van belasting. Een te strakke band forceert uitwijkbewegingen.</li>\n  <li><strong>Hoofd naar voren schuiven.</strong> Het hoofd blijft waar het is — de handen komen naar het hoofd toe.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Twee tot drie sets met 15 tot 20 herhalingen, graag aan het einde van elke sessie of als\n  warming-up voor drukoefeningen. Frequentie slaat hier intensiteit — driemaal per week licht is\n  beter dan één keer zwaar.\n</p>"
     },
     "no": {
       "name": "Face Pull",
@@ -4262,7 +4524,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Skuldrene forblir ned – ingen shrugging av skulderbladene oppover.",
         "Ideell companion til press-sesjon; 15-25 repetisjoner per sett."
-      ]
+      ],
+      "article": "<h2>Øvelsen mot skrivebordet</h2>\n<p>\n  Face pull trener den bakre skuldermuskulaturen og musklene mellom skulderbladene – altså nettopp de\n  områdene som svekkes ved stillesittende arbeid og pressetung trening. Den er mindre en\n  oppbyggingsøvelse enn en balanserings- og forebyggingsøvelse, og i den rollen en av de mest verdifulle\n  som finnes.\n</p>\n<p>\n  Den som gjør mye push-ups, dips og benkpress uten å jobbe med baksiden av skulderen, ender på\n  mellomlang sikt opp med plager i det fremre skulderleddet. Face pull koster to minutter og forhindrer\n  nettopp det.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Fest et strikk i ansiktshøyde, grip endene med begge hender. Hendene trekkes mot ansiktet og samtidig\n  fra hverandre, albuene holdes høyt i skulderhøyde. Ved endepunktet peker håndbaken utover, skulderbladene\n  er trukket sammen. Kontrollert tilbake.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Albuene synker.</strong> Da blir det til en roøvelse, og bakre skulder forblir uinvolvert. Hold albuene i skulderhøyde.</li>\n  <li><strong>For mye motstand.</strong> Øvelsen lever av ren utførelse, ikke av belastning. Et for stramt strikk fremtvinger unnamanøvre.</li>\n  <li><strong>Å skyve hodet fremover.</strong> Hodet blir der det er – hendene kommer til det.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  To til tre sett med 15 til 20 repetisjoner, gjerne på slutten av hver økt eller som oppvarming før\n  presseøvelser. Her slår hyppighet intensitet – tre ganger i uken lett er bedre enn én gang tungt.\n</p>"
     },
     "zh": {
       "name": "面部拉动",
@@ -4276,7 +4539,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "肩膀保持放松——不要耸起肩胛骨。",
         "任何推送课程的理想伴侣；每组15-25次。"
-      ]
+      ],
+      "article": "<h2>对抗久坐办公的训练动作</h2>\n<p>\n  面拉训练的是三角肌后束和肩胛骨之间的肌肉——正是那些在久坐工作和以推为主的训练中\n  容易萎缩的区域。与其说它是一个增肌动作，不如说它是一个平衡与预防性动作，而在这个\n  角色上，它是最有价值的动作之一。\n</p>\n<p>\n  如果经常做俯卧撑、双杠臂屈伸和卧推，却忽视肩部后侧的训练，中期往往会出现肩关节\n  前侧的不适。面拉只需要两分钟，却正好能预防这个问题。\n</p>\n<h2>动作要领</h2>\n<p>\n  将弹力带固定在脸部高度，双手各握住一端。双手向脸部拉动的同时向两侧分开，肘部始终\n  保持在肩膀高度。到达终点时，手背朝向外侧，肩胛骨向中间收紧。然后有控制地返回。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>肘部下垂。</strong>这样动作会变成划船，肩部后侧得不到锻炼。肘部应始终保持在肩膀高度。</li>\n  <li><strong>阻力太大。</strong>这个动作的价值在于标准的动作质量，而不是负荷大小。弹力带太紧会迫使身体做出代偿动作。</li>\n  <li><strong>头部前伸迎合。</strong>头部应保持不动——是双手靠近头部，而不是相反。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  两到三组，每组15到20次，很适合安排在每次训练课的结尾，或作为推类动作前的热身。\n  这里频率比强度更重要——每周三次轻松训练，胜过一次高强度训练。\n</p>"
     }
   },
   "pull.pullups": {
@@ -4307,7 +4571,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Παλινδρόμηση: αρνητικά (άλμα πάνω, κατέβασμα αργά) ή λαστιχάκι-υποβοηθούμενο pull-up.",
         "Πλήρες εύρος — σαγόνι πάνω από τη μπάρα στην κορυφή, αγκώνες πλήρως εκτεταμένοι στο κάτω."
-      ]
+      ],
+      "article": "<h2>Γιατί το pull-up είναι τόσο δύσκολο</h2>\n<p>\n  Στο push-up κινείς 65 έως 75 τοις εκατό του σωματικού σου βάρους. Στο pull-up είναι εκατό τοις εκατό,\n  κρατημένα από μια μυϊκή ομάδα που σχεδόν ποτέ δεν απαιτείται στην καθημερινότητα. Γι' αυτό πολλοί\n  αρχάριοι αποτυγχάνουν στην πρώτη κιόλας επανάληψη — όχι από έλλειψη θέλησης, αλλά επειδή το άλμα από\n  το μηδέν στο πλήρες είναι πολύ μεγάλο.\n</p>\n<p>\n  Εκπαιδεύεται ο πλατύς ραχιαίος, ο δικέφαλος, οι αντιβράχιοι και ολόκληρη η ωμική ζώνη. Ως κάθετη έλξη\n  αποτελεί το άμεσο αντίστοιχο της πίεσης και επομένως απαραίτητο για έναν ισορροπημένο ώμο.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Λαβή περίπου στο πλάτος των ώμων ή ελαφρώς παραπάνω, ράχη χεριού προς το πρόσωπο. Πριν την έλξη\n  τράβηξε τις ωμοπλάτες προς τα κάτω και προς τα πίσω — αυτό το πρώτο χιλιοστό αποφασίζει αν δουλεύει η\n  πλάτη ή μόνο το χέρι. Μετά τράβηγμα προς τα πάνω μέχρι το πηγούνι να περάσει τη μπάρα, και ελεγχόμενο\n  κατέβασμα μέχρι σχεδόν πλήρη έκταση των χεριών.\n</p>\n<h2>Ο δρόμος προς την πρώτη επανάληψη</h2>\n<p>\n  Η εξέλιξη περνά από πέντε στάδια: παθητικό κρέμασμα, τραβήγματα ωμοπλάτης, πλάγια κωπηλασία κάτω από\n  μια μπάρα, αρνητικά pull-ups με αργό κατέβασμα και τέλος υποβοηθούμενα pull-ups με λαστιχάκι ή πόδι.\n  Μόνο όταν ένα στάδιο αντέχει τρία καθαρά σετ, προστίθεται το επόμενο. Υπολόγισε σε εβδομάδες έως μήνες,\n  όχι σε μέρες.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Φόρα από το ισχίο.</strong> Παράγει επαναλήψεις χωρίς προπονητικό ερέθισμα.</li>\n  <li><strong>Μισό εύρος κίνησης.</strong> Κάτω σχεδόν πλήρης έκταση, πάνω πηγούνι πάνω από τη μπάρα — οτιδήποτε ενδιάμεσο μετράει μόνο μισό.</li>\n  <li><strong>Τράβηγμα μόνο με το χέρι.</strong> Χωρίς την κίνηση της ωμοπλάτης στην αρχή, ο δικέφαλος γίνεται το εμπόδιο.</li>\n</ul>"
     },
     "en": {
       "name": "Pull-ups",
@@ -4321,7 +4586,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Regression: negatives (jump up, lower slowly) or a band-assisted pull.",
         "Full range — chin over the bar at the top, elbows fully extended at the bottom."
-      ]
+      ],
+      "article": "<h2>Why the pull-up is so hard</h2>\n<p>\n  In a push-up you move 65 to 75 percent of your body weight. In a pull-up it's a hundred percent, held\n  by a muscle group that daily life barely demands. That's why many beginners fail on the very first\n  rep — not from lack of will, but because the jump from zero to a full rep is too big.\n</p>\n<p>\n  It trains the lats, biceps, forearms and the entire shoulder girdle. As a vertical pull, it's the\n  direct counterpart to pressing and therefore essential for a balanced shoulder.\n</p>\n<h2>Execution</h2>\n<p>\n  Grip roughly shoulder-width or slightly wider, backs of the hands facing you. Before pulling, depress\n  and retract the shoulder blades — that first millimeter decides whether the back or just the arm does\n  the work. Then pull up until the chin clears the bar, and lower under control to nearly full arm\n  extension.\n</p>\n<h2>The path to the first rep</h2>\n<p>\n  The progression runs in five stages: passive hangs, scapular pull-ups, inclined rows under a bar,\n  negatives with a slow lowering phase, and finally assisted pull-ups with a band or foot support. Only\n  move to the next stage once the current one supports three clean sets. Count in weeks to months, not\n  days.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Kipping from the hips.</strong> Produces reps without training stimulus.</li>\n  <li><strong>Half range of motion.</strong> Nearly straight at the bottom, chin over the bar at the top — everything in between only counts halfway.</li>\n  <li><strong>Pulling with the arm alone.</strong> Without the initial scapular movement, the biceps become the bottleneck.</li>\n</ul>"
     },
     "es": {
       "name": "Dominadas",
@@ -4335,7 +4601,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Regresión: negativos (salta hacia arriba, baja lentamente) o una dominada asistida con banda.",
         "Rango completo — barbilla sobre la barra en la parte superior, codos completamente extendidos en la parte inferior."
-      ]
+      ],
+      "article": "<h2>Por qué la dominada es tan difícil</h2>\n<p>\n  En la flexión mueves entre el 65 y el 75 por ciento de tu peso corporal. En la dominada es el cien por\n  cien, sostenido por un grupo muscular que apenas se exige en el día a día. Por eso muchos principiantes\n  fracasan en la primera repetición — no por falta de voluntad, sino porque el salto de cero a completo\n  es demasiado grande.\n</p>\n<p>\n  Se entrenan el dorsal ancho, el bíceps, los antebrazos y toda la cintura escapular. Como tirón\n  vertical, es la contraparte directa del empuje y por eso imprescindible para un hombro equilibrado.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Agarre aproximadamente a la anchura de los hombros o algo más ancho, dorso de las manos hacia la cara.\n  Antes de tirar, lleva los omóplatos hacia abajo y hacia atrás — ese primer milímetro decide si trabaja\n  la espalda o solo el brazo. Luego tira hacia arriba hasta que la barbilla pase la barra, y baja bajo\n  control hasta casi la extensión completa del brazo.\n</p>\n<h2>El camino hacia la primera repetición</h2>\n<p>\n  La progresión avanza en cinco escalones: colgarse pasivamente, dominadas escapulares, remo inclinado\n  bajo una barra, negativas con descenso lento y finalmente dominadas asistidas con banda o pie. Solo\n  cuando un escalón sostiene tres series limpias se pasa al siguiente. Cuenta en semanas o meses, no en\n  días.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Impulso desde la cadera.</strong> Genera repeticiones sin estímulo de entrenamiento.</li>\n  <li><strong>Medio rango de movimiento.</strong> Abajo casi extender, arriba la barbilla sobre la barra — todo lo intermedio cuenta solo a medias.</li>\n  <li><strong>Tirar solo con el brazo.</strong> Sin el movimiento inicial de los omóplatos, el bíceps se convierte en el cuello de botella.</li>\n</ul>"
     },
     "fr": {
       "name": "Tractions",
@@ -4349,7 +4616,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Régression : négatifs (sautez vers le haut, abaissez lentement) ou traction assistée par bande.",
         "Amplitude complète — menton au-dessus de la barre au sommet, coudes totalement tendus en bas."
-      ]
+      ],
+      "article": "<h2>Pourquoi la traction est si difficile</h2>\n<p>\n  Dans la pompe, vous déplacez 65 à 75 % de votre poids de corps. Dans la traction, c'est cent pour\n  cent, soutenus par un groupe musculaire à peine sollicité au quotidien. C'est pourquoi tant de\n  débutants échouent sur la première répétition — non par manque de volonté, mais parce que le saut de\n  zéro à cent pour cent est trop grand.\n</p>\n<p>\n  Elle entraîne le grand dorsal, les biceps, les avant-bras et toute la ceinture scapulaire. En tant que\n  tirage vertical, elle est le pendant direct de la poussée et donc indispensable pour une épaule\n  équilibrée.\n</p>\n<h2>Exécution</h2>\n<p>\n  Prise à peu près à la largeur des épaules ou légèrement au-delà, dos des mains face au visage. Avant\n  de tirer, ramenez les omoplates vers le bas et l'arrière — ce premier millimètre détermine si le dos\n  travaille ou seulement le bras. Tirez ensuite jusqu'à ce que le menton dépasse la barre, puis\n  redescendez de façon contrôlée jusqu'à des bras presque tendus.\n</p>\n<h2>Le chemin vers la première répétition</h2>\n<p>\n  La progression se déroule en cinq étapes : la suspension passive, les tractions scapulaires, le rowing\n  incliné sous une barre, les négatives avec descente lente, et enfin les tractions assistées par bande\n  ou par pied. On ne passe à l'étape suivante que lorsqu'une étape tient sur trois séries propres.\n  Comptez en semaines, voire en mois, pas en jours.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Élan de la hanche.</strong> Produit des répétitions sans stimulus d'entraînement.</li>\n  <li><strong>Amplitude partielle.</strong> En bas, presque tendu, en haut, menton au-dessus de la barre — tout ce qui est entre les deux ne compte qu'à moitié.</li>\n  <li><strong>Tirer uniquement avec le bras.</strong> Sans le mouvement initial des omoplates, le biceps devient le facteur limitant.</li>\n</ul>"
     },
     "it": {
       "name": "Trazioni",
@@ -4363,7 +4631,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Regressione: negative (salta su, abbassa lentamente) o trazioni assistite con band.",
         "Ampiezza completa — mento sopra la barra in alto, gomiti completamente estesi in basso."
-      ]
+      ],
+      "article": "<h2>Perché le trazioni sono così difficili</h2>\n<p>\n  Nel piegamento sposti dal 65 al 75 per cento del tuo peso corporeo. Nella trazione è il cento per\n  cento, sostenuto da un gruppo muscolare che nella vita quotidiana viene sollecitato a malapena. Per\n  questo molti principianti falliscono già alla prima ripetizione — non per mancanza di volontà, ma\n  perché il salto da zero a completo è troppo grande.\n</p>\n<p>\n  Si allenano il grande dorsale, il bicipite, gli avambracci e l'intero cingolo scapolare. Come tiro\n  verticale è la controparte diretta della spinta, e quindi indispensabile per una spalla equilibrata.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Presa a larghezza spalle circa o leggermente più larga, dorso delle mani rivolto verso il viso. Prima\n  di tirare, porta le scapole verso il basso e indietro — questo primo millimetro decide se lavora la\n  schiena o solo il braccio. Poi tirati su finché il mento non supera la barra, e scendi in modo\n  controllato fino a una posizione di braccia quasi distese.\n</p>\n<h2>Il percorso verso la prima ripetizione</h2>\n<p>\n  La progressione avviene in cinque tappe: sospensione passiva, trazioni scapolari, rematore inclinato\n  sotto una sbarra, negative con discesa lenta e infine trazioni assistite con band o piede d'appoggio.\n  Solo quando una tappa regge tre serie pulite si passa alla successiva. Conta in settimane o mesi, non\n  in giorni.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Slancio dal bacino.</strong> Produce ripetizioni senza stimolo allenante.</li>\n  <li><strong>Ampiezza di movimento dimezzata.</strong> In basso quasi distendere, in alto mento sopra la barra — tutto il resto conta solo a metà.</li>\n  <li><strong>Tirare solo con il braccio.</strong> Senza il movimento iniziale delle scapole, il bicipite diventa il collo di bottiglia.</li>\n</ul>"
     },
     "nl": {
       "name": "Pull-ups",
@@ -4377,7 +4646,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Stap terug: negatieve bewegingen (spring omhoog, zak langzaam) of band-gesteunde pull-up.",
         "Volledig bereik — kin over balk bovenaan, ellebogen volledig gestrekt onderaan."
-      ]
+      ],
+      "article": "<h2>Waarom de pull-up zo zwaar is</h2>\n<p>\n  Bij de push-up beweeg je 65 tot 75 procent van je lichaamsgewicht. Bij de pull-up is dat honderd\n  procent, gedragen door een spiergroep die in het dagelijks leven nauwelijks wordt aangesproken.\n  Daarom stranden veel beginners bij de eerste herhaling — niet uit gebrek aan wil, maar omdat de\n  sprong van nul naar vol te groot is.\n</p>\n<p>\n  Getraind worden de brede rugspier, biceps, onderarmen en de hele schoudergordel. Als verticale\n  trekbeweging is hij het directe tegenwicht van drukken en daarmee onmisbaar voor een uitgebalanceerde\n  schouder.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Greep ongeveer schouderbreed tot licht daarboven, handruggen naar het gezicht. Voor het trekken\n  de schouderbladen naar beneden en naar achteren trekken — die eerste millimeter bepaalt of de rug\n  of alleen de arm werkt. Dan optrekken tot de kin boven de balk is, en gecontroleerd zakken tot\n  bijna gestrekte armen.\n</p>\n<h2>De weg naar de eerste herhaling</h2>\n<p>\n  De opbouw verloopt in vijf stappen: passief hangen, schouderbladophalingen aan de stang, schuine\n  roeibeweging onder een balk, negatieve pull-ups met langzaam zakken en ten slotte ondersteunde\n  pull-ups met band of voet. Pas als een stap drie zuivere sets draagt, komt de volgende. Reken in\n  weken tot maanden, niet in dagen.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Zwaai uit de heup.</strong> Levert herhalingen zonder trainingsprikkel op.</li>\n  <li><strong>Half bewegingsbereik.</strong> Onderaan bijna strekken, bovenaan kin over de balk — alles ertussenin telt maar half.</li>\n  <li><strong>Alleen met de arm trekken.</strong> Zonder de schouderbladbeweging aan het begin wordt de biceps het knelpunt.</li>\n</ul>"
     },
     "no": {
       "name": "Pull-ups",
@@ -4391,7 +4661,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Regresjon: negatives (hopp opp, senk sakte) eller båndassistert pull.",
         "Full rekkevidde – hake over stangen øverst, albuer fullt strukket nederst."
-      ]
+      ],
+      "article": "<h2>Hvorfor pull-upen er så vanskelig</h2>\n<p>\n  Ved push-up beveger du 65 til 75 prosent av kroppsvekten din. Ved pull-up er det hundre prosent, holdt\n  av en muskelgruppe som knapt utfordres i hverdagen. Derfor mislykkes mange nybegynnere allerede på den\n  første repetisjonen – ikke av manglende vilje, men fordi spranget fra null til full er for stort.\n</p>\n<p>\n  Det som trenes, er den brede ryggmuskelen, biceps, underarmene og hele skulderbeltet. Som vertikal\n  trekkbevegelse er den det direkte motstykket til pressing, og dermed uunnværlig for en balansert\n  skulder.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Grep omtrent i skulderbredde eller litt bredere, håndbaken mot ansiktet. Før du trekker, dras\n  skulderbladene ned og bakover – denne første millimeteren avgjør om ryggen eller bare armen jobber.\n  Trekk deretter opp til haken er over stangen, og senk kontrollert til nesten strak arm.\n</p>\n<h2>Veien til den første repetisjonen</h2>\n<p>\n  Progresjonen går i fem trinn: passiv henging, scapula-pull, skrå roing under en stang, negative\n  pull-ups med langsom senking, og til slutt assisterte pull-ups med strikk eller fot. Først når ett nivå\n  bærer tre rene sett, går man videre til neste. Regn i uker til måneder, ikke dager.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Sving fra hoften.</strong> Skaper repetisjoner uten treningsstimulans.</li>\n  <li><strong>Halvt bevegelsesutslag.</strong> Nesten strak arm nederst, haken over stangen øverst – alt imellom teller bare halvt.</li>\n  <li><strong>Å trekke bare med armen.</strong> Uten skulderbladbevegelsen i starten blir biceps flaskehalsen.</li>\n</ul>"
     },
     "zh": {
       "name": "引体向上",
@@ -4405,7 +4676,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "回归：负重（跳起，缓慢放低）或带辅助引体向上。",
         "完整范围——下巴在杆上方，肘部在底部完全伸展。"
-      ]
+      ],
+      "article": "<h2>引体向上为什么这么难</h2>\n<p>\n  做俯卧撑时，你移动的是体重的65%到75%。而做引体向上，移动的是100%的体重，还要靠一组\n  日常生活中几乎用不到的肌群来支撑。这就是为什么很多初学者连第一次都做不到——不是\n  因为不够努力，而是因为从零到完整动作之间的跨度实在太大。\n</p>\n<p>\n  训练的肌群包括背阔肌、肱二头肌、前臂以及整个肩带。作为一种垂直拉的动作，它是推类\n  动作的直接对应项，对维持肩部的平衡不可或缺。\n</p>\n<h2>动作要领</h2>\n<p>\n  握距大约与肩同宽或略宽，手背朝向脸部。拉动之前先把肩胛骨向下、向后收紧——正是这\n  最初的一点点动作，决定了发力的是背部还是仅仅是手臂。然后向上拉，直到下巴超过横杆，\n  再有控制地下降到手臂接近伸直的位置。\n</p>\n<h2>通往第一次完整引体向上的路径</h2>\n<p>\n  进阶分为五个阶段：被动悬垂、肩胛骨引体、单杠下的斜身划船、慢速下降的离心引体向上，\n  最后是借助弹力带或脚部辅助的辅助引体向上。只有当某个阶段能稳定完成三组标准动作，\n  才进入下一阶段。要以周甚至月为单位来计算进度，而不是天。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>借助髋部摆动。</strong>虽然能完成次数，却没有训练效果。</li>\n  <li><strong>动作幅度不完整。</strong>底部应接近完全伸直，顶部下巴要超过横杆——中间的幅度只能算一半。</li>\n  <li><strong>只靠手臂拉动。</strong>如果一开始没有肩胛骨的启动动作，肱二头肌就会成为限制因素。</li>\n</ul>"
     }
   },
   "pull.rows": {
@@ -4436,7 +4708,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Τράβηξη προς τα κάτω πλευρά για πολλαπλασιασμό των lats· τράβηξη προς το στήθος για mid-back.",
         "Χωρίς kipping — ο κορμός παραμένει ακίνητο, μόνο τα χέρια και ανώτερη πλάτη κινούνται."
-      ]
+      ],
+      "article": "<h2>Το οριζόντιο αντίστοιχο της πίεσης</h2>\n<p>\n  Τα περισσότερα προγράμματα προπόνησης έχουν μια ανισορροπία: πολλή πίεση, λίγη έλξη. Το αποτέλεσμα\n  είναι ώμοι τραβηγμένοι προς τα εμπρός και με τον καιρό ενοχλήσεις στην μπροστινή άρθρωση του ώμου. Το\n  rows είναι το άμεσο αντίδοτο — εκπαιδεύει τη μυϊκή ομάδα που τραβά τις ωμοπλάτες προς τα πίσω και προς\n  τα κάτω.\n</p>\n<p>\n  Ως εμπειρικός κανόνας ισχύει: τουλάχιστον όσο όγκο έλξης όσο και όγκο πίεσης. Όποιος κάνει τρία σετ\n  push-ups, θα πρέπει να αντιπαραβάλλει τρία σετ rows.\n</p>\n<h2>Εκτέλεση χωρίς όργανα</h2>\n<p>\n  Πλάγια κωπηλασία κάτω από μια σταθερή μπάρα, ένα τραπέζι ή με κρίκους: το σώμα κρέμεται τεντωμένο κάτω\n  από τη λαβή, οι φτέρνες στο έδαφος. Πρώτα μάζεμα των ωμοπλατών, μετά τράβηγμα του στήθους προς τη\n  μπάρα. Το σώμα παραμένει ευθεία γραμμή — το ισχίο δεν επιτρέπεται να κρεμάσει.\n</p>\n<p>\n  Τη δυσκολία τη ρυθμίζεις μέσω της γωνίας του σώματος: όσο πιο οριζόντιο, τόσο πιο δύσκολο. Πόδια\n  ανυψωμένα κάνει την άσκηση σαφώς πιο απαιτητική.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Τράβηγμα μόνο με τα χέρια.</strong> Χωρίς την κίνηση της ωμοπλάτης η πλάτη παραμένει ανεμπλεκή.</li>\n  <li><strong>Το ισχίο κρεμάει.</strong> Ακριβώς όπως στο plank — γλουτοί σφιχτοί, πλευρά κάτω.</li>\n  <li><strong>Αγκώνες πολύ ανοιχτοί προς τα έξω.</strong> Περίπου 45 μοίρες προς τον κορμό είναι και εδώ η φιλική προς τον ώμο θέση.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία έως τέσσερα σετ με 8 έως 15 επαναλήψεις. Κράτημα ενός δευτερολέπτου στην κορυφή με συνειδητό\n  μάζεμα των ωμοπλατών αποδίδει περισσότερα από επιπλέον επαναλήψεις.\n</p>"
     },
     "en": {
       "name": "Rows",
@@ -4450,7 +4723,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Pull to the lower ribs to bias the lats; pull to the chest for the mid-back.",
         "No kipping — the trunk stays still, only the arms and upper back move."
-      ]
+      ],
+      "article": "<h2>The horizontal counterpart to pressing</h2>\n<p>\n  Most training plans have an imbalance: lots of pressing, little pulling. The result is rounded-forward\n  shoulders and, over time, front-shoulder-joint issues. The row is the direct remedy — it trains the\n  muscles that pull the shoulder blades back and down.\n</p>\n<p>\n  A good rule of thumb: at least as much pulling volume as pressing volume. Three sets of push-ups\n  deserve three sets of rows in return.\n</p>\n<h2>Execution without equipment</h2>\n<p>\n  Inclined rows under a stable bar, a table, or with rings: the body hangs extended under the grip,\n  heels on the floor. Retract the shoulder blades first, then pull the chest to the bar. The body stays a\n  straight line — the hips must not sag.\n</p>\n<p>\n  You control the difficulty through body angle: the more horizontal, the harder. Elevating the feet\n  makes it noticeably harder still.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Pulling with the arms alone.</strong> Without the scapular movement, the back stays uninvolved.</li>\n  <li><strong>Hips sagging.</strong> Just like the plank — glutes braced, ribs down.</li>\n  <li><strong>Elbows flared wide.</strong> Roughly 45 degrees to the torso is the shoulder-friendly position here too.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Three to four sets of 8 to 15 reps. Holding a one-second squeeze at the top with the shoulder blades\n  deliberately pressed together does more than extra reps.\n</p>"
     },
     "es": {
       "name": "Remo",
@@ -4464,7 +4738,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tira hacia las costillas inferiores para sesgar los dorsales; tira hacia el pecho para la espalda media.",
         "Sin kipping — el torso permanece quieto, solo los brazos y la espalda superior se mueven."
-      ]
+      ],
+      "article": "<h2>La contraparte horizontal de la presión</h2>\n<p>\n  La mayoría de los planes de entrenamiento tienen un desequilibrio: mucha presión, poco tirón. El\n  resultado son hombros llevados hacia adelante y, con el tiempo, molestias en la articulación anterior\n  del hombro. El remo es el remedio directo — entrena la musculatura que lleva los omóplatos hacia atrás\n  y hacia abajo.\n</p>\n<p>\n  Como regla general: al menos el mismo volumen de tirón que de presión. Quien hace tres series de\n  flexiones debería contrarrestar con tres series de remo.\n</p>\n<h2>Ejecución sin equipamiento</h2>\n<p>\n  Remo inclinado bajo una barra estable, una mesa o con anillas: el cuerpo cuelga extendido bajo el\n  agarre, los talones en el suelo. Primero junta los omóplatos, luego tira el pecho hacia la barra. El\n  cuerpo permanece en línea recta — la cadera no debe hundirse.\n</p>\n<p>\n  La dificultad se controla con el ángulo del cuerpo: cuanto más horizontal, más difícil. Con los pies\n  elevados, el ejercicio se vuelve notablemente más exigente.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Tirar solo con los brazos.</strong> Sin el movimiento de los omóplatos, la espalda queda sin trabajar.</li>\n  <li><strong>La cadera se hunde.</strong> Igual que en la plancha — glúteo firme, costillas abajo.</li>\n  <li><strong>Codos muy abiertos.</strong> Unos 45 grados respecto al tronco es también aquí la posición más segura para el hombro.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Tres a cuatro series de 8 a 15 repeticiones. Mantener un segundo arriba y apretar conscientemente los\n  omóplatos aporta más que repeticiones adicionales.\n</p>"
     },
     "fr": {
       "name": "Tirage horizontal",
@@ -4478,7 +4753,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tirez vers les côtes inférieures pour biaiser les lats ; tirez vers la poitrine pour le dos médian.",
         "Pas de kipping — le tronc reste immobile, seuls les bras et le haut du dos bougent."
-      ]
+      ],
+      "article": "<h2>Le pendant horizontal de la poussée</h2>\n<p>\n  La plupart des programmes d'entraînement présentent un déséquilibre : beaucoup de poussée, peu de\n  traction. Le résultat : des épaules tirées vers l'avant et, avec le temps, des douleurs à l'avant de\n  l'articulation de l'épaule. Le rowing est le remède direct — il entraîne les muscles qui ramènent les\n  omoplates vers l'arrière et vers le bas.\n</p>\n<p>\n  Règle empirique : au moins autant de volume de traction que de volume de poussée. Qui fait trois\n  séries de pompes devrait leur opposer trois séries de rowing.\n</p>\n<h2>Exécution sans matériel</h2>\n<p>\n  Rowing incliné sous une barre stable, une table ou avec des anneaux : le corps est suspendu tendu sous\n  la prise, les talons au sol. Rapprochez d'abord les omoplates, puis tirez la poitrine vers la barre.\n  Le corps reste une ligne droite — les hanches ne doivent pas s'affaisser.\n</p>\n<p>\n  Vous réglez la difficulté par l'angle du corps : plus il est horizontal, plus c'est difficile. Pieds\n  surélevés rend l'exercice nettement plus exigeant.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Tirer uniquement avec les bras.</strong> Sans mouvement des omoplates, le dos reste inactif.</li>\n  <li><strong>Les hanches s'affaissent.</strong> Exactement comme au plank — fessiers contractés, côtes basses.</li>\n  <li><strong>Coudes très écartés.</strong> Environ 45 degrés par rapport au tronc reste ici aussi la position la plus favorable pour l'épaule.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Trois à quatre séries de 8 à 15 répétitions. Tenir une seconde en haut en rapprochant volontairement\n  les omoplates apporte plus que des répétitions supplémentaires.\n</p>"
     },
     "it": {
       "name": "Rematori",
@@ -4492,7 +4768,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Tira verso le costole inferiori per enfatizzare i latissimi; tira verso il petto per la schiena media.",
         "Niente kipping — il busto rimane fermo, solo le braccia e la parte superiore della schiena si muovono."
-      ]
+      ],
+      "article": "<h2>La controparte orizzontale della spinta</h2>\n<p>\n  La maggior parte dei piani di allenamento presenta uno squilibrio: molta spinta, poca trazione. Il\n  risultato sono spalle tirate in avanti e, col tempo, disturbi nell'articolazione anteriore della\n  spalla. Il rematore è il rimedio diretto — allena la muscolatura che riporta le scapole indietro e\n  verso il basso.\n</p>\n<p>\n  Come regola empirica vale: almeno tanto volume di trazione quanto volume di spinta. Chi fa tre serie\n  di piegamenti dovrebbe contrapporre tre serie di rematori.\n</p>\n<h2>Esecuzione senza attrezzi</h2>\n<p>\n  Rematore inclinato sotto una sbarra stabile, un tavolo o con gli anelli: il corpo pende disteso sotto\n  la presa, i talloni a terra. Prima ravvicina le scapole, poi tira il petto verso la sbarra. Il corpo\n  resta una linea retta — i fianchi non devono cedere.\n</p>\n<p>\n  La difficoltà si regola tramite l'angolo del corpo: più orizzontale, più difficile. Con i piedi\n  rialzati l'esercizio diventa nettamente più impegnativo.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Tirare solo con le braccia.</strong> Senza il movimento delle scapole, la schiena resta inattiva.</li>\n  <li><strong>I fianchi cedono.</strong> Esattamente come nel plank — glutei saldi, costole in basso.</li>\n  <li><strong>Gomiti troppo divaricati.</strong> Circa 45 gradi rispetto al busto è anche qui la posizione più rispettosa della spalla.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Tre-quattro serie da 8 a 15 ripetizioni. Mantenere un secondo in alto e contrarre consapevolmente le\n  scapole porta più benefici di ripetizioni aggiuntive.\n</p>"
     },
     "nl": {
       "name": "Rijen",
@@ -4506,7 +4783,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Trek naar onderste ribben om lat bias; trek naar borst voor mid-rug.",
         "Geen kipping — romp blijft stil, alleen armen en bovenrug bewegen."
-      ]
+      ],
+      "article": "<h2>De horizontale tegenhanger van drukken</h2>\n<p>\n  De meeste trainingsplannen hebben een onbalans: veel drukken, weinig trekken. Het resultaat zijn\n  naar voren getrokken schouders en na verloop van tijd klachten in het voorste schoudergewricht.\n  Rijen is het directe tegenmiddel — het traint de spieren die de schouderbladen terug en naar\n  beneden trekken.\n</p>\n<p>\n  Als vuistregel geldt: minstens evenveel trekvolume als drukvolume. Wie drie sets push-ups doet,\n  moet er drie sets rijen tegenover zetten.\n</p>\n<h2>Uitvoering zonder toestellen</h2>\n<p>\n  Schuine roeibeweging onder een stabiele balk, een tafel of met ringen: het lichaam hangt gestrekt\n  onder de greep, de hielen op de vloer. Eerst de schouderbladen samentrekken, dan de borst naar de\n  balk trekken. Het lichaam blijft een rechte lijn — de heup mag niet doorzakken.\n</p>\n<p>\n  De moeilijkheid stuur je via de lichaamshoek: hoe horizontaler, hoe zwaarder. Voeten verhoogd\n  maakt de oefening aanzienlijk veeleisender.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Alleen met de armen trekken.</strong> Zonder schouderbladbeweging blijft de rug onbetrokken.</li>\n  <li><strong>Heup zakt door.</strong> Net als bij de plank — billen stevig, ribben omlaag.</li>\n  <li><strong>Ellebogen wijd gespreid.</strong> Ongeveer 45 graden ten opzichte van de romp is ook hier de schoudervriendelijke positie.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Drie tot vier sets met 8 tot 15 herhalingen. Bovenaan één seconde vasthouden en de\n  schouderbladen bewust samendrukken levert meer op dan extra herhalingen.\n</p>"
     },
     "no": {
       "name": "Rows",
@@ -4520,7 +4798,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Trekk til nedre ribben for å bias lats; trekk til bryst for mid-back.",
         "Ingen kiping – stammen forblir stille, bare armer og øvre rygg beveger seg."
-      ]
+      ],
+      "article": "<h2>Det horisontale motstykket til pressing</h2>\n<p>\n  De fleste treningsplaner har en ubalanse: mye pressing, lite trekking. Resultatet er skuldre som\n  trekkes fremover, og med tiden plager i det fremre skulderleddet. Roøvelsen er det direkte\n  motmiddelet – den trener muskulaturen som trekker skulderbladene bakover og nedover.\n</p>\n<p>\n  Som tommelfingerregel gjelder: minst like mye trekkvolum som pressevolum. Den som gjør tre sett\n  push-ups, bør sette tre sett roing imot.\n</p>\n<h2>Utførelse uten utstyr</h2>\n<p>\n  Skrå roing under en stabil stang, et bord eller med ringer: kroppen henger strak under grepet, hælene i\n  gulvet. Trekk først skulderbladene sammen, deretter brystet mot stangen. Kroppen holdes i én rett\n  linje – hoften skal ikke synke.\n</p>\n<p>\n  Vanskelighetsgraden styrer du via kroppsvinkelen: jo mer vannrett, desto tyngre. Hevede føtter gjør\n  øvelsen betydelig mer krevende.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å trekke bare med armene.</strong> Uten skulderbladbevegelse forblir ryggen uinvolvert.</li>\n  <li><strong>Hoften synker.</strong> Akkurat som ved planken – sett spent, ribbein nede.</li>\n  <li><strong>Albuene langt ut til siden.</strong> Omtrent 45 grader fra kroppen er den skuldervennlige posisjonen også her.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Tre til fire sett med 8 til 15 repetisjoner. Å holde ett sekund på toppen og bevisst presse\n  skulderbladene sammen gir mer enn ekstra repetisjoner.\n</p>"
     },
     "zh": {
       "name": "划船",
@@ -4534,7 +4813,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "拉向下肋以偏向背阔肌；拉向胸部用于中背。",
         "不要借力——躯干保持静止，仅双臂和上背运动。"
-      ]
+      ],
+      "article": "<h2>推类动作的水平对应项</h2>\n<p>\n  大多数训练计划都存在一个失衡：推得多，拉得少。结果就是肩膀逐渐前倾，久而久之出现\n  肩关节前侧的不适。划船正是直接的解药——它训练的是把肩胛骨向后、向下拉的那组肌肉。\n</p>\n<p>\n  一个经验法则是：拉类动作的训练量至少要和推类动作持平。如果做了三组俯卧撑，就应该\n  配上三组划船。\n</p>\n<h2>无器械动作要领</h2>\n<p>\n  在稳固的横杆、桌子下或用吊环做斜身划船：身体在握点下方伸直悬挂，脚跟着地。先收紧\n  肩胛骨，再把胸部拉向横杆。身体始终保持一条直线——髋部不能下塌。\n</p>\n<p>\n  难度通过身体的角度来调节：身体越接近水平，动作越难。把双脚垫高会让动作明显更具\n  挑战性。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>只靠手臂拉动。</strong>没有肩胛骨的启动动作，背部就无法真正参与发力。</li>\n  <li><strong>髋部下塌。</strong>和平板支撑一样——臀部收紧，肋骨下沉。</li>\n  <li><strong>肘部张得太开。</strong>与躯干大约呈45度角，同样是对肩关节最友好的角度。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  三到四组，每组8到15次。在顶部停顿一秒并有意识地收紧肩胛骨，比单纯增加次数更有效果。\n</p>"
     }
   },
   "push.benchdips": {
@@ -4565,7 +4845,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Προστασία ώμων — μην πάνε βαθύτερα από ό,τι νιώθεται καλό.",
         "Κάντε δυσκολότερο με ίσια πόδια, πόδια σε δεύτερο πάγκο, ή βάρος στην αγκάλη."
-      ]
+      ],
+      "article": "<h2>Είσοδος στην κίνηση του dip</h2>\n<p>\n  Στα bench dips τα χέρια βρίσκονται πίσω από το σώμα πάνω σε πάγκο, τα πόδια στο έδαφος. Επειδή ένα\n  μέρος του βάρους μεταφέρεται μέσω των ποδιών, η άσκηση είναι σαφώς πιο εύκολη από το ελεύθερο dip και\n  δοσολογείται με ακρίβεια μέσω της θέσης των ποδιών: γόνατα λυγισμένα και κοντά στο σώμα είναι εύκολο,\n  πόδια τεντωμένα και μακριά μπροστά πιο δύσκολο, πόδια ανυψωμένα το πιο δύσκολο.\n</p>\n<p>\n  Εκπαιδεύεται κυρίως ο τρικέφαλος, επιπλέον ο μπροστινός ώμος.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Χέρια περίπου στο πλάτος των ώμων στην άκρη του πάγκου, τα δάχτυλα δείχνουν προς τα εμπρός. Η πλάτη\n  παραμένει κοντά στον πάγκο — όσο πιο μακριά απομακρύνεται το σώμα από αυτόν, τόσο πιο δυσμενής η\n  έλξη στον ώμο. Κατέβασμα μέχρι ο αγκώνας να φτάσει περίπου τις 90 μοίρες, μετά πίεση προς τα πάνω.\n</p>\n<h2>Το πρόβλημα του ώμου</h2>\n<p>\n  Τα bench dips φέρνουν τον ώμο σε έσω στροφή και ταυτόχρονα σε έκταση — έναν συνδυασμό που σε υπερβολικό\n  βάθος μπορεί να γίνει δυσάρεστος. Δύο κανόνες το μετριάζουν: όχι βαθύτερα από 90 μοίρες, και το σώμα\n  κοντά στον πάγκο. Όποιος νιώθει τράβηγμα μπροστά στον ώμο, θα πρέπει να στραφεί σε push-ups με στενή\n  θέση χεριών, που χτυπούν τον ίδιο μυ.\n</p>\n<h2>Δοσολογία</h2>\n<p>\n  Τρία σετ με 8 έως 15 επαναλήψεις. Ως εξέλιξη πρώτα τέντωσε τα πόδια, μετά τοποθέτησε τα πόδια σε\n  δεύτερο πάγκο — και όταν αυτό εδραιωθεί, πέρασε σε ελεύθερα dips.\n</p>"
     },
     "en": {
       "name": "Bench Dips",
@@ -4579,7 +4860,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Protect the shoulders — don't go deeper than feels good.",
         "Make it harder with straight legs, feet on a second bench, or weight on the lap."
-      ]
+      ],
+      "article": "<h2>An entry point into the dip movement</h2>\n<p>\n  In bench dips, the hands rest behind the body on a bench while the feet stay on the floor. Because part\n  of the weight is carried through the legs, the exercise is noticeably easier than the free dip and\n  finely adjustable through foot position: knees bent and close to the body is easy, legs straight and\n  far forward is harder, feet elevated is hardest.\n</p>\n<p>\n  It mainly trains the triceps, along with the front deltoids.\n</p>\n<h2>Execution</h2>\n<p>\n  Hands roughly shoulder-width on the bench edge, fingers pointing forward. The back stays close to the\n  bench — the further the body drifts away from it, the worse the pull on the shoulder. Lower until the\n  elbow reaches about 90 degrees, then press back up.\n</p>\n<h2>The shoulder catch</h2>\n<p>\n  Bench dips put the shoulder into internal rotation and extension at the same time — a combination that\n  can get uncomfortable if you go too deep. Two rules defuse that: don't go below 90 degrees, and keep\n  the body close to the bench. If you feel it pulling at the front of the shoulder, switch to close-grip\n  push-ups instead, which hit the same muscle.\n</p>\n<h2>Programming</h2>\n<p>\n  Three sets of 8 to 15 reps. To progress: first straighten the legs, then put the feet on a second\n  bench — and once that's solid, move to free dips.\n</p>"
     },
     "es": {
       "name": "Flexiones de banco",
@@ -4593,7 +4875,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Protege los hombros — no bajes más de lo que se sienta bien.",
         "Hazlo más difícil con piernas rectas, pies en un segundo banco, o peso en el regazo."
-      ]
+      ],
+      "article": "<h2>La entrada al movimiento de fondos</h2>\n<p>\n  En las flexiones de banco, las manos se apoyan detrás del cuerpo sobre un banco, los pies en el suelo.\n  Como parte del peso se transfiere a través de las piernas, el ejercicio es notablemente más fácil que\n  el fondo libre y se puede dosificar con precisión mediante la posición de los pies: rodillas\n  flexionadas y cerca del cuerpo es fácil, piernas extendidas y adelantadas es más difícil, pies\n  elevados es lo más difícil.\n</p>\n<p>\n  Se entrena principalmente el tríceps, y además el hombro anterior.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Manos aproximadamente a la anchura de los hombros en el borde del banco, dedos apuntando hacia\n  adelante. La espalda se mantiene cerca del banco — cuanto más se aleje el cuerpo de él, más\n  desfavorable es la tracción sobre el hombro. Baja hasta que el codo alcance aproximadamente 90 grados,\n  luego empuja hacia arriba.\n</p>\n<h2>El punto delicado del hombro</h2>\n<p>\n  Las flexiones de banco llevan el hombro a rotación interna y al mismo tiempo a extensión — una\n  combinación que puede volverse incómoda con demasiada profundidad. Dos reglas lo mitigan: no bajar más\n  de 90 grados, y mantener el cuerpo cerca del banco. Quien sienta tirón en la parte delantera del hombro\n  debería recurrir a flexiones con agarre cerrado, que trabajan el mismo músculo.\n</p>\n<h2>Dosificación</h2>\n<p>\n  Tres series de 8 a 15 repeticiones. Como progresión, primero extiende las piernas, luego coloca los\n  pies sobre un segundo banco — y cuando eso se domine, cambia a fondos libres.\n</p>"
     },
     "fr": {
       "name": "Dips sur banc",
@@ -4607,7 +4890,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Protégez les épaules — ne descendez pas plus profond que ce qui se sent bon.",
         "Rendez-le plus difficile avec les jambes tendues, pieds sur un deuxième banc, ou du poids sur les genoux."
-      ]
+      ],
+      "article": "<h2>L'entrée en matière vers le mouvement de dip</h2>\n<p>\n  Dans le dip sur banc, les mains reposent derrière le corps sur un banc, les pieds au sol. Comme une\n  partie du poids est reportée sur les jambes, l'exercice est nettement plus facile que le dip libre et\n  se dose finement via la position des pieds : genoux fléchis et proches du corps, c'est facile ; jambes\n  tendues et loin devant, plus difficile ; pieds surélevés, le plus difficile.\n</p>\n<p>\n  L'exercice cible surtout les triceps, ainsi que l'avant de l'épaule.\n</p>\n<h2>Exécution</h2>\n<p>\n  Mains à peu près à la largeur des épaules sur le bord du banc, doigts pointés vers l'avant. Le dos\n  reste proche du banc — plus le corps s'en éloigne, plus la traction sur l'épaule devient défavorable.\n  Descendez jusqu'à ce que le coude atteigne environ 90 degrés, puis repoussez.\n</p>\n<h2>Le piège de l'épaule</h2>\n<p>\n  Le dip sur banc met l'épaule en rotation interne et en extension en même temps — une combinaison qui\n  peut devenir inconfortable si l'on descend trop bas. Deux règles limitent ce risque : ne pas dépasser\n  90 degrés, et garder le corps proche du banc. Qui ressent une tension à l'avant de l'épaule devrait se\n  rabattre sur des pompes prise serrée, qui ciblent le même muscle.\n</p>\n<h2>Dosage</h2>\n<p>\n  Trois séries de 8 à 15 répétitions. Pour progresser, tendez d'abord les jambes, puis posez les pieds\n  sur un deuxième banc — et une fois cela maîtrisé, passez aux dips libres.\n</p>"
     },
     "it": {
       "name": "Dips su panca",
@@ -4621,7 +4905,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Proteggi le spalle — non scendere più profondo di quanto ti senti bene.",
         "Rendilo più difficile con gambe dritte, piedi su una seconda panca, o peso sulle ginocchia."
-      ]
+      ],
+      "article": "<h2>L'ingresso al movimento del dip</h2>\n<p>\n  Nei dip su panca le mani poggiano dietro il corpo su una panca, i piedi a terra. Poiché parte del peso\n  viene scaricato attraverso le gambe, l'esercizio è nettamente più leggero del dip libero e regolabile\n  con precisione tramite la posizione dei piedi: ginocchia piegate e vicine al corpo è più facile, gambe\n  distese e lontane più difficile, piedi rialzati la variante più impegnativa.\n</p>\n<p>\n  Si allena soprattutto il tricipite, insieme alla spalla anteriore.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Mani a larghezza spalle circa sul bordo della panca, dita rivolte in avanti. La schiena resta vicina\n  alla panca — più il corpo se ne allontana, più sfavorevole diventa la trazione sulla spalla. Scendi\n  finché il gomito non raggiunge circa 90 gradi, poi spingi verso l'alto.\n</p>\n<h2>Il punto critico della spalla</h2>\n<p>\n  I dip su panca portano la spalla in intrarotazione e contemporaneamente in estensione — una\n  combinazione che con una profondità eccessiva può diventare sgradevole. Due regole attenuano il\n  problema: non scendere oltre i 90 gradi, e mantenere il corpo vicino alla panca. Chi sente tirare\n  davanti alla spalla dovrebbe passare ai piegamenti con presa stretta, che colpiscono lo stesso muscolo.\n</p>\n<h2>Dosaggio</h2>\n<p>\n  Tre serie da 8 a 15 ripetizioni. Come progressione: prima distendi le gambe, poi appoggia i piedi su\n  una seconda panca — e quando questo è acquisito, passa ai dip liberi.\n</p>"
     },
     "nl": {
       "name": "Bench Dips",
@@ -4635,7 +4920,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Bescherm schouders — ga niet dieper dan voelt goed.",
         "Maak harder met benen recht, voeten op tweede bank, of gewicht op schoot."
-      ]
+      ],
+      "article": "<h2>Instap in de dip-beweging</h2>\n<p>\n  Bij bench dips liggen de handen achter het lichaam op een bank, de voeten op de vloer. Omdat een\n  deel van het gewicht via de benen wordt afgevoerd, is de oefening aanzienlijk lichter dan de vrije\n  dip en via de voetpositie fijn te doseren: knieën gebogen en dicht bij het lichaam is licht, benen\n  gestrekt en ver naar voren zwaarder, voeten verhoogd het zwaarst.\n</p>\n<p>\n  Getraind wordt vooral de triceps, daarnaast de voorste schouder.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Handen ongeveer schouderbreed op de bankrand, vingers wijzen naar voren. De rug blijft dicht bij\n  de bank — hoe verder het lichaam ervan wegdrijft, hoe ongunstiger de trek op de schouder. Laten\n  zakken tot de elleboog ongeveer 90 graden bereikt, dan omhoog drukken.\n</p>\n<h2>De schoudervalkuil</h2>\n<p>\n  Bench dips brengen de schouder in binnenwaartse rotatie en tegelijk in strekking — een combinatie\n  die bij te grote diepte onaangenaam kan worden. Twee regels verminderen dat: niet dieper dan 90\n  graden, en het lichaam dicht bij de bank houden. Wie voorin de schouder trekt, kan beter\n  overstappen op push-ups met een smalle handpositie, die dezelfde spier raken.\n</p>\n<h2>Dosering</h2>\n<p>\n  Drie sets met 8 tot 15 herhalingen. Als progressie eerst de benen strekken, dan de voeten op een\n  tweede bank leggen — en als dat goed zit, overstappen op vrije dips.\n</p>"
     },
     "no": {
       "name": "Bench Dips",
@@ -4649,7 +4935,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beskytt skuldre – ikke dypere enn det som føles bra.",
         "Gjør det vanskeligere med rette ben, føtter på annen benk, eller vekt i fanget."
-      ]
+      ],
+      "article": "<h2>Innsteg til dip-bevegelsen</h2>\n<p>\n  Ved bench dips ligger hendene bak kroppen på en benk, føttene på gulvet. Fordi en del av vekten bæres\n  via beina, er øvelsen betydelig lettere enn den frie dipsen, og kan finjusteres via fotposisjonen:\n  bøyde knær nær kroppen er lett, strake bein langt fremme tyngre, hevede føtter tyngst.\n</p>\n<p>\n  Det som trenes, er først og fremst triceps, i tillegg til den fremre skulderen.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Hendene omtrent i skulderbredde på benkkanten, fingrene peker fremover. Ryggen holdes nær benken – jo\n  lenger kroppen vandrer bort fra den, desto mer ugunstig blir draget på skulderen. Senk deg til albuen\n  når omtrent 90 grader, press deretter opp igjen.\n</p>\n<h2>Skulderfellen</h2>\n<p>\n  Bench dips bringer skulderen inn i innadrotasjon og samtidig i strekk – en kombinasjon som kan bli\n  ubehagelig ved for stor dybde. To regler avdramatiserer dette: ikke dypere enn 90 grader, og hold\n  kroppen tett inntil benken. Den som kjenner sting foran i skulderen, bør heller gå over til push-ups\n  med smalt håndgrep, som treffer samme muskel.\n</p>\n<h2>Dosering</h2>\n<p>\n  Tre sett med 8 til 15 repetisjoner. Som progresjon, strekk først beina, legg deretter føttene på en\n  annen benk – og når det sitter, gå over til frie dips.\n</p>"
     },
     "zh": {
       "name": "凳上撑体",
@@ -4663,7 +4950,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "保护肩膀——不要比感觉好的更深下降。",
         "用伸直的腿、第二个长凳上的脚或腿上的重量使其更难。"
-      ]
+      ],
+      "article": "<h2>撑体动作的入门方式</h2>\n<p>\n  凳上撑体时，双手放在身后的长凳上，双脚着地。由于部分体重通过腿部分担，这个动作比\n  自由撑体轻松得多，而且难度可以通过脚的位置精细调节：膝盖弯曲、双脚靠近身体时最\n  轻松，双腿伸直并远离身体时更难，双脚垫高时难度最大。\n</p>\n<p>\n  主要训练的是肱三头肌，同时也会锻炼到三角肌前束。\n</p>\n<h2>动作要领</h2>\n<p>\n  双手与肩同宽放在长凳边缘，手指朝前。背部始终贴近长凳——身体离长凳越远，对肩关节\n  的牵拉就越不利。下降到肘部大约呈90度，然后向上撑起。\n</p>\n<h2>肩部隐患</h2>\n<p>\n  凳上撑体会让肩关节同时处于内旋和伸展状态——如果下降幅度过大，这种组合可能会引起\n  不适。两条规则可以降低风险：下降幅度不超过90度，并让身体始终贴近长凳。如果肩部\n  前侧出现牵拉感，可以改做窄距俯卧撑，同样能锻炼到相同的肌肉。\n</p>\n<h2>训练量</h2>\n<p>\n  三组，每组8到15次。进阶时先伸直双腿，再把双脚放到第二张长凳上——熟练之后，可以\n  转向自由撑体。\n</p>"
     }
   },
   "push.dips": {
@@ -4694,7 +4982,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Λυγίσιμο ελαφρώς μπροστά προς πολλαπλασιασμό του στήθους· μείνε όρθιος προς δρέπανισμα τριγλώχινων.",
         "Αρχάριοι: ξεκίνημα με bench dips, κατόπιν αρνητικά dips (εκκεντρικά μόνο), κατόπιν πλήρη dips."
-      ]
+      ],
+      "article": "<h2>Η πιο σκληρή άσκηση πίεσης με σωματικό βάρος</h2>\n<p>\n  Τα dips κινούν σχεδόν ολόκληρο το σωματικό βάρος και είναι έτσι σαφώς πιο δύσκολα από το push-up.\n  Χτυπούν στήθος, τρικέφαλο και μπροστινό ώμο ταυτόχρονα. Η γωνία του κορμού καθορίζει την κατανομή:\n  όρθιος εργάζεται κυρίως ο τρικέφαλος, γερμένος μπροστά το φορτίο μετατοπίζεται προς το στήθος.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Στήριξη σε παράλληλες μπάρες, χέρια τεντωμένα, πόδια ελαφρώς λυγισμένα. Κατέβασμα υπό έλεγχο μέχρι\n  βραχίονας και αντιβράχιο να σχηματίσουν περίπου 90 μοίρες, μετά πίεση προς τα πάνω. Οι αγκώνες\n  παραμένουν κοντά στο σώμα και δείχνουν προς τα πίσω, όχι προς τα έξω.\n</p>\n<h2>Προσοχή στον ώμο</h2>\n<p>\n  Τα dips είναι η άσκηση με τη μεγαλύτερη πιθανότητα τραυματισμού για τον ώμο, και μάλιστα για\n  συγκεκριμένο λόγο: στη βαθιά θέση η άρθρωση περιέρχεται σε έντονη έκταση. Όποιος πηγαίνει πολύ βαθιά,\n  επιβαρύνει την αρθρική κάψα αντί για τον μυ.\n</p>\n<p>\n  Πρακτικός κανόνας: 90 μοίρες στον αγκώνα είναι αρκετά βαθιά. Όποιος νιώθει τράβηγμα μπροστά στον ώμο\n  αντί να νιώθει τον μυ, πηγαίνει πολύ βαθιά ή δεν είναι ακόμη έτοιμος για την άσκηση.\n</p>\n<h2>Προϋπόθεση και δοσολογία</h2>\n<p>\n  Πριν τα πρώτα dips θα πρέπει να υπάρχουν στο πρόγραμμα push-ups με καλό εύρος κίνησης και επαρκής\n  όγκος έλξης. Είσοδος μέσω bench dips ή με υποβοήθηση λαστιχού. Μετά τρία έως τέσσερα σετ με 5 έως 12\n  επαναλήψεις.\n</p>"
     },
     "en": {
       "name": "Dips",
@@ -4708,7 +4997,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Lean slightly forward to bias the chest; stay upright to bias the triceps.",
         "Beginners: start with bench dips, then negative dips (eccentric only), then full dips."
-      ]
+      ],
+      "article": "<h2>The hardest bodyweight press</h2>\n<p>\n  Dips move nearly the full body weight, making them noticeably harder than the push-up. They hit the\n  chest, triceps and front deltoids at the same time. Torso angle controls the split: upright works\n  mainly the triceps, leaning forward shifts the load toward the chest.\n</p>\n<h2>Execution</h2>\n<p>\n  Support on parallel bars, arms extended, legs slightly bent. Lower under control until upper and lower\n  arm form roughly 90 degrees, then press back up. The elbows stay close to the body and point back, not\n  out to the sides.\n</p>\n<h2>Keeping an eye on the shoulder</h2>\n<p>\n  Dips are the exercise with the greatest injury potential for the shoulder, for a specific reason: in\n  the deep position the joint moves into a heavily extended stance. Go too deep and you load the joint\n  capsule instead of the muscle.\n</p>\n<p>\n  Practical rule: 90 degrees at the elbow is deep enough. If you feel it pulling at the front of the\n  shoulder instead of feeling the muscles, you're going too deep or not yet ready for the exercise.\n</p>\n<h2>Prerequisite and programming</h2>\n<p>\n  Before the first dips, push-ups with a good range of motion and enough pulling volume should already\n  be part of the program. Start with bench dips or band assistance. Then three to four sets of 5 to 12\n  reps.\n</p>"
     },
     "es": {
       "name": "Fondos",
@@ -4722,7 +5012,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Inclínate ligeramente hacia adelante para sesgar el pecho; mantente erguido para sesgar los tríceps.",
         "Principiantes: comienza con flexiones de banco, luego fondos negativos (solo excéntrico), luego fondos completos."
-      ]
+      ],
+      "article": "<h2>El ejercicio de presión más exigente con peso corporal</h2>\n<p>\n  Los fondos mueven casi todo el peso corporal y son por eso notablemente más difíciles que la flexión.\n  Trabajan pecho, tríceps y hombro anterior al mismo tiempo. El ángulo del torso controla la\n  distribución: erguido trabaja sobre todo el tríceps, inclinado hacia adelante la carga se traslada\n  hacia el pecho.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Apóyate en barras paralelas, brazos extendidos, piernas ligeramente flexionadas. Baja bajo control\n  hasta que el brazo y el antebrazo formen aproximadamente 90 grados, luego empuja hacia arriba. Los\n  codos permanecen cerca del cuerpo y apuntan hacia atrás, no hacia afuera.\n</p>\n<h2>Vigilar el hombro</h2>\n<p>\n  Los fondos son el ejercicio con mayor potencial de lesión para el hombro, y por una razón concreta: en\n  la posición baja, la articulación llega a una posición de extensión muy pronunciada. Quien baja\n  demasiado carga la cápsula articular en lugar de la musculatura.\n</p>\n<p>\n  Regla práctica: 90 grados en el codo son suficientemente profundo. Quien sienta tirón en la parte\n  delantera del hombro en lugar de sentir el músculo, está bajando demasiado o aún no está listo para el\n  ejercicio.\n</p>\n<h2>Requisito previo y dosificación</h2>\n<p>\n  Antes de los primeros fondos deberían dominarse las flexiones con buen rango de movimiento y suficiente\n  volumen de tirón en el programa. Entrada mediante flexiones de banco o con asistencia de banda. Luego,\n  tres a cuatro series de 5 a 12 repeticiones.\n</p>"
     },
     "fr": {
       "name": "Dips",
@@ -4736,7 +5027,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Penchez-vous légèrement en avant pour biaiser la poitrine ; restez droit pour biaiser les triceps.",
         "Débutants : commencez avec dips sur banc, puis négatif (excentrique seulement), puis dips complets."
-      ]
+      ],
+      "article": "<h2>L'exercice de poussée au poids du corps le plus difficile</h2>\n<p>\n  Les dips mobilisent presque tout le poids du corps et sont donc nettement plus difficiles que la\n  pompe. Ils ciblent simultanément la poitrine, les triceps et l'avant de l'épaule. L'angle du torse\n  détermine la répartition : droit, ce sont surtout les triceps qui travaillent ; penché en avant, la\n  charge se déplace vers la poitrine.\n</p>\n<h2>Exécution</h2>\n<p>\n  Prenez appui sur des barres parallèles, bras tendus, jambes légèrement fléchies. Descendez de façon\n  contrôlée jusqu'à ce que le bras et l'avant-bras forment environ 90 degrés, puis repoussez. Les coudes\n  restent proches du corps et pointent vers l'arrière, pas vers l'extérieur.\n</p>\n<h2>Garder l'épaule à l'œil</h2>\n<p>\n  Le dip est l'exercice au plus fort potentiel de blessure pour l'épaule, et ce pour une raison précise :\n  en position basse, l'articulation se retrouve dans une extension prononcée. Qui descend trop bas\n  sollicite la capsule articulaire plutôt que les muscles.\n</p>\n<p>\n  Règle pratique : 90 degrés au coude, c'est assez profond. Qui ressent une tension à l'avant de l'épaule\n  plutôt que dans les muscles descend trop bas ou n'est pas encore prêt pour cet exercice.\n</p>\n<h2>Prérequis et dosage</h2>\n<p>\n  Avant les premiers dips, le programme devrait déjà inclure des pompes avec une bonne amplitude et\n  suffisamment de volume de traction. Entrée en matière via les dips sur banc ou avec l'assistance d'une\n  bande. Ensuite, trois à quatre séries de 5 à 12 répétitions.\n</p>"
     },
     "it": {
       "name": "Dips",
@@ -4750,7 +5042,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Inclina leggermente in avanti per enfatizzare il petto; rimani eretto per enfatizzare i tricipiti.",
         "Principianti: inizia con dips su panca, poi dips negativi (solo eccentrico), poi dips completi."
-      ]
+      ],
+      "article": "<h2>L'esercizio di spinta a corpo libero più duro</h2>\n<p>\n  I dip muovono quasi l'intero peso corporeo e sono quindi nettamente più difficili del piegamento.\n  Colpiscono contemporaneamente petto, tricipite e spalla anteriore. L'angolo del busto ne controlla la\n  distribuzione: eretto lavora soprattutto il tricipite, inclinato in avanti il carico si sposta verso\n  il petto.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Sostegno su barre parallele, braccia distese, gambe leggermente piegate. Scendi in modo controllato\n  finché braccio e avambraccio non formano circa 90 gradi, poi spingi verso l'alto. I gomiti restano\n  vicini al corpo e puntano all'indietro, non verso l'esterno.\n</p>\n<h2>Tenere d'occhio la spalla</h2>\n<p>\n  I dip sono l'esercizio con il maggior potenziale di infortunio per la spalla, e per una ragione\n  precisa: nella posizione bassa l'articolazione entra in una posizione fortemente estesa. Chi scende\n  troppo carica la capsula articolare invece della muscolatura.\n</p>\n<p>\n  Regola pratica: 90 gradi al gomito sono già abbastanza in basso. Chi sente tirare davanti alla spalla\n  invece di sentire i muscoli lavorare, scende troppo o non è ancora pronto per l'esercizio.\n</p>\n<h2>Prerequisiti e dosaggio</h2>\n<p>\n  Prima dei primi dip dovrebbero essere già presenti nel programma piegamenti con una buona ampiezza di\n  movimento e un volume di trazione sufficiente. Si comincia con i dip su panca o con l'assistenza di\n  una band. Poi tre-quattro serie da 5 a 12 ripetizioni.\n</p>"
     },
     "nl": {
       "name": "Dips",
@@ -4764,7 +5057,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Leun licht naar voren om borst bias; blijf rechtop voor triceps bias.",
         "Beginners: begin met bench dips, dan negatieve dips (excentrisch alleen), dan volledige dips."
-      ]
+      ],
+      "article": "<h2>De zwaarste drukoefening met lichaamsgewicht</h2>\n<p>\n  Dips bewegen vrijwel het volledige lichaamsgewicht en zijn daarmee aanzienlijk zwaarder dan de\n  push-up. Ze raken borst, triceps en de voorste schouder tegelijk. De rompgehoek stuurt de\n  verdeling: rechtop werkt vooral de triceps, naar voren geleund verschuift de belasting naar de\n  borst.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Op parallelle stangen steunen, armen gestrekt, benen licht gebogen. Gecontroleerd zakken tot\n  boven- en onderarm ongeveer 90 graden vormen, dan omhoog drukken. De ellebogen blijven dicht bij\n  het lichaam en wijzen naar achteren, niet naar buiten.\n</p>\n<h2>De schouder in het oog houden</h2>\n<p>\n  Dips zijn de oefening met het grootste blessurerisico voor de schouder, en wel om een concrete\n  reden: in de diepe positie komt het gewricht in een sterk gestrekte stand. Wie te diep gaat,\n  belast het gewrichtskapsel in plaats van de spieren.\n</p>\n<p>\n  Praktische regel: 90 graden in de elleboog is diep genoeg. Wie voorin de schouder trekt in plaats\n  van spieren te voelen, gaat te diep of is nog niet klaar voor de oefening.\n</p>\n<h2>Voorwaarde en dosering</h2>\n<p>\n  Voor de eerste dips horen push-ups met een goede bewegingsuitslag en voldoende trekvolume in het\n  programma te staan. Instap via bench dips of met bandondersteuning. Dan drie tot vier sets met 5\n  tot 12 herhalingen.\n</p>"
     },
     "no": {
       "name": "Dips",
@@ -4778,7 +5072,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Lut litt fremover for å bias bryst; forbli oppreist for å bias triceps.",
         "Nybegynnere: start med bench dips, så negative dips (eksentrist bare), så fulle dips."
-      ]
+      ],
+      "article": "<h2>Den tyngste presseøvelsen med kroppsvekt</h2>\n<p>\n  Dips beveger nesten hele kroppsvekten, og er dermed betydelig tyngre enn push-up. De treffer bryst,\n  triceps og fremre skulder samtidig. Overkroppsvinkelen styrer fordelingen: oppreist jobber først og\n  fremst triceps, lent fremover flytter belastningen mot brystet.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Støtt deg på parallelle stenger, armene strake, beina lett bøyd. Senk deg kontrollert til overarm og\n  underarm danner omtrent 90 grader, press deretter opp igjen. Albuene holdes nær kroppen og peker\n  bakover, ikke utover.\n</p>\n<h2>Hold øye med skulderen</h2>\n<p>\n  Dips er øvelsen med størst skadepotensial for skulderen, og det av en konkret grunn: i den dype\n  posisjonen havner leddet i en sterkt strukket stilling. Den som går for dypt, belaster leddkapselen i\n  stedet for muskulaturen.\n</p>\n<p>\n  Praktisk regel: 90 grader i albuen er dypt nok. Den som kjenner sting foran i skulderen i stedet for\n  muskler, går for dypt eller er ikke klar for øvelsen ennå.\n</p>\n<h2>Forutsetning og dosering</h2>\n<p>\n  Før de første dipsene bør push-ups med godt bevegelsesutslag og tilstrekkelig trekkvolum stå i\n  programmet. Innsteg via bench dips eller med strikkassistanse. Deretter tre til fire sett med 5 til 12\n  repetisjoner.\n</p>"
     },
     "zh": {
       "name": "撑体",
@@ -4792,7 +5087,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "略微向前倾以偏向胸部；保持竖直以偏向三头肌。",
         "初学者：从凳上撑体开始，然后负重撑体（仅下降），然后完整撑体。"
-      ]
+      ],
+      "article": "<h2>最难的自重推类训练动作</h2>\n<p>\n  撑体几乎要移动全部体重，因此明显比俯卧撑更难。它同时锻炼胸部、肱三头肌和三角肌\n  前束。上半身的倾斜角度决定了发力的分配：身体竖直时主要锻炼肱三头肌，向前倾斜时\n  负荷则更多转移到胸部。\n</p>\n<h2>动作要领</h2>\n<p>\n  支撑在两根平行杠上，手臂伸直，双腿略微弯曲。有控制地下降，直到大臂和小臂大约呈\n  90度，然后向上撑起。肘部始终贴近身体，朝向后方，而不是向外张开。\n</p>\n<h2>时刻关注肩部状态</h2>\n<p>\n  撑体是对肩部受伤风险最高的动作，原因很明确：在最低位置时，肩关节会处于强烈的\n  伸展状态。下降幅度过大时，承受负荷的会是关节囊，而不是肌肉。\n</p>\n<p>\n  一个实用的原则：肘部弯曲到90度就已经足够深了。如果感受到的是肩部前侧的牵拉感，\n  而不是肌肉的发力感，说明下降幅度太大，或者身体还没准备好做这个动作。\n</p>\n<h2>前提条件与训练量</h2>\n<p>\n  在尝试第一次撑体之前，训练计划中应该已经包含动作幅度良好的俯卧撑，以及足够的\n  拉类动作训练量。可以先从凳上撑体或弹力带辅助撑体开始入门。之后可以进行三到四组，\n  每组5到12次。\n</p>"
     }
   },
   "push.handstandhold": {
@@ -4823,7 +5119,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αρχάριοι: δημιουργία pike push-ups και wall walks πρώτα, κατόπιν ξεκίνησε πρακτική του κρατήματος.",
         "Σπρώξιμο των ώμων ενεργά «μέσα στα αυτιά» — χωρίς βυθισμένη θέση."
-      ]
+      ],
+      "article": "<h2>Από την πίεση στη μεταφορά φορτίου</h2>\n<p>\n  Το handstand hold δεν είναι άσκηση πίεσης, αλλά άσκηση κρατήματος: ο ώμος φέρει ολόκληρο το σωματικό\n  βάρος σε θέση πάνω από το κεφάλι, ενώ ο κορμός και οι καρποί σταθεροποιούν την ευθεία γραμμή. Χτίζει\n  σταθερότητα ώμου που καμία άλλη άσκηση σωματικού βάρους δεν παράγει με τον ίδιο τρόπο, και αποτελεί\n  προϋπόθεση για το handstand push-up.\n</p>\n<p>\n  Ο δρόμος προς εκεί περνά από το pike push-up: όσο πιο ψηλά στέκονται τα πόδια εκεί, τόσο πιο κάθετη\n  γίνεται η φόρτιση — το handstand είναι το τελικό σημείο αυτής της γραμμής.\n</p>\n<h2>Εκτέλεση στον τοίχο</h2>\n<p>\n  Δύο παραλλαγές. Ανέβασμα με την κοιλιά προς τον τοίχο δίνει την πιο ίσια και ειλικρινή γραμμή, αλλά\n  είναι πιο δύσκολο να επιτευχθεί. Με την πλάτη προς τον τοίχο είναι πιο εύκολη η είσοδος, αλλά οδηγεί\n  εύκολα σε οσφυϊκή κύρτωση.\n</p>\n<p>\n  Και στις δύο περιπτώσεις: χέρια στο πλάτος των ώμων, δάχτυλα ανοιχτά και ενεργά αγκιστρωμένα στο\n  έδαφος, χέρια τεντωμένα, ώμοι σπρωγμένοι προς τα αυτιά. Γλουτοί και κοιλιά σφιχτά, πλευρά κάτω — το\n  σώμα είναι ευθεία γραμμή, όχι τόξο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Οσφυϊκή κύρτωση.</strong> Το πιο συχνό λάθος και ο λόγος που πολλοί δεν καταφέρνουν να κρατήσουν τη θέση — παλεύουν ενάντια στη δική τους στατική.</li>\n  <li><strong>Οι ώμοι βυθισμένοι.</strong> Σπρώξε ενεργά προς τα πάνω, αλλιώς το βάρος κρέμεται στις αρθρώσεις.</li>\n  <li><strong>Καρποί χωρίς θέρμανση.</strong> Πριν την πρώτη επανάληψη κάνε περιστροφές και τέντωμα· η επιβάρυνση είναι ασυνήθιστα υψηλή.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τέσσερα έως έξι σετ των 15 έως 45 δευτερολέπτων με άφθονη ανάπαυση. Προπόνηση φρέσκια, όχι στο τέλος\n  της περιόδου.\n</p>"
     },
     "en": {
       "name": "Handstand Hold",
@@ -4837,7 +5134,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners: build pike push-ups and wall walks first, then start practising the hold.",
         "Press the shoulders actively \"into the ears\" — no sunken position."
-      ]
+      ],
+      "article": "<h2>From pressing to carrying</h2>\n<p>\n  The handstand hold isn't a pressing exercise, it's a holding exercise: the shoulder carries the full\n  body weight in an overhead position while the trunk and wrists stabilize the line. It builds shoulder\n  stability that no other bodyweight exercise creates the same way, and it's the prerequisite for the\n  handstand push-up.\n</p>\n<p>\n  The path there runs through the pike push-up: the higher the feet are placed there, the more vertical\n  the load becomes — the handstand is the endpoint of that line.\n</p>\n<h2>Execution against a wall</h2>\n<p>\n  Two variants. Walking up facing the wall gives the straighter, more honest line but is harder to get\n  into. Facing away from the wall is the easier entry but tempts you into a lower-back arch.\n</p>\n<p>\n  In both cases: hands shoulder-width, fingers spread and actively gripping the floor, arms straight,\n  shoulders pressed up toward the ears. Glutes and abs braced, ribs down — the body is a line, not an\n  arch.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Lower-back arch.</strong> The most common mistake and the reason many can't hold the position — they're fighting their own posture.</li>\n  <li><strong>Sunken shoulders.</strong> Actively push up, otherwise the weight hangs in the joints.</li>\n  <li><strong>Cold wrists.</strong> Circle and stretch them before the first rep; the load is unusually high.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Four to six sets of 15 to 45 seconds with generous rest. Train it fresh, not at the end of a session.\n</p>"
     },
     "es": {
       "name": "Sostenimiento en parada de manos",
@@ -4851,7 +5149,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Principiantes: construye flexiones pike y caminatas de pared primero, luego comienza a practicar el sostenimiento.",
         "Presiona los hombros activamente «hacia las orejas» — sin posición hundida."
-      ]
+      ],
+      "article": "<h2>De empujar a sostener</h2>\n<p>\n  El sostenimiento en parada de manos no es un ejercicio de presión, sino uno de sostén: el hombro\n  soporta todo el peso corporal en posición sobre la cabeza, mientras el tronco y las muñecas\n  estabilizan la línea. Desarrolla una estabilidad de hombro que ningún otro ejercicio de peso corporal\n  genera así, y es el requisito previo para la flexión en parada de manos.\n</p>\n<p>\n  El camino hasta ahí pasa por la flexión pike: cuanto más altos estén los pies en esa posición, más\n  vertical se vuelve la carga — la parada de manos es el punto final de esa línea.\n</p>\n<h2>Ejecución contra la pared</h2>\n<p>\n  Dos variantes. Subir con el vientre hacia la pared da la línea más recta y honesta, pero es más difícil\n  de alcanzar. Con la espalda hacia la pared es la entrada más sencilla, pero induce a la hiperlordosis.\n</p>\n<p>\n  En ambos casos: manos a la anchura de los hombros, dedos separados y agarrando activamente el suelo,\n  brazos extendidos, hombros empujados hacia las orejas. Glúteo y abdomen firmes, costillas abajo — el\n  cuerpo es una línea, no un arco.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Hiperlordosis.</strong> El error más frecuente y la razón por la que muchos no logran mantener la posición — luchan contra su propia estática.</li>\n  <li><strong>Hombros hundidos.</strong> Empújalos activamente hacia arriba, de lo contrario el peso cuelga de las articulaciones.</li>\n  <li><strong>Muñecas sin calentar.</strong> Haz círculos y estiramientos antes de la primera repetición; la carga es inusualmente alta.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Cuatro a seis series de 15 a 45 segundos con descanso abundante. Entrena en fresco, no al final de la\n  sesión.\n</p>"
     },
     "fr": {
       "name": "Tenue en appui facial",
@@ -4865,7 +5164,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Débutants : construisez d'abord les pompes pike et les wall walks, puis commencez à pratiquer la tenue.",
         "Poussez les épaules activement « dans les oreilles » — pas de position enfoncée."
-      ]
+      ],
+      "article": "<h2>De la poussée au port du poids</h2>\n<p>\n  La tenue en équilibre facial n'est pas un exercice de poussée, mais un exercice de maintien : l'épaule\n  porte tout le poids du corps en position tête en bas, tandis que le tronc et les poignets stabilisent\n  la ligne. Elle développe une stabilité d'épaule qu'aucun autre exercice au poids du corps ne génère de\n  cette façon, et c'est le prérequis de la pompe en équilibre facial.\n</p>\n<p>\n  Le chemin qui y mène passe par la pompe pike : plus les pieds sont surélevés, plus la charge devient\n  verticale — l'équilibre facial est le point final de cette progression.\n</p>\n<h2>Exécution contre un mur</h2>\n<p>\n  Deux variantes. Monter face au mur donne la ligne la plus droite et la plus honnête, mais elle est plus\n  difficile à prendre. Dos au mur, c'est plus facile à démarrer, mais cela incite à cambrer le dos.\n</p>\n<p>\n  Dans les deux cas : mains à la largeur des épaules, doigts écartés et agrippant activement le sol,\n  bras tendus, épaules poussées vers les oreilles. Fessiers et abdominaux fermes, côtes basses — le corps\n  forme une ligne, pas un arc.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Cambrure lombaire.</strong> L'erreur la plus fréquente, et la raison pour laquelle beaucoup n'arrivent pas à tenir la position — ils luttent contre leur propre statique.</li>\n  <li><strong>Épaules enfoncées.</strong> Poussez-les activement vers le haut, sinon le poids repose sur les articulations.</li>\n  <li><strong>Poignets non échauffés.</strong> Faites des rotations et des étirements avant la première répétition ; la charge est inhabituellement élevée.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Quatre à six séries de 15 à 45 secondes avec une récupération généreuse. Entraînez-vous à froid, pas en\n  fin de séance.\n</p>"
     },
     "it": {
       "name": "Verticale",
@@ -4879,7 +5179,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Principianti: costruisci pike push-up e wall walk prima, poi inizia a praticare il mantenimento.",
         "Premi le spalle attivamente 'nelle orecchie' — niente posizione sprofondata."
-      ]
+      ],
+      "article": "<h2>Dalla spinta al mantenimento</h2>\n<p>\n  L'handstand hold non è un esercizio di spinta, ma di mantenimento: la spalla sostiene l'intero peso\n  corporeo in posizione sopra la testa, mentre tronco e polsi stabilizzano la linea. Costruisce una\n  stabilità della spalla che nessun altro esercizio a corpo libero genera allo stesso modo, ed è il\n  prerequisito per il piegamento in verticale.\n</p>\n<p>\n  Il percorso passa per il piegamento a piramide (pike push-up): più i piedi sono in alto, più il carico\n  diventa verticale — la verticale è il punto d'arrivo di questa linea.\n</p>\n<h2>Esecuzione al muro</h2>\n<p>\n  Due varianti. Salire con la pancia rivolta verso il muro dà la linea più dritta e onesta, ma è più\n  difficile da assumere. Con la schiena verso il muro l'ingresso è più semplice, ma induce facilmente\n  all'iperlordosi.\n</p>\n<p>\n  In entrambi i casi: mani a larghezza spalle, dita divaricate e attivamente premute a terra, braccia\n  distese, spalle spinte verso le orecchie. Glutei e addominali saldi, costole in basso — il corpo è una\n  linea, non un arco.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Iperlordosi.</strong> L'errore più comune e il motivo per cui molti non riescono a mantenere la posizione — combattono contro la propria statica.</li>\n  <li><strong>Spalle affossate.</strong> Spingile attivamente verso l'alto, altrimenti il peso finisce nelle articolazioni.</li>\n  <li><strong>Polsi non riscaldati.</strong> Ruotali e allungali prima della prima ripetizione; il carico è insolitamente alto.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Quattro-sei serie da 15 a 45 secondi con ampia pausa. Allenala da fresco, non alla fine della sessione.\n</p>"
     },
     "nl": {
       "name": "Handstand Hold",
@@ -4893,7 +5194,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners: bouw first pike push-ups en wall walks, start dan met oefenen van handstand.",
         "Zet schouders actief \"in oren\" — geen ingezonken positie."
-      ]
+      ],
+      "article": "<h2>Van drukken naar dragen</h2>\n<p>\n  De handstand hold is geen drukoefening, maar een houdoefening: de schouder draagt het volledige\n  lichaamsgewicht in een boven-het-hoofd-positie, terwijl romp en polsen de lijn stabiliseren. Hij\n  bouwt een schouderstabiliteit op die geen andere lichaamsgewichtoefening zo oplevert, en is de\n  voorwaarde voor de handstand push-up.\n</p>\n<p>\n  De weg ernaartoe loopt via de pike push-up: hoe hoger de voeten daar staan, hoe verticaler de\n  belasting wordt — de handstand is het eindpunt van die lijn.\n</p>\n<h2>Uitvoering tegen de muur</h2>\n<p>\n  Twee varianten. Met de buik naar de muur omhoog lopen levert de rechtere en eerlijkere lijn op,\n  maar is lastiger in te nemen. Met de rug naar de muur is de eenvoudigere instap, maar verleidt\n  tot een holle rug.\n</p>\n<p>\n  In beide gevallen: handen schouderbreed, vingers gespreid en actief in de vloer grijpend, armen\n  gestrekt, schouders naar de oren geschoven. Billen en buik stevig, ribben omlaag — het lichaam is\n  een lijn, geen boog.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Holle rug.</strong> De meest voorkomende fout en de reden waarom velen de positie niet kunnen volhouden — ze vechten tegen hun eigen statica.</li>\n  <li><strong>Schouders ingezonken.</strong> Actief naar boven duwen, anders hangt het gewicht in de gewrichten.</li>\n  <li><strong>Niet opgewarmde polsen.</strong> Voor de eerste herhaling draaien en rekken; de belasting is ongewoon hoog.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Vier tot zes sets van 15 tot 45 seconden met ruime pauze. Fris trainen, niet aan het einde van de\n  sessie.\n</p>"
     },
     "no": {
       "name": "Handstand Hold",
@@ -4907,7 +5209,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nybegynnere: bygg pike push-ups og wall walks først, så start å øve holdet.",
         "Press skulderne aktivt «inn i örene» – ingen sunket posisjon."
-      ]
+      ],
+      "article": "<h2>Fra pressing til bæring</h2>\n<p>\n  Handstand hold er ikke en presseøvelse, men en holdeøvelse: skulderen bærer hele kroppsvekten i\n  posisjon over hodet, mens midtparti og håndledd stabiliserer linjen. Den bygger en skulderstabilitet\n  ingen annen kroppsvektøvelse skaper på samme måte, og er forutsetningen for handstand push-up.\n</p>\n<p>\n  Veien dit går via pike push-up: jo høyere føttene står der, desto mer loddrett blir belastningen –\n  handstanden er endepunktet på denne linjen.\n</p>\n<h2>Utførelse mot vegg</h2>\n<p>\n  To varianter. Å gå opp med magen mot veggen gir den rettere og mer ærlige linjen, men er vanskeligere å\n  komme inn i. Med ryggen mot veggen er innsteget enklere, men frister til hul rygg.\n</p>\n<p>\n  I begge tilfeller: hendene i skulderbredde, fingrene spredt og aktivt gripende i gulvet, armene strake,\n  skuldrene skjøvet opp mot ørene. Sete og mage spent, ribbein nede – kroppen er én linje, ingen bue.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Hul rygg.</strong> Den vanligste feilen, og grunnen til at mange ikke klarer å holde posisjonen – de kjemper mot sin egen statikk.</li>\n  <li><strong>Sunkne skuldre.</strong> Skyv dem aktivt oppover, ellers henger vekten i leddene.</li>\n  <li><strong>Uoppvarmede håndledd.</strong> Sirkle og tøy før første repetisjon; belastningen er uvant høy.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Fire til seks sett på 15 til 45 sekunder med rikelig pause. Tren dette uthvilt, ikke på slutten av\n  økten.\n</p>"
     },
     "zh": {
       "name": "倒立保持",
@@ -4921,7 +5224,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "初学者：首先建立毛毛虫推和墙走，然后开始练习保持。",
         "主动将肩膀向上按压\"进入耳朵\"——没有下沉位置。"
-      ]
+      ],
+      "article": "<h2>从推举到承重</h2>\n<p>\n  倒立保持不是一个推举动作，而是一个静态保持动作：肩部要在过头顶的姿势下承受全部\n  体重，同时核心和手腕负责维持身体的直线。它能建立起其他自重训练动作都无法带来的\n  肩部稳定性，也是倒立俯卧撑的前提条件。\n</p>\n<p>\n  通往倒立的路径要经过屈体俯卧撑：双脚垫得越高，负荷就越接近垂直方向——倒立正是\n  这条进阶路线的终点。\n</p>\n<h2>靠墙动作要领</h2>\n<p>\n  有两种做法。面朝墙向上走，能形成更直、更真实的身体线条，但更难进入这个姿势。\n  背朝墙则更容易入门，但容易导致腰部过度前凸。\n</p>\n<p>\n  无论哪种方式：双手与肩同宽，手指张开并主动抓地，手臂伸直，肩膀主动向上顶向耳朵。\n  臀部和腹部收紧，肋骨下沉——身体应呈一条直线，而不是一个弧形。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>腰部过度前凸。</strong>最常见的错误，也是很多人无法保持这个姿势的原因——他们其实是在和自己的身体结构对抗。</li>\n  <li><strong>肩膀下沉塌陷。</strong>应主动向上推——否则体重会全部压在关节上。</li>\n  <li><strong>手腕没有充分热身。</strong>在第一次尝试前应先做手腕画圈和拉伸；这个动作对手腕的负荷远超日常水平。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  四到六组，每组15到45秒，组间充分休息。应该在身体新鲜时练习，而不是放在训练课的\n  最后。\n</p>"
     }
   },
   "squat.boxjump": {
@@ -4952,7 +5256,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Επιλογή ύψος που μπορείς να ξεπεράσεις με ασφάλεια — τα περισσότερα άλματα κουτιού τραυματισμοί προέρχονται από πάνω ψηλά.",
         "Βήμα κάτω μεταξύ επαναλήψεων — επαναλαμβάνοντας προσγειώσεις από ύψος είναι δύσκολο στα γόνατα και achilles."
-      ]
+      ],
+      "article": "<h2>Δύναμη άλματος χωρίς σκληρή προσγείωση</h2>\n<p>\n  Το box jump έχει σε σχέση με άλλες ασκήσεις άλματος ένα πλεονέκτημα που συχνά παραβλέπεται:\n  προσγειώνεσαι ψηλότερα απ' όσο απογειώθηκες. Το ύψος πτώσης είναι έτσι μικρό και η κρουστική\n  επιβάρυνση στο γόνατο και στον αχίλλειο τένοντα σαφώς μικρότερη απ' ό,τι στο άλμα με επιστροφή στο\n  έδαφος. Για ανθρώπους με προβλήματα γονάτου είναι συχνά η πιο ανεκτή άσκηση ταχύ-δύναμης.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Στάση μπροστά στο κουτί, σε μισό squat, μετά εκρηκτικό άλμα και πλήρης τοποθέτηση και των δύο ποδιών\n  στην επιφάνεια. Σημαντικό είναι να προσγειωθείς μαλακά σε ελαφρώς λυγισμένη θέση και μετά να\n  ισιώσεις — όχι να χτυπήσεις με τεντωμένα πόδια.\n</p>\n<p>\n  Η επιστροφή γίνεται με κατέβασμα, όχι με άλμα. Επαναλαμβανόμενα άλματα προς τα κάτω από το κουτί\n  είναι η κύρια πηγή ενοχλήσεων αχίλλειου τένοντα σε αυτή την άσκηση.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Πολύ ψηλό κουτί.</strong> Ύψος που επιτυγχάνεται μόνο με μέγιστο μάζεμα των γονάτων μετρά κινητικότητα, όχι δύναμη άλματος — και οι κνήμες πληρώνουν το τίμημα σε αστοχία.</li>\n  <li><strong>Άλμα προς τα κάτω.</strong> Πάντα κατέβασμα με βήμα.</li>\n  <li><strong>Συνέχιση κουρασμένος.</strong> Το σετ τελειώνει όταν οι προσγειώσεις γίνουν ακαθόριστες.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τέσσερα έως έξι σετ με 3 έως 5 άλματα και πλήρη ανάπαυση, νωρίς στην προπόνηση. Επίλεξε ύψος που\n  κατέχεις με ασφάλεια — η αυτοπεποίθηση σε αυτή την άσκηση είναι παράγοντας ασφαλείας.\n</p>"
     },
     "en": {
       "name": "Box Jumps",
@@ -4966,7 +5271,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Pick a height you can clear safely — most box-jump injuries come from going too high.",
         "Step down between reps — landing repeatedly from height is hard on knees and Achilles."
-      ]
+      ],
+      "article": "<h2>Jump power without a hard landing</h2>\n<p>\n  The box jump has an advantage over other jumping exercises that's often overlooked: you land higher\n  than you took off from. That keeps the drop height small and the impact on the knees and Achilles\n  tendon noticeably lower than jumping back down to the floor. For people with knee issues, it's often\n  the most tolerable speed-strength exercise available.\n</p>\n<h2>Execution</h2>\n<p>\n  Stand in front of the box, drop into a half squat, then jump explosively and land with both feet fully\n  on the surface. What matters is landing soft in a slightly bent position and then standing up — not\n  slamming down with straight legs.\n</p>\n<p>\n  The way back down should be stepped, not jumped. Repeated jumps off the box are the main source of\n  Achilles tendon issues with this exercise.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Box too high.</strong> A height only reachable by tucking the knees to the max measures mobility, not jump power — and the shins pay the price on a miss.</li>\n  <li><strong>Jumping down.</strong> Always step down.</li>\n  <li><strong>Continuing while fatigued.</strong> The set ends once the landings get sloppy.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Four to six sets of 3 to 5 jumps with full rest, early in the session. Pick a height you can clear with\n  confidence — confidence is a safety factor in this exercise.\n</p>"
     },
     "es": {
       "name": "Saltos a caja",
@@ -4980,7 +5286,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Elige una altura que puedas despejar con seguridad — la mayoría de lesiones de saltos de caja provienen de altura excesiva.",
         "Baja entre repeticiones — aterrizar repetidamente desde altura es difícil para rodillas y tendón de Aquiles."
-      ]
+      ],
+      "article": "<h2>Potencia de salto sin aterrizaje duro</h2>\n<p>\n  El salto a caja tiene una ventaja frente a otros ejercicios de salto que a menudo se pasa por alto: se\n  aterriza más alto de lo que se despega. La altura de caída es por eso pequeña y el impacto sobre la\n  rodilla y el tendón de Aquiles claramente menor que al saltar de vuelta al suelo. Para personas con\n  problemas de rodilla suele ser el ejercicio de fuerza-velocidad más tolerable.\n</p>\n<h2>Ejecución</h2>\n<p>\n  De pie frente a la caja, baja a media sentadilla, luego despega explosivamente y apoya ambos pies por\n  completo sobre la superficie. Es importante aterrizar suavemente en una posición ligeramente flexionada\n  y luego incorporarse — no golpear con las piernas extendidas.\n</p>\n<p>\n  El regreso se hace bajando, no saltando. Los saltos repetidos desde la caja hacia el suelo son la\n  principal fuente de molestias en el tendón de Aquiles con este ejercicio.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Caja demasiado alta.</strong> Una altura que solo se alcanza con máxima flexión de rodillas mide movilidad, no potencia de salto — y las espinillas pagan el precio si se falla.</li>\n  <li><strong>Saltar hacia abajo.</strong> Siempre baja escalonadamente.</li>\n  <li><strong>Continuar fatigado.</strong> La serie termina en cuanto las aterrizadas se vuelven imprecisas.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Cuatro a seis series de 3 a 5 saltos con descanso completo, al principio de la sesión. Elige una altura\n  que domines con seguridad — la confianza es, en este ejercicio, un factor de seguridad.\n</p>"
     },
     "fr": {
       "name": "Saut en boîte",
@@ -4994,7 +5301,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Choisissez une hauteur que vous pouvez franchir en toute sécurité — la plupart des blessures en saut en boîte viennent d'une hauteur trop grande.",
         "Redescendez entre les répétitions — les atterrissages répétés en hauteur sont durs pour les genoux et les talons."
-      ]
+      ],
+      "article": "<h2>De la puissance de saut sans atterrissage brutal</h2>\n<p>\n  Le saut en boîte a, par rapport aux autres exercices de saut, un avantage souvent négligé : on atterrit\n  plus haut qu'on ne décolle. La hauteur de chute est donc réduite et l'impact sur les genoux et le\n  tendon d'Achille nettement plus faible qu'en sautant et en retombant au sol. Pour les personnes ayant\n  des problèmes de genou, c'est souvent l'exercice de force vitesse le mieux toléré.\n</p>\n<h2>Exécution</h2>\n<p>\n  Debout devant la boîte, descendez en demi-squat, puis sautez explosivement et posez les deux pieds\n  entièrement sur la surface. L'important est d'atterrir en douceur dans une position légèrement fléchie,\n  puis de se redresser — pas de heurter la surface jambes tendues.\n</p>\n<p>\n  Le retour se fait en redescendant, pas en sautant. Les sauts répétés depuis la boîte sont la principale\n  source de problèmes au tendon d'Achille avec cet exercice.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Boîte trop haute.</strong> Une hauteur atteinte uniquement en ramenant les genoux au maximum mesure la mobilité, pas la puissance de saut — et les tibias paient le prix en cas d'échec.</li>\n  <li><strong>Sauter pour redescendre.</strong> Toujours redescendre en marchant.</li>\n  <li><strong>Continuer fatigué.</strong> La série s'arrête dès que les atterrissages deviennent imprécis.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Quatre à six séries de 3 à 5 sauts avec récupération complète, en début de séance. Choisissez une\n  hauteur que vous maîtrisez en toute sécurité — la confiance est, dans cet exercice, un facteur de\n  sécurité.\n</p>"
     },
     "it": {
       "name": "Salto su box",
@@ -5008,7 +5316,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Scegli un'altezza che riesci a superare in sicurezza — la maggior parte degli infortuni viene dall'andare troppo alto.",
         "Scendi tra le ripetizioni — atterra ripetutamente da altezza è difficile per ginocchia e tendine di Achille."
-      ]
+      ],
+      "article": "<h2>Potenza esplosiva senza atterraggio duro</h2>\n<p>\n  Il box jump ha, rispetto ad altri esercizi di salto, un vantaggio spesso trascurato: si atterra più in\n  alto di quanto ci si stacchi da terra. L'altezza di caduta è quindi ridotta e il carico d'impatto su\n  ginocchio e tendine d'Achille nettamente inferiore rispetto a un salto che ricade a terra. Per chi ha\n  problemi al ginocchio è spesso l'esercizio di potenza esplosiva più tollerabile.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  In piedi davanti al box, scendi in un mezzo squat, poi stacca in modo esplosivo appoggiando entrambi i\n  piedi completamente sulla superficie. È importante atterrare in modo morbido in una posizione\n  leggermente piegata e poi raddrizzarsi — non colpire il box a gambe tese.\n</p>\n<p>\n  Il ritorno va fatto scendendo, non saltando. I salti ripetuti giù dal box sono la principale causa di\n  disturbi al tendine d'Achille con questo esercizio.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Box troppo alto.</strong> Un'altezza raggiunta solo con la massima flessione delle ginocchia misura la mobilità, non la potenza esplosiva — e le tibie pagano il prezzo in caso di errore.</li>\n  <li><strong>Saltare giù.</strong> Scendi sempre.</li>\n  <li><strong>Continuare affaticati.</strong> La serie termina quando gli atterraggi diventano scorretti.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Quattro-sei serie da 3 a 5 salti con recupero completo, presto nella sessione. Scegli un'altezza che\n  padroneggi con sicurezza — la fiducia in questo esercizio è un fattore di sicurezza.\n</p>"
     },
     "nl": {
       "name": "Box Jumps",
@@ -5022,7 +5331,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Kies hoogte die je veilig kunt springen — meeste kistjesprongblessures van te hoog gaan.",
         "Stap terug tussen herhalingen — landing herhaaldelijk van hoogte is hard voor knieën en Achilles."
-      ]
+      ],
+      "article": "<h2>Sprongkracht zonder harde landing</h2>\n<p>\n  De box jump heeft ten opzichte van andere sprongoefeningen een voordeel dat vaak over het hoofd\n  wordt gezien: je landt hoger dan waar je van afzet. De valhoogte is daardoor klein en de\n  stootbelasting op knie en achillespees aanzienlijk lager dan bij een sprong terug naar de vloer.\n  Voor mensen met knieklachten is dit vaak de best verdraagbare snelheidskrachtoefening.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Voor de kist staan, in een halve squat, dan explosief afzetten en met beide voeten volledig op\n  het oppervlak landen. Belangrijk is om in een licht gebogen positie zacht te landen en je daarna\n  op te richten — niet met gestrekte benen neer te ploffen.\n</p>\n<p>\n  De terugweg hoort afgestapt te worden, niet gesprongen. Herhaald van de kist afspringen is de\n  belangrijkste oorzaak van achillespeesklachten bij deze oefening.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Te hoge kist.</strong> Een hoogte die alleen wordt gehaald door de knieën maximaal op te trekken, meet mobiliteit, geen sprongkracht — en de schenen betalen de prijs bij een misser.</li>\n  <li><strong>Naar beneden springen.</strong> Altijd afstappen.</li>\n  <li><strong>Vermoeid doorgaan.</strong> De set eindigt zodra de landingen onzuiver worden.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Vier tot zes sets met 3 tot 5 sprongen en volledige pauze, vroeg in de sessie. Kies een hoogte\n  die je veilig beheerst — zelfvertrouwen is bij deze oefening een veiligheidsfactor.\n</p>"
     },
     "no": {
       "name": "Box Jumps",
@@ -5036,7 +5346,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Velg høyde du trygt kan fjerne – mesteparten av box-jump-skader kommer fra for høyt.",
         "Steg ned mellom repetisjoner – landing gjentatte ganger fra høyde er tøft for knær og Achilles."
-      ]
+      ],
+      "article": "<h2>Hoppkraft uten hard landing</h2>\n<p>\n  Box jump har en fordel over andre hoppeøvelser som ofte blir oversett: man lander høyere enn man\n  hopper fra. Fallhøyden blir dermed liten, og støtbelastningen på kne og akillessene betydelig lavere\n  enn ved hopp tilbake til gulvet. For folk med kneplager er den ofte den mest tålelige\n  hurtighetsstyrkeøvelsen.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Stå foran boksen, gå ned i en halv knebøy, hopp deretter eksplosivt av og sett begge føttene helt oppå\n  flaten. Viktig er å lande mykt i en lett bøyd posisjon og deretter rette seg opp – ikke å slå ned med\n  strake bein.\n</p>\n<p>\n  Veien ned skal gås, ikke hoppes. Gjentatte hopp ned fra boksen er hovedkilden til akillesplager ved\n  denne øvelsen.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>For høy boks.</strong> En høyde som bare nås med maksimal opptrekk av knærne, måler bevegelighet, ikke hoppkraft – og leggbeina betaler prisen ved bom.</li>\n  <li><strong>Å hoppe ned.</strong> Gå alltid ned.</li>\n  <li><strong>Å fortsette utmattet.</strong> Settet avsluttes når landingene blir urene.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Fire til seks sett med 3 til 5 hopp og full pause, tidlig i økten. Velg en høyde du trygt behersker –\n  selvtillit er en sikkerhetsfaktor ved denne øvelsen.\n</p>"
     },
     "zh": {
       "name": "箱跳",
@@ -5050,7 +5361,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "选择你能安全清除的高度——大多数箱跳伤来自过高。",
         "组间踏下——重复从高度着地对膝盖和跟腱很难。"
-      ]
+      ],
+      "article": "<h2>无需硬着地的爆发力训练</h2>\n<p>\n  相比其他跳跃动作，箱跳有一个常被忽视的优势：落地的位置比起跳的位置更高。这样\n  一来，实际的下落高度就很小，膝盖和跟腱承受的冲击力也明显低于跳回地面的动作。\n  对有膝盖问题的人来说，这往往是最容易耐受的爆发力训练动作。\n</p>\n<h2>动作要领</h2>\n<p>\n  站在箱子前，下蹲到半深蹲位置，然后爆发式起跳，双脚完全落在箱面上。关键是要以\n  微屈的姿势轻柔落地，然后再站直——而不是双腿伸直硬着地。\n</p>\n<p>\n  返回时应该走下箱子，而不是跳下来。反复从箱子上跳下，是这个动作导致跟腱问题的\n  主要原因。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>箱子太高。</strong>只有靠最大限度收膝才能够到的高度，考验的是柔韧性而不是爆发力——一旦踩空，胫骨会为此付出代价。</li>\n  <li><strong>从箱子上跳下。</strong>应该始终走下来。</li>\n  <li><strong>疲劳后仍继续训练。</strong>一旦落地动作变得不标准，这一组就应该结束。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  四到六组，每组3到5次跳跃，充分休息，安排在训练课的前段。选择一个自己能稳定掌控\n  的高度——对这个动作来说，信心本身就是一项安全因素。\n</p>"
     }
   },
   "squat.wallsit": {
@@ -5081,7 +5393,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Αρχάριοι: 3 × 20-30 δ.· προχωρημένοι 3 × 60-90 δ..",
         "Αν τα γόνατα παραπονιέται, κράτησε τα ισχία ελαφρώς ψηλότερα — 90° δεν είναι υποχρεωτικό."
-      ]
+      ],
+      "article": "<h2>Ισομετρία με αισθητό αποτέλεσμα</h2>\n<p>\n  Το wall sit είναι μια ισομετρική άσκηση: οι μύες εργάζονται χωρίς να βραχύνονται. Αυτό ακούγεται σαν\n  λιγότερο, αλλά έχει δύο συγκεκριμένα πλεονεκτήματα. Πρώτον, δημιουργεί κόπωση στον τετρακέφαλο χωρίς\n  καμία κίνηση της άρθρωσης, γεγονός που το καθιστά συχνά την πρώτη ανεκτή άσκηση μετά από προβλήματα\n  γονάτου. Δεύτερον, δοσολογείται με ακρίβεια μέσω του χρόνου και της γωνίας του γόνατος.\n</p>\n<p>\n  Το ισομετρικό κράτημα έχει επιπλέον μια καλά τεκμηριωμένη παράπλευρη επίδραση στην αρτηριακή πίεση —\n  τακτικά σετ ενός έως δύο λεπτών τη μειώνουν μετρήσιμα.\n</p>\n<h2>Εκτέλεση</h2>\n<p>\n  Με την πλάτη επίπεδη στον τοίχο, γλίστρα προς τα κάτω μέχρι μηρός και κνήμη να σχηματίσουν περίπου 90\n  μοίρες. Τα πόδια στέκονται τόσο μπροστά ώστε τα γόνατα να παραμένουν κάθετα πάνω από τους αστραγάλους.\n  Πλάτη, ώμοι και κεφάλι έχουν επαφή με τον τοίχο, τα χέρια κρέμονται χαλαρά ή ακουμπούν στον τοίχο.\n</p>\n<h2>Συνήθη λάθη</h2>\n<ul>\n  <li><strong>Στήριξη των χεριών στους μηρούς.</strong> Αφαιρεί ακριβώς το φορτίο για το οποίο πρόκειται.</li>\n  <li><strong>Γόνατα πάνω από τα δάχτυλα.</strong> Εδώ — σε αντίθεση με το ελεύθερο squat — πραγματικό λάθος, επειδή η θέση κρατιέται στατικά. Τοποθέτησε τα πόδια πιο μπροστά.</li>\n  <li><strong>Κράτημα της αναπνοής.</strong> Ιδιαίτερα συχνό σε ισομετρική εργασία και δυσμενές για την αρτηριακή πίεση. Συνέχισε να αναπνέεις ήρεμα.</li>\n</ul>\n<h2>Δοσολογία</h2>\n<p>\n  Τέσσερα σετ των 30 έως 90 δευτερολέπτων με ίσης διάρκειας ανάπαυση. Εξέλιξη μέσω του χρόνου, μιας πιο\n  βαθιάς γωνίας ή μονόποδης εκτέλεσης.\n</p>"
     },
     "en": {
       "name": "Wall Sit",
@@ -5095,7 +5408,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners: 3 × 20-30 s; advanced 3 × 60-90 s.",
         "If knees complain, keep the hips slightly higher — 90° is not mandatory."
-      ]
+      ],
+      "article": "<h2>Isometrics with a noticeable effect</h2>\n<p>\n  The wall sit is an isometric exercise: the muscles work without shortening. That sounds like less, but\n  it has two concrete advantages. First, it fatigues the quads without any joint movement, which often\n  makes it the first tolerable exercise after knee problems. Second, it's precisely dosable through time\n  and knee angle.\n</p>\n<p>\n  Isometric holds also have a well-documented side effect on blood pressure — regular sets of one to two\n  minutes lower it measurably.\n</p>\n<h2>Execution</h2>\n<p>\n  Slide down the wall with the back flat against it until the upper and lower leg form roughly 90\n  degrees. The feet sit far enough forward that the knees stay stacked directly over the ankles. The\n  back, shoulders and head stay in contact with the wall; the arms hang loose or rest against it.\n</p>\n<h2>Common mistakes</h2>\n<ul>\n  <li><strong>Resting the hands on the thighs.</strong> Removes exactly the load the exercise is about.</li>\n  <li><strong>Knees past the toes.</strong> Here — unlike in the free squat — a real mistake, because the position is held statically. Move the feet further forward.</li>\n  <li><strong>Holding the breath.</strong> Especially common in isometric work and unfavorable for blood pressure. Keep breathing calmly.</li>\n</ul>\n<h2>Programming</h2>\n<p>\n  Four sets of 30 to 90 seconds with an equal rest. Progress through time, a deeper angle, or single-leg.\n</p>"
     },
     "es": {
       "name": "Sentadilla contra la pared",
@@ -5109,7 +5423,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Principiantes: 3 × 20-30 s; avanzados 3 × 60-90 s.",
         "Si las rodillas se quejan, mantén las caderas ligeramente más altas — 90° no es obligatorio."
-      ]
+      ],
+      "article": "<h2>Isometría con un efecto perceptible</h2>\n<p>\n  La sentadilla contra la pared es un ejercicio isométrico: los músculos trabajan sin acortarse. Suena a\n  menos, pero tiene dos ventajas concretas. Primero, genera fatiga en el cuádriceps sin ningún movimiento\n  articular, lo que la convierte a menudo en el primer ejercicio tolerable tras problemas de rodilla.\n  Segundo, se dosifica con precisión mediante el tiempo y el ángulo de rodilla.\n</p>\n<p>\n  El sostenimiento isométrico tiene además un efecto secundario bien documentado sobre la presión\n  arterial — series regulares de uno a dos minutos la reducen de forma medible.\n</p>\n<h2>Ejecución</h2>\n<p>\n  Deslízate con la espalda plana contra la pared hacia abajo hasta que el muslo y la pantorrilla formen\n  aproximadamente 90 grados. Los pies quedan lo suficientemente adelantados como para que las rodillas\n  permanezcan verticalmente sobre los tobillos. Espalda, hombros y cabeza tienen contacto con la pared,\n  los brazos cuelgan sueltos o descansan contra la pared.\n</p>\n<h2>Errores frecuentes</h2>\n<ul>\n  <li><strong>Apoyar las manos en los muslos.</strong> Quita justo la carga de la que se trata.</li>\n  <li><strong>Rodillas por delante de los dedos del pie.</strong> Aquí — a diferencia de la sentadilla libre — es un error real, porque la posición se mantiene de forma estática. Coloca los pies más adelante.</li>\n  <li><strong>Contener la respiración.</strong> Especialmente frecuente en el trabajo isométrico y desfavorable para la presión arterial. Sigue respirando con calma.</li>\n</ul>\n<h2>Dosificación</h2>\n<p>\n  Cuatro series de 30 a 90 segundos con pausa de igual duración. Progresión mediante el tiempo, un ángulo\n  más profundo o a una sola pierna.\n</p>"
     },
     "fr": {
       "name": "Appui-fessier contre le mur",
@@ -5123,7 +5438,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Débutants : 3 × 20-30 s ; avancés 3 × 60-90 s.",
         "Si les genoux se plaignent, gardez les hanches légèrement plus hautes — 90° n'est pas obligatoire."
-      ]
+      ],
+      "article": "<h2>L'isométrie aux effets bien réels</h2>\n<p>\n  L'appui-fessier contre le mur est un exercice isométrique : les muscles travaillent sans se\n  raccourcir. Cela paraît moins efficace, mais présente deux avantages concrets. D'abord, il génère de\n  la fatigue dans les quadriceps sans aucun mouvement articulaire, ce qui en fait souvent le premier\n  exercice tolérable après un problème de genou. Ensuite, il se dose précisément par le temps et l'angle\n  du genou.\n</p>\n<p>\n  Le maintien isométrique a en outre un effet secondaire bien documenté sur la tension artérielle — des\n  séries régulières d'une à deux minutes la font baisser de façon mesurable.\n</p>\n<h2>Exécution</h2>\n<p>\n  Glissez le dos à plat contre le mur vers le bas, jusqu'à ce que la cuisse et le tibia forment environ\n  90 degrés. Les pieds sont placés assez loin devant pour que les genoux restent verticalement au-dessus\n  des chevilles. Le dos, les épaules et la tête restent en contact avec le mur, les bras pendent\n  librement ou reposent contre le mur.\n</p>\n<h2>Erreurs fréquentes</h2>\n<ul>\n  <li><strong>Prendre appui des mains sur les cuisses.</strong> Retire précisément la charge qui est l'objet de l'exercice.</li>\n  <li><strong>Genoux au-delà des orteils.</strong> Ici — contrairement au squat libre — une véritable erreur, car la position est maintenue de façon statique. Placez les pieds plus loin devant.</li>\n  <li><strong>Retenir sa respiration.</strong> Particulièrement fréquent lors d'un travail isométrique, et défavorable pour la tension artérielle. Continuez à respirer calmement.</li>\n</ul>\n<h2>Dosage</h2>\n<p>\n  Quatre séries de 30 à 90 secondes avec une pause de même durée. Progression par le temps, un angle plus\n  profond ou sur une jambe.\n</p>"
     },
     "it": {
       "name": "Wall sit",
@@ -5137,7 +5453,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Principianti: 3 × 20-30 s; avanzati 3 × 60-90 s.",
         "Se le ginocchia protestano, mantieni i fianchi leggermente più alti — 90° non è obbligatorio."
-      ]
+      ],
+      "article": "<h2>Isometria con effetto percepibile</h2>\n<p>\n  Il wall sit è un esercizio isometrico: i muscoli lavorano senza accorciarsi. Sembra meno impegnativo,\n  ma ha due vantaggi concreti. Primo, genera affaticamento nella parte anteriore della coscia senza\n  alcun movimento articolare, il che lo rende spesso il primo esercizio sostenibile dopo problemi al\n  ginocchio. Secondo, è dosabile con precisione tramite il tempo e l'angolo del ginocchio.\n</p>\n<p>\n  Il mantenimento isometrico ha inoltre un effetto collaterale ben documentato sulla pressione\n  sanguigna — serie regolari di uno-due minuti la riducono in modo misurabile.\n</p>\n<h2>Esecuzione</h2>\n<p>\n  Scivola verso il basso con la schiena piatta contro il muro finché coscia e polpaccio non formano\n  circa 90 gradi. I piedi sono posizionati abbastanza avanti da far restare le ginocchia in verticale\n  sopra le caviglie. Schiena, spalle e testa sono a contatto con il muro, le braccia pendono rilassate o\n  poggiano contro il muro.\n</p>\n<h2>Errori comuni</h2>\n<ul>\n  <li><strong>Appoggiare le mani sulle cosce.</strong> Toglie esattamente il carico che è lo scopo dell'esercizio.</li>\n  <li><strong>Ginocchia oltre le punte dei piedi.</strong> Qui — a differenza dello squat libero — è un vero errore, perché la posizione viene mantenuta staticamente. Sposta i piedi più avanti.</li>\n  <li><strong>Trattenere il respiro.</strong> Particolarmente diffuso nel lavoro isometrico e sfavorevole per la pressione sanguigna. Continua a respirare con calma.</li>\n</ul>\n<h2>Dosaggio</h2>\n<p>\n  Quattro serie da 30 a 90 secondi con pausa di pari durata. Progredisci tramite il tempo, un angolo più\n  profondo o su una gamba sola.\n</p>"
     },
     "nl": {
       "name": "Wall Sit",
@@ -5151,7 +5468,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Beginners: 3 × 20-30 s; gevorderden 3 × 60-90 s.",
         "Als knieën klagen, houd heupen licht hoger — 90° verplicht niet."
-      ]
+      ],
+      "article": "<h2>Isometrie met voelbaar effect</h2>\n<p>\n  De wall sit is een isometrische oefening: de spieren werken zonder te verkorten. Dat klinkt naar\n  minder, maar heeft twee concrete voordelen. Ten eerste creëert het vermoeidheid in de quadriceps\n  zonder enige gewrichtsbeweging, wat hem na knieklachten vaak tot de eerste belastbare oefening\n  maakt. Ten tweede is hij exact te doseren via tijd en kniehoek.\n</p>\n<p>\n  Isometrisch volhouden heeft bovendien een goed onderbouwd neveneffect op de bloeddruk —\n  regelmatige sets van één tot twee minuten verlagen die meetbaar.\n</p>\n<h2>Uitvoering</h2>\n<p>\n  Met de rug plat tegen de muur naar beneden glijden tot boven- en onderbeen ongeveer 90 graden\n  vormen. De voeten staan zo ver naar voren dat de knieën verticaal boven de enkels blijven. Rug,\n  schouders en hoofd hebben muurcontact, de armen hangen losjes of liggen tegen de muur.\n</p>\n<h2>Veelgemaakte fouten</h2>\n<ul>\n  <li><strong>Handen op de bovenbenen steunen.</strong> Neemt precies de belasting weg waar het om gaat.</li>\n  <li><strong>Knie over de tenen.</strong> Hier — anders dan bij de vrije squat — een echte fout, omdat de positie statisch wordt vastgehouden. Voeten verder naar voren zetten.</li>\n  <li><strong>Adem inhouden.</strong> Bij isometrisch werk bijzonder wijdverbreid en ongunstig voor de bloeddruk. Rustig doorademen.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Vier sets van 30 tot 90 seconden met even lange pauze. Opbouw via de tijd, een diepere hoek of\n  eenbenig.\n</p>"
     },
     "no": {
       "name": "Wall Sit",
@@ -5165,7 +5483,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "Nybegynnere: 3 × 20-30 s; avansert 3 × 60-90 s.",
         "Hvis knærne klager, hold hofter litt høyere – 90° er ikke obligatorisk."
-      ]
+      ],
+      "article": "<h2>Isometri med merkbar effekt</h2>\n<p>\n  Wall sit er en isometrisk øvelse: musklene jobber uten å forkortes. Det høres ut som mindre, men har to\n  konkrete fordeler. For det første skaper den utmattelse i quadriceps helt uten leddbevegelse, noe som\n  ofte gjør den til den første belastbare øvelsen etter kneplager. For det andre kan den doseres nøyaktig\n  via tid og knevinkel.\n</p>\n<p>\n  Isometrisk holdearbeid har dessuten en godt dokumentert bieffekt på blodtrykket – regelmessige sett\n  over ett til to minutter senker det målbart.\n</p>\n<h2>Utførelse</h2>\n<p>\n  Skli nedover med ryggen flatt mot veggen, til lår og legg danner omtrent 90 grader. Føttene står langt\n  nok fremme til at knærne forblir loddrett over anklene. Rygg, skuldre og hode har kontakt med veggen,\n  armene henger avslappet eller hviler mot veggen.\n</p>\n<h2>Vanlige feil</h2>\n<ul>\n  <li><strong>Å støtte hendene på lårene.</strong> Fjerner nettopp den belastningen det handler om.</li>\n  <li><strong>Knærne foran tærne.</strong> Her – i motsetning til ved fri knebøy – en reell feil, fordi posisjonen holdes statisk. Sett føttene lenger fremover.</li>\n  <li><strong>Å holde pusten.</strong> Spesielt utbredt ved isometrisk arbeid og ugunstig for blodtrykket. Fortsett å puste rolig.</li>\n</ul>\n<h2>Dosering</h2>\n<p>\n  Fire sett på 30 til 90 sekunder med like lang pause. Progresjon via tiden, en dypere vinkel eller\n  enbeint utførelse.\n</p>"
     },
     "zh": {
       "name": "靠墙深蹲",
@@ -5179,7 +5498,8 @@ export const EXERCISE_WIKI_CONTENT: Readonly<
       "tips": [
         "初学者：3×20-30秒；进阶3×60-90秒。",
         "如果膝盖有意见，保持髋部略高——90°不是强制的。"
-      ]
+      ],
+      "article": "<h2>效果明显的等长训练</h2>\n<p>\n  靠墙深蹲是一种等长收缩训练：肌肉发力，但不发生缩短。这听起来强度较低，实际上\n  却有两个明确的优势。第一，它能在完全不产生关节运动的情况下让股四头肌产生疲劳，\n  因此在膝盖出现问题后，它往往是最先可以承受的训练动作。第二，它可以通过时间和\n  膝盖角度进行精确的强度调节。\n</p>\n<p>\n  等长静态保持还有一个证据充分的附带效果：对血压的影响——规律进行一到两分钟的\n  静态保持训练，能明显降低血压。\n</p>\n<h2>动作要领</h2>\n<p>\n  背部平贴墙面向下滑动，直到大腿和小腿大约呈90度角。双脚站得足够靠前，使膝盖始终\n  保持在脚踝正上方。背部、肩膀和头部都贴着墙面，双臂自然下垂或贴靠在墙上。\n</p>\n<h2>常见错误</h2>\n<ul>\n  <li><strong>用手撑在大腿上。</strong>这样恰恰卸掉了这个动作真正要训练的负荷。</li>\n  <li><strong>膝盖超过脚尖。</strong>与自由深蹲不同，这里确实算是一个错误，因为这个姿势是静态保持的。应该把双脚放得更靠前一些。</li>\n  <li><strong>屏住呼吸。</strong>在等长训练中尤其常见，对血压也不利。应保持平稳呼吸。</li>\n</ul>\n<h2>训练量</h2>\n<p>\n  四组，每组30到90秒，休息时间相同。可以通过延长时间、加深角度或改为单腿来进阶。\n</p>"
     }
   }
 };
