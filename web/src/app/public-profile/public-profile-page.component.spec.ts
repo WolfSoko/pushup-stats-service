@@ -23,6 +23,7 @@ const sampleProfile: PublicProfile = {
   currentStreak: 14,
   bestSingleEntry: 50,
   bestDayTotal: 250,
+  achievements: [],
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 
@@ -192,8 +193,7 @@ describe('PublicProfilePageComponent', () => {
       expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as
-        | { imageUrl?: string; imageAlt?: string }
-        | undefined;
+        { imageUrl?: string; imageAlt?: string } | undefined;
       // URL must be derived from the active FirebaseApp.options.projectId
       // so PR previews / staging / prod each hit their own function host.
       expect(ogExtras?.imageUrl).toContain('-pushup-stats.cloudfunctions.net');
@@ -211,8 +211,7 @@ describe('PublicProfilePageComponent', () => {
       expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as
-        | { imageUrl?: string; imageAlt?: string }
-        | undefined;
+        { imageUrl?: string; imageAlt?: string } | undefined;
       expect(ogExtras?.imageAlt).toContain('Wolfi');
     });
 
@@ -233,6 +232,41 @@ describe('PublicProfilePageComponent', () => {
       expect(args).toBeDefined();
       if (!args) return;
       expect(args[2]).toBe('/u/abcdef1234567890');
+    });
+  });
+
+  describe('Achievements', () => {
+    it('should render one badge per earned achievement', async () => {
+      // given
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          achievements: ['plan-completed-core-4w-v1', 'plan-days-10'],
+        },
+      });
+
+      // then
+      const badges = fixture.nativeElement.querySelectorAll('.badge');
+      expect(badges.length).toBe(2);
+    });
+
+    it('should omit the section entirely when nothing is earned', async () => {
+      // given
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(fixture.nativeElement.querySelector('.achievements')).toBeNull();
+    });
+
+    it('should skip an id the catalog no longer knows', async () => {
+      // given — a badge earned under an older catalog must not break the
+      // page or render an empty chip
+      await setup({
+        resolve: { ...sampleProfile, achievements: ['plan-days-7'] },
+      });
+
+      // then
+      expect(fixture.nativeElement.querySelector('.achievements')).toBeNull();
     });
   });
 

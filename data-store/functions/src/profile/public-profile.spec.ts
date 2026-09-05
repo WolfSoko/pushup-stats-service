@@ -105,6 +105,7 @@ describe('buildPublicProfile', () => {
       currentStreak: 0,
       bestSingleEntry: null,
       bestDayTotal: null,
+      achievements: [],
       updatedAt: '',
     });
   });
@@ -132,6 +133,7 @@ describe('buildPublicProfile', () => {
       currentStreak: 14,
       bestSingleEntry: 50,
       bestDayTotal: 250,
+      achievements: [],
       updatedAt: '2026-04-29T08:30:00.000Z',
     });
   });
@@ -240,6 +242,7 @@ describe('buildPublicProfile', () => {
       'totalEntries',
       'totalDays',
       'currentStreak',
+      'achievements',
       'bestSingleEntry',
       'bestDayTotal',
       'updatedAt',
@@ -247,5 +250,55 @@ describe('buildPublicProfile', () => {
     for (const key of Object.keys(result ?? {})) {
       expect(allowed.has(key)).toBe(true);
     }
+  });
+});
+
+describe('buildPublicProfile achievements', () => {
+  const uid = 'abc123';
+  const config = { displayName: 'Wolfi', ui: { publicProfile: true } };
+
+  it('should project earned achievement ids newest first', () => {
+    // when
+    const result = buildPublicProfile(uid, config, null, {
+      earned: [
+        { id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' },
+        { id: 'plan-completed-core-4w', awardedAt: '2026-03-01T00:00:00.000Z' },
+        { id: 'plan-days-10', awardedAt: '2026-02-01T00:00:00.000Z' },
+      ],
+    });
+
+    // then
+    expect(result?.achievements).toEqual([
+      'plan-completed-core-4w',
+      'plan-days-10',
+      'plan-days-1',
+    ]);
+  });
+
+  it('should expose ids only, never the award timestamps', () => {
+    // given — when a badge was earned reveals activity patterns, which
+    // the profile deliberately does not publish
+    // when
+    const result = buildPublicProfile(uid, config, null, {
+      earned: [{ id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' }],
+    });
+
+    // then
+    expect(result?.achievements).toEqual(['plan-days-1']);
+    expect(JSON.stringify(result)).not.toContain('2026-01-02');
+  });
+
+  it.each([
+    ['no document', null],
+    ['an empty document', {}],
+    ['a non-array earned field', { earned: 'nope' } as never],
+    ['entries without an id', { earned: [{ awardedAt: '2026-01-02' }] }],
+    ['entries with an empty id', { earned: [{ id: '', awardedAt: 'x' }] }],
+  ])('should degrade to no badges for %s', (_label, achievements) => {
+    // then — the profile is served unauthenticated; a malformed document
+    // must not break the page
+    expect(
+      buildPublicProfile(uid, config, null, achievements)?.achievements
+    ).toEqual([]);
   });
 });

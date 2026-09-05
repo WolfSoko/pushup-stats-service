@@ -105,6 +105,22 @@
           }
         </section>
 
+        @if (badgesFor(p); as badges) {
+          @if (badges.length > 0) {
+            <section class="achievements">
+              <h2>{{ achievementsLabel }}</h2>
+              <ul class="badge-list">
+                @for (badge of badges; track badge.id) {
+                  <li class="badge">
+                    <mat-icon aria-hidden="true">{{ badge.icon }}</mat-icon>
+                    <span>{{ badge.label }}</span>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+        }
+
         <section class="cta">
           <a mat-flat-button color="primary" routerLink="/">
             <mat-icon>fitness_center</mat-icon>

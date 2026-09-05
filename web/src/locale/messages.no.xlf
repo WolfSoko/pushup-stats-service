@@ -10907,5 +10907,29 @@ Deine Position: # ·  Reps        </source>
         <target> Det finnes ingen positendeteksjon for denne øvelsen – tell med mobilen under deg. </target>
       </segment>
     </unit>
+    <unit id="publicProfile.badge.planCompleted">
+      <segment state="initial">
+        <source>Trainingsplan abgeschlossen</source>
+        <target>Trainingsplan abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.firstPlanDay">
+      <segment state="initial">
+        <source>Erster Plantag</source>
+        <target>Erster Plantag</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.planDays">
+      <segment state="initial">
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.achievements">
+      <segment state="initial">
+        <source>Erfolge</source>
+        <target>Erfolge</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

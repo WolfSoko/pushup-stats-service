@@ -26,6 +26,11 @@ export interface UserStatsForPublicProfile {
   updatedAt?: string;
 }
 
+/** Shape of `userAchievements/{uid}` as far as the profile cares. */
+export interface UserAchievementsForPublicProfile {
+  earned?: Array<{ id?: unknown; awardedAt?: unknown }>;
+}
+
 export interface PublicProfileProjection {
   uid: string;
   displayName: string;
@@ -35,6 +40,12 @@ export interface PublicProfileProjection {
   currentStreak: number;
   bestSingleEntry: number | null;
   bestDayTotal: number | null;
+  /**
+   * Ids of achievements the user has earned, newest first. Ids only —
+   * the label and icon come from the client-side catalog, so renaming a
+   * badge never requires a data migration.
+   */
+  achievements: string[];
   updatedAt: string;
 }
 
@@ -74,7 +85,8 @@ export function isValidUid(value: unknown): value is string {
 export function buildPublicProfile(
   uid: string,
   config: UserConfigForPublicProfile | null,
-  stats: UserStatsForPublicProfile | null
+  stats: UserStatsForPublicProfile | null,
+  achievements: UserAchievementsForPublicProfile | null = null
 ): PublicProfileProjection | null {
   if (!config || !isPublicProfileAllowed(config)) return null;
 
@@ -95,8 +107,32 @@ export function buildPublicProfile(
       Number.isFinite(stats.bestDay.total)
         ? stats.bestDay.total
         : null,
+    achievements: publicAchievementIds(achievements),
     updatedAt: typeof stats?.updatedAt === 'string' ? stats.updatedAt : '',
   };
+}
+
+/**
+ * Ids of earned achievements, newest first.
+ *
+ * Defensive on purpose: this document is written by a trigger, but the
+ * profile is served unauthenticated, so a malformed or partially written
+ * entry must degrade to "no badges" rather than break the page.
+ */
+function publicAchievementIds(
+  achievements: UserAchievementsForPublicProfile | null
+): string[] {
+  const earned = achievements?.earned;
+  if (!Array.isArray(earned)) return [];
+  return earned
+    .filter(
+      (entry): entry is { id: string; awardedAt: string } =>
+        typeof entry?.id === 'string' &&
+        entry.id.length > 0 &&
+        typeof entry?.awardedAt === 'string'
+    )
+    .sort((a, b) => b.awardedAt.localeCompare(a.awardedAt))
+    .map((entry) => entry.id);
 }
 
 function numberOrZero(value: unknown): number {

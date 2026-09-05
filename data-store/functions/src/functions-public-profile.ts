@@ -9,6 +9,7 @@ import {
   buildPublicProfile,
   isValidUid,
   type UserConfigForPublicProfile,
+  type UserAchievementsForPublicProfile,
   type UserStatsForPublicProfile,
 } from './profile';
 // `renderProfileOg` lives behind a dynamic `import()` call inside the
@@ -23,7 +24,7 @@ import {
 // functions in `index.ts` are thin wrappers" rule.
 async function fetchPublicProfileProjection(uid: string) {
   if (!isValidUid(uid)) return null;
-  const [cfgSnap, statsSnap] = await Promise.all([
+  const [cfgSnap, statsSnap, achievementsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
     // Public pushup stats now live in the per-exercise aggregate
     // (`updateExerciseStatsOnEntryWrite` keeps it fresh); the top-level
@@ -35,6 +36,7 @@ async function fetchPublicProfileProjection(uid: string) {
       .collection('perExercise')
       .doc('pushup')
       .get(),
+    db.collection('userAchievements').doc(uid).get(),
   ]);
   const config = cfgSnap.exists
     ? (cfgSnap.data() as UserConfigForPublicProfile)
@@ -42,7 +44,10 @@ async function fetchPublicProfileProjection(uid: string) {
   const stats = statsSnap.exists
     ? (statsSnap.data() as UserStatsForPublicProfile)
     : null;
-  return buildPublicProfile(uid, config, stats);
+  const achievements = achievementsSnap.exists
+    ? (achievementsSnap.data() as UserAchievementsForPublicProfile)
+    : null;
+  return buildPublicProfile(uid, config, stats, achievements);
 }
 
 // Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`

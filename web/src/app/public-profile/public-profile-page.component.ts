@@ -15,6 +15,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  resolveAchievementBadges,
+  type AchievementBadge,
+} from './achievement-badge';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
 import { ShareService } from '../core/share.service';
@@ -92,6 +96,11 @@ export class PublicProfilePageComponent {
   protected readonly bestSetLabel = $localize`:@@publicProfile.bestSet:Bester Einzel-Eintrag`;
   protected readonly bestDayLabel = $localize`:@@publicProfile.bestDay:Bester Tag`;
   protected readonly shareAriaLabel = $localize`:@@publicProfile.share.aria:Profil teilen`;
+  protected readonly achievementsLabel = $localize`:@@publicProfile.achievements:Erfolge`;
+
+  protected badgesFor(profile: PublicProfile): ReadonlyArray<AchievementBadge> {
+    return resolveAchievementBadges(profile.achievements ?? []);
+  }
   protected readonly shareLabel = $localize`:@@publicProfile.share:Teilen`;
   protected readonly ctaLabel = $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.com`;
 

@@ -383,6 +383,17 @@ service cloud.firestore {
       allow delete: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Achievements are derived by the `awardAchievementsOnPlanWrite`
+    // trigger and surface on the public profile, so the client must not
+    // be able to mint them — writes are Admin-SDK only, exactly like
+    // `userStats`. Owners may read their own badges; the public profile
+    // reads them through the `getPublicProfile` callable, which bypasses
+    // these rules via the Admin SDK.
+    match /userAchievements/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+    }
+
     // Trash bin for deleted entries — written only by the
     // `archiveDeletedExerciseEntry` trigger via the Admin SDK, which
     // bypasses these rules. Kept closed explicitly (the catch-all below

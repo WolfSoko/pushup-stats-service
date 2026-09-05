@@ -11614,5 +11614,29 @@
         <target> Per questo esercizio non è disponibile il rilevamento della posa – conta con il telefono sotto di te. </target>
       </segment>
     </unit>
+    <unit id="publicProfile.badge.planCompleted">
+      <segment state="initial">
+        <source>Trainingsplan abgeschlossen</source>
+        <target>Trainingsplan abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.firstPlanDay">
+      <segment state="initial">
+        <source>Erster Plantag</source>
+        <target>Erster Plantag</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.planDays">
+      <segment state="initial">
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.achievements">
+      <segment state="initial">
+        <source>Erfolge</source>
+        <target>Erfolge</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

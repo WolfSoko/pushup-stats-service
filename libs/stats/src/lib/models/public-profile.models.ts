@@ -23,6 +23,13 @@ export interface PublicProfile {
   readonly bestSingleEntry: number | null;
   /** Best single-day total reps (null until any entries exist). */
   readonly bestDayTotal: number | null;
+  /**
+   * Ids of earned achievements, newest first. Ids only — labels and
+   * icons come from the local catalog, and the award timestamps stay
+   * server-side because when a badge was earned reveals activity
+   * patterns the profile does not publish.
+   */
+  readonly achievements: ReadonlyArray<string>;
   /** ISO timestamp of the last stats update. */
   readonly updatedAt: string;
 }

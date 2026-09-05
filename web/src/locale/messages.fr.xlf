@@ -11486,5 +11486,29 @@
         <target> Il n’y a pas de détection de pose pour cet exercice – compte avec le téléphone sous toi. </target>
       </segment>
     </unit>
+    <unit id="publicProfile.badge.planCompleted">
+      <segment state="initial">
+        <source>Trainingsplan abgeschlossen</source>
+        <target>Trainingsplan abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.firstPlanDay">
+      <segment state="initial">
+        <source>Erster Plantag</source>
+        <target>Erster Plantag</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.planDays">
+      <segment state="initial">
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.achievements">
+      <segment state="initial">
+        <source>Erfolge</source>
+        <target>Erfolge</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
