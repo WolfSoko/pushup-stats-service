@@ -61,6 +61,7 @@ import { AndroidTestInviteOrchestrationService } from './core/android-test-invit
 import { SwUpdateService } from './core/sw-update.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
+import { AchievementCelebrationService } from './achievements/achievement-celebration.service';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { FeedbackDialogComponent } from './core/feedback/feedback-dialog.component';
 import { FeedbackService } from './core/feedback/feedback.service';
@@ -233,6 +234,10 @@ export class App {
   private readonly _goalReachedNotifier = inject(
     GoalReachedNotificationService
   );
+  // Eager-inject so a badge earned while the user is on any page still
+  // gets its celebration — awarding happens server-side, so the document
+  // can sync at any moment.
+  private readonly _achievements = inject(AchievementCelebrationService);
   // Eager-inject so the Android closed-test invite popup can fire regardless
   // of which page is mounted.
   private readonly _androidTestInvite = inject(

@@ -2685,6 +2685,46 @@
         <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>
       </segment>
     </unit>
+    <unit id="achievement.dialog.headline">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:81</note>
+      </notes>
+      <segment>
+        <source>Geschafft!</source>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.close">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:82</note>
+      </notes>
+      <segment>
+        <source>Weiter</source>
+      </segment>
+    </unit>
+    <unit id="achievement.dialog.share">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:83</note>
+      </notes>
+      <segment>
+        <source>Teilen</source>
+      </segment>
+    </unit>
+    <unit id="achievement.share.title">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:91</note>
+      </notes>
+      <segment>
+        <source>Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="achievement.share.text">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:92</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
+      </segment>
+    </unit>
     <unit id="admin.feedback.title">
       <notes>
         <note category="location">web/src/app/admin/admin-feedback-section.component.html:1,4</note>
@@ -4271,7 +4311,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:147</note>
+        <note category="location">web/src/app/app.ts:148</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4279,7 +4319,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:148</note>
+        <note category="location">web/src/app/app.ts:149</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4287,7 +4327,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:266</note>
+        <note category="location">web/src/app/app.ts:271</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4295,7 +4335,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:355</note>
+        <note category="location">web/src/app/app.ts:360</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4303,7 +4343,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:358</note>
+        <note category="location">web/src/app/app.ts:363</note>
       </notes>
       <segment>
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
@@ -4311,7 +4351,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:422</note>
+        <note category="location">web/src/app/app.ts:427</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4319,7 +4359,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:451</note>
+        <note category="location">web/src/app/app.ts:456</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4327,7 +4367,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:458</note>
+        <note category="location">web/src/app/app.ts:463</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
