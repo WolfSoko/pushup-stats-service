@@ -7,3 +7,4 @@ export * from './public-profile';
 // up cold-start latency and making any renderer load failure crash unrelated
 // triggers. Import `renderProfileOg` directly from `./profile/og-render`
 // in the one place that needs it.
+export * from './photo-source';

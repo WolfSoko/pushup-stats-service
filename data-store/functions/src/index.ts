@@ -53,11 +53,9 @@ export {
   refreshExerciseLeaderboardsOnEntryWrite,
 } from './functions-leaderboards';
 
-export {
-  getPublicProfile,
-  ogProfile,
-  profilePhoto,
-} from './functions-public-profile';
+export { getPublicProfile, ogProfile } from './functions-public-profile';
+
+export { profilePhoto } from './functions-profile-photo';
 
 export { generateMotivationQuotes } from './functions-motivation';
 

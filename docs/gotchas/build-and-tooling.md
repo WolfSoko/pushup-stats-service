@@ -209,3 +209,38 @@ Fix: include `*.run.app` in the comma-separated `NG_ALLOWED_HOSTS` value in **bo
 **Angular's wildcard syntax requires the `*.` prefix specifically** — `isHostAllowed` in `@angular/ssr` only treats entries that start with `*.` as wildcards (it does `allowedHost.startsWith('*.')` then `hostname.endsWith(allowedHost.slice(1))`). A bare leading dot like `.run.app` is matched literally and silently fails to cover the revision URLs.
 
 `*.run.app` is broad but acceptable: the SSR doesn't make outgoing requests based on the `Host` header — canonical / `og:url` come from a hardcoded `BASE_URL` in `SeoService` — so the SSRF risk reduces to "an attacker-controlled `*.run.app` host renders our public HTML on their domain", which doesn't expose any private state.
+
+## Two checks that report success without checking anything
+
+Both of these were used as evidence that a change was clean; both were
+green while `nx build cloud-functions` had five type errors.
+
+**`tsc --noEmit -p data-store/functions/tsconfig.json` compiles nothing.**
+That file is a solution-style tsconfig — `"files": []`, `"include": []`,
+and two `references`. `tsc -p` does not follow project references unless
+you pass `--build`, so it type-checks an empty file set and exits 0 no
+matter what the sources contain. The same shape exists elsewhere in the
+workspace, so the trap is not specific to the functions.
+
+```bash
+# lies: nothing was checked
+npx tsc --noEmit -p data-store/functions/tsconfig.json
+
+# actually checks
+pnpm nx build cloud-functions          # preferred — same config as CI
+npx tsc --noEmit -p data-store/functions/tsconfig.app.json
+```
+
+**A pipeline reports the exit code of its last command, not the failing
+one.** `pnpm nx ... | grep -E "error" | tail -5` exits 0 whenever `tail`
+succeeds, which is always — so a failed Nx run reads as a pass, and
+filtering for errors hides the summary line that would have shown it.
+
+```bash
+set -o pipefail                        # or check ${PIPESTATUS[0]}
+pnpm nx affected -t=lint,test,build > nx.log 2>&1; echo "exit=$?"
+```
+
+Rule of thumb: write the full output to a file and read the tool's own
+verdict out of it. Do not let a filter stand between a build and the
+claim that it passed.
