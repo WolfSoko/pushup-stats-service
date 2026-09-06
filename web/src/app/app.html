@@ -146,6 +146,7 @@
       </a>
       <span class="app-title" i18n="@@app.title">Pushups</span>
       <span class="spacer"></span>
+      @if (hasAnyDailyGoal()) {
       <div
         class="goal-pill-wrap"
         data-testid="toolbar-goal-pill-wrap"
@@ -205,7 +206,7 @@
           </p>
         </div>
       </ng-template>
-      @if (swUpdateAvailable()) {
+      } @if (swUpdateAvailable()) {
       <button
         mat-icon-button
         class="sw-update-button"
