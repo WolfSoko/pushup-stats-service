@@ -11725,7 +11725,7 @@
     </unit>
         <unit id="settings.photo.visibilityHint">
       <segment state="translated">
-        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
         <target>Tant que ton profil est public, tout le monde peut voir cette photo — y compris les moteurs de recherche et l’aperçu de partage. Si ton profil est privé, toi seul(e) la vois.</target>
       </segment>
     </unit>
@@ -11757,6 +11757,18 @@
       <segment state="translated">
         <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
         <target>La photo de ton compte Google est actuellement utilisée. Envoie ta propre photo pour la remplacer.</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.useAccountPhoto">
+      <segment state="initial">
+        <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
+        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.useAccountPhotoHint">
+      <segment state="initial">
+        <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
+        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
       </segment>
     </unit>
 </file>

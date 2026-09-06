@@ -14,7 +14,11 @@ import { toPublicDisplayName, type UserProfile } from './logic';
 
 /** Subset of `UserConfig` this projection actually reads. */
 export interface UserConfigForPublicProfile extends UserProfile {
-  ui?: { publicProfile?: boolean; hideFromLeaderboard?: boolean };
+  ui?: {
+    publicProfile?: boolean;
+    hideFromLeaderboard?: boolean;
+    hideAccountPhoto?: boolean;
+  };
   createdAt?: string;
   /** Set by the client after a photo upload; drives the photo URL. */
   photoUpdatedAt?: string;

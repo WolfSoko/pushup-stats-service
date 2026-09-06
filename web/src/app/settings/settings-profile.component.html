@@ -58,12 +58,26 @@
           {{ message }}
         </p>
       }
+      <div class="setting-row">
+        <mat-slide-toggle
+          [checked]="!facade.hideAccountPhotoDraft()"
+          (change)="facade.hideAccountPhotoDraft.set(!$event.checked)"
+          data-testid="settings-account-photo-toggle"
+          i18n="@@settings.photo.useAccountPhoto"
+        >
+          Bild meines Anmeldekontos auf dem Profil verwenden
+        </mat-slide-toggle>
+        <p class="muted" i18n="@@settings.photo.useAccountPhotoHint">
+          Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines
+          Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt.
+        </p>
+      </div>
       <p class="hint warn-hint" data-testid="settings-photo-visibility-hint">
         <mat-icon aria-hidden="true">public</mat-icon>
         <span i18n="@@settings.photo.visibilityHint"
           >Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen —
           auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil
-          privat, sieht es nur du.</span
+          privat, siehst es nur du.</span
         >
       </p>
     </div>

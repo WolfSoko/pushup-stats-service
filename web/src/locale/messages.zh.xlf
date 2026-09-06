@@ -11359,7 +11359,7 @@
     </unit>
         <unit id="settings.photo.visibilityHint">
       <segment state="translated">
-        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
         <target>只要你的资料是公开的，任何人都能看到这张图片——包括搜索引擎和分享预览。如果你的资料是私密的，只有你自己能看到。</target>
       </segment>
     </unit>
@@ -11391,6 +11391,18 @@
       <segment state="translated">
         <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
         <target>目前使用的是你 Google 账号的头像。上传自己的图片即可替换。</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.useAccountPhoto">
+      <segment state="initial">
+        <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
+        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.useAccountPhotoHint">
+      <segment state="initial">
+        <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
+        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
       </segment>
     </unit>
 </file>

@@ -6,6 +6,7 @@ const CONFIG: ResolvedConfig = {
   displayName: 'Wolf',
   hideFromLeaderboard: false,
   publicProfile: false,
+  hideAccountPhoto: false,
   consent: { targetedAds: true },
   snapQuality: 'low',
 };
@@ -14,6 +15,7 @@ const PERSISTED: DraftSnapshot = {
   displayName: 'Wolf',
   hideFromLeaderboard: false,
   publicProfile: false,
+  hideAccountPhoto: false,
   adsConsent: true,
   snapQuality: 'low',
 };

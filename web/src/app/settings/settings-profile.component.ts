@@ -46,14 +46,21 @@ export class SettingsProfileComponent {
   protected readonly uploadedUrl = this.avatar.uploadedUrl;
 
   /**
-   * Without an upload the profile falls back to the account picture, so
-   * the preview has to show it too — otherwise the page claims there is
-   * no photo while the profile is already showing one.
+   * Mirrors what the public profile shows, not what the toolbar shows:
+   * without an upload the profile falls back to the account picture
+   * unless the user switched that off. A preview that ignored the switch
+   * would promise a picture the profile no longer publishes.
    */
-  protected readonly photoUrl = this.avatar.avatarUrl;
+  protected readonly photoUrl = computed(
+    () => this.uploadedUrl() ?? this.publishedAccountPhoto()
+  );
 
   protected readonly usesAccountPhoto = computed(
-    () => this.uploadedUrl() === null && this.user.accountPhotoUrl() !== null
+    () => this.uploadedUrl() === null && this.publishedAccountPhoto() !== null
+  );
+
+  private readonly publishedAccountPhoto = computed(() =>
+    this.facade.hideAccountPhotoDraft() ? null : this.user.accountPhotoUrl()
   );
 
   private readonly messages: Readonly<Record<string, string>> = {
