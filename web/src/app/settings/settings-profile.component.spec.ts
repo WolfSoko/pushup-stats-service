@@ -16,6 +16,7 @@ function facadeMock(overrides: Record<string, unknown> = {}) {
     displayNameViolation: signal(null),
     leaderboardOptOutDraft: signal(false),
     publicProfileDraft: signal(true),
+    hideAccountPhotoDraft: signal(false),
     profileUrl: signal('https://pushup-stats.com/de/u/uid-1'),
     userId: signal('uid-1'),
     config: signal({ publicProfile: true }),
@@ -28,7 +29,8 @@ function facadeMock(overrides: Record<string, unknown> = {}) {
 async function setup(
   photos: Partial<Record<string, unknown>> = {},
   accountPhotoUrl: string | null = null,
-  uploadedUrl: string | null = null
+  uploadedUrl: string | null = null,
+  hideAccountPhoto = false
 ) {
   const photoService = {
     busy: signal(false),
@@ -40,7 +42,12 @@ async function setup(
   const account = signal(accountPhotoUrl);
   const view = await render(SettingsProfileComponent, {
     providers: [
-      { provide: SettingsFacade, useValue: facadeMock() },
+      {
+        provide: SettingsFacade,
+        useValue: facadeMock({
+          hideAccountPhotoDraft: signal(hideAccountPhoto),
+        }),
+      },
       { provide: ProfilePhotoService, useValue: photoService },
       { provide: UserContextService, useValue: { accountPhotoUrl: account } },
       {
@@ -96,6 +103,48 @@ describe('SettingsProfileComponent', () => {
 
       // then
       expect(screen.getByTestId('settings-photo-preview')).toBeTruthy();
+    });
+
+    describe('Given the account picture is switched off', () => {
+      it('should drop it from the preview', async () => {
+        // given — the card shows what the profile publishes, so a preview
+        // that ignored the switch would promise a picture that is gone
+        await setup({}, 'https://lh3.googleusercontent.com/a/pic', null, true);
+
+        // then
+        expect(previewSrc()).toBeNull();
+      });
+
+      it('should stop claiming the account picture is in use', async () => {
+        // given
+        await setup({}, 'https://lh3.googleusercontent.com/a/pic', null, true);
+
+        // then
+        expect(screen.queryByTestId('settings-photo-account-hint')).toBeNull();
+      });
+
+      it('should keep an uploaded photo', async () => {
+        // given — the switch is about the provider's picture only
+        await setup(
+          {},
+          'https://lh3.googleusercontent.com/a/pic',
+          'https://example.test/own',
+          true
+        );
+
+        // then
+        expect(previewSrc()).toBe('https://example.test/own');
+      });
+
+      it('should offer the switch even before anything is uploaded', async () => {
+        // given
+        await setup();
+
+        // then
+        expect(
+          screen.getByTestId('settings-account-photo-toggle')
+        ).toBeTruthy();
+      });
     });
 
     it('should offer removal only once a photo exists', async () => {

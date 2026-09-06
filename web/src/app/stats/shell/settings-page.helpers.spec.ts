@@ -21,6 +21,7 @@ describe('settings-page.helpers', () => {
         displayName: '',
         hideFromLeaderboard: false,
         publicProfile: false,
+        hideAccountPhoto: false,
         consent: { targetedAds: true },
         snapQuality: DEFAULT_SNAP_QUALITY,
       });
@@ -43,6 +44,7 @@ describe('settings-page.helpers', () => {
         ui: {
           hideFromLeaderboard: true,
           publicProfile: true,
+          hideAccountPhoto: false,
           snapQuality: 'high',
         },
         consent: { targetedAds: false, dataProcessing: true },
@@ -56,6 +58,7 @@ describe('settings-page.helpers', () => {
         displayName: 'Wolf',
         hideFromLeaderboard: true,
         publicProfile: true,
+        hideAccountPhoto: false,
         consent: { targetedAds: false, dataProcessing: true },
         snapQuality: 'high',
       });
@@ -125,6 +128,7 @@ describe('settings-page.helpers', () => {
       displayName: '  Wolf  ',
       hideFromLeaderboard: true,
       publicProfile: false,
+      hideAccountPhoto: false,
       consent: { targetedAds: false },
       snapQuality: 'middle',
     };
@@ -162,6 +166,7 @@ describe('settings-page.helpers', () => {
       displayName: 'Wolf',
       hideFromLeaderboard: false,
       publicProfile: true,
+      hideAccountPhoto: false,
       adsConsent: true,
       snapQuality: 'low',
     };
@@ -205,6 +210,7 @@ describe('settings-page.helpers', () => {
       displayName: 'Wolf',
       hideFromLeaderboard: true,
       publicProfile: true,
+      hideAccountPhoto: false,
       adsConsent: false,
       snapQuality: 'high',
     };
@@ -215,6 +221,7 @@ describe('settings-page.helpers', () => {
         displayName: 'Wolf',
         hideFromLeaderboard: false,
         publicProfile: false,
+        hideAccountPhoto: false,
         consent: { targetedAds: true, dataProcessing: true },
         snapQuality: 'low',
       };
@@ -229,6 +236,7 @@ describe('settings-page.helpers', () => {
         ui: {
           hideFromLeaderboard: true,
           publicProfile: true,
+          hideAccountPhoto: false,
           snapQuality: 'high',
         },
       });
@@ -240,6 +248,7 @@ describe('settings-page.helpers', () => {
         displayName: 'Wolf',
         hideFromLeaderboard: false,
         publicProfile: false,
+        hideAccountPhoto: false,
         consent: undefined as unknown as ResolvedConfig['consent'],
         snapQuality: 'low',
       };
@@ -320,5 +329,54 @@ describe('settings-page.helpers', () => {
       // when / then
       expect(isAnalyticsConsentGranted()).toBe(false);
     });
+  });
+});
+
+describe('hideAccountPhoto round trip', () => {
+  const base: ResolvedConfig = {
+    displayName: 'Wolf',
+    hideFromLeaderboard: false,
+    publicProfile: true,
+    hideAccountPhoto: false,
+    consent: { targetedAds: true },
+    snapQuality: 'low',
+  };
+
+  it.each([[true], [false]])('should read %s back from the config', (flag) => {
+    // then
+    expect(
+      resolveConfig({ ui: { hideAccountPhoto: flag } }).hideAccountPhoto
+    ).toBe(flag);
+  });
+
+  it('should default to keeping the account picture', () => {
+    // then — absent means every existing profile shows what it always did
+    expect(resolveConfig({ ui: {} }).hideAccountPhoto).toBe(false);
+  });
+
+  it('should ignore a non-boolean value', () => {
+    // then — a stray string must not read as "switched on"
+    expect(
+      resolveConfig({ ui: { hideAccountPhoto: 'yes' } }).hideAccountPhoto
+    ).toBe(false);
+  });
+
+  it('should survive the save round trip', () => {
+    // given — the switch is worthless if it never reaches Firestore
+    const draft = snapshotFromConfig({ ...base, hideAccountPhoto: true });
+
+    // when
+    const update = buildSaveUpdate(draft, base);
+
+    // then
+    expect(update.ui?.hideAccountPhoto).toBe(true);
+  });
+
+  it('should count as an unsaved change', () => {
+    // given — otherwise the auto-save never fires for this toggle
+    const a = snapshotFromConfig(base);
+
+    // then
+    expect(snapshotsEqual(a, { ...a, hideAccountPhoto: true })).toBe(false);
   });
 });

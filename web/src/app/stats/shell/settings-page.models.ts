@@ -9,6 +9,7 @@ export interface DraftSnapshot {
   displayName: string;
   hideFromLeaderboard: boolean;
   publicProfile: boolean;
+  hideAccountPhoto: boolean;
   adsConsent: boolean;
   snapQuality: SnapQuality;
 }
@@ -17,6 +18,7 @@ export interface ResolvedConfig {
   displayName: string;
   hideFromLeaderboard: boolean;
   publicProfile: boolean;
+  hideAccountPhoto: boolean;
   consent: { targetedAds?: boolean } & Record<string, unknown>;
   snapQuality: SnapQuality;
 }

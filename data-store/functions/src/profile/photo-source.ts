@@ -11,11 +11,17 @@ export type PhotoSource =
 /**
  * Decides where a profile's photo comes from.
  *
- * Split out from the IO so the privacy rule is testable on its own: an
- * uploaded photo on a *private* profile must never resolve to the public
- * `profilePhoto` endpoint, because that endpoint answers 404 for private
- * profiles — including to the owner, since an `<img>` carries no token.
- * The owner's copy is inlined by the caller instead.
+ * Split out from the IO so the privacy rules are testable on their own.
+ *
+ * An uploaded photo on a *private* profile must never resolve to the
+ * public `profilePhoto` endpoint, because that endpoint answers 404 for
+ * private profiles — including to the owner, since an `<img>` carries no
+ * token. The owner's copy is inlined by the caller instead.
+ *
+ * The account picture is a fallback the user never asked to publish, so
+ * `hideAccountPhoto` takes it back off the profile. It only ever applies
+ * when there is no upload; an uploaded photo was chosen deliberately and
+ * is governed by the profile's own visibility instead.
  */
 export function photoSource(
   config: UserConfigForPublicProfile | null | undefined,
@@ -28,5 +34,7 @@ export function photoSource(
     }
     return viewerIsOwner ? { kind: 'inline' } : { kind: 'none' };
   }
-  return { kind: 'account' };
+  return config?.ui?.hideAccountPhoto === true
+    ? { kind: 'none' }
+    : { kind: 'account' };
 }

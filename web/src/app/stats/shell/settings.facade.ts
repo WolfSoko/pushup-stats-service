@@ -74,6 +74,7 @@ export class SettingsFacade implements OnDestroy {
   );
   readonly leaderboardOptOutDraft = signal(false);
   readonly publicProfileDraft = signal(false);
+  readonly hideAccountPhotoDraft = signal(false);
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
 
@@ -190,6 +191,7 @@ export class SettingsFacade implements OnDestroy {
       displayName: this.displayNameDraft().trim(),
       hideFromLeaderboard: this.leaderboardOptOutDraft(),
       publicProfile: this.publicProfileDraft(),
+      hideAccountPhoto: this.hideAccountPhotoDraft(),
       adsConsent: this.adsConsentDraft(),
       snapQuality: this.snapQualityDraft(),
     };
@@ -199,6 +201,7 @@ export class SettingsFacade implements OnDestroy {
     this.displayNameDraft.set(cfg.displayName);
     this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
     this.publicProfileDraft.set(cfg.publicProfile);
+    this.hideAccountPhotoDraft.set(cfg.hideAccountPhoto);
     this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     this.snapQualityDraft.set(cfg.snapQuality);
   }

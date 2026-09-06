@@ -201,6 +201,14 @@ export interface UserConfig {
      * it returns `not-found`. Defaults to `false` (private).
      */
     publicProfile?: boolean;
+    /**
+     * Suppresses the identity provider's picture (e.g. Google) on the
+     * public profile. Absent/`false` keeps it, which is what every
+     * existing profile already shows. Only the explicit upload survives
+     * this switch: the account picture was never something the user
+     * agreed to publish, so they must be able to take it back off.
+     */
+    hideAccountPhoto?: boolean;
     dayChartMode?: '24h' | '14h';
     quickAdds?: QuickAddConfig[];
     snapQuality?: SnapQuality;

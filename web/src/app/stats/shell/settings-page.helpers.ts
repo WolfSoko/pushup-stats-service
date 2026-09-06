@@ -16,6 +16,7 @@ export function resolveConfig(val: unknown): ResolvedConfig {
       displayName: '',
       hideFromLeaderboard: false,
       publicProfile: false,
+      hideAccountPhoto: false,
       consent: { targetedAds: true },
       snapQuality: DEFAULT_SNAP_QUALITY,
     };
@@ -39,6 +40,10 @@ export function resolveConfig(val: unknown): ResolvedConfig {
         : false,
     publicProfile:
       typeof ui['publicProfile'] === 'boolean' ? ui['publicProfile'] : false,
+    hideAccountPhoto:
+      typeof ui['hideAccountPhoto'] === 'boolean'
+        ? ui['hideAccountPhoto']
+        : false,
     consent:
       consent === null
         ? { targetedAds: true }
@@ -58,6 +63,7 @@ export function snapshotFromConfig(cfg: ResolvedConfig): DraftSnapshot {
     displayName: cfg.displayName.trim(),
     hideFromLeaderboard: cfg.hideFromLeaderboard,
     publicProfile: cfg.publicProfile,
+    hideAccountPhoto: cfg.hideAccountPhoto,
     adsConsent: cfg.consent?.targetedAds ?? true,
     snapQuality: cfg.snapQuality,
   };
@@ -68,6 +74,7 @@ export function snapshotsEqual(a: DraftSnapshot, b: DraftSnapshot): boolean {
     a.displayName === b.displayName &&
     a.hideFromLeaderboard === b.hideFromLeaderboard &&
     a.publicProfile === b.publicProfile &&
+    a.hideAccountPhoto === b.hideAccountPhoto &&
     a.adsConsent === b.adsConsent &&
     a.snapQuality === b.snapQuality
   );
@@ -86,6 +93,7 @@ export function buildSaveUpdate(
     ui: {
       hideFromLeaderboard: draft.hideFromLeaderboard,
       publicProfile: draft.publicProfile,
+      hideAccountPhoto: draft.hideAccountPhoto,
       snapQuality: draft.snapQuality,
     },
   };

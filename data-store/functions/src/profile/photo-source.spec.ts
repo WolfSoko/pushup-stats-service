@@ -46,6 +46,43 @@ describe('photoSource', () => {
     );
   });
 
+  describe('Given the account picture is switched off', () => {
+    const hidden = { ui: { publicProfile: true, hideAccountPhoto: true } };
+
+    it('should publish nothing instead of the account picture', () => {
+      // then — the account picture is a fallback the user never agreed
+      // to publish, so switching it off has to reach the profile
+      expect(photoSource(hidden, false)).toEqual({ kind: 'none' });
+    });
+
+    it('should hide it from the owner too', () => {
+      // then — the owner's view of their own profile must match what
+      // visitors get, or the switch looks like it did nothing
+      expect(photoSource(hidden, true)).toEqual({ kind: 'none' });
+    });
+
+    it('should leave an uploaded photo alone', () => {
+      // then — an upload was chosen deliberately; this switch is only
+      // about the picture that came from the identity provider
+      expect(
+        photoSource(
+          { ...hidden, photoUpdatedAt: uploaded.photoUpdatedAt },
+          false
+        )
+      ).toEqual({ kind: 'endpoint', version: uploaded.photoUpdatedAt });
+    });
+
+    it.each([[false], [undefined]])(
+      'should keep the account picture when the switch is %s',
+      (hideAccountPhoto) => {
+        // then — absent means every existing profile keeps what it shows
+        expect(
+          photoSource({ ui: { publicProfile: true, hideAccountPhoto } }, false)
+        ).toEqual({ kind: 'account' });
+      }
+    );
+  });
+
   describe('Given no uploaded photo', () => {
     it.each([[undefined], [null], [{}], [{ photoUpdatedAt: '' }]])(
       'should fall back to the account picture for %j',
