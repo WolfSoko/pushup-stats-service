@@ -12055,8 +12055,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.photo.visibilityHint">
       <segment state="initial">
-        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
-        <target>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</target>
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
+        <target>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.type">
