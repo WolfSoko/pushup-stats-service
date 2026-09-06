@@ -114,14 +114,20 @@ export class AppDataFacade {
 
   /**
    * Plan target if available, otherwise the user-configured goal. Kept
-   * without the `|| 100` fallback so `remainingToGoal` and `goalReached`
-   * can distinguish "no goal configured" from "goal of 100".
+   * without a `|| 100` fallback so `remainingToGoal`, `goalReached` and
+   * `dailyGoal` can distinguish "no goal configured" (e.g. a plan rest
+   * day with no user-configured goal) from "goal of 100".
    */
   private readonly effectiveDailyGoal = computed(
     () => this.planTodayTarget() || this.userConfig.dailyGoal()
   );
 
-  readonly dailyGoal = computed(() => this.effectiveDailyGoal() || 100);
+  readonly dailyGoal = this.effectiveDailyGoal;
+
+  /** Whether a single-figure daily goal applies today at all — false on
+   *  a plan rest day with no user-configured goal, when the toolbar pill
+   *  must not show a target it invented. */
+  readonly hasDailyGoal = computed(() => this.effectiveDailyGoal() > 0);
 
   readonly todayProgress = computed(() => {
     if (this.isBrowser && this.live.connected()) {

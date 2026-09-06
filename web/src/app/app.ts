@@ -250,6 +250,7 @@ export class App {
   readonly todayProgress = this.appData.todayProgress;
   readonly remainingToGoal = this.appData.remainingToGoal;
   readonly goalReached = this.appData.goalReached;
+  readonly hasDailyGoal = this.appData.hasDailyGoal;
   /**
    * Aggregated daily-goal completion (0–100). Drives the toolbar pill
    * label whenever goals are scored per exercise — falls back to the
@@ -261,6 +262,14 @@ export class App {
     () =>
       this.appData.perExerciseGoals() &&
       this.appData.todayGoalEntries().length > 0
+  );
+  /**
+   * Whether the toolbar pill has anything to show at all today — false on
+   * a plan rest day with no user-configured goal and no complex goals, so
+   * the pill doesn't invent a target (e.g. "10 / 100") that was never set.
+   */
+  readonly hasAnyDailyGoal = computed(
+    () => this.hasComplexDailyGoals() || this.hasDailyGoal()
   );
   /**
    * Per-exercise breakdown for the toolbar pill's hover/touch dropdown.

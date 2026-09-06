@@ -602,6 +602,15 @@ describe('AppDataFacade', () => {
       expect(facade.dailyGoal()).toBe(100);
     });
 
+    it('Given an active plan on a rest day and no user-configured goal, Then dailyGoal is 0 and hasDailyGoal is false (does not invent a 100 target)', async () => {
+      userConfigApiMock.getConfig.mockReturnValue(of({ userId: 'u1' }));
+      const facade = setup({ planTodayDay: restDay });
+      await flushResources();
+
+      expect(facade.dailyGoal()).toBe(0);
+      expect(facade.hasDailyGoal()).toBe(false);
+    });
+
     it('Given no active plan, Then dailyGoal still reflects the user-configured goal (no regression)', async () => {
       const facade = setup({ dailyGoal: 100, planTodayDay: null });
       await flushResources();

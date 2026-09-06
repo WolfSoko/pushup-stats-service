@@ -31,6 +31,7 @@ import {
   VAPID_PUBLIC_KEY,
 } from '@pu-push/push';
 import { App } from './app';
+import { TrainingPlanStore } from './training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 import { SwUpdateService } from './core/sw-update.service';
@@ -243,6 +244,76 @@ describe('App (testing-library)', () => {
     expect(
       await screen.findAllByText((content) => content.includes('42 / 137'))
     ).toBeTruthy();
+  });
+
+  it('hides the toolbar goal pill on a plan rest day with no user-configured goal (regression: pill must not invent a 100 target)', async () => {
+    userConfigApiMock.getConfig.mockReturnValue(of({}));
+    const today = new Date().toISOString().slice(0, 10);
+    liveEntriesSignal.set([
+      {
+        _id: 'e1',
+        exerciseId: 'pushup',
+        timestamp: `${today}T10:00:00`,
+        reps: 10,
+        source: 'web',
+      },
+    ]);
+    liveConnectedSignal.set(true);
+
+    const restDay = {
+      dayIndex: 1,
+      kind: 'rest' as const,
+      targetReps: 0,
+      description: 'Ruhetag',
+    };
+    const trainingPlanStoreMock = {
+      hasActivePlan: () => true,
+      todayDay: () => restDay,
+      currentDayIndex: () => null,
+      dayProgress: () => [],
+      logPlanExercise: vitest.fn(),
+    };
+
+    const { fixture } = await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
+        { provide: TrainingPlanStore, useValue: trainingPlanStoreMock },
+      ],
+    });
+
+    // Give the daily progress resource a tick to resolve before asserting
+    // absence, so we don't pass on a false negative from a pending render.
+    await fixture.whenStable();
+
+    expect(screen.queryByText('Tagesziel')).toBeNull();
+    expect(screen.queryByTestId('toolbar-goal-pill-wrap')).toBeNull();
   });
 
   it('given a configured daily goal, when the goal pill is hovered, then it expands into a per-exercise breakdown dropdown', async () => {
