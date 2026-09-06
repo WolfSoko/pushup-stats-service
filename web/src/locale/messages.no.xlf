@@ -4281,10 +4281,10 @@ Deine Position: # ·  Reps        </source>
         <target> Direktlogging fra varslingen </target>
       </segment>
     </unit>
-    <unit id="reminder.quickLog.desc">
+        <unit id="reminder.quickLog.desc">
       <segment state="initial">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
-        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
+        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
+        <target> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">

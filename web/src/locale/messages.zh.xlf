@@ -4776,13 +4776,10 @@
         <source>Jahr</source>
       <target>年</target></segment>
     </unit>
-    <unit id="rangeBackAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
-      </notes>
+        <unit id="rangeBackAria">
       <segment state="initial">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
-        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
+        <source>Vorheriger Zeitraum</source>
+        <target>Vorheriger Zeitraum</target>
       </segment>
     </unit>
     <unit id="rangeBack">

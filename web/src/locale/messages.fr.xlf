@@ -3385,13 +3385,10 @@
         <target> Saisie directe depuis la notification </target>
       </segment>
     </unit>
-    <unit id="reminder.quickLog.desc">
-      <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164,167</note>
-      </notes>
+        <unit id="reminder.quickLog.desc">
       <segment state="initial">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
-        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
+        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
+        <target> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
