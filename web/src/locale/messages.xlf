@@ -6618,17 +6618,9 @@
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
       </segment>
     </unit>
-    <unit id="publicProfile.subtitle">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:75,77</note>
-      </notes>
-      <segment>
-        <source> Pushup Tracker </source>
-      </segment>
-    </unit>
     <unit id="publicProfile.private.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:114</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:10</note>
       </notes>
       <segment>
         <source>Dein Profil ist noch privat</source>
@@ -6636,7 +6628,7 @@
     </unit>
     <unit id="publicProfile.private.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:115</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:11</note>
       </notes>
       <segment>
         <source>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</source>
@@ -6644,7 +6636,7 @@
     </unit>
     <unit id="publicProfile.private.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:116</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:12</note>
       </notes>
       <segment>
         <source>Profil öffentlich machen</source>
@@ -6652,7 +6644,7 @@
     </unit>
     <unit id="publicProfile.week">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:118</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:13</note>
       </notes>
       <segment>
         <source>Diese Woche</source>
@@ -6660,7 +6652,7 @@
     </unit>
     <unit id="publicProfile.month">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:119</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:14</note>
       </notes>
       <segment>
         <source>Dieser Monat</source>
@@ -6668,7 +6660,7 @@
     </unit>
     <unit id="publicProfile.exercises">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:120</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:15</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -6676,7 +6668,7 @@
     </unit>
     <unit id="publicProfile.heatmap">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:121</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:16</note>
       </notes>
       <segment>
         <source>Wann trainiert wird</source>
@@ -6684,7 +6676,7 @@
     </unit>
     <unit id="publicProfile.heatmap.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:122</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:17</note>
       </notes>
       <segment>
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
@@ -6692,71 +6684,15 @@
     </unit>
     <unit id="publicProfile.memberSince">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:123</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:18</note>
       </notes>
       <segment>
         <source>Dabei seit</source>
       </segment>
     </unit>
-    <unit id="weekday.short.mon">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:126</note>
-      </notes>
-      <segment>
-        <source>Mo</source>
-      </segment>
-    </unit>
-    <unit id="weekday.short.tue">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:127</note>
-      </notes>
-      <segment>
-        <source>Di</source>
-      </segment>
-    </unit>
-    <unit id="weekday.short.wed">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:128</note>
-      </notes>
-      <segment>
-        <source>Mi</source>
-      </segment>
-    </unit>
-    <unit id="weekday.short.thu">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
-      </notes>
-      <segment>
-        <source>Do</source>
-      </segment>
-    </unit>
-    <unit id="weekday.short.fri">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:130</note>
-      </notes>
-      <segment>
-        <source>Fr</source>
-      </segment>
-    </unit>
-    <unit id="weekday.short.sat">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:131</note>
-      </notes>
-      <segment>
-        <source>Sa</source>
-      </segment>
-    </unit>
-    <unit id="weekday.short.sun">
-      <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:132</note>
-      </notes>
-      <segment>
-        <source>So</source>
-      </segment>
-    </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:176</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:19</note>
       </notes>
       <segment>
         <source>Profil nicht gefunden</source>
@@ -6764,7 +6700,7 @@
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:177</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:20</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
@@ -6772,7 +6708,7 @@
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:178</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:21</note>
       </notes>
       <segment>
         <source>Profil konnte nicht geladen werden</source>
@@ -6780,7 +6716,7 @@
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:179</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:22</note>
       </notes>
       <segment>
         <source>Bitte versuche es später erneut.</source>
@@ -6788,7 +6724,7 @@
     </unit>
     <unit id="publicProfile.retry">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:180</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
       </notes>
       <segment>
         <source>Erneut versuchen</source>
@@ -6796,7 +6732,7 @@
     </unit>
     <unit id="publicProfile.toHome">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:181</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
       </notes>
       <segment>
         <source>Zur Startseite</source>
@@ -6804,7 +6740,7 @@
     </unit>
     <unit id="publicProfile.stats">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:182</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
       </notes>
       <segment>
         <source>Statistik</source>
@@ -6812,7 +6748,7 @@
     </unit>
     <unit id="publicProfile.total">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:183</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
       </notes>
       <segment>
         <source>Gesamte Reps</source>
@@ -6820,7 +6756,7 @@
     </unit>
     <unit id="publicProfile.streak">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:184</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
       </notes>
       <segment>
         <source>Aktuelle Streak</source>
@@ -6828,7 +6764,7 @@
     </unit>
     <unit id="publicProfile.days">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:185</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
       </notes>
       <segment>
         <source>Aktive Tage</source>
@@ -6836,7 +6772,7 @@
     </unit>
     <unit id="publicProfile.entries">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:186</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -6844,7 +6780,7 @@
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:187</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
       </notes>
       <segment>
         <source>Bester Einzel-Eintrag</source>
@@ -6852,7 +6788,7 @@
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:188</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
       </notes>
       <segment>
         <source>Bester Tag</source>
@@ -6860,7 +6796,7 @@
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:189</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
       </notes>
       <segment>
         <source>Profil teilen</source>
@@ -6868,7 +6804,7 @@
     </unit>
     <unit id="publicProfile.achievements">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:190</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
       </notes>
       <segment>
         <source>Erfolge</source>
@@ -6876,7 +6812,7 @@
     </unit>
     <unit id="publicProfile.share">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:195</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -6884,15 +6820,127 @@
     </unit>
     <unit id="publicProfile.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:196</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
       </notes>
       <segment>
         <source>Selbst tracken – pushup-stats.com</source>
       </segment>
     </unit>
+    <unit id="publicProfile.owner.hint">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
+      </notes>
+      <segment>
+        <source>Nur du siehst diese Schalter. Blende einzelne Elemente aus, die nicht öffentlich sein sollen.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
+      </notes>
+      <segment>
+        <source>Als Besucher ansehen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.photoEdit">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
+      </notes>
+      <segment>
+        <source>Profilbild ändern</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.hideElement">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
+      </notes>
+      <segment>
+        <source>Auf dem öffentlichen Profil ausblenden</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.showElement">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
+      </notes>
+      <segment>
+        <source>Auf dem öffentlichen Profil anzeigen</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.mon">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
+      </notes>
+      <segment>
+        <source>Mo</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.tue">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
+      </notes>
+      <segment>
+        <source>Di</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.wed">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
+      </notes>
+      <segment>
+        <source>Mi</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.thu">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+      </notes>
+      <segment>
+        <source>Do</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.fri">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+      </notes>
+      <segment>
+        <source>Fr</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.sat">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+      </notes>
+      <segment>
+        <source>Sa</source>
+      </segment>
+    </unit>
+    <unit id="weekday.short.sun">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+      </notes>
+      <segment>
+        <source>So</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.subtitle">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:124,126</note>
+      </notes>
+      <segment>
+        <source> Pushup Tracker </source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.textPlain">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:54</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
+      </segment>
+    </unit>
     <unit id="publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:229</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:55</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
@@ -6900,7 +6948,7 @@
     </unit>
     <unit id="publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:231</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:57</note>
       </notes>
       <segment>
         <source>Pushup Tracker Profil</source>
@@ -6908,7 +6956,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:276</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:82</note>
       </notes>
       <segment>
         <source>Profil nicht verfügbar – Pushup Tracker</source>
@@ -6916,7 +6964,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:277</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:83</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
@@ -6924,23 +6972,39 @@
     </unit>
     <unit id="publicProfile.seo.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:292</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:106</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · Pushup Tracker</source>
       </segment>
     </unit>
+    <unit id="publicProfile.seo.titlePlain">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:107</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
+      </segment>
+    </unit>
     <unit id="publicProfile.seo.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:293</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:109</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
       </segment>
     </unit>
+    <unit id="publicProfile.seo.descriptionPlain">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:110</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
+      </segment>
+    </unit>
     <unit id="publicProfile.seo.imageAlt">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.ts:306</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:123</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker</source>

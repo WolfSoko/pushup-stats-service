@@ -2,8 +2,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { deleteObject, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
 
-import { profilePhotoPath } from '../core/avatar.service';
-import { UserConfigStore } from '../core/user-config.store';
+import { profilePhotoPath } from './avatar.service';
+import { UserConfigStore } from './user-config.store';
 import { prepareProfilePhoto, type PhotoRejection } from './profile-photo';
 
 export type PhotoUploadResult =

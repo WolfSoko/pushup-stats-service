@@ -9,6 +9,9 @@ import { type PublicProfile } from '@pu-stats/models';
 import { PublicProfilePageComponent } from './public-profile-page.component';
 import { ShareService } from '../core/share.service';
 import { SeoService } from '../core/seo.service';
+import { UserConfigStore } from '../core/user-config.store';
+import { ProfilePhotoService } from '../core/profile-photo.service';
+import { signal } from '@angular/core';
 
 const firebaseAppMock = {
   options: { projectId: 'pushup-stats' },
@@ -31,6 +34,8 @@ const sampleProfile: PublicProfile = {
   heatmap: {},
   exercises: [],
   isPrivate: false,
+  viewerIsOwner: false,
+  hidden: [],
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 
@@ -41,6 +46,16 @@ describe('PublicProfilePageComponent', () => {
   };
   const shareMock = { share: vitest.fn().mockResolvedValue('native') };
   const seoMock = { update: vitest.fn() };
+  const configMock = {
+    config: signal<Record<string, unknown> | null>({
+      ui: { publicProfile: true, hideFromLeaderboard: true },
+    }),
+    save: vitest.fn().mockResolvedValue({}),
+  };
+  const photosMock = {
+    busy: signal(false),
+    upload: vitest.fn().mockResolvedValue({ ok: true }),
+  };
 
   function makeRoute(uid: string | null): ActivatedRoute {
     const params = uid ? { uid } : {};
@@ -80,6 +95,8 @@ describe('PublicProfilePageComponent', () => {
         { provide: ShareService, useValue: shareMock },
         { provide: SeoService, useValue: seoMock },
         { provide: FirebaseApp, useValue: firebaseAppMock },
+        { provide: UserConfigStore, useValue: configMock },
+        { provide: ProfilePhotoService, useValue: photosMock },
         // Pin the locale so the share-URL assertion below is deterministic
         // (the unit-test default differs per Angular setup; pinning here
         // documents which prefix the share builder should pick).
@@ -474,6 +491,180 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-share"]'
         )
       ).toBeNull();
+    });
+  });
+
+  describe('Owner controls', () => {
+    const owner = (over: Partial<PublicProfile> = {}): PublicProfile => ({
+      ...sampleProfile,
+      viewerIsOwner: true,
+      ...over,
+    });
+    const q = (sel: string) => fixture.nativeElement.querySelector(sel);
+
+    it('should not show any switches to a visitor', async () => {
+      // given — the controls are the owner's, and their mere presence
+      // would tell a visitor the profile has hidden parts
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(q('[data-testid="profile-owner-bar"]')).toBeNull();
+      expect(q('[data-testid="profile-toggle-streak"]')).toBeNull();
+    });
+
+    it('should show the switches to the owner', async () => {
+      // given
+      await setup({ resolve: owner() });
+
+      // then
+      expect(q('[data-testid="profile-owner-bar"]')).toBeTruthy();
+      expect(q('[data-testid="profile-toggle-streak"]')).toBeTruthy();
+    });
+
+    it('should keep a switched-off element on screen for the owner', async () => {
+      // given — removing it would take the switch that turns it back on
+      // away with it
+      await setup({ resolve: owner({ hidden: ['streak'] }) });
+
+      // then
+      expect(q('[data-testid="public-profile-streak"]')).toBeTruthy();
+      expect(q('[data-testid="profile-toggle-streak"]')).toBeTruthy();
+    });
+
+    it('should mark a switched-off element as not published', async () => {
+      // given
+      await setup({ resolve: owner({ hidden: ['streak'] }) });
+
+      // then — dimming is the only cue that it is off; without it the
+      // page would look the same either way
+      expect(
+        q('[data-testid="public-profile-streak"]').closest('.is-hidden')
+      ).toBeTruthy();
+    });
+
+    describe('Preview as visitor', () => {
+      it('should not be offered while the profile is private', async () => {
+        // given — there is no visitor view to preview yet
+        await setup({ resolve: owner({ isPrivate: true }) });
+
+        // then
+        expect(q('[data-testid="profile-preview-toggle"]')).toBeNull();
+      });
+
+      it('should be offered once the profile is public', async () => {
+        // given
+        await setup({ resolve: owner({ isPrivate: false }) });
+
+        // then
+        expect(q('[data-testid="profile-preview-toggle"]')).toBeTruthy();
+      });
+
+      it('should drop switched-off elements entirely', async () => {
+        // given
+        await setup({ resolve: owner({ hidden: ['streak'] }) });
+
+        // when
+        fixture.componentInstance['previewAsVisitor'].set(true);
+        fixture.detectChanges();
+
+        // then — a preview that still showed it would be a lie about
+        // what visitors get
+        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+      });
+
+      it('should hide the switches themselves', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        fixture.componentInstance['previewAsVisitor'].set(true);
+        fixture.detectChanges();
+
+        // then
+        expect(q('[data-testid="profile-toggle-streak"]')).toBeNull();
+      });
+    });
+
+    describe('Saving a switch', () => {
+      it('should persist the element as hidden', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        q('[data-testid="profile-toggle-streak"]').click();
+        await fixture.whenStable();
+
+        // then
+        expect(configMock.save).toHaveBeenCalledWith(
+          expect.objectContaining({
+            ui: expect.objectContaining({ profileHidden: ['streak'] }),
+          })
+        );
+      });
+
+      it('should not drop the other ui settings', async () => {
+        // given — writing only the new key risks losing publicProfile,
+        // which would quietly unpublish the profile
+        await setup({ resolve: owner() });
+
+        // when
+        q('[data-testid="profile-toggle-streak"]').click();
+        await fixture.whenStable();
+
+        // then
+        const ui = configMock.save.mock.calls[0][0].ui;
+        expect(ui.publicProfile).toBe(true);
+        expect(ui.hideFromLeaderboard).toBe(true);
+      });
+
+      it('should flip the element without waiting for the round trip', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        q('[data-testid="profile-toggle-streak"]').click();
+        fixture.detectChanges();
+
+        // then — the projection still says visible; the local mirror is
+        // what makes the switch feel like a switch
+        expect(
+          q('[data-testid="public-profile-streak"]').closest('.is-hidden')
+        ).toBeTruthy();
+      });
+    });
+
+    describe('Profile photo', () => {
+      it('should not be clickable for a visitor', async () => {
+        // given
+        await setup({ resolve: sampleProfile });
+
+        // then
+        expect(q('[data-testid="profile-photo-edit"]')).toBeNull();
+      });
+
+      it('should open the picker for the owner', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // then
+        expect(q('[data-testid="profile-photo-edit"]')).toBeTruthy();
+        expect(q('[data-testid="profile-photo-input"]')).toBeTruthy();
+      });
+
+      it('should upload the picked file', async () => {
+        // given
+        await setup({ resolve: owner() });
+        const input = q('[data-testid="profile-photo-input"]');
+        const file = new File(['x'], 'a.jpg', { type: 'image/jpeg' });
+        Object.defineProperty(input, 'files', { value: [file] });
+
+        // when
+        input.dispatchEvent(new Event('change'));
+        await fixture.whenStable();
+
+        // then
+        expect(photosMock.upload).toHaveBeenCalledWith(file);
+      });
     });
   });
 });

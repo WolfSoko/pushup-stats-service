@@ -8,13 +8,13 @@
     @case ('not-found') {
       <mat-card class="status-card" data-testid="public-profile-not-found">
         <mat-card-header>
-          <mat-card-title>{{ notFoundTitle }}</mat-card-title>
+          <mat-card-title>{{ labels.notFoundTitle }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ notFoundBody }}</p>
+          <p>{{ labels.notFoundBody }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-stroked-button routerLink="/">{{ homeLabel }}</a>
+          <a mat-stroked-button routerLink="/">{{ labels.home }}</a>
         </mat-card-actions>
       </mat-card>
     }
@@ -22,14 +22,14 @@
     @case ('error') {
       <mat-card class="status-card" data-testid="public-profile-error">
         <mat-card-header>
-          <mat-card-title>{{ errorTitle }}</mat-card-title>
+          <mat-card-title>{{ labels.errorTitle }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ errorBody }}</p>
+          <p>{{ labels.errorBody }}</p>
         </mat-card-content>
         <mat-card-actions>
           <button mat-stroked-button type="button" (click)="reload()">
-            {{ retryLabel }}
+            {{ labels.retry }}
           </button>
         </mat-card-actions>
       </mat-card>
@@ -41,34 +41,83 @@
             <mat-card-content>
               <mat-icon aria-hidden="true">lock</mat-icon>
               <div>
-                <strong>{{ privateTitle }}</strong>
-                <p>{{ privateBody }}</p>
+                <strong>{{ labels.privateTitle }}</strong>
+                <p>{{ labels.privateBody }}</p>
               </div>
               <a
                 mat-flat-button
                 color="primary"
                 routerLink="/settings/profil"
                 data-testid="public-profile-enable"
-                >{{ privateCta }}</a
+                >{{ labels.privateCta }}</a
               >
             </mat-card-content>
           </mat-card>
         }
 
-        <header class="profile-header">
-          <div class="avatar" aria-hidden="true">
-            @if (p.photoURL && !photoFailed()) {
-              <img
-                [src]="p.photoURL"
-                alt=""
-                data-testid="public-profile-photo"
-                referrerpolicy="no-referrer"
-                (error)="photoFailed.set(true)"
-              />
-            } @else {
-              <mat-icon>fitness_center</mat-icon>
+        @if (isOwner()) {
+          <div class="owner-bar" data-testid="profile-owner-bar">
+            <mat-icon aria-hidden="true">tune</mat-icon>
+            <span class="owner-hint">{{ labels.ownerHint }}</span>
+            @if (canPreview()) {
+              <mat-slide-toggle
+                [checked]="previewAsVisitor()"
+                (change)="previewAsVisitor.set($event.checked)"
+                data-testid="profile-preview-toggle"
+                >{{ labels.previewAsVisitor }}</mat-slide-toggle
+              >
             }
           </div>
+        }
+
+        <header class="profile-header">
+          <input
+            #photoInput
+            type="file"
+            class="visually-hidden"
+            accept="image/jpeg,image/png,image/webp"
+            data-testid="profile-photo-input"
+            (change)="onPhotoPicked($event)"
+          />
+          @if (isOwner() && !previewAsVisitor()) {
+            <button
+              type="button"
+              class="avatar avatar-button"
+              data-testid="profile-photo-edit"
+              [disabled]="photos.busy()"
+              [attr.aria-label]="labels.photoEdit"
+              (click)="photoInput.click()"
+            >
+              @if (p.photoURL && !photoFailed()) {
+                <img
+                  [src]="p.photoURL"
+                  alt=""
+                  data-testid="public-profile-photo"
+                  referrerpolicy="no-referrer"
+                  (error)="photoFailed.set(true)"
+                />
+              } @else {
+                <mat-icon>fitness_center</mat-icon>
+              }
+              <span class="avatar-overlay" aria-hidden="true">
+                <mat-icon>photo_camera</mat-icon>
+              </span>
+            </button>
+          } @else {
+            <div class="avatar" aria-hidden="true">
+              @if (p.photoURL && !photoFailed()) {
+                <img
+                  [src]="p.photoURL"
+                  alt=""
+                  data-testid="public-profile-photo"
+                  referrerpolicy="no-referrer"
+                  (error)="photoFailed.set(true)"
+                />
+              } @else {
+                <mat-icon>fitness_center</mat-icon>
+              }
+            </div>
+          }
           <div class="header-text">
             <h1 data-testid="public-profile-name">{{ p.displayName }}</h1>
             <p class="subtitle" i18n="@@publicProfile.subtitle">
@@ -80,81 +129,163 @@
             type="button"
             class="share-btn"
             data-testid="public-profile-share"
-            [attr.aria-label]="shareAriaLabel"
+            [attr.aria-label]="labels.shareAria"
             (click)="shareProfile()"
           >
             <mat-icon>share</mat-icon>
-            <span>{{ shareLabel }}</span>
+            <span>{{ labels.share }}</span>
           </button>
         </header>
 
-        <section class="stats-grid" [attr.aria-label]="statsLabel">
-          <mat-card class="stat-card">
-            <mat-card-content>
-              <small>{{ totalLabel }}</small>
-              <b data-testid="public-profile-total">{{
-                p.total | number: '1.0-0'
-              }}</b>
-            </mat-card-content>
-          </mat-card>
-          <mat-card class="stat-card">
-            <mat-card-content>
-              <small>{{ streakLabel }}</small>
-              <b data-testid="public-profile-streak">{{
-                p.currentStreak | number: '1.0-0'
-              }}</b>
-            </mat-card-content>
-          </mat-card>
-          <mat-card class="stat-card">
-            <mat-card-content>
-              <small>{{ daysLabel }}</small>
-              <b>{{ p.totalDays | number: '1.0-0' }}</b>
-            </mat-card-content>
-          </mat-card>
-          <mat-card class="stat-card">
-            <mat-card-content>
-              <small>{{ entriesLabel }}</small>
-              <b>{{ p.totalEntries | number: '1.0-0' }}</b>
-            </mat-card-content>
-          </mat-card>
-          @if (p.weeklyReps > 0) {
-            <mat-card class="stat-card">
+        <section class="stats-grid" [attr.aria-label]="labels.stats">
+          @if (renders('total', true)) {
+            <mat-card class="stat-card" [class.is-hidden]="!isVisible('total')">
               <mat-card-content>
-                <small>{{ weekLabel }}</small>
+                <small>{{ labels.total }}</small>
+                <b data-testid="public-profile-total">{{
+                  p.total | number: '1.0-0'
+                }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'total', label: labels.total }
+                  "
+                ></ng-container>
+              </mat-card-content>
+            </mat-card>
+          }
+          @if (renders('streak', true)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!isVisible('streak')"
+            >
+              <mat-card-content>
+                <small>{{ labels.streak }}</small>
+                <b data-testid="public-profile-streak">{{
+                  p.currentStreak | number: '1.0-0'
+                }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'streak', label: labels.streak }
+                  "
+                ></ng-container>
+              </mat-card-content>
+            </mat-card>
+          }
+          @if (renders('days', true)) {
+            <mat-card class="stat-card" [class.is-hidden]="!isVisible('days')">
+              <mat-card-content>
+                <small>{{ labels.days }}</small>
+                <b>{{ p.totalDays | number: '1.0-0' }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'days', label: labels.days }
+                  "
+                ></ng-container>
+              </mat-card-content>
+            </mat-card>
+          }
+          @if (renders('entries', true)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!isVisible('entries')"
+            >
+              <mat-card-content>
+                <small>{{ labels.entries }}</small>
+                <b>{{ p.totalEntries | number: '1.0-0' }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'entries', label: labels.entries }
+                  "
+                ></ng-container>
+              </mat-card-content>
+            </mat-card>
+          }
+          @if (renders('week', !!p.weeklyReps)) {
+            <mat-card class="stat-card" [class.is-hidden]="!isVisible('week')">
+              <mat-card-content>
+                <small>{{ labels.week }}</small>
                 <b>{{ p.weeklyReps | number: '1.0-0' }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'week', label: labels.week }
+                  "
+                ></ng-container>
               </mat-card-content>
             </mat-card>
           }
-          @if (p.monthlyReps > 0) {
-            <mat-card class="stat-card">
+          @if (renders('month', !!p.monthlyReps)) {
+            <mat-card class="stat-card" [class.is-hidden]="!isVisible('month')">
               <mat-card-content>
-                <small>{{ monthLabel }}</small>
+                <small>{{ labels.month }}</small>
                 <b>{{ p.monthlyReps | number: '1.0-0' }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'month', label: labels.month }
+                  "
+                ></ng-container>
               </mat-card-content>
             </mat-card>
           }
-          @if (p.bestSingleEntry !== null) {
-            <mat-card class="stat-card">
+          @if (renders('bestSet', p.bestSingleEntry !== null)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!isVisible('bestSet')"
+            >
               <mat-card-content>
-                <small>{{ bestSetLabel }}</small>
+                <small>{{ labels.bestSet }}</small>
                 <b>{{ p.bestSingleEntry | number: '1.0-0' }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'bestSet', label: labels.bestSet }
+                  "
+                ></ng-container>
               </mat-card-content>
             </mat-card>
           }
-          @if (p.bestDayTotal !== null) {
-            <mat-card class="stat-card">
+          @if (renders('bestDay', p.bestDayTotal !== null)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!isVisible('bestDay')"
+            >
               <mat-card-content>
-                <small>{{ bestDayLabel }}</small>
+                <small>{{ labels.bestDay }}</small>
                 <b>{{ p.bestDayTotal | number: '1.0-0' }}</b>
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'bestDay', label: labels.bestDay }
+                  "
+                ></ng-container>
               </mat-card-content>
             </mat-card>
           }
         </section>
 
         @if (badgesFor(p); as badges) {
-          @if (badges.length > 0) {
-            <section class="achievements">
-              <h2>{{ achievementsLabel }}</h2>
+          @if (renders('achievements', badges.length > 0)) {
+            <section
+              class="achievements"
+              [class.is-hidden]="!isVisible('achievements')"
+            >
+              <h2>
+                {{ labels.achievements }}
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: {
+                      $implicit: 'achievements',
+                      label: labels.achievements,
+                    }
+                  "
+                ></ng-container>
+              </h2>
               <ul class="badge-list">
                 @for (badge of badges; track badge.id) {
                   <li class="badge">
@@ -168,9 +299,21 @@
         }
 
         @if (exerciseRows(); as rows) {
-          @if (rows.length > 0) {
-            <section class="exercises" data-testid="public-profile-exercises">
-              <h2>{{ exercisesLabel }}</h2>
+          @if (renders('exercises', rows.length > 0)) {
+            <section
+              class="exercises"
+              data-testid="public-profile-exercises"
+              [class.is-hidden]="!isVisible('exercises')"
+            >
+              <h2>
+                {{ labels.exercises }}
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'exercises', label: labels.exercises }
+                  "
+                ></ng-container>
+              </h2>
               <ul class="exercise-list">
                 @for (row of rows; track row.exerciseId) {
                   <li>
@@ -187,13 +330,25 @@
         }
 
         @if (heatmapRows(); as rows) {
-          @if (rows.length > 0) {
-            <section class="heatmap" data-testid="public-profile-heatmap">
-              <h2>{{ heatmapLabel }}</h2>
+          @if (renders('heatmap', rows.length > 0)) {
+            <section
+              class="heatmap"
+              data-testid="public-profile-heatmap"
+              [class.is-hidden]="!isVisible('heatmap')"
+            >
+              <h2>
+                {{ labels.heatmap }}
+                <ng-container
+                  *ngTemplateOutlet="
+                    sectionToggle;
+                    context: { $implicit: 'heatmap', label: labels.heatmap }
+                  "
+                ></ng-container>
+              </h2>
               <div
                 class="heatmap-grid"
                 role="img"
-                [attr.aria-label]="heatmapAria"
+                [attr.aria-label]="labels.heatmapAria"
               >
                 @for (row of rows; track row.weekday) {
                   <span class="heatmap-day">{{ row.weekday }}</span>
@@ -213,10 +368,35 @@
         <section class="cta">
           <a mat-flat-button color="primary" routerLink="/">
             <mat-icon>fitness_center</mat-icon>
-            <span>{{ ctaLabel }}</span>
+            <span>{{ labels.cta }}</span>
           </a>
         </section>
       }
     }
   }
 </main>
+
+<ng-template #sectionToggle let-section let-label="label">
+  @if (showControls()) {
+    <button
+      mat-icon-button
+      type="button"
+      class="section-toggle"
+      [attr.data-testid]="'profile-toggle-' + section"
+      [attr.aria-pressed]="isVisible(section)"
+      [attr.aria-label]="
+        (isVisible(section) ? labels.hideElement : labels.showElement) +
+        ': ' +
+        label
+      "
+      [matTooltip]="
+        isVisible(section) ? labels.hideElement : labels.showElement
+      "
+      (click)="toggleSection(section, !isVisible(section))"
+    >
+      <mat-icon>{{
+        isVisible(section) ? 'visibility' : 'visibility_off'
+      }}</mat-icon>
+    </button>
+  }
+</ng-template>

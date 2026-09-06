@@ -8,97 +8,16 @@
  * (email, goals, reminder config, raw entries) is whitelisted by absence.
  */
 
-import type { MeasurementType } from '@pu-stats/models';
+import { normalizeHiddenSections, type ProfileSection } from '@pu-stats/models';
 
-import { toPublicDisplayName, type UserProfile } from './logic';
-
-/** Subset of `UserConfig` this projection actually reads. */
-export interface UserConfigForPublicProfile extends UserProfile {
-  ui?: {
-    publicProfile?: boolean;
-    hideFromLeaderboard?: boolean;
-    hideAccountPhoto?: boolean;
-  };
-  createdAt?: string;
-  /** Set by the client after a photo upload; drives the photo URL. */
-  photoUpdatedAt?: string;
-}
-
-/** Subset of `UserStats` this projection actually reads. */
-export interface UserStatsForPublicProfile {
-  total?: number;
-  totalEntries?: number;
-  totalDays?: number;
-  currentStreak?: number;
-  bestSingleEntry?: { reps: number; timestamp: string } | null;
-  bestDay?: { date: string; total: number } | null;
-  /**
-   * Period buckets carry the key they were written for. Reading the
-   * value without checking the key would present last week's number as
-   * "this week" for anyone who has not trained since.
-   */
-  weeklyReps?: number;
-  weeklyKey?: string;
-  monthlyReps?: number;
-  monthlyKey?: string;
-  /** Cumulative reps per `<weekday>-<HH>` slot, zero slots pruned. */
-  heatmap?: Record<string, number>;
-  updatedAt?: string;
-}
-
-/** One entry of the per-exercise breakdown. */
-export interface ExerciseTotal {
-  exerciseId: string;
-  total: number;
-  totalDays: number;
-  /**
-   * Carried per entry because the stored `total` is not unit-homogeneous:
-   * it holds reps, seconds or metres depending on the exercise. Summing
-   * across measurements would be meaningless, so the client formats and
-   * groups by this instead.
-   */
-  measurement: MeasurementType;
-}
-
-/** Shape of `userAchievements/{uid}` as far as the profile cares. */
-export interface UserAchievementsForPublicProfile {
-  earned?: Array<{ id?: unknown; awardedAt?: unknown }>;
-}
-
-export interface PublicProfileProjection {
-  uid: string;
-  displayName: string;
-  total: number;
-  totalEntries: number;
-  totalDays: number;
-  currentStreak: number;
-  bestSingleEntry: number | null;
-  bestDayTotal: number | null;
-  /**
-   * Ids of achievements the user has earned, newest first. Ids only —
-   * the label and icon come from the client-side catalog, so renaming a
-   * badge never requires a data migration.
-   */
-  achievements: string[];
-  /** Google/Firebase Auth photo, or an uploaded one once that exists. */
-  photoURL: string | null;
-  /** ISO date the account was created, null when unknown. */
-  memberSince: string | null;
-  /** Reps in the *current* Berlin week/month; 0 when the bucket is stale. */
-  weeklyReps: number;
-  monthlyReps: number;
-  /** Cumulative reps per `<weekday>-<HH>` slot. */
-  heatmap: Record<string, number>;
-  /** Top exercises by volume, grouped and formatted by the client. */
-  exercises: ExerciseTotal[];
-  /**
-   * True only when the projection is handed to its own owner despite the
-   * profile being private. Never true for a third party — the callable
-   * returns `not-found` in that case, unchanged.
-   */
-  isPrivate: boolean;
-  updatedAt: string;
-}
+import { toPublicDisplayName } from './logic';
+import type {
+  PublicProfileExtras,
+  PublicProfileProjection,
+  UserAchievementsForPublicProfile,
+  UserConfigForPublicProfile,
+  UserStatsForPublicProfile,
+} from './public-profile.types';
 
 /**
  * Returns true iff the user has explicitly opted in to a public profile.
@@ -128,25 +47,6 @@ export function isValidUid(value: unknown): value is string {
   );
 }
 
-/**
- * Build the public projection. Returns `null` when the requested user has
- * not opted in — callers MUST surface this as `not-found` to anonymous
- * callers so existence of a private user can't be probed.
- */
-export interface PublicProfileExtras {
-  readonly achievements?: UserAchievementsForPublicProfile | null;
-  readonly photoURL?: string | null;
-  readonly exercises?: ReadonlyArray<ExerciseTotal>;
-  /** Berlin period keys for "now", used to reject stale buckets. */
-  readonly currentWeeklyKey?: string;
-  readonly currentMonthlyKey?: string;
-  /**
-   * Set only when the caller proved they own this uid. It is the single
-   * bypass of the opt-in gate and must never be derived from request data.
-   */
-  readonly viewerIsOwner?: boolean;
-}
-
 export function buildPublicProfile(
   uid: string,
   config: UserConfigForPublicProfile | null,
@@ -158,24 +58,41 @@ export function buildPublicProfile(
   // The owner may see their own profile before opting in; nobody else can.
   if (!isPublic && extras.viewerIsOwner !== true) return null;
 
+  const hidden = normalizeHiddenSections(config.ui?.profileHidden);
+  const viewerIsOwner = extras.viewerIsOwner === true;
+  // The owner needs the full picture to operate the switches; everyone
+  // else gets a projection the hidden values never entered.
+  const show = <T>(section: ProfileSection, value: T, blank: T): T =>
+    viewerIsOwner || !hidden.includes(section) ? value : blank;
+
   return {
     uid,
     displayName: toPublicDisplayName(config),
-    total: numberOrZero(stats?.total),
-    totalEntries: numberOrZero(stats?.totalEntries),
-    totalDays: numberOrZero(stats?.totalDays),
-    currentStreak: numberOrZero(stats?.currentStreak),
-    bestSingleEntry:
+    total: show('total', numberOrZero(stats?.total), null),
+    totalEntries: show('entries', numberOrZero(stats?.totalEntries), null),
+    totalDays: show('days', numberOrZero(stats?.totalDays), null),
+    currentStreak: show('streak', numberOrZero(stats?.currentStreak), null),
+    bestSingleEntry: show(
+      'bestSet',
       typeof stats?.bestSingleEntry?.reps === 'number' &&
-      Number.isFinite(stats.bestSingleEntry.reps)
+        Number.isFinite(stats.bestSingleEntry.reps)
         ? stats.bestSingleEntry.reps
         : null,
-    bestDayTotal:
+      null
+    ),
+    bestDayTotal: show(
+      'bestDay',
       typeof stats?.bestDay?.total === 'number' &&
-      Number.isFinite(stats.bestDay.total)
+        Number.isFinite(stats.bestDay.total)
         ? stats.bestDay.total
         : null,
-    achievements: publicAchievementIds(extras.achievements ?? null),
+      null
+    ),
+    achievements: show(
+      'achievements',
+      publicAchievementIds(extras.achievements ?? null),
+      []
+    ),
     photoURL:
       typeof extras.photoURL === 'string' && extras.photoURL !== ''
         ? extras.photoURL
@@ -184,19 +101,25 @@ export function buildPublicProfile(
       typeof config.createdAt === 'string' && config.createdAt !== ''
         ? config.createdAt
         : null,
-    weeklyReps: periodValue(
-      stats?.weeklyReps,
-      stats?.weeklyKey,
-      extras.currentWeeklyKey
+    weeklyReps: show(
+      'week',
+      periodValue(stats?.weeklyReps, stats?.weeklyKey, extras.currentWeeklyKey),
+      null
     ),
-    monthlyReps: periodValue(
-      stats?.monthlyReps,
-      stats?.monthlyKey,
-      extras.currentMonthlyKey
+    monthlyReps: show(
+      'month',
+      periodValue(
+        stats?.monthlyReps,
+        stats?.monthlyKey,
+        extras.currentMonthlyKey
+      ),
+      null
     ),
-    heatmap: publicHeatmap(stats?.heatmap),
-    exercises: [...(extras.exercises ?? [])],
+    heatmap: show('heatmap', publicHeatmap(stats?.heatmap), {}),
+    exercises: show('exercises', [...(extras.exercises ?? [])], []),
     isPrivate: !isPublic,
+    viewerIsOwner,
+    hidden: viewerIsOwner ? hidden : [],
     updatedAt: typeof stats?.updatedAt === 'string' ? stats.updatedAt : '',
   };
 }

@@ -1,7 +1,5 @@
-import {
-  isPublicProfileAllowed,
-  type UserConfigForPublicProfile,
-} from './public-profile';
+import { isPublicProfileAllowed } from './public-profile';
+import type { UserConfigForPublicProfile } from './public-profile.types';
 export type PhotoSource =
   | { readonly kind: 'endpoint'; readonly version: string }
   | { readonly kind: 'inline' }

@@ -209,6 +209,12 @@ export interface UserConfig {
      * agreed to publish, so they must be able to take it back off.
      */
     hideAccountPhoto?: boolean;
+    /**
+     * Ids from `PROFILE_SECTIONS` the user switched off on their public
+     * profile. Absent means everything is shown, so a newly added
+     * element appears without a migration.
+     */
+    profileHidden?: string[];
     dayChartMode?: '24h' | '14h';
     quickAdds?: QuickAddConfig[];
     snapQuality?: SnapQuality;

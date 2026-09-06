@@ -1,3 +1,5 @@
+import type { ProfileSection } from './profile-sections';
+
 /**
  * Sanitized projection of a user's stats for the public profile route.
  *
@@ -11,14 +13,18 @@ export interface PublicProfile {
   readonly uid: string;
   /** Public display name (anonymous fallback when none was set). */
   readonly displayName: string;
-  /** Total reps across all time. */
-  readonly total: number;
-  /** Total number of recorded entries. */
-  readonly totalEntries: number;
-  /** Total number of unique days with at least one entry. */
-  readonly totalDays: number;
-  /** Current consecutive-day streak. */
-  readonly currentStreak: number;
+  /**
+   * Total reps across all time. `null` when the owner switched this
+   * element off — the server omits it rather than relying on the client
+   * to hide it, so a hidden value never reaches a visitor at all.
+   */
+  readonly total: number | null;
+  /** Total number of recorded entries; `null` when switched off. */
+  readonly totalEntries: number | null;
+  /** Unique days with at least one entry; `null` when switched off. */
+  readonly totalDays: number | null;
+  /** Current consecutive-day streak; `null` when switched off. */
+  readonly currentStreak: number | null;
   /** Best single-entry rep count (null until any entries exist). */
   readonly bestSingleEntry: number | null;
   /** Best single-day total reps (null until any entries exist). */
@@ -34,9 +40,12 @@ export interface PublicProfile {
   readonly photoURL: string | null;
   /** ISO date the account was created, null when unknown. */
   readonly memberSince: string | null;
-  /** Reps in the current Berlin week/month; 0 when the bucket is stale. */
-  readonly weeklyReps: number;
-  readonly monthlyReps: number;
+  /**
+   * Reps in the current Berlin week/month; 0 when the bucket is stale,
+   * `null` when the element is switched off.
+   */
+  readonly weeklyReps: number | null;
+  readonly monthlyReps: number | null;
   /** Cumulative reps per `<weekday>-<HH>` slot. */
   readonly heatmap: Readonly<Record<string, number>>;
   /** Top exercises by volume. */
@@ -47,6 +56,13 @@ export interface PublicProfile {
    * receives a private profile.
    */
   readonly isPrivate: boolean;
+  /** True when the viewer owns this profile; drives the inline switches. */
+  readonly viewerIsOwner: boolean;
+  /**
+   * Elements the owner switched off. Empty for visitors — naming them
+   * would give away what the switch is there to withhold.
+   */
+  readonly hidden: ReadonlyArray<ProfileSection>;
   /** ISO timestamp of the last stats update. */
   readonly updatedAt: string;
 }

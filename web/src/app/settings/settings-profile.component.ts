@@ -17,7 +17,7 @@ import { UserContextService } from '@pu-auth/auth';
 
 import { AvatarService } from '../core/avatar.service';
 import { SettingsFacade } from '../stats/shell/settings.facade';
-import { ProfilePhotoService } from './profile-photo.service';
+import { ProfilePhotoService } from '../core/profile-photo.service';
 
 @Component({
   selector: 'app-settings-profile',

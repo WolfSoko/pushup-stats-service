@@ -113,6 +113,8 @@ describe('buildPublicProfile', () => {
       heatmap: {},
       exercises: [],
       isPrivate: false,
+      viewerIsOwner: false,
+      hidden: [],
       updatedAt: '',
     });
   });
@@ -148,6 +150,8 @@ describe('buildPublicProfile', () => {
       heatmap: {},
       exercises: [],
       isPrivate: false,
+      viewerIsOwner: false,
+      hidden: [],
       updatedAt: '2026-04-29T08:30:00.000Z',
     });
   });
@@ -264,13 +268,17 @@ describe('buildPublicProfile', () => {
       'heatmap',
       'exercises',
       'isPrivate',
+      'viewerIsOwner',
+      'hidden',
       'bestSingleEntry',
       'bestDayTotal',
       'updatedAt',
     ]);
-    for (const key of Object.keys(result ?? {})) {
-      expect(allowed.has(key)).toBe(true);
-    }
+    // Naming the offenders beats a bare `true !== false`: this guard
+    // fires when someone adds a field, and the message should say which.
+    expect(
+      Object.keys(result ?? {}).filter((key) => !allowed.has(key))
+    ).toEqual([]);
   });
 });
 
@@ -446,5 +454,129 @@ describe('buildPublicProfile heatmap', () => {
     expect(
       buildPublicProfile(uid, config, { heatmap } as never, {})?.heatmap
     ).toEqual({});
+  });
+});
+
+describe('buildPublicProfile element visibility', () => {
+  const uid = 'abc123';
+  const stats = {
+    total: 5000,
+    totalEntries: 120,
+    totalDays: 90,
+    currentStreak: 7,
+    bestSingleEntry: { reps: 60, timestamp: '2026-09-01T10:00:00.000Z' },
+    bestDay: { date: '2026-09-01', total: 200 },
+    weeklyReps: 300,
+    weeklyKey: '2026-W36',
+    monthlyReps: 1200,
+    monthlyKey: '2026-09',
+    heatmap: { 'Mo-07': 40 },
+  };
+  const extras = {
+    currentWeeklyKey: '2026-W36',
+    currentMonthlyKey: '2026-09',
+    achievements: { earned: { 'plan-days-10': '2026-09-01T00:00:00.000Z' } },
+    exercises: [
+      { exerciseId: 'pushup', total: 5000, measurement: 'reps' as const },
+    ],
+  };
+  const configWith = (profileHidden: unknown) => ({
+    displayName: 'Wolfi',
+    ui: { publicProfile: true, profileHidden },
+  });
+
+  describe('Given a visitor', () => {
+    it.each([
+      ['total', 'total'],
+      ['streak', 'currentStreak'],
+      ['days', 'totalDays'],
+      ['entries', 'totalEntries'],
+      ['week', 'weeklyReps'],
+      ['month', 'monthlyReps'],
+      ['bestSet', 'bestSingleEntry'],
+      ['bestDay', 'bestDayTotal'],
+    ])('should omit %s entirely from the payload', (section, field) => {
+      // then — the projection goes over the wire, so hiding it only in
+      // the template would still ship the number to anyone who looks
+      const result = buildPublicProfile(uid, configWith([section]), stats, {
+        ...extras,
+      });
+      expect(result?.[field as keyof typeof result]).toBeNull();
+    });
+
+    it('should omit hidden achievements', () => {
+      const result = buildPublicProfile(
+        uid,
+        configWith(['achievements']),
+        stats,
+        { ...extras }
+      );
+      expect(result?.achievements).toEqual([]);
+    });
+
+    it('should omit hidden exercises', () => {
+      const result = buildPublicProfile(uid, configWith(['exercises']), stats, {
+        ...extras,
+      });
+      expect(result?.exercises).toEqual([]);
+    });
+
+    it('should omit a hidden heatmap', () => {
+      const result = buildPublicProfile(uid, configWith(['heatmap']), stats, {
+        ...extras,
+      });
+      expect(result?.heatmap).toEqual({});
+    });
+
+    it('should not reveal which elements are hidden', () => {
+      // then — listing them would hand back exactly what the switch is
+      // there to withhold
+      const result = buildPublicProfile(uid, configWith(['streak']), stats, {
+        ...extras,
+      });
+      expect(result?.hidden).toEqual([]);
+      expect(result?.viewerIsOwner).toBe(false);
+    });
+
+    it('should leave everything else untouched', () => {
+      const result = buildPublicProfile(uid, configWith(['streak']), stats, {
+        ...extras,
+      });
+      expect(result?.total).toBe(5000);
+      expect(result?.totalDays).toBe(90);
+    });
+  });
+
+  describe('Given the owner', () => {
+    it('should still receive the hidden values', () => {
+      // then — the switches need something to switch, and the owner is
+      // allowed to see their own numbers
+      const result = buildPublicProfile(uid, configWith(['streak']), stats, {
+        ...extras,
+        viewerIsOwner: true,
+      });
+      expect(result?.currentStreak).toBe(7);
+    });
+
+    it('should learn which elements are hidden', () => {
+      const result = buildPublicProfile(
+        uid,
+        configWith(['streak', 'heatmap']),
+        stats,
+        { ...extras, viewerIsOwner: true }
+      );
+      expect(result?.hidden).toEqual(['streak', 'heatmap']);
+      expect(result?.viewerIsOwner).toBe(true);
+    });
+  });
+
+  it('should default to showing everything', () => {
+    // then — no config means every existing profile is unchanged
+    const result = buildPublicProfile(uid, configWith(undefined), stats, {
+      ...extras,
+    });
+    expect(result?.hidden).toEqual([]);
+    expect(result?.total).toBe(5000);
+    expect(result?.heatmap).not.toEqual({});
   });
 });

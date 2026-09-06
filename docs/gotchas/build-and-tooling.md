@@ -161,6 +161,21 @@ node tools/src/write-functions-workspace-allowbuilds.mjs /tmp/fd-test/pnpm-lock.
 
 **`Inlining of fonts failed ... fonts.googleapis.com/icon?family=Material+Icons`** is a network flake during `web:build`, **not a code bug**. Retry `pnpm nx run web:build -c production` after a few seconds.
 
+**`EnvironmentTeardownError: [vitest-worker]: Closing rpc while "onUserConsoleLog"
+was pending`** during `web:test` is a worker-teardown race, not a test failure.
+The run reports every test as passing and _still_ exits non-zero, because
+Vitest counts the unhandled rejection separately:
+
+```
+ Test Files  176 passed (176)
+      Tests  2389 passed (2389)
+     Errors  1 error
+```
+
+Seen originating in `web/src/app/ai/ai-assistant.tools.spec.ts`, which logs
+during teardown. Re-run before investigating — and note that the green test
+counts alone do not tell you the task passed, so read Nx's own verdict too.
+
 ## One-shot node scripts without a CLI bin
 
 `pnpm dlx` fails with `ERR_PNPM_DLX_NO_BIN` for packages that only expose a library API (e.g. `sharp`, `png-to-ico`). Install transiently in a scratch dir and point `NODE_PATH` at it:

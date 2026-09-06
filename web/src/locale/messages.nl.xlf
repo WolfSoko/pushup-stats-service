@@ -11899,5 +11899,53 @@
         <target> Zonder eigen foto toont je openbare profiel anders de foto van je Google-account. Een zelf geüploade foto blijft hierdoor onaangetast. </target>
       </segment>
     </unit>
+    <unit id="publicProfile.owner.hint">
+      <segment state="initial">
+        <source>Nur du siehst diese Schalter. Blende einzelne Elemente aus, die nicht öffentlich sein sollen.</source>
+        <target>Nur du siehst diese Schalter. Blende einzelne Elemente aus, die nicht öffentlich sein sollen.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview">
+      <segment state="initial">
+        <source>Als Besucher ansehen</source>
+        <target>Als Besucher ansehen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.photoEdit">
+      <segment state="initial">
+        <source>Profilbild ändern</source>
+        <target>Profilbild ändern</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.hideElement">
+      <segment state="initial">
+        <source>Auf dem öffentlichen Profil ausblenden</source>
+        <target>Auf dem öffentlichen Profil ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.showElement">
+      <segment state="initial">
+        <source>Auf dem öffentlichen Profil anzeigen</source>
+        <target>Auf dem öffentlichen Profil anzeigen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.share.textPlain">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.titlePlain">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.seo.descriptionPlain">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

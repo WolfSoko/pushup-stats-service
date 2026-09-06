@@ -8,3 +8,4 @@ export * from './public-profile';
 // triggers. Import `renderProfileOg` directly from `./profile/og-render`
 // in the one place that needs it.
 export * from './photo-source';
+export * from './public-profile.types';

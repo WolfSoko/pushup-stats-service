@@ -18,7 +18,7 @@ import satori from 'satori';
 import { Resvg, initWasm } from '@resvg/resvg-wasm';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import type { PublicProfileProjection } from './public-profile';
+import type { PublicProfileProjection } from './public-profile.types';
 
 // Direct CDN URL (no GitHub redirect), pinned to a release tag for stability.
 const FONT_URL =
@@ -157,6 +157,29 @@ function badgeLabel(id: string, copy: OgCopy): string | null {
  * an empty node, so the caller filters it out instead of rendering a
  * gap.
  */
+/**
+ * Stat strip under the name. Built from the parts that survived the
+ * projection: an element the owner switched off is `null` there, and the
+ * share card is as public as the profile — printing it here would hand
+ * out exactly what the switch took away.
+ */
+function statLine(
+  profile: PublicProfileProjection,
+  copy: { numberLocale: string; daysLabel: string }
+): string {
+  const parts: string[] = [];
+  if (profile.total !== null) {
+    parts.push(`${profile.total.toLocaleString(copy.numberLocale)} Reps`);
+  }
+  if (profile.currentStreak !== null) {
+    parts.push(`Streak ${profile.currentStreak}`);
+  }
+  if (profile.totalDays !== null) {
+    parts.push(`${profile.totalDays} ${copy.daysLabel}`);
+  }
+  return parts.join(' · ');
+}
+
 function badgeRow(
   achievements: ReadonlyArray<string>,
   copy: OgCopy
@@ -251,7 +274,7 @@ export function buildOgTree(
               fontSize: '36px',
               color: '#dbe7ff',
             },
-            children: `${profile.total.toLocaleString(copy.numberLocale)} Reps · Streak ${profile.currentStreak} · ${profile.totalDays} ${copy.daysLabel}`,
+            children: statLine(profile, copy),
           }),
           ...[badgeRow(profile.achievements ?? [], copy)].filter(
             (node): node is SatoriElement => node !== null
