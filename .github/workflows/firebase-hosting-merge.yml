@@ -112,11 +112,11 @@ jobs:
       # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
       # invocation and surfaces any transient hop as "Failed to authenticate".
       # Retry a few times before giving up; a genuine failure still fails the job.
-      - name: Deploy Hosting + Cloud Functions + Firestore rules & indexes
+      - name: Deploy Hosting + Cloud Functions + Firestore & Storage rules
         working-directory: data-store
         run: |
           for attempt in 1 2 3 4; do
-            pnpm exec firebase deploy --only hosting,functions,firestore --project pushup-stats && exit 0
+            pnpm exec firebase deploy --only hosting,functions,firestore,storage --project pushup-stats && exit 0
             echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
             sleep 15
           done

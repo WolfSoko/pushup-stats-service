@@ -1,0 +1,34 @@
+rules_version = '2';
+
+// Profile photos.
+//
+// The bucket is private. A world-readable bucket would put every uploaded
+// photo on the open internet even for users who never make their profile
+// public — consenting to *upload* is not consenting to unconditional
+// publication.
+//
+// Two read paths, deliberately:
+//   - The owner reads their own file directly (an `<img>` tag cannot send
+//     an Authorization header, so the Firebase SDK's download URL is the
+//     only way the owner can see their photo while the profile is still
+//     private).
+//   - Everyone else goes through the `profilePhoto` Cloud Function, which
+//     applies the same visibility rule as the profile itself and uses the
+//     Admin SDK — which bypasses these rules by design.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /profile-photos/{userId}/{fileName} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // 2 MB and image types only: the client already downscales, so a
+      // larger payload means something bypassed the app.
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && request.resource.size < 2 * 1024 * 1024
+                   && request.resource.contentType.matches('image/(jpeg|png|webp)');
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

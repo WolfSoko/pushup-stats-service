@@ -1,3 +1,66 @@
+<mat-card class="section-card" data-testid="settings-photo-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>photo_camera</mat-icon>
+    <mat-card-title i18n="@@settings.photo.title">Profilbild</mat-card-title>
+    <mat-card-subtitle i18n="@@settings.photo.subtitle">
+      Wird auf deinem Profil und in der Teilen-Vorschau angezeigt.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="photo-row">
+    <div class="photo-preview" aria-hidden="true">
+      @if (photoUrl(); as url) {
+        <img [src]="url" alt="" data-testid="settings-photo-preview" />
+      } @else {
+        <mat-icon>account_circle</mat-icon>
+      }
+    </div>
+    <div class="photo-actions">
+      <input
+        #photoInput
+        type="file"
+        class="visually-hidden"
+        accept="image/jpeg,image/png,image/webp"
+        data-testid="settings-photo-input"
+        (change)="onPhotoPicked($event)"
+      />
+      <button
+        mat-stroked-button
+        type="button"
+        [disabled]="photos.busy()"
+        data-testid="settings-photo-choose"
+        (click)="photoInput.click()"
+      >
+        <mat-icon>upload</mat-icon>
+        <span i18n="@@settings.photo.choose">Bild wählen</span>
+      </button>
+      @if (photoUrl()) {
+        <button
+          mat-button
+          type="button"
+          [disabled]="photos.busy()"
+          data-testid="settings-photo-remove"
+          (click)="removePhoto()"
+        >
+          <span i18n="@@settings.photo.remove">Entfernen</span>
+        </button>
+      }
+      @if (photoError(); as message) {
+        <p class="error" role="alert" data-testid="settings-photo-error">
+          {{ message }}
+        </p>
+      }
+      <p class="hint warn-hint" data-testid="settings-photo-visibility-hint">
+        <mat-icon aria-hidden="true">public</mat-icon>
+        <span i18n="@@settings.photo.visibilityHint"
+          >Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen —
+          auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil
+          privat, sieht es nur du.</span
+        >
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
 <mat-card id="profile" class="section-card">
   <mat-card-header>
     <mat-icon mat-card-avatar>person</mat-icon>

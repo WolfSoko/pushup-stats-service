@@ -227,6 +227,12 @@ export interface UserConfig {
      */
     sessionMode?: SessionMode;
   };
+  /**
+   * ISO timestamp of the last profile-photo upload, absent when none was
+   * ever uploaded. Kept here rather than probing Storage on every profile
+   * view, and doubles as the cache-buster in the photo URL.
+   */
+  photoUpdatedAt?: string;
   createdAt?: string;
   updatedAt?: string;
   reminder?: ReminderConfig;
@@ -264,6 +270,7 @@ export type UserConfigUpdate = Partial<
     | 'consent'
     | 'ui'
     | 'reminder'
+    | 'photoUpdatedAt'
   >
 >;
 

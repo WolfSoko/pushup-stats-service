@@ -11702,5 +11702,59 @@
         <target>So</target>
       </segment>
     </unit>
+    <unit id="settings.photo.title">
+      <segment state="initial">
+        <source>Profilbild</source>
+        <target>Profilbild</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.subtitle">
+      <segment state="initial">
+        <source> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </source>
+        <target> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.choose">
+      <segment state="initial">
+        <source>Bild wählen</source>
+        <target>Bild wählen</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.remove">
+      <segment state="initial">
+        <source>Entfernen</source>
+        <target>Entfernen</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.visibilityHint">
+      <segment state="initial">
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
+        <target>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.error.type">
+      <segment state="initial">
+        <source>Bitte ein JPG, PNG oder WebP wählen.</source>
+        <target>Bitte ein JPG, PNG oder WebP wählen.</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.error.size">
+      <segment state="initial">
+        <source>Das Bild ist zu groß.</source>
+        <target>Das Bild ist zu groß.</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.error.decode">
+      <segment state="initial">
+        <source>Das Bild konnte nicht gelesen werden.</source>
+        <target>Das Bild konnte nicht gelesen werden.</target>
+      </segment>
+    </unit>
+    <unit id="settings.photo.error.upload">
+      <segment state="initial">
+        <source>Hochladen fehlgeschlagen. Bitte erneut versuchen.</source>
+        <target>Hochladen fehlgeschlagen. Bitte erneut versuchen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

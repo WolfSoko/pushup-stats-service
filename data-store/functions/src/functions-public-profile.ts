@@ -5,6 +5,7 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
 import { getAuth } from 'firebase-admin/auth';
+import { getStorage } from 'firebase-admin/storage';
 import { findExerciseDefinition } from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
@@ -12,6 +13,7 @@ import { db } from './firebase-app';
 import { periodKeys } from './user-stats-delta';
 import {
   buildPublicProfile,
+  isPublicProfileAllowed,
   isValidUid,
   type UserConfigForPublicProfile,
   type ExerciseTotal,
@@ -28,12 +30,34 @@ import {
 // semantics. Centralising the lookup here keeps the 404-parity contract
 // from drifting between the two wrappers and matches the project's "trigger
 // functions in `index.ts` are thin wrappers" rule.
+const PHOTO_BUCKET = 'pushup-stats-profile-photos';
+const PHOTO_PREFIX = 'profile-photos';
+
+function photoObjectPath(uid: string): string {
+  return `${PHOTO_PREFIX}/${uid}/avatar`;
+}
+
 /**
- * Photo shown on the profile. Read from Firebase Auth rather than stored:
- * a Google account's picture changes on Google's side, and copying it into
- * Firestore would go stale silently.
+ * Photo shown on the profile.
+ *
+ * An uploaded photo wins and is served through `profilePhoto` rather than
+ * from a public bucket — the bucket stays private so a photo is never
+ * more visible than the profile it belongs to. `photoUpdatedAt` doubles
+ * as the cache-buster, so a new upload is not masked by the CDN.
+ *
+ * Otherwise the Google account picture, read from Firebase Auth rather
+ * than copied into Firestore: it changes on Google's side, and a copy
+ * would go stale silently.
  */
-async function resolvePhotoUrl(uid: string): Promise<string | null> {
+async function resolvePhotoUrl(
+  uid: string,
+  config: UserConfigForPublicProfile
+): Promise<string | null> {
+  if (typeof config.photoUpdatedAt === 'string' && config.photoUpdatedAt) {
+    const project = process.env['GCLOUD_PROJECT'] ?? 'pushup-stats';
+    const version = encodeURIComponent(config.photoUpdatedAt);
+    return `https://europe-west3-${project}.cloudfunctions.net/profilePhoto?uid=${encodeURIComponent(uid)}&v=${version}`;
+  }
   try {
     const user = await getAuth().getUser(uid);
     return user.photoURL ?? null;
@@ -105,7 +129,7 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   const parts = berlinDateParts();
   const keys = periodKeys(parts);
   const [photoURL, exercises] = await Promise.all([
-    resolvePhotoUrl(uid),
+    resolvePhotoUrl(uid, config ?? {}),
     readExerciseTotals(uid),
   ]);
   return buildPublicProfile(uid, config, stats, {
@@ -197,6 +221,47 @@ export const ogProfile = onRequest(
         err: err instanceof Error ? err.message : String(err),
       });
       res.status(500).send('OG render failed');
+    }
+  }
+);
+
+/**
+ * `GET /profilePhoto?uid=<uid>` — streams the uploaded profile photo.
+ *
+ * Applies the same visibility rule as the profile itself, minus the owner
+ * bypass: this endpoint is unauthenticated (an `<img>` tag cannot send a
+ * token), so it only ever serves photos of profiles that are public. The
+ * owner reads their own file directly from Storage instead, which the
+ * storage rules allow.
+ */
+export const profilePhoto = onRequest(
+  { region: 'europe-west3', invoker: 'public', cors: true },
+  async (req, res) => {
+    const uid = String(req.query['uid'] ?? '').trim();
+    if (!isValidUid(uid)) {
+      res.status(404).type('text/plain').send('Photo not available');
+      return;
+    }
+
+    const cfgSnap = await db.collection('userConfigs').doc(uid).get();
+    const config = cfgSnap.exists
+      ? (cfgSnap.data() as UserConfigForPublicProfile)
+      : null;
+    if (!config || !isPublicProfileAllowed(config) || !config.photoUpdatedAt) {
+      res.status(404).type('text/plain').send('Photo not available');
+      return;
+    }
+
+    try {
+      const file = getStorage().bucket(PHOTO_BUCKET).file(photoObjectPath(uid));
+      const [metadata] = await file.getMetadata();
+      // Immutable: the URL carries `photoUpdatedAt`, so a new upload is a
+      // new URL and can never be served from a stale cache entry.
+      res.setHeader('Cache-Control', 'public, max-age=86400, immutable');
+      res.setHeader('Content-Type', metadata.contentType ?? 'image/jpeg');
+      file.createReadStream().pipe(res);
+    } catch {
+      res.status(404).type('text/plain').send('Photo not available');
     }
   }
 );

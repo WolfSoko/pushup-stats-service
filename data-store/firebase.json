@@ -105,22 +105,40 @@
       {
         "source": "/.well-known/assetlinks.json",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=3600" },
-          { "key": "Content-Type", "value": "application/json" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
         ]
       },
       {
         "source": "/manifest.webmanifest",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=3600" },
-          { "key": "Content-Type", "value": "application/manifest+json" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/manifest+json"
+          }
         ]
       },
       {
         "source": "/build-info.json",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=60" },
-          { "key": "Content-Type", "value": "application/json" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=60"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
         ]
       }
     ]
@@ -135,5 +153,11 @@
       "firebase-debug.*.log",
       "data-store/functions"
     ]
-  }
+  },
+  "storage": [
+    {
+      "bucket": "pushup-stats-profile-photos",
+      "rules": "storage.rules"
+    }
+  ]
 }

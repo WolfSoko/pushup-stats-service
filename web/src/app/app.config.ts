@@ -13,6 +13,7 @@ import {
   getFunctions,
   provideFunctions,
 } from '@angular/fire/functions';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 import { FirebaseApp } from '@angular/fire/app';
 import {
   getRemoteConfig,
@@ -115,6 +116,12 @@ export const appConfig: ApplicationConfig = {
           provideFireStore(),
           provideFunctions(() =>
             getFunctions(inject(FirebaseApp), 'europe-west3')
+          ),
+          // Profile photos live in a dedicated, private bucket rather than
+          // the default one — the default `.firebasestorage.app` name is
+          // reserved by Google and cannot be provisioned from the CLI.
+          provideStorage(() =>
+            getStorage(inject(FirebaseApp), 'gs://pushup-stats-profile-photos')
           ),
           provideAnalytics(() => getAnalytics()),
           provideRemoteConfig(() => {

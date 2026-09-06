@@ -98,3 +98,47 @@ describe('App Hosting release-artifact configuration', () => {
     }
   });
 });
+
+/**
+ * Profile photos live in a dedicated, private bucket — the default
+ * `.firebasestorage.app` name is reserved by Google and cannot be created
+ * from the CLI. Two things follow that are easy to get wrong silently:
+ * `firebase.json` must name the bucket (an entry without one targets the
+ * default bucket, which does not exist here), and the deploy command must
+ * actually include `storage` or the rules never ship.
+ */
+describe('Storage rules wiring', () => {
+  const firebaseJson = load('data-store/firebase.json');
+  const mergeWorkflow = readFileSync(
+    resolve(ROOT, '.github/workflows/firebase-hosting-merge.yml'),
+    'utf-8'
+  );
+
+  it('should name the bucket the rules belong to', () => {
+    // then
+    expect(firebaseJson.storage).toEqual([
+      { bucket: 'pushup-stats-profile-photos', rules: 'storage.rules' },
+    ]);
+  });
+
+  it('should include storage in the production deploy', () => {
+    // then — rules that never deploy are worse than no rules: the app
+    // would behave as if they were in force
+    expect(mergeWorkflow).toContain(
+      '--only hosting,functions,firestore,storage'
+    );
+  });
+
+  it('should keep the bucket private to clients', () => {
+    // given — a world-readable bucket would publish every uploaded photo,
+    // including those of users who never made their profile public
+    const rules = readFileSync(
+      resolve(ROOT, 'data-store/storage.rules'),
+      'utf-8'
+    );
+
+    // then
+    expect(rules).toContain('allow read: if request.auth != null');
+    expect(rules).not.toMatch(/allow read:\s*if true/);
+  });
+});
