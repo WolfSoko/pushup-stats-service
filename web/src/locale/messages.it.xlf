@@ -11729,27 +11729,27 @@
       </segment>
     </unit>
     <unit id="user.menu.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mein Profil</source>
-        <target>Mein Profil</target>
+        <target>Il mio profilo</target>
       </segment>
     </unit>
     <unit id="publicProfile.private.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Profil ist noch privat</source>
-        <target>Dein Profil ist noch privat</target>
+        <target>Il tuo profilo è ancora privato</target>
       </segment>
     </unit>
     <unit id="publicProfile.private.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</source>
-        <target>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</target>
+        <target>Nessuno tranne te può vederlo. Attivalo nelle impostazioni per poterlo condividere.</target>
       </segment>
     </unit>
     <unit id="publicProfile.private.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil öffentlich machen</source>
-        <target>Profil öffentlich machen</target>
+        <target>Rendi pubblico il profilo</target>
       </segment>
     </unit>
 </file>
