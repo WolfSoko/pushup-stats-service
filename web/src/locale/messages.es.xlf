@@ -3386,9 +3386,9 @@
       </segment>
     </unit>
         <unit id="reminder.quickLog.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
-        <target> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
+        <target> Muestra un botón «Registrar» en la notificación push. Al tocarlo, la entrada se guarda de inmediato y se confirma en la notificación; no hace falta abrir la app para ello. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -11746,153 +11746,153 @@
       </segment>
     </unit>
     <unit id="publicProfile.week">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Woche</source>
-        <target>Diese Woche</target>
+        <target>Esta semana</target>
       </segment>
     </unit>
     <unit id="publicProfile.month">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieser Monat</source>
-        <target>Dieser Monat</target>
+        <target>Este mes</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Ejercicios</target>
       </segment>
     </unit>
     <unit id="publicProfile.heatmap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wann trainiert wird</source>
-        <target>Wann trainiert wird</target>
+        <target>Cuándo entrenas</target>
       </segment>
     </unit>
     <unit id="publicProfile.heatmap.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
-        <target>Trainingsverteilung über Wochentage und Tageszeit</target>
+        <target>Distribución de los entrenamientos por día de la semana y hora del día</target>
       </segment>
     </unit>
     <unit id="publicProfile.memberSince">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dabei seit</source>
-        <target>Dabei seit</target>
+        <target>Miembro desde</target>
       </segment>
     </unit>
     <unit id="weekday.short.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>Lun</target>
       </segment>
     </unit>
     <unit id="weekday.short.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>Mar</target>
       </segment>
     </unit>
     <unit id="weekday.short.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>Mié</target>
       </segment>
     </unit>
     <unit id="weekday.short.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>Jue</target>
       </segment>
     </unit>
     <unit id="weekday.short.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Vie</target>
       </segment>
     </unit>
     <unit id="weekday.short.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Sáb</target>
       </segment>
     </unit>
     <unit id="weekday.short.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>Dom</target>
       </segment>
     </unit>
     <unit id="settings.photo.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profilbild</source>
-        <target>Profilbild</target>
+        <target>Foto de perfil</target>
       </segment>
     </unit>
     <unit id="settings.photo.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </source>
-        <target> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </target>
+        <target> Se muestra en tu perfil y en la vista previa al compartir. </target>
       </segment>
     </unit>
     <unit id="settings.photo.choose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bild wählen</source>
-        <target>Bild wählen</target>
+        <target>Elegir imagen</target>
       </segment>
     </unit>
     <unit id="settings.photo.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source>Entfernen</source>
-        <target>Entfernen</target>
+        <target>Quitar</target>
       </segment>
     </unit>
-    <unit id="settings.photo.visibilityHint">
-      <segment state="initial">
+        <unit id="settings.photo.visibilityHint">
+      <segment state="translated">
         <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
-        <target>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</target>
+        <target>Mientras tu perfil sea público, cualquiera puede ver esta foto — incluidos los buscadores y la vista previa al compartir. Si tu perfil es privado, solo tú la ves.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.type">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte ein JPG, PNG oder WebP wählen.</source>
-        <target>Bitte ein JPG, PNG oder WebP wählen.</target>
+        <target>Por favor, elige un archivo JPG, PNG o WebP.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.size">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Bild ist zu groß.</source>
-        <target>Das Bild ist zu groß.</target>
+        <target>La imagen es demasiado grande.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.decode">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Bild konnte nicht gelesen werden.</source>
-        <target>Das Bild konnte nicht gelesen werden.</target>
+        <target>No se pudo leer la imagen.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.upload">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hochladen fehlgeschlagen. Bitte erneut versuchen.</source>
-        <target>Hochladen fehlgeschlagen. Bitte erneut versuchen.</target>
+        <target>Error al subir la imagen. Inténtalo de nuevo.</target>
       </segment>
     </unit>
     <unit id="settings.photo.accountHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
-        <target>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</target>
+        <target>Ahora mismo se usa la foto de tu cuenta de Google. Sube tu propia foto para reemplazarla.</target>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhoto">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
-        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+        <target> Usar la foto de mi cuenta de acceso en mi perfil </target>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhotoHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
-        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
+        <target> Sin una foto propia, tu perfil público muestra en su lugar la foto de tu cuenta de Google. Una foto que hayas subido tú mismo/a no se ve afectada por esto. </target>
       </segment>
     </unit>
 </file>
