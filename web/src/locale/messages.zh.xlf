@@ -11394,15 +11394,15 @@
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhoto">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
-        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+        <target> 在资料中使用我的登录账号头像 </target>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhotoHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
-        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
+        <target> 如果没有自己的图片，你的公开资料会改为显示你 Google 账号的头像。你自己上传的图片不受此设置影响。 </target>
       </segment>
     </unit>
 </file>

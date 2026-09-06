@@ -11888,15 +11888,15 @@
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhoto">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
-        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+        <target> Χρήση της εικόνας του λογαριασμού σύνδεσής μου στο προφίλ </target>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhotoHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
-        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
+        <target> Χωρίς δική σου εικόνα, το δημόσιο προφίλ σου εμφανίζει διαφορετικά την εικόνα του λογαριασμού σου Google. Μια εικόνα που έχεις ανεβάσει εσύ δεν επηρεάζεται από αυτό. </target>
       </segment>
     </unit>
 </file>

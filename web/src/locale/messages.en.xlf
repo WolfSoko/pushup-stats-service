@@ -12090,15 +12090,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhoto">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
-        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+        <target> Use my sign-in account’s picture on my profile </target>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhotoHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
-        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
+        <target> Without your own picture, your public profile otherwise shows your Google account picture. An uploaded picture of your own is not affected by this. </target>
       </segment>
     </unit>
 </file>

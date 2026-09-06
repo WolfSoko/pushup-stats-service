@@ -11760,15 +11760,15 @@
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhoto">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bild meines Anmeldekontos auf dem Profil verwenden </source>
-        <target> Bild meines Anmeldekontos auf dem Profil verwenden </target>
+        <target> Utiliser la photo de mon compte de connexion sur mon profil </target>
       </segment>
     </unit>
     <unit id="settings.photo.useAccountPhotoHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </source>
-        <target> Ohne eigenes Bild zeigt dein öffentliches Profil sonst das Bild deines Google-Kontos. Ein selbst hochgeladenes Bild bleibt davon unberührt. </target>
+        <target> Sans photo personnelle, ton profil public affiche sinon la photo de ton compte Google. Une photo que tu as toi-même mise en ligne n’est pas concernée par ce réglage. </target>
       </segment>
     </unit>
 </file>
