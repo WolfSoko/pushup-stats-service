@@ -4281,10 +4281,10 @@ Deine Position: # ·  Reps        </source>
         <target> Direktlogging fra varslingen </target>
       </segment>
     </unit>
-    <unit id="reminder.quickLog.desc">
-      <segment state="initial">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
-        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
+        <unit id="reminder.quickLog.desc">
+      <segment state="translated">
+        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
+        <target> Viser en «Registrer»-knapp på push-varselet. Et trykk lagrer oppføringen med én gang og bekrefter den i varselet – appen trenger ikke å åpnes for dette. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -11046,141 +11046,141 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="publicProfile.week">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Woche</source>
-        <target>Diese Woche</target>
+        <target>Denne uken</target>
       </segment>
     </unit>
     <unit id="publicProfile.month">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieser Monat</source>
-        <target>Dieser Monat</target>
+        <target>Denne måneden</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Øvelser</target>
       </segment>
     </unit>
     <unit id="publicProfile.heatmap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wann trainiert wird</source>
-        <target>Wann trainiert wird</target>
+        <target>Når du trener</target>
       </segment>
     </unit>
     <unit id="publicProfile.heatmap.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
-        <target>Trainingsverteilung über Wochentage und Tageszeit</target>
+        <target>Treningsfordeling etter ukedag og tid på døgnet</target>
       </segment>
     </unit>
     <unit id="publicProfile.memberSince">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dabei seit</source>
-        <target>Dabei seit</target>
+        <target>Medlem siden</target>
       </segment>
     </unit>
     <unit id="weekday.short.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>Man</target>
       </segment>
     </unit>
     <unit id="weekday.short.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>Tir</target>
       </segment>
     </unit>
     <unit id="weekday.short.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>Ons</target>
       </segment>
     </unit>
     <unit id="weekday.short.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>Tor</target>
       </segment>
     </unit>
     <unit id="weekday.short.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>Fre</target>
       </segment>
     </unit>
     <unit id="weekday.short.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>Lør</target>
       </segment>
     </unit>
     <unit id="weekday.short.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>Søn</target>
       </segment>
     </unit>
     <unit id="settings.photo.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profilbild</source>
-        <target>Profilbild</target>
+        <target>Profilbilde</target>
       </segment>
     </unit>
     <unit id="settings.photo.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </source>
-        <target> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </target>
+        <target> Vises på profilen din og i delingsforhåndsvisningen. </target>
       </segment>
     </unit>
     <unit id="settings.photo.choose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bild wählen</source>
-        <target>Bild wählen</target>
+        <target>Velg bilde</target>
       </segment>
     </unit>
     <unit id="settings.photo.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source>Entfernen</source>
-        <target>Entfernen</target>
+        <target>Fjern</target>
       </segment>
     </unit>
-    <unit id="settings.photo.visibilityHint">
-      <segment state="initial">
-        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
-        <target>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</target>
+        <unit id="settings.photo.visibilityHint">
+      <segment state="translated">
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
+        <target>Så lenge profilen din er offentlig, kan alle se dette bildet — også søkemotorer og delingsforhåndsvisningen. Er profilen din privat, er det bare du som ser det.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.type">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte ein JPG, PNG oder WebP wählen.</source>
-        <target>Bitte ein JPG, PNG oder WebP wählen.</target>
+        <target>Velg en JPG-, PNG- eller WebP-fil.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.size">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Bild ist zu groß.</source>
-        <target>Das Bild ist zu groß.</target>
+        <target>Bildet er for stort.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.decode">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Bild konnte nicht gelesen werden.</source>
-        <target>Das Bild konnte nicht gelesen werden.</target>
+        <target>Bildet kunne ikke leses.</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.upload">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hochladen fehlgeschlagen. Bitte erneut versuchen.</source>
-        <target>Hochladen fehlgeschlagen. Bitte erneut versuchen.</target>
+        <target>Opplasting mislyktes. Prøv igjen.</target>
       </segment>
     </unit>
     <unit id="settings.photo.accountHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
-        <target>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</target>
+        <target>Bildet fra Google-kontoen din brukes for øyeblikket. Last opp ditt eget for å erstatte det.</target>
       </segment>
     </unit>
 </file>

@@ -4776,13 +4776,10 @@
         <source>Jahr</source>
       <target>年</target></segment>
     </unit>
-    <unit id="rangeBackAria">
-      <notes>
-        <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
-      </notes>
-      <segment state="initial">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
-        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
+        <unit id="rangeBackAria">
+      <segment state="translated">
+        <source>Vorheriger Zeitraum</source>
+        <target>上一周期</target>
       </segment>
     </unit>
     <unit id="rangeBack">
@@ -11259,141 +11256,141 @@
       </segment>
     </unit>
     <unit id="publicProfile.week">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Woche</source>
-        <target>Diese Woche</target>
+        <target>本周</target>
       </segment>
     </unit>
     <unit id="publicProfile.month">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieser Monat</source>
-        <target>Dieser Monat</target>
+        <target>本月</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>训练动作</target>
       </segment>
     </unit>
     <unit id="publicProfile.heatmap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wann trainiert wird</source>
-        <target>Wann trainiert wird</target>
+        <target>训练时间</target>
       </segment>
     </unit>
     <unit id="publicProfile.heatmap.aria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
-        <target>Trainingsverteilung über Wochentage und Tageszeit</target>
+        <target>按星期几和时段划分的训练分布</target>
       </segment>
     </unit>
     <unit id="publicProfile.memberSince">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dabei seit</source>
-        <target>Dabei seit</target>
+        <target>加入于</target>
       </segment>
     </unit>
     <unit id="weekday.short.mon">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mo</source>
-        <target>Mo</target>
+        <target>周一</target>
       </segment>
     </unit>
     <unit id="weekday.short.tue">
-      <segment state="initial">
+      <segment state="translated">
         <source>Di</source>
-        <target>Di</target>
+        <target>周二</target>
       </segment>
     </unit>
     <unit id="weekday.short.wed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mi</source>
-        <target>Mi</target>
+        <target>周三</target>
       </segment>
     </unit>
     <unit id="weekday.short.thu">
-      <segment state="initial">
+      <segment state="translated">
         <source>Do</source>
-        <target>Do</target>
+        <target>周四</target>
       </segment>
     </unit>
     <unit id="weekday.short.fri">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fr</source>
-        <target>Fr</target>
+        <target>周五</target>
       </segment>
     </unit>
     <unit id="weekday.short.sat">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sa</source>
-        <target>Sa</target>
+        <target>周六</target>
       </segment>
     </unit>
     <unit id="weekday.short.sun">
-      <segment state="initial">
+      <segment state="translated">
         <source>So</source>
-        <target>So</target>
+        <target>周日</target>
       </segment>
     </unit>
     <unit id="settings.photo.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profilbild</source>
-        <target>Profilbild</target>
+        <target>头像</target>
       </segment>
     </unit>
     <unit id="settings.photo.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </source>
-        <target> Wird auf deinem Profil und in der Teilen-Vorschau angezeigt. </target>
+        <target> 会显示在你的资料和分享预览中。 </target>
       </segment>
     </unit>
     <unit id="settings.photo.choose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bild wählen</source>
-        <target>Bild wählen</target>
+        <target>选择图片</target>
       </segment>
     </unit>
     <unit id="settings.photo.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source>Entfernen</source>
-        <target>Entfernen</target>
+        <target>移除</target>
       </segment>
     </unit>
-    <unit id="settings.photo.visibilityHint">
-      <segment state="initial">
-        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
-        <target>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</target>
+        <unit id="settings.photo.visibilityHint">
+      <segment state="translated">
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
+        <target>只要你的资料是公开的，任何人都能看到这张图片——包括搜索引擎和分享预览。如果你的资料是私密的，只有你自己能看到。</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.type">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte ein JPG, PNG oder WebP wählen.</source>
-        <target>Bitte ein JPG, PNG oder WebP wählen.</target>
+        <target>请选择 JPG、PNG 或 WebP 格式的文件。</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.size">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Bild ist zu groß.</source>
-        <target>Das Bild ist zu groß.</target>
+        <target>图片太大了。</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.decode">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Bild konnte nicht gelesen werden.</source>
-        <target>Das Bild konnte nicht gelesen werden.</target>
+        <target>无法读取图片。</target>
       </segment>
     </unit>
     <unit id="settings.photo.error.upload">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hochladen fehlgeschlagen. Bitte erneut versuchen.</source>
-        <target>Hochladen fehlgeschlagen. Bitte erneut versuchen.</target>
+        <target>上传失败，请重试。</target>
       </segment>
     </unit>
     <unit id="settings.photo.accountHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
-        <target>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</target>
+        <target>目前使用的是你 Google 账号的头像。上传自己的图片即可替换。</target>
       </segment>
     </unit>
 </file>
