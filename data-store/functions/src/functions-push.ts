@@ -343,6 +343,10 @@ export const dispatchPushReminders = onSchedule(
         }
 
         let sentToUser = false;
+        // Declared outside the try so the lease-release `finally` can persist
+        // the token the payload carried; both are set before the first send.
+        let actionToken: string | null = null;
+        let quickLogReps: number | undefined;
         try {
           const subsCol = await userRef.collection('subs').get();
           if (subsCol.empty) {
@@ -364,13 +368,13 @@ export const dispatchPushReminders = onSchedule(
           // independently caused the title to clamp to 500 while the payload
           // shipped the raw (potentially absurd) Firestore value, so the SW
           // logged a different count than the user saw on the button.
-          const quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
+          quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
           const actions = buildReminderActions(userLocale, quickLogReps);
           // One token per dispatch, shared by all of the user's devices and
           // persisted below once a push went out. The SW hands it back to
           // `reminderAction`; the server decides what "quick-log" means from
           // `pendingAction.quickLogReps`, never from the notification.
-          const actionToken = newReminderActionToken();
+          actionToken = newReminderActionToken();
           const payload = JSON.stringify({
             title: 'PushUp Stats',
             body,
@@ -465,7 +469,7 @@ export const dispatchPushReminders = onSchedule(
             inProgress: false,
             leaseAcquiredAt: FieldValue.delete(),
           };
-          if (sentToUser) {
+          if (sentToUser && actionToken) {
             releaseData['lastSentAt'] = FieldValue.serverTimestamp();
             releaseData['pendingAction'] = {
               token: actionToken,
