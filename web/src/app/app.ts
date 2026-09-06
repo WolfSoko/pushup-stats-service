@@ -42,7 +42,6 @@ import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.comp
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
 import {
-  PushIntentDrainService,
   PushSubscriptionService,
   PushSwRegistrationService,
 } from '@pu-push/push';
@@ -174,7 +173,6 @@ export class App {
   readonly showQuickAddFab = computed(() => !!this.user.userIdSafe());
   private readonly pushService = inject(PushSubscriptionService);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
-  private readonly pushIntents = inject(PushIntentDrainService);
   // Eagerly register the push service worker on boot so:
   //   - fresh visitors have the SW installed before they ever open /reminders
   //     (no cold-start race on the first `subscribe()` click), and
@@ -184,7 +182,6 @@ export class App {
   // for PUSH_SUBSCRIPTION_CHANGED events fired by the push SW.
   private readonly _initPushBridge = afterNextRender(() => {
     this.pushService.registerSwListener();
-    this.pushIntents.init();
     void this.pushSwRegistration.getRegistration();
   });
   private static readonly COACHMARK_SEEN_KEY = 'pus_speeddial_coachmark_seen';

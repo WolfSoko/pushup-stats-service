@@ -3389,9 +3389,9 @@
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164,167</note>
       </notes>
-      <segment state="translated">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Affiche un bouton « Enregistrer » sur la notification push. Si l'application est déjà ouverte, l'entrée est enregistrée en arrière-plan ; sinon, un onglet s'ouvre brièvement et crée automatiquement l'entrée. </target>
+      <segment state="initial">
+        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
+        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">

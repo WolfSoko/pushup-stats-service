@@ -124,7 +124,7 @@
     <unit id="user.guestName">
       <notes>
         <note category="location">libs/auth/src/lib/core/user-context.service.ts:17</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:39</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:57</note>
       </notes>
       <segment>
         <source>Gast</source>
@@ -517,7 +517,7 @@
     </unit>
     <unit id="user.menu.profile">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:29,31</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:34,36</note>
       </notes>
       <segment>
         <source>Mein Profil</source>
@@ -525,7 +525,7 @@
     </unit>
     <unit id="user.menu.settings">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:37,39</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:42,44</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -533,7 +533,7 @@
     </unit>
     <unit id="user.menu.logout">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:41,43</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:46,48</note>
       </notes>
       <segment>
         <source>Abmelden</source>
@@ -541,7 +541,7 @@
     </unit>
     <unit id="user.menu.guestHint">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:55,58</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:60,63</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast</source>
@@ -549,7 +549,7 @@
     </unit>
     <unit id="user.menu.convertAccount">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:61,63</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:66,68</note>
       </notes>
       <segment>
         <source>Umwandeln in Nutzerkonto</source>
@@ -557,8 +557,8 @@
     </unit>
     <unit id="user.menu.signIn">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:65,67</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:83,85</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:70,72</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:88,90</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -566,7 +566,7 @@
     </unit>
     <unit id="user.menu.tryAsGuest">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:79,81</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:84,86</note>
       </notes>
       <segment>
         <source>Als Gast ausprobieren</source>
@@ -574,7 +574,7 @@
     </unit>
     <unit id="user.menu.aria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:36</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:54</note>
       </notes>
       <segment>
         <source>Nutzerkonto-Menü</source>
@@ -582,7 +582,7 @@
     </unit>
     <unit id="user.menu.guestAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:37</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:55</note>
       </notes>
       <segment>
         <source>Gast-Menü</source>
@@ -590,7 +590,7 @@
     </unit>
     <unit id="user.menu.anonAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:38</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:56</note>
       </notes>
       <segment>
         <source>Anmelde-Menü</source>
@@ -618,31 +618,6 @@
       </notes>
       <segment>
         <source>Eintrag konnte nicht gespeichert werden.</source>
-      </segment>
-    </unit>
-    <unit id="snackbar.close">
-      <notes>
-        <note category="location">libs/push/src/lib/quick-log.service.ts:45</note>
-        <note category="location">libs/push/src/lib/quick-log.service.ts:62</note>
-        <note category="location">libs/push/src/lib/quick-log.service.ts:69</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:163</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:178</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:197</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:213</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:225</note>
-      </notes>
-      <segment>
-        <source>Schließen</source>
-      </segment>
-    </unit>
-    <unit id="reminder.quickLog.success">
-      <notes>
-        <note category="location">libs/push/src/lib/quick-log.service.ts:61</note>
-      </notes>
-      <segment>
-        <source><ph id="0" equiv="reps" disp="reps"/> Push-ups eingetragen ✓</source>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.title">
@@ -4311,7 +4286,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:148</note>
+        <note category="location">web/src/app/app.ts:150</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4319,7 +4294,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:149</note>
+        <note category="location">web/src/app/app.ts:151</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -7064,7 +7039,7 @@
         <note category="location">web/src/app/reminders/shell/reminder-quick-log.component.ts:28,32</note>
       </notes>
       <segment>
-        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
+        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -7354,6 +7329,20 @@
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
+      </segment>
+    </unit>
+    <unit id="snackbar.close">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:163</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:178</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:197</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:213</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:225</note>
+      </notes>
+      <segment>
+        <source>Schließen</source>
       </segment>
     </unit>
     <unit id="unsubAll.error">
@@ -7800,7 +7789,7 @@
     </unit>
     <unit id="settings.photo.error.type">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:59</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:60</note>
       </notes>
       <segment>
         <source>Bitte ein JPG, PNG oder WebP wählen.</source>
@@ -7808,7 +7797,7 @@
     </unit>
     <unit id="settings.photo.error.size">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:60</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:61</note>
       </notes>
       <segment>
         <source>Das Bild ist zu groß.</source>
@@ -7816,7 +7805,7 @@
     </unit>
     <unit id="settings.photo.error.decode">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:61</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:62</note>
       </notes>
       <segment>
         <source>Das Bild konnte nicht gelesen werden.</source>
@@ -7824,7 +7813,7 @@
     </unit>
     <unit id="settings.photo.error.upload">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:62</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:63</note>
       </notes>
       <segment>
         <source>Hochladen fehlgeschlagen. Bitte erneut versuchen.</source>

@@ -160,6 +160,42 @@ const QUICK_LOG_LABELS: Record<ReminderLocale, (n: number) => string> = {
   zh: (n) => `✅ 记录 ${n}`,
 };
 
+const SNOOZED_LABELS: Record<ReminderLocale, (minutes: number) => string> = {
+  de: (m) => `⏰ Erinnerung um ${m} Min verschoben`,
+  en: (m) => `⏰ Reminder snoozed for ${m} min`,
+  fr: (m) => `⏰ Rappel reporté de ${m} min`,
+  es: (m) => `⏰ Recordatorio aplazado ${m} min`,
+  it: (m) => `⏰ Promemoria posticipato di ${m} min`,
+  nl: (m) => `⏰ Herinnering ${m} min uitgesteld`,
+  el: (m) => `⏰ Η υπενθύμιση αναβλήθηκε για ${m} λεπτά`,
+  no: (m) => `⏰ Påminnelse utsatt ${m} min`,
+  zh: (m) => `⏰ 提醒已推迟${m}分钟`,
+};
+
+const QUICK_LOG_DONE_LABELS: Record<ReminderLocale, (n: number) => string> = {
+  de: (n) => `✅ ${n} Liegestütze eingetragen`,
+  en: (n) => `✅ ${n} push-ups logged`,
+  fr: (n) => `✅ ${n} pompes enregistrées`,
+  es: (n) => `✅ ${n} flexiones registradas`,
+  it: (n) => `✅ ${n} flessioni registrate`,
+  nl: (n) => `✅ ${n} push-ups geregistreerd`,
+  el: (n) => `✅ ${n} κάμψεις καταχωρήθηκαν`,
+  no: (n) => `✅ ${n} push-ups logget`,
+  zh: (n) => `✅ 已记录 ${n} 个俯卧撑`,
+};
+
+const ACTION_FAILED_LABELS: Record<ReminderLocale, string> = {
+  de: 'Aktion fehlgeschlagen – bitte in der App erneut versuchen',
+  en: 'Action failed – please try again in the app',
+  fr: "Échec de l'action – réessayez dans l'application",
+  es: 'La acción falló – inténtalo de nuevo en la app',
+  it: "Azione non riuscita – riprova nell'app",
+  nl: 'Actie mislukt – probeer het opnieuw in de app',
+  el: 'Η ενέργεια απέτυχε – δοκιμάστε ξανά στην εφαρμογή',
+  no: 'Handlingen mislyktes – prøv igjen i appen',
+  zh: '操作失败 – 请在应用中重试',
+};
+
 export function reminderTitle(locale: unknown): string {
   return REMINDER_TITLES[normalizeReminderLocale(locale)];
 }
@@ -180,4 +216,19 @@ export function reminderLogLabel(locale: unknown): string {
 
 export function reminderQuickLogLabel(locale: unknown, reps: number): string {
   return QUICK_LOG_LABELS[normalizeReminderLocale(locale)](reps);
+}
+
+export function reminderSnoozedLabel(locale: unknown, minutes: number): string {
+  return SNOOZED_LABELS[normalizeReminderLocale(locale)](minutes);
+}
+
+export function reminderQuickLogDoneLabel(
+  locale: unknown,
+  reps: number
+): string {
+  return QUICK_LOG_DONE_LABELS[normalizeReminderLocale(locale)](reps);
+}
+
+export function reminderActionFailedLabel(locale: unknown): string {
+  return ACTION_FAILED_LABELS[normalizeReminderLocale(locale)];
 }

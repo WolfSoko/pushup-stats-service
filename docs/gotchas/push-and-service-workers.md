@@ -78,80 +78,65 @@ Symptom that points here: "the SW update notification stopped working after depl
 
 ## Notification action data must match the action title
 
-`ServiceWorkerRegistration.showNotification(title, { actions })` accepts a list of buttons; the click payload is delivered to `notificationclick` with the original `notification.data`. When the button label embeds a value (e.g. "✅ Log 25"), **derive the displayed value and the data payload from the same sanitized variable**. Computing them independently caused a real PR #249 regression: the title clamped to 500 via `sanitizeQuickLogReps` while `data.quickLogReps` shipped raw `Math.floor(reminder.quickLogReps ?? 0)`, so the SW silently logged 9999 push-ups when the user tapped a button labelled "Log 500".
+`ServiceWorkerRegistration.showNotification(title, { actions })` accepts a list of buttons; when a label embeds a value (e.g. "✅ Log 25"), **the displayed value and the value the server later acts on must come from the same sanitized variable**. Computing them independently caused a real PR #249 regression: the title clamped to 500 via `sanitizeQuickLogReps` while the payload shipped raw `Math.floor(reminder.quickLogReps ?? 0)`, so 9999 push-ups were logged behind a button labelled "Log 500".
 
-Pattern (CF `dispatchPushReminders`):
+Pattern (CF `dispatchPushReminders`): sanitize once, pass the result to `buildReminderActions` **and** store it in `pendingAction.quickLogReps` next to the action token. The SW never sends a count — `reminderAction` writes the stored one, so a stale or tampered payload cannot pick a number.
 
-```ts
-const quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
-const actions = buildReminderActions(lang, quickLogReps);
-const payload = JSON.stringify({
-  // ...
-  data: { url, locale, ...(quickLogReps ? { quickLogReps } : {}) },
-  actions,
-});
-```
+## Notification actions are completed by the service worker, never by a window
 
-Defense-in-depth: clamp again in the SW handler (`libs/sw-push/src/notification-click.ts`) and in `QuickLogService`. Stale payloads from older SW deployments stay in the push queue for `TTL: 1800` seconds and can outlive a server-side validator change.
-
-## Neither postMessage nor a query param delivers a notification action
-
-Both channels the SW has to an app window lose actions on an installed Android
-PWA, and they lose them in opposite directions:
+Both channels the SW has to an app window lose or replay actions on an
+installed Android PWA, and the two failure modes point in opposite directions:
 
 - **`client.postMessage()` arrives late, not never.** A backgrounded PWA is
   _frozen_: `matchAll` still returns it, but the message sits in its queue until
   the tab thaws — which may be hours later, on an unrelated notification tap.
-  It is not a dropped message, it is a **delayed** one, and that is worse: the
-  handler cannot tell a fresh tap from a stale one.
 - **`openWindow('/app?quickLog=N')` replays.** Android resumes an existing PWA
-  task instead of navigating, so the param never arrives. When it does arrive,
-  it stays in the task's committed URL, and **every later resume re-runs the
-  deep link**.
+  task instead of navigating, so the param never arrives; when it does arrive,
+  it stays in the task's committed URL and every later resume re-runs it.
+- **A durable intent store drained on resume is still a window hand-off.** The
+  app applies whatever is stored whenever it happens to come to the front — a
+  quick-log tapped minutes earlier surfaces on the next snooze tap and reads as
+  "snooze logged push-ups".
 
-Production symptom (Aug 2026): tapping "⏰ 30 Min snoozen" created a 20-rep
-push-up entry. The snooze tap only _resumed_ the app; the resume replayed a
-quick-log the user had tapped earlier. Four such entries were written, one at
-02:05 — inside the user's own quiet hours, when the dispatcher had sent nothing
-at all. Meanwhile `snoozeReminder` had zero invocations for over three months.
+Production symptom (Aug/Sep 2026, through three fix attempts): tapping
+"⏰ 30 Min snoozen" created a 10/20-rep push-up entry when the app came up.
 
-**Rule: a notification action must be recorded durably before any window is
-involved.** `libs/sw-push/src/intent-queue.ts` writes `{id, type, createdAt}`
-to IndexedDB; `PushIntentDrainService` claims intents by reading and clearing
-them in one transaction, and discards anything older than `PUSH_INTENT_MAX_AGE_MS`
-(pinned to the dispatcher's `TTL: 1800`). Two properties do the work:
+**Rule: a notification action is one HTTP call from the SW, authenticated by a
+single-use token, and no app window takes part.** `dispatchPushReminders`
+mints a random token per reminder, stores it as
+`reminderDispatchState/{uid}.pendingAction` (with the sanitized `quickLogReps`
+the button showed) and ships `data.reminderAction = {uid, token, url}` in the
+push payload. On `notificationclick` the SW POSTs the token to the
+`reminderAction` callable; the server verifies, consumes and applies it in one
+transaction (`data-store/functions/src/push/reminder-action.ts`). Properties:
 
-- **single-use** — read-and-clear share a transaction, so overlapping triggers
-  (SW nudge + `visibilitychange`) cannot double-apply. At-most-once is the
-  deliberate trade: a dropped snooze costs one reminder, a replayed quick-log
-  writes an entry the user never asked for.
-- **time-bounded** — a late drain discards instead of acting. This is what makes
-  the frozen-tab case safe rather than merely unlikely.
+- **single-use** — verify + delete + write share a transaction, so a second
+  tap, a retried request or a replayed SW event finds nothing pending.
+- **time-bounded** — `REMINDER_ACTION_MAX_AGE_MS` is pinned to the dispatcher's
+  `TTL: 1800`; a token older than the push it belongs to is refused.
+- **server-authoritative count** — the reps written for `quick-log` come from
+  the stored `pendingAction`, never from the request, so a tampered or stale
+  payload cannot choose a number.
+- **visible fallback** — a refusal, a missing token (older dispatcher payload)
+  or a network error never logs silently: quick-log opens `/app?log=1` (the
+  dialog), snooze shows a failure notification.
 
-The `postMessage` that remains is a _nudge_ carrying no payload, and the drain
-runs on three triggers because none is reliable alone: auth-resolved (cold
-start), the SW nudge (app responsive), and `visibilitychange → visible` (the
-frozen tab that Android just resumed without navigating).
+The SW confirms with a notification (`data.feedback`, localized by the
+dispatcher) so the user gets an answer without opening the app; the app's
+Firestore listeners pick the server write up on their own.
 
-Corollary: **`focus()` is what thaws a frozen client.** Quick-log always called
-it and appeared to work; snooze did not, and appeared broken. Any handler that
-waits on a client answering must focus it first.
+Deploy rollover: an old SW against the new dispatcher stores nothing and
+opens the app on a tap (no app-side consumer remains); a new SW against an old
+dispatcher has no token and falls back visibly. Neither writes a wrong entry.
 
-Deploy rollover: the SW and the app update independently, so for up to ~24h a
-device can run an old SW against a new app (its `QUICK_LOG_PUSHUPS` message and
-`?quickLog=` link are ignored — quick-log no-ops) or a new SW against an old app
-(intents pile up unread and expire — snooze is lost). Both self-heal; neither
-writes a wrong entry.
+The `snoozeReminder` callable stays deployed only because the non-interactive
+prod deploy (`firebase deploy` without `--force`) aborts on function deletion;
+nothing calls it any more.
 
 ## Notification deep-links are untrusted input
 
-The count no longer round-trips through the URL (see above — that link replayed), but it still round-trips through the notification payload and the intent store, so it stays untrusted: clamp into the valid range in the SW _and_ before persisting in `QuickLogService`.
+`?log=1` is the only deep link left and it only opens the entry dialog — nothing persists without a further tap. Any future param that writes data would replay on Android (see above); route it through `reminderAction` instead.
 
-## Source attribution must be consistent across paths
+## Source attribution
 
-A single user action ("tap notification button") reaches the app through one of two timings depending on whether a window is already open — both now end in the same `QuickLogService.logEntry`, so the attribution cannot drift:
-
-- **App open** → SW nudges the client, which drains the intent immediately.
-- **App closed** → SW opens `/{locale}/app`; the app drains the intent on boot.
-
-Both must set the same `source`, otherwise source-based filtering/analytics quietly drift apart.
+Every entry created from a notification button is written by `reminderAction` with `source: 'reminder'`, so source-based filtering and analytics have a single writer to trust.

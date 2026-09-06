@@ -1,14 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import {
-  signal,
-  WritableSignal,
-  PLATFORM_ID,
-  type EnvironmentProviders,
-  type Provider,
-} from '@angular/core';
-import { provideRouter, Router } from '@angular/router';
+import { signal, WritableSignal, PLATFORM_ID } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 import { AvatarService } from './core/avatar.service';
 import { Title } from '@angular/platform-browser';
@@ -27,11 +21,7 @@ import {
   UserContextService,
 } from '@pu-auth/auth';
 import { AdsStore } from '@pu-stats/ads';
-import {
-  PushIntentDrainService,
-  PushSubscriptionService,
-  VAPID_PUBLIC_KEY,
-} from '@pu-push/push';
+import { VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { App } from './app';
 import { TrainingPlanStore } from './training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
@@ -48,6 +38,7 @@ describe('App (testing-library)', () => {
     isAuthenticated: () => true,
     authResolved: () => true,
     isGuest: () => false,
+    accountPhotoUrl: () => null,
     error: () => null,
     logout: () => Promise.resolve(),
     tryAsGuest: () => Promise.resolve(true),
@@ -1273,6 +1264,7 @@ describe('App (testing-library)', () => {
     function providersForUser(userCtx: {
       userIdSafe: () => string;
       isGuest: () => boolean;
+      accountPhotoUrl?: () => string | null;
     }) {
       return [
         provideRouter([]),
@@ -1327,6 +1319,7 @@ describe('App (testing-library)', () => {
         providers: providersForUser({
           userIdSafe: () => '',
           isGuest: () => false,
+          accountPhotoUrl: () => null,
         }),
       });
 
@@ -1644,108 +1637,6 @@ describe('App (testing-library)', () => {
 
       fixture.componentInstance.handleOpenExerciseTimer();
       expect(openExerciseTimer).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  // Regression: the snooze used to ride on a `?snooze=N` deep link, which
-  // Android drops when it resumes an existing PWA task instead of navigating
-  // (production: zero snoozeReminder invocations for months). It now travels
-  // through the single-use intent store, drained by PushIntentDrainService.
-  describe('push intent hand-off', () => {
-    type ProviderLike = Provider | EnvironmentProviders;
-    function providers(extra: ProviderLike[] = []): ProviderLike[] {
-      return [
-        provideRouter([]),
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        {
-          provide: UserContextService,
-          useValue: {
-            userNameSafe: userNameSignal.asReadonly(),
-            userIdSafe: () => 'u1',
-            accountPhotoUrl: () => null,
-            isAdmin: () => false,
-            isGuest: () => false,
-          },
-        },
-        { provide: AuthStore, useValue: authMock },
-        { provide: AuthService, useValue: authServiceMock },
-        { provide: Auth, useValue: firebaseAuthMock },
-        { provide: UserConfigApiService, useValue: userConfigApiMock },
-        { provide: StatsApiService, useValue: statsApiMock },
-        { provide: AdsStore, useValue: adsStoreMock },
-        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
-        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
-        {
-          provide: LiveDataStore,
-          useValue: {
-            connected: liveConnectedSignal,
-            exerciseEntries: liveEntriesSignal,
-            exerciseEntriesLoaded: liveConnectedSignal,
-            updateTick: signal(0),
-          },
-        },
-        ...extra,
-      ];
-    }
-
-    it('should start the intent drain on boot', async () => {
-      // given a stubbed drain service
-      const init = vitest.fn();
-      const { fixture } = await render(App, {
-        providers: providers([
-          {
-            provide: PushIntentDrainService,
-            useValue: { init, drain: vitest.fn().mockResolvedValue(false) },
-          },
-          {
-            provide: PushSubscriptionService,
-            useValue: {
-              snooze: vitest.fn(),
-              registerSwListener: vitest.fn(),
-              status: () => 'subscribed',
-            },
-          },
-        ]),
-      });
-
-      // when the app has rendered
-      await fixture.whenStable();
-
-      // then the notification hand-off is live for this session
-      expect(init).toHaveBeenCalledTimes(1);
-    });
-
-    it('should ignore a ?snooze param instead of calling the backend', async () => {
-      // given a rendered app with a spy on the push facade
-      const snooze = vitest.fn().mockResolvedValue(undefined);
-      const { fixture } = await render(App, {
-        providers: providers([
-          {
-            provide: PushIntentDrainService,
-            useValue: {
-              init: vitest.fn(),
-              drain: vitest.fn().mockResolvedValue(false),
-            },
-          },
-          {
-            provide: PushSubscriptionService,
-            useValue: {
-              snooze,
-              registerSwListener: vitest.fn(),
-              status: () => 'subscribed',
-            },
-          },
-        ]),
-      });
-
-      // when a stale deep link from an older service worker arrives
-      const router = TestBed.inject(Router);
-      await router.navigate([], { queryParams: { snooze: 30 } });
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      // then nothing is snoozed off the URL — a replayed URL must stay inert
-      expect(snooze).not.toHaveBeenCalled();
     });
   });
 });

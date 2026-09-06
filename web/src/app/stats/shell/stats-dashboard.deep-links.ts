@@ -10,10 +10,10 @@ import type { ActivatedRoute, Router } from '@angular/router';
  * `openWindow('/app?quickLog=N')` hand-off replays. Android resumes an
  * existing PWA task instead of navigating, so the count stayed in the task's
  * committed URL and every later resume wrote another entry — including one at
- * 02:05 inside the user's quiet hours. Quick-log now travels through the
- * single-use intent store (`@pu-push/push`), which cannot replay. `?log=1` is
- * safe to keep because it only opens a dialog; nothing is persisted without a
- * further tap.
+ * 02:05 inside the user's quiet hours. Quick-log is now completed by the push
+ * service worker against the `reminderAction` Cloud Function with a
+ * single-use token, so no window is involved at all. `?log=1` is safe to keep
+ * because it only opens a dialog; nothing is persisted without a further tap.
  */
 export function registerDashboardDeepLinks(deps: {
   route: ActivatedRoute;

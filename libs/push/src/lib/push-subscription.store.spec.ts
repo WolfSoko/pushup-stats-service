@@ -510,11 +510,12 @@ describe('PushSubscriptionStore', () => {
     });
   });
 
-  // Regression: clicking "Snooze" on a push notification must only call the
-  // snoozeReminder Cloud Function — never any entry-creation path. This locks
-  // in that the SW message bridge keeps SNOOZE_REMINDER and QUICK_LOG_PUSHUPS
-  // strictly partitioned, so a snooze click can never silently log push-ups.
-  describe('regression: SW messages never trigger a snooze', () => {
+  // Regression: notification actions are completed by the push SW against
+  // the `reminderAction` callable — nothing the SW posts to a window may
+  // reach any callable. A message queued in a frozen tab is processed
+  // whenever the tab thaws, which is how a stale quick-log once wrote
+  // push-ups on the back of an unrelated snooze tap.
+  describe('regression: SW messages never reach a callable', () => {
     function setupMessageBridge(): {
       messageListeners: Array<(ev: MessageEvent) => void>;
     } {
@@ -533,10 +534,6 @@ describe('PushSubscriptionStore', () => {
       return { messageListeners };
     }
 
-    // The snooze no longer rides on a postMessage — `PushIntentDrainService`
-    // claims it from the intent store, which is single-use and time-bounded.
-    // No SW message may reach the callable through this store, otherwise a
-    // message queued in a frozen tab could still act hours later.
     it('should ignore every SW message that is not a subscription change', async () => {
       // given the SW message bridge
       const { messageListeners } = setupMessageBridge();
@@ -545,7 +542,7 @@ describe('PushSubscriptionStore', () => {
       httpsCallableMock.mockReset();
       httpsCallableMock.mockReturnValue(callable);
 
-      // when the legacy and current message types arrive
+      // when message types from every earlier hand-off design arrive
       const store = setupStore();
       store.registerSwListener();
       for (const listener of messageListeners) {
@@ -564,27 +561,15 @@ describe('PushSubscriptionStore', () => {
       expect(callable).not.toHaveBeenCalled();
     });
 
-    it('should call the snoozeReminder callable and nothing else from snooze()', async () => {
+    it('should expose no snooze entry point on the store at all', () => {
       // given
       setupMessageBridge();
-      const callable = jest
-        .fn()
-        .mockResolvedValue({ data: { ok: true, snoozeUntil: 'x' } });
-      const httpsCallableMock = httpsCallable as jest.Mock;
-      httpsCallableMock.mockReset();
-      httpsCallableMock.mockReturnValue(callable);
 
       // when
-      const store = setupStore();
-      await store.snooze(15);
+      const store = setupStore() as unknown as Record<string, unknown>;
 
-      // then
-      expect(httpsCallableMock).toHaveBeenCalledTimes(1);
-      expect(httpsCallableMock).toHaveBeenCalledWith(
-        expect.anything(),
-        'snoozeReminder'
-      );
-      expect(callable).toHaveBeenCalledWith({ snoozeMinutes: 15 });
+      // then the app has no way to snooze — only the push SW does, per tap
+      expect(store['snooze']).toBeUndefined();
     });
   });
 });

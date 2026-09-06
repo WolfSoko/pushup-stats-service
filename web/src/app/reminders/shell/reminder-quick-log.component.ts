@@ -25,9 +25,9 @@ import { parseInputNumber } from './reminders-page.helpers';
         Direkt-Eintrag aus der Benachrichtigung
       </p>
       <p class="muted" i18n="@@reminder.quickLog.desc">
-        Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die
-        App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert;
-        ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt.
+        Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp
+        darauf speichert den Eintrag sofort und bestätigt ihn in der
+        Benachrichtigung – die App muss dafür nicht geöffnet werden.
       </p>
       <div class="reminder-row">
         <mat-slide-toggle
