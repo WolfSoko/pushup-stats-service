@@ -13,6 +13,7 @@ class FirebaseAuthStub {
     displayName?: string | null;
     email?: string | null;
     isAnonymous?: boolean;
+    photoURL?: string | null;
   } | null>(null);
 }
 
@@ -35,6 +36,41 @@ describe('UserContextService', () => {
     firebaseAuth.user.set({ uid: 'firebase-user' });
     TestBed.tick();
     expect(service.userIdSafe()).toBe('firebase-user');
+  });
+
+  describe('accountPhotoUrl', () => {
+    it('should expose the identity provider picture', () => {
+      // given — the settings preview and the public profile both fall
+      // back to it when no photo has been uploaded
+      const service = TestBed.inject(UserContextService);
+      firebaseAuth.user.set({ uid: '1', photoURL: 'https://g/pic' });
+      TestBed.tick();
+
+      // then
+      expect(service.accountPhotoUrl()).toBe('https://g/pic');
+    });
+
+    it.each([[null], [undefined]])(
+      'should report %s as no picture',
+      (photoURL) => {
+        // given
+        const service = TestBed.inject(UserContextService);
+        firebaseAuth.user.set({ uid: '1', photoURL });
+        TestBed.tick();
+
+        // then — callers distinguish "no picture" from a URL, so
+        // undefined must not leak through
+        expect(service.accountPhotoUrl()).toBeNull();
+      }
+    );
+
+    it('should report no picture while signed out', () => {
+      // given
+      const service = TestBed.inject(UserContextService);
+
+      // then
+      expect(service.accountPhotoUrl()).toBeNull();
+    });
   });
 
   it('uses firebase auth user.displayName when available', () => {

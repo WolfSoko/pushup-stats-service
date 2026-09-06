@@ -33,7 +33,7 @@
         <mat-icon>upload</mat-icon>
         <span i18n="@@settings.photo.choose">Bild wählen</span>
       </button>
-      @if (photoUrl()) {
+      @if (uploadedUrl()) {
         <button
           mat-button
           type="button"
@@ -43,6 +43,15 @@
         >
           <span i18n="@@settings.photo.remove">Entfernen</span>
         </button>
+      }
+      @if (usesAccountPhoto()) {
+        <p class="hint" data-testid="settings-photo-account-hint">
+          <mat-icon aria-hidden="true">account_circle</mat-icon>
+          <span i18n="@@settings.photo.accountHint"
+            >Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein
+            eigenes hoch, um es zu ersetzen.</span
+          >
+        </p>
       }
       @if (photoError(); as message) {
         <p class="error" role="alert" data-testid="settings-photo-error">

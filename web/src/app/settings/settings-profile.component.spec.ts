@@ -2,6 +2,8 @@ import { signal } from '@angular/core';
 import { render, screen } from '@testing-library/angular';
 import { vi } from 'vitest';
 
+import { UserContextService } from '@pu-auth/auth';
+
 import { SettingsFacade } from '../stats/shell/settings.facade';
 import { ProfilePhotoService } from './profile-photo.service';
 import { SettingsProfileComponent } from './settings-profile.component';
@@ -21,7 +23,10 @@ function facadeMock(overrides: Record<string, unknown> = {}) {
   };
 }
 
-async function setup(photos: Partial<Record<string, unknown>> = {}) {
+async function setup(
+  photos: Partial<Record<string, unknown>> = {},
+  accountPhotoUrl: string | null = null
+) {
   const photoService = {
     busy: signal(false),
     upload: vi.fn().mockResolvedValue({ ok: true }),
@@ -33,9 +38,18 @@ async function setup(photos: Partial<Record<string, unknown>> = {}) {
     providers: [
       { provide: SettingsFacade, useValue: facadeMock() },
       { provide: ProfilePhotoService, useValue: photoService },
+      {
+        provide: UserContextService,
+        useValue: { accountPhotoUrl: signal(accountPhotoUrl) },
+      },
     ],
   });
   return { view, photoService };
+}
+
+function previewSrc(): string | null {
+  const img = screen.queryByTestId('settings-photo-preview');
+  return img ? img.getAttribute('src') : null;
 }
 
 describe('SettingsProfileComponent', () => {
@@ -84,6 +98,77 @@ describe('SettingsProfileComponent', () => {
 
       // then
       expect(screen.queryByTestId('settings-photo-remove')).toBeNull();
+    });
+
+    describe('Given a Google account picture and no upload', () => {
+      it('should preview the account picture', async () => {
+        // given — the profile already falls back to it, so a page that
+        // shows the empty placeholder here contradicts the live profile
+        await setup({}, 'https://lh3.googleusercontent.com/a/pic');
+
+        // then
+        expect(previewSrc()).toBe('https://lh3.googleusercontent.com/a/pic');
+      });
+
+      it('should not offer to remove it', async () => {
+        // given — it belongs to the Google account; this page cannot
+        // delete it, and a button that does nothing is worse than none
+        await setup({}, 'https://lh3.googleusercontent.com/a/pic');
+
+        // then
+        expect(screen.queryByTestId('settings-photo-remove')).toBeNull();
+      });
+
+      it('should say where the picture comes from', async () => {
+        // given — otherwise the missing remove button looks broken
+        await setup({}, 'https://lh3.googleusercontent.com/a/pic');
+
+        // then
+        expect(
+          screen.getByTestId('settings-photo-account-hint').textContent
+        ).toContain('Google');
+      });
+    });
+
+    describe('Given both an upload and a Google account picture', () => {
+      it('should prefer the upload', async () => {
+        // given
+        await setup(
+          {
+            ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/own'),
+          },
+          'https://lh3.googleusercontent.com/a/pic'
+        );
+
+        // then
+        expect(previewSrc()).toBe('https://example.test/own');
+      });
+
+      it('should offer to remove the upload', async () => {
+        // given
+        await setup(
+          {
+            ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/own'),
+          },
+          'https://lh3.googleusercontent.com/a/pic'
+        );
+
+        // then
+        expect(screen.getByTestId('settings-photo-remove')).toBeTruthy();
+      });
+
+      it('should not claim the account picture is in use', async () => {
+        // given
+        await setup(
+          {
+            ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/own'),
+          },
+          'https://lh3.googleusercontent.com/a/pic'
+        );
+
+        // then
+        expect(screen.queryByTestId('settings-photo-account-hint')).toBeNull();
+      });
     });
 
     it('should surface a rejection instead of failing silently', async () => {

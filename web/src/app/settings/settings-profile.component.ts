@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -11,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RouterLink } from '@angular/router';
+
+import { UserContextService } from '@pu-auth/auth';
 
 import { SettingsFacade } from '../stats/shell/settings.facade';
 import { ProfilePhotoService } from './profile-photo.service';
@@ -33,9 +36,24 @@ import { ProfilePhotoService } from './profile-photo.service';
 export class SettingsProfileComponent {
   protected readonly facade = inject(SettingsFacade);
   protected readonly photos = inject(ProfilePhotoService);
+  private readonly user = inject(UserContextService);
 
-  protected readonly photoUrl = signal<string | null>(null);
+  /** An uploaded photo — the only kind this page can remove. */
+  protected readonly uploadedUrl = signal<string | null>(null);
   protected readonly photoError = signal<string | null>(null);
+
+  /**
+   * Without an upload the profile falls back to the Google account
+   * picture, so the preview has to show it too — otherwise the page
+   * claims there is no photo while the profile is already showing one.
+   */
+  protected readonly photoUrl = computed(
+    () => this.uploadedUrl() ?? this.user.accountPhotoUrl()
+  );
+
+  protected readonly usesAccountPhoto = computed(
+    () => this.uploadedUrl() === null && this.user.accountPhotoUrl() !== null
+  );
 
   private readonly messages: Readonly<Record<string, string>> = {
     type: $localize`:@@settings.photo.error.type:Bitte ein JPG, PNG oder WebP wählen.`,
@@ -69,10 +87,10 @@ export class SettingsProfileComponent {
   protected async removePhoto(): Promise<void> {
     this.photoError.set(null);
     await this.photos.remove();
-    this.photoUrl.set(null);
+    this.uploadedUrl.set(null);
   }
 
   private async refreshPhoto(): Promise<void> {
-    this.photoUrl.set(await this.photos.ownPhotoUrl());
+    this.uploadedUrl.set(await this.photos.ownPhotoUrl());
   }
 }

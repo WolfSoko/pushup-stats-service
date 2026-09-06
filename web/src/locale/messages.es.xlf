@@ -11880,5 +11880,11 @@
         <target>Hochladen fehlgeschlagen. Bitte erneut versuchen.</target>
       </segment>
     </unit>
+    <unit id="settings.photo.accountHint">
+      <segment state="initial">
+        <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
+        <target>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

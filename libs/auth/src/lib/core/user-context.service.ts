@@ -20,6 +20,11 @@ export class UserContextService {
 
   readonly userIdSafe = computed(() => this.authStore.user()?.uid ?? '');
 
+  /** Picture from the identity provider (Google), not an uploaded one. */
+  readonly accountPhotoUrl = computed(
+    () => this.authStore.user()?.photoURL ?? null
+  );
+
   private readonly adminClaimResource = resource({
     params: () => ({ userId: this.userIdSafe() }),
     loader: async ({ params }) => {

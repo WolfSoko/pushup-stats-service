@@ -475,7 +475,7 @@
     <unit id="displayName.violation.tooShort">
       <notes>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:259,261</note>
-        <note category="location">web/src/app/settings/settings-profile.component.html:96,99</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:105,108</note>
       </notes>
       <segment>
         <source> Mindestens 2 Zeichen. </source>
@@ -484,7 +484,7 @@
     <unit id="displayName.violation.tooLong">
       <notes>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:269,271</note>
-        <note category="location">web/src/app/settings/settings-profile.component.html:106,109</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:115,118</note>
       </notes>
       <segment>
         <source> Höchstens 30 Zeichen. </source>
@@ -493,7 +493,7 @@
     <unit id="displayName.violation.invalidCharacters">
       <notes>
         <note category="location">libs/auth/src/lib/ui/register/register.component.html:279,281</note>
-        <note category="location">web/src/app/settings/settings-profile.component.html:116,120</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:125,129</note>
       </notes>
       <segment>
         <source> Nur Buchstaben, Ziffern, Leerzeichen, sowie _ . - erlaubt. </source>
@@ -7662,9 +7662,17 @@
         <source>Entfernen</source>
       </segment>
     </unit>
+    <unit id="settings.photo.accountHint">
+      <notes>
+        <note category="location">web/src/app/settings/settings-profile.component.html:51,54</note>
+      </notes>
+      <segment>
+        <source>Zurzeit wird das Bild deines Google-Kontos verwendet. Lade ein eigenes hoch, um es zu ersetzen.</source>
+      </segment>
+    </unit>
     <unit id="settings.photo.visibilityHint">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:55,59</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:64,68</note>
       </notes>
       <segment>
         <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
@@ -7672,7 +7680,7 @@
     </unit>
     <unit id="settings.section.profile.title">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:68,70</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:77,79</note>
       </notes>
       <segment>
         <source>Profil</source>
@@ -7680,7 +7688,7 @@
     </unit>
     <unit id="settings.section.profile.subtitle">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:71,73</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:80,82</note>
       </notes>
       <segment>
         <source> Wie du in der App und der Bestenliste erscheinst. </source>
@@ -7688,7 +7696,7 @@
     </unit>
     <unit id="displayNameLabel">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:76,78</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:85,87</note>
       </notes>
       <segment>
         <source>Anzeigename</source>
@@ -7696,7 +7704,7 @@
     </unit>
     <unit id="displayNamePlaceholder">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:82</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:91</note>
       </notes>
       <segment>
         <source>Wolf</source>
@@ -7704,7 +7712,7 @@
     </unit>
     <unit id="settings.displayNameHint">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:85,87</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:94,96</note>
       </notes>
       <segment>
         <source>Kann in der Bestenliste angezeigt werden.</source>
@@ -7712,7 +7720,7 @@
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:125,130</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:134,139</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -7720,7 +7728,7 @@
     </unit>
     <unit id="settings.section.privacy.title">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:135,137</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:144,146</note>
       </notes>
       <segment>
         <source>Sichtbarkeit</source>
@@ -7728,7 +7736,7 @@
     </unit>
     <unit id="settings.section.privacy.subtitle">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:138,140</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:147,149</note>
       </notes>
       <segment>
         <source> Steuere, wer dein Profil sehen kann. </source>
@@ -7736,7 +7744,7 @@
     </unit>
     <unit id="settings.leaderboardOptIn">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:150,152</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:159,161</note>
       </notes>
       <segment>
         <source> In Bestenliste anzeigen </source>
@@ -7744,7 +7752,7 @@
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:154,157</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:163,166</note>
       </notes>
       <segment>
         <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
@@ -7752,7 +7760,7 @@
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:162,167</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:171,176</note>
       </notes>
       <segment>
         <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
@@ -7760,7 +7768,7 @@
     </unit>
     <unit id="settings.publicProfile.toggle">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:176,178</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:185,187</note>
       </notes>
       <segment>
         <source> Öffentliches Profil aktivieren </source>
@@ -7768,7 +7776,7 @@
     </unit>
     <unit id="settings.publicProfile.hint">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:179,184</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:188,193</note>
       </notes>
       <segment>
         <source> Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat. </source>
@@ -7776,7 +7784,7 @@
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:201,203</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:210,212</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
@@ -7784,7 +7792,7 @@
     </unit>
     <unit id="settings.publicProfile.shareCta">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.html:210,212</note>
+        <note category="location">web/src/app/settings/settings-profile.component.html:219,221</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Profil teilen </source>
@@ -7792,7 +7800,7 @@
     </unit>
     <unit id="settings.photo.error.type">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:41</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:59</note>
       </notes>
       <segment>
         <source>Bitte ein JPG, PNG oder WebP wählen.</source>
@@ -7800,7 +7808,7 @@
     </unit>
     <unit id="settings.photo.error.size">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:42</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:60</note>
       </notes>
       <segment>
         <source>Das Bild ist zu groß.</source>
@@ -7808,7 +7816,7 @@
     </unit>
     <unit id="settings.photo.error.decode">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:43</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:61</note>
       </notes>
       <segment>
         <source>Das Bild konnte nicht gelesen werden.</source>
@@ -7816,7 +7824,7 @@
     </unit>
     <unit id="settings.photo.error.upload">
       <notes>
-        <note category="location">web/src/app/settings/settings-profile.component.ts:44</note>
+        <note category="location">web/src/app/settings/settings-profile.component.ts:62</note>
       </notes>
       <segment>
         <source>Hochladen fehlgeschlagen. Bitte erneut versuchen.</source>
