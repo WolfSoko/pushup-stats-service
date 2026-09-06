@@ -1,8 +1,10 @@
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { render, screen } from '@testing-library/angular';
 import { vi } from 'vitest';
 
 import { UserContextService } from '@pu-auth/auth';
+
+import { AvatarService } from '../core/avatar.service';
 
 import { SettingsFacade } from '../stats/shell/settings.facade';
 import { ProfilePhotoService } from './profile-photo.service';
@@ -25,22 +27,28 @@ function facadeMock(overrides: Record<string, unknown> = {}) {
 
 async function setup(
   photos: Partial<Record<string, unknown>> = {},
-  accountPhotoUrl: string | null = null
+  accountPhotoUrl: string | null = null,
+  uploadedUrl: string | null = null
 ) {
   const photoService = {
     busy: signal(false),
     upload: vi.fn().mockResolvedValue({ ok: true }),
     remove: vi.fn().mockResolvedValue(undefined),
-    ownPhotoUrl: vi.fn().mockResolvedValue(null),
     ...photos,
   };
+  const uploaded = signal(uploadedUrl);
+  const account = signal(accountPhotoUrl);
   const view = await render(SettingsProfileComponent, {
     providers: [
       { provide: SettingsFacade, useValue: facadeMock() },
       { provide: ProfilePhotoService, useValue: photoService },
+      { provide: UserContextService, useValue: { accountPhotoUrl: account } },
       {
-        provide: UserContextService,
-        useValue: { accountPhotoUrl: signal(accountPhotoUrl) },
+        provide: AvatarService,
+        useValue: {
+          uploadedUrl: uploaded,
+          avatarUrl: computed(() => uploaded() ?? account()),
+        },
       },
     ],
   });
@@ -84,9 +92,7 @@ describe('SettingsProfileComponent', () => {
 
     it('should preview an existing photo', async () => {
       // given
-      await setup({
-        ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/a.jpg'),
-      });
+      await setup({}, null, 'https://example.test/a.jpg');
 
       // then
       expect(screen.getByTestId('settings-photo-preview')).toBeTruthy();
@@ -134,10 +140,9 @@ describe('SettingsProfileComponent', () => {
       it('should prefer the upload', async () => {
         // given
         await setup(
-          {
-            ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/own'),
-          },
-          'https://lh3.googleusercontent.com/a/pic'
+          {},
+          'https://lh3.googleusercontent.com/a/pic',
+          'https://example.test/own'
         );
 
         // then
@@ -147,10 +152,9 @@ describe('SettingsProfileComponent', () => {
       it('should offer to remove the upload', async () => {
         // given
         await setup(
-          {
-            ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/own'),
-          },
-          'https://lh3.googleusercontent.com/a/pic'
+          {},
+          'https://lh3.googleusercontent.com/a/pic',
+          'https://example.test/own'
         );
 
         // then
@@ -160,10 +164,9 @@ describe('SettingsProfileComponent', () => {
       it('should not claim the account picture is in use', async () => {
         // given
         await setup(
-          {
-            ownPhotoUrl: vi.fn().mockResolvedValue('https://example.test/own'),
-          },
-          'https://lh3.googleusercontent.com/a/pic'
+          {},
+          'https://lh3.googleusercontent.com/a/pic',
+          'https://example.test/own'
         );
 
         // then

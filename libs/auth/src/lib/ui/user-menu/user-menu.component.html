@@ -6,8 +6,13 @@
     [matMenuTriggerFor]="userMenu"
     [attr.aria-label]="ariaUserMenu"
   >
-    @if (user()?.photoURL) {
-      <img [src]="user()!.photoURL" alt="" class="avatar-img" />
+    @if (avatar(); as src) {
+      <img
+        [src]="src"
+        alt=""
+        class="avatar-img"
+        data-testid="user-menu-avatar"
+      />
     } @else {
       <mat-icon>account_circle</mat-icon>
     }

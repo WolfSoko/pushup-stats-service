@@ -1,13 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  Storage,
-  uploadBytes,
-} from '@angular/fire/storage';
+import { deleteObject, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
 
+import { profilePhotoPath } from '../core/avatar.service';
 import { UserConfigStore } from '../core/user-config.store';
 import { prepareProfilePhoto, type PhotoRejection } from './profile-photo';
 
@@ -32,10 +27,6 @@ export class ProfilePhotoService {
 
   readonly busy = signal(false);
 
-  private path(uid: string): string {
-    return `profile-photos/${uid}/avatar`;
-  }
-
   async upload(file: File): Promise<PhotoUploadResult> {
     const uid = this.user.userIdSafe();
     if (!this.storage || !uid) return { ok: false, reason: 'upload' };
@@ -45,9 +36,13 @@ export class ProfilePhotoService {
 
     this.busy.set(true);
     try {
-      await uploadBytes(ref(this.storage, this.path(uid)), prepared.blob, {
-        contentType: 'image/jpeg',
-      });
+      await uploadBytes(
+        ref(this.storage, profilePhotoPath(uid)),
+        prepared.blob,
+        {
+          contentType: 'image/jpeg',
+        }
+      );
       await this.configStore.save({ photoUpdatedAt: new Date().toISOString() });
       return { ok: true };
     } catch {
@@ -62,7 +57,7 @@ export class ProfilePhotoService {
     if (!this.storage || !uid) return;
     this.busy.set(true);
     try {
-      await deleteObject(ref(this.storage, this.path(uid)));
+      await deleteObject(ref(this.storage, profilePhotoPath(uid)));
     } catch {
       // Already gone is a success for the caller's purposes.
     } finally {
@@ -70,21 +65,6 @@ export class ProfilePhotoService {
       // pointing at a photo that is no longer there.
       await this.configStore.save({ photoUpdatedAt: '' });
       this.busy.set(false);
-    }
-  }
-
-  /**
-   * Download URL for the signed-in user's own photo. The bucket is private
-   * and an `<img>` cannot send a token, so this SDK-issued URL is how the
-   * owner previews their photo while the profile is still private.
-   */
-  async ownPhotoUrl(): Promise<string | null> {
-    const uid = this.user.userIdSafe();
-    if (!this.storage || !uid) return null;
-    try {
-      return await getDownloadURL(ref(this.storage, this.path(uid)));
-    } catch {
-      return null;
     }
   }
 }

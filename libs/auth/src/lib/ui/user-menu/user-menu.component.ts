@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,11 +33,23 @@ export class UserMenuComponent {
   private readonly state = inject(AuthStore);
   private readonly router = inject(Router);
 
+  /**
+   * Overrides the identity provider's picture. This library knows nothing
+   * about uploaded photos — they live in the app's user config — so the
+   * host supplies the resolved URL and the default keeps the previous
+   * behaviour for anyone who does not.
+   */
+  readonly avatarUrl = input<string | null>(null);
+
   readonly user = this.state.user;
   readonly loading = this.state.loading;
   readonly isAuthenticated = this.state.isAuthenticated;
   readonly isGuest = this.state.isGuest;
   readonly error = this.state.error;
+
+  readonly avatar = computed(
+    () => this.avatarUrl() ?? this.user()?.photoURL ?? null
+  );
 
   readonly ariaUserMenu = $localize`:@@user.menu.aria:Nutzerkonto-Menü`;
   readonly ariaGuestMenu = $localize`:@@user.menu.guestAria:Gast-Menü`;

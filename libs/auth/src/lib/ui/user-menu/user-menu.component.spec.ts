@@ -10,6 +10,7 @@ function makeStore(opts: {
   loading?: boolean;
   tryAsGuest?: jest.Mock;
   uid?: string | undefined;
+  photoURL?: string | null;
 }) {
   return {
     isAuthenticated: jest.fn().mockReturnValue(opts.isAuthenticated),
@@ -22,7 +23,7 @@ function makeStore(opts: {
             uid: 'uid' in opts ? opts.uid : 'test-uid',
             displayName: 'Test User',
             email: 'test@example.com',
-            photoURL: null,
+            photoURL: opts.photoURL ?? null,
           }
         : null
     ),
@@ -267,5 +268,58 @@ describe('UserMenuComponent', () => {
       ],
     });
     expect(document.body.querySelector('mat-spinner')).toBeTruthy();
+  });
+});
+
+describe('UserMenuComponent avatar', () => {
+  async function renderAvatar(
+    photoURL: string | null,
+    inputs: Record<string, unknown> = {}
+  ) {
+    await render(UserMenuComponent, {
+      inputs,
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthStore,
+          useValue: makeStore({
+            isAuthenticated: true,
+            isGuest: false,
+            photoURL,
+          }),
+        },
+        { provide: Auth, useValue: {} },
+      ],
+    });
+    return screen.queryByTestId('user-menu-avatar');
+  }
+
+  it('should show the account picture when the host supplies nothing', async () => {
+    // then — unchanged behaviour for any consumer that does not know
+    // about uploaded photos
+    const img = await renderAvatar('https://g/pic');
+    expect(img?.getAttribute('src')).toBe('https://g/pic');
+  });
+
+  it('should prefer the supplied avatar over the account picture', async () => {
+    // given — an uploaded photo lives in the app's user config, which this
+    // library cannot read; the host resolves it and passes it in
+    const img = await renderAvatar('https://g/pic', {
+      avatarUrl: 'https://own/pic',
+    });
+
+    // then — without this the toolbar kept showing the Google picture
+    // after an upload, while the profile page showed the new one
+    expect(img?.getAttribute('src')).toBe('https://own/pic');
+  });
+
+  it('should fall back to the account picture when the host passes null', async () => {
+    const img = await renderAvatar('https://g/pic', { avatarUrl: null });
+    expect(img?.getAttribute('src')).toBe('https://g/pic');
+  });
+
+  it('should render the placeholder icon when there is no picture at all', async () => {
+    const img = await renderAvatar(null);
+    expect(img).toBeNull();
   });
 });

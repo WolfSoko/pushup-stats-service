@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 
 import { UserContextService } from '@pu-auth/auth';
 
+import { AvatarService } from '../core/avatar.service';
 import { SettingsFacade } from '../stats/shell/settings.facade';
 import { ProfilePhotoService } from './profile-photo.service';
 
@@ -37,19 +38,19 @@ export class SettingsProfileComponent {
   protected readonly facade = inject(SettingsFacade);
   protected readonly photos = inject(ProfilePhotoService);
   private readonly user = inject(UserContextService);
+  private readonly avatar = inject(AvatarService);
 
-  /** An uploaded photo — the only kind this page can remove. */
-  protected readonly uploadedUrl = signal<string | null>(null);
   protected readonly photoError = signal<string | null>(null);
 
+  /** An uploaded photo — the only kind this page can remove. */
+  protected readonly uploadedUrl = this.avatar.uploadedUrl;
+
   /**
-   * Without an upload the profile falls back to the Google account
-   * picture, so the preview has to show it too — otherwise the page
-   * claims there is no photo while the profile is already showing one.
+   * Without an upload the profile falls back to the account picture, so
+   * the preview has to show it too — otherwise the page claims there is
+   * no photo while the profile is already showing one.
    */
-  protected readonly photoUrl = computed(
-    () => this.uploadedUrl() ?? this.user.accountPhotoUrl()
-  );
+  protected readonly photoUrl = this.avatar.avatarUrl;
 
   protected readonly usesAccountPhoto = computed(
     () => this.uploadedUrl() === null && this.user.accountPhotoUrl() !== null
@@ -61,10 +62,6 @@ export class SettingsProfileComponent {
     decode: $localize`:@@settings.photo.error.decode:Das Bild konnte nicht gelesen werden.`,
     upload: $localize`:@@settings.photo.error.upload:Hochladen fehlgeschlagen. Bitte erneut versuchen.`,
   };
-
-  constructor() {
-    void this.refreshPhoto();
-  }
 
   protected async onPhotoPicked(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
@@ -81,16 +78,10 @@ export class SettingsProfileComponent {
       );
       return;
     }
-    await this.refreshPhoto();
   }
 
   protected async removePhoto(): Promise<void> {
     this.photoError.set(null);
     await this.photos.remove();
-    this.uploadedUrl.set(null);
-  }
-
-  private async refreshPhoto(): Promise<void> {
-    this.uploadedUrl.set(await this.photos.ownPhotoUrl());
   }
 }

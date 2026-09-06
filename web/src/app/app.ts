@@ -35,6 +35,8 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
+
+import { AvatarService } from './core/avatar.service';
 import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { SeoService } from './core/seo.service';
@@ -142,6 +144,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
 })
 export class App {
   private readonly swUpdate = inject(SwUpdateService);
+  protected readonly avatar = inject(AvatarService);
   /** Drives the persistent "new version" button in the toolbar. */
   readonly swUpdateAvailable = this.swUpdate.updateAvailable;
   readonly swUpdateUnrecoverable = this.swUpdate.unrecoverable;
