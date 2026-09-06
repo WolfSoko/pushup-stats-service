@@ -320,19 +320,52 @@
 
 .owner-bar {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.5rem;
   margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   border: 1px dashed var(--mat-sys-outline, #8a8a8a);
   border-radius: 12px;
 }
 
+.owner-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
 .owner-hint {
-  flex: 1 1 16rem;
+  margin: 0;
   font-size: 0.85rem;
   opacity: 0.8;
+}
+
+/* The eye icons carry the whole feature, and an icon alone does not say
+   what it does. Spelling both states out once here beats a tooltip the
+   user has to go hunting for. */
+.owner-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    opacity: 0.75;
+  }
 }
 
 .avatar-button {

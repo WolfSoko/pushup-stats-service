@@ -6826,17 +6826,41 @@
         <source>Selbst tracken – pushup-stats.com</source>
       </segment>
     </unit>
-    <unit id="publicProfile.owner.hint">
+    <unit id="publicProfile.owner.title">
       <notes>
         <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
       </notes>
       <segment>
-        <source>Nur du siehst diese Schalter. Blende einzelne Elemente aus, die nicht öffentlich sein sollen.</source>
+        <source>Nur für dich sichtbar</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.hint">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
+      </notes>
+      <segment>
+        <source>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legendVisible">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
+      </notes>
+      <segment>
+        <source>Wird auf deinem öffentlichen Profil angezeigt.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legendHidden">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
+      </notes>
+      <segment>
+        <source>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</source>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
       </notes>
       <segment>
         <source>Als Besucher ansehen</source>
@@ -6844,7 +6868,7 @@
     </unit>
     <unit id="publicProfile.owner.photoEdit">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
       </notes>
       <segment>
         <source>Profilbild ändern</source>
@@ -6852,7 +6876,7 @@
     </unit>
     <unit id="publicProfile.owner.hideElement">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
       </notes>
       <segment>
         <source>Auf dem öffentlichen Profil ausblenden</source>
@@ -6860,7 +6884,7 @@
     </unit>
     <unit id="publicProfile.owner.showElement">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
       </notes>
       <segment>
         <source>Auf dem öffentlichen Profil anzeigen</source>
@@ -6868,7 +6892,7 @@
     </unit>
     <unit id="weekday.short.mon">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -6876,7 +6900,7 @@
     </unit>
     <unit id="weekday.short.tue">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -6884,7 +6908,7 @@
     </unit>
     <unit id="weekday.short.wed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -6892,7 +6916,7 @@
     </unit>
     <unit id="weekday.short.thu">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -6900,7 +6924,7 @@
     </unit>
     <unit id="weekday.short.fri">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -6908,7 +6932,7 @@
     </unit>
     <unit id="weekday.short.sat">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -6916,7 +6940,7 @@
     </unit>
     <unit id="weekday.short.sun">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
       </notes>
       <segment>
         <source>So</source>
@@ -6924,7 +6948,7 @@
     </unit>
     <unit id="publicProfile.subtitle">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:124,126</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:139,141</note>
       </notes>
       <segment>
         <source> Pushup Tracker </source>

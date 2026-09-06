@@ -56,9 +56,24 @@
         }
 
         @if (isOwner()) {
-          <div class="owner-bar" data-testid="profile-owner-bar">
-            <mat-icon aria-hidden="true">tune</mat-icon>
-            <span class="owner-hint">{{ labels.ownerHint }}</span>
+          <section class="owner-bar" data-testid="profile-owner-bar">
+            <h2 class="owner-title">
+              <mat-icon aria-hidden="true">tune</mat-icon>
+              {{ labels.ownerTitle }}
+            </h2>
+            <p class="owner-hint" data-testid="profile-owner-hint">
+              {{ labels.ownerHint }}
+            </p>
+            <ul class="owner-legend" data-testid="profile-owner-legend">
+              <li>
+                <mat-icon aria-hidden="true">visibility</mat-icon>
+                <span>{{ labels.legendVisible }}</span>
+              </li>
+              <li>
+                <mat-icon aria-hidden="true">visibility_off</mat-icon>
+                <span>{{ labels.legendHidden }}</span>
+              </li>
+            </ul>
             @if (canPreview()) {
               <mat-slide-toggle
                 [checked]="previewAsVisitor()"
@@ -67,7 +82,7 @@
                 >{{ labels.previewAsVisitor }}</mat-slide-toggle
               >
             }
-          </div>
+          </section>
         }
 
         <header class="profile-header">

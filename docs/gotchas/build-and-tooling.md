@@ -172,9 +172,16 @@ Vitest counts the unhandled rejection separately:
      Errors  1 error
 ```
 
-Seen originating in `web/src/app/ai/ai-assistant.tools.spec.ts`, which logs
-during teardown. Re-run before investigating — and note that the green test
-counts alone do not tell you the task passed, so read Nx's own verdict too.
+Vitest attributes it to whichever file the worker was on — in this repo
+usually `web/src/app/ai/ai-assistant.tools.spec.ts`, which contains no
+`console` call at all, so the named file is not the cause. Coverage was
+measured and ruled out: the same command passed with coverage on and failed
+with it on, in separate runs.
+
+Re-run before investigating. And note that the green test counts alone do
+not tell you the task passed — Vitest reports the unhandled rejection in a
+separate `Errors` row and still exits non-zero — so read Nx's own verdict
+line too.
 
 ## One-shot node scripts without a CLI bin
 

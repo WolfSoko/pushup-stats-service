@@ -12101,10 +12101,10 @@ Deine Position: # ·  Reps        </source>
         <target> Without your own picture, your public profile otherwise shows your Google account picture. An uploaded picture of your own is not affected by this. </target>
       </segment>
     </unit>
-    <unit id="publicProfile.owner.hint">
+        <unit id="publicProfile.owner.hint">
       <segment state="initial">
-        <source>Nur du siehst diese Schalter. Blende einzelne Elemente aus, die nicht öffentlich sein sollen.</source>
-        <target>Nur du siehst diese Schalter. Blende einzelne Elemente aus, die nicht öffentlich sein sollen.</target>
+        <source>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</source>
+        <target>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
@@ -12147,6 +12147,24 @@ Deine Position: # ·  Reps        </source>
       <segment state="initial">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.title">
+      <segment state="initial">
+        <source>Nur für dich sichtbar</source>
+        <target>Nur für dich sichtbar</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legendVisible">
+      <segment state="initial">
+        <source>Wird auf deinem öffentlichen Profil angezeigt.</source>
+        <target>Wird auf deinem öffentlichen Profil angezeigt.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legendHidden">
+      <segment state="initial">
+        <source>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</source>
+        <target>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</target>
       </segment>
     </unit>
 </file>

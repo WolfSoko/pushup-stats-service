@@ -512,6 +512,51 @@ describe('PublicProfilePageComponent', () => {
       expect(q('[data-testid="profile-toggle-streak"]')).toBeNull();
     });
 
+    describe('Explaining the eye icons', () => {
+      it('should describe both states at the top of the page', async () => {
+        // given — an eye icon on its own does not say what it does, and
+        // the icons carry the whole feature
+        await setup({ resolve: owner() });
+
+        // then
+        const legend = q('[data-testid="profile-owner-legend"]');
+        expect(legend).toBeTruthy();
+        expect(legend.querySelectorAll('li').length).toBe(2);
+      });
+
+      it('should name both icons, not just the visible one', async () => {
+        // given — the half that is easy to misread is the crossed-out
+        // eye: it must say "hidden", not leave the user guessing
+        await setup({ resolve: owner() });
+
+        // then
+        const icons = [
+          ...q('[data-testid="profile-owner-legend"]').querySelectorAll(
+            'mat-icon'
+          ),
+        ].map((i: Element) => i.textContent?.trim());
+        expect(icons).toEqual(['visibility', 'visibility_off']);
+      });
+
+      it('should say the icons are private to the owner', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // then
+        expect(q('[data-testid="profile-owner-hint"]').textContent).toContain(
+          'nur du'
+        );
+      });
+
+      it('should not appear for a visitor', async () => {
+        // given
+        await setup({ resolve: sampleProfile });
+
+        // then
+        expect(q('[data-testid="profile-owner-legend"]')).toBeNull();
+      });
+    });
+
     it('should show the switches to the owner', async () => {
       // given
       await setup({ resolve: owner() });
