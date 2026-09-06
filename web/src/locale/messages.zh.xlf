@@ -11258,5 +11258,83 @@
         <target>公开资料</target>
       </segment>
     </unit>
+    <unit id="publicProfile.week">
+      <segment state="initial">
+        <source>Diese Woche</source>
+        <target>Diese Woche</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.month">
+      <segment state="initial">
+        <source>Dieser Monat</source>
+        <target>Dieser Monat</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises">
+      <segment state="initial">
+        <source>Übungen</source>
+        <target>Übungen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.heatmap">
+      <segment state="initial">
+        <source>Wann trainiert wird</source>
+        <target>Wann trainiert wird</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.heatmap.aria">
+      <segment state="initial">
+        <source>Trainingsverteilung über Wochentage und Tageszeit</source>
+        <target>Trainingsverteilung über Wochentage und Tageszeit</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.memberSince">
+      <segment state="initial">
+        <source>Dabei seit</source>
+        <target>Dabei seit</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.mon">
+      <segment state="initial">
+        <source>Mo</source>
+        <target>Mo</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.tue">
+      <segment state="initial">
+        <source>Di</source>
+        <target>Di</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.wed">
+      <segment state="initial">
+        <source>Mi</source>
+        <target>Mi</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.thu">
+      <segment state="initial">
+        <source>Do</source>
+        <target>Do</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.fri">
+      <segment state="initial">
+        <source>Fr</source>
+        <target>Fr</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.sat">
+      <segment state="initial">
+        <source>Sa</source>
+        <target>Sa</target>
+      </segment>
+    </unit>
+    <unit id="weekday.short.sun">
+      <segment state="initial">
+        <source>So</source>
+        <target>So</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

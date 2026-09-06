@@ -204,3 +204,100 @@
     height: 20px;
   }
 }
+
+.private-banner {
+  margin-bottom: 16px;
+  border-left: 4px solid var(--mat-sys-primary);
+
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  p {
+    margin: 2px 0 0;
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.9rem;
+  }
+
+  a {
+    margin-left: auto;
+  }
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.exercises,
+.heatmap {
+  margin-top: 28px;
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+}
+
+.exercise-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(6rem, 10rem) 1fr auto;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+.exercise-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--mat-sys-surface-container-high);
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--mat-sys-primary);
+  }
+}
+
+.exercise-value {
+  font-variant-numeric: tabular-nums;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: auto repeat(24, 1fr);
+  gap: 2px;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.heatmap-day {
+  font-size: 0.7rem;
+  color: var(--mat-sys-on-surface-variant);
+  padding-right: 4px;
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  min-width: 8px;
+  border-radius: 2px;
+  background: var(--mat-sys-primary);
+}

@@ -3,29 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { FirebaseApp } from '@angular/fire/app';
-import { Auth } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
-/**
- * `onAuthStateChanged` is a module export, and ESM does not allow spying
- * on those — so the module is mocked once and the emitted user is steered
- * through `mockAuthUser` per test.
- */
-let mockAuthUser: { uid: string } | null = null;
-vitest.mock('@angular/fire/auth', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@angular/fire/auth')>();
-  // `Object.assign` rather than a spread: `vitest.mock` factories are
-  // hoisted above esbuild's `__spreadValues` helper, which then blows up
-  // at import time with "__spreadValues is not a function".
-  return Object.assign({}, actual, {
-    onAuthStateChanged: (_auth: unknown, cb: (u: unknown) => void) => {
-      cb(mockAuthUser);
-      return () => undefined;
-    },
-  });
-});
-
 import { PublicProfilePageComponent } from './public-profile-page.component';
 import { ShareService } from '../core/share.service';
 import { SeoService } from '../core/seo.service';
@@ -44,6 +24,13 @@ const sampleProfile: PublicProfile = {
   bestSingleEntry: 50,
   bestDayTotal: 250,
   achievements: [],
+  photoURL: null,
+  memberSince: null,
+  weeklyReps: 0,
+  monthlyReps: 0,
+  heatmap: {},
+  exercises: [],
+  isPrivate: false,
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 
@@ -69,8 +56,6 @@ describe('PublicProfilePageComponent', () => {
       uid?: string | null;
       resolve?: PublicProfile | null;
       reject?: unknown;
-      /** Provided only where ownership matters; absent = signed out / server. */
-      auth?: unknown;
     } = {}
   ): Promise<void> {
     vitest.clearAllMocks();
@@ -99,7 +84,6 @@ describe('PublicProfilePageComponent', () => {
         // (the unit-test default differs per Angular setup; pinning here
         // documents which prefix the share builder should pick).
         { provide: LOCALE_ID, useValue: 'en-US' },
-        ...(options.auth ? [{ provide: Auth, useValue: options.auth }] : []),
       ],
     }).compileComponents();
 
@@ -258,19 +242,12 @@ describe('PublicProfilePageComponent', () => {
     });
   });
 
-  describe('Own private profile', () => {
-    afterEach(() => {
-      mockAuthUser = null;
-    });
-
-    it('should offer to make it public when the visitor is the owner', async () => {
-      // given — the "Mein Profil" entry sends every user here, and most
-      // have not opted in yet; a generic "does not exist" page about
-      // their own profile would be nonsense
-      mockAuthUser = { uid: 'abcdef1234567890' };
-
-      // when
-      await setup({ resolve: null, auth: {} });
+  describe('Private profile shown to its owner', () => {
+    it('should show the hint AND the profile content', async () => {
+      // given — the server hands the owner their own private profile;
+      // replacing the content with a hint would hide exactly what the
+      // owner came to look at
+      await setup({ resolve: { ...sampleProfile, isPrivate: true } });
 
       // then
       expect(
@@ -280,17 +257,27 @@ describe('PublicProfilePageComponent', () => {
       ).not.toBeNull();
       expect(
         fixture.nativeElement.querySelector(
-          '[data-testid="public-profile-not-found"]'
+          '[data-testid="public-profile-name"]'
         )
-      ).toBeNull();
+      ).not.toBeNull();
     });
 
-    it('should show the generic not-found for someone else', async () => {
+    it('should link to the settings tab that flips the switch', async () => {
       // given
-      mockAuthUser = { uid: 'ein-anderer' };
+      await setup({ resolve: { ...sampleProfile, isPrivate: true } });
 
       // when
-      await setup({ resolve: null, auth: {} });
+      const cta = fixture.nativeElement.querySelector(
+        '[data-testid="public-profile-enable"]'
+      ) as HTMLAnchorElement | null;
+
+      // then
+      expect(cta?.getAttribute('href')).toContain('/settings/profil');
+    });
+
+    it('should not show the hint on a public profile', async () => {
+      // given
+      await setup({ resolve: sampleProfile });
 
       // then
       expect(
@@ -298,22 +285,136 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-private"]'
         )
       ).toBeNull();
-      expect(
-        fixture.nativeElement.querySelector(
-          '[data-testid="public-profile-not-found"]'
-        )
-      ).not.toBeNull();
     });
 
-    it('should show the generic not-found for a signed-out visitor', async () => {
-      // given — no Auth provider at all, as on the server
-      // when
+    it('should still show the generic not-found when there is no profile', async () => {
+      // given
       await setup({ resolve: null });
 
       // then
       expect(
         fixture.nativeElement.querySelector(
-          '[data-testid="public-profile-private"]'
+          '[data-testid="public-profile-not-found"]'
+        )
+      ).not.toBeNull();
+    });
+  });
+
+  describe('Heatmap and exercises', () => {
+    it('should render seven weekday rows when there is heatmap data', async () => {
+      // given
+      await setup({
+        resolve: { ...sampleProfile, heatmap: { 'Mo-08': 120, 'Fr-19': 40 } },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelectorAll('.heatmap-day').length
+      ).toBe(7);
+    });
+
+    it('should omit the heatmap entirely when nothing was logged', async () => {
+      // given — a grid of blank cells says less than no section
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-heatmap"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should render one bar per exercise, biggest at full width', async () => {
+      // given
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          exercises: [
+            {
+              exerciseId: 'pushup',
+              total: 5000,
+              totalDays: 90,
+              measurement: 'reps' as const,
+            },
+            {
+              exerciseId: 'plank.standard',
+              total: 3600,
+              totalDays: 40,
+              measurement: 'time' as const,
+            },
+          ],
+        },
+      });
+
+      // then
+      const items = fixture.nativeElement.querySelectorAll(
+        '.exercise-list li'
+      ) as NodeListOf<HTMLElement>;
+      expect(items.length).toBe(2);
+      expect(
+        items[0].querySelector('.exercise-bar span')?.getAttribute('style')
+      ).toContain('100%');
+    });
+
+    it('should format each exercise in its own unit', async () => {
+      // given — plank stores seconds, push-ups store reps; the same
+      // number must not render the same way
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          exercises: [
+            {
+              exerciseId: 'plank.standard',
+              total: 3600,
+              totalDays: 40,
+              measurement: 'time' as const,
+            },
+          ],
+        },
+      });
+
+      // then
+      const value = fixture.nativeElement.querySelector('.exercise-value');
+      expect(value?.textContent).toContain('h');
+    });
+
+    it('should omit the exercise section when there is nothing to show', async () => {
+      // given
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-exercises"]'
+        )
+      ).toBeNull();
+    });
+  });
+
+  describe('Profile photo', () => {
+    it('should render the photo when one is set', async () => {
+      // given
+      await setup({
+        resolve: { ...sampleProfile, photoURL: 'https://example.test/p.jpg' },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-photo"]'
+        )
+      ).not.toBeNull();
+    });
+
+    it('should fall back to the placeholder icon without a photo', async () => {
+      // given
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-photo"]'
         )
       ).toBeNull();
     });

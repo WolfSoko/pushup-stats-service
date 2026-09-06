@@ -4,11 +4,17 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
+import { getAuth } from 'firebase-admin/auth';
+import { findExerciseDefinition } from '@pu-stats/models';
+
+import { berlinDateParts } from './datetime';
 import { db } from './firebase-app';
+import { periodKeys } from './user-stats-delta';
 import {
   buildPublicProfile,
   isValidUid,
   type UserConfigForPublicProfile,
+  type ExerciseTotal,
   type UserAchievementsForPublicProfile,
   type UserStatsForPublicProfile,
 } from './profile';
@@ -22,7 +28,51 @@ import {
 // semantics. Centralising the lookup here keeps the 404-parity contract
 // from drifting between the two wrappers and matches the project's "trigger
 // functions in `index.ts` are thin wrappers" rule.
-async function fetchPublicProfileProjection(uid: string) {
+/**
+ * Photo shown on the profile. Read from Firebase Auth rather than stored:
+ * a Google account's picture changes on Google's side, and copying it into
+ * Firestore would go stale silently.
+ */
+async function resolvePhotoUrl(uid: string): Promise<string | null> {
+  try {
+    const user = await getAuth().getUser(uid);
+    return user.photoURL ?? null;
+  } catch {
+    // A missing auth record is normal for a deleted account; the profile
+    // still renders, just without a picture.
+    return null;
+  }
+}
+
+/**
+ * Per-exercise totals, biggest first. Capped because a profile is a
+ * summary, not a database dump.
+ */
+async function readExerciseTotals(uid: string): Promise<ExerciseTotal[]> {
+  const snap = await db
+    .collection('userStats')
+    .doc(uid)
+    .collection('perExercise')
+    .get();
+  const rows: ExerciseTotal[] = [];
+  for (const doc of snap.docs) {
+    const definition = findExerciseDefinition(doc.id);
+    if (!definition) continue;
+    const total = Number(doc.data()['total'] ?? 0);
+    if (!Number.isFinite(total) || total <= 0) continue;
+    rows.push({
+      exerciseId: doc.id,
+      total,
+      totalDays: Number(doc.data()['totalDays'] ?? 0),
+      measurement: definition.measurement,
+    });
+  }
+  return rows.sort((a, b) => b.total - a.total).slice(0, MAX_PROFILE_EXERCISES);
+}
+
+const MAX_PROFILE_EXERCISES = 8;
+
+async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
   const [cfgSnap, statsSnap, achievementsSnap] = await Promise.all([
     db.collection('userConfigs').doc(uid).get(),
@@ -47,7 +97,25 @@ async function fetchPublicProfileProjection(uid: string) {
   const achievements = achievementsSnap.exists
     ? (achievementsSnap.data() as UserAchievementsForPublicProfile)
     : null;
-  return buildPublicProfile(uid, config, stats, achievements);
+
+  const viewerIsOwner = viewerUid !== '' && viewerUid === uid;
+  // Only pay for the extra reads once the profile will actually be shown.
+  if (!buildPublicProfile(uid, config, stats, { viewerIsOwner })) return null;
+
+  const parts = berlinDateParts();
+  const keys = periodKeys(parts);
+  const [photoURL, exercises] = await Promise.all([
+    resolvePhotoUrl(uid),
+    readExerciseTotals(uid),
+  ]);
+  return buildPublicProfile(uid, config, stats, {
+    achievements,
+    photoURL,
+    exercises,
+    currentWeeklyKey: keys.weeklyKey,
+    currentMonthlyKey: keys.monthlyKey,
+    viewerIsOwner,
+  });
 }
 
 // Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`
@@ -61,7 +129,13 @@ export const getPublicProfile = onCall(
   { region: 'europe-west3', invoker: 'public' },
   async (request) => {
     const uid = String(request.data?.uid ?? '').trim();
-    const projection = await fetchPublicProfileProjection(uid);
+    // `invoker: 'public'` keeps the endpoint callable without auth, but a
+    // signed-in caller still ships a verified token — that is the only
+    // thing allowed to unlock a private profile, and only its own.
+    const projection = await fetchPublicProfileProjection(
+      uid,
+      request.auth?.uid ?? ''
+    );
     if (!projection) {
       // Same response for "malformed UID", "user does not exist", and
       // "user is private" so an attacker can't enumerate accounts.

@@ -8,7 +8,6 @@ import {
   LOCALE_ID,
   signal,
 } from '@angular/core';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { FirebaseApp } from '@angular/fire/app';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -20,6 +19,8 @@ import {
   resolveAchievementBadges,
   type AchievementBadge,
 } from './achievement-badge';
+import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import { formatExerciseTotal } from './exercise-total.format';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type PublicProfile } from '@pu-stats/models';
 import { ShareService } from '../core/share.service';
@@ -31,6 +32,31 @@ type LoadState =
   | { kind: 'ready'; profile: PublicProfile }
   | { kind: 'not-found' }
   | { kind: 'error' };
+
+/**
+ * Weekday keys as the stats trigger writes them (German abbreviations,
+ * baked into the stored data). Mapped to localised labels here so an
+ * English profile does not show "Mo, Di, Mi".
+ */
+const HEATMAP_WEEKDAYS = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'] as const;
+
+interface HeatmapCell {
+  readonly hour: number;
+  readonly intensity: number;
+  readonly title: string;
+}
+
+interface HeatmapRow {
+  readonly weekday: string;
+  readonly cells: ReadonlyArray<HeatmapCell>;
+}
+
+interface ExerciseRow {
+  readonly exerciseId: string;
+  readonly name: string;
+  readonly value: string;
+  readonly percent: number;
+}
 
 const OG_FUNCTION_REGION = 'europe-west3';
 
@@ -76,40 +102,77 @@ export class PublicProfilePageComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly firebaseApp = inject(FirebaseApp);
   private readonly localeId = inject(LOCALE_ID) as string;
-  /**
-   * Optional on purpose. This page is public and server-rendered for
-   * anonymous visitors; injecting `UserContextService` here would drag
-   * the whole auth chain (and a hard `Auth` dependency) into a route
-   * that must work without a signed-in user at all.
-   */
-  private readonly auth = inject(Auth, { optional: true });
 
   protected readonly state = signal<LoadState>({ kind: 'loading' });
-  /** uid from the route, kept so the not-found branch can tell an
-   *  own private profile from a stranger's missing one. */
-  private readonly routeUid = signal('');
-  /** uid of the signed-in visitor, empty while signed out or on the server. */
-  private readonly viewerUid = signal('');
+  /** Google photo URLs can 404 or be blocked; fall back to the icon. */
+  protected readonly photoFailed = signal(false);
   protected readonly profile = computed(() => {
     const s = this.state();
     return s.kind === 'ready' ? s.profile : null;
   });
 
-  /**
-   * True when the visitor is looking at their own profile and it came
-   * back as not-found — i.e. they have not opted in yet. Without this the
-   * "Mein Profil" entry in the user menu would send most users to a
-   * generic "does not exist" page about themselves.
-   */
-  protected readonly isOwnPrivateProfile = computed(() => {
-    if (this.state().kind !== 'not-found') return false;
-    const own = this.viewerUid();
-    return own !== '' && own === this.routeUid();
-  });
-
   protected readonly privateTitle = $localize`:@@publicProfile.private.title:Dein Profil ist noch privat`;
   protected readonly privateBody = $localize`:@@publicProfile.private.body:Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.`;
   protected readonly privateCta = $localize`:@@publicProfile.private.cta:Profil öffentlich machen`;
+
+  protected readonly weekLabel = $localize`:@@publicProfile.week:Diese Woche`;
+  protected readonly monthLabel = $localize`:@@publicProfile.month:Dieser Monat`;
+  protected readonly exercisesLabel = $localize`:@@publicProfile.exercises:Übungen`;
+  protected readonly heatmapLabel = $localize`:@@publicProfile.heatmap:Wann trainiert wird`;
+  protected readonly heatmapAria = $localize`:@@publicProfile.heatmap.aria:Trainingsverteilung über Wochentage und Tageszeit`;
+  protected readonly memberSinceLabel = $localize`:@@publicProfile.memberSince:Dabei seit`;
+
+  private readonly weekdayLabels: Readonly<Record<string, string>> = {
+    Mo: $localize`:@@weekday.short.mon:Mo`,
+    Di: $localize`:@@weekday.short.tue:Di`,
+    Mi: $localize`:@@weekday.short.wed:Mi`,
+    Do: $localize`:@@weekday.short.thu:Do`,
+    Fr: $localize`:@@weekday.short.fri:Fr`,
+    Sa: $localize`:@@weekday.short.sat:Sa`,
+    So: $localize`:@@weekday.short.sun:So`,
+  };
+
+  /**
+   * Seven weekday rows × 24 hours. Empty when nothing was ever logged —
+   * a grid of blank cells says less than no section at all.
+   */
+  protected readonly heatmapRows = computed<ReadonlyArray<HeatmapRow>>(() => {
+    const map = this.profile()?.heatmap ?? {};
+    const values = Object.values(map);
+    const max = values.length > 0 ? Math.max(...values) : 0;
+    if (max <= 0) return [];
+    return HEATMAP_WEEKDAYS.map((day) => ({
+      weekday: this.weekdayLabels[day],
+      cells: Array.from({ length: 24 }, (_, hour) => {
+        const reps = map[`${day}-${String(hour).padStart(2, '0')}`] ?? 0;
+        return {
+          hour,
+          // Floor at a faint tint so the grid still reads as a grid;
+          // a pure 0 would make empty hours invisible.
+          intensity: reps > 0 ? 0.2 + 0.8 * (reps / max) : 0.06,
+          title: `${this.weekdayLabels[day]} ${String(hour).padStart(2, '0')}:00`,
+        };
+      }),
+    }));
+  });
+
+  /**
+   * Exercises as labelled bars. The bar is relative to the biggest entry,
+   * never a share of a total: the stored numbers mix reps, seconds and
+   * metres, so a common denominator would be meaningless.
+   */
+  protected readonly exerciseRows = computed<ReadonlyArray<ExerciseRow>>(() => {
+    const exercises = this.profile()?.exercises ?? [];
+    if (exercises.length === 0) return [];
+    const max = Math.max(...exercises.map((e) => e.total));
+    return exercises.map((entry) => ({
+      exerciseId: entry.exerciseId,
+      name: exerciseDisplayName(entry.exerciseId),
+      value: formatExerciseTotal(entry.total, entry.measurement, this.localeId),
+      percent: max > 0 ? Math.round((entry.total / max) * 100) : 0,
+    }));
+  });
+
   protected readonly notFoundTitle = $localize`:@@publicProfile.notFound.title:Profil nicht gefunden`;
   protected readonly notFoundBody = $localize`:@@publicProfile.notFound.body:Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.`;
   protected readonly errorTitle = $localize`:@@publicProfile.error.title:Profil konnte nicht geladen werden`;
@@ -141,21 +204,10 @@ export class PublicProfilePageComponent {
   private loadVersion = 0;
 
   constructor() {
-    // Auth resolves asynchronously; without the listener a visitor whose
-    // session settles after the API answered would see the generic
-    // "profile does not exist" page about their own profile.
-    if (this.auth) {
-      const stop = onAuthStateChanged(this.auth, (user) =>
-        this.viewerUid.set(user?.uid ?? '')
-      );
-      this.destroyRef.onDestroy(stop);
-    }
-
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         const uid = (params.get('uid') ?? '').trim();
-        this.routeUid.set(uid);
         if (!uid) {
           this.loadVersion++;
           this.state.set({ kind: 'not-found' });

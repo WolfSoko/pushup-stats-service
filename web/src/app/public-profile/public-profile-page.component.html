@@ -6,38 +6,19 @@
       </div>
     }
     @case ('not-found') {
-      @if (isOwnPrivateProfile()) {
-        <mat-card class="status-card" data-testid="public-profile-private">
-          <mat-card-header>
-            <mat-card-title>{{ privateTitle }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ privateBody }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <a
-              mat-flat-button
-              color="primary"
-              routerLink="/settings/profil"
-              data-testid="public-profile-enable"
-              >{{ privateCta }}</a
-            >
-          </mat-card-actions>
-        </mat-card>
-      } @else {
-        <mat-card class="status-card" data-testid="public-profile-not-found">
-          <mat-card-header>
-            <mat-card-title>{{ notFoundTitle }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ notFoundBody }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <a mat-stroked-button routerLink="/">{{ homeLabel }}</a>
-          </mat-card-actions>
-        </mat-card>
-      }
+      <mat-card class="status-card" data-testid="public-profile-not-found">
+        <mat-card-header>
+          <mat-card-title>{{ notFoundTitle }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ notFoundBody }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-stroked-button routerLink="/">{{ homeLabel }}</a>
+        </mat-card-actions>
+      </mat-card>
     }
+
     @case ('error') {
       <mat-card class="status-card" data-testid="public-profile-error">
         <mat-card-header>
@@ -55,9 +36,38 @@
     }
     @case ('ready') {
       @if (profile(); as p) {
+        @if (p.isPrivate) {
+          <mat-card class="private-banner" data-testid="public-profile-private">
+            <mat-card-content>
+              <mat-icon aria-hidden="true">lock</mat-icon>
+              <div>
+                <strong>{{ privateTitle }}</strong>
+                <p>{{ privateBody }}</p>
+              </div>
+              <a
+                mat-flat-button
+                color="primary"
+                routerLink="/settings/profil"
+                data-testid="public-profile-enable"
+                >{{ privateCta }}</a
+              >
+            </mat-card-content>
+          </mat-card>
+        }
+
         <header class="profile-header">
           <div class="avatar" aria-hidden="true">
-            <mat-icon>fitness_center</mat-icon>
+            @if (p.photoURL && !photoFailed()) {
+              <img
+                [src]="p.photoURL"
+                alt=""
+                data-testid="public-profile-photo"
+                referrerpolicy="no-referrer"
+                (error)="photoFailed.set(true)"
+              />
+            } @else {
+              <mat-icon>fitness_center</mat-icon>
+            }
           </div>
           <div class="header-text">
             <h1 data-testid="public-profile-name">{{ p.displayName }}</h1>
@@ -107,6 +117,22 @@
               <b>{{ p.totalEntries | number: '1.0-0' }}</b>
             </mat-card-content>
           </mat-card>
+          @if (p.weeklyReps > 0) {
+            <mat-card class="stat-card">
+              <mat-card-content>
+                <small>{{ weekLabel }}</small>
+                <b>{{ p.weeklyReps | number: '1.0-0' }}</b>
+              </mat-card-content>
+            </mat-card>
+          }
+          @if (p.monthlyReps > 0) {
+            <mat-card class="stat-card">
+              <mat-card-content>
+                <small>{{ monthLabel }}</small>
+                <b>{{ p.monthlyReps | number: '1.0-0' }}</b>
+              </mat-card-content>
+            </mat-card>
+          }
           @if (p.bestSingleEntry !== null) {
             <mat-card class="stat-card">
               <mat-card-content>
@@ -137,6 +163,49 @@
                   </li>
                 }
               </ul>
+            </section>
+          }
+        }
+
+        @if (exerciseRows(); as rows) {
+          @if (rows.length > 0) {
+            <section class="exercises" data-testid="public-profile-exercises">
+              <h2>{{ exercisesLabel }}</h2>
+              <ul class="exercise-list">
+                @for (row of rows; track row.exerciseId) {
+                  <li>
+                    <span class="exercise-name">{{ row.name }}</span>
+                    <span class="exercise-bar" aria-hidden="true">
+                      <span [style.width.%]="row.percent"></span>
+                    </span>
+                    <span class="exercise-value">{{ row.value }}</span>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+        }
+
+        @if (heatmapRows(); as rows) {
+          @if (rows.length > 0) {
+            <section class="heatmap" data-testid="public-profile-heatmap">
+              <h2>{{ heatmapLabel }}</h2>
+              <div
+                class="heatmap-grid"
+                role="img"
+                [attr.aria-label]="heatmapAria"
+              >
+                @for (row of rows; track row.weekday) {
+                  <span class="heatmap-day">{{ row.weekday }}</span>
+                  @for (cell of row.cells; track cell.hour) {
+                    <span
+                      class="heatmap-cell"
+                      [style.opacity]="cell.intensity"
+                      [title]="cell.title"
+                    ></span>
+                  }
+                }
+              </div>
             </section>
           }
         }

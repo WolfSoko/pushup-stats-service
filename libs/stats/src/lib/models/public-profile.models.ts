@@ -30,6 +30,36 @@ export interface PublicProfile {
    * patterns the profile does not publish.
    */
   readonly achievements: ReadonlyArray<string>;
+  /** Profile picture (Google account photo), null when none is set. */
+  readonly photoURL: string | null;
+  /** ISO date the account was created, null when unknown. */
+  readonly memberSince: string | null;
+  /** Reps in the current Berlin week/month; 0 when the bucket is stale. */
+  readonly weeklyReps: number;
+  readonly monthlyReps: number;
+  /** Cumulative reps per `<weekday>-<HH>` slot. */
+  readonly heatmap: Readonly<Record<string, number>>;
+  /** Top exercises by volume. */
+  readonly exercises: ReadonlyArray<PublicProfileExercise>;
+  /**
+   * True only when the viewer is the owner and has not opted in yet. The
+   * page keeps showing the content and adds a hint; nobody else ever
+   * receives a private profile.
+   */
+  readonly isPrivate: boolean;
   /** ISO timestamp of the last stats update. */
   readonly updatedAt: string;
+}
+
+export interface PublicProfileExercise {
+  readonly exerciseId: string;
+  readonly total: number;
+  readonly totalDays: number;
+  /**
+   * The stored total is not unit-homogeneous — reps, seconds or metres
+   * depending on the exercise — so the client groups and formats by this
+   * instead of summing across entries.
+   */
+  readonly measurement:
+    'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
 }

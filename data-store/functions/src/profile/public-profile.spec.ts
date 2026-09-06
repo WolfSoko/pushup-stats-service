@@ -106,6 +106,13 @@ describe('buildPublicProfile', () => {
       bestSingleEntry: null,
       bestDayTotal: null,
       achievements: [],
+      photoURL: null,
+      memberSince: null,
+      weeklyReps: 0,
+      monthlyReps: 0,
+      heatmap: {},
+      exercises: [],
+      isPrivate: false,
       updatedAt: '',
     });
   });
@@ -134,6 +141,13 @@ describe('buildPublicProfile', () => {
       bestSingleEntry: 50,
       bestDayTotal: 250,
       achievements: [],
+      photoURL: null,
+      memberSince: null,
+      weeklyReps: 0,
+      monthlyReps: 0,
+      heatmap: {},
+      exercises: [],
+      isPrivate: false,
       updatedAt: '2026-04-29T08:30:00.000Z',
     });
   });
@@ -243,6 +257,13 @@ describe('buildPublicProfile', () => {
       'totalDays',
       'currentStreak',
       'achievements',
+      'photoURL',
+      'memberSince',
+      'weeklyReps',
+      'monthlyReps',
+      'heatmap',
+      'exercises',
+      'isPrivate',
       'bestSingleEntry',
       'bestDayTotal',
       'updatedAt',
@@ -260,11 +281,16 @@ describe('buildPublicProfile achievements', () => {
   it('should project earned achievement ids newest first', () => {
     // when
     const result = buildPublicProfile(uid, config, null, {
-      earned: [
-        { id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' },
-        { id: 'plan-completed-core-4w', awardedAt: '2026-03-01T00:00:00.000Z' },
-        { id: 'plan-days-10', awardedAt: '2026-02-01T00:00:00.000Z' },
-      ],
+      achievements: {
+        earned: [
+          { id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' },
+          {
+            id: 'plan-completed-core-4w',
+            awardedAt: '2026-03-01T00:00:00.000Z',
+          },
+          { id: 'plan-days-10', awardedAt: '2026-02-01T00:00:00.000Z' },
+        ],
+      },
     });
 
     // then
@@ -280,7 +306,9 @@ describe('buildPublicProfile achievements', () => {
     // the profile deliberately does not publish
     // when
     const result = buildPublicProfile(uid, config, null, {
-      earned: [{ id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' }],
+      achievements: {
+        earned: [{ id: 'plan-days-1', awardedAt: '2026-01-02T00:00:00.000Z' }],
+      },
     });
 
     // then
@@ -298,7 +326,125 @@ describe('buildPublicProfile achievements', () => {
     // then — the profile is served unauthenticated; a malformed document
     // must not break the page
     expect(
-      buildPublicProfile(uid, config, null, achievements)?.achievements
+      buildPublicProfile(uid, config, null, { achievements })?.achievements
     ).toEqual([]);
+  });
+});
+
+describe('buildPublicProfile owner access', () => {
+  const uid = 'abc123';
+  const privateConfig = {
+    displayName: 'Wolfi',
+    ui: { publicProfile: false },
+  };
+
+  it('should show a private profile to its own owner', () => {
+    // when
+    const result = buildPublicProfile(uid, privateConfig, null, {
+      viewerIsOwner: true,
+    });
+
+    // then
+    expect(result?.uid).toBe(uid);
+    expect(result?.isPrivate).toBe(true);
+  });
+
+  it.each([
+    ['a stranger', { viewerIsOwner: false }],
+    ['an anonymous visitor', {}],
+  ])('should stay hidden from %s', (_label, extras) => {
+    // then — the opt-in gate has exactly one bypass and this is not it
+    expect(buildPublicProfile(uid, privateConfig, null, extras)).toBeNull();
+  });
+
+  it('should not mark a public profile as private for its owner', () => {
+    // given
+    const publicConfig = { displayName: 'Wolfi', ui: { publicProfile: true } };
+
+    // then
+    expect(
+      buildPublicProfile(uid, publicConfig, null, { viewerIsOwner: true })
+        ?.isPrivate
+    ).toBe(false);
+  });
+
+  it('should still refuse a missing config even for the owner', () => {
+    // then — no config means no account; ownership cannot conjure one
+    expect(
+      buildPublicProfile(uid, null, null, { viewerIsOwner: true })
+    ).toBeNull();
+  });
+});
+
+describe('buildPublicProfile period buckets', () => {
+  const uid = 'abc123';
+  const config = { displayName: 'Wolfi', ui: { publicProfile: true } };
+  const stats = {
+    weeklyReps: 300,
+    weeklyKey: '2026-W36',
+    monthlyReps: 1200,
+    monthlyKey: '2026-09',
+  };
+
+  it('should report the bucket when it belongs to the current period', () => {
+    // when
+    const result = buildPublicProfile(uid, config, stats, {
+      currentWeeklyKey: '2026-W36',
+      currentMonthlyKey: '2026-09',
+    });
+
+    // then
+    expect(result?.weeklyReps).toBe(300);
+    expect(result?.monthlyReps).toBe(1200);
+  });
+
+  it('should zero a stale bucket instead of presenting it as current', () => {
+    // given — a user who last trained in August would otherwise show
+    // August's volume as "this month"
+    const result = buildPublicProfile(uid, config, stats, {
+      currentWeeklyKey: '2026-W37',
+      currentMonthlyKey: '2026-10',
+    });
+
+    // then
+    expect(result?.weeklyReps).toBe(0);
+    expect(result?.monthlyReps).toBe(0);
+  });
+
+  it('should zero when the current period is unknown', () => {
+    // then — guessing would be worse than showing nothing
+    const result = buildPublicProfile(uid, config, stats, {});
+    expect(result?.weeklyReps).toBe(0);
+    expect(result?.monthlyReps).toBe(0);
+  });
+});
+
+describe('buildPublicProfile heatmap', () => {
+  const uid = 'abc123';
+  const config = { displayName: 'Wolfi', ui: { publicProfile: true } };
+
+  it('should keep well-formed slots', () => {
+    // when
+    const result = buildPublicProfile(
+      uid,
+      config,
+      { heatmap: { 'Mo-08': 120, 'Fr-19': 40 } },
+      {}
+    );
+
+    // then
+    expect(result?.heatmap).toEqual({ 'Mo-08': 120, 'Fr-19': 40 });
+  });
+
+  it.each([
+    ['a malformed slot key', { nonsense: 5 }],
+    ['a non-numeric value', { 'Mo-08': 'viel' }],
+    ['a zero or negative value', { 'Mo-08': 0, 'Di-09': -3 }],
+    ['a non-object heatmap', 'kaputt'],
+  ])('should drop %s', (_label, heatmap) => {
+    // then — served unauthenticated, so a malformed document must degrade
+    expect(
+      buildPublicProfile(uid, config, { heatmap } as never, {})?.heatmap
+    ).toEqual({});
   });
 });
