@@ -7664,7 +7664,7 @@
         <note category="location">web/src/app/settings/settings-profile.component.html:64,68</note>
       </notes>
       <segment>
-        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, sieht es nur du.</source>
+        <source>Solange dein Profil öffentlich ist, kann jeder dieses Bild sehen — auch Suchmaschinen und die Vorschau beim Teilen. Ist dein Profil privat, siehst es nur du.</source>
       </segment>
     </unit>
     <unit id="settings.section.profile.title">
