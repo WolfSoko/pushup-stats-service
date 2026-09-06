@@ -9,6 +9,8 @@ import {
   type Provider,
 } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
+
+import { AvatarService } from './core/avatar.service';
 import { Title } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import {
@@ -121,6 +123,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -147,6 +150,71 @@ describe('App (testing-library)', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  describe('Toolbar avatar', () => {
+    async function renderShell(avatarUrl: string | null) {
+      return render(App, {
+        providers: [
+          provideRouter([]),
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserContextService,
+            useValue: {
+              userNameSafe: userNameSignal.asReadonly(),
+              userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
+              isAdmin: () => false,
+              isGuest: () => false,
+            },
+          },
+          {
+            provide: AvatarService,
+            useValue: { avatarUrl: signal(avatarUrl) },
+          },
+          { provide: AuthStore, useValue: authMock },
+          { provide: AuthService, useValue: authServiceMock },
+          { provide: Auth, useValue: firebaseAuthMock },
+          { provide: UserConfigApiService, useValue: userConfigApiMock },
+          { provide: StatsApiService, useValue: statsApiMock },
+          { provide: AdsStore, useValue: adsStoreMock },
+          { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: exerciseFirestoreMock,
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              connected: liveConnectedSignal,
+              exerciseEntries: liveEntriesSignal,
+              exerciseEntriesLoaded: liveConnectedSignal,
+              updateTick: signal(0),
+            },
+          },
+        ],
+      });
+    }
+
+    it('should hand the resolved avatar to the user menu', async () => {
+      // given — the menu lives in libs/auth and cannot read the uploaded
+      // photo itself; the shell is the only place that passes it in, and
+      // nothing covered that wiring
+      await renderShell('https://own/pic');
+
+      // then
+      expect(screen.getByTestId('user-menu-avatar').getAttribute('src')).toBe(
+        'https://own/pic'
+      );
+    });
+
+    it('should show no avatar image when there is no picture', async () => {
+      // given
+      await renderShell(null);
+
+      // then
+      expect(screen.queryByTestId('user-menu-avatar')).toBeNull();
+    });
+  });
+
   it('renders sidenav navigation links', async () => {
     await render(App, {
       providers: [
@@ -157,6 +225,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -216,6 +285,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -283,6 +353,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -339,6 +410,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -406,6 +478,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -694,6 +767,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => false,
               isGuest: () => false,
             },
@@ -747,6 +821,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => false,
               isGuest: () => false,
             },
@@ -800,6 +875,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => false,
               isGuest: () => false,
             },
@@ -853,6 +929,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => false,
               isGuest: () => false,
             },
@@ -910,6 +987,7 @@ describe('App (testing-library)', () => {
               useValue: {
                 userNameSafe: userNameSignal.asReadonly(),
                 userIdSafe: () => 'u1',
+                accountPhotoUrl: () => null,
                 isAdmin: () => false,
                 isGuest: () => false,
               },
@@ -962,6 +1040,7 @@ describe('App (testing-library)', () => {
               useValue: {
                 userNameSafe: userNameSignal.asReadonly(),
                 userIdSafe: () => 'u1',
+                accountPhotoUrl: () => null,
                 isAdmin: () => false,
                 isGuest: () => false,
               },
@@ -1013,6 +1092,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -1055,6 +1135,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -1108,6 +1189,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -1200,6 +1282,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             isAdmin: () => false,
+            accountPhotoUrl: () => null,
             ...userCtx,
           },
         },
@@ -1277,6 +1360,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => false,
               isGuest: () => false,
             },
@@ -1369,6 +1453,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
@@ -1409,6 +1494,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => true,
               isGuest: () => false,
             },
@@ -1456,6 +1542,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => true,
               isGuest: () => false,
             },
@@ -1512,6 +1599,7 @@ describe('App (testing-library)', () => {
             useValue: {
               userNameSafe: userNameSignal.asReadonly(),
               userIdSafe: () => 'u1',
+              accountPhotoUrl: () => null,
               isAdmin: () => true,
               isGuest: () => false,
             },
@@ -1574,6 +1662,7 @@ describe('App (testing-library)', () => {
           useValue: {
             userNameSafe: userNameSignal.asReadonly(),
             userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
             isAdmin: () => false,
             isGuest: () => false,
           },
