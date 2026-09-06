@@ -8,8 +8,6 @@
  * so jest can call them with plain mocks.
  */
 
-import type { PushIntent } from './intent-queue';
-
 /** Injected at build time by esbuild's `define` option. */
 declare const __SW_PUSH_VERSION__: string;
 
@@ -52,6 +50,13 @@ export interface PushEventLike {
   waitUntil(promise: Promise<unknown>): void;
 }
 
+/** `focus` exists on window clients only; the body-tap path checks for it. */
+export interface SwWindowClient {
+  url: string;
+  postMessage(message: unknown, transfer?: Transferable[]): void;
+  focus?(): Promise<unknown>;
+}
+
 export interface SwContext {
   registration: Pick<
     ServiceWorkerRegistration,
@@ -61,17 +66,12 @@ export interface SwContext {
     matchAll(options?: {
       type?: string;
       includeUncontrolled?: boolean;
-    }): Promise<Array<Pick<WindowClient, 'url' | 'focus' | 'postMessage'>>>;
+    }): Promise<ReadonlyArray<SwWindowClient>>;
     openWindow(url: string): Promise<unknown>;
   };
   origin: string;
-  /**
-   * Persists what the user tapped before any window is involved. Injected
-   * rather than imported so the handlers stay unit-testable without an
-   * IndexedDB runtime — see `intent-queue.ts` for why the hand-off has to be
-   * durable at all.
-   */
-  saveIntent(intent: PushIntent): Promise<void>;
+  /** Injected so the click handlers stay unit-testable without a network. */
+  fetch(input: string, init?: RequestInit): Promise<Response>;
 }
 
 interface PushPayload {

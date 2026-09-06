@@ -1,4 +1,9 @@
-import { normalizeReminderLocale } from '@pu-stats/models';
+import {
+  normalizeReminderLocale,
+  reminderActionFailedLabel,
+  reminderQuickLogDoneLabel,
+  reminderSnoozedLabel,
+} from '@pu-stats/models';
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { defineSecret } from 'firebase-functions/params';
@@ -14,13 +19,25 @@ import {
   buildReminderActions,
   isExpiredSubscriptionError,
   isLeaseStale,
+  newReminderActionToken,
   pushSubscriptionId,
   PUSH_SEND_OPTIONS,
   sanitizeQuickLogReps,
   shouldSendReminder,
+  SNOOZE_MINUTES_DEFAULT,
   STALE_LEASE_MS,
   validateSubscriptionPayload,
 } from './push';
+
+/**
+ * Where the push service worker completes a notification action. The SW is
+ * a self-contained bundle without Firebase config, so the dispatcher tells
+ * it the endpoint — and the project id keeps staging and prod apart.
+ */
+function reminderActionUrl(): string {
+  const project = process.env['GCLOUD_PROJECT'] ?? 'pushup-stats';
+  return `https://europe-west3-${project}.cloudfunctions.net/reminderAction`;
+}
 
 export async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);
@@ -349,6 +366,11 @@ export const dispatchPushReminders = onSchedule(
           // logged a different count than the user saw on the button.
           const quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
           const actions = buildReminderActions(userLocale, quickLogReps);
+          // One token per dispatch, shared by all of the user's devices and
+          // persisted below once a push went out. The SW hands it back to
+          // `reminderAction`; the server decides what "quick-log" means from
+          // `pendingAction.quickLogReps`, never from the notification.
+          const actionToken = newReminderActionToken();
           const payload = JSON.stringify({
             title: 'PushUp Stats',
             body,
@@ -359,7 +381,26 @@ export const dispatchPushReminders = onSchedule(
             data: {
               url: `/${userLocale}/app`,
               locale: userLocale,
-              ...(quickLogReps ? { quickLogReps } : {}),
+              reminderAction: {
+                uid,
+                token: actionToken,
+                url: reminderActionUrl(),
+              },
+              feedback: {
+                snoozed: reminderSnoozedLabel(
+                  userLocale,
+                  SNOOZE_MINUTES_DEFAULT
+                ),
+                ...(quickLogReps
+                  ? {
+                      logged: reminderQuickLogDoneLabel(
+                        userLocale,
+                        quickLogReps
+                      ),
+                    }
+                  : {}),
+                failed: reminderActionFailedLabel(userLocale),
+              },
             },
             actions,
           });
@@ -426,6 +467,11 @@ export const dispatchPushReminders = onSchedule(
           };
           if (sentToUser) {
             releaseData['lastSentAt'] = FieldValue.serverTimestamp();
+            releaseData['pendingAction'] = {
+              token: actionToken,
+              issuedAt: FieldValue.serverTimestamp(),
+              ...(quickLogReps ? { quickLogReps } : {}),
+            };
           }
           await dispatchRef
             .set(releaseData, { merge: true })

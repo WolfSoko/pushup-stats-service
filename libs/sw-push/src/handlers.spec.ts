@@ -43,7 +43,7 @@ function makeCtx(overrides?: {
       openWindow,
     },
     origin: 'https://pushup-stats.com',
-    saveIntent: jest.fn().mockResolvedValue(undefined),
+    fetch: jest.fn(),
   };
   return { ctx, showNotification, subscribe, matchAll, openWindow };
 }

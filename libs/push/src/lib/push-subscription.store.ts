@@ -123,14 +123,6 @@ export const PushSubscriptionStore = signalStore(
       return { deviceCount: result.data.deviceCount ?? 0 };
     }
 
-    async function snoozeReminder(snoozeMinutes: number): Promise<void> {
-      if (!store._functions) {
-        throw new Error('Firebase Functions is not available');
-      }
-      const callable = httpsCallable(store._functions, 'snoozeReminder');
-      await callable({ snoozeMinutes });
-    }
-
     /**
      * Get the dedicated push SW registration (scope `/push/`). The service
      * memoises register() internally and already has its own timeout, so
@@ -317,10 +309,6 @@ export const PushSubscriptionStore = signalStore(
           }
         })();
         return subscribeInFlight;
-      },
-
-      async snooze(snoozeMinutes = 30): Promise<void> {
-        await snoozeReminder(snoozeMinutes);
       },
 
       async unsubscribe(): Promise<void> {

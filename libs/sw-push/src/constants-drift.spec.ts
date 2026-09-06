@@ -1,15 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { SW_SUPPORTED_LOCALES } from './handlers';
-import { SW_QUICK_LOG_MAX } from './notification-click';
 
 /**
  * `sw-push` is an isolated service-worker bundle (eslint `scope:sw-push` →
  * `onlyDependOnLibsWithTags: []`), so it cannot import `@pu-stats/models` at
- * runtime — the quick-log cap and locale list are inlined in `handlers.ts`.
+ * runtime — the locale list is inlined in `handlers.ts`.
  *
  * This guard reads the canonical model source as text (no module import, so no
- * module-boundary violation) and fails CI if the inlined SW copies drift,
+ * module-boundary violation) and fails CI if the inlined SW copy drifts,
  * mirroring how `firestore.rules` is pinned to the exercise catalog.
  *
  * Reading via `fs` leaves no import edge for Nx to infer, so `sw-push` carries
@@ -23,16 +22,6 @@ function readModelSource(file: string): string {
 }
 
 describe('sw-push constants drift guard', () => {
-  it('should keep SW_QUICK_LOG_MAX in sync with QUICK_LOG_REPS_MAX', () => {
-    // given
-    const src = readModelSource('reminder-config.models.ts');
-    const match = src.match(/QUICK_LOG_REPS_MAX\s*=\s*(\d+)/);
-
-    // then
-    expect(match).not.toBeNull();
-    expect(SW_QUICK_LOG_MAX).toBe(match ? Number(match[1]) : NaN);
-  });
-
   it('should keep SW_SUPPORTED_LOCALES in sync with SUPPORTED_REMINDER_LOCALES', () => {
     // given
     const src = readModelSource('reminder-i18n.models.ts');

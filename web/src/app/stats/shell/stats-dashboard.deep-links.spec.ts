@@ -61,7 +61,7 @@ describe('registerDashboardDeepLinks', () => {
   // Regression: `?quickLog=N` used to persist an entry straight from the URL.
   // Android keeps that URL in the resumed PWA task, so every later resume
   // wrote another entry — one landed at 02:05, inside the user's quiet hours.
-  // Quick-log now travels through the single-use intent store instead.
+  // Quick-log is now completed server-side by the push SW (`reminderAction`).
   it('should never persist an entry from a quickLog param', () => {
     // given a stale (or tampered) deep link
     const { openCreateDialog, navigate } = setup({ quickLog: '20' });
@@ -71,7 +71,7 @@ describe('registerDashboardDeepLinks', () => {
     expect(navigate).not.toHaveBeenCalled();
   });
 
-  it('should ignore a snooze param — the intent store owns that now', () => {
+  it('should ignore a snooze param — the push SW completes snoozes server-side', () => {
     // given a deep link from an older service worker
     const { openCreateDialog, navigate } = setup({ snooze: '30', log: '1' });
 

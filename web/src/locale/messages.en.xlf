@@ -5258,9 +5258,9 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="reminder.quickLog.desc">
-      <segment state="translated">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
-        <target> Adds a "Log" button to the push notification. If the app is already open, the entry is saved in the background; otherwise a tab opens briefly and creates the entry automatically. </target>
+      <segment state="initial">
+        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
+        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
       </segment>
     </unit>
     <unit id="reminder.quickLog.toggle">

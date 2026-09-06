@@ -68,6 +68,8 @@ export {
   unsubscribeAllPushDevices,
 } from './functions-push';
 
+export { reminderAction } from './functions-reminder-action';
+
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 
 export { awardAchievementsOnPlanWrite } from './functions-achievements';

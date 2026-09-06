@@ -4780,9 +4780,9 @@
       <notes>
         <note category="location">web/src/app/stats/components/filter-bar/filter-bar.component.ts</note>
       </notes>
-      <segment state="translated">
-        <source>Vorheriger Zeitraum</source>
-        <target>上一周期</target>
+      <segment state="initial">
+        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
+        <target> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </target>
       </segment>
     </unit>
     <unit id="rangeBack">
