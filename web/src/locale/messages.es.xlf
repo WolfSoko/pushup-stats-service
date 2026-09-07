@@ -11896,69 +11896,69 @@
       </segment>
     </unit>
         <unit id="publicProfile.owner.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</source>
-        <target>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</target>
+        <target>Toca el icono del ojo en un elemento para decidir si aparece en tu perfil público. Solo tú ves esta sección y los iconos de ojo.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Besucher ansehen</source>
-        <target>Als Besucher ansehen</target>
+        <target>Ver como visitante</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.photoEdit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profilbild ändern</source>
-        <target>Profilbild ändern</target>
+        <target>Cambiar foto de perfil</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.hideElement">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem öffentlichen Profil ausblenden</source>
-        <target>Auf dem öffentlichen Profil ausblenden</target>
+        <target>Ocultar en el perfil público</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.showElement">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem öffentlichen Profil anzeigen</source>
-        <target>Auf dem öffentlichen Profil anzeigen</target>
+        <target>Mostrar en el perfil público</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.textPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> entrena en Pushup Tracker 💪 Échale un vistazo:</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.titlePlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> en Pushup Tracker. Registra tu propio progreso gratis en pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für dich sichtbar</source>
-        <target>Nur für dich sichtbar</target>
+        <target>Visible solo para ti</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legendVisible">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wird auf deinem öffentlichen Profil angezeigt.</source>
-        <target>Wird auf deinem öffentlichen Profil angezeigt.</target>
+        <target>Se muestra en tu perfil público.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legendHidden">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</source>
-        <target>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</target>
+        <target>Oculto – solo tú lo ves, aquí se muestra atenuado.</target>
       </segment>
     </unit>
 </file>
