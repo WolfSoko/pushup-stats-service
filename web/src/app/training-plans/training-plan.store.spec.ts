@@ -412,32 +412,39 @@ describe('TrainingPlanStore', () => {
         // Mirrors the production transaction: the day's previous result is
         // dropped before the new one lands, so a revision replaces it.
         setTestResult: vitest.fn(
-          (_uid: string, dayIndex: number, reps: number) => {
+          (
+            _uid: string,
+            dayIndex: number,
+            itemIndex: number,
+            value: number
+          ) => {
             const cur = mocks.current as UserTrainingPlan;
             mocks.current = {
               ...cur,
               testResults: [
                 ...(cur.testResults ?? []).filter(
-                  (id) => !id.startsWith(`${dayIndex}:`)
+                  (id) => !id.startsWith(`${dayIndex}:${itemIndex}:`)
                 ),
-                `${dayIndex}:${reps}`,
+                `${dayIndex}:${itemIndex}:${value}`,
               ],
             };
             stream.next(mocks.current);
             return of(void 0);
           }
         ),
-        removeTestResult: vitest.fn((_uid: string, dayIndex: number) => {
-          const cur = mocks.current as UserTrainingPlan;
-          mocks.current = {
-            ...cur,
-            testResults: (cur.testResults ?? []).filter(
-              (id) => !id.startsWith(`${dayIndex}:`)
-            ),
-          };
-          stream.next(mocks.current);
-          return of(void 0);
-        }),
+        removeTestResult: vitest.fn(
+          (_uid: string, dayIndex: number, itemIndex: number) => {
+            const cur = mocks.current as UserTrainingPlan;
+            mocks.current = {
+              ...cur,
+              testResults: (cur.testResults ?? []).filter(
+                (id) => !id.startsWith(`${dayIndex}:${itemIndex}:`)
+              ),
+            };
+            stream.next(mocks.current);
+            return of(void 0);
+          }
+        ),
       },
       statsApiMock: {
         createPushup: vitest.fn((payload: PushupCreate) =>
@@ -2104,18 +2111,57 @@ describe('TrainingPlanStore', () => {
 
   describe('max tests', () => {
     /**
-     * A plan shaped like the real ones that bracket their weeks with max
-     * tests: day 1 opens with a test that prescribes nothing at all (the
-     * shape that previously rendered no input), day 5 closes with one.
+     * A plan shaped like Core Foundations: day 1 opens with a test that
+     * measures three things, day 5 closes with one. Day 4's test in the
+     * simpler plans measured only pushups; here the baseline pairs a
+     * plank hold with pushups and a hollow hold.
      */
-    const TESTED_PLAN: TrainingPlan = {
-      id: 'tested-plan',
-      slug: 'tested-plan',
-      title: 'Tested Plan',
-      summary: 'Test-only plan bracketed by max tests.',
+    const MULTI_TEST_PLAN: TrainingPlan = {
+      id: 'multi-test-plan',
+      slug: 'multi-test-plan',
+      title: 'Multi Test Plan',
+      summary: 'Test-only plan whose baseline measures three exercises.',
       level: 'beginner',
       totalDays: 5,
-      baselineMaxReps: 20,
+      baselineMax: { pushup: 10, 'plank.standard': 30 },
+      days: [
+        {
+          dayIndex: 1,
+          kind: 'test',
+          targetReps: 10,
+          description: 'Baseline',
+          exercises: [
+            { exerciseId: 'plank.standard', target: 30 },
+            { exerciseId: 'pushup', target: 10 },
+          ],
+        },
+        {
+          dayIndex: 2,
+          kind: 'main',
+          targetReps: 20,
+          sets: [10, 10],
+          description: 'd2',
+          exercises: [
+            { exerciseId: 'pushup', target: 20, sets: [10, 10] },
+            { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] },
+            { exerciseId: 'core.deadbug', target: 20 },
+          ],
+        },
+        { dayIndex: 3, kind: 'rest', targetReps: 0, description: 'rest' },
+        { dayIndex: 4, kind: 'rest', targetReps: 0, description: 'rest' },
+        { dayIndex: 5, kind: 'test', targetReps: 30, description: 'Endtest' },
+      ],
+    };
+
+    /** A baseline that prescribes nothing measurable at all. */
+    const BARE_TEST_PLAN: TrainingPlan = {
+      id: 'bare-test-plan',
+      slug: 'bare-test-plan',
+      title: 'Bare Test Plan',
+      summary: 'Test-only plan whose baseline prescribes no figure.',
+      level: 'beginner',
+      totalDays: 3,
+      baselineMax: { pushup: 20 },
       days: [
         { dayIndex: 1, kind: 'test', targetReps: 0, description: 'Baseline' },
         {
@@ -2125,111 +2171,167 @@ describe('TrainingPlanStore', () => {
           sets: [20, 20, 20],
           description: 'd2',
         },
-        { dayIndex: 3, kind: 'light', targetReps: 30, description: 'd3' },
-        { dayIndex: 4, kind: 'rest', targetReps: 0, description: 'rest' },
-        { dayIndex: 5, kind: 'test', targetReps: 100, description: 'Endtest' },
+        { dayIndex: 3, kind: 'rest', targetReps: 0, description: 'rest' },
       ],
     };
 
-    const testedLookup = (id: string): TrainingPlan | null =>
-      id === 'tested-plan' ? TESTED_PLAN : findPlanById(id);
+    const multiLookup = (id: string): TrainingPlan | null =>
+      id === 'multi-test-plan' ? MULTI_TEST_PLAN : findPlanById(id);
+    const bareLookup = (id: string): TrainingPlan | null =>
+      id === 'bare-test-plan' ? BARE_TEST_PLAN : findPlanById(id);
 
     /** Active plan whose day 1 (the opening test) maps to today. */
-    const startedToday: UserTrainingPlan = {
-      userId: 'u1',
-      planId: 'tested-plan',
-      startDate: toBerlinIsoDate(new Date()),
-      status: 'active',
-      completedDays: [],
-    };
-
-    function testedSetup() {
-      return setup(startedToday, [], [], testedLookup);
+    function startedToday(planId: string): UserTrainingPlan {
+      return {
+        userId: 'u1',
+        planId,
+        startDate: toBerlinIsoDate(new Date()),
+        status: 'active',
+        completedDays: [],
+      };
     }
 
-    it('should record a result on a test day that prescribes nothing', async () => {
-      // given the opening test, whose day carries no measurable target
-      const { store, mocks } = testedSetup();
+    function multiSetup(initial?: Partial<UserTrainingPlan>) {
+      return setup(
+        { ...startedToday('multi-test-plan'), ...initial },
+        [],
+        [],
+        multiLookup
+      );
+    }
+
+    function bareSetup() {
+      return setup(startedToday('bare-test-plan'), [], [], bareLookup);
+    }
+
+    it('should record a value against the field it belongs to', async () => {
+      // given a baseline measuring a plank hold and pushups
+      const { store, mocks } = multiSetup();
       await flush();
 
-      // when the user enters what they managed
-      const result = await store.recordTestResult(1, 37);
+      // when the user enters each of them
+      const plank = await store.recordTestResult(1, 0, 45);
+      const pushups = await store.recordTestResult(1, 1, 15);
       await flush();
 
-      // then it is persisted against that day
-      expect(result).toBe('recorded');
-      expect(mocks.apiMock.setTestResult).toHaveBeenCalledWith('u1', 1, 37);
-      expect(store.testResult(1)).toBe(37);
+      // then both are persisted separately, neither overwriting the other
+      expect(plank).toBe('recorded');
+      expect(pushups).toBe('recorded');
+      expect(mocks.apiMock.setTestResult).toHaveBeenCalledWith('u1', 1, 0, 45);
+      expect(mocks.apiMock.setTestResult).toHaveBeenCalledWith('u1', 1, 1, 15);
+      expect(store.testResults(1).get(0)).toBe(45);
+      expect(store.testResults(1).get(1)).toBe(15);
     });
 
-    it('should log the attempt as a single-set entry', async () => {
-      // given the opening test
-      const { store, mocks } = testedSetup();
+    it('should log a hold as a duration, not as reps', async () => {
+      // given the plank field of the baseline
+      const { store, mocks } = multiSetup();
       await flush();
 
-      // when a maximum of 37 is recorded
-      await store.recordTestResult(1, 37);
+      // when a 45-second hold is recorded
+      await store.recordTestResult(1, 0, 45);
       await flush();
 
-      // then it counts toward stats like any other set
-      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+      // then the entry is written in the exercise's own unit
       const payload = mocks.exerciseApiMock.createEntry.mock.calls[0][1];
       expect(payload).toMatchObject({
-        exerciseId: 'pushup',
-        reps: 37,
-        sets: [37],
+        exerciseId: 'plank.standard',
+        durationSec: 45,
+        intervals: [45],
         source: 'plan',
       });
+      expect(payload.reps).toBeUndefined();
     });
 
-    it('should close a test day that has no exercise row to tick', async () => {
-      // given the opening test — `isPlanDayFulfilled` can never close it,
-      // because the day derives no exercise items at all
-      const { store, mocks } = testedSetup();
+    it('should scale each exercise by its own measured baseline', async () => {
+      // given a plan written for 10 pushups and a 30 s plank
+      const { store } = multiSetup();
       await flush();
 
-      // when the result is recorded
-      await store.recordTestResult(1, 37);
+      // when the user holds twice as long but matches the pushups
+      await store.recordTestResult(1, 0, 60);
+      await store.recordTestResult(1, 1, 10);
       await flush();
 
-      // then the user is not left with a day they cannot finish
-      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 1);
+      // then the plank work doubles and the pushups stay put
+      const day2 = store.activeCatalog()?.days[1];
+      const byId = new Map(
+        (day2?.exercises ?? []).map((e) => [e.exerciseId, e])
+      );
+      expect(byId.get('plank.standard')?.target).toBe(180);
+      expect(byId.get('pushup')?.target).toBe(20);
+      expect(day2?.targetReps).toBe(20);
+    });
+
+    it('should move an unmeasured exercise with the pushup factor', async () => {
+      // given Dead Bug, which the baseline never measured
+      const { store } = multiSetup();
+      await flush();
+
+      // when the pushup result runs the plan at 1.5×
+      await store.recordTestResult(1, 1, 15);
+      await flush();
+
+      // then the plan does not end up half-adjusted
+      const deadbug = store
+        .activeCatalog()
+        ?.days[1].exercises?.find((e) => e.exerciseId === 'core.deadbug');
+      expect(deadbug?.target).toBe(30);
+    });
+
+    it('should scale off one field while another is still blank', async () => {
+      // given only the plank recorded
+      const { store } = multiSetup();
+      await flush();
+      await store.recordTestResult(1, 0, 60);
+      await flush();
+
+      // then the plank scales and the pushups keep the catalog numbers
+      const day2 = store.activeCatalog()?.days[1];
+      expect(
+        day2?.exercises?.find((e) => e.exerciseId === 'plank.standard')?.target
+      ).toBe(180);
+      expect(day2?.targetReps).toBe(20);
+    });
+
+    it('should close the day once every field is ticked', async () => {
+      // given a baseline with two fields
+      const { store } = multiSetup();
+      await flush();
+
+      // when only the first is recorded
+      await store.recordTestResult(1, 0, 45);
+      await flush();
+      expect(store.todayDone()).toBe(false);
+
+      // and then the second
+      await store.recordTestResult(1, 1, 15);
+      await flush();
+
+      // then the day closes
       expect(store.todayDone()).toBe(true);
     });
 
-    it('should rescale the following days to the measured result', async () => {
-      // given a plan written for a baseline of 20
-      const { store } = testedSetup();
-      await flush();
-      expect(store.activeCatalog()?.days[1].targetReps).toBe(60);
-
-      // when the user tests at 30
-      await store.recordTestResult(1, 30);
+    it('should close a test day that has no exercise row to tick', async () => {
+      // given a baseline prescribing nothing measurable — it derives no
+      // exercise items, so fulfillment can never close it
+      const { store, mocks } = bareSetup();
       await flush();
 
-      // then every later day moves with them
-      expect(store.scaleFactor()).toBe(1.5);
+      // when the result is recorded
+      const result = await store.recordTestResult(1, 0, 30);
+      await flush();
+
+      // then the user is not left with a day they cannot finish
+      expect(result).toBe('recorded');
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 1);
+      expect(store.todayDone()).toBe(true);
       expect(store.activeCatalog()?.days[1].targetReps).toBe(90);
-      expect(store.activeCatalog()?.days[1].sets).toEqual([30, 30, 30]);
-      expect(store.activeCatalog()?.days[2].targetReps).toBe(45);
-    });
-
-    it('should leave the closing test at its own recommendation', async () => {
-      // given a rescaled plan
-      const { store } = testedSetup();
-      await flush();
-
-      // when the opening test doubles the load
-      await store.recordTestResult(1, 40);
-      await flush();
-
-      // then the final test still just asks for everything the user has
-      expect(store.activeCatalog()?.days[4].targetReps).toBe(100);
     });
 
     it('should keep the catalog values when the test is skipped', async () => {
       // given a user who skips the opening test rather than taking it
-      const { store } = testedSetup();
+      const { store } = multiSetup();
       await flush();
 
       // when they skip the day
@@ -2237,49 +2339,57 @@ describe('TrainingPlanStore', () => {
       await flush();
 
       // then the plan they train is the plan as published
-      expect(store.scaleFactor()).toBe(1);
-      expect(store.activeCatalog()?.days[1].targetReps).toBe(60);
-      expect(store.activeCatalog()?.days[1].sets).toEqual([20, 20, 20]);
+      const day2 = store.activeCatalog()?.days[1];
+      expect(day2?.targetReps).toBe(20);
+      expect(
+        day2?.exercises?.find((e) => e.exerciseId === 'plank.standard')?.target
+      ).toBe(90);
     });
 
-    it('should replace the earlier entry when a result is revised', async () => {
-      // given a test already taken at 30, and the entry that attempt wrote
+    it('should replace the earlier entry when a value is revised', async () => {
+      // given a pushup baseline already taken at 10, and its entry
       const priorAttempt = {
         _id: 'e1',
         userId: 'u1',
         exerciseId: 'pushup',
-        timestamp: `${planDayDateIso(startedToday.startDate, 1)}T12:00:00.000+02:00`,
-        reps: 30,
-        sets: [30],
+        timestamp: `${planDayDateIso(
+          toBerlinIsoDate(new Date()),
+          1
+        )}T12:00:00.000+02:00`,
+        reps: 10,
+        sets: [10],
         source: 'plan',
       } as ExerciseEntry;
       const { store, mocks } = setup(
-        { ...startedToday, testResults: ['1:30'], completedDays: [1] },
+        {
+          ...startedToday('multi-test-plan'),
+          testResults: ['1:1:10'],
+        },
         [],
         [priorAttempt],
-        testedLookup
+        multiLookup
       );
       await flush();
 
-      // when the user corrects it to 35
-      const result = await store.recordTestResult(1, 35);
+      // when the user corrects it to 15
+      const result = await store.recordTestResult(1, 1, 15);
       await flush();
 
       // then the old attempt does not linger alongside the new one
       expect(result).toBe('updated');
       expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledWith('e1');
-      expect(store.testResult(1)).toBe(35);
-      expect(store.scaleFactor()).toBe(1.75);
+      expect(store.testResults(1).get(1)).toBe(15);
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(30);
     });
 
-    it('should reject a result that is not a usable rep count', async () => {
-      // given the opening test
-      const { store, mocks } = testedSetup();
+    it('should reject a value that is not a usable measurement', async () => {
+      // given the pushup field
+      const { store, mocks } = multiSetup();
       await flush();
 
       // when nonsense arrives
-      const zero = await store.recordTestResult(1, 0);
-      const fractional = await store.recordTestResult(1, 12.5);
+      const zero = await store.recordTestResult(1, 1, 0);
+      const fractional = await store.recordTestResult(1, 1, 12.5);
       await flush();
 
       // then nothing is written
@@ -2289,13 +2399,46 @@ describe('TrainingPlanStore', () => {
       expect(mocks.exerciseApiMock.createEntry).not.toHaveBeenCalled();
     });
 
-    it('should refuse to record against a day that is not a test', async () => {
-      // given day 2 is an ordinary training day
-      const { store, mocks } = testedSetup();
+    it('should judge a hold against the duration ceiling, not the rep one', async () => {
+      // given a plank hold longer than any sane rep count
+      const { store, mocks } = multiSetup();
       await flush();
 
-      // when a result is aimed at it
-      const result = await store.recordTestResult(2, 30);
+      // when 2400 seconds are recorded
+      const result = await store.recordTestResult(1, 0, 2400);
+      await flush();
+
+      // then the unit decides, and the value stands
+      expect(result).toBe('recorded');
+      expect(mocks.apiMock.setTestResult).toHaveBeenCalledWith(
+        'u1',
+        1,
+        0,
+        2400
+      );
+    });
+
+    it('should refuse a field the day does not have', async () => {
+      // given a baseline with two fields
+      const { store, mocks } = multiSetup();
+      await flush();
+
+      // when a third is addressed
+      const result = await store.recordTestResult(1, 5, 30);
+      await flush();
+
+      // then
+      expect(result).toBe('noop');
+      expect(mocks.apiMock.setTestResult).not.toHaveBeenCalled();
+    });
+
+    it('should refuse to record against a day that is not a test', async () => {
+      // given day 2 is an ordinary training day
+      const { store, mocks } = multiSetup();
+      await flush();
+
+      // when a value is aimed at it
+      const result = await store.recordTestResult(2, 0, 30);
       await flush();
 
       // then it is turned away
@@ -2305,11 +2448,11 @@ describe('TrainingPlanStore', () => {
 
     it('should refuse to record a test that is still in the future', async () => {
       // given the closing test, days away
-      const { store, mocks } = testedSetup();
+      const { store, mocks } = multiSetup();
       await flush();
 
-      // when a result is entered for it early
-      const result = await store.recordTestResult(5, 44);
+      // when a value is entered for it early
+      const result = await store.recordTestResult(5, 0, 44);
       await flush();
 
       // then
@@ -2317,33 +2460,39 @@ describe('TrainingPlanStore', () => {
       expect(mocks.apiMock.setTestResult).not.toHaveBeenCalled();
     });
 
-    it('should restore the catalog values when a result is discarded', async () => {
-      // given a recorded result that halved the plan
-      const { store, mocks } = testedSetup();
+    it('should restore one exercise catalog values when its value is discarded', async () => {
+      // given both fields recorded, halving the pushups
+      const { store, mocks } = multiSetup();
       await flush();
-      await store.recordTestResult(1, 10);
+      await store.recordTestResult(1, 0, 60);
+      await store.recordTestResult(1, 1, 5);
       await flush();
-      expect(store.activeCatalog()?.days[1].targetReps).toBe(30);
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(10);
 
-      // when the user discards it
-      const discarded = await store.clearTestResult(1);
+      // when only the pushup value is discarded
+      const discarded = await store.clearTestResult(1, 1);
       await flush();
 
-      // then the plan is back to what the catalog publishes
+      // then the pushups return to the catalog and the plank stays scaled
       expect(discarded).toBe(true);
-      expect(mocks.apiMock.removeTestResult).toHaveBeenCalledWith('u1', 1);
-      expect(store.testResult(1)).toBeNull();
-      expect(store.scaleFactor()).toBe(1);
-      expect(store.activeCatalog()?.days[1].targetReps).toBe(60);
+      expect(mocks.apiMock.removeTestResult).toHaveBeenCalledWith('u1', 1, 1);
+      expect(store.testResults(1).get(1)).toBeUndefined();
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(20);
+      expect(
+        store
+          .activeCatalog()
+          ?.days[1].exercises?.find((e) => e.exerciseId === 'plank.standard')
+          ?.target
+      ).toBe(180);
     });
 
-    it('should report nothing to discard when no result was recorded', async () => {
+    it('should report nothing to discard when no value was recorded', async () => {
       // given an untaken test
-      const { store, mocks } = testedSetup();
+      const { store, mocks } = multiSetup();
       await flush();
 
       // when a discard is requested anyway
-      const discarded = await store.clearTestResult(1);
+      const discarded = await store.clearTestResult(1, 0);
       await flush();
 
       // then

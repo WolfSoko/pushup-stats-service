@@ -1,53 +1,85 @@
 import {
   TrainingPlan,
   TrainingPlanDay,
-  TrainingPlanExercise,
   UserTrainingPlan,
   planDayByIndex,
   trainingPlanDayExerciseId,
 } from './training-plan.models';
 import { planDayExercises } from './training-plan-exercise.models';
 import { findExerciseDefinition } from './exercise.catalog';
+import { MeasurementType } from './exercise.models';
 
 /**
- * The max-test half of the training-plan model: reading and writing the
- * result of a `test` day, and locating which exercise of that day the
- * measured value belongs to. The scaling those results drive lives in
+ * The max-test half of the training-plan model: reading and writing what
+ * a `test` day measured, and working out which of the day's exercises it
+ * measures. The scaling those results drive lives in
  * `training-plan-scaling.ts`.
+ *
+ * A test day can measure several things at once — Core Foundations opens
+ * with a max plank hold, ten pushups and a max hollow hold — so results
+ * are keyed by exercise position within the day, not by the day alone.
  */
 
-/** Stable id for one `test` day's result, as persisted in `testResults`. */
-export function planTestResultId(dayIndex: number, reps: number): string {
-  return `${dayIndex}:${reps}`;
+/** Stable id for one measured value, as persisted in `testResults`. */
+export function planTestResultId(
+  dayIndex: number,
+  itemIndex: number,
+  value: number
+): string {
+  return `${dayIndex}:${itemIndex}:${value}`;
 }
 
-/** Inverse of {@link planTestResultId}. Returns null for malformed ids. */
+/**
+ * Inverse of {@link planTestResultId}. Returns null for malformed ids.
+ *
+ * Two-part ids (`"1:37"`) come from the single-value shape that shipped
+ * before test days could measure more than one exercise, and resolve to
+ * the day's first field.
+ */
 export function parsePlanTestResultId(
   id: string
-): { dayIndex: number; reps: number } | null {
-  const match = /^(\d+):(\d+)$/.exec(id);
-  if (!match) return null;
-  return { dayIndex: Number(match[1]), reps: Number(match[2]) };
+): { dayIndex: number; itemIndex: number; value: number } | null {
+  const three = /^(\d+):(\d+):(\d+)$/.exec(id);
+  if (three) {
+    return {
+      dayIndex: Number(three[1]),
+      itemIndex: Number(three[2]),
+      value: Number(three[3]),
+    };
+  }
+  const two = /^(\d+):(\d+)$/.exec(id);
+  if (!two) return null;
+  return { dayIndex: Number(two[1]), itemIndex: 0, value: Number(two[2]) };
 }
 
 /**
- * The result the user recorded for a `test` day, or null when they
- * haven't taken it.
+ * Everything the user recorded for one `test` day, keyed by field index.
  *
  * The write path replaces rather than appends, but a legacy or
- * hand-edited doc could still carry two entries for one day — last one
- * wins, so a resolved target never depends on array order.
+ * hand-edited doc could still carry two values for one field — last one
+ * wins, so a resolved target never depends on array order luck.
  */
-export function planTestResult(
+export function planTestResults(
   userPlan: Pick<UserTrainingPlan, 'testResults'> | null,
   dayIndex: number
-): number | null {
-  let found: number | null = null;
+): ReadonlyMap<number, number> {
+  const out = new Map<number, number>();
   for (const id of userPlan?.testResults ?? []) {
     const parsed = parsePlanTestResultId(id);
-    if (parsed && parsed.dayIndex === dayIndex) found = parsed.reps;
+    if (parsed && parsed.dayIndex === dayIndex) {
+      out.set(parsed.itemIndex, parsed.value);
+    }
   }
-  return found;
+  return out;
+}
+
+/** One measured value of a `test` day, or null when it wasn't recorded. */
+export function planTestResult(
+  userPlan: Pick<UserTrainingPlan, 'testResults'> | null,
+  dayIndex: number,
+  itemIndex: number
+): number | null {
+  return planTestResults(userPlan, dayIndex).get(itemIndex) ?? null;
 }
 
 /** Every `test` day of a plan, in day order. */
@@ -58,7 +90,7 @@ export function planTestDays(
 }
 
 /**
- * The plan's opening max test — the one whose result rescales what comes
+ * The plan's opening max test — the one whose results rescale what comes
  * after it. Null when the plan's only test is its closing one: nothing
  * follows that, so there is nothing to rescale.
  */
@@ -85,60 +117,88 @@ export function planFinalTestDay(
   return last === planBaselineTestDay(plan) ? null : last;
 }
 
-/** Which exercise of a `test` day the measured maximum is recorded against. */
-export interface PlanTestExercise {
+/** One value a `test` day asks the user to record. */
+export interface PlanTestField {
+  /** Position within the day, and the key the result is stored under. */
+  readonly itemIndex: number;
   readonly exerciseId: string;
   readonly variantId?: string;
-  /**
-   * Position in the day's exercise list, or null when the day prescribes
-   * nothing measurable ("just go to failure", `targetReps: 0`). A null
-   * index has no row to tick, so recording the result closes the day
-   * directly instead.
-   */
-  readonly itemIndex: number | null;
   /** The day's own recommendation, 0 when it prescribes none. */
   readonly recommended: number;
+  /** Drives the unit shown and the entry field a result is written to. */
+  readonly measurement: MeasurementType;
+  /**
+   * False when the day lists no exercises at all ("just go to failure").
+   * Such a field has no exercise row to tick, so recording it closes the
+   * day directly.
+   */
+  readonly hasItem: boolean;
 }
 
-function isRepsMeasured(exercise: TrainingPlanExercise): boolean {
-  return findExerciseDefinition(exercise.exerciseId)?.measurement === 'reps';
+/** Measurements a max test can be recorded in. */
+function isMeasurable(measurement: MeasurementType | null): boolean {
+  return measurement === 'reps' || measurement === 'time';
 }
 
 /**
- * The exercise a `test` day measures. Multi-exercise tests (Full Body's
- * "max pushups · 50 squats · 1 min plank") pair the max attempt with
- * ordinary prescribed work, so the maximum is recorded against the first
- * rep-counted item and the rest stay normal check-off rows.
+ * The values a `test` day asks for — one per measurable exercise it
+ * prescribes, in the order the day lists them.
+ *
+ * A day that prescribes nothing measurable still gets one field: its
+ * description asks the user for a baseline, so there has to be somewhere
+ * to put it.
  */
-export function planTestExercise(day: TrainingPlanDay): PlanTestExercise {
-  const items = planDayExercises(day);
-  const itemIndex = items.findIndex(isRepsMeasured);
-  const item = itemIndex >= 0 ? items[itemIndex] : null;
-  if (!item) {
-    return {
+export function planTestFields(
+  day: TrainingPlanDay
+): ReadonlyArray<PlanTestField> {
+  const fields: PlanTestField[] = [];
+  planDayExercises(day).forEach((exercise, itemIndex) => {
+    const measurement =
+      findExerciseDefinition(exercise.exerciseId)?.measurement ?? null;
+    if (!isMeasurable(measurement)) return;
+    fields.push({
+      itemIndex,
+      exerciseId: exercise.exerciseId,
+      ...(exercise.variantId ? { variantId: exercise.variantId } : {}),
+      recommended: exercise.target,
+      measurement: measurement as MeasurementType,
+      hasItem: true,
+    });
+  });
+  if (fields.length > 0) return fields;
+  return [
+    {
+      itemIndex: 0,
       exerciseId: trainingPlanDayExerciseId(day),
       ...(day.variantId ? { variantId: day.variantId } : {}),
-      itemIndex: null,
       recommended: Math.max(0, day.targetReps),
-    };
-  }
-  return {
-    exerciseId: item.exerciseId,
-    ...(item.variantId ? { variantId: item.variantId } : {}),
-    itemIndex,
-    recommended: item.target,
-  };
+      measurement: 'reps',
+      hasItem: false,
+    },
+  ];
 }
 
 /** Largest result a max test accepts, guarding against a stray keypress. */
 export const MAX_TEST_REPS = 2000;
+/** Largest hold a max test accepts, in seconds (just under three hours). */
+export const MAX_TEST_SECONDS = 10_000;
+
+/** The ceiling a result is checked against, by measurement. */
+export function maxTestValue(measurement: MeasurementType): number {
+  return measurement === 'time' ? MAX_TEST_SECONDS : MAX_TEST_REPS;
+}
 
 /**
- * Whether a value is a usable max-test result: a whole number of reps,
- * at least 1, below the typo guard.
+ * Whether a value is a usable max-test result: a whole number, at least
+ * 1, below the typo guard for its unit.
  */
-export function isValidTestResult(reps: number): boolean {
-  return Number.isInteger(reps) && reps >= 1 && reps <= MAX_TEST_REPS;
+export function isValidTestResult(
+  value: number,
+  measurement: MeasurementType = 'reps'
+): boolean {
+  return (
+    Number.isInteger(value) && value >= 1 && value <= maxTestValue(measurement)
+  );
 }
 
 /** True when `dayIndex` is a `test` day of the plan. */

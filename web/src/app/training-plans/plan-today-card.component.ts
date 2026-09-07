@@ -14,7 +14,10 @@ import {
   ExerciseToggle,
   PlanDayExercisesComponent,
 } from './plan-day-exercises.component';
-import { PlanTestInputComponent } from './plan-test-input.component';
+import {
+  PlanTestInputComponent,
+  TestResultSubmit,
+} from './plan-test-input.component';
 import { DayRow } from './training-plan-detail.models';
 
 /**
@@ -52,8 +55,8 @@ export class PlanTodayCardComponent {
   readonly logExercise = output<number>();
   readonly toggleExercise = output<ExerciseToggle>();
   readonly resetExercise = output<number>();
-  readonly recordTest = output<number>();
-  readonly clearTest = output<void>();
+  readonly recordTest = output<TestResultSubmit>();
+  readonly clearTest = output<number>();
 
   protected readonly isRest = computed(() => this.row().day.kind === 'rest');
 

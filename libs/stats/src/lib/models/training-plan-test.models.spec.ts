@@ -2,15 +2,17 @@ import {
   isTestDay,
   isValidTestResult,
   MAX_TEST_REPS,
+  MAX_TEST_SECONDS,
   parsePlanTestResultId,
   planBaselineTestDay,
   planFinalTestDay,
-  planTestExercise,
+  planTestFields,
   planTestResult,
   planTestResultId,
+  planTestResults,
 } from './training-plan-test.models';
 import { TrainingPlan, TrainingPlanDay } from './training-plan.models';
-import { TRAINING_PLANS } from './training-plan.catalog';
+import { findPlanBySlug, TRAINING_PLANS } from './training-plan.catalog';
 
 function day(
   dayIndex: number,
@@ -34,37 +36,73 @@ function plan(days: TrainingPlanDay[]): TrainingPlan {
 }
 
 describe('planTestResultId / parsePlanTestResultId', () => {
-  it('should round-trip a day index and a result', () => {
-    // given an id built for day 1 with 37 reps
-    const id = planTestResultId(1, 37);
+  it('should round-trip a day, a field and a value', () => {
+    // given an id for the second field of day 1
+    const id = planTestResultId(1, 2, 37);
 
     // when it is parsed back
     // then nothing is lost
-    expect(parsePlanTestResultId(id)).toEqual({ dayIndex: 1, reps: 37 });
+    expect(parsePlanTestResultId(id)).toEqual({
+      dayIndex: 1,
+      itemIndex: 2,
+      value: 37,
+    });
+  });
+
+  it('should read a legacy single-value id as the day first field', () => {
+    // given the two-part shape that shipped before test days could
+    // measure more than one exercise
+    // then it still resolves, rather than being dropped as malformed
+    expect(parsePlanTestResultId('1:37')).toEqual({
+      dayIndex: 1,
+      itemIndex: 0,
+      value: 37,
+    });
   });
 
   it('should reject a malformed id', () => {
     expect(parsePlanTestResultId('1:')).toBeNull();
     expect(parsePlanTestResultId('x:3')).toBeNull();
-    expect(parsePlanTestResultId('1:2:3')).toBeNull();
+    expect(parsePlanTestResultId('1:2:3:4')).toBeNull();
   });
 });
 
-describe('planTestResult', () => {
-  it('should return null for a day with no recorded result', () => {
-    expect(planTestResult({ testResults: [] }, 1)).toBeNull();
-    expect(planTestResult(null, 1)).toBeNull();
+describe('planTestResults', () => {
+  it('should return nothing for a day with no recorded values', () => {
+    expect(planTestResults({ testResults: [] }, 1).size).toBe(0);
+    expect(planTestResults(null, 1).size).toBe(0);
   });
 
-  it('should read the result of the requested day only', () => {
-    // given results for the opening and closing tests
+  it('should collect every field of the requested day', () => {
+    // given a three-value baseline and a separate closing test
     const doc = {
-      testResults: [planTestResultId(1, 20), planTestResultId(30, 44)],
+      testResults: [
+        planTestResultId(1, 0, 45),
+        planTestResultId(1, 1, 12),
+        planTestResultId(1, 2, 30),
+        planTestResultId(28, 1, 25),
+      ],
     };
 
-    // then each day resolves to its own number
-    expect(planTestResult(doc, 1)).toBe(20);
-    expect(planTestResult(doc, 30)).toBe(44);
+    // when the opening test's values are read
+    const results = planTestResults(doc, 1);
+
+    // then all three come back, and the closing test stays out of it
+    expect(results.size).toBe(3);
+    expect(results.get(0)).toBe(45);
+    expect(results.get(1)).toBe(12);
+    expect(results.get(2)).toBe(30);
+    expect(planTestResult(doc, 28, 1)).toBe(25);
+  });
+
+  it('should let the last value win when a doc duplicates one field', () => {
+    // given a hand-edited doc with two values for the same field
+    const doc = {
+      testResults: [planTestResultId(1, 0, 10), planTestResultId(1, 0, 30)],
+    };
+
+    // then the resolved value does not depend on array order luck
+    expect(planTestResult(doc, 1, 0)).toBe(30);
   });
 });
 
@@ -94,54 +132,77 @@ describe('planBaselineTestDay / planFinalTestDay', () => {
   });
 });
 
-describe('planTestExercise', () => {
-  it('should fall back to the pushup sentinel when the test prescribes nothing', () => {
-    // given the opening test of a plan that just says "go to failure"
-    const test = day(1, 'test', 0);
-
-    // when the measured exercise is resolved
-    const resolved = planTestExercise(test);
-
-    // then there is still somewhere to write the attempt — and no row to tick
-    expect(resolved.exerciseId).toBe('pushup');
-    expect(resolved.itemIndex).toBeNull();
-    expect(resolved.recommended).toBe(0);
-  });
-
-  it('should target the single derived item of a plain test day', () => {
-    // given a test day carrying a recommendation
-    const resolved = planTestExercise(day(30, 'test', 100));
-
-    // then the attempt closes the day's one exercise row
-    expect(resolved.exerciseId).toBe('pushup');
-    expect(resolved.itemIndex).toBe(0);
-    expect(resolved.recommended).toBe(100);
-  });
-
-  it('should pick the first rep-counted item of a multi-exercise test', () => {
-    // given a functional test that opens with a timed hold
-    const test = day(28, 'test', 30, {
+describe('planTestFields', () => {
+  it('should ask for one value per measurable exercise of the day', () => {
+    // given a baseline that measures a hold, pushups and another hold
+    const test = day(1, 'test', 10, {
       exercises: [
-        { exerciseId: 'plank.standard', target: 60 },
-        { exerciseId: 'pushup', target: 30 },
-        { exerciseId: 'core.hollowhold', target: 60 },
+        { exerciseId: 'plank.standard', target: 30 },
+        { exerciseId: 'pushup', target: 10 },
+        { exerciseId: 'core.hollowhold', target: 20 },
       ],
     });
 
-    // when the measured exercise is resolved
-    const resolved = planTestExercise(test);
+    // when its fields are resolved
+    const fields = planTestFields(test);
 
-    // then the max attempt lands on the pushups, not the plank
-    expect(resolved.exerciseId).toBe('pushup');
-    expect(resolved.itemIndex).toBe(1);
+    // then all three are asked for, each in its own unit
+    expect(fields).toHaveLength(3);
+    expect(fields.map((f) => f.exerciseId)).toEqual([
+      'plank.standard',
+      'pushup',
+      'core.hollowhold',
+    ]);
+    expect(fields.map((f) => f.itemIndex)).toEqual([0, 1, 2]);
+    expect(fields.map((f) => f.measurement)).toEqual(['time', 'reps', 'time']);
+    expect(fields.every((f) => f.hasItem)).toBe(true);
+  });
+
+  it('should fall back to one pushup field when the test prescribes nothing', () => {
+    // given the opening test of a plan that just says "go to failure"
+    const fields = planTestFields(day(1, 'test', 0));
+
+    // then there is still somewhere to put the result — and no row to tick
+    expect(fields).toHaveLength(1);
+    expect(fields[0].exerciseId).toBe('pushup');
+    expect(fields[0].itemIndex).toBe(0);
+    expect(fields[0].hasItem).toBe(false);
+    expect(fields[0].recommended).toBe(0);
+  });
+
+  it('should carry the day own recommendation as the reference figure', () => {
+    // given a test day recommending 100
+    const fields = planTestFields(day(30, 'test', 100));
+
+    // then the single derived field reports it
+    expect(fields).toHaveLength(1);
+    expect(fields[0].recommended).toBe(100);
+    expect(fields[0].hasItem).toBe(true);
+  });
+
+  it('should skip exercises no result can be recorded against', () => {
+    // given a day pairing pushups with a distance run
+    const test = day(1, 'test', 20, {
+      exercises: [
+        { exerciseId: 'pushup', target: 20 },
+        { exerciseId: 'cardio.running', target: 1000 },
+      ],
+    });
+
+    // when its fields are resolved
+    const fields = planTestFields(test);
+
+    // then only the rep- and time-measured work is asked for
+    expect(fields.map((f) => f.exerciseId)).toEqual(['pushup']);
   });
 });
 
 describe('isValidTestResult', () => {
-  it('should accept a whole number of reps in range', () => {
+  it('should accept a whole number in range for its unit', () => {
     expect(isValidTestResult(1)).toBe(true);
-    expect(isValidTestResult(37)).toBe(true);
     expect(isValidTestResult(MAX_TEST_REPS)).toBe(true);
+    expect(isValidTestResult(600, 'time')).toBe(true);
+    expect(isValidTestResult(MAX_TEST_SECONDS, 'time')).toBe(true);
   });
 
   it('should reject nonsense a stray keypress could produce', () => {
@@ -150,6 +211,13 @@ describe('isValidTestResult', () => {
     expect(isValidTestResult(12.5)).toBe(false);
     expect(isValidTestResult(MAX_TEST_REPS + 1)).toBe(false);
     expect(isValidTestResult(Number.NaN)).toBe(false);
+  });
+
+  it('should allow a hold longer than the rep ceiling', () => {
+    // given a duration that would be absurd as a rep count
+    // then the unit decides, not one shared ceiling
+    expect(isValidTestResult(MAX_TEST_REPS + 1, 'time')).toBe(true);
+    expect(isValidTestResult(MAX_TEST_SECONDS + 1, 'time')).toBe(false);
   });
 });
 
@@ -163,13 +231,54 @@ describe('isTestDay', () => {
 });
 
 describe('the shipped catalog', () => {
-  it('should offer a writable max-test exercise on every test day', () => {
-    // given every test day in the catalog — including the two whose
-    // prescription is empty, which previously rendered no input at all
+  it('should offer a writable field on every test day', () => {
+    // given every test day in the catalog — including the ones whose
+    // prescription is empty, which once rendered no input at all
     for (const p of TRAINING_PLANS) {
       for (const d of p.days.filter((x) => x.kind === 'test')) {
-        // then each resolves an exercise the result can be written against
-        expect(planTestExercise(d).exerciseId).toBeTruthy();
+        expect(planTestFields(d).length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('should ask Core Foundations for all three of its baselines', () => {
+    // given the day whose description names a plank hold, pushups and a
+    // hollow hold — but which listed no exercises at all
+    const core = findPlanBySlug('core-4w') as TrainingPlan;
+    const baseline = planBaselineTestDay(core) as TrainingPlanDay;
+
+    // when its fields are resolved
+    const fields = planTestFields(baseline);
+
+    // then each measurement gets its own input
+    expect(fields.map((f) => f.exerciseId)).toEqual([
+      'plank.standard',
+      'pushup',
+      'core.hollowhold',
+    ]);
+  });
+
+  it('should ask the Push-Pull final test for pushups and pull-ups', () => {
+    // given a closing test whose description names two max efforts
+    const pushPull = findPlanBySlug('push-pull-6w') as TrainingPlan;
+    const final = planFinalTestDay(pushPull) as TrainingPlanDay;
+
+    // then both are recordable, not just the pushups
+    expect(planTestFields(final).map((f) => f.exerciseId)).toEqual([
+      'pushup',
+      'pull.pullups',
+    ]);
+  });
+
+  it('should name a baseline for every exercise its opening test measures', () => {
+    // given every plan that rescales itself
+    for (const p of TRAINING_PLANS.filter((x) => x.baselineMax)) {
+      const baseline = planBaselineTestDay(p) as TrainingPlanDay;
+      expect(baseline).not.toBeNull();
+      // then no measured exercise is left without a reference to
+      // compare against, which would silently drop it from scaling
+      for (const field of planTestFields(baseline)) {
+        expect(p.baselineMax?.[field.exerciseId]).toBeGreaterThan(0);
       }
     }
   });

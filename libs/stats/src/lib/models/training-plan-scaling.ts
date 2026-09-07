@@ -7,62 +7,107 @@ import {
 } from './training-plan.models';
 import {
   planBaselineTestDay,
-  planTestResult,
+  planTestFields,
+  planTestResults,
 } from './training-plan-test.models';
 
 /**
- * Rescaling a curated plan to the user's measured starting strength.
+ * Rescaling a curated plan to the strength the user actually brought.
  *
- * A plan that opens with a max test is written for one particular
- * baseline (`TrainingPlan.baselineMaxReps`). Someone who tests at half
- * that baseline is handed a plan they cannot finish; someone at double
- * it is handed one that never challenges them. Once the opening test has
- * a result, every later day is scaled by the ratio between the two.
+ * A plan that opens with a max test is written for one particular set of
+ * baselines (`TrainingPlan.baselineMax`). Someone testing at half of them
+ * is handed a plan they cannot finish; someone at double is handed one
+ * that never challenges them.
  *
- * Skipping the test leaves the factor at exactly 1, and a factor of 1
- * returns the catalog object itself — so the untested path is not merely
- * numerically unchanged, it is the very same object the catalog exports.
+ * A test can measure several things — Core Foundations opens with a plank
+ * hold, pushups and a hollow hold — and each measured exercise scales its
+ * own prescriptions across the plan. Exercises the test never measured
+ * follow the pushup factor, so a plan does not end up half-adjusted.
+ *
+ * Skipping the test leaves every factor at 1, and that case returns the
+ * catalog object itself — the untouched path is not merely numerically
+ * unchanged, it is the very same object the catalog exports.
  */
 
 /**
- * Bounds on the scale factor. A plan is a progression, not a pure
- * multiple of a single number: past roughly ±2× the structure it was
- * written around (set counts, rest intervals, weekly ramp) stops making
- * sense, and an unbounded factor would turn one fat-fingered test result
- * into weeks of unusable targets.
+ * Bounds on any single factor. A plan is a progression, not a pure
+ * multiple of one number: past roughly ±2× the structure it was written
+ * around (set counts, rest intervals, weekly ramp) stops making sense,
+ * and an unbounded factor would turn one fat-fingered result into weeks
+ * of unusable targets.
  */
 export const MIN_PLAN_SCALE = 0.5;
 export const MAX_PLAN_SCALE = 2;
 
-/** Factor resolution for the memo cache — 1 % steps are finer than any
- *  rounded rep target can resolve. */
+/** The exercise whose factor stands in for everything unmeasured. */
+const PRIMARY_EXERCISE = 'pushup';
+
+/** Factor resolution — 1 % steps are finer than any rounded target can
+ *  resolve, and keep the memo cache keyed on stable numbers. */
 const FACTOR_PRECISION = 100;
 
 /**
- * How far the user's opening test sits from the baseline the plan was
- * written for. Exactly 1 — meaning "leave the catalog alone" — whenever
- * the plan has no opening test, names no baseline, or the user hasn't
- * recorded a result.
+ * How far the user's opening test moved each exercise from the baseline
+ * the plan was written for.
  */
-export function planScaleFactor(
-  plan: Pick<TrainingPlan, 'days' | 'baselineMaxReps'> | null,
-  userPlan: Pick<UserTrainingPlan, 'testResults'> | null
-): number {
-  if (!plan) return 1;
-  const baseline = plan.baselineMaxReps ?? 0;
-  if (baseline <= 0) return 1;
-  const testDay = planBaselineTestDay(plan);
-  if (!testDay) return 1;
-  const measured = planTestResult(userPlan, testDay.dayIndex);
-  if (measured === null || measured <= 0) return 1;
-  const raw = measured / baseline;
-  const clamped = Math.min(MAX_PLAN_SCALE, Math.max(MIN_PLAN_SCALE, raw));
+export interface PlanScaleFactors {
+  /** Applied to `targetReps` and to every exercise without its own factor. */
+  readonly primary: number;
+  readonly byExercise: ReadonlyMap<string, number>;
+}
+
+/** Nothing measured: the plan stands exactly as published. */
+export const NO_PLAN_SCALING: PlanScaleFactors = {
+  primary: 1,
+  byExercise: new Map(),
+};
+
+function clampFactor(measured: number, reference: number): number {
+  const clamped = Math.min(
+    MAX_PLAN_SCALE,
+    Math.max(MIN_PLAN_SCALE, measured / reference)
+  );
   return Math.round(clamped * FACTOR_PRECISION) / FACTOR_PRECISION;
+}
+
+/** True when no factor would change anything. */
+export function isNeutralScaling(factors: PlanScaleFactors): boolean {
+  return (
+    factors.primary === 1 &&
+    Array.from(factors.byExercise.values()).every((f) => f === 1)
+  );
+}
+
+/**
+ * The factors the user's opening test puts in force. Neutral whenever the
+ * plan has no opening test, names no baselines, or the user recorded
+ * nothing — which is also what skipping the test leaves behind.
+ */
+export function planScaleFactors(
+  plan: Pick<TrainingPlan, 'days' | 'baselineMax'> | null,
+  userPlan: Pick<UserTrainingPlan, 'testResults'> | null
+): PlanScaleFactors {
+  const baselines = plan?.baselineMax;
+  if (!plan || !baselines) return NO_PLAN_SCALING;
+  const testDay = planBaselineTestDay(plan);
+  if (!testDay) return NO_PLAN_SCALING;
+  const results = planTestResults(userPlan, testDay.dayIndex);
+  if (results.size === 0) return NO_PLAN_SCALING;
+
+  const byExercise = new Map<string, number>();
+  for (const field of planTestFields(testDay)) {
+    const measured = results.get(field.itemIndex) ?? 0;
+    const reference = baselines[field.exerciseId] ?? 0;
+    if (measured <= 0 || reference <= 0) continue;
+    byExercise.set(field.exerciseId, clampFactor(measured, reference));
+  }
+  if (byExercise.size === 0) return NO_PLAN_SCALING;
+  return { primary: byExercise.get(PRIMARY_EXERCISE) ?? 1, byExercise };
 }
 
 /** Scales one target, keeping "unquantified" (`<= 0`) targets unquantified. */
 function scaleValue(value: number, factor: number): number {
-  if (value <= 0) return value;
+  if (value <= 0 || factor === 1) return value;
   return Math.max(1, Math.round(value * factor));
 }
 
@@ -88,8 +133,8 @@ export function scaleBreakdown(
     .map((e) => e.index);
   let cursor = 0;
   // `guard` bounds the walk for the one case that cannot be satisfied:
-  // a total below `sets.length`, where every set is already at its
-  // floor of 1 and no further reduction is possible.
+  // a total below `sets.length`, where every set is already at its floor
+  // of 1 and no further reduction is possible.
   let guard = out.length * Math.abs(drift) + out.length;
   while (drift !== 0 && guard-- > 0) {
     const index = order[cursor % order.length];
@@ -105,16 +150,20 @@ export function scaleBreakdown(
   return out;
 }
 
+function factorFor(factors: PlanScaleFactors, exerciseId: string): number {
+  return factors.byExercise.get(exerciseId) ?? factors.primary;
+}
+
 /**
- * Scales a day's exercise list. Rep-counted items belonging to the day's
- * headline exercise are scaled as one breakdown so their sum still
- * mirrors `targetReps` — the dashboard goal pill reads that field, and a
+ * Scales a day's exercise list. Items belonging to the day's headline
+ * exercise are scaled as one breakdown so their sum still mirrors
+ * `targetReps` — the dashboard goal pill reads that field, and a
  * structured day whose pushup items drifted away from it would show the
  * user two different numbers for the same work.
  */
 function scaleExercises(
   exercises: ReadonlyArray<TrainingPlanExercise>,
-  factor: number,
+  factors: PlanScaleFactors,
   headlineId: string,
   scaledTargetReps: number
 ): TrainingPlanExercise[] {
@@ -124,14 +173,18 @@ function scaleExercises(
   const headlineIndexes = exercises
     .map((e, i) => (e.exerciseId === headlineId && e.target > 0 ? i : -1))
     .filter((i) => i >= 0);
-  const headlineTargets = headlineIndexes.map((i) => exercises[i].target);
-  const scaledHeadline = scaleBreakdown(headlineTargets, scaledTargetReps);
+  const scaledHeadline = scaleBreakdown(
+    headlineIndexes.map((i) => exercises[i].target),
+    scaledTargetReps
+  );
   const byIndex = new Map(
     headlineIndexes.map((planIndex, n) => [planIndex, scaledHeadline[n]])
   );
 
   return exercises.map((exercise, index) => {
-    const target = byIndex.get(index) ?? scaleValue(exercise.target, factor);
+    const target =
+      byIndex.get(index) ??
+      scaleValue(exercise.target, factorFor(factors, exercise.exerciseId));
     return {
       ...exercise,
       target,
@@ -147,10 +200,12 @@ function scaleExercises(
  */
 export function scaleTrainingPlanDay(
   day: TrainingPlanDay,
-  factor: number
+  factors: PlanScaleFactors
 ): TrainingPlanDay {
-  if (factor === 1 || day.kind === 'rest' || day.kind === 'test') return day;
-  const targetReps = scaleValue(day.targetReps, factor);
+  if (day.kind === 'rest' || day.kind === 'test') return day;
+  if (isNeutralScaling(factors)) return day;
+  const headlineId = trainingPlanDayExerciseId(day);
+  const targetReps = scaleValue(day.targetReps, factorFor(factors, headlineId));
   return {
     ...day,
     targetReps,
@@ -159,8 +214,8 @@ export function scaleTrainingPlanDay(
       ? {
           exercises: scaleExercises(
             day.exercises,
-            factor,
-            trainingPlanDayExerciseId(day),
+            factors,
+            headlineId,
             targetReps
           ),
         }
@@ -168,32 +223,41 @@ export function scaleTrainingPlanDay(
   };
 }
 
-// Scaled plans are memoised per catalog entry and factor. `activeCatalog`
-// is a computed signal feeding `planDayExercises`' own per-day WeakMap
-// cache and a tree of downstream computeds; handing them a freshly built
-// plan on every recomputation would invalidate all of it for numbers that
-// did not change.
-const scaledPlans = new WeakMap<TrainingPlan, Map<number, TrainingPlan>>();
+/** Cache key for one factor set — stable across map insertion order. */
+function factorKey(factors: PlanScaleFactors): string {
+  return Array.from(factors.byExercise.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([id, f]) => `${id}=${f}`)
+    .join('|');
+}
+
+// Scaled plans are memoised per catalog entry and factor set.
+// `activeCatalog` is a computed signal feeding `planDayExercises`' own
+// per-day WeakMap cache and a tree of downstream computeds; handing them a
+// freshly built plan on every recomputation would invalidate all of it for
+// numbers that did not change.
+const scaledPlans = new WeakMap<TrainingPlan, Map<string, TrainingPlan>>();
 
 /**
  * The plan as this user should train it. Returns the catalog object
- * unchanged at factor 1, so an untested or skipped opening test keeps
- * referential identity with the catalog all the way down.
+ * unchanged under neutral scaling, so an untested or skipped opening test
+ * keeps referential identity with the catalog all the way down.
  */
 export function scaleTrainingPlan(
   plan: TrainingPlan,
-  factor: number
+  factors: PlanScaleFactors
 ): TrainingPlan {
-  if (factor === 1) return plan;
+  if (isNeutralScaling(factors)) return plan;
+  const key = factorKey(factors);
   const cached = scaledPlans.get(plan);
-  const hit = cached?.get(factor);
+  const hit = cached?.get(key);
   if (hit) return hit;
   const scaled: TrainingPlan = {
     ...plan,
-    days: plan.days.map((day) => scaleTrainingPlanDay(day, factor)),
+    days: plan.days.map((day) => scaleTrainingPlanDay(day, factors)),
   };
-  const bucket = cached ?? new Map<number, TrainingPlan>();
-  bucket.set(factor, scaled);
+  const bucket = cached ?? new Map<string, TrainingPlan>();
+  bucket.set(key, scaled);
   scaledPlans.set(plan, bucket);
   return scaled;
 }
@@ -204,5 +268,5 @@ export function scaledPlanFor(
   userPlan: Pick<UserTrainingPlan, 'testResults'> | null
 ): TrainingPlan | null {
   if (!plan) return null;
-  return scaleTrainingPlan(plan, planScaleFactor(plan, userPlan));
+  return scaleTrainingPlan(plan, planScaleFactors(plan, userPlan));
 }

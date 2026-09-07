@@ -25,6 +25,36 @@
   width: 18px;
   height: 18px;
 }
+.test-field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.test-field-row + .test-field-row {
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+:host-context(.dark-theme) .test-field-row + .test-field-row {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+.test-field-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.test-name {
+  font-size: 0.84rem;
+}
+.test-scaled {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.test-scaled-item {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 .test-recommended {
   font-size: 0.78rem;
   font-weight: 400;
@@ -52,6 +82,7 @@
 }
 .test-hint {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 6px;
   margin: 0;

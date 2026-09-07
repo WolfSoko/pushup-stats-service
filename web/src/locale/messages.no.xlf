@@ -11297,16 +11297,16 @@ Deine Position: # ·  Reps        </source>
         <target>Aktualisieren</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.test.invalid">
+        <unit id="trainingPlans.test.invalid">
       <segment state="initial">
-        <source> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ maxReps }}"/> eintragen. </source>
-        <target> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ maxReps }}"/> eintragen. </target>
+        <source> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> eintragen. </source>
+        <target> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> eintragen. </target>
       </segment>
     </unit>
-    <unit id="trainingPlans.test.hintOpen">
+        <unit id="trainingPlans.test.hintOpen">
       <segment state="initial">
-        <source>Dein Ergebnis passt die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</source>
-        <target>Dein Ergebnis passt die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</target>
+        <source>Deine Ergebnisse passen die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</source>
+        <target>Deine Ergebnisse passen die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintScaled">
@@ -11321,16 +11321,16 @@ Deine Position: # ·  Reps        </source>
         <target>Die folgenden Tage laufen auf der normalen Planvorgabe.</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.test.clear">
+        <unit id="trainingPlans.test.clear">
       <segment state="initial">
-        <source>Ergebnis verwerfen</source>
-        <target>Ergebnis verwerfen</target>
+        <source>Wert verwerfen</source>
+        <target>Wert verwerfen</target>
       </segment>
     </unit>
-    <unit id="trainingPlans.test.cleared">
+        <unit id="trainingPlans.test.cleared">
       <segment state="initial">
-        <source>Ergebnis verworfen — es gelten wieder die normalen Planwerte.</source>
-        <target>Ergebnis verworfen — es gelten wieder die normalen Planwerte.</target>
+        <source>Wert verworfen — dafür gelten wieder die normalen Planwerte.</source>
+        <target>Wert verworfen — dafür gelten wieder die normalen Planwerte.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.recorded">
@@ -11349,6 +11349,30 @@ Deine Position: # ·  Reps        </source>
       <segment state="initial">
         <source>Bitte eine gültige Wiederholungszahl eintragen.</source>
         <target>Bitte eine gültige Wiederholungszahl eintragen.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.promptMulti">
+      <segment state="initial">
+        <source>Ergebnisse deines Maximaltests</source>
+        <target>Ergebnisse deines Maximaltests</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.hintRecorded">
+      <segment state="initial">
+        <source>Ergebnisse festgehalten — die Planwerte bleiben unverändert.</source>
+        <target>Ergebnisse festgehalten — die Planwerte bleiben unverändert.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.hintScaledIntro">
+      <segment state="initial">
+        <source>Die folgenden Tage laufen auf:</source>
+        <target>Die folgenden Tage laufen auf:</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.seconds">
+      <segment state="initial">
+        <source>s</source>
+        <target>s</target>
       </segment>
     </unit>
 </file>

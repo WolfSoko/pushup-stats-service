@@ -195,31 +195,38 @@ export class UserTrainingPlanApiService {
    * Record (or revise) the measured result of a `test` day.
    *
    * A result is revisable, so this cannot be a bare `arrayUnion` the way
-   * `addCompletedDay` is — the day's previous entry has to go. Firestore
+   * `addCompletedDay` is — that field's previous value has to go. Firestore
    * allows only one transform per field per write, so `arrayRemove` and
    * `arrayUnion` on `testResults` cannot be combined; the read-modify-write
-   * runs in a transaction instead, same as `jumpToDay`.
+   * runs in a transaction instead, same as `jumpToDay`. Only the addressed
+   * field is rewritten, so the day's other measurements survive.
    */
   setTestResult(
     userId: string,
     dayIndex: number,
-    reps: number
+    itemIndex: number,
+    value: number
   ): Observable<void> {
-    return this.rewriteTestResults(userId, dayIndex, (kept) => [
+    return this.rewriteTestResults(userId, dayIndex, itemIndex, (kept) => [
       ...kept,
-      planTestResultId(dayIndex, reps),
+      planTestResultId(dayIndex, itemIndex, value),
     ]);
   }
 
-  /** Drop a `test` day's result — the plan falls back to catalog targets. */
-  removeTestResult(userId: string, dayIndex: number): Observable<void> {
-    return this.rewriteTestResults(userId, dayIndex, (kept) => kept);
+  /** Drop one measured value — that exercise falls back to catalog targets. */
+  removeTestResult(
+    userId: string,
+    dayIndex: number,
+    itemIndex: number
+  ): Observable<void> {
+    return this.rewriteTestResults(userId, dayIndex, itemIndex, (kept) => kept);
   }
 
   private rewriteTestResults(
     userId: string,
     dayIndex: number,
-    next: (withoutDay: string[]) => string[]
+    itemIndex: number,
+    next: (withoutField: string[]) => string[]
   ): Observable<void> {
     const effectiveUserId = this.resolveUserId(userId);
     if (!effectiveUserId || !this.firestore) return of(void 0);
@@ -229,11 +236,16 @@ export class UserTrainingPlanApiService {
       runTransaction(firestore, async (tx) => {
         const snap = await tx.get(ref);
         const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
-        const withoutDay = (data?.testResults ?? []).filter(
-          (id) => parsePlanTestResultId(id)?.dayIndex !== dayIndex
-        );
+        const withoutField = (data?.testResults ?? []).filter((id) => {
+          const parsed = parsePlanTestResultId(id);
+          return (
+            !parsed ||
+            parsed.dayIndex !== dayIndex ||
+            parsed.itemIndex !== itemIndex
+          );
+        });
         tx.update(ref, {
-          testResults: next(withoutDay),
+          testResults: next(withoutField),
           updatedAt: new Date().toISOString(),
         });
       })

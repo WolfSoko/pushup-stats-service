@@ -176,7 +176,7 @@
         (toggleExercise)="toggleExercise(today.day.dayIndex, $event)"
         (resetExercise)="resetExercise(today.day.dayIndex, $event)"
         (recordTest)="recordTest(today.day.dayIndex, $event)"
-        (clearTest)="clearTest(today.day.dayIndex)"
+        (clearTest)="clearTest(today.day.dayIndex, $event)"
       />
     }
 
@@ -263,13 +263,11 @@
                   }
                   @if (row.test; as test) {
                     <app-plan-test-input
-                      [result]="test.result"
-                      [recommended]="test.recommended"
+                      [fields]="test.fields"
                       [scalesPlan]="test.scalesPlan"
-                      [factor]="test.factor"
                       [interactive]="isThisPlanActive() && !row.isFuture"
                       (submitResult)="recordTest(row.day.dayIndex, $event)"
-                      (clearResult)="clearTest(row.day.dayIndex)"
+                      (clearResult)="clearTest(row.day.dayIndex, $event)"
                     />
                   }
                   <app-plan-day-exercises

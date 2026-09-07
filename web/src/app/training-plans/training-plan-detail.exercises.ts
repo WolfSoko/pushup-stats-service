@@ -1,16 +1,23 @@
 import {
   findExerciseDefinition,
   formatExerciseValue,
+  maxTestValue,
   planDayByIndex,
   planDayProgress,
   PlanExerciseProgress,
+  planTestFields,
+  type PlanScaleFactors,
   TrainingPlan,
+  TrainingPlanDay,
 } from '@pu-stats/models';
 import {
   exerciseDisplayName,
   variantDisplayName,
 } from '../stats/i18n/exercise-display-names';
-import { DayExerciseRow } from './training-plan-detail.models';
+import { DayExerciseRow, DayTestField } from './training-plan-detail.models';
+
+const REPS_UNIT = $localize`:@@trainingPlans.reps:Wdh.`;
+const SECONDS_UNIT = $localize`:@@trainingPlans.test.seconds:s`;
 
 /**
  * Maps a day's per-exercise fulfillment onto the row view-model the
@@ -74,5 +81,42 @@ export function previewDayProgress(
     entries: [],
     dateIso: '',
     completedItems: [],
+  });
+}
+
+/**
+ * Maps a `test` day's fields onto the rows the result form binds — one
+ * per measurable exercise the day prescribes, each in its own unit.
+ *
+ * `percent` is null for an exercise the plan defines no baseline for: its
+ * value is worth recording (it is the user's before/after figure) but
+ * there is nothing to scale it against.
+ */
+export function buildTestFieldRows(
+  day: TrainingPlanDay,
+  results: ReadonlyMap<number, number>,
+  factors: PlanScaleFactors,
+  baselines: Readonly<Record<string, number>> | undefined
+): DayTestField[] {
+  return planTestFields(day).map((field) => {
+    const def = findExerciseDefinition(field.exerciseId);
+    const unit = def?.unit ?? 'reps';
+    const variant = def?.variants?.find((v) => v.id === field.variantId);
+    const base = exerciseDisplayName(field.exerciseId);
+    const scalable = (baselines?.[field.exerciseId] ?? 0) > 0;
+    const factor = factors.byExercise.get(field.exerciseId);
+    return {
+      itemIndex: field.itemIndex,
+      name: variant ? `${base} · ${variantDisplayName(variant)}` : base,
+      result: results.get(field.itemIndex) ?? null,
+      recommended:
+        field.recommended > 0
+          ? formatExerciseValue(field.recommended, unit)
+          : '',
+      unit: field.measurement === 'time' ? SECONDS_UNIT : REPS_UNIT,
+      isTime: field.measurement === 'time',
+      max: maxTestValue(field.measurement),
+      percent: scalable ? Math.round((factor ?? 1) * 100) : null,
+    };
   });
 }

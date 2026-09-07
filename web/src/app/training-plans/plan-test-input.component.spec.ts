@@ -1,35 +1,56 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { PlanTestInputComponent } from './plan-test-input.component';
+import {
+  PlanTestInputComponent,
+  TestResultSubmit,
+} from './plan-test-input.component';
+import { DayTestField } from './training-plan-detail.models';
 
-interface Setup {
-  submitted: number[];
-  cleared: number;
+function field(overrides: Partial<DayTestField> = {}): DayTestField {
+  return {
+    itemIndex: 0,
+    name: 'Liegestütze',
+    result: null,
+    recommended: '',
+    unit: 'Wdh.',
+    isTime: false,
+    max: 2000,
+    percent: 100,
+    ...overrides,
+  };
+}
+
+/** The three-measurement shape of a Core Foundations baseline. */
+function coreFields(): DayTestField[] {
+  return [
+    field({ itemIndex: 0, name: 'Plank', unit: 's', isTime: true, max: 10000 }),
+    field({ itemIndex: 1, name: 'Liegestütze' }),
+    field({
+      itemIndex: 2,
+      name: 'Hollow Hold',
+      unit: 's',
+      isTime: true,
+      max: 10000,
+    }),
+  ];
+}
+
+interface Harness {
+  submitted: TestResultSubmit[];
+  cleared: number[];
 }
 
 async function setup(
-  inputs: Partial<{
-    result: number | null;
-    recommended: number;
-    scalesPlan: boolean;
-    factor: number;
-    interactive: boolean;
-  }> = {}
-): Promise<Setup> {
-  const state: Setup = { submitted: [], cleared: 0 };
+  fields: DayTestField[] = [field()],
+  inputs: { scalesPlan?: boolean; interactive?: boolean } = {}
+): Promise<Harness> {
+  const state: Harness = { submitted: [], cleared: [] };
   await render(PlanTestInputComponent, {
-    inputs: {
-      result: null,
-      recommended: 0,
-      scalesPlan: true,
-      factor: 1,
-      interactive: true,
-      ...inputs,
-    },
+    inputs: { fields, scalesPlan: true, interactive: true, ...inputs },
     on: {
-      submitResult: (reps: number) => state.submitted.push(reps),
-      clearResult: () => state.cleared++,
+      submitResult: (e: TestResultSubmit) => state.submitted.push(e),
+      clearResult: (i: number) => state.cleared.push(i),
     },
   });
   return state;
@@ -38,142 +59,196 @@ async function setup(
 const byTestId = (id: string): HTMLElement =>
   document.querySelector(`[data-testid="${id}"]`) as HTMLElement;
 
-const repsField = (): HTMLInputElement =>
-  byTestId('plan-test-reps') as HTMLInputElement;
+const repsField = (i: number): HTMLInputElement =>
+  byTestId(`plan-test-reps-${i}`) as HTMLInputElement;
 
 describe('PlanTestInputComponent', () => {
-  it('should offer a result field on a test day that prescribes nothing', async () => {
-    // given the opening test of a plan with no recommended figure —
-    // the case that previously rendered no input at all
-    await setup({ recommended: 0 });
+  it('should offer one field per measurable exercise of the day', async () => {
+    // given a baseline measuring a plank hold, pushups and a hollow hold —
+    // the case that previously rendered a single pushup field
+    await setup(coreFields());
 
-    // then there is somewhere to put the measured maximum
-    expect(repsField()).toBeTruthy();
-    expect(byTestId('plan-test-submit')).toBeTruthy();
+    // then each measurement can be entered on its own
+    expect(repsField(0)).toBeTruthy();
+    expect(repsField(1)).toBeTruthy();
+    expect(repsField(2)).toBeTruthy();
+    expect(screen.getByText('Plank')).toBeTruthy();
+    expect(screen.getByText('Hollow Hold')).toBeTruthy();
   });
 
-  it('should emit the entered result', async () => {
-    // given an empty field
-    const state = await setup();
+  it('should label each field with its own unit', async () => {
+    // given a mix of holds and rep counts
+    await setup(coreFields());
 
-    // when the user types their maximum and submits
-    await userEvent.type(repsField(), '37');
-    await userEvent.click(byTestId('plan-test-submit'));
+    // then seconds are not presented as repetitions
+    expect(screen.getAllByText('s')).toHaveLength(2);
+    expect(screen.getByText('Wdh.')).toBeTruthy();
+  });
 
-    // then the parent is handed the number to persist
-    expect(state.submitted).toEqual([37]);
+  it('should emit the entered value with the field it belongs to', async () => {
+    // given the three-field baseline
+    const state = await setup(coreFields());
+
+    // when the user fills the pushup field
+    await userEvent.type(repsField(1), '37');
+    await userEvent.click(byTestId('plan-test-submit-1'));
+
+    // then the parent learns which measurement this was
+    expect(state.submitted).toEqual([{ itemIndex: 1, value: 37 }]);
+  });
+
+  it('should keep the fields independent', async () => {
+    // given the three-field baseline
+    const state = await setup(coreFields());
+
+    // when two different measurements are entered
+    await userEvent.type(repsField(0), '45');
+    await userEvent.click(byTestId('plan-test-submit-0'));
+    await userEvent.type(repsField(2), '30');
+    await userEvent.click(byTestId('plan-test-submit-2'));
+
+    // then neither overwrites the other
+    expect(state.submitted).toEqual([
+      { itemIndex: 0, value: 45 },
+      { itemIndex: 2, value: 30 },
+    ]);
   });
 
   it('should submit on Enter', async () => {
-    // given an empty field
     const state = await setup();
-
-    // when the user finishes with the keyboard
-    await userEvent.type(repsField(), '24{Enter}');
-
-    // then the result is recorded without reaching for the button
-    expect(state.submitted).toEqual([24]);
+    await userEvent.type(repsField(0), '24{Enter}');
+    expect(state.submitted).toEqual([{ itemIndex: 0, value: 24 }]);
   });
 
-  it('should refuse a result that is not a usable rep count', async () => {
-    // given an empty field
+  it('should accept a hold beyond the rep ceiling', async () => {
+    // given a plank field, whose ceiling is a duration
+    const state = await setup([
+      field({
+        itemIndex: 0,
+        name: 'Plank',
+        unit: 's',
+        isTime: true,
+        max: 10000,
+      }),
+    ]);
+
+    // when a long hold is entered
+    await userEvent.type(repsField(0), '2400');
+    await userEvent.click(byTestId('plan-test-submit-0'));
+
+    // then it is not rejected as an implausible rep count
+    expect(state.submitted).toEqual([{ itemIndex: 0, value: 2400 }]);
+  });
+
+  it('should refuse a value that is not usable', async () => {
     const state = await setup();
+    await userEvent.type(repsField(0), '0');
 
-    // when the user types something nonsensical
-    await userEvent.type(repsField(), '0');
-
-    // then the submit stays closed and the reason is shown
     expect(
-      byTestId('plan-test-submit').getAttribute('disabled')
+      byTestId('plan-test-submit-0').getAttribute('disabled')
     ).not.toBeNull();
-    expect(byTestId('plan-test-error')).toBeTruthy();
+    expect(byTestId('plan-test-error-0')).toBeTruthy();
     expect(state.submitted).toEqual([]);
   });
 
-  it('should not offer submission while the field is empty', async () => {
-    // given / when
+  it('should not scold the user before they type', async () => {
     await setup();
-
-    // then there is nothing to submit, and no error scolding the user yet
     expect(
-      byTestId('plan-test-submit').getAttribute('disabled')
+      byTestId('plan-test-submit-0').getAttribute('disabled')
     ).not.toBeNull();
-    expect(byTestId('plan-test-error')).toBeNull();
+    expect(byTestId('plan-test-error-0')).toBeNull();
   });
 
-  it('should prefill an existing result so a revision starts from it', async () => {
-    // given a test already taken at 30
-    await setup({ result: 30 });
-
-    // then the field carries it and the button offers an update
-    expect(repsField().value).toBe('30');
-    expect(byTestId('plan-test-submit').textContent).toContain('Aktualisieren');
+  it('should prefill an existing value so a revision starts from it', async () => {
+    await setup([field({ result: 30 })]);
+    expect(repsField(0).value).toBe('30');
+    expect(byTestId('plan-test-submit-0').textContent).toContain(
+      'Aktualisieren'
+    );
   });
 
-  it('should offer to discard an existing result', async () => {
-    // given a recorded result
-    const state = await setup({ result: 30 });
+  it('should discard only the value it was asked to', async () => {
+    // given two recorded measurements
+    const state = await setup([
+      field({
+        itemIndex: 0,
+        name: 'Plank',
+        result: 45,
+        unit: 's',
+        isTime: true,
+      }),
+      field({ itemIndex: 1, name: 'Liegestütze', result: 12 }),
+    ]);
 
-    // when the user discards it
-    await userEvent.click(byTestId('plan-test-clear'));
+    // when the second is discarded
+    await userEvent.click(byTestId('plan-test-clear-1'));
 
-    // then the parent is asked to drop it
-    expect(state.cleared).toBe(1);
+    // then the first is untouched
+    expect(state.cleared).toEqual([1]);
+    expect(byTestId('plan-test-clear-0')).toBeTruthy();
   });
 
-  it('should not offer to discard when there is nothing recorded', async () => {
-    // given an untaken test
-    await setup({ result: null });
-
-    // then
-    expect(byTestId('plan-test-clear')).toBeNull();
+  it('should not offer to discard what was never recorded', async () => {
+    await setup();
+    expect(byTestId('plan-test-clear-0')).toBeNull();
   });
 
-  it('should explain that the result adjusts the following days', async () => {
-    // given the plan's opening test, untaken
-    await setup({ scalesPlan: true, result: null });
+  it('should explain what recording does while a field is still open', async () => {
+    // given a baseline only partly filled in
+    await setup([field({ itemIndex: 0, result: 30 }), field({ itemIndex: 1 })]);
 
-    // then the user is told what recording it does — and what skipping does
+    // then the user is told what the results do — and what skipping does
     expect(
-      screen.getByText(/passt die Vorgaben der folgenden Tage an/)
+      screen.getByText(/passen die Vorgaben der folgenden Tage an/)
     ).toBeTruthy();
     expect(screen.getByText(/normalen Planwerte/)).toBeTruthy();
   });
 
-  it('should report the adjustment a recorded result put in force', async () => {
-    // given a result that moved the plan to 150 %
-    await setup({ scalesPlan: true, result: 30, factor: 1.5 });
+  it('should report the adjustment each measurement put in force', async () => {
+    // given a fully recorded baseline that moved two exercises differently
+    await setup([
+      field({
+        itemIndex: 0,
+        name: 'Plank',
+        result: 60,
+        percent: 200,
+        unit: 's',
+        isTime: true,
+      }),
+      field({ itemIndex: 1, name: 'Liegestütze', result: 15, percent: 150 }),
+    ]);
 
-    // then the effect is stated in the user's own terms
-    expect(screen.getByText(/150/)).toBeTruthy();
+    // then the effect is stated per exercise, not as one number
+    expect(screen.getByText(/Plank 200 %/)).toBeTruthy();
+    expect(screen.getByText(/Liegestütze 150 %/)).toBeTruthy();
+  });
+
+  it('should not promise scaling for a measurement the plan cannot use', async () => {
+    // given a recorded value the plan defines no baseline for
+    await setup([field({ result: 30, percent: null })]);
+
+    // then it is reported as noted, not as an adjustment
+    expect(screen.getByText(/Planwerte bleiben unverändert/)).toBeTruthy();
   });
 
   it('should stay silent about scaling on the closing test', async () => {
     // given the final test — nothing follows it to rescale
-    await setup({ scalesPlan: false, result: null });
-
-    // then no promise is made about later days
+    await setup([field()], { scalesPlan: false });
     expect(screen.queryByText(/folgenden Tage/)).toBeNull();
   });
 
   it('should show the recommended figure when the day names one', async () => {
-    // given a test day recommending 100
-    await setup({ recommended: 100 });
-
-    // then it reads as a reference, not as the answer
+    await setup([field({ recommended: '100' })]);
     expect(screen.getByText(/Richtwert/)).toBeTruthy();
     expect(screen.getByText('100')).toBeTruthy();
   });
 
   it('should stay read-only for a future day or an inactive plan', async () => {
-    // given a non-interactive render
-    await setup({ interactive: false, result: 30 });
-
-    // then nothing can be written from here
-    expect(repsField().disabled).toBe(true);
+    await setup([field({ result: 30 })], { interactive: false });
+    expect(repsField(0).disabled).toBe(true);
     expect(
-      byTestId('plan-test-submit').getAttribute('disabled')
+      byTestId('plan-test-submit-0').getAttribute('disabled')
     ).not.toBeNull();
-    expect(byTestId('plan-test-clear')).toBeNull();
+    expect(byTestId('plan-test-clear-0')).toBeNull();
   });
 });

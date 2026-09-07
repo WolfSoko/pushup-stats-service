@@ -501,47 +501,66 @@ describe('UserTrainingPlanApiService', () => {
     return captured as unknown as Record<string, unknown>;
   }
 
-  it('should record a max-test result alongside the results of other days', async () => {
-    // given a doc that already holds the closing test's result
+  it('should record a measured value alongside the day other measurements', async () => {
+    // given a baseline whose plank hold is already recorded
     const payload = await captureTestResultWrite(
-      { testResults: ['30:44'] },
-      (service) => service.setTestResult('u', 1, 37)
+      { testResults: ['1:0:45'] },
+      (service) => service.setTestResult('u', 1, 1, 12)
     );
 
-    // then the new result joins it rather than replacing the array
-    expect(payload['testResults']).toEqual(['30:44', '1:37']);
+    // then the pushup value joins it instead of replacing the array
+    expect(payload['testResults']).toEqual(['1:0:45', '1:1:12']);
   });
 
-  it('should replace a revised result rather than stacking a second one', async () => {
-    // given day 1 already recorded at 30 — `arrayUnion` alone would leave
-    // both values behind, and Firestore allows only one transform per field
+  it('should replace a revised value without touching the day other fields', async () => {
+    // given all three fields of a Core Foundations baseline recorded
     const payload = await captureTestResultWrite(
-      { testResults: ['1:30', '30:44'] },
-      (service) => service.setTestResult('u', 1, 35)
+      { testResults: ['1:0:45', '1:1:12', '1:2:30'] },
+      (service) => service.setTestResult('u', 1, 1, 15)
     );
 
-    // then exactly one result stands for that day
-    expect(payload['testResults']).toEqual(['30:44', '1:35']);
+    // then only the pushup field is rewritten — `arrayUnion` alone would
+    // leave both values behind, and Firestore allows one transform per field
+    expect(payload['testResults']).toEqual(['1:0:45', '1:2:30', '1:1:15']);
   });
 
-  it('should drop only the requested day when a result is discarded', async () => {
-    // given results for both tests
+  it('should drop only the requested field when a value is discarded', async () => {
+    // given a three-value baseline
     const payload = await captureTestResultWrite(
-      { testResults: ['1:30', '30:44'] },
-      (service) => service.removeTestResult('u', 1)
+      { testResults: ['1:0:45', '1:1:12', '1:2:30'] },
+      (service) => service.removeTestResult('u', 1, 1)
     );
 
-    // then the closing test's result survives
-    expect(payload['testResults']).toEqual(['30:44']);
+    // then the plank and hollow values survive
+    expect(payload['testResults']).toEqual(['1:0:45', '1:2:30']);
   });
 
-  it('should record the first result on a doc that has none', async () => {
-    // given a plan doc with no `testResults` field yet
+  it('should keep another day results when one day field is rewritten', async () => {
+    // given values for both the opening and the closing test
+    const payload = await captureTestResultWrite(
+      { testResults: ['1:0:45', '28:0:60'] },
+      (service) => service.setTestResult('u', 1, 0, 50)
+    );
+
+    // then the closing test is untouched
+    expect(payload['testResults']).toEqual(['28:0:60', '1:0:50']);
+  });
+
+  it('should replace a legacy single-value entry rather than duplicating it', async () => {
+    // given a doc written before test days could measure several things
+    const payload = await captureTestResultWrite(
+      { testResults: ['1:37'] },
+      (service) => service.setTestResult('u', 1, 0, 40)
+    );
+
+    // then it resolves to field 0 and is superseded, not stacked on
+    expect(payload['testResults']).toEqual(['1:0:40']);
+  });
+
+  it('should record the first value on a doc that has none', async () => {
     const payload = await captureTestResultWrite({}, (service) =>
-      service.setTestResult('u', 1, 20)
+      service.setTestResult('u', 1, 0, 20)
     );
-
-    // then
-    expect(payload['testResults']).toEqual(['1:20']);
+    expect(payload['testResults']).toEqual(['1:0:20']);
   });
 });

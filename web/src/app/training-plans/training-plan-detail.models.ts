@@ -28,16 +28,34 @@ export interface DayExerciseRow {
   auto: boolean;
 }
 
-/** View-model for the result field of a `test` day. */
-export interface DayTestRow {
-  /** What the user measured, or null while the test is untaken. */
+/** View-model for one measured value of a `test` day. */
+export interface DayTestField {
+  /** Position within the day; identifies the value being recorded. */
+  itemIndex: number;
+  /** Localized exercise name, including the variant when the plan names one. */
+  name: string;
+  /** What the user measured, or null while it is unrecorded. */
   result: number | null;
-  /** The day's own recommended figure; 0 when it prescribes none. */
-  recommended: number;
-  /** True for the opening test — the one whose result rescales the plan. */
+  /** The day's own recommended figure, formatted; empty when it has none. */
+  recommended: string;
+  /** Unit suffix shown next to the field (`Wdh.`, `s`). */
+  unit: string;
+  /** True when the value is a duration rather than a rep count. */
+  isTime: boolean;
+  /** Largest value accepted, guarding against a stray keypress. */
+  max: number;
+  /**
+   * Percent of the plan's baseline this value put in force, or null when
+   * the plan defines no baseline for this exercise (nothing to scale).
+   */
+  percent: number | null;
+}
+
+/** View-model for the result fields of a `test` day. */
+export interface DayTestRow {
+  fields: ReadonlyArray<DayTestField>;
+  /** True for the opening test — the one whose results rescale the plan. */
   scalesPlan: boolean;
-  /** Scale factor currently in force, for the "what this did" hint. */
-  factor: number;
 }
 
 /** View-model for a single plan day rendered in the week list. */

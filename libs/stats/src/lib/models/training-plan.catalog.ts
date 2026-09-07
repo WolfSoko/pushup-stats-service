@@ -1271,7 +1271,8 @@ const PUSH_PULL_BALANCE_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     100,
     undefined,
-    $localize`:@@plan.push-pull-6w.day.42.desc:Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz`
+    $localize`:@@plan.push-pull-6w.day.42.desc:Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz`,
+    { exercises: [x(LS, 100), x(PULLUPS, 12)] }
   ),
 ];
 
@@ -1636,7 +1637,8 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'test',
     10,
     undefined,
-    $localize`:@@plan.core-4w.day.1.desc:Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit`
+    $localize`:@@plan.core-4w.day.1.desc:Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit`,
+    { exercises: [x(PLANK, 30), x(LS, 10), x(HOLLOW, 20)] }
   ),
   d(
     2,
@@ -2293,7 +2295,7 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     },
     blogSlug: $localize`:@@plan.challenge-30d.blogSlug:30-tage-liegestuetze-challenge`,
     // Tag 2 fährt 3×AMRAP mit Ziel 20-20-20.
-    baselineMaxReps: 20,
+    baselineMax: { pushup: 20 },
     days: CHALLENGE_30_DAYS,
   },
   {
@@ -2312,7 +2314,7 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     },
     blogSlug: $localize`:@@plan.over-40-4w.blogSlug:liegestuetze-ab-40`,
     // Tag 2 startet bei 3×8 Knie- oder erhöhten Liegestützen.
-    baselineMaxReps: 10,
+    baselineMax: { pushup: 10 },
     days: OVER_40_DAYS,
   },
   {
@@ -2331,7 +2333,7 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     },
     // Der Plan richtet sich laut eigenem Text an „20+ saubere Liegestütze am
     // Stück"; die 50 des Tag-1-Tests sind Tagesvolumen, kein Einzelsatz-Maximum.
-    baselineMaxReps: 22,
+    baselineMax: { pushup: 22 },
     days: DAILY_100_DAYS,
   },
   {
@@ -2380,8 +2382,8 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
       profileUrl:
         'https://unsplash.com/@lawrencecrayton?utm_source=pushup_stats&utm_medium=referral',
     },
-    // Tag 1 empfiehlt 20 Liegestütze im Maximalsatz.
-    baselineMaxReps: 20,
+    // Referenzen aus dem Baseline-Test an Tag 1.
+    baselineMax: { pushup: 20, 'squat.wallsit': 60, 'plank.standard': 60 },
     days: FULL_BODY_DAYS,
   },
   {
@@ -2398,8 +2400,9 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
       profileUrl:
         'https://unsplash.com/@yogaminna8?utm_source=pushup_stats&utm_medium=referral',
     },
-    // Tag 1 empfiehlt 10 saubere Liegestütze, Tag 2 fährt 2×10.
-    baselineMaxReps: 10,
+    // Referenzen aus dem Baseline-Test an Tag 1; Plank und Hollow folgen
+    // den Satzlängen, die Tag 2 in Woche 1 fährt.
+    baselineMax: { pushup: 10, 'plank.standard': 30, 'core.hollowhold': 20 },
     days: CORE_FOUNDATIONS_DAYS,
   },
   {

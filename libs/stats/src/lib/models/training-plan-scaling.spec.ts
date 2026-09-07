@@ -1,15 +1,18 @@
 import {
+  isNeutralScaling,
   MAX_PLAN_SCALE,
   MIN_PLAN_SCALE,
-  planScaleFactor,
+  NO_PLAN_SCALING,
+  planScaleFactors,
   scaleBreakdown,
   scaleTrainingPlan,
   scaleTrainingPlanDay,
   scaledPlanFor,
+  type PlanScaleFactors,
 } from './training-plan-scaling';
 import {
-  planTestResultId,
   planBaselineTestDay,
+  planTestResultId,
 } from './training-plan-test.models';
 import {
   TrainingPlan,
@@ -17,7 +20,7 @@ import {
   UserTrainingPlan,
 } from './training-plan.models';
 import { planDayExercises } from './training-plan-exercise.models';
-import { TRAINING_PLANS } from './training-plan.catalog';
+import { findPlanBySlug, TRAINING_PLANS } from './training-plan.catalog';
 
 function day(
   dayIndex: number,
@@ -28,7 +31,10 @@ function day(
   return { dayIndex, kind, targetReps, description: '', ...extra };
 }
 
-function plan(days: TrainingPlanDay[], baselineMaxReps?: number): TrainingPlan {
+function plan(
+  days: TrainingPlanDay[],
+  baselineMax?: Record<string, number>
+): TrainingPlan {
   return {
     id: 'p',
     slug: 'p',
@@ -36,7 +42,7 @@ function plan(days: TrainingPlanDay[], baselineMaxReps?: number): TrainingPlan {
     summary: '',
     level: 'beginner',
     totalDays: days.length,
-    ...(baselineMaxReps === undefined ? {} : { baselineMaxReps }),
+    ...(baselineMax ? { baselineMax } : {}),
     days,
   };
 }
@@ -52,112 +58,157 @@ function userPlan(testResults?: string[]): UserTrainingPlan {
   };
 }
 
-/** A plan that opens and closes with a max test, as the real ones do. */
-const TESTED_PLAN = plan(
+function factors(byExercise: Record<string, number>): PlanScaleFactors {
+  const map = new Map(Object.entries(byExercise));
+  return { primary: map.get('pushup') ?? 1, byExercise: map };
+}
+
+/**
+ * A plan whose opening test measures three things, like Core Foundations:
+ * a plank hold, pushups and a hollow hold.
+ */
+const MULTI_PLAN = plan(
   [
-    day(1, 'test', 0),
-    day(2, 'main', 60, { sets: [20, 20, 20] }),
+    day(1, 'test', 10, {
+      exercises: [
+        { exerciseId: 'plank.standard', target: 30 },
+        { exerciseId: 'pushup', target: 10 },
+        { exerciseId: 'core.hollowhold', target: 20 },
+      ],
+    }),
+    day(2, 'main', 20, {
+      sets: [10, 10],
+      exercises: [
+        { exerciseId: 'pushup', target: 20, sets: [10, 10] },
+        { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] },
+        { exerciseId: 'core.hollowhold', target: 60, sets: [20, 20, 20] },
+        { exerciseId: 'core.deadbug', target: 20 },
+      ],
+    }),
     day(3, 'rest', 0),
-    day(4, 'light', 30, { sets: [15, 15] }),
-    day(5, 'test', 100),
+    day(4, 'test', 30),
   ],
-  20
+  { pushup: 10, 'plank.standard': 30, 'core.hollowhold': 20 }
 );
 
-describe('planScaleFactor', () => {
-  it('should be 1 when the opening test has no recorded result', () => {
-    // given a plan with a baseline but an untaken test
-    // when the factor is resolved
-    // then nothing scales
-    expect(planScaleFactor(TESTED_PLAN, userPlan())).toBe(1);
+/** Results: pushups ×1.5, plank ×2, hollow ×1. */
+const MULTI_RESULTS = [
+  planTestResultId(1, 0, 60),
+  planTestResultId(1, 1, 15),
+  planTestResultId(1, 2, 20),
+];
+
+describe('planScaleFactors', () => {
+  it('should be neutral when the opening test has no recorded values', () => {
+    expect(planScaleFactors(MULTI_PLAN, userPlan())).toBe(NO_PLAN_SCALING);
   });
 
-  it('should be 1 when the user skipped the opening test', () => {
-    // given a user who skipped day 1 rather than recording a result
+  it('should be neutral when the user skipped the opening test', () => {
+    // given a user who skipped day 1 rather than recording anything
     const skipped: UserTrainingPlan = { ...userPlan(), skippedDays: [1] };
 
-    // when the factor is resolved
     // then the catalog numbers stand
-    expect(planScaleFactor(TESTED_PLAN, skipped)).toBe(1);
+    expect(isNeutralScaling(planScaleFactors(MULTI_PLAN, skipped))).toBe(true);
   });
 
-  it('should be 1 for a plan that names no baseline', () => {
-    // given the same days without `baselineMaxReps`
-    const noBaseline = plan(TESTED_PLAN.days as TrainingPlanDay[]);
+  it('should be neutral for a plan that names no baselines', () => {
+    // given the same days without `baselineMax`
+    const noBaseline = plan(MULTI_PLAN.days as TrainingPlanDay[]);
 
-    // when a result exists anyway
-    const result = planScaleFactor(
-      noBaseline,
-      userPlan([planTestResultId(1, 40)])
-    );
-
-    // then there is nothing to compare it against
-    expect(result).toBe(1);
+    // then there is nothing to compare the values against
+    expect(
+      isNeutralScaling(planScaleFactors(noBaseline, userPlan(MULTI_RESULTS)))
+    ).toBe(true);
   });
 
-  it('should be 1 when the plan only closes with a test', () => {
+  it('should be neutral when the plan only closes with a test', () => {
     // given a plan whose single test is its last day
-    const closingOnly = plan([day(1, 'main', 30), day(2, 'test', 50)], 20);
-
-    // when a result is recorded for it
-    const result = planScaleFactor(
-      closingOnly,
-      userPlan([planTestResultId(2, 40)])
-    );
+    const closingOnly = plan([day(1, 'main', 30), day(2, 'test', 50)], {
+      pushup: 20,
+    });
 
     // then nothing follows it to rescale
     expect(planBaselineTestDay(closingOnly)).toBeNull();
-    expect(result).toBe(1);
-  });
-
-  it('should divide the measured result by the plan baseline', () => {
-    // given a baseline of 20 and a measured 30
-    // when the factor is resolved
-    // then the plan runs at 1.5×
     expect(
-      planScaleFactor(TESTED_PLAN, userPlan([planTestResultId(1, 30)]))
-    ).toBe(1.5);
+      isNeutralScaling(
+        planScaleFactors(closingOnly, userPlan([planTestResultId(2, 0, 40)]))
+      )
+    ).toBe(true);
   });
 
-  it('should clamp a result far below the baseline', () => {
-    // given a user who managed 2 reps against a baseline of 20
-    const result = planScaleFactor(
-      TESTED_PLAN,
-      userPlan([planTestResultId(1, 2)])
+  it('should derive one factor per measured exercise', () => {
+    // given a test measuring three things against three references
+    const result = planScaleFactors(MULTI_PLAN, userPlan(MULTI_RESULTS));
+
+    // then each exercise gets its own ratio
+    expect(result.byExercise.get('pushup')).toBe(1.5);
+    expect(result.byExercise.get('plank.standard')).toBe(2);
+    expect(result.byExercise.get('core.hollowhold')).toBe(1);
+    // and the pushup factor stands in for everything unmeasured
+    expect(result.primary).toBe(1.5);
+  });
+
+  it('should ignore a field the user left blank', () => {
+    // given only the plank recorded
+    const result = planScaleFactors(
+      MULTI_PLAN,
+      userPlan([planTestResultId(1, 0, 60)])
     );
 
-    // then the factor stops at the floor rather than collapsing the plan
-    expect(result).toBe(MIN_PLAN_SCALE);
+    // then the untaken measurements do not invent a factor
+    expect(result.byExercise.get('plank.standard')).toBe(2);
+    expect(result.byExercise.has('pushup')).toBe(false);
+    // and unmeasured exercises stay at the catalog numbers
+    expect(result.primary).toBe(1);
   });
 
-  it('should clamp a result far above the baseline', () => {
-    // given a fat-fingered 500 against a baseline of 20
-    const result = planScaleFactor(
-      TESTED_PLAN,
-      userPlan([planTestResultId(1, 500)])
+  it('should ignore a measured exercise the plan names no baseline for', () => {
+    // given a test measuring pushups, but a plan that only references planks
+    const p = plan(MULTI_PLAN.days as TrainingPlanDay[], {
+      'plank.standard': 30,
+    });
+
+    // when everything is recorded
+    const result = planScaleFactors(p, userPlan(MULTI_RESULTS));
+
+    // then only the referenced exercise scales
+    expect(result.byExercise.get('plank.standard')).toBe(2);
+    expect(result.byExercise.has('pushup')).toBe(false);
+  });
+
+  it('should clamp a value far below its baseline', () => {
+    const result = planScaleFactors(
+      MULTI_PLAN,
+      userPlan([planTestResultId(1, 1, 1)])
+    );
+    expect(result.byExercise.get('pushup')).toBe(MIN_PLAN_SCALE);
+  });
+
+  it('should clamp a value far above its baseline', () => {
+    // given a fat-fingered 500 against a baseline of 10
+    const result = planScaleFactors(
+      MULTI_PLAN,
+      userPlan([planTestResultId(1, 1, 500)])
     );
 
     // then weeks of unusable targets are avoided
-    expect(result).toBe(MAX_PLAN_SCALE);
+    expect(result.byExercise.get('pushup')).toBe(MAX_PLAN_SCALE);
   });
 
-  it('should read the last entry when a doc carries duplicates for one day', () => {
-    // given a hand-edited doc with two results for day 1
-    const messy = userPlan([planTestResultId(1, 10), planTestResultId(1, 30)]);
+  it('should read a legacy single-value doc as the first field', () => {
+    // given a doc written before test days could measure several things
+    const result = planScaleFactors(MULTI_PLAN, userPlan(['1:60']));
 
-    // when the factor is resolved
-    // then it does not depend on array order luck
-    expect(planScaleFactor(TESTED_PLAN, messy)).toBe(1.5);
+    // then it still resolves — onto the day's first field, the plank
+    expect(result.byExercise.get('plank.standard')).toBe(2);
   });
 });
 
 describe('scaleBreakdown', () => {
   it('should keep the sets summing to the new total', () => {
-    // given a 3-set breakdown rescaled to 90
-    const out = scaleBreakdown([20, 20, 20], 90);
-
-    // then the parts still add up to the whole
-    expect(out.reduce((a, b) => a + b, 0)).toBe(90);
+    expect(scaleBreakdown([20, 20, 20], 90).reduce((a, b) => a + b, 0)).toBe(
+      90
+    );
   });
 
   it('should preserve the descending shape of a breakdown', () => {
@@ -172,67 +223,70 @@ describe('scaleBreakdown', () => {
 
   it('should never drop a set below one rep', () => {
     // given a total smaller than the number of sets
-    const out = scaleBreakdown([10, 10, 10], 2);
-
-    // then every set survives as a real set
-    expect(out.every((s) => s >= 1)).toBe(true);
+    expect(scaleBreakdown([10, 10, 10], 2).every((s) => s >= 1)).toBe(true);
   });
 
   it('should terminate on a total of zero', () => {
-    // given nothing to distribute
-    // then the input is handed back untouched
     expect(scaleBreakdown([10, 10], 0)).toEqual([10, 10]);
   });
 });
 
 describe('scaleTrainingPlanDay', () => {
-  it('should leave rest days alone', () => {
-    // given a rest day
-    const rest = day(3, 'rest', 0);
+  const f = factors({
+    pushup: 1.5,
+    'plank.standard': 2,
+    'core.hollowhold': 1,
+  });
 
-    // then it is returned as-is
-    expect(scaleTrainingPlanDay(rest, 1.5)).toBe(rest);
+  it('should leave rest days alone', () => {
+    const rest = day(3, 'rest', 0);
+    expect(scaleTrainingPlanDay(rest, f)).toBe(rest);
   });
 
   it('should leave test days alone', () => {
     // given a max test — an all-out effort, not a movable target
-    const test = day(5, 'test', 100);
-
-    // then its recommendation does not move with the factor
-    expect(scaleTrainingPlanDay(test, 1.5)).toBe(test);
+    const test = day(4, 'test', 100);
+    expect(scaleTrainingPlanDay(test, f)).toBe(test);
   });
 
-  it('should scale targetReps and its set breakdown together', () => {
-    // given a main day of 3×20
-    const main = day(2, 'main', 60, { sets: [20, 20, 20] });
+  it('should scale each exercise by its own measured factor', () => {
+    // given a circuit day whose exercises the test measured differently
+    const scaled = scaleTrainingPlanDay(MULTI_PLAN.days[1], f);
+    const byId = new Map(
+      (scaled.exercises ?? []).map((e) => [e.exerciseId, e])
+    );
 
-    // when the plan runs at 1.5×
-    const scaled = scaleTrainingPlanDay(main, 1.5);
-
-    // then both the total and the breakdown move, and still agree
-    expect(scaled.targetReps).toBe(90);
-    expect(scaled.sets).toEqual([30, 30, 30]);
-    expect(scaled.sets?.reduce((a, b) => a + b, 0)).toBe(scaled.targetReps);
+    // then each moves by its own ratio, not by one shared number
+    expect(byId.get('pushup')?.target).toBe(30);
+    expect(byId.get('plank.standard')?.target).toBe(180);
+    expect(byId.get('core.hollowhold')?.target).toBe(60);
   });
 
-  it('should scale time-measured exercises alongside the reps', () => {
-    // given a circuit day pairing pushups with holds
-    const circuit = day(2, 'main', 30, {
-      exercises: [
-        { exerciseId: 'pushup', target: 30, sets: [10, 10, 10] },
-        { exerciseId: 'plank.standard', target: 90, sets: [30, 30, 30] },
-      ],
-    });
+  it('should move an unmeasured exercise with the pushup factor', () => {
+    // given Dead Bug, which the opening test never measured
+    const scaled = scaleTrainingPlanDay(MULTI_PLAN.days[1], f);
+    const deadbug = (scaled.exercises ?? []).find(
+      (e) => e.exerciseId === 'core.deadbug'
+    );
 
-    // when the plan runs at 1.5×
-    const scaled = scaleTrainingPlanDay(circuit, 1.5);
-
-    // then the holds move with everything else
-    expect(scaled.exercises?.[0].target).toBe(45);
-    expect(scaled.exercises?.[1].target).toBe(135);
+    // then the plan does not end up half-adjusted
+    expect(deadbug?.target).toBe(30);
   });
 
-  it('should keep the pushup items mirroring targetReps', () => {
+  it('should scale targetReps with the headline exercise', () => {
+    // given the day's pushup portion at ×1.5
+    const scaled = scaleTrainingPlanDay(MULTI_PLAN.days[1], f);
+
+    // then the dashboard pill and the exercise list agree
+    expect(scaled.targetReps).toBe(30);
+    expect(scaled.sets).toEqual([15, 15]);
+    const pushupTotal = (scaled.exercises ?? [])
+      .filter((e) => e.exerciseId === 'pushup')
+      .reduce((sum, e) => sum + e.target, 0);
+    expect(pushupTotal).toBe(scaled.targetReps);
+  });
+
+  it('should keep the pushup items mirroring targetReps under odd factors', () => {
     // given a day that names the headline exercise twice
     const split = day(2, 'main', 40, {
       exercises: [
@@ -242,10 +296,10 @@ describe('scaleTrainingPlanDay', () => {
       ],
     });
 
-    // when it is scaled by an awkward factor
-    const scaled = scaleTrainingPlanDay(split, 1.35);
+    // when scaled by a factor that rounds awkwardly
+    const scaled = scaleTrainingPlanDay(split, factors({ pushup: 1.35 }));
 
-    // then the dashboard pill and the exercise list still agree
+    // then the two numbers the user sees still agree
     const pushupTotal = (scaled.exercises ?? [])
       .filter((e) => e.exerciseId === 'pushup')
       .reduce((sum, e) => sum + e.target, 0);
@@ -259,11 +313,10 @@ describe('scaleTrainingPlanDay', () => {
       exercises: [{ exerciseId: 'cardio.burpees', target: 0 }],
     });
 
-    // when it is scaled
-    const scaled = scaleTrainingPlanDay(hiit, 2);
-
     // then a target is not invented for it
-    expect(scaled.exercises?.[0].target).toBe(0);
+    expect(
+      scaleTrainingPlanDay(hiit, factors({ pushup: 2 })).exercises?.[0].target
+    ).toBe(0);
   });
 
   it('should keep item sets summing to their own item target', () => {
@@ -273,28 +326,30 @@ describe('scaleTrainingPlanDay', () => {
     });
 
     // when scaled by a factor that rounds awkwardly
-    const scaled = scaleTrainingPlanDay(d, 1.17);
+    const item = scaleTrainingPlanDay(d, factors({ pushup: 1.17 }))
+      .exercises?.[0];
 
     // then the invariant the catalog guard enforces still holds
-    const item = scaled.exercises?.[0];
     expect(item?.sets?.reduce((a, b) => a + b, 0)).toBe(item?.target);
   });
 });
 
 describe('scaleTrainingPlan', () => {
-  it('should return the catalog object itself at factor 1', () => {
+  it('should return the catalog object itself under neutral scaling', () => {
     // given an untested plan
-    // when it is "scaled" by 1
     // then the untouched path is identity, not a rebuilt copy
-    expect(scaleTrainingPlan(TESTED_PLAN, 1)).toBe(TESTED_PLAN);
+    expect(scaleTrainingPlan(MULTI_PLAN, NO_PLAN_SCALING)).toBe(MULTI_PLAN);
+    expect(scaleTrainingPlan(MULTI_PLAN, factors({ pushup: 1 }))).toBe(
+      MULTI_PLAN
+    );
   });
 
-  it('should hand back the same object for a repeated factor', () => {
+  it('should hand back the same object for a repeated factor set', () => {
     // given one scaled plan
-    const first = scaleTrainingPlan(TESTED_PLAN, 1.5);
+    const first = scaleTrainingPlan(MULTI_PLAN, factors({ pushup: 1.5 }));
 
-    // when it is requested again
-    const second = scaleTrainingPlan(TESTED_PLAN, 1.5);
+    // when the same factors are requested again, built independently
+    const second = scaleTrainingPlan(MULTI_PLAN, factors({ pushup: 1.5 }));
 
     // then downstream computed signals are not invalidated for nothing
     expect(second).toBe(first);
@@ -302,35 +357,33 @@ describe('scaleTrainingPlan', () => {
 
   it('should keep derived exercise items in step with the scaled day', () => {
     // given a plan scaled up
-    const scaled = scaleTrainingPlan(TESTED_PLAN, 1.5);
-
-    // when the day's exercise list is derived
-    const items = planDayExercises(scaled.days[1]);
+    const scaled = scaleTrainingPlan(MULTI_PLAN, factors({ pushup: 1.5 }));
 
     // then the item the UI renders carries the scaled target
-    expect(items[0].target).toBe(90);
+    expect(planDayExercises(scaled.days[1])[0].target).toBe(30);
   });
 });
 
 describe('scaledPlanFor', () => {
   it('should leave the plan untouched for a user who skipped the test', () => {
-    // given no recorded result
-    // when the plan is resolved for that user
+    // given no recorded values
     // then they train the catalog plan, object identity included
-    expect(scaledPlanFor(TESTED_PLAN, userPlan())).toBe(TESTED_PLAN);
+    expect(scaledPlanFor(MULTI_PLAN, userPlan())).toBe(MULTI_PLAN);
   });
 
-  it('should apply the measured baseline end to end', () => {
-    // given a user who tested at 10 against a baseline of 20
-    const scaled = scaledPlanFor(
-      TESTED_PLAN,
-      userPlan([planTestResultId(1, 10)])
+  it('should apply every measured baseline end to end', () => {
+    // given the three-value baseline recorded
+    const scaled = scaledPlanFor(MULTI_PLAN, userPlan(MULTI_RESULTS));
+    const byId = new Map(
+      (scaled?.days[1].exercises ?? []).map((e) => [e.exerciseId, e])
     );
 
-    // then the plan halves, and its closing test still asks for everything
-    expect(scaled?.days[1].targetReps).toBe(30);
-    expect(scaled?.days[3].targetReps).toBe(15);
-    expect(scaled?.days[4].targetReps).toBe(100);
+    // then each exercise sits on its own factor, and the closing test
+    // still asks for everything the user has
+    expect(byId.get('pushup')?.target).toBe(30);
+    expect(byId.get('plank.standard')?.target).toBe(180);
+    expect(byId.get('core.hollowhold')?.target).toBe(60);
+    expect(scaled?.days[3].targetReps).toBe(30);
   });
 
   it('should return null without a plan', () => {
@@ -339,22 +392,46 @@ describe('scaledPlanFor', () => {
 });
 
 describe('scaling the shipped catalog', () => {
-  const scalable = TRAINING_PLANS.filter((p) => p.baselineMaxReps);
+  const scalable = TRAINING_PLANS.filter((p) => p.baselineMax);
 
-  it('should only name a baseline on plans that open with a test', () => {
-    // given every plan carrying `baselineMaxReps`
+  it('should only name baselines on plans that open with a test', () => {
     for (const p of scalable) {
-      // then each has an opening test whose result can drive it
       expect(planBaselineTestDay(p)).not.toBeNull();
     }
     expect(scalable.length).toBeGreaterThan(0);
   });
 
+  it('should scale Core Foundations plank work off the plank baseline', () => {
+    // given a user who doubles the plank hold but matches the pushups
+    const core = findPlanBySlug('core-4w') as TrainingPlan;
+    const scaled = scaledPlanFor(
+      core,
+      userPlan([planTestResultId(1, 0, 60), planTestResultId(1, 1, 10)])
+    ) as TrainingPlan;
+
+    // when a later plank prescription is compared
+    const before = core.days[1].exercises?.find(
+      (e) => e.exerciseId === 'plank.standard'
+    );
+    const after = scaled.days[1].exercises?.find(
+      (e) => e.exerciseId === 'plank.standard'
+    );
+
+    // then the plank moved and the pushups did not
+    expect(after?.target).toBe((before?.target ?? 0) * 2);
+    expect(scaled.days[1].targetReps).toBe(core.days[1].targetReps);
+  });
+
   it('should hold the catalog invariants after scaling', () => {
     // given every scalable plan pushed to both clamp bounds
+    const probes: PlanScaleFactors[] = [
+      factors({ pushup: MIN_PLAN_SCALE }),
+      factors({ pushup: 1.37, 'plank.standard': 0.8 }),
+      factors({ pushup: MAX_PLAN_SCALE, 'core.hollowhold': 1.5 }),
+    ];
     for (const p of scalable) {
-      for (const factor of [MIN_PLAN_SCALE, 1.37, MAX_PLAN_SCALE]) {
-        for (const d of scaleTrainingPlan(p, factor).days) {
+      for (const probe of probes) {
+        for (const d of scaleTrainingPlan(p, probe).days) {
           // then rest days stay empty and sets keep summing to their total
           if (d.kind === 'rest') expect(d.targetReps).toBe(0);
           if (d.sets && d.kind !== 'test') {
@@ -365,10 +442,12 @@ describe('scaling the shipped catalog', () => {
               expect(item.sets.reduce((a, b) => a + b, 0)).toBe(item.target);
             }
           }
-          const pushupTotal = (d.exercises ?? [])
-            .filter((e) => e.exerciseId === 'pushup')
-            .reduce((sum, e) => sum + e.target, 0);
-          if (d.exercises) expect(pushupTotal).toBe(d.targetReps);
+          if (d.exercises) {
+            const pushupTotal = d.exercises
+              .filter((e) => e.exerciseId === 'pushup')
+              .reduce((sum, e) => sum + e.target, 0);
+            expect(pushupTotal).toBe(d.targetReps);
+          }
         }
       }
     }

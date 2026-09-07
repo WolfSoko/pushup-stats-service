@@ -24,8 +24,8 @@ import {
   isPlanCompleted,
   planDayByIndex,
   PlanExerciseProgress,
-  planScaleFactor,
-  planTestResult,
+  planScaleFactors,
+  planTestResults,
   scaleTrainingPlan,
   TrainingPlan,
   TrainingPlanDay,
@@ -126,9 +126,9 @@ export const TrainingPlanStore = signalStore(
       return a ? store._findPlanById(a.planId) : null;
     });
 
-    /** How far the opening max test moved this user's targets; 1 = untested. */
-    const scaleFactor = computed(() =>
-      planScaleFactor(activeCatalogBase(), activePlan())
+    /** How far the opening max test moved each exercise; neutral = untested. */
+    const scaleFactors = computed(() =>
+      planScaleFactors(activeCatalogBase(), activePlan())
     );
 
     /**
@@ -140,7 +140,7 @@ export const TrainingPlanStore = signalStore(
      */
     const activeCatalog = computed<TrainingPlan | null>(() => {
       const base = activeCatalogBase();
-      return base ? scaleTrainingPlan(base, scaleFactor()) : null;
+      return base ? scaleTrainingPlan(base, scaleFactors()) : null;
     });
 
     const today = computed(() => {
@@ -222,7 +222,7 @@ export const TrainingPlanStore = signalStore(
       activePlan,
       activeCatalogBase,
       activeCatalog,
-      scaleFactor,
+      scaleFactors,
       currentDayIndex,
       todayDay,
       todayTarget,
@@ -252,14 +252,15 @@ export const TrainingPlanStore = signalStore(
     /** Re-open one exercise: drop its tick and the entries the plan wrote. */
     resetPlanExercise: (dayIndex: number, itemIndex: number) =>
       resetPlanExercise(store, dayIndex, itemIndex),
-    /** The maximum the user measured on a `test` day, or null. */
-    testResult: (dayIndex: number): number | null =>
-      planTestResult(store.activePlan(), dayIndex),
-    /** Record (or revise) a max-test result; rescales the days after it. */
-    recordTestResult: (dayIndex: number, reps: number) =>
-      recordTestResult(store, dayIndex, reps),
-    /** Drop a max-test result — targets fall back to the catalog. */
-    clearTestResult: (dayIndex: number) => clearTestResult(store, dayIndex),
+    /** Everything the user measured on a `test` day, keyed by field index. */
+    testResults: (dayIndex: number): ReadonlyMap<number, number> =>
+      planTestResults(store.activePlan(), dayIndex),
+    /** Record (or revise) one measured value; rescales the days after it. */
+    recordTestResult: (dayIndex: number, itemIndex: number, value: number) =>
+      recordTestResult(store, dayIndex, itemIndex, value),
+    /** Drop one measured value — that exercise falls back to the catalog. */
+    clearTestResult: (dayIndex: number, itemIndex: number) =>
+      clearTestResult(store, dayIndex, itemIndex),
     unmarkDayDone: (dayIndex: number) =>
       lifecycle.unmarkDayDone(store, dayIndex),
     skipDay: (dayIndex: number) => lifecycle.skipDay(store, dayIndex),

@@ -11,6 +11,7 @@ import { AuthStore } from '@pu-auth/auth';
 import { makeAuthStoreMock } from '@pu-stats/testing';
 import {
   findPlanBySlug,
+  NO_PLAN_SCALING,
   PlanExerciseProgress,
   TrainingPlan,
   TrainingPlanDay,
@@ -46,10 +47,10 @@ function baseStore() {
     ),
     logPlanExercise: vitest.fn().mockResolvedValue('noop' as const),
     setItemDone: vitest.fn().mockResolvedValue(undefined),
-    scaleFactor: signal(1),
-    testResult: vitest.fn((dayIndex: number): number | null => {
+    scaleFactors: signal(NO_PLAN_SCALING),
+    testResults: vitest.fn((dayIndex: number): ReadonlyMap<number, number> => {
       void dayIndex;
-      return null;
+      return new Map();
     }),
     recordTestResult: vitest.fn().mockResolvedValue('noop' as const),
     clearTestResult: vitest.fn().mockResolvedValue(false),

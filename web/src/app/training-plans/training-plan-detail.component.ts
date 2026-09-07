@@ -30,7 +30,10 @@ import {
   PlanDayExercisesComponent,
 } from './plan-day-exercises.component';
 import { planDayExpansion } from './plan-day-expansion';
-import { PlanTestInputComponent } from './plan-test-input.component';
+import {
+  PlanTestInputComponent,
+  TestResultSubmit,
+} from './plan-test-input.component';
 import { PlanTodayCardComponent } from './plan-today-card.component';
 import {
   registerAutoStart,
@@ -157,8 +160,8 @@ export class TrainingPlanDetailComponent {
         skippedDays: this.store.activePlan()?.skippedDays ?? [],
         dayProgress: (dayIndex) => this.store.dayProgress(dayIndex),
         previewProgress: previewDayProgress,
-        testResult: (dayIndex) => this.store.testResult(dayIndex),
-        scaleFactor: this.store.scaleFactor(),
+        testResults: (dayIndex) => this.store.testResults(dayIndex),
+        scaleFactors: this.store.scaleFactors(),
       },
       this.locale
     )
@@ -256,19 +259,19 @@ export class TrainingPlanDetailComponent {
     await this.store.setItemDone(dayIndex, event.itemIndex, event.done);
   }
 
-  async recordTest(dayIndex: number, reps: number): Promise<void> {
+  async recordTest(dayIndex: number, event: TestResultSubmit): Promise<void> {
     const message = messageForTestResult(
-      await this.store.recordTestResult(dayIndex, reps)
+      await this.store.recordTestResult(dayIndex, event.itemIndex, event.value)
     );
     if (message) {
       this.snackbar.open(message, undefined, { duration: 3000 });
     }
   }
 
-  async clearTest(dayIndex: number): Promise<void> {
-    if (!(await this.store.clearTestResult(dayIndex))) return;
+  async clearTest(dayIndex: number, itemIndex: number): Promise<void> {
+    if (!(await this.store.clearTestResult(dayIndex, itemIndex))) return;
     this.snackbar.open(
-      $localize`:@@trainingPlans.test.cleared:Ergebnis verworfen — es gelten wieder die normalen Planwerte.`,
+      $localize`:@@trainingPlans.test.cleared:Wert verworfen — dafür gelten wieder die normalen Planwerte.`,
       undefined,
       { duration: 3000 }
     );

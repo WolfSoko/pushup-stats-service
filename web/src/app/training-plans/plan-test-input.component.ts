@@ -5,22 +5,28 @@ import {
   input,
   linkedSignal,
   output,
+  signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { isValidTestResult, MAX_TEST_REPS } from '@pu-stats/models';
+import { DayTestField } from './training-plan-detail.models';
+
+/** One measured value the user submitted. */
+export interface TestResultSubmit {
+  itemIndex: number;
+  value: number;
+}
 
 /**
- * The result field of a max-test day.
+ * The result form of a max-test day.
  *
- * Every other plan day prescribes its numbers; a test day asks for one.
- * Without this field the opening test of a plan is a day whose
- * description tells the user to record a baseline and whose UI offers
- * nowhere to put it — and on the plans whose test prescribes no figure
- * at all, nothing rendered whatsoever.
+ * Every other plan day prescribes its numbers; a test day asks for them.
+ * A day can measure several things at once — Core Foundations opens with
+ * a max plank hold, ten pushups and a max hollow hold — so there is one
+ * row per measurable exercise, each in its own unit.
  *
  * Purely presentational — the parent owns the store writes.
  */
@@ -38,66 +44,83 @@ import { isValidTestResult, MAX_TEST_REPS } from '@pu-stats/models';
   styleUrl: './plan-test-input.component.css',
 })
 export class PlanTestInputComponent {
-  /** The result already recorded for this test day, if any. */
-  readonly result = input<number | null>(null);
-  /** The day's own recommended figure; 0 when it prescribes none. */
-  readonly recommended = input(0);
+  readonly fields = input.required<ReadonlyArray<DayTestField>>();
   /**
-   * True for the plan's opening test — the one whose result rescales the
+   * True for the plan's opening test — the one whose results rescale the
    * days after it. A closing test only records where the user landed.
    */
   readonly scalesPlan = input(false);
-  /** The scale factor currently in force, for the "what this did" hint. */
-  readonly factor = input(1);
-  /** False for future days and inactive plans — the field stays read-only. */
+  /** False for future days and inactive plans — the form stays read-only. */
   readonly interactive = input(false);
 
-  readonly submitResult = output<number>();
-  readonly clearResult = output<void>();
+  readonly submitResult = output<TestResultSubmit>();
+  readonly clearResult = output<number>();
 
-  protected readonly maxReps = MAX_TEST_REPS;
-
-  /** Re-seeds from the stored result, so a revision starts from it. */
-  protected readonly draft = linkedSignal(() => {
-    const current = this.result();
-    return current === null ? '' : String(current);
+  /** Re-seeds from the stored values, so a revision starts from them. */
+  private readonly drafts = linkedSignal<
+    ReadonlyArray<DayTestField>,
+    ReadonlyMap<number, string>
+  >({
+    source: this.fields,
+    computation: (fields) =>
+      new Map(
+        fields.map((f) => [f.itemIndex, f.result === null ? '' : `${f.result}`])
+      ),
   });
 
-  protected readonly touched = linkedSignal(() => {
-    this.result();
-    return false;
-  });
+  private readonly touched = signal<ReadonlySet<number>>(new Set());
 
-  protected readonly parsed = computed(() => {
-    const raw = this.draft().trim();
+  protected draftFor(itemIndex: number): string {
+    return this.drafts().get(itemIndex) ?? '';
+  }
+
+  private parsed(itemIndex: number): number | null {
+    const raw = this.draftFor(itemIndex).trim();
     if (raw === '') return null;
     const value = Number(raw);
     return Number.isFinite(value) ? value : null;
-  });
-
-  protected readonly valid = computed(() => {
-    const value = this.parsed();
-    return value !== null && isValidTestResult(value);
-  });
-
-  protected readonly showError = computed(
-    () => this.touched() && this.draft().trim() !== '' && !this.valid()
-  );
-
-  /** The user's result as a percentage of what the plan was written for. */
-  protected readonly percent = computed(() => Math.round(this.factor() * 100));
-
-  protected readonly clearTooltip = $localize`:@@trainingPlans.test.clear:Ergebnis verwerfen`;
-
-  protected onInput(value: string): void {
-    this.draft.set(value);
-    this.touched.set(true);
   }
 
-  protected submit(): void {
-    this.touched.set(true);
-    const value = this.parsed();
-    if (value === null || !isValidTestResult(value)) return;
-    this.submitResult.emit(value);
+  protected isValid(field: DayTestField): boolean {
+    const value = this.parsed(field.itemIndex);
+    return (
+      value !== null &&
+      Number.isInteger(value) &&
+      value >= 1 &&
+      value <= field.max
+    );
+  }
+
+  protected showError(field: DayTestField): boolean {
+    return (
+      this.touched().has(field.itemIndex) &&
+      this.draftFor(field.itemIndex).trim() !== '' &&
+      !this.isValid(field)
+    );
+  }
+
+  /** True once every field of the day carries a recorded value. */
+  protected readonly allRecorded = computed(() =>
+    this.fields().every((f) => f.result !== null)
+  );
+
+  /** Fields whose value actually moved the plan, for the effect summary. */
+  protected readonly scaled = computed(() =>
+    this.fields().filter((f) => f.result !== null && f.percent !== null)
+  );
+
+  protected readonly clearTooltip = $localize`:@@trainingPlans.test.clear:Wert verwerfen`;
+
+  protected onInput(itemIndex: number, value: string): void {
+    this.drafts.update((map) => new Map(map).set(itemIndex, value));
+    this.touched.update((set) => new Set(set).add(itemIndex));
+  }
+
+  protected submit(field: DayTestField): void {
+    this.touched.update((set) => new Set(set).add(field.itemIndex));
+    if (!this.isValid(field)) return;
+    const value = this.parsed(field.itemIndex);
+    if (value === null) return;
+    this.submitResult.emit({ itemIndex: field.itemIndex, value });
   }
 }

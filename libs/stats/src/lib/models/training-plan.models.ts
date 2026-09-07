@@ -136,14 +136,17 @@ export interface TrainingPlan {
    */
   blogSlug?: string;
   /**
-   * The single-set maximum the plan's numbers were written for — the
-   * reference `planScaleFactor` divides the opening test's result by.
-   * Deliberately not the baseline day's `targetReps`: that is the
-   * recommendation shown to the user and is legitimately 0 on a plan
+   * Per-exercise baselines the plan's numbers were written for, keyed by
+   * `ExerciseDefinition.id` and expressed in that exercise's own unit
+   * (reps, or seconds for holds). `planScaleFactors` divides the opening
+   * test's measured values by these.
+   *
+   * Deliberately not the baseline day's own targets: those are the
+   * recommendations shown to the user, and are legitimately 0 on a plan
    * whose opening test prescribes nothing but "go to failure". Absent ⇒
    * the plan never rescales.
    */
-  baselineMaxReps?: number;
+  baselineMax?: Readonly<Record<string, number>>;
   days: ReadonlyArray<TrainingPlanDay>;
 }
 

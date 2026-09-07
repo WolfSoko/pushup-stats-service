@@ -4,9 +4,10 @@ import {
   localizePushupType,
   localizePushupTypeSlug,
   planBaselineTestDay,
-  planTestExercise,
+  type PlanScaleFactors,
   PlanExerciseProgress,
   PushupTypeInfo,
+  NO_PLAN_SCALING,
   TrainingPlan,
   TrainingPlanDay,
 } from '@pu-stats/models';
@@ -18,6 +19,7 @@ import type {
 import {
   asCompletedRows,
   buildExerciseRows,
+  buildTestFieldRows,
 } from './training-plan-detail.exercises';
 import {
   DayRow,
@@ -25,6 +27,8 @@ import {
   DayWeek,
   PushupTypeChip,
 } from './training-plan-detail.models';
+
+const EMPTY_RESULTS: ReadonlyMap<number, number> = new Map();
 
 /** What the plan page knows about the user's progress on a plan. */
 export interface WeekBuildContext {
@@ -40,10 +44,10 @@ export interface WeekBuildContext {
     plan: TrainingPlan,
     dayIndex: number
   ) => ReadonlyArray<PlanExerciseProgress>;
-  /** The maximum the user measured on a `test` day of the *active* plan. */
-  testResult: (dayIndex: number) => number | null;
-  /** Scale factor the opening test put in force; 1 when untested. */
-  scaleFactor: number;
+  /** What the user measured on a `test` day of the *active* plan. */
+  testResults: (dayIndex: number) => ReadonlyMap<number, number>;
+  /** Factors the opening test put in force; neutral when untested. */
+  scaleFactors: PlanScaleFactors;
 }
 
 /**
@@ -68,10 +72,11 @@ export function weeksFor(
         ctx.active
           ? ctx.dayProgress(dayIndex)
           : ctx.previewProgress(plan, dayIndex),
-      testResultFor: (dayIndex) =>
-        ctx.active ? ctx.testResult(dayIndex) : null,
+      testResultsFor: (dayIndex) =>
+        ctx.active ? ctx.testResults(dayIndex) : EMPTY_RESULTS,
       baselineTestDayIndex: planBaselineTestDay(plan)?.dayIndex ?? null,
-      scaleFactor: ctx.active ? ctx.scaleFactor : 1,
+      scaleFactors: ctx.active ? ctx.scaleFactors : NO_PLAN_SCALING,
+      baselineMax: plan.baselineMax,
     },
     locale
   );
@@ -169,24 +174,29 @@ export interface PlanProgress {
   skipped: ReadonlySet<number>;
   /** Per-exercise fulfillment of a day. Empty for an inactive plan. */
   exercisesFor: (dayIndex: number) => ReadonlyArray<PlanExerciseProgress>;
-  /** Measured result of a `test` day; null for an inactive plan. */
-  testResultFor: (dayIndex: number) => number | null;
+  /** Measured values of a `test` day; empty for an inactive plan. */
+  testResultsFor: (dayIndex: number) => ReadonlyMap<number, number>;
   /** Day index of the opening test, or null when the plan has none. */
   baselineTestDayIndex: number | null;
-  scaleFactor: number;
+  scaleFactors: PlanScaleFactors;
+  /** Per-exercise references the plan was written for. */
+  baselineMax?: Readonly<Record<string, number>>;
 }
 
-/** The result field of a `test` day; null for every other kind. */
+/** The result fields of a `test` day; null for every other kind. */
 function testRowFor(
   day: TrainingPlanDay,
   progress: PlanProgress
 ): DayTestRow | null {
   if (day.kind !== 'test') return null;
   return {
-    result: progress.testResultFor(day.dayIndex),
-    recommended: planTestExercise(day).recommended,
+    fields: buildTestFieldRows(
+      day,
+      progress.testResultsFor(day.dayIndex),
+      progress.scaleFactors,
+      progress.baselineMax
+    ),
     scalesPlan: day.dayIndex === progress.baselineTestDayIndex,
-    factor: progress.scaleFactor,
   };
 }
 

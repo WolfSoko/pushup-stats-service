@@ -3,6 +3,7 @@ import {
   findPlanBySlug,
   localizePushupType,
   localizePushupTypeSlug,
+  NO_PLAN_SCALING,
   TrainingPlan,
   TrainingPlanDay,
 } from '@pu-stats/models';
@@ -48,9 +49,9 @@ function noProgress(): PlanProgress {
     completed: new Set(),
     skipped: new Set(),
     exercisesFor: () => [],
-    testResultFor: () => null,
+    testResultsFor: () => new Map(),
     baselineTestDayIndex: null,
-    scaleFactor: 1,
+    scaleFactors: NO_PLAN_SCALING,
   };
 }
 
@@ -151,9 +152,9 @@ describe('buildWeeks', () => {
       completed: new Set([1]),
       skipped: new Set([3]),
       exercisesFor: () => [],
-      testResultFor: () => null,
+      testResultsFor: () => new Map(),
       baselineTestDayIndex: null,
-      scaleFactor: 1,
+      scaleFactors: NO_PLAN_SCALING,
     };
     // when building weeks
     const rows = buildWeeks(planWith(days), progress, LOCALE)[0].rows;

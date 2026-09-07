@@ -30,13 +30,11 @@
 
     @if (row().test; as test) {
       <app-plan-test-input
-        [result]="test.result"
-        [recommended]="test.recommended"
+        [fields]="test.fields"
         [scalesPlan]="test.scalesPlan"
-        [factor]="test.factor"
         [interactive]="interactive()"
         (submitResult)="recordTest.emit($event)"
-        (clearResult)="clearTest.emit()"
+        (clearResult)="clearTest.emit($event)"
       />
     }
 
