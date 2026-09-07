@@ -124,18 +124,6 @@ const REMINDER_BODIES: Record<ReminderLocale, ReadonlyArray<string>> = {
   ],
 };
 
-const SNOOZE_LABELS: Record<ReminderLocale, string> = {
-  de: '⏰ 30 Min snoozen',
-  en: '⏰ Snooze 30 min',
-  fr: '⏰ Reporter 30 min',
-  es: '⏰ Aplazar 30 min',
-  it: '⏰ Posticipa 30 min',
-  nl: '⏰ Uitstellen 30 min',
-  el: '⏰ Αναβολή 30 λεπτά',
-  no: '⏰ Utsett 30 min',
-  zh: '⏰ 推迟30分钟',
-};
-
 const LOG_LABELS: Record<ReminderLocale, string> = {
   de: '✅ Eintragen',
   en: '✅ Log push-ups',
@@ -158,18 +146,6 @@ const QUICK_LOG_LABELS: Record<ReminderLocale, (n: number) => string> = {
   el: (n) => `✅ Καταχώριση ${n}`,
   no: (n) => `✅ Logg ${n}`,
   zh: (n) => `✅ 记录 ${n}`,
-};
-
-const SNOOZED_LABELS: Record<ReminderLocale, (minutes: number) => string> = {
-  de: (m) => `⏰ Erinnerung um ${m} Min verschoben`,
-  en: (m) => `⏰ Reminder snoozed for ${m} min`,
-  fr: (m) => `⏰ Rappel reporté de ${m} min`,
-  es: (m) => `⏰ Recordatorio aplazado ${m} min`,
-  it: (m) => `⏰ Promemoria posticipato di ${m} min`,
-  nl: (m) => `⏰ Herinnering ${m} min uitgesteld`,
-  el: (m) => `⏰ Η υπενθύμιση αναβλήθηκε για ${m} λεπτά`,
-  no: (m) => `⏰ Påminnelse utsatt ${m} min`,
-  zh: (m) => `⏰ 提醒已推迟${m}分钟`,
 };
 
 const QUICK_LOG_DONE_LABELS: Record<ReminderLocale, (n: number) => string> = {
@@ -206,20 +182,12 @@ export function reminderBodyChoices(locale: unknown): ReadonlyArray<string> {
   return [...REMINDER_BODIES[normalizeReminderLocale(locale)]];
 }
 
-export function reminderSnoozeLabel(locale: unknown): string {
-  return SNOOZE_LABELS[normalizeReminderLocale(locale)];
-}
-
 export function reminderLogLabel(locale: unknown): string {
   return LOG_LABELS[normalizeReminderLocale(locale)];
 }
 
 export function reminderQuickLogLabel(locale: unknown, reps: number): string {
   return QUICK_LOG_LABELS[normalizeReminderLocale(locale)](reps);
-}
-
-export function reminderSnoozedLabel(locale: unknown, minutes: number): string {
-  return SNOOZED_LABELS[normalizeReminderLocale(locale)](minutes);
 }
 
 export function reminderQuickLogDoneLabel(

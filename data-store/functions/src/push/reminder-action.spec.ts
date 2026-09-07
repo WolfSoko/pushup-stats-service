@@ -31,8 +31,7 @@ function request(
   return {
     uid: 'user-1',
     token: TOKEN,
-    action: 'snooze',
-    snoozeMinutes: 30,
+    action: 'quick-log',
     ...overrides,
   };
 }
@@ -52,23 +51,6 @@ describe('push/reminder-action', () => {
   });
 
   describe('parseReminderActionRequest', () => {
-    it('should accept a snooze request and default the minutes', () => {
-      // when
-      const parsed = parseReminderActionRequest({
-        uid: 'u',
-        token: 't',
-        action: 'snooze',
-      });
-
-      // then
-      expect(parsed).toEqual({
-        uid: 'u',
-        token: 't',
-        action: 'snooze',
-        snoozeMinutes: 30,
-      });
-    });
-
     it('should accept a quick-log request', () => {
       // when
       const parsed = parseReminderActionRequest({
@@ -78,22 +60,15 @@ describe('push/reminder-action', () => {
       });
 
       // then
-      expect(parsed?.action).toBe('quick-log');
+      expect(parsed).toEqual({ uid: 'u', token: 't', action: 'quick-log' });
     });
 
     it.each([
-      ['missing uid', { token: 't', action: 'snooze' }],
-      ['empty token', { uid: 'u', token: '', action: 'snooze' }],
+      ['missing uid', { token: 't', action: 'quick-log' }],
+      ['empty token', { uid: 'u', token: '', action: 'quick-log' }],
       ['unknown action', { uid: 'u', token: 't', action: 'delete-all' }],
-      [
-        'snooze minutes out of range',
-        { uid: 'u', token: 't', action: 'snooze', snoozeMinutes: 0 },
-      ],
-      [
-        'fractional snooze minutes',
-        { uid: 'u', token: 't', action: 'snooze', snoozeMinutes: 1.5 },
-      ],
-      ['non-object payload', 'snooze'],
+      ['the removed snooze action', { uid: 'u', token: 't', action: 'snooze' }],
+      ['non-object payload', 'quick-log'],
       ['null payload', null],
     ])('should reject %s', (_label, raw) => {
       // then
@@ -102,39 +77,6 @@ describe('push/reminder-action', () => {
   });
 
   describe('decideReminderAction', () => {
-    it('should snooze when the token matches and is fresh', () => {
-      // when
-      const decision = decideReminderAction(
-        request(),
-        pending(),
-        undefined,
-        NOW
-      );
-
-      // then
-      expect(decision).toEqual({
-        ok: true,
-        action: 'snooze',
-        snoozeMinutes: 30,
-        snoozedUntilMs: NOW + 30 * 60_000,
-      });
-    });
-
-    it('should never write an entry for a snooze, even when quick-log reps are pending', () => {
-      // given a reminder that offered a quick-log button
-      const decision = decideReminderAction(
-        request({ action: 'snooze' }),
-        pending({ quickLogReps: 10 }),
-        'Europe/Berlin',
-        NOW
-      );
-
-      // then the snooze carries no entry
-      expect(decision.ok).toBe(true);
-      expect(decision).not.toHaveProperty('entry');
-      expect(decision).not.toHaveProperty('reps');
-    });
-
     it('should quick-log with the reps the server offered, not the ones the client claims', () => {
       // when
       const decision = decideReminderAction(

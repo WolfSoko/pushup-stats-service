@@ -1,4 +1,4 @@
-import { FieldValue, Timestamp } from 'firebase-admin/firestore';
+import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
@@ -43,20 +43,12 @@ export const reminderAction = onCall(
       const result = decideReminderAction(parsed, pending, timezone, nowMs);
       if (!result.ok) return result;
 
-      const statePatch: Record<string, unknown> = {
-        uid: parsed.uid,
-        pendingAction: FieldValue.delete(),
-      };
-      if (result.action === 'snooze') {
-        statePatch['snoozedUntil'] = Timestamp.fromMillis(
-          result.snoozedUntilMs
-        );
-        statePatch['snoozedAt'] = FieldValue.serverTimestamp();
-        statePatch['snoozeMinutes'] = result.snoozeMinutes;
-      } else {
-        tx.set(db.collection('exerciseEntries').doc(), result.entry);
-      }
-      tx.set(dispatchRef, statePatch, { merge: true });
+      tx.set(db.collection('exerciseEntries').doc(), result.entry);
+      tx.set(
+        dispatchRef,
+        { uid: parsed.uid, pendingAction: FieldValue.delete() },
+        { merge: true }
+      );
       return result;
     });
 
@@ -70,13 +62,7 @@ export const reminderAction = onCall(
     }
 
     logger.info('reminderAction', { uid: parsed.uid, action: decision.action });
-    return decision.action === 'snooze'
-      ? {
-          ok: true,
-          action: 'snooze',
-          snoozeUntil: new Date(decision.snoozedUntilMs).toISOString(),
-        }
-      : { ok: true, action: 'quick-log', reps: decision.reps };
+    return { ok: true, action: 'quick-log', reps: decision.reps };
   }
 );
 

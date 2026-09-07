@@ -16,7 +16,7 @@ Decomposed from the monolithic `index.ts`:
 - **leaderboard/:** Ranking aggregation, period key calculations
 - **motivation/:** Quote cache logic, Gemini fallback, name sanitization
 - **push/subscription:** Subscription ID generation, payload validation
-- **push/reminders:** Reminder scheduling (quiet hours, snooze, intervals)
+- **push/reminders:** Reminder scheduling (quiet hours, intervals)
 - **push/reminder-action:** Single-use action tokens for the notification buttons (`reminderAction` callable — see [`gotchas/push-and-service-workers.md`](gotchas/push-and-service-workers.md))
 - **admin/:** User privilege checks (Custom Claims validation), deletion validation, batch helpers
 - **entry-trash/:** Archive record for deleted entries (retention window, owner extraction)

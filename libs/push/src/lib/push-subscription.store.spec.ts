@@ -568,7 +568,7 @@ describe('PushSubscriptionStore', () => {
       // when
       const store = setupStore() as unknown as Record<string, unknown>;
 
-      // then the app has no way to snooze — only the push SW does, per tap
+      // then the app has no way to snooze — the feature is gone entirely
       expect(store['snooze']).toBeUndefined();
     });
   });

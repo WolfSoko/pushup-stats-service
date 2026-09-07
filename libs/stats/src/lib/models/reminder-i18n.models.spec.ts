@@ -6,8 +6,6 @@ import {
   reminderLogLabel,
   reminderQuickLogDoneLabel,
   reminderQuickLogLabel,
-  reminderSnoozedLabel,
-  reminderSnoozeLabel,
   reminderTitle,
   SUPPORTED_REMINDER_LOCALES,
 } from './reminder-i18n.models';
@@ -78,9 +76,8 @@ describe('reminder-i18n.models', () => {
     );
 
     it.each(SUPPORTED_REMINDER_LOCALES)(
-      'has snooze + log + quickLog labels for "%s"',
+      'has log + quickLog labels for "%s"',
       (locale) => {
-        expect(reminderSnoozeLabel(locale)).toMatch(/⏰/);
         expect(reminderLogLabel(locale)).toMatch(/✅/);
         const quick = reminderQuickLogLabel(locale, 42);
         expect(quick).toMatch(/✅/);
@@ -92,12 +89,9 @@ describe('reminder-i18n.models', () => {
       'should have action feedback labels for "%s"',
       (locale) => {
         // given the confirmation texts the push SW shows after an action
-        const snoozed = reminderSnoozedLabel(locale, 30);
         const logged = reminderQuickLogDoneLabel(locale, 42);
 
-        // then each carries its value and the failure text is non-empty
-        expect(snoozed).toMatch(/⏰/);
-        expect(snoozed).toContain('30');
+        // then it carries its value and the failure text is non-empty
         expect(logged).toMatch(/✅/);
         expect(logged).toContain('42');
         expect(reminderActionFailedLabel(locale).length).toBeGreaterThan(0);
@@ -106,11 +100,8 @@ describe('reminder-i18n.models', () => {
 
     it('falls back to the default locale for unsupported tags', () => {
       expect(reminderTitle('xx')).toBe(reminderTitle(DEFAULT_REMINDER_LOCALE));
-      expect(reminderSnoozedLabel('xx', 30)).toBe(
-        reminderSnoozedLabel(DEFAULT_REMINDER_LOCALE, 30)
-      );
-      expect(reminderSnoozeLabel('xx')).toBe(
-        reminderSnoozeLabel(DEFAULT_REMINDER_LOCALE)
+      expect(reminderLogLabel('xx')).toBe(
+        reminderLogLabel(DEFAULT_REMINDER_LOCALE)
       );
     });
   });

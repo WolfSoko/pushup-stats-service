@@ -108,14 +108,8 @@ function defaultActions(
   locale: SwLocale
 ): Array<{ action: string; title: string }> {
   return locale === 'en'
-    ? [
-        { action: 'snooze', title: '⏰ Snooze 30 min' },
-        { action: 'log', title: '✅ Log push-ups' },
-      ]
-    : [
-        { action: 'snooze', title: '⏰ 30 Min snoozen' },
-        { action: 'log', title: '✅ Eintragen' },
-      ];
+    ? [{ action: 'log', title: '✅ Log push-ups' }]
+    : [{ action: 'log', title: '✅ Eintragen' }];
 }
 
 export function handlePush(event: PushEventLike, ctx: SwContext): void {

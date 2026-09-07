@@ -95,11 +95,12 @@ installed Android PWA, and the two failure modes point in opposite directions:
   it stays in the task's committed URL and every later resume re-runs it.
 - **A durable intent store drained on resume is still a window hand-off.** The
   app applies whatever is stored whenever it happens to come to the front — a
-  quick-log tapped minutes earlier surfaces on the next snooze tap and reads as
-  "snooze logged push-ups".
+  quick-log tapped minutes earlier surfaces on the next notification tap and
+  reads as "the notification logged push-ups by itself".
 
-Production symptom (Aug/Sep 2026, through three fix attempts): tapping
-"⏰ 30 Min snoozen" created a 10/20-rep push-up entry when the app came up.
+Production symptom (Aug/Sep 2026, through three fix attempts): tapping the
+notification's non-logging button created a 10/20-rep push-up entry when the
+app came up.
 
 **Rule: a notification action is one HTTP call from the SW, authenticated by a
 single-use token, and no app window takes part.** `dispatchPushReminders`
@@ -119,7 +120,7 @@ transaction (`data-store/functions/src/push/reminder-action.ts`). Properties:
   payload cannot choose a number.
 - **visible fallback** — a refusal, a missing token (older dispatcher payload)
   or a network error never logs silently: quick-log opens `/app?log=1` (the
-  dialog), snooze shows a failure notification.
+  dialog) so the user enters the count themselves.
 
 The SW confirms with a notification (`data.feedback`, localized by the
 dispatcher) so the user gets an answer without opening the app; the app's
@@ -129,9 +130,22 @@ Deploy rollover: an old SW against the new dispatcher stores nothing and
 opens the app on a tap (no app-side consumer remains); a new SW against an old
 dispatcher has no token and falls back visibly. Neither writes a wrong entry.
 
-The `snoozeReminder` callable stays deployed only because the non-interactive
-prod deploy (`firebase deploy` without `--force`) aborts on function deletion;
-nothing calls it any more.
+## Snooze is gone
+
+The reminder notification has no snooze button, no `snooze` action in
+`reminderAction`, and no `snoozedUntil` gate in `shouldSendReminder`. A
+notification cached from before the removal still shows the button; tapping it
+now falls through to the plain body-tap route and just opens the app — it never
+posts to `reminderAction`, which rejects the `snooze` action outright.
+
+**Deleting the `snoozeReminder` callable needs a manual step.** The prod deploy
+runs `firebase deploy` without `--force` and aborts when a deployed function
+disappears from the source. Delete it once, out of band, before merging a change
+that drops the export:
+
+```bash
+pnpm exec firebase functions:delete snoozeReminder --region europe-west3 --project pushup-stats
+```
 
 ## Notification deep-links are untrusted input
 

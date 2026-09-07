@@ -87,10 +87,7 @@ describe('handlePush', () => {
         icon: '/icons/icon-192x192.png',
         badge: '/icons/badge-72x72.png',
         tag: 'reminder',
-        actions: [
-          { action: 'snooze', title: '⏰ 30 Min snoozen' },
-          { action: 'log', title: '✅ Eintragen' },
-        ],
+        actions: [{ action: 'log', title: '✅ Eintragen' }],
       })
     );
   });
@@ -107,7 +104,6 @@ describe('handlePush', () => {
     handlePush(event, ctx);
     const options = showNotification.mock.calls[0][1];
     expect(options.actions).toEqual([
-      { action: 'snooze', title: '⏰ Snooze 30 min' },
       { action: 'log', title: '✅ Log push-ups' },
     ]);
   });

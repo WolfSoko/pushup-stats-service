@@ -1143,12 +1143,11 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
-  // Regression: a `?snooze=N` deep-link arrives via the SW snooze action
-  // (or via App.ts before it strips the param). The dashboard's
-  // `_handleLogParam` shares the URL with App.ts's `_handleSnoozeParam`,
-  // so it must defer to it — never mistake a snooze URL for a quick-log
-  // or log deep-link.
-  describe('Given the dashboard mounts on a snooze deep-link URL', () => {
+  // Regression: `?snooze=N` is a legacy deep-link — the snooze feature is
+  // gone, but a notification that predates its removal can still open this
+  // URL. The dashboard must never mistake it for a quick-log or log
+  // deep-link.
+  describe('Given the dashboard mounts on a legacy snooze deep-link URL', () => {
     /**
      * Boots a fresh dashboard fixture with the given query params on the
      * `ActivatedRoute` snapshot — the only path the dashboard's
@@ -1231,10 +1230,7 @@ describe('StatsDashboardComponent', () => {
         serviceMock.createPushup.mockClear();
         await createDashboardWithQueryParams({ snooze: '30' });
 
-        // Then — snooze deep-links don't trigger any entry creation. The
-        // SW's snooze action posts SNOOZE_REMINDER to an open client OR
-        // opens this URL when no client exists; either way, the dashboard
-        // must keep its hands off entry creation.
+        // Then — a legacy snooze deep-link triggers no entry creation.
         expect(serviceMock.createPushup).not.toHaveBeenCalled();
       });
 
@@ -1249,11 +1245,10 @@ describe('StatsDashboardComponent', () => {
     });
 
     describe('When the URL carries ?snooze=30&quickLog=20 (defense-in-depth)', () => {
-      // The current SW never produces this combination, but if a future
-      // change ever did, the snooze flow should win — clicking snooze
-      // should never silently log push-ups even with a stale `quickLog`
-      // alongside it. This test pins down the dashboard's contract:
-      // a `snooze` param suppresses the quick-log deep-link.
+      // No SW ever produced this combination, but a stale `quickLog`
+      // alongside a legacy `snooze` param must still not log push-ups.
+      // This pins down the dashboard's contract: a `snooze` param
+      // suppresses the quick-log deep-link.
       it('Then it must NOT call createPushup', async () => {
         // Given
         serviceMock.createPushup.mockClear();

@@ -3,9 +3,10 @@
  *
  * Every dispatched reminder carries a fresh single-use token; the push
  * service worker presents it to the `reminderAction` callable and the
- * server performs the snooze / quick-log itself. The app window is never
- * involved, so nothing can be replayed when Android resumes a frozen PWA —
- * the failure mode behind every earlier "snooze logged push-ups" report.
+ * server performs the quick-log itself. The app window is never involved,
+ * so nothing can be replayed when Android resumes a frozen PWA — the
+ * failure mode behind every earlier "the notification logged push-ups by
+ * itself" report.
  *
  * Pure decision logic lives here; `functions-reminder-action.ts` wraps it in
  * a Firestore transaction so verify + consume + write commit atomically.
@@ -20,17 +21,12 @@ import { sanitizeQuickLogReps } from './reminders';
 /** Mirrors `PUSH_SEND_OPTIONS.TTL` — an undeliverable reminder is not actionable either. */
 export const REMINDER_ACTION_MAX_AGE_MS = 30 * 60 * 1000;
 
-export const SNOOZE_MINUTES_DEFAULT = 30;
-export const SNOOZE_MINUTES_MIN = 1;
-export const SNOOZE_MINUTES_MAX = 1440;
-
-export type ReminderActionType = 'snooze' | 'quick-log';
+export type ReminderActionType = 'quick-log';
 
 export interface ReminderActionRequest {
   uid: string;
   token: string;
   action: ReminderActionType;
-  snoozeMinutes: number;
 }
 
 /** Stored on `reminderDispatchState/{uid}.pendingAction` by the dispatcher. */
@@ -44,12 +40,6 @@ export type ReminderActionRejection =
   'no-pending-action' | 'token-mismatch' | 'expired' | 'quick-log-not-offered';
 
 export type ReminderActionDecision =
-  | {
-      ok: true;
-      action: 'snooze';
-      snoozeMinutes: number;
-      snoozedUntilMs: number;
-    }
   | { ok: true; action: 'quick-log'; reps: number; entry: QuickLogEntryData }
   | { ok: false; reason: ReminderActionRejection };
 
@@ -72,22 +62,13 @@ export function parseReminderActionRequest(
   raw: unknown
 ): ReminderActionRequest | null {
   if (!raw || typeof raw !== 'object') return null;
-  const { uid, token, action, snoozeMinutes } = raw as Record<string, unknown>;
+  const { uid, token, action } = raw as Record<string, unknown>;
   if (typeof uid !== 'string' || uid.length < 1 || uid.length > 128)
     return null;
   if (typeof token !== 'string' || token.length < 1 || token.length > 256)
     return null;
-  if (action !== 'snooze' && action !== 'quick-log') return null;
-  const minutes =
-    snoozeMinutes === undefined ? SNOOZE_MINUTES_DEFAULT : snoozeMinutes;
-  if (
-    typeof minutes !== 'number' ||
-    !Number.isInteger(minutes) ||
-    minutes < SNOOZE_MINUTES_MIN ||
-    minutes > SNOOZE_MINUTES_MAX
-  )
-    return null;
-  return { uid, token, action, snoozeMinutes: minutes };
+  if (action !== 'quick-log') return null;
+  return { uid, token, action };
 }
 
 function tokensMatch(stored: string, presented: string): boolean {
@@ -115,15 +96,6 @@ export function decideReminderAction(
   const issued = issuedAtMs(pending.issuedAt);
   if (issued === null || nowMs - issued > REMINDER_ACTION_MAX_AGE_MS)
     return { ok: false, reason: 'expired' };
-
-  if (request.action === 'snooze') {
-    return {
-      ok: true,
-      action: 'snooze',
-      snoozeMinutes: request.snoozeMinutes,
-      snoozedUntilMs: nowMs + request.snoozeMinutes * 60 * 1000,
-    };
-  }
 
   const reps = sanitizeQuickLogReps(pending.quickLogReps);
   if (!reps) return { ok: false, reason: 'quick-log-not-offered' };

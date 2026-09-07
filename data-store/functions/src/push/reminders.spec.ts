@@ -23,18 +23,18 @@ describe('push/reminders', () => {
 
     it('returns false when reminder is not enabled', () => {
       const reminder: Partial<ReminderConfig> = { enabled: false };
-      const result = shouldSendReminder(reminder, null, baseTime, null);
+      const result = shouldSendReminder(reminder, null, baseTime);
       expect(result).toBe(false);
     });
 
     it('returns false when reminder is undefined', () => {
-      const result = shouldSendReminder(undefined, null, baseTime, null);
+      const result = shouldSendReminder(undefined, null, baseTime);
       expect(result).toBe(false);
     });
 
     it('returns true when reminder is enabled and no constraints', () => {
       const reminder: Partial<ReminderConfig> = { enabled: true };
-      const result = shouldSendReminder(reminder, null, baseTime, null);
+      const result = shouldSendReminder(reminder, null, baseTime);
       expect(result).toBe(true);
     });
 
@@ -48,16 +48,14 @@ describe('push/reminders', () => {
         timezone: 'Europe/Berlin',
         weekdays: [today],
       };
-      expect(shouldSendReminder(onScheduledDay, null, baseTime, null)).toBe(
-        true
-      );
+      expect(shouldSendReminder(onScheduledDay, null, baseTime)).toBe(true);
 
       const onOtherDay: Partial<ReminderConfig> = {
         enabled: true,
         timezone: 'Europe/Berlin',
         weekdays: [(today + 1) % 7],
       };
-      expect(shouldSendReminder(onOtherDay, null, baseTime, null)).toBe(false);
+      expect(shouldSendReminder(onOtherDay, null, baseTime)).toBe(false);
 
       // Empty weekdays means every day.
       const everyDay: Partial<ReminderConfig> = {
@@ -65,7 +63,7 @@ describe('push/reminders', () => {
         timezone: 'Europe/Berlin',
         weekdays: [],
       };
-      expect(shouldSendReminder(everyDay, null, baseTime, null)).toBe(true);
+      expect(shouldSendReminder(everyDay, null, baseTime)).toBe(true);
     });
 
     it('respects quiet hours (non-midnight-crossing)', () => {
@@ -78,17 +76,15 @@ describe('push/reminders', () => {
 
       // 14:00 Berlin time (outside quiet hours) -> should send
       const dayTime = new Date('2024-03-15T13:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, dayTime, null)).toBe(true);
+      expect(shouldSendReminder(reminder, null, dayTime)).toBe(true);
 
       // 23:00 Berlin time (inside quiet hours) -> should not send
       const nightTime = new Date('2024-03-15T22:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, nightTime, null)).toBe(false);
+      expect(shouldSendReminder(reminder, null, nightTime)).toBe(false);
 
       // 05:00 Berlin time (inside quiet hours) -> should not send
       const earlyMorning = new Date('2024-03-15T04:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, earlyMorning, null)).toBe(
-        false
-      );
+      expect(shouldSendReminder(reminder, null, earlyMorning)).toBe(false);
     });
 
     it('respects quiet hours (simple daytime range)', () => {
@@ -101,15 +97,15 @@ describe('push/reminders', () => {
 
       // 11:00 Berlin -> should send
       const beforeQuiet = new Date('2024-03-15T10:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, beforeQuiet, null)).toBe(true);
+      expect(shouldSendReminder(reminder, null, beforeQuiet)).toBe(true);
 
       // 13:00 Berlin (1 PM) -> should not send
       const duringQuiet = new Date('2024-03-15T12:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, duringQuiet, null)).toBe(false);
+      expect(shouldSendReminder(reminder, null, duringQuiet)).toBe(false);
 
       // 15:00 Berlin -> should send
       const afterQuiet = new Date('2024-03-15T14:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, afterQuiet, null)).toBe(true);
+      expect(shouldSendReminder(reminder, null, afterQuiet)).toBe(true);
     });
 
     it('handles multiple quiet hour ranges', () => {
@@ -124,39 +120,15 @@ describe('push/reminders', () => {
 
       // 08:30 Berlin -> should not send (in first quiet hour)
       const morningQuiet = new Date('2024-03-15T07:30:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, morningQuiet, null)).toBe(
-        false
-      );
+      expect(shouldSendReminder(reminder, null, morningQuiet)).toBe(false);
 
       // 10:00 Berlin -> should send (between quiet hours)
       const between = new Date('2024-03-15T09:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, between, null)).toBe(true);
+      expect(shouldSendReminder(reminder, null, between)).toBe(true);
 
       // 21:00 Berlin -> should not send (in second quiet hour)
       const eveningQuiet = new Date('2024-03-15T20:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, null, eveningQuiet, null)).toBe(
-        false
-      );
-    });
-
-    it('respects snooze time', () => {
-      const reminder: Partial<ReminderConfig> = { enabled: true };
-      const now = baseTime;
-      const snoozeUntil = mockFirestoreTime(now + 1000 * 60 * 10); // Snooze 10 minutes
-
-      // Should not send while snoozed
-      const result = shouldSendReminder(reminder, null, now, snoozeUntil);
-      expect(result).toBe(false);
-
-      // Should send after snooze expires
-      const afterSnooze = now + 1000 * 60 * 11;
-      const resultAfter = shouldSendReminder(
-        reminder,
-        null,
-        afterSnooze,
-        snoozeUntil
-      );
-      expect(resultAfter).toBe(true);
+      expect(shouldSendReminder(reminder, null, eveningQuiet)).toBe(false);
     });
 
     it('respects interval since last send', () => {
@@ -168,17 +140,12 @@ describe('push/reminders', () => {
       const lastSent = mockFirestoreTime(now - 1000 * 60 * 30); // 30 min ago
 
       // Should not send (interval not elapsed)
-      const result = shouldSendReminder(reminder, lastSent, now, null);
+      const result = shouldSendReminder(reminder, lastSent, now);
       expect(result).toBe(false);
 
       // Should send after interval elapses
       const afterInterval = now + 1000 * 60 * 31;
-      const resultAfter = shouldSendReminder(
-        reminder,
-        lastSent,
-        afterInterval,
-        null
-      );
+      const resultAfter = shouldSendReminder(reminder, lastSent, afterInterval);
       expect(resultAfter).toBe(true);
     });
 
@@ -189,17 +156,12 @@ describe('push/reminders', () => {
       const lastSent = mockFirestoreTime(now - 1000 * 60 * 60 + 1000);
 
       // Should not send (default 60 min interval not elapsed)
-      const result = shouldSendReminder(reminder, lastSent, now, null);
+      const result = shouldSendReminder(reminder, lastSent, now);
       expect(result).toBe(false);
 
       // Should send after 1 hour elapses
       const afterInterval = now + 2000;
-      const resultAfter = shouldSendReminder(
-        reminder,
-        lastSent,
-        afterInterval,
-        null
-      );
+      const resultAfter = shouldSendReminder(reminder, lastSent, afterInterval);
       expect(resultAfter).toBe(true);
     });
 
@@ -214,7 +176,7 @@ describe('push/reminders', () => {
 
       // Should handle gracefully (won't throw)
       expect(() => {
-        shouldSendReminder(reminder, lastSent, now, null);
+        shouldSendReminder(reminder, lastSent, now);
       }).not.toThrow();
     });
 
@@ -230,20 +192,18 @@ describe('push/reminders', () => {
       const lastSent = mockFirestoreTime(now - 1000 * 60 * 120); // 2 hours ago
 
       // Should send: enabled, not in quiet hours, interval elapsed
-      expect(shouldSendReminder(reminder, lastSent, now, null)).toBe(true);
+      expect(shouldSendReminder(reminder, lastSent, now)).toBe(true);
 
       // Should not send: in quiet hours
       const nightTime = new Date('2024-03-15T23:00:00Z').getTime();
-      expect(shouldSendReminder(reminder, lastSent, nightTime, null)).toBe(
-        false
-      );
+      expect(shouldSendReminder(reminder, lastSent, nightTime)).toBe(false);
 
       // Should not send: interval not elapsed
       const lastSentRecent = mockFirestoreTime(now - 1000 * 60 * 30); // 30 min ago
       const soonAfter = now + 1000 * 60 * 5; // 5 minutes later
-      expect(
-        shouldSendReminder(reminder, lastSentRecent, soonAfter, null)
-      ).toBe(false);
+      expect(shouldSendReminder(reminder, lastSentRecent, soonAfter)).toBe(
+        false
+      );
     });
   });
 
@@ -530,23 +490,30 @@ describe('push/reminders', () => {
   describe('buildReminderActions', () => {
     it('returns the generic German log action when no quickLogReps configured', () => {
       const actions = buildReminderActions('de', undefined);
-      expect(actions).toEqual([
-        { action: 'snooze', title: '⏰ 30 Min snoozen' },
-        { action: 'log', title: '✅ Eintragen' },
-      ]);
+      expect(actions).toEqual([{ action: 'log', title: '✅ Eintragen' }]);
     });
 
     it('returns the generic English log action when no quickLogReps configured', () => {
       const actions = buildReminderActions('en', undefined);
-      expect(actions).toEqual([
-        { action: 'snooze', title: '⏰ Snooze 30 min' },
-        { action: 'log', title: '✅ Log push-ups' },
-      ]);
+      expect(actions).toEqual([{ action: 'log', title: '✅ Log push-ups' }]);
+    });
+
+    it('should offer log as the only action', () => {
+      // given a reminder with and without a configured quick-log count
+      const generic = buildReminderActions('de', undefined);
+      const quick = buildReminderActions('de', 25);
+
+      // then neither carries a snooze button any more
+      expect(generic).toHaveLength(1);
+      expect(quick).toHaveLength(1);
+      expect([...generic, ...quick].map((a) => a.action)).not.toContain(
+        'snooze'
+      );
     });
 
     it('emits a quick-log action with the configured count (German)', () => {
       const actions = buildReminderActions('de', 25);
-      expect(actions[1]).toEqual({
+      expect(actions[0]).toEqual({
         action: 'quick-log',
         title: '✅ 25 eintragen',
       });
@@ -554,7 +521,7 @@ describe('push/reminders', () => {
 
     it('emits a quick-log action with the configured count (English)', () => {
       const actions = buildReminderActions('en', 25);
-      expect(actions[1]).toEqual({
+      expect(actions[0]).toEqual({
         action: 'quick-log',
         title: '✅ Log 25',
       });
@@ -562,38 +529,30 @@ describe('push/reminders', () => {
 
     it('falls back to generic log when quickLogReps is invalid', () => {
       const actions = buildReminderActions('de', NaN);
-      expect(actions[1].action).toBe('log');
+      expect(actions[0].action).toBe('log');
     });
 
-    it('returns French snooze + log labels when locale is "fr"', () => {
+    it('returns the French log label when locale is "fr"', () => {
       const actions = buildReminderActions('fr', undefined);
       expect(actions[0]).toEqual({
-        action: 'snooze',
-        title: '⏰ Reporter 30 min',
-      });
-      expect(actions[1]).toEqual({
         action: 'log',
         title: '✅ Enregistrer',
       });
     });
 
-    it('returns Chinese snooze + log labels when locale is "zh"', () => {
+    it('returns the Chinese log label when locale is "zh"', () => {
       const actions = buildReminderActions('zh', undefined);
-      expect(actions[0].title).toContain('30');
-      expect(actions[1].title).toContain('记录');
+      expect(actions[0].title).toContain('记录');
     });
 
     it('normalises a regional tag (en-US) to its primary subtag', () => {
       const actions = buildReminderActions('en-US', 12);
-      expect(actions[1]).toEqual({ action: 'quick-log', title: '✅ Log 12' });
+      expect(actions[0]).toEqual({ action: 'quick-log', title: '✅ Log 12' });
     });
 
     it('falls back to the default locale for unsupported tags', () => {
       const actions = buildReminderActions('xx', undefined);
-      expect(actions).toEqual([
-        { action: 'snooze', title: '⏰ 30 Min snoozen' },
-        { action: 'log', title: '✅ Eintragen' },
-      ]);
+      expect(actions).toEqual([{ action: 'log', title: '✅ Eintragen' }]);
     });
   });
 });
