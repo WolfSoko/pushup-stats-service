@@ -99,7 +99,7 @@ importers:
         version: 4.5.1
       chartjs-adapter-date-fns:
         specifier: ^3.0.0
-        version: 3.0.0(chart.js@4.5.1)(date-fns@4.1.0)
+        version: 3.0.0(chart.js@4.5.1)(date-fns@4.4.0)
       chartjs-chart-matrix:
         specifier: 3.0.5
         version: 3.0.5(chart.js@4.5.1)
@@ -110,8 +110,8 @@ importers:
         specifier: 2.8.6
         version: 2.8.6
       date-fns:
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.4.0
+        version: 4.4.0
       express:
         specifier: 5.2.1
         version: 5.2.1(supports-color@7.2.0)
@@ -7144,9 +7144,6 @@ packages:
   data-urls@5.0.0:
     resolution: {integrity: sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg==}
     engines: {node: '>=18'}
-
-  date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   date-fns@4.4.0:
     resolution: {integrity: sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==}
@@ -19464,10 +19461,10 @@ snapshots:
     dependencies:
       '@kurkle/color': 0.3.4
 
-  chartjs-adapter-date-fns@3.0.0(chart.js@4.5.1)(date-fns@4.1.0):
+  chartjs-adapter-date-fns@3.0.0(chart.js@4.5.1)(date-fns@4.4.0):
     dependencies:
       chart.js: 4.5.1
-      date-fns: 4.1.0
+      date-fns: 4.4.0
 
   chartjs-chart-matrix@3.0.5(chart.js@4.5.1):
     dependencies:
@@ -20000,8 +19997,6 @@ snapshots:
     dependencies:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-
-  date-fns@4.1.0: {}
 
   date-fns@4.4.0: {}
 
