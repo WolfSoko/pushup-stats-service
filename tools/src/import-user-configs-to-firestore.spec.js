@@ -14,9 +14,36 @@ jest.mock('firebase-admin/firestore', () => ({
 }));
 
 describe('readConfigsFromFile', () => {
+  /**
+   * Stubs `fs.readFileSync` for one path only, delegating every other
+   * read to the real thing.
+   *
+   * `jest.spyOn` replaces the function process-wide, and Jest itself
+   * reads files through it — source maps, transform cache, code frames.
+   * A blanket stub therefore feeds Jest's own internals whatever this
+   * test returns (or throws), which surfaces as a source-map parse
+   * warning and an ENOENT reported against the wrong test. Whether it
+   * bites depends on the transform cache being cold, so it passes in CI
+   * and fails on a fresh checkout.
+   */
+  function stubReadFileSync(targetPath, behavior) {
+    const realReadFileSync = fs.readFileSync;
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockImplementation((requestedPath, ...rest) =>
+        requestedPath === targetPath
+          ? behavior()
+          : realReadFileSync(requestedPath, ...rest)
+      );
+  }
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('parses valid JSON from the given file path', () => {
     const configs = [{ userId: 'u1', goal: 10 }];
-    jest.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify(configs));
+    stubReadFileSync('/some/path.json', () => JSON.stringify(configs));
 
     const result = readConfigsFromFile('/some/path.json');
 
@@ -25,15 +52,11 @@ describe('readConfigsFromFile', () => {
   });
 
   it('throws if the file does not exist', () => {
-    jest.spyOn(fs, 'readFileSync').mockImplementation(() => {
+    stubReadFileSync('/missing.json', () => {
       throw new Error('ENOENT');
     });
 
     expect(() => readConfigsFromFile('/missing.json')).toThrow('ENOENT');
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 });
 

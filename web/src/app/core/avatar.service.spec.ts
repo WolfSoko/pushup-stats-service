@@ -1,4 +1,4 @@
-import { PLATFORM_ID, signal } from '@angular/core';
+import { ApplicationRef, PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Storage } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
@@ -20,14 +20,17 @@ vi.mock('@angular/fire/storage', async (importOriginal) => {
 });
 
 /**
- * Drives the resource to completion: read it so it starts, let Angular
- * schedule the loader, resolve the promise, then propagate the value.
+ * Drives the resource to completion: read it so it starts, then wait for
+ * the application to go stable.
+ *
+ * Waiting on `whenStable` rather than a fixed number of macrotasks — the
+ * resource settles when it settles, and a hard-coded `setTimeout(0)` left
+ * the assertion racing the loader on a loaded machine, reading the
+ * fallback picture before the download URL had propagated.
  */
 async function settle(service: AvatarService): Promise<void> {
   service.avatarUrl();
-  TestBed.tick();
-  await new Promise((r) => setTimeout(r, 0));
-  TestBed.tick();
+  await TestBed.inject(ApplicationRef).whenStable();
 }
 
 function setup(opts: {
