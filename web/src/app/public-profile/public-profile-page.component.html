@@ -318,12 +318,7 @@
         }
 
         @if (exerciseGroups(); as groups) {
-          @if (
-            renders(
-              'exercises',
-              groups.some((g) => g.rows.length > 0)
-            )
-          ) {
+          @if (renders('exercises', groups.length > 0)) {
             <section
               class="exercises"
               data-testid="public-profile-exercises"
@@ -338,41 +333,21 @@
                   "
                 ></ng-container>
               </h2>
-              @for (group of groups; track group.measurement) {
-                @if (group.rows.length > 0) {
-                  <div class="exercise-group">
-                    <h3 class="exercise-group-title">
-                      @switch (group.measurement) {
-                        @case ('reps') {
-                          {{ labels.exercisesReps }}
-                        }
-                        @case ('time') {
-                          {{ labels.exercisesTime }}
-                        }
-                        @case ('distance') {
-                          {{ labels.exercisesDistance }}
-                        }
-                        @case ('distance-time') {
-                          {{ labels.exercisesDistance }}
-                        }
-                        @default {
-                          {{ group.measurement }}
-                        }
-                      }
-                    </h3>
-                    <ul class="exercise-list">
-                      @for (row of group.rows; track row.exerciseId) {
-                        <li>
-                          <span class="exercise-name">{{ row.name }}</span>
-                          <span class="exercise-bar" aria-hidden="true">
-                            <span [style.width.%]="row.percent"></span>
-                          </span>
-                          <span class="exercise-value">{{ row.value }}</span>
-                        </li>
-                      }
-                    </ul>
-                  </div>
-                }
+              @for (group of groups; track group.kind) {
+                <div class="exercise-group">
+                  <h3 class="exercise-group-title">{{ group.label }}</h3>
+                  <ul class="exercise-list">
+                    @for (row of group.rows; track row.exerciseId) {
+                      <li>
+                        <span class="exercise-name">{{ row.name }}</span>
+                        <span class="exercise-bar" aria-hidden="true">
+                          <span [style.width.%]="row.percent"></span>
+                        </span>
+                        <span class="exercise-value">{{ row.value }}</span>
+                      </li>
+                    }
+                  </ul>
+                </div>
               }
             </section>
           }

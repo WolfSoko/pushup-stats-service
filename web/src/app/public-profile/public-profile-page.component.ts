@@ -27,15 +27,17 @@ import { PublicProfileApiService } from '@pu-stats/data-access';
 import { type ProfileSection, type PublicProfile } from '@pu-stats/models';
 import { PublicProfileSeo } from './public-profile-seo';
 import {
-  buildExerciseRows,
+  buildExerciseGroups,
   buildHeatmapRows,
-  groupExercisesByMeasurement,
   type ExerciseGroup,
-  type ExerciseRow,
   type HeatmapRow,
 } from './profile-view.model';
 import { withSectionVisible } from './profile-visibility';
-import { PROFILE_LABELS, WEEKDAY_LABELS } from './profile-labels';
+import {
+  EXERCISE_GROUP_LABELS,
+  PROFILE_LABELS,
+  WEEKDAY_LABELS,
+} from './profile-labels';
 import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 
@@ -152,17 +154,15 @@ export class PublicProfilePageComponent {
     buildHeatmapRows(this.profile()?.heatmap ?? {}, WEEKDAY_LABELS)
   );
 
-  protected readonly exerciseRows = computed<ReadonlyArray<ExerciseRow>>(() =>
-    buildExerciseRows(
-      this.profile()?.exercises ?? [],
-      (entry) => exerciseDisplayName(entry.exerciseId),
-      (entry) =>
-        formatExerciseTotal(entry.total, entry.measurement, this.localeId)
-    )
-  );
-
   protected readonly exerciseGroups = computed<ReadonlyArray<ExerciseGroup>>(
-    () => groupExercisesByMeasurement(this.exerciseRows())
+    () =>
+      buildExerciseGroups(
+        this.profile()?.exercises ?? [],
+        (entry) => exerciseDisplayName(entry.exerciseId),
+        (entry) =>
+          formatExerciseTotal(entry.total, entry.measurement, this.localeId),
+        (kind) => EXERCISE_GROUP_LABELS[kind]
+      )
   );
 
   protected badgesFor(profile: PublicProfile): ReadonlyArray<AchievementBadge> {

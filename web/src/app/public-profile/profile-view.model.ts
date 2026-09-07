@@ -1,3 +1,5 @@
+import type { PublicProfileExercise } from '@pu-stats/models';
+
 export interface HeatmapCell {
   readonly hour: number;
   readonly intensity: number;
@@ -14,12 +16,17 @@ export interface ExerciseRow {
   readonly name: string;
   readonly value: string;
   readonly percent: number;
-  readonly measurement: string;
 }
 
+/**
+ * `distance-time` folds into `distance`: both store metres and render
+ * through the same km/m formatting, so their bars are comparable.
+ */
+export type ExerciseGroupKind = 'reps' | 'time' | 'distance' | 'weight';
+
 export interface ExerciseGroup {
-  readonly measurement:
-    'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
+  readonly kind: ExerciseGroupKind;
+  readonly label: string;
   readonly rows: ReadonlyArray<ExerciseRow>;
 }
 
@@ -64,48 +71,61 @@ export function buildHeatmapRows(
   }));
 }
 
+const GROUP_KIND: Readonly<
+  Record<PublicProfileExercise['measurement'], ExerciseGroupKind>
+> = {
+  reps: 'reps',
+  time: 'time',
+  distance: 'distance',
+  'distance-time': 'distance',
+  weight: 'weight',
+};
+
+const GROUP_ORDER: ReadonlyArray<ExerciseGroupKind> = [
+  'reps',
+  'time',
+  'distance',
+  'weight',
+];
+
 /**
- * Exercises as labelled bars. The bar is relative to the biggest entry,
- * never a share of a total: the stored numbers mix reps, seconds and
- * metres, so a common denominator would be meaningless.
+ * Exercises as labelled bars, split by what they measure.
+ *
+ * A bar is relative to the biggest entry *of its own group*, never a
+ * share of a total and never relative to the whole profile: the stored
+ * numbers mix reps, seconds and metres, so a shared denominator would
+ * squash every plank next to a five-digit rep count.
  */
-export function buildExerciseRows<
-  T extends { exerciseId: string; total: number; measurement: string },
+export function buildExerciseGroups<
+  T extends {
+    exerciseId: string;
+    total: number;
+    measurement: PublicProfileExercise['measurement'];
+  },
 >(
   exercises: ReadonlyArray<T>,
   name: (entry: T) => string,
-  value: (entry: T) => string
-): ReadonlyArray<ExerciseRow> {
-  if (exercises.length === 0) return [];
-  const max = Math.max(...exercises.map((e) => e.total));
-  return exercises.map((entry) => ({
-    exerciseId: entry.exerciseId,
-    name: name(entry),
-    value: value(entry),
-    measurement: entry.measurement,
-    percent: max > 0 ? Math.round((entry.total / max) * 100) : 0,
-  }));
-}
-
-export function groupExercisesByMeasurement(
-  rows: ReadonlyArray<ExerciseRow>
+  value: (entry: T) => string,
+  label: (kind: ExerciseGroupKind) => string
 ): ReadonlyArray<ExerciseGroup> {
-  const groups = new Map<string, ExerciseRow[]>();
-  for (const row of rows) {
-    const group = groups.get(row.measurement) ?? [];
-    groups.set(row.measurement, [...group, row]);
+  const byKind = new Map<ExerciseGroupKind, T[]>();
+  for (const entry of exercises) {
+    const kind = GROUP_KIND[entry.measurement];
+    byKind.set(kind, [...(byKind.get(kind) ?? []), entry]);
   }
-  const order: Record<string, number> = {
-    reps: 1,
-    time: 2,
-    distance: 3,
-    'distance-time': 4,
-    weight: 5,
-  };
-  return Array.from(groups.entries())
-    .sort((a, b) => (order[a[0]] ?? 999) - (order[b[0]] ?? 999))
-    .map(([measurement, measurementRows]) => ({
-      measurement: measurement as ExerciseGroup['measurement'],
-      rows: measurementRows,
-    }));
+  return [...byKind.entries()]
+    .sort(([a], [b]) => GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b))
+    .map(([kind, entries]) => {
+      const max = Math.max(...entries.map((e) => e.total));
+      return {
+        kind,
+        label: label(kind),
+        rows: entries.map((entry) => ({
+          exerciseId: entry.exerciseId,
+          name: name(entry),
+          value: value(entry),
+          percent: max > 0 ? Math.round((entry.total / max) * 100) : 0,
+        })),
+      };
+    });
 }
