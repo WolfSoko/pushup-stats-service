@@ -12151,5 +12151,23 @@
         <target>Fortschritt behalten</target>
       </segment>
     </unit>
+    <unit id="publicProfile.exercises.reps">
+      <segment state="initial">
+        <source>Stückübungen</source>
+        <target>Stückübungen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.time">
+      <segment state="initial">
+        <source>Zeitübungen</source>
+        <target>Zeitübungen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.distance">
+      <segment state="initial">
+        <source>Streckenübungen</source>
+        <target>Streckenübungen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
