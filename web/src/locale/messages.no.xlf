@@ -11196,69 +11196,69 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
         <unit id="publicProfile.owner.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</source>
-        <target>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</target>
+        <target>Trykk på øyeikonet på et element for å bestemme om det vises på den offentlige profilen din. Bare du ser dette området og øyeikonene.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Besucher ansehen</source>
-        <target>Als Besucher ansehen</target>
+        <target>Vis som besøkende</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.photoEdit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profilbild ändern</source>
-        <target>Profilbild ändern</target>
+        <target>Endre profilbilde</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.hideElement">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem öffentlichen Profil ausblenden</source>
-        <target>Auf dem öffentlichen Profil ausblenden</target>
+        <target>Skjul på offentlig profil</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.showElement">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem öffentlichen Profil anzeigen</source>
-        <target>Auf dem öffentlichen Profil anzeigen</target>
+        <target>Vis på offentlig profil</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.textPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> trener med Pushup Tracker 💪 Sjekk det ut:</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.titlePlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> på Pushup Tracker. Følg din egen fremgang gratis på pushup-stats.com.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für dich sichtbar</source>
-        <target>Nur für dich sichtbar</target>
+        <target>Kun synlig for deg</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legendVisible">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wird auf deinem öffentlichen Profil angezeigt.</source>
-        <target>Wird auf deinem öffentlichen Profil angezeigt.</target>
+        <target>Vises på den offentlige profilen din.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legendHidden">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</source>
-        <target>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</target>
+        <target>Skjult – bare du ser det, vist nedtonet her.</target>
       </segment>
     </unit>
 </file>
