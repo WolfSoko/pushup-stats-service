@@ -34,7 +34,7 @@ function baseStore() {
     completionPercent: signal(0),
     todayDay: signal<TrainingPlanDay | null>(null),
     todayDone: signal(false),
-    start: vitest.fn().mockResolvedValue(undefined),
+    start: vitest.fn().mockResolvedValue('started' as const),
     abandon: vitest.fn().mockResolvedValue(undefined),
     markDayDone: vitest.fn().mockResolvedValue(undefined),
     unmarkDayDone: vitest.fn().mockResolvedValue(undefined),
@@ -48,6 +48,7 @@ function baseStore() {
     logPlanExercise: vitest.fn().mockResolvedValue('noop' as const),
     setItemDone: vitest.fn().mockResolvedValue(undefined),
     scaleFactors: signal(NO_PLAN_SCALING),
+    activePlanHasProgress: signal(false),
     testResults: vitest.fn((dayIndex: number): ReadonlyMap<number, number> => {
       void dayIndex;
       return new Map();
@@ -246,7 +247,9 @@ describe('TrainingPlanDetailComponent', () => {
 
       // Yield once so the constructor's effect runs.
       await new Promise((resolve) => setTimeout(resolve, 0));
-      expect(store.start).toHaveBeenCalledWith('recruit-6w-v1');
+      expect(store.start).toHaveBeenCalledWith('recruit-6w-v1', {
+        keepCurrentProgress: true,
+      });
     });
 
     it('does not auto-start when ?autoStart is missing', async () => {

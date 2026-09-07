@@ -1,7 +1,11 @@
 import { firstValueFrom } from 'rxjs';
 import {
+  currentPlanDayIndex,
+  parkedFrom,
   parsePlanDayItemId,
   planDayByIndex,
+  planHasProgress,
+  resumedPlanFrom,
   startDateForTargetDay,
 } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
@@ -14,27 +18,105 @@ import {
 
 type Store = TrainingPlanActionsStore;
 
+/** How `start` resolved, so the caller can tell the user what happened. */
+export type StartPlanOutcome =
+  | 'started' // fresh run of the plan
+  | 'resumed' // picked a parked record back up
+  | 'noop'; // no user, or an unknown plan id
+
+/** What to do with the progress of the plan being switched away from. */
+export interface StartPlanOptions {
+  /**
+   * True parks the outgoing plan's progress so the user can come back to
+   * it. False discards it — and also drops any record parked earlier, so
+   * "verwerfen" cannot leave an older snapshot behind to resurrect later.
+   */
+  keepCurrentProgress: boolean;
+  /** Ignore a parked record for the incoming plan and start it over. */
+  restart?: boolean;
+}
+
 /**
- * Activate a plan starting today (Berlin date). Overwrites any
- * existing active plan — that is intentional: only one active
- * plan at a time, and the user has confirmed the switch.
+ * Set the outgoing plan's progress aside, or discard it. No-op when
+ * there is nothing to keep — a plan the user activated and immediately
+ * switched away from leaves no snapshot worth writing.
  */
-export async function start(store: Store, planId: string): Promise<void> {
-  const userId = store._user.userIdSafe();
-  if (!userId) return;
-  const plan = store._findPlanById(planId);
-  if (!plan) return;
+async function handleOutgoingPlan(
+  store: Store,
+  userId: string,
+  incomingPlanId: string,
+  keep: boolean
+): Promise<void> {
+  const current = store.activePlan();
+  if (!current || current.planId === incomingPlanId) return;
+  if (!keep) {
+    await firstValueFrom(store._api.deleteParkedPlan(userId, current.planId));
+    return;
+  }
+  if (!planHasProgress(current)) return;
+  const catalog = store._findPlanById(current.planId);
+  const dayIndex =
+    (catalog &&
+      currentPlanDayIndex(
+        catalog,
+        current.startDate,
+        toBerlinIsoDate(new Date())
+      )) ||
+    1;
   await firstValueFrom(
-    store._api.setPlan(userId, {
-      planId: plan.id,
-      startDate: toBerlinIsoDate(new Date()),
-      status: 'active',
-      completedDays: [],
-      skippedDays: [],
-      completedItems: [],
-    })
+    store._api.parkPlan(userId, parkedFrom(current, dayIndex))
   );
+}
+
+/**
+ * Activate a plan. Replaces the active-plan document, which is why the
+ * outgoing plan's progress has to be dealt with first — that write is a
+ * wholesale overwrite, not a merge.
+ *
+ * A plan the user parked earlier resumes where they left off: its
+ * progress is restored and `startDate` re-anchored so today is that day
+ * again, rather than the plan having silently run on during the break.
+ */
+export async function start(
+  store: Store,
+  planId: string,
+  options: StartPlanOptions = { keepCurrentProgress: true }
+): Promise<StartPlanOutcome> {
+  const userId = store._user.userIdSafe();
+  if (!userId) return 'noop';
+  const plan = store._findPlanById(planId);
+  if (!plan) return 'noop';
+
+  await handleOutgoingPlan(store, userId, plan.id, options.keepCurrentProgress);
+
+  const parked = options.restart
+    ? null
+    : await firstValueFrom(store._api.getParkedPlan(userId, plan.id));
+  const today = toBerlinIsoDate(new Date());
+
+  await firstValueFrom(
+    store._api.setPlan(
+      userId,
+      parked
+        ? resumedPlanFrom(parked, plan, today)
+        : {
+            planId: plan.id,
+            startDate: today,
+            status: 'active',
+            completedDays: [],
+            skippedDays: [],
+            completedItems: [],
+            testResults: [],
+          }
+    )
+  );
+  // The record is live again; leaving it behind would let a later switch
+  // resume a stale snapshot over the progress made since.
+  if (parked || options.restart) {
+    await firstValueFrom(store._api.deleteParkedPlan(userId, plan.id));
+  }
   store.activeResource.reload();
+  return parked ? 'resumed' : 'started';
 }
 
 /**

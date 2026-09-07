@@ -11951,5 +11951,77 @@
         <target>s</target>
       </segment>
     </unit>
+    <unit id="trainingPlans.resumed">
+      <segment state="initial">
+        <source>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</source>
+        <target>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resumeUndo">
+      <segment state="initial">
+        <source>Von vorn beginnen</source>
+        <target>Von vorn beginnen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.restarted">
+      <segment state="initial">
+        <source>Plan von vorn begonnen.</source>
+        <target>Plan von vorn begonnen.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.title">
+      <segment state="initial">
+        <source>Plan wechseln?</source>
+        <target>Plan wechseln?</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.current">
+      <segment state="initial">
+        <source>Du bist gerade bei</source>
+        <target>Du bist gerade bei</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.atDay">
+      <segment state="initial">
+        <source>an Tag</source>
+        <target>an Tag</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.completed">
+      <segment state="initial">
+        <source>, erledigt:</source>
+        <target>, erledigt:</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.days">
+      <segment state="initial">
+        <source>Tage</source>
+        <target>Tage</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.keepExplain">
+      <segment state="initial">
+        <source> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </source>
+        <target> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.cancel">
+      <segment state="initial">
+        <source>Abbrechen</source>
+        <target>Abbrechen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.discard">
+      <segment state="initial">
+        <source>Fortschritt verwerfen</source>
+        <target>Fortschritt verwerfen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.keep">
+      <segment state="initial">
+        <source>Fortschritt behalten</source>
+        <target>Fortschritt behalten</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

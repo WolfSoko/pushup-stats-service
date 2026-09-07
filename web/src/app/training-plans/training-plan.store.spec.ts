@@ -12,6 +12,7 @@ import {
   ExerciseEntry,
   ExerciseEntryCreate,
   findPlanById,
+  type ParkedTrainingPlan,
   PushupCreate,
   PushupRecord,
   TrainingPlan,
@@ -234,7 +235,12 @@ interface Mocks {
     jumpToDay: ReturnType<typeof vitest.fn>;
     setTestResult: ReturnType<typeof vitest.fn>;
     removeTestResult: ReturnType<typeof vitest.fn>;
+    parkPlan: ReturnType<typeof vitest.fn>;
+    getParkedPlan: ReturnType<typeof vitest.fn>;
+    deleteParkedPlan: ReturnType<typeof vitest.fn>;
   };
+  /** Stand-in for the `history` subcollection, keyed by plan id. */
+  parked: Map<string, ParkedTrainingPlan>;
   statsApiMock: {
     createPushup: ReturnType<typeof vitest.fn>;
   };
@@ -270,6 +276,7 @@ describe('TrainingPlanStore', () => {
     const mocks: Mocks = {
       stream,
       current: initial,
+      parked: new Map<string, ParkedTrainingPlan>(),
       apiMock: {
         getActivePlan: vitest.fn(() => stream.asObservable()),
         setPlan: vitest.fn((_uid: string, plan: UserTrainingPlan) => {
@@ -432,6 +439,17 @@ describe('TrainingPlanStore', () => {
             return of(void 0);
           }
         ),
+        parkPlan: vitest.fn((_uid: string, record: ParkedTrainingPlan) => {
+          mocks.parked.set(record.planId, record);
+          return of(void 0);
+        }),
+        getParkedPlan: vitest.fn((_uid: string, planId: string) =>
+          of(mocks.parked.get(planId) ?? null)
+        ),
+        deleteParkedPlan: vitest.fn((_uid: string, planId: string) => {
+          mocks.parked.delete(planId);
+          return of(void 0);
+        }),
         removeTestResult: vitest.fn(
           (_uid: string, dayIndex: number, itemIndex: number) => {
             const cur = mocks.current as UserTrainingPlan;
@@ -2498,6 +2516,223 @@ describe('TrainingPlanStore', () => {
       // then
       expect(discarded).toBe(false);
       expect(mocks.apiMock.removeTestResult).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('switching plans', () => {
+    /** Active plan with progress of every kind, sitting on day 12. */
+    function inProgress(): UserTrainingPlan {
+      return {
+        userId: 'u1',
+        planId: 'challenge-30d-v1',
+        startDate: toBerlinIsoDate(new Date(Date.now() - 11 * 86_400_000)),
+        status: 'active',
+        completedDays: [1, 2, 3],
+        skippedDays: [4],
+        completedItems: ['1:0'],
+        testResults: ['1:0:30'],
+      };
+    }
+
+    it('should park the outgoing progress when the user keeps it', async () => {
+      // given a plan 12 days in
+      const { store, mocks } = setup(inProgress());
+      await flush();
+
+      // when the user switches away and keeps the progress
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // then nothing it accumulated is lost
+      expect(mocks.apiMock.parkPlan).toHaveBeenCalled();
+      const parked = mocks.parked.get('challenge-30d-v1');
+      expect(parked).toMatchObject({
+        planId: 'challenge-30d-v1',
+        dayIndex: 12,
+        completedDays: [1, 2, 3],
+        skippedDays: [4],
+        completedItems: ['1:0'],
+        testResults: ['1:0:30'],
+      });
+      // and the new plan starts clean
+      expect(store.activePlan()?.planId).toBe('recruit-6w-v1');
+      expect(store.activePlan()?.completedDays).toEqual([]);
+    });
+
+    it('should discard the outgoing progress when the user declines', async () => {
+      // given a plan with progress
+      const { store, mocks } = setup(inProgress());
+      await flush();
+
+      // when the user switches away and discards it
+      await store.start('recruit-6w-v1', { keepCurrentProgress: false });
+      await flush();
+
+      // then nothing is parked
+      expect(mocks.apiMock.parkPlan).not.toHaveBeenCalled();
+      expect(mocks.parked.has('challenge-30d-v1')).toBe(false);
+    });
+
+    it('should drop an older record when the user discards', async () => {
+      // given a plan parked on an earlier switch
+      const { store, mocks } = setup(inProgress());
+      await flush();
+      mocks.parked.set('challenge-30d-v1', {
+        planId: 'challenge-30d-v1',
+        dayIndex: 5,
+        completedDays: [1],
+        parkedAt: '2026-01-01T00:00:00.000Z',
+      });
+
+      // when the user switches away and discards
+      await store.start('recruit-6w-v1', { keepCurrentProgress: false });
+      await flush();
+
+      // then the stale snapshot cannot resurrect on a later switch back
+      expect(mocks.apiMock.deleteParkedPlan).toHaveBeenCalledWith(
+        'u1',
+        'challenge-30d-v1'
+      );
+      expect(mocks.parked.has('challenge-30d-v1')).toBe(false);
+    });
+
+    it('should not park a plan the user never made progress on', async () => {
+      // given a plan activated and immediately switched away from
+      const { store, mocks } = setup({
+        ...inProgress(),
+        completedDays: [],
+        skippedDays: [],
+        completedItems: [],
+        testResults: [],
+      });
+      await flush();
+
+      // when the user switches
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // then there is no empty snapshot to trip over later
+      expect(mocks.apiMock.parkPlan).not.toHaveBeenCalled();
+    });
+
+    it('should resume a parked plan where the user left off', async () => {
+      // given the user switched away from a plan on day 12 and has since
+      // been training something else
+      const { store } = setup(inProgress());
+      await flush();
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // when they come back to it
+      const outcome = await store.start('challenge-30d-v1', {
+        keepCurrentProgress: true,
+      });
+      await flush();
+
+      // then the plan picks up exactly where it stood
+      expect(outcome).toBe('resumed');
+      expect(store.activePlan()?.completedDays).toEqual([1, 2, 3]);
+      expect(store.activePlan()?.skippedDays).toEqual([4]);
+      expect(store.activePlan()?.completedItems).toEqual(['1:0']);
+      expect(store.activePlan()?.testResults).toEqual(['1:0:30']);
+      // and today is the day they left, not 20 days further on
+      expect(store.currentDayIndex()).toBe(12);
+    });
+
+    it('should consume the parked record once it is live again', async () => {
+      // given a resumed plan
+      const { store, mocks } = setup(inProgress());
+      await flush();
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+      await store.start('challenge-30d-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // then the snapshot is gone — leaving it would let a later switch
+      // resume it over everything achieved since
+      expect(mocks.parked.has('challenge-30d-v1')).toBe(false);
+    });
+
+    it('should report a plain start when nothing was parked', async () => {
+      // given no active plan at all
+      const { store } = setup(null);
+      await flush();
+
+      // when a plan is started
+      const outcome = await store.start('recruit-6w-v1', {
+        keepCurrentProgress: true,
+      });
+      await flush();
+
+      // then
+      expect(outcome).toBe('started');
+      expect(store.activePlan()?.completedDays).toEqual([]);
+    });
+
+    it('should start over when the caller asks for a restart', async () => {
+      // given a parked plan
+      const { store, mocks } = setup(inProgress());
+      await flush();
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // when the user chooses to begin it from scratch
+      const outcome = await store.start('challenge-30d-v1', {
+        keepCurrentProgress: true,
+        restart: true,
+      });
+      await flush();
+
+      // then the parked progress is neither restored nor left behind
+      expect(outcome).toBe('started');
+      expect(store.activePlan()?.completedDays).toEqual([]);
+      expect(store.currentDayIndex()).toBe(1);
+      expect(mocks.parked.has('challenge-30d-v1')).toBe(false);
+    });
+
+    it('should not park anything when re-starting the active plan', async () => {
+      // given the plan already running
+      const { store, mocks } = setup(inProgress());
+      await flush();
+
+      // when it is started again
+      await store.start('challenge-30d-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // then a switch to itself does not snapshot itself
+      expect(mocks.apiMock.parkPlan).not.toHaveBeenCalled();
+    });
+
+    it('should flag whether a switch would cost the user anything', async () => {
+      // given a plan with progress
+      const { store } = setup(inProgress());
+      await flush();
+      expect(store.activePlanHasProgress()).toBe(true);
+
+      // when a fresh plan replaces it
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // then there is nothing at stake until progress accrues again
+      expect(store.activePlanHasProgress()).toBe(false);
+    });
+
+    it('should reject an unknown plan id without touching anything', async () => {
+      // given an active plan
+      const { store, mocks } = setup(inProgress());
+      await flush();
+
+      // when a stale id is started
+      const outcome = await store.start('no-such-plan', {
+        keepCurrentProgress: false,
+      });
+      await flush();
+
+      // then the running plan is left alone
+      expect(outcome).toBe('noop');
+      expect(store.activePlan()?.planId).toBe('challenge-30d-v1');
+      expect(mocks.apiMock.setPlan).not.toHaveBeenCalled();
+      expect(mocks.apiMock.deleteParkedPlan).not.toHaveBeenCalled();
     });
   });
 });

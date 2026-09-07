@@ -11041,7 +11041,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:292,294</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:11,12</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:216,217</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:217,218</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:108,109</note>
       </notes>
       <segment>
@@ -11052,7 +11052,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:83,84</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:13,14</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:220,221</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:221,222</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:111,112</note>
       </notes>
       <segment>
@@ -11063,7 +11063,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:15,16</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:218,219</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:219,220</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:114,116</note>
       </notes>
       <segment>
@@ -11075,8 +11075,8 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,90</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:305,307</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:18,20</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:225,226</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:231,232</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:226,227</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:232,233</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.exercises.ts:19</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:126,128</note>
       </notes>
@@ -11088,7 +11088,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,103</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:59,62</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:289,291</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:300,302</note>
       </notes>
       <segment>
         <source>Session starten</source>
@@ -11356,6 +11356,30 @@
         <source>Teilen</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.skipped">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-actions.service.ts:33</note>
+      </notes>
+      <segment>
+        <source>Tag übersprungen.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.jumped">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-actions.service.ts:43</note>
+      </notes>
+      <segment>
+        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.cleared">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-day-actions.service.ts:85</note>
+      </notes>
+      <segment>
+        <source>Wert verworfen — dafür gelten wieder die normalen Planwerte.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.exercise.unquantified">
       <notes>
         <note category="location">web/src/app/training-plans/plan-day-exercises.component.html:33,36</note>
@@ -11402,6 +11426,110 @@
       </notes>
       <segment>
         <source>Übung zurücksetzen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.started">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:70</note>
+      </notes>
+      <segment>
+        <source>Plan gestartet — viel Erfolg!</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resumed">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:79</note>
+      </notes>
+      <segment>
+        <source>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resumeUndo">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:80</note>
+      </notes>
+      <segment>
+        <source>Von vorn beginnen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.restarted">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:94</note>
+      </notes>
+      <segment>
+        <source>Plan von vorn begonnen.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:38,41</note>
+      </notes>
+      <segment>
+        <source>Plan wechseln?</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.current">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:41,42</note>
+      </notes>
+      <segment>
+        <source>Du bist gerade bei</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.atDay">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:43,44</note>
+      </notes>
+      <segment>
+        <source>an Tag</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.completed">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:45,46</note>
+      </notes>
+      <segment>
+        <source>, erledigt:</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.days">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:47,49</note>
+      </notes>
+      <segment>
+        <source>Tage</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.keepExplain">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:50,53</note>
+      </notes>
+      <segment>
+        <source> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.cancel">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:56,59</note>
+      </notes>
+      <segment>
+        <source>Abbrechen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.discard">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:64,67</note>
+      </notes>
+      <segment>
+        <source>Fortschritt verwerfen</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.switch.keep">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-switch-dialog.component.ts:73,75</note>
+      </notes>
+      <segment>
+        <source>Fortschritt behalten</source>
       </segment>
     </unit>
     <unit id="trainingPlans.test.promptMulti">
@@ -11880,7 +12008,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:43</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:408,412</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:425,429</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -12008,12 +12136,12 @@
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:138,140</note>
       </notes>
       <segment>
-        <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
+        <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
       </segment>
     </unit>
     <unit id="trainingPlans.start">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:143,145</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:144,146</note>
       </notes>
       <segment>
         <source>Plan starten</source>
@@ -12021,7 +12149,7 @@
     </unit>
     <unit id="trainingPlans.signupAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:154,157</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:155,158</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -12029,7 +12157,7 @@
     </unit>
     <unit id="trainingPlans.loginAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:162,165</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:163,166</note>
       </notes>
       <segment>
         <source>Schon Konto? Einloggen</source>
@@ -12037,7 +12165,7 @@
     </unit>
     <unit id="trainingPlans.week">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:186,187</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:187,188</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -12045,7 +12173,7 @@
     </unit>
     <unit id="trainingPlans.checkoffHint">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:260,262</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:261,263</note>
       </notes>
       <segment>
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
@@ -12053,7 +12181,7 @@
     </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:320,321</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:331,332</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -12061,7 +12189,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:340,342</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:351,353</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -12069,7 +12197,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:350,352</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:361,363</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
@@ -12077,7 +12205,7 @@
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:361,363</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:372,374</note>
       </notes>
       <segment>
         <source>Alle Übungen eintragen &amp; abhaken</source>
@@ -12085,7 +12213,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:368,370</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:382,384</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -12093,7 +12221,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:374,376</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:391,393</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -12101,7 +12229,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:386,388</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:403,405</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -12109,7 +12237,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:405,406</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:422,423</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -12117,50 +12245,18 @@
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:174</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:170</note>
       </notes>
       <segment>
         <source>Tagesdetails ein-/ausklappen</source>
       </segment>
     </unit>
-    <unit id="trainingPlans.started">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:196</note>
-      </notes>
-      <segment>
-        <source>Plan gestartet — viel Erfolg!</source>
-      </segment>
-    </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:213</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:205</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.skipped">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:231</note>
-      </notes>
-      <segment>
-        <source>Tag übersprungen.</source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.jumped">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:244</note>
-      </notes>
-      <segment>
-        <source>Auf Tag <ph id="0" equiv="INTERPOLATION" disp="dayIndex"/> gesprungen.</source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.test.cleared">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:274</note>
-      </notes>
-      <segment>
-        <source>Wert verworfen — dafür gelten wieder die normalen Planwerte.</source>
       </segment>
     </unit>
     <unit id="trainingPlans.autoStartFailed">

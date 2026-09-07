@@ -23,17 +23,13 @@ import { AuthStore } from '@pu-auth/auth';
 import { findPlanBySlug, localizeTrainingPlanContent } from '@pu-stats/models';
 import { previewDayProgress } from './training-plan-detail.exercises';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
-import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
+import { TrainingPlanStore } from './training-plan.store';
+import { PlanStartService } from './plan-start.service';
+import { PlanDayActionsService } from './plan-day-actions.service';
 import { isPlanActive } from './training-plan-store.selectors';
-import {
-  ExerciseToggle,
-  PlanDayExercisesComponent,
-} from './plan-day-exercises.component';
+import { PlanDayExercisesComponent } from './plan-day-exercises.component';
 import { planDayExpansion } from './plan-day-expansion';
-import {
-  PlanTestInputComponent,
-  TestResultSubmit,
-} from './plan-test-input.component';
+import { PlanTestInputComponent } from './plan-test-input.component';
 import { PlanTodayCardComponent } from './plan-today-card.component';
 import {
   registerAutoStart,
@@ -42,9 +38,6 @@ import {
 import {
   formatSets,
   loginParamsFor,
-  messageForLogResult,
-  messageForResetResult,
-  messageForTestResult,
   offersSession,
   sessionLinkFor,
   signupParamsFor,
@@ -79,6 +72,9 @@ export class TrainingPlanDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly snackbar = inject(MatSnackBar);
+  private readonly planStart = inject(PlanStartService);
+  /** Bound directly from the template — see `PlanDayActionsService`. */
+  protected readonly dayActions = inject(PlanDayActionsService);
   private readonly locale = inject(LOCALE_ID) as string;
   private readonly authStore = inject(AuthStore);
   private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
@@ -191,12 +187,8 @@ export class TrainingPlanDetailComponent {
       });
       return;
     }
-    await this.store.start(p.id);
-    this.snackbar.open(
-      $localize`:@@trainingPlans.started:Plan gestartet — viel Erfolg!`,
-      undefined,
-      { duration: 3000 }
-    );
+    const result = await this.planStart.start(p);
+    if (result === 'cancelled' || result === 'noop') return;
     if (this.queryParamsSignal().get('autoStart') === '1') {
       void this.router.navigate([], {
         relativeTo: this.route,
@@ -215,81 +207,5 @@ export class TrainingPlanDetailComponent {
       { duration: 3000 }
     );
     void this.router.navigate(['/training-plans']);
-  }
-
-  async mark(dayIndex: number): Promise<void> {
-    await this.store.markDayDone(dayIndex);
-  }
-
-  async unmark(dayIndex: number): Promise<void> {
-    await this.store.unmarkDayDone(dayIndex);
-  }
-
-  async skip(dayIndex: number): Promise<void> {
-    await this.store.skipDay(dayIndex);
-    this.snackbar.open(
-      $localize`:@@trainingPlans.skipped:Tag übersprungen.`,
-      undefined,
-      { duration: 2000 }
-    );
-  }
-
-  async unskip(dayIndex: number): Promise<void> {
-    await this.store.unskipDay(dayIndex);
-  }
-
-  async jumpToDay(dayIndex: number): Promise<void> {
-    await this.store.jumpToDay(dayIndex);
-    this.snackbar.open(
-      $localize`:@@trainingPlans.jumped:Auf Tag ${dayIndex}:INTERPOLATION: gesprungen.`,
-      undefined,
-      { duration: 2500 }
-    );
-  }
-
-  async logPlanDay(dayIndex: number): Promise<void> {
-    this.reportLogResult(await this.store.logPlanDay(dayIndex));
-  }
-
-  async logExercise(dayIndex: number, itemIndex: number): Promise<void> {
-    this.reportLogResult(await this.store.logPlanExercise(dayIndex, itemIndex));
-  }
-
-  async toggleExercise(dayIndex: number, event: ExerciseToggle): Promise<void> {
-    await this.store.setItemDone(dayIndex, event.itemIndex, event.done);
-  }
-
-  async recordTest(dayIndex: number, event: TestResultSubmit): Promise<void> {
-    const message = messageForTestResult(
-      await this.store.recordTestResult(dayIndex, event.itemIndex, event.value)
-    );
-    if (message) {
-      this.snackbar.open(message, undefined, { duration: 3000 });
-    }
-  }
-
-  async clearTest(dayIndex: number, itemIndex: number): Promise<void> {
-    if (!(await this.store.clearTestResult(dayIndex, itemIndex))) return;
-    this.snackbar.open(
-      $localize`:@@trainingPlans.test.cleared:Wert verworfen — dafür gelten wieder die normalen Planwerte.`,
-      undefined,
-      { duration: 3000 }
-    );
-  }
-
-  async resetExercise(dayIndex: number, itemIndex: number): Promise<void> {
-    const message = messageForResetResult(
-      await this.store.resetPlanExercise(dayIndex, itemIndex)
-    );
-    if (message) {
-      this.snackbar.open(message, undefined, { duration: 3000 });
-    }
-  }
-
-  private reportLogResult(result: LogPlanDayResult): void {
-    const message = messageForLogResult(result);
-    if (message) {
-      this.snackbar.open(message, undefined, { duration: 3000 });
-    }
   }
 }

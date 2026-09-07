@@ -135,7 +135,8 @@
           @if (isAuthenticated()) {
             @if (store.hasActivePlan()) {
               <p class="muted warn-replace" i18n="@@trainingPlans.replaceWarn">
-                Achtung: Dies ersetzt den aktuell aktiven Plan.
+                Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob
+                du dessen Fortschritt behalten willst.
               </p>
             }
             <button mat-flat-button color="primary" (click)="start()">
@@ -172,11 +173,11 @@
         [sessionLink]="sessionLink()"
         [interactive]="isThisPlanActive()"
         [offersSession]="showSessionCta(today)"
-        (logExercise)="logExercise(today.day.dayIndex, $event)"
-        (toggleExercise)="toggleExercise(today.day.dayIndex, $event)"
-        (resetExercise)="resetExercise(today.day.dayIndex, $event)"
-        (recordTest)="recordTest(today.day.dayIndex, $event)"
-        (clearTest)="clearTest(today.day.dayIndex, $event)"
+        (logExercise)="dayActions.logExercise(today.day.dayIndex, $event)"
+        (toggleExercise)="dayActions.toggleExercise(today.day.dayIndex, $event)"
+        (resetExercise)="dayActions.resetExercise(today.day.dayIndex, $event)"
+        (recordTest)="dayActions.recordTest(today.day.dayIndex, $event)"
+        (clearTest)="dayActions.clearTest(today.day.dayIndex, $event)"
       />
     }
 
@@ -266,16 +267,26 @@
                       [fields]="test.fields"
                       [scalesPlan]="test.scalesPlan"
                       [interactive]="isThisPlanActive() && !row.isFuture"
-                      (submitResult)="recordTest(row.day.dayIndex, $event)"
-                      (clearResult)="clearTest(row.day.dayIndex, $event)"
+                      (submitResult)="
+                        dayActions.recordTest(row.day.dayIndex, $event)
+                      "
+                      (clearResult)="
+                        dayActions.clearTest(row.day.dayIndex, $event)
+                      "
                     />
                   }
                   <app-plan-day-exercises
                     [exercises]="row.exercises"
                     [interactive]="isThisPlanActive() && !row.isFuture"
-                    (logExercise)="logExercise(row.day.dayIndex, $event)"
-                    (toggleExercise)="toggleExercise(row.day.dayIndex, $event)"
-                    (resetExercise)="resetExercise(row.day.dayIndex, $event)"
+                    (logExercise)="
+                      dayActions.logExercise(row.day.dayIndex, $event)
+                    "
+                    (toggleExercise)="
+                      dayActions.toggleExercise(row.day.dayIndex, $event)
+                    "
+                    (resetExercise)="
+                      dayActions.resetExercise(row.day.dayIndex, $event)
+                    "
                   />
                   @if (showSessionCta(row)) {
                     <a
@@ -333,7 +344,7 @@
                       @if (row.isCompleted) {
                         <button
                           mat-menu-item
-                          (click)="unmark(row.day.dayIndex)"
+                          (click)="dayActions.unmark(row.day.dayIndex)"
                         >
                           <mat-icon>undo</mat-icon>
                           <span i18n="@@trainingPlans.menu.undoDone"
@@ -343,7 +354,7 @@
                       } @else if (row.isSkipped) {
                         <button
                           mat-menu-item
-                          (click)="unskip(row.day.dayIndex)"
+                          (click)="dayActions.unskip(row.day.dayIndex)"
                         >
                           <mat-icon>undo</mat-icon>
                           <span i18n="@@trainingPlans.menu.undoSkip"
@@ -354,7 +365,7 @@
                         @if (row.exercises.length > 0) {
                           <button
                             mat-menu-item
-                            (click)="logPlanDay(row.day.dayIndex)"
+                            (click)="dayActions.logPlanDay(row.day.dayIndex)"
                           >
                             <mat-icon color="primary">check_circle</mat-icon>
                             <span i18n="@@trainingPlans.menu.logAllDone"
@@ -362,13 +373,19 @@
                             >
                           </button>
                         }
-                        <button mat-menu-item (click)="mark(row.day.dayIndex)">
+                        <button
+                          mat-menu-item
+                          (click)="dayActions.mark(row.day.dayIndex)"
+                        >
                           <mat-icon>check</mat-icon>
                           <span i18n="@@trainingPlans.menu.markDone"
                             >Nur abhaken (ohne Eintrag)</span
                           >
                         </button>
-                        <button mat-menu-item (click)="skip(row.day.dayIndex)">
+                        <button
+                          mat-menu-item
+                          (click)="dayActions.skip(row.day.dayIndex)"
+                        >
                           <mat-icon>skip_next</mat-icon>
                           <span i18n="@@trainingPlans.menu.skip"
                             >Tag überspringen</span
@@ -379,7 +396,7 @@
                     @if (!row.isToday) {
                       <button
                         mat-menu-item
-                        (click)="jumpToDay(row.day.dayIndex)"
+                        (click)="dayActions.jumpToDay(row.day.dayIndex)"
                       >
                         <mat-icon>fast_forward</mat-icon>
                         <span i18n="@@trainingPlans.menu.jump"

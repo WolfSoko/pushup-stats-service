@@ -3,15 +3,18 @@ import { Auth } from '@angular/fire/auth';
 import {
   arrayRemove,
   arrayUnion,
+  deleteDoc,
   doc,
   docData,
   DocumentReference,
   Firestore,
+  getDoc,
   runTransaction,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
 import {
+  ParkedTrainingPlan,
   parsePlanTestResultId,
   planTestResultId,
   UserTrainingPlan,
@@ -21,6 +24,8 @@ import { from, map, Observable, of } from 'rxjs';
 import { nextSkippedDays } from './user-training-plan.jump';
 
 const COLLECTION = 'userTrainingPlans';
+/** Subcollection holding the progress of plans the user switched away from. */
+const HISTORY_COLLECTION = 'history';
 
 /** Optimistic echo of an `updatePlan` write for callers that only need the
  *  patched fields back (and the shape returned when there is no Firestore). */
@@ -278,6 +283,51 @@ export class UserTrainingPlanApiService {
       updatedAt: nowIso,
     };
     return from(setDoc(ref, payload)).pipe(map(() => payload));
+  }
+
+  /**
+   * Set a plan's progress aside so activating another one doesn't destroy
+   * it. One document per plan, overwritten wholesale — a parked record is
+   * a snapshot, not something two writers edit concurrently.
+   */
+  parkPlan(userId: string, parked: ParkedTrainingPlan): Observable<void> {
+    const ref = this.historyRef(userId, parked.planId);
+    if (!ref) return of(void 0);
+    return from(setDoc(ref, parked)).pipe(map(() => void 0));
+  }
+
+  /** A plan's parked progress, or null when it has none. */
+  getParkedPlan(
+    userId: string,
+    planId: string
+  ): Observable<ParkedTrainingPlan | null> {
+    const ref = this.historyRef(userId, planId);
+    if (!ref) return of(null);
+    return from(getDoc(ref)).pipe(
+      map((snap) => (snap.exists() ? snap.data() : null))
+    );
+  }
+
+  /** Discard a plan's parked progress. */
+  deleteParkedPlan(userId: string, planId: string): Observable<void> {
+    const ref = this.historyRef(userId, planId);
+    if (!ref) return of(void 0);
+    return from(deleteDoc(ref)).pipe(map(() => void 0));
+  }
+
+  private historyRef(
+    userId: string,
+    planId: string
+  ): DocumentReference<ParkedTrainingPlan> | null {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore || !planId) return null;
+    return doc(
+      this.firestore,
+      COLLECTION,
+      effectiveUserId,
+      HISTORY_COLLECTION,
+      planId
+    ) as DocumentReference<ParkedTrainingPlan>;
   }
 
   /** Field-level `updateDoc` with the `updatedAt` stamp, or a no-op when

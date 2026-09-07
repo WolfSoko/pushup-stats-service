@@ -24,6 +24,7 @@ import {
   isPlanCompleted,
   planDayByIndex,
   PlanExerciseProgress,
+  planHasProgress,
   planScaleFactors,
   planTestResults,
   scaleTrainingPlan,
@@ -49,6 +50,10 @@ import { registerTrainingPlanHooks } from './training-plan-store.hooks';
 
 export type { LogPlanDayResult } from './training-plan-store.internals';
 export type { ResetExerciseResult } from './training-plan-store.reset';
+export type {
+  StartPlanOptions,
+  StartPlanOutcome,
+} from './training-plan-store.lifecycle';
 export type { RecordTestResultOutcome } from './training-plan-store.tests';
 
 /**
@@ -183,6 +188,13 @@ export const TrainingPlanStore = signalStore(
       return computeCompletionPercent(c, a.completedDays, a.skippedDays ?? []);
     });
 
+    /**
+     * Whether switching away from the active plan would cost the user
+     * anything. Drives the keep-or-discard prompt: a plan just activated
+     * and immediately abandoned has nothing at stake to ask about.
+     */
+    const activePlanHasProgress = computed(() => planHasProgress(activePlan()));
+
     const isCompleted = computed(() => {
       const a = activePlan();
       const c = activeCatalog();
@@ -229,6 +241,7 @@ export const TrainingPlanStore = signalStore(
       todayDone,
       todaySkipped,
       completionPercent,
+      activePlanHasProgress,
       isCompleted,
       hasActivePlan,
       activePlanLoaded,
@@ -237,7 +250,8 @@ export const TrainingPlanStore = signalStore(
   withMethods((store) => ({
     /** All curated plans (re-exposed for component templates). */
     allPlans: () => actions.allPlans(),
-    start: (planId: string) => lifecycle.start(store, planId),
+    start: (planId: string, options?: lifecycle.StartPlanOptions) =>
+      lifecycle.start(store, planId, options),
     markTodayDone: () => actions.markTodayDone(store),
     logTodayPlanDay: () => actions.logTodayPlanDay(store),
     markDayDone: (dayIndex: number) => actions.markDayDone(store, dayIndex),
