@@ -11136,7 +11136,7 @@
       </segment>
     </unit>
     <unit id="publicProfile.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan-Erfolge</source>
         <target>成就</target>
       </segment>
@@ -11478,207 +11478,207 @@
       </segment>
     </unit>
     <unit id="trainingPlans.test.prompt">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnis deines Maximaltests</source>
-        <target>Ergebnis deines Maximaltests</target>
+        <target>你的最大测试结果</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.recommended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Richtwert</source>
-        <target>Richtwert</target>
+        <target>参考值</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>次数</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen</source>
-        <target>Eintragen</target>
+        <target>保存</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.update">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktualisieren</source>
-        <target>Aktualisieren</target>
+        <target>更新</target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> eintragen. </source>
-        <target> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> eintragen. </target>
+        <target> 请输入 1 到 <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> 之间的整数。 </target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.hintOpen">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Ergebnisse passen die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</source>
-        <target>Deine Ergebnisse passen die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</target>
+        <target>你的成绩会调整接下来几天的目标。如果不输入，将保持正常的计划数值。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintScaled">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die folgenden Tage laufen auf <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % der Planvorgabe.</source>
-        <target>Die folgenden Tage laufen auf <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % der Planvorgabe.</target>
+        <target>接下来几天将按计划目标的 <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % 进行。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintNeutral">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die folgenden Tage laufen auf der normalen Planvorgabe.</source>
-        <target>Die folgenden Tage laufen auf der normalen Planvorgabe.</target>
+        <target>接下来几天将按正常的计划目标进行。</target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.clear">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert verwerfen</source>
-        <target>Wert verwerfen</target>
+        <target>放弃数值</target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.cleared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert verworfen — dafür gelten wieder die normalen Planwerte.</source>
-        <target>Wert verworfen — dafür gelten wieder die normalen Planwerte.</target>
+        <target>数值已放弃——恢复正常的计划数值。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.recorded">
-      <segment state="initial">
+      <segment state="translated">
         <source>Maximaltest eingetragen — die folgenden Tage sind angepasst.</source>
-        <target>Maximaltest eingetragen — die folgenden Tage sind angepasst.</target>
+        <target>已记录最大测试——接下来几天已调整。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.updated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnis aktualisiert.</source>
-        <target>Ergebnis aktualisiert.</target>
+        <target>成绩已更新。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.rejected">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte eine gültige Wiederholungszahl eintragen.</source>
-        <target>Bitte eine gültige Wiederholungszahl eintragen.</target>
+        <target>请输入有效的次数。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.promptMulti">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnisse deines Maximaltests</source>
-        <target>Ergebnisse deines Maximaltests</target>
+        <target>你的最大测试成绩</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintRecorded">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnisse festgehalten — die Planwerte bleiben unverändert.</source>
-        <target>Ergebnisse festgehalten — die Planwerte bleiben unverändert.</target>
+        <target>成绩已记录——计划数值保持不变。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintScaledIntro">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die folgenden Tage laufen auf:</source>
-        <target>Die folgenden Tage laufen auf:</target>
+        <target>接下来几天将按：</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.seconds">
-      <segment state="initial">
+      <segment state="translated">
         <source>s</source>
-        <target>s</target>
+        <target>秒</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resumed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</source>
-        <target>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</target>
+        <target>计划已从第 <ph id="0" equiv="INTERPOLATION" disp="day"/> 天恢复。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resumeUndo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von vorn beginnen</source>
-        <target>Von vorn beginnen</target>
+        <target>从头开始</target>
       </segment>
     </unit>
     <unit id="trainingPlans.restarted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan von vorn begonnen.</source>
-        <target>Plan von vorn begonnen.</target>
+        <target>计划已从头开始。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan wechseln?</source>
-        <target>Plan wechseln?</target>
+        <target>切换计划？</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.current">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du bist gerade bei</source>
-        <target>Du bist gerade bei</target>
+        <target>你目前在</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.atDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>an Tag</source>
-        <target>an Tag</target>
+        <target>的第</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.completed">
-      <segment state="initial">
+      <segment state="translated">
         <source>, erledigt:</source>
-        <target>, erledigt:</target>
+        <target>天，已完成：</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage</source>
-        <target>Tage</target>
+        <target>天</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.keepExplain">
-      <segment state="initial">
+      <segment state="translated">
         <source> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </source>
-        <target> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </target>
+        <target> 保留进度后，你可以稍后在完全相同的位置继续这个计划。 </target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abbrechen</source>
-        <target>Abbrechen</target>
+        <target>取消</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.discard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fortschritt verwerfen</source>
-        <target>Fortschritt verwerfen</target>
+        <target>放弃进度</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.keep">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fortschritt behalten</source>
-        <target>Fortschritt behalten</target>
+        <target>保留进度</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stückübungen</source>
-        <target>Stückübungen</target>
+        <target>计次动作</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitübungen</source>
-        <target>Zeitübungen</target>
+        <target>计时动作</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Streckenübungen</source>
-        <target>Streckenübungen</target>
+        <target>距离动作</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtsübungen</source>
-        <target>Gewichtsübungen</target>
+        <target>负重动作</target>
       </segment>
     </unit>
 </file>

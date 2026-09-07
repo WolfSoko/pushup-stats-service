@@ -11630,7 +11630,7 @@
       </segment>
     </unit>
     <unit id="publicProfile.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan-Erfolge</source>
         <target>Prestaties</target>
       </segment>
@@ -11972,207 +11972,207 @@
       </segment>
     </unit>
     <unit id="trainingPlans.test.prompt">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnis deines Maximaltests</source>
-        <target>Ergebnis deines Maximaltests</target>
+        <target>Resultaat van je maximale test</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.recommended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Richtwert</source>
-        <target>Richtwert</target>
+        <target>Richtwaarde</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.label">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Herhalingen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eintragen</source>
-        <target>Eintragen</target>
+        <target>Opslaan</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.update">
-      <segment state="initial">
+      <segment state="translated">
         <source>Aktualisieren</source>
-        <target>Aktualisieren</target>
+        <target>Bijwerken</target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> eintragen. </source>
-        <target> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> eintragen. </target>
+        <target> Voer een geheel getal tussen 1 en <ph id="0" equiv="INTERPOLATION" disp="{{ field.max }}"/> in. </target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.hintOpen">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Ergebnisse passen die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</source>
-        <target>Deine Ergebnisse passen die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</target>
+        <target>Je resultaten passen de doelen van de volgende dagen aan. Zonder invoer blijven de normale planwaarden gelden.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintScaled">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die folgenden Tage laufen auf <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % der Planvorgabe.</source>
-        <target>Die folgenden Tage laufen auf <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % der Planvorgabe.</target>
+        <target>De volgende dagen lopen op <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % van het plandoel.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintNeutral">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die folgenden Tage laufen auf der normalen Planvorgabe.</source>
-        <target>Die folgenden Tage laufen auf der normalen Planvorgabe.</target>
+        <target>De volgende dagen lopen op het normale plandoel.</target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.clear">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert verwerfen</source>
-        <target>Wert verwerfen</target>
+        <target>Waarde wissen</target>
       </segment>
     </unit>
         <unit id="trainingPlans.test.cleared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wert verworfen — dafür gelten wieder die normalen Planwerte.</source>
-        <target>Wert verworfen — dafür gelten wieder die normalen Planwerte.</target>
+        <target>Waarde gewist — de normale planwaarden gelden weer.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.recorded">
-      <segment state="initial">
+      <segment state="translated">
         <source>Maximaltest eingetragen — die folgenden Tage sind angepasst.</source>
-        <target>Maximaltest eingetragen — die folgenden Tage sind angepasst.</target>
+        <target>Maximale test geregistreerd — de volgende dagen zijn aangepast.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.updated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnis aktualisiert.</source>
-        <target>Ergebnis aktualisiert.</target>
+        <target>Resultaat bijgewerkt.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.rejected">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte eine gültige Wiederholungszahl eintragen.</source>
-        <target>Bitte eine gültige Wiederholungszahl eintragen.</target>
+        <target>Voer een geldig aantal herhalingen in.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.promptMulti">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnisse deines Maximaltests</source>
-        <target>Ergebnisse deines Maximaltests</target>
+        <target>Resultaten van je maximale test</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintRecorded">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ergebnisse festgehalten — die Planwerte bleiben unverändert.</source>
-        <target>Ergebnisse festgehalten — die Planwerte bleiben unverändert.</target>
+        <target>Resultaten vastgelegd — de planwaarden blijven ongewijzigd.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.hintScaledIntro">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die folgenden Tage laufen auf:</source>
-        <target>Die folgenden Tage laufen auf:</target>
+        <target>De volgende dagen lopen op:</target>
       </segment>
     </unit>
     <unit id="trainingPlans.test.seconds">
-      <segment state="initial">
+      <segment state="translated">
         <source>s</source>
         <target>s</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resumed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</source>
-        <target>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</target>
+        <target>Plan hervat bij dag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resumeUndo">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von vorn beginnen</source>
-        <target>Von vorn beginnen</target>
+        <target>Opnieuw beginnen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.restarted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan von vorn begonnen.</source>
-        <target>Plan von vorn begonnen.</target>
+        <target>Plan opnieuw vanaf het begin gestart.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan wechseln?</source>
-        <target>Plan wechseln?</target>
+        <target>Plan wisselen?</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.current">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du bist gerade bei</source>
-        <target>Du bist gerade bei</target>
+        <target>Je bent momenteel bij</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.atDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>an Tag</source>
-        <target>an Tag</target>
+        <target>op dag</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.completed">
-      <segment state="initial">
+      <segment state="translated">
         <source>, erledigt:</source>
-        <target>, erledigt:</target>
+        <target>, voltooid:</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage</source>
-        <target>Tage</target>
+        <target>dagen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.keepExplain">
-      <segment state="initial">
+      <segment state="translated">
         <source> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </source>
-        <target> Behältst du den Fortschritt, kannst du diesen Plan später genau hier wieder aufnehmen. </target>
+        <target> Als je je voortgang behoudt, kun je dit plan later precies hier weer oppakken. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abbrechen</source>
-        <target>Abbrechen</target>
+        <target>Annuleren</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.discard">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fortschritt verwerfen</source>
-        <target>Fortschritt verwerfen</target>
+        <target>Voortgang verwerpen</target>
       </segment>
     </unit>
     <unit id="trainingPlans.switch.keep">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fortschritt behalten</source>
-        <target>Fortschritt behalten</target>
+        <target>Voortgang behouden</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stückübungen</source>
-        <target>Stückübungen</target>
+        <target>Herhalingsoefeningen</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.time">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitübungen</source>
-        <target>Zeitübungen</target>
+        <target>Tijdoefeningen</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.distance">
-      <segment state="initial">
+      <segment state="translated">
         <source>Streckenübungen</source>
-        <target>Streckenübungen</target>
+        <target>Afstandsoefeningen</target>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.weight">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gewichtsübungen</source>
-        <target>Gewichtsübungen</target>
+        <target>Gewichtsoefeningen</target>
       </segment>
     </unit>
 </file>
