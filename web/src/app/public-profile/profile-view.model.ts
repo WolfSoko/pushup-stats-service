@@ -14,6 +14,13 @@ export interface ExerciseRow {
   readonly name: string;
   readonly value: string;
   readonly percent: number;
+  readonly measurement: string;
+}
+
+export interface ExerciseGroup {
+  readonly measurement:
+    'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
+  readonly rows: ReadonlyArray<ExerciseRow>;
 }
 
 /**
@@ -63,7 +70,7 @@ export function buildHeatmapRows(
  * metres, so a common denominator would be meaningless.
  */
 export function buildExerciseRows<
-  T extends { exerciseId: string; total: number },
+  T extends { exerciseId: string; total: number; measurement: string },
 >(
   exercises: ReadonlyArray<T>,
   name: (entry: T) => string,
@@ -75,6 +82,30 @@ export function buildExerciseRows<
     exerciseId: entry.exerciseId,
     name: name(entry),
     value: value(entry),
+    measurement: entry.measurement,
     percent: max > 0 ? Math.round((entry.total / max) * 100) : 0,
   }));
+}
+
+export function groupExercisesByMeasurement(
+  rows: ReadonlyArray<ExerciseRow>
+): ReadonlyArray<ExerciseGroup> {
+  const groups = new Map<string, ExerciseRow[]>();
+  for (const row of rows) {
+    const group = groups.get(row.measurement) ?? [];
+    groups.set(row.measurement, [...group, row]);
+  }
+  const order: Record<string, number> = {
+    reps: 1,
+    time: 2,
+    distance: 3,
+    'distance-time': 4,
+    weight: 5,
+  };
+  return Array.from(groups.entries())
+    .sort((a, b) => (order[a[0]] ?? 999) - (order[b[0]] ?? 999))
+    .map(([measurement, measurementRows]) => ({
+      measurement: measurement as ExerciseGroup['measurement'],
+      rows: measurementRows,
+    }));
 }

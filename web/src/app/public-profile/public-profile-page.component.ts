@@ -29,6 +29,8 @@ import { PublicProfileSeo } from './public-profile-seo';
 import {
   buildExerciseRows,
   buildHeatmapRows,
+  groupExercisesByMeasurement,
+  type ExerciseGroup,
   type ExerciseRow,
   type HeatmapRow,
 } from './profile-view.model';
@@ -157,6 +159,10 @@ export class PublicProfilePageComponent {
       (entry) =>
         formatExerciseTotal(entry.total, entry.measurement, this.localeId)
     )
+  );
+
+  protected readonly exerciseGroups = computed<ReadonlyArray<ExerciseGroup>>(
+    () => groupExercisesByMeasurement(this.exerciseRows())
   );
 
   protected badgesFor(profile: PublicProfile): ReadonlyArray<AchievementBadge> {
