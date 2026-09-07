@@ -568,7 +568,8 @@ describe('PushSubscriptionStore', () => {
       // when
       const store = setupStore() as unknown as Record<string, unknown>;
 
-      // then the app has no way to snooze — only the push SW does, per tap
+      // then nothing in the app can snooze a reminder — the action was
+      // retired everywhere, and this guards the store against growing it back
       expect(store['snooze']).toBeUndefined();
     });
   });

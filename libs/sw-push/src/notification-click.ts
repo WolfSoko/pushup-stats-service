@@ -1,10 +1,10 @@
 /**
  * `notificationclick` handling for the push service worker: routes the
- * reminder notification's action buttons (`snooze`, `log`, `quick-log`)
- * and the plain body tap.
+ * reminder notification's action buttons (`log`, `quick-log`) and the
+ * plain body tap.
  *
- * `snooze` and `quick-log` are completed right here, server-side, with the
- * single-use token the dispatcher put into the notification. No app window
+ * `quick-log` is completed right here, server-side, with the single-use
+ * token the dispatcher put into the notification. No app window
  * takes part: every channel from the SW to a window (postMessage, a deep
  * link, a stored intent drained on resume) arrives late or replays on an
  * installed Android PWA, and each of them has written a push-up entry the
@@ -13,9 +13,6 @@
  */
 import { resolveLocale, type SwContext, type SwLocale } from './handlers';
 
-/** Minutes the `snooze` action postpones the next reminder by. */
-export const SNOOZE_MINUTES = 30;
-
 export interface ReminderActionRef {
   uid: string;
   token: string;
@@ -23,7 +20,6 @@ export interface ReminderActionRef {
 }
 
 export interface ReminderActionFeedback {
-  snoozed?: string;
   logged?: string;
   failed?: string;
 }
@@ -42,7 +38,7 @@ export interface NotificationClickEventLike {
   waitUntil(promise: Promise<unknown>): void;
 }
 
-type ReminderActionType = 'snooze' | 'quick-log';
+type ReminderActionType = 'quick-log';
 
 function actionRef(
   event: NotificationClickEventLike
@@ -77,12 +73,7 @@ async function completeOnServer(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        data: {
-          uid: ref.uid,
-          token: ref.token,
-          action,
-          ...(action === 'snooze' ? { snoozeMinutes: SNOOZE_MINUTES } : {}),
-        },
+        data: { uid: ref.uid, token: ref.token, action },
       }),
     });
     if (!response.ok) return false;
@@ -102,10 +93,6 @@ function fallbackFeedback(
 ): string {
   const en = locale === 'en';
   switch (kind) {
-    case 'snoozed':
-      return en
-        ? `⏰ Reminder snoozed for ${SNOOZE_MINUTES} min`
-        : `⏰ Erinnerung um ${SNOOZE_MINUTES} Min verschoben`;
     case 'logged':
       return en ? '✅ Push-ups logged' : '✅ Liegestütze eingetragen';
     default:
@@ -129,19 +116,6 @@ function showFeedback(
     badge: '/icons/badge-72x72.png',
     data: { url: `/${locale}/app`, locale },
   });
-}
-
-function handleSnooze(
-  event: NotificationClickEventLike,
-  ctx: SwContext,
-  locale: SwLocale
-): void {
-  event.waitUntil(
-    (async () => {
-      const done = await completeOnServer('snooze', event, ctx);
-      await showFeedback(done ? 'snoozed' : 'failed', event, ctx, locale);
-    })()
-  );
 }
 
 function handleQuickLog(
@@ -171,11 +145,6 @@ export function handleNotificationClick(
 
   const action = event.action;
   const locale = resolveLocale(event.notification.data?.locale);
-
-  if (action === 'snooze') {
-    handleSnooze(event, ctx, locale);
-    return;
-  }
 
   if (action === 'log') {
     event.waitUntil(ctx.clients.openWindow(`/${locale}/app?log=1`));

@@ -10,7 +10,6 @@ import {
   reminderBodyChoices,
   reminderLogLabel,
   reminderQuickLogLabel,
-  reminderSnoozeLabel,
   type ReminderConfig,
 } from '@pu-stats/models';
 
@@ -25,18 +24,16 @@ export interface FirestoreTimestamp {
 
 /**
  * Determines if a push reminder should be sent now
- * Checks: enabled status, quiet hours, snooze state, and interval elapsed
+ * Checks: enabled status, quiet hours, and interval elapsed
  * @param reminder Reminder configuration
  * @param lastSentAt Last time reminder was sent
  * @param nowMs Current time in milliseconds
- * @param snoozedUntil When the snooze ends
  * @returns true if reminder should be sent
  */
 export function shouldSendReminder(
   reminder: Partial<ReminderConfig> | undefined,
   lastSentAt: FirestoreTimestamp | null,
-  nowMs: number,
-  snoozedUntil: FirestoreTimestamp | null
+  nowMs: number
 ): boolean {
   // Reminder must be enabled
   if (!reminder?.enabled) return false;
@@ -58,14 +55,6 @@ export function shouldSendReminder(
     )
   )
     return false;
-
-  // Check if snoozed
-  if (snoozedUntil) {
-    const snoozeMs = snoozedUntil.toMillis
-      ? snoozedUntil.toMillis()
-      : new Date(snoozedUntil as unknown as string).getTime();
-    if (nowMs < snoozeMs) return false;
-  }
 
   // Check interval has elapsed since last send
   if (lastSentAt) {
@@ -213,20 +202,14 @@ export function buildReminderActions(
   quickLogReps: number | undefined
 ): NotificationAction[] {
   const locale = normalizeReminderLocale(rawLocale);
-  const snooze: NotificationAction = {
-    action: 'snooze',
-    title: reminderSnoozeLabel(locale),
-  };
-
   const reps = sanitizeQuickLogReps(quickLogReps);
   if (reps) {
     return [
-      snooze,
       { action: 'quick-log', title: reminderQuickLogLabel(locale, reps) },
     ];
   }
 
-  return [snooze, { action: 'log', title: reminderLogLabel(locale) }];
+  return [{ action: 'log', title: reminderLogLabel(locale) }];
 }
 
 /**

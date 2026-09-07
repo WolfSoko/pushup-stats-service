@@ -1143,11 +1143,10 @@ describe('StatsDashboardComponent', () => {
     });
   });
 
-  // Regression: a `?snooze=N` deep-link arrives via the SW snooze action
-  // (or via App.ts before it strips the param). The dashboard's
-  // `_handleLogParam` shares the URL with App.ts's `_handleSnoozeParam`,
-  // so it must defer to it — never mistake a snooze URL for a quick-log
-  // or log deep-link.
+  // Regression: `?snooze=N` URLs still reach the app from reminders sent
+  // before the snooze action was retired. The dashboard's `_handleLogParam`
+  // reads the same URL, so it must never mistake one for a quick-log or log
+  // deep-link and write an entry off it.
   describe('Given the dashboard mounts on a snooze deep-link URL', () => {
     /**
      * Boots a fresh dashboard fixture with the given query params on the
@@ -1231,10 +1230,8 @@ describe('StatsDashboardComponent', () => {
         serviceMock.createPushup.mockClear();
         await createDashboardWithQueryParams({ snooze: '30' });
 
-        // Then — snooze deep-links don't trigger any entry creation. The
-        // SW's snooze action posts SNOOZE_REMINDER to an open client OR
-        // opens this URL when no client exists; either way, the dashboard
-        // must keep its hands off entry creation.
+        // Then — a leftover snooze deep-link creates nothing. The action
+        // is gone, but its URLs outlive it in notification trays.
         expect(serviceMock.createPushup).not.toHaveBeenCalled();
       });
 

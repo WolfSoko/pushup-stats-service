@@ -5,7 +5,6 @@
 
 import {
   handleNotificationClick,
-  SNOOZE_MINUTES,
   type NotificationClickEventLike,
   type ReminderActionFeedback,
   type ReminderActionRef,
@@ -106,166 +105,6 @@ describe('handleNotificationClick', () => {
     expect(close).toHaveBeenCalledTimes(1);
   });
 
-  describe('snooze action', () => {
-    it('should complete the snooze on the server with the notification token', async () => {
-      // given a reminder that carries an action token
-      const { ctx, fetch } = makeCtx();
-      const { event, settled } = makeEvent('snooze', {
-        locale: 'de',
-        reminderAction: makeRef(),
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then exactly one POST goes to the dispatcher-provided URL
-      expect(fetch).toHaveBeenCalledTimes(1);
-      expect(fetch.mock.calls[0][0]).toBe(ACTION_URL);
-      expect(postedBody(fetch)).toEqual({
-        data: {
-          uid: 'user-1',
-          token: 'tok-1',
-          action: 'snooze',
-          snoozeMinutes: SNOOZE_MINUTES,
-        },
-      });
-    });
-
-    it('should never send a quick-log or open a window for a snooze', async () => {
-      // given a reminder that also offered a quick-log button
-      const { ctx, fetch, openWindow, matchAll } = makeCtx();
-      const { event, settled } = makeEvent('snooze', {
-        locale: 'de',
-        reminderAction: makeRef(),
-        feedback: { logged: '✅ 10 Liegestütze eingetragen' },
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then the only server call is a snooze and no window is touched
-      expect(fetch).toHaveBeenCalledTimes(1);
-      expect(postedBody(fetch).data['action']).toBe('snooze');
-      expect(openWindow).not.toHaveBeenCalled();
-      expect(matchAll).not.toHaveBeenCalled();
-    });
-
-    it('should confirm the snooze with the localized feedback text', async () => {
-      // given
-      const { ctx, showNotification } = makeCtx();
-      const { event, settled } = makeEvent('snooze', {
-        locale: 'fr',
-        reminderAction: makeRef(),
-        feedback: { snoozed: '⏰ Rappel reporté de 30 min' },
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then
-      expect(showNotification).toHaveBeenCalledWith(
-        '⏰ Rappel reporté de 30 min',
-        expect.objectContaining({
-          tag: 'reminder',
-          data: { url: '/fr/app', locale: 'fr' },
-        })
-      );
-    });
-
-    it('should fall back to a built-in confirmation when the payload has none', async () => {
-      // given
-      const { ctx, showNotification } = makeCtx();
-      const { event, settled } = makeEvent('snooze', {
-        locale: 'en',
-        reminderAction: makeRef(),
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then
-      expect(showNotification.mock.calls[0][0]).toContain('snoozed');
-    });
-
-    it('should report failure when the server refuses the token', async () => {
-      // given a token the server has already consumed
-      const { ctx, showNotification } = makeCtx({
-        fetch: jest
-          .fn()
-          .mockResolvedValue(
-            serverSays({ error: { status: 'PERMISSION_DENIED' } }, false)
-          ),
-      });
-      const { event, settled } = makeEvent('snooze', {
-        locale: 'de',
-        reminderAction: makeRef(),
-        feedback: { failed: 'Aktion fehlgeschlagen' },
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then
-      expect(showNotification).toHaveBeenCalledWith(
-        'Aktion fehlgeschlagen',
-        expect.anything()
-      );
-    });
-
-    it('should report failure when the network is down', async () => {
-      // given
-      const { ctx, showNotification } = makeCtx({
-        fetch: jest.fn().mockRejectedValue(new TypeError('Failed to fetch')),
-      });
-      const { event, settled } = makeEvent('snooze', {
-        locale: 'de',
-        reminderAction: makeRef(),
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then
-      expect(showNotification).toHaveBeenCalledTimes(1);
-      expect(showNotification.mock.calls[0][0]).toContain('fehlgeschlagen');
-    });
-
-    it('should report failure instead of calling anything when the payload has no token', async () => {
-      // given a notification sent by an older dispatcher
-      const { ctx, fetch, showNotification } = makeCtx();
-      const { event, settled } = makeEvent('snooze', { locale: 'de' });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then
-      expect(fetch).not.toHaveBeenCalled();
-      expect(showNotification.mock.calls[0][0]).toContain('fehlgeschlagen');
-    });
-
-    it('should refuse to post the token to a non-https URL', async () => {
-      // given a tampered payload
-      const { ctx, fetch } = makeCtx();
-      const { event, settled } = makeEvent('snooze', {
-        reminderAction: makeRef({ url: 'http://evil.example/collect' }),
-      });
-
-      // when
-      handleNotificationClick(event, ctx);
-      await settled();
-
-      // then
-      expect(fetch).not.toHaveBeenCalled();
-    });
-  });
-
   describe('quick-log action', () => {
     it('should complete the quick-log on the server without sending a count', async () => {
       // given — the server already knows the offered reps from the token
@@ -356,6 +195,21 @@ describe('handleNotificationClick', () => {
       // then
       expect(fetch).not.toHaveBeenCalled();
       expect(openWindow).toHaveBeenCalledWith('/zh/app?log=1');
+    });
+
+    it('should refuse to post the token to a non-https URL', async () => {
+      // given a tampered payload
+      const { ctx, fetch } = makeCtx();
+      const { event, settled } = makeEvent('quick-log', {
+        reminderAction: makeRef({ url: 'http://evil.example/collect' }),
+      });
+
+      // when
+      handleNotificationClick(event, ctx);
+      await settled();
+
+      // then the single-use token never leaves over plain http
+      expect(fetch).not.toHaveBeenCalled();
     });
 
     it('should open the entry dialog when the network is down', async () => {

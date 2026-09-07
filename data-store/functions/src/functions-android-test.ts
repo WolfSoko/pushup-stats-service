@@ -213,8 +213,7 @@ export const adminConfirmAndroidTestCandidate = onCall(
 /**
  * User-initiated opt-in from the invite popup. Only a user whose own
  * `androidTest.status` is `'confirmed'` (i.e. an admin already approved
- * them as a candidate) may opt in — same auth-only, no-admin-check shape as
- * `snoozeReminder`.
+ * them as a candidate) may opt in — auth-only, no admin check.
  */
 export const optInAndroidTest = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },

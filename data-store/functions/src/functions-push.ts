@@ -2,9 +2,8 @@ import {
   normalizeReminderLocale,
   reminderActionFailedLabel,
   reminderQuickLogDoneLabel,
-  reminderSnoozedLabel,
 } from '@pu-stats/models';
-import { FieldValue, Timestamp } from 'firebase-admin/firestore';
+import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { defineSecret } from 'firebase-functions/params';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
@@ -24,7 +23,6 @@ import {
   PUSH_SEND_OPTIONS,
   sanitizeQuickLogReps,
   shouldSendReminder,
-  SNOOZE_MINUTES_DEFAULT,
   STALE_LEASE_MS,
   validateSubscriptionPayload,
 } from './push';
@@ -295,7 +293,6 @@ export const dispatchPushReminders = onSchedule(
         await db.runTransaction(async (tx) => {
           const dispatchSnap = await tx.get(dispatchRef);
           const lastSentAt = dispatchSnap.data()?.lastSentAt || null;
-          const snoozedUntil = dispatchSnap.data()?.snoozedUntil || null;
           const alreadyInProgress = dispatchSnap.data()?.inProgress === true;
 
           if (alreadyInProgress) {
@@ -322,8 +319,7 @@ export const dispatchPushReminders = onSchedule(
               { merge: true }
             );
           }
-          if (!shouldSendReminder(reminder, lastSentAt, nowMs, snoozedUntil))
-            return;
+          if (!shouldSendReminder(reminder, lastSentAt, nowMs)) return;
 
           tx.set(
             dispatchRef,
@@ -391,10 +387,6 @@ export const dispatchPushReminders = onSchedule(
                 url: reminderActionUrl(),
               },
               feedback: {
-                snoozed: reminderSnoozedLabel(
-                  userLocale,
-                  SNOOZE_MINUTES_DEFAULT
-                ),
                 ...(quickLogReps
                   ? {
                       logged: reminderQuickLogDoneLabel(
@@ -497,42 +489,5 @@ export const dispatchPushReminders = onSchedule(
     }
 
     logger.info('dispatchPushReminders: done', results);
-  }
-);
-
-export const snoozeReminder = onCall(
-  { region: 'europe-west3' },
-  async (request) => {
-    if (!request.auth)
-      throw new HttpsError('unauthenticated', 'Auth required.');
-
-    const uid = request.auth.uid;
-    const snoozeMinutes = request.data?.snoozeMinutes ?? 30;
-
-    if (
-      typeof snoozeMinutes !== 'number' ||
-      snoozeMinutes < 1 ||
-      snoozeMinutes > 1440
-    ) {
-      throw new HttpsError('invalid-argument', 'snoozeMinutes must be 1–1440.');
-    }
-
-    const snoozeMs = snoozeMinutes * 60 * 1000;
-    const snoozeUntil = Timestamp.fromMillis(Date.now() + snoozeMs);
-
-    const dispatchRef = db.collection('reminderDispatchState').doc(uid);
-    await dispatchRef.set(
-      {
-        snoozedUntil: snoozeUntil,
-        uid,
-        snoozedAt: FieldValue.serverTimestamp(),
-        snoozeMinutes,
-        inProgress: false,
-      },
-      { merge: true }
-    );
-
-    logger.info('snoozeReminder', { uid, snoozeMinutes });
-    return { ok: true, snoozeUntil: snoozeUntil.toDate().toISOString() };
   }
 );

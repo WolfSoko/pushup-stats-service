@@ -64,7 +64,6 @@ export {
   dispatchPushReminders,
   revokeAllSessions,
   savePushSubscription,
-  snoozeReminder,
   unsubscribeAllPushDevices,
 } from './functions-push';
 

@@ -71,11 +71,11 @@ describe('registerDashboardDeepLinks', () => {
     expect(navigate).not.toHaveBeenCalled();
   });
 
-  it('should ignore a snooze param — the push SW completes snoozes server-side', () => {
-    // given a deep link from an older service worker
+  it('should ignore a leftover snooze param', () => {
+    // given a deep link from a reminder sent before snooze was retired
     const { openCreateDialog, navigate } = setup({ snooze: '30', log: '1' });
 
-    // then the log dialog still opens; the snooze is simply not this file's job
+    // then the log dialog still opens and the stray param changes nothing
     expect(openCreateDialog).toHaveBeenCalledTimes(1);
     expect(navigate).toHaveBeenCalledTimes(1);
   });
