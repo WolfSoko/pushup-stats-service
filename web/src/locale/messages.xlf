@@ -6946,12 +6946,12 @@
         <source>So</source>
       </segment>
     </unit>
-    <unit id="publicProfile.subtitle">
+    <unit id="publicProfile.tagline">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:139,141</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:143,145</note>
       </notes>
       <segment>
-        <source> Pushup Tracker </source>
+        <source> Jeden Tag ein Stück stärker. Mach mit. </source>
       </segment>
     </unit>
     <unit id="publicProfile.share.textPlain">

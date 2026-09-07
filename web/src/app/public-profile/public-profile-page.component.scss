@@ -65,10 +65,15 @@
     font-size: clamp(1.4rem, 3vw, 2rem);
   }
 
+  /* No longer a label under the name but a line meant to be read, so it
+     gets a little more presence — still below the name, which stays the
+     loudest thing in the header. */
   .subtitle {
-    margin: 4px 0 0;
-    color: #9fb3de;
-    font-size: 0.85rem;
+    margin: 5px 0 0;
+    color: #c3d4f2;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-wrap: balance;
   }
 }
 
@@ -149,7 +154,7 @@
   }
 
   .header-text .subtitle {
-    color: #64748b;
+    color: #475569;
   }
 
   .stat-card {

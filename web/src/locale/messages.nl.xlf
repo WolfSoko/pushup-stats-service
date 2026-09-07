@@ -11965,5 +11965,11 @@
         <target>Verborgen – alleen jij ziet dit, hier gedimd weergegeven.</target>
       </segment>
     </unit>
+    <unit id="publicProfile.tagline">
+      <segment state="initial">
+        <source> Jeden Tag ein Stück stärker. Mach mit. </source>
+        <target> Jeden Tag ein Stück stärker. Mach mit. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

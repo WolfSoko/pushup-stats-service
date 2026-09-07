@@ -494,6 +494,23 @@ describe('PublicProfilePageComponent', () => {
     });
   });
 
+  describe('Tagline', () => {
+    it('should invite the visitor instead of naming the product', async () => {
+      // given — a visitor arrives from someone else's shared link, so the
+      // line under the name is the one chance to say why they should care
+      await setup({ resolve: sampleProfile });
+
+      // then
+      const tagline = fixture.nativeElement.querySelector(
+        '[data-testid="public-profile-tagline"]'
+      );
+      expect(tagline).toBeTruthy();
+      expect(tagline.textContent.trim()).toBe(
+        'Jeden Tag ein Stück stärker. Mach mit.'
+      );
+    });
+  });
+
   describe('Owner controls', () => {
     const owner = (over: Partial<PublicProfile> = {}): PublicProfile => ({
       ...sampleProfile,

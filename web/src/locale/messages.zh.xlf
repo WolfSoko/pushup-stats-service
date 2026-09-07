@@ -11471,5 +11471,11 @@
         <target>已隐藏——只有你能看到，这里以灰色显示。</target>
       </segment>
     </unit>
+    <unit id="publicProfile.tagline">
+      <segment state="initial">
+        <source> Jeden Tag ein Stück stärker. Mach mit. </source>
+        <target> Jeden Tag ein Stück stärker. Mach mit. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

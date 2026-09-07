@@ -12167,5 +12167,11 @@ Deine Position: # ·  Reps        </source>
         <target>Hidden – only you can see this, shown dimmed here.</target>
       </segment>
     </unit>
+    <unit id="publicProfile.tagline">
+      <segment state="initial">
+        <source> Jeden Tag ein Stück stärker. Mach mit. </source>
+        <target> Jeden Tag ein Stück stärker. Mach mit. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>
