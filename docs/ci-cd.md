@@ -100,6 +100,12 @@ browser + SSR Sentry events.
 - **Rule:** No deployment path should bypass CI. Both Hosting and App Hosting are gated on green CI.
 - **Sentry source maps:** The deploy workflow uploads source maps to Sentry after the production build (`pnpm sentry:sourcemaps`). Requires `SENTRY_AUTH_TOKEN` GitHub secret. See [`observability/sentry.md`](observability/sentry.md).
 
+## Deleting a Cloud Function
+
+Both deploy workflows pass `--force` to `firebase deploy`. Removing a function's export from `data-store/functions/src/index.ts` is therefore all it takes — the next deploy deletes the deployed function.
+
+Without `--force`, firebase-tools prompts before deleting and aborts in a non-interactive shell, which fails the whole deploy — Hosting, Firestore rules and Storage rules included, not just the function. That is the trade: a function dropped from the source is gone on the next deploy with no second confirmation, so **deleting an export is a production change**. Check that nothing still calls the function (clients, other functions, the service worker) before removing it.
+
 ## Deploy Authentication (Workload Identity Federation)
 
 Both deploy workflows authenticate to GCP **keylessly** via Workload Identity Federation — no long-lived service-account JSON key is stored in GitHub. Each run mints a GitHub OIDC token (`permissions: id-token: write`); GCP exchanges it for short-lived credentials scoped to this repo. `google-github-actions/auth` exports `GOOGLE_APPLICATION_CREDENTIALS`, which `firebase deploy` and `gcloud` consume automatically.

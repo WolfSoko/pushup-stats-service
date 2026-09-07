@@ -112,11 +112,16 @@ jobs:
       # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
       # invocation and surfaces any transient hop as "Failed to authenticate".
       # Retry a few times before giving up; a genuine failure still fails the job.
+      #
+      # `--force` confirms function deletions non-interactively. Without it a
+      # deploy that drops a function from the source aborts on the prompt and
+      # takes Hosting and the rules down with it, so a removed Cloud Function
+      # needed a manual `functions:delete` before the merge could ship.
       - name: Deploy Hosting + Cloud Functions + Firestore & Storage rules
         working-directory: data-store
         run: |
           for attempt in 1 2 3 4; do
-            pnpm exec firebase deploy --only hosting,functions,firestore,storage --project pushup-stats && exit 0
+            pnpm exec firebase deploy --only hosting,functions,firestore,storage --project pushup-stats --force && exit 0
             echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
             sleep 15
           done

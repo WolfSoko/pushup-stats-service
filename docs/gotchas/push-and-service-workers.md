@@ -138,14 +138,9 @@ notification cached from before the removal still shows the button; tapping it
 now falls through to the plain body-tap route and just opens the app — it never
 posts to `reminderAction`, which rejects the `snooze` action outright.
 
-**Deleting the `snoozeReminder` callable needs a manual step.** The prod deploy
-runs `firebase deploy` without `--force` and aborts when a deployed function
-disappears from the source. Delete it once, out of band, before merging a change
-that drops the export:
-
-```bash
-pnpm exec firebase functions:delete snoozeReminder --region europe-west3 --project pushup-stats
-```
+The `snoozeReminder` callable is gone with it. The prod deploy passes `--force`
+so a function dropped from the source is deleted on the next deploy instead of
+aborting it — see [`docs/ci-cd.md`](../ci-cd.md).
 
 ## Notification deep-links are untrusted input
 
