@@ -6620,7 +6620,7 @@
     </unit>
     <unit id="publicProfile.private.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:10</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:12</note>
       </notes>
       <segment>
         <source>Dein Profil ist noch privat</source>
@@ -6628,7 +6628,7 @@
     </unit>
     <unit id="publicProfile.private.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:11</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:13</note>
       </notes>
       <segment>
         <source>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</source>
@@ -6636,7 +6636,7 @@
     </unit>
     <unit id="publicProfile.private.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:12</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:14</note>
       </notes>
       <segment>
         <source>Profil öffentlich machen</source>
@@ -6644,7 +6644,7 @@
     </unit>
     <unit id="publicProfile.week">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:13</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:15</note>
       </notes>
       <segment>
         <source>Diese Woche</source>
@@ -6652,7 +6652,7 @@
     </unit>
     <unit id="publicProfile.month">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:14</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:16</note>
       </notes>
       <segment>
         <source>Dieser Monat</source>
@@ -6660,7 +6660,7 @@
     </unit>
     <unit id="publicProfile.exercises">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:15</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:17</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -6668,7 +6668,7 @@
     </unit>
     <unit id="publicProfile.heatmap">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:16</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:18</note>
       </notes>
       <segment>
         <source>Wann trainiert wird</source>
@@ -6676,7 +6676,7 @@
     </unit>
     <unit id="publicProfile.heatmap.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:17</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:19</note>
       </notes>
       <segment>
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
@@ -6684,7 +6684,7 @@
     </unit>
     <unit id="publicProfile.memberSince">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:18</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:20</note>
       </notes>
       <segment>
         <source>Dabei seit</source>
@@ -6692,7 +6692,7 @@
     </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:19</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:21</note>
       </notes>
       <segment>
         <source>Profil nicht gefunden</source>
@@ -6700,7 +6700,7 @@
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:20</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:22</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
@@ -6708,7 +6708,7 @@
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:21</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
       </notes>
       <segment>
         <source>Profil konnte nicht geladen werden</source>
@@ -6716,7 +6716,7 @@
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:22</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
       </notes>
       <segment>
         <source>Bitte versuche es später erneut.</source>
@@ -6724,7 +6724,7 @@
     </unit>
     <unit id="publicProfile.retry">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
       </notes>
       <segment>
         <source>Erneut versuchen</source>
@@ -6732,7 +6732,7 @@
     </unit>
     <unit id="publicProfile.toHome">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
       </notes>
       <segment>
         <source>Zur Startseite</source>
@@ -6740,7 +6740,7 @@
     </unit>
     <unit id="publicProfile.stats">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
       </notes>
       <segment>
         <source>Statistik</source>
@@ -6748,7 +6748,7 @@
     </unit>
     <unit id="publicProfile.total">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
       </notes>
       <segment>
         <source>Gesamte Reps</source>
@@ -6756,7 +6756,7 @@
     </unit>
     <unit id="publicProfile.streak">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
       </notes>
       <segment>
         <source>Aktuelle Streak</source>
@@ -6764,7 +6764,7 @@
     </unit>
     <unit id="publicProfile.days">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
       </notes>
       <segment>
         <source>Aktive Tage</source>
@@ -6772,7 +6772,7 @@
     </unit>
     <unit id="publicProfile.entries">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -6780,7 +6780,7 @@
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
       </notes>
       <segment>
         <source>Bester Einzel-Eintrag</source>
@@ -6788,7 +6788,7 @@
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
       </notes>
       <segment>
         <source>Bester Tag</source>
@@ -6796,7 +6796,7 @@
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
       </notes>
       <segment>
         <source>Profil teilen</source>
@@ -6804,15 +6804,15 @@
     </unit>
     <unit id="publicProfile.achievements">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
       </notes>
       <segment>
-        <source>Erfolge</source>
+        <source>Trainingsplan-Erfolge</source>
       </segment>
     </unit>
     <unit id="publicProfile.share">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -6820,7 +6820,7 @@
     </unit>
     <unit id="publicProfile.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
       </notes>
       <segment>
         <source>Selbst tracken – pushup-stats.com</source>
@@ -6828,7 +6828,7 @@
     </unit>
     <unit id="publicProfile.owner.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
       </notes>
       <segment>
         <source>Nur für dich sichtbar</source>
@@ -6836,7 +6836,7 @@
     </unit>
     <unit id="publicProfile.owner.hint">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
       </notes>
       <segment>
         <source>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</source>
@@ -6844,7 +6844,7 @@
     </unit>
     <unit id="publicProfile.owner.legendVisible">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
       </notes>
       <segment>
         <source>Wird auf deinem öffentlichen Profil angezeigt.</source>
@@ -6852,7 +6852,7 @@
     </unit>
     <unit id="publicProfile.owner.legendHidden">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
       </notes>
       <segment>
         <source>Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.</source>
@@ -6860,7 +6860,7 @@
     </unit>
     <unit id="publicProfile.owner.preview">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
       </notes>
       <segment>
         <source>Als Besucher ansehen</source>
@@ -6868,7 +6868,7 @@
     </unit>
     <unit id="publicProfile.owner.photoEdit">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
       </notes>
       <segment>
         <source>Profilbild ändern</source>
@@ -6876,7 +6876,7 @@
     </unit>
     <unit id="publicProfile.owner.hideElement">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
       </notes>
       <segment>
         <source>Auf dem öffentlichen Profil ausblenden</source>
@@ -6884,15 +6884,47 @@
     </unit>
     <unit id="publicProfile.owner.showElement">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
       </notes>
       <segment>
         <source>Auf dem öffentlichen Profil anzeigen</source>
       </segment>
     </unit>
+    <unit id="publicProfile.exercises.reps">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+      </notes>
+      <segment>
+        <source>Stückübungen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.time">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
+      </notes>
+      <segment>
+        <source>Zeitübungen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.distance">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
+      </notes>
+      <segment>
+        <source>Streckenübungen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.weight">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
+      </notes>
+      <segment>
+        <source>Gewichtsübungen</source>
+      </segment>
+    </unit>
     <unit id="weekday.short.mon">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -6900,7 +6932,7 @@
     </unit>
     <unit id="weekday.short.tue">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -6908,7 +6940,7 @@
     </unit>
     <unit id="weekday.short.wed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -6916,7 +6948,7 @@
     </unit>
     <unit id="weekday.short.thu">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:61</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -6924,7 +6956,7 @@
     </unit>
     <unit id="weekday.short.fri">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:62</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -6932,7 +6964,7 @@
     </unit>
     <unit id="weekday.short.sat">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:63</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -6940,7 +6972,7 @@
     </unit>
     <unit id="weekday.short.sun">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:64</note>
       </notes>
       <segment>
         <source>So</source>

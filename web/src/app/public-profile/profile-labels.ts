@@ -1,3 +1,5 @@
+import type { ExerciseGroupKind } from './profile-view.model';
+
 /**
  * Every fixed string on the public profile, in one place.
  *
@@ -30,7 +32,7 @@ export const PROFILE_LABELS = {
   bestSet: $localize`:@@publicProfile.bestSet:Bester Einzel-Eintrag`,
   bestDay: $localize`:@@publicProfile.bestDay:Bester Tag`,
   shareAria: $localize`:@@publicProfile.share.aria:Profil teilen`,
-  achievements: $localize`:@@publicProfile.achievements:Erfolge`,
+  achievements: $localize`:@@publicProfile.achievements:Trainingsplan-Erfolge`,
   share: $localize`:@@publicProfile.share:Teilen`,
   cta: $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.com`,
   ownerTitle: $localize`:@@publicProfile.owner.title:Nur für dich sichtbar`,
@@ -42,6 +44,15 @@ export const PROFILE_LABELS = {
   hideElement: $localize`:@@publicProfile.owner.hideElement:Auf dem öffentlichen Profil ausblenden`,
   showElement: $localize`:@@publicProfile.owner.showElement:Auf dem öffentlichen Profil anzeigen`,
 } as const;
+
+export const EXERCISE_GROUP_LABELS: Readonly<
+  Record<ExerciseGroupKind, string>
+> = {
+  reps: $localize`:@@publicProfile.exercises.reps:Stückübungen`,
+  time: $localize`:@@publicProfile.exercises.time:Zeitübungen`,
+  distance: $localize`:@@publicProfile.exercises.distance:Streckenübungen`,
+  weight: $localize`:@@publicProfile.exercises.weight:Gewichtsübungen`,
+};
 
 export const WEEKDAY_LABELS: Readonly<Record<string, string>> = {
   Mo: $localize`:@@weekday.short.mon:Mo`,

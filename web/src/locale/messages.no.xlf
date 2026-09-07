@@ -10926,8 +10926,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="publicProfile.achievements">
-      <segment state="translated">
-        <source>Erfolge</source>
+      <segment state="initial">
+        <source>Trainingsplan-Erfolge</source>
         <target>Prestasjoner</target>
       </segment>
     </unit>
@@ -11445,6 +11445,30 @@ Deine Position: # ·  Reps        </source>
       <segment state="initial">
         <source>Fortschritt behalten</source>
         <target>Fortschritt behalten</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.reps">
+      <segment state="initial">
+        <source>Stückübungen</source>
+        <target>Stückübungen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.time">
+      <segment state="initial">
+        <source>Zeitübungen</source>
+        <target>Zeitübungen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.distance">
+      <segment state="initial">
+        <source>Streckenübungen</source>
+        <target>Streckenübungen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.exercises.weight">
+      <segment state="initial">
+        <source>Gewichtsübungen</source>
+        <target>Gewichtsübungen</target>
       </segment>
     </unit>
 </file>

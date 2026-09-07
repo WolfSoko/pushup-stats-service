@@ -317,8 +317,8 @@
           }
         }
 
-        @if (exerciseRows(); as rows) {
-          @if (renders('exercises', rows.length > 0)) {
+        @if (exerciseGroups(); as groups) {
+          @if (renders('exercises', groups.length > 0)) {
             <section
               class="exercises"
               data-testid="public-profile-exercises"
@@ -333,17 +333,22 @@
                   "
                 ></ng-container>
               </h2>
-              <ul class="exercise-list">
-                @for (row of rows; track row.exerciseId) {
-                  <li>
-                    <span class="exercise-name">{{ row.name }}</span>
-                    <span class="exercise-bar" aria-hidden="true">
-                      <span [style.width.%]="row.percent"></span>
-                    </span>
-                    <span class="exercise-value">{{ row.value }}</span>
-                  </li>
-                }
-              </ul>
+              @for (group of groups; track group.kind) {
+                <div class="exercise-group">
+                  <h3 class="exercise-group-title">{{ group.label }}</h3>
+                  <ul class="exercise-list">
+                    @for (row of group.rows; track row.exerciseId) {
+                      <li>
+                        <span class="exercise-name">{{ row.name }}</span>
+                        <span class="exercise-bar" aria-hidden="true">
+                          <span [style.width.%]="row.percent"></span>
+                        </span>
+                        <span class="exercise-value">{{ row.value }}</span>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              }
             </section>
           }
         }
