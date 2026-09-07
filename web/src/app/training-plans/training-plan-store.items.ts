@@ -135,7 +135,7 @@ export async function logPlanExercise(
  * hasn't echoed the write back yet, and deciding on pre-write state
  * would leave a just-finished day open.
  */
-async function checkOffItems(
+export async function checkOffItems(
   store: Store,
   dayIndex: number,
   itemIndexes: ReadonlyArray<number>

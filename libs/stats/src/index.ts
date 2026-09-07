@@ -16,6 +16,8 @@ export * from './lib/models/unified-entry.models';
 export * from './lib/models/training-plan.models';
 export * from './lib/models/training-plan-schedule.models';
 export * from './lib/models/training-plan-exercise.models';
+export * from './lib/models/training-plan-test.models';
+export * from './lib/models/training-plan-scaling';
 export * from './lib/models/training-plan.catalog';
 export * from './lib/models/training-plan-content';
 export * from './lib/models/training-session.models';

@@ -12173,5 +12173,89 @@ Deine Position: # ·  Reps        </source>
         <target> A little stronger every day. Join in. </target>
       </segment>
     </unit>
+    <unit id="trainingPlans.test.prompt">
+      <segment state="initial">
+        <source>Ergebnis deines Maximaltests</source>
+        <target>Ergebnis deines Maximaltests</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.recommended">
+      <segment state="initial">
+        <source>Richtwert</source>
+        <target>Richtwert</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.label">
+      <segment state="initial">
+        <source>Wiederholungen</source>
+        <target>Wiederholungen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.submit">
+      <segment state="initial">
+        <source>Eintragen</source>
+        <target>Eintragen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.update">
+      <segment state="initial">
+        <source>Aktualisieren</source>
+        <target>Aktualisieren</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.invalid">
+      <segment state="initial">
+        <source> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ maxReps }}"/> eintragen. </source>
+        <target> Bitte eine ganze Zahl zwischen 1 und <ph id="0" equiv="INTERPOLATION" disp="{{ maxReps }}"/> eintragen. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.hintOpen">
+      <segment state="initial">
+        <source>Dein Ergebnis passt die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</source>
+        <target>Dein Ergebnis passt die Vorgaben der folgenden Tage an. Ohne Eintrag bleiben die normalen Planwerte stehen.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.hintScaled">
+      <segment state="initial">
+        <source>Die folgenden Tage laufen auf <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % der Planvorgabe.</source>
+        <target>Die folgenden Tage laufen auf <ph id="0" equiv="INTERPOLATION" disp="{{ percent() }}"/> % der Planvorgabe.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.hintNeutral">
+      <segment state="initial">
+        <source>Die folgenden Tage laufen auf der normalen Planvorgabe.</source>
+        <target>Die folgenden Tage laufen auf der normalen Planvorgabe.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.clear">
+      <segment state="initial">
+        <source>Ergebnis verwerfen</source>
+        <target>Ergebnis verwerfen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.cleared">
+      <segment state="initial">
+        <source>Ergebnis verworfen — es gelten wieder die normalen Planwerte.</source>
+        <target>Ergebnis verworfen — es gelten wieder die normalen Planwerte.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.recorded">
+      <segment state="initial">
+        <source>Maximaltest eingetragen — die folgenden Tage sind angepasst.</source>
+        <target>Maximaltest eingetragen — die folgenden Tage sind angepasst.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.updated">
+      <segment state="initial">
+        <source>Ergebnis aktualisiert.</source>
+        <target>Ergebnis aktualisiert.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.test.rejected">
+      <segment state="initial">
+        <source>Bitte eine gültige Wiederholungszahl eintragen.</source>
+        <target>Bitte eine gültige Wiederholungszahl eintragen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

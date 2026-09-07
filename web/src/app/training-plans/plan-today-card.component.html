@@ -28,6 +28,18 @@
 
     <p class="today-desc muted">{{ row().day.description }}</p>
 
+    @if (row().test; as test) {
+      <app-plan-test-input
+        [result]="test.result"
+        [recommended]="test.recommended"
+        [scalesPlan]="test.scalesPlan"
+        [factor]="test.factor"
+        [interactive]="interactive()"
+        (submitResult)="recordTest.emit($event)"
+        (clearResult)="clearTest.emit()"
+      />
+    }
+
     @if (!isRest()) {
       <app-plan-day-exercises
         [exercises]="row().exercises"

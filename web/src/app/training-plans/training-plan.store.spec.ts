@@ -232,6 +232,8 @@ interface Mocks {
     addSkippedDay: ReturnType<typeof vitest.fn>;
     removeSkippedDay: ReturnType<typeof vitest.fn>;
     jumpToDay: ReturnType<typeof vitest.fn>;
+    setTestResult: ReturnType<typeof vitest.fn>;
+    removeTestResult: ReturnType<typeof vitest.fn>;
   };
   statsApiMock: {
     createPushup: ReturnType<typeof vitest.fn>;
@@ -407,6 +409,35 @@ describe('TrainingPlanStore', () => {
             return of(void 0);
           }
         ),
+        // Mirrors the production transaction: the day's previous result is
+        // dropped before the new one lands, so a revision replaces it.
+        setTestResult: vitest.fn(
+          (_uid: string, dayIndex: number, reps: number) => {
+            const cur = mocks.current as UserTrainingPlan;
+            mocks.current = {
+              ...cur,
+              testResults: [
+                ...(cur.testResults ?? []).filter(
+                  (id) => !id.startsWith(`${dayIndex}:`)
+                ),
+                `${dayIndex}:${reps}`,
+              ],
+            };
+            stream.next(mocks.current);
+            return of(void 0);
+          }
+        ),
+        removeTestResult: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = mocks.current as UserTrainingPlan;
+          mocks.current = {
+            ...cur,
+            testResults: (cur.testResults ?? []).filter(
+              (id) => !id.startsWith(`${dayIndex}:`)
+            ),
+          };
+          stream.next(mocks.current);
+          return of(void 0);
+        }),
       },
       statsApiMock: {
         createPushup: vitest.fn((payload: PushupCreate) =>
@@ -2068,6 +2099,256 @@ describe('TrainingPlanStore', () => {
       expect(result).toBe('noop');
       expect(mocks.exerciseApiMock.deleteEntry).not.toHaveBeenCalled();
       expect(mocks.apiMock.removeCompletedItems).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('max tests', () => {
+    /**
+     * A plan shaped like the real ones that bracket their weeks with max
+     * tests: day 1 opens with a test that prescribes nothing at all (the
+     * shape that previously rendered no input), day 5 closes with one.
+     */
+    const TESTED_PLAN: TrainingPlan = {
+      id: 'tested-plan',
+      slug: 'tested-plan',
+      title: 'Tested Plan',
+      summary: 'Test-only plan bracketed by max tests.',
+      level: 'beginner',
+      totalDays: 5,
+      baselineMaxReps: 20,
+      days: [
+        { dayIndex: 1, kind: 'test', targetReps: 0, description: 'Baseline' },
+        {
+          dayIndex: 2,
+          kind: 'main',
+          targetReps: 60,
+          sets: [20, 20, 20],
+          description: 'd2',
+        },
+        { dayIndex: 3, kind: 'light', targetReps: 30, description: 'd3' },
+        { dayIndex: 4, kind: 'rest', targetReps: 0, description: 'rest' },
+        { dayIndex: 5, kind: 'test', targetReps: 100, description: 'Endtest' },
+      ],
+    };
+
+    const testedLookup = (id: string): TrainingPlan | null =>
+      id === 'tested-plan' ? TESTED_PLAN : findPlanById(id);
+
+    /** Active plan whose day 1 (the opening test) maps to today. */
+    const startedToday: UserTrainingPlan = {
+      userId: 'u1',
+      planId: 'tested-plan',
+      startDate: toBerlinIsoDate(new Date()),
+      status: 'active',
+      completedDays: [],
+    };
+
+    function testedSetup() {
+      return setup(startedToday, [], [], testedLookup);
+    }
+
+    it('should record a result on a test day that prescribes nothing', async () => {
+      // given the opening test, whose day carries no measurable target
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when the user enters what they managed
+      const result = await store.recordTestResult(1, 37);
+      await flush();
+
+      // then it is persisted against that day
+      expect(result).toBe('recorded');
+      expect(mocks.apiMock.setTestResult).toHaveBeenCalledWith('u1', 1, 37);
+      expect(store.testResult(1)).toBe(37);
+    });
+
+    it('should log the attempt as a single-set entry', async () => {
+      // given the opening test
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when a maximum of 37 is recorded
+      await store.recordTestResult(1, 37);
+      await flush();
+
+      // then it counts toward stats like any other set
+      expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
+      const payload = mocks.exerciseApiMock.createEntry.mock.calls[0][1];
+      expect(payload).toMatchObject({
+        exerciseId: 'pushup',
+        reps: 37,
+        sets: [37],
+        source: 'plan',
+      });
+    });
+
+    it('should close a test day that has no exercise row to tick', async () => {
+      // given the opening test — `isPlanDayFulfilled` can never close it,
+      // because the day derives no exercise items at all
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when the result is recorded
+      await store.recordTestResult(1, 37);
+      await flush();
+
+      // then the user is not left with a day they cannot finish
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 1);
+      expect(store.todayDone()).toBe(true);
+    });
+
+    it('should rescale the following days to the measured result', async () => {
+      // given a plan written for a baseline of 20
+      const { store } = testedSetup();
+      await flush();
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(60);
+
+      // when the user tests at 30
+      await store.recordTestResult(1, 30);
+      await flush();
+
+      // then every later day moves with them
+      expect(store.scaleFactor()).toBe(1.5);
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(90);
+      expect(store.activeCatalog()?.days[1].sets).toEqual([30, 30, 30]);
+      expect(store.activeCatalog()?.days[2].targetReps).toBe(45);
+    });
+
+    it('should leave the closing test at its own recommendation', async () => {
+      // given a rescaled plan
+      const { store } = testedSetup();
+      await flush();
+
+      // when the opening test doubles the load
+      await store.recordTestResult(1, 40);
+      await flush();
+
+      // then the final test still just asks for everything the user has
+      expect(store.activeCatalog()?.days[4].targetReps).toBe(100);
+    });
+
+    it('should keep the catalog values when the test is skipped', async () => {
+      // given a user who skips the opening test rather than taking it
+      const { store } = testedSetup();
+      await flush();
+
+      // when they skip the day
+      await store.skipDay(1);
+      await flush();
+
+      // then the plan they train is the plan as published
+      expect(store.scaleFactor()).toBe(1);
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(60);
+      expect(store.activeCatalog()?.days[1].sets).toEqual([20, 20, 20]);
+    });
+
+    it('should replace the earlier entry when a result is revised', async () => {
+      // given a test already taken at 30, and the entry that attempt wrote
+      const priorAttempt = {
+        _id: 'e1',
+        userId: 'u1',
+        exerciseId: 'pushup',
+        timestamp: `${planDayDateIso(startedToday.startDate, 1)}T12:00:00.000+02:00`,
+        reps: 30,
+        sets: [30],
+        source: 'plan',
+      } as ExerciseEntry;
+      const { store, mocks } = setup(
+        { ...startedToday, testResults: ['1:30'], completedDays: [1] },
+        [],
+        [priorAttempt],
+        testedLookup
+      );
+      await flush();
+
+      // when the user corrects it to 35
+      const result = await store.recordTestResult(1, 35);
+      await flush();
+
+      // then the old attempt does not linger alongside the new one
+      expect(result).toBe('updated');
+      expect(mocks.exerciseApiMock.deleteEntry).toHaveBeenCalledWith('e1');
+      expect(store.testResult(1)).toBe(35);
+      expect(store.scaleFactor()).toBe(1.75);
+    });
+
+    it('should reject a result that is not a usable rep count', async () => {
+      // given the opening test
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when nonsense arrives
+      const zero = await store.recordTestResult(1, 0);
+      const fractional = await store.recordTestResult(1, 12.5);
+      await flush();
+
+      // then nothing is written
+      expect(zero).toBe('invalid');
+      expect(fractional).toBe('invalid');
+      expect(mocks.apiMock.setTestResult).not.toHaveBeenCalled();
+      expect(mocks.exerciseApiMock.createEntry).not.toHaveBeenCalled();
+    });
+
+    it('should refuse to record against a day that is not a test', async () => {
+      // given day 2 is an ordinary training day
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when a result is aimed at it
+      const result = await store.recordTestResult(2, 30);
+      await flush();
+
+      // then it is turned away
+      expect(result).toBe('noop');
+      expect(mocks.apiMock.setTestResult).not.toHaveBeenCalled();
+    });
+
+    it('should refuse to record a test that is still in the future', async () => {
+      // given the closing test, days away
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when a result is entered for it early
+      const result = await store.recordTestResult(5, 44);
+      await flush();
+
+      // then
+      expect(result).toBe('noop');
+      expect(mocks.apiMock.setTestResult).not.toHaveBeenCalled();
+    });
+
+    it('should restore the catalog values when a result is discarded', async () => {
+      // given a recorded result that halved the plan
+      const { store, mocks } = testedSetup();
+      await flush();
+      await store.recordTestResult(1, 10);
+      await flush();
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(30);
+
+      // when the user discards it
+      const discarded = await store.clearTestResult(1);
+      await flush();
+
+      // then the plan is back to what the catalog publishes
+      expect(discarded).toBe(true);
+      expect(mocks.apiMock.removeTestResult).toHaveBeenCalledWith('u1', 1);
+      expect(store.testResult(1)).toBeNull();
+      expect(store.scaleFactor()).toBe(1);
+      expect(store.activeCatalog()?.days[1].targetReps).toBe(60);
+    });
+
+    it('should report nothing to discard when no result was recorded', async () => {
+      // given an untaken test
+      const { store, mocks } = testedSetup();
+      await flush();
+
+      // when a discard is requested anyway
+      const discarded = await store.clearTestResult(1);
+      await flush();
+
+      // then
+      expect(discarded).toBe(false);
+      expect(mocks.apiMock.removeTestResult).not.toHaveBeenCalled();
     });
   });
 });

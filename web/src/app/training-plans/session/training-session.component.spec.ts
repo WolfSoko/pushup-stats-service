@@ -125,6 +125,7 @@ async function setup(options: Options = {}) {
         useValue: {
           currentDayIndex: signal(3),
           todayDay: signal(DAY),
+          activeCatalog: signal(null),
           activePlan: signal(activePlan),
           activePlanLoaded: signal(true),
           dayProgress: () =>

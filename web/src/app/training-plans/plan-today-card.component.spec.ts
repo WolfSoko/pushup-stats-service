@@ -19,6 +19,7 @@ function row(overrides: Partial<DayRow> = {}): DayRow {
     isFuture: false,
     isCheckoff: false,
     exercises: [],
+    test: null,
     pushupTypes: [],
     ...overrides,
   };

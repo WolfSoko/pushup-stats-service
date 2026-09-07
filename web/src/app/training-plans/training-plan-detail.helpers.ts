@@ -3,6 +3,8 @@ import {
   isCheckoffDay,
   localizePushupType,
   localizePushupTypeSlug,
+  planBaselineTestDay,
+  planTestExercise,
   PlanExerciseProgress,
   PushupTypeInfo,
   TrainingPlan,
@@ -10,13 +12,19 @@ import {
 } from '@pu-stats/models';
 import type {
   LogPlanDayResult,
+  RecordTestResultOutcome,
   ResetExerciseResult,
 } from './training-plan.store';
 import {
   asCompletedRows,
   buildExerciseRows,
 } from './training-plan-detail.exercises';
-import { DayRow, DayWeek, PushupTypeChip } from './training-plan-detail.models';
+import {
+  DayRow,
+  DayTestRow,
+  DayWeek,
+  PushupTypeChip,
+} from './training-plan-detail.models';
 
 /** What the plan page knows about the user's progress on a plan. */
 export interface WeekBuildContext {
@@ -32,6 +40,10 @@ export interface WeekBuildContext {
     plan: TrainingPlan,
     dayIndex: number
   ) => ReadonlyArray<PlanExerciseProgress>;
+  /** The maximum the user measured on a `test` day of the *active* plan. */
+  testResult: (dayIndex: number) => number | null;
+  /** Scale factor the opening test put in force; 1 when untested. */
+  scaleFactor: number;
 }
 
 /**
@@ -56,6 +68,10 @@ export function weeksFor(
         ctx.active
           ? ctx.dayProgress(dayIndex)
           : ctx.previewProgress(plan, dayIndex),
+      testResultFor: (dayIndex) =>
+        ctx.active ? ctx.testResult(dayIndex) : null,
+      baselineTestDayIndex: planBaselineTestDay(plan)?.dayIndex ?? null,
+      scaleFactor: ctx.active ? ctx.scaleFactor : 1,
     },
     locale
   );
@@ -153,6 +169,25 @@ export interface PlanProgress {
   skipped: ReadonlySet<number>;
   /** Per-exercise fulfillment of a day. Empty for an inactive plan. */
   exercisesFor: (dayIndex: number) => ReadonlyArray<PlanExerciseProgress>;
+  /** Measured result of a `test` day; null for an inactive plan. */
+  testResultFor: (dayIndex: number) => number | null;
+  /** Day index of the opening test, or null when the plan has none. */
+  baselineTestDayIndex: number | null;
+  scaleFactor: number;
+}
+
+/** The result field of a `test` day; null for every other kind. */
+function testRowFor(
+  day: TrainingPlanDay,
+  progress: PlanProgress
+): DayTestRow | null {
+  if (day.kind !== 'test') return null;
+  return {
+    result: progress.testResultFor(day.dayIndex),
+    recommended: planTestExercise(day).recommended,
+    scalesPlan: day.dayIndex === progress.baselineTestDayIndex,
+    factor: progress.scaleFactor,
+  };
 }
 
 /**
@@ -180,6 +215,7 @@ export function buildWeeks(
       isFuture: currentDay !== null && day.dayIndex > currentDay,
       isCheckoff: isCheckoffDay(day),
       exercises: isCompleted ? asCompletedRows(exercises) : exercises,
+      test: testRowFor(day, progress),
       pushupTypes: pushupTypeChipsForDay(day, locale),
     };
     const list = grouped.get(weekIndex) ?? [];
@@ -216,6 +252,25 @@ export function messageForResetResult(
       return $localize`:@@trainingPlans.exercise.resetDone:Übung zurückgesetzt.`;
     case 'kept-entries':
       return $localize`:@@trainingPlans.exercise.resetKept:Haken entfernt — deine eigenen Einträge bleiben bestehen.`;
+    case 'not-ready':
+      return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
+    case 'in-flight':
+    case 'noop':
+      return null;
+  }
+}
+
+/** Maps a max-test recording outcome to a user-facing snackbar message. */
+export function messageForTestResult(
+  result: RecordTestResultOutcome
+): string | null {
+  switch (result) {
+    case 'recorded':
+      return $localize`:@@trainingPlans.test.recorded:Maximaltest eingetragen — die folgenden Tage sind angepasst.`;
+    case 'updated':
+      return $localize`:@@trainingPlans.test.updated:Ergebnis aktualisiert.`;
+    case 'invalid':
+      return $localize`:@@trainingPlans.test.rejected:Bitte eine gültige Wiederholungszahl eintragen.`;
     case 'not-ready':
       return $localize`:@@trainingPlans.notReady:Daten werden noch geladen, bitte gleich noch einmal versuchen.`;
     case 'in-flight':

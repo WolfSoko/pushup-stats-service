@@ -30,6 +30,7 @@ import {
   PlanDayExercisesComponent,
 } from './plan-day-exercises.component';
 import { planDayExpansion } from './plan-day-expansion';
+import { PlanTestInputComponent } from './plan-test-input.component';
 import { PlanTodayCardComponent } from './plan-today-card.component';
 import {
   registerAutoStart,
@@ -40,6 +41,7 @@ import {
   loginParamsFor,
   messageForLogResult,
   messageForResetResult,
+  messageForTestResult,
   offersSession,
   sessionLinkFor,
   signupParamsFor,
@@ -61,6 +63,7 @@ import { DayRow } from './training-plan-detail.models';
     MatTooltipModule,
     PageHeaderComponent,
     PlanDayExercisesComponent,
+    PlanTestInputComponent,
     PlanTodayCardComponent,
     RouterLink,
   ],
@@ -93,10 +96,23 @@ export class TrainingPlanDetailComponent {
     initialValue: this.route.snapshot.queryParamMap,
   });
 
-  readonly plan = computed(() => {
+  /** The plan this route points at, exactly as the catalog ships it. */
+  private readonly catalogPlan = computed(() => {
     const slug = this.slugSignal().get('slug');
     return slug ? findPlanBySlug(slug) : null;
   });
+
+  /**
+   * What the page renders. Once this is the user's active plan, that is
+   * the store's rescaled copy — otherwise a user whose max test moved
+   * their targets would read the catalog's numbers here and the adjusted
+   * ones everywhere else.
+   */
+  readonly plan = computed(() =>
+    isPlanActive(this.catalogPlan(), this.store.activePlan())
+      ? (this.store.activeCatalog() ?? this.catalogPlan())
+      : this.catalogPlan()
+  );
 
   /** Long-form editorial copy (markdown-sourced), `null` until a plan ships it. */
   readonly aboutHtml = computed(() => {
@@ -128,7 +144,7 @@ export class TrainingPlanDetailComponent {
   }
 
   readonly isThisPlanActive = computed(() =>
-    isPlanActive(this.plan(), this.store.activePlan())
+    isPlanActive(this.catalogPlan(), this.store.activePlan())
   );
 
   readonly weeks = computed(() =>
@@ -141,6 +157,8 @@ export class TrainingPlanDetailComponent {
         skippedDays: this.store.activePlan()?.skippedDays ?? [],
         dayProgress: (dayIndex) => this.store.dayProgress(dayIndex),
         previewProgress: previewDayProgress,
+        testResult: (dayIndex) => this.store.testResult(dayIndex),
+        scaleFactor: this.store.scaleFactor(),
       },
       this.locale
     )
@@ -236,6 +254,24 @@ export class TrainingPlanDetailComponent {
 
   async toggleExercise(dayIndex: number, event: ExerciseToggle): Promise<void> {
     await this.store.setItemDone(dayIndex, event.itemIndex, event.done);
+  }
+
+  async recordTest(dayIndex: number, reps: number): Promise<void> {
+    const message = messageForTestResult(
+      await this.store.recordTestResult(dayIndex, reps)
+    );
+    if (message) {
+      this.snackbar.open(message, undefined, { duration: 3000 });
+    }
+  }
+
+  async clearTest(dayIndex: number): Promise<void> {
+    if (!(await this.store.clearTestResult(dayIndex))) return;
+    this.snackbar.open(
+      $localize`:@@trainingPlans.test.cleared:Ergebnis verworfen — es gelten wieder die normalen Planwerte.`,
+      undefined,
+      { duration: 3000 }
+    );
   }
 
   async resetExercise(dayIndex: number, itemIndex: number): Promise<void> {

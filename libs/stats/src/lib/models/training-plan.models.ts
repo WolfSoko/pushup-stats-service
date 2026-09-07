@@ -135,6 +135,15 @@ export interface TrainingPlan {
    * it with the EN slug per locale.
    */
   blogSlug?: string;
+  /**
+   * The single-set maximum the plan's numbers were written for — the
+   * reference `planScaleFactor` divides the opening test's result by.
+   * Deliberately not the baseline day's `targetReps`: that is the
+   * recommendation shown to the user and is legitimately 0 on a plan
+   * whose opening test prescribes nothing but "go to failure". Absent ⇒
+   * the plan never rescales.
+   */
+  baselineMaxReps?: number;
   days: ReadonlyArray<TrainingPlanDay>;
 }
 
@@ -192,6 +201,17 @@ export interface UserTrainingPlan {
    * date-matching for those.
    */
   dayActivatedAt?: string;
+  /**
+   * Measured results of the plan's `test` days, as flat
+   * `"<dayIndex>:<reps>"` strings — same nested-map-clobber rationale as
+   * `completedItems`. Unlike those, a result can be *revised*, so writes
+   * go through a transaction that drops the day's previous entry instead
+   * of a bare `arrayUnion`.
+   *
+   * The opening test's result scales every later day; absent ⇒ the user
+   * sees the plan's catalog numbers unchanged.
+   */
+  testResults?: string[];
   createdAt?: string;
   updatedAt?: string;
 }
@@ -205,6 +225,7 @@ export type UserTrainingPlanUpdate = Partial<
     | 'completedDays'
     | 'skippedDays'
     | 'completedItems'
+    | 'testResults'
   >
 >;
 

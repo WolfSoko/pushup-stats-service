@@ -48,6 +48,9 @@ function noProgress(): PlanProgress {
     completed: new Set(),
     skipped: new Set(),
     exercisesFor: () => [],
+    testResultFor: () => null,
+    baselineTestDayIndex: null,
+    scaleFactor: 1,
   };
 }
 
@@ -148,6 +151,9 @@ describe('buildWeeks', () => {
       completed: new Set([1]),
       skipped: new Set([3]),
       exercisesFor: () => [],
+      testResultFor: () => null,
+      baselineTestDayIndex: null,
+      scaleFactor: 1,
     };
     // when building weeks
     const rows = buildWeeks(planWith(days), progress, LOCALE)[0].rows;

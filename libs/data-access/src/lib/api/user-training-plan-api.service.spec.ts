@@ -4,7 +4,7 @@ import * as firestoreFns from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { UserTrainingPlan } from '@pu-stats/models';
 import { render } from '@testing-library/angular';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserTrainingPlanApiService } from './user-training-plan-api.service';
 
 jest.mock('@angular/fire/auth', () => ({
@@ -462,5 +462,86 @@ describe('UserTrainingPlanApiService', () => {
     // then
     await Promise.resolve();
     expect(firestoreFns.updateDoc).not.toHaveBeenCalled();
+  });
+
+  /** Runs a transaction-backed call against fake server state and returns
+   *  the payload the service handed to `tx.update`. */
+  async function captureTestResultWrite(
+    serverState: Record<string, unknown>,
+    call: (service: UserTrainingPlanApiService) => Observable<void>
+  ): Promise<Record<string, unknown>> {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+    let captured: Record<string, unknown> | null = null;
+    (firestoreFns.runTransaction as jest.Mock).mockImplementation(
+      async (_fs: unknown, body: (tx: unknown) => Promise<void>) => {
+        await body({
+          get: async () => ({ data: () => serverState }),
+          update: (_ref: unknown, payload: Record<string, unknown>) => {
+            captured = payload;
+          },
+        });
+      }
+    );
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+    await new Promise<void>((resolve, reject) =>
+      call(service).subscribe({ next: () => resolve(), error: reject })
+    );
+    expect(captured).not.toBeNull();
+    return captured as unknown as Record<string, unknown>;
+  }
+
+  it('should record a max-test result alongside the results of other days', async () => {
+    // given a doc that already holds the closing test's result
+    const payload = await captureTestResultWrite(
+      { testResults: ['30:44'] },
+      (service) => service.setTestResult('u', 1, 37)
+    );
+
+    // then the new result joins it rather than replacing the array
+    expect(payload['testResults']).toEqual(['30:44', '1:37']);
+  });
+
+  it('should replace a revised result rather than stacking a second one', async () => {
+    // given day 1 already recorded at 30 — `arrayUnion` alone would leave
+    // both values behind, and Firestore allows only one transform per field
+    const payload = await captureTestResultWrite(
+      { testResults: ['1:30', '30:44'] },
+      (service) => service.setTestResult('u', 1, 35)
+    );
+
+    // then exactly one result stands for that day
+    expect(payload['testResults']).toEqual(['30:44', '1:35']);
+  });
+
+  it('should drop only the requested day when a result is discarded', async () => {
+    // given results for both tests
+    const payload = await captureTestResultWrite(
+      { testResults: ['1:30', '30:44'] },
+      (service) => service.removeTestResult('u', 1)
+    );
+
+    // then the closing test's result survives
+    expect(payload['testResults']).toEqual(['30:44']);
+  });
+
+  it('should record the first result on a doc that has none', async () => {
+    // given a plan doc with no `testResults` field yet
+    const payload = await captureTestResultWrite({}, (service) =>
+      service.setTestResult('u', 1, 20)
+    );
+
+    // then
+    expect(payload['testResults']).toEqual(['1:20']);
   });
 });

@@ -24,6 +24,9 @@ import {
   isPlanCompleted,
   planDayByIndex,
   PlanExerciseProgress,
+  planScaleFactor,
+  planTestResult,
+  scaleTrainingPlan,
   TrainingPlan,
   TrainingPlanDay,
   UserTrainingPlan,
@@ -40,11 +43,13 @@ import * as actions from './training-plan-store.actions';
 import * as items from './training-plan-store.items';
 import * as lifecycle from './training-plan-store.lifecycle';
 import { resetPlanExercise } from './training-plan-store.reset';
+import { clearTestResult, recordTestResult } from './training-plan-store.tests';
 import { dayProgress } from './training-plan-store.internals';
 import { registerTrainingPlanHooks } from './training-plan-store.hooks';
 
 export type { LogPlanDayResult } from './training-plan-store.internals';
 export type { ResetExerciseResult } from './training-plan-store.reset';
+export type { RecordTestResultOutcome } from './training-plan-store.tests';
 
 /**
  * Seam for resolving a curated plan by id so tests can drive a plan the
@@ -115,9 +120,27 @@ export const TrainingPlanStore = signalStore(
       () => store.activeResource.value() ?? null
     );
 
-    const activeCatalog = computed<TrainingPlan | null>(() => {
+    /** The plan exactly as the catalog ships it. */
+    const activeCatalogBase = computed<TrainingPlan | null>(() => {
       const a = activePlan();
       return a ? store._findPlanById(a.planId) : null;
+    });
+
+    /** How far the opening max test moved this user's targets; 1 = untested. */
+    const scaleFactor = computed(() =>
+      planScaleFactor(activeCatalogBase(), activePlan())
+    );
+
+    /**
+     * The plan as this user should train it. Every consumer of a plan day
+     * — dashboard pill, toolbar goals, the detail page, the guided session,
+     * every `logPlanDay` write — resolves it through here, so rescaling in
+     * this one computed is what makes the measured baseline reach all of
+     * them. At factor 1 it is the catalog object itself.
+     */
+    const activeCatalog = computed<TrainingPlan | null>(() => {
+      const base = activeCatalogBase();
+      return base ? scaleTrainingPlan(base, scaleFactor()) : null;
     });
 
     const today = computed(() => {
@@ -197,7 +220,9 @@ export const TrainingPlanStore = signalStore(
 
     return {
       activePlan,
+      activeCatalogBase,
       activeCatalog,
+      scaleFactor,
       currentDayIndex,
       todayDay,
       todayTarget,
@@ -227,6 +252,14 @@ export const TrainingPlanStore = signalStore(
     /** Re-open one exercise: drop its tick and the entries the plan wrote. */
     resetPlanExercise: (dayIndex: number, itemIndex: number) =>
       resetPlanExercise(store, dayIndex, itemIndex),
+    /** The maximum the user measured on a `test` day, or null. */
+    testResult: (dayIndex: number): number | null =>
+      planTestResult(store.activePlan(), dayIndex),
+    /** Record (or revise) a max-test result; rescales the days after it. */
+    recordTestResult: (dayIndex: number, reps: number) =>
+      recordTestResult(store, dayIndex, reps),
+    /** Drop a max-test result — targets fall back to the catalog. */
+    clearTestResult: (dayIndex: number) => clearTestResult(store, dayIndex),
     unmarkDayDone: (dayIndex: number) =>
       lifecycle.unmarkDayDone(store, dayIndex),
     skipDay: (dayIndex: number) => lifecycle.skipDay(store, dayIndex),

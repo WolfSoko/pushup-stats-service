@@ -1,0 +1,175 @@
+import { firstValueFrom } from 'rxjs';
+import {
+  isValidTestResult,
+  planDayByIndex,
+  planDayItemId,
+  planTestExercise,
+  planTestResult,
+  type PlanTestExercise,
+} from '@pu-stats/models';
+import { appendLocalOffset } from '@pu-stats/date';
+import {
+  acquireWriteLock,
+  dayIsWritable,
+  planDayDateFor,
+  releaseWriteLock,
+  resolveExerciseApi,
+  TrainingPlanActionsStore,
+} from './training-plan-store.internals';
+import { checkOffItems } from './training-plan-store.items';
+import { deletePlanEntries } from './training-plan-store.reset';
+
+type Store = TrainingPlanActionsStore;
+
+/**
+ * Recording the result of a max-test day.
+ *
+ * A test day is the one prescription whose number the *user* supplies:
+ * the plan can recommend a figure, but only the attempt says what it
+ * actually was. The result is persisted on the plan doc — where the
+ * opening test's value rescales every later day — and mirrored as a
+ * normal exercise entry so the attempt counts toward stats and streaks
+ * like any other set.
+ */
+
+/**
+ * Outcome of {@link recordTestResult}:
+ *  - `recorded` — first result for this test day
+ *  - `updated` — replaced an earlier result (and the entry behind it)
+ *  - `invalid` — not a usable rep count
+ *  - `not-ready` — the entry mirror hasn't synced yet
+ *  - `noop` / `in-flight` — nothing was written
+ */
+export type RecordTestResultOutcome =
+  'recorded' | 'updated' | 'invalid' | 'noop' | 'in-flight' | 'not-ready';
+
+/** The single-set entry a max attempt produces. */
+async function writeTestEntry(
+  store: Store,
+  dayIndex: number,
+  test: PlanTestExercise,
+  reps: number
+): Promise<void> {
+  const api = resolveExerciseApi(store);
+  const userId = store._user.userIdSafe();
+  if (!api || !userId) return;
+  await firstValueFrom(
+    api.createEntry(userId, {
+      exerciseId: test.exerciseId,
+      ...(test.variantId ? { variantId: test.variantId } : {}),
+      timestamp: appendLocalOffset(`${planDayDateFor(store, dayIndex)}T12:00`),
+      reps,
+      // A max test is by definition one unbroken set.
+      sets: [reps],
+      source: 'plan',
+    })
+  );
+}
+
+/**
+ * Drop the entry a previous attempt at this test wrote, so a revised
+ * result replaces it rather than stacking on top. The budget is the
+ * earlier *recorded* value, not everything logged that day — entries the
+ * user added by hand are none of this action's business.
+ */
+async function discardPreviousAttempt(
+  store: Store,
+  dayIndex: number,
+  test: PlanTestExercise,
+  previous: number | null
+): Promise<void> {
+  if (previous === null) return;
+  await deletePlanEntries(
+    store,
+    planDayDateFor(store, dayIndex),
+    { exerciseId: test.exerciseId, target: previous },
+    previous
+  );
+}
+
+/**
+ * Persist the measured maximum for a `test` day: the result itself, the
+ * entry mirroring it, and the day's completion.
+ *
+ * Days whose test prescribes nothing measurable have no exercise row to
+ * tick, so they are marked done directly — otherwise the user would be
+ * left with a day they just completed and cannot close.
+ */
+export async function recordTestResult(
+  store: Store,
+  dayIndex: number,
+  reps: number
+): Promise<RecordTestResultOutcome> {
+  if (!isValidTestResult(reps)) return 'invalid';
+  if (!dayIsWritable(store, dayIndex)) return 'noop';
+  const catalog = store.activeCatalog();
+  const day = catalog ? planDayByIndex(catalog, dayIndex) : null;
+  if (!day || day.kind !== 'test') return 'noop';
+  // Revising a result deletes the entry behind the old one, and the
+  // mirror is what says which entry that is.
+  if (store._isBrowser && !store._live.exerciseEntriesLoaded()) {
+    return 'not-ready';
+  }
+  if (!acquireWriteLock(store, dayIndex)) return 'in-flight';
+  try {
+    const previous = planTestResult(store.activePlan(), dayIndex);
+    if (previous === reps) return 'updated';
+    const test = planTestExercise(day);
+    const userId = store._user.userIdSafe();
+
+    await discardPreviousAttempt(store, dayIndex, test, previous);
+    await writeTestEntry(store, dayIndex, test, reps);
+    await firstValueFrom(store._api.setTestResult(userId, dayIndex, reps));
+
+    if (test.itemIndex !== null) {
+      await checkOffItems(store, dayIndex, [test.itemIndex]);
+    } else {
+      if (!store.activePlan()?.completedDays.includes(dayIndex)) {
+        await firstValueFrom(store._api.addCompletedDay(userId, dayIndex));
+      }
+      store.activeResource.reload();
+    }
+    return previous === null ? 'recorded' : 'updated';
+  } finally {
+    releaseWriteLock(store, dayIndex);
+  }
+}
+
+/**
+ * Discard a recorded test result: the value, the entry it wrote, and the
+ * day's completion. The plan falls back to its catalog targets, which is
+ * also what the user gets by skipping the test outright.
+ */
+export async function clearTestResult(
+  store: Store,
+  dayIndex: number
+): Promise<boolean> {
+  if (!dayIsWritable(store, dayIndex)) return false;
+  if (store._isBrowser && !store._live.exerciseEntriesLoaded()) return false;
+  const catalog = store.activeCatalog();
+  const day = catalog ? planDayByIndex(catalog, dayIndex) : null;
+  if (!day || day.kind !== 'test') return false;
+  const previous = planTestResult(store.activePlan(), dayIndex);
+  if (previous === null) return false;
+  if (!acquireWriteLock(store, dayIndex)) return false;
+  try {
+    const userId = store._user.userIdSafe();
+    const test = planTestExercise(day);
+    await discardPreviousAttempt(store, dayIndex, test, previous);
+    await firstValueFrom(store._api.removeTestResult(userId, dayIndex));
+    if (test.itemIndex !== null) {
+      await firstValueFrom(
+        store._api.removeCompletedItems(userId, [
+          planDayItemId(dayIndex, test.itemIndex),
+        ])
+      );
+    }
+    if (store.activePlan()?.completedDays.includes(dayIndex)) {
+      await firstValueFrom(store._api.removeCompletedDay(userId, dayIndex));
+    }
+    store.activeResource.reload();
+    return true;
+  } finally {
+    releaseWriteLock(store, dayIndex);
+  }
+}

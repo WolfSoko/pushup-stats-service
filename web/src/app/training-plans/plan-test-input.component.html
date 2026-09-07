@@ -1,0 +1,95 @@
+<div class="test-input" data-testid="plan-test-input">
+  <div class="test-prompt">
+    <mat-icon class="test-icon" aria-hidden="true"
+      >local_fire_department</mat-icon
+    >
+    <span i18n="@@trainingPlans.test.prompt">Ergebnis deines Maximaltests</span>
+    @if (recommended() > 0) {
+      <span class="test-recommended muted">
+        <span i18n="@@trainingPlans.test.recommended">Richtwert</span>
+        {{ recommended() }}
+      </span>
+    }
+  </div>
+
+  <div class="test-row">
+    <mat-form-field
+      class="test-field"
+      appearance="outline"
+      subscriptSizing="dynamic"
+    >
+      <mat-label i18n="@@trainingPlans.test.label">Wiederholungen</mat-label>
+      <input
+        matInput
+        type="number"
+        inputmode="numeric"
+        min="1"
+        [max]="maxReps"
+        data-testid="plan-test-reps"
+        [disabled]="!interactive()"
+        [value]="draft()"
+        (input)="onInput($any($event.target).value)"
+        (keyup.enter)="submit()"
+      />
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      class="test-submit"
+      data-testid="plan-test-submit"
+      [disabled]="!interactive() || !valid()"
+      (click)="submit()"
+    >
+      <mat-icon>check</mat-icon>
+      @if (result() === null) {
+        <span i18n="@@trainingPlans.test.submit">Eintragen</span>
+      } @else {
+        <span i18n="@@trainingPlans.test.update">Aktualisieren</span>
+      }
+    </button>
+
+    @if (interactive() && result() !== null) {
+      <button
+        mat-icon-button
+        class="test-clear"
+        data-testid="plan-test-clear"
+        [matTooltip]="clearTooltip"
+        [attr.aria-label]="clearTooltip"
+        (click)="clearResult.emit()"
+      >
+        <mat-icon>restart_alt</mat-icon>
+      </button>
+    }
+  </div>
+
+  @if (showError()) {
+    <p
+      class="test-error"
+      data-testid="plan-test-error"
+      i18n="@@trainingPlans.test.invalid"
+    >
+      Bitte eine ganze Zahl zwischen 1 und {{ maxReps }} eintragen.
+    </p>
+  }
+
+  @if (scalesPlan()) {
+    <p class="test-hint muted">
+      <mat-icon aria-hidden="true">info</mat-icon>
+      @if (result() === null) {
+        <span i18n="@@trainingPlans.test.hintOpen"
+          >Dein Ergebnis passt die Vorgaben der folgenden Tage an. Ohne Eintrag
+          bleiben die normalen Planwerte stehen.</span
+        >
+      } @else if (percent() !== 100) {
+        <span i18n="@@trainingPlans.test.hintScaled"
+          >Die folgenden Tage laufen auf {{ percent() }} % der
+          Planvorgabe.</span
+        >
+      } @else {
+        <span i18n="@@trainingPlans.test.hintNeutral"
+          >Die folgenden Tage laufen auf der normalen Planvorgabe.</span
+        >
+      }
+    </p>
+  }
+</div>

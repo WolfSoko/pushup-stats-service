@@ -46,6 +46,13 @@ function baseStore() {
     ),
     logPlanExercise: vitest.fn().mockResolvedValue('noop' as const),
     setItemDone: vitest.fn().mockResolvedValue(undefined),
+    scaleFactor: signal(1),
+    testResult: vitest.fn((dayIndex: number): number | null => {
+      void dayIndex;
+      return null;
+    }),
+    recordTestResult: vitest.fn().mockResolvedValue('noop' as const),
+    clearTestResult: vitest.fn().mockResolvedValue(false),
     skipDay: vitest.fn().mockResolvedValue(undefined),
     unskipDay: vitest.fn().mockResolvedValue(undefined),
     jumpToDay: vitest.fn().mockResolvedValue(undefined),

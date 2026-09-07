@@ -14,6 +14,7 @@ import {
   ExerciseToggle,
   PlanDayExercisesComponent,
 } from './plan-day-exercises.component';
+import { PlanTestInputComponent } from './plan-test-input.component';
 import { DayRow } from './training-plan-detail.models';
 
 /**
@@ -33,6 +34,7 @@ import { DayRow } from './training-plan-detail.models';
     MatCardModule,
     MatIconModule,
     PlanDayExercisesComponent,
+    PlanTestInputComponent,
     RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,6 +52,8 @@ export class PlanTodayCardComponent {
   readonly logExercise = output<number>();
   readonly toggleExercise = output<ExerciseToggle>();
   readonly resetExercise = output<number>();
+  readonly recordTest = output<number>();
+  readonly clearTest = output<void>();
 
   protected readonly isRest = computed(() => this.row().day.kind === 'rest');
 

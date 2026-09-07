@@ -11,7 +11,12 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { UserTrainingPlan, UserTrainingPlanUpdate } from '@pu-stats/models';
+import {
+  parsePlanTestResultId,
+  planTestResultId,
+  UserTrainingPlan,
+  UserTrainingPlanUpdate,
+} from '@pu-stats/models';
 import { from, map, Observable, of } from 'rxjs';
 import { nextSkippedDays } from './user-training-plan.jump';
 
@@ -181,6 +186,55 @@ export class UserTrainingPlanApiService {
           // from whichever day already claimed it — see `dayActivatedAt`.
           dayActivatedAt: nowIso,
           updatedAt: nowIso,
+        });
+      })
+    ).pipe(map(() => void 0));
+  }
+
+  /**
+   * Record (or revise) the measured result of a `test` day.
+   *
+   * A result is revisable, so this cannot be a bare `arrayUnion` the way
+   * `addCompletedDay` is — the day's previous entry has to go. Firestore
+   * allows only one transform per field per write, so `arrayRemove` and
+   * `arrayUnion` on `testResults` cannot be combined; the read-modify-write
+   * runs in a transaction instead, same as `jumpToDay`.
+   */
+  setTestResult(
+    userId: string,
+    dayIndex: number,
+    reps: number
+  ): Observable<void> {
+    return this.rewriteTestResults(userId, dayIndex, (kept) => [
+      ...kept,
+      planTestResultId(dayIndex, reps),
+    ]);
+  }
+
+  /** Drop a `test` day's result — the plan falls back to catalog targets. */
+  removeTestResult(userId: string, dayIndex: number): Observable<void> {
+    return this.rewriteTestResults(userId, dayIndex, (kept) => kept);
+  }
+
+  private rewriteTestResults(
+    userId: string,
+    dayIndex: number,
+    next: (withoutDay: string[]) => string[]
+  ): Observable<void> {
+    const effectiveUserId = this.resolveUserId(userId);
+    if (!effectiveUserId || !this.firestore) return of(void 0);
+    const ref = this.docRef(effectiveUserId);
+    const firestore = this.firestore;
+    return from(
+      runTransaction(firestore, async (tx) => {
+        const snap = await tx.get(ref);
+        const data = (snap.data() as UserTrainingPlan | undefined) ?? null;
+        const withoutDay = (data?.testResults ?? []).filter(
+          (id) => parsePlanTestResultId(id)?.dayIndex !== dayIndex
+        );
+        tx.update(ref, {
+          testResults: next(withoutDay),
+          updatedAt: new Date().toISOString(),
         });
       })
     ).pipe(map(() => void 0));

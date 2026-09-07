@@ -57,7 +57,7 @@ function planWrittenEntries(
  * twice, so the entries are drawn down rather than wiped: resetting the
  * first Plank item must leave the second one's seconds alone.
  */
-async function deletePlanEntries(
+export async function deletePlanEntries(
   store: Store,
   dateIso: string,
   exercise: TrainingPlanExercise,

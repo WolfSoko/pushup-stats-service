@@ -84,10 +84,18 @@ export class TrainingSessionComponent {
     initialValue: this.route.snapshot.paramMap,
   });
 
-  protected readonly plan = computed(() => {
+  private readonly catalogPlan = computed(() => {
     const slug = this.slugSignal().get('slug');
     return slug ? findPlanBySlug(slug) : null;
   });
+
+  /** The active plan's rescaled copy, so the session walks the same
+   *  targets the plan page and the dashboard show. */
+  protected readonly plan = computed(() =>
+    isPlanActive(this.catalogPlan(), this.planStore.activePlan())
+      ? (this.planStore.activeCatalog() ?? this.catalogPlan())
+      : this.catalogPlan()
+  );
 
   protected readonly planUrl = computed(() => {
     const slug = this.slugSignal().get('slug');
@@ -100,7 +108,7 @@ export class TrainingSessionComponent {
    * against a prescription nothing tracks.
    */
   protected readonly isThisPlanActive = computed(() =>
-    isPlanActive(this.plan(), this.planStore.activePlan())
+    isPlanActive(this.catalogPlan(), this.planStore.activePlan())
   );
 
   protected readonly rows = computed(() =>

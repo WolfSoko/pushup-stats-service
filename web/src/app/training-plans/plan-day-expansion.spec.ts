@@ -18,6 +18,7 @@ function row(dayIndex: number, isCompleted = false): DayRow {
     isFuture: false,
     isCheckoff: false,
     exercises: [],
+    test: null,
     pushupTypes: [],
   };
 }

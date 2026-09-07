@@ -28,6 +28,18 @@ export interface DayExerciseRow {
   auto: boolean;
 }
 
+/** View-model for the result field of a `test` day. */
+export interface DayTestRow {
+  /** What the user measured, or null while the test is untaken. */
+  result: number | null;
+  /** The day's own recommended figure; 0 when it prescribes none. */
+  recommended: number;
+  /** True for the opening test — the one whose result rescales the plan. */
+  scalesPlan: boolean;
+  /** Scale factor currently in force, for the "what this did" hint. */
+  factor: number;
+}
+
 /** View-model for a single plan day rendered in the week list. */
 export interface DayRow {
   day: TrainingPlanDay;
@@ -39,6 +51,8 @@ export interface DayRow {
   /** Day is ticked off by hand rather than fulfilled by logged metrics. */
   isCheckoff: boolean;
   exercises: ReadonlyArray<DayExerciseRow>;
+  /** Present only on `test` days — the day's measured-result field. */
+  test: DayTestRow | null;
   pushupTypes: ReadonlyArray<PushupTypeChip>;
 }
 
