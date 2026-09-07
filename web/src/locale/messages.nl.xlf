@@ -11966,9 +11966,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.tagline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Jeden Tag ein Stück stärker. Mach mit. </source>
-        <target> Jeden Tag ein Stück stärker. Mach mit. </target>
+        <target> Elke dag een beetje sterker. Doe mee. </target>
       </segment>
     </unit>
 </file>
