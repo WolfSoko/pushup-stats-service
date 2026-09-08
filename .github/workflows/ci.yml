@@ -79,8 +79,13 @@ jobs:
         # Docs: https://nx.dev/docs/reference/nx-cloud/launch-templates
         run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="lint,test,build" --with-env-vars="NODE_OPTIONS"
 
+      # `--outputStyle=stream` so the agents' task output lands in this log.
+      # Nx defaults to `static-failures-only` in CI, which prints a failing
+      # task's output — but with Nx Agents the task ran elsewhere and its
+      # output stays in Nx Cloud, leaving only a summary table and a link
+      # behind. Costs a noisier log; buys being able to read a failure here.
       - name: Nx affected (lint + test + build)
-        run: pnpm exec nx affected -t=lint,test,build -c=production
+        run: pnpm exec nx affected -t=lint,test,build -c=production --outputStyle=stream
 
       - name: Nx fix-ci (always)
         if: always()
@@ -150,7 +155,7 @@ jobs:
         run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
 
       - name: Nx affected (e2e)
-        run: pnpm exec nx affected -t=e2e-ci -c=production
+        run: pnpm exec nx affected -t=e2e-ci -c=production --outputStyle=stream
 
       - name: Nx fix-ci (always)
         if: always()

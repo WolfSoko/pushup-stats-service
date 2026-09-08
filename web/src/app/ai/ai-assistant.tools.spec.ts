@@ -79,6 +79,16 @@ function tool(harness: Harness, name: string): AnyToolConfig {
 }
 
 describe('registerAiAssistantTools', () => {
+  // `setup()` builds a real `CopilotKit` against a runtime URL that does not
+  // exist, and each one keeps working in the background. Resetting only at
+  // the start of the next `setup()` leaves the last harness alive into the
+  // worker's teardown, where its console output races the closing rpc —
+  // Vitest reports that as an unhandled `EnvironmentTeardownError` and fails
+  // the task while every test passes.
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
   it('should register the three frontend tools the agent may call', () => {
     // given / when
     const harness = setup();

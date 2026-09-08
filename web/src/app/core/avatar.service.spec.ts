@@ -20,16 +20,19 @@ vi.mock('@angular/fire/storage', async (importOriginal) => {
 });
 
 /**
- * Drives the resource to completion: read it so it starts, then wait for
- * the application to go stable.
+ * Drives the resource to completion: read it so it starts, flush so the
+ * loader is actually scheduled, then wait for the application to go stable.
  *
- * Waiting on `whenStable` rather than a fixed number of macrotasks — the
- * resource settles when it settles, and a hard-coded `setTimeout(0)` left
- * the assertion racing the loader on a loaded machine, reading the
- * fallback picture before the download URL had propagated.
+ * Both halves matter. Without the `tick` the loader has not registered a
+ * pending task yet, so `whenStable` resolves straight away and the
+ * assertion reads the account picture the resource is about to replace.
+ * Without `whenStable` the wait is a fixed macrotask that a loaded machine
+ * outruns. `getDownloadURL` is mocked to resolve a tick late precisely so a
+ * helper that gets either half wrong fails every time instead of rarely.
  */
 async function settle(service: AvatarService): Promise<void> {
   service.avatarUrl();
+  TestBed.tick();
   await TestBed.inject(ApplicationRef).whenStable();
 }
 
@@ -72,7 +75,12 @@ describe('profilePhotoPath', () => {
 describe('AvatarService', () => {
   beforeEach(() => {
     getDownloadURL.mockReset();
-    getDownloadURL.mockResolvedValue('https://own/pic');
+    getDownloadURL.mockImplementation(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(() => resolve('https://own/pic'), 0)
+        )
+    );
     ref.mockReset();
     ref.mockImplementation((_storage: unknown, path: string) => ({ path }));
   });
