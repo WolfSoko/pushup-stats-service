@@ -4,20 +4,12 @@ import { Storage } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
 import { vi } from 'vitest';
 
-import { AvatarService, profilePhotoPath } from './avatar.service';
+import {
+  AVATAR_DOWNLOADER,
+  AvatarService,
+  profilePhotoPath,
+} from './avatar.service';
 import { UserConfigStore } from './user-config.store';
-
-// `spyOn` cannot redefine an ESM export; the module has to be mocked.
-// `Object.assign` rather than a spread — the spread helper is not
-// available inside a hoisted factory.
-const { getDownloadURL, ref } = vi.hoisted(() => ({
-  getDownloadURL: vi.fn(),
-  ref: vi.fn(),
-}));
-vi.mock('@angular/fire/storage', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@angular/fire/storage')>();
-  return Object.assign({}, actual, { getDownloadURL, ref });
-});
 
 /**
  * Drives the resource to completion: read it so it starts, then wait for
@@ -32,6 +24,12 @@ async function settle(service: AvatarService): Promise<void> {
   service.avatarUrl();
   await TestBed.inject(ApplicationRef).whenStable();
 }
+
+// vi.fn() mock for AVATAR_DOWNLOADER — declared outside setup() so the
+// beforeEach can reset it and individual tests can override the return value.
+// Using a DI useValue provider avoids vi.mock('@angular/fire/storage'),
+// which breaks the esbuild shared-chunk bundle (see testing.md gotchas).
+const downloader = vi.fn<(storage: Storage, uid: string) => Promise<string>>();
 
 function setup(opts: {
   uid?: string;
@@ -48,6 +46,7 @@ function setup(opts: {
     providers: [
       { provide: PLATFORM_ID, useValue: 'browser' },
       { provide: Storage, useValue: opts.storage ?? {} },
+      { provide: AVATAR_DOWNLOADER, useValue: downloader },
       { provide: UserConfigStore, useValue: { config } },
       {
         provide: UserContextService,
@@ -71,10 +70,8 @@ describe('profilePhotoPath', () => {
 
 describe('AvatarService', () => {
   beforeEach(() => {
-    getDownloadURL.mockReset();
-    getDownloadURL.mockResolvedValue('https://own/pic');
-    ref.mockReset();
-    ref.mockImplementation((_storage: unknown, path: string) => ({ path }));
+    downloader.mockReset();
+    downloader.mockResolvedValue('https://own/pic');
   });
 
   describe('Given no uploaded photo', () => {
@@ -87,7 +84,7 @@ describe('AvatarService', () => {
       await settle(service);
 
       // then
-      expect(getDownloadURL).not.toHaveBeenCalled();
+      expect(downloader).not.toHaveBeenCalled();
     });
 
     it('should fall back to the account picture', async () => {
@@ -133,15 +130,12 @@ describe('AvatarService', () => {
       // then
       expect(service.avatarUrl()).toBe('https://own/pic');
       expect(service.uploadedUrl()).toBe('https://own/pic');
-      expect(ref).toHaveBeenCalledWith(
-        expect.anything(),
-        'profile-photos/uid-1/avatar'
-      );
+      expect(downloader).toHaveBeenCalledWith(expect.anything(), 'uid-1');
     });
 
     it('should fall back to the account picture when the object is gone', async () => {
       // given — the config can name a photo that Storage no longer has
-      getDownloadURL.mockRejectedValue(new Error('404'));
+      downloader.mockRejectedValue(new Error('404'));
       const { service } = setup({
         photoUpdatedAt: '2026-09-06T10:00:00.000Z',
         accountPhotoUrl: 'https://g/pic',
