@@ -20,20 +20,22 @@ vi.mock('@angular/fire/storage', async (importOriginal) => {
 });
 
 /**
- * Drives the resource to completion: read it so it starts, flush so the
- * loader is actually scheduled, then wait for the application to go stable.
+ * Drives the resource to completion: read it so it starts, let Angular
+ * schedule the loader, resolve the promise, then propagate the value.
  *
- * Both halves matter. Without the `tick` the loader has not registered a
- * pending task yet, so `whenStable` resolves straight away and the
- * assertion reads the account picture the resource is about to replace.
- * Without `whenStable` the wait is a fixed macrotask that a loaded machine
- * outruns. `getDownloadURL` is mocked to resolve a tick late precisely so a
- * helper that gets either half wrong fails every time instead of rarely.
+ * Every step earns its place. Dropping the first `tick` leaves the loader
+ * unscheduled, so `whenStable` finds nothing pending and returns before
+ * the download URL exists. Dropping the trailing `tick` leaves the
+ * resolved value unpropagated. `whenStable` is the belt to the
+ * macrotask's braces: on a slow machine the loader can outlast a single
+ * `setTimeout(0)`, which is how this raced on CI agents.
  */
 async function settle(service: AvatarService): Promise<void> {
   service.avatarUrl();
   TestBed.tick();
+  await new Promise((r) => setTimeout(r, 0));
   await TestBed.inject(ApplicationRef).whenStable();
+  TestBed.tick();
 }
 
 function setup(opts: {
@@ -75,12 +77,7 @@ describe('profilePhotoPath', () => {
 describe('AvatarService', () => {
   beforeEach(() => {
     getDownloadURL.mockReset();
-    getDownloadURL.mockImplementation(
-      () =>
-        new Promise((resolve) =>
-          setTimeout(() => resolve('https://own/pic'), 0)
-        )
-    );
+    getDownloadURL.mockResolvedValue('https://own/pic');
     ref.mockReset();
     ref.mockImplementation((_storage: unknown, path: string) => ({ path }));
   });
