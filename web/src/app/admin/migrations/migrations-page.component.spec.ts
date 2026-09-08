@@ -42,7 +42,7 @@ describe('MigrationsPageComponent', () => {
         impl: async () => ({
           data: {
             statuses: {
-              'pushup-unification': {
+              'reminder-snooze-cleanup': {
                 completed: true,
                 completedAt: '2026-06-04T10:00:00.000Z',
                 completedBy: 'admin-uid',
@@ -54,7 +54,9 @@ describe('MigrationsPageComponent', () => {
     ]);
 
     // then the page exposes it to the cards
-    expect(component.statuses()['pushup-unification']?.completed).toBe(true);
+    expect(component.statuses()['reminder-snooze-cleanup']?.completed).toBe(
+      true
+    );
     expect(callablesMock.call).toHaveBeenCalledWith('getMigrationStatuses');
   });
 
@@ -72,7 +74,7 @@ describe('MigrationsPageComponent', () => {
           setArg = data;
           return {
             data: {
-              id: 'pushup-unification',
+              id: 'reminder-snooze-cleanup',
               completed: true,
               completedAt: '2026-06-04T10:00:00.000Z',
               completedBy: 'admin-uid',
@@ -83,12 +85,14 @@ describe('MigrationsPageComponent', () => {
     ]);
 
     // when a card requests completion
-    await component.setStatus('pushup-unification', true);
+    await component.setStatus('reminder-snooze-cleanup', true);
     fixture.detectChanges();
 
     // then the callable is invoked and local state updates
-    expect(setArg).toEqual({ id: 'pushup-unification', completed: true });
-    expect(component.statuses()['pushup-unification']?.completed).toBe(true);
+    expect(setArg).toEqual({ id: 'reminder-snooze-cleanup', completed: true });
+    expect(component.statuses()['reminder-snooze-cleanup']?.completed).toBe(
+      true
+    );
     expect(component.busyId()).toBeNull();
   });
 });

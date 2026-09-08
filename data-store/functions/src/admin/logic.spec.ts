@@ -413,13 +413,13 @@ describe('admin/logic', () => {
     it('should accept a valid {id, completed} payload', () => {
       // given / when
       const result = validateSetMigrationStatusPayload({
-        id: 'pushup-unification',
+        id: 'reminder-snooze-cleanup',
         completed: true,
       });
       // then
       expect(result).toEqual({
         valid: true,
-        id: 'pushup-unification',
+        id: 'reminder-snooze-cleanup',
         completed: true,
       });
     });

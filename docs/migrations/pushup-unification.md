@@ -1,5 +1,13 @@
 # Migration runbook: Pushup unification (`pushups` → `exerciseEntries`)
 
+> **Abgeschlossen und zurückgebaut.** Die Migration ist in Produktion
+> gelaufen, und die Callables `migratePushupsToExerciseEntries`,
+> `rollbackPushupUnification` und `backfillPushupPerExerciseStats` sind samt
+> ihrer Planer-Module entfernt — die Schritte unten lassen sich also nicht
+> mehr ausführen. Das Dokument bleibt als Protokoll dessen stehen, was
+> gemacht wurde und warum; wer es wieder braucht, holt den Code aus der
+> Historie.
+
 Staged, **reversible** copy of the legacy `pushups` collection into the
 unified `exerciseEntries` collection with `exerciseId: 'pushup'`. Tracks
 issue #432. Phase-7 follow-up of the [multi-exercise roadmap](../../plans/multi-exercise-roadmap.md).

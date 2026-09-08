@@ -3377,25 +3377,9 @@
         <source>Rückgängig</source>
       </segment>
     </unit>
-    <unit id="admin.migrations.pushupUnification.title">
-      <notes>
-        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:62</note>
-      </notes>
-      <segment>
-        <source>Liegestütze vereinheitlichen (pushups → exerciseEntries)</source>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupUnification.description">
-      <notes>
-        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:63</note>
-      </notes>
-      <segment>
-        <source>Kopiert die Legacy-„pushups“-Collection nach „exerciseEntries“ (exerciseId:&quot;pushup&quot;, migratedFrom:&quot;pushups&quot;). Idempotent, lässt die Quelle unangetastet und ist über „Rückgängig“ reversibel. Immer erst den Probelauf ausführen und die Zahlen gegen das Runbook prüfen.</source>
-      </segment>
-    </unit>
     <unit id="admin.migrations.reminderSnoozeCleanup.title">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:69</note>
+        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:62</note>
       </notes>
       <segment>
         <source>Snooze-Reste aus reminderDispatchState entfernen</source>
@@ -3403,26 +3387,10 @@
     </unit>
     <unit id="admin.migrations.reminderSnoozeCleanup.description">
       <notes>
-        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:70</note>
+        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:63</note>
       </notes>
       <segment>
         <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.title">
-      <notes>
-        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:75</note>
-      </notes>
-      <segment>
-        <source>Pushup-Aggregat backfillen (perExercise/pushup)</source>
-      </segment>
-    </unit>
-    <unit id="admin.migrations.pushupBackfill.description">
-      <notes>
-        <note category="location">web/src/app/admin/migrations/migration-descriptors.ts:76</note>
-      </notes>
-      <segment>
-        <source>Baut „userStats/{uid}/perExercise/pushup“ aus den migrierten Pushup-Einträgen neu auf, damit das Dashboard nach dem Cutover sofort korrekte Pushup-Totals und -Streaks zeigt. Nach der Unification-Migration ausführen. Idempotent.</source>
       </segment>
     </unit>
     <unit id="admin.migrations.subtitle">

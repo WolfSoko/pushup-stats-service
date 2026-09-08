@@ -76,9 +76,3 @@ export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 export { awardAchievementsOnPlanWrite } from './functions-achievements';
 
 export { archiveDeletedExerciseEntry } from './functions-entry-trash';
-
-export {
-  backfillPushupPerExerciseStats,
-  migratePushupsToExerciseEntries,
-  rollbackPushupUnification,
-} from './functions-pushup-migration';
