@@ -139,11 +139,11 @@ a request from an old SW is refused by `parseReminderActionRequest`.
 
 Two leftovers outlive the code and need a deliberate hand:
 
-- **The `snoozeReminder` callable stays deployed.** The non-interactive prod
-  deploy (`firebase deploy` without `--force`) aborts on function deletion, so
-  removing it from `index.ts` does not remove it from GCP. Delete it manually:
-  `pnpm exec firebase functions:delete snoozeReminder --region europe-west3
---project pushup-stats`.
+- **The `snoozeReminder` callable outlived the code by one deploy.** The prod
+  deploy ran without `--force`, so its deletion became a confirmation prompt
+  that nothing in CI could answer, and the whole deploy aborted — Hosting and
+  rules with it, four retries deep. The merge workflow now passes `--force`,
+  matching staging, so a retired function goes out with the next deploy.
 - **`reminderDispatchState/{uid}` docs keep their `snoozedUntil` field.** It is
   ignored now, so any user still holding an active snooze gets their next
   reminder on the normal interval instead of after it expires.
