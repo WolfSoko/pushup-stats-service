@@ -20,23 +20,31 @@ vi.mock('@angular/fire/storage', async (importOriginal) => {
 });
 
 /**
- * Drives the resource to completion: read it so it starts, let Angular
- * schedule the loader, resolve the promise, then propagate the value.
+ * Drives the resource to completion and waits for `until` to hold.
  *
- * Every step earns its place. Dropping the first `tick` leaves the loader
- * unscheduled, so `whenStable` finds nothing pending and returns before
- * the download URL exists. Dropping the trailing `tick` leaves the
- * resolved value unpropagated. `whenStable` is the belt to the
- * macrotask's braces: on a slow machine the loader can outlast a single
- * `setTimeout(0)`, which is how this raced on CI agents.
+ * Waiting on the condition rather than on a fixed number of turns: how
+ * many flushes the loader needs is a scheduling detail, and pinning it to
+ * one macrotask made this file lose its race whenever an unrelated spec
+ * changed how Vitest packs files onto workers. Bounded, so a condition
+ * that never holds fails as an assertion rather than hanging.
  */
-async function settle(service: AvatarService): Promise<void> {
-  service.avatarUrl();
-  TestBed.tick();
-  await new Promise((r) => setTimeout(r, 0));
-  await TestBed.inject(ApplicationRef).whenStable();
-  TestBed.tick();
+async function settle(
+  service: AvatarService,
+  until: () => boolean = () => true
+): Promise<void> {
+  for (let attempt = 0; attempt < 50; attempt++) {
+    service.avatarUrl();
+    TestBed.tick();
+    await new Promise((r) => setTimeout(r, 0));
+    await TestBed.inject(ApplicationRef).whenStable();
+    TestBed.tick();
+    if (until()) return;
+  }
 }
+
+/** The resource has produced its download URL. */
+const uploadResolved = (service: AvatarService) => (): boolean =>
+  service.uploadedUrl() !== null;
 
 function setup(opts: {
   uid?: string;
@@ -133,7 +141,7 @@ describe('AvatarService', () => {
       });
 
       // when
-      await settle(service);
+      await settle(service, uploadResolved(service));
 
       // then
       expect(service.avatarUrl()).toBe('https://own/pic');
