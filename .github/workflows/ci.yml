@@ -87,6 +87,17 @@ jobs:
       - name: Nx affected (lint + test + build)
         run: pnpm exec nx affected -t=lint,test,build -c=production --outputStyle=stream
 
+      # `--outputStyle=stream` brings back the output of tasks that finish,
+      # but a *failing* distributed task keeps its log in Nx Cloud — which a
+      # CI access token cannot read. Re-run the tests here, undistributed, so
+      # the assertion that failed is readable in this log. Only on the
+      # failure path, so a green run pays nothing.
+      - name: Fehlgeschlagene Tests unverteilt wiederholen (lesbarer Log)
+        if: failure()
+        env:
+          NX_CLOUD_DISTRIBUTED_EXECUTION: 'false'
+        run: pnpm exec nx affected -t=test -c=production --outputStyle=stream --skip-nx-cache
+
       - name: Nx fix-ci (always)
         if: always()
         run: pnpm exec nx fix-ci
