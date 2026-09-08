@@ -112,11 +112,19 @@ jobs:
       # firebase-tools re-runs the OIDC→STS→impersonation token exchange on each
       # invocation and surfaces any transient hop as "Failed to authenticate".
       # Retry a few times before giving up; a genuine failure still fails the job.
+      # `--force` because this deploy is non-interactive: without it, a
+      # Cloud Function that no longer exists in `index.ts` turns into a
+      # confirmation prompt that has nobody to answer it, and the whole
+      # deploy aborts — Hosting and rules included, not just functions.
+      # Retiring `snoozeReminder` blocked every deploy this way until it
+      # was noticed. The trade: a function dropped from `index.ts` by
+      # accident is now deleted in production without a second look, so
+      # removals belong in a reviewed change. Staging already runs this way.
       - name: Deploy Hosting + Cloud Functions + Firestore & Storage rules
         working-directory: data-store
         run: |
           for attempt in 1 2 3 4; do
-            pnpm exec firebase deploy --only hosting,functions,firestore,storage --project pushup-stats && exit 0
+            pnpm exec firebase deploy --only hosting,functions,firestore,storage --project pushup-stats --force && exit 0
             echo "::warning::firebase deploy attempt $attempt failed; retrying in 15s (transient WIF token exchange)"
             sleep 15
           done
