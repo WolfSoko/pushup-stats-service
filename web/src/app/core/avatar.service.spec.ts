@@ -4,20 +4,22 @@ import { Storage } from '@angular/fire/storage';
 import { UserContextService } from '@pu-auth/auth';
 import { vi } from 'vitest';
 
-import { AvatarService, profilePhotoPath } from './avatar.service';
+import {
+  AvatarService,
+  PROFILE_PHOTO_READER,
+  profilePhotoPath,
+} from './avatar.service';
 import { UserConfigStore } from './user-config.store';
 
-// `spyOn` cannot redefine an ESM export; the module has to be mocked.
-// `Object.assign` rather than a spread — the spread helper is not
-// available inside a hoisted factory.
-const { getDownloadURL, ref } = vi.hoisted(() => ({
-  getDownloadURL: vi.fn(),
-  ref: vi.fn(),
-}));
-vi.mock('@angular/fire/storage', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@angular/fire/storage')>();
-  return Object.assign({}, actual, { getDownloadURL, ref });
-});
+/**
+ * The Storage read, substituted through DI rather than by mocking
+ * `@angular/fire/storage`. Specs here share a Vitest module registry, so a
+ * module mock only wins when no neighbouring spec loaded the real module
+ * onto the worker first — which made this file pass or fail depending on
+ * how Vitest packed files, and broke it for good when an unrelated spec
+ * grew. `readPhoto` records the path it was asked for.
+ */
+const readPhoto = vi.fn<(storage: unknown, path: string) => Promise<string>>();
 
 /**
  * Drives the resource to completion and waits for `until` to hold.
@@ -62,6 +64,7 @@ function setup(opts: {
       { provide: PLATFORM_ID, useValue: 'browser' },
       { provide: Storage, useValue: opts.storage ?? {} },
       { provide: UserConfigStore, useValue: { config } },
+      { provide: PROFILE_PHOTO_READER, useValue: readPhoto },
       {
         provide: UserContextService,
         useValue: {
@@ -84,10 +87,8 @@ describe('profilePhotoPath', () => {
 
 describe('AvatarService', () => {
   beforeEach(() => {
-    getDownloadURL.mockReset();
-    getDownloadURL.mockResolvedValue('https://own/pic');
-    ref.mockReset();
-    ref.mockImplementation((_storage: unknown, path: string) => ({ path }));
+    readPhoto.mockReset();
+    readPhoto.mockResolvedValue('https://own/pic');
   });
 
   describe('Given no uploaded photo', () => {
@@ -100,7 +101,7 @@ describe('AvatarService', () => {
       await settle(service);
 
       // then
-      expect(getDownloadURL).not.toHaveBeenCalled();
+      expect(readPhoto).not.toHaveBeenCalled();
     });
 
     it('should fall back to the account picture', async () => {
@@ -146,7 +147,7 @@ describe('AvatarService', () => {
       // then
       expect(service.avatarUrl()).toBe('https://own/pic');
       expect(service.uploadedUrl()).toBe('https://own/pic');
-      expect(ref).toHaveBeenCalledWith(
+      expect(readPhoto).toHaveBeenCalledWith(
         expect.anything(),
         'profile-photos/uid-1/avatar'
       );
@@ -154,7 +155,7 @@ describe('AvatarService', () => {
 
     it('should fall back to the account picture when the object is gone', async () => {
       // given — the config can name a photo that Storage no longer has
-      getDownloadURL.mockRejectedValue(new Error('404'));
+      readPhoto.mockRejectedValue(new Error('404'));
       const { service } = setup({
         photoUpdatedAt: '2026-09-06T10:00:00.000Z',
         accountPhotoUrl: 'https://g/pic',
