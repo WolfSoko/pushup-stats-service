@@ -11472,15 +11472,15 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.migrations.reminderSnoozeCleanup.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Snooze-Reste aus reminderDispatchState entfernen</source>
-        <target>Snooze-Reste aus reminderDispatchState entfernen</target>
+        <target>Fjern snooze-rester fra reminderDispatchState</target>
       </segment>
     </unit>
     <unit id="admin.migrations.reminderSnoozeCleanup.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</target>
+        <target>Sletter «snoozedUntil», «snoozedAt» og «snoozeMinutes» fra «reminderDispatchState/{uid}». Snooze-handlingen for påminnelsen er fjernet, feltene blir ikke lenger lest av noen. Idempotent, ikke reversibel — kjør alltid prøvekjøringen først.</target>
       </segment>
     </unit>
 </file>
