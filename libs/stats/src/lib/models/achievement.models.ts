@@ -15,7 +15,7 @@
 /** Stable id of an earned achievement. Never rename — it is the doc id. */
 export type AchievementId = string;
 
-export type AchievementKind = 'plan-days' | 'plan-completed';
+export type AchievementKind = 'plan-days' | 'plan-completed' | 'invites';
 
 export interface AchievementDefinition {
   readonly id: AchievementId;
@@ -24,6 +24,7 @@ export interface AchievementDefinition {
   readonly icon: string;
   /**
    * For `plan-days`: how many completed plan days unlock it.
+   * For `invites`: how many friends joined through the user's link.
    * For `plan-completed`: unset — the badge is tied to `planId`.
    */
   readonly threshold?: number;
@@ -104,6 +105,38 @@ export function deriveAchievements(
 }
 
 /**
+ * Invite milestones. Sparse for the same reason as the plan days, and it
+ * stops at ten: past that the badge says nothing new about the user.
+ */
+export const INVITE_MILESTONES: ReadonlyArray<number> = [1, 3, 10];
+
+export function inviteAchievementId(threshold: number): AchievementId {
+  return `invites-${threshold}`;
+}
+
+export const INVITE_ACHIEVEMENTS: ReadonlyArray<AchievementDefinition> =
+  INVITE_MILESTONES.map((threshold) => ({
+    id: inviteAchievementId(threshold),
+    kind: 'invites' as const,
+    icon: threshold >= 10 ? 'groups' : 'person_add',
+    threshold,
+  }));
+
+/**
+ * Invite badges an invite count entitles a user to. Separate from
+ * {@link deriveAchievements} because the count lives on the user's
+ * config, not in their plan progress — the referral callable owns it.
+ */
+export function deriveInviteAchievements(
+  invitedCount: number
+): ReadonlyArray<AchievementId> {
+  if (!Number.isFinite(invitedCount)) return [];
+  return INVITE_MILESTONES.filter((m) => invitedCount >= m).map(
+    inviteAchievementId
+  );
+}
+
+/**
  * Resolves a stored id back to its definition. Unknown ids yield `null`
  * rather than throwing: a badge earned under an older catalog must not
  * break the profile page after the catalog changes.
@@ -113,6 +146,8 @@ export function findAchievementDefinition(
 ): AchievementDefinition | null {
   const milestone = PLAN_DAY_ACHIEVEMENTS.find((a) => a.id === id);
   if (milestone) return milestone;
+  const invite = INVITE_ACHIEVEMENTS.find((a) => a.id === id);
+  if (invite) return invite;
   const planMatch = /^plan-completed-(.+)$/.exec(id);
   return planMatch ? planCompletedAchievement(planMatch[1]) : null;
 }

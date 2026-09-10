@@ -176,6 +176,17 @@ Walks today's plan day — "50 s Plank → 20 Russian Twists → 15 Liegestütze
 - **An exercise the plan quantifies only as a total** is split evenly across the rounds (remainder to the earlier ones, so the sum stays the target). Doing all of it in round one would defeat the circuit. Unquantified items (HIIT blocks) appear once and are ticked off.
 - **"Wie vorgegeben" splits by round.** Only the round that closes a plan item goes through `logPlanExercise` (write remainder + tick + close the day); earlier rounds write just their portion via `SessionCaptureService.logPrescribed`, because ticking the item off would swallow the rounds still to come. "Abhaken" is per-item by design and does close an exercise's remaining rounds.
 
+### Invitations — the return path of the sharing loop
+
+Sharing existed without a way back: a link went out, nothing came of it, and nobody could tell. The loop now closes in four pieces.
+
+- **The link carries the inviter.** `buildInviteUrl` (`web/src/app/core/profile-share-url.ts`) appends `?ref=<uid>` and points at the user's public profile when they have one (their own numbers plus an OG card convert better than the homepage), the landing page otherwise. `InviteService` wraps it with invitation copy — deliberately different from "share today's result", which is a brag, not an ask.
+- **The visitor's browser remembers it.** `ReferralService` parks the `ref` value in `localStorage` on app start, because signup is several routes and possibly a provider redirect later. The first link wins; an invalid id (empty, slash, over 128 chars) never gets stored. `InviteBannerComponent` greets the visitor with the inviter's name when that inviter has a public profile, anonymously otherwise — it reveals nothing `/u/:uid` doesn't already.
+- **The server decides whether it counts.** `ReferralClaimHook` (a `POST_AUTH_HOOK`) calls the `claimReferral` callable, which refuses self-invites, anonymous accounts, a second attribution for the same account, and claims older than `REFERRAL_CLAIM_WINDOW_MS` (7 days after signup). It writes `userConfigs/{uid}.referral` on both sides and awards the inviter's badges in one transaction. `referral` is **server-only** — `firestore.rules` blocks client writes to it exactly like `androidTest`, because the invite count feeds public badges.
+- **Badges use the existing achievement system.** `AchievementKind` gained `'invites'` with milestones 1 / 3 / 10 (`deriveInviteAchievements`). They live in the same `userAchievements.earned` array as plan badges; the plan trigger rewrites that document wholesale but reads `earned` generically, so invite badges survive it.
+
+The hook runs on **every** sign-in, not just the first, and drops the pending invitation whatever the verdict — retrying forever would re-ask a question the server already answered. Known limit: badges are cosmetic and the count is farmable by anyone willing to create several real (non-anonymous) accounts. Worth rate-limiting only if it ever shows up in the data.
+
 ### Analysis page: chart bucketing per period
 
 The filter period picks the chart's bucket size — `granularityForRange` (`web/src/app/stats/analysis/chart-granularity.ts`) maps day → `hourly`, week → `daily`, month → `weekly`, year → `monthly`. `AnalysisStore.viewGranularity` derives it from `rangeMode` (i.e. from `from`/`to` via `inferRangeMode`), so no extra state stores the period. Every range therefore stays at a few dozen bars instead of stretching a year across 365 of them.

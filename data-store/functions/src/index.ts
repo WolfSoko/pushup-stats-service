@@ -71,6 +71,7 @@ export { reminderAction } from './functions-reminder-action';
 
 export { cleanupReminderSnoozeState } from './functions-reminder-snooze-cleanup';
 
+export { claimReferral } from './functions-referral';
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 
 export { awardAchievementsOnPlanWrite } from './functions-achievements';

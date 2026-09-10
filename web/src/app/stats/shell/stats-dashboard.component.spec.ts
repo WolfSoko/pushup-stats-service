@@ -1609,6 +1609,25 @@ describe('StatsDashboardComponent', () => {
       liveExerciseEntries.set([]);
     });
 
+    it('Then the invite button shares a link that carries the inviter', async () => {
+      // Given
+      await fixture.whenStable();
+      shareSpy.mockClear();
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="dashboard-invite"]'
+      ) as HTMLButtonElement;
+
+      // When
+      expect(button).not.toBeNull();
+      button.click();
+      await fixture.whenStable();
+
+      // Then
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.url).toContain('ref=');
+      expect(payload.text).not.toBe('');
+    });
+
     it('Then it is disabled while nothing is logged today', async () => {
       // Given — no entries at all
       const previous = liveEntries();

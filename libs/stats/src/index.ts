@@ -8,6 +8,7 @@ export * from './lib/models/reminder-i18n.models';
 export * from './lib/models/reminder-goal.models';
 export * from './lib/models/user-stats.models';
 export * from './lib/models/achievement.models';
+export * from './lib/models/referral.models';
 export * from './lib/models/public-profile.models';
 export * from './lib/models/exercise.models';
 export * from './lib/models/exercise.catalog';

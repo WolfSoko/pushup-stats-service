@@ -143,18 +143,35 @@
               Jeden Tag ein Stück stärker. Mach mit.
             </p>
           </div>
-          <button
-            mat-stroked-button
-            type="button"
-            class="share-btn"
-            data-testid="public-profile-share"
-            [attr.aria-label]="labels.shareAria"
-            (click)="shareProfile()"
-          >
-            <mat-icon>share</mat-icon>
-            <span>{{ labels.share }}</span>
-          </button>
+          <div class="share-actions">
+            <button
+              mat-stroked-button
+              type="button"
+              class="share-btn"
+              data-testid="public-profile-share"
+              [attr.aria-label]="labels.shareAria"
+              (click)="shareProfile()"
+            >
+              <mat-icon>share</mat-icon>
+              <span>{{ labels.share }}</span>
+            </button>
+            @if (isOwner()) {
+              <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                class="share-btn"
+                data-testid="public-profile-invite"
+                (click)="inviteFriend()"
+              >
+                <mat-icon>person_add</mat-icon>
+                <span i18n="@@invite.action">Freunde einladen</span>
+              </button>
+            }
+          </div>
         </header>
+
+        <app-invite-banner />
 
         <section class="stats-grid" [attr.aria-label]="labels.stats">
           @if (renders('total', true)) {

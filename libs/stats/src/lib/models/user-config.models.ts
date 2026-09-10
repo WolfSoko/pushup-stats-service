@@ -1,4 +1,5 @@
 import type { MeasurementType } from './exercise.models';
+import type { ReferralState } from './referral.models';
 import { ReminderConfig } from './reminder-config.models';
 import type { ReminderLocale } from './reminder-i18n.models';
 import type { SessionMode } from './training-session.models';
@@ -263,6 +264,13 @@ export interface UserConfig {
    * manually adding the tester's email in Play Console — see
    * `docs/android-test-program.md`).
    */
+  /**
+   * Who invited this user and how many they brought in themselves.
+   * Server-only — written exclusively by the `claimReferral` callable and
+   * blocked from client writes in `firestore.rules`, same as
+   * `androidTest`: the invite count feeds public badges.
+   */
+  referral?: ReferralState;
   androidTest?: {
     status: 'candidate' | 'confirmed' | 'declined' | 'optedIn' | 'notified';
     confirmedAt?: string;

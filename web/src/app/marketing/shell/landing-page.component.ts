@@ -14,6 +14,7 @@ import {
 import { InstallPromptService } from '../../core/install-prompt.service';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 import { SessionFeatureSectionComponent } from '../components/session-feature-section/session-feature-section.component';
+import { InviteBannerComponent } from '../../core/invite-banner.component';
 
 // Each string is 7 characters — one per day, top-to-bottom.
 // 'e' = empty, '1'..'5' = intensity buckets (matches .lp-day-* SCSS).
@@ -46,6 +47,7 @@ const HEATMAP_PATTERN: readonly string[] = [
     MatCardModule,
     MatIconModule,
     AdSlotComponent,
+    InviteBannerComponent,
     ReminderFeatureSectionComponent,
     SessionFeatureSectionComponent,
   ],

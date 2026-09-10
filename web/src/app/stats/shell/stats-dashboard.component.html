@@ -26,18 +26,35 @@
         Live: {{ liveConnected() ? 'verbunden' : 'getrennt' }}
       </p>
     </div>
-    <button
-      mat-stroked-button
-      type="button"
-      class="header-share"
-      data-testid="dashboard-share"
-      [attr.aria-label]="shareDayAriaLabel"
-      [disabled]="!canShareDay()"
-      (click)="shareDay()"
-    >
-      <mat-icon>share</mat-icon>
-      <span>{{ shareDayLabel }}</span>
-    </button>
+    <div class="header-actions">
+      <button
+        mat-stroked-button
+        type="button"
+        class="header-share"
+        data-testid="dashboard-share"
+        [attr.aria-label]="shareDayAriaLabel"
+        [disabled]="!canShareDay()"
+        (click)="shareDay()"
+      >
+        <mat-icon>share</mat-icon>
+        <span>{{ shareDayLabel }}</span>
+      </button>
+      <button
+        mat-stroked-button
+        type="button"
+        class="header-share"
+        data-testid="dashboard-invite"
+        (click)="inviteFriend()"
+      >
+        <mat-icon>person_add</mat-icon>
+        <span i18n="@@invite.action">Freunde einladen</span>
+        @if (invitedCount() > 0) {
+          <span class="invite-count" data-testid="dashboard-invite-count">{{
+            invitedCount()
+          }}</span>
+        }
+      </button>
+    </div>
   </header>
 
   <a

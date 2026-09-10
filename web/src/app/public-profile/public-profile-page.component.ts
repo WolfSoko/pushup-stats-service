@@ -5,6 +5,7 @@ import {
   computed,
   DestroyRef,
   inject,
+  Injector,
   LOCALE_ID,
   signal,
 } from '@angular/core';
@@ -40,6 +41,8 @@ import {
 } from './profile-labels';
 import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
+import { InviteBannerComponent } from '../core/invite-banner.component';
+import { InviteService } from '../core/invite.service';
 
 type LoadState =
   | { kind: 'loading' }
@@ -59,6 +62,7 @@ type LoadState =
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    InviteBannerComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PublicProfileSeo],
@@ -84,6 +88,14 @@ export class PublicProfilePageComponent {
     const s = this.state();
     return s.kind === 'ready' ? s.profile : null;
   });
+
+  /**
+   * Resolved lazily: `InviteService` reaches the auth stack for the user's
+   * own uid, and this route also renders for anonymous visitors (and in
+   * harnesses without Firebase Auth). The button it backs only exists for
+   * the signed-in owner, where the providers are there.
+   */
+  private readonly injector = inject(Injector);
 
   protected readonly isOwner = computed(
     () => this.profile()?.viewerIsOwner === true
@@ -208,6 +220,10 @@ export class PublicProfilePageComponent {
   protected reload(): void {
     const uid = this.route.snapshot.paramMap.get('uid')?.trim();
     if (uid) void this.load(uid);
+  }
+
+  protected inviteFriend(): void {
+    void this.injector.get(InviteService, null)?.inviteFriend();
   }
 
   protected shareProfile(): void {

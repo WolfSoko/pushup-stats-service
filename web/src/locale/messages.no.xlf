@@ -11585,5 +11585,47 @@ Deine Position: # ·  Reps        </source>
         <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</target>
       </segment>
     </unit>
+    <unit id="invite.banner.named">
+      <segment state="initial">
+        <source>hat dich zu Pushup Tracker eingeladen.</source>
+        <target>hat dich zu Pushup Tracker eingeladen.</target>
+      </segment>
+    </unit>
+    <unit id="invite.banner.anonymous">
+      <segment state="initial">
+        <source> Du wurdest zu Pushup Tracker eingeladen. </source>
+        <target> Du wurdest zu Pushup Tracker eingeladen. </target>
+      </segment>
+    </unit>
+    <unit id="invite.share.title">
+      <segment state="initial">
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="invite.share.text">
+      <segment state="initial">
+        <source>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</source>
+        <target>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</target>
+      </segment>
+    </unit>
+    <unit id="invite.action">
+      <segment state="initial">
+        <source>Freunde einladen</source>
+        <target>Freunde einladen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.firstInvite">
+      <segment state="initial">
+        <source>Ersten Freund eingeladen</source>
+        <target>Ersten Freund eingeladen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.badge.invites">
+      <segment state="initial">
+        <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
+        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
