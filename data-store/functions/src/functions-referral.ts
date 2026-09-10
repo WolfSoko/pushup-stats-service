@@ -2,7 +2,9 @@ import { getAuth } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import {
+  friendshipId,
   isValidReferrerId,
+  newFriendship,
   type EarnedAchievement,
   type ReferralState,
 } from '@pu-stats/models';
@@ -122,6 +124,16 @@ export const claimReferral = onCall(
       }
       return plan;
     });
+
+    // The invitation already says these two know each other, so the
+    // friendship starts as a request from the inviter instead of making
+    // the newcomer hunt for a profile. `create` keeps an existing record
+    // (including a declined one) untouched.
+    await db
+      .collection('friendships')
+      .doc(friendshipId(referrer, uid))
+      .create(newFriendship(referrer, uid, nowIso))
+      .catch(() => undefined);
 
     logger.info('claimReferral', {
       uid,

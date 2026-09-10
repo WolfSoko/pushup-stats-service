@@ -3764,7 +3764,7 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:147,148</note>
+        <note category="location">web/src/app/app.html:158,159</note>
       </notes>
       <segment>
         <source>Pushups</source>
@@ -3773,8 +3773,8 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:248,250</note>
-        <note category="location">web/src/app/app.html:311,313</note>
+        <note category="location">web/src/app/app.html:259,261</note>
+        <note category="location">web/src/app/app.html:322,324</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3783,8 +3783,8 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:32,34</note>
-        <note category="location">web/src/app/app.html:252,254</note>
-        <note category="location">web/src/app/app.html:315,317</note>
+        <note category="location">web/src/app/app.html:263,265</note>
+        <note category="location">web/src/app/app.html:326,328</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3792,19 +3792,27 @@
     </unit>
     <unit id="nav.leaderboard">
       <notes>
-        <note category="location">web/src/app/app.html:41,44</note>
-        <note category="location">web/src/app/app.html:256,258</note>
-        <note category="location">web/src/app/app.html:319,321</note>
+        <note category="location">web/src/app/app.html:41,43</note>
+        <note category="location">web/src/app/app.html:267,269</note>
+        <note category="location">web/src/app/app.html:330,332</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
       </segment>
     </unit>
+    <unit id="nav.friends">
+      <notes>
+        <note category="location">web/src/app/app.html:51,53</note>
+      </notes>
+      <segment>
+        <source>Freunde</source>
+      </segment>
+    </unit>
     <unit id="nav.trainingPlans">
       <notes>
-        <note category="location">web/src/app/app.html:50,53</note>
-        <note category="location">web/src/app/app.html:260,262</note>
-        <note category="location">web/src/app/app.html:323,325</note>
+        <note category="location">web/src/app/app.html:61,64</note>
+        <note category="location">web/src/app/app.html:271,273</note>
+        <note category="location">web/src/app/app.html:334,336</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3812,9 +3820,9 @@
     </unit>
     <unit id="nav.blog">
       <notes>
-        <note category="location">web/src/app/app.html:59,61</note>
-        <note category="location">web/src/app/app.html:264,266</note>
-        <note category="location">web/src/app/app.html:327,329</note>
+        <note category="location">web/src/app/app.html:70,72</note>
+        <note category="location">web/src/app/app.html:275,277</note>
+        <note category="location">web/src/app/app.html:338,340</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3822,7 +3830,7 @@
     </unit>
     <unit id="nav.more">
       <notes>
-        <note category="location">web/src/app/app.html:62,64</note>
+        <note category="location">web/src/app/app.html:73,75</note>
       </notes>
       <segment>
         <source>Mehr</source>
@@ -3830,7 +3838,7 @@
     </unit>
     <unit id="nav.history">
       <notes>
-        <note category="location">web/src/app/app.html:70,72</note>
+        <note category="location">web/src/app/app.html:81,83</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -3838,7 +3846,7 @@
     </unit>
     <unit id="nav.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:79,82</note>
+        <note category="location">web/src/app/app.html:90,93</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3846,7 +3854,7 @@
     </unit>
     <unit id="nav.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:88,91</note>
+        <note category="location">web/src/app/app.html:99,102</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -3854,7 +3862,7 @@
     </unit>
     <unit id="nav.language">
       <notes>
-        <note category="location">web/src/app/app.html:102,103</note>
+        <note category="location">web/src/app/app.html:113,114</note>
       </notes>
       <segment>
         <source>Sprache</source>
@@ -3862,7 +3870,7 @@
     </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:120,121</note>
+        <note category="location">web/src/app/app.html:131,132</note>
       </notes>
       <segment>
         <source>Pushup Navigation</source>
@@ -3870,7 +3878,7 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:126,127</note>
+        <note category="location">web/src/app/app.html:137,138</note>
       </notes>
       <segment>
         <source>Menü öffnen</source>
@@ -3878,7 +3886,7 @@
     </unit>
     <unit id="nav.toLanding">
       <notes>
-        <note category="location">web/src/app/app.html:136,137</note>
+        <note category="location">web/src/app/app.html:147,148</note>
       </notes>
       <segment>
         <source>Zur Landingpage</source>
@@ -3886,7 +3894,7 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:172,173</note>
+        <note category="location">web/src/app/app.html:183,184</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -3894,7 +3902,7 @@
     </unit>
     <unit id="toolbarDailyGoal.checkHint">
       <notes>
-        <note category="location">web/src/app/app.html:205,207</note>
+        <note category="location">web/src/app/app.html:216,218</note>
       </notes>
       <segment>
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
@@ -3902,7 +3910,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:228,229</note>
+        <note category="location">web/src/app/app.html:239,240</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -3910,7 +3918,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/app.html:239,240</note>
+        <note category="location">web/src/app/app.html:250,251</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>
@@ -3918,7 +3926,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:273</note>
+        <note category="location">web/src/app/app.html:284</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -3926,7 +3934,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:278,280</note>
+        <note category="location">web/src/app/app.html:289,291</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3934,7 +3942,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:281,283</note>
+        <note category="location">web/src/app/app.html:292,294</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -3942,7 +3950,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:283,284</note>
+        <note category="location">web/src/app/app.html:294,295</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -3950,7 +3958,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:285,287</note>
+        <note category="location">web/src/app/app.html:296,298</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -3958,7 +3966,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:288,291</note>
+        <note category="location">web/src/app/app.html:299,302</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -3966,7 +3974,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:295,297</note>
+        <note category="location">web/src/app/app.html:306,308</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -3974,7 +3982,7 @@
     </unit>
     <unit id="nav.bottom.aria">
       <notes>
-        <note category="location">web/src/app/app.html:302,303</note>
+        <note category="location">web/src/app/app.html:313,314</note>
       </notes>
       <segment>
         <source>Mobile-Navigation</source>
@@ -4172,9 +4180,25 @@
         <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
       </segment>
     </unit>
+    <unit id="seo.friends.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:227</note>
+      </notes>
+      <segment>
+        <source>Freunde – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.friends.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:228</note>
+      </notes>
+      <segment>
+        <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
+      </segment>
+    </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:226</note>
+        <note category="location">web/src/app/app.routes.ts:239</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -4182,7 +4206,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:227</note>
+        <note category="location">web/src/app/app.routes.ts:240</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4190,7 +4214,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:237</note>
+        <note category="location">web/src/app/app.routes.ts:250</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -4198,7 +4222,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:238</note>
+        <note category="location">web/src/app/app.routes.ts:251</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4206,7 +4230,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:252</note>
+        <note category="location">web/src/app/app.routes.ts:265</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4214,7 +4238,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:253</note>
+        <note category="location">web/src/app/app.routes.ts:266</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4222,7 +4246,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:270</note>
+        <note category="location">web/src/app/app.routes.ts:283</note>
       </notes>
       <segment>
         <source>Über uns – Pushup Tracker</source>
@@ -4230,7 +4254,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:271</note>
+        <note category="location">web/src/app/app.routes.ts:284</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4238,7 +4262,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:281</note>
+        <note category="location">web/src/app/app.routes.ts:294</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -4246,7 +4270,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:282</note>
+        <note category="location">web/src/app/app.routes.ts:295</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -4254,7 +4278,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:292</note>
+        <note category="location">web/src/app/app.routes.ts:305</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -4262,7 +4286,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:293</note>
+        <note category="location">web/src/app/app.routes.ts:306</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -5127,6 +5151,184 @@
       </notes>
       <segment>
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.self">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:15</note>
+      </notes>
+      <segment>
+        <source>Das ist dein eigenes Profil.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.exists">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:17</note>
+      </notes>
+      <segment>
+        <source>Ihr seid schon Freunde.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.pending">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:19</note>
+      </notes>
+      <segment>
+        <source>Die Anfrage läuft schon.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.declined">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:21</note>
+      </notes>
+      <segment>
+        <source>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.limit">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:23</note>
+      </notes>
+      <segment>
+        <source>Deine Freundesliste ist voll.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.unauthenticated">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:25</note>
+      </notes>
+      <segment>
+        <source>Dafür brauchst du ein Konto.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.invalid">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:27</note>
+      </notes>
+      <segment>
+        <source>Dieses Profil gibt es nicht.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.gone">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:31</note>
+      </notes>
+      <segment>
+        <source>Diese Anfrage ist nicht mehr offen.</source>
+      </segment>
+    </unit>
+    <unit id="friends.error.failed">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:33</note>
+      </notes>
+      <segment>
+        <source>Das hat nicht funktioniert. Bitte später erneut versuchen.</source>
+      </segment>
+    </unit>
+    <unit id="friends.title">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:38,39</note>
+      </notes>
+      <segment>
+        <source>Freunde</source>
+      </segment>
+    </unit>
+    <unit id="friends.intro">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:40,42</note>
+      </notes>
+      <segment>
+        <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
+      </segment>
+    </unit>
+    <unit id="friends.incoming">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:56,57</note>
+      </notes>
+      <segment>
+        <source>Anfragen an dich</source>
+      </segment>
+    </unit>
+    <unit id="friends.decline">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:69,70</note>
+      </notes>
+      <segment>
+        <source> Ablehnen </source>
+      </segment>
+    </unit>
+    <unit id="friends.accept">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:79,80</note>
+      </notes>
+      <segment>
+        <source> Annehmen </source>
+      </segment>
+    </unit>
+    <unit id="friends.list">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:88,89</note>
+      </notes>
+      <segment>
+        <source>Deine Freunde</source>
+      </segment>
+    </unit>
+    <unit id="friends.empty">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:95,96</note>
+      </notes>
+      <segment>
+        <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
+      </segment>
+    </unit>
+    <unit id="invite.action">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:107,108</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:168,169</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
+      </notes>
+      <segment>
+        <source>Freunde einladen</source>
+      </segment>
+    </unit>
+    <unit id="friends.remove">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:125,126</note>
+      </notes>
+      <segment>
+        <source> Entfernen </source>
+      </segment>
+    </unit>
+    <unit id="friends.outgoing">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:135,136</note>
+      </notes>
+      <segment>
+        <source>Von dir angefragt</source>
+      </segment>
+    </unit>
+    <unit id="friends.waiting">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:140,141</note>
+      </notes>
+      <segment>
+        <source>wartet noch</source>
+      </segment>
+    </unit>
+    <unit id="friends.withdraw">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:149,150</note>
+      </notes>
+      <segment>
+        <source> Zurückziehen </source>
+      </segment>
+    </unit>
+    <unit id="friends.anonymous">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:209</note>
+      </notes>
+      <segment>
+        <source>Ohne Namen</source>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">
@@ -6906,25 +7108,57 @@
         <source>Profilbild ändern</source>
       </segment>
     </unit>
-    <unit id="publicProfile.owner.hideElement">
-      <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
-      </notes>
-      <segment>
-        <source>Auf dem öffentlichen Profil ausblenden</source>
-      </segment>
-    </unit>
-    <unit id="publicProfile.owner.showElement">
+    <unit id="publicProfile.owner.visibility.public">
       <notes>
         <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
       </notes>
       <segment>
-        <source>Auf dem öffentlichen Profil anzeigen</source>
+        <source>Für alle sichtbar</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.friends">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
+      </notes>
+      <segment>
+        <source>Nur für Freunde sichtbar</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.off">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+      </notes>
+      <segment>
+        <source>Für niemanden sichtbar</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.nextFriends">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+      </notes>
+      <segment>
+        <source>Tippen: nur Freunde</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.nextOff">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+      </notes>
+      <segment>
+        <source>Tippen: ausblenden</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.nextPublic">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+      </notes>
+      <segment>
+        <source>Tippen: für alle zeigen</source>
       </segment>
     </unit>
     <unit id="publicProfile.exercises.reps">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:57</note>
       </notes>
       <segment>
         <source>Stückübungen</source>
@@ -6932,7 +7166,7 @@
     </unit>
     <unit id="publicProfile.exercises.time">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
       </notes>
       <segment>
         <source>Zeitübungen</source>
@@ -6940,7 +7174,7 @@
     </unit>
     <unit id="publicProfile.exercises.distance">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
       </notes>
       <segment>
         <source>Streckenübungen</source>
@@ -6948,7 +7182,7 @@
     </unit>
     <unit id="publicProfile.exercises.weight">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
       </notes>
       <segment>
         <source>Gewichtsübungen</source>
@@ -6956,7 +7190,7 @@
     </unit>
     <unit id="weekday.short.mon">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:64</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -6964,7 +7198,7 @@
     </unit>
     <unit id="weekday.short.tue">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:65</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -6972,7 +7206,7 @@
     </unit>
     <unit id="weekday.short.wed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:66</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -6980,7 +7214,7 @@
     </unit>
     <unit id="weekday.short.thu">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:61</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:67</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -6988,7 +7222,7 @@
     </unit>
     <unit id="weekday.short.fri">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:62</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -6996,7 +7230,7 @@
     </unit>
     <unit id="weekday.short.sat">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:63</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:69</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -7004,7 +7238,7 @@
     </unit>
     <unit id="weekday.short.sun">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:64</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:70</note>
       </notes>
       <segment>
         <source>So</source>
@@ -7018,13 +7252,28 @@
         <source> Jeden Tag ein Stück stärker. Mach mit. </source>
       </segment>
     </unit>
-    <unit id="invite.action">
+    <unit id="friends.requested">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:168,169</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:182,183</note>
       </notes>
       <segment>
-        <source>Freunde einladen</source>
+        <source>Anfrage gesendet</source>
+      </segment>
+    </unit>
+    <unit id="friends.add">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:184,186</note>
+      </notes>
+      <segment>
+        <source>Als Freund hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="friends.already">
+      <notes>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:190,192</note>
+      </notes>
+      <segment>
+        <source>Ihr seid Freunde</source>
       </segment>
     </unit>
     <unit id="publicProfile.share.textPlain">

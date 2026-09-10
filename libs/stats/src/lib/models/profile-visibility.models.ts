@@ -108,3 +108,15 @@ export function withSectionVisibility(
   }
   return next;
 }
+
+/**
+ * The next audience in the cycle the profile page offers: widest first,
+ * so the common case (show this to everyone) is one tap from the default.
+ */
+export function nextSectionVisibility(
+  level: ProfileSectionVisibility
+): ProfileSectionVisibility {
+  if (level === 'public') return 'friends';
+  if (level === 'friends') return 'off';
+  return 'public';
+}

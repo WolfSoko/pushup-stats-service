@@ -196,6 +196,14 @@ Friendships are **mutual**: one side asks, the other accepts. That consent is wh
 - **`declined` is remembered, removal is not.** A declined request blocks the same requester from asking again — otherwise "no" is a nag button — while the person who declined may still send their own request later. `removeFriend` deletes the document: ending a friendship is not a "no" that should block a future request.
 - **The profile learns the tier with one read.** `getPublicProfile` resolves `viewerIsFriend` by getting the pair's document by id (no query), and only for signed-in viewers who aren't the owner — where it can actually change the answer. `buildPublicProfile` then filters every section through `isSectionVisibleTo`, and hands the owner their `visibility` map (nobody else gets it, same reason `hidden` was owner-only).
 
+#### The friends screen
+
+`/freunde` (auth-guarded, `noindex`) lists confirmed friends, requests waiting for an answer, and requests waiting on someone else — `listFriends` returns all three in one call, with the other side's display name resolved server-side so the client needs no read access to other users' configs. Every action re-reads the lists instead of patching them locally: a friendship is a two-party record, and the other side may have acted in the meantime.
+
+Requests start in two places. `/u/:uid` offers "Als Freund hinzufügen" to anyone who isn't the owner and isn't already a friend — **including anonymous visitors**, on purpose: the callable answers `unauthenticated`, and the page turns that into a trip to the signup page rather than hiding the button behind an auth check this anonymous route would otherwise have to make. And a claimed invitation creates the request itself, from the inviter — the two already know each other, so making the newcomer hunt for a profile would be silly.
+
+The per-section switch on the profile **cycles** public → friends → off → public, one icon (`public` / `group` / `visibility_off`) with the current audience and the next tap in its tooltip. A cycle keeps the control inline next to the value it governs, which is what made the old two-state version legible.
+
 ### Analysis page: chart bucketing per period
 
 The filter period picks the chart's bucket size — `granularityForRange` (`web/src/app/stats/analysis/chart-granularity.ts`) maps day → `hourly`, week → `daily`, month → `weekly`, year → `monthly`. `AnalysisStore.viewGranularity` derives it from `rangeMode` (i.e. from `from`/`to` via `inferRangeMode`), so no extra state stores the period. Every range therefore stays at a few dozen bars instead of stretching a year across 365 of them.

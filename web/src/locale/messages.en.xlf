@@ -12533,5 +12533,203 @@ Deine Position: # ·  Reps        </source>
         <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
       </segment>
     </unit>
+    <unit id="nav.friends">
+      <segment state="initial">
+        <source>Freunde</source>
+        <target>Freunde</target>
+      </segment>
+    </unit>
+    <unit id="seo.friends.title">
+      <segment state="initial">
+        <source>Freunde – Pushup Tracker</source>
+        <target>Freunde – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.friends.description">
+      <segment state="initial">
+        <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
+        <target>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.self">
+      <segment state="initial">
+        <source>Das ist dein eigenes Profil.</source>
+        <target>Das ist dein eigenes Profil.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.exists">
+      <segment state="initial">
+        <source>Ihr seid schon Freunde.</source>
+        <target>Ihr seid schon Freunde.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.pending">
+      <segment state="initial">
+        <source>Die Anfrage läuft schon.</source>
+        <target>Die Anfrage läuft schon.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.declined">
+      <segment state="initial">
+        <source>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</source>
+        <target>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.limit">
+      <segment state="initial">
+        <source>Deine Freundesliste ist voll.</source>
+        <target>Deine Freundesliste ist voll.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.unauthenticated">
+      <segment state="initial">
+        <source>Dafür brauchst du ein Konto.</source>
+        <target>Dafür brauchst du ein Konto.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.invalid">
+      <segment state="initial">
+        <source>Dieses Profil gibt es nicht.</source>
+        <target>Dieses Profil gibt es nicht.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.gone">
+      <segment state="initial">
+        <source>Diese Anfrage ist nicht mehr offen.</source>
+        <target>Diese Anfrage ist nicht mehr offen.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.failed">
+      <segment state="initial">
+        <source>Das hat nicht funktioniert. Bitte später erneut versuchen.</source>
+        <target>Das hat nicht funktioniert. Bitte später erneut versuchen.</target>
+      </segment>
+    </unit>
+    <unit id="friends.title">
+      <segment state="initial">
+        <source>Freunde</source>
+        <target>Freunde</target>
+      </segment>
+    </unit>
+    <unit id="friends.intro">
+      <segment state="initial">
+        <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
+        <target> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </target>
+      </segment>
+    </unit>
+    <unit id="friends.incoming">
+      <segment state="initial">
+        <source>Anfragen an dich</source>
+        <target>Anfragen an dich</target>
+      </segment>
+    </unit>
+    <unit id="friends.decline">
+      <segment state="initial">
+        <source> Ablehnen </source>
+        <target> Ablehnen </target>
+      </segment>
+    </unit>
+    <unit id="friends.accept">
+      <segment state="initial">
+        <source> Annehmen </source>
+        <target> Annehmen </target>
+      </segment>
+    </unit>
+    <unit id="friends.list">
+      <segment state="initial">
+        <source>Deine Freunde</source>
+        <target>Deine Freunde</target>
+      </segment>
+    </unit>
+    <unit id="friends.empty">
+      <segment state="initial">
+        <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
+        <target> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </target>
+      </segment>
+    </unit>
+    <unit id="friends.remove">
+      <segment state="initial">
+        <source> Entfernen </source>
+        <target> Entfernen </target>
+      </segment>
+    </unit>
+    <unit id="friends.outgoing">
+      <segment state="initial">
+        <source>Von dir angefragt</source>
+        <target>Von dir angefragt</target>
+      </segment>
+    </unit>
+    <unit id="friends.waiting">
+      <segment state="initial">
+        <source>wartet noch</source>
+        <target>wartet noch</target>
+      </segment>
+    </unit>
+    <unit id="friends.withdraw">
+      <segment state="initial">
+        <source> Zurückziehen </source>
+        <target> Zurückziehen </target>
+      </segment>
+    </unit>
+    <unit id="friends.anonymous">
+      <segment state="initial">
+        <source>Ohne Namen</source>
+        <target>Ohne Namen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.public">
+      <segment state="initial">
+        <source>Für alle sichtbar</source>
+        <target>Für alle sichtbar</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.friends">
+      <segment state="initial">
+        <source>Nur für Freunde sichtbar</source>
+        <target>Nur für Freunde sichtbar</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.off">
+      <segment state="initial">
+        <source>Für niemanden sichtbar</source>
+        <target>Für niemanden sichtbar</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.nextFriends">
+      <segment state="initial">
+        <source>Tippen: nur Freunde</source>
+        <target>Tippen: nur Freunde</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.nextOff">
+      <segment state="initial">
+        <source>Tippen: ausblenden</source>
+        <target>Tippen: ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.visibility.nextPublic">
+      <segment state="initial">
+        <source>Tippen: für alle zeigen</source>
+        <target>Tippen: für alle zeigen</target>
+      </segment>
+    </unit>
+    <unit id="friends.requested">
+      <segment state="initial">
+        <source>Anfrage gesendet</source>
+        <target>Anfrage gesendet</target>
+      </segment>
+    </unit>
+    <unit id="friends.add">
+      <segment state="initial">
+        <source>Als Freund hinzufügen</source>
+        <target>Als Freund hinzufügen</target>
+      </segment>
+    </unit>
+    <unit id="friends.already">
+      <segment state="initial">
+        <source>Ihr seid Freunde</source>
+        <target>Ihr seid Freunde</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

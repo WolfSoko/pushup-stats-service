@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +25,13 @@ import {
 import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
 import { formatExerciseTotal } from './exercise-total.format';
 import { PublicProfileApiService } from '@pu-stats/data-access';
-import { type ProfileSection, type PublicProfile } from '@pu-stats/models';
+import {
+  nextSectionVisibility,
+  withSectionVisibility,
+  type ProfileSection,
+  type ProfileSectionVisibility,
+  type PublicProfile,
+} from '@pu-stats/models';
 import { PublicProfileSeo } from './public-profile-seo';
 import {
   buildExerciseGroups,
@@ -33,7 +39,6 @@ import {
   type ExerciseGroup,
   type HeatmapRow,
 } from './profile-view.model';
-import { withSectionVisible } from './profile-visibility';
 import {
   EXERCISE_GROUP_LABELS,
   PROFILE_LABELS,
@@ -43,6 +48,7 @@ import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { InviteBannerComponent } from '../core/invite-banner.component';
 import { InviteService } from '../core/invite.service';
+import { FriendsStore } from '../friends/friends.store';
 
 type LoadState =
   | { kind: 'loading' }
@@ -96,21 +102,24 @@ export class PublicProfilePageComponent {
    * the signed-in owner, where the providers are there.
    */
   private readonly injector = inject(Injector);
+  private readonly router = inject(Router);
 
   protected readonly isOwner = computed(
     () => this.profile()?.viewerIsOwner === true
   );
 
   /**
-   * Local mirror of the opt-out list so a switch flips immediately
+   * Local mirror of the per-section levels so a switch moves immediately
    * instead of waiting for the round trip through Firestore and back.
    * Seeded from the server, and the server stays the authority.
    */
-  private readonly hiddenOverride = signal<ProfileSection[] | null>(null);
+  private readonly visibilityOverride = signal<Partial<
+    Record<ProfileSection, ProfileSectionVisibility>
+  > | null>(null);
 
-  protected readonly hidden = computed<ReadonlyArray<ProfileSection>>(
-    () => this.hiddenOverride() ?? this.profile()?.hidden ?? []
-  );
+  protected readonly visibility = computed<
+    Partial<Record<ProfileSection, ProfileSectionVisibility>>
+  >(() => this.visibilityOverride() ?? this.profile()?.visibility ?? {});
 
   /** Shows the page exactly as a visitor would get it. */
   protected readonly previewAsVisitor = signal(false);
@@ -132,8 +141,13 @@ export class PublicProfilePageComponent {
     () => this.isOwner() && this.profile()?.isPrivate === false
   );
 
+  /** Who may see this section. Defaults to friends-only, as the model does. */
+  protected levelOf(section: ProfileSection): ProfileSectionVisibility {
+    return this.visibility()[section] ?? 'friends';
+  }
+
   protected isVisible(section: ProfileSection): boolean {
-    return !this.hidden().includes(section);
+    return this.levelOf(section) !== 'off';
   }
 
   /**
@@ -148,18 +162,46 @@ export class PublicProfilePageComponent {
     return this.showControls() || (this.isVisible(section) && hasContent);
   }
 
-  protected async toggleSection(
-    section: ProfileSection,
-    visible: boolean
-  ): Promise<void> {
-    const next = withSectionVisible(this.hidden(), section, visible);
-    this.hiddenOverride.set(next);
+  protected visibilityIcon(section: ProfileSection): string {
+    const level = this.levelOf(section);
+    if (level === 'public') return 'public';
+    return level === 'friends' ? 'group' : 'visibility_off';
+  }
+
+  protected visibilityLabel(section: ProfileSection): string {
+    const level = this.levelOf(section);
+    if (level === 'public') return this.labels.visibilityPublic;
+    return level === 'friends'
+      ? this.labels.visibilityFriends
+      : this.labels.visibilityOff;
+  }
+
+  protected nextLabel(section: ProfileSection): string {
+    const next = nextSectionVisibility(this.levelOf(section));
+    if (next === 'public') return this.labels.visibilityNextPublic;
+    return next === 'friends'
+      ? this.labels.visibilityNextFriends
+      : this.labels.visibilityNextOff;
+  }
+
+  /**
+   * One tap moves a section to the next audience: public → friends → off →
+   * public. A cycle rather than three controls keeps the switch where it
+   * is — inline next to the value it governs — and the tooltip names both
+   * the current state and what the next tap does.
+   */
+  protected async cycleSection(section: ProfileSection): Promise<void> {
+    const next = nextSectionVisibility(this.levelOf(section));
+    const levels = withSectionVisibility(this.visibility(), section, next);
+    this.visibilityOverride.set(levels);
     const ui = this.configStore.config()?.ui ?? {};
-    // Spread the stored map rather than writing `{ profileHidden }` alone:
-    // whether a partial nested write keeps its siblings is exactly the
-    // question `docs/gotchas/firestore.md` says was never settled, and
+    // Spread the stored map rather than writing `{ profileVisibility }`
+    // alone: whether a partial nested write keeps its siblings is exactly
+    // the question `docs/gotchas/firestore.md` says was never settled, and
     // losing `publicProfile` here would silently unpublish the profile.
-    await this.configStore.save({ ui: { ...ui, profileHidden: next } });
+    await this.configStore.save({
+      ui: { ...ui, profileVisibility: levels },
+    });
   }
 
   protected readonly heatmapRows = computed<ReadonlyArray<HeatmapRow>>(() =>
@@ -222,6 +264,41 @@ export class PublicProfilePageComponent {
     if (uid) void this.load(uid);
   }
 
+  /**
+   * Offered to a signed-in visitor who is not already a friend. Anonymous
+   * visitors get nothing to click — a request needs an account on both
+   * ends.
+   */
+  /**
+   * Offered to anyone looking at someone else's profile they are not
+   * already friends with — signed in or not. Asking the auth stack here
+   * would drag it into a route that renders for anonymous visitors; an
+   * anonymous click is answered by the server and turned into a trip to
+   * the signup page, which is the better flow anyway.
+   */
+  protected readonly canAddFriend = computed(
+    () => !this.isOwner() && this.profile()?.viewerIsFriend !== true
+  );
+
+  protected readonly friendRequestSent = signal(false);
+
+  protected async addFriend(): Promise<void> {
+    const uid = this.profile()?.uid;
+    if (!uid) return;
+    const friends = this.injector.get(FriendsStore, null);
+    if (!friends) return;
+    const ok = await friends.requestFriend(uid);
+    if (ok) {
+      this.friendRequestSent.set(true);
+      return;
+    }
+    if (friends.lastRejection() === 'unauthenticated') {
+      void this.router.navigate(['/register'], {
+        queryParams: { returnUrl: `/u/${uid}` },
+      });
+    }
+  }
+
   protected inviteFriend(): void {
     void this.injector.get(InviteService, null)?.inviteFriend();
   }
@@ -243,7 +320,7 @@ export class PublicProfilePageComponent {
       }
       // Drop the local mirror: the server is the authority again, and a
       // stale override would survive a reload after a failed save.
-      this.hiddenOverride.set(null);
+      this.visibilityOverride.set(null);
       this.state.set({ kind: 'ready', profile });
       this.seo.apply(profile);
     } catch {
