@@ -150,7 +150,14 @@ export interface TrainingPlan {
   days: ReadonlyArray<TrainingPlanDay>;
 }
 
-export type TrainingPlanStatus = 'active' | 'completed' | 'abandoned';
+/**
+ * `paused` is an active plan on hold: the document keeps every bit of
+ * progress, but the plan stops advancing through its days and stops
+ * driving the user's goals until they resume it
+ * (see `training-plan-pause.models.ts`).
+ */
+export type TrainingPlanStatus =
+  'active' | 'paused' | 'completed' | 'abandoned';
 
 /**
  * Per-user state for an activated plan. Stored at
@@ -215,6 +222,18 @@ export interface UserTrainingPlan {
    * sees the plan's catalog numbers unchanged.
    */
   testResults?: string[];
+  /**
+   * ISO timestamp of the moment the user paused the plan, absent while it
+   * runs. Shown on the plan page so a long break is visible as such.
+   */
+  pausedAt?: string;
+  /**
+   * The 1-based day the plan is frozen on while paused. `startDate` is
+   * deliberately left untouched during the break — it is re-anchored on
+   * resume so this day becomes today again, which is also what keeps the
+   * day's logged entries attached to the date they happened on.
+   */
+  pausedDayIndex?: number;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -229,6 +248,8 @@ export type UserTrainingPlanUpdate = Partial<
     | 'skippedDays'
     | 'completedItems'
     | 'testResults'
+    | 'pausedAt'
+    | 'pausedDayIndex'
   >
 >;
 

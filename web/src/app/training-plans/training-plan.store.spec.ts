@@ -16,6 +16,7 @@ import {
   PushupCreate,
   PushupRecord,
   TrainingPlan,
+  TrainingPlanDay,
   TRAINING_PLANS,
   UserTrainingPlan,
 } from '@pu-stats/models';
@@ -233,6 +234,8 @@ interface Mocks {
     addSkippedDay: ReturnType<typeof vitest.fn>;
     removeSkippedDay: ReturnType<typeof vitest.fn>;
     jumpToDay: ReturnType<typeof vitest.fn>;
+    pausePlan: ReturnType<typeof vitest.fn>;
+    resumePlan: ReturnType<typeof vitest.fn>;
     setTestResult: ReturnType<typeof vitest.fn>;
     removeTestResult: ReturnType<typeof vitest.fn>;
     parkPlan: ReturnType<typeof vitest.fn>;
@@ -416,6 +419,32 @@ describe('TrainingPlanStore', () => {
             return of(void 0);
           }
         ),
+        // Mirrors the production write: the pause marks land, `startDate`
+        // is deliberately left alone.
+        pausePlan: vitest.fn((_uid: string, dayIndex: number) => {
+          const cur = mocks.current as UserTrainingPlan;
+          mocks.current = {
+            ...cur,
+            status: 'paused',
+            pausedAt: new Date().toISOString(),
+            pausedDayIndex: dayIndex,
+          };
+          stream.next(mocks.current);
+          return of(void 0);
+        }),
+        // Mirrors the production write, including the field deletions: a
+        // resumed plan carries no pause marks.
+        resumePlan: vitest.fn((_uid: string, newStartDate: string | null) => {
+          const cur = mocks.current as UserTrainingPlan;
+          const next = { ...cur, status: 'active' as const };
+          delete next.pausedAt;
+          delete next.pausedDayIndex;
+          if (newStartDate) next.startDate = newStartDate;
+          next.dayActivatedAt = new Date().toISOString();
+          mocks.current = next;
+          stream.next(mocks.current);
+          return of(void 0);
+        }),
         // Mirrors the production transaction: the day's previous result is
         // dropped before the new one lands, so a revision replaces it.
         setTestResult: vitest.fn(
@@ -2516,6 +2545,227 @@ describe('TrainingPlanStore', () => {
       // then
       expect(discarded).toBe(false);
       expect(mocks.apiMock.removeTestResult).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('pausing', () => {
+    /** A plan whose day 5 maps to today. */
+    function planOnDay5(): UserTrainingPlan {
+      return {
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate: toBerlinIsoDate(new Date(Date.now() - 4 * 86_400_000)),
+        status: 'active',
+        completedDays: [1, 2, 3, 4],
+      };
+    }
+
+    it('should freeze the plan on the day the user is on', async () => {
+      // given
+      const { store, mocks } = setup(planOnDay5());
+      await flush();
+      expect(store.currentDayIndex()).toBe(5);
+
+      // when
+      await store.pause();
+      await flush();
+
+      // then
+      expect(mocks.apiMock.pausePlan).toHaveBeenCalledWith('u1', 5);
+      expect(store.hasActivePlan()).toBe(false);
+      expect(store.hasPausedPlan()).toBe(true);
+      expect(store.currentDayIndex()).toBe(5);
+    });
+
+    it('should keep reporting the frozen day however long the break lasts', async () => {
+      // given — paused on day 5 eight days ago
+      const { store } = setup({
+        ...planOnDay5(),
+        startDate: toBerlinIsoDate(new Date(Date.now() - 12 * 86_400_000)),
+        status: 'paused',
+        pausedAt: new Date(Date.now() - 8 * 86_400_000).toISOString(),
+        pausedDayIndex: 5,
+      });
+
+      // when
+      await flush();
+
+      // then — without the freeze the calendar would have moved on to day 13
+      expect(store.currentDayIndex()).toBe(5);
+      expect(store.todayDay()?.dayIndex).toBe(5);
+    });
+
+    it('should not touch the start date while paused', async () => {
+      // given
+      const { store, mocks } = setup(planOnDay5());
+      await flush();
+      const startDate = store.activePlan()?.startDate;
+
+      // when
+      await store.pause();
+      await flush();
+
+      // then — completed days keep pointing at the dates they happened on
+      expect(store.activePlan()?.startDate).toBe(startDate);
+      expect(mocks.apiMock.jumpToDay).not.toHaveBeenCalled();
+    });
+
+    it('should keep every bit of progress through the pause', async () => {
+      // given
+      const { store } = setup({
+        ...planOnDay5(),
+        completedItems: ['5:0'],
+        testResults: ['1:0:22'],
+      });
+      await flush();
+
+      // when
+      await store.pause();
+      await flush();
+
+      // then
+      expect(store.activePlan()?.completedDays).toEqual([1, 2, 3, 4]);
+      expect(store.activePlan()?.completedItems).toEqual(['5:0']);
+      expect(store.activePlan()?.testResults).toEqual(['1:0:22']);
+      expect(store.completionPercent()).toBeGreaterThan(0);
+    });
+
+    it('should resume at the frozen day, whatever the break cost in calendar days', async () => {
+      // given — paused on day 5, ten days ago
+      const { store, mocks } = setup({
+        ...planOnDay5(),
+        startDate: toBerlinIsoDate(new Date(Date.now() - 14 * 86_400_000)),
+        status: 'paused',
+        pausedAt: new Date(Date.now() - 10 * 86_400_000).toISOString(),
+        pausedDayIndex: 5,
+      });
+      await flush();
+
+      // when
+      await store.resume();
+      await flush();
+
+      // then
+      expect(mocks.apiMock.resumePlan).toHaveBeenCalled();
+      expect(store.hasActivePlan()).toBe(true);
+      expect(store.currentDayIndex()).toBe(5);
+      expect(store.activePlan()?.pausedAt).toBeUndefined();
+      expect(store.activePlan()?.pausedDayIndex).toBeUndefined();
+    });
+
+    it('should refuse to pause a plan that is not running', async () => {
+      // given
+      const { store, mocks } = setup({
+        ...planOnDay5(),
+        status: 'paused',
+        pausedDayIndex: 5,
+      });
+      await flush();
+
+      // when
+      await store.pause();
+
+      // then
+      expect(mocks.apiMock.pausePlan).not.toHaveBeenCalled();
+    });
+
+    it('should refuse to resume a plan that is not paused', async () => {
+      // given
+      const { store, mocks } = setup(planOnDay5());
+      await flush();
+
+      // when
+      await store.resume();
+
+      // then
+      expect(mocks.apiMock.resumePlan).not.toHaveBeenCalled();
+    });
+
+    it('should not auto-mark days while the plan is paused', async () => {
+      // given — the frozen day's target is covered by logged entries. Needs a
+      // browser PLATFORM_ID for the auto-mark effect to run at all, so this
+      // builds its own harness like the other auto-mark tests.
+      const day5 = PLAN.days.find((d) => d.dayIndex === 5) as TrainingPlanDay;
+      const startDate = toBerlinIsoDate(new Date(Date.now() - 4 * 86_400_000));
+      const initial: UserTrainingPlan = {
+        userId: 'u1',
+        planId: PLAN.id,
+        startDate,
+        status: 'paused',
+        completedDays: [],
+        pausedDayIndex: 5,
+      };
+      const stream = new BehaviorSubject<UserTrainingPlan | null>(initial);
+      const addCompletedDay = vitest.fn(() => of(void 0));
+      const entries = signal<ExerciseEntry[]>([
+        {
+          _id: 'e1',
+          userId: 'u1',
+          exerciseId: 'pushup',
+          timestamp: appendLocalOffset(`${planDayDateIso(startDate, 5)}T12:00`),
+          reps: day5.targetReps,
+          source: 'manual',
+        } as ExerciseEntry,
+      ]);
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: PLATFORM_ID, useValue: 'browser' },
+          {
+            provide: UserTrainingPlanApiService,
+            useValue: {
+              getActivePlan: vitest.fn(() => stream.asObservable()),
+              addCompletedDay,
+            },
+          },
+          { provide: StatsApiService, useValue: { createPushup: vitest.fn() } },
+          {
+            provide: ExerciseFirestoreService,
+            useValue: { createEntry: vitest.fn() },
+          },
+          {
+            provide: LiveDataStore,
+            useValue: {
+              exerciseEntries: entries,
+              connected: signal(true),
+              exerciseEntriesLoaded: signal(true),
+              updateTick: signal(0),
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => 'u1' },
+          },
+        ],
+      });
+      const store = TestBed.inject(TrainingPlanStore);
+
+      // when
+      await flush();
+
+      // then — the same day would be auto-marked on a running plan
+      expect(store.currentDayIndex()).toBe(5);
+      expect(addCompletedDay).not.toHaveBeenCalled();
+      TestBed.resetTestingModule();
+    });
+
+    it('should park a paused plan at its frozen day when switching away', async () => {
+      // given — paused on day 5, the calendar has since run to day 13
+      const { store, mocks } = setup({
+        ...planOnDay5(),
+        startDate: toBerlinIsoDate(new Date(Date.now() - 12 * 86_400_000)),
+        status: 'paused',
+        pausedDayIndex: 5,
+      });
+      await flush();
+
+      // when
+      await store.start('recruit-6w-v1', { keepCurrentProgress: true });
+      await flush();
+
+      // then
+      expect(mocks.parked.get(PLAN.id)?.dayIndex).toBe(5);
     });
   });
 

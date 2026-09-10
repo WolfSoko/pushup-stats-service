@@ -12407,5 +12407,59 @@ Deine Position: # ·  Reps        </source>
         <target> Erinnerungen pausieren, wenn das Ziel erreicht ist </target>
       </segment>
     </unit>
+    <unit id="trainingPlans.paused.title">
+      <segment state="initial">
+        <source> Pausierter Plan </source>
+        <target> Pausierter Plan </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.onResumePlanned">
+      <segment state="initial">
+        <source>Beim Fortsetzen:</source>
+        <target>Beim Fortsetzen:</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resume">
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.pause">
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </source>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.paused">
+      <segment state="initial">
+        <source>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</source>
+        <target>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resumedAtDay">
+      <segment state="initial">
+        <source>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</source>
+        <target>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.pausedAtDay">
+      <segment state="initial">
+        <source>Pausiert bei Tag:</source>
+        <target>Pausiert bei Tag:</target>
+      </segment>
+    </unit>
+        <unit id="trainingPlans.pausedHint">
+      <segment state="initial">
+        <source> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </source>
+        <target> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.pausedSince">
+      <segment state="initial">
+        <source>Pausiert seit</source>
+        <target>Pausiert seit</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

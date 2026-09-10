@@ -62,7 +62,7 @@
       </mat-chip>
     </mat-chip-set>
 
-    @if (isThisPlanActive()) {
+    @if (isThisPlanStarted()) {
       <mat-card class="status-card">
         <mat-card-content>
           <div class="progress-row">
@@ -75,22 +75,45 @@
           />
           @if (store.currentDayIndex(); as idx) {
             <p class="muted current-day">
-              <span i18n="@@trainingPlans.currentDay">Aktueller Tag:</span>
+              @if (isThisPlanPaused()) {
+                <span i18n="@@trainingPlans.pausedAtDay"
+                  >Pausiert bei Tag:</span
+                >
+              } @else {
+                <span i18n="@@trainingPlans.currentDay">Aktueller Tag:</span>
+              }
               {{ idx }} / {{ p.totalDays }}
             </p>
           }
-          <p class="muted goal-hint">
-            <mat-icon aria-hidden="true">flag</mat-icon>
-            <span i18n="@@trainingPlans.goalOverrideHint">
-              Tagesziel wird vom Plan gesetzt.
-            </span>
-            <a
-              routerLink="/settings"
-              fragment="targets"
-              i18n="@@trainingPlans.goalOverrideHint.cta"
-              >Manuelle Ziele anpassen</a
-            >
-          </p>
+          @if (isThisPlanPaused()) {
+            <p class="muted goal-hint">
+              <mat-icon aria-hidden="true">pause_circle</mat-icon>
+              <span i18n="@@trainingPlans.pausedHint">
+                Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes
+                Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag
+                weiter.
+              </span>
+            </p>
+            @if (pausedAt(); as since) {
+              <p class="muted paused-since">
+                <span i18n="@@trainingPlans.pausedSince">Pausiert seit</span>
+                {{ since | date: 'mediumDate' }}
+              </p>
+            }
+          } @else {
+            <p class="muted goal-hint">
+              <mat-icon aria-hidden="true">flag</mat-icon>
+              <span i18n="@@trainingPlans.goalOverrideHint">
+                Tagesziel wird vom Plan gesetzt.
+              </span>
+              <a
+                routerLink="/settings"
+                fragment="targets"
+                i18n="@@trainingPlans.goalOverrideHint.cta"
+                >Manuelle Ziele anpassen</a
+              >
+            </p>
+          }
         </mat-card-content>
         <mat-card-actions align="end">
           <button
@@ -102,6 +125,26 @@
             <mat-icon>cancel</mat-icon>
             Plan beenden
           </button>
+          @if (isThisPlanPaused()) {
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="resume()"
+              i18n="@@trainingPlans.resume"
+            >
+              <mat-icon>play_arrow</mat-icon>
+              Plan fortsetzen
+            </button>
+          } @else {
+            <button
+              mat-stroked-button
+              (click)="pause()"
+              i18n="@@trainingPlans.pause"
+            >
+              <mat-icon>pause</mat-icon>
+              Plan pausieren
+            </button>
+          }
         </mat-card-actions>
       </mat-card>
     } @else if (authResolved()) {

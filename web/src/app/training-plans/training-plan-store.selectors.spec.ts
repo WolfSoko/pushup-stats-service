@@ -4,6 +4,7 @@ import {
   isDayDone,
   isDaySkipped,
   isPlanActive,
+  isPlanPaused,
 } from './training-plan-store.selectors';
 
 const plan: UserTrainingPlan = {
@@ -114,5 +115,34 @@ describe('isPlanActive', () => {
   it('should not hold without a plan', () => {
     // given / when / then
     expect(isPlanActive(null, active)).toBe(false);
+  });
+});
+
+describe('isPlanPaused', () => {
+  it('should be true for the paused plan the user is looking at', () => {
+    // given
+    const paused: UserTrainingPlan = { ...plan, status: 'paused' };
+
+    // when / then
+    expect(isPlanPaused({ id: 'p' }, paused)).toBe(true);
+  });
+
+  it('should be false for a running plan', () => {
+    // when / then
+    expect(isPlanPaused({ id: 'p' }, plan)).toBe(false);
+  });
+
+  it('should be false for a different plan being paused', () => {
+    // given
+    const paused: UserTrainingPlan = { ...plan, status: 'paused' };
+
+    // when / then
+    expect(isPlanPaused({ id: 'other' }, paused)).toBe(false);
+  });
+
+  it('should be false without a plan on either side', () => {
+    // when / then
+    expect(isPlanPaused(null, { ...plan, status: 'paused' })).toBe(false);
+    expect(isPlanPaused({ id: 'p' }, null)).toBe(false);
   });
 });

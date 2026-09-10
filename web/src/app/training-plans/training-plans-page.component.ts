@@ -10,11 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@pu-auth/auth';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
+import { ActivePlanCardComponent } from './active-plan-card.component';
+import { PlanPauseService } from './plan-pause.service';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 @Component({
@@ -24,8 +25,8 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
-    MatProgressBarModule,
     MatSnackBarModule,
+    ActivePlanCardComponent,
     PageHeaderComponent,
     RouterLink,
   ],
@@ -79,91 +80,18 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
       }
 
       @if (activeView(); as active) {
-        <mat-card class="active-plan">
-          <mat-card-header>
-            <mat-card-title i18n="@@trainingPlans.active.title">
-              Aktiver Plan
-            </mat-card-title>
-            <mat-card-subtitle>{{ active.title }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p class="muted">{{ active.summary }}</p>
-
-            @if (store.currentDayIndex(); as idx) {
-              <div class="progress-row">
-                <span i18n="@@trainingPlans.day">Tag</span>
-                <strong>{{ idx }} / {{ active.totalDays }}</strong>
-              </div>
-              <mat-progress-bar
-                mode="determinate"
-                [value]="store.completionPercent()"
-              />
-            }
-
-            @if (todayLocalized(); as today) {
-              <div class="today-card">
-                <div class="today-kind">
-                  @if (today.kind === 'rest') {
-                    <mat-icon>self_improvement</mat-icon>
-                    <span i18n="@@trainingPlans.kind.rest">Ruhetag</span>
-                  } @else if (today.kind === 'light') {
-                    <mat-icon>directions_walk</mat-icon>
-                    <span i18n="@@trainingPlans.kind.light">Leichter Tag</span>
-                  } @else if (today.kind === 'test') {
-                    <mat-icon>local_fire_department</mat-icon>
-                    <span i18n="@@trainingPlans.kind.test">Maximaltest</span>
-                  } @else {
-                    <mat-icon>fitness_center</mat-icon>
-                    <span i18n="@@trainingPlans.kind.main">Trainingstag</span>
-                  }
-                </div>
-                @if (today.targetReps > 0) {
-                  <div class="today-target">
-                    <span i18n="@@trainingPlans.todayTarget"
-                      >Heute geplant:</span
-                    >
-                    <strong>{{ today.targetReps }}</strong>
-                    <span i18n="@@trainingPlans.reps">Wdh.</span>
-                  </div>
-                }
-                <p class="muted today-desc">{{ today.description }}</p>
-              </div>
-            }
-          </mat-card-content>
-          <mat-card-actions align="end">
-            <button
-              mat-stroked-button
-              type="button"
-              color="warn"
-              (click)="abandon()"
-              i18n="@@trainingPlans.abandon"
-            >
-              <mat-icon>cancel</mat-icon>
-              Plan beenden
-            </button>
-            @if (todayLocalized(); as today) {
-              @if (
-                today.kind !== 'rest' &&
-                today.targetReps > 0 &&
-                !store.todayDone()
-              ) {
-                <button
-                  mat-flat-button
-                  type="button"
-                  color="primary"
-                  (click)="logToday()"
-                >
-                  <mat-icon>play_circle</mat-icon>
-                  <span i18n="@@trainingPlans.logToday">Heute eintragen</span>
-                </button>
-              }
-            }
-            <a mat-flat-button [routerLink]="['/training-plans', active.slug]">
-              <mat-icon>open_in_full</mat-icon>
-              <span i18n="@@trainingPlans.openDetail">Details öffnen</span>
-            </a>
-          </mat-card-actions>
-        </mat-card>
+        <app-active-plan-card
+          [view]="active"
+          [paused]="store.hasPausedPlan()"
+          [dayIndex]="store.currentDayIndex()"
+          [completionPercent]="store.completionPercent()"
+          [today]="todayLocalized()"
+          [todayDone]="store.todayDone()"
+          (abandon)="abandon()"
+          (pausePlan)="pause()"
+          (resumePlan)="resume()"
+          (logToday)="logToday()"
+        />
       }
 
       <section class="plan-grid">
@@ -242,41 +170,6 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
       :host-context(.dark-theme) .muted {
         color: rgba(255, 255, 255, 0.6);
       }
-      .active-plan {
-        margin-bottom: 24px;
-        border-left: 4px solid var(--mat-sys-primary, #3f51b5);
-      }
-      .progress-row {
-        display: flex;
-        gap: 8px;
-        align-items: baseline;
-        margin: 12px 0 4px;
-      }
-      .today-card {
-        margin-top: 16px;
-        padding: 12px 16px;
-        border-radius: 8px;
-        background: rgba(0, 0, 0, 0.04);
-      }
-      :host-context(.dark-theme) .today-card {
-        background: rgba(255, 255, 255, 0.05);
-      }
-      .today-kind {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 500;
-      }
-      .today-target {
-        margin-top: 8px;
-        font-size: 1.2rem;
-        display: flex;
-        gap: 6px;
-        align-items: baseline;
-      }
-      .today-desc {
-        margin: 6px 0 0;
-      }
       .plan-grid {
         display: grid;
         gap: 16px;
@@ -330,6 +223,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 export class TrainingPlansPageComponent {
   readonly store = inject(TrainingPlanStore);
   private readonly snackbar = inject(MatSnackBar);
+  private readonly planPause = inject(PlanPauseService);
   private readonly authStore = inject(AuthStore);
 
   readonly isAuthenticated = this.authStore.isAuthenticated;
@@ -355,10 +249,14 @@ export class TrainingPlansPageComponent {
     this.failedImages.update((set) => new Set(set).add(id));
   }
 
-  /** Active plan card view-model — null when no plan is active. */
+  /**
+   * Plan card view-model — null when the user has no plan. A paused plan
+   * still gets the card: it is where they come back to resume it.
+   */
   readonly activeView = computed(() => {
     const cat = this.store.activeCatalog();
-    if (!cat || !this.store.hasActivePlan()) return null;
+    if (!cat) return null;
+    if (!this.store.hasActivePlan() && !this.store.hasPausedPlan()) return null;
     return {
       slug: cat.slug,
       title: cat.title,
@@ -374,6 +272,14 @@ export class TrainingPlansPageComponent {
 
   abandon(): void {
     void this.store.abandon();
+  }
+
+  pause(): void {
+    void this.planPause.pause();
+  }
+
+  resume(): void {
+    void this.planPause.resume();
   }
 
   async logToday(): Promise<void> {

@@ -2,6 +2,7 @@ import { firstValueFrom } from 'rxjs';
 import {
   currentPlanDayIndex,
   parkedFrom,
+  pausedPlanDayIndex,
   parsePlanDayItemId,
   planDayByIndex,
   planHasProgress,
@@ -55,7 +56,7 @@ async function handleOutgoingPlan(
   }
   if (!planHasProgress(current)) return;
   const catalog = store._findPlanById(current.planId);
-  const dayIndex =
+  const calendarDay =
     (catalog &&
       currentPlanDayIndex(
         catalog,
@@ -63,6 +64,10 @@ async function handleOutgoingPlan(
         toBerlinIsoDate(new Date())
       )) ||
     1;
+  // A paused plan's `startDate` has kept running through the break, so its
+  // frozen day — not the calendar — is the day to park.
+  const dayIndex =
+    pausedPlanDayIndex(current, catalog?.totalDays ?? 0) ?? calendarDay;
   await firstValueFrom(
     store._api.parkPlan(userId, parkedFrom(current, dayIndex))
   );

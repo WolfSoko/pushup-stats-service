@@ -25,14 +25,15 @@ export class PlanStartService {
   private readonly switchDialog = inject(PlanSwitchDialogService);
 
   /**
-   * Whether replacing the active plan would cost the user progress.
+   * Whether replacing the current plan would cost the user progress.
    * Re-starting the plan already running is not a switch, and a plan with
-   * nothing recorded has nothing at stake worth a dialog.
+   * nothing recorded has nothing at stake worth a dialog. A paused plan
+   * counts: the user set it aside to come back to it.
    */
   private switchWouldCostProgress(planId: string): boolean {
     const active = this.store.activePlan();
     return (
-      this.store.hasActivePlan() &&
+      (this.store.hasActivePlan() || this.store.hasPausedPlan()) &&
       active !== null &&
       active.planId !== planId &&
       this.store.activePlanHasProgress()

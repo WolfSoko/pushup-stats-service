@@ -11069,8 +11069,8 @@
     <unit id="trainingPlans.day">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:77,78</note>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:59,60</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:8,9</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:94,95</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -11080,9 +11080,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:292,294</note>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:70,71</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:11,12</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:217,218</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:108,109</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:258,259</note>
       </notes>
       <segment>
         <source>Ruhetag</source>
@@ -11091,9 +11091,9 @@
     <unit id="trainingPlans.kind.light">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:83,84</note>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:73,74</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:13,14</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:221,222</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:111,112</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:262,263</note>
       </notes>
       <segment>
         <source>Leichter Tag</source>
@@ -11102,9 +11102,9 @@
     <unit id="trainingPlans.kind.test">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:76,78</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:15,16</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:219,220</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:114,116</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:260,261</note>
       </notes>
       <segment>
         <source>Maximaltest</source>
@@ -11114,11 +11114,11 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,90</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:305,307</note>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:92,94</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:18,20</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:226,227</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:232,233</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:267,268</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:273,274</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.exercises.ts:19</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:126,128</note>
       </notes>
       <segment>
         <source>Wdh.</source>
@@ -11128,7 +11128,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,103</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:59,62</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:300,302</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:341,343</note>
       </notes>
       <segment>
         <source>Session starten</source>
@@ -11137,7 +11137,7 @@
     <unit id="trainingPlans.openDetail">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:109,111</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:163,165</note>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:147,149</note>
       </notes>
       <segment>
         <source> Details öffnen </source>
@@ -11396,6 +11396,81 @@
         <source>Teilen</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.paused.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:45,47</note>
+      </notes>
+      <segment>
+        <source> Pausierter Plan </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.active.title">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:49,51</note>
+      </notes>
+      <segment>
+        <source> Aktiver Plan </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.kind.main">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:79,81</note>
+      </notes>
+      <segment>
+        <source>Trainingstag</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.onResumePlanned">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:86,88</note>
+      </notes>
+      <segment>
+        <source>Beim Fortsetzen:</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.todayTarget">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:89,91</note>
+      </notes>
+      <segment>
+        <source>Heute geplant:</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.abandon">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:107,109</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:123,125</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resume">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:118,120</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:133,135</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.pause">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:128,130</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:142,144</note>
+      </notes>
+      <segment>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.logToday">
+      <notes>
+        <note category="location">web/src/app/training-plans/active-plan-card.component.ts:140,142</note>
+      </notes>
+      <segment>
+        <source>Heute eintragen</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.skipped">
       <notes>
         <note category="location">web/src/app/training-plans/plan-day-actions.service.ts:33</note>
@@ -11468,9 +11543,25 @@
         <source>Übung zurücksetzen</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.paused">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-pause.service.ts:26</note>
+      </notes>
+      <segment>
+        <source>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.resumedAtDay">
+      <notes>
+        <note category="location">web/src/app/training-plans/plan-pause.service.ts:37</note>
+      </notes>
+      <segment>
+        <source>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.started">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-start.service.ts:70</note>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:71</note>
       </notes>
       <segment>
         <source>Plan gestartet — viel Erfolg!</source>
@@ -11478,7 +11569,7 @@
     </unit>
     <unit id="trainingPlans.resumed">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-start.service.ts:79</note>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:80</note>
       </notes>
       <segment>
         <source>Plan bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> fortgesetzt.</source>
@@ -11486,7 +11577,7 @@
     </unit>
     <unit id="trainingPlans.resumeUndo">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-start.service.ts:80</note>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:81</note>
       </notes>
       <segment>
         <source>Von vorn beginnen</source>
@@ -11494,7 +11585,7 @@
     </unit>
     <unit id="trainingPlans.restarted">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-start.service.ts:94</note>
+        <note category="location">web/src/app/training-plans/plan-start.service.ts:95</note>
       </notes>
       <segment>
         <source>Plan von vorn begonnen.</source>
@@ -12048,7 +12139,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:43</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:425,429</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:466,470</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -12057,7 +12148,7 @@
     <unit id="trainingPlans.daysSuffix">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:52,54</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:193,195</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:121,123</note>
       </notes>
       <segment>
         <source>Tage</source>
@@ -12066,7 +12157,7 @@
     <unit id="trainingPlans.level.beginner">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:56,57</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:198,200</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:126,128</note>
       </notes>
       <segment>
         <source>Einsteiger</source>
@@ -12075,7 +12166,7 @@
     <unit id="trainingPlans.level.intermediate">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:58,60</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:202,204</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:130,132</note>
       </notes>
       <segment>
         <source>Mittelstufe</source>
@@ -12084,7 +12175,7 @@
     <unit id="trainingPlans.level.advanced">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:60,63</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:206,208</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:134,136</note>
       </notes>
       <segment>
         <source>Fortgeschritten</source>
@@ -12098,17 +12189,41 @@
         <source>Fortschritt</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.pausedAtDay">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:79,81</note>
+      </notes>
+      <segment>
+        <source>Pausiert bei Tag:</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.currentDay">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:78,79</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:81,83</note>
       </notes>
       <segment>
         <source>Aktueller Tag:</source>
       </segment>
     </unit>
+    <unit id="trainingPlans.pausedHint">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:90,92</note>
+      </notes>
+      <segment>
+        <source> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </source>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.pausedSince">
+      <notes>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:97,98</note>
+      </notes>
+      <segment>
+        <source>Pausiert seit</source>
+      </segment>
+    </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:85,87</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:105,107</note>
       </notes>
       <segment>
         <source> Tagesziel wird vom Plan gesetzt. </source>
@@ -12116,24 +12231,15 @@
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:91,94</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:111,115</note>
       </notes>
       <segment>
         <source>Manuelle Ziele anpassen</source>
       </segment>
     </unit>
-    <unit id="trainingPlans.abandon">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:102,104</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:141,143</note>
-      </notes>
-      <segment>
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
-      </segment>
-    </unit>
     <unit id="trainingPlans.startCta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:112,114</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:153,155</note>
       </notes>
       <segment>
         <source> Starte den Plan und das Tagesziel im Dashboard wird automatisch nach diesem Plan gesetzt. </source>
@@ -12141,7 +12247,7 @@
     </unit>
     <unit id="trainingPlans.signupCta">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:117,119</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:158,160</note>
       </notes>
       <segment>
         <source> Erstelle ein kostenloses Konto, um diesen Plan zu starten. Wir tracken deinen Fortschritt automatisch und setzen dein Tagesziel passend zum Plan. </source>
@@ -12149,7 +12255,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.tracking">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:123,125</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:164,166</note>
       </notes>
       <segment>
         <source> Automatische Fortschrittsverfolgung </source>
@@ -12157,7 +12263,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.goal">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:126,128</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:167,169</note>
       </notes>
       <segment>
         <source> Tagesziel passt sich täglich an deinen Plan an </source>
@@ -12165,7 +12271,7 @@
     </unit>
     <unit id="trainingPlans.signupBenefit.streak">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:129,131</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:170,172</note>
       </notes>
       <segment>
         <source> Streaks, Statistiken und Bestenliste </source>
@@ -12173,7 +12279,7 @@
     </unit>
     <unit id="trainingPlans.replaceWarn">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:138,140</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:179,181</note>
       </notes>
       <segment>
         <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
@@ -12181,7 +12287,7 @@
     </unit>
     <unit id="trainingPlans.start">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:144,146</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:185,187</note>
       </notes>
       <segment>
         <source>Plan starten</source>
@@ -12189,7 +12295,7 @@
     </unit>
     <unit id="trainingPlans.signupAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:155,158</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:196,199</note>
       </notes>
       <segment>
         <source>Konto erstellen &amp; Plan starten</source>
@@ -12197,7 +12303,7 @@
     </unit>
     <unit id="trainingPlans.loginAndStart">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:163,166</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:204,207</note>
       </notes>
       <segment>
         <source>Schon Konto? Einloggen</source>
@@ -12205,7 +12311,7 @@
     </unit>
     <unit id="trainingPlans.week">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:187,188</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:228,229</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -12213,7 +12319,7 @@
     </unit>
     <unit id="trainingPlans.checkoffHint">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:261,263</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:302,304</note>
       </notes>
       <segment>
         <source>Intervall-Tag — Übungen einzeln abhaken.</source>
@@ -12221,7 +12327,7 @@
     </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:331,332</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:372,373</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -12229,7 +12335,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:351,353</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:392,394</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -12237,7 +12343,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:361,363</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:402,404</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
@@ -12245,7 +12351,7 @@
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:372,374</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:413,415</note>
       </notes>
       <segment>
         <source>Alle Übungen eintragen &amp; abhaken</source>
@@ -12253,7 +12359,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:382,384</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:423,425</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -12261,7 +12367,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:391,393</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:432,434</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -12269,7 +12375,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:403,405</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:444,446</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -12277,7 +12383,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:422,423</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:463,464</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -12285,7 +12391,7 @@
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:170</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:189</note>
       </notes>
       <segment>
         <source>Tagesdetails ein-/ausklappen</source>
@@ -12293,7 +12399,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:205</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:232</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -12318,7 +12424,7 @@
     <unit id="trainingPlans.logged">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:245</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:390</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:296</note>
       </notes>
       <segment>
         <source>Plan-Sätze wurden eingetragen.</source>
@@ -12327,7 +12433,7 @@
     <unit id="trainingPlans.alreadyLogged">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:247</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:392</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:298</note>
       </notes>
       <segment>
         <source>Tag war schon eingetragen — als erledigt markiert.</source>
@@ -12338,7 +12444,7 @@
         <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:249</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:266</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:285</note>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:394</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:300</note>
       </notes>
       <segment>
         <source>Daten werden noch geladen, bitte gleich noch einmal versuchen.</source>
@@ -12386,7 +12492,7 @@
     </unit>
     <unit id="trainingPlans.title">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:36,37</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:37,38</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -12394,7 +12500,7 @@
     </unit>
     <unit id="trainingPlans.intro">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:38,41</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:39,42</note>
       </notes>
       <segment>
         <source> Strukturierte Pläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung. Starte einen Plan, und dein Tagesziel im Dashboard wird automatisch gesetzt. </source>
@@ -12402,7 +12508,7 @@
     </unit>
     <unit id="trainingPlans.banner.title">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:51,53</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:52,54</note>
       </notes>
       <segment>
         <source> Plan auswählen, Konto erstellen, durchstarten </source>
@@ -12410,7 +12516,7 @@
     </unit>
     <unit id="trainingPlans.banner.body">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:54,56</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:55,57</note>
       </notes>
       <segment>
         <source> Suche dir unten einen Plan aus. Mit einem kostenlosen Konto tracken wir deinen Fortschritt automatisch und passen dein Tagesziel an den gewählten Plan an. </source>
@@ -12418,7 +12524,7 @@
     </unit>
     <unit id="trainingPlans.banner.login">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:67,70</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:68,71</note>
       </notes>
       <segment>
         <source>Einloggen</source>
@@ -12426,47 +12532,15 @@
     </unit>
     <unit id="trainingPlans.banner.signup">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:75,77</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:76,78</note>
       </notes>
       <segment>
         <source>Kostenlos registrieren</source>
       </segment>
     </unit>
-    <unit id="trainingPlans.active.title">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:85,86</note>
-      </notes>
-      <segment>
-        <source> Aktiver Plan </source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.kind.main">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:117,119</note>
-      </notes>
-      <segment>
-        <source>Trainingstag</source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.todayTarget">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:123,125</note>
-      </notes>
-      <segment>
-        <source>Heute geplant:</source>
-      </segment>
-    </unit>
-    <unit id="trainingPlans.logToday">
-      <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:157,159</note>
-      </notes>
-      <segment>
-        <source>Heute eintragen</source>
-      </segment>
-    </unit>
     <unit id="trainingPlans.viewPlan">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:222,224</note>
+        <note category="location">web/src/app/training-plans/training-plans-page.component.ts:150,152</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>

@@ -22,6 +22,8 @@ import {
   currentPlanDayIndex,
   findPlanById,
   isPlanCompleted,
+  isPausedPlan,
+  pausedPlanDayIndex,
   planDayByIndex,
   PlanExerciseProgress,
   planHasProgress,
@@ -43,6 +45,7 @@ import {
 import * as actions from './training-plan-store.actions';
 import * as items from './training-plan-store.items';
 import * as lifecycle from './training-plan-store.lifecycle';
+import * as pause from './training-plan-store.pause';
 import { resetPlanExercise } from './training-plan-store.reset';
 import { clearTestResult, recordTestResult } from './training-plan-store.tests';
 import { dayProgress } from './training-plan-store.internals';
@@ -155,11 +158,17 @@ export const TrainingPlanStore = signalStore(
       return toBerlinIsoDate(new Date());
     });
 
-    /** Current 1-based day for today, or null if not started/no plan. */
+    /**
+     * Current 1-based day for today, or null if not started/no plan.
+     * A paused plan reports the day it was frozen on — see
+     * `training-plan-pause.models.ts`.
+     */
     const currentDayIndex = computed<number | null>(() => {
       const a = activePlan();
       const c = activeCatalog();
       if (!a || !c) return null;
+      const frozen = pausedPlanDayIndex(a, c.totalDays);
+      if (frozen !== null) return frozen;
       return currentPlanDayIndex(c, a.startDate, today());
     });
 
@@ -217,6 +226,16 @@ export const TrainingPlanStore = signalStore(
     );
 
     /**
+     * A plan the user put on hold: still theirs, still holding every bit
+     * of progress, but not driving goals or accepting day writes. Same
+     * catalog-resolvable guard as `hasActivePlan` — a paused plan whose
+     * id no longer exists is nothing we can offer to resume.
+     */
+    const hasPausedPlan = computed(
+      () => isPausedPlan(activePlan()) && activeCatalog() !== null
+    );
+
+    /**
      * True once the Firestore listener for the active plan has emitted
      * at least one value (or resolved synchronously to `null` for
      * unauthenticated users). Distinguishes "we haven't heard yet" from
@@ -244,6 +263,7 @@ export const TrainingPlanStore = signalStore(
       activePlanHasProgress,
       isCompleted,
       hasActivePlan,
+      hasPausedPlan,
       activePlanLoaded,
     };
   }),
@@ -282,6 +302,10 @@ export const TrainingPlanStore = signalStore(
     jumpToDay: (targetDayIndex: number) =>
       lifecycle.jumpToDay(store, targetDayIndex),
     abandon: () => lifecycle.abandon(store),
+    /** Put the plan on hold on today's day; the break costs no plan days. */
+    pause: () => pause.pause(store),
+    /** Pick a paused plan back up at the day it was frozen on. */
+    resume: () => pause.resume(store),
     reload: () => store.activeResource.reload(),
   })),
   withHooks({
