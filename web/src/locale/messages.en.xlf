@@ -12461,5 +12461,35 @@ Deine Position: # ·  Reps        </source>
         <target>Pausiert seit</target>
       </segment>
     </unit>
+    <unit id="dashboard.share.moreExercises">
+      <segment state="initial">
+        <source>+<ph id="0" equiv="count" disp="rest"/> weitere</source>
+        <target>+<ph id="0" equiv="count" disp="rest"/> weitere</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.day.profile.streak">
+      <segment state="initial">
+        <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
+        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.day.profile.simple">
+      <segment state="initial">
+        <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</source>
+        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.day.streak">
+      <segment state="initial">
+        <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
+        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.share.day.simple">
+      <segment state="initial">
+        <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</source>
+        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

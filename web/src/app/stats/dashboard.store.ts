@@ -36,6 +36,10 @@ import {
   sumRepsInWeek,
 } from './dashboard/dashboard-math';
 import { buildShareDayPayload } from './dashboard/dashboard-share';
+import {
+  dayExerciseTotals,
+  formatDaySummary,
+} from './dashboard/dashboard-share-summary';
 
 export const DashboardStore = signalStore(
   withProps(() => ({
@@ -72,6 +76,20 @@ export const DashboardStore = signalStore(
         .exerciseEntries()
         .filter((e) => e.exerciseId === 'pushup')
         .map((e) => ({ timestamp: e.timestamp, reps: e.reps ?? 0 }))
+    );
+
+    /**
+     * What the user logged today across every exercise, as the share line.
+     * Empty when nothing is logged — the share button keys off that, since
+     * there is nothing to tell anyone.
+     */
+    const todaySummary = computed(() =>
+      formatDaySummary(
+        dayExerciseTotals(
+          store._live.exerciseEntries(),
+          toBerlinIsoDate(new Date())
+        )
+      )
     );
 
     /** Precomputed server-side stats (null if not yet available). */
@@ -270,6 +288,7 @@ export const DashboardStore = signalStore(
       weeklyGoalReached,
       monthlyGoalReached,
       todayTotal,
+      todaySummary,
       goalProgressPercent,
       dailyGoalConfigured,
       remainingToGoal,
@@ -301,7 +320,7 @@ export const DashboardStore = signalStore(
     shareDay(): Promise<ShareResult> {
       return store._share.share(
         buildShareDayPayload({
-          total: store.todayTotal(),
+          summary: store.todaySummary(),
           streak: store.currentStreak(),
           uid: store._user.userIdSafe(),
           publicProfile: store._userConfig.config()?.ui?.publicProfile === true,

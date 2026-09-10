@@ -32,6 +32,7 @@
       class="header-share"
       data-testid="dashboard-share"
       [attr.aria-label]="shareDayAriaLabel"
+      [disabled]="!canShareDay()"
       (click)="shareDay()"
     >
       <mat-icon>share</mat-icon>

@@ -380,6 +380,9 @@ export class StatsDashboardComponent {
     void this.router.navigate(['/history']);
   }
 
+  /** Nothing logged today means there is nothing to tell anyone. */
+  readonly canShareDay = computed(() => this.store.todaySummary() !== '');
+
   shareDay(): void {
     void this.store.shareDay();
   }
