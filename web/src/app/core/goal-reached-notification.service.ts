@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import { isPlanDayFulfilled, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
 import { toBerlinIsoDate } from '@pu-stats/date';
 import type {
   GoalKind,
@@ -35,6 +35,12 @@ interface GoalSpec {
   readonly goal: Signal<number>;
   readonly total: Signal<number>;
   readonly periodKey: Signal<string>;
+  /**
+   * Extra condition the celebration waits for, beyond `total >= goal`.
+   * Used by the plan kind, whose `goal` counts only the pushup portion of
+   * the day — see `planDayFulfilled`.
+   */
+  readonly gate?: Signal<boolean>;
 }
 
 // Monotonic counter so concurrent dialogs (daily + weekly + monthly all
@@ -164,6 +170,23 @@ export class GoalReachedNotificationService {
     }
   );
 
+  /**
+   * Whether today's plan day is finished in full — every exercise it
+   * prescribes, not just the pushups.
+   *
+   * The plan celebration's `goal` is `day.targetReps`, which tracks the
+   * pushup portion alone; on a day that also prescribes squats or a plank
+   * hold, hitting the rep count is not finishing the day. Celebrating
+   * there told the user they were done while the plan page still showed
+   * open exercises.
+   */
+  private readonly planDayFulfilled = computed(() => {
+    if (!this.trainingPlan.hasActivePlan()) return false;
+    const idx = this.trainingPlan.currentDayIndex();
+    if (idx === null) return false;
+    return isPlanDayFulfilled(this.trainingPlan.dayProgress(idx));
+  });
+
   private readonly specs: readonly GoalSpec[] = [
     {
       kind: 'daily',
@@ -188,6 +211,7 @@ export class GoalReachedNotificationService {
       goal: this.planGoal,
       total: this.todayTotal,
       periodKey: this.todayBerlin,
+      gate: this.planDayFulfilled,
     },
   ];
 
@@ -253,6 +277,7 @@ export class GoalReachedNotificationService {
       if (goal <= 0) return;
       const total = spec.total();
       if (total < goal) return;
+      if (spec.gate && !spec.gate()) return;
       const key = `${STORAGE_PREFIX}${spec.kind}_${spec.periodKey()}`;
       if (this.opened.has(key)) return;
       if (readFlag(key)) {
