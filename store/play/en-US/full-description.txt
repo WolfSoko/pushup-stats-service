@@ -1,4 +1,4 @@
-A push-up counter and workout tracker that turns push-ups and 40 more exercises into a game you want to win.
+A push-up counter and workout tracker that turns push-ups and 41 more exercises into a game you want to win.
 
 Whether you are starting from zero or already past your first hundred, this app keeps you going. Your camera counts reps automatically, curated training plans tell you exactly what to do today, and the leaderboard pushes you without nagging.
 
@@ -54,5 +54,5 @@ English, German, French, Spanish, Italian, Dutch, Greek, Norwegian, Chinese.
 
 Free. No subscription. No credit card.
 
-Pushup Stats is an honest app for people who actually train — not for sticker collectors.
+Pushup Tracker is an honest app for people who actually train — not for sticker collectors.
 Download it and knock out your first one.

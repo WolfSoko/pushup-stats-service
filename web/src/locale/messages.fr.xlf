@@ -258,8 +258,8 @@
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
       </notes>
       <segment state="translated">
-        <source>Willkommen bei PushUp Stats</source>
-        <target>Bienvenue dans PushUp Stats</target>
+        <source>Willkommen bei Pushup Tracker</source>
+        <target>Bienvenue dans Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
@@ -5736,7 +5736,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
       <segment state="translated">
-        <source>Pushup Stats</source>
+        <source>Pushup Tracker</source>
         <target>Statistiques de pompes</target>
       </segment>
     </unit>
@@ -10603,8 +10603,8 @@
     </unit>
     <unit id="androidTest.invite.body">
       <segment state="translated">
-        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> Nous développons actuellement l'app Android PushUp Stats et recherchons des testeurs. Envie de l'essayer avant tout le monde ? </target>
+        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> Nous développons actuellement l'app Android Pushup Tracker et recherchons des testeurs. Envie de l'essayer avant tout le monde ? </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">

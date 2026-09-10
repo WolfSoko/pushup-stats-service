@@ -121,7 +121,7 @@ describe('handlePush', () => {
     };
     handlePush(event, ctx);
     expect(showNotification).toHaveBeenCalledWith(
-      'PushUp Stats',
+      'Pushup Tracker',
       expect.objectContaining({ body: 'raw text' })
     );
   });

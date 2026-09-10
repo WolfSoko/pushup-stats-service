@@ -800,7 +800,7 @@ Active:         </target>
     <unit id="auth.login.title">
       <segment state="translated">
         <source />
-        <target>Welcome to PushUp Stats</target>
+        <target>Welcome to Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="auth.next">
@@ -1870,8 +1870,8 @@ Active:         </target>
         
             </notes>
       <segment state="translated">
-        <source>Pushup Stats</source>
-        <target>Pushup Stats</target>
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
 
         
         
@@ -10933,8 +10933,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="androidTest.invite.body">
       <segment state="translated">
-        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> We're currently building the PushUp Stats Android app and are looking for testers. Want to try it before everyone else? </target>
+        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> We're currently building the Pushup Tracker Android app and are looking for testers. Want to try it before everyone else? </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">

@@ -233,8 +233,8 @@
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
       </notes>
       <segment state="translated">
-        <source>Willkommen bei PushUp Stats</source>
-      <target>欢迎来到 PushUp Stats</target></segment>
+        <source>Willkommen bei Pushup Tracker</source>
+      <target>欢迎来到 Pushup Tracker</target></segment>
     </unit>
     <unit id="auth.login.subtitle">
       <notes>
@@ -6336,7 +6336,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
       <segment state="translated">
-        <source>Pushup Stats</source>
+        <source>Pushup Tracker</source>
       <target>俯卧撑统计</target></segment>
     </unit>
     <unit id="dashboardTitle">
@@ -10237,8 +10237,8 @@
     </unit>
     <unit id="androidTest.invite.body">
       <segment state="translated">
-        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> 我们正在开发 PushUp Stats 的 Android 应用，正在寻找测试人员。想在所有人之前抢先体验吗？ </target>
+        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> 我们正在开发 Pushup Tracker 的 Android 应用，正在寻找测试人员。想在所有人之前抢先体验吗？ </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">

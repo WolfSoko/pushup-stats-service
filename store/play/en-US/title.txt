@@ -1,1 +1,1 @@
-Pushup Stats: Rep Counter
+Pushup Tracker: Rep Counter

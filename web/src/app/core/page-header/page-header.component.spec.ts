@@ -33,7 +33,7 @@ describe('PageHeaderComponent', () => {
     expect(screen.getByRole('heading', { name: 'Analyse' })).toBeTruthy();
     expect(screen.getByText('Trends und Streaks')).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Teilen' })).toBeTruthy();
-    expect(screen.getByText('Pushup Stats')).toBeTruthy();
+    expect(screen.getByText('Pushup Tracker')).toBeTruthy();
   });
 
   it('given a variant input, when rendered, then exposes the variant via data-variant for theming', async () => {

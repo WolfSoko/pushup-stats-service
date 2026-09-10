@@ -119,10 +119,10 @@ export function handlePush(event: PushEventLike, ctx: SwContext): void {
   try {
     payload = (event.data.json() ?? {}) as PushPayload;
   } catch {
-    payload = { title: 'PushUp Stats', body: event.data.text() };
+    payload = { title: 'Pushup Tracker', body: event.data.text() };
   }
 
-  const title = payload.title || 'PushUp Stats';
+  const title = payload.title || 'Pushup Tracker';
   const rawLocale = payload.data?.locale ?? payload.locale ?? '';
   const localeTag = String(rawLocale).toLowerCase();
   const locale = resolveLocale(localeTag);

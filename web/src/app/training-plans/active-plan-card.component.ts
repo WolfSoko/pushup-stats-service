@@ -196,6 +196,17 @@ export interface ActivePlanView {
     .today-desc {
       margin: 6px 0 0;
     }
+    /* Four actions don't fit one row on a phone. Without wrapping, the row
+       sets the card's min-width and the whole card grows past the viewport. */
+    mat-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    mat-card-actions > a,
+    mat-card-actions > button {
+      margin: 0;
+    }
   `,
 })
 export class ActivePlanCardComponent {

@@ -9,7 +9,7 @@ export class LoginPage {
   readonly registerLink: Locator;
 
   constructor(private readonly page: Page) {
-    this.title = page.getByText('Willkommen bei PushUp Stats');
+    this.title = page.getByText('Willkommen bei Pushup Tracker');
     this.emailInput = page.getByLabel(/e-mail/i);
     this.passwordInput = page.getByLabel(/passwort/i).first();
     this.submitButton = page.getByRole('button', {

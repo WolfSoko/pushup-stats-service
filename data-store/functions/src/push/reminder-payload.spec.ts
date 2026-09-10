@@ -49,7 +49,7 @@ describe('push/reminder-payload', () => {
 
       // then
       expect(data.body).toContain('Tagesziel: 40/100');
-      expect(data.title).toBe('PushUp Stats');
+      expect(data.title).toBe('Pushup Tracker');
     });
 
     it('should offer the generic log action without a quick-log count', () => {

@@ -24,7 +24,7 @@ def twaManifest = [
     applicationId: 'com.pushupstats.app',
     hostName: 'pushup-stats.com', // The domain being opened in the TWA.
     launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
-    name: 'Pushup Stats', // The application name.
+    name: 'Pushup Tracker', // The application name.
     launcherName: 'Pushups', // The name shown on the Android Launcher.
     themeColor: '#1A233A', // The color used for the status bar.
     themeColorDark: '#000000', // The color used for the dark status bar.

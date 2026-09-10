@@ -569,7 +569,7 @@ Aktiv:         </target>
             </notes>
       <segment state="translated">
         <source>Pushups</source>
-        <target>Pushup Stats</target>
+        <target>Pushup Tracker</target>
 
             </segment>
 
@@ -691,7 +691,7 @@ Aktiv:         </target>
     <unit id="auth.login.title">
       <segment state="translated">
         <source/>
-        <target>Velkommen til Pushup Stats</target>
+        <target>Velkommen til Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="auth.next">
@@ -1514,8 +1514,8 @@ Aktiv:         </target>
 
             </notes>
       <segment state="translated">
-        <source>Pushup Stats</source>
-        <target>Pushup Stats</target>
+        <source>Pushup Tracker</source>
+        <target>Pushup Tracker</target>
 
             </segment>
 
@@ -3010,7 +3010,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.analysis.title">
       <segment state="translated">
         <source>Analyse – Pushup Tracker</source>
-        <target>Analyse – Pushup Stats</target>
+        <target>Analyse – Pushup Tracker</target>
 
             </segment>
 
@@ -3026,7 +3026,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.dashboard.title">
       <segment state="translated">
         <source>Dashboard – Pushup Tracker</source>
-        <target>Dashboard – Pushup Stats</target>
+        <target>Dashboard – Pushup Tracker</target>
 
             </segment>
 
@@ -3042,7 +3042,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.history.title">
       <segment state="translated">
         <source>Historie – Pushup Tracker</source>
-        <target>Historie – Pushup Stats</target>
+        <target>Historie – Pushup Tracker</target>
 
             </segment>
 
@@ -3050,7 +3050,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.default.description">
       <segment state="translated">
         <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
-        <target>Spor reps, trender og treningsserier med Pushup Stats.</target>
+        <target>Spor reps, trender og treningsserier med Pushup Tracker.</target>
 
             </segment>
 
@@ -3058,7 +3058,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.default.title">
       <segment state="translated">
         <source>Pushup Tracker</source>
-        <target>Pushup Stats</target>
+        <target>Pushup Tracker</target>
 
             </segment>
 
@@ -3090,7 +3090,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.leaderboard.title">
       <segment state="translated">
         <source>Bestenliste – Pushup Tracker</source>
-        <target>Rangliste – Pushup Stats</target>
+        <target>Rangliste – Pushup Tracker</target>
 
             </segment>
 
@@ -3106,7 +3106,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.login.title">
       <segment state="translated">
         <source>Login – Pushup Tracker</source>
-        <target>Logg inn – Pushup Stats</target>
+        <target>Logg inn – Pushup Tracker</target>
 
             </segment>
 
@@ -3122,7 +3122,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.register.title">
       <segment state="translated">
         <source>Registrierung – Pushup Tracker</source>
-        <target>Registrer deg – Pushup Stats</target>
+        <target>Registrer deg – Pushup Tracker</target>
 
             </segment>
 
@@ -3138,7 +3138,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.settings.title">
       <segment state="translated">
         <source>Einstellungen – Pushup Tracker</source>
-        <target>Innstillinger – Pushup Stats</target>
+        <target>Innstillinger – Pushup Tracker</target>
 
             </segment>
 
@@ -4850,25 +4850,25 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.impressum.title">
       <segment state="translated">
         <source>Impressum – Pushup Tracker</source>
-        <target>Juridisk merknad – Pushup Stats</target>
+        <target>Juridisk merknad – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.impressum.description">
       <segment state="translated">
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
-        <target>Juridisk merknad og leverandøridentifikasjon for Pushup Stats.</target>
+        <target>Juridisk merknad og leverandøridentifikasjon for Pushup Tracker.</target>
       </segment>
     </unit>
     <unit id="seo.datenschutz.title">
       <segment state="translated">
         <source>Datenschutzerklärung – Pushup Tracker</source>
-        <target>Personvernpolicy – Pushup Stats</target>
+        <target>Personvernpolicy – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.datenschutz.description">
       <segment state="translated">
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
-        <target>Personvernpolicyen for Pushup Stats – informasjon om databehandling, informasjonskapsler og dine rettigheter.</target>
+        <target>Personvernpolicyen for Pushup Tracker – informasjon om databehandling, informasjonskapsler og dine rettigheter.</target>
       </segment>
     </unit>
 
@@ -5382,7 +5382,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="seo.trainingPlans.title">
       <segment state="translated">
         <source>Trainingspläne – Pushup Tracker</source>
-        <target>Treningsplaner – Pushup Stats</target>
+        <target>Treningsplaner – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.trainingPlans.description">
@@ -5748,7 +5748,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="dashboard.share.title">
       <segment state="translated">
         <source>Pushup Tracker</source>
-        <target>Pushup Stats</target>
+        <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.simple">
@@ -10027,8 +10027,8 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="androidTest.invite.body">
       <segment state="translated">
-        <source> Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> Vi bygger for tiden PushUp Stats Android-appen og ser etter testere. Har du lyst til å prøve den før alle andre? </target>
+        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> Vi bygger for tiden Pushup Tracker Android-appen og ser etter testere. Har du lyst til å prøve den før alle andre? </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
@@ -10952,7 +10952,7 @@ Deine Position: # ·  Reps        </source>
     <unit id="achievement.share.title">
       <segment state="translated">
         <source>Pushup Tracker</source>
-        <target>Pushup Stats</target>
+        <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="achievement.share.text">

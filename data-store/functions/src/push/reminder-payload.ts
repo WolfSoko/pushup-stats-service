@@ -51,7 +51,7 @@ export interface ReminderPayloadInput {
 export function buildReminderPushPayload(input: ReminderPayloadInput): string {
   const { locale, quickLogReps } = input;
   return JSON.stringify({
-    title: 'PushUp Stats',
+    title: 'Pushup Tracker',
     body: reminderBody(locale, input.quote, input.goal),
     icon: '/icons/icon-192x192.png',
     badge: '/icons/badge-72x72.png',

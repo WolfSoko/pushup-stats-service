@@ -40,8 +40,8 @@ type InviteDialogState = 'ask' | 'thanks';
       </h2>
       <mat-dialog-content>
         <p i18n="@@androidTest.invite.body">
-          Wir bauen gerade die PushUp Stats Android-App und suchen Tester. Hast
-          du Lust, sie vor allen anderen auszuprobieren?
+          Wir bauen gerade die Pushup Tracker Android-App und suchen Tester.
+          Hast du Lust, sie vor allen anderen auszuprobieren?
         </p>
         @if (error()) {
           <p class="error">{{ error() }}</p>

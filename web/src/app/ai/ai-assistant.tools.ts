@@ -26,7 +26,7 @@ export function registerAiAssistantTools(): void {
 
   connectAgentContext(() => ({
     description:
-      "Pushup Stats app state: exercises that can be logged and the signed-in user's daily goal progress.",
+      "Pushup Tracker app state: exercises that can be logged and the signed-in user's daily goal progress.",
     value: JSON.stringify({
       exercises: loggableExercises(),
       today: summary(),

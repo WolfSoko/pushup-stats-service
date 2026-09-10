@@ -24,7 +24,7 @@ export type PageHeaderVariant =
         </span>
       }
       <div class="page-header-text">
-        <p class="page-header-eyebrow" i18n="@@eyebrowTitle">Pushup Stats</p>
+        <p class="page-header-eyebrow" i18n="@@eyebrowTitle">Pushup Tracker</p>
         <ng-content select="[page-title]" />
         <ng-content select="[page-subtitle]" />
       </div>
