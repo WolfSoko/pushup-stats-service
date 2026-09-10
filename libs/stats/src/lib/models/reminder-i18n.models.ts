@@ -1,3 +1,5 @@
+import type { ReminderGoalState } from './reminder-goal.models';
+
 /**
  * Locale handling shared between client (in-app reminders) and Cloud
  * Functions (server-side push). The server has no `LOCALE_ID`, so the
@@ -172,6 +174,57 @@ const ACTION_FAILED_LABELS: Record<ReminderLocale, string> = {
   zh: '操作失败 – 请在应用中重试',
 };
 
+/**
+ * Progress line prefixed to a reminder body so the notification names what
+ * is still open instead of only cheering. Three shapes, because a plan day
+ * with several exercises has no single unit to count
+ * (see `ReminderGoalState.counts`).
+ */
+const GOAL_DAILY_LINES: Record<
+  ReminderLocale,
+  (done: number, target: number) => string
+> = {
+  de: (d, t) => `Tagesziel: ${d}/${t} – noch ${t - d}`,
+  en: (d, t) => `Daily goal: ${d}/${t} – ${t - d} to go`,
+  fr: (d, t) => `Objectif du jour : ${d}/${t} – encore ${t - d}`,
+  es: (d, t) => `Objetivo diario: ${d}/${t} – faltan ${t - d}`,
+  it: (d, t) => `Obiettivo giornaliero: ${d}/${t} – ancora ${t - d}`,
+  nl: (d, t) => `Dagdoel: ${d}/${t} – nog ${t - d}`,
+  el: (d, t) => `Στόχος ημέρας: ${d}/${t} – μένουν ${t - d}`,
+  no: (d, t) => `Dagsmål: ${d}/${t} – ${t - d} igjen`,
+  zh: (d, t) => `今日目标：${d}/${t} – 还差 ${t - d}`,
+};
+
+const GOAL_PLAN_VALUE_LINES: Record<
+  ReminderLocale,
+  (day: number, done: number, target: number) => string
+> = {
+  de: (day, d, t) => `Plan-Tag ${day}: ${d}/${t} – noch ${t - d}`,
+  en: (day, d, t) => `Plan day ${day}: ${d}/${t} – ${t - d} to go`,
+  fr: (day, d, t) => `Jour ${day} du plan : ${d}/${t} – encore ${t - d}`,
+  es: (day, d, t) => `Día ${day} del plan: ${d}/${t} – faltan ${t - d}`,
+  it: (day, d, t) => `Giorno ${day} del piano: ${d}/${t} – ancora ${t - d}`,
+  nl: (day, d, t) => `Plandag ${day}: ${d}/${t} – nog ${t - d}`,
+  el: (day, d, t) => `Ημέρα ${day} του πλάνου: ${d}/${t} – μένουν ${t - d}`,
+  no: (day, d, t) => `Plandag ${day}: ${d}/${t} – ${t - d} igjen`,
+  zh: (day, d, t) => `计划第 ${day} 天：${d}/${t} – 还差 ${t - d}`,
+};
+
+const GOAL_PLAN_ITEM_LINES: Record<
+  ReminderLocale,
+  (day: number, done: number, target: number) => string
+> = {
+  de: (day, d, t) => `Plan-Tag ${day}: ${d}/${t} Übungen geschafft`,
+  en: (day, d, t) => `Plan day ${day}: ${d}/${t} exercises done`,
+  fr: (day, d, t) => `Jour ${day} du plan : ${d}/${t} exercices faits`,
+  es: (day, d, t) => `Día ${day} del plan: ${d}/${t} ejercicios hechos`,
+  it: (day, d, t) => `Giorno ${day} del piano: ${d}/${t} esercizi fatti`,
+  nl: (day, d, t) => `Plandag ${day}: ${d}/${t} oefeningen gedaan`,
+  el: (day, d, t) => `Ημέρα ${day} του πλάνου: ${d}/${t} ασκήσεις έτοιμες`,
+  no: (day, d, t) => `Plandag ${day}: ${d}/${t} øvelser ferdig`,
+  zh: (day, d, t) => `计划第 ${day} 天：已完成 ${d}/${t} 个动作`,
+};
+
 export function reminderTitle(locale: unknown): string {
   return REMINDER_TITLES[normalizeReminderLocale(locale)];
 }
@@ -199,4 +252,23 @@ export function reminderQuickLogDoneLabel(
 
 export function reminderActionFailedLabel(locale: unknown): string {
   return ACTION_FAILED_LABELS[normalizeReminderLocale(locale)];
+}
+
+/**
+ * The progress line for a reminder, or `''` when there is no goal to
+ * report. Callers prepend it to the motivational body.
+ */
+export function reminderGoalLine(
+  locale: unknown,
+  goal: ReminderGoalState | null
+): string {
+  if (!goal) return '';
+  const resolved = normalizeReminderLocale(locale);
+  if (goal.kind === 'daily') {
+    return GOAL_DAILY_LINES[resolved](goal.done, goal.target);
+  }
+  const day = goal.dayIndex ?? 1;
+  const lines =
+    goal.counts === 'items' ? GOAL_PLAN_ITEM_LINES : GOAL_PLAN_VALUE_LINES;
+  return lines[resolved](day, goal.done, goal.target);
 }

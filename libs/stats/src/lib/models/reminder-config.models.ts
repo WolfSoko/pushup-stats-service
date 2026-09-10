@@ -19,6 +19,13 @@ export interface ReminderConfig {
    * action — tapping it logs the entry without the user opening the app.
    */
   quickLogReps?: number;
+  /**
+   * Suppresses reminders for the rest of the day once the goal they point
+   * at is reached (see `reminder-goal.models.ts`). Absent ⇒ enabled: a
+   * reminder to do what is already done is noise, and that holds for the
+   * configs written before this field existed too.
+   */
+  pauseWhenGoalReached?: boolean;
 }
 
 export const QUICK_LOG_REPS_MIN = 1;

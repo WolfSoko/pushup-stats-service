@@ -5,6 +5,7 @@ import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { isInQuietHours, ReminderService } from './reminder.service';
+import { REMINDER_GOAL_STATE } from './reminder-goal.token';
 import { SHOULD_SKIP_IN_APP_REMINDER } from './skip-in-app-reminder.token';
 
 /**
@@ -21,7 +22,11 @@ class FakePushSwRegistrationService {
     return navigator.serviceWorker.getRegistration();
   }
 }
-import type { ReminderConfig } from '@pu-stats/models';
+import {
+  dailyReminderGoal,
+  type ReminderConfig,
+  type ReminderGoalState,
+} from '@pu-stats/models';
 
 async function flushMicrotasks(): Promise<void> {
   // Several ticks to flush chained async operations
@@ -56,7 +61,8 @@ describe('ReminderService', () => {
   function createService(
     configOverride?: Partial<ReminderConfig>,
     shouldSkipInApp = false,
-    locale = 'de'
+    locale = 'de',
+    goal: ReminderGoalState | null = null
   ): ReminderService {
     const config = { ...defaultConfig, ...configOverride };
     TestBed.configureTestingModule({
@@ -82,6 +88,7 @@ describe('ReminderService', () => {
           provide: SHOULD_SKIP_IN_APP_REMINDER,
           useValue: () => shouldSkipInApp,
         },
+        { provide: REMINDER_GOAL_STATE, useValue: () => goal },
         {
           provide: PushSwRegistrationService,
           useClass: FakePushSwRegistrationService,
@@ -449,6 +456,72 @@ describe('ReminderService', () => {
     expect(showNotificationSpy).toHaveBeenCalled();
 
     service.stop();
+  });
+  describe('goal awareness', () => {
+    it('should name the open goal above the motivational quote', async () => {
+      // given
+      const service = createService(
+        undefined,
+        false,
+        'de',
+        dailyReminderGoal(40, 100)
+      );
+
+      // when
+      service.start({ userId: 'u1' });
+      jest.advanceTimersByTime(5_000);
+      await flushMicrotasks();
+
+      // then
+      expect(showNotificationSpy).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          body: 'Tagesziel: 40/100 – noch 60\nStay strong!',
+        })
+      );
+
+      service.stop();
+    });
+
+    it('should not remind once the goal is reached', async () => {
+      // given
+      const service = createService(
+        undefined,
+        false,
+        'de',
+        dailyReminderGoal(100, 100)
+      );
+
+      // when
+      service.start({ userId: 'u1' });
+      jest.advanceTimersByTime(5_000);
+      await flushMicrotasks();
+
+      // then
+      expect(showNotificationSpy).not.toHaveBeenCalled();
+
+      service.stop();
+    });
+
+    it('should keep reminding after a reached goal when the user turned the pause off', async () => {
+      // given
+      const service = createService(
+        { pauseWhenGoalReached: false },
+        false,
+        'de',
+        dailyReminderGoal(100, 100)
+      );
+
+      // when
+      service.start({ userId: 'u1' });
+      jest.advanceTimersByTime(5_000);
+      await flushMicrotasks();
+
+      // then
+      expect(showNotificationSpy).toHaveBeenCalled();
+
+      service.stop();
+    });
   });
 });
 

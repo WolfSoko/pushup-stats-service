@@ -5,12 +5,15 @@ import {
   isInQuietHours,
   isReminderDayActive,
   normalizeReminderLocale,
+  reminderGoalLine,
   reminderTitle,
+  shouldPauseForReachedGoal,
 } from '@pu-stats/models';
 import { ReminderStore } from './reminder.store';
 import { ReminderPermissionService } from './reminder-permission.service';
 import { MotivationStore } from '@pu-stats/motivation';
 import { PushSwRegistrationService } from '@pu-push/push';
+import { REMINDER_GOAL_STATE } from './reminder-goal.token';
 import { SHOULD_SKIP_IN_APP_REMINDER } from './skip-in-app-reminder.token';
 
 // Re-exported so the in-app tier and the server dispatcher share one
@@ -30,6 +33,7 @@ export class ReminderService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly motivationStore = inject(MotivationStore);
   private readonly shouldSkipInApp = inject(SHOULD_SKIP_IN_APP_REMINDER);
+  private readonly readGoal = inject(REMINDER_GOAL_STATE);
   private readonly pushSwRegistration = inject(PushSwRegistrationService);
   private readonly locale = normalizeReminderLocale(inject(LOCALE_ID));
 
@@ -118,10 +122,17 @@ export class ReminderService {
     const lastShownAt = this.readLastShownAt();
     if (lastShownAt !== null && Date.now() - lastShownAt < intervalMs) return;
 
+    // Nothing left to remind about: the plan day (or the daily goal) the
+    // user is working toward is already done.
+    const goal = this.readGoal();
+    if (shouldPauseForReachedGoal(config, goal)) return;
+
     const quote = await this.getNextQuote();
     if (!quote) return;
 
     const title = reminderTitle(this.locale);
+    const goalLine = reminderGoalLine(this.locale, goal);
+    const body = goalLine ? `${goalLine}\n${quote}` : quote;
 
     if (Notification.permission === 'granted') {
       // Prefer ServiceWorker notification — `new Notification()` is not
@@ -135,7 +146,7 @@ export class ReminderService {
           const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
             .href;
           await reg.showNotification(title, {
-            body: quote,
+            body,
             icon: iconUrl,
             tag: 'reminder',
             renotify: true,
@@ -151,7 +162,7 @@ export class ReminderService {
           const iconUrl = new URL('assets/pushup-logo.svg', document.baseURI)
             .href;
           new Notification(title, {
-            body: quote,
+            body,
             icon: iconUrl,
           });
           displayed = true;

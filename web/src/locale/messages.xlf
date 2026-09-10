@@ -7130,6 +7130,30 @@
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">notifications</pc> Push aktivieren </source>
       </segment>
     </unit>
+    <unit id="reminder.goalPause.label">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-goal-pause.component.ts:16,18</note>
+      </notes>
+      <segment>
+        <source> Erinnerungen und Ziel </source>
+      </segment>
+    </unit>
+    <unit id="reminder.goalPause.desc">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-goal-pause.component.ts:19,22</note>
+      </notes>
+      <segment>
+        <source> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </source>
+      </segment>
+    </unit>
+    <unit id="reminder.goalPause.toggle">
+      <notes>
+        <note category="location">web/src/app/reminders/shell/reminder-goal-pause.component.ts:28,30</note>
+      </notes>
+      <segment>
+        <source> Erinnerungen pausieren, wenn das Ziel erreicht ist </source>
+      </segment>
+    </unit>
     <unit id="reminder.quickLog.label">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminder-quick-log.component.ts:25,27</note>
@@ -7212,7 +7236,7 @@
     </unit>
     <unit id="reminder.section.title">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:37,39</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:39,41</note>
       </notes>
       <segment>
         <source>🔔 Erinnerungen / Reminders</source>
@@ -7220,7 +7244,7 @@
     </unit>
     <unit id="reminder.enabled.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:45,46</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:47,48</note>
       </notes>
       <segment>
         <source> Liegestütz-Erinnerungen aktivieren </source>
@@ -7228,7 +7252,7 @@
     </unit>
     <unit id="reminder.permission.denied.hint">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:53,55</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:55,57</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Benachrichtigungen sind im Browser blockiert. Bitte in den Browser-Einstellungen erlauben. </source>
@@ -7236,7 +7260,7 @@
     </unit>
     <unit id="reminder.permission.granted">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:61,64</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:63,66</note>
       </notes>
       <segment>
         <source>Benachrichtigungen erlaubt</source>
@@ -7244,7 +7268,7 @@
     </unit>
     <unit id="reminder.permission.unsupported">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:69,71</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:71,73</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">info</pc> Dein Browser unterstützt keine Benachrichtigungen. </source>
@@ -7252,7 +7276,7 @@
     </unit>
     <unit id="reminder.interval.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:79,81</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:81,83</note>
       </notes>
       <segment>
         <source> Erinnerungsintervall </source>
@@ -7260,7 +7284,7 @@
     </unit>
     <unit id="reminder.interval.aria">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:85,86</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:87,88</note>
       </notes>
       <segment>
         <source>Intervall-Voreinstellungen</source>
@@ -7268,7 +7292,7 @@
     </unit>
     <unit id="reminder.interval.30min">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:89,91</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:91,93</note>
       </notes>
       <segment>
         <source>30 Min</source>
@@ -7276,7 +7300,7 @@
     </unit>
     <unit id="reminder.interval.1h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:92,94</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:94,96</note>
       </notes>
       <segment>
         <source>1 Std</source>
@@ -7284,7 +7308,7 @@
     </unit>
     <unit id="reminder.interval.2h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:95,97</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:97,99</note>
       </notes>
       <segment>
         <source>2 Std</source>
@@ -7292,7 +7316,7 @@
     </unit>
     <unit id="reminder.interval.4h">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:98,100</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:100,102</note>
       </notes>
       <segment>
         <source>4 Std</source>
@@ -7300,7 +7324,7 @@
     </unit>
     <unit id="reminder.interval.custom.label">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:104,106</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:106,108</note>
       </notes>
       <segment>
         <source>Benutzerdefiniert (Min)</source>
@@ -7308,7 +7332,7 @@
     </unit>
     <unit id="reminder.interval.hint">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:117,119</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:119,121</note>
       </notes>
       <segment>
         <source>15–480 Minuten</source>
@@ -7316,7 +7340,7 @@
     </unit>
     <unit id="reminder.save">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:157,159</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:165,167</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">save</pc> Erinnerungen speichern </source>
@@ -7324,7 +7348,7 @@
     </unit>
     <unit id="reminder.saved">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:161,163</note>
+        <note category="location">web/src/app/reminders/shell/reminder-settings-section.component.ts:169,171</note>
       </notes>
       <segment>
         <source>Gespeichert.</source>

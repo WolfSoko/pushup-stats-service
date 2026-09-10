@@ -25,6 +25,8 @@ type ReminderFormState = {
    */
   quickLogEnabled: boolean;
   quickLogReps: number;
+  /** Hold reminders back once the day's goal is done. */
+  pauseWhenGoalReached: boolean;
   dirty: boolean;
   saving: boolean;
   saved: boolean;
@@ -39,6 +41,7 @@ const initialState: ReminderFormState = {
   weekdays: [],
   quickLogEnabled: false,
   quickLogReps: DEFAULT_QUICK_LOG_REPS,
+  pauseWhenGoalReached: true,
   dirty: false,
   saving: false,
   saved: false,
@@ -74,6 +77,7 @@ export const ReminderFormStore = signalStore(
         quickLogReps: repsValid
           ? Math.min(normalizedReps as number, QUICK_LOG_REPS_MAX)
           : DEFAULT_QUICK_LOG_REPS,
+        pauseWhenGoalReached: config?.pauseWhenGoalReached !== false,
         dirty: false,
         saved: false,
       });
@@ -135,6 +139,10 @@ export const ReminderFormStore = signalStore(
       patchState(store, { quickLogReps: value, dirty: true });
     },
 
+    setPauseWhenGoalReached(value: boolean): void {
+      patchState(store, { pauseWhenGoalReached: value, dirty: true });
+    },
+
     clampQuickLogReps(): void {
       const val = store.quickLogReps();
       const clamped = Number.isFinite(val)
@@ -161,6 +169,7 @@ export const ReminderFormStore = signalStore(
         intervalMinutes: store.intervalMinutes(),
         quietHours: store.quietHours(),
         timezone,
+        pauseWhenGoalReached: store.pauseWhenGoalReached(),
       };
       const weekdays = store.weekdays();
       if (weekdays.length > 0) {

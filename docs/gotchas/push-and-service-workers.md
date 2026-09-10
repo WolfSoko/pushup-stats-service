@@ -63,6 +63,21 @@ Symptom that points here: "the SW update notification stopped working after depl
 - **Never use `navigator.serviceWorker.ready`** in async code paths — it hangs forever when no SW is registered (dev mode: `enabled: !isDevMode()`). Use `navigator.serviceWorker.getRegistration()` which resolves immediately with `undefined`.
 - **`renotify: true`** is not in the TypeScript `NotificationOptions` type — cast with `as NotificationOptions`.
 
+## Reminders name the goal, and stop once it is done
+
+Both tiers resolve one `ReminderGoalState` (`@pu-stats/models`, `reminder-goal.models.ts`): today's training-plan day while a plan is active, otherwise the configured daily goal — the same precedence as the toolbar pill. It drives two things: the progress line prefixed to the notification body (`reminderGoalLine`), and `ReminderConfig.pauseWhenGoalReached` (**absent ⇒ on**), which holds the reminder back once the goal is reached.
+
+A plan day with one exercise reports that exercise's own numbers ("60/100"); a multi-exercise day counts finished exercises instead, because its items have no common unit.
+
+Where the progress comes from differs per tier, and that is the part to keep in mind:
+
+- **In-app:** live entry signals, via the `REMINDER_GOAL_STATE` token (app wires it to `ReminderGoalService`). The reminders lib has no compile-time knowledge of plans.
+- **Cloud Function:** the per-exercise day aggregates, `userStats/{uid}/perExercise/{exerciseId}.dailyReps`, guarded by `dailyKey === today` — a rolled-over doc counts as nothing. The dispatcher has no entry stream, so `planDayProgress` is fed synthetic one-entry-per-exercise totals. Consequence: the server **cannot** honour `UserTrainingPlan.dayActivatedAt` (no per-entry timestamps survive in an aggregate), so reps logged before a plan activation earlier the same day still count — the reminder can pause slightly sooner than the plan page would.
+
+Reads happen only after `shouldSendReminder` has already said a send is due, so a user in quiet hours or inside their interval costs nothing extra. A paused tick deliberately does **not** write `lastSentAt`: deleting an entry puts the user back under the goal and the next tick reminds again.
+
+`loadReminderGoal` swallows its own Firestore failures (warn + `null`). The goal is an enrichment; a transient read error must not cost the user the reminder itself.
+
 ## Subscription vs reminder toggle
 
 **Push subscription ≠ reminder toggle.** They are separate actions. Auto-subscribing to push when enabling reminders must only happen on first enable (not every save) to respect explicit push opt-out.

@@ -12059,5 +12059,23 @@
         <target>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</target>
       </segment>
     </unit>
+        <unit id="reminder.goalPause.label">
+      <segment state="initial">
+        <source> Erinnerungen und Ziel </source>
+        <target> Erinnerungen und Ziel </target>
+      </segment>
+    </unit>
+        <unit id="reminder.goalPause.desc">
+      <segment state="initial">
+        <source> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </source>
+        <target> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </target>
+      </segment>
+    </unit>
+    <unit id="reminder.goalPause.toggle">
+      <segment state="initial">
+        <source> Erinnerungen pausieren, wenn das Ziel erreicht ist </source>
+        <target> Erinnerungen pausieren, wenn das Ziel erreicht ist </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

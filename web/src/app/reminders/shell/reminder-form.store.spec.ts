@@ -141,6 +141,48 @@ describe('ReminderFormStore', () => {
     });
   });
 
+  describe('goal pause', () => {
+    it('should default to pausing reminders once the goal is reached', () => {
+      // then
+      expect(store.pauseWhenGoalReached()).toBe(true);
+    });
+
+    it('should treat a config without the flag as pausing', () => {
+      // when
+      store.syncFromConfig(defaultConfig);
+
+      // then
+      expect(store.pauseWhenGoalReached()).toBe(true);
+    });
+
+    it('should hydrate an explicit opt-out', () => {
+      // when
+      store.syncFromConfig({ ...defaultConfig, pauseWhenGoalReached: false });
+
+      // then
+      expect(store.pauseWhenGoalReached()).toBe(false);
+    });
+
+    it('should mark the form dirty when toggled', () => {
+      // when
+      store.setPauseWhenGoalReached(false);
+
+      // then
+      expect(store.pauseWhenGoalReached()).toBe(false);
+      expect(store.dirty()).toBe(true);
+    });
+
+    it('should write the choice to the saved config', () => {
+      // when
+      store.setPauseWhenGoalReached(false);
+
+      // then
+      expect(store.toConfig('Europe/Berlin').pauseWhenGoalReached).toBe(false);
+      store.setPauseWhenGoalReached(true);
+      expect(store.toConfig('Europe/Berlin').pauseWhenGoalReached).toBe(true);
+    });
+  });
+
   describe('syncIfClean (race condition guard)', () => {
     it('syncs when form is clean', () => {
       const config: ReminderConfig = { ...defaultConfig, enabled: true };

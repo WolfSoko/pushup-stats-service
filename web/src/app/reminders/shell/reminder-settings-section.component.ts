@@ -15,6 +15,7 @@ import type { NotificationPermissionStatus } from '@pu-reminders/reminders';
 import { ReminderFormStore } from './reminder-form.store';
 import { parseInputNumber } from './reminders-page.helpers';
 import { ReminderQuietHoursComponent } from './reminder-quiet-hours.component';
+import { ReminderGoalPauseComponent } from './reminder-goal-pause.component';
 import { ReminderQuickLogComponent } from './reminder-quick-log.component';
 import { ReminderWeekdaysComponent } from './reminder-weekdays.component';
 
@@ -29,6 +30,7 @@ import { ReminderWeekdaysComponent } from './reminder-weekdays.component';
     MatIconModule,
     MatSlideToggleModule,
     ReminderQuietHoursComponent,
+    ReminderGoalPauseComponent,
     ReminderQuickLogComponent,
     ReminderWeekdaysComponent,
   ],
@@ -123,6 +125,12 @@ import { ReminderWeekdaysComponent } from './reminder-weekdays.component';
             [weekdays]="form.weekdays()"
             [saving]="form.saving()"
             (weekdaysChange)="form.setWeekdays($event)"
+          />
+
+          <app-reminder-goal-pause
+            [enabled]="form.pauseWhenGoalReached()"
+            [saving]="form.saving()"
+            (enabledToggle)="form.setPauseWhenGoalReached($event)"
           />
 
           <app-reminder-quick-log
