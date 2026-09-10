@@ -187,6 +187,15 @@ Sharing existed without a way back: a link went out, nothing came of it, and nob
 
 The hook runs on **every** sign-in, not just the first, and drops the pending invitation whatever the verdict — retrying forever would re-ask a question the server already answered. Known limit: badges are cosmetic and the count is farmable by anyone willing to create several real (non-anonymous) accounts. Worth rate-limiting only if it ever shows up in the data.
 
+### Friendships and the three-level profile visibility
+
+Friendships are **mutual**: one side asks, the other accepts. That consent is what allows a third audience between "private" and "public", so each profile section now carries a level instead of a boolean — `off` / `friends` / `public` (`profile-visibility.models.ts`).
+
+- **Legacy configs need no migration.** `sectionVisibility` derives the level from the old fields: a section in `ui.profileHidden` stays `off`, everything else becomes `public` on a public profile and **`friends` on a private one**. That last default is the consequential one — a user who never opted into a public profile will show those sections to someone whose friend request they accept. The master switch `ui.publicProfile` keeps its old meaning: visible to the world.
+- **One document per pair.** `friendships/{loUid}__{hiUid}` with `users` (sorted), `requestedBy` and `status`. The deterministic id means "A asks B" and "B asks A" cannot produce two competing records, and a duplicate request is an `ALREADY_EXISTS` write rather than a race. Participants read their own records (`array-contains` on `users`); **every write goes through the callables** in `functions-friends.ts`, because the status decides what the other side may see.
+- **`declined` is remembered, removal is not.** A declined request blocks the same requester from asking again — otherwise "no" is a nag button — while the person who declined may still send their own request later. `removeFriend` deletes the document: ending a friendship is not a "no" that should block a future request.
+- **The profile learns the tier with one read.** `getPublicProfile` resolves `viewerIsFriend` by getting the pair's document by id (no query), and only for signed-in viewers who aren't the owner — where it can actually change the answer. `buildPublicProfile` then filters every section through `isSectionVisibleTo`, and hands the owner their `visibility` map (nobody else gets it, same reason `hidden` was owner-only).
+
 ### Analysis page: chart bucketing per period
 
 The filter period picks the chart's bucket size — `granularityForRange` (`web/src/app/stats/analysis/chart-granularity.ts`) maps day → `hourly`, week → `daily`, month → `weekly`, year → `monthly`. `AnalysisStore.viewGranularity` derives it from `rangeMode` (i.e. from `from`/`to` via `inferRangeMode`), so no extra state stores the period. Every range therefore stays at a few dozen bars instead of stretching a year across 365 of them.

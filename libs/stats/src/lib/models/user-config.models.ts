@@ -214,8 +214,17 @@ export interface UserConfig {
      * Ids from `PROFILE_SECTIONS` the user switched off on their public
      * profile. Absent means everything is shown, so a newly added
      * element appears without a migration.
+     *
+     * Superseded by {@link profileVisibility}, which has a level per
+     * section instead of a boolean. Still read for configs written before
+     * friendships existed — see `sectionVisibility`.
      */
     profileHidden?: string[];
+    /**
+     * Per-section audience: `'off'`, `'friends'` or `'public'`, keyed by
+     * `ProfileSection`. Absent sections fall back to the legacy fields.
+     */
+    profileVisibility?: Record<string, string>;
     dayChartMode?: '24h' | '14h';
     quickAdds?: QuickAddConfig[];
     snapQuality?: SnapQuality;

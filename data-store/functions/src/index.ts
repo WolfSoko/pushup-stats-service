@@ -71,6 +71,12 @@ export { reminderAction } from './functions-reminder-action';
 
 export { cleanupReminderSnoozeState } from './functions-reminder-snooze-cleanup';
 
+export {
+  listFriends,
+  removeFriend,
+  respondFriendRequest,
+  sendFriendRequest,
+} from './functions-friends';
 export { claimReferral } from './functions-referral';
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 

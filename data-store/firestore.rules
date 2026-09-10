@@ -390,6 +390,17 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Friendships — one doc per pair, id `<loUid>__<hiUid>`. Participants
+    // read their own records (the friends screen queries
+    // `array-contains` on `users`); every write goes through the
+    // `functions-friends` callables, because the status is what unlocks
+    // the `friends` visibility tier on a profile.
+    match /friendships/{friendshipId} {
+      allow read: if request.auth != null
+                  && request.auth.uid in resource.data.users;
+      allow write: if false;
+    }
+
     // Achievements are derived by the `awardAchievementsOnPlanWrite`
     // trigger and surface on the public profile, so the client must not
     // be able to mint them — writes are Admin-SDK only, exactly like

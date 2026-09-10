@@ -114,7 +114,9 @@ describe('buildPublicProfile', () => {
       exercises: [],
       isPrivate: false,
       viewerIsOwner: false,
+      viewerIsFriend: false,
       hidden: [],
+      visibility: {},
       updatedAt: '',
     });
   });
@@ -151,7 +153,9 @@ describe('buildPublicProfile', () => {
       exercises: [],
       isPrivate: false,
       viewerIsOwner: false,
+      viewerIsFriend: false,
       hidden: [],
+      visibility: {},
       updatedAt: '2026-04-29T08:30:00.000Z',
     });
   });
@@ -269,7 +273,9 @@ describe('buildPublicProfile', () => {
       'exercises',
       'isPrivate',
       'viewerIsOwner',
+      'viewerIsFriend',
       'hidden',
+      'visibility',
       'bestSingleEntry',
       'bestDayTotal',
       'updatedAt',
@@ -578,5 +584,85 @@ describe('buildPublicProfile element visibility', () => {
     expect(result?.hidden).toEqual([]);
     expect(result?.total).toBe(5000);
     expect(result?.heatmap).not.toEqual({});
+  });
+});
+
+describe('buildPublicProfile for friends', () => {
+  const uid = 'abc123';
+  const stats = { total: 5000, currentStreak: 7, updatedAt: 'x' } as never;
+
+  it('should show a private profile to a confirmed friend', () => {
+    // given a profile that was never made public
+    const config = { displayName: 'Wolf', ui: { publicProfile: false } };
+
+    // when
+    const result = buildPublicProfile(uid, config, stats, {
+      viewerIsFriend: true,
+    });
+
+    // then — the friendship is the consent; legacy sections default to
+    // friends-only, so the numbers come through
+    expect(result).not.toBeNull();
+    expect(result?.total).toBe(5000);
+    expect(result?.viewerIsFriend).toBe(true);
+    expect(result?.isPrivate).toBe(true);
+  });
+
+  it('should still refuse that profile to everyone else', () => {
+    // given
+    const config = { displayName: 'Wolf', ui: { publicProfile: false } };
+
+    // when / then
+    expect(buildPublicProfile(uid, config, stats, {})).toBeNull();
+  });
+
+  it('should keep a section switched off hidden from friends too', () => {
+    // given
+    const config = {
+      displayName: 'Wolf',
+      ui: { profileVisibility: { total: 'off', streak: 'friends' } },
+    };
+
+    // when
+    const result = buildPublicProfile(uid, config, stats, {
+      viewerIsFriend: true,
+    });
+
+    // then
+    expect(result?.total).toBeNull();
+    expect(result?.currentStreak).toBe(7);
+  });
+
+  it('should keep a friends-only section out of the public projection', () => {
+    // given a public profile with one section narrowed to friends
+    const config = {
+      displayName: 'Wolf',
+      ui: { publicProfile: true, profileVisibility: { total: 'friends' } },
+    };
+
+    // when
+    const result = buildPublicProfile(uid, config, stats, {});
+
+    // then
+    expect(result?.total).toBeNull();
+    expect(result?.currentStreak).toBe(7);
+  });
+
+  it('should hand the owner their levels and nobody else', () => {
+    // given
+    const config = {
+      displayName: 'Wolf',
+      ui: { publicProfile: true, profileVisibility: { total: 'friends' } },
+    };
+
+    // when
+    const owner = buildPublicProfile(uid, config, stats, {
+      viewerIsOwner: true,
+    });
+    const visitor = buildPublicProfile(uid, config, stats, {});
+
+    // then
+    expect(owner?.visibility.total).toBe('friends');
+    expect(visitor?.visibility).toEqual({});
   });
 });
