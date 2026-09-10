@@ -14,7 +14,9 @@ import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { InviteService } from '../core/invite.service';
 import { FriendsStore } from './friends.store';
+import { FriendsBoardComponent } from './friends-board.component';
 import { friendRejectionMessage } from './friends-messages';
+import type { FriendsBoardPeriod } from './friends-api.service';
 
 /**
  * The friends screen: who you train with, who asked, and who you asked.
@@ -29,6 +31,7 @@ import { friendRejectionMessage } from './friends-messages';
     MatCardModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    FriendsBoardComponent,
     PageHeaderComponent,
     RouterLink,
   ],
@@ -83,6 +86,17 @@ import { friendRejectionMessage } from './friends-messages';
               </mat-card-actions>
             </mat-card>
           }
+        </section>
+      }
+
+      @if (store.board().length > 1) {
+        <section>
+          <h2 i18n="@@friends.board">Euer Vergleich</h2>
+          <app-friends-board
+            [entries]="store.board()"
+            [period]="store.boardPeriod()"
+            (periodChange)="changePeriod($event)"
+          />
         </section>
       }
 
@@ -206,6 +220,11 @@ export class FriendsPageComponent implements OnInit {
 
   ngOnInit(): void {
     void this.store.reload();
+    void this.store.loadBoard();
+  }
+
+  protected changePeriod(period: unknown): void {
+    if (isBoardPeriod(period)) void this.store.loadBoard(period);
   }
 
   /** A friend who never set a display name still needs a label. */
@@ -216,4 +235,13 @@ export class FriendsPageComponent implements OnInit {
   protected invite(): void {
     void this.invites.inviteFriend();
   }
+}
+
+function isBoardPeriod(value: unknown): value is FriendsBoardPeriod {
+  return (
+    value === 'daily' ||
+    value === 'week' ||
+    value === 'month' ||
+    value === 'allTime'
+  );
 }

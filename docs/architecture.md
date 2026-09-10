@@ -204,6 +204,12 @@ Requests start in two places. `/u/:uid` offers "Als Freund hinzufügen" to anyon
 
 The per-section switch on the profile **cycles** public → friends → off → public, one icon (`public` / `group` / `visibility_off`) with the current audience and the next tap in its tooltip. A cycle keeps the control inline next to the value it governs, which is what made the old two-state version legible.
 
+#### The friends board
+
+`getFriendsLeaderboard` ranks the viewer and their confirmed friends for one exercise and period (`daily` / `week` / `month` / `allTime`). It deliberately does **not** read the public leaderboard snapshot: that is a precomputed top-N list, and friends are an arbitrary set who will mostly not be in it. Values come from `userStats/{uid}/perExercise/{exerciseId}` via two `getAll` calls (configs + stats), with the same stale-bucket rule as everywhere else — a `dailyKey` that is not today counts as zero.
+
+Two rules worth knowing: a friend appears only if their own `total` section is visible to friends (the board is "my numbers, shown to friends"), and **the viewer always appears**, whatever they set — a board missing the person reading it would be strange. Participants at zero stay on the board; on a day nobody trained, the zeros are the nudge.
+
 ### Analysis page: chart bucketing per period
 
 The filter period picks the chart's bucket size — `granularityForRange` (`web/src/app/stats/analysis/chart-granularity.ts`) maps day → `hourly`, week → `daily`, month → `weekly`, year → `monthly`. `AnalysisStore.viewGranularity` derives it from `rangeMode` (i.e. from `from`/`to` via `inferRangeMode`), so no extra state stores the period. Every range therefore stays at a few dozen bars instead of stretching a year across 365 of them.

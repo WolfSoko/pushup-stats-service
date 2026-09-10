@@ -22,7 +22,13 @@ describe('FriendsPageComponent', () => {
       incoming: FriendRow[];
       outgoing: FriendRow[];
     }> = {},
-    overrides: Partial<Record<'respond' | 'remove', unknown>> = {}
+    overrides: Partial<Record<'respond' | 'remove', unknown>> = {},
+    boardEntries?: ReadonlyArray<{
+      uid: string;
+      displayName: string | null;
+      value: number;
+      isViewer: boolean;
+    }>
   ) {
     const api = {
       list: vitest.fn().mockResolvedValue({
@@ -33,6 +39,7 @@ describe('FriendsPageComponent', () => {
       request: vitest.fn().mockResolvedValue({ ok: true }),
       respond: vitest.fn().mockResolvedValue({ ok: true }),
       remove: vitest.fn().mockResolvedValue({ ok: true }),
+      board: vitest.fn().mockResolvedValue(boardEntries ?? []),
       ...overrides,
     };
     const invite = { inviteFriend: vitest.fn().mockResolvedValue('native') };
@@ -128,5 +135,48 @@ describe('FriendsPageComponent', () => {
 
     // then
     expect(document.body.textContent).toContain('Ohne Namen');
+  });
+
+  describe('the board', () => {
+    const entries = [
+      { uid: 'b', displayName: 'Bob', value: 900, isViewer: false },
+      { uid: 'me', displayName: 'Wolf', value: 300, isViewer: true },
+    ];
+
+    it('should rank the group and mark the viewer', async () => {
+      // given
+      await renderPage({ friends: [row()] }, {}, entries);
+
+      // then
+      const rows = screen.getAllByTestId('board-row');
+      expect(rows).toHaveLength(2);
+      expect(rows[0].textContent).toContain('Bob');
+      expect(rows[1].textContent).toContain('Du');
+    });
+
+    it('should reload the board when the period changes', async () => {
+      // given
+      const { api, fixture } = await renderPage(
+        { friends: [row()] },
+        {},
+        entries
+      );
+      api.board.mockClear();
+
+      // when — the chips are a listbox; click the "Gesamt" option
+      (screen.getByRole('option', { name: 'Gesamt' }) as HTMLElement).click();
+      await fixture.whenStable();
+
+      // then
+      expect(api.board).toHaveBeenCalledWith('allTime');
+    });
+
+    it('should stay away with nobody to compare against', async () => {
+      // given — a board of one is not a comparison
+      await renderPage({ friends: [row()] }, {}, [entries[1]]);
+
+      // then
+      expect(screen.queryAllByTestId('board-row')).toHaveLength(0);
+    });
   });
 });

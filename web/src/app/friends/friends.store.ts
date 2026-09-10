@@ -12,6 +12,8 @@ import {
   FriendsApiService,
   type FriendActionReason,
   type FriendRow,
+  type FriendsBoardEntry,
+  type FriendsBoardPeriod,
 } from './friends-api.service';
 
 type FriendsState = {
@@ -21,6 +23,8 @@ type FriendsState = {
   loading: boolean;
   /** Reason the last action was refused, for the page to explain it. */
   lastRejection: FriendActionReason;
+  board: ReadonlyArray<FriendsBoardEntry>;
+  boardPeriod: FriendsBoardPeriod;
 };
 
 const initialState: FriendsState = {
@@ -29,6 +33,8 @@ const initialState: FriendsState = {
   outgoing: [],
   loading: false,
   lastRejection: undefined,
+  board: [],
+  boardPeriod: 'week',
 };
 
 /**
@@ -89,8 +95,20 @@ export const FriendsStore = signalStore(
       }
     }
 
+    async function loadBoard(period?: FriendsBoardPeriod): Promise<void> {
+      const next = period ?? store.boardPeriod();
+      patchState(store, { boardPeriod: next });
+      try {
+        patchState(store, { board: await _api.board(next) });
+      } catch {
+        // The board is the extra on this page, not the page.
+        patchState(store, { board: [] });
+      }
+    }
+
     return {
       reload,
+      loadBoard,
       requestFriend: (uid: string) => act(() => _api.request(uid)),
       accept: (id: string) => act(() => _api.respond(id, true)),
       decline: (id: string) => act(() => _api.respond(id, false)),

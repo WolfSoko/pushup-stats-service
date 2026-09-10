@@ -27,6 +27,7 @@ describe('FriendsStore', () => {
       request: vitest.fn().mockResolvedValue({ ok: true }),
       respond: vitest.fn().mockResolvedValue({ ok: true }),
       remove: vitest.fn().mockResolvedValue({ ok: true }),
+      board: vitest.fn().mockResolvedValue([]),
     };
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -124,5 +125,42 @@ describe('FriendsStore', () => {
     // then
     expect(ok).toBe(false);
     expect(store.lastRejection()).toBe('failed');
+  });
+
+  it('should remember the period the board was asked for', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when
+    await store.loadBoard('allTime');
+
+    // then
+    expect(api.board).toHaveBeenCalledWith('allTime');
+    expect(store.boardPeriod()).toBe('allTime');
+  });
+
+  it('should reuse the last period when none is given', async () => {
+    // given
+    const { store, api } = setup();
+    await store.loadBoard('month');
+    api.board.mockClear();
+
+    // when
+    await store.loadBoard();
+
+    // then
+    expect(api.board).toHaveBeenCalledWith('month');
+  });
+
+  it('should empty the board rather than break the page', async () => {
+    // given
+    const { store, api } = setup();
+    api.board.mockRejectedValue(new Error('offline'));
+
+    // when
+    await store.loadBoard('week');
+
+    // then
+    expect(store.board()).toEqual([]);
   });
 });

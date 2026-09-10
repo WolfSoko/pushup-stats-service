@@ -5153,6 +5153,63 @@
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
       </segment>
     </unit>
+    <unit id="friends.board.periodAria">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:27,28</note>
+      </notes>
+      <segment>
+        <source>Zeitraum</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.daily">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:31,33</note>
+      </notes>
+      <segment>
+        <source>Heute</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.week">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:34,36</note>
+      </notes>
+      <segment>
+        <source>7 Tage</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.month">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:37,39</note>
+      </notes>
+      <segment>
+        <source>30 Tage</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.allTime">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:40,42</note>
+      </notes>
+      <segment>
+        <source>Gesamt</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.you">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:94</note>
+      </notes>
+      <segment>
+        <source>Du</source>
+      </segment>
+    </unit>
+    <unit id="friends.anonymous">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:95</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:232</note>
+      </notes>
+      <segment>
+        <source>Ohne Namen</source>
+      </segment>
+    </unit>
     <unit id="friends.error.self">
       <notes>
         <note category="location">web/src/app/friends/friends-messages.ts:15</note>
@@ -5227,7 +5284,7 @@
     </unit>
     <unit id="friends.title">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:38,39</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:41,42</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -5235,7 +5292,7 @@
     </unit>
     <unit id="friends.intro">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:40,42</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:43,45</note>
       </notes>
       <segment>
         <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
@@ -5243,7 +5300,7 @@
     </unit>
     <unit id="friends.incoming">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:56,57</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:59,60</note>
       </notes>
       <segment>
         <source>Anfragen an dich</source>
@@ -5251,7 +5308,7 @@
     </unit>
     <unit id="friends.decline">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:69,70</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:74,75</note>
       </notes>
       <segment>
         <source> Ablehnen </source>
@@ -5259,15 +5316,23 @@
     </unit>
     <unit id="friends.accept">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:79,80</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:84,85</note>
       </notes>
       <segment>
         <source> Annehmen </source>
       </segment>
     </unit>
+    <unit id="friends.board">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:94,95</note>
+      </notes>
+      <segment>
+        <source>Euer Vergleich</source>
+      </segment>
+    </unit>
     <unit id="friends.list">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:88,89</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:104,105</note>
       </notes>
       <segment>
         <source>Deine Freunde</source>
@@ -5275,7 +5340,7 @@
     </unit>
     <unit id="friends.empty">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:95,96</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:111,112</note>
       </notes>
       <segment>
         <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
@@ -5283,7 +5348,7 @@
     </unit>
     <unit id="invite.action">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:107,108</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:123,124</note>
         <note category="location">web/src/app/public-profile/public-profile-page.component.html:168,169</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
       </notes>
@@ -5293,7 +5358,7 @@
     </unit>
     <unit id="friends.remove">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:125,126</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:143,144</note>
       </notes>
       <segment>
         <source> Entfernen </source>
@@ -5301,7 +5366,7 @@
     </unit>
     <unit id="friends.outgoing">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:135,136</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:153,154</note>
       </notes>
       <segment>
         <source>Von dir angefragt</source>
@@ -5309,7 +5374,7 @@
     </unit>
     <unit id="friends.waiting">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:140,141</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:158,159</note>
       </notes>
       <segment>
         <source>wartet noch</source>
@@ -5317,18 +5382,10 @@
     </unit>
     <unit id="friends.withdraw">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:149,150</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:167,168</note>
       </notes>
       <segment>
         <source> Zurückziehen </source>
-      </segment>
-    </unit>
-    <unit id="friends.anonymous">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:209</note>
-      </notes>
-      <segment>
-        <source>Ohne Namen</source>
       </segment>
     </unit>
     <unit id="goalsHeaderTitle">

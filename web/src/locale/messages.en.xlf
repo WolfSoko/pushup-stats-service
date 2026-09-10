@@ -12731,5 +12731,47 @@ Deine Position: # ·  Reps        </source>
         <target>Ihr seid Freunde</target>
       </segment>
     </unit>
+    <unit id="friends.board.periodAria">
+      <segment state="initial">
+        <source>Zeitraum</source>
+        <target>Zeitraum</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.daily">
+      <segment state="initial">
+        <source>Heute</source>
+        <target>Heute</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.week">
+      <segment state="initial">
+        <source>7 Tage</source>
+        <target>7 Tage</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.month">
+      <segment state="initial">
+        <source>30 Tage</source>
+        <target>30 Tage</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.allTime">
+      <segment state="initial">
+        <source>Gesamt</source>
+        <target>Gesamt</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.you">
+      <segment state="initial">
+        <source>Du</source>
+        <target>Du</target>
+      </segment>
+    </unit>
+    <unit id="friends.board">
+      <segment state="initial">
+        <source>Euer Vergleich</source>
+        <target>Euer Vergleich</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

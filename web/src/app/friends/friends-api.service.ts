@@ -16,6 +16,21 @@ export interface FriendListsResponse {
   readonly outgoing: ReadonlyArray<FriendRow>;
 }
 
+export type FriendsBoardPeriod = 'daily' | 'week' | 'month' | 'allTime';
+
+export interface FriendsBoardEntry {
+  readonly uid: string;
+  readonly displayName: string | null;
+  readonly value: number;
+  readonly isViewer: boolean;
+}
+
+export interface FriendsBoardResponse {
+  readonly exerciseId: string;
+  readonly period: FriendsBoardPeriod;
+  readonly entries: ReadonlyArray<FriendsBoardEntry>;
+}
+
 /** Why the server refused a request; `undefined` when it accepted. */
 export type FriendActionReason = string | undefined;
 
@@ -65,6 +80,17 @@ export class FriendsApiService {
       FriendActionResponse
     >('respondFriendRequest')({ id, accept });
     return result.data ?? { ok: false };
+  }
+
+  async board(
+    period: FriendsBoardPeriod,
+    exerciseId?: string
+  ): Promise<ReadonlyArray<FriendsBoardEntry>> {
+    const result = await this.callables.call<
+      { period: FriendsBoardPeriod; exerciseId?: string },
+      FriendsBoardResponse
+    >('getFriendsLeaderboard')({ period, exerciseId });
+    return result.data?.entries ?? [];
   }
 
   async remove(id: string): Promise<FriendActionResponse> {

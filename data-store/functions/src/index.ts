@@ -71,6 +71,7 @@ export { reminderAction } from './functions-reminder-action';
 
 export { cleanupReminderSnoozeState } from './functions-reminder-snooze-cleanup';
 
+export { getFriendsLeaderboard } from './functions-friends-leaderboard';
 export {
   listFriends,
   removeFriend,
