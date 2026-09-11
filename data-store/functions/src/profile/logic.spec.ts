@@ -4,6 +4,7 @@ import {
   toPublicDisplayName,
   isLeaderboardNameAllowed,
   isLeaderboardExcluded,
+  isPublicProfileLinkAllowed,
   UserProfile,
 } from './logic';
 
@@ -109,6 +110,45 @@ describe('profile/logic', () => {
 
     it('returns false when profile is undefined', () => {
       expect(isLeaderboardExcluded(undefined)).toBe(false);
+    });
+  });
+
+  describe('isPublicProfileLinkAllowed', () => {
+    const named = {
+      displayName: 'Wolfi',
+      ui: { hideFromLeaderboard: false },
+    };
+
+    it('should link a profile that publishes something to everyone', () => {
+      // given — the settings master switch is gone; a level does the job
+      const profile = {
+        ...named,
+        ui: { ...named.ui, profileVisibility: { total: 'public' } },
+      };
+
+      // when / then
+      expect(isPublicProfileLinkAllowed(profile)).toBe(true);
+    });
+
+    it('should not link a profile that only friends may open', () => {
+      // given — ranking links to `/u/<uid>`, which a visitor cannot open
+      const profile = {
+        ...named,
+        ui: { ...named.ui, profileVisibility: { total: 'friends' } },
+      };
+
+      // when / then
+      expect(isPublicProfileLinkAllowed(profile)).toBe(false);
+    });
+
+    it('should keep linking a legacy public profile', () => {
+      // when / then
+      expect(
+        isPublicProfileLinkAllowed({
+          ...named,
+          ui: { ...named.ui, publicProfile: true },
+        })
+      ).toBe(true);
     });
   });
 });

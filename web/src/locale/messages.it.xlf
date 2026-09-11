@@ -5404,8 +5404,8 @@
       </segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
-      <segment state="translated">
-        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
+      <segment state="initial">
+        <source> In der Bestenliste erscheinst du erst, wenn mindestens ein Bereich deines Profils für alle sichtbar ist. Das stellst du direkt im Profil ein. </source>
         <target> Solo i profili con Profilo pubblico attivato compaiono nella classifica. Attiva «Profilo pubblico» qui sotto per usare questa opzione. </target>
       </segment>
     </unit>
@@ -5422,8 +5422,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:107,110</note>
       </notes>
-      <segment state="translated">
-        <source> Erlaubt jedem mit dem Link den Zugriff auf deine Reps, Streak und Bestleistungen. Dein Anzeigename ist sichtbar; E-Mail, Ziele und Erinnerungen bleiben privat. </source>
+      <segment state="initial">
+        <source> Wer welchen Teil deines Profils sieht, stellst du direkt im Profil ein: für alle, nur für Freunde, oder für niemanden. Dein Anzeigename ist für jeden sichtbar, der dein Profil öffnen darf; E-Mail, Ziele und Erinnerungen bleiben immer privat. </source>
         <target> Consente a chiunque abbia il collegamento di accedere alle tue ripetizioni, serie e migliori prestazioni. Il tuo nome visualizzato è visibile; E-mail, obiettivi e promemoria rimangono privati. </target>
       </segment>
     </unit>
@@ -7924,8 +7924,8 @@
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
-      <segment state="translated">
-        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Profil und Sichtbarkeit </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Anteprima</target>
       </segment>
     </unit>
@@ -11738,8 +11738,8 @@
       </segment>
     </unit>
     <unit id="publicProfile.private.body">
-      <segment state="translated">
-        <source>Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.</source>
+      <segment state="initial">
+        <source>Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.</source>
         <target>Nessuno tranne te può vederlo. Attivalo nelle impostazioni per poterlo condividere.</target>
       </segment>
     </unit>

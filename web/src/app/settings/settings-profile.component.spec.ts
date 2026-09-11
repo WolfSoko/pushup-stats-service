@@ -15,11 +15,11 @@ function facadeMock(overrides: Record<string, unknown> = {}) {
     displayNameDraft: signal('Wolfi'),
     displayNameViolation: signal(null),
     leaderboardOptOutDraft: signal(false),
-    publicProfileDraft: signal(true),
+    profileIsPublic: signal(true),
     hideAccountPhotoDraft: signal(false),
     profileUrl: signal('https://pushup-stats.com/de/u/uid-1'),
     userId: signal('uid-1'),
-    config: signal({ publicProfile: true }),
+    config: signal({}),
     asValue: (event: Event) => (event.target as HTMLInputElement).value,
     shareMyProfile: vi.fn(),
     ...overrides,
@@ -62,20 +62,96 @@ async function setup(
   return { view, photoService };
 }
 
+async function setupWith(overrides: Record<string, unknown>) {
+  return render(SettingsProfileComponent, {
+    providers: [
+      { provide: SettingsFacade, useValue: facadeMock(overrides) },
+      {
+        provide: ProfilePhotoService,
+        useValue: {
+          busy: signal(false),
+          upload: vi.fn(),
+          remove: vi.fn(),
+        },
+      },
+      {
+        provide: UserContextService,
+        useValue: { accountPhotoUrl: signal(null) },
+      },
+      {
+        provide: AvatarService,
+        useValue: { uploadedUrl: signal(null), avatarUrl: signal(null) },
+      },
+    ],
+  });
+}
+
 function previewSrc(): string | null {
   const img = screen.queryByTestId('settings-photo-preview');
   return img ? img.getAttribute('src') : null;
 }
 
 describe('SettingsProfileComponent', () => {
-  it('should render the display-name field and the visibility toggles', async () => {
+  it('should render the display-name field and the visibility controls', async () => {
     // given — this tab had no test at all after the settings section was
     // split into routed children
     await setup();
 
     // then
-    expect(screen.getByTestId('settings-public-profile-toggle')).toBeTruthy();
     expect(screen.getByTestId('settings-leaderboard-toggle')).toBeTruthy();
+    expect(screen.getByTestId('settings-public-profile-preview')).toBeTruthy();
+  });
+
+  describe('Visibility', () => {
+    it('should not offer a master switch any more', async () => {
+      // given — the levels on the profile page are the opt-in now, and a
+      // second switch beside them could only contradict them
+      await setup();
+
+      // then
+      expect(screen.queryByTestId('settings-public-profile-toggle')).toBeNull();
+    });
+
+    it('should point at the profile where the levels live', async () => {
+      // given
+      await setup();
+
+      // then
+      expect(
+        screen
+          .getByTestId('settings-public-profile-preview')
+          .getAttribute('href')
+      ).toContain('/u/uid-1');
+    });
+
+    it('should offer the preview even while nothing is public', async () => {
+      // given — a private profile is exactly where the user goes to
+      // publish something
+      await setupWith({ profileIsPublic: signal(false) });
+
+      // then
+      expect(
+        screen.getByTestId('settings-public-profile-preview')
+      ).toBeTruthy();
+    });
+
+    it('should not offer to share a profile nobody may open', async () => {
+      // given
+      await setupWith({ profileIsPublic: signal(false) });
+
+      // then
+      expect(screen.queryByText(/Profil teilen/)).toBeNull();
+    });
+
+    it('should say what the leaderboard needs while nothing is public', async () => {
+      // given
+      await setupWith({ profileIsPublic: signal(false) });
+
+      // then
+      expect(
+        screen.getByTestId('settings-leaderboard-requires-public-profile')
+      ).toBeTruthy();
+    });
   });
 
   describe('Profile photo', () => {

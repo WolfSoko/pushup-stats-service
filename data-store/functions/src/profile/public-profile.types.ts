@@ -14,6 +14,8 @@ export interface UserConfigForPublicProfile extends UserProfile {
     hideAccountPhoto?: boolean;
     /** Ids from `PROFILE_SECTIONS` the owner switched off. */
     profileHidden?: unknown;
+    /** Level per section, keyed by `PROFILE_SECTIONS`. */
+    profileVisibility?: Readonly<Record<string, string>>;
   };
   createdAt?: string;
   /** Set by the client after a photo upload; drives the photo URL. */

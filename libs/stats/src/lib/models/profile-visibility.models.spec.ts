@@ -2,11 +2,13 @@ import { describe, expect, it } from '@jest/globals';
 
 import {
   canViewProfile,
+  isProfilePublic,
   isSectionVisibleTo,
   profileVisibilityMap,
   sectionVisibility,
   withSectionVisibility,
 } from './profile-visibility.models';
+import { PROFILE_SECTIONS } from './profile-sections';
 
 describe('profile-visibility.models', () => {
   describe('sectionVisibility', () => {
@@ -86,6 +88,57 @@ describe('profile-visibility.models', () => {
     it('should keep a public profile public', () => {
       // when / then
       expect(canViewProfile({ publicProfile: true }, 'public')).toBe(true);
+    });
+
+    it('should open the page for a visitor as soon as one section is public', () => {
+      // given — the only opt-in left is the per-section level
+      const ui = { profileVisibility: { streak: 'public' } };
+
+      // when / then
+      expect(canViewProfile(ui, 'public')).toBe(true);
+    });
+  });
+
+  describe('isProfilePublic', () => {
+    it('should call a profile public as soon as one section is', () => {
+      // given — the settings switch is gone; the levels are the opt-in
+      const ui = { profileVisibility: { total: 'public', streak: 'off' } };
+
+      // when / then
+      expect(isProfilePublic(ui)).toBe(true);
+    });
+
+    it('should call a profile private when nothing is public', () => {
+      // given
+      const ui = { profileVisibility: { total: 'friends', streak: 'off' } };
+
+      // when / then
+      expect(isProfilePublic(ui)).toBe(false);
+    });
+
+    it('should keep a legacy public profile public', () => {
+      // given a config written before the levels existed
+      expect(isProfilePublic({ publicProfile: true })).toBe(true);
+    });
+
+    it('should keep a legacy private profile private', () => {
+      // when / then
+      expect(isProfilePublic({ publicProfile: false })).toBe(false);
+      expect(isProfilePublic(undefined)).toBe(false);
+    });
+
+    it('should follow the levels a legacy profile was given later', () => {
+      // given — the explicit level wins over the old master switch, so
+      // narrowing every section takes the profile off the open web
+      const ui = {
+        publicProfile: true,
+        profileVisibility: Object.fromEntries(
+          PROFILE_SECTIONS.map((section) => [section, 'friends'])
+        ),
+      };
+
+      // when / then
+      expect(isProfilePublic(ui)).toBe(false);
     });
   });
 

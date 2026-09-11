@@ -10,8 +10,7 @@ import type { ExerciseGroupKind } from './profile-view.model';
  */
 export const PROFILE_LABELS = {
   privateTitle: $localize`:@@publicProfile.private.title:Dein Profil ist noch privat`,
-  privateBody: $localize`:@@publicProfile.private.body:Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.`,
-  privateCta: $localize`:@@publicProfile.private.cta:Profil öffentlich machen`,
+  privateBody: $localize`:@@publicProfile.private.body:Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.`,
   week: $localize`:@@publicProfile.week:Diese Woche`,
   month: $localize`:@@publicProfile.month:Dieser Monat`,
   exercises: $localize`:@@publicProfile.exercises:Übungen`,

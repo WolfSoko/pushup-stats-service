@@ -286,19 +286,25 @@ describe('PublicProfilePageComponent', () => {
       ).not.toBeNull();
     });
 
-    it('should link to the settings tab that flips the switch', async () => {
-      // given
+    it('should say how to publish something, on this page', async () => {
+      // given — the settings switch is gone; the switches next to each
+      // element are the opt-in, so a trip to the settings would be a
+      // dead end
       await setup({
         resolve: { ...sampleProfile, isPrivate: true, viewerIsOwner: true },
       });
 
-      // when
-      const cta = fixture.nativeElement.querySelector(
-        '[data-testid="public-profile-enable"]'
-      ) as HTMLAnchorElement | null;
-
       // then
-      expect(cta?.getAttribute('href')).toContain('/settings/profil');
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-enable"]'
+        )
+      ).toBeNull();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        ).textContent
+      ).toContain('Symbol');
     });
 
     it('should not show the hint on a public profile', async () => {

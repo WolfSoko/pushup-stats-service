@@ -11,6 +11,7 @@ import { UserStatsApiService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import {
   exerciseEntryToUnified,
+  isProfilePublic,
   type UnifiedEntry,
   type UserStats,
 } from '@pu-stats/models';
@@ -323,7 +324,7 @@ export const DashboardStore = signalStore(
           summary: store.todaySummary(),
           streak: store.currentStreak(),
           uid: store._user.userIdSafe(),
-          publicProfile: store._userConfig.config()?.ui?.publicProfile === true,
+          publicProfile: isProfilePublic(store._userConfig.config()?.ui),
           localeId: store._localeId,
         })
       );

@@ -29,6 +29,7 @@ export type ProfileSectionVisibility = 'off' | 'friends' | 'public';
 export type ProfileViewer = 'owner' | 'friend' | 'public';
 
 export interface ProfileVisibilityUi {
+  /** Legacy master switch; still read as a default, never written any more. */
   publicProfile?: boolean;
   /** Legacy opt-out list; still honoured, never written any more. */
   profileHidden?: unknown;
@@ -77,19 +78,36 @@ export function isSectionVisibleTo(
 }
 
 /**
+ * Whether anyone with the link gets a page at all.
+ *
+ * The settings used to carry a master switch on top of the per-section
+ * levels, which said the same thing twice and could contradict itself.
+ * The sections are the truth now: a profile is public exactly as long as
+ * one of them is. Legacy configs answer through {@link sectionVisibility},
+ * so the old switch still decides for anyone who never touched a level.
+ */
+export function isProfilePublic(
+  ui: ProfileVisibilityUi | undefined | null
+): boolean {
+  return PROFILE_SECTIONS.some(
+    (section) => sectionVisibility(ui, section) === 'public'
+  );
+}
+
+/**
  * Whether the profile page exists at all for this viewer.
  *
  * A confirmed friend always gets the page — they asked, the owner agreed,
  * and the page then shows whatever their levels allow, possibly nothing
- * but the name they already know. Everyone else still needs the public
- * opt-in, exactly as before.
+ * but the name they already know. Everyone else needs something published
+ * to the world.
  */
 export function canViewProfile(
   ui: ProfileVisibilityUi | undefined | null,
   viewer: ProfileViewer
 ): boolean {
   if (viewer === 'owner' || viewer === 'friend') return true;
-  return ui?.publicProfile === true;
+  return isProfilePublic(ui);
 }
 
 /**

@@ -5,7 +5,6 @@ import type { DraftSnapshot, ResolvedConfig } from './settings-page.models';
 const CONFIG: ResolvedConfig = {
   displayName: 'Wolf',
   hideFromLeaderboard: false,
-  publicProfile: false,
   hideAccountPhoto: false,
   consent: { targetedAds: true },
   snapQuality: 'low',
@@ -14,7 +13,6 @@ const CONFIG: ResolvedConfig = {
 const PERSISTED: DraftSnapshot = {
   displayName: 'Wolf',
   hideFromLeaderboard: false,
-  publicProfile: false,
   hideAccountPhoto: false,
   adsConsent: true,
   snapQuality: 'low',
@@ -175,7 +173,7 @@ describe('SettingsAutoSaveController', () => {
       const ctrl = new SettingsAutoSaveController(deps);
       ctrl.hydrate(CONFIG);
       // displayName unchanged from baseline, only a flag differs
-      const otherFieldDirty = { ...PERSISTED, publicProfile: true };
+      const otherFieldDirty = { ...PERSISTED, hideAccountPhoto: true };
       draftRef.current = otherFieldDirty;
 
       // when

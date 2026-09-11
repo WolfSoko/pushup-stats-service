@@ -1,3 +1,5 @@
+import { PROFILE_SECTIONS } from '@pu-stats/models';
+
 import {
   buildPublicProfile,
   isPublicProfileAllowed,
@@ -49,6 +51,31 @@ describe('isPublicProfileAllowed', () => {
       isPublicProfileAllowed({
         displayName: 'Wolfi',
         ui: { publicProfile: false },
+      })
+    ).toBe(false);
+  });
+
+  it('Given a section published to everyone, Then returns true', () => {
+    // The settings master switch is gone: a level of `public` on any one
+    // section is what publishes the profile now.
+    expect(
+      isPublicProfileAllowed({
+        displayName: 'Wolfi',
+        ui: { profileVisibility: { streak: 'public' } },
+      })
+    ).toBe(true);
+  });
+
+  it('Given every section narrowed to friends, Then returns false', () => {
+    expect(
+      isPublicProfileAllowed({
+        displayName: 'Wolfi',
+        ui: {
+          publicProfile: true,
+          profileVisibility: Object.fromEntries(
+            PROFILE_SECTIONS.map((section) => [section, 'friends'])
+          ),
+        },
       })
     ).toBe(false);
   });
