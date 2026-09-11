@@ -1964,7 +1964,7 @@ Active:         </target>
 
         
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto erstellen</source>
         <target>Sign up now</target>
 
@@ -1996,7 +1996,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Trend charts and KPI cards for every exercise: push-up variants (Standard, Wide, Diamond), sit-ups, squats, planks and running – with a freely selectable time range.</target>
             </segment>
@@ -2014,7 +2014,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Sätze &amp; Intervalle</source>
         <target>Multi-set tracking</target>
             </segment>
@@ -2023,7 +2023,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Log every set individually – e.g. 12 + 10 + 8. The app sums them up automatically and shows your average set size.</target>
             </segment>
@@ -2041,7 +2041,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>Triple progress bar keeps you on track. The streak counter rewards consistency and confetti celebrates each daily goal you hit.</target>
             </segment>
@@ -2068,7 +2068,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Log an entry in 2 seconds via the floating action button or quick actions directly on the dashboard – no dialog needed.</target>
             </segment>
@@ -2095,7 +2095,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Install it as an app straight from the browser – with real-time sync across all your devices and your daily result a share button away.</target>
             </segment>
@@ -2140,7 +2140,7 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
@@ -2158,7 +2158,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – our AI recognises your motion in real time, right in your browser, and counts along automatically. The live Form Check shows angle and confidence so you always know the count is clean.</target>
       </segment>
@@ -2284,7 +2284,7 @@ Active:         </target>
 
         
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
         <target> Your position: #{$INTERPOLATION} · {$INTERPOLATION_1} reps </target>
 
@@ -2447,7 +2447,7 @@ Active:         </target>
 
 
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and running when you want more. </target>
 
@@ -2533,7 +2533,7 @@ Active:         </target>
 
         
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
         <target>
           <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'connected' : 'disconnected' }}" />
@@ -3716,7 +3716,7 @@ Active:         </target>
       
         </unit>
     <unit id="seo.default.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
         <target>Track reps, trends, and streaks with Pushup Tracker.</target>
 
@@ -4103,7 +4103,7 @@ Active:         </target>
 
         
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
         showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
       }}"/></pc> Quelle </source>
@@ -4385,9 +4385,9 @@ Active:         </target>
 
         
             </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Passwort muss mindestens 8 Zeichen lang sein!</source>
-        <target>Password must be at least 6 characters long!</target>
+        <target>Password must be at least 8 characters long!</target>
 
         
         
@@ -4724,7 +4724,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="admin.bulk.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
         <target>Deletes anonymous users without pushups in the last <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> days.</target>
       </segment>
@@ -5612,7 +5612,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="landing.feature.adaptive.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>The quick actions learn from your history and suggest fitting rep counts – or you configure your own buttons.</target>
       </segment>
@@ -6002,7 +6002,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="datenschutz.ads.personalized.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </source>
         <target>On your first visit, a consent banner will ask whether you allow personalized advertising. If you choose "Necessary only", only non-personalized ads will be served, which do not set tracking cookies for advertising profiles. You can change your consent at any time via the "Cookie Settings" link in the page footer.</target>
       </segment>
@@ -6014,7 +6014,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="datenschutz.cookies.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </source>
         <target>This website uses cookies. Technically necessary cookies (session, language preference) are set without consent. Cookies for analytics (Google Analytics) and personalized advertising (Google AdSense) are only activated after your explicit consent. You can revoke your consent at any time via the "Cookie Settings" link in the footer.</target>
       </segment>
@@ -6530,13 +6530,13 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="trainingPlans.replaceWarn">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
         <target>Heads up: this replaces the currently active plan.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.abandon">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
         <target>End plan</target>
       </segment>
@@ -6896,7 +6896,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
         <target><ph id="0" equiv="name" disp="name" /> hit <ph id="1" equiv="total" disp="total" /> push-ups on Pushup Tracker 💪 Check it out:</target>
       </segment>
@@ -6944,7 +6944,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Profil teilen </source>
         <target>Share profile</target>
       </segment>
@@ -7158,7 +7158,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> Exercises </target>
       </segment>
@@ -7897,7 +7897,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>Push-up types</target>
       </segment>
@@ -9626,7 +9626,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
         <target>Symmetric 6-week plan for push-ups and pulling work (rows, pull-up negatives, face pulls). Avoids the classic "push only" imbalance and strengthens the posterior chain equally. One dedicated pull day per week on top of the push progression.</target>
       </segment>
@@ -10086,7 +10086,7 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>Use this + button to record exercises lightning fast – from any page.</target>
       </segment>
@@ -12096,7 +12096,7 @@ Active:         </target>
       </segment>
     </unit>
         <unit id="publicProfile.owner.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.</source>
         <target>Tap the eye icon on an item to decide whether it appears on your public profile. Only you can see this area and the eye icons.</target>
       </segment>
@@ -12768,27 +12768,27 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="invite.banner.invitedBy">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
-        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</target>
+        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> invited you to Pushup Tracker.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.public">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für alle sichtbar, die deinen Profil-Link haben.</source>
-        <target>Für alle sichtbar, die deinen Profil-Link haben.</target>
+        <target>Visible to everyone who has your profile link.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für Freunde, die deine Anfrage bestätigt haben.</source>
-        <target>Nur für Freunde, die deine Anfrage bestätigt haben.</target>
+        <target>Only friends who have confirmed your request.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.off">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
-        <target>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</target>
+        <target>For no one – only you can see this, shown dimmed here.</target>
       </segment>
     </unit>
 </file>
