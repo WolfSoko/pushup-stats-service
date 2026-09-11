@@ -22,8 +22,6 @@ import {
   resolveAchievementBadges,
   type AchievementBadge,
 } from './achievement-badge';
-import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
-import { formatExerciseTotal } from './exercise-total.format';
 import { PublicProfileApiService } from '@pu-stats/data-access';
 import type {
   ProfileSection,
@@ -32,17 +30,8 @@ import type {
 } from '@pu-stats/models';
 import { PublicProfileSeo } from './public-profile-seo';
 import { ProfileAudienceView } from './profile-audience.view';
-import {
-  buildExerciseGroups,
-  buildHeatmapRows,
-  type ExerciseGroup,
-  type HeatmapRow,
-} from './profile-view.model';
-import {
-  EXERCISE_GROUP_LABELS,
-  PROFILE_LABELS,
-  WEEKDAY_LABELS,
-} from './profile-labels';
+import { createProfileRows } from './profile-rows';
+import { PROFILE_LABELS } from './profile-labels';
 import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { InviteBannerComponent } from '../core/invite-banner.component';
@@ -94,6 +83,9 @@ export class PublicProfilePageComponent {
     return s.kind === 'ready' ? s.profile : null;
   });
 
+  /** Everything the page renders as a list. */
+  protected readonly rows = createProfileRows(this.profile, this.localeId);
+
   /** Who sees what, and whose view the owner is previewing. */
   protected readonly audience = new ProfileAudienceView(
     this.profile,
@@ -121,21 +113,6 @@ export class PublicProfilePageComponent {
       ui: { ...ui, profileVisibility: levels },
     });
   }
-
-  protected readonly heatmapRows = computed<ReadonlyArray<HeatmapRow>>(() =>
-    buildHeatmapRows(this.profile()?.heatmap ?? {}, WEEKDAY_LABELS)
-  );
-
-  protected readonly exerciseGroups = computed<ReadonlyArray<ExerciseGroup>>(
-    () =>
-      buildExerciseGroups(
-        this.profile()?.exercises ?? [],
-        (entry) => exerciseDisplayName(entry.exerciseId),
-        (entry) =>
-          formatExerciseTotal(entry.total, entry.measurement, this.localeId),
-        (kind) => EXERCISE_GROUP_LABELS[kind]
-      )
-  );
 
   protected badgesFor(profile: PublicProfile): ReadonlyArray<AchievementBadge> {
     return resolveAchievementBadges(profile.achievements ?? []);

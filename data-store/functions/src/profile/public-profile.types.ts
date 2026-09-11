@@ -44,6 +44,15 @@ export interface UserStatsForPublicProfile {
   updatedAt?: string;
 }
 
+/** One logged workout, as a profile visitor may see it. */
+export interface RecentEntry {
+  exerciseId: string;
+  /** Reps, seconds or metres — see {@link ExerciseTotal.measurement}. */
+  value: number;
+  measurement: MeasurementType;
+  timestamp: string;
+}
+
 /** One entry of the per-exercise breakdown. */
 export interface ExerciseTotal {
   exerciseId: string;
@@ -94,6 +103,8 @@ export interface PublicProfileProjection {
   heatmap: Record<string, number>;
   /** Top exercises by volume, grouped and formatted by the client. */
   exercises: ExerciseTotal[];
+  /** The last few workouts, newest first. Empty when not visible. */
+  recent: RecentEntry[];
   /**
    * True only when the projection is handed to its own owner despite the
    * profile being private. Never true for a third party — the callable
@@ -130,6 +141,7 @@ export interface PublicProfileExtras {
   readonly achievements?: UserAchievementsForPublicProfile | null;
   readonly photoURL?: string | null;
   readonly exercises?: ReadonlyArray<ExerciseTotal>;
+  readonly recent?: ReadonlyArray<RecentEntry>;
   /** Berlin period keys for "now", used to reject stale buckets. */
   readonly currentWeeklyKey?: string;
   readonly currentMonthlyKey?: string;

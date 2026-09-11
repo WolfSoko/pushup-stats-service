@@ -7,8 +7,11 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 import {
   findExerciseDefinition,
   friendshipId,
+  isSectionVisibleTo,
   isValidFriendUid,
+  sectionVisibility,
   type Friendship,
+  type ProfileViewer,
 } from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
@@ -21,6 +24,7 @@ import {
   type UserConfigForPublicProfile,
   type ExerciseTotal,
   type UserAchievementsForPublicProfile,
+  type RecentEntry,
   type UserStatsForPublicProfile,
 } from './profile';
 // `renderProfileOg` lives behind a dynamic `import()` call inside the
@@ -61,6 +65,45 @@ async function readExerciseTotals(uid: string): Promise<ExerciseTotal[]> {
 }
 
 const MAX_PROFILE_EXERCISES = 8;
+
+const MAX_RECENT_ENTRIES = 10;
+
+/**
+ * The workouts behind the numbers, newest first — the same "what did you
+ * just train" the owner sees on their dashboard.
+ *
+ * Only fetched when the viewer may actually see them: it is the one extra
+ * query per profile view, and a section set to `friends` would otherwise
+ * be paid for by every anonymous visitor.
+ */
+async function readRecentEntries(uid: string): Promise<RecentEntry[]> {
+  const snap = await db
+    .collection('exerciseEntries')
+    .where('userId', '==', uid)
+    .orderBy('timestamp', 'desc')
+    .limit(MAX_RECENT_ENTRIES)
+    .get();
+  const rows: RecentEntry[] = [];
+  for (const doc of snap.docs) {
+    const data = doc.data();
+    const definition = findExerciseDefinition(String(data['exerciseId'] ?? ''));
+    const timestamp = data['timestamp'];
+    if (!definition || typeof timestamp !== 'string' || !timestamp) continue;
+    // Same fallback order as the stats trigger: a run carries both
+    // `distanceM` and `durationSec`, and distance is its primary value.
+    const value = Number(
+      data['reps'] ?? data['distanceM'] ?? data['durationSec'] ?? 0
+    );
+    if (!Number.isFinite(value) || value <= 0) continue;
+    rows.push({
+      exerciseId: definition.id,
+      value,
+      measurement: definition.measurement,
+      timestamp,
+    });
+  }
+  return rows;
+}
 
 async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
@@ -103,14 +146,25 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
 
   const parts = berlinDateParts();
   const keys = periodKeys(parts);
-  const [photoURL, exercises] = await Promise.all([
+  const viewer: ProfileViewer = viewerIsOwner
+    ? 'owner'
+    : viewerIsFriend
+      ? 'friend'
+      : 'public';
+  const showsRecent = isSectionVisibleTo(
+    sectionVisibility(config?.ui, 'recent'),
+    viewer
+  );
+  const [photoURL, exercises, recent] = await Promise.all([
     resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
     readExerciseTotals(uid),
+    showsRecent ? readRecentEntries(uid) : Promise.resolve([]),
   ]);
   return buildPublicProfile(uid, config, stats, {
     achievements,
     photoURL,
     exercises,
+    recent,
     currentWeeklyKey: keys.weeklyKey,
     currentMonthlyKey: keys.monthlyKey,
     viewerIsOwner,

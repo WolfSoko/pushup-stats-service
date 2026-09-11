@@ -1,6 +1,7 @@
 import type { PublicProfileExercise } from '@pu-stats/models';
 
 import {
+  buildRecentRows,
   buildExerciseGroups,
   type ExerciseGroupKind,
 } from './profile-view.model';
@@ -156,5 +157,62 @@ describe('buildExerciseGroups', () => {
 
     // then
     expect(group.rows[0].percent).toBe(0);
+  });
+});
+
+describe('buildRecentRows', () => {
+  const entries = [
+    {
+      exerciseId: 'pushup',
+      value: 40,
+      measurement: 'reps',
+      timestamp: '2026-09-11T18:00:00.000Z',
+    },
+    {
+      exerciseId: 'plank',
+      value: 90,
+      measurement: 'time',
+      timestamp: '2026-09-11T17:00:00.000Z',
+    },
+  ];
+
+  it('should keep the order it was given', () => {
+    // given — the server sorts newest first; re-sorting here could only
+    // disagree with it
+    const rows = buildRecentRows(
+      entries,
+      (id) => id,
+      (entry) => String(entry.value)
+    );
+
+    // then
+    expect(rows.map((row) => row.name)).toEqual(['pushup', 'plank']);
+  });
+
+  it('should format each entry in its own unit', () => {
+    // given
+    const rows = buildRecentRows(
+      entries,
+      (id) => id,
+      (entry) => `${entry.value} ${entry.measurement}`
+    );
+
+    // then
+    expect(rows[0].value).toBe('40 reps');
+    expect(rows[1].value).toBe('90 time');
+  });
+
+  it('should give two entries of the same second distinct keys', () => {
+    // given — a tracked session writes several entries at once, and a
+    // duplicate `track` key drops tiles from the DOM
+    const sameSecond = [entries[0], { ...entries[0] }];
+    const rows = buildRecentRows(
+      sameSecond,
+      (id) => id,
+      () => ''
+    );
+
+    // then
+    expect(rows[0].key).not.toBe(rows[1].key);
   });
 });

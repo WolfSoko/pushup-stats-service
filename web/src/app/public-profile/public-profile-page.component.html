@@ -383,7 +383,7 @@
           }
         }
 
-        @if (exerciseGroups(); as groups) {
+        @if (rows.exerciseGroups(); as groups) {
           @if (audience.renders('exercises', groups.length > 0)) {
             <section
               class="exercises"
@@ -419,8 +419,40 @@
           }
         }
 
-        @if (heatmapRows(); as rows) {
-          @if (audience.renders('heatmap', rows.length > 0)) {
+        @if (audience.renders('recent', p.recent.length > 0)) {
+          <section
+            class="recent"
+            data-testid="public-profile-recent"
+            [class.is-hidden]="!audience.isVisible('recent')"
+          >
+            <h2>
+              {{ labels.recent }}
+              <ng-container
+                *ngTemplateOutlet="
+                  sectionToggle;
+                  context: { $implicit: 'recent', label: labels.recent }
+                "
+              ></ng-container>
+            </h2>
+            <div class="recent-grid">
+              @for (row of rows.recentRows(); track row.key) {
+                <article
+                  class="recent-tile"
+                  data-testid="public-profile-recent-tile"
+                >
+                  <strong class="tile-title">{{ row.name }}</strong>
+                  <span class="tile-value">{{ row.value }}</span>
+                  <small class="tile-time">{{
+                    row.timestamp | date: 'short'
+                  }}</small>
+                </article>
+              }
+            </div>
+          </section>
+        }
+
+        @if (rows.heatmapRows(); as heatmap) {
+          @if (audience.renders('heatmap', heatmap.length > 0)) {
             <section
               class="heatmap"
               data-testid="public-profile-heatmap"
@@ -440,7 +472,7 @@
                 role="img"
                 [attr.aria-label]="labels.heatmapAria"
               >
-                @for (row of rows; track row.weekday) {
+                @for (row of heatmap; track row.weekday) {
                   <span class="heatmap-day">{{ row.weekday }}</span>
                   @for (cell of row.cells; track cell.hour) {
                     <span

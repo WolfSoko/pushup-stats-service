@@ -34,6 +34,7 @@ const sampleProfile: PublicProfile = {
   monthlyReps: 0,
   heatmap: {},
   exercises: [],
+  recent: [],
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],
@@ -446,6 +447,80 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-exercises"]'
         )
       ).toBeNull();
+    });
+  });
+
+  describe('Recent workouts', () => {
+    const recent = [
+      {
+        exerciseId: 'pushup',
+        value: 40,
+        measurement: 'reps' as const,
+        timestamp: '2026-09-11T18:00:00.000Z',
+      },
+      {
+        exerciseId: 'plank',
+        value: 90,
+        measurement: 'time' as const,
+        timestamp: '2026-09-11T17:00:00.000Z',
+      },
+    ];
+
+    it('should render one tile per workout', async () => {
+      // given — the same "what did you just train" the dashboard shows,
+      // seen from the visitor's side
+      await setup({ resolve: { ...sampleProfile, recent } });
+
+      // then
+      const tiles = fixture.nativeElement.querySelectorAll(
+        '[data-testid="public-profile-recent-tile"]'
+      );
+      expect(tiles.length).toBe(2);
+      expect(tiles[0].textContent).toContain('Liegestütze');
+    });
+
+    it('should format every workout in its own unit', async () => {
+      // given — 90 under a plank is seconds, not repetitions
+      await setup({ resolve: { ...sampleProfile, recent } });
+
+      // then
+      const tiles = fixture.nativeElement.querySelectorAll(
+        '[data-testid="public-profile-recent-tile"]'
+      );
+      expect(tiles[1].textContent).toContain('1:30 min');
+    });
+
+    it('should omit the section when the viewer gets no workouts', async () => {
+      // given — a visitor of a profile that keeps them for friends gets
+      // an empty list, and an empty heading would announce what is hidden
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-recent"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should keep the section and its switch for the owner', async () => {
+      // given — the owner needs the switch even before they ever logged
+      // anything, or they could never publish this
+      await setup({
+        resolve: { ...sampleProfile, viewerIsOwner: true, recent: [] },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-recent"]'
+        )
+      ).toBeTruthy();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="profile-toggle-recent"]'
+        )
+      ).toBeTruthy();
     });
   });
 

@@ -43,6 +43,14 @@ export function isProfileSectionVisibility(
   return value === 'off' || value === 'friends' || value === 'public';
 }
 
+/**
+ * Sections added after the legacy master switch existed. Nobody ever
+ * agreed to publish these, so they start at `friends` even on a profile
+ * that was public back then — an old opt-in is not consent for a new kind
+ * of data.
+ */
+const FRIENDS_UNLESS_CHOSEN: ReadonlyArray<ProfileSection> = ['recent'];
+
 /** The level in force for one section, legacy configs included. */
 export function sectionVisibility(
   ui: ProfileVisibilityUi | undefined | null,
@@ -53,6 +61,7 @@ export function sectionVisibility(
   if (normalizeHiddenSections(ui?.profileHidden).includes(section)) {
     return 'off';
   }
+  if (FRIENDS_UNLESS_CHOSEN.includes(section)) return 'friends';
   return ui?.publicProfile === true ? 'public' : 'friends';
 }
 

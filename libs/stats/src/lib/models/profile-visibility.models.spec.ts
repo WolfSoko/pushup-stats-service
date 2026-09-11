@@ -173,10 +173,20 @@ describe('profile-visibility.models', () => {
       const map = profileVisibilityMap({ publicProfile: true });
 
       // then
-      expect(Object.values(map).every((level) => level === 'public')).toBe(
-        true
-      );
-      expect(Object.keys(map).length).toBeGreaterThan(5);
+      expect(Object.keys(map).length).toBe(PROFILE_SECTIONS.length);
+      for (const section of PROFILE_SECTIONS) {
+        expect(map[section]).toBeTruthy();
+      }
+    });
+
+    it('should keep a legacy opt-in from publishing sections invented later', () => {
+      // given — the old master switch said "show my stats", not "show
+      // every kind of data added afterwards"
+      const map = profileVisibilityMap({ publicProfile: true });
+
+      // then
+      expect(map.total).toBe('public');
+      expect(map.recent).toBe('friends');
     });
   });
 });

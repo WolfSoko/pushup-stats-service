@@ -144,6 +144,15 @@ export interface ActivePlanView {
             }
           }
         }
+        <button
+          mat-stroked-button
+          type="button"
+          data-testid="active-plan-share"
+          (click)="sharePlan.emit()"
+        >
+          <mat-icon>share</mat-icon>
+          <span i18n="@@trainingPlans.share">Plan teilen</span>
+        </button>
         <a mat-flat-button [routerLink]="['/training-plans', view().slug]">
           <mat-icon>open_in_full</mat-icon>
           <span i18n="@@trainingPlans.openDetail">Details öffnen</span>
@@ -220,4 +229,5 @@ export class ActivePlanCardComponent {
   readonly pausePlan = output<void>();
   readonly resumePlan = output<void>();
   readonly logToday = output<void>();
+  readonly sharePlan = output<void>();
 }

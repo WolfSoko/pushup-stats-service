@@ -5787,8 +5787,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,46</note>
       </notes>
-      <segment state="translated">
-        <source>All-Time Gesamt</source>
+      <segment state="initial">
+        <source>Gesamt</source>
         <target>Total de todos los tiempos</target>
       </segment>
     </unit>
@@ -5796,8 +5796,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:49,50</note>
       </notes>
-      <segment state="translated">
-        <source>All-Time Tage</source>
+      <segment state="initial">
+        <source>Tage</source>
         <target>Días de todos los tiempos</target>
       </segment>
     </unit>
@@ -5805,8 +5805,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:53,54</note>
       </notes>
-      <segment state="translated">
-        <source>All-Time Einträge</source>
+      <segment state="initial">
+        <source>Einträge</source>
         <target>Entradas de todos los tiempos</target>
       </segment>
     </unit>
@@ -5814,8 +5814,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:57,58</note>
       </notes>
-      <segment state="translated">
-        <source>All-Time Ø/Tag</source>
+      <segment state="initial">
+        <source>Ø pro Tag</source>
         <target>Todo el tiempo Ø/día</target>
       </segment>
     </unit>
@@ -12625,6 +12625,72 @@
       <segment state="initial">
         <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
         <target>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.recent">
+      <segment state="initial">
+        <source>Letzte Übungen</source>
+        <target>Letzte Übungen</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.heading">
+      <segment state="initial">
+        <source>Alle Liegestütze seit Beginn</source>
+        <target>Alle Liegestütze seit Beginn</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.total">
+      <segment state="initial">
+        <source>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</source>
+        <target>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.days">
+      <segment state="initial">
+        <source>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</source>
+        <target>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.entries">
+      <segment state="initial">
+        <source>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</source>
+        <target>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.allTime.hint.avg">
+      <segment state="initial">
+        <source>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</source>
+        <target>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.share">
+      <segment state="initial">
+        <source>Plan teilen</source>
+        <target>Plan teilen</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.share.plain">
+      <segment state="initial">
+        <source>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</source>
+        <target>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.share.paused">
+      <segment state="initial">
+        <source>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</source>
+        <target>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.share.day">
+      <segment state="initial">
+        <source>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</source>
+        <target>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</target>
+      </segment>
+    </unit>
+    <unit id="trainingPlans.share.title">
+      <segment state="initial">
+        <source>Pushup Tracker Trainingsplan</source>
+        <target>Pushup Tracker Trainingsplan</target>
       </segment>
     </unit>
 </file>

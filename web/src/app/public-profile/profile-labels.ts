@@ -15,6 +15,7 @@ export const PROFILE_LABELS = {
   month: $localize`:@@publicProfile.month:Dieser Monat`,
   exercises: $localize`:@@publicProfile.exercises:Übungen`,
   heatmap: $localize`:@@publicProfile.heatmap:Wann trainiert wird`,
+  recent: $localize`:@@publicProfile.recent:Letzte Übungen`,
   heatmapAria: $localize`:@@publicProfile.heatmap.aria:Trainingsverteilung über Wochentage und Tageszeit`,
   memberSince: $localize`:@@publicProfile.memberSince:Dabei seit`,
   notFoundTitle: $localize`:@@publicProfile.notFound.title:Profil nicht gefunden`,

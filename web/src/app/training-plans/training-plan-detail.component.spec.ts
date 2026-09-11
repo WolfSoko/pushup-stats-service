@@ -18,6 +18,7 @@ import {
   UserTrainingPlan,
 } from '@pu-stats/models';
 import { TrainingPlanDetailComponent } from './training-plan-detail.component';
+import { ShareService } from '../core/share.service';
 import { TrainingPlanStore } from './training-plan.store';
 
 function makeStoreMock(overrides: Partial<ReturnType<typeof baseStore>> = {}) {
@@ -938,6 +939,37 @@ describe('TrainingPlanDetailComponent', () => {
       expect(document.querySelector('.status-card')).toBeTruthy();
       expect(document.body.textContent).toContain('Pausiert bei Tag:');
       expect(screen.queryByRole('button', { name: /Plan starten/ })).toBeNull();
+    });
+
+    it('should offer sharing the plan from the detail page', async () => {
+      // given — the page a user lands on from the dashboard banner is
+      // where they look at their plan, so it is where they share it
+      const share = { share: vitest.fn().mockResolvedValue('native') };
+
+      // when
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: planStore(false) },
+          { provide: ShareService, useValue: share },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+      screen.getByTestId('plan-detail-share').click();
+
+      // then
+      expect(share.share).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining('/training-plans/recruit-6w'),
+        })
+      );
     });
 
     it('should say that the plan is not setting the daily goal while paused', async () => {

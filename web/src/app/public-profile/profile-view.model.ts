@@ -129,3 +129,33 @@ export function buildExerciseGroups<
       };
     });
 }
+
+export interface RecentRow {
+  /** Stable key: two entries can share a second but not an exercise. */
+  readonly key: string;
+  readonly name: string;
+  readonly value: string;
+  readonly timestamp: string;
+}
+
+/**
+ * The "what did they just train" tiles. Formatting is handed in so this
+ * stays free of `$localize` and the locale — the page owns both.
+ */
+export function buildRecentRows(
+  entries: ReadonlyArray<{
+    exerciseId: string;
+    value: number;
+    measurement: string;
+    timestamp: string;
+  }>,
+  name: (exerciseId: string) => string,
+  value: (entry: { value: number; measurement: string }) => string
+): ReadonlyArray<RecentRow> {
+  return entries.map((entry, index) => ({
+    key: `${entry.timestamp}-${entry.exerciseId}-${index}`,
+    name: name(entry.exerciseId),
+    value: value(entry),
+    timestamp: entry.timestamp,
+  }));
+}

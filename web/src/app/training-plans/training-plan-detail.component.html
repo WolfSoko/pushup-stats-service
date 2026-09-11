@@ -118,6 +118,15 @@
         <mat-card-actions align="end">
           <button
             mat-stroked-button
+            type="button"
+            data-testid="plan-detail-share"
+            (click)="sharePlan()"
+          >
+            <mat-icon>share</mat-icon>
+            <span i18n="@@trainingPlans.share">Plan teilen</span>
+          </button>
+          <button
+            mat-stroked-button
             color="warn"
             (click)="abandon()"
             i18n="@@trainingPlans.abandon"

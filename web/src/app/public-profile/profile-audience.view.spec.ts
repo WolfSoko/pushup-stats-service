@@ -23,6 +23,7 @@ const sample: PublicProfile = {
   monthlyReps: 0,
   heatmap: {},
   exercises: [],
+  recent: [],
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],

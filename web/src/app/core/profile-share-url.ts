@@ -22,6 +22,19 @@ export function buildProfileShareUrl(
 }
 
 /**
+ * The public page of a training plan, locale-prefixed like the profile
+ * link above and for the same reason.
+ */
+export function buildPlanShareUrl(
+  slug: string | null | undefined,
+  localeId: string | null | undefined
+): string {
+  if (!slug) return SHARE_URL_BASE;
+  const lang = localeId?.toLowerCase().startsWith('en') ? 'en' : 'de';
+  return `${SHARE_URL_BASE}/${lang}/training-plans/${encodeURIComponent(slug)}`;
+}
+
+/**
  * The link a user hands to a friend. Carries `?ref=<uid>` so the signup it
  * produces can be attributed back (see `referral.models.ts`).
  *
