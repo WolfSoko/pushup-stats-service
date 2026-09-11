@@ -66,12 +66,16 @@
             </p>
             <ul class="owner-legend" data-testid="profile-owner-legend">
               <li>
-                <mat-icon aria-hidden="true">visibility</mat-icon>
-                <span>{{ labels.legendVisible }}</span>
+                <mat-icon aria-hidden="true">public</mat-icon>
+                <span>{{ labels.legendPublic }}</span>
+              </li>
+              <li>
+                <mat-icon aria-hidden="true">group</mat-icon>
+                <span>{{ labels.legendFriends }}</span>
               </li>
               <li>
                 <mat-icon aria-hidden="true">visibility_off</mat-icon>
-                <span>{{ labels.legendHidden }}</span>
+                <span>{{ labels.legendOff }}</span>
               </li>
             </ul>
             @if (canPreview()) {

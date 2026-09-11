@@ -534,21 +534,21 @@ describe('PublicProfilePageComponent', () => {
       expect(q('[data-testid="profile-toggle-streak"]')).toBeNull();
     });
 
-    describe('Explaining the eye icons', () => {
-      it('should describe both states at the top of the page', async () => {
-        // given — an eye icon on its own does not say what it does, and
-        // the icons carry the whole feature
+    describe('Explaining the visibility icons', () => {
+      it('should describe every audience at the top of the page', async () => {
+        // given — an icon on its own does not say what it does, and the
+        // icons carry the whole feature
         await setup({ resolve: owner() });
 
-        // then
+        // then: public, friends, nobody
         const legend = q('[data-testid="profile-owner-legend"]');
         expect(legend).toBeTruthy();
-        expect(legend.querySelectorAll('li').length).toBe(2);
+        expect(legend.querySelectorAll('li').length).toBe(3);
       });
 
-      it('should name both icons, not just the visible one', async () => {
-        // given — the half that is easy to misread is the crossed-out
-        // eye: it must say "hidden", not leave the user guessing
+      it('should use the same icons the switches show', async () => {
+        // given — a legend with different icons than the buttons is worse
+        // than none
         await setup({ resolve: owner() });
 
         // then
@@ -557,7 +557,18 @@ describe('PublicProfilePageComponent', () => {
             'mat-icon'
           ),
         ].map((i: Element) => i.textContent?.trim());
-        expect(icons).toEqual(['visibility', 'visibility_off']);
+        expect(icons).toEqual(['public', 'group', 'visibility_off']);
+      });
+
+      it('should explain what the middle audience means', async () => {
+        // given — "friends" is the new one and the only one that needs
+        // saying out loud
+        await setup({ resolve: owner() });
+
+        // then
+        expect(q('[data-testid="profile-owner-legend"]').textContent).toContain(
+          'Freunde'
+        );
       });
 
       it('should say the icons are private to the owner', async () => {

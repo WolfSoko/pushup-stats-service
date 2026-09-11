@@ -11896,8 +11896,8 @@
       </segment>
     </unit>
         <unit id="publicProfile.owner.hint">
-      <segment state="translated">
-        <source>Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.</source>
+      <segment state="initial">
+        <source>Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.</source>
         <target>Toca el icono del ojo en un elemento para decidir si aparece en tu perfil público. Solo tú ves esta sección y los iconos de ojo.</target>
       </segment>
     </unit>
@@ -12571,6 +12571,24 @@
       <segment state="initial">
         <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
         <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legend.public">
+      <segment state="initial">
+        <source>Für alle sichtbar, die deinen Profil-Link haben.</source>
+        <target>Für alle sichtbar, die deinen Profil-Link haben.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legend.friends">
+      <segment state="initial">
+        <source>Nur für Freunde, die deine Anfrage bestätigt haben.</source>
+        <target>Nur für Freunde, die deine Anfrage bestätigt haben.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.legend.off">
+      <segment state="initial">
+        <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
+        <target>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</target>
       </segment>
     </unit>
 </file>

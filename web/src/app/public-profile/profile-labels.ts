@@ -36,9 +36,10 @@ export const PROFILE_LABELS = {
   share: $localize`:@@publicProfile.share:Teilen`,
   cta: $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.com`,
   ownerTitle: $localize`:@@publicProfile.owner.title:Nur für dich sichtbar`,
-  ownerHint: $localize`:@@publicProfile.owner.hint:Tippe bei einem Element auf das Auge, um zu bestimmen, ob es auf deinem öffentlichen Profil erscheint. Diesen Bereich und die Augen-Symbole sehen nur du.`,
-  legendVisible: $localize`:@@publicProfile.owner.legendVisible:Wird auf deinem öffentlichen Profil angezeigt.`,
-  legendHidden: $localize`:@@publicProfile.owner.legendHidden:Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.`,
+  ownerHint: $localize`:@@publicProfile.owner.hint:Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.`,
+  legendPublic: $localize`:@@publicProfile.owner.legend.public:Für alle sichtbar, die deinen Profil-Link haben.`,
+  legendFriends: $localize`:@@publicProfile.owner.legend.friends:Nur für Freunde, die deine Anfrage bestätigt haben.`,
+  legendOff: $localize`:@@publicProfile.owner.legend.off:Für niemanden – nur du siehst es, hier abgeblendet dargestellt.`,
   previewAsVisitor: $localize`:@@publicProfile.owner.preview:Als Besucher ansehen`,
   photoEdit: $localize`:@@publicProfile.owner.photoEdit:Profilbild ändern`,
   /** Current audience of one element, for the switch's tooltip. */
