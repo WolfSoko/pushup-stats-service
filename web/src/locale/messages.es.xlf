@@ -12184,387 +12184,387 @@
       </segment>
     </unit>
         <unit id="reminder.goalPause.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erinnerungen und Ziel </source>
-        <target> Erinnerungen und Ziel </target>
+        <target>Recordatorios y objetivo</target>
       </segment>
     </unit>
         <unit id="reminder.goalPause.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </source>
-        <target> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </target>
+        <target>Los recordatorios muestran lo que falta hoy: el día del plan si hay un plan de entrenamiento activo, o si no, tu objetivo diario.</target>
       </segment>
     </unit>
     <unit id="reminder.goalPause.toggle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erinnerungen pausieren, wenn das Ziel erreicht ist </source>
-        <target> Erinnerungen pausieren, wenn das Ziel erreicht ist </target>
+        <target>Pausar recordatorios cuando se alcance el objetivo</target>
       </segment>
     </unit>
     <unit id="trainingPlans.paused.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pausierter Plan </source>
-        <target> Pausierter Plan </target>
+        <target>Plan pausado</target>
       </segment>
     </unit>
     <unit id="trainingPlans.onResumePlanned">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beim Fortsetzen:</source>
-        <target>Beim Fortsetzen:</target>
+        <target>Al reanudar:</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resume">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Reanudar plan</target>
       </segment>
     </unit>
     <unit id="trainingPlans.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Pausar plan</target>
       </segment>
     </unit>
     <unit id="trainingPlans.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</source>
-        <target>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</target>
+        <target>Plan pausado: te espera en el día <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resumedAtDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</source>
-        <target>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
+        <target>Continúa en el día <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.pausedAtDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert bei Tag:</source>
-        <target>Pausiert bei Tag:</target>
+        <target>Pausado en el día:</target>
       </segment>
     </unit>
         <unit id="trainingPlans.pausedHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </source>
-        <target> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </target>
+        <target>El plan está en pausa: no transcurren días del plan y vuelve a aplicarse tu propio objetivo diario. Al reanudar, continuará en este día.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.pausedSince">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert seit</source>
-        <target>Pausiert seit</target>
+        <target>Pausado desde</target>
       </segment>
     </unit>
     <unit id="dashboard.share.moreExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>+<ph id="0" equiv="count" disp="rest"/> weitere</source>
-        <target>+<ph id="0" equiv="count" disp="rest"/> weitere</target>
+        <target>+<ph id="0" equiv="count" disp="rest"/> más</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.profile.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</target>
+        <target>Hoy: <ph id="0" equiv="summary" disp="summary"/> 💪 Racha: <ph id="1" equiv="streak" disp="streak"/> días 🔥 Mira mi perfil:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.profile.simple">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</target>
+        <target>Hoy: <ph id="0" equiv="summary" disp="summary"/> 💪 Mira mi perfil:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</target>
+        <target>Hoy: <ph id="0" equiv="summary" disp="summary"/> 💪 Racha: <ph id="1" equiv="streak" disp="streak"/> días 🔥 Registra tus estadísticas gratis:</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.simple">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</target>
+        <target>Hoy: <ph id="0" equiv="summary" disp="summary"/> 💪 Registra tus estadísticas gratis:</target>
       </segment>
     </unit>
     <unit id="invite.banner.named">
-      <segment state="initial">
+      <segment state="translated">
         <source>hat dich zu Pushup Tracker eingeladen.</source>
-        <target>hat dich zu Pushup Tracker eingeladen.</target>
+        <target>te ha invitado a Pushup Tracker.</target>
       </segment>
     </unit>
     <unit id="invite.banner.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du wurdest zu Pushup Tracker eingeladen. </source>
-        <target> Du wurdest zu Pushup Tracker eingeladen. </target>
+        <target>Has sido invitado a Pushup Tracker.</target>
       </segment>
     </unit>
     <unit id="invite.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</source>
-        <target>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</target>
+        <target>Entrena conmigo: cuenta repeticiones con la cámara, completa un plan de entrenamiento y compite en la clasificación. Gratis:</target>
       </segment>
     </unit>
     <unit id="invite.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde einladen</source>
-        <target>Freunde einladen</target>
+        <target>Invitar amigos</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.firstInvite">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ersten Freund eingeladen</source>
-        <target>Ersten Freund eingeladen</target>
+        <target>Invitó a su primer amigo</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.invites">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
-        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+        <target><ph id="0" equiv="invites" disp="invites"/> amigos invitados</target>
       </segment>
     </unit>
     <unit id="nav.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Amigos</target>
       </segment>
     </unit>
     <unit id="seo.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde – Pushup Tracker</source>
-        <target>Freunde – Pushup Tracker</target>
+        <target>Amigos – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.friends.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
-        <target>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</target>
+        <target>Confirma amigos, responde solicitudes y entrena juntos.</target>
       </segment>
     </unit>
     <unit id="friends.error.self">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das ist dein eigenes Profil.</source>
-        <target>Das ist dein eigenes Profil.</target>
+        <target>Este es tu propio perfil.</target>
       </segment>
     </unit>
     <unit id="friends.error.exists">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ihr seid schon Freunde.</source>
-        <target>Ihr seid schon Freunde.</target>
+        <target>Ya sois amigos.</target>
       </segment>
     </unit>
     <unit id="friends.error.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Anfrage läuft schon.</source>
-        <target>Die Anfrage läuft schon.</target>
+        <target>La solicitud ya está en curso.</target>
       </segment>
     </unit>
     <unit id="friends.error.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</source>
-        <target>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</target>
+        <target>La solicitud fue rechazada. Espera a que la otra parte se ponga en contacto.</target>
       </segment>
     </unit>
     <unit id="friends.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Freundesliste ist voll.</source>
-        <target>Deine Freundesliste ist voll.</target>
+        <target>Tu lista de amigos está llena.</target>
       </segment>
     </unit>
     <unit id="friends.error.unauthenticated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dafür brauchst du ein Konto.</source>
-        <target>Dafür brauchst du ein Konto.</target>
+        <target>Necesitas una cuenta para eso.</target>
       </segment>
     </unit>
     <unit id="friends.error.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieses Profil gibt es nicht.</source>
-        <target>Dieses Profil gibt es nicht.</target>
+        <target>Este perfil no existe.</target>
       </segment>
     </unit>
     <unit id="friends.error.gone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Anfrage ist nicht mehr offen.</source>
-        <target>Diese Anfrage ist nicht mehr offen.</target>
+        <target>Esta solicitud ya no está abierta.</target>
       </segment>
     </unit>
     <unit id="friends.error.failed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das hat nicht funktioniert. Bitte später erneut versuchen.</source>
-        <target>Das hat nicht funktioniert. Bitte später erneut versuchen.</target>
+        <target>Eso no ha funcionado. Inténtalo de nuevo más tarde.</target>
       </segment>
     </unit>
     <unit id="friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Amigos</target>
       </segment>
     </unit>
     <unit id="friends.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
-        <target> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </target>
+        <target>Entrenad juntos: los amigos confirmados ven lo que permiten los ajustes de perfil del otro.</target>
       </segment>
     </unit>
     <unit id="friends.incoming">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfragen an dich</source>
-        <target>Anfragen an dich</target>
+        <target>Solicitudes para ti</target>
       </segment>
     </unit>
     <unit id="friends.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target>Rechazar</target>
       </segment>
     </unit>
     <unit id="friends.accept">
-      <segment state="initial">
+      <segment state="translated">
         <source> Annehmen </source>
-        <target> Annehmen </target>
+        <target>Aceptar</target>
       </segment>
     </unit>
     <unit id="friends.list">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Freunde</source>
-        <target>Deine Freunde</target>
+        <target>Tus amigos</target>
       </segment>
     </unit>
     <unit id="friends.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
-        <target> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </target>
+        <target>Aún no tienes amigos. Invita a alguien, o abre un perfil y envía una solicitud.</target>
       </segment>
     </unit>
     <unit id="friends.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source> Entfernen </source>
-        <target> Entfernen </target>
+        <target>Eliminar</target>
       </segment>
     </unit>
     <unit id="friends.outgoing">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von dir angefragt</source>
-        <target>Von dir angefragt</target>
+        <target>Solicitado por ti</target>
       </segment>
     </unit>
     <unit id="friends.waiting">
-      <segment state="initial">
+      <segment state="translated">
         <source>wartet noch</source>
-        <target>wartet noch</target>
+        <target>aún pendiente</target>
       </segment>
     </unit>
     <unit id="friends.withdraw">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurückziehen </source>
-        <target> Zurückziehen </target>
+        <target>Retirar</target>
       </segment>
     </unit>
     <unit id="friends.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ohne Namen</source>
-        <target>Ohne Namen</target>
+        <target>Sin nombre</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.public">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für alle sichtbar</source>
-        <target>Für alle sichtbar</target>
+        <target>Visible para todos</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für Freunde sichtbar</source>
-        <target>Nur für Freunde sichtbar</target>
+        <target>Visible solo para amigos</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.off">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für niemanden sichtbar</source>
-        <target>Für niemanden sichtbar</target>
+        <target>No visible para nadie</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.nextFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippen: nur Freunde</source>
-        <target>Tippen: nur Freunde</target>
+        <target>Toca: solo amigos</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.nextOff">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippen: ausblenden</source>
-        <target>Tippen: ausblenden</target>
+        <target>Toca: ocultar</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.nextPublic">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippen: für alle zeigen</source>
-        <target>Tippen: für alle zeigen</target>
+        <target>Toca: mostrar a todos</target>
       </segment>
     </unit>
     <unit id="friends.requested">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfrage gesendet</source>
-        <target>Anfrage gesendet</target>
+        <target>Solicitud enviada</target>
       </segment>
     </unit>
     <unit id="friends.add">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Freund hinzufügen</source>
-        <target>Als Freund hinzufügen</target>
+        <target>Añadir como amigo</target>
       </segment>
     </unit>
     <unit id="friends.already">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ihr seid Freunde</source>
-        <target>Ihr seid Freunde</target>
+        <target>Sois amigos</target>
       </segment>
     </unit>
     <unit id="friends.board.periodAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitraum</source>
-        <target>Zeitraum</target>
+        <target>Periodo</target>
       </segment>
     </unit>
     <unit id="friends.board.daily">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute</source>
-        <target>Heute</target>
+        <target>Hoy</target>
       </segment>
     </unit>
     <unit id="friends.board.week">
-      <segment state="initial">
+      <segment state="translated">
         <source>7 Tage</source>
-        <target>7 Tage</target>
+        <target>7 días</target>
       </segment>
     </unit>
     <unit id="friends.board.month">
-      <segment state="initial">
+      <segment state="translated">
         <source>30 Tage</source>
-        <target>30 Tage</target>
+        <target>30 días</target>
       </segment>
     </unit>
     <unit id="friends.board.allTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamt</source>
-        <target>Gesamt</target>
+        <target>Total</target>
       </segment>
     </unit>
     <unit id="friends.board.you">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du</source>
-        <target>Du</target>
+        <target>Tú</target>
       </segment>
     </unit>
     <unit id="friends.board">
-      <segment state="initial">
+      <segment state="translated">
         <source>Euer Vergleich</source>
-        <target>Euer Vergleich</target>
+        <target>Vuestra comparación</target>
       </segment>
     </unit>
 </file>

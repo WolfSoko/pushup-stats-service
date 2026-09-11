@@ -12276,171 +12276,171 @@
       </segment>
     </unit>
     <unit id="friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Amis</target>
       </segment>
     </unit>
     <unit id="friends.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
-        <target> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </target>
+        <target>Vous vous entraînez ensemble : les amis confirmés voient ce que vos paramètres de profil autorisent à partager.</target>
       </segment>
     </unit>
     <unit id="friends.incoming">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfragen an dich</source>
-        <target>Anfragen an dich</target>
+        <target>Demandes reçues</target>
       </segment>
     </unit>
     <unit id="friends.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target>Refuser</target>
       </segment>
     </unit>
     <unit id="friends.accept">
-      <segment state="initial">
+      <segment state="translated">
         <source> Annehmen </source>
-        <target> Annehmen </target>
+        <target>Accepter</target>
       </segment>
     </unit>
     <unit id="friends.list">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Freunde</source>
-        <target>Deine Freunde</target>
+        <target>Tes amis</target>
       </segment>
     </unit>
     <unit id="friends.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
-        <target> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </target>
+        <target>Pas encore d'amis. Invite quelqu'un — ou ouvre un profil et envoie une demande.</target>
       </segment>
     </unit>
     <unit id="friends.remove">
-      <segment state="initial">
+      <segment state="translated">
         <source> Entfernen </source>
-        <target> Entfernen </target>
+        <target>Supprimer</target>
       </segment>
     </unit>
     <unit id="friends.outgoing">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von dir angefragt</source>
-        <target>Von dir angefragt</target>
+        <target>Demandes envoyées</target>
       </segment>
     </unit>
     <unit id="friends.waiting">
-      <segment state="initial">
+      <segment state="translated">
         <source>wartet noch</source>
-        <target>wartet noch</target>
+        <target>en attente</target>
       </segment>
     </unit>
     <unit id="friends.withdraw">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zurückziehen </source>
-        <target> Zurückziehen </target>
+        <target>Retirer</target>
       </segment>
     </unit>
     <unit id="friends.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ohne Namen</source>
-        <target>Ohne Namen</target>
+        <target>Sans nom</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.public">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für alle sichtbar</source>
-        <target>Für alle sichtbar</target>
+        <target>Visible pour tous</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für Freunde sichtbar</source>
-        <target>Nur für Freunde sichtbar</target>
+        <target>Visible pour les amis uniquement</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.off">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für niemanden sichtbar</source>
-        <target>Für niemanden sichtbar</target>
+        <target>Visible pour personne</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.nextFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippen: nur Freunde</source>
-        <target>Tippen: nur Freunde</target>
+        <target>Appuyer : amis uniquement</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.nextOff">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippen: ausblenden</source>
-        <target>Tippen: ausblenden</target>
+        <target>Appuyer : masquer</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.visibility.nextPublic">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippen: für alle zeigen</source>
-        <target>Tippen: für alle zeigen</target>
+        <target>Appuyer : afficher pour tous</target>
       </segment>
     </unit>
     <unit id="friends.requested">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfrage gesendet</source>
-        <target>Anfrage gesendet</target>
+        <target>Demande envoyée</target>
       </segment>
     </unit>
     <unit id="friends.add">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Freund hinzufügen</source>
-        <target>Als Freund hinzufügen</target>
+        <target>Ajouter comme ami</target>
       </segment>
     </unit>
     <unit id="friends.already">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ihr seid Freunde</source>
-        <target>Ihr seid Freunde</target>
+        <target>Vous êtes amis</target>
       </segment>
     </unit>
     <unit id="friends.board.periodAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeitraum</source>
-        <target>Zeitraum</target>
+        <target>Période</target>
       </segment>
     </unit>
     <unit id="friends.board.daily">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute</source>
-        <target>Heute</target>
+        <target>Aujourd'hui</target>
       </segment>
     </unit>
     <unit id="friends.board.week">
-      <segment state="initial">
+      <segment state="translated">
         <source>7 Tage</source>
-        <target>7 Tage</target>
+        <target>7 jours</target>
       </segment>
     </unit>
     <unit id="friends.board.month">
-      <segment state="initial">
+      <segment state="translated">
         <source>30 Tage</source>
-        <target>30 Tage</target>
+        <target>30 jours</target>
       </segment>
     </unit>
     <unit id="friends.board.allTime">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamt</source>
-        <target>Gesamt</target>
+        <target>Total</target>
       </segment>
     </unit>
     <unit id="friends.board.you">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du</source>
-        <target>Du</target>
+        <target>Toi</target>
       </segment>
     </unit>
     <unit id="friends.board">
-      <segment state="initial">
+      <segment state="translated">
         <source>Euer Vergleich</source>
-        <target>Euer Vergleich</target>
+        <target>Votre comparaison</target>
       </segment>
     </unit>
 </file>
