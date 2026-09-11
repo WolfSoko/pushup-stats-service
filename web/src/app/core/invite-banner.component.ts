@@ -31,11 +31,13 @@ import { ReferralService } from './referral.service';
         <mat-card-content>
           <mat-icon aria-hidden="true">person_add</mat-icon>
           @if (inviterName(); as name) {
-            <span
-              ><strong>{{ name }}</strong>
-              <span i18n="@@invite.banner.named"
-                >hat dich zu Pushup Tracker eingeladen.</span
-              ></span
+            <!-- One message, name included: Angular drops the whitespace-only
+                 text node between two elements (preserveWhitespaces is off by
+                 default), which glued the name to the verb. A single message
+                 also lets a translation move the name. -->
+            <span i18n="@@invite.banner.invitedBy"
+              ><strong>{{ name }}</strong> hat dich zu Pushup Tracker
+              eingeladen.</span
             >
           } @else {
             <span i18n="@@invite.banner.anonymous">

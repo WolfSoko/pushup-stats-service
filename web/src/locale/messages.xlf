@@ -4991,17 +4991,17 @@
         <source> Absenden </source>
       </segment>
     </unit>
-    <unit id="invite.banner.named">
+    <unit id="invite.banner.invitedBy">
       <notes>
-        <note category="location">web/src/app/core/invite-banner.component.ts:37,39</note>
+        <note category="location">web/src/app/core/invite-banner.component.ts:39,40</note>
       </notes>
       <segment>
-        <source>hat dich zu Pushup Tracker eingeladen.</source>
+        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
       </segment>
     </unit>
     <unit id="invite.banner.anonymous">
       <notes>
-        <note category="location">web/src/app/core/invite-banner.component.ts:42,44</note>
+        <note category="location">web/src/app/core/invite-banner.component.ts:44,46</note>
       </notes>
       <segment>
         <source> Du wurdest zu Pushup Tracker eingeladen. </source>

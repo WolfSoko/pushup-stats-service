@@ -77,6 +77,23 @@
   }
 }
 
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Icon and label are separate elements: Angular removes the whitespace-only
+   text node between them, so the gap has to come from the layout. */
+.friend-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
 .share-btn {
   flex-shrink: 0;
   align-self: center;
@@ -134,8 +151,13 @@
     align-items: flex-start;
   }
 
+  .share-actions {
+    align-self: stretch;
+  }
+
   .share-btn {
     align-self: stretch;
+    flex: 1 1 auto;
   }
 }
 

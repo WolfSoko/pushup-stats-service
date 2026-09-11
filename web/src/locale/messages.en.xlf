@@ -12767,5 +12767,11 @@ Active:         </target>
         <target>Your comparison</target>
       </segment>
     </unit>
+    <unit id="invite.banner.invitedBy">
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
+        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

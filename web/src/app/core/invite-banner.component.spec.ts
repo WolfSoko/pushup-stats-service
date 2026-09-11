@@ -28,9 +28,12 @@ describe('InviteBannerComponent', () => {
     // given
     await renderBanner('inviter-1', { displayName: 'Wolf' });
 
-    // then
+    // then — one sentence, with the space: Angular drops whitespace-only
+    // text nodes between elements, which once produced "Wolfhat dich"
     expect(await screen.findByText('Wolf')).toBeTruthy();
-    expect(document.body.textContent).toContain('eingeladen');
+    expect(document.body.textContent).toContain(
+      'Wolf hat dich zu Pushup Tracker eingeladen.'
+    );
   });
 
   it('should stay anonymous when the inviter has no public profile', async () => {
