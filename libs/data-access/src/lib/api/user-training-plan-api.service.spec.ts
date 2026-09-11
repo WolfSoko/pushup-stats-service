@@ -26,6 +26,7 @@ jest.mock('@angular/fire/firestore', () => ({
     __type: 'arrayRemove',
     values,
   })),
+  deleteField: jest.fn(() => ({ __type: 'deleteField' })),
 }));
 
 describe('UserTrainingPlanApiService', () => {
@@ -327,6 +328,84 @@ describe('UserTrainingPlanApiService', () => {
     // priorSkipped, so it should be preserved as well. Days 1..6 sans
     // 10 are bulk-skipped.
     expect(payload['skippedDays']).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it('pausePlan freezes the day without moving the start date', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    service.pausePlan('u', 7).subscribe();
+
+    await Promise.resolve();
+    const patch = (firestoreFns.updateDoc as jest.Mock).mock.calls[0][1];
+    expect(patch.status).toBe('paused');
+    expect(patch.pausedDayIndex).toBe(7);
+    expect(patch.pausedAt).toEqual(expect.any(String));
+    expect(patch.startDate).toBeUndefined();
+  });
+
+  it('resumePlan re-anchors the schedule and deletes the pause marks', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    service.resumePlan('u', '2026-10-01').subscribe();
+
+    await Promise.resolve();
+    const patch = (firestoreFns.updateDoc as jest.Mock).mock.calls[0][1];
+    expect(patch.status).toBe('active');
+    expect(patch.startDate).toBe('2026-10-01');
+    // Deleted, not zeroed — a leftover mark reads as a still-paused plan.
+    expect(patch.pausedAt).toEqual({ __type: 'deleteField' });
+    expect(patch.pausedDayIndex).toEqual({ __type: 'deleteField' });
+    expect(patch.dayActivatedAt).toEqual(expect.any(String));
+  });
+
+  it('resumePlan leaves the schedule alone without a new start date', async () => {
+    (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u' });
+
+    const { fixture } = await render('', {
+      providers: [
+        UserTrainingPlanApiService,
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: { currentUser: { uid: 'u' } } },
+      ],
+    });
+
+    const service = fixture.debugElement.injector.get(
+      UserTrainingPlanApiService
+    );
+
+    service.resumePlan('u', null).subscribe();
+
+    await Promise.resolve();
+    const patch = (firestoreFns.updateDoc as jest.Mock).mock.calls[0][1];
+    expect(patch.status).toBe('active');
+    expect(patch.startDate).toBeUndefined();
   });
 
   it('removeSkippedDay uses arrayRemove on skippedDays', async () => {

@@ -4,7 +4,12 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
-import { findExerciseDefinition } from '@pu-stats/models';
+import {
+  findExerciseDefinition,
+  friendshipId,
+  isValidFriendUid,
+  type Friendship,
+} from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
 import { db } from './firebase-app';
@@ -84,8 +89,17 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     : null;
 
   const viewerIsOwner = viewerUid !== '' && viewerUid === uid;
+  // A confirmed friendship opens the `friends` tier of the owner's
+  // visibility settings. One get by deterministic id — no query, and only
+  // for signed-in strangers, where it can actually change the answer.
+  const viewerIsFriend =
+    !viewerIsOwner && viewerUid !== '' && (await areFriends(viewerUid, uid));
   // Only pay for the extra reads once the profile will actually be shown.
-  if (!buildPublicProfile(uid, config, stats, { viewerIsOwner })) return null;
+  if (
+    !buildPublicProfile(uid, config, stats, { viewerIsOwner, viewerIsFriend })
+  ) {
+    return null;
+  }
 
   const parts = berlinDateParts();
   const keys = periodKeys(parts);
@@ -100,7 +114,18 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     currentWeeklyKey: keys.weeklyKey,
     currentMonthlyKey: keys.monthlyKey,
     viewerIsOwner,
+    viewerIsFriend,
   });
+}
+
+/** Whether the two users have an accepted friendship. */
+async function areFriends(viewerUid: string, uid: string): Promise<boolean> {
+  if (!isValidFriendUid(viewerUid) || !isValidFriendUid(uid)) return false;
+  const snap = await db
+    .collection('friendships')
+    .doc(friendshipId(viewerUid, uid))
+    .get();
+  return (snap.data() as Friendship | undefined)?.status === 'accepted';
 }
 
 // Returns a sanitized projection of `userConfigs/{uid}` + `userStats/{uid}`

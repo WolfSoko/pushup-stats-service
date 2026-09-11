@@ -1,4 +1,4 @@
-import { buildProfileShareUrl } from './profile-share-url';
+import { buildInviteUrl, buildProfileShareUrl } from './profile-share-url';
 
 describe('buildProfileShareUrl', () => {
   it.each([
@@ -39,6 +39,36 @@ describe('buildProfileShareUrl', () => {
     // characters that need encoding — keep the contract explicit.
     expect(buildProfileShareUrl('a/b c?d', 'de')).toBe(
       'https://pushup-stats.com/de/u/a%2Fb%20c%3Fd'
+    );
+  });
+});
+
+describe('buildInviteUrl', () => {
+  it('should point at the public profile and carry the inviter', () => {
+    // given a user who opted into a public profile
+    // when / then
+    expect(buildInviteUrl('abc12345', 'de', true)).toBe(
+      'https://pushup-stats.com/de/u/abc12345?ref=abc12345'
+    );
+  });
+
+  it('should fall back to the landing page without a public profile', () => {
+    // when / then
+    expect(buildInviteUrl('abc12345', 'en-US', false)).toBe(
+      'https://pushup-stats.com/en?ref=abc12345'
+    );
+  });
+
+  it('should degrade to the bare homepage when signed out', () => {
+    // when / then — nothing to attribute, but the link still works
+    expect(buildInviteUrl('', 'de', true)).toBe('https://pushup-stats.com');
+    expect(buildInviteUrl(null, 'de', false)).toBe('https://pushup-stats.com');
+  });
+
+  it('should URL-encode the uid in the ref parameter', () => {
+    // when / then
+    expect(buildInviteUrl('a b&c', 'de', false)).toBe(
+      'https://pushup-stats.com/de?ref=a%20b%26c'
     );
   });
 });

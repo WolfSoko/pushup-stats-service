@@ -1,4 +1,5 @@
 import type { ProfileSection } from './profile-sections';
+import type { ProfileSectionVisibility } from './profile-visibility.models';
 
 /**
  * Sanitized projection of a user's stats for the public profile route.
@@ -63,6 +64,15 @@ export interface PublicProfile {
    * would give away what the switch is there to withhold.
    */
   readonly hidden: ReadonlyArray<ProfileSection>;
+  /**
+   * Per-section audience (`off` / `friends` / `public`). Owner-only, same
+   * reason as {@link hidden}; `{}` for everyone else.
+   */
+  readonly visibility: Partial<
+    Record<ProfileSection, ProfileSectionVisibility>
+  >;
+  /** True when the viewer is a confirmed friend of this profile's owner. */
+  readonly viewerIsFriend: boolean;
   /** ISO timestamp of the last stats update. */
   readonly updatedAt: string;
 }

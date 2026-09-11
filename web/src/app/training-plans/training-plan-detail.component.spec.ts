@@ -29,6 +29,7 @@ function baseStore() {
     activeCatalog: signal<TrainingPlan | null>(null),
     activePlan: signal<UserTrainingPlan | null>(null),
     hasActivePlan: signal(false),
+    hasPausedPlan: signal(false),
     activePlanLoaded: signal(true),
     currentDayIndex: signal<number | null>(null),
     completionPercent: signal(0),
@@ -58,6 +59,8 @@ function baseStore() {
     skipDay: vitest.fn().mockResolvedValue(undefined),
     unskipDay: vitest.fn().mockResolvedValue(undefined),
     jumpToDay: vitest.fn().mockResolvedValue(undefined),
+    pause: vitest.fn().mockResolvedValue(undefined),
+    resume: vitest.fn().mockResolvedValue(undefined),
   };
 }
 
@@ -855,6 +858,97 @@ describe('TrainingPlanDetailComponent', () => {
       await renderPlan('hiit-4w');
       // then no empty section is left in the DOM
       expect(document.querySelector('.plan-about')).toBeNull();
+    });
+  });
+
+  describe('pausing', () => {
+    const PLAN = findPlanBySlug('recruit-6w') as NonNullable<
+      ReturnType<typeof findPlanBySlug>
+    >;
+
+    function planStore(paused: boolean) {
+      return makeStoreMock({
+        activeCatalog: signal(PLAN),
+        activePlan: signal({
+          userId: 'u1',
+          planId: PLAN.id,
+          startDate: '2026-04-01',
+          status: paused ? 'paused' : 'active',
+          completedDays: [1, 2],
+          ...(paused
+            ? { pausedDayIndex: 3, pausedAt: '2026-04-03T10:00:00.000Z' }
+            : {}),
+        } as never),
+        hasActivePlan: signal(!paused),
+        hasPausedPlan: signal(paused),
+        currentDayIndex: signal(3),
+        completionPercent: signal(20),
+      });
+    }
+
+    async function renderWith(store: ReturnType<typeof makeStoreMock>) {
+      await render(TrainingPlanDetailComponent, {
+        providers: [
+          provideRouter([]),
+          { provide: ActivatedRoute, useValue: makeRouteMock('recruit-6w') },
+          { provide: TrainingPlanStore, useValue: store },
+          {
+            provide: AuthStore,
+            useValue: makeAuthStoreMock({
+              isAuthenticated: true,
+              authResolved: true,
+            }),
+          },
+        ],
+      });
+    }
+
+    it('should offer pausing a running plan', async () => {
+      // given
+      const store = planStore(false);
+
+      // when
+      await renderWith(store);
+      screen.getByRole('button', { name: /Plan pausieren/ }).click();
+
+      // then
+      expect(store.pause).toHaveBeenCalled();
+    });
+
+    it('should offer resuming a paused plan', async () => {
+      // given
+      const store = planStore(true);
+
+      // when
+      await renderWith(store);
+      screen.getByRole('button', { name: /Plan fortsetzen/ }).click();
+
+      // then
+      expect(store.resume).toHaveBeenCalled();
+      expect(
+        screen.queryByRole('button', { name: /Plan pausieren/ })
+      ).toBeNull();
+    });
+
+    it('should keep the progress of a paused plan on screen', async () => {
+      // given a paused plan with two days done
+      await renderWith(planStore(true));
+
+      // then the user sees where they stand, not a pitch to start the plan
+      expect(document.querySelector('.status-card')).toBeTruthy();
+      expect(document.body.textContent).toContain('Pausiert bei Tag:');
+      expect(screen.queryByRole('button', { name: /Plan starten/ })).toBeNull();
+    });
+
+    it('should say that the plan is not setting the daily goal while paused', async () => {
+      // given
+      await renderWith(planStore(true));
+
+      // then
+      expect(document.body.textContent).not.toContain(
+        'Tagesziel wird vom Plan gesetzt.'
+      );
+      expect(document.body.textContent).toContain('Der Plan ruht');
     });
   });
 });

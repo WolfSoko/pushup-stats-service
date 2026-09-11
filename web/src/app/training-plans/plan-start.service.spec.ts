@@ -50,7 +50,8 @@ function setup(options: Options = {}) {
           start,
           activePlan: signal(active),
           activeCatalog: signal({ title: '30-Tage-Challenge' }),
-          hasActivePlan: signal(active !== null),
+          hasActivePlan: signal(active !== null && active.status !== 'paused'),
+          hasPausedPlan: signal(active?.status === 'paused'),
           activePlanHasProgress: signal(options.hasProgress ?? true),
           currentDayIndex: signal(12),
           scaleFactors: signal(NO_PLAN_SCALING),
@@ -133,6 +134,22 @@ describe('PlanStartService', () => {
     // then a dialog about nothing is not shown
     expect(confirmSwitch).not.toHaveBeenCalled();
     expect(start).toHaveBeenCalledWith('recruit-6w-v1', {
+      keepCurrentProgress: true,
+    });
+  });
+
+  it('should ask about a paused plan too — the user set it aside to return to it', async () => {
+    // given
+    const { service, confirmSwitch, start } = setup({
+      active: activePlan({ status: 'paused', pausedDayIndex: 12 }),
+    });
+
+    // when
+    await service.start({ id: 'other-plan', title: 'Anderer Plan' });
+
+    // then
+    expect(confirmSwitch).toHaveBeenCalled();
+    expect(start).toHaveBeenCalledWith('other-plan', {
       keepCurrentProgress: true,
     });
   });

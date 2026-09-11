@@ -111,13 +111,30 @@
   min-width: 0;
 }
 
-.header-share {
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   flex-shrink: 0;
   align-self: flex-start;
+}
+
+.header-share {
+  flex-shrink: 0;
 
   mat-icon {
     margin-right: 4px;
   }
+}
+
+/* Invite count rides along on the button rather than taking its own row. */
+.invite-count {
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: var(--mat-sys-primary, #3f51b5);
+  color: var(--mat-sys-on-primary, #fff);
 }
 
 .brand-logo {
@@ -668,8 +685,12 @@ h1 {
     align-items: flex-start;
   }
 
-  .header-share {
+  .header-actions {
     align-self: stretch;
+  }
+
+  .header-share {
+    flex: 1 1 auto;
     justify-content: center;
   }
 }

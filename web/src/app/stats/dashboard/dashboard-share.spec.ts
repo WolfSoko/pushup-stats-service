@@ -4,7 +4,7 @@ describe('buildShareDayPayload', () => {
   it('should share the generic homepage when the user has no public profile', () => {
     // given a signed-in user who did not opt into a public profile
     const payload = buildShareDayPayload({
-      total: 42,
+      summary: '42 Liegestütze',
       streak: 1,
       uid: 'user-1',
       publicProfile: false,
@@ -19,7 +19,7 @@ describe('buildShareDayPayload', () => {
   it('should share the profile URL when the user opted into a public profile', () => {
     // given a public-profile user
     const payload = buildShareDayPayload({
-      total: 42,
+      summary: '42 Liegestütze',
       streak: 5,
       uid: 'user-1',
       publicProfile: true,
@@ -34,7 +34,7 @@ describe('buildShareDayPayload', () => {
   it('should fall back to the homepage when public profile is on but uid is missing', () => {
     // given opted-in but signed out (no uid)
     const payload = buildShareDayPayload({
-      total: 10,
+      summary: '10 Liegestütze',
       streak: 1,
       uid: '',
       publicProfile: true,
@@ -42,5 +42,20 @@ describe('buildShareDayPayload', () => {
     });
     // then
     expect(payload.url).toBe('https://pushup-stats.com');
+  });
+
+  it('should lead with the day exercises, not a push-up count', () => {
+    // given a day of squats and a plank — no push-ups at all
+    const payload = buildShareDayPayload({
+      summary: '60 Kniebeugen, 2:00 Plank',
+      streak: 1,
+      uid: 'user-1',
+      publicProfile: false,
+      localeId: 'de',
+    });
+
+    // then the text reports what was trained, and never claims push-ups
+    expect(payload.text).toContain('60 Kniebeugen, 2:00 Plank');
+    expect(payload.text).not.toContain('Liegestütze');
   });
 });

@@ -1580,6 +1580,71 @@ describe('StatsDashboardComponent', () => {
       expect(payload.title).toBe('Pushup Tracker');
     });
 
+    it('Then it names every exercise of the day, not just push-ups', async () => {
+      // Given — 60 squats on top of today's push-ups
+      liveExerciseEntries.set([
+        {
+          _id: 'sq-1',
+          userId: 'u1',
+          exerciseId: 'legs.squats',
+          timestamp: '2025-01-15T09:00:00',
+          reps: 60,
+          source: 'manual',
+        } as never,
+      ]);
+      await fixture.whenStable();
+      fixture.detectChanges();
+      shareSpy.mockClear();
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="dashboard-share"]'
+      ) as HTMLButtonElement;
+
+      // When
+      button.click();
+      await fixture.whenStable();
+
+      // Then
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.text).toContain('60 Kniebeugen');
+      liveExerciseEntries.set([]);
+    });
+
+    it('Then the invite button shares a link that carries the inviter', async () => {
+      // Given
+      await fixture.whenStable();
+      shareSpy.mockClear();
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="dashboard-invite"]'
+      ) as HTMLButtonElement;
+
+      // When
+      expect(button).not.toBeNull();
+      button.click();
+      await fixture.whenStable();
+
+      // Then
+      const payload = shareSpy.mock.calls[0][0];
+      expect(payload.url).toContain('ref=');
+      expect(payload.text).not.toBe('');
+    });
+
+    it('Then it is disabled while nothing is logged today', async () => {
+      // Given — no entries at all
+      const previous = liveEntries();
+      liveEntries.set([]);
+      liveExerciseEntries.set([]);
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // Then there is nothing to tell anyone
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="dashboard-share"]'
+      ) as HTMLButtonElement;
+      expect(button.disabled).toBe(true);
+
+      liveEntries.set(previous);
+    });
+
     it('Then a multi-day streak adds the streak count to the share text', async () => {
       // Given — server stats report a 3-day streak ending today
       userStatsMock.getPerExerciseStats.mockReturnValueOnce(

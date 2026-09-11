@@ -4,6 +4,7 @@ import {
   arrayRemove,
   arrayUnion,
   deleteDoc,
+  deleteField,
   doc,
   docData,
   DocumentReference,
@@ -16,6 +17,7 @@ import {
 import {
   ParkedTrainingPlan,
   parsePlanTestResultId,
+  pausedPlanPatch,
   planTestResultId,
   UserTrainingPlan,
   UserTrainingPlanUpdate,
@@ -255,6 +257,35 @@ export class UserTrainingPlanApiService {
         });
       })
     ).pipe(map(() => void 0));
+  }
+
+  /**
+   * Put the plan on hold at `dayIndex`. `startDate` stays as it is: the
+   * break must not move the dates the user's completed days sit on, and
+   * `resumePlan` re-anchors it in one step when they come back.
+   */
+  pausePlan(userId: string, dayIndex: number): Observable<void> {
+    return this.patch(userId, { ...pausedPlanPatch(dayIndex) });
+  }
+
+  /**
+   * Take the plan off hold. `newStartDate` re-anchors the schedule so the
+   * frozen day is today again; pass `null` to leave the schedule alone
+   * (a plan whose frozen day no longer fits the catalog).
+   *
+   * The pause marks are deleted rather than zeroed — a leftover
+   * `pausedAt` on a running plan reads as if the feature were still on.
+   */
+  resumePlan(userId: string, newStartDate: string | null): Observable<void> {
+    return this.patch(userId, {
+      status: 'active',
+      ...(newStartDate ? { startDate: newStartDate } : {}),
+      pausedAt: deleteField(),
+      pausedDayIndex: deleteField(),
+      // Re-anchoring shifts which day owns today's date — see
+      // `dayActivatedAt`, same reason as `jumpToDay`.
+      dayActivatedAt: new Date().toISOString(),
+    });
   }
 
   removeSkippedDay(userId: string, dayIndex: number): Observable<void> {

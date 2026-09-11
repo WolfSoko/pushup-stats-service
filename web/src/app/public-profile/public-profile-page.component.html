@@ -143,18 +143,57 @@
               Jeden Tag ein Stück stärker. Mach mit.
             </p>
           </div>
-          <button
-            mat-stroked-button
-            type="button"
-            class="share-btn"
-            data-testid="public-profile-share"
-            [attr.aria-label]="labels.shareAria"
-            (click)="shareProfile()"
-          >
-            <mat-icon>share</mat-icon>
-            <span>{{ labels.share }}</span>
-          </button>
+          <div class="share-actions">
+            <button
+              mat-stroked-button
+              type="button"
+              class="share-btn"
+              data-testid="public-profile-share"
+              [attr.aria-label]="labels.shareAria"
+              (click)="shareProfile()"
+            >
+              <mat-icon>share</mat-icon>
+              <span>{{ labels.share }}</span>
+            </button>
+            @if (isOwner()) {
+              <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                class="share-btn"
+                data-testid="public-profile-invite"
+                (click)="inviteFriend()"
+              >
+                <mat-icon>person_add</mat-icon>
+                <span i18n="@@invite.action">Freunde einladen</span>
+              </button>
+            } @else if (canAddFriend()) {
+              <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                class="share-btn"
+                data-testid="public-profile-add-friend"
+                [disabled]="friendRequestSent()"
+                (click)="addFriend()"
+              >
+                <mat-icon>person_add</mat-icon>
+                @if (friendRequestSent()) {
+                  <span i18n="@@friends.requested">Anfrage gesendet</span>
+                } @else {
+                  <span i18n="@@friends.add">Als Freund hinzufügen</span>
+                }
+              </button>
+            } @else if (p.viewerIsFriend) {
+              <span class="friend-hint">
+                <mat-icon aria-hidden="true">group</mat-icon>
+                <span i18n="@@friends.already">Ihr seid Freunde</span>
+              </span>
+            }
+          </div>
         </header>
+
+        <app-invite-banner />
 
         <section class="stats-grid" [attr.aria-label]="labels.stats">
           @if (renders('total', true)) {
@@ -406,21 +445,15 @@
       mat-icon-button
       type="button"
       class="section-toggle"
+      [class.is-friends]="levelOf(section) === 'friends'"
       [attr.data-testid]="'profile-toggle-' + section"
-      [attr.aria-pressed]="isVisible(section)"
       [attr.aria-label]="
-        (isVisible(section) ? labels.hideElement : labels.showElement) +
-        ': ' +
-        label
+        visibilityLabel(section) + ': ' + label + '. ' + nextLabel(section)
       "
-      [matTooltip]="
-        isVisible(section) ? labels.hideElement : labels.showElement
-      "
-      (click)="toggleSection(section, !isVisible(section))"
+      [matTooltip]="visibilityLabel(section) + ' · ' + nextLabel(section)"
+      (click)="cycleSection(section)"
     >
-      <mat-icon>{{
-        isVisible(section) ? 'visibility' : 'visibility_off'
-      }}</mat-icon>
+      <mat-icon>{{ visibilityIcon(section) }}</mat-icon>
     </button>
   }
 </ng-template>

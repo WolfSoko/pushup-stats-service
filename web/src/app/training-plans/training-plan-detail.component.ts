@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -26,7 +26,8 @@ import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { TrainingPlanStore } from './training-plan.store';
 import { PlanStartService } from './plan-start.service';
 import { PlanDayActionsService } from './plan-day-actions.service';
-import { isPlanActive } from './training-plan-store.selectors';
+import { PlanPauseService } from './plan-pause.service';
+import { isPlanActive, isPlanPaused } from './training-plan-store.selectors';
 import { PlanDayExercisesComponent } from './plan-day-exercises.component';
 import { planDayExpansion } from './plan-day-expansion';
 import { PlanTestInputComponent } from './plan-test-input.component';
@@ -49,6 +50,7 @@ import { DayRow } from './training-plan-detail.models';
 @Component({
   selector: 'app-training-plan-detail',
   imports: [
+    DatePipe,
     MatCardModule,
     MatButtonModule,
     MatChipsModule,
@@ -73,6 +75,7 @@ export class TrainingPlanDetailComponent {
   private readonly router = inject(Router);
   private readonly snackbar = inject(MatSnackBar);
   private readonly planStart = inject(PlanStartService);
+  private readonly planPause = inject(PlanPauseService);
   /** Bound directly from the template — see `PlanDayActionsService`. */
   protected readonly dayActions = inject(PlanDayActionsService);
   private readonly locale = inject(LOCALE_ID) as string;
@@ -108,7 +111,7 @@ export class TrainingPlanDetailComponent {
    * ones everywhere else.
    */
   readonly plan = computed(() =>
-    isPlanActive(this.catalogPlan(), this.store.activePlan())
+    this.isThisPlanStarted()
       ? (this.store.activeCatalog() ?? this.catalogPlan())
       : this.catalogPlan()
   );
@@ -146,11 +149,27 @@ export class TrainingPlanDetailComponent {
     isPlanActive(this.catalogPlan(), this.store.activePlan())
   );
 
+  readonly isThisPlanPaused = computed(() =>
+    isPlanPaused(this.catalogPlan(), this.store.activePlan())
+  );
+
+  /**
+   * The user's own run of this plan, paused or not. Their progress, their
+   * rescaled targets and their measured tests all belong on the page
+   * either way — only writing to it is off while the plan is on hold.
+   */
+  readonly isThisPlanStarted = computed(
+    () => this.isThisPlanActive() || this.isThisPlanPaused()
+  );
+
+  /** ISO timestamp the plan was paused at, for the "since" line. */
+  readonly pausedAt = computed(() => this.store.activePlan()?.pausedAt ?? null);
+
   readonly weeks = computed(() =>
     weeksFor(
       this.plan(),
       {
-        active: this.isThisPlanActive(),
+        active: this.isThisPlanStarted(),
         currentDayIndex: this.store.currentDayIndex(),
         completedDays: this.store.activePlan()?.completedDays ?? [],
         skippedDays: this.store.activePlan()?.skippedDays ?? [],
@@ -197,6 +216,14 @@ export class TrainingPlanDetailComponent {
         replaceUrl: true,
       });
     }
+  }
+
+  pause(): Promise<void> {
+    return this.planPause.pause();
+  }
+
+  resume(): Promise<void> {
+    return this.planPause.resume();
   }
 
   async abandon(): Promise<void> {

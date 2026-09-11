@@ -53,6 +53,7 @@ import { exerciseSuggestions } from './stats-dashboard.suggestions';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
+import { InviteService } from '../../core/invite.service';
 import {
   ExerciseToggle,
   PlanDayExercisesComponent,
@@ -98,6 +99,7 @@ export class StatsDashboardComponent {
   private readonly quickAdd = inject(QuickAddOrchestrationService);
   private readonly appData = inject(AppDataFacade);
   private readonly locale = inject(LOCALE_ID) as string;
+  private readonly invites = inject(InviteService);
 
   // Mirrors stats-table.formatEntry so the dashboard preview matches
   // the history page when a catalog definition exists (plank → m:ss,
@@ -378,6 +380,16 @@ export class StatsDashboardComponent {
 
   navigateToHistory(): void {
     void this.router.navigate(['/history']);
+  }
+
+  /** Nothing logged today means there is nothing to tell anyone. */
+  readonly canShareDay = computed(() => this.store.todaySummary() !== '');
+
+  /** Accounts that joined through this user's link, 0 when none have. */
+  readonly invitedCount = this.invites.invitedCount;
+
+  inviteFriend(): void {
+    void this.invites.inviteFriend();
   }
 
   shareDay(): void {

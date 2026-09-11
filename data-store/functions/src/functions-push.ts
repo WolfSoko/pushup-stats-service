@@ -1,7 +1,6 @@
 import {
   normalizeReminderLocale,
-  reminderActionFailedLabel,
-  reminderQuickLogDoneLabel,
+  shouldPauseForReachedGoal,
 } from '@pu-stats/models';
 import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
@@ -10,32 +9,25 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import webpush from 'web-push';
 
+import { berlinDateParts } from './datetime';
 import { db, TZ } from './firebase-app';
-import { flattenTiers, type TieredQuotes } from './motivation';
 import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
-  buildReminderActions,
+  buildReminderPushPayload,
   isExpiredSubscriptionError,
   isLeaseStale,
+  loadMotivationPool,
+  loadReminderGoal,
   newReminderActionToken,
   pushSubscriptionId,
   PUSH_SEND_OPTIONS,
+  reminderActionUrl,
   sanitizeQuickLogReps,
   shouldSendReminder,
   STALE_LEASE_MS,
   validateSubscriptionPayload,
 } from './push';
-
-/**
- * Where the push service worker completes a notification action. The SW is
- * a self-contained bundle without Firebase config, so the dispatcher tells
- * it the endpoint — and the project id keeps staging and prod apart.
- */
-function reminderActionUrl(): string {
-  const project = process.env['GCLOUD_PROJECT'] ?? 'pushup-stats';
-  return `https://europe-west3-${project}.cloudfunctions.net/reminderAction`;
-}
 
 export async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);
@@ -182,56 +174,6 @@ export const revokeAllSessions = onCall({ region: 'europe-west3' }, (request) =>
 const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
 const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
 
-/**
- * Reads the cached motivation pool a user has for `lang` and returns a
- * flat list of quote strings. Tolerant of legacy doc shapes (flat
- * `quotes: string[]` / `quotes: {text}[]`) and the new tiered shape.
- * Returns an empty array on any error so the caller falls back to the
- * built-in localised messages.
- */
-async function loadMotivationPool(
-  uid: string,
-  lang: string
-): Promise<string[]> {
-  try {
-    const snap = await db
-      .collection('motivationQuotes')
-      .doc(`${uid}__${lang}`)
-      .get();
-    if (!snap.exists) return [];
-    const data = snap.data() as
-      | {
-          tiers?: TieredQuotes;
-          quotes?: ReadonlyArray<unknown>;
-        }
-      | undefined;
-    if (!data) return [];
-    if (data.tiers) return flattenTiers(data.tiers);
-    if (Array.isArray(data.quotes)) {
-      return data.quotes
-        .map((q) =>
-          typeof q === 'string'
-            ? q
-            : typeof q === 'object' && q !== null && 'text' in q
-              ? String((q as { text?: unknown }).text ?? '')
-              : String(q ?? '')
-        )
-        .filter((q) => q.trim().length > 0);
-    }
-    return [];
-  } catch (err) {
-    // Defensive against non-Error throws (string, null, etc.) — we don't
-    // want the logger itself to throw and surface as an unhandled
-    // rejection in the dispatch loop.
-    logger.warn('loadMotivationPool: failed', {
-      uid,
-      lang,
-      err: err instanceof Error ? err.message : String(err),
-    });
-    return [];
-  }
-}
-
 export const dispatchPushReminders = onSchedule(
   {
     schedule: 'every 5 minutes',
@@ -350,6 +292,20 @@ export const dispatchPushReminders = onSchedule(
             continue;
           }
 
+          // The goal the reminder is about — today's plan day, else the
+          // configured daily goal. Read only once a send is actually due,
+          // so a user inside their interval or in quiet hours costs
+          // nothing extra.
+          const goal = await loadReminderGoal(
+            uid,
+            userConfigData,
+            berlinDateParts(new Date(nowMs)).isoDate
+          );
+          if (shouldPauseForReachedGoal(reminder, goal)) {
+            results.skipped++;
+            continue;
+          }
+
           // Pull the body from the user's pre-generated motivation pool —
           // that pool is locale-aware (`generateMotivationQuotes` writes
           // `motivationQuotes/{uid}__{lang}`) and the Gemini cost is
@@ -358,47 +314,25 @@ export const dispatchPushReminders = onSchedule(
           // tokens. Fallback to the per-locale built-in list if the cache
           // is empty (user hasn't opened the app yet today).
           const pool = await loadMotivationPool(uid, userLocale);
-          const body = buildNotificationPayload(userLocale, pool);
           // Single source of truth: sanitize once, then use the same value for
           // both the action title and the data payload. Computing them
           // independently caused the title to clamp to 500 while the payload
           // shipped the raw (potentially absurd) Firestore value, so the SW
           // logged a different count than the user saw on the button.
           quickLogReps = sanitizeQuickLogReps(reminder?.quickLogReps);
-          const actions = buildReminderActions(userLocale, quickLogReps);
           // One token per dispatch, shared by all of the user's devices and
           // persisted below once a push went out. The SW hands it back to
           // `reminderAction`; the server decides what "quick-log" means from
           // `pendingAction.quickLogReps`, never from the notification.
           actionToken = newReminderActionToken();
-          const payload = JSON.stringify({
-            title: 'PushUp Stats',
-            body,
-            icon: '/icons/icon-192x192.png',
-            badge: '/icons/badge-72x72.png',
-            tag: 'reminder',
-            renotify: true,
-            data: {
-              url: `/${userLocale}/app`,
-              locale: userLocale,
-              reminderAction: {
-                uid,
-                token: actionToken,
-                url: reminderActionUrl(),
-              },
-              feedback: {
-                ...(quickLogReps
-                  ? {
-                      logged: reminderQuickLogDoneLabel(
-                        userLocale,
-                        quickLogReps
-                      ),
-                    }
-                  : {}),
-                failed: reminderActionFailedLabel(userLocale),
-              },
-            },
-            actions,
+          const payload = buildReminderPushPayload({
+            uid,
+            locale: userLocale,
+            quote: buildNotificationPayload(userLocale, pool),
+            goal,
+            quickLogReps,
+            actionToken,
+            actionUrl: reminderActionUrl(),
           });
 
           const expiredSubs: FirebaseFirestore.DocumentReference[] = [];

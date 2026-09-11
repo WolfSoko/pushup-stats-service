@@ -221,6 +221,19 @@ export const appRoutes: Routes = [
     ],
   },
   {
+    path: 'freunde',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.friends.title:Freunde – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.friends.description:Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.`,
+      noindex: true,
+    },
+    loadComponent: () =>
+      import('./friends/friends-page.component').then(
+        (m) => m.FriendsPageComponent
+      ),
+  },
+  {
     path: 'leaderboard',
     data: {
       seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,

@@ -9,19 +9,23 @@ import { TrainingPlanStore } from './training-plan.store';
 
 function makeStoreMock(
   activeCatalog: (typeof TRAINING_PLANS)[number] | null = null,
-  hasActivePlan = false
+  hasActivePlan = false,
+  hasPausedPlan = false
 ) {
   return {
     allPlans: () => TRAINING_PLANS,
     activeCatalog: signal(activeCatalog),
     activePlan: signal(null),
     hasActivePlan: signal(hasActivePlan),
+    hasPausedPlan: signal(hasPausedPlan),
     activePlanLoaded: signal(true),
     currentDayIndex: signal(null),
     completionPercent: signal(0),
     todayDay: signal(null),
     todayDone: signal(false),
     abandon: vitest.fn(),
+    pause: vitest.fn().mockResolvedValue(undefined),
+    resume: vitest.fn().mockResolvedValue(undefined),
     logTodayPlanDay: vitest.fn().mockResolvedValue('noop'),
   };
 }

@@ -30,6 +30,18 @@ export function resolveAchievementBadge(id: string): AchievementBadge | null {
     };
   }
 
+  if (definition.kind === 'invites') {
+    const invites = definition.threshold ?? 0;
+    return {
+      id,
+      icon: definition.icon,
+      label:
+        invites === 1
+          ? $localize`:@@publicProfile.badge.firstInvite:Ersten Freund eingeladen`
+          : $localize`:@@publicProfile.badge.invites:${invites}:invites: Freunde eingeladen`,
+    };
+  }
+
   const days = definition.threshold ?? 0;
   const label =
     days === 1

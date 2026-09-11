@@ -8,7 +8,14 @@
  * (email, goals, reminder config, raw entries) is whitelisted by absence.
  */
 
-import { normalizeHiddenSections, type ProfileSection } from '@pu-stats/models';
+import {
+  canViewProfile,
+  isSectionVisibleTo,
+  profileVisibilityMap,
+  PROFILE_SECTIONS,
+  type ProfileSection,
+  type ProfileViewer,
+} from '@pu-stats/models';
 
 import { toPublicDisplayName } from './logic';
 import type {
@@ -55,15 +62,23 @@ export function buildPublicProfile(
 ): PublicProfileProjection | null {
   if (!config) return null;
   const isPublic = isPublicProfileAllowed(config);
-  // The owner may see their own profile before opting in; nobody else can.
-  if (!isPublic && extras.viewerIsOwner !== true) return null;
-
-  const hidden = normalizeHiddenSections(config.ui?.profileHidden);
   const viewerIsOwner = extras.viewerIsOwner === true;
+  const viewerIsFriend = extras.viewerIsFriend === true;
+  const viewer: ProfileViewer = viewerIsOwner
+    ? 'owner'
+    : viewerIsFriend
+      ? 'friend'
+      : 'public';
+  // The owner sees their own profile before opting in, a confirmed friend
+  // sees it because the owner agreed to the friendship; nobody else can.
+  if (!canViewProfile(config.ui, viewer)) return null;
+
+  const visibility = profileVisibilityMap(config.ui);
+  const hidden = PROFILE_SECTIONS.filter((s) => visibility[s] === 'off');
   // The owner needs the full picture to operate the switches; everyone
-  // else gets a projection the hidden values never entered.
+  // else gets a projection the values they may not see never entered.
   const show = <T>(section: ProfileSection, value: T, blank: T): T =>
-    viewerIsOwner || !hidden.includes(section) ? value : blank;
+    isSectionVisibleTo(visibility[section], viewer) ? value : blank;
 
   return {
     uid,
@@ -119,7 +134,9 @@ export function buildPublicProfile(
     exercises: show('exercises', [...(extras.exercises ?? [])], []),
     isPrivate: !isPublic,
     viewerIsOwner,
+    viewerIsFriend,
     hidden: viewerIsOwner ? hidden : [],
+    visibility: viewerIsOwner ? visibility : {},
     updatedAt: typeof stats?.updatedAt === 'string' ? stats.updatedAt : '',
   };
 }

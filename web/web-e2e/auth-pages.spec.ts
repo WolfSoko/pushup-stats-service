@@ -4,7 +4,7 @@ test.describe('Auth pages smoke', () => {
   test('login page renders essentials', async ({ page }) => {
     await page.goto('/login');
 
-    await expect(page.getByText('Willkommen bei PushUp Stats')).toBeVisible();
+    await expect(page.getByText('Willkommen bei Pushup Tracker')).toBeVisible();
     await expect(
       page.getByRole('button', { name: /mit google anmelden/i })
     ).toBeVisible();

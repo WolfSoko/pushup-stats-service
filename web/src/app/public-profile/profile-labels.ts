@@ -41,8 +41,14 @@ export const PROFILE_LABELS = {
   legendHidden: $localize`:@@publicProfile.owner.legendHidden:Ausgeblendet – nur du siehst es, hier abgeblendet dargestellt.`,
   previewAsVisitor: $localize`:@@publicProfile.owner.preview:Als Besucher ansehen`,
   photoEdit: $localize`:@@publicProfile.owner.photoEdit:Profilbild ändern`,
-  hideElement: $localize`:@@publicProfile.owner.hideElement:Auf dem öffentlichen Profil ausblenden`,
-  showElement: $localize`:@@publicProfile.owner.showElement:Auf dem öffentlichen Profil anzeigen`,
+  /** Current audience of one element, for the switch's tooltip. */
+  visibilityPublic: $localize`:@@publicProfile.owner.visibility.public:Für alle sichtbar`,
+  visibilityFriends: $localize`:@@publicProfile.owner.visibility.friends:Nur für Freunde sichtbar`,
+  visibilityOff: $localize`:@@publicProfile.owner.visibility.off:Für niemanden sichtbar`,
+  /** What the next tap does. */
+  visibilityNextFriends: $localize`:@@publicProfile.owner.visibility.nextFriends:Tippen: nur Freunde`,
+  visibilityNextOff: $localize`:@@publicProfile.owner.visibility.nextOff:Tippen: ausblenden`,
+  visibilityNextPublic: $localize`:@@publicProfile.owner.visibility.nextPublic:Tippen: für alle zeigen`,
 } as const;
 
 export const EXERCISE_GROUP_LABELS: Readonly<

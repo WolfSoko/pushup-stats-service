@@ -12,6 +12,7 @@ import { SeoService } from '../core/seo.service';
 import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { signal } from '@angular/core';
+import { FriendsStore } from '../friends/friends.store';
 
 const firebaseAppMock = {
   options: { projectId: 'pushup-stats' },
@@ -36,6 +37,8 @@ const sampleProfile: PublicProfile = {
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],
+  visibility: {},
+  viewerIsFriend: false,
   updatedAt: '2026-04-29T08:30:00.000Z',
 };
 
@@ -71,6 +74,7 @@ describe('PublicProfilePageComponent', () => {
       uid?: string | null;
       resolve?: PublicProfile | null;
       reject?: unknown;
+      extraProviders?: unknown[];
     } = {}
   ): Promise<void> {
     vitest.clearAllMocks();
@@ -101,6 +105,7 @@ describe('PublicProfilePageComponent', () => {
         // (the unit-test default differs per Angular setup; pinning here
         // documents which prefix the share builder should pick).
         { provide: LOCALE_ID, useValue: 'en-US' },
+        ...((options.extraProviders ?? []) as never[]),
       ],
     }).compileComponents();
 
@@ -586,7 +591,9 @@ describe('PublicProfilePageComponent', () => {
     it('should keep a switched-off element on screen for the owner', async () => {
       // given — removing it would take the switch that turns it back on
       // away with it
-      await setup({ resolve: owner({ hidden: ['streak'] }) });
+      await setup({
+        resolve: owner({ visibility: { streak: 'off' } }),
+      });
 
       // then
       expect(q('[data-testid="public-profile-streak"]')).toBeTruthy();
@@ -595,7 +602,9 @@ describe('PublicProfilePageComponent', () => {
 
     it('should mark a switched-off element as not published', async () => {
       // given
-      await setup({ resolve: owner({ hidden: ['streak'] }) });
+      await setup({
+        resolve: owner({ visibility: { streak: 'off' } }),
+      });
 
       // then — dimming is the only cue that it is off; without it the
       // page would look the same either way
@@ -623,7 +632,9 @@ describe('PublicProfilePageComponent', () => {
 
       it('should drop switched-off elements entirely', async () => {
         // given
-        await setup({ resolve: owner({ hidden: ['streak'] }) });
+        await setup({
+          resolve: owner({ visibility: { streak: 'off' } }),
+        });
 
         // when
         fixture.componentInstance['previewAsVisitor'].set(true);
@@ -648,9 +659,29 @@ describe('PublicProfilePageComponent', () => {
     });
 
     describe('Saving a switch', () => {
-      it('should persist the element as hidden', async () => {
+      it('should narrow a public element to friends on the first tap', async () => {
+        // given a section everyone can see
+        await setup({ resolve: owner({ visibility: { streak: 'public' } }) });
+
+        // when
+        q('[data-testid="profile-toggle-streak"]').click();
+        await fixture.whenStable();
+
+        // then — widest first, so one tap is the step most people want
+        expect(configMock.save).toHaveBeenCalledWith(
+          expect.objectContaining({
+            ui: expect.objectContaining({
+              profileVisibility: expect.objectContaining({
+                streak: 'friends',
+              }),
+            }),
+          })
+        );
+      });
+
+      it('should switch a friends-only element off on the next tap', async () => {
         // given
-        await setup({ resolve: owner() });
+        await setup({ resolve: owner({ visibility: { streak: 'friends' } }) });
 
         // when
         q('[data-testid="profile-toggle-streak"]').click();
@@ -659,7 +690,28 @@ describe('PublicProfilePageComponent', () => {
         // then
         expect(configMock.save).toHaveBeenCalledWith(
           expect.objectContaining({
-            ui: expect.objectContaining({ profileHidden: ['streak'] }),
+            ui: expect.objectContaining({
+              profileVisibility: expect.objectContaining({ streak: 'off' }),
+            }),
+          })
+        );
+      });
+
+      it('should come back round to public from off', async () => {
+        // given — the cycle has to be closed, or a hidden element is
+        // hidden forever
+        await setup({ resolve: owner({ visibility: { streak: 'off' } }) });
+
+        // when
+        q('[data-testid="profile-toggle-streak"]').click();
+        await fixture.whenStable();
+
+        // then
+        expect(configMock.save).toHaveBeenCalledWith(
+          expect.objectContaining({
+            ui: expect.objectContaining({
+              profileVisibility: expect.objectContaining({ streak: 'public' }),
+            }),
           })
         );
       });
@@ -727,6 +779,61 @@ describe('PublicProfilePageComponent', () => {
         // then
         expect(photosMock.upload).toHaveBeenCalledWith(file);
       });
+    });
+  });
+
+  describe('Adding a friend', () => {
+    const visitorProfile = { ...sampleProfile, viewerIsOwner: false };
+
+    function friendsMock(ok = true, reason?: string) {
+      const requestFriend = vitest.fn().mockResolvedValue(ok);
+      return {
+        requestFriend,
+        lastRejection: () => reason,
+      };
+    }
+
+    it('should offer a request on a stranger profile', async () => {
+      // given
+      const friends = friendsMock();
+      await setup({
+        resolve: visitorProfile,
+        extraProviders: [{ provide: FriendsStore, useValue: friends }],
+      });
+
+      // when
+      const button = document.querySelector(
+        '[data-testid="public-profile-add-friend"]'
+      ) as HTMLButtonElement;
+      expect(button).toBeTruthy();
+      button.click();
+      await fixture.whenStable();
+
+      // then
+      expect(friends.requestFriend).toHaveBeenCalledWith(visitorProfile.uid);
+    });
+
+    it('should not offer it on your own profile', async () => {
+      // given
+      await setup({ resolve: { ...sampleProfile, viewerIsOwner: true } });
+
+      // then
+      expect(
+        document.querySelector('[data-testid="public-profile-add-friend"]')
+      ).toBeNull();
+    });
+
+    it('should say so when the two are already friends', async () => {
+      // given
+      await setup({
+        resolve: { ...visitorProfile, viewerIsFriend: true },
+      });
+
+      // then
+      expect(
+        document.querySelector('[data-testid="public-profile-add-friend"]')
+      ).toBeNull();
+      expect(document.body.textContent).toContain('Ihr seid Freunde');
     });
   });
 });

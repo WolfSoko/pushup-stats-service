@@ -29,12 +29,37 @@ Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne (`TRAINING_PLANS`),
 Liegestütz-Varianten (`PUSHUP_TYPES`) oder die Locale-Liste in
 `web/project.json` änderst, gehören die Zahlen im Store-Text mit angepasst.
 
+## Anzeigename: „Pushup Tracker"
+
+Ein Name über alle Flächen, damit Store, Startbildschirm und Web-App nicht
+drei Marken behaupten. Er steht an diesen Stellen — wer ihn ändert, ändert
+sie alle:
+
+| Fläche                  | Datei                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| Play-Titel (Präfix)     | `store/play/<locale>/title.txt`                                                                          |
+| PWA                     | `web/public/manifest.webmanifest` (`name`)                                                               |
+| TWA / Android-App-Label | `mobile/android-twa/twa-manifest.json`, `app/build.gradle`, `app/src/main/res/raw/web_app_manifest.json` |
+| Seitentitel & Social    | `web/src/index.html`, `web/src/app/app.routes.ts` (`seoTitle`)                                           |
+| Sichtbare UI            | `@@eyebrowTitle`, der Login-Titel, der Android-Test-Dialog                                               |
+| Push-Benachrichtigungen | `data-store/functions/src/push/reminder-payload.ts`, `libs/sw-push/src/handlers.ts`                      |
+| Blog-Autor/Publisher    | `web/src/app/blog/blog-article.component.ts`                                                             |
+
+Nicht betroffen und absichtlich anders: die Domain `pushup-stats.com`, die
+Paket-ID `com.pushupstats.app`, der Firebase-Projektname und der Repo-Name
+(`pushup-stats-service`) — technische Identitäten, die Nutzer nie sehen und
+deren Änderung teuer bis unmöglich ist. `short_name` / `launcherName`
+bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
+
+**Warum „Tracker" und nicht „Stats":** „tracker" wird gesucht, „stats" nicht
+— und die ~20 indexierten Seitentitel trugen den Namen schon.
+
 ## Belege für die Aussagen im Listing
 
-- **41 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
+- **42 Übungen + 9 Kategorien** — `EXERCISE_CATALOG` / `EXERCISE_CATEGORIES`
   in `libs/stats/src/lib/models/exercise.catalog.ts`. Der Katalog enthält
-  `PUSHUP_DEFINITION` **plus** 40 weitere Definitionen — daher „Liegestütze
-  und 40 weitere Übungen“ im Fließtext, aber „41 Übungen“ in der Aufzählung.
+  `PUSHUP_DEFINITION` **plus** 41 weitere Definitionen — daher „Liegestütze
+  und 41 weitere Übungen“ im Fließtext, aber „42 Übungen“ in der Aufzählung.
 - **13 Liegestütz-Varianten** — `PUSHUP_TYPES` in
   `libs/stats/src/lib/models/pushup-type.models.ts`
 - **10 Trainingspläne** — `TRAINING_PLANS` in

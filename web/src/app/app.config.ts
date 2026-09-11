@@ -41,15 +41,20 @@ import {
 } from '@pu-stats/data-access';
 import { UserProfileSyncHook } from './core/auth/user-profile-sync.hook';
 import { GuestDataMigrationHook } from './core/auth/guest-data-migration.hook';
+import { ReferralClaimHook } from './core/auth/referral-claim.hook';
 import { adsConfig } from '../env/ads.config';
 import { firebaseRuntime } from '../env/firebase-runtime';
 import { demoUserId } from '../env/demo.config';
 import { DEMO_USER_ID } from '@pu-stats/data-access';
 import { PushSubscriptionService, VAPID_PUBLIC_KEY } from '@pu-push/push';
-import { SHOULD_SKIP_IN_APP_REMINDER } from '@pu-reminders/reminders';
+import {
+  REMINDER_GOAL_STATE,
+  SHOULD_SKIP_IN_APP_REMINDER,
+} from '@pu-reminders/reminders';
 import { appRoutes } from './app.routes';
 import { createAppRouterFeatures } from './app.router-features';
 import { DeferredSentryErrorHandler } from './core/observability/sentry';
+import { ReminderGoalService } from './core/reminder-goal.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -80,6 +85,7 @@ export const appConfig: ApplicationConfig = {
     { provide: USER_PROFILE_PORT, useExisting: UserConfigApiService },
     { provide: POST_AUTH_HOOKS, useClass: UserProfileSyncHook, multi: true },
     { provide: POST_AUTH_HOOKS, useClass: GuestDataMigrationHook, multi: true },
+    { provide: POST_AUTH_HOOKS, useClass: ReferralClaimHook, multi: true },
     { provide: VAPID_PUBLIC_KEY, useValue: firebaseRuntime.vapidPublicKey },
     // Wire the reminders → push port: skip in-app notifications when server
     // Web Push is delivering the same reminder, so the user doesn't get two
@@ -89,6 +95,15 @@ export const appConfig: ApplicationConfig = {
       useFactory: () => {
         const push = inject(PushSubscriptionService);
         return () => push.status() === 'subscribed';
+      },
+    },
+    // Wire the reminders → plan/goal port: the reminder names the goal it is
+    // about and holds off once that goal is done.
+    {
+      provide: REMINDER_GOAL_STATE,
+      useFactory: () => {
+        const goals = inject(ReminderGoalService);
+        return () => goals.goal();
       },
     },
     // Stock ngsw at scope `/` — handles app shell + asset caching only.

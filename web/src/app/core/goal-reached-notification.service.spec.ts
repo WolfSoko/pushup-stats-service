@@ -80,7 +80,24 @@ describe('GoalReachedNotificationService', () => {
     const planDay = config.planTodayDay ?? null;
     planTodayDay.set(planDay);
     planHasActive.set(planDay !== null);
-    planProgress.set(config.planProgress ?? []);
+    // Mirror production for a single-exercise day: `dayProgress` derives one
+    // item from `targetReps`, fulfilled once the reps are in. Tests that care
+    // about a partly finished day pass `planProgress` explicitly.
+    planProgress.set(
+      config.planProgress ??
+        (planDay && planDay.targetReps > 0
+          ? [
+              {
+                itemIndex: 0,
+                exercise: { exerciseId: 'pushup', target: planDay.targetReps },
+                logged: planDay.targetReps,
+                fulfilledByEntries: true,
+                checkedOff: false,
+                done: true,
+              },
+            ]
+          : [])
+    );
 
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -640,6 +657,18 @@ describe('GoalReachedNotificationService', () => {
         done: false,
       },
     ];
+    /** Same day, with the plank hold finished too. */
+    const completedProgress: ReadonlyArray<PlanExerciseProgress> = progress.map(
+      (item) => ({
+        ...item,
+        logged: item.exercise.target,
+        fulfilledByEntries: true,
+        done: true,
+      })
+    );
+    const pushupEntry = [
+      { _id: '1', timestamp: '2026-04-22T08:00:00', reps: 50 } as PushupRecord,
+    ];
 
     function dialogDataFor(kind: string): Record<string, unknown> | undefined {
       const call = dialogOpenSpy.mock.calls.find((c) => {
@@ -650,27 +679,61 @@ describe('GoalReachedNotificationService', () => {
         ?.data;
     }
 
-    it('should hand the formatted plan checklist to the plan and daily dialogs', async () => {
-      // given
+    it('should NOT celebrate the plan day when only its pushups are done', async () => {
+      // given a day prescribing 50 pushups and a 90 s plank: the reps are
+      // in, the hold is not. `targetReps` counts only the pushups, so the
+      // plan threshold is met while the day plainly isn't.
       setup({
         dailyGoal: 10,
-        weeklyGoal: 20,
         planTodayDay: planDay,
         planProgress: progress,
-        entries: [
-          {
-            _id: '1',
-            timestamp: '2026-04-22T08:00:00',
-            reps: 50,
-          } as PushupRecord,
-        ],
+        entries: pushupEntry,
+      });
+
+      // when
+      await flushAll();
+
+      // then no "du hast es geschafft" for a day with an open exercise
+      expect(dialogDataFor('plan')).toBeUndefined();
+      expect(
+        localStorage.getItem('pus_goal_reached_plan_2026-04-22')
+      ).toBeNull();
+      // and the daily goal, which really is just a rep count, still fires
+      expect(dialogDataFor('daily')).toBeDefined();
+    });
+
+    it('should celebrate the plan day once every exercise is done', async () => {
+      // given the same day with the plank finished as well
+      setup({
+        dailyGoal: 10,
+        planTodayDay: planDay,
+        planProgress: completedProgress,
+        entries: pushupEntry,
       });
 
       // when
       await flushAll();
 
       // then
-      const expectedItems = [
+      expect(dialogDataFor('plan')).toMatchObject({ kind: 'plan', goal: 50 });
+    });
+
+    it('should hand the formatted plan checklist to the daily dialog', async () => {
+      // given a partly finished day — an open exercise is exactly what the
+      // checklist is for
+      setup({
+        dailyGoal: 10,
+        weeklyGoal: 20,
+        planTodayDay: planDay,
+        planProgress: progress,
+        entries: pushupEntry,
+      });
+
+      // when
+      await flushAll();
+
+      // then
+      expect(dialogDataFor('daily')?.['planItems']).toEqual([
         expect.objectContaining({
           name: 'Liegestütze',
           target: '50',
@@ -685,10 +748,27 @@ describe('GoalReachedNotificationService', () => {
           logged: '0:45',
           done: false,
         }),
-      ];
-      expect(dialogDataFor('plan')?.['planItems']).toEqual(expectedItems);
-      expect(dialogDataFor('daily')?.['planItems']).toEqual(expectedItems);
+      ]);
       expect(dialogDataFor('weekly')?.['planItems']).toEqual([]);
+    });
+
+    it('should hand the checklist to the plan dialog too', async () => {
+      // given a finished day
+      setup({
+        dailyGoal: 10,
+        planTodayDay: planDay,
+        planProgress: completedProgress,
+        entries: pushupEntry,
+      });
+
+      // when
+      await flushAll();
+
+      // then
+      expect(dialogDataFor('plan')?.['planItems']).toEqual([
+        expect.objectContaining({ name: 'Liegestütze', done: true }),
+        expect.objectContaining({ name: 'Plank', logged: '1:30', done: true }),
+      ]);
     });
 
     it('should pass no plan items when no plan is active', async () => {

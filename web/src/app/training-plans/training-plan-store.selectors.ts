@@ -21,6 +21,23 @@ export function isPlanActive(
   );
 }
 
+/**
+ * Whether the plan the user is holding paused is this very plan. The
+ * detail page offers resuming only for the plan the user is actually
+ * looking at.
+ */
+export function isPlanPaused(
+  plan: Pick<TrainingPlan, 'id'> | null,
+  active: Pick<UserTrainingPlan, 'planId' | 'status'> | null
+): boolean {
+  return (
+    !!plan &&
+    !!active &&
+    active.planId === plan.id &&
+    active.status === 'paused'
+  );
+}
+
 /** Whether a 1-based day index is in the plan's completed set. */
 export function isDayDone(
   plan: UserTrainingPlan | null,

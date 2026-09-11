@@ -40,6 +40,17 @@
         <mat-icon matListItemIcon>leaderboard</mat-icon>
         <span matListItemTitle i18n="@@nav.leaderboard">Bestenliste</span>
       </a>
+      @if (isLoggedIn()) {
+      <a
+        mat-list-item
+        routerLink="/freunde"
+        routerLinkActive="active"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle i18n="@@nav.friends">Freunde</span>
+      </a>
+      }
       <a
         mat-list-item
         routerLink="/training-plans"

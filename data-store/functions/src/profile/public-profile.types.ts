@@ -1,4 +1,8 @@
-import { type MeasurementType, type ProfileSection } from '@pu-stats/models';
+import {
+  type MeasurementType,
+  type ProfileSection,
+  type ProfileSectionVisibility,
+} from '@pu-stats/models';
 
 import { type UserProfile } from './logic';
 
@@ -105,6 +109,13 @@ export interface PublicProfileProjection {
    * switch is there to hide.
    */
   hidden: ProfileSection[];
+  /**
+   * Per-section audience (`off` / `friends` / `public`), owner-only for the
+   * same reason as {@link hidden}. Empty for everyone else.
+   */
+  visibility: Partial<Record<ProfileSection, ProfileSectionVisibility>>;
+  /** True when the viewer is a confirmed friend of this profile's owner. */
+  viewerIsFriend: boolean;
   updatedAt: string;
 }
 
@@ -125,4 +136,10 @@ export interface PublicProfileExtras {
    * bypass of the opt-in gate and must never be derived from request data.
    */
   readonly viewerIsOwner?: boolean;
+  /**
+   * Set only when a confirmed friendship was read from Firestore. Like
+   * `viewerIsOwner`, it opens data the public gate would refuse, so it
+   * must never be derived from request data.
+   */
+  readonly viewerIsFriend?: boolean;
 }

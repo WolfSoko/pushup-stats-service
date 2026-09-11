@@ -46,7 +46,9 @@ describe('LoginComponent', () => {
   it('renders login title', async () => {
     await renderLogin();
 
-    expect(screen.getByText('Willkommen bei PushUp Stats')).toBeInTheDocument();
+    expect(
+      screen.getByText('Willkommen bei Pushup Tracker')
+    ).toBeInTheDocument();
   });
 
   it('should prevent the native form submission so credentials never leak into the URL', async () => {

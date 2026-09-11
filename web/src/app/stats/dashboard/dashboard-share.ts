@@ -1,7 +1,8 @@
 import { buildProfileShareUrl } from '../../core/profile-share-url';
 
 export interface ShareDayInput {
-  total: number;
+  /** What was logged today, already formatted (see `formatDaySummary`). */
+  summary: string;
   streak: number;
   /** Current user id, or empty when signed out. */
   uid: string;
@@ -21,9 +22,12 @@ export interface SharePayload {
  * user opted into a public profile we share their profile URL (dynamic
  * OG card with per-user stats) instead of the generic homepage, and the
  * copy nudges the reader to view the profile.
+ *
+ * The text leads with the day's actual exercises rather than a push-up
+ * count — see `dashboard-share-summary.ts`.
  */
 export function buildShareDayPayload(input: ShareDayInput): SharePayload {
-  const { total, streak, uid, publicProfile, localeId } = input;
+  const { summary, streak, uid, publicProfile, localeId } = input;
   const profileUrl =
     publicProfile && uid ? buildProfileShareUrl(uid, localeId) : '';
 
@@ -31,13 +35,13 @@ export function buildShareDayPayload(input: ShareDayInput): SharePayload {
   if (profileUrl) {
     text =
       streak > 1
-        ? $localize`:@@dashboard.share.text.profile.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Schau dir mein Profil an:`
-        : $localize`:@@dashboard.share.text.profile.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Schau dir mein Profil an:`;
+        ? $localize`:@@dashboard.share.day.profile.streak:Heute: ${summary}:summary: 💪 Streak: ${streak}:streak: Tage 🔥 Schau dir mein Profil an:`
+        : $localize`:@@dashboard.share.day.profile.simple:Heute: ${summary}:summary: 💪 Schau dir mein Profil an:`;
   } else {
     text =
       streak > 1
-        ? $localize`:@@dashboard.share.text.streak:Heute schon ${total}:total: Liegestütze geschafft – Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
-        : $localize`:@@dashboard.share.text.simple:Heute schon ${total}:total: Liegestütze geschafft! 💪 Tracke deine Stats kostenlos:`;
+        ? $localize`:@@dashboard.share.day.streak:Heute: ${summary}:summary: 💪 Streak: ${streak}:streak: Tage 🔥 Tracke deine Stats kostenlos:`
+        : $localize`:@@dashboard.share.day.simple:Heute: ${summary}:summary: 💪 Tracke deine Stats kostenlos:`;
   }
 
   return {
