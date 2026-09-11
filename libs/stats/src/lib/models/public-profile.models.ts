@@ -53,6 +53,8 @@ export interface PublicProfile {
   readonly exercises: ReadonlyArray<PublicProfileExercise>;
   /** The last handful of workouts, newest first. */
   readonly recent: ReadonlyArray<PublicProfileEntry>;
+  /** The training plan the owner is running, `null` when there is none. */
+  readonly plan: PublicProfilePlan | null;
   /**
    * True only when the viewer is the owner and has not opted in yet. The
    * page keeps showing the content and adds a hint; nobody else ever
@@ -90,6 +92,18 @@ export interface PublicProfileEntry {
   readonly measurement: ProfileMeasurement;
   /** ISO timestamp of the entry. */
   readonly timestamp: string;
+}
+
+/**
+ * Where the owner stands in their plan. The plan itself is named by id —
+ * title, slug and length come from the local catalog, so the visitor sees
+ * them in their own language.
+ */
+export interface PublicProfilePlan {
+  readonly planId: string;
+  readonly dayIndex: number;
+  readonly totalDays: number;
+  readonly paused: boolean;
 }
 
 export interface PublicProfileExercise {

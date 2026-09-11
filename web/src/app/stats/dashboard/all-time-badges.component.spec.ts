@@ -51,6 +51,21 @@ describe('AllTimeBadgesComponent', () => {
     }
   });
 
+  it('should give the same explanation to a screen reader', async () => {
+    // given — the tooltip only exists on hover or long-press, and the
+    // row itself is a link, so a tap navigates instead of explaining
+    const fixture = await render();
+
+    // then
+    const labels = [...fixture.nativeElement.querySelectorAll('.badge')].map(
+      (badge: Element) => badge.getAttribute('aria-label')
+    );
+    expect(labels.length).toBe(4);
+    for (const label of labels) {
+      expect(label).toContain('Liegestütz');
+    }
+  });
+
   it('should say how the average is calculated', async () => {
     // given — the one badge whose number cannot be checked by eye
     const fixture = await render();

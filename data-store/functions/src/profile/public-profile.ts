@@ -134,6 +134,7 @@ export function buildPublicProfile(
     heatmap: show('heatmap', publicHeatmap(stats?.heatmap), {}),
     exercises: show('exercises', [...(extras.exercises ?? [])], []),
     recent: show('recent', [...(extras.recent ?? [])], []),
+    plan: show('plan', extras.plan ?? null, null),
     isPrivate: !isPublic,
     viewerIsOwner,
     viewerIsFriend,

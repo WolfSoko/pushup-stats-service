@@ -419,7 +419,47 @@
           }
         }
 
-        @if (audience.renders('recent', p.recent.length > 0)) {
+        @if (audience.renders('plan', rows.plan() !== null)) {
+          <section
+            class="plan-section"
+            data-testid="public-profile-plan"
+            [class.is-hidden]="!audience.isVisible('plan')"
+          >
+            <h2>
+              {{ labels.plan }}
+              <ng-container
+                *ngTemplateOutlet="
+                  sectionToggle;
+                  context: { $implicit: 'plan', label: labels.plan }
+                "
+              ></ng-container>
+            </h2>
+            @if (rows.plan(); as plan) {
+              <a
+                class="plan-card"
+                [routerLink]="['/training-plans', plan.slug]"
+                data-testid="public-profile-plan-link"
+              >
+                <mat-icon aria-hidden="true">fitness_center</mat-icon>
+                <span class="plan-text">
+                  <strong>{{ plan.title }}</strong>
+                  <small>
+                    {{ plan.dayLine }}
+                    @if (plan.paused) {
+                      · {{ labels.planPaused }}
+                    }
+                  </small>
+                  <span class="plan-bar" aria-hidden="true">
+                    <span [style.width.%]="plan.percent"></span>
+                  </span>
+                </span>
+                <span class="plan-cta">{{ labels.planCta }}</span>
+              </a>
+            }
+          </section>
+        }
+
+        @if (audience.renders('recent', rows.recentRows().length > 0)) {
           <section
             class="recent"
             data-testid="public-profile-recent"
@@ -442,9 +482,7 @@
                 >
                   <strong class="tile-title">{{ row.name }}</strong>
                   <span class="tile-value">{{ row.value }}</span>
-                  <small class="tile-time">{{
-                    row.timestamp | date: 'short'
-                  }}</small>
+                  <small class="tile-time">{{ row.time }}</small>
                 </article>
               }
             </div>

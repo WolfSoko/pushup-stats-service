@@ -35,6 +35,7 @@ const sampleProfile: PublicProfile = {
   heatmap: {},
   exercises: [],
   recent: [],
+  plan: null,
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],
@@ -450,6 +451,96 @@ describe('PublicProfilePageComponent', () => {
     });
   });
 
+  describe('Active training plan', () => {
+    const plan = {
+      planId: 'challenge-30d-v1',
+      dayIndex: 12,
+      totalDays: 30,
+      paused: false,
+    };
+
+    it('should name the plan and the day the owner is on', async () => {
+      // given
+      await setup({ resolve: { ...sampleProfile, plan } });
+
+      // then
+      const section = fixture.nativeElement.querySelector(
+        '[data-testid="public-profile-plan"]'
+      );
+      expect(section).toBeTruthy();
+      expect(section.textContent).toContain('30-Tage-Challenge');
+      expect(section.textContent).toContain('12');
+      expect(section.textContent).toContain('30');
+    });
+
+    it('should link to the plan so a visitor can start it too', async () => {
+      // given — the whole point of showing it
+      await setup({ resolve: { ...sampleProfile, plan } });
+
+      // then
+      expect(
+        fixture.nativeElement
+          .querySelector('[data-testid="public-profile-plan-link"]')
+          .getAttribute('href')
+      ).toContain('/training-plans/challenge-30d');
+    });
+
+    it('should say when the plan is on hold', async () => {
+      // given — "Tag 12 von 30" alone would claim progress that is paused
+      await setup({
+        resolve: { ...sampleProfile, plan: { ...plan, paused: true } },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-plan"]'
+        ).textContent
+      ).toContain('Pausiert');
+    });
+
+    it('should omit the section when the viewer gets no plan', async () => {
+      // given — no plan, or one the owner keeps to themselves
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-plan"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should keep the switch for the owner without a plan', async () => {
+      // given — the switch has to exist before there is anything to show,
+      // or the owner could never publish it
+      await setup({
+        resolve: { ...sampleProfile, viewerIsOwner: true, plan: null },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="profile-toggle-plan"]'
+        )
+      ).toBeTruthy();
+    });
+
+    it('should ignore a plan the catalog no longer knows', async () => {
+      // given — a retired plan id must not render an empty card
+      await setup({
+        resolve: { ...sampleProfile, plan: { ...plan, planId: 'retired' } },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-plan-link"]'
+        )
+      ).toBeNull();
+    });
+  });
+
   describe('Recent workouts', () => {
     const recent = [
       {
@@ -488,6 +579,18 @@ describe('PublicProfilePageComponent', () => {
         '[data-testid="public-profile-recent-tile"]'
       );
       expect(tiles[1].textContent).toContain('1:30 min');
+    });
+
+    it('should show the workout time in Berlin time', async () => {
+      // given — every other number on this profile is bucketed in Berlin,
+      // so a tile must not land on another weekday for a visitor abroad
+      await setup({ resolve: { ...sampleProfile, recent } });
+
+      // then — 18:00 UTC is 20:00 in Berlin (CEST)
+      const tiles = fixture.nativeElement.querySelectorAll(
+        '[data-testid="public-profile-recent-tile"]'
+      );
+      expect(tiles[0].textContent).toContain('8:00');
     });
 
     it('should omit the section when the viewer gets no workouts', async () => {

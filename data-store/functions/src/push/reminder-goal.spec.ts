@@ -7,7 +7,10 @@ import {
   reminderPlanDay,
 } from './reminder-goal';
 
-const PUSHUP_PLAN = 'challenge-30d-v1';
+// A plan whose days prescribe push-ups and nothing else — the shape the
+// `counts: 'value'` branch is about. (The 30-day challenge stopped being
+// one when it gained core and leg work.)
+const PUSHUP_PLAN = 'recruit-6w-v1';
 const CORE_PLAN = 'core-4w-v1';
 
 function activePlan(overrides: Record<string, unknown> = {}) {
@@ -27,12 +30,12 @@ describe('push/reminder-goal', () => {
       // given
       const plan = activePlan();
 
-      // when — day 2 of the plan, a pushup-only main day
-      const resolved = reminderPlanDay(plan, '2026-09-10');
+      // when — day 3 of the plan, a pushup-only main day
+      const resolved = reminderPlanDay(plan, '2026-09-11');
 
       // then
-      expect(resolved?.dayIndex).toBe(2);
-      expect(resolved?.day.targetReps).toBe(60);
+      expect(resolved?.dayIndex).toBe(3);
+      expect(resolved?.day.targetReps).toBe(33);
     });
 
     it('should ignore a plan that is not active', () => {
@@ -57,7 +60,10 @@ describe('push/reminder-goal', () => {
 
     it('should report nothing on a day that prescribes no target', () => {
       // when — day 1 of the challenge plan is the max test (target 0)
-      const resolved = reminderPlanDay(activePlan(), '2026-09-09');
+      const resolved = reminderPlanDay(
+        activePlan({ planId: 'challenge-30d-v1' }),
+        '2026-09-09'
+      );
 
       // then
       expect(resolved).toBeNull();
@@ -65,7 +71,10 @@ describe('push/reminder-goal', () => {
 
     it('should scale the day by the measured opening test', () => {
       // given — the plan's numbers assume 22 reps; this user managed 44
-      const plan = activePlan({ testResults: ['1:0:44'] });
+      const plan = activePlan({
+        planId: 'challenge-30d-v1',
+        testResults: ['1:0:44'],
+      });
 
       // when
       const resolved = reminderPlanDay(plan, '2026-09-10');
@@ -80,7 +89,7 @@ describe('push/reminder-goal', () => {
       // given
       const { day, dayIndex } = reminderPlanDay(
         activePlan(),
-        '2026-09-10'
+        '2026-09-11'
       ) as NonNullable<ReturnType<typeof reminderPlanDay>>;
 
       // when
@@ -89,16 +98,16 @@ describe('push/reminder-goal', () => {
         dayIndex,
         [],
         new Map([['pushup', 25]]),
-        '2026-09-10'
+        '2026-09-11'
       );
 
       // then
       expect(goal).toMatchObject({
         kind: 'plan',
-        dayIndex: 2,
+        dayIndex: 3,
         counts: 'value',
         done: 25,
-        target: 60,
+        target: 33,
         reached: false,
       });
     });
@@ -107,7 +116,7 @@ describe('push/reminder-goal', () => {
       // given
       const { day, dayIndex } = reminderPlanDay(
         activePlan(),
-        '2026-09-10'
+        '2026-09-11'
       ) as NonNullable<ReturnType<typeof reminderPlanDay>>;
 
       // when
@@ -115,8 +124,8 @@ describe('push/reminder-goal', () => {
         day,
         dayIndex,
         [],
-        new Map([['pushup', 60]]),
-        '2026-09-10'
+        new Map([['pushup', 33]]),
+        '2026-09-11'
       );
 
       // then

@@ -7,8 +7,13 @@ describe('buildProfileShareUrl', () => {
     ['en-US', 'en'],
     ['en', 'en'],
     ['EN', 'en'],
+    // Every locale the i18n build emits keeps its own prefix — the link
+    // is read in the language the sharer uses.
+    ['fr-FR', 'fr'],
+    ['it', 'it'],
+    ['zh-CN', 'zh'],
     // Unknown / unsupported locales fall back to the source locale.
-    ['fr-FR', 'de'],
+    ['pt-BR', 'de'],
     ['', 'de'],
   ])(
     'Given LOCALE_ID=%j, Then it builds /%s/u/<uid>',

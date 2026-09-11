@@ -44,6 +44,14 @@ export interface UserStatsForPublicProfile {
   updatedAt?: string;
 }
 
+/** Where the owner stands in their training plan. */
+export interface PlanProgress {
+  planId: string;
+  dayIndex: number;
+  totalDays: number;
+  paused: boolean;
+}
+
 /** One logged workout, as a profile visitor may see it. */
 export interface RecentEntry {
   exerciseId: string;
@@ -105,6 +113,8 @@ export interface PublicProfileProjection {
   exercises: ExerciseTotal[];
   /** The last few workouts, newest first. Empty when not visible. */
   recent: RecentEntry[];
+  /** The running training plan, `null` when there is none or it is hidden. */
+  plan: PlanProgress | null;
   /**
    * True only when the projection is handed to its own owner despite the
    * profile being private. Never true for a third party — the callable
@@ -142,6 +152,7 @@ export interface PublicProfileExtras {
   readonly photoURL?: string | null;
   readonly exercises?: ReadonlyArray<ExerciseTotal>;
   readonly recent?: ReadonlyArray<RecentEntry>;
+  readonly plan?: PlanProgress | null;
   /** Berlin period keys for "now", used to reject stale buckets. */
   readonly currentWeeklyKey?: string;
   readonly currentMonthlyKey?: string;

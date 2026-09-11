@@ -98,8 +98,6 @@ const AMRAP_4X = $localize`:@@plan.day.amrap.4x:4×AMRAP`;
 const AMRAP_4X_60S = $localize`:@@plan.day.amrap.4x60s:4×AMRAP, 60 s Pause`;
 const TARGET_REPS_5 = $localize`:@@plan.day.targetReps.5:5 Sätze Zielwiederholungen`;
 const SETS_4X_90S = $localize`:@@plan.day.sets.4x90s:4 Sätze, 90 s Pause`;
-const SETS_3X_70PCT = $localize`:@@plan.day.sets.3x70pct:3 Sätze à 70 %`;
-const LIGHT_DAY_2X50PCT = $localize`:@@plan.day.light.2x50pct:Leichter Tag — 2×50 %`;
 
 const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
   // Week 1 (Mon–Sun) — 3× full reps with 90s rest. Targets are
@@ -196,6 +194,8 @@ const RECRUIT_DAYS: ReadonlyArray<TrainingPlanDay> = [
 ];
 
 const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
+  // Liegestütze carry the progression; every working day adds one
+  // supporting exercise so the 30 days train more than one movement.
   // Week 1 — Foundation. 3× AMRAP @ 90s on main days; light = 50% max.
   d(
     1,
@@ -204,58 +204,191 @@ const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
     undefined,
     $localize`:@@plan.challenge-30d.day.1.desc:Maximaltest — als Ausgangswert eintragen`
   ),
-  d(2, 'main', 60, [20, 20, 20], AMRAP_3X_90S),
+  d(
+    2,
+    'main',
+    60,
+    [20, 20, 20],
+    $localize`:@@plan.challenge-30d.day.2.desc:3×AMRAP LS, 90 s Pause · 3×30 s Plank`,
+    { exercises: [x(LS, 60, [20, 20, 20]), x(PLANK, 90, [30, 30, 30])] }
+  ),
   d(
     3,
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.challenge-30d.day.3.desc:Leichter Tag — 2×50 % vom Maximum`
+    $localize`:@@plan.challenge-30d.day.3.desc:Leichter Tag — 2×50 % vom Maximum · 10 min Mobility`,
+    { exercises: [x(LS, 20, [10, 10]), x(STRETCH, 600)] }
   ),
-  d(4, 'main', 63, [22, 21, 20], AMRAP_3X_90S),
-  d(5, 'light', 22, [11, 11], LIGHT_DAY),
-  d(6, 'main', 66, [23, 22, 21], AMRAP_3X_90S),
-  d(7, 'rest', 0, undefined, REST_DAY),
+  d(
+    4,
+    'main',
+    63,
+    [22, 21, 20],
+    $localize`:@@plan.challenge-30d.day.4.desc:3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen`,
+    { exercises: [x(LS, 63, [22, 21, 20]), x(SQUATS, 45, [15, 15, 15])] }
+  ),
+  d(
+    5,
+    'light',
+    22,
+    [11, 11],
+    $localize`:@@plan.challenge-30d.day.5.desc:Leichter Tag · 3×20 s Hollow Hold`,
+    { exercises: [x(LS, 22, [11, 11]), x(HOLLOW, 60, [20, 20, 20])] }
+  ),
+  d(
+    6,
+    'main',
+    66,
+    [23, 22, 21],
+    $localize`:@@plan.challenge-30d.day.6.desc:3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge`,
+    { exercises: [x(LS, 66, [23, 22, 21]), x(ROWS, 30, [10, 10, 10])] }
+  ),
+  d(7, 'rest', 0, undefined, REST_DAY_MOBILITY),
   // Week 2 — Volume. 4× AMRAP @ 60s; light = 60% max.
-  d(8, 'main', 80, [22, 20, 19, 19], AMRAP_4X_60S),
+  d(
+    8,
+    'main',
+    80,
+    [22, 20, 19, 19],
+    $localize`:@@plan.challenge-30d.day.8.desc:4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers`,
+    { exercises: [x(LS, 80, [22, 20, 19, 19]), x(CLIMBERS, 90, [30, 30, 30])] }
+  ),
   d(
     9,
     'light',
     30,
     [10, 10, 10],
-    $localize`:@@plan.challenge-30d.day.9.desc:Leichter Tag — 3×60 % vom Maximum`
+    $localize`:@@plan.challenge-30d.day.9.desc:Leichter Tag — 3×60 % vom Maximum · 3×12 Glute Bridges`,
+    { exercises: [x(LS, 30, [10, 10, 10]), x(GLUTE, 36, [12, 12, 12])] }
   ),
-  d(10, 'main', 84, [23, 21, 20, 20], AMRAP_4X_60S),
-  d(11, 'light', 33, [11, 11, 11], LIGHT_DAY),
-  d(12, 'main', 88, [24, 22, 21, 21], AMRAP_4X_60S),
-  d(13, 'light', 36, [12, 12, 12], LIGHT_DAY),
-  d(14, 'rest', 0, undefined, REST_DAY),
+  d(
+    10,
+    'main',
+    84,
+    [23, 21, 20, 20],
+    $localize`:@@plan.challenge-30d.day.10.desc:4×AMRAP LS, 60 s Pause · 3×45 s Plank`,
+    { exercises: [x(LS, 84, [23, 21, 20, 20]), x(PLANK, 135, [45, 45, 45])] }
+  ),
+  d(
+    11,
+    'light',
+    33,
+    [11, 11, 11],
+    $localize`:@@plan.challenge-30d.day.11.desc:Leichter Tag · 10 min Mobility`,
+    { exercises: [x(LS, 33, [11, 11, 11]), x(STRETCH, 600)] }
+  ),
+  d(
+    12,
+    'main',
+    88,
+    [24, 22, 21, 21],
+    $localize`:@@plan.challenge-30d.day.12.desc:4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen`,
+    {
+      exercises: [x(LS, 88, [24, 22, 21, 21]), x(JUMPSQUATS, 36, [12, 12, 12])],
+    }
+  ),
+  d(
+    13,
+    'light',
+    36,
+    [12, 12, 12],
+    $localize`:@@plan.challenge-30d.day.13.desc:Leichter Tag · 3×10 Dead Bugs`,
+    { exercises: [x(LS, 36, [12, 12, 12]), x(DEADBUG, 30, [10, 10, 10])] }
+  ),
+  d(14, 'rest', 0, undefined, REST_DAY_MOBILITY),
   // Week 3 — Intensity. 5× target reps (~80% max). No light days.
   d(
     15,
     'main',
     100,
     [22, 20, 20, 20, 18],
-    $localize`:@@plan.challenge-30d.day.15.desc:5 Sätze à ~80 % vom Maximum`
+    $localize`:@@plan.challenge-30d.day.15.desc:5 Sätze à ~80 % vom Maximum · 4×10 Ruderzüge`,
+    {
+      exercises: [
+        x(LS, 100, [22, 20, 20, 20, 18]),
+        x(ROWS, 40, [10, 10, 10, 10]),
+      ],
+    }
   ),
   d(16, 'rest', 0, undefined, MOBILITY_CHEST_STRETCH),
-  d(17, 'main', 105, [23, 22, 20, 20, 20], TARGET_REPS_5),
+  d(
+    17,
+    'main',
+    105,
+    [23, 22, 20, 20, 20],
+    $localize`:@@plan.challenge-30d.day.17.desc:5 Sätze Zielwiederholungen · 4×25 s Hollow Hold`,
+    {
+      exercises: [
+        x(LS, 105, [23, 22, 20, 20, 20]),
+        x(HOLLOW, 100, [25, 25, 25, 25]),
+      ],
+    }
+  ),
   d(18, 'rest', 0, undefined, MOBILITY_CHEST_STRETCH),
-  d(19, 'main', 110, [24, 22, 22, 22, 20], TARGET_REPS_5),
+  d(
+    19,
+    'main',
+    110,
+    [24, 22, 22, 22, 20],
+    $localize`:@@plan.challenge-30d.day.19.desc:5 Sätze Zielwiederholungen · 3×20 Ausfallschritte`,
+    {
+      exercises: [
+        x(LS, 110, [24, 22, 22, 22, 20]),
+        x(LUNGES, 60, [20, 20, 20]),
+      ],
+    }
+  ),
   d(20, 'rest', 0, undefined, MOBILITY_CHEST_STRETCH),
-  d(21, 'main', 115, [25, 23, 23, 22, 22], TARGET_REPS_5),
+  d(
+    21,
+    'main',
+    115,
+    [25, 23, 23, 22, 22],
+    $localize`:@@plan.challenge-30d.day.21.desc:5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss`,
+    { exercises: [x(LS, 115, [25, 23, 23, 22, 22]), x(BURPEES, 24, [8, 8, 8])] }
+  ),
   // Week 4 — Tapering & Peak. 3× 70% max, last 2 days active recovery.
   d(
     22,
     'main',
     70,
     [25, 23, 22],
-    $localize`:@@plan.challenge-30d.day.22.desc:3 Sätze à 70 % — Qualität vor Quantität`
+    $localize`:@@plan.challenge-30d.day.22.desc:3 Sätze à 70 % — Qualität vor Quantität · 2×60 s Plank`,
+    { exercises: [x(LS, 70, [25, 23, 22]), x(PLANK, 120, [60, 60])] }
   ),
-  d(23, 'light', 30, [15, 15], LIGHT_DAY_2X50PCT),
-  d(24, 'main', 75, [26, 25, 24], SETS_3X_70PCT),
-  d(25, 'light', 30, [15, 15], LIGHT_DAY_2X50PCT),
-  d(26, 'main', 75, [26, 25, 24], SETS_3X_70PCT),
+  d(
+    23,
+    'light',
+    30,
+    [15, 15],
+    $localize`:@@plan.challenge-30d.day.23.desc:Leichter Tag — 2×50 % · 10 min Mobility`,
+    { exercises: [x(LS, 30, [15, 15]), x(STRETCH, 600)] }
+  ),
+  d(
+    24,
+    'main',
+    75,
+    [26, 25, 24],
+    $localize`:@@plan.challenge-30d.day.24.desc:3 Sätze à 70 % · 3×15 Face Pulls`,
+    { exercises: [x(LS, 75, [26, 25, 24]), x(FACEPULL, 45, [15, 15, 15])] }
+  ),
+  d(
+    25,
+    'light',
+    30,
+    [15, 15],
+    $localize`:@@plan.challenge-30d.day.25.desc:Leichter Tag — 2×50 % · 10 min Dehnen`,
+    { exercises: [x(LS, 30, [15, 15]), x(STRETCH, 600)] }
+  ),
+  d(
+    26,
+    'main',
+    75,
+    [26, 25, 24],
+    $localize`:@@plan.challenge-30d.day.26.desc:3 Sätze à 70 % · 2×30 s Hollow Hold`,
+    { exercises: [x(LS, 75, [26, 25, 24]), x(HOLLOW, 60, [30, 30])] }
+  ),
   d(
     27,
     'rest',
@@ -2283,15 +2416,15 @@ export const TRAINING_PLANS: ReadonlyArray<TrainingPlan> = [
     id: 'challenge-30d-v1',
     slug: 'challenge-30d',
     title: $localize`:@@plan.challenge-30d.title:30-Tage-Challenge`,
-    summary: $localize`:@@plan.challenge-30d.summary:Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.`,
+    summary: $localize`:@@plan.challenge-30d.summary:Dreißig Tage tägliches Training mit gezielten Ruhetagen. Liegestütze sind der Kern, dazu kommen Core-, Bein- und Zugübungen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.`,
     level: 'intermediate',
     totalDays: 30,
     heroImage:
-      'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1714646442330-9068099f5521?auto=format&fit=crop&w=1600&q=80',
     heroImagePhotographer: {
-      name: 'bruce mars',
+      name: 'Vitaly Gariev',
       profileUrl:
-        'https://unsplash.com/@brucemars?utm_source=pushup_stats&utm_medium=referral',
+        'https://unsplash.com/@silverkblack?utm_source=pushup_stats&utm_medium=referral',
     },
     blogSlug: $localize`:@@plan.challenge-30d.blogSlug:30-tage-liegestuetze-challenge`,
     // Tag 2 fährt 3×AMRAP mit Ziel 20-20-20.

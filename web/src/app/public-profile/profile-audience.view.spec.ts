@@ -24,6 +24,7 @@ const sample: PublicProfile = {
   heatmap: {},
   exercises: [],
   recent: [],
+  plan: null,
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],

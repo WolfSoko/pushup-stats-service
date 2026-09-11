@@ -1020,32 +1020,32 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:186</note>
       </notes>
-      <segment state="translated">
-        <source>Leichter Tag — 2×50 % vom Maximum</source>
+      <segment state="initial">
+        <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
       <target>轻量级训练日 — 最大值的 2×50%</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:199</note>
       </notes>
-      <segment state="translated">
-        <source>Leichter Tag — 3×60 % vom Maximum</source>
+      <segment state="initial">
+        <source>Leichter Tag — 3×60 % vom Maximum · 3×12 Glute Bridges</source>
       <target>轻量级训练日 — 最大值的 3×60%</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.15.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:212</note>
       </notes>
-      <segment state="translated">
-        <source>5 Sätze à ~80 % vom Maximum</source>
+      <segment state="initial">
+        <source>5 Sätze à ~80 % vom Maximum · 4×10 Ruderzüge</source>
       <target>5 组 × 最大值的约 80%</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.22.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:226</note>
       </notes>
-      <segment state="translated">
-        <source>3 Sätze à 70 % — Qualität vor Quantität</source>
+      <segment state="initial">
+        <source>3 Sätze à 70 % — Qualität vor Quantität · 2×60 s Plank</source>
       <target>3 组 × 70% — 质量优于数量</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.27.desc">
@@ -1716,8 +1716,8 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:909</note>
       </notes>
-      <segment state="translated">
-        <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
+      <segment state="initial">
+        <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Liegestütze sind der Kern, dazu kommen Core-, Bein- und Zugübungen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
       <target>30 天每日训练，有针对性的休息日。第 1 天是最大值测试，第 30 天是最终测试。</target></segment>
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
@@ -12201,6 +12201,126 @@
       <segment state="initial">
         <source>Pushup Tracker Trainingsplan</source>
         <target>Pushup Tracker Trainingsplan</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.2.desc">
+      <segment state="initial">
+        <source>3×AMRAP LS, 90 s Pause · 3×30 s Plank</source>
+        <target>3×AMRAP LS, 90 s Pause · 3×30 s Plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.4.desc">
+      <segment state="initial">
+        <source>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</source>
+        <target>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.5.desc">
+      <segment state="initial">
+        <source>Leichter Tag · 3×20 s Hollow Hold</source>
+        <target>Leichter Tag · 3×20 s Hollow Hold</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.6.desc">
+      <segment state="initial">
+        <source>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</source>
+        <target>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.8.desc">
+      <segment state="initial">
+        <source>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</source>
+        <target>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.10.desc">
+      <segment state="initial">
+        <source>4×AMRAP LS, 60 s Pause · 3×45 s Plank</source>
+        <target>4×AMRAP LS, 60 s Pause · 3×45 s Plank</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.11.desc">
+      <segment state="initial">
+        <source>Leichter Tag · 10 min Mobility</source>
+        <target>Leichter Tag · 10 min Mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.12.desc">
+      <segment state="initial">
+        <source>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</source>
+        <target>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.13.desc">
+      <segment state="initial">
+        <source>Leichter Tag · 3×10 Dead Bugs</source>
+        <target>Leichter Tag · 3×10 Dead Bugs</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.17.desc">
+      <segment state="initial">
+        <source>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</source>
+        <target>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.19.desc">
+      <segment state="initial">
+        <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
+        <target>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.21.desc">
+      <segment state="initial">
+        <source>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</source>
+        <target>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.23.desc">
+      <segment state="initial">
+        <source>Leichter Tag — 2×50 % · 10 min Mobility</source>
+        <target>Leichter Tag — 2×50 % · 10 min Mobility</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.24.desc">
+      <segment state="initial">
+        <source>3 Sätze à 70 % · 3×15 Face Pulls</source>
+        <target>3 Sätze à 70 % · 3×15 Face Pulls</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.25.desc">
+      <segment state="initial">
+        <source>Leichter Tag — 2×50 % · 10 min Dehnen</source>
+        <target>Leichter Tag — 2×50 % · 10 min Dehnen</target>
+      </segment>
+    </unit>
+    <unit id="plan.challenge-30d.day.26.desc">
+      <segment state="initial">
+        <source>3 Sätze à 70 % · 2×30 s Hollow Hold</source>
+        <target>3 Sätze à 70 % · 2×30 s Hollow Hold</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.plan">
+      <segment state="initial">
+        <source>Trainingsplan</source>
+        <target>Trainingsplan</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.plan.paused">
+      <segment state="initial">
+        <source>Pausiert</source>
+        <target>Pausiert</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.plan.cta">
+      <segment state="initial">
+        <source>Plan ansehen</source>
+        <target>Plan ansehen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.plan.day">
+      <segment state="initial">
+        <source>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></source>
+        <target>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></target>
       </segment>
     </unit>
 </file>

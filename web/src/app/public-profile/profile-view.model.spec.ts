@@ -182,7 +182,8 @@ describe('buildRecentRows', () => {
     const rows = buildRecentRows(
       entries,
       (id) => id,
-      (entry) => String(entry.value)
+      (entry) => String(entry.value),
+      (timestamp) => timestamp
     );
 
     // then
@@ -194,7 +195,8 @@ describe('buildRecentRows', () => {
     const rows = buildRecentRows(
       entries,
       (id) => id,
-      (entry) => `${entry.value} ${entry.measurement}`
+      (entry) => `${entry.value} ${entry.measurement}`,
+      (timestamp) => timestamp
     );
 
     // then
@@ -202,17 +204,31 @@ describe('buildRecentRows', () => {
     expect(rows[1].value).toBe('90 time');
   });
 
-  it('should give two entries of the same second distinct keys', () => {
+  it('should give every tile a unique key', () => {
     // given — a tracked session writes several entries at once, and a
     // duplicate `track` key drops tiles from the DOM
-    const sameSecond = [entries[0], { ...entries[0] }];
+    const sameSecond = [entries[0], { ...entries[0] }, entries[1]];
     const rows = buildRecentRows(
       sameSecond,
       (id) => id,
+      () => '',
       () => ''
     );
 
     // then
-    expect(rows[0].key).not.toBe(rows[1].key);
+    expect(new Set(rows.map((row) => row.key)).size).toBe(rows.length);
+  });
+
+  it('should hand the timestamp to the formatter', () => {
+    // given — the profile shows Berlin time, which the page decides
+    const rows = buildRecentRows(
+      entries,
+      (id) => id,
+      () => '',
+      (timestamp) => `at ${timestamp}`
+    );
+
+    // then
+    expect(rows[0].time).toBe('at 2026-09-11T18:00:00.000Z');
   });
 });

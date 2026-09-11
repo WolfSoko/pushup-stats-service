@@ -7,6 +7,12 @@ import { RouterLink } from '@angular/router';
  * The badge row above the dashboard: everything the user ever logged as
  * push-ups.
  *
+ * The row is one link to the analysis page, so a tap goes there rather
+ * than opening a tooltip — which is why the heading, not the tooltip,
+ * carries the part nobody may miss (that these are push-ups). The
+ * per-badge sentence is available on hover, on long-press, and to
+ * screen readers through `aria-label`.
+ *
  * Four bare numbers in a row said nothing about what they count. The
  * heading names the exercise — these aggregate `perExercise/pushup`, not
  * the sit-ups and runs logged right below them — and each badge carries
@@ -29,16 +35,32 @@ import { RouterLink } from '@angular/router';
         routerLink="/analysis"
         data-testid="dashboard-all-time-badges-link"
       >
-        <span class="badge" [matTooltip]="hints.total">
+        <span
+          class="badge"
+          [matTooltip]="hints.total"
+          [attr.aria-label]="hints.total"
+        >
           <small i18n="@@allTimeTotal">Gesamt</small><b>{{ total() }}</b>
         </span>
-        <span class="badge" [matTooltip]="hints.days">
+        <span
+          class="badge"
+          [matTooltip]="hints.days"
+          [attr.aria-label]="hints.days"
+        >
           <small i18n="@@allTimeDays">Tage</small><b>{{ days() }}</b>
         </span>
-        <span class="badge" [matTooltip]="hints.entries">
+        <span
+          class="badge"
+          [matTooltip]="hints.entries"
+          [attr.aria-label]="hints.entries"
+        >
           <small i18n="@@allTimeEntries">Einträge</small><b>{{ entries() }}</b>
         </span>
-        <span class="badge" [matTooltip]="hints.avg">
+        <span
+          class="badge"
+          [matTooltip]="hints.avg"
+          [attr.aria-label]="hints.avg"
+        >
           <small i18n="@@allTimeAvg">Ø pro Tag</small><b>{{ avg() }}</b>
         </span>
         <span class="badges-cta">

@@ -179,14 +179,16 @@ describe('profile-visibility.models', () => {
       }
     });
 
-    it('should keep a legacy opt-in from publishing sections invented later', () => {
-      // given — the old master switch said "show my stats", not "show
-      // every kind of data added afterwards"
+    it('should keep an older agreement from publishing sections invented later', () => {
+      // given — neither the old master switch nor a friendship accepted
+      // last month said anything about a kind of data that did not exist
+      // yet, so those sections wait for their own switch
       const map = profileVisibilityMap({ publicProfile: true });
 
       // then
       expect(map.total).toBe('public');
-      expect(map.recent).toBe('friends');
+      expect(map.recent).toBe('off');
+      expect(map.plan).toBe('off');
     });
   });
 });

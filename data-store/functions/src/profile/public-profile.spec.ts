@@ -140,6 +140,7 @@ describe('buildPublicProfile', () => {
       heatmap: {},
       exercises: [],
       recent: [],
+      plan: null,
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
@@ -180,6 +181,7 @@ describe('buildPublicProfile', () => {
       heatmap: {},
       exercises: [],
       recent: [],
+      plan: null,
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
@@ -301,6 +303,7 @@ describe('buildPublicProfile', () => {
       'heatmap',
       'exercises',
       'recent',
+      'plan',
       'isPrivate',
       'viewerIsOwner',
       'viewerIsFriend',
@@ -601,7 +604,9 @@ describe('buildPublicProfile element visibility', () => {
         stats,
         { ...extras, viewerIsOwner: true }
       );
-      expect(result?.hidden).toEqual(['streak', 'heatmap']);
+      // Sections that are off by default until the owner publishes them
+      // belong in the list too — it is what the owner's page dims.
+      expect(result?.hidden).toEqual(['streak', 'heatmap', 'recent', 'plan']);
       expect(result?.viewerIsOwner).toBe(true);
     });
   });
@@ -721,12 +726,28 @@ describe('buildPublicProfile › recent workouts', () => {
     expect(result?.recent).toEqual([]);
   });
 
-  it('should show them to a confirmed friend', () => {
-    // given
+  it('should keep them from a friend who was never told about them', () => {
+    // given — the friendship was accepted before this section existed
     const result = buildPublicProfile(uid, config, null, {
       recent,
       viewerIsFriend: true,
     });
+
+    // then
+    expect(result?.recent).toEqual([]);
+  });
+
+  it('should show them to a friend once the owner chose that', () => {
+    // given
+    const result = buildPublicProfile(
+      uid,
+      {
+        ...config,
+        ui: { ...config.ui, profileVisibility: { recent: 'friends' } },
+      },
+      null,
+      { recent, viewerIsFriend: true }
+    );
 
     // then
     expect(result?.recent).toEqual(recent);

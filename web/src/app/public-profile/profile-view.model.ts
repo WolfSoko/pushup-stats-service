@@ -131,11 +131,12 @@ export function buildExerciseGroups<
 }
 
 export interface RecentRow {
-  /** Stable key: two entries can share a second but not an exercise. */
+  /** Unique per tile; the position keeps two identical entries apart. */
   readonly key: string;
   readonly name: string;
   readonly value: string;
-  readonly timestamp: string;
+  /** Already formatted — see `createProfileRows` for the timezone. */
+  readonly time: string;
 }
 
 /**
@@ -150,12 +151,13 @@ export function buildRecentRows(
     timestamp: string;
   }>,
   name: (exerciseId: string) => string,
-  value: (entry: { value: number; measurement: string }) => string
+  value: (entry: { value: number; measurement: string }) => string,
+  time: (timestamp: string) => string
 ): ReadonlyArray<RecentRow> {
   return entries.map((entry, index) => ({
     key: `${entry.timestamp}-${entry.exerciseId}-${index}`,
     name: name(entry.exerciseId),
     value: value(entry),
-    timestamp: entry.timestamp,
+    time: time(entry.timestamp),
   }));
 }

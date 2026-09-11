@@ -5,13 +5,19 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
 import {
+  currentPlanDayIndex,
   findExerciseDefinition,
+  findPlanById,
   friendshipId,
+  isPausedPlan,
   isSectionVisibleTo,
   isValidFriendUid,
+  pausedPlanDayIndex,
   sectionVisibility,
   type Friendship,
+  type ProfileSection,
   type ProfileViewer,
+  type UserTrainingPlan,
 } from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
@@ -24,6 +30,7 @@ import {
   type UserConfigForPublicProfile,
   type ExerciseTotal,
   type UserAchievementsForPublicProfile,
+  type PlanProgress,
   type RecentEntry,
   type UserStatsForPublicProfile,
 } from './profile';
@@ -105,6 +112,35 @@ async function readRecentEntries(uid: string): Promise<RecentEntry[]> {
   return rows;
 }
 
+/**
+ * The plan the user is running, as far as a visitor may see it: which
+ * plan, how far in, and whether it is on hold. Named by id — the client
+ * resolves title and length from its own catalog, in its own language.
+ */
+async function readActivePlan(
+  uid: string,
+  today: string
+): Promise<PlanProgress | null> {
+  const snap = await db.collection('userTrainingPlans').doc(uid).get();
+  const data = snap.data() as UserTrainingPlan | undefined;
+  if (!data || (data.status !== 'active' && data.status !== 'paused')) {
+    return null;
+  }
+  const plan = findPlanById(data.planId);
+  if (!plan) return null;
+  // A paused plan shows the day it was left on, not one the break ran past.
+  const dayIndex =
+    pausedPlanDayIndex(data, plan.totalDays) ??
+    currentPlanDayIndex(plan, data.startDate, today);
+  if (dayIndex === null) return null;
+  return {
+    planId: plan.id,
+    dayIndex,
+    totalDays: plan.totalDays,
+    paused: isPausedPlan(data),
+  };
+}
+
 async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
   const [cfgSnap, statsSnap, achievementsSnap] = await Promise.all([
@@ -151,20 +187,21 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     : viewerIsFriend
       ? 'friend'
       : 'public';
-  const showsRecent = isSectionVisibleTo(
-    sectionVisibility(config?.ui, 'recent'),
-    viewer
-  );
-  const [photoURL, exercises, recent] = await Promise.all([
+  // Skip the extra read entirely when the viewer may not see the section.
+  const shows = (section: ProfileSection): boolean =>
+    isSectionVisibleTo(sectionVisibility(config?.ui, section), viewer);
+  const [photoURL, exercises, recent, plan] = await Promise.all([
     resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
     readExerciseTotals(uid),
-    showsRecent ? readRecentEntries(uid) : Promise.resolve([]),
+    shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
+    shows('plan') ? readActivePlan(uid, parts.isoDate) : Promise.resolve(null),
   ]);
   return buildPublicProfile(uid, config, stats, {
     achievements,
     photoURL,
     exercises,
     recent,
+    plan,
     currentWeeklyKey: keys.weeklyKey,
     currentMonthlyKey: keys.monthlyKey,
     viewerIsOwner,
