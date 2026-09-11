@@ -54,7 +54,7 @@
         </unit>
     <unit id="2721806142807617942">
       <segment state="translated">
-        <source />
+        <source> Registrieren </source>
         <target> Register </target>
       </segment>
     </unit>
@@ -77,7 +77,7 @@
         </unit>
     <unit id="6031063121455734122">
       <segment state="translated">
-        <source />
+        <source> Zurück </source>
         <target> Back </target>
       </segment>
     </unit>
@@ -685,133 +685,133 @@ Active:         </target>
         </unit>
     <unit id="auth.email">
       <segment state="translated">
-        <source />
+        <source>E-Mail</source>
         <target>Email</target>
       </segment>
     </unit>
     <unit id="auth.error.emailInUse">
       <segment state="translated">
-        <source />
+        <source>Für diese E-Mail existiert bereits ein Konto.</source>
         <target>An account already exists for this email.</target>
       </segment>
     </unit>
     <unit id="auth.error.generic">
       <segment state="translated">
-        <source />
+        <source>Anmeldung fehlgeschlagen. Bitte versuche es erneut.</source>
         <target>Login failed. Please try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.internalError">
       <segment state="translated">
-        <source />
+        <source>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</source>
         <target>A technical error occurred. Please try again shortly.</target>
       </segment>
     </unit>
     <unit id="auth.error.invalidCredential">
       <segment state="translated">
-        <source />
+        <source>E-Mail oder Passwort ist nicht korrekt.</source>
         <target>Email or password is incorrect.</target>
       </segment>
     </unit>
     <unit id="auth.error.invalidEmail">
       <segment state="translated">
-        <source />
+        <source>Bitte eine gültige E-Mail-Adresse eingeben.</source>
         <target>Please enter a valid email address.</target>
       </segment>
     </unit>
     <unit id="auth.error.network">
       <segment state="translated">
-        <source />
+        <source>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</source>
         <target>Network error. Please check your internet connection and try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.popupBlocked">
       <segment state="translated">
-        <source />
+        <source>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</source>
         <target>Popup was blocked. Please allow popups and try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.popupClosed">
       <segment state="translated">
-        <source />
+        <source>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</source>
         <target>Google sign-in was canceled. The sign-in window was closed.</target>
       </segment>
     </unit>
     <unit id="auth.error.tooManyRequests">
       <segment state="translated">
-        <source />
+        <source>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</source>
         <target>Too many attempts. Please wait a moment and try again.</target>
       </segment>
     </unit>
     <unit id="auth.error.userDisabled">
       <segment state="translated">
-        <source />
+        <source>Dieses Konto ist deaktiviert.</source>
         <target>This account is disabled.</target>
       </segment>
     </unit>
     <unit id="auth.error.userNotFound">
       <segment state="translated">
-        <source />
+        <source>Kein Konto mit dieser E-Mail gefunden.</source>
         <target>No account found for this email.</target>
       </segment>
     </unit>
     <unit id="auth.error.weakPassword">
       <segment state="translated">
-        <source />
+        <source>Das Passwort ist zu schwach (mindestens 6 Zeichen).</source>
         <target>Password is too weak (at least 6 characters).</target>
       </segment>
     </unit>
     <unit id="auth.error.wrongPassword">
       <segment state="translated">
-        <source />
+        <source>E-Mail oder Passwort ist nicht korrekt.</source>
         <target>Email or password is incorrect.</target>
       </segment>
     </unit>
     <unit id="auth.google.signin">
       <segment state="translated">
-        <source />
+        <source>Mit Google anmelden</source>
         <target> Sign in with Google </target>
       </segment>
     </unit>
     <unit id="auth.google.signup">
       <segment state="translated">
-        <source />
+        <source>Mit Google registrieren</source>
         <target> Sign up with Google </target>
       </segment>
     </unit>
     <unit id="auth.login.loading">
       <segment state="translated">
-        <source />
+        <source>Anmelden...</source>
         <target>Signing in...</target>
       </segment>
     </unit>
     <unit id="auth.login.submit">
       <segment state="translated">
-        <source />
+        <source>Anmelden</source>
         <target>Sign in</target>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
       <segment state="translated">
-        <source />
+        <source>Bitte melde dich an</source>
         <target>Please sign in</target>
       </segment>
     </unit>
     <unit id="auth.login.title">
       <segment state="translated">
-        <source />
+        <source>Willkommen bei Pushup Tracker</source>
         <target>Welcome to Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="auth.next">
       <segment state="translated">
-        <source />
+        <source> Weiter </source>
         <target> Next </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.consent.checkbox">
       <segment state="translated">
-        <source />
+        <source>Einwilligung erteilen</source>
         <target> Grant consent </target>
       </segment>
     </unit>
@@ -823,43 +823,44 @@ Active:         </target>
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <segment state="translated">
-        <source />
+        <source>Bitte stimme der Datenverarbeitung zu.</source>
         <target>Please consent to data processing.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <segment state="translated">
-        <source />
+        <source>Kein eingeloggter Nutzer gefunden.</source>
         <target>No logged-in user found.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.saveFailed">
       <segment state="translated">
-        <source />
+        <source>Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
         <target>Onboarding could not be saved. Please try again.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.finish">
       <segment state="translated">
-        <source />
+        <source> Abschließen </source>
         <target> Finish </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.goal">
       <segment state="translated">
-        <source />
+        <source>Tagesziel</source>
         <target>Daily goal</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.title">
       <segment state="translated">
-        <source />
+        <source> Einrichtung abschließen
+</source>
         <target> Complete setup </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.username">
       <segment state="translated">
-        <source />
+        <source>Benutzername</source>
         <target>Username</target>
       </segment>
     </unit>
@@ -871,19 +872,19 @@ Active:         </target>
     </unit>
     <unit id="auth.or">
       <segment state="translated">
-        <source />
+        <source>oder</source>
         <target>or</target>
       </segment>
     </unit>
     <unit id="auth.password">
       <segment state="translated">
-        <source />
+        <source>Passwort</source>
         <target>Password</target>
       </segment>
     </unit>
     <unit id="auth.register.back">
       <segment state="translated">
-        <source />
+        <source> Zurück</source>
         <target> Back </target>
       </segment>
     </unit>
@@ -895,19 +896,19 @@ Active:         </target>
     </unit>
     <unit id="auth.register.google.skipPassword">
       <segment state="translated">
-        <source />
+        <source> Passwort-Schritt übersprungen (Google Registrierung). </source>
         <target> Password step skipped (Google registration). </target>
       </segment>
     </unit>
     <unit id="auth.register.noAccount">
       <segment state="translated">
-        <source />
+        <source>Noch kein Account?</source>
         <target>No account yet?</target>
       </segment>
     </unit>
     <unit id="auth.register.password.hint">
       <segment state="translated">
-        <source />
+        <source> Mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahl und Sonderzeichen. </source>
         <target>Min. 8 characters, 1 number, and 1 special character.</target>
       </segment>
     </unit>
@@ -919,7 +920,7 @@ Active:         </target>
     </unit>
     <unit id="auth.register.password.repeat">
       <segment state="translated">
-        <source />
+        <source>Passwort wiederholen</source>
         <target>Repeat password</target>
       </segment>
     </unit>
@@ -937,13 +938,13 @@ Active:         </target>
     </unit>
     <unit id="auth.register.submit">
       <segment state="translated">
-        <source />
+        <source> Registrieren </source>
         <target> Register </target>
       </segment>
     </unit>
     <unit id="auth.register.subtitle">
       <segment state="translated">
-        <source />
+        <source>Erstelle dein Konto</source>
         <target>Create your account</target>
       </segment>
     </unit>
@@ -967,25 +968,25 @@ Active:         </target>
     </unit>
     <unit id="auth.register.success.dashboard">
       <segment state="translated">
-        <source />
+        <source> Zum Dashboard </source>
         <target> Go to dashboard </target>
       </segment>
     </unit>
     <unit id="auth.register.success.text">
       <segment state="translated">
-        <source />
+        <source> Dein Account ist bereit. Zeit für die ersten Liegestütze 💪 </source>
         <target> Your account is ready. Time for the first push-ups 💪 </target>
       </segment>
     </unit>
     <unit id="auth.register.success.title">
       <segment state="translated">
-        <source />
+        <source>Geschafft! 🎉</source>
         <target>Done! 🎉</target>
       </segment>
     </unit>
     <unit id="auth.register.title">
       <segment state="translated">
-        <source />
+        <source>Registrierung</source>
         <target>Registration</target>
       </segment>
     </unit>
@@ -1963,8 +1964,8 @@ Active:         </target>
 
         
             </notes>
-      <segment state="translated">
-        <source>Jetzt registrieren</source>
+      <segment state="initial">
+        <source>Konto erstellen</source>
         <target>Sign up now</target>
 
         
@@ -1995,8 +1996,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+      <segment state="initial">
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Trend charts and KPI cards for every exercise: push-up variants (Standard, Wide, Diamond), sit-ups, squats, planks and running – with a freely selectable time range.</target>
             </segment>
         </unit>
@@ -2013,8 +2014,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Multi-Set Tracking</source>
+      <segment state="initial">
+        <source>Sätze &amp; Intervalle</source>
         <target>Multi-set tracking</target>
             </segment>
         </unit>
@@ -2022,8 +2023,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+      <segment state="initial">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Log every set individually – e.g. 12 + 10 + 8. The app sums them up automatically and shows your average set size.</target>
             </segment>
         </unit>
@@ -2040,8 +2041,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+      <segment state="initial">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>Triple progress bar keeps you on track. The streak counter rewards consistency and confetti celebrates each daily goal you hit.</target>
             </segment>
         </unit>
@@ -2067,8 +2068,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+      <segment state="initial">
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Log an entry in 2 seconds via the floating action button or quick actions directly on the dashboard – no dialog needed.</target>
             </segment>
         </unit>
@@ -2094,8 +2095,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      <segment state="initial">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Install it as an app straight from the browser – with real-time sync across all your devices and your daily result a share button away.</target>
             </segment>
         </unit>
@@ -2139,8 +2140,8 @@ Active:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="initial">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>GDPR-friendly with customisable cookie consent. Your name on the leaderboard? Only if you want it there. No subscription, no credit card.</target>
             </segment>
         </unit>
@@ -2157,8 +2158,8 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+      <segment state="initial">
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Prop up your phone, open the auto-counter and start your push-ups, squats, pull-ups or sit-ups – our AI recognises your motion in real time, right in your browser, and counts along automatically. The live Form Check shows angle and confidence so you always know the count is clean.</target>
       </segment>
     </unit>
@@ -2283,11 +2284,8 @@ Active:         </target>
 
         
             </notes>
-      <segment state="translated">
-        <source>
-          <x id="INTERPOLATION" equiv-text="{{ me.rank }}" />
-          <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}" />
-Deine Position: # ·  Reps        </source>
+      <segment state="initial">
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
         <target> Your position: #{$INTERPOLATION} · {$INTERPOLATION_1} reps </target>
 
         
@@ -2449,8 +2447,8 @@ Deine Position: # ·  Reps        </source>
 
 
             </notes>
-      <segment state="translated">
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+      <segment state="initial">
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Track push-ups in seconds — with trends, streaks and live sync. Plus sit-ups, squats, planks and running when you want more. </target>
 
 
@@ -2535,10 +2533,8 @@ Deine Position: # ·  Reps        </source>
 
         
             </notes>
-      <segment state="translated">
-        <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'verbunden' : 'getrennt' }}" />
- Live:          </source>
+      <segment state="initial">
+        <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
         <target>
           <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? 'connected' : 'disconnected' }}" />
  Live:          </target>
@@ -2705,7 +2701,7 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="nav.leaderboard">
       <segment state="translated">
-        <source />
+        <source>Bestenliste</source>
         <target>Leaderboard</target>
       </segment>
     </unit>
@@ -3720,8 +3716,8 @@ Deine Position: # ·  Reps        </source>
       
         </unit>
     <unit id="seo.default.description">
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
+      <segment state="initial">
+        <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
         <target>Track reps, trends, and streaks with Pushup Tracker.</target>
 
         
@@ -3853,13 +3849,13 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="settings.adsConsentHint">
       <segment state="translated">
-        <source />
+        <source>Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.</source>
         <target> Controls whether ad slots may be loaded on the dashboard. </target>
       </segment>
     </unit>
     <unit id="settings.adsConsentOptIn">
       <segment state="translated">
-        <source />
+        <source> Personalisierte Werbung aktivieren </source>
         <target> Enable personalized ads </target>
       </segment>
     </unit>
@@ -3961,7 +3957,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.dangerZoneBody">
       <segment state="translated">
-        <source />
+        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
         <target> Deleting your account removes your account. Training data remains anonymized for statistical analysis. </target>
       </segment>
     </unit>
@@ -3985,61 +3981,61 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.dangerZoneTitle">
       <segment state="translated">
-        <source />
+        <source>Danger Zone</source>
         <target>Danger Zone</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccount">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
         <target>{$START_TAG_MAT_ICON}warning{$CLOSE_TAG_MAT_ICON} Delete account </target>
       </segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <segment state="translated">
-        <source />
+        <source> Final löschen </source>
         <target> Final delete </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogInfo">
       <segment state="translated">
-        <source />
+        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
         <target> Your account will be deleted. Training data remains anonymized for statistical analysis. </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <segment state="translated">
-        <source />
+        <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Please enter exactly "löschen".</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <segment state="translated">
-        <source />
+        <source>Bestätigungswort eingeben</source>
         <target>Enter confirmation word</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogTitle">
       <segment state="translated">
-        <source />
+        <source> Account wirklich löschen? </source>
         <target> Really delete account? </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogWarning">
       <segment state="translated">
-        <source />
+        <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
         <target> Warning: This action cannot be undone. </target>
       </segment>
     </unit>
     <unit id="settings.deletingAccount">
       <segment state="translated">
-        <source />
+        <source>Konto wird gelöscht…</source>
         <target>Deleting account…</target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint">
       <segment state="translated">
-        <source />
+        <source>Kann in der Bestenliste angezeigt werden.</source>
         <target>May be shown on the leaderboard.</target>
       </segment>
     </unit>
@@ -4051,19 +4047,19 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.leaderboardOptIn">
       <segment state="translated">
-        <source />
+        <source> In Bestenliste anzeigen </source>
         <target> Show in leaderboard </target>
       </segment>
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <segment state="translated">
-        <source />
+        <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
         <target> If disabled, your profile will not be shown in the leaderboard. </target>
       </segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source />
+        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
         <target> Only profiles with Public profile enabled appear on the leaderboard. Enable “Public profile” below to use this option. </target>
       </segment>
     </unit>
@@ -4107,12 +4103,10 @@ Deine Position: # ·  Reps        </source>
 
         
             </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
-            <ph id="1" equiv="INTERPOLATION" disp="{{         showSourceColumn() ? 'visibility' : 'visibility_off'       }}" />
-          </pc>
- Quelle         </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
+        showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
+      }}"/></pc> Quelle </source>
         <target>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
             <ph id="1" equiv="INTERPOLATION" disp="{{         showSourceColumn() ? 'visibility' : 'visibility_off'       }}" />
@@ -4240,7 +4234,7 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="toolbarDailyGoal">
       <segment state="translated">
-        <source />
+        <source>Tagesziel</source>
         <target>Daily goal</target>
       </segment>
     </unit>
@@ -4391,8 +4385,8 @@ Deine Position: # ·  Reps        </source>
 
         
             </notes>
-      <segment state="translated">
-        <source>Passwort muss mindestens 6 Zeichen lang sein!</source>
+      <segment state="initial">
+        <source>Passwort muss mindestens 8 Zeichen lang sein!</source>
         <target>Password must be at least 6 characters long!</target>
 
         
@@ -4730,8 +4724,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.bulk.hint">
-      <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> Tagen. </source>
+      <segment state="initial">
+        <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
         <target>Deletes anonymous users without pushups in the last <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}" /> days.</target>
       </segment>
     </unit>
@@ -5618,8 +5612,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="landing.feature.adaptive.body">
-      <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+      <segment state="initial">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>The quick actions learn from your history and suggest fitting rep counts – or you configure your own buttons.</target>
       </segment>
     </unit>
@@ -6008,8 +6002,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="datenschutz.ads.personalized.body">
-      <segment state="translated">
-        <source>Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige" wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen" im Footer der Seite ändern.</source>
+      <segment state="initial">
+        <source> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </source>
         <target>On your first visit, a consent banner will ask whether you allow personalized advertising. If you choose "Necessary only", only non-personalized ads will be served, which do not set tracking cookies for advertising profiles. You can change your consent at any time via the "Cookie Settings" link in the page footer.</target>
       </segment>
     </unit>
@@ -6020,8 +6014,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="datenschutz.cookies.body">
-      <segment state="translated">
-        <source>Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen" im Footer widerrufen.</source>
+      <segment state="initial">
+        <source> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </source>
         <target>This website uses cookies. Technically necessary cookies (session, language preference) are set without consent. Cookies for analytics (Google Analytics) and personalized advertising (Google AdSense) are only activated after your explicit consent. You can revoke your consent at any time via the "Cookie Settings" link in the footer.</target>
       </segment>
     </unit>
@@ -6536,14 +6530,14 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="trainingPlans.replaceWarn">
-      <segment state="translated">
-        <source>Achtung: Dies ersetzt den aktuell aktiven Plan.</source>
+      <segment state="initial">
+        <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
         <target>Heads up: this replaces the currently active plan.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.abandon">
-      <segment state="translated">
-        <source>Plan beenden</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
         <target>End plan</target>
       </segment>
     </unit>
@@ -6902,8 +6896,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name" /> hat <ph id="1" equiv="total" disp="total" /> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
         <target><ph id="0" equiv="name" disp="name" /> hit <ph id="1" equiv="total" disp="total" /> push-ups on Pushup Tracker 💪 Check it out:</target>
       </segment>
     </unit>
@@ -6950,8 +6944,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
-      <segment state="translated">
-        <source>Profil teilen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Profil teilen </source>
         <target>Share profile</target>
       </segment>
     </unit>
@@ -7164,8 +7158,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="translated">
-        <source> Übungen </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> Exercises </target>
       </segment>
     </unit>
@@ -7903,8 +7897,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="translated">
-        <source>Liegestütztypen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>Push-up types</target>
       </segment>
     </unit>
@@ -8001,43 +7995,43 @@ Deine Position: # ·  Reps        </source>
     
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source />
+        <source>Noch kein aktiver Trainingsplan</source>
         <target>No active training plan yet</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source />
+        <source> Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen. </source>
         <target> Pick a plan to have your daily goal set automatically. </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source />
+        <source> Plan wählen </source>
         <target> Pick a plan </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source />
+        <source>Tagesziel in Einstellungen öffnen</source>
         <target>Open daily goal in settings</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source />
+        <source>Letzten Eintrag in der Historie öffnen</source>
         <target>Open last entry in history</target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source />
+        <source>Zur Bestenliste</source>
         <target>View leaderboard</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Preview</target>
       </segment>
     </unit>
@@ -8055,211 +8049,211 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source />
+        <source>Datenschutzerklärung</source>
         <target>Privacy policy</target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source />
+        <source> Sichtbarkeit oder Anzeigename anpassen? </source>
         <target> Want to change your visibility or display name? </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source />
+        <source>Einstellungen öffnen</source>
         <target>Open settings</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source />
+        <source> Mitmachen und auftauchen? </source>
         <target> Want to compete and show up here? </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source />
+        <source>Anmelden</source>
         <target>Sign in</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source />
+        <source> Tagesziel wird vom Plan gesetzt. </source>
         <target> Your daily goal is set by the plan. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source />
+        <source>Manuelle Ziele anpassen</source>
         <target>Adjust manual goals</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source />
+        <source>Noch keine Einträge.</source>
         <target>No entries yet.</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source />
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
         <target> Add your first training entry — your history will appear here. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Create entry</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source />
+        <source>Noch keine Daten zum Analysieren.</source>
         <target>No data to analyse yet.</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source />
+        <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
         <target> Start a training plan or log your first set — we'll show trends and streaks here. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Pick a training plan</target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source />
+        <source>Übersicht</source>
         <target>Overview</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source />
+        <source> Im aktuellen Zeitraum gibt es noch keine Einträge. </source>
         <target>No entries in the current date range yet.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source />
+        <source> Diese Einträge gehören zu keiner bekannten Kategorie — Aggregat unten. </source>
         <target>These entries don't belong to a known category — aggregate below.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source />
+        <source> Vergleich nach Übungsgruppe </source>
         <target>Comparison by exercise group</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source />
+        <source> Keine Daten im aktuellen Zeitraum. </source>
         <target>No data in the current date range.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source />
+        <source>Reps gesamt</source>
         <target>Total reps</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source />
+        <source>Heute</source>
         <target>Today</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source />
+        <source>Bester Tag</source>
         <target>Best day</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source />
+        <source>Streak</source>
         <target>Streak</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source />
+        <source> Trainingseinheiten </source>
         <target>Training sessions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source />
+        <source> Wiederholungen </source>
         <target>Reps</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source />
+        <source>Sätze gesamt</source>
         <target>Total sets</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source />
+        <source> Zeit </source>
         <target>Time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source />
+        <source>Zeit gesamt</source>
         <target>Total time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source />
+        <source>Heute</source>
         <target>Today</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source />
+        <source> Strecke </source>
         <target>Distance</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source />
+        <source> Strecke gesamt </source>
         <target>Total distance</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source />
+        <source>Heute</source>
         <target>Today</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source />
+        <source> Strecke &amp; Zeit </source>
         <target>Distance &amp; Time</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source />
+        <source>Trainingseinheiten</source>
         <target>Training sessions</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source />
+        <source>Details ansehen</source>
         <target>View details</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source />
+        <source>Zur Analyse</source>
         <target>Open analysis</target>
       </segment>
     </unit>
@@ -9632,8 +9626,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.summary">
-      <segment state="translated">
-        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+      <segment state="initial">
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
         <target>Symmetric 6-week plan for push-ups and pulling work (rows, pull-up negatives, face pulls). Avoids the classic "push only" imbalance and strengthens the posterior chain equally. One dedicated pull day per week on top of the push progression.</target>
       </segment>
     </unit>
@@ -10092,8 +10086,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="translated">
-        <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
+      <segment state="initial">
+        <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>Use this + button to record exercises lightning fast – from any page.</target>
       </segment>
     </unit>

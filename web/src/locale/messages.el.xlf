@@ -939,8 +939,8 @@
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
-      <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
+      <segment state="initial">
+        <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
         <target> Διαγράφει ανώνυμους χρήστες χωρίς pushups τις τελευταίες <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> ημέρες. </target>
       </segment>
     </unit>
@@ -1762,7 +1762,7 @@
       </notes>
       <segment state="translated">
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
-        <target>Ιστολόγιο – Συμβουλές &amp; Οδηγοί Push-Up | Παρακολούθηση Pushup</target>
+        <target>Ιστολόγιο – Συμβουλές &amp; Οδηγοί Push-Up | Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.blog.description">
@@ -1823,8 +1823,8 @@
       <notes>
         <note category="location">web/src/app/app.ts:224</note>
       </notes>
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
+      <segment state="initial">
+        <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
         <target>Παρακολουθήστε επαναλήψεις, τάσεις και σερί με το Pushup Tracker.</target>
       </segment>
     </unit>
@@ -2131,8 +2131,8 @@
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:74,76</note>
       </notes>
-      <segment state="translated">
-        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
+      <segment state="initial">
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
         <target> Η θέση σας: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Επαναλήψεις </target>
       </segment>
     </unit>
@@ -2537,8 +2537,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="translated">
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+      <segment state="initial">
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Κατέγραψε τις κάμψεις σου σε δευτερόλεπτα — με τάσεις, σερί και live συγχρονισμό. Επιπλέον sit-ups, καθίσματα, plank και τρέξιμο όταν θέλεις περισσότερα. </target>
       </segment>
     </unit>
@@ -2714,8 +2714,8 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+      <segment state="initial">
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Στήσε το κινητό, άνοιξε την αυτόματη μέτρηση και ξεκίνα τις κάμψεις, τα καθίσματα, τις έλξεις ή τους κοιλιακούς – η τεχνητή νοημοσύνη μας αναγνωρίζει την κίνησή σου σε πραγματικό χρόνο, απευθείας στον περιηγητή, και μετράει αυτόματα. Το ζωντανό Form Check δείχνει γωνία και αξιοπιστία ώστε να ξέρεις ότι η μέτρηση είναι καθαρή.</target>
       </segment>
     </unit>
@@ -2732,8 +2732,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:284,286</note>
       </notes>
-      <segment state="translated">
-        <source>Multi-Set Tracking</source>
+      <segment state="initial">
+        <source>Sätze &amp; Intervalle</source>
         <target>Παρακολούθηση πολλαπλών συνόλων</target>
       </segment>
     </unit>
@@ -2741,8 +2741,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+      <segment state="initial">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Καταγράψτε κάθε πρόταση ξεχωριστά – π.χ. Π.χ. 12 + 10 + 8. Η εφαρμογή αθροίζει αυτόματα και εμφανίζει το μέσο μέγεθος του συνόλου σας.</target>
       </segment>
     </unit>
@@ -2759,8 +2759,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
-      <segment state="translated">
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+      <segment state="initial">
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Γραφήματα τάσεων και κάρτες KPI για κάθε άσκηση: παραλλαγές κάμψεων (Standard, Wide, Diamond), sit-ups, καθίσματα, plank και τρέξιμο — με ελεύθερα επιλέξιμη περίοδο.</target>
       </segment>
     </unit>
@@ -2777,8 +2777,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,461</note>
       </notes>
-      <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+      <segment state="initial">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>Η τριπλή γραμμή προόδου σας κρατά σε καλό δρόμο. Το Streak Display σάς ανταμείβει που το τηρείτε, το κομφετί γιορτάζει τον καθημερινό σας στόχο που επιτύχατε.</target>
       </segment>
     </unit>
@@ -2813,8 +2813,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
       </notes>
-      <segment state="translated">
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+      <segment state="initial">
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Είσοδος σε 2 δευτερόλεπτα χρησιμοποιώντας το κουμπί αιωρούμενης ενέργειας ή γρήγορες ενέργειες απευθείας στον πίνακα ελέγχου - χωρίς κανένα παράθυρο διαλόγου.</target>
       </segment>
     </unit>
@@ -2831,8 +2831,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:534,538</note>
       </notes>
-      <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+      <segment state="initial">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>Οι γρήγορες ενέργειες μαθαίνουν από το ιστορικό σας και προτείνουν κατάλληλες επαναλήψεις - ή μπορείτε να διαμορφώσετε τα δικά σας κουμπιά.</target>
       </segment>
     </unit>
@@ -2849,8 +2849,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
-      <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      <segment state="initial">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Εγκατάσταση απευθείας από τον περιηγητή σαν εφαρμογή – με συγχρονισμό σε πραγματικό χρόνο σε όλες τις συσκευές και κοινοποίηση του ημερήσιου αποτελέσματος με ένα κουμπί.</target>
       </segment>
     </unit>
@@ -2894,8 +2894,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,566</note>
       </notes>
-      <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="initial">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>Συμβατό με το GDPR με συναίνεση για προσαρμοσμένα cookie. Το όνομά σας στο leaderboard; Μόνο αν το θέλεις. Χωρίς συνδρομή, χωρίς πιστωτική κάρτα.</target>
       </segment>
     </unit>
@@ -3838,8 +3838,8 @@
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:169,170</note>
       </notes>
-      <segment state="translated">
-        <source>Pick one / Custom</source>
+      <segment state="initial">
+        <source>Auswählen oder eintippen</source>
         <target>Επιλέξτε ένα / Προσαρμοσμένο</target>
       </segment>
     </unit>
@@ -3856,8 +3856,8 @@
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:186,187</note>
       </notes>
-      <segment state="translated">
-        <source>web / whatsapp / Custom</source>
+      <segment state="initial">
+        <source>web / whatsapp / eigene Quelle</source>
         <target>web / whatsapp / Custom</target>
       </segment>
     </unit>
@@ -5405,7 +5405,7 @@
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source/>
+        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
         <target> Μόνο τα προφίλ με ενεργοποιημένο το Δημόσιο προφίλ εμφανίζονται στον πίνακα κατάταξης. Ενεργοποίησε παρακάτω το «Δημόσιο προφίλ» για να χρησιμοποιήσεις αυτήν την επιλογή. </target>
       </segment>
     </unit>
@@ -5710,8 +5710,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:321,323</note>
       </notes>
-      <segment state="translated">
-        <source>Bitte exakt „löscchen“ eingeben.</source>
+      <segment state="initial">
+        <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Εισαγάγετε ακριβώς "διαγραφή".</target>
       </segment>
     </unit>
@@ -5755,8 +5755,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze Statistik</source>
+      <segment state="initial">
+        <source>Meine Trainingsübersicht</source>
         <target>Στατιστικά Push-up</target>
       </segment>
     </unit>
@@ -5764,8 +5764,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,18</note>
       </notes>
-      <segment state="translated">
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+      <segment state="initial">
+        <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
         <target> Παρακολουθήστε τον όγκο και την πρόοδο της προπόνησης – ξεκάθαρα, γρήγορα και βελτιστοποιημένα για κινητά. </target>
       </segment>
     </unit>
@@ -6255,8 +6255,8 @@
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:143,144</note>
       </notes>
-      <segment state="translated">
-        <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
+      <segment state="initial">
+        <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
         <target> Προσοχή: Αντικαθιστά το τρέχον ενεργό πρόγραμμα. </target>
       </segment>
     </unit>
@@ -6712,8 +6712,8 @@
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="translated">
-        <source> Übungen </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> Ασκήσεις </target>
       </segment>
     </unit>
@@ -7636,8 +7636,8 @@
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="translated">
-        <source>Liegestütztypen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>Τύποι push-up</target>
       </segment>
     </unit>
@@ -7733,199 +7733,199 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source/>
+        <source> Sichtbarkeit oder Anzeigename anpassen? </source>
         <target> Αλλαγή ορατότητας ή ονόματος εμφάνισης; </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Einstellungen öffnen</source>
         <target>Άνοιγμα ρυθμίσεων</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source/>
+        <source> Mitmachen und auftauchen? </source>
         <target> Συμμετοχή και εμφάνιση εδώ; </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Anmelden</source>
         <target>Σύνδεση</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source/>
+        <source>Noch keine Daten zum Analysieren.</source>
         <target>Δεν υπάρχουν ακόμη δεδομένα για ανάλυση.</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source/>
+        <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
         <target> Ξεκίνα ένα πρόγραμμα προπόνησης ή κατέγραψε την πρώτη σου σειρά — θα εμφανιστούν εδώ τάσεις και σερί. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Επιλογή προγράμματος προπόνησης </target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source/>
+        <source>Übersicht</source>
         <target>Επισκόπηση</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source/>
+        <source> Im aktuellen Zeitraum gibt es noch keine Einträge. </source>
         <target>Δεν υπάρχουν ακόμη καταχωρίσεις στο τρέχον εύρος ημερομηνιών.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source/>
+        <source> Diese Einträge gehören zu keiner bekannten Kategorie — Aggregat unten. </source>
         <target>Αυτές οι καταχωρίσεις δεν ανήκουν σε καμία γνωστή κατηγορία — σύνολο παρακάτω.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source/>
+        <source> Vergleich nach Übungsgruppe </source>
         <target>Σύγκριση ανά ομάδα ασκήσεων</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source/>
+        <source> Keine Daten im aktuellen Zeitraum. </source>
         <target>Δεν υπάρχουν δεδομένα στο τρέχον εύρος ημερομηνιών.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source/>
+        <source>Reps gesamt</source>
         <target>Συνολικές επαναλήψεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>Σήμερα</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source/>
+        <source>Streak</source>
         <target>Σερί</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source/>
+        <source>Bester Tag</source>
         <target>Καλύτερη ημέρα</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source/>
+        <source> Trainingseinheiten </source>
         <target>Προπονήσεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source/>
+        <source> Wiederholungen </source>
         <target>Επαναλήψεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source/>
+        <source>Sätze gesamt</source>
         <target>Σύνολο σετ</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source/>
+        <source> Zeit </source>
         <target>Χρόνος</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source/>
+        <source>Zeit gesamt</source>
         <target>Συνολικός χρόνος</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>Σήμερα</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source/>
+        <source> Strecke </source>
         <target>Απόσταση</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source/>
+        <source> Strecke gesamt </source>
         <target>Συνολική απόσταση</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>Σήμερα</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source/>
+        <source> Strecke &amp; Zeit </source>
         <target>Απόσταση &amp; χρόνος</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source/>
+        <source>Trainingseinheiten</source>
         <target>Προπονήσεις</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source/>
+        <source>Details ansehen</source>
         <target>Προβολή λεπτομερειών</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source/>
+        <source>Noch keine Einträge.</source>
         <target>Δεν υπάρχουν ακόμη καταχωρήσεις.</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source/>
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
         <target> Προσθέστε την πρώτη σας καταχώρηση προπόνησης — το ιστορικό σας θα εμφανιστεί εδώ. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Δημιουργία καταχώρησης </target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source/>
+        <source>Zur Bestenliste</source>
         <target>Προς τον πίνακα κατάταξης</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Προεπισκόπηση</target>
       </segment>
     </unit>
@@ -7943,55 +7943,55 @@
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source/>
+        <source>Datenschutzerklärung</source>
         <target>Πολιτική απορρήτου</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source/>
+        <source>Noch kein aktiver Trainingsplan</source>
         <target>Δεν υπάρχει ακόμη ενεργό πρόγραμμα προπόνησης</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source/>
+        <source> Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen. </source>
         <target> Επίλεξε ένα πρόγραμμα για να οριστεί αυτόματα ο ημερήσιος στόχος σου. </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source/>
+        <source> Plan wählen </source>
         <target> Επιλογή προγράμματος </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source/>
+        <source>Tagesziel in Einstellungen öffnen</source>
         <target>Άνοιγμα ημερήσιου στόχου στις ρυθμίσεις</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source/>
+        <source>Letzten Eintrag in der Historie öffnen</source>
         <target>Άνοιγμα τελευταίας καταχώρησης στο ιστορικό</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source/>
+        <source>Zur Analyse</source>
         <target>Στην ανάλυση</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source/>
+        <source> Tagesziel wird vom Plan gesetzt. </source>
         <target> Ο ημερήσιος στόχος ορίζεται από το πρόγραμμα. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Manuelle Ziele anpassen</source>
         <target>Προσαρμογή χειροκίνητων στόχων</target>
       </segment>
     </unit>
@@ -9890,8 +9890,8 @@
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="translated">
-        <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
+      <segment state="initial">
+        <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>Με αυτό το κουμπί + καταγράφεις ασκήσεις αστραπιαία – από οποιαδήποτε σελίδα.</target>
       </segment>
     </unit>

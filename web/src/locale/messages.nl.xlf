@@ -939,8 +939,8 @@
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
-      <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
+      <segment state="initial">
+        <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
         <target> Verwijdert anonieme gebruikers zonder push-ups in de afgelopen <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/>-dagen. </target>
       </segment>
     </unit>
@@ -1582,7 +1582,7 @@
       </notes>
       <segment state="translated">
         <source>Dashboard – Pushup Tracker</source>
-        <target>Dashboard – Push-uptracker</target>
+        <target>Dashboard – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.dashboard.description">
@@ -1600,7 +1600,7 @@
       </notes>
       <segment state="translated">
         <source>Login – Pushup Tracker</source>
-        <target>Inloggen – Pushup-tracker</target>
+        <target>Inloggen – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.login.description">
@@ -1618,7 +1618,7 @@
       </notes>
       <segment state="translated">
         <source>Registrierung – Pushup Tracker</source>
-        <target>Registratie – Pushup-tracker</target>
+        <target>Registratie – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.register.description">
@@ -1636,7 +1636,7 @@
       </notes>
       <segment state="translated">
         <source>Historie – Pushup Tracker</source>
-        <target>Geschiedenis – Push-uptracker</target>
+        <target>Geschiedenis – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.history.description">
@@ -1654,7 +1654,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse – Pushup Tracker</source>
-        <target>Analyse – Pushup-tracker</target>
+        <target>Analyse – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.analysis.description">
@@ -1672,7 +1672,7 @@
       </notes>
       <segment state="translated">
         <source>Einstellungen – Pushup Tracker</source>
-        <target>Instellingen – Push-uptracker</target>
+        <target>Instellingen – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.settings.description">
@@ -1708,7 +1708,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen – Pushup Tracker</source>
-        <target>Herinneringen – Push-uptracker</target>
+        <target>Herinneringen – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.reminders.description">
@@ -1726,7 +1726,7 @@
       </notes>
       <segment state="translated">
         <source>Bestenliste – Pushup Tracker</source>
-        <target>Leiderbord – Push-uptracker</target>
+        <target>Leiderbord – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.leaderboard.description">
@@ -1744,7 +1744,7 @@
       </notes>
       <segment state="translated">
         <source>Profil – Pushup Tracker</source>
-        <target>Profiel – Push-uptracker</target>
+        <target>Profiel – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.publicProfile.description">
@@ -1762,7 +1762,7 @@
       </notes>
       <segment state="translated">
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
-        <target>Blog – Push-uptips en handleidingen | Push-up-tracker</target>
+        <target>Blog – Push-uptips en handleidingen | Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.blog.description">
@@ -1780,7 +1780,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum – Pushup Tracker</source>
-        <target>Impressum – Push-uptracker</target>
+        <target>Impressum – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.impressum.description">
@@ -1798,7 +1798,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutzerklärung – Pushup Tracker</source>
-        <target>Privacybeleid – Pushup-tracker</target>
+        <target>Privacybeleid – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.datenschutz.description">
@@ -1816,15 +1816,15 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker</source>
-        <target>Push-uptracker</target>
+        <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.default.description">
       <notes>
         <note category="location">web/src/app/app.ts:224</note>
       </notes>
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
+      <segment state="initial">
+        <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
         <target>Houd herhalingen, trends en streaks bij met Pushup Tracker.</target>
       </segment>
     </unit>
@@ -2131,8 +2131,8 @@
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:74,76</note>
       </notes>
-      <segment state="translated">
-        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> Reps </source>
+      <segment state="initial">
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
         <target> Uw positie: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}"/> reps </target>
       </segment>
     </unit>
@@ -2537,8 +2537,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="translated">
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+      <segment state="initial">
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Volg je push-ups in seconden — met trends, streaks en live-sync. Plus sit-ups, squats, plank en hardlopen wanneer je meer wilt. </target>
       </segment>
     </unit>
@@ -2714,8 +2714,8 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+      <segment state="initial">
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Zet de telefoon neer, open de auto-teller en doe je push-ups, squats, pull-ups of sit-ups – onze AI herkent je beweging in realtime, direct in de browser, en telt automatisch mee. De live Form Check toont hoek en zekerheid, zodat je weet dat de telling klopt.</target>
       </segment>
     </unit>
@@ -2732,8 +2732,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:284,286</note>
       </notes>
-      <segment state="translated">
-        <source>Multi-Set Tracking</source>
+      <segment state="initial">
+        <source>Sätze &amp; Intervalle</source>
         <target>Tracking van meerdere sets</target>
       </segment>
     </unit>
@@ -2741,8 +2741,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+      <segment state="initial">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Neem elke zin afzonderlijk op – b.v. Bijvoorbeeld 12 + 10 + 8. De app telt automatisch uw gemiddelde setgrootte op en toont deze.</target>
       </segment>
     </unit>
@@ -2759,8 +2759,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
-      <segment state="translated">
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+      <segment state="initial">
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Trendgrafieken en KPI-kaarten voor elke oefening: push-up-varianten (Standard, Wide, Diamond), sit-ups, squats, plank en hardlopen — met vrij te kiezen periode.</target>
       </segment>
     </unit>
@@ -2777,8 +2777,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,461</note>
       </notes>
-      <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+      <segment state="initial">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>Drievoudige voortgangsbalk houdt u op het goede spoor. Streak-display beloont je als je je eraan houdt, confetti viert je dagelijkse doel dat je hebt bereikt.</target>
       </segment>
     </unit>
@@ -2813,8 +2813,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
       </notes>
-      <segment state="translated">
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+      <segment state="initial">
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Invoer in 2 seconden via de zwevende actieknop of snelle acties direct in het dashboard - zonder enige dialoog.</target>
       </segment>
     </unit>
@@ -2831,8 +2831,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:534,538</note>
       </notes>
-      <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+      <segment state="initial">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>De snelle acties leren van je geschiedenis en stellen geschikte herhalingen voor - of je kunt je eigen knoppen configureren.</target>
       </segment>
     </unit>
@@ -2849,8 +2849,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
-      <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      <segment state="initial">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Installeer hem rechtstreeks vanuit de browser als app, met realtime synchronisatie tussen al je apparaten en deel je dagresultaat met één knop.</target>
       </segment>
     </unit>
@@ -2894,8 +2894,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,566</note>
       </notes>
-      <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="initial">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>AVG-conform met aanpasbare toestemming voor cookies. Jouw naam op het scorebord? Alleen als jij het wilt. Geen abonnement, geen creditcard.</target>
       </segment>
     </unit>
@@ -3838,8 +3838,8 @@
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:169,170</note>
       </notes>
-      <segment state="translated">
-        <source>Pick one / Custom</source>
+      <segment state="initial">
+        <source>Auswählen oder eintippen</source>
         <target>Kies er één / Aangepast</target>
       </segment>
     </unit>
@@ -3856,8 +3856,8 @@
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:186,187</note>
       </notes>
-      <segment state="translated">
-        <source>web / whatsapp / Custom</source>
+      <segment state="initial">
+        <source>web / whatsapp / eigene Quelle</source>
         <target>web / whatsapp / aangepast</target>
       </segment>
     </unit>
@@ -5405,7 +5405,7 @@
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source/>
+        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
         <target> Alleen profielen met Openbaar profiel ingeschakeld verschijnen in de ranglijst. Schakel hieronder „Openbaar profiel" in om deze optie te gebruiken. </target>
       </segment>
     </unit>
@@ -5710,8 +5710,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:321,323</note>
       </notes>
-      <segment state="translated">
-        <source>Bitte exakt „löscchen“ eingeben.</source>
+      <segment state="initial">
+        <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Voer “verwijderen” exact in.</target>
       </segment>
     </unit>
@@ -5755,8 +5755,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze Statistik</source>
+      <segment state="initial">
+        <source>Meine Trainingsübersicht</source>
         <target>Push-upstatistieken</target>
       </segment>
     </unit>
@@ -5764,8 +5764,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,18</note>
       </notes>
-      <segment state="translated">
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+      <segment state="initial">
+        <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
         <target> Houd het trainingsvolume en de voortgang in de gaten – duidelijk, snel en mobiel geoptimaliseerd. </target>
       </segment>
     </unit>
@@ -6255,8 +6255,8 @@
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:143,144</note>
       </notes>
-      <segment state="translated">
-        <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
+      <segment state="initial">
+        <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
         <target> Let op: dit vervangt het momenteel actieve plan. </target>
       </segment>
     </unit>
@@ -6712,8 +6712,8 @@
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="translated">
-        <source> Übungen </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> Oefeningen </target>
       </segment>
     </unit>
@@ -7636,8 +7636,8 @@
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="translated">
-        <source>Liegestütztypen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>Push-up types</target>
       </segment>
     </unit>
@@ -7733,199 +7733,199 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source/>
+        <source> Sichtbarkeit oder Anzeigename anpassen? </source>
         <target> Zichtbaarheid of weergavenaam aanpassen? </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Einstellungen öffnen</source>
         <target>Instellingen openen</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source/>
+        <source> Mitmachen und auftauchen? </source>
         <target> Meedoen en verschijnen? </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Anmelden</source>
         <target>Aanmelden</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source/>
+        <source>Noch keine Daten zum Analysieren.</source>
         <target>Nog geen gegevens om te analyseren.</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source/>
+        <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
         <target> Start een trainingsplan of registreer je eerste set — we tonen hier trends en streaks. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan kiezen </target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source/>
+        <source>Übersicht</source>
         <target>Overzicht</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source/>
+        <source> Im aktuellen Zeitraum gibt es noch keine Einträge. </source>
         <target>Nog geen invoer in het huidige datumbereik.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source/>
+        <source> Diese Einträge gehören zu keiner bekannten Kategorie — Aggregat unten. </source>
         <target>Deze invoer hoort niet bij een bekende categorie — totaal hieronder.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source/>
+        <source> Vergleich nach Übungsgruppe </source>
         <target>Vergelijking per oefeningsgroep</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source/>
+        <source> Keine Daten im aktuellen Zeitraum. </source>
         <target>Geen gegevens in het huidige datumbereik.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source/>
+        <source>Reps gesamt</source>
         <target>Totaal herhalingen</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>Vandaag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source/>
+        <source>Streak</source>
         <target>Reeks</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source/>
+        <source>Bester Tag</source>
         <target>Beste dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source/>
+        <source> Trainingseinheiten </source>
         <target>Trainingen</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source/>
+        <source> Wiederholungen </source>
         <target>Herhalingen</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source/>
+        <source>Sätze gesamt</source>
         <target>Totaal sets</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source/>
+        <source> Zeit </source>
         <target>Tijd</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source/>
+        <source>Zeit gesamt</source>
         <target>Totale tijd</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>Vandaag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source/>
+        <source> Strecke </source>
         <target>Afstand</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source/>
+        <source> Strecke gesamt </source>
         <target>Totale afstand</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>Vandaag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source/>
+        <source> Strecke &amp; Zeit </source>
         <target>Afstand &amp; tijd</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source/>
+        <source>Trainingseinheiten</source>
         <target>Trainingen</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source/>
+        <source>Details ansehen</source>
         <target>Details bekijken</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source/>
+        <source>Noch keine Einträge.</source>
         <target>Nog geen invoer.</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source/>
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
         <target> Voeg je eerste trainingsinvoer toe — je historie verschijnt hier. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Invoer aanmaken </target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source/>
+        <source>Zur Bestenliste</source>
         <target>Naar het klassement</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Voorbeeld</target>
       </segment>
     </unit>
@@ -7943,55 +7943,55 @@
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source/>
+        <source>Datenschutzerklärung</source>
         <target>Privacyverklaring</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source/>
+        <source>Noch kein aktiver Trainingsplan</source>
         <target>Nog geen actief trainingsplan</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source/>
+        <source> Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen. </source>
         <target> Kies een plan om je dagdoel automatisch te laten instellen. </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source/>
+        <source> Plan wählen </source>
         <target> Plan kiezen </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source/>
+        <source>Tagesziel in Einstellungen öffnen</source>
         <target>Dagdoel openen in instellingen</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source/>
+        <source>Letzten Eintrag in der Historie öffnen</source>
         <target>Laatste invoer openen in geschiedenis</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source/>
+        <source>Zur Analyse</source>
         <target>Naar analyse</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source/>
+        <source> Tagesziel wird vom Plan gesetzt. </source>
         <target> Het dagdoel wordt door het plan bepaald. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Manuelle Ziele anpassen</source>
         <target>Handmatige doelen aanpassen</target>
       </segment>
     </unit>
@@ -9890,8 +9890,8 @@
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="translated">
-        <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
+      <segment state="initial">
+        <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>Met deze +‑knop registreer je oefeningen razendsnel – van elke pagina.</target>
       </segment>
     </unit>

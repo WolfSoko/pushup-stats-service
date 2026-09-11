@@ -1812,8 +1812,8 @@
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
-      <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" /> Tagen. </source>
+      <segment state="initial">
+        <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
       <target> 删除在过去 <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" /> 天内没有俯卧撑记录的匿名用户。 </target></segment>
     </unit>
     <unit id="admin.bulk.button">
@@ -2397,7 +2397,7 @@
       </notes>
       <segment state="translated">
         <source>Dashboard – Pushup Tracker</source>
-      <target>仪表盘 – 俯卧撑追踪器</target></segment>
+      <target>仪表盘 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.dashboard.description">
       <notes>
@@ -2413,7 +2413,7 @@
       </notes>
       <segment state="translated">
         <source>Login – Pushup Tracker</source>
-      <target>登录 – 俯卧撑追踪器</target></segment>
+      <target>登录 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.login.description">
       <notes>
@@ -2429,7 +2429,7 @@
       </notes>
       <segment state="translated">
         <source>Registrierung – Pushup Tracker</source>
-      <target>注册 – 俯卧撑追踪器</target></segment>
+      <target>注册 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.register.description">
       <notes>
@@ -2445,7 +2445,7 @@
       </notes>
       <segment state="translated">
         <source>Historie – Pushup Tracker</source>
-      <target>历史记录 – 俯卧撑追踪器</target></segment>
+      <target>历史记录 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.history.description">
       <notes>
@@ -2461,7 +2461,7 @@
       </notes>
       <segment state="translated">
         <source>Analyse – Pushup Tracker</source>
-      <target>分析 – 俯卧撑追踪器</target></segment>
+      <target>分析 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.analysis.description">
       <notes>
@@ -2477,7 +2477,7 @@
       </notes>
       <segment state="translated">
         <source>Einstellungen – Pushup Tracker</source>
-      <target>设置 – 俯卧撑追踪器</target></segment>
+      <target>设置 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.settings.description">
       <notes>
@@ -2493,7 +2493,7 @@
       </notes>
       <segment state="translated">
         <source>Trainingspläne – Pushup Tracker</source>
-      <target>训练计划 – 俯卧撑追踪器</target></segment>
+      <target>训练计划 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.trainingPlans.description">
       <notes>
@@ -2509,7 +2509,7 @@
       </notes>
       <segment state="translated">
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
-      <target>俯卧撑类型详解 – 俯卧撑追踪器</target></segment>
+      <target>俯卧撑类型详解 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
@@ -2525,7 +2525,7 @@
       </notes>
       <segment state="translated">
         <source>Erinnerungen – Pushup Tracker</source>
-      <target>提醒 – 俯卧撑追踪器</target></segment>
+      <target>提醒 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.reminders.description">
       <notes>
@@ -2541,7 +2541,7 @@
       </notes>
       <segment state="translated">
         <source>Bestenliste – Pushup Tracker</source>
-      <target>排行榜 – 俯卧撑追踪器</target></segment>
+      <target>排行榜 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
@@ -2557,7 +2557,7 @@
       </notes>
       <segment state="translated">
         <source>Profil – Pushup Tracker</source>
-      <target>个人资料 – 俯卧撑追踪器</target></segment>
+      <target>个人资料 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
@@ -2573,7 +2573,7 @@
       </notes>
       <segment state="translated">
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
-      <target>博客 – 俯卧撑技巧和指南 | 俯卧撑追踪器</target></segment>
+      <target>博客 – 俯卧撑技巧和指南 | Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.blog.description">
       <notes>
@@ -2589,7 +2589,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum – Pushup Tracker</source>
-      <target>法律声明 – 俯卧撑追踪器</target></segment>
+      <target>法律声明 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.impressum.description">
       <notes>
@@ -2597,7 +2597,7 @@
       </notes>
       <segment state="translated">
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
-      <target>俯卧撑追踪器的法律声明和提供商标识。</target></segment>
+      <target>Pushup Tracker的法律声明和提供商标识。</target></segment>
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
@@ -2605,7 +2605,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutzerklärung – Pushup Tracker</source>
-      <target>隐私政策 – 俯卧撑追踪器</target></segment>
+      <target>隐私政策 – Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
@@ -2613,7 +2613,7 @@
       </notes>
       <segment state="translated">
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
-      <target>俯卧撑追踪器隐私政策 – 数据处理、Cookie 和您的权利信息。</target></segment>
+      <target>Pushup Tracker隐私政策 – 数据处理、Cookie 和您的权利信息。</target></segment>
     </unit>
     <unit id="seo.default.title">
       <notes>
@@ -2621,15 +2621,15 @@
       </notes>
       <segment state="translated">
         <source>Pushup Tracker</source>
-      <target>俯卧撑追踪器</target></segment>
+      <target>Pushup Tracker</target></segment>
     </unit>
     <unit id="seo.default.description">
       <notes>
         <note category="location">web/src/app/app.ts:287</note>
       </notes>
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
-      <target>追踪次数、趋势和连续天数，使用俯卧撑追踪器。</target></segment>
+      <segment state="initial">
+        <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
+      <target>追踪次数、趋势和连续天数，使用Pushup Tracker。</target></segment>
     </unit>
     <unit id="sw.update.available">
       <notes>
@@ -2905,8 +2905,8 @@
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:75,77</note>
       </notes>
-      <segment state="translated">
-        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> Reps </source>
+      <segment state="initial">
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
       <target> 您的排名：#<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> 次 </target></segment>
     </unit>
     <unit id="reminder.feature.eyebrow">
@@ -3266,8 +3266,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="translated">
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+      <segment state="initial">
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
       <target> 几秒钟记录俯卧撑 — 提供趋势、连续天数与实时同步。需要更多时还可记录仰卧起坐、深蹲、平板支撑和跑步。</target></segment>
     </unit>
     <unit id="landing.cta.dashboard">
@@ -3426,8 +3426,8 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+      <segment state="initial">
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>把手机放好,打开自动计数,然后开始做俯卧撑、深蹲、引体向上或仰卧起坐——我们的 AI 直接在浏览器中实时识别你的动作并自动计数。实时动作检查显示角度和置信度,让你随时知道计数是否准确。</target>
       </segment>
     </unit>
@@ -3443,16 +3443,16 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="translated">
-        <source>Multi-Set Tracking</source>
+      <segment state="initial">
+        <source>Sätze &amp; Intervalle</source>
       <target>多组次数追踪</target></segment>
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:292,294</note>
       </notes>
-      <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+      <segment state="initial">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
       <target>逐组记录每一组 — 例如 12 + 10 + 8 次。应用会自动求和，并计算你的平均每组次数。</target></segment>
     </unit>
     <unit id="landing.feature.analytics.title">
@@ -3467,8 +3467,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:361,364</note>
       </notes>
-      <segment state="translated">
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+      <segment state="initial">
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
       <target>为每项练习提供趋势图与 KPI 卡片：俯卧撑变体(Standard、Wide、Diamond)、仰卧起坐、深蹲、平板支撑与跑步 — 可自由选择时间范围。</target></segment>
     </unit>
     <unit id="landing.feature.goals.title">
@@ -3483,8 +3483,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:462,465</note>
       </notes>
-      <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+      <segment state="initial">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
       <target>三重进度条让你保持正轨。连续记录显示会显示你的坚持情况，达成每日目标时还有彩纸庆祝。</target></segment>
     </unit>
     <unit id="landing.feature.heatmap.title">
@@ -3515,8 +3515,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:524,527</note>
       </notes>
-      <segment state="translated">
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+      <segment state="initial">
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
       <target>通过悬浮操作按钮或仪表板快速操作，只需2秒就能记录一次训练 — 无需打开对话框。</target></segment>
     </unit>
     <unit id="landing.feature.adaptive.title">
@@ -3531,8 +3531,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:538,542</note>
       </notes>
-      <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+      <segment state="initial">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
       <target>快速操作按钮会学习你的历史数据并推荐合适的次数 — 或者你可以自定义按钮。</target></segment>
     </unit>
     <unit id="landing.feature.pwa.title">
@@ -3547,8 +3547,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:552,555</note>
       </notes>
-      <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      <segment state="initial">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
       <target>直接从浏览器作为应用安装 — 在所有设备之间实时同步,并通过分享按钮发送当日成绩。</target></segment>
     </unit>
     <unit id="landing.feature.pwa.installed">
@@ -3590,8 +3590,8 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:566,570</note>
       </notes>
-      <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="initial">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
       <target>符合GDPR标准，可自定义Cookie同意设置。想要你的名字出现在排行榜上？只有在你同意时才会显示。无需订阅，无需信用卡。</target></segment>
     </unit>
     <unit id="ads.landing.aria">
@@ -3814,8 +3814,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName" /> hat <ph id="1" equiv="total" disp="profile.total" /> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
 
         <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 Pushup Tracker 上完成了 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑！</target>
       </segment>
@@ -4042,8 +4042,8 @@
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164,167</note>
       </notes>
-      <segment state="translated">
-        <source> Zeigt einen "Eintragen"-Button auf der Push-Benachrichtigung. Wenn die App schon geöffnet ist, wird der Eintrag im Hintergrund gespeichert; ansonsten öffnet sich kurz ein Tab, der den Eintrag automatisch anlegt. </source>
+      <segment state="initial">
+        <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
       <target> 在推送通知上显示"记录"按钮。如果应用已打开，记录会在后台保存；否则会打开一个标签页自动创建记录。 </target></segment>
     </unit>
     <unit id="reminder.quickLog.toggle">
@@ -6001,7 +6001,7 @@
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source />
+        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
         <target> 只有启用了「公开档案」的用户才会出现在排行榜上。请在下方启用「公开档案」以使用此选项。 </target>
       </segment>
     </unit>
@@ -6303,8 +6303,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:451,453</note>
       </notes>
-      <segment state="translated">
-        <source>Bitte exakt „löscchen“ eingeben.</source>
+      <segment state="initial">
+        <source>Bitte exakt „löschen“ eingeben.</source>
       <target>请准确输入"löscchen"。</target></segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
@@ -6343,16 +6343,16 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
-      <segment state="translated">
-        <source>Liegestütze Statistik</source>
+      <segment state="initial">
+        <source>Meine Trainingsübersicht</source>
       <target>俯卧撑统计</target></segment>
     </unit>
     <unit id="dashboardSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,18</note>
       </notes>
-      <segment state="translated">
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+      <segment state="initial">
+        <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
       <target> 快速掌握训练量和进度 – 清晰、快速且移动设备优化。 </target></segment>
     </unit>
     <unit id="liveStateLabel">
@@ -6797,8 +6797,8 @@
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:154,155</note>
       </notes>
-      <segment state="translated">
-        <source> Achtung: Dies ersetzt den aktuell aktiven Plan. </source>
+      <segment state="initial">
+        <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
       <target> 警告：这将替换当前活跃的计划。 </target></segment>
     </unit>
     <unit id="trainingPlans.start">
@@ -7219,8 +7219,8 @@
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="translated">
-        <source> Übungen </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> 训练动作 </target>
       </segment>
     </unit>
@@ -7259,8 +7259,8 @@
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="translated">
-        <source>Liegestütztypen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>俯卧撑类型</target>
       </segment>
     </unit>
@@ -7356,199 +7356,199 @@
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source />
+        <source> Sichtbarkeit oder Anzeigename anpassen? </source>
         <target> 想修改可见性或显示名称？ </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source />
+        <source>Einstellungen öffnen</source>
         <target>打开设置</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source />
+        <source> Mitmachen und auftauchen? </source>
         <target> 想参与并出现在这里？ </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source />
+        <source>Anmelden</source>
         <target>登录</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source />
+        <source>Noch keine Daten zum Analysieren.</source>
         <target>还没有可分析的数据。</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source />
+        <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
         <target> 启动训练计划或记录第一组——我们会在这里显示趋势和连续记录。 </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> 选择训练计划 </target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source />
+        <source>Übersicht</source>
         <target>概览</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source />
+        <source> Im aktuellen Zeitraum gibt es noch keine Einträge. </source>
         <target>当前日期范围内尚无条目。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source />
+        <source> Diese Einträge gehören zu keiner bekannten Kategorie — Aggregat unten. </source>
         <target>这些条目不属于任何已知类别 — 下方为汇总。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source />
+        <source> Vergleich nach Übungsgruppe </source>
         <target>按训练组对比</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source />
+        <source> Keine Daten im aktuellen Zeitraum. </source>
         <target>当前日期范围内暂无数据。</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source />
+        <source>Reps gesamt</source>
         <target>总次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source />
+        <source>Heute</source>
         <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source />
+        <source>Streak</source>
         <target>连续天数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source />
+        <source>Bester Tag</source>
         <target>最佳日</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source />
+        <source> Trainingseinheiten </source>
         <target>训练次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source />
+        <source> Wiederholungen </source>
         <target>次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source />
+        <source>Sätze gesamt</source>
         <target>总组数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source />
+        <source> Zeit </source>
         <target>时间</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source />
+        <source>Zeit gesamt</source>
         <target>总时间</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source />
+        <source>Heute</source>
         <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source />
+        <source> Strecke </source>
         <target>距离</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source />
+        <source> Strecke gesamt </source>
         <target>总距离</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source />
+        <source>Heute</source>
         <target>今天</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source />
+        <source> Strecke &amp; Zeit </source>
         <target>距离与时间</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source />
+        <source>Trainingseinheiten</source>
         <target>训练次数</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source />
+        <source>Details ansehen</source>
         <target>查看详情</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source />
+        <source>Noch keine Einträge.</source>
         <target>还没有记录。</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source />
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
         <target> 添加你的第一条训练记录——历史记录就会显示在这里。 </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> 创建记录 </target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source />
+        <source>Zur Bestenliste</source>
         <target>查看排行榜</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source />
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> 预览</target>
       </segment>
     </unit>
@@ -7566,55 +7566,55 @@
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source />
+        <source>Datenschutzerklärung</source>
         <target>隐私声明</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source />
+        <source>Noch kein aktiver Trainingsplan</source>
         <target>尚无活动训练计划</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source />
+        <source> Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen. </source>
         <target> 选择一个计划，让每日目标自动设定。 </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source />
+        <source> Plan wählen </source>
         <target> 选择计划 </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source />
+        <source>Tagesziel in Einstellungen öffnen</source>
         <target>在设置中打开每日目标</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source />
+        <source>Letzten Eintrag in der Historie öffnen</source>
         <target>在历史记录中打开最后一条记录</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source />
+        <source>Zur Analyse</source>
         <target>查看分析</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source />
+        <source> Tagesziel wird vom Plan gesetzt. </source>
         <target> 每日目标由计划设定。 </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source />
+        <source>Manuelle Ziele anpassen</source>
         <target>调整手动目标</target>
       </segment>
     </unit>
@@ -8900,8 +8900,8 @@
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.summary">
-      <segment state="translated">
-        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische "nur Push"-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
+      <segment state="initial">
+        <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
         <target>6周对称推拉训练计划：俯卧撑配合拉力训练（划船、引体向上离心、面拉）。避免经典的"只推不拉"失衡，均衡强化后链。每周一天专门的拉日，作为推力进阶之外的补充。</target>
       </segment>
     </unit>
@@ -9396,8 +9396,8 @@
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="translated">
-        <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
+      <segment state="initial">
+        <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>使用此 + 按钮，可从任意页面闪速记录练习。</target>
       </segment>
     </unit>
@@ -9932,7 +9932,7 @@
     <unit id="seo.assistant.title">
       <segment state="translated">
         <source>KI-Coach – Pushup Tracker</source>
-        <target>AI教练 – 俯卧撑追踪器</target>
+        <target>AI教练 – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">

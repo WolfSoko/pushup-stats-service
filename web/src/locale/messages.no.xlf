@@ -39,7 +39,7 @@
         </unit>
     <unit id="2721806142807617942">
       <segment state="translated">
-        <source/>
+        <source> Registrieren </source>
         <target> Registrer </target>
       </segment>
     </unit>
@@ -57,7 +57,7 @@
         </unit>
     <unit id="6031063121455734122">
       <segment state="translated">
-        <source/>
+        <source> Zurück </source>
         <target> Tilbake </target>
       </segment>
     </unit>
@@ -346,8 +346,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="analysis.avgSetsCol">
-      <segment state="translated">
-        <source>&#x2300; Sets</source>
+      <segment state="initial">
+        <source>⌀ Sets</source>
         <target>&#x2300; Serier</target>
       </segment>
     </unit>
@@ -358,8 +358,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="analysis.avgSetSizeTitle">
-      <segment state="translated">
-        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
+      <segment state="initial">
+        <source>⌀ Set-Größe</source>
         <target>&#x2300; Seriestørrelse</target>
       </segment>
     </unit>
@@ -511,8 +511,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="pie.avgSetSize">
-      <segment state="translated">
-        <source>&#x2300; Set-Gr&#x00F6;&#x00DF;e</source>
+      <segment state="initial">
+        <source>⌀ Set-Größe</source>
         <target>&#x2300; Seriestørrelse</target>
       </segment>
     </unit>
@@ -576,133 +576,133 @@ Aktiv:         </target>
         </unit>
     <unit id="auth.email">
       <segment state="translated">
-        <source/>
+        <source>E-Mail</source>
         <target>E-post</target>
       </segment>
     </unit>
     <unit id="auth.error.emailInUse">
       <segment state="translated">
-        <source/>
+        <source>Für diese E-Mail existiert bereits ein Konto.</source>
         <target>En konto finnes allerede for denne e-postadressen.</target>
       </segment>
     </unit>
     <unit id="auth.error.generic">
       <segment state="translated">
-        <source/>
+        <source>Anmeldung fehlgeschlagen. Bitte versuche es erneut.</source>
         <target>Innlogging mislyktes. Vennligst prøv igjen.</target>
       </segment>
     </unit>
     <unit id="auth.error.internalError">
       <segment state="translated">
-        <source/>
+        <source>Ein technischer Fehler ist aufgetreten. Bitte gleich erneut versuchen.</source>
         <target>En teknisk feil oppstod. Vennligst prøv igjen snart.</target>
       </segment>
     </unit>
     <unit id="auth.error.invalidCredential">
       <segment state="translated">
-        <source/>
+        <source>E-Mail oder Passwort ist nicht korrekt.</source>
         <target>E-post eller passord er feil.</target>
       </segment>
     </unit>
     <unit id="auth.error.invalidEmail">
       <segment state="translated">
-        <source/>
+        <source>Bitte eine gültige E-Mail-Adresse eingeben.</source>
         <target>Vennligst skriv inn en gyldig e-postadresse.</target>
       </segment>
     </unit>
     <unit id="auth.error.network">
       <segment state="translated">
-        <source/>
+        <source>Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen.</source>
         <target>Nettverksfeil. Vennligst sjekk internetttilkoblingen din og prøv igjen.</target>
       </segment>
     </unit>
     <unit id="auth.error.popupBlocked">
       <segment state="translated">
-        <source/>
+        <source>Pop-up wurde blockiert. Bitte Pop-ups erlauben und erneut versuchen.</source>
         <target>Popup-vinduet ble blokkert. Vennligst tillat popup-vinduer og prøv igjen.</target>
       </segment>
     </unit>
     <unit id="auth.error.popupClosed">
       <segment state="translated">
-        <source/>
+        <source>Google-Anmeldung abgebrochen. Das Anmelde-Fenster wurde geschlossen.</source>
         <target>Google-innlogging ble avbrutt. Innloggingsvinduet ble lukket.</target>
       </segment>
     </unit>
     <unit id="auth.error.tooManyRequests">
       <segment state="translated">
-        <source/>
+        <source>Zu viele Versuche. Bitte kurz warten und erneut versuchen.</source>
         <target>For mange forsøk. Vennligst vent litt og prøv igjen.</target>
       </segment>
     </unit>
     <unit id="auth.error.userDisabled">
       <segment state="translated">
-        <source/>
+        <source>Dieses Konto ist deaktiviert.</source>
         <target>Denne kontoen er deaktivert.</target>
       </segment>
     </unit>
     <unit id="auth.error.userNotFound">
       <segment state="translated">
-        <source/>
+        <source>Kein Konto mit dieser E-Mail gefunden.</source>
         <target>Ingen konto funnet for denne e-postadressen.</target>
       </segment>
     </unit>
     <unit id="auth.error.weakPassword">
       <segment state="translated">
-        <source/>
+        <source>Das Passwort ist zu schwach (mindestens 6 Zeichen).</source>
         <target>Passordet er for svakt (minst 6 tegn).</target>
       </segment>
     </unit>
     <unit id="auth.error.wrongPassword">
       <segment state="translated">
-        <source/>
+        <source>E-Mail oder Passwort ist nicht korrekt.</source>
         <target>E-post eller passord er feil.</target>
       </segment>
     </unit>
     <unit id="auth.google.signin">
       <segment state="translated">
-        <source/>
+        <source>Mit Google anmelden</source>
         <target> Logg inn med Google </target>
       </segment>
     </unit>
     <unit id="auth.google.signup">
       <segment state="translated">
-        <source/>
+        <source>Mit Google registrieren</source>
         <target> Registrer deg med Google </target>
       </segment>
     </unit>
     <unit id="auth.login.loading">
       <segment state="translated">
-        <source/>
+        <source>Anmelden...</source>
         <target>Logger inn...</target>
       </segment>
     </unit>
     <unit id="auth.login.submit">
       <segment state="translated">
-        <source/>
+        <source>Anmelden</source>
         <target>Logg inn</target>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
       <segment state="translated">
-        <source/>
+        <source>Bitte melde dich an</source>
         <target>Vennligst logg inn</target>
       </segment>
     </unit>
     <unit id="auth.login.title">
       <segment state="translated">
-        <source/>
+        <source>Willkommen bei Pushup Tracker</source>
         <target>Velkommen til Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="auth.next">
       <segment state="translated">
-        <source/>
+        <source> Weiter </source>
         <target> Neste </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.consent.checkbox">
       <segment state="translated">
-        <source/>
+        <source>Einwilligung erteilen</source>
         <target> Gi samtykke </target>
       </segment>
     </unit>
@@ -714,43 +714,44 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.onboarding.google.error.consentRequired">
       <segment state="translated">
-        <source/>
+        <source>Bitte stimme der Datenverarbeitung zu.</source>
         <target>Vennligst gi samtykke til databehandling.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.noUser">
       <segment state="translated">
-        <source/>
+        <source>Kein eingeloggter Nutzer gefunden.</source>
         <target>Ingen innlogget bruker funnet.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.error.saveFailed">
       <segment state="translated">
-        <source/>
+        <source>Onboarding konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
         <target>Oppsett kunne ikke lagres. Vennligst prøv igjen.</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.finish">
       <segment state="translated">
-        <source/>
+        <source> Abschließen </source>
         <target> Fullfør </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.goal">
       <segment state="translated">
-        <source/>
+        <source>Tagesziel</source>
         <target>Daglig mål</target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.title">
       <segment state="translated">
-        <source/>
+        <source> Einrichtung abschließen
+</source>
         <target> Fullfør oppsett </target>
       </segment>
     </unit>
     <unit id="auth.onboarding.google.username">
       <segment state="translated">
-        <source/>
+        <source>Benutzername</source>
         <target>Brukernavn</target>
       </segment>
     </unit>
@@ -762,19 +763,19 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.or">
       <segment state="translated">
-        <source/>
+        <source>oder</source>
         <target>eller</target>
       </segment>
     </unit>
     <unit id="auth.password">
       <segment state="translated">
-        <source/>
+        <source>Passwort</source>
         <target>Passord</target>
       </segment>
     </unit>
     <unit id="auth.register.back">
       <segment state="translated">
-        <source/>
+        <source> Zurück</source>
         <target> Tilbake </target>
       </segment>
     </unit>
@@ -786,19 +787,19 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.register.google.skipPassword">
       <segment state="translated">
-        <source/>
+        <source> Passwort-Schritt übersprungen (Google Registrierung). </source>
         <target> Passordfasen hoppet over (Google-registrering). </target>
       </segment>
     </unit>
     <unit id="auth.register.noAccount">
       <segment state="translated">
-        <source/>
+        <source>Noch kein Account?</source>
         <target>Ingen konto ennå?</target>
       </segment>
     </unit>
     <unit id="auth.register.password.hint">
       <segment state="translated">
-        <source/>
+        <source> Mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahl und Sonderzeichen. </source>
         <target>Min. 8 tegn, 1 tall og 1 spesialtegn.</target>
       </segment>
     </unit>
@@ -810,7 +811,7 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.register.password.repeat">
       <segment state="translated">
-        <source/>
+        <source>Passwort wiederholen</source>
         <target>Gjenta passord</target>
       </segment>
     </unit>
@@ -828,13 +829,13 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.register.submit">
       <segment state="translated">
-        <source/>
+        <source> Registrieren </source>
         <target> Registrer </target>
       </segment>
     </unit>
     <unit id="auth.register.subtitle">
       <segment state="translated">
-        <source/>
+        <source>Erstelle dein Konto</source>
         <target>Opprett kontoen din</target>
       </segment>
     </unit>
@@ -858,25 +859,25 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.register.success.dashboard">
       <segment state="translated">
-        <source/>
+        <source> Zum Dashboard </source>
         <target> Gå til kontrollpanel </target>
       </segment>
     </unit>
     <unit id="auth.register.success.text">
       <segment state="translated">
-        <source/>
+        <source> Dein Account ist bereit. Zeit für die ersten Liegestütze 💪 </source>
         <target> Kontoen din er klar. Dags for de første armheving(ene) 💪 </target>
       </segment>
     </unit>
     <unit id="auth.register.success.title">
       <segment state="translated">
-        <source/>
+        <source>Geschafft! 🎉</source>
         <target>Ferdig! 🎉</target>
       </segment>
     </unit>
     <unit id="auth.register.title">
       <segment state="translated">
-        <source/>
+        <source>Registrierung</source>
         <target>Registrering</target>
       </segment>
     </unit>
@@ -1180,8 +1181,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="settings.snapQualityHint">
-      <segment state="translated">
-        <source>Steuert die Partikelanzahl der „Ziel erreicht"-Animation (40k / 120k / 200k).</source>
+      <segment state="initial">
+        <source> Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k). </source>
         <target>Kontrollerer partikkelantallet for "mål nådd"-animasjonen (40k / 120k / 200k).</target>
       </segment>
     </unit>
@@ -1238,8 +1239,8 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,16</note>
 
             </notes>
-      <segment state="translated">
-        <source> Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
+      <segment state="initial">
+        <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
         <target> Hold øye med treningsvolumet og progresjon – klar, rask og mobil optimert. </target>
 
             </segment>
@@ -1250,8 +1251,8 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:11,12</note>
 
             </notes>
-      <segment state="translated">
-        <source>Liegestütze Statistik</source>
+      <segment state="initial">
+        <source>Meine Trainingsübersicht</source>
         <target>Armhevingsstatistikk</target>
 
             </segment>
@@ -1582,8 +1583,8 @@ Aktiv:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
             </notes>
-      <segment state="translated">
-        <source>Jetzt registrieren</source>
+      <segment state="initial">
+        <source>Konto erstellen</source>
         <target>Registrer deg nå</target>
 
             </segment>
@@ -1605,8 +1606,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Verlaufsdiagramme und KPI-Karten für jede Übung: Liegestütz-Varianten (Standard, Wide, Diamond), Sit-ups, Kniebeugen, Plank und Laufen – mit frei wählbarem Zeitraum.</source>
+      <segment state="initial">
+        <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Trenddiagrammer og KPI-kort for hver øvelse: push-up-varianter (Standard, Wide, Diamond), sit-ups, knebøy, plank og løping — med fritt valgt tidsrom.</target>
             </segment>
         </unit>
@@ -1623,8 +1624,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Multi-Set Tracking</source>
+      <segment state="initial">
+        <source>Sätze &amp; Intervalle</source>
         <target>Flersett-sporing</target>
             </segment>
         </unit>
@@ -1632,8 +1633,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Erfasse jeden Satz einzeln – z.&#x202F;B. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Die App summiert automatisch und zeigt deine durchschnittliche Set-Größe.</source>
+      <segment state="initial">
+        <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Logg hver sett enkeltvis – f.eks. 12&#xA0;+&#xA0;10&#xA0;+&#xA0;8. Appen summerer automatisk og viser gjennomsnittlig setstørrelse.</target>
             </segment>
         </unit>
@@ -1650,8 +1651,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs. Streak-Anzeige belohnt dranbleiben, Konfetti feiert dein erreichtes Tagesziel.</source>
+      <segment state="initial">
+        <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>Trippel fremgangsindikator holder deg på sporet. Streak-telleren belønner konsistens og konfetti feirer hvert daglige mål du oppnår.</target>
             </segment>
         </unit>
@@ -1677,8 +1678,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Eintrag in 2 Sekunden über den Floating Action Button oder Schnellaktionen direkt im Dashboard – ganz ohne Dialog.</source>
+      <segment state="initial">
+        <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Logg en oppføring på 2 sekunder via flytende handlingsknapp eller hurtighandlinger direkte i dashbordet – ingen dialog nødvendig.</target>
             </segment>
         </unit>
@@ -1704,8 +1705,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten und Tagesergebnis per Teilen-Button.</source>
+      <segment state="initial">
+        <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Installer den rett fra nettleseren som app, med sanntidssynkronisering mellom alle enhetene dine, og del dagsresultatet med én knapp.</target>
             </segment>
         </unit>
@@ -1740,8 +1741,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>Privacy first &amp; 100&#xA0;% kostenlos</source>
+      <segment state="initial">
+        <source>Privacy first &amp; 100 % kostenlos</source>
         <target>Personvern først &amp; 100% gratis</target>
             </segment>
         </unit>
@@ -1749,8 +1750,8 @@ Aktiv:         </target>
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
             </notes>
-      <segment state="translated">
-        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
+      <segment state="initial">
+        <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>GDPR-kompatibel med tilpassbar informasjonskapsel-samtykke. Ditt navn på leaderboard? Bare hvis du ønsker det. Ingen abonnement, intet kredittkort.</target>
             </segment>
         </unit>
@@ -1767,8 +1768,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="translated">
-        <source>Stell das Handy hin, öffne die Auto-Zählung und mach deine Liegestütze, Kniebeugen, Klimmzüge oder Sit-ups – unsere KI erkennt deine Bewegung in Echtzeit direkt im Browser und zählt automatisch mit. Der Live-Form-Check zeigt Winkel und Sicherheit, damit du jederzeit weißt, dass die Zählung sauber läuft.</source>
+      <segment state="initial">
+        <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Sett mobilen ned, åpne auto-tellingen og gjør armhevinger, knebøy, kroppshevinger eller sit-ups – KI-en vår gjenkjenner bevegelsen din i sanntid, rett i nettleseren, og teller automatisk for deg. Live Form Check viser vinkel og sikkerhet slik at du vet at tellingen er ren.</target>
       </segment>
     </unit>
@@ -1882,11 +1883,8 @@ Aktiv:         </target>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
             </notes>
-      <segment state="translated">
-        <source>
-          <x id="INTERPOLATION" equiv-text="{{ me.rank }}"/>
-          <x id="INTERPOLATION_1" equiv-text="{{ me.reps }}"/>
-Deine Position: # ·  Reps        </source>
+      <segment state="initial">
+        <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
         <target> Din posisjon: #{$INTERPOLATION} · {$INTERPOLATION_1} armhevninger </target>
 
             </segment>
@@ -2038,8 +2036,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html</note>
 
             </notes>
-      <segment state="translated">
-        <source> Liegestütze tracken in Sekunden – mit Trends, Streaks und Live-Sync. Plus Sit-ups, Kniebeugen, Plank und Laufen, wenn du mehr willst. </source>
+      <segment state="initial">
+        <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Spor push-ups på sekunder — med trender, streaks og live-sync. Pluss sit-ups, knebøy, plank og løping når du vil ha mer. </target>
 
             </segment>
@@ -2104,10 +2102,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:21,23</note>
 
             </notes>
-      <segment state="translated">
-        <source>
-          <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/>
- Live:          </source>
+      <segment state="initial">
+        <source> Live: <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;verbunden&apos; : &apos;getrennt&apos; }}"/> </source>
         <target>
           <ph id="0" equiv="INTERPOLATION" disp="{{ liveConnected() ? &apos;connected&apos; : &apos;disconnected&apos; }}"/>
  Direkte:          </target>
@@ -2225,7 +2221,7 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="nav.leaderboard">
       <segment state="translated">
-        <source/>
+        <source>Bestenliste</source>
         <target>Leaderboard</target>
       </segment>
     </unit>
@@ -3048,8 +3044,8 @@ Deine Position: # ·  Reps        </source>
 
         </unit>
     <unit id="seo.default.description">
-      <segment state="translated">
-        <source>Tracke Reps, Trends und Streaks mit Pushup Tracker.</source>
+      <segment state="initial">
+        <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
         <target>Spor reps, trender og treningsserier med Pushup Tracker.</target>
 
             </segment>
@@ -3145,13 +3141,13 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="settings.adsConsentHint">
       <segment state="translated">
-        <source/>
+        <source>Steuert, ob Werbe-Slots im Dashboard geladen werden dürfen.</source>
         <target> Kontrollerer om annonsenøttene kan lastes på dashbordet. </target>
       </segment>
     </unit>
     <unit id="settings.adsConsentOptIn">
       <segment state="translated">
-        <source/>
+        <source> Personalisierte Werbung aktivieren </source>
         <target> Aktiver personaliserte annonser </target>
       </segment>
     </unit>
@@ -3253,7 +3249,7 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.dangerZoneBody">
       <segment state="translated">
-        <source/>
+        <source> Konto löschen entfernt dein Konto. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
         <target> Sletting av kontoen din fjerner kontoen din. Treningsdata forblir anonymisert for statistisk analyse. </target>
       </segment>
     </unit>
@@ -3277,61 +3273,61 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.dangerZoneTitle">
       <segment state="translated">
-        <source/>
+        <source>Danger Zone</source>
         <target>Faresone</target>
       </segment>
     </unit>
     <unit id="settings.deleteAccount">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
         <target>{$START_TAG_MAT_ICON}warning{$CLOSE_TAG_MAT_ICON} Slett konto </target>
       </segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <segment state="translated">
-        <source/>
+        <source> Final löschen </source>
         <target> Slett endelig </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogInfo">
       <segment state="translated">
-        <source/>
+        <source> Dein Konto wird gelöscht. Trainingsdaten bleiben für statistische Auswertung anonymisiert erhalten. </source>
         <target> Kontoen din vil bli slettet. Treningsdata forblir anonymisert for statistisk analyse. </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseHint">
       <segment state="translated">
-        <source/>
+        <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Skriv inn nøyaktig &quot;slett&quot;.</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogPhraseLabel">
       <segment state="translated">
-        <source/>
+        <source>Bestätigungswort eingeben</source>
         <target>Skriv inn bekreftelsesord</target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogTitle">
       <segment state="translated">
-        <source/>
+        <source> Account wirklich löschen? </source>
         <target> Virkelig slette konto? </target>
       </segment>
     </unit>
     <unit id="settings.deleteDialogWarning">
       <segment state="translated">
-        <source/>
+        <source> Achtung: Diese Aktion ist nicht rückgängig. </source>
         <target> Advarsel: Denne handlingen kan ikke angres. </target>
       </segment>
     </unit>
     <unit id="settings.deletingAccount">
       <segment state="translated">
-        <source/>
+        <source>Konto wird gelöscht…</source>
         <target>Sletter konto…</target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint">
       <segment state="translated">
-        <source/>
+        <source>Kann in der Bestenliste angezeigt werden.</source>
         <target>Kan vises på ranglisten.</target>
       </segment>
     </unit>
@@ -3343,19 +3339,19 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.leaderboardOptIn">
       <segment state="translated">
-        <source/>
+        <source> In Bestenliste anzeigen </source>
         <target> Vis på ranglisten </target>
       </segment>
     </unit>
     <unit id="settings.leaderboardOptOutHint">
       <segment state="translated">
-        <source/>
+        <source> Wenn deaktiviert, wird dein Profil in der Bestenliste nicht angezeigt. </source>
         <target> Hvis deaktivert, vil profilen din ikke vises på ranglisten. </target>
       </segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
       <segment state="translated">
-        <source/>
+        <source> Nur Profile mit aktiviertem Öffentlichen Profil erscheinen in der Bestenliste. Aktiviere unten „Öffentliches Profil“, um diese Option zu nutzen. </source>
         <target> Bare profiler med Offentlig profil aktivert vises på topplisten. Aktiver «Offentlig profil» nedenfor for å bruke dette alternativet. </target>
       </segment>
     </unit>
@@ -3388,14 +3384,10 @@ Deine Position: # ·  Reps        </source>
         <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:15,20</note>
 
             </notes>
-      <segment state="translated">
-        <source>
-          <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
-            <ph id="1" equiv="INTERPOLATION" disp="{{
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{
         showSourceColumn() ? &apos;visibility&apos; : &apos;visibility_off&apos;
-      }}"/>
-          </pc>
- Quelle         </source>
+      }}"/></pc> Quelle </source>
         <target>
           <pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">
             <ph id="1" equiv="INTERPOLATION" disp="{{
@@ -3488,7 +3480,7 @@ Deine Position: # ·  Reps        </source>
         </unit>
     <unit id="toolbarDailyGoal">
       <segment state="translated">
-        <source/>
+        <source>Tagesziel</source>
         <target>Daglig mål</target>
       </segment>
     </unit>
@@ -3601,8 +3593,8 @@ Deine Position: # ·  Reps        </source>
         <note category="location">libs/auth/src/lib/ui/login/login.component.ts:75</note>
 
             </notes>
-      <segment state="translated">
-        <source>Passwort muss mindestens 6 Zeichen lang sein!</source>
+      <segment state="initial">
+        <source>Passwort muss mindestens 8 Zeichen lang sein!</source>
         <target>Passordet må være minst 6 tegn langt!</target>
 
             </segment>
@@ -3754,8 +3746,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="admin.bulk.hint">
-      <segment state="translated">
-        <source> Löscht anonyme Benutzer ohne Pushups in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}"/> Tagen. </source>
+      <segment state="initial">
+        <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
         <target> Sletter anonyme brukere uten armhevninger de siste <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays }}"/> dagene. </target>
       </segment>
     </unit>
@@ -4642,8 +4634,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="landing.feature.adaptive.body">
-      <segment state="translated">
-        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor – oder du konfigurierst eigene Buttons.</source>
+      <segment state="initial">
+        <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>Hurtighandlingene lærer fra historikken din og foreslår passende repetisjoner – eller du konfigurerer dine egne knapper.</target>
       </segment>
     </unit>
@@ -5038,8 +5030,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="datenschutz.ads.personalized.body">
-      <segment state="translated">
-        <source>Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige" wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen" im Footer der Seite ändern.</source>
+      <segment state="initial">
+        <source> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </source>
         <target>Ved ditt første besøk vil du bli spurt via en samtykkebanner om du tillater personalisert annonsering. Hvis du velger "Bare nødvendige", vises kun ikke-personaliserte annonser, som ikke setter sporingskappler for annonseringsprofiler. Du kan endre samtykket ditt når som helst via lenken "Informasjonskapselinnstillinger" i sidens bunntekst.</target>
       </segment>
     </unit>
@@ -5050,8 +5042,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="datenschutz.cookies.body">
-      <segment state="translated">
-        <source>Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen" im Footer widerrufen.</source>
+      <segment state="initial">
+        <source> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </source>
         <target>Dette nettstedet bruker informasjonskapsler. Teknisk nødvendige informasjonskapsler (økt, språkpreferanse) settes uten samtykke. Informasjonskapsler for analyse (Google Analytics) og personalisert annonsering (Google AdSense) aktiveres kun etter ditt eksplisitte samtykke. Du kan trekke tilbake samtykket ditt når som helst via lenken "Informasjonskapselinnstillinger" i bunnteksten.</target>
       </segment>
     </unit>
@@ -5608,14 +5600,14 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="trainingPlans.replaceWarn">
-      <segment state="translated">
-        <source>Achtung: Dies ersetzt den aktuell aktiven Plan.</source>
+      <segment state="initial">
+        <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
         <target>Advarsel: dette erstatter den aktive planen.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.abandon">
-      <segment state="translated">
-        <source>Plan beenden</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
         <target>Avslutt plan</target>
       </segment>
     </unit>
@@ -5932,8 +5924,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
         <target><ph id="0" equiv="name" disp="name"/> klarte <ph id="1" equiv="total" disp="total"/> armhevninger på Pushup Tracker 💪 Sjekk det ut:</target>
       </segment>
     </unit>
@@ -5980,8 +5972,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
-      <segment state="translated">
-        <source>Profil teilen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Profil teilen </source>
         <target>Del profilen</target>
       </segment>
     </unit>
@@ -6194,8 +6186,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="translated">
-        <source> Übungen </source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> Øvelser </target>
       </segment>
     </unit>
@@ -6932,8 +6924,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="translated">
-        <source>Liegestütztypen</source>
+      <segment state="initial">
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>Push-up-typer</target>
       </segment>
     </unit>
@@ -7029,199 +7021,199 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="leaderboard.visibilityHint">
       <segment state="translated">
-        <source/>
+        <source> Sichtbarkeit oder Anzeigename anpassen? </source>
         <target> Endre synlighet eller visningsnavn? </target>
       </segment>
     </unit>
     <unit id="leaderboard.visibilityHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Einstellungen öffnen</source>
         <target>Åpne innstillinger</target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint">
       <segment state="translated">
-        <source/>
+        <source> Mitmachen und auftauchen? </source>
         <target> Bli med og vis deg? </target>
       </segment>
     </unit>
     <unit id="leaderboard.loginHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Anmelden</source>
         <target>Logg inn</target>
       </segment>
     </unit>
     <unit id="analysis.empty.title">
       <segment state="translated">
-        <source/>
+        <source>Noch keine Daten zum Analysieren.</source>
         <target>Ingen data å analysere ennå.</target>
       </segment>
     </unit>
     <unit id="analysis.empty.body">
       <segment state="translated">
-        <source/>
+        <source> Starte einen Trainingsplan oder trage deinen ersten Satz ein — dann zeigen wir dir hier Trends und Streaks. </source>
         <target> Start en treningsplan eller logg ditt første sett — vi viser trender og serier her. </target>
       </segment>
     </unit>
     <unit id="analysis.empty.cta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Trainingsplan wählen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">fitness_center</pc> Velg treningsplan </target>
       </segment>
     </unit>
     <unit id="analysis.tabs.overview">
       <segment state="translated">
-        <source/>
+        <source>Übersicht</source>
         <target>Oversikt</target>
       </segment>
     </unit>
     <unit id="analysis.overview.empty">
       <segment state="translated">
-        <source/>
+        <source> Im aktuellen Zeitraum gibt es noch keine Einträge. </source>
         <target>Ingen oppføringer i valgt datointervall ennå.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.uncategorisedNotice">
       <segment state="translated">
-        <source/>
+        <source> Diese Einträge gehören zu keiner bekannten Kategorie — Aggregat unten. </source>
         <target>Disse oppføringene tilhører ingen kjent kategori — aggregert nedenfor.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.title">
       <segment state="translated">
-        <source/>
+        <source> Vergleich nach Übungsgruppe </source>
         <target>Sammenligning etter øvelsesgruppe</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.empty">
       <segment state="translated">
-        <source/>
+        <source> Keine Daten im aktuellen Zeitraum. </source>
         <target>Ingen data i valgt datointervall.</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalReps">
       <segment state="translated">
-        <source/>
+        <source>Reps gesamt</source>
         <target>Totale repetisjoner</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayReps">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>I dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.streak">
       <segment state="translated">
-        <source/>
+        <source>Streak</source>
         <target>Serie</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.bestDay">
       <segment state="translated">
-        <source/>
+        <source>Bester Tag</source>
         <target>Beste dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.comparison.metricLabel">
       <segment state="translated">
-        <source/>
+        <source> Trainingseinheiten </source>
         <target>Økter</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.repsTitle">
       <segment state="translated">
-        <source/>
+        <source> Wiederholungen </source>
         <target>Repetisjoner</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalSets">
       <segment state="translated">
-        <source/>
+        <source>Sätze gesamt</source>
         <target>Totalt antall sett</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.timeTitle">
       <segment state="translated">
-        <source/>
+        <source> Zeit </source>
         <target>Tid</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalTime">
       <segment state="translated">
-        <source/>
+        <source>Zeit gesamt</source>
         <target>Total tid</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayTime">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>I dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTitle">
       <segment state="translated">
-        <source/>
+        <source> Strecke </source>
         <target>Distanse</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.totalDistance">
       <segment state="translated">
-        <source/>
+        <source> Strecke gesamt </source>
         <target>Total distanse</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.todayDistance">
       <segment state="translated">
-        <source/>
+        <source>Heute</source>
         <target>I dag</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.facet.distanceTimeTitle">
       <segment state="translated">
-        <source/>
+        <source> Strecke &amp; Zeit </source>
         <target>Distanse og tid</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.entries">
       <segment state="translated">
-        <source/>
+        <source>Trainingseinheiten</source>
         <target>Økter</target>
       </segment>
     </unit>
     <unit id="analysis.overview.cards.viewDetails">
       <segment state="translated">
-        <source/>
+        <source>Details ansehen</source>
         <target>Vis detaljer</target>
       </segment>
     </unit>
     <unit id="entries.empty.title">
       <segment state="translated">
-        <source/>
+        <source>Noch keine Einträge.</source>
         <target>Ingen oppføringer ennå.</target>
       </segment>
     </unit>
     <unit id="entries.empty.body">
       <segment state="translated">
-        <source/>
+        <source> Trage deinen ersten Trainingseintrag ein — dann wird hier deine Historie sichtbar. </source>
         <target> Legg til din første treningsoppføring — historikken vises her. </target>
       </segment>
     </unit>
     <unit id="entries.empty.cta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Eintrag erstellen </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">add</pc> Lag oppføring </target>
       </segment>
     </unit>
     <unit id="settings.displayNameHint.leaderboardLink">
       <segment state="translated">
-        <source/>
+        <source>Zur Bestenliste</source>
         <target>Til topplisten</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
       <segment state="translated">
-        <source/>
+        <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vorschau </source>
         <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Forhåndsvisning</target>
       </segment>
     </unit>
@@ -7239,55 +7231,55 @@ Deine Position: # ·  Reps        </source>
     </unit>
     <unit id="settings.adsConsent.privacyLink">
       <segment state="translated">
-        <source/>
+        <source>Datenschutzerklärung</source>
         <target>Personvernpolicy</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanTitle">
       <segment state="translated">
-        <source/>
+        <source>Noch kein aktiver Trainingsplan</source>
         <target>Ingen aktiv treningsplan ennå</target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <segment state="translated">
-        <source/>
+        <source> Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen. </source>
         <target> Velg en plan for å sette dagsmålet ditt automatisk. </target>
       </segment>
     </unit>
     <unit id="dashboard.noPlanCta">
       <segment state="translated">
-        <source/>
+        <source> Plan wählen </source>
         <target> Velg plan </target>
       </segment>
     </unit>
     <unit id="dashboard.goalEditAria">
       <segment state="translated">
-        <source/>
+        <source>Tagesziel in Einstellungen öffnen</source>
         <target>Åpne dagsmål i innstillinger</target>
       </segment>
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <segment state="translated">
-        <source/>
+        <source>Letzten Eintrag in der Historie öffnen</source>
         <target>Åpne siste oppføring i historikken</target>
       </segment>
     </unit>
     <unit id="dashboard.allTimeBadges.cta">
       <segment state="translated">
-        <source/>
+        <source>Zur Analyse</source>
         <target>Til analyse</target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint">
       <segment state="translated">
-        <source/>
+        <source> Tagesziel wird vom Plan gesetzt. </source>
         <target> Dagsmålet settes av planen. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.goalOverrideHint.cta">
       <segment state="translated">
-        <source/>
+        <source>Manuelle Ziele anpassen</source>
         <target>Juster manuelle mål</target>
       </segment>
     </unit>
@@ -9186,8 +9178,8 @@ Deine Position: # ·  Reps        </source>
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="translated">
-        <source>Über diesen +‑Button erfasst du Wiederholungen blitzschnell – von jeder Seite aus.</source>
+      <segment state="initial">
+        <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>Med denne +‑knappen registrerer du øvelser lynraskt – fra hvilken som helst side.</target>
       </segment>
     </unit>
