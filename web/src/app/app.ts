@@ -377,7 +377,7 @@ export class App {
           data.seoTitle ?? $localize`:@@seo.default.title:Pushup Tracker`;
         const description =
           data.seoDescription ??
-          $localize`:@@seo.default.description:Tracke Reps, Trends und Streaks mit Pushup Tracker.`;
+          $localize`:@@seo.default.description:Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.`;
 
         const path = nav.urlAfterRedirects || nav.url;
         this.seo.update(title, description, path, { noindex: data.noindex });
