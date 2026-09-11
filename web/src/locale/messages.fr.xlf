@@ -12060,219 +12060,219 @@
       </segment>
     </unit>
         <unit id="reminder.goalPause.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erinnerungen und Ziel </source>
-        <target> Erinnerungen und Ziel </target>
+        <target> Rappels et objectif </target>
       </segment>
     </unit>
         <unit id="reminder.goalPause.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </source>
-        <target> Erinnerungen zeigen, was heute noch offen ist – der Plan-Tag, wenn ein Trainingsplan läuft, sonst dein Tagesziel. </target>
+        <target> Les rappels montrent ce qu'il reste à faire aujourd'hui : le jour du plan si un plan d'entraînement est en cours, sinon ton objectif du jour. </target>
       </segment>
     </unit>
     <unit id="reminder.goalPause.toggle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erinnerungen pausieren, wenn das Ziel erreicht ist </source>
-        <target> Erinnerungen pausieren, wenn das Ziel erreicht ist </target>
+        <target> Mettre les rappels en pause une fois l'objectif atteint </target>
       </segment>
     </unit>
     <unit id="trainingPlans.paused.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Pausierter Plan </source>
-        <target> Pausierter Plan </target>
+        <target> Plan en pause </target>
       </segment>
     </unit>
     <unit id="trainingPlans.onResumePlanned">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beim Fortsetzen:</source>
-        <target>Beim Fortsetzen:</target>
+        <target>À la reprise :</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resume">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Plan fortsetzen </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">play_arrow</pc> Reprendre le plan </target>
       </segment>
     </unit>
     <unit id="trainingPlans.pause">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Plan pausieren </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">pause</pc> Mettre le plan en pause </target>
       </segment>
     </unit>
     <unit id="trainingPlans.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</source>
-        <target>Plan pausiert — er wartet bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/> auf dich.</target>
+        <target>Plan en pause — il t'attend au jour <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.resumedAtDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</source>
-        <target>Weiter geht&apos;s bei Tag <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
+        <target>Reprise au jour <ph id="0" equiv="INTERPOLATION" disp="day"/>.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.pausedAtDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert bei Tag:</source>
-        <target>Pausiert bei Tag:</target>
+        <target>En pause au jour :</target>
       </segment>
     </unit>
         <unit id="trainingPlans.pausedHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </source>
-        <target> Der Plan ruht: es verstreichen keine Plan-Tage und dein eigenes Tagesziel gilt wieder. Beim Fortsetzen geht es bei diesem Tag weiter. </target>
+        <target> Le plan est en pause : aucun jour de plan ne s'écoule et ton propre objectif quotidien s'applique de nouveau. À la reprise, il continue à partir de ce jour. </target>
       </segment>
     </unit>
     <unit id="trainingPlans.pausedSince">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert seit</source>
-        <target>Pausiert seit</target>
+        <target>En pause depuis</target>
       </segment>
     </unit>
     <unit id="dashboard.share.moreExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>+<ph id="0" equiv="count" disp="rest"/> weitere</source>
-        <target>+<ph id="0" equiv="count" disp="rest"/> weitere</target>
+        <target>+<ph id="0" equiv="count" disp="rest"/> de plus</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.profile.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</target>
+        <target>Aujourd'hui : <ph id="0" equiv="summary" disp="summary"/> 💪 Série : <ph id="1" equiv="streak" disp="streak"/> jours 🔥 Regarde mon profil :</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.profile.simple">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</target>
+        <target>Aujourd'hui : <ph id="0" equiv="summary" disp="summary"/> 💪 Regarde mon profil :</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</target>
+        <target>Aujourd'hui : <ph id="0" equiv="summary" disp="summary"/> 💪 Série : <ph id="1" equiv="streak" disp="streak"/> jours 🔥 Suis tes stats gratuitement :</target>
       </segment>
     </unit>
     <unit id="dashboard.share.day.simple">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</source>
-        <target>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</target>
+        <target>Aujourd'hui : <ph id="0" equiv="summary" disp="summary"/> 💪 Suis tes stats gratuitement :</target>
       </segment>
     </unit>
     <unit id="invite.banner.named">
-      <segment state="initial">
+      <segment state="translated">
         <source>hat dich zu Pushup Tracker eingeladen.</source>
-        <target>hat dich zu Pushup Tracker eingeladen.</target>
+        <target>t'a invité(e) sur Pushup Tracker.</target>
       </segment>
     </unit>
     <unit id="invite.banner.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du wurdest zu Pushup Tracker eingeladen. </source>
-        <target> Du wurdest zu Pushup Tracker eingeladen. </target>
+        <target> Tu as été invité(e) sur Pushup Tracker. </target>
       </segment>
     </unit>
     <unit id="invite.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker</source>
         <target>Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</source>
-        <target>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</target>
+        <target>Entraîne-toi avec moi : compte tes répétitions à la caméra, suis un plan d'entraînement, affronte les autres au classement. Gratuit :</target>
       </segment>
     </unit>
     <unit id="invite.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde einladen</source>
-        <target>Freunde einladen</target>
+        <target>Inviter des amis</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.firstInvite">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ersten Freund eingeladen</source>
-        <target>Ersten Freund eingeladen</target>
+        <target>Premier ami invité</target>
       </segment>
     </unit>
     <unit id="publicProfile.badge.invites">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
-        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+        <target><ph id="0" equiv="invites" disp="invites"/> amis invités</target>
       </segment>
     </unit>
     <unit id="nav.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Amis</target>
       </segment>
     </unit>
     <unit id="seo.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde – Pushup Tracker</source>
-        <target>Freunde – Pushup Tracker</target>
+        <target>Amis – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.friends.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
-        <target>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</target>
+        <target>Confirme tes amis, réponds aux demandes et entraînez-vous ensemble.</target>
       </segment>
     </unit>
     <unit id="friends.error.self">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das ist dein eigenes Profil.</source>
-        <target>Das ist dein eigenes Profil.</target>
+        <target>C'est ton propre profil.</target>
       </segment>
     </unit>
     <unit id="friends.error.exists">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ihr seid schon Freunde.</source>
-        <target>Ihr seid schon Freunde.</target>
+        <target>Vous êtes déjà amis.</target>
       </segment>
     </unit>
     <unit id="friends.error.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Anfrage läuft schon.</source>
-        <target>Die Anfrage läuft schon.</target>
+        <target>La demande est déjà en cours.</target>
       </segment>
     </unit>
     <unit id="friends.error.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</source>
-        <target>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</target>
+        <target>La demande a été refusée. Attends que l'autre personne se manifeste.</target>
       </segment>
     </unit>
     <unit id="friends.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Freundesliste ist voll.</source>
-        <target>Deine Freundesliste ist voll.</target>
+        <target>Ta liste d'amis est pleine.</target>
       </segment>
     </unit>
     <unit id="friends.error.unauthenticated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dafür brauchst du ein Konto.</source>
-        <target>Dafür brauchst du ein Konto.</target>
+        <target>Il te faut un compte pour cela.</target>
       </segment>
     </unit>
     <unit id="friends.error.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dieses Profil gibt es nicht.</source>
-        <target>Dieses Profil gibt es nicht.</target>
+        <target>Ce profil n'existe pas.</target>
       </segment>
     </unit>
     <unit id="friends.error.gone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Anfrage ist nicht mehr offen.</source>
-        <target>Diese Anfrage ist nicht mehr offen.</target>
+        <target>Cette demande n'est plus ouverte.</target>
       </segment>
     </unit>
     <unit id="friends.error.failed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das hat nicht funktioniert. Bitte später erneut versuchen.</source>
-        <target>Das hat nicht funktioniert. Bitte später erneut versuchen.</target>
+        <target>Ça n'a pas fonctionné. Réessaie plus tard.</target>
       </segment>
     </unit>
     <unit id="friends.title">
