@@ -40,7 +40,14 @@ export const PROFILE_LABELS = {
   legendPublic: $localize`:@@publicProfile.owner.legend.public:Für alle sichtbar, die deinen Profil-Link haben.`,
   legendFriends: $localize`:@@publicProfile.owner.legend.friends:Nur für Freunde, die deine Anfrage bestätigt haben.`,
   legendOff: $localize`:@@publicProfile.owner.legend.off:Für niemanden – nur du siehst es, hier abgeblendet dargestellt.`,
-  previewAsVisitor: $localize`:@@publicProfile.owner.preview:Als Besucher ansehen`,
+  /** The preview picker: whose view of the profile is on screen. */
+  previewGroup: $localize`:@@publicProfile.owner.preview.group:Ansicht wählen`,
+  previewOwner: $localize`:@@publicProfile.owner.preview.owner:Bearbeiten`,
+  previewFriend: $localize`:@@publicProfile.owner.preview.friend:Als Freund`,
+  previewPublic: $localize`:@@publicProfile.owner.preview:Als Besucher`,
+  previewLocked: $localize`:@@publicProfile.owner.preview.locked:Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.`,
+  previewNoteFriend: $localize`:@@publicProfile.owner.preview.noteFriend:So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.`,
+  previewNotePublic: $localize`:@@publicProfile.owner.preview.notePublic:So sieht dein Profil für alle aus, die deinen Profil-Link haben.`,
   photoEdit: $localize`:@@publicProfile.owner.photoEdit:Profilbild ändern`,
   /** Current audience of one element, for the switch's tooltip. */
   visibilityPublic: $localize`:@@publicProfile.owner.visibility.public:Für alle sichtbar`,

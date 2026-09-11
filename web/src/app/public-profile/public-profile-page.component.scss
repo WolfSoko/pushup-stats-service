@@ -412,6 +412,28 @@
   }
 }
 
+/* Three audiences side by side on a phone, so the labels shrink before
+   the group wraps out of the dashed box. */
+.preview-modes {
+  align-self: flex-start;
+  max-width: 100%;
+  font-size: 0.8rem;
+
+  mat-icon {
+    margin-right: 0.3rem;
+    font-size: 1.05rem;
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+}
+
+.preview-note {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+
 .avatar-button {
   position: relative;
   padding: 0;

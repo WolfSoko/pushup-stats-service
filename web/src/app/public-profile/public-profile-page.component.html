@@ -36,7 +36,7 @@
     }
     @case ('ready') {
       @if (profile(); as p) {
-        @if (p.isPrivate) {
+        @if (p.isPrivate && audience.showControls()) {
           <mat-card class="private-banner" data-testid="public-profile-private">
             <mat-card-content>
               <mat-icon aria-hidden="true">lock</mat-icon>
@@ -55,36 +55,54 @@
           </mat-card>
         }
 
-        @if (isOwner()) {
+        @if (audience.isOwner()) {
           <section class="owner-bar" data-testid="profile-owner-bar">
             <h2 class="owner-title">
               <mat-icon aria-hidden="true">tune</mat-icon>
               {{ labels.ownerTitle }}
             </h2>
-            <p class="owner-hint" data-testid="profile-owner-hint">
-              {{ labels.ownerHint }}
-            </p>
-            <ul class="owner-legend" data-testid="profile-owner-legend">
-              <li>
-                <mat-icon aria-hidden="true">public</mat-icon>
-                <span>{{ labels.legendPublic }}</span>
-              </li>
-              <li>
-                <mat-icon aria-hidden="true">group</mat-icon>
-                <span>{{ labels.legendFriends }}</span>
-              </li>
-              <li>
-                <mat-icon aria-hidden="true">visibility_off</mat-icon>
-                <span>{{ labels.legendOff }}</span>
-              </li>
-            </ul>
-            @if (canPreview()) {
-              <mat-slide-toggle
-                [checked]="previewAsVisitor()"
-                (change)="previewAsVisitor.set($event.checked)"
-                data-testid="profile-preview-toggle"
-                >{{ labels.previewAsVisitor }}</mat-slide-toggle
-              >
+            <mat-button-toggle-group
+              class="preview-modes"
+              hideSingleSelectionIndicator
+              [attr.aria-label]="labels.previewGroup"
+              [value]="audience.mode()"
+              (change)="audience.previewMode.set($event.value)"
+              data-testid="profile-preview-modes"
+            >
+              @for (option of audience.previewOptions(); track option.mode) {
+                <mat-button-toggle
+                  [value]="option.mode"
+                  [disabled]="option.disabled"
+                  [matTooltip]="option.disabled ? labels.previewLocked : ''"
+                  [attr.data-testid]="'profile-preview-' + option.mode"
+                >
+                  <mat-icon>{{ option.icon }}</mat-icon>
+                  <span>{{ option.label }}</span>
+                </mat-button-toggle>
+              }
+            </mat-button-toggle-group>
+            @if (audience.showControls()) {
+              <p class="owner-hint" data-testid="profile-owner-hint">
+                {{ labels.ownerHint }}
+              </p>
+              <ul class="owner-legend" data-testid="profile-owner-legend">
+                <li>
+                  <mat-icon aria-hidden="true">public</mat-icon>
+                  <span>{{ labels.legendPublic }}</span>
+                </li>
+                <li>
+                  <mat-icon aria-hidden="true">group</mat-icon>
+                  <span>{{ labels.legendFriends }}</span>
+                </li>
+                <li>
+                  <mat-icon aria-hidden="true">visibility_off</mat-icon>
+                  <span>{{ labels.legendOff }}</span>
+                </li>
+              </ul>
+            } @else {
+              <p class="preview-note" data-testid="profile-preview-note">
+                {{ audience.previewNote() }}
+              </p>
             }
           </section>
         }
@@ -98,7 +116,7 @@
             data-testid="profile-photo-input"
             (change)="onPhotoPicked($event)"
           />
-          @if (isOwner() && !previewAsVisitor()) {
+          @if (audience.showControls()) {
             <button
               type="button"
               class="avatar avatar-button"
@@ -159,7 +177,7 @@
               <mat-icon>share</mat-icon>
               <span>{{ labels.share }}</span>
             </button>
-            @if (isOwner()) {
+            @if (audience.showControls()) {
               <button
                 mat-flat-button
                 color="primary"
@@ -171,14 +189,14 @@
                 <mat-icon>person_add</mat-icon>
                 <span i18n="@@invite.action">Freunde einladen</span>
               </button>
-            } @else if (canAddFriend()) {
+            } @else if (canAddFriend() || audience.mode() === 'public') {
               <button
                 mat-flat-button
                 color="primary"
                 type="button"
                 class="share-btn"
                 data-testid="public-profile-add-friend"
-                [disabled]="friendRequestSent()"
+                [disabled]="friendRequestSent() || audience.isOwner()"
                 (click)="addFriend()"
               >
                 <mat-icon>person_add</mat-icon>
@@ -188,7 +206,7 @@
                   <span i18n="@@friends.add">Als Freund hinzufügen</span>
                 }
               </button>
-            } @else if (p.viewerIsFriend) {
+            } @else if (p.viewerIsFriend || audience.mode() === 'friend') {
               <span class="friend-hint">
                 <mat-icon aria-hidden="true">group</mat-icon>
                 <span i18n="@@friends.already">Ihr seid Freunde</span>
@@ -200,8 +218,11 @@
         <app-invite-banner />
 
         <section class="stats-grid" [attr.aria-label]="labels.stats">
-          @if (renders('total', true)) {
-            <mat-card class="stat-card" [class.is-hidden]="!isVisible('total')">
+          @if (audience.renders('total', p.total !== null)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!audience.isVisible('total')"
+            >
               <mat-card-content>
                 <small>{{ labels.total }}</small>
                 <b data-testid="public-profile-total">{{
@@ -216,10 +237,10 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('streak', true)) {
+          @if (audience.renders('streak', p.currentStreak !== null)) {
             <mat-card
               class="stat-card"
-              [class.is-hidden]="!isVisible('streak')"
+              [class.is-hidden]="!audience.isVisible('streak')"
             >
               <mat-card-content>
                 <small>{{ labels.streak }}</small>
@@ -235,8 +256,11 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('days', true)) {
-            <mat-card class="stat-card" [class.is-hidden]="!isVisible('days')">
+          @if (audience.renders('days', p.totalDays !== null)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!audience.isVisible('days')"
+            >
               <mat-card-content>
                 <small>{{ labels.days }}</small>
                 <b>{{ p.totalDays | number: '1.0-0' }}</b>
@@ -249,10 +273,10 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('entries', true)) {
+          @if (audience.renders('entries', p.totalEntries !== null)) {
             <mat-card
               class="stat-card"
-              [class.is-hidden]="!isVisible('entries')"
+              [class.is-hidden]="!audience.isVisible('entries')"
             >
               <mat-card-content>
                 <small>{{ labels.entries }}</small>
@@ -266,8 +290,11 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('week', !!p.weeklyReps)) {
-            <mat-card class="stat-card" [class.is-hidden]="!isVisible('week')">
+          @if (audience.renders('week', !!p.weeklyReps)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!audience.isVisible('week')"
+            >
               <mat-card-content>
                 <small>{{ labels.week }}</small>
                 <b>{{ p.weeklyReps | number: '1.0-0' }}</b>
@@ -280,8 +307,11 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('month', !!p.monthlyReps)) {
-            <mat-card class="stat-card" [class.is-hidden]="!isVisible('month')">
+          @if (audience.renders('month', !!p.monthlyReps)) {
+            <mat-card
+              class="stat-card"
+              [class.is-hidden]="!audience.isVisible('month')"
+            >
               <mat-card-content>
                 <small>{{ labels.month }}</small>
                 <b>{{ p.monthlyReps | number: '1.0-0' }}</b>
@@ -294,10 +324,10 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('bestSet', p.bestSingleEntry !== null)) {
+          @if (audience.renders('bestSet', p.bestSingleEntry !== null)) {
             <mat-card
               class="stat-card"
-              [class.is-hidden]="!isVisible('bestSet')"
+              [class.is-hidden]="!audience.isVisible('bestSet')"
             >
               <mat-card-content>
                 <small>{{ labels.bestSet }}</small>
@@ -311,10 +341,10 @@
               </mat-card-content>
             </mat-card>
           }
-          @if (renders('bestDay', p.bestDayTotal !== null)) {
+          @if (audience.renders('bestDay', p.bestDayTotal !== null)) {
             <mat-card
               class="stat-card"
-              [class.is-hidden]="!isVisible('bestDay')"
+              [class.is-hidden]="!audience.isVisible('bestDay')"
             >
               <mat-card-content>
                 <small>{{ labels.bestDay }}</small>
@@ -331,10 +361,10 @@
         </section>
 
         @if (badgesFor(p); as badges) {
-          @if (renders('achievements', badges.length > 0)) {
+          @if (audience.renders('achievements', badges.length > 0)) {
             <section
               class="achievements"
-              [class.is-hidden]="!isVisible('achievements')"
+              [class.is-hidden]="!audience.isVisible('achievements')"
             >
               <h2>
                 {{ labels.achievements }}
@@ -361,11 +391,11 @@
         }
 
         @if (exerciseGroups(); as groups) {
-          @if (renders('exercises', groups.length > 0)) {
+          @if (audience.renders('exercises', groups.length > 0)) {
             <section
               class="exercises"
               data-testid="public-profile-exercises"
-              [class.is-hidden]="!isVisible('exercises')"
+              [class.is-hidden]="!audience.isVisible('exercises')"
             >
               <h2>
                 {{ labels.exercises }}
@@ -397,11 +427,11 @@
         }
 
         @if (heatmapRows(); as rows) {
-          @if (renders('heatmap', rows.length > 0)) {
+          @if (audience.renders('heatmap', rows.length > 0)) {
             <section
               class="heatmap"
               data-testid="public-profile-heatmap"
-              [class.is-hidden]="!isVisible('heatmap')"
+              [class.is-hidden]="!audience.isVisible('heatmap')"
             >
               <h2>
                 {{ labels.heatmap }}
@@ -444,20 +474,26 @@
 </main>
 
 <ng-template #sectionToggle let-section let-label="label">
-  @if (showControls()) {
+  @if (audience.showControls()) {
     <button
       mat-icon-button
       type="button"
       class="section-toggle"
-      [class.is-friends]="levelOf(section) === 'friends'"
+      [class.is-friends]="audience.levelOf(section) === 'friends'"
       [attr.data-testid]="'profile-toggle-' + section"
       [attr.aria-label]="
-        visibilityLabel(section) + ': ' + label + '. ' + nextLabel(section)
+        audience.label(section) +
+        ': ' +
+        label +
+        '. ' +
+        audience.nextLabel(section)
       "
-      [matTooltip]="visibilityLabel(section) + ' · ' + nextLabel(section)"
-      (click)="cycleSection(section)"
+      [matTooltip]="
+        audience.label(section) + ' · ' + audience.nextLabel(section)
+      "
+      (click)="audience.cycle(section)"
     >
-      <mat-icon>{{ visibilityIcon(section) }}</mat-icon>
+      <mat-icon>{{ audience.icon(section) }}</mat-icon>
     </button>
   }
 </ng-template>

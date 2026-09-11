@@ -5349,7 +5349,7 @@
     <unit id="invite.action">
       <notes>
         <note category="location">web/src/app/friends/friends-page.component.ts:123,124</note>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:172,173</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:190,191</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
       </notes>
       <segment>
@@ -7157,17 +7157,65 @@
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
       </segment>
     </unit>
-    <unit id="publicProfile.owner.preview">
+    <unit id="publicProfile.owner.preview.group">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
       </notes>
       <segment>
-        <source>Als Besucher ansehen</source>
+        <source>Ansicht wählen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.owner">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
+      </notes>
+      <segment>
+        <source>Bearbeiten</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.friend">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
+      </notes>
+      <segment>
+        <source>Als Freund</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+      </notes>
+      <segment>
+        <source>Als Besucher</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.locked">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+      </notes>
+      <segment>
+        <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.noteFriend">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+      </notes>
+      <segment>
+        <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.notePublic">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+      </notes>
+      <segment>
+        <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
       </segment>
     </unit>
     <unit id="publicProfile.owner.photoEdit">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
       </notes>
       <segment>
         <source>Profilbild ändern</source>
@@ -7175,7 +7223,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.public">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
       </notes>
       <segment>
         <source>Für alle sichtbar</source>
@@ -7183,7 +7231,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.friends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
       </notes>
       <segment>
         <source>Nur für Freunde sichtbar</source>
@@ -7191,7 +7239,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.off">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:55</note>
       </notes>
       <segment>
         <source>Für niemanden sichtbar</source>
@@ -7199,7 +7247,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextFriends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:57</note>
       </notes>
       <segment>
         <source>Tippen: nur Freunde</source>
@@ -7207,7 +7255,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextOff">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
       </notes>
       <segment>
         <source>Tippen: ausblenden</source>
@@ -7215,7 +7263,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextPublic">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
       </notes>
       <segment>
         <source>Tippen: für alle zeigen</source>
@@ -7223,7 +7271,7 @@
     </unit>
     <unit id="publicProfile.exercises.reps">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:65</note>
       </notes>
       <segment>
         <source>Stückübungen</source>
@@ -7231,7 +7279,7 @@
     </unit>
     <unit id="publicProfile.exercises.time">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:66</note>
       </notes>
       <segment>
         <source>Zeitübungen</source>
@@ -7239,7 +7287,7 @@
     </unit>
     <unit id="publicProfile.exercises.distance">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:67</note>
       </notes>
       <segment>
         <source>Streckenübungen</source>
@@ -7247,7 +7295,7 @@
     </unit>
     <unit id="publicProfile.exercises.weight">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:61</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
       </notes>
       <segment>
         <source>Gewichtsübungen</source>
@@ -7255,7 +7303,7 @@
     </unit>
     <unit id="weekday.short.mon">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:65</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:72</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -7263,7 +7311,7 @@
     </unit>
     <unit id="weekday.short.tue">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:66</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:73</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -7271,7 +7319,7 @@
     </unit>
     <unit id="weekday.short.wed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:67</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:74</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -7279,7 +7327,7 @@
     </unit>
     <unit id="weekday.short.thu">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:75</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -7287,7 +7335,7 @@
     </unit>
     <unit id="weekday.short.fri">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:69</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:76</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -7295,7 +7343,7 @@
     </unit>
     <unit id="weekday.short.sat">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:70</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:77</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -7303,7 +7351,7 @@
     </unit>
     <unit id="weekday.short.sun">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:71</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:78</note>
       </notes>
       <segment>
         <source>So</source>
@@ -7311,7 +7359,7 @@
     </unit>
     <unit id="publicProfile.tagline">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:147,149</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:165,167</note>
       </notes>
       <segment>
         <source> Jeden Tag ein Stück stärker. Mach mit. </source>
@@ -7319,7 +7367,7 @@
     </unit>
     <unit id="friends.requested">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:186,187</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:204,205</note>
       </notes>
       <segment>
         <source>Anfrage gesendet</source>
@@ -7327,7 +7375,7 @@
     </unit>
     <unit id="friends.add">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:188,190</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:206,208</note>
       </notes>
       <segment>
         <source>Als Freund hinzufügen</source>
@@ -7335,7 +7383,7 @@
     </unit>
     <unit id="friends.already">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:194,196</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:212,214</note>
       </notes>
       <segment>
         <source>Ihr seid Freunde</source>

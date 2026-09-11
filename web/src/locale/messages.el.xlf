@@ -11906,8 +11906,8 @@
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
-      <segment state="translated">
-        <source>Als Besucher ansehen</source>
+      <segment state="initial">
+        <source>Als Besucher</source>
         <target>Προβολή ως επισκέπτης</target>
       </segment>
     </unit>
@@ -12593,6 +12593,42 @@
       <segment state="initial">
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
         <target>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.group">
+      <segment state="initial">
+        <source>Ansicht wählen</source>
+        <target>Ansicht wählen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.owner">
+      <segment state="initial">
+        <source>Bearbeiten</source>
+        <target>Bearbeiten</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.friend">
+      <segment state="initial">
+        <source>Als Freund</source>
+        <target>Als Freund</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.locked">
+      <segment state="initial">
+        <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
+        <target>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.noteFriend">
+      <segment state="initial">
+        <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
+        <target>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.owner.preview.notePublic">
+      <segment state="initial">
+        <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
+        <target>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</target>
       </segment>
     </unit>
 </file>

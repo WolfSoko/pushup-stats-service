@@ -269,7 +269,9 @@ describe('PublicProfilePageComponent', () => {
       // given — the server hands the owner their own private profile;
       // replacing the content with a hint would hide exactly what the
       // owner came to look at
-      await setup({ resolve: { ...sampleProfile, isPrivate: true } });
+      await setup({
+        resolve: { ...sampleProfile, isPrivate: true, viewerIsOwner: true },
+      });
 
       // then
       expect(
@@ -286,7 +288,9 @@ describe('PublicProfilePageComponent', () => {
 
     it('should link to the settings tab that flips the switch', async () => {
       // given
-      await setup({ resolve: { ...sampleProfile, isPrivate: true } });
+      await setup({
+        resolve: { ...sampleProfile, isPrivate: true, viewerIsOwner: true },
+      });
 
       // when
       const cta = fixture.nativeElement.querySelector(
@@ -307,6 +311,31 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-private"]'
         )
       ).toBeNull();
+    });
+
+    it('should not show the owner hint to a friend of a private profile', async () => {
+      // given — a friendship gets you the page even while it is private,
+      // and "Dein Profil ist noch privat" is not addressed to you
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          isPrivate: true,
+          viewerIsOwner: false,
+          viewerIsFriend: true,
+        },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        )
+      ).toBeNull();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-name"]'
+        )
+      ).not.toBeNull();
     });
 
     it('should still show the generic not-found when there is no profile', async () => {
@@ -624,35 +653,90 @@ describe('PublicProfilePageComponent', () => {
       ).toBeTruthy();
     });
 
-    describe('Preview as visitor', () => {
-      it('should not be offered while the profile is private', async () => {
+    describe('Previewing another audience', () => {
+      const pick = (mode: string) => {
+        const button = q(
+          '[data-testid="profile-preview-' + mode + '"] button'
+        ) as HTMLButtonElement;
+        button.click();
+        fixture.detectChanges();
+      };
+
+      it('should offer the picker to the owner', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // then
+        expect(q('[data-testid="profile-preview-modes"]')).toBeTruthy();
+        expect(q('[data-testid="profile-preview-friend"]')).toBeTruthy();
+        expect(q('[data-testid="profile-preview-public"]')).toBeTruthy();
+      });
+
+      it('should not offer it to a visitor', async () => {
+        // given
+        await setup({ resolve: sampleProfile });
+
+        // then
+        expect(q('[data-testid="profile-preview-modes"]')).toBeNull();
+      });
+
+      it('should lock the visitor view while the profile is private', async () => {
         // given — there is no visitor view to preview yet
         await setup({ resolve: owner({ isPrivate: true }) });
 
         // then
-        expect(q('[data-testid="profile-preview-toggle"]')).toBeNull();
+        expect(
+          q('[data-testid="profile-preview-public"] button').disabled
+        ).toBe(true);
       });
 
-      it('should be offered once the profile is public', async () => {
-        // given
-        await setup({ resolve: owner({ isPrivate: false }) });
+      it('should still offer the friends view on a private profile', async () => {
+        // given — a friendship gets you the page without the public opt-in
+        await setup({ resolve: owner({ isPrivate: true }) });
 
         // then
-        expect(q('[data-testid="profile-preview-toggle"]')).toBeTruthy();
+        expect(
+          q('[data-testid="profile-preview-friend"] button').disabled
+        ).toBe(false);
       });
 
-      it('should drop switched-off elements entirely', async () => {
+      it('should keep a friends-only element in the friends view', async () => {
         // given
-        await setup({
-          resolve: owner({ visibility: { streak: 'off' } }),
-        });
+        await setup({ resolve: owner({ visibility: { streak: 'friends' } }) });
 
         // when
-        fixture.componentInstance['previewAsVisitor'].set(true);
-        fixture.detectChanges();
+        pick('friend');
 
-        // then — a preview that still showed it would be a lie about
-        // what visitors get
+        // then
+        expect(q('[data-testid="public-profile-streak"]')).toBeTruthy();
+      });
+
+      it('should drop a friends-only element from the visitor view', async () => {
+        // given — the one difference the two previews exist to show
+        await setup({ resolve: owner({ visibility: { streak: 'friends' } }) });
+
+        // when
+        pick('public');
+
+        // then
+        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+      });
+
+      it('should drop switched-off elements from both previews', async () => {
+        // given
+        await setup({ resolve: owner({ visibility: { streak: 'off' } }) });
+
+        // when
+        pick('friend');
+
+        // then — a preview that still showed it would be a lie about what
+        // the other side gets
+        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+
+        // when
+        pick('public');
+
+        // then
         expect(q('[data-testid="public-profile-streak"]')).toBeNull();
       });
 
@@ -661,11 +745,61 @@ describe('PublicProfilePageComponent', () => {
         await setup({ resolve: owner() });
 
         // when
-        fixture.componentInstance['previewAsVisitor'].set(true);
-        fixture.detectChanges();
+        pick('friend');
 
         // then
         expect(q('[data-testid="profile-toggle-streak"]')).toBeNull();
+        expect(q('[data-testid="profile-owner-legend"]')).toBeNull();
+      });
+
+      it('should name the audience on screen', async () => {
+        // given — three icons in a row do not say which one is active
+        await setup({ resolve: owner() });
+
+        // when
+        pick('friend');
+
+        // then
+        expect(q('[data-testid="profile-preview-note"]').textContent).toContain(
+          'Freunde'
+        );
+      });
+
+      it('should show what a friend gets instead of the owner actions', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        pick('friend');
+
+        // then
+        expect(q('[data-testid="public-profile-invite"]')).toBeNull();
+        expect(fixture.nativeElement.textContent).toContain('Ihr seid Freunde');
+      });
+
+      it('should show a visitor the friend request, without being able to send it', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        pick('public');
+
+        // then — you cannot befriend yourself, so the button is only shape
+        const button = q('[data-testid="public-profile-add-friend"]');
+        expect(button).toBeTruthy();
+        expect(button.disabled).toBe(true);
+      });
+
+      it('should come back to the switches when editing is picked again', async () => {
+        // given
+        await setup({ resolve: owner() });
+        pick('public');
+
+        // when
+        pick('owner');
+
+        // then
+        expect(q('[data-testid="profile-toggle-streak"]')).toBeTruthy();
       });
     });
 
