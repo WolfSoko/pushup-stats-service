@@ -12176,15 +12176,15 @@
       </segment>
     </unit>
     <unit id="admin.migrations.reminderSnoozeCleanup.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Snooze-Reste aus reminderDispatchState entfernen</source>
-        <target>Snooze-Reste aus reminderDispatchState entfernen</target>
+        <target>Αφαίρεση καταλοίπων αναβολής από το reminderDispatchState</target>
       </segment>
     </unit>
     <unit id="admin.migrations.reminderSnoozeCleanup.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</source>
-        <target>Löscht „snoozedUntil“, „snoozedAt“ und „snoozeMinutes“ aus „reminderDispatchState/{uid}“. Die Snooze-Aktion der Erinnerung wurde entfernt, die Felder werden von niemandem mehr gelesen. Idempotent, nicht umkehrbar — erst den Probelauf ausführen.</target>
+        <target>Διαγράφει τα «snoozedUntil», «snoozedAt» και «snoozeMinutes» από το «reminderDispatchState/{uid}». Η ενέργεια αναβολής της υπενθύμισης έχει αφαιρεθεί, αυτά τα πεδία δεν διαβάζονται πλέον από κανέναν. Ιδεμποτέντ, μη αναστρέψιμο — εκτελέστε πάντα πρώτα τη δοκιμαστική εκτέλεση.</target>
       </segment>
     </unit>
         <unit id="reminder.goalPause.label">
