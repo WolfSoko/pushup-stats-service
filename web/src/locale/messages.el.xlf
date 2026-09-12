@@ -6946,9 +6946,9 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
-        <target>Ελαφριά ημέρα — 2×50 % του μέγιστου · 10 min κινητικότητα</target>
+        <target>Ελαφριά μέρα — δύο σετ στο μισό φορτίο · Κινητικότητα στο τέλος</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
@@ -7006,15 +7006,15 @@
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
-        <target>3×8 πιέσεις στα γόνατα ή ανυψωμένες πιέσεις</target>
+        <target>Τρία σετ κάμψεις με γόνατα ή σε ανυψωμένη θέση</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, saubere Technik</source>
-        <target>3×9 καθαρές πιέσεις</target>
+        <target>Τρία σετ, καθαρή τεχνική</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
@@ -7024,27 +7024,27 @@
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, volle Bewegungsamplitude</source>
-        <target>3×10 καθαρές πιέσεις</target>
+        <target>Τρία σετ, πλήρες εύρος κίνησης</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
-        <target>3×11</target>
+        <target>Τρία σετ, ίδια τεχνική όπως την 1η εβδομάδα</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, etwas mehr Volumen</source>
-        <target>3×12</target>
+        <target>Τρία σετ, λίγο περισσότερος όγκος</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze — letzte Steigerung dieser Woche</source>
-        <target>3×13</target>
+        <target>Τρία σετ — τελευταία αύξηση αυτής της εβδομάδας</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.22.desc">
@@ -7084,123 +7084,123 @@
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
-        <target>5×10 καθαρές επαναλήψεις, 60 δευτ. διάλειμμα</target>
+        <target>Πέντε σετ, καθαρές επαναλήψεις, 60 δευτ. διάλειμμα</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause</source>
-        <target>5×12, 60 δευτ. διάλειμμα</target>
+        <target>Πέντε σετ, 60 δευτ. διάλειμμα</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
-        <target>5×12, 60 δευτ. διάλειμμα</target>
+        <target>Πέντε σετ, 60 δευτ. διάλειμμα — ίδιος όγκος με χθες</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
-        <target>5×14, 60 δευτ. διάλειμμα</target>
+        <target>Πέντε σετ, 60 δευτ. διάλειμμα — ο όγκος αυξάνεται</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
-        <target>Ελαφριά ημέρα — 2×15 σε χαλαρό ρυθμό</target>
+        <target>Ελαφριά μέρα — δύο σετ σε χαλαρό ρυθμό</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleichbleibendes Tempo</source>
-        <target>5×16</target>
+        <target>Πέντε σετ, σταθερός ρυθμός</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze — Technik vor Tempo</source>
-        <target>5×16</target>
+        <target>Πέντε σετ — τεχνική πριν από τον ρυθμό</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, Volumen steigt</source>
-        <target>5×18</target>
+        <target>Πέντε σετ, ο όγκος αυξάνεται</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleiches Volumen</source>
-        <target>5×18</target>
+        <target>Πέντε σετ, ίδιος όγκος</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erstes Hundert — fünf Sätze</source>
-        <target>Πρώτα εκατό: 5×20</target>
+        <target>Πρώτη εκατοντάδα — πέντε σετ</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
-        <target>4×25 (λιγότερα σετ, περισσότερες επαναλήψεις)</target>
+        <target>Λιγότερα σετ, αλλά περισσότερες επαναλήψεις ανά σετ</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze wie gehabt</source>
-        <target>5×20</target>
+        <target>Πέντε σετ όπως πριν</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
-        <target>4×25</target>
+        <target>Τέσσερα μεγαλύτερα σετ</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze</source>
-        <target>5×20</target>
+        <target>Πέντε σετ</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze — Tempo bewusst verlangsamen</source>
-        <target>4×25 — επιβράδυνε συνειδητά τον ρυθμό</target>
+        <target>Τέσσερα σετ — επιβράδυνε συνειδητά τον ρυθμό</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, letzte volle Woche</source>
-        <target>5×20</target>
+        <target>Πέντε σετ, τελευταία πλήρης εβδομάδα</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
-        <target>4×25</target>
+        <target>Τέσσερα μεγαλύτερα σετ</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, unverändertes Volumen</source>
-        <target>5×20</target>
+        <target>Πέντε σετ, αμετάβλητος όγκος</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze, ruhiges Tempo</source>
-        <target>4×25</target>
+        <target>Τέσσερα σετ, ήρεμος ρυθμός</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter großer Tag vor dem Test</source>
-        <target>Τελευταία ημέρα των 100 πριν το τεστ</target>
+        <target>Τελευταία μεγάλη μέρα πριν το τεστ</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
@@ -8950,141 +8950,141 @@
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
-        <target>Κύκλος 3 γύροι — 10 κάμψεις · 15 καθίσματα · 10 προβολές ανά πόδι · 30 s plank</target>
+        <target>Κύκλωμα 3 γύρων — Κάμψεις · Καθίσματα · Προβολές ανά πόδι · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος 3 γύροι — 10 κάμψεις · 15 sumo καθίσματα · 12 glute bridges · 40 s plank</target>
+        <target>Κύκλωμα 3 γύρων — Κάμψεις · Καθίσματα sumo · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Ελαφριά ημέρα — 2×10 κάμψεις · κινητικότητα 10 min</target>
+        <target>Ελαφριά μέρα — δύο σετ κάμψεις · Κινητικότητα</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
-        <target>Κύκλος 3 γύροι — 10 κάμψεις · 15 καθίσματα · 10 glute bridges · 30 s hollow hold</target>
+        <target>Κύκλωμα 3 γύρων — Κάμψεις · Καθίσματα · Glute bridges · Hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
-        <target>Κύκλος 3 γύροι — 12 κάμψεις · 18 καθίσματα · 12 προβολές ανά πόδι · 40 s plank</target>
+        <target>Κύκλωμα 3 γύρων — Κάμψεις · Καθίσματα · Προβολές ανά πόδι · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος 3 γύροι — 12 κάμψεις · 18 sumo καθίσματα · 15 glute bridges · 45 s plank</target>
+        <target>Κύκλωμα 3 γύρων — Κάμψεις · Καθίσματα sumo · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
-        <target>Ελαφριά ημέρα — 2×11 κάμψεις · άνοιγμα ισχίου 10 min</target>
+        <target>Ελαφριά μέρα — δύο σετ κάμψεις · Άνοιγμα ισχίων</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
-        <target>Κύκλος 3 γύροι — 12 κάμψεις · 12 step-ups ανά πόδι · 15 ρωσικές περιστροφές · 40 s plank</target>
+        <target>Κύκλωμα 3 γύρων — Κάμψεις · Step-ups ανά πόδι · Russian twists · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος 4 γύροι — 10 κάμψεις · 15 καθίσματα · 12 glute bridges · 40 s plank</target>
+        <target>Κύκλωμα 4 γύρων — Κάμψεις · Καθίσματα · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
-        <target>Κύκλος 4 γύροι — 11 κάμψεις · 16 προβολές ανά πόδι · 15 glute bridges · 45 s plank</target>
+        <target>Κύκλωμα 4 γύρων — Κάμψεις · Προβολές ανά πόδι · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
-        <target>Ελαφριά ημέρα — 2×12 κάμψεις · γιόγκα 20 min</target>
+        <target>Ελαφριά μέρα — δύο σετ κάμψεις · Yoga</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
-        <target>Κύκλος 4 γύροι — 12 κάμψεις · 15 καθίσματα με άλμα · 12 glute bridges · 45 s plank</target>
+        <target>Κύκλωμα 4 γύρων — Κάμψεις · Jump squats · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος 4 γύροι — 13 κάμψεις · 18 καθίσματα · 15 glute bridges · 50 s plank</target>
+        <target>Κύκλωμα 4 γύρων — Κάμψεις · Καθίσματα · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
-        <target>Κύκλος 4 γύροι — 14 κάμψεις · 18 προβολές ανά πόδι · 15 hip thrusts · 50 s plank</target>
+        <target>Κύκλωμα 4 γύρων — Κάμψεις · Προβολές ανά πόδι · Hip thrusts · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
-        <target>Ελαφριά ημέρα — 2×13 κάμψεις · foam rolling 15 min</target>
+        <target>Ελαφριά μέρα — δύο σετ κάμψεις · Foam rolling</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
-        <target>Κύκλος 4 γύροι — 15 κάμψεις · 18 καθίσματα με άλμα · 15 glute bridges · 60 s plank</target>
+        <target>Κύκλωμα 4 γύρων — Κάμψεις · Jump squats · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος 5 γύροι — 12 κάμψεις · 15 καθίσματα · 12 glute bridges · 45 s plank</target>
+        <target>Κύκλωμα 5 γύρων — Κάμψεις · Καθίσματα · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
-        <target>Κύκλος 5 γύροι — 13 κάμψεις · 16 προβολές ανά πόδι · 13 glute bridges · 50 s plank</target>
+        <target>Κύκλωμα 5 γύρων — Κάμψεις · Προβολές ανά πόδι · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Ελαφριά ημέρα — 2×14 κάμψεις · κινητικότητα 15 min</target>
+        <target>Ελαφριά μέρα — δύο σετ κάμψεις · Κινητικότητα</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
-        <target>Κύκλος 5 γύροι — 14 κάμψεις · 18 καθίσματα με άλμα · 15 hip thrusts · 60 s plank</target>
+        <target>Κύκλωμα 5 γύρων — Κάμψεις · Jump squats · Hip thrusts · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος κορύφωσης 5 γύροι — 15 κάμψεις · 20 καθίσματα · 15 glute bridges · 60 s plank</target>
+        <target>Κύκλωμα αιχμής 5 γύρων — Κάμψεις · Καθίσματα · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Κύκλος αποφόρτισης 4 γύροι, ελεγχόμενο tempo — 15 κάμψεις · 15 καθίσματα · 12 glute bridges · 45 s plank</target>
+        <target>Κύκλωμα μείωσης 4 γύρων, ελεγχόμενος ρυθμός — Κάμψεις · Καθίσματα · Glute bridges · Plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Ελαφριά ημέρα — 2×12 κάμψεις · κινητικότητα</target>
+        <target>Ελαφριά μέρα — δύο σετ κάμψεις · Κινητικότητα</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.42.desc">
@@ -9100,111 +9100,111 @@
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
-        <target>plank 3×30 s · hollow hold 3×20 s · dead bug 3×10 ανά πλευρά · κάμψεις 2×10</target>
+        <target>Plank · Hollow hold · Dead bug ανά πλευρά · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
-        <target>Beinheben 3×10 · ρωσική περιστροφή 3×15 · plank 3×30 s · κάμψεις 2×12</target>
+        <target>Άρσεις ποδιών · Russian twist · Plank · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
-        <target>mountain climbers 3×30 s · dead bug 3×12 · plank 3×35 s · κάμψεις 2×10</target>
+        <target>Mountain climbers · Dead bug · Plank · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
-        <target>Ελαφριά ημέρα — γάτα-αγελάδα 3×10 · άνοιγμα ισχίου 2 min · 2×7 καθαρές κάμψεις</target>
+        <target>Ελαφριά μέρα — Cat-cow · Άνοιγμα ισχίων · καθαρές κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
-        <target>plank 3×40 s · hollow hold 3×25 s · dead bug 3×12 · κάμψεις 2×11</target>
+        <target>Plank · Hollow hold · Dead bug · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
-        <target>Beinheben 3×12 · ρωσική περιστροφή 3×18 · plank 3×40 s · κάμψεις 2×12</target>
+        <target>Άρσεις ποδιών · Russian twist · Plank · Κάμψεις — περισσότερος όγκος</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
-        <target>mountain climbers 4×30 s · πλευρικό plank 2×25 s ανά πλευρά · κάμψεις 2×12</target>
+        <target>Mountain climbers · Πλαϊνό plank ανά πλευρά · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Mobility · lockere Liegestütze</source>
-        <target>Ελαφριά ημέρα — κινητικότητα 10 min · 2×8 κάμψεις</target>
+        <target>Ελαφριά μέρα — Κινητικότητα · χαλαρές κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
-        <target>Κύκλος κορμού 3 γύροι — 40 s plank · 20 s hollow hold · 12 dead bugs · 10 κάμψεις</target>
+        <target>Κύκλωμα κορμού 3 γύρων — Plank · Hollow hold · Dead bugs · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
-        <target>plank 3×50 s · πλευρικό plank 3×30 s ανά πλευρά · hollow hold 3×30 s · κάμψεις 2×15</target>
+        <target>Plank · Πλαϊνό plank ανά πλευρά · Hollow hold · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
-        <target>κρεμαστές ανυψώσεις γονάτων 3×8 · ρωσική περιστροφή 3×20 · plank 3×50 s · κάμψεις 2×15</target>
+        <target>Κρεμαστές ανυψώσεις γονάτων · Russian twist · Plank · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
-        <target>Core ισχύς: plank 3×60 s · dead bug 3×15 · mountain climbers 3×45 s · κάμψεις 2×15</target>
+        <target>Δύναμη κορμού: Plank · Dead bug · Mountain climbers · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Stretching</source>
-        <target>Ελαφριά ημέρα — 2×9 κάμψεις · διατάσεις 10 min</target>
+        <target>Ελαφριά μέρα — χαλαρές κάμψεις · Διατάσεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
-        <target>Κύκλος κορμού 3 γύροι — 50 s plank · 12 Beinheben · 20 ρωσικές περιστροφές · 10 κάμψεις</target>
+        <target>Κύκλωμα κορμού 3 γύρων — Plank · Άρσεις ποδιών · Russian twists · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
-        <target>plank 3×60 s · hollow hold 3×40 s · κρεμαστές ανυψώσεις γονάτων 3×10 · κάμψεις 2×16</target>
+        <target>Plank · Hollow hold · Κρεμαστές ανυψώσεις γονάτων · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
-        <target>Κύκλος κορμού 3 γύροι — 1 min plank · 30 ρωσικές περιστροφές · 12 Beinheben · 12 κάμψεις</target>
+        <target>Κύκλωμα κορμού 3 γύρων — Plank · Russian twists · Άρσεις ποδιών · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
-        <target>πλευρικό plank 3×40 s ανά πλευρά · dead bug 3×16 · hollow hold 3×40 s · κάμψεις 2×16</target>
+        <target>Πλαϊνό plank ανά πλευρά · Dead bug · Hollow hold · Κάμψεις</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Mobility</source>
-        <target>Ελαφριά ημέρα — 2×9 κάμψεις · κινητικότητα</target>
+        <target>Ελαφριά μέρα — χαλαρές κάμψεις · Κινητικότητα</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.28.desc">
@@ -12308,9 +12308,9 @@
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
-        <target>Προπονήσου μαζί μου: μέτρα επαναλήψεις με την κάμερα, ολοκλήρωσε πρόγραμμα προπόνησης και ανταγωνίσου στην κατάταξη. Δωρεάν:</target>
+        <target>Προπονήσου μαζί μου: μέτρησε τις επαναλήψεις με την κάμερα, ας αλληλοϋποστηριζόμαστε και ας ξεκινήσουμε κοινές προκλήσεις. Δωρεάν:</target>
       </segment>
     </unit>
     <unit id="invite.action">
@@ -12758,9 +12758,9 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
-        <target>5 σετ στοχευμένων επαναλήψεων · 3×20 προβολές</target>
+        <target>5 σετ επαναλήψεων-στόχου · Προβολές στο τέλος</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
@@ -12818,219 +12818,219 @@
       </segment>
     </unit>
     <unit id="exerciseRef.tooltip.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Wiki-Eintrag</source>
-        <target>Zum Wiki-Eintrag</target>
+        <target>Μετάβαση στο άρθρο του wiki</target>
       </segment>
     </unit>
     <unit id="challenge.create.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>Έναρξη πρόκλησης</target>
       </segment>
     </unit>
     <unit id="challenge.create.friendsHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer macht mit?</source>
-        <target>Wer macht mit?</target>
+        <target>Ποιος συμμετέχει;</target>
       </segment>
     </unit>
     <unit id="challenge.create.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Άσκηση</target>
       </segment>
     </unit>
     <unit id="challenge.create.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Wiederholungen)</source>
-        <target>Ziel (Wiederholungen)</target>
+        <target>Στόχος (επαναλήψεις)</target>
       </segment>
     </unit>
     <unit id="challenge.create.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer</source>
-        <target>Dauer</target>
+        <target>Διάρκεια</target>
       </segment>
     </unit>
     <unit id="challenge.create.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target>Ακύρωση</target>
       </segment>
     </unit>
     <unit id="challenge.create.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Los geht’s </source>
-        <target> Los geht’s </target>
+        <target>Ας ξεκινήσουμε</target>
       </segment>
     </unit>
     <unit id="challenge.create.days">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target><ph id="0" equiv="days" disp="days"/> ημέρες</target>
       </segment>
     </unit>
     <unit id="challenges.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges</source>
-        <target>Challenges</target>
+        <target>Προκλήσεις</target>
       </segment>
     </unit>
     <unit id="challenges.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>Έναρξη πρόκλησης</target>
       </segment>
     </unit>
     <unit id="challenges.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
-        <target> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </target>
+        <target>Ακόμα καμία πρόκληση. Προκάλεσε τους φίλους σου: ένας στόχος, λίγες μέρες, όλοι μαζί.</target>
       </segment>
     </unit>
     <unit id="challenges.ended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beendet</source>
-        <target>Beendet</target>
+        <target>Ολοκληρώθηκε</target>
       </segment>
     </unit>
     <unit id="challenges.leave">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verlassen </source>
-        <target> Verlassen </target>
+        <target>Αποχώρηση</target>
       </segment>
     </unit>
     <unit id="challenges.lastDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter Tag</source>
-        <target>Letzter Tag</target>
+        <target>Τελευταία μέρα</target>
       </segment>
     </unit>
     <unit id="challenges.daysLeft">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target>Noch <ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target>Ακόμα <ph id="0" equiv="days" disp="days"/> ημέρες</target>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</source>
-        <target><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</target>
+        <target><ph id="0" equiv="count" disp="count"/> εκκρεμείς αιτήσεις φιλίας</target>
       </segment>
     </unit>
     <unit id="friends.board.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuern</source>
-        <target>Anfeuern</target>
+        <target>Ενθάρρυνση</target>
       </segment>
     </unit>
     <unit id="friends.board.cheered">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>Ήδη ενθαρρύνθηκε σήμερα</target>
       </segment>
     </unit>
     <unit id="friends.board.cheersToday">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</target>
+        <target><ph id="0" equiv="count" disp="count"/> ενθαρρύνσεις σήμερα</target>
       </segment>
     </unit>
     <unit id="friends.error.cheeredAlready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert – morgen wieder.</source>
-        <target>Heute schon angefeuert – morgen wieder.</target>
+        <target>Ήδη ενθαρρύνθηκε σήμερα – ξανά αύριο.</target>
       </segment>
     </unit>
     <unit id="friends.error.notFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das geht nur unter bestätigten Freunden.</source>
-        <target>Das geht nur unter bestätigten Freunden.</target>
+        <target>Αυτό ισχύει μόνο μεταξύ επιβεβαιωμένων φίλων.</target>
       </segment>
     </unit>
     <unit id="challenge.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>Επίλεξε τουλάχιστον έναν φίλο.</target>
       </segment>
     </unit>
     <unit id="challenge.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Teilnehmer für eine Challenge.</source>
-        <target>Zu viele Teilnehmer für eine Challenge.</target>
+        <target>Πάρα πολλοί συμμετέχοντες για μία πρόκληση.</target>
       </segment>
     </unit>
     <unit id="challenge.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für diese Übung geht keine Challenge.</source>
-        <target>Für diese Übung geht keine Challenge.</target>
+        <target>Δεν υπάρχει πρόκληση για αυτή την άσκηση.</target>
       </segment>
     </unit>
     <unit id="challenge.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Ziel muss zwischen 10 und 100.000 liegen.</source>
-        <target>Das Ziel muss zwischen 10 und 100.000 liegen.</target>
+        <target>Ο στόχος πρέπει να είναι μεταξύ 10 και 100.000.</target>
       </segment>
     </unit>
     <unit id="challenge.error.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Dauer gibt es nicht.</source>
-        <target>Diese Dauer gibt es nicht.</target>
+        <target>Αυτή η διάρκεια δεν υπάρχει.</target>
       </segment>
     </unit>
     <unit id="challenge.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon genug Challenges laufen. Warte, bis eine endet.</source>
-        <target>Du hast schon genug Challenges laufen. Warte, bis eine endet.</target>
+        <target>Έχεις ήδη αρκετές ενεργές προκλήσεις. Περίμενε μέχρι να ολοκληρωθεί κάποια.</target>
       </segment>
     </unit>
-        <unit id="challenge.error.gone">
+    <unit id="challenge.error.gone">
       <segment state="initial">
         <source>Diese Einladung ist nicht mehr offen.</source>
-        <target>Diese Einladung ist nicht mehr offen.</target>
+        <target>Αυτή η πρόκληση δεν υπάρχει πια.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Φίλοι</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
-        <target> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </target>
+        <target>Προπονήσου με φίλους: συγκρίνετε την πρόοδό σας, ενθαρρύνετε ο ένας τον άλλον και ξεκινήστε κοινές προκλήσεις.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Στους φίλους</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.leading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</source>
-        <target>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</target>
+        <target>Είσαι πρώτος αυτή την εβδομάδα ανάμεσα σε <ph id="0" equiv="total" disp="total"/> φίλους.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.rank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</source>
-        <target>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</target>
+        <target>Αυτή την εβδομάδα είσαι στη θέση <ph id="0" equiv="rank" disp="rank"/> από <ph id="1" equiv="total" disp="total"/>.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</target>
+        <target><ph id="0" equiv="count" disp="count"/> αιτήσεις σε αναμονή</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.activeChallenges">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenges laufen</target>
+        <target><ph id="0" equiv="count" disp="count"/> ενεργές προκλήσεις</target>
       </segment>
     </unit>
     <unit id="challenges.invitation">
