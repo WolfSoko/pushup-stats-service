@@ -388,7 +388,7 @@ describe('TrainingPlanDetailComponent', () => {
       expect(restRows.length).toBeGreaterThan(0);
       for (const row of restRows) {
         expect(row.querySelector('.pushup-types')).toBeNull();
-        expect(row.querySelector('.pushup-type-chip')).toBeNull();
+        expect(row.querySelector('app-exercise-ref')).toBeNull();
       }
     });
 

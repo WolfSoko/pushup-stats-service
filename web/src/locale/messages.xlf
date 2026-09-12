@@ -4993,7 +4993,7 @@
     <unit id="dailyGoal.check.manual">
       <notes>
         <note category="location">web/src/app/core/daily-goal-actions.service.ts:61</note>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:61</note>
       </notes>
       <segment>
         <source>Dieses Ziel braucht einen manuellen Eintrag</source>
@@ -5005,7 +5005,7 @@
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.ts:49</note>
         <note category="location">web/src/app/stats/components/analysis-teaser-card/analysis-teaser-card.component.ts:49</note>
         <note category="location">web/src/app/stats/components/quick-add-config-dialog/quick-add-config-dialog.component.ts:385</note>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.format.ts:71</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.format.ts:69</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:24</note>
         <note category="location">web/src/app/stats/i18n/exercise-display-names.ts:212</note>
         <note category="location">web/src/app/stats/shell/entries-page.component.ts:296</note>
@@ -5017,7 +5017,7 @@
     </unit>
     <unit id="dailyGoal.check.reached">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:56</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:58</note>
       </notes>
       <segment>
         <source>Ziel erreicht</source>
@@ -5025,7 +5025,7 @@
     </unit>
     <unit id="dailyGoal.check.fill">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:61</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:63</note>
       </notes>
       <segment>
         <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
@@ -5033,7 +5033,7 @@
     </unit>
     <unit id="dailyGoal.check.aria">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:65</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:67</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
@@ -5053,6 +5053,14 @@
       </notes>
       <segment>
         <source><ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/> <ph id="1" equiv="EXERCISE" disp="item.exerciseName"/> bis zum Tagesziel hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="exerciseRef.tooltip.cta">
+      <notes>
+        <note category="location">web/src/app/core/exercise-ref/exercise-ref.model.ts:29</note>
+      </notes>
+      <segment>
+        <source>Zum Wiki-Eintrag</source>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">
@@ -9671,17 +9679,9 @@
         <source>Reps</source>
       </segment>
     </unit>
-    <unit id="statsTable.exercise.wikiTooltip">
-      <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:102,103</note>
-      </notes>
-      <segment>
-        <source>Wiki-Eintrag öffnen</source>
-      </segment>
-    </unit>
     <unit id="colType">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:112,113</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:110,111</note>
       </notes>
       <segment>
         <source>Typ</source>
@@ -9689,7 +9689,7 @@
     </unit>
     <unit id="colSource">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:121,122</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:119,120</note>
       </notes>
       <segment>
         <source>Quelle</source>
@@ -9697,7 +9697,7 @@
     </unit>
     <unit id="colActions">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:130,131</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:128,129</note>
       </notes>
       <segment>
         <source>Aktion</source>
@@ -9705,7 +9705,7 @@
     </unit>
     <unit id="editAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:137,138</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:135,136</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -9713,7 +9713,7 @@
     </unit>
     <unit id="editTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:139,140</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:137,138</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -9721,7 +9721,7 @@
     </unit>
     <unit id="deleteAria">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:150</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:148</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -9729,7 +9729,7 @@
     </unit>
     <unit id="deleteTitle">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:152</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.html:150</note>
       </notes>
       <segment>
         <source>Löschen</source>
@@ -9737,7 +9737,7 @@
     </unit>
     <unit id="colExercise">
       <notes>
-        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:128</note>
+        <note category="location">web/src/app/stats/components/stats-table/stats-table.component.ts:126</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -10105,22 +10105,6 @@
       </notes>
       <segment>
         <source> Speichern </source>
-      </segment>
-    </unit>
-    <unit id="exerciseWikiLinkTooltip.generic">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.display.ts:22</note>
-      </notes>
-      <segment>
-        <source>Anleitung zu Übungen öffnen</source>
-      </segment>
-    </unit>
-    <unit id="exerciseWikiLinkTooltip.specific">
-      <notes>
-        <note category="location">web/src/app/stats/components/training-entry-dialog/training-entry-dialog.display.ts:24</note>
-      </notes>
-      <segment>
-        <source>Anleitung öffnen</source>
       </segment>
     </unit>
     <unit id="pie.distributionAria">
@@ -12109,7 +12093,7 @@
     </unit>
     <unit id="trainingPlans.exercise.unquantified">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.html:33,36</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.html:41,44</note>
       </notes>
       <segment>
         <source>nach Vorgabe</source>
@@ -12117,7 +12101,7 @@
     </unit>
     <unit id="trainingPlans.exercise.auto">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:53</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:55</note>
       </notes>
       <segment>
         <source>Automatisch erfüllt — durch deine Einträge an diesem Tag.</source>
@@ -12125,7 +12109,7 @@
     </unit>
     <unit id="trainingPlans.exercise.check">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:54</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:56</note>
       </notes>
       <segment>
         <source>Übung abhaken (ohne Eintrag)</source>
@@ -12133,7 +12117,7 @@
     </unit>
     <unit id="trainingPlans.exercise.undo">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:55</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:57</note>
       </notes>
       <segment>
         <source>Haken entfernen</source>
@@ -12141,7 +12125,7 @@
     </unit>
     <unit id="trainingPlans.exercise.log">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:56</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:58</note>
       </notes>
       <segment>
         <source>Vorgabe eintragen</source>
@@ -12149,7 +12133,7 @@
     </unit>
     <unit id="trainingPlans.exercise.reset">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:57</note>
+        <note category="location">web/src/app/training-plans/plan-day-exercises.component.ts:59</note>
       </notes>
       <segment>
         <source>Übung zurücksetzen</source>
@@ -12783,7 +12767,7 @@
     <unit id="trainingPlans.back">
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:43</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:477,481</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:471,475</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -12971,7 +12955,7 @@
     </unit>
     <unit id="trainingPlans.menu.triggerAria">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:383,384</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:377,378</note>
       </notes>
       <segment>
         <source>Tagesaktionen öffnen</source>
@@ -12979,7 +12963,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:403,405</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:397,399</note>
       </notes>
       <segment>
         <source>Erledigt rückgängig machen</source>
@@ -12987,7 +12971,7 @@
     </unit>
     <unit id="trainingPlans.menu.undoSkip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:413,415</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:407,409</note>
       </notes>
       <segment>
         <source>Überspringen rückgängig machen</source>
@@ -12995,7 +12979,7 @@
     </unit>
     <unit id="trainingPlans.menu.logAllDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:424,426</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:418,420</note>
       </notes>
       <segment>
         <source>Alle Übungen eintragen &amp; abhaken</source>
@@ -13003,7 +12987,7 @@
     </unit>
     <unit id="trainingPlans.menu.markDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:434,436</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:428,430</note>
       </notes>
       <segment>
         <source>Nur abhaken (ohne Eintrag)</source>
@@ -13011,7 +12995,7 @@
     </unit>
     <unit id="trainingPlans.menu.skip">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:443,445</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:437,439</note>
       </notes>
       <segment>
         <source>Tag überspringen</source>
@@ -13019,7 +13003,7 @@
     </unit>
     <unit id="trainingPlans.menu.jump">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:455,457</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:449,451</note>
       </notes>
       <segment>
         <source>Zu diesem Tag springen</source>
@@ -13027,7 +13011,7 @@
     </unit>
     <unit id="trainingPlans.notFound">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:474,475</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.html:468,469</note>
       </notes>
       <segment>
         <source>Plan nicht gefunden.</source>
@@ -13035,7 +13019,7 @@
     </unit>
     <unit id="trainingPlans.toggleDayDetails">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:191</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:189</note>
       </notes>
       <segment>
         <source>Tagesdetails ein-/ausklappen</source>
@@ -13043,7 +13027,7 @@
     </unit>
     <unit id="trainingPlans.abandoned">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:238</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:236</note>
       </notes>
       <segment>
         <source>Plan beendet.</source>
@@ -13067,7 +13051,7 @@
     </unit>
     <unit id="trainingPlans.logged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:245</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:231</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:303</note>
       </notes>
       <segment>
@@ -13076,7 +13060,7 @@
     </unit>
     <unit id="trainingPlans.alreadyLogged">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:247</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:233</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:305</note>
       </notes>
       <segment>
@@ -13085,9 +13069,9 @@
     </unit>
     <unit id="trainingPlans.notReady">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:249</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:266</note>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:285</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:235</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:252</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:271</note>
         <note category="location">web/src/app/training-plans/training-plans-page.component.ts:307</note>
       </notes>
       <segment>
@@ -13096,7 +13080,7 @@
     </unit>
     <unit id="trainingPlans.exercise.resetDone">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:262</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:248</note>
       </notes>
       <segment>
         <source>Übung zurückgesetzt.</source>
@@ -13104,7 +13088,7 @@
     </unit>
     <unit id="trainingPlans.exercise.resetKept">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:264</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:250</note>
       </notes>
       <segment>
         <source>Haken entfernt — deine eigenen Einträge bleiben bestehen.</source>
@@ -13112,7 +13096,7 @@
     </unit>
     <unit id="trainingPlans.test.recorded">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:279</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:265</note>
       </notes>
       <segment>
         <source>Maximaltest eingetragen — die folgenden Tage sind angepasst.</source>
@@ -13120,7 +13104,7 @@
     </unit>
     <unit id="trainingPlans.test.updated">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:281</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:267</note>
       </notes>
       <segment>
         <source>Ergebnis aktualisiert.</source>
@@ -13128,7 +13112,7 @@
     </unit>
     <unit id="trainingPlans.test.rejected">
       <notes>
-        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:283</note>
+        <note category="location">web/src/app/training-plans/training-plan-detail.helpers.ts:269</note>
       </notes>
       <segment>
         <source>Bitte eine gültige Wiederholungszahl eintragen.</source>

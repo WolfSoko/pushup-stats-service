@@ -37,6 +37,8 @@ export function buildExerciseRows(
     const quantified = exercise.target > 0;
     return {
       itemIndex: item.itemIndex,
+      exerciseId: exercise.exerciseId,
+      variantId: exercise.variantId ?? null,
       name: variant ? `${base} · ${variantDisplayName(variant)}` : base,
       target: quantified ? formatExerciseValue(exercise.target, unit) : '',
       logged: quantified ? formatExerciseValue(item.logged, unit) : '',

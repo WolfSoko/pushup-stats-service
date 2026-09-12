@@ -1,3 +1,4 @@
+import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { PlanDayExercisesComponent } from './plan-day-exercises.component';
@@ -6,6 +7,8 @@ import { DayExerciseRow } from './training-plan-detail.models';
 function row(overrides: Partial<DayExerciseRow> = {}): DayExerciseRow {
   return {
     itemIndex: 0,
+    exerciseId: 'legs.squats',
+    variantId: null,
     name: 'Kniebeugen',
     target: '45',
     logged: '15',
@@ -25,6 +28,7 @@ async function setup(exercises: DayExerciseRow[], interactive = true) {
   await render(PlanDayExercisesComponent, {
     inputs: { exercises, interactive },
     on: { logExercise, toggleExercise, resetExercise },
+    providers: [provideRouter([])],
   });
   return { logExercise, toggleExercise, resetExercise };
 }

@@ -96,14 +96,12 @@
         >{{ exerciseColumnLabel }}</mat-header-cell
       >
       <mat-cell *matCellDef="let entry">
-        <a
-          class="exercise-wiki-link"
-          [routerLink]="exerciseWikiLink(entry)"
-          matTooltip="Wiki-Eintrag öffnen"
-          i18n-matTooltip="@@statsTable.exercise.wikiTooltip"
+        <app-exercise-ref
           data-testid="stats-table-exercise-link"
-          >{{ exerciseLabel(entry) }}</a
-        >
+          [exerciseId]="entry.exerciseId"
+          [variantId]="entry.variantId ?? null"
+          [showIcon]="false"
+        />
       </mat-cell>
     </ng-container>
 

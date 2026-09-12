@@ -17,6 +17,12 @@
   column-gap: 8px;
   padding: 2px 0;
 }
+.exercise-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
 .exercise-name {
   font-size: 0.86rem;
   white-space: normal;

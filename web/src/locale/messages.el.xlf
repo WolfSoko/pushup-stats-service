@@ -12817,5 +12817,11 @@
         <target>Ημέρα <ph id="0" equiv="day" disp="progress.dayIndex"/> από <ph id="1" equiv="total" disp="progress.totalDays"/></target>
       </segment>
     </unit>
+    <unit id="exerciseRef.tooltip.cta">
+      <segment state="initial">
+        <source>Zum Wiki-Eintrag</source>
+        <target>Zum Wiki-Eintrag</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
