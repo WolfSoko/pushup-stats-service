@@ -1,8 +1,6 @@
 import {
   detectPushupTypes,
   isCheckoffDay,
-  localizePushupType,
-  localizePushupTypeSlug,
   planBaselineTestDay,
   type PlanScaleFactors,
   PlanExerciseProgress,
@@ -58,28 +56,23 @@ export interface WeekBuildContext {
  */
 export function weeksFor(
   plan: TrainingPlan | null,
-  ctx: WeekBuildContext,
-  locale: string
+  ctx: WeekBuildContext
 ): DayWeek[] {
   if (!plan) return [];
-  return buildWeeks(
-    plan,
-    {
-      currentDay: ctx.active ? ctx.currentDayIndex : null,
-      completed: new Set(ctx.active ? ctx.completedDays : []),
-      skipped: new Set(ctx.active ? ctx.skippedDays : []),
-      exercisesFor: (dayIndex) =>
-        ctx.active
-          ? ctx.dayProgress(dayIndex)
-          : ctx.previewProgress(plan, dayIndex),
-      testResultsFor: (dayIndex) =>
-        ctx.active ? ctx.testResults(dayIndex) : EMPTY_RESULTS,
-      baselineTestDayIndex: planBaselineTestDay(plan)?.dayIndex ?? null,
-      scaleFactors: ctx.active ? ctx.scaleFactors : NO_PLAN_SCALING,
-      baselineMax: plan.baselineMax,
-    },
-    locale
-  );
+  return buildWeeks(plan, {
+    currentDay: ctx.active ? ctx.currentDayIndex : null,
+    completed: new Set(ctx.active ? ctx.completedDays : []),
+    skipped: new Set(ctx.active ? ctx.skippedDays : []),
+    exercisesFor: (dayIndex) =>
+      ctx.active
+        ? ctx.dayProgress(dayIndex)
+        : ctx.previewProgress(plan, dayIndex),
+    testResultsFor: (dayIndex) =>
+      ctx.active ? ctx.testResults(dayIndex) : EMPTY_RESULTS,
+    baselineTestDayIndex: planBaselineTestDay(plan)?.dayIndex ?? null,
+    scaleFactors: ctx.active ? ctx.scaleFactors : NO_PLAN_SCALING,
+    baselineMax: plan.baselineMax,
+  });
 }
 
 /** Today's row, for the card the plan page repeats above the week list. */
@@ -146,24 +139,18 @@ export function formatSets(sets: number[]): string {
 
 /**
  * Resolves the wiki-linkable pushup variants mentioned in a day's
- * description. Rest days never carry type chips.
+ * description. Rest days never carry type chips. Name/summary/slug are
+ * resolved at render time by `app-exercise-ref` (via the variant id), so
+ * this only identifies which variants were detected.
  */
 export function pushupTypeChipsForDay(
-  day: TrainingPlanDay,
-  locale: string
+  day: TrainingPlanDay
 ): ReadonlyArray<PushupTypeChip> {
   if (day.kind === 'rest') return [];
   const matched: ReadonlyArray<PushupTypeInfo> = detectPushupTypes(
     day.description
   );
-  return matched.map((type) => {
-    const localized = localizePushupType(type, locale);
-    return {
-      slug: localizePushupTypeSlug(type, locale),
-      name: localized.name,
-      summary: localized.summary,
-    };
-  });
+  return matched.map((type) => ({ id: type.id }));
 }
 
 /** Per-day completion state derived from the active plan, used to build rows. */
@@ -206,8 +193,7 @@ function testRowFor(
  */
 export function buildWeeks(
   plan: TrainingPlan,
-  progress: PlanProgress,
-  locale: string
+  progress: PlanProgress
 ): DayWeek[] {
   const { currentDay, completed, skipped } = progress;
   const grouped = new Map<number, DayRow[]>();
@@ -226,7 +212,7 @@ export function buildWeeks(
       isCheckoff: isCheckoffDay(day),
       exercises: isCompleted ? asCompletedRows(exercises) : exercises,
       test: testRowFor(day, progress),
-      pushupTypes: pushupTypeChipsForDay(day, locale),
+      pushupTypes: pushupTypeChipsForDay(day),
     };
     const list = grouped.get(weekIndex) ?? [];
     list.push(row);

@@ -1,8 +1,6 @@
 import {
   displayPushupType,
   findExerciseDefinition,
-  findExerciseWikiEntry,
-  findPushupTypeByStoredValue,
   formatEntryDisplay,
   formatExerciseValue,
   measurementValueField,
@@ -73,26 +71,6 @@ export function exerciseLabel(entry: UnifiedEntry): string {
   const def = findExerciseDefinition(entry.exerciseId);
   if (!def) return entry.exerciseId;
   return exerciseDisplayName(def.id);
-}
-
-/**
- * Wiki deep-link for the entry's exercise label. Pushup rows route to
- * the dedicated `/wiki/liegestuetz-typen` wiki with the variant slug
- * (when known); catalog exercise rows route to `/wiki/uebungen/<slug>`
- * when an entry exists, else to the list page so a stale catalog id
- * can't 404 the link. Always returns a usable target — every row in
- * the stats table maps to either the pushup wiki or the generic
- * exercises wiki, so the column is always rendered as a link.
- */
-export function exerciseWikiLink(entry: UnifiedEntry): string[] {
-  if (entry.exerciseId === 'pushup') {
-    const variant = findPushupTypeByStoredValue(entry.variantId);
-    return variant
-      ? ['/wiki/liegestuetz-typen', variant.slug]
-      : ['/wiki/liegestuetz-typen'];
-  }
-  const wikiEntry = findExerciseWikiEntry(entry.exerciseId);
-  return wikiEntry ? ['/wiki/uebungen', wikiEntry.slug] : ['/wiki/uebungen'];
 }
 
 export function formatSets(sets: number[]): string {

@@ -1,16 +1,20 @@
 import { TrainingPlanDay } from '@pu-stats/models';
 
-/** A wiki-linkable pushup variant detected from a day's description. */
+/**
+ * A pushup variant detected from a day's description. Only the id is
+ * carried — `app-exercise-ref` resolves name, summary and wiki link.
+ */
 export interface PushupTypeChip {
-  slug: string;
-  name: string;
-  summary: string;
+  id: string;
 }
 
 /** View-model for one trackable exercise inside a day. */
 export interface DayExerciseRow {
   /** 0-based position inside the day's exercise list. */
   itemIndex: number;
+  /** Catalog id, for resolving the wiki reference. */
+  exerciseId: string;
+  variantId: string | null;
   /** Localized exercise name, including the variant when the plan names one. */
   name: string;
   /** Formatted target in the exercise's unit (`45`, `1:30`, `500 m`). */

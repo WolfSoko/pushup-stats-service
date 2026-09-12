@@ -355,18 +355,12 @@
                   }
                   @if (row.pushupTypes.length > 0) {
                     <div class="pushup-types">
-                      @for (type of row.pushupTypes; track type.slug) {
-                        <a
-                          class="pushup-type-chip"
-                          [routerLink]="['/wiki/liegestuetz-typen', type.slug]"
-                          [matTooltip]="type.summary"
-                          matTooltipPosition="above"
-                        >
-                          <mat-icon class="pushup-type-icon" aria-hidden="true"
-                            >help_outline</mat-icon
-                          >
-                          <span>{{ type.name }}</span>
-                        </a>
+                      @for (type of row.pushupTypes; track type.id) {
+                        <app-exercise-ref
+                          variant="chip"
+                          exerciseId="pushup"
+                          [variantId]="type.id"
+                        />
                       }
                     </div>
                   }

@@ -1,0 +1,14 @@
+<a
+  class="exercise-ref"
+  [class.exercise-ref-chip]="variant() === 'chip'"
+  [routerLink]="ref().wikiLink"
+  [matTooltip]="tooltip()"
+  matTooltipPosition="above"
+>
+  @if (showIcon()) {
+    <mat-icon class="exercise-ref-icon" aria-hidden="true"
+      >help_outline</mat-icon
+    >
+  }
+  <span class="exercise-ref-name">{{ name() }}</span>
+</a>

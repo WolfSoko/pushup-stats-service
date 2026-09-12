@@ -1,8 +1,6 @@
 import {
   detectPushupTypes,
   findPlanBySlug,
-  localizePushupType,
-  localizePushupTypeSlug,
   NO_PLAN_SCALING,
   TrainingPlan,
   TrainingPlanDay,
@@ -18,8 +16,6 @@ import {
   pushupTypeChipsForDay,
   PlanProgress,
 } from './training-plan-detail.helpers';
-
-const LOCALE = 'de';
 
 function day(overrides: Partial<TrainingPlanDay>): TrainingPlanDay {
   return {
@@ -85,29 +81,22 @@ describe('pushupTypeChipsForDay', () => {
       description: 'Archer-Liegestütze zur Erholung',
     });
     // when resolving its chips
-    const chips = pushupTypeChipsForDay(restDay, LOCALE);
+    const chips = pushupTypeChipsForDay(restDay);
     // then none are produced
     expect(chips).toEqual([]);
   });
 
-  it('should map every detected pushup type to a localized chip', () => {
+  it('should map every detected pushup type to a chip carrying its id', () => {
     // given a description carrying at least one detectable variant
     const description = 'Archer-Liegestütze und Diamant-Liegestütze';
     const detected = detectPushupTypes(description);
     const subject = day({ kind: 'main', description });
     // when resolving chips
-    const chips = pushupTypeChipsForDay(subject, LOCALE);
-    // then there is one chip per detected type with localized fields
+    const chips = pushupTypeChipsForDay(subject);
+    // then there is one chip per detected type — `app-exercise-ref`
+    // resolves name/summary/slug from the id at render time
     expect(detected.length).toBeGreaterThan(0);
-    expect(chips.length).toBe(detected.length);
-    detected.forEach((type, i) => {
-      const localized = localizePushupType(type, LOCALE);
-      expect(chips[i]).toEqual({
-        slug: localizePushupTypeSlug(type, LOCALE),
-        name: localized.name,
-        summary: localized.summary,
-      });
-    });
+    expect(chips).toEqual(detected.map((type) => ({ id: type.id })));
   });
 
   it('should return no chips when the description matches no known type', () => {
@@ -117,7 +106,7 @@ describe('pushupTypeChipsForDay', () => {
       description: 'xxxyyyzzz nothing here',
     });
     // when resolving chips
-    const chips = pushupTypeChipsForDay(subject, LOCALE);
+    const chips = pushupTypeChipsForDay(subject);
     // then none are produced
     expect(chips).toEqual([]);
   });
@@ -130,7 +119,7 @@ describe('buildWeeks', () => {
       day({ dayIndex: i + 1, description: '' })
     );
     // when building weeks with no active progress
-    const weeks = buildWeeks(planWith(days), noProgress(), LOCALE);
+    const weeks = buildWeeks(planWith(days), noProgress());
     // then days 1-7 are week 1 and 8-10 are week 2
     expect(weeks.map((w) => w.weekIndex)).toEqual([1, 2]);
     expect(weeks[0].rows.map((r) => r.day.dayIndex)).toEqual([
@@ -141,7 +130,7 @@ describe('buildWeeks', () => {
 
   it('should return an empty array for a plan with no days', () => {
     // given / when / then
-    expect(buildWeeks(planWith([]), noProgress(), LOCALE)).toEqual([]);
+    expect(buildWeeks(planWith([]), noProgress())).toEqual([]);
   });
 
   it('should flag today, completed, skipped and future from progress', () => {
@@ -157,7 +146,7 @@ describe('buildWeeks', () => {
       scaleFactors: NO_PLAN_SCALING,
     };
     // when building weeks
-    const rows = buildWeeks(planWith(days), progress, LOCALE)[0].rows;
+    const rows = buildWeeks(planWith(days), progress)[0].rows;
     // then each row reflects its status relative to the current day
     expect(rows[0]).toMatchObject({ isCompleted: true, isFuture: false });
     expect(rows[1]).toMatchObject({ isToday: true, isFuture: false });
@@ -169,7 +158,7 @@ describe('buildWeeks', () => {
     // given a plan viewed without an active progress (currentDay null)
     const days = [1, 2, 3].map((d) => day({ dayIndex: d }));
     // when building weeks
-    const rows = buildWeeks(planWith(days), noProgress(), LOCALE)[0].rows;
+    const rows = buildWeeks(planWith(days), noProgress())[0].rows;
     // then no row is marked today or future
     expect(rows.every((r) => !r.isToday && !r.isFuture)).toBe(true);
   });
@@ -178,7 +167,7 @@ describe('buildWeeks', () => {
     // given days listed out of order spanning two weeks
     const days = [day({ dayIndex: 9 }), day({ dayIndex: 1 })];
     // when building weeks
-    const weeks = buildWeeks(planWith(days), noProgress(), LOCALE);
+    const weeks = buildWeeks(planWith(days), noProgress());
     // then the buckets come back in ascending week order
     expect(weeks.map((w) => w.weekIndex)).toEqual([1, 2]);
   });
@@ -189,7 +178,7 @@ describe('buildWeeks', () => {
     expect(plan).not.toBeNull();
     if (!plan) return;
     // when building weeks
-    const weeks = buildWeeks(plan, noProgress(), LOCALE);
+    const weeks = buildWeeks(plan, noProgress());
     const allRows = weeks.flatMap((w) => w.rows);
     // then rest rows carry no chips and at least one non-rest row does
     expect(allRows.some((r) => r.pushupTypes.length > 0)).toBe(true);
@@ -238,7 +227,7 @@ describe('buildWeeks', () => {
           : [],
     };
     // when building weeks
-    const [row] = buildWeeks(planWith(days), progress, LOCALE)[0].rows;
+    const [row] = buildWeeks(planWith(days), progress)[0].rows;
     // then each exercise is its own row with its own state
     expect(row.exercises.map((e) => e.done)).toEqual([true, false]);
     expect(row.exercises[0].auto).toBe(true);
@@ -263,7 +252,7 @@ describe('buildWeeks', () => {
       ],
     };
     // when building weeks
-    const [row] = buildWeeks(planWith(days), progress, LOCALE)[0].rows;
+    const [row] = buildWeeks(planWith(days), progress)[0].rows;
     // then the list follows the day rather than contradicting it
     expect(row.exercises[0].done).toBe(true);
   });
@@ -275,7 +264,7 @@ describe('buildWeeks', () => {
       day({ dayIndex: 2 }),
     ];
     // when building weeks
-    const rows = buildWeeks(planWith(days), noProgress(), LOCALE)[0].rows;
+    const rows = buildWeeks(planWith(days), noProgress())[0].rows;
     // then only the interval day is marked
     expect(rows.map((r) => r.isCheckoff)).toEqual([true, false]);
   });

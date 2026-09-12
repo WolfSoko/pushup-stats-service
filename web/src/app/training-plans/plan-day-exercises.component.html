@@ -2,22 +2,30 @@
   <ul class="exercise-list">
     @for (ex of exercises(); track ex.itemIndex) {
       <li class="exercise-row" [class.done]="ex.done">
-        <mat-checkbox
-          class="exercise-check"
-          [checked]="ex.done"
-          [disabled]="!interactive() || ex.auto"
-          [matTooltip]="
-            ex.auto ? autoTooltip : ex.done ? undoTooltip : checkTooltip
-          "
-          (change)="
-            toggleExercise.emit({
-              itemIndex: ex.itemIndex,
-              done: $event.checked,
-            })
-          "
-        >
-          <span class="exercise-name">{{ ex.name }}</span>
-        </mat-checkbox>
+        <span class="exercise-label">
+          <mat-checkbox
+            class="exercise-check"
+            [checked]="ex.done"
+            [disabled]="!interactive() || ex.auto"
+            [matTooltip]="
+              ex.auto ? autoTooltip : ex.done ? undoTooltip : checkTooltip
+            "
+            [attr.aria-label]="ex.name"
+            (change)="
+              toggleExercise.emit({
+                itemIndex: ex.itemIndex,
+                done: $event.checked,
+              })
+            "
+          />
+          <app-exercise-ref
+            class="exercise-name"
+            [exerciseId]="ex.exerciseId"
+            [variantId]="ex.variantId"
+            [label]="ex.name"
+            [showIcon]="false"
+          />
+        </span>
 
         <div class="exercise-meta">
           @if (ex.quantified) {

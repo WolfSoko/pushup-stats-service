@@ -22,11 +22,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
 import { UnifiedEntry } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
+import { ExerciseRefComponent } from '../../../core/exercise-ref/exercise-ref.component';
 import { TrainingEntryDialogComponent } from '../training-entry-dialog/training-entry-dialog.component';
 import {
   TrainingEntryDialogData,
@@ -34,8 +34,6 @@ import {
 } from '../training-entry-dialog/training-entry-dialog.models';
 import {
   buildDisplayedColumns,
-  exerciseLabel,
-  exerciseWikiLink,
   formatEntry,
   formatSets,
   sortingValue,
@@ -67,8 +65,8 @@ import {
     MatSortModule,
     MatRippleModule,
     MatTooltipModule,
-    RouterLink,
     ScrollingModule,
+    ExerciseRefComponent,
   ],
   templateUrl: './stats-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -126,14 +124,6 @@ export class StatsTableComponent {
   readonly dataSource = new MatTableDataSource<UnifiedEntry>([]);
 
   readonly exerciseColumnLabel = $localize`:@@colExercise:Übung`;
-
-  exerciseLabel(entry: UnifiedEntry): string {
-    return exerciseLabel(entry);
-  }
-
-  exerciseWikiLink(entry: UnifiedEntry): string[] {
-    return exerciseWikiLink(entry);
-  }
 
   constructor() {
     this.dataSource.sortingDataAccessor = (item, property) =>
