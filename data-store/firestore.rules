@@ -401,6 +401,26 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Cheers — one doc per (sender, recipient, day), id
+    // `<from>__<to>__<YYYY-MM-DD>`. Written only by the `sendCheer`
+    // callable, which is what limits them to confirmed friends and one a
+    // day; the friends board reads them through `getFriendsLeaderboard`.
+    match /cheers/{cheerId} {
+      allow read: if request.auth != null
+                  && (request.auth.uid == resource.data.from
+                      || request.auth.uid == resource.data.to);
+      allow write: if false;
+    }
+
+    // Friend challenges — participants read their own; every write goes
+    // through the `functions-challenges` callables, because the
+    // participant list decides whose entries the others get summed.
+    match /challenges/{challengeId} {
+      allow read: if request.auth != null
+                  && request.auth.uid in resource.data.participants;
+      allow write: if false;
+    }
+
     // Achievements are derived by the `awardAchievementsOnPlanWrite`
     // trigger and surface on the public profile, so the client must not
     // be able to mint them — writes are Admin-SDK only, exactly like

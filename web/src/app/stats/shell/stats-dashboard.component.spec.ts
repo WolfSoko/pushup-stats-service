@@ -26,6 +26,8 @@ import { AppDataFacade } from '../../core/app-data.facade';
 import type { DailyGoalItemView } from '../../core/daily-goal.helpers';
 import { ShareService } from '../../core/share.service';
 import { UserConfigStore } from '../../core/user-config.store';
+import { ChallengesApiService } from '../../friends/challenges-api.service';
+import { FriendsApiService } from '../../friends/friends-api.service';
 import { TrainingPlanStore } from '../../training-plans/training-plan.store';
 
 function goalItem(
@@ -194,7 +196,18 @@ describe('StatsDashboardComponent', () => {
 
   const userContextSpy = {
     userIdSafe: vitest.fn().mockReturnValue('u1'),
+    isGuest: () => false,
   };
+
+  // The friends card asks for lists, board and challenges on init; an
+  // empty answer keeps it to its invite state.
+  const friendsApiMock = {
+    list: vitest
+      .fn()
+      .mockResolvedValue({ friends: [], incoming: [], outgoing: [] }),
+    board: vitest.fn().mockResolvedValue([]),
+  };
+  const challengesApiMock = { list: vitest.fn().mockResolvedValue([]) };
 
   const shareSpy = vitest.fn().mockResolvedValue('native' as const);
   const shareServiceMock = { share: shareSpy };
@@ -269,6 +282,8 @@ describe('StatsDashboardComponent', () => {
         { provide: UserStatsApiService, useValue: userStatsMock },
         { provide: LiveDataStore, useValue: liveMock },
         { provide: UserContextService, useValue: userContextSpy },
+        { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: AdsStore, useValue: adsConfigMock },
         { provide: AuthStore, useValue: makeAuthStoreMock() },
         {
@@ -1172,7 +1187,9 @@ describe('StatsDashboardComponent', () => {
             },
           },
           { provide: LiveDataStore, useValue: liveMock },
-          { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
+          { provide: UserContextService, useValue: userContextSpy },
+          { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           { provide: AdsStore, useValue: adsConfigMock },
           { provide: AuthStore, useValue: makeAuthStoreMock() },
           {

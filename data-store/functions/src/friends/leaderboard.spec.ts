@@ -138,7 +138,32 @@ describe('friends/leaderboard', () => {
 
       // then
       expect(board).toEqual([
-        { uid: 'a', displayName: 'Ada', value: 0, isViewer: false },
+        {
+          uid: 'a',
+          displayName: 'Ada',
+          value: 0,
+          isViewer: false,
+          cheers: 0,
+          cheered: false,
+        },
+      ]);
+    });
+
+    it('should carry today’s cheers onto each row', () => {
+      // given — Ada got two cheers, and the viewer already cheered Bob
+      const rows = [row({ uid: 'a' }), row({ uid: 'b', displayName: 'Bob' })];
+      const cheers = {
+        received: new Map([['a', 2]]),
+        cheeredByViewer: new Set(['b']),
+      };
+
+      // when
+      const board = rankFriends(rows, 'week', KEYS, cheers);
+
+      // then
+      expect(board.map((e) => [e.uid, e.cheers, e.cheered])).toEqual([
+        ['a', 2, false],
+        ['b', 0, true],
       ]);
     });
 

@@ -163,6 +163,12 @@ Two leftovers outlive the code and need a deliberate hand:
   ignored now, so any user still holding an active snooze gets their next
   reminder on the normal interval instead of after it expires.
 
+## A non-reminder push must ship `actions: []`
+
+`handlePush` in the SW substitutes its reminder buttons ("✅ Eintragen") whenever the payload has **no** `actions` array — a legacy-payload fallback. A friend request, cheer or challenge notification that omits the field therefore grows a log-push-ups button. `buildFriendPushPayload` sends an explicit empty list; do the same for any new notification kind that is not the reminder.
+
+Sending push outside the dispatcher: list `VAPID_SECRETS` on the function, call `configureWebPush()` (false ⇒ secrets unset, skip), then `deliverPushToUser(uid, payload, options, label)` from `push/deliver-user.ts`. It reads the user's subscriptions, drops the ones the push service declared gone, and logs the rest of the failures. Give each kind its own `topic` so FCM collapses duplicates of that kind without swallowing another.
+
 ## Notification deep-links are untrusted input
 
 `?log=1` is the only deep link left and it only opens the entry dialog — nothing persists without a further tap. Any future param that writes data would replay on Android (see above); route it through `reminderAction` instead.

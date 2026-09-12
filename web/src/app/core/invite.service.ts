@@ -37,7 +37,7 @@ export class InviteService {
   async inviteFriend(): Promise<ShareResult> {
     return this.share.share({
       title: $localize`:@@invite.share.title:Pushup Tracker`,
-      text: $localize`:@@invite.share.text:Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:`,
+      text: $localize`:@@invite.share.text:Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:`,
       url: this.inviteUrl(),
     });
   }

@@ -23,6 +23,10 @@ export interface FriendsBoardEntry {
   readonly displayName: string | null;
   readonly value: number;
   readonly isViewer: boolean;
+  /** Cheers this participant received today. */
+  readonly cheers: number;
+  /** Whether the viewer already cheered them today. */
+  readonly cheered: boolean;
 }
 
 export interface FriendsBoardResponse {
@@ -40,7 +44,7 @@ export interface FriendActionResponse {
 }
 
 /**
- * The four friendship callables.
+ * The friendship callables.
  *
  * Every write goes through them — `friendships` is Admin-SDK-only, because
  * the status of a friendship decides what the other side may see.
@@ -98,6 +102,14 @@ export class FriendsApiService {
       { id: string },
       FriendActionResponse
     >('removeFriend')({ id });
+    return result.data ?? { ok: false };
+  }
+
+  async cheer(uid: string): Promise<FriendActionResponse> {
+    const result = await this.callables.call<
+      { uid: string },
+      FriendActionResponse
+    >('sendCheer')({ uid });
     return result.data ?? { ok: false };
   }
 }
