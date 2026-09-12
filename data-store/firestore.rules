@@ -405,19 +405,18 @@ service cloud.firestore {
     // `<from>__<to>__<YYYY-MM-DD>`. Written only by the `sendCheer`
     // callable, which is what limits them to confirmed friends and one a
     // day; the friends board reads them through `getFriendsLeaderboard`.
+    // Nothing reads them directly, so they stay closed like `userStats`.
     match /cheers/{cheerId} {
-      allow read: if request.auth != null
-                  && (request.auth.uid == resource.data.from
-                      || request.auth.uid == resource.data.to);
-      allow write: if false;
+      allow read, write: if false;
     }
 
-    // Friend challenges — participants read their own; every write goes
-    // through the `functions-challenges` callables, because the
+    // Friend challenges — participants and invitees read their own; every
+    // write goes through the `functions-challenges` callables, because the
     // participant list decides whose entries the others get summed.
     match /challenges/{challengeId} {
       allow read: if request.auth != null
-                  && request.auth.uid in resource.data.participants;
+                  && (request.auth.uid in resource.data.participants
+                      || request.auth.uid in resource.data.invited);
       allow write: if false;
     }
 

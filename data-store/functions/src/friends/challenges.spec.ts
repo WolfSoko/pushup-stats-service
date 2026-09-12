@@ -4,6 +4,7 @@ import {
   activeChallengeCount,
   buildChallengeView,
   challengeEntryBounds,
+  invitedOf,
   sanitizeExerciseName,
   visibleChallenges,
   type ChallengeDoc,
@@ -14,6 +15,7 @@ function doc(over: Partial<ChallengeDoc> = {}): ChallengeDoc {
     id: 'c1',
     createdBy: 'a',
     participants: ['a', 'b'],
+    invited: [],
     exerciseId: 'pushup',
     target: 500,
     from: '2026-09-14',
@@ -93,10 +95,62 @@ describe('friends/challenges', () => {
 
       // then
       expect(view.status).toBe('active');
+      expect(view.viewerInvited).toBe(false);
       expect(view.entries).toEqual([
         { uid: 'b', displayName: 'Bob', value: 320, isViewer: false },
         { uid: 'a', displayName: null, value: 0, isViewer: true },
       ]);
+    });
+
+    it('should show an invitee the framing but nobody’s numbers', () => {
+      // given — c was asked and has not answered
+      const sums = new Map([
+        ['a', 100],
+        ['b', 320],
+      ]);
+      const names = new Map([['b', 'Bob']]);
+
+      // when
+      const view = buildChallengeView(
+        doc({ invited: ['c'] }),
+        sums,
+        names,
+        'c',
+        '2026-09-15'
+      );
+
+      // then
+      expect(view.viewerInvited).toBe(true);
+      expect(view.entries).toEqual([]);
+      expect(view.invited).toEqual([{ uid: 'c', displayName: null }]);
+    });
+
+    it('should list who is still to answer for a participant', () => {
+      // when
+      const view = buildChallengeView(
+        doc({ invited: ['c'] }),
+        new Map(),
+        new Map([['c', 'Cy']]),
+        'a',
+        '2026-09-15'
+      );
+
+      // then
+      expect(view.invited).toEqual([{ uid: 'c', displayName: 'Cy' }]);
+      expect(view.entries.map((e) => e.uid)).toEqual(['a', 'b']);
+    });
+
+    it('should treat a document without an invited list as having none', () => {
+      // given a challenge written before invitations existed
+      const legacy = doc();
+      delete (legacy as { invited?: string[] }).invited;
+
+      // when / then
+      expect(invitedOf(legacy)).toEqual([]);
+      expect(
+        buildChallengeView(legacy, new Map(), new Map(), 'a', '2026-09-15')
+          .invited
+      ).toEqual([]);
     });
 
     it('should report an ended challenge as such', () => {

@@ -1,71 +1,50 @@
-import { AggregateField, FieldValue } from 'firebase-admin/firestore';
+import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import {
   challengeEndDate,
   challengeRejection,
+  challengeRespondRejection,
   findExerciseDefinition,
   type Challenge,
-  type Friendship,
 } from '@pu-stats/models';
 
+import { requireUid } from './callable-auth';
 import { berlinDateParts } from './datetime';
 import { db } from './firebase-app';
 import {
-  acceptedFriendUids,
   activeChallengeCount,
   buildChallengeView,
   buildFriendPushPayload,
-  challengeEntryBounds,
   friendPushOptions,
+  invitedOf,
   sanitizeExerciseName,
   visibleChallenges,
-  type ChallengeDoc,
 } from './friends';
+import {
+  CHALLENGES,
+  challengeExpiry,
+  readChallengesOf,
+  readFriendUids,
+  sumChallengeEntries,
+  toChallengeDoc,
+} from './friends/challenges-read';
 import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
+import { readDisplayNames } from './user-config-read';
 
 /**
  * Friend challenges: a rep target for one exercise, chased by a group of
  * confirmed friends over a few days.
  *
- * Every write goes through these callables — who is in a challenge decides
- * whose numbers the others see, so `challenges` is Admin-SDK-only. Progress
- * is summed from `exerciseEntries` per participant on read: the
- * per-exercise aggregates only keep calendar buckets, and a challenge's
- * result has to survive the week rolling over.
+ * Invited friends see the challenge, not the numbers, until they accept —
+ * being a participant is the consent to show each other their entries.
+ * Every write goes through these callables, so `challenges` is
+ * Admin-SDK-only. Progress is summed from `exerciseEntries` on read: the
+ * per-exercise aggregates only keep calendar buckets, and a result has to
+ * survive the week rolling over. The TTL policy on `expiresAt` drops a
+ * challenge once its result is no longer shown.
  */
-
-const COLLECTION = 'challenges';
-
-function requireUid(auth: { uid?: string } | undefined): string {
-  if (!auth?.uid) {
-    throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
-  }
-  return auth.uid;
-}
-
-async function readChallenges(uid: string): Promise<ChallengeDoc[]> {
-  const snap = await db
-    .collection(COLLECTION)
-    .where('participants', 'array-contains', uid)
-    .get();
-  return snap.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Challenge),
-  }));
-}
-
-async function readFriendUids(uid: string): Promise<string[]> {
-  const snap = await db
-    .collection('friendships')
-    .where('users', 'array-contains', uid)
-    .get();
-  return acceptedFriendUids(
-    snap.docs.map((doc) => ({ id: doc.id, ...(doc.data() as Friendship) })),
-    uid
-  );
-}
 
 export const createChallenge = onCall(
   { region: 'europe-west3', timeoutSeconds: 30, secrets: VAPID_SECRETS },
@@ -77,45 +56,55 @@ export const createChallenge = onCall(
     const days = request.data?.days as unknown;
 
     const today = berlinDateParts().isoDate;
-    const [friends, mine] = await Promise.all([
-      readFriendUids(uid),
-      readChallenges(uid),
-    ]);
+    const friends = await readFriendUids(uid);
     const exercise =
       typeof exerciseId === 'string'
         ? findExerciseDefinition(exerciseId)
         : null;
-    const rejection = challengeRejection({
-      friendUids,
-      acceptedFriendUids: friends,
-      target,
-      days,
-      exerciseValid: exercise?.measurement === 'reps',
-      activeCount: activeChallengeCount(
-        mine.filter((c) => c.createdBy === uid),
-        today
-      ),
-    });
-    if (rejection) return { ok: false, reason: rejection };
+    const ref = db.collection(CHALLENGES).doc();
+    const mine = db.collection(CHALLENGES).where('createdBy', '==', uid);
 
-    // Narrowed by `challengeRejection`.
-    const invited = [...new Set(friendUids as string[])];
-    const challenge: Challenge = {
-      createdBy: uid,
-      participants: [uid, ...invited],
-      exerciseId: exerciseId as string,
-      target: target as number,
-      from: today,
-      to: challengeEndDate(today, days as number),
-      createdAt: new Date().toISOString(),
-    };
-    const ref = await db.collection(COLLECTION).add(challenge);
+    // The active-count check and the create share a transaction, so two
+    // parallel calls cannot both slip under the limit.
+    const result = await db.runTransaction(async (tx) => {
+      const own = (await tx.get(mine)).docs.map(toChallengeDoc);
+      const rejection = challengeRejection({
+        friendUids,
+        acceptedFriendUids: friends,
+        target,
+        days,
+        exerciseValid: exercise?.measurement === 'reps',
+        activeCount: activeChallengeCount(own, today),
+      });
+      if (rejection) return { ok: false as const, reason: rejection };
+
+      // Narrowed by `challengeRejection`.
+      const invited = [...new Set(friendUids as string[])];
+      const to = challengeEndDate(today, days as number);
+      const challenge: Challenge = {
+        createdBy: uid,
+        participants: [uid],
+        invited,
+        exerciseId: exerciseId as string,
+        target: target as number,
+        from: today,
+        to,
+        createdAt: new Date().toISOString(),
+      };
+      tx.create(ref, { ...challenge, expiresAt: challengeExpiry(to) });
+      return { ok: true as const, invited, challenge };
+    });
+    if (!result.ok) return result;
 
     if (configureWebPush()) {
-      const recipients = await readPushRecipients([uid, ...invited]);
+      const recipients = await readPushRecipients([uid, ...result.invited]);
       const actorName = recipients.get(uid)?.displayName ?? null;
+      const exerciseName = sanitizeExerciseName(
+        request.data?.exerciseName,
+        result.challenge.exerciseId
+      );
       await Promise.all(
-        invited.map((friend) =>
+        result.invited.map((friend) =>
           deliverPushToUser(
             friend,
             buildFriendPushPayload({
@@ -123,11 +112,8 @@ export const createChallenge = onCall(
               locale: recipients.get(friend)?.locale ?? 'de',
               actorName,
               challenge: {
-                target: challenge.target,
-                exerciseName: sanitizeExerciseName(
-                  request.data?.exerciseName,
-                  challenge.exerciseId
-                ),
+                target: result.challenge.target,
+                exerciseName,
                 days: days as number,
               },
             }),
@@ -141,55 +127,73 @@ export const createChallenge = onCall(
     logger.info('createChallenge', {
       uid,
       id: ref.id,
-      invited: invited.length,
+      invited: result.invited.length,
     });
     return { ok: true, id: ref.id };
   }
 );
 
-/** One participant's reps for the exercise inside the challenge window. */
-async function sumEntries(
-  uid: string,
-  challenge: ChallengeDoc
-): Promise<number> {
-  const bounds = challengeEntryBounds(challenge);
-  const snap = await db
-    .collection('exerciseEntries')
-    .where('userId', '==', uid)
-    .where('exerciseId', '==', challenge.exerciseId)
-    .where('timestamp', '>=', bounds.fromInclusive)
-    .where('timestamp', '<', bounds.toExclusive)
-    .aggregate({ total: AggregateField.sum('reps') })
-    .get();
-  return Number(snap.data().total ?? 0);
-}
+/** Accepting moves the user onto the board; declining just takes them off the list. */
+export const respondChallenge = onCall(
+  { region: 'europe-west3', timeoutSeconds: 30 },
+  async (request) => {
+    const uid = requireUid(request.auth);
+    const id = requireId(request.data?.id);
+    const accept = request.data?.accept === true;
 
+    const ref = db.collection(CHALLENGES).doc(id);
+    const today = berlinDateParts().isoDate;
+    const result = await db.runTransaction(async (tx) => {
+      const snap = await tx.get(ref);
+      const doc = snap.exists ? toChallengeDoc(snap) : undefined;
+      const rejection = challengeRespondRejection(
+        doc && { ...doc, invited: invitedOf(doc) },
+        uid,
+        today
+      );
+      if (rejection) return { ok: false as const, reason: rejection };
+      tx.update(ref, {
+        invited: FieldValue.arrayRemove(uid),
+        ...(accept ? { participants: FieldValue.arrayUnion(uid) } : {}),
+      });
+      return { ok: true as const, accepted: accept };
+    });
+
+    logger.info('respondChallenge', { uid, id, ...result });
+    return result;
+  }
+);
+
+/**
+ * The viewer's challenges. `progress: false` skips the per-participant
+ * sums — a surface that only counts challenges (the dashboard card) has
+ * no use for N×M aggregation queries. An invitee gets no sums either way.
+ */
 export const listChallenges = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },
   async (request) => {
     const uid = requireUid(request.auth);
+    const withProgress = request.data?.progress !== false;
     const today = berlinDateParts().isoDate;
-    const docs = visibleChallenges(await readChallenges(uid), today);
+    const docs = visibleChallenges(await readChallengesOf(uid), today);
 
-    const uids = [...new Set(docs.flatMap((doc) => doc.participants))];
-    const names = new Map<string, string>();
-    if (uids.length > 0) {
-      const col = db.collection('userConfigs');
-      const snaps = await db.getAll(...uids.map((id) => col.doc(id)));
-      for (const snap of snaps) {
-        const name = String(snap.data()?.['displayName'] ?? '').trim();
-        if (name) names.set(snap.id, name);
-      }
-    }
+    const names = await readDisplayNames(
+      docs.flatMap((doc) => [...doc.participants, ...invitedOf(doc)])
+    );
 
     const challenges = await Promise.all(
       docs.map(async (doc) => {
         const sums = new Map<string, number>();
-        await Promise.all(
-          doc.participants.map(async (participant) => {
-            sums.set(participant, await sumEntries(participant, doc));
-          })
-        );
+        if (withProgress && !invitedOf(doc).includes(uid)) {
+          await Promise.all(
+            doc.participants.map(async (participant) => {
+              sums.set(
+                participant,
+                await sumChallengeEntries(participant, doc)
+              );
+            })
+          );
+        }
         return buildChallengeView(doc, sums, names, uid, today);
       })
     );
@@ -206,12 +210,9 @@ export const leaveChallenge = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },
   async (request) => {
     const uid = requireUid(request.auth);
-    const id = request.data?.id as unknown;
-    if (typeof id !== 'string' || id === '') {
-      throw new HttpsError('invalid-argument', 'id fehlt.');
-    }
+    const id = requireId(request.data?.id);
 
-    const ref = db.collection(COLLECTION).doc(id);
+    const ref = db.collection(CHALLENGES).doc(id);
     const left = await db.runTransaction(async (tx) => {
       const snap = await tx.get(ref);
       if (!snap.exists) return false;
@@ -226,3 +227,10 @@ export const leaveChallenge = onCall(
     return { ok: left };
   }
 );
+
+function requireId(value: unknown): string {
+  if (typeof value !== 'string' || value === '') {
+    throw new HttpsError('invalid-argument', 'id fehlt.');
+  }
+  return value;
+}

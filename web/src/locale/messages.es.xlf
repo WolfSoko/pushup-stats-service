@@ -12981,10 +12981,10 @@
         <target>Du hast schon genug Challenges laufen. Warte, bis eine endet.</target>
       </segment>
     </unit>
-    <unit id="challenge.error.gone">
+        <unit id="challenge.error.gone">
       <segment state="initial">
-        <source>Diese Challenge gibt es nicht mehr.</source>
-        <target>Diese Challenge gibt es nicht mehr.</target>
+        <source>Diese Einladung ist nicht mehr offen.</source>
+        <target>Diese Einladung ist nicht mehr offen.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
@@ -13027,6 +13027,72 @@
       <segment state="initial">
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
         <target><ph id="0" equiv="count" disp="count"/> Challenges laufen</target>
+      </segment>
+    </unit>
+    <unit id="challenges.invitation">
+      <segment state="initial">
+        <source> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </source>
+        <target> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </target>
+      </segment>
+    </unit>
+    <unit id="challenges.stillInvited">
+      <segment state="initial">
+        <source>Noch eingeladen:</source>
+        <target>Noch eingeladen:</target>
+      </segment>
+    </unit>
+    <unit id="challenges.decline">
+      <segment state="initial">
+        <source> Ablehnen </source>
+        <target> Ablehnen </target>
+      </segment>
+    </unit>
+    <unit id="challenges.accept">
+      <segment state="initial">
+        <source> Mitmachen </source>
+        <target> Mitmachen </target>
+      </segment>
+    </unit>
+    <unit id="nav.friends.pendingAriaOne">
+      <segment state="initial">
+        <source>Eine offene Freundschaftsanfrage</source>
+        <target>Eine offene Freundschaftsanfrage</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheersTodayOne">
+      <segment state="initial">
+        <source>Eine Anfeuerung heute</source>
+        <target>Eine Anfeuerung heute</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.ended">
+      <segment state="initial">
+        <source>Die Challenge ist schon vorbei.</source>
+        <target>Die Challenge ist schon vorbei.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.pendingOne">
+      <segment state="initial">
+        <source>Eine Anfrage wartet auf dich</source>
+        <target>Eine Anfrage wartet auf dich</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.invitationOne">
+      <segment state="initial">
+        <source>Eine Challenge-Einladung wartet</source>
+        <target>Eine Challenge-Einladung wartet</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.invitations">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
+        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.activeChallengeOne">
+      <segment state="initial">
+        <source>Eine Challenge läuft</source>
+        <target>Eine Challenge läuft</target>
       </segment>
     </unit>
 </file>

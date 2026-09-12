@@ -22,6 +22,11 @@ export interface ChallengeParticipantEntry {
   readonly isViewer: boolean;
 }
 
+export interface ChallengeInvitee {
+  readonly uid: string;
+  readonly displayName: string | null;
+}
+
 export interface ChallengeView {
   readonly id: string;
   readonly createdBy: string;
@@ -30,8 +35,17 @@ export interface ChallengeView {
   readonly from: string;
   readonly to: string;
   readonly status: 'active' | 'ended';
-  /** Highest first; the viewer is always in it. */
+  /** Participants, highest first — empty for an invitee, who sees no numbers. */
   readonly entries: ReadonlyArray<ChallengeParticipantEntry>;
+  /** Still to answer. */
+  readonly invited: ReadonlyArray<ChallengeInvitee>;
+  /** The viewer was asked and has not answered. */
+  readonly viewerInvited: boolean;
+}
+
+/** Documents written before invitations existed carry no `invited`. */
+export function invitedOf(doc: Pick<Challenge, 'invited'>): string[] {
+  return Array.isArray(doc.invited) ? doc.invited : [];
 }
 
 /**
@@ -94,6 +108,11 @@ export function sanitizeExerciseName(raw: unknown, exerciseId: string): string {
   return clean || exerciseId;
 }
 
+/**
+ * What one viewer gets to see. Numbers are for participants only: an
+ * invitee has not agreed to share theirs, so they get the framing (who,
+ * what, how long) and nothing else until they accept.
+ */
 export function buildChallengeView(
   doc: ChallengeDoc,
   sums: ReadonlyMap<string, number>,
@@ -101,18 +120,22 @@ export function buildChallengeView(
   viewerUid: string,
   todayIso: string
 ): ChallengeView {
-  const entries = doc.participants
-    .map((uid) => ({
-      uid,
-      displayName: names.get(uid) ?? null,
-      value: Math.round(sums.get(uid) ?? 0),
-      isViewer: uid === viewerUid,
-    }))
-    .sort(
-      (a, b) =>
-        b.value - a.value ||
-        (a.displayName ?? '').localeCompare(b.displayName ?? '')
-    );
+  const invited = invitedOf(doc);
+  const viewerInvited = invited.includes(viewerUid);
+  const entries = viewerInvited
+    ? []
+    : doc.participants
+        .map((uid) => ({
+          uid,
+          displayName: names.get(uid) ?? null,
+          value: Math.round(sums.get(uid) ?? 0),
+          isViewer: uid === viewerUid,
+        }))
+        .sort(
+          (a, b) =>
+            b.value - a.value ||
+            (a.displayName ?? '').localeCompare(b.displayName ?? '')
+        );
   return {
     id: doc.id,
     createdBy: doc.createdBy,
@@ -122,5 +145,10 @@ export function buildChallengeView(
     to: doc.to,
     status: challengeStatus(doc, todayIso),
     entries,
+    invited: invited.map((uid) => ({
+      uid,
+      displayName: names.get(uid) ?? null,
+    })),
+    viewerInvited,
   };
 }

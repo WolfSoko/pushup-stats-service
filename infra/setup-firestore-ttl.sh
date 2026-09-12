@@ -8,6 +8,10 @@
 # bin is a Firestore TTL policy on the `expiresAt` field, not a scheduled
 # function — Firestore drops expired documents itself, at no invocation cost.
 #
+# `cheers` (one document per friend cheer and day) and `challenges` (friend
+# challenges, kept a week past their end so the result can be seen) carry
+# the same field and would otherwise grow forever.
+#
 # TTL policies are project state, NOT part of `firestore.rules` /
 # `firestore.indexes.json`, so `firebase deploy` does not create them. Without
 # this script the archive grows forever and nothing enforces the 365 days.
@@ -49,6 +53,8 @@ done
 # collection-group:field pairs that must carry a TTL policy.
 TTL_FIELDS=(
   "deletedExerciseEntries:expiresAt"
+  "cheers:expiresAt"
+  "challenges:expiresAt"
 )
 
 run() {

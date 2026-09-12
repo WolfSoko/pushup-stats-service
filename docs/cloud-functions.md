@@ -36,6 +36,8 @@ Sitting on the delete trigger rather than in the client's delete call means ever
 ./infra/setup-firestore-ttl.sh --project <staging>   # any other environment
 ```
 
+The same script covers `cheers` (a friend cheer matters today; expires two days out) and `challenges` (a week past the end date, when the result stops being shown). Any collection that grows per user action and has no owner to delete it belongs on that list.
+
 Two consequences worth remembering:
 
 - `expiresAt` must be a real Firestore `Timestamp`. TTL ignores ISO strings, and the documents would never expire.

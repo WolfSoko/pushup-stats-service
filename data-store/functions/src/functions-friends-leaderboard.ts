@@ -15,7 +15,7 @@ import {
   rankFriends,
   type FriendStatsRow,
 } from './friends';
-import { readCheersToday } from './functions-cheers';
+import { readCheersToday } from './friends/cheers-read';
 import { periodKeys } from './user-stats-delta';
 
 /**

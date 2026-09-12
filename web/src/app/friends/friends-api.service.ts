@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import type { CheerRejection, FriendRequestRejection } from '@pu-stats/models';
 
 import { CallableFunctionsService } from '../admin/callable-functions.service';
 
@@ -35,8 +36,20 @@ export interface FriendsBoardResponse {
   readonly entries: ReadonlyArray<FriendsBoardEntry>;
 }
 
-/** Why the server refused a request; `undefined` when it accepted. */
-export type FriendActionReason = string | undefined;
+/**
+ * Why the server refused; `undefined` when it accepted. The codes are
+ * `friendRequestRejection` / `cheerRejection` from the models, the
+ * callables' own `respondRejection`, and two the client adds itself.
+ */
+export type FriendActionReason =
+  | FriendRequestRejection
+  | CheerRejection
+  | 'not-found'
+  | 'not-yours'
+  | 'settled'
+  | 'unauthenticated'
+  | 'failed'
+  | undefined;
 
 export interface FriendActionResponse {
   readonly ok: boolean;

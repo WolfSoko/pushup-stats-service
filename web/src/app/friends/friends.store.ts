@@ -15,6 +15,7 @@ import {
   type FriendsBoardEntry,
   type FriendsBoardPeriod,
 } from './friends-api.service';
+import { runStoreAction } from './store-action';
 
 type FriendsState = {
   friends: ReadonlyArray<FriendRow>;
@@ -38,7 +39,8 @@ const initialState: FriendsState = {
 };
 
 /**
- * The friends screen's state.
+ * The friends screen's state — and, being root-provided, the nav badge's
+ * and the dashboard card's.
  *
  * Every action re-reads the lists from the server rather than patching
  * them locally: the other side may have acted in the meantime, and a
@@ -47,7 +49,11 @@ const initialState: FriendsState = {
 export const FriendsStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withProps(() => ({ _api: inject(FriendsApiService) })),
+  withProps(() => ({
+    _api: inject(FriendsApiService),
+    /** The reload in flight, so two consumers mounting at once share one call. */
+    _reloading: null as Promise<void> | null,
+  })),
   withComputed((store) => ({
     friendCount: computed(() => store.friends().length),
     /** Requests waiting for this user — what the nav badge counts. */
@@ -59,45 +65,44 @@ export const FriendsStore = signalStore(
         store.outgoing().length === 0
     ),
   })),
-  withMethods(({ _api, ...store }) => {
-    async function reload(): Promise<void> {
+  withMethods((store) => {
+    const { _api } = store;
+
+    function reload(): Promise<void> {
+      if (store._reloading) return store._reloading;
       patchState(store, { loading: true });
-      try {
-        const lists = await _api.list();
-        patchState(store, {
-          friends: lists.friends,
-          incoming: lists.incoming,
-          outgoing: lists.outgoing,
-          loading: false,
+      store._reloading = _api
+        .list()
+        .then((lists) => {
+          patchState(store, {
+            friends: lists.friends,
+            incoming: lists.incoming,
+            outgoing: lists.outgoing,
+          });
+        })
+        .catch(() => {
+          // The page keeps whatever it had; a failed refresh is not a
+          // reason to empty the screen.
+        })
+        .finally(() => {
+          store._reloading = null;
+          patchState(store, { loading: false });
         });
-      } catch {
-        // The page keeps whatever it had; a failed refresh is not a reason
-        // to empty the screen.
-        patchState(store, { loading: false });
-      }
+      return store._reloading;
     }
 
-    async function act(
-      action: () => Promise<{ ok: boolean; reason?: FriendActionReason }>
-    ): Promise<boolean> {
-      patchState(store, { lastRejection: undefined });
-      try {
-        const result = await action();
-        if (!result.ok) {
-          patchState(store, { lastRejection: result.reason ?? 'failed' });
-          return false;
-        }
-        await reload();
-        return true;
-      } catch {
-        patchState(store, { lastRejection: 'failed' });
-        return false;
-      }
-    }
-
-    async function loadBoard(period?: FriendsBoardPeriod): Promise<void> {
+    /**
+     * Loads the board for a period. The friends page passes the period
+     * the user picked and remembers it; a preview elsewhere (the
+     * dashboard card) asks with `remember: false` so it never resets the
+     * chips on the friends page under the user.
+     */
+    async function loadBoard(
+      period?: FriendsBoardPeriod,
+      options: { remember?: boolean } = {}
+    ): Promise<void> {
       const next = period ?? store.boardPeriod();
-      patchState(store, { boardPeriod: next });
+      if (options.remember !== false) patchState(store, { boardPeriod: next });
       try {
         patchState(store, { board: await _api.board(next) });
       } catch {
@@ -106,34 +111,25 @@ export const FriendsStore = signalStore(
       }
     }
 
-    /**
-     * A cheer changes the board (the count, and the button that sent it),
-     * not the lists — so it re-reads the board rather than everything.
-     */
-    async function cheer(uid: string): Promise<boolean> {
-      patchState(store, { lastRejection: undefined });
-      try {
-        const result = await _api.cheer(uid);
-        if (!result.ok) {
-          patchState(store, { lastRejection: result.reason ?? 'failed' });
-          return false;
-        }
-        await loadBoard();
-        return true;
-      } catch {
-        patchState(store, { lastRejection: 'failed' });
-        return false;
-      }
-    }
-
     return {
       reload,
       loadBoard,
-      cheer,
-      requestFriend: (uid: string) => act(() => _api.request(uid)),
-      accept: (id: string) => act(() => _api.respond(id, true)),
-      decline: (id: string) => act(() => _api.respond(id, false)),
-      remove: (id: string) => act(() => _api.remove(id)),
+      requestFriend: (uid: string) =>
+        runStoreAction(store, () => _api.request(uid), reload),
+      accept: (id: string) =>
+        runStoreAction(store, () => _api.respond(id, true), reload),
+      decline: (id: string) =>
+        runStoreAction(store, () => _api.respond(id, false), reload),
+      remove: (id: string) =>
+        runStoreAction(store, () => _api.remove(id), reload),
+      // A cheer changes the board (the count, and the button that sent
+      // it), not the lists.
+      cheer: (uid: string) =>
+        runStoreAction(
+          store,
+          () => _api.cheer(uid),
+          () => loadBoard()
+        ),
     };
   })
 );
