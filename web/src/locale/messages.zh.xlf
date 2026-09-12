@@ -1020,7 +1020,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:186</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
       <target>轻量日 — 2×50%（最大值）· 10 min 活动度训练</target></segment>
     </unit>
@@ -1076,7 +1076,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:264</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
       <target>3×8 膝盖俯卧撑或提高俯卧撑</target></segment>
     </unit>
@@ -1084,7 +1084,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:272</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, saubere Technik</source>
       <target>3×9 标准俯卧撑</target></segment>
     </unit>
@@ -1100,7 +1100,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:286</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, volle Bewegungsamplitude</source>
       <target>3×10 标准俯卧撑</target></segment>
     </unit>
@@ -1108,7 +1108,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:290</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
       <target>3×11</target></segment>
     </unit>
@@ -1116,7 +1116,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:297</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, etwas mehr Volumen</source>
       <target>3×12</target></segment>
     </unit>
@@ -1124,7 +1124,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:305</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze — letzte Steigerung dieser Woche</source>
       <target>3×13</target></segment>
     </unit>
@@ -1164,7 +1164,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:362</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
       <target>5×10 标准重复，60 秒休息</target></segment>
     </unit>
@@ -1172,7 +1172,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:369</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause</source>
       <target>5×12，60 秒休息</target></segment>
     </unit>
@@ -1180,7 +1180,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:376</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
       <target>5×12，60 秒休息</target></segment>
     </unit>
@@ -1188,7 +1188,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:383</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
       <target>5×14，60 秒休息</target></segment>
     </unit>
@@ -1196,7 +1196,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:390</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
       <target>轻量级训练日 — 2×15，轻松节奏</target></segment>
     </unit>
@@ -1204,7 +1204,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:399</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleichbleibendes Tempo</source>
       <target>5×16</target></segment>
     </unit>
@@ -1212,7 +1212,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:406</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze — Technik vor Tempo</source>
       <target>5×16</target></segment>
     </unit>
@@ -1220,7 +1220,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:413</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, Volumen steigt</source>
       <target>5×18</target></segment>
     </unit>
@@ -1228,7 +1228,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:420</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleiches Volumen</source>
       <target>5×18</target></segment>
     </unit>
@@ -1236,7 +1236,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:427</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Erstes Hundert — fünf Sätze</source>
       <target>首个百位数：5×20</target></segment>
     </unit>
@@ -1244,7 +1244,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:437</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
       <target>4×25（较少的组，更多的重复）</target></segment>
     </unit>
@@ -1252,7 +1252,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:444</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze wie gehabt</source>
       <target>5×20</target></segment>
     </unit>
@@ -1260,7 +1260,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:451</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
       <target>4×25</target></segment>
     </unit>
@@ -1268,7 +1268,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:458</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze</source>
       <target>5×20</target></segment>
     </unit>
@@ -1276,7 +1276,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:465</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze — Tempo bewusst verlangsamen</source>
       <target>4×25 — 刻意放慢速度</target></segment>
     </unit>
@@ -1284,7 +1284,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:475</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, letzte volle Woche</source>
       <target>5×20</target></segment>
     </unit>
@@ -1292,7 +1292,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:482</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
       <target>4×25</target></segment>
     </unit>
@@ -1300,7 +1300,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:489</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, unverändertes Volumen</source>
       <target>5×20</target></segment>
     </unit>
@@ -1308,7 +1308,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:496</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze, ruhiges Tempo</source>
       <target>4×25</target></segment>
     </unit>
@@ -1316,7 +1316,7 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:503</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter großer Tag vor dem Test</source>
       <target>测试前最后一个百位数日</target></segment>
     </unit>
@@ -8456,139 +8456,139 @@
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
         <target>循环 3 轮 — 10 俯卧撑 · 15 深蹲 · 10 弓步 每条腿 · 30 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 3 轮 — 10 俯卧撑 · 15 相扑深蹲 · 12 臀桥 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>轻量日 — 2×10 俯卧撑 · 活动度 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
         <target>循环 3 轮 — 10 俯卧撑 · 15 深蹲 · 10 臀桥 · 30 s 空心支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
         <target>循环 3 轮 — 12 俯卧撑 · 18 深蹲 · 12 弓步 每条腿 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 3 轮 — 12 俯卧撑 · 18 相扑深蹲 · 15 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
         <target>轻量日 — 2×11 俯卧撑 · 开髋 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
         <target>循环 3 轮 — 12 俯卧撑 · 12 台阶上跨 每条腿 · 15 俄罗斯转体 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 10 俯卧撑 · 15 深蹲 · 12 臀桥 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 11 俯卧撑 · 16 弓步 每条腿 · 15 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
         <target>轻量日 — 2×12 俯卧撑 · 瑜伽 20 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 12 俯卧撑 · 15 跳跃深蹲 · 12 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 13 俯卧撑 · 18 深蹲 · 15 臀桥 · 50 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
         <target>循环 4 轮 — 14 俯卧撑 · 18 弓步 每条腿 · 15 臀冲 · 50 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
         <target>轻量日 — 2×13 俯卧撑 · 泡沫轴放松 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 15 俯卧撑 · 18 跳跃深蹲 · 15 臀桥 · 60 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 5 轮 — 12 俯卧撑 · 15 深蹲 · 12 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
         <target>循环 5 轮 — 13 俯卧撑 · 16 弓步 每条腿 · 13 臀桥 · 50 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>轻量日 — 2×14 俯卧撑 · 活动度 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
         <target>循环 5 轮 — 14 俯卧撑 · 18 跳跃深蹲 · 15 臀冲 · 60 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>峰值循环 5 轮 — 15 俯卧撑 · 20 深蹲 · 15 臀桥 · 60 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>减载循环 4 轮, 控制节奏 — 15 俯卧撑 · 15 深蹲 · 12 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>轻量日 — 2×12 俯卧撑 · 活动度</target>
       </segment>
@@ -8606,109 +8606,109 @@
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
         <target>平板支撑 3×30 s · 空心支撑 3×20 s · 死虫 3×10 每侧 · 俯卧撑 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
         <target>抬腿 3×10 · 俄罗斯转体 3×15 · 平板支撑 3×30 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
         <target>登山者 3×30 s · 死虫 3×12 · 平板支撑 3×35 s · 俯卧撑 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
         <target>轻量日 — 猫牛式 3×10 · 开髋 2 min · 2×7 标准的 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
         <target>平板支撑 3×40 s · 空心支撑 3×25 s · 死虫 3×12 · 俯卧撑 2×11</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
         <target>抬腿 3×12 · 俄罗斯转体 3×18 · 平板支撑 3×40 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
         <target>登山者 4×30 s · 侧平板支撑 2×25 s 每侧 · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Mobility · lockere Liegestütze</source>
         <target>轻量日 — 活动度 10 min · 2×8 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
         <target>核心循环 3 轮 — 40 s 平板支撑 · 20 s 空心支撑 · 12 死虫 · 10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
         <target>平板支撑 3×50 s · 侧平板支撑 3×30 s 每侧 · 空心支撑 3×30 s · 俯卧撑 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
         <target>悬挂屈膝抬腿 3×8 · 俄罗斯转体 3×20 · 平板支撑 3×50 s · 俯卧撑 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
         <target>核心力量: 平板支撑 3×60 s · 死虫 3×15 · 登山者 3×45 s · 俯卧撑 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Stretching</source>
         <target>轻量日 — 2×9 俯卧撑 · 拉伸 10 min</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
         <target>核心循环 3 轮 — 50 s 平板支撑 · 12 抬腿 · 20 俄罗斯转体 · 10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
         <target>平板支撑 3×60 s · 空心支撑 3×40 s · 悬挂屈膝抬腿 3×10 · 俯卧撑 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
         <target>核心循环 3 轮 — 1 min 平板支撑 · 30 俄罗斯转体 · 12 抬腿 · 12 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
         <target>侧平板支撑 3×40 s 每侧 · 死虫 3×16 · 空心支撑 3×40 s · 俯卧撑 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Mobility</source>
         <target>轻量日 — 2×9 俯卧撑 · 活动度</target>
       </segment>
@@ -11814,7 +11814,7 @@
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
         <target>和我一起训练：用摄像头计数、完成训练计划、在排行榜上一较高下。免费：</target>
       </segment>
@@ -12264,7 +12264,7 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
         <target>5 组目标次数 · 3×20 弓步</target>
       </segment>
@@ -12324,219 +12324,219 @@
       </segment>
     </unit>
     <unit id="exerciseRef.tooltip.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Wiki-Eintrag</source>
-        <target>Zum Wiki-Eintrag</target>
+        <target>查看 Wiki 条目</target>
       </segment>
     </unit>
     <unit id="challenge.create.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>发起挑战</target>
       </segment>
     </unit>
     <unit id="challenge.create.friendsHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer macht mit?</source>
-        <target>Wer macht mit?</target>
+        <target>谁参加？</target>
       </segment>
     </unit>
     <unit id="challenge.create.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>练习</target>
       </segment>
     </unit>
     <unit id="challenge.create.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Wiederholungen)</source>
-        <target>Ziel (Wiederholungen)</target>
+        <target>目标（重复次数）</target>
       </segment>
     </unit>
     <unit id="challenge.create.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer</source>
-        <target>Dauer</target>
+        <target>时长</target>
       </segment>
     </unit>
     <unit id="challenge.create.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> 取消 </target>
       </segment>
     </unit>
     <unit id="challenge.create.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Los geht’s </source>
-        <target> Los geht’s </target>
+        <target> 开始吧 </target>
       </segment>
     </unit>
     <unit id="challenge.create.days">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target><ph id="0" equiv="days" disp="days"/> 天</target>
       </segment>
     </unit>
     <unit id="challenges.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges</source>
-        <target>Challenges</target>
+        <target>挑战</target>
       </segment>
     </unit>
     <unit id="challenges.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>发起挑战</target>
       </segment>
     </unit>
     <unit id="challenges.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
-        <target> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </target>
+        <target> 还没有挑战。挑战你的好友：一个目标，几天时间，一起完成。 </target>
       </segment>
     </unit>
     <unit id="challenges.ended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beendet</source>
-        <target>Beendet</target>
+        <target>已结束</target>
       </segment>
     </unit>
     <unit id="challenges.leave">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verlassen </source>
-        <target> Verlassen </target>
+        <target> 退出 </target>
       </segment>
     </unit>
     <unit id="challenges.lastDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter Tag</source>
-        <target>Letzter Tag</target>
+        <target>最后一天</target>
       </segment>
     </unit>
     <unit id="challenges.daysLeft">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target>Noch <ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target>还剩 <ph id="0" equiv="days" disp="days"/> 天</target>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</source>
-        <target><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</target>
+        <target><ph id="0" equiv="count" disp="count"/> 个待处理的好友请求</target>
       </segment>
     </unit>
     <unit id="friends.board.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuern</source>
-        <target>Anfeuern</target>
+        <target>加油</target>
       </segment>
     </unit>
     <unit id="friends.board.cheered">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>今天已经加油过了</target>
       </segment>
     </unit>
     <unit id="friends.board.cheersToday">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</target>
+        <target>今天 <ph id="0" equiv="count" disp="count"/> 次加油</target>
       </segment>
     </unit>
     <unit id="friends.error.cheeredAlready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert – morgen wieder.</source>
-        <target>Heute schon angefeuert – morgen wieder.</target>
+        <target>今天已经加油过了——明天再来。</target>
       </segment>
     </unit>
     <unit id="friends.error.notFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das geht nur unter bestätigten Freunden.</source>
-        <target>Das geht nur unter bestätigten Freunden.</target>
+        <target>这仅适用于已确认的好友。</target>
       </segment>
     </unit>
     <unit id="challenge.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>请至少选择一位好友。</target>
       </segment>
     </unit>
     <unit id="challenge.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Teilnehmer für eine Challenge.</source>
-        <target>Zu viele Teilnehmer für eine Challenge.</target>
+        <target>挑战的参与人数过多。</target>
       </segment>
     </unit>
     <unit id="challenge.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für diese Übung geht keine Challenge.</source>
-        <target>Für diese Übung geht keine Challenge.</target>
+        <target>该练习不支持挑战。</target>
       </segment>
     </unit>
     <unit id="challenge.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Ziel muss zwischen 10 und 100.000 liegen.</source>
-        <target>Das Ziel muss zwischen 10 und 100.000 liegen.</target>
+        <target>目标必须在 10 到 100000 之间。</target>
       </segment>
     </unit>
     <unit id="challenge.error.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Dauer gibt es nicht.</source>
-        <target>Diese Dauer gibt es nicht.</target>
+        <target>该时长不存在。</target>
       </segment>
     </unit>
     <unit id="challenge.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon genug Challenges laufen. Warte, bis eine endet.</source>
-        <target>Du hast schon genug Challenges laufen. Warte, bis eine endet.</target>
+        <target>你已经有足够多的挑战在进行中，请等待一个结束。</target>
       </segment>
     </unit>
     <unit id="challenge.error.gone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Challenge gibt es nicht mehr.</source>
-        <target>Diese Challenge gibt es nicht mehr.</target>
+        <target>该挑战已不存在。</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>好友</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
-        <target> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </target>
+        <target> 和好友一起训练：互相比较、互相加油，一起发起挑战。 </target>
       </segment>
     </unit>
     <unit id="dashboard.friends.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>查看好友</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.leading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</source>
-        <target>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</target>
+        <target>本周你在 <ph id="0" equiv="total" disp="total"/> 位好友中排名第一。</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.rank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</source>
-        <target>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</target>
+        <target>本周你排名第 <ph id="0" equiv="rank" disp="rank"/> 位，共 <ph id="1" equiv="total" disp="total"/> 位。</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</target>
+        <target><ph id="0" equiv="count" disp="count"/> 个请求等待你处理</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.activeChallenges">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenges laufen</target>
+        <target><ph id="0" equiv="count" disp="count"/> 个挑战正在进行</target>
       </segment>
     </unit>
 </file>
