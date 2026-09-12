@@ -13194,33 +13194,33 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="dashboard.friends.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Go to friends</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.leading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</source>
-        <target>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</target>
+        <target>You're in the lead this week among <ph id="0" equiv="total" disp="total"/> friends.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.rank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</source>
-        <target>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</target>
+        <target>You're in place <ph id="0" equiv="rank" disp="rank"/> of <ph id="1" equiv="total" disp="total"/> this week.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</target>
+        <target><ph id="0" equiv="count" disp="count"/> requests waiting for you</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.activeChallenges">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenges laufen</target>
+        <target><ph id="0" equiv="count" disp="count"/> challenges running</target>
       </segment>
     </unit>
 </file>
