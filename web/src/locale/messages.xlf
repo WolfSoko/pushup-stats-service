@@ -977,7 +977,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:220</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
+        <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.4.desc">
@@ -1073,7 +1073,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:334</note>
       </notes>
       <segment>
-        <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
+        <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
@@ -1153,7 +1153,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:424</note>
       </notes>
       <segment>
-        <source>3×8 Knie- oder erhöhte Liegestütze</source>
+        <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
@@ -1161,7 +1161,7 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:432</note>
       </notes>
       <segment>
-        <source>3×9 saubere Liegestütze</source>
+        <source>Drei Sätze, saubere Technik</source>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
@@ -1177,36 +1177,36 @@
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:446</note>
       </notes>
       <segment>
-        <source>3×10 saubere Liegestütze</source>
+        <source>Drei Sätze, volle Bewegungsamplitude</source>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:450</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:455</note>
       </notes>
       <segment>
-        <source>3×11</source>
+        <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:457</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:463</note>
       </notes>
       <segment>
-        <source>3×12</source>
+        <source>Drei Sätze, etwas mehr Volumen</source>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:465</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:471</note>
       </notes>
       <segment>
-        <source>3×13</source>
+        <source>Drei Sätze — letzte Steigerung dieser Woche</source>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:483</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:489</note>
       </notes>
       <segment>
         <source>4 Sätze, kontrolliertes Tempo</source>
@@ -1214,7 +1214,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:491</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:497</note>
       </notes>
       <segment>
         <source>4 Sätze, langsame Exzentrik</source>
@@ -1222,7 +1222,7 @@
     </unit>
     <unit id="plan.over-40-4w.day.28.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:501</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:507</note>
       </notes>
       <segment>
         <source>Endtest: Maximale Liegestütze</source>
@@ -1230,7 +1230,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:515</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:521</note>
       </notes>
       <segment>
         <source>Baseline-Test: maximale Wiederholungen in einem Satz</source>
@@ -1238,167 +1238,167 @@
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:522</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:528</note>
       </notes>
       <segment>
-        <source>5×10 saubere Wiederholungen, 60 s Pause</source>
+        <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:529</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:535</note>
       </notes>
       <segment>
-        <source>5×12, 60 s Pause</source>
+        <source>Fünf Sätze, 60 s Pause</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:536</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:542</note>
       </notes>
       <segment>
-        <source>5×12, 60 s Pause</source>
+        <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:543</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:549</note>
       </notes>
       <segment>
-        <source>5×14, 60 s Pause</source>
+        <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:550</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:556</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×15 in lockerem Tempo</source>
+        <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:559</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:565</note>
       </notes>
       <segment>
-        <source>5×16</source>
+        <source>Fünf Sätze, gleichbleibendes Tempo</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:566</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:572</note>
       </notes>
       <segment>
-        <source>5×16</source>
+        <source>Fünf Sätze — Technik vor Tempo</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:573</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:579</note>
       </notes>
       <segment>
-        <source>5×18</source>
+        <source>Fünf Sätze, Volumen steigt</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:580</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:586</note>
       </notes>
       <segment>
-        <source>5×18</source>
+        <source>Fünf Sätze, gleiches Volumen</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:587</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:593</note>
       </notes>
       <segment>
-        <source>Erstes Hundert: 5×20</source>
+        <source>Erstes Hundert — fünf Sätze</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:597</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:603</note>
       </notes>
       <segment>
-        <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
+        <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:604</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:610</note>
       </notes>
       <segment>
-        <source>5×20</source>
+        <source>Fünf Sätze wie gehabt</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:611</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:617</note>
       </notes>
       <segment>
-        <source>4×25</source>
+        <source>Vier längere Sätze</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:618</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:624</note>
       </notes>
       <segment>
-        <source>5×20</source>
+        <source>Fünf Sätze</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:625</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:631</note>
       </notes>
       <segment>
-        <source>4×25 — Tempo bewusst verlangsamen</source>
+        <source>Vier Sätze — Tempo bewusst verlangsamen</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:635</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:641</note>
       </notes>
       <segment>
-        <source>5×20</source>
+        <source>Fünf Sätze, letzte volle Woche</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:642</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:648</note>
       </notes>
       <segment>
-        <source>4×25</source>
+        <source>Vier längere Sätze</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:649</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:655</note>
       </notes>
       <segment>
-        <source>5×20</source>
+        <source>Fünf Sätze, unverändertes Volumen</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:656</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:662</note>
       </notes>
       <segment>
-        <source>4×25</source>
+        <source>Vier Sätze, ruhiges Tempo</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:663</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:669</note>
       </notes>
       <segment>
-        <source>Letzter 100er-Tag vor dem Test</source>
+        <source>Letzter großer Tag vor dem Test</source>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:670</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:676</note>
       </notes>
       <segment>
         <source>Leichter Tag — Form-Check</source>
@@ -1406,7 +1406,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:678</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:684</note>
       </notes>
       <segment>
         <source>Ruhetag — Vorbereitung auf den Endtest</source>
@@ -1414,7 +1414,7 @@
     </unit>
     <unit id="plan.daily-100-30d.day.30.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:685</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:691</note>
       </notes>
       <segment>
         <source>Endtest: Maximale saubere Wiederholungen in einem Satz</source>
@@ -1422,7 +1422,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:707</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:713</note>
       </notes>
       <segment>
         <source>Archer-Liegestütze 3×6</source>
@@ -1430,7 +1430,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:715</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:721</note>
       </notes>
       <segment>
         <source>Wand-Einarmige 3×10 (langsame Exzentrik)</source>
@@ -1438,7 +1438,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:723</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:729</note>
       </notes>
       <segment>
         <source>Standard-Liegestütze 3×20 (Volumen)</source>
@@ -1446,7 +1446,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:730</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:736</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×10</source>
@@ -1454,7 +1454,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:739</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:745</note>
       </notes>
       <segment>
         <source>Archer 3×8</source>
@@ -1462,7 +1462,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:747</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:753</note>
       </notes>
       <segment>
         <source>Wand-Einarmige 3×12</source>
@@ -1470,7 +1470,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:755</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:761</note>
       </notes>
       <segment>
         <source>Standard 3×22</source>
@@ -1478,7 +1478,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:762</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:768</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×12</source>
@@ -1486,7 +1486,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:771</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:777</note>
       </notes>
       <segment>
         <source>Archer 3×10 — Phase 1 abschließen</source>
@@ -1494,7 +1494,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:779</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:785</note>
       </notes>
       <segment>
         <source>Wand-Einarmige 3×15</source>
@@ -1502,7 +1502,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:787</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:793</note>
       </notes>
       <segment>
         <source>Standard 3×25</source>
@@ -1510,7 +1510,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.20.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:794</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:800</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×14</source>
@@ -1518,7 +1518,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:804</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:810</note>
       </notes>
       <segment>
         <source>Negative Einarmige von Bank 3×5 (3 s runter)</source>
@@ -1526,7 +1526,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:812</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:818</note>
       </notes>
       <segment>
         <source>Langsame Archer 3×6 (Tempo 3-1-1)</source>
@@ -1534,7 +1534,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:820</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:826</note>
       </notes>
       <segment>
         <source>Weite Liegestütze 3×20 (Brust-Volumen)</source>
@@ -1542,7 +1542,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:830</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:836</note>
       </notes>
       <segment>
         <source>Negative Einarmige 3×5</source>
@@ -1550,7 +1550,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.31.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:838</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:844</note>
       </notes>
       <segment>
         <source>Langsame Archer 3×7</source>
@@ -1558,7 +1558,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.33.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:846</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:852</note>
       </notes>
       <segment>
         <source>Weite Liegestütze 3×20</source>
@@ -1566,7 +1566,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.34.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:853</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:859</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×11</source>
@@ -1574,7 +1574,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:862</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:868</note>
       </notes>
       <segment>
         <source>Negative Einarmige 3×6</source>
@@ -1582,7 +1582,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.38.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:870</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:876</note>
       </notes>
       <segment>
         <source>Langsame Archer 3×8 — Phase 2 abschließen</source>
@@ -1590,7 +1590,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.40.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:878</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:884</note>
       </notes>
       <segment>
         <source>Weite Liegestütze 3×~22</source>
@@ -1598,7 +1598,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.43.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:889</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:895</note>
       </notes>
       <segment>
         <source>Partielle Einarmige (niedrige Bank) 3×4</source>
@@ -1606,7 +1606,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.45.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:897</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:903</note>
       </notes>
       <segment>
         <source>Archer mit langem Tempo 3×6</source>
@@ -1614,7 +1614,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.47.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:905</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:911</note>
       </notes>
       <segment>
         <source>Diamant-Liegestütze 3×12 (Trizeps-Volumen)</source>
@@ -1622,7 +1622,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.50.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:915</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:921</note>
       </notes>
       <segment>
         <source>Partielle Einarmige 3×4</source>
@@ -1630,7 +1630,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.52.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:923</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:929</note>
       </notes>
       <segment>
         <source>Archer mit Tempo 3×6</source>
@@ -1638,7 +1638,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.54.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:931</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:937</note>
       </notes>
       <segment>
         <source>Diamant 3×13</source>
@@ -1646,7 +1646,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.57.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:941</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:947</note>
       </notes>
       <segment>
         <source>Partielle Einarmige 3×5 — Phase 3 abschließen</source>
@@ -1654,7 +1654,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.59.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:949</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:955</note>
       </notes>
       <segment>
         <source>Tempo-Archer 3×7</source>
@@ -1662,7 +1662,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.61.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:957</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:963</note>
       </notes>
       <segment>
         <source>Diamant 3×13</source>
@@ -1670,7 +1670,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.64.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:968</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:974</note>
       </notes>
       <segment>
         <source>Volle Einarmige (weiter Stand) 3×3</source>
@@ -1678,7 +1678,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.66.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:976</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:982</note>
       </notes>
       <segment>
         <source>Einarmige (etwas engerer Stand) 3×4</source>
@@ -1686,7 +1686,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.68.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:984</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:990</note>
       </notes>
       <segment>
         <source>Standard 3×25</source>
@@ -1694,7 +1694,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.71.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:994</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1000</note>
       </notes>
       <segment>
         <source>Volle Einarmige 3×3</source>
@@ -1702,7 +1702,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.73.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1002</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1008</note>
       </notes>
       <segment>
         <source>Einarmige enger Stand 3×5</source>
@@ -1710,7 +1710,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.75.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1010</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1016</note>
       </notes>
       <segment>
         <source>Standard 3×25</source>
@@ -1718,7 +1718,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.78.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1020</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1026</note>
       </notes>
       <segment>
         <source>Letzte schwere Einheit 3×3</source>
@@ -1726,7 +1726,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.80.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1028</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1034</note>
       </notes>
       <segment>
         <source>Technik-Taper 2×4 saubere Wiederholungen</source>
@@ -1734,7 +1734,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.82.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1036</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1042</note>
       </notes>
       <segment>
         <source>Mobility + 2×3 leichte Wiederholungen</source>
@@ -1742,7 +1742,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.83.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1043</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1049</note>
       </notes>
       <segment>
         <source>Ruhetag — bereit für Endtest</source>
@@ -1750,7 +1750,7 @@
     </unit>
     <unit id="plan.one-arm-12w.day.84.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1050</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1056</note>
       </notes>
       <segment>
         <source>Endtest: maximale saubere einarmige Liegestütze pro Seite</source>
@@ -1758,7 +1758,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1068</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1074</note>
       </notes>
       <segment>
         <source>Push 3×10 saubere Liegestütze · Pull 3×8 invertierte Ruderzüge, 90 s Pause</source>
@@ -1766,7 +1766,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1076</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1082</note>
       </notes>
       <segment>
         <source>Pull-Tag: 4×8 Australian Rows · Push 2×12 Knie-Liegestütze als Aktivierung</source>
@@ -1774,7 +1774,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1087</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1093</note>
       </notes>
       <segment>
         <source>Push 3×11 · Pull 3×6 Klimmzug-Negative (5 s Exzentrik)</source>
@@ -1782,7 +1782,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1100</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1106</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×10 · 3×12 Face Pulls</source>
@@ -1790,7 +1790,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1108</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1114</note>
       </notes>
       <segment>
         <source>Push 3×12 · Pull 3×8 invertierte Ruderzüge · Plank 3×30 s</source>
@@ -1798,7 +1798,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1124</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1130</note>
       </notes>
       <segment>
         <source>Push 3×AMRAP (Ziel 13-12-11) · Pull 3×9 Rudern</source>
@@ -1806,7 +1806,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1132</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1138</note>
       </notes>
       <segment>
         <source>Pull-Tag: 4×9 Australian Rows · Push 3×9 saubere LS</source>
@@ -1814,7 +1814,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1146</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1152</note>
       </notes>
       <segment>
         <source>Push 3×AMRAP (Ziel 14-13-12) · Pull 3×7 Klimmzug-Negative</source>
@@ -1822,7 +1822,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1159</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1165</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×11 · 3×12 Face Pulls · Schulter-Mobility</source>
@@ -1830,7 +1830,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1167</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1173</note>
       </notes>
       <segment>
         <source>Push 3×AMRAP · Pull 3×10 invertierte Ruderzüge · Plank 3×40 s</source>
@@ -1838,7 +1838,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1183</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1189</note>
       </notes>
       <segment>
         <source>Push 4 Sätze · Pull 4×6 Klimmzüge (oder Negative)</source>
@@ -1846,7 +1846,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.16.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1191</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1197</note>
       </notes>
       <segment>
         <source>Pull-Tag: 5×8 Australian Rows · Push 3×10 saubere LS</source>
@@ -1854,7 +1854,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1205</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1211</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×7 Klimmzüge · Plank 3×45 s</source>
@@ -1862,7 +1862,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1219</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1225</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×12 · 3×15 Face Pulls</source>
@@ -1870,7 +1870,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.20.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1227</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1233</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×8 Klimmzüge · Hollow Hold 3×20 s</source>
@@ -1878,7 +1878,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1243</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1249</note>
       </notes>
       <segment>
         <source>Push 4 Sätze, 60 s Pause · Pull 4×8 Klimmzüge</source>
@@ -1886,7 +1886,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.23.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1251</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1257</note>
       </notes>
       <segment>
         <source>Pull-Tag: 5×9 Australian Rows · Push 3×11 LS</source>
@@ -1894,7 +1894,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1265</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1271</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×9 Klimmzüge · Plank 3×50 s</source>
@@ -1902,7 +1902,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1279</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1285</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×13 · Brust- und Rücken-Mobility</source>
@@ -1910,7 +1910,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.27.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1286</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1292</note>
       </notes>
       <segment>
         <source>Push 4×AMRAP · Pull 4×10 Klimmzüge · Hollow Hold 3×30 s</source>
@@ -1918,7 +1918,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1302</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1308</note>
       </notes>
       <segment>
         <source>Push 5 Sätze · Pull 5×7 Klimmzüge, 90 s Pause</source>
@@ -1926,7 +1926,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.30.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1315</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1321</note>
       </notes>
       <segment>
         <source>Pull-Tag: 5×10 Australian Rows · Push 3×12 LS</source>
@@ -1934,7 +1934,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.32.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1329</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1335</note>
       </notes>
       <segment>
         <source>Push 5 Sätze · Pull 5×8 Klimmzüge · Plank 3×60 s</source>
@@ -1942,7 +1942,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.33.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1343</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1349</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×14 · 4×12 Face Pulls</source>
@@ -1950,7 +1950,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.34.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1351</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1357</note>
       </notes>
       <segment>
         <source>Push 5 Sätze · Pull 5×9 Klimmzüge · Hollow Hold 3×40 s</source>
@@ -1958,7 +1958,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1367</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1373</note>
       </notes>
       <segment>
         <source>Push 5 Sätze schwer · Pull 5×10 Klimmzüge</source>
@@ -1966,7 +1966,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.37.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1380</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1386</note>
       </notes>
       <segment>
         <source>Pull-Schwerpunkt: 5×AMRAP Klimmzüge · Push 4×10 LS</source>
@@ -1974,7 +1974,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.39.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1391</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1397</note>
       </notes>
       <segment>
         <source>Taper-Tag: 4×15 saubere LS · 3×6 Klimmzüge</source>
@@ -1982,7 +1982,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.40.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1399</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1405</note>
       </notes>
       <segment>
         <source>Leichter Tag 2×10 · Mobility</source>
@@ -1990,7 +1990,7 @@
     </unit>
     <unit id="plan.push-pull-6w.day.42.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1407</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1413</note>
       </notes>
       <segment>
         <source>Endtest: maximale Liegestütze + maximale Klimmzüge in einem Satz</source>
@@ -1998,7 +1998,7 @@
     </unit>
     <unit id="plan.full-body-6w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1424</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1430</note>
       </notes>
       <segment>
         <source>Baseline-Test: maximale Liegestütze · 1 min Wall-Sit · 1 min Plank</source>
@@ -2006,191 +2006,191 @@
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1432</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1438</note>
       </notes>
       <segment>
-        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1448</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1454</note>
       </notes>
       <segment>
-        <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+        <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1463</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1469</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1471</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1477</note>
       </notes>
       <segment>
-        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1488</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1494</note>
       </notes>
       <segment>
-        <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1504</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1510</note>
       </notes>
       <segment>
-        <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
+        <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1519</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1525</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
+        <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1527</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1533</note>
       </notes>
       <segment>
-        <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
+        <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1545</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1551</note>
       </notes>
       <segment>
-        <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+        <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1561</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1567</note>
       </notes>
       <segment>
-        <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
+        <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1576</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1582</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
+        <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1584</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1590</note>
       </notes>
       <segment>
-        <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
+        <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1602</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1608</note>
       </notes>
       <segment>
-        <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
+        <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1618</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1624</note>
       </notes>
       <segment>
-        <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
+        <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1633</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1639</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
+        <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1641</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1647</note>
       </notes>
       <segment>
-        <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
+        <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1659</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1665</note>
       </notes>
       <segment>
-        <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+        <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1675</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1681</note>
       </notes>
       <segment>
-        <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
+        <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1690</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1696</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1698</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1704</note>
       </notes>
       <segment>
-        <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
+        <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1716</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1722</note>
       </notes>
       <segment>
-        <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
+        <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1732</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1738</note>
       </notes>
       <segment>
-        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1747</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1753</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×12 LS · Mobility</source>
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.42.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1756</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1762</note>
       </notes>
       <segment>
         <source>Funktionstest: maximale LS · 50 Kniebeugen auf Zeit · 1 min Plank-Halt</source>
@@ -2198,7 +2198,7 @@
     </unit>
     <unit id="plan.core-4w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1773</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1779</note>
       </notes>
       <segment>
         <source>Baseline: maximale Plank-Zeit · 10 saubere LS · maximale Hollow-Hold-Zeit</source>
@@ -2206,151 +2206,151 @@
     </unit>
     <unit id="plan.core-4w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1781</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1787</note>
       </notes>
       <segment>
-        <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
+        <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1796</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1802</note>
       </notes>
       <segment>
-        <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
+        <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1812</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1818</note>
       </notes>
       <segment>
-        <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
+        <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1827</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1833</note>
       </notes>
       <segment>
-        <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
+        <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1843</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1849</note>
       </notes>
       <segment>
-        <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
+        <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1858</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1864</note>
       </notes>
       <segment>
-        <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
+        <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1874</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1880</note>
       </notes>
       <segment>
-        <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
+        <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1888</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1894</note>
       </notes>
       <segment>
-        <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
+        <source>Leichter Tag — Mobility · lockere Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1896</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1902</note>
       </notes>
       <segment>
-        <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
+        <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1913</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1919</note>
       </notes>
       <segment>
-        <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
+        <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1928</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1934</note>
       </notes>
       <segment>
-        <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
+        <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1944</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1950</note>
       </notes>
       <segment>
-        <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
+        <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1959</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1965</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
+        <source>Leichter Tag — lockere Liegestütze · Stretching</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1967</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1973</note>
       </notes>
       <segment>
-        <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
+        <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1984</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1990</note>
       </notes>
       <segment>
-        <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
+        <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:1999</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2005</note>
       </notes>
       <segment>
-        <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
+        <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2015</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2021</note>
       </notes>
       <segment>
-        <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
+        <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2030</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2036</note>
       </notes>
       <segment>
-        <source>Leichter Tag — 2×9 LS · Mobility</source>
+        <source>Leichter Tag — lockere Liegestütze · Mobility</source>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.28.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2038</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2044</note>
       </notes>
       <segment>
         <source>Endtest: 1 min Plank-Halt · maximale LS · 1 min Hollow Hold</source>
@@ -2358,7 +2358,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2055</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2061</note>
       </notes>
       <segment>
         <source>HIIT 4 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
@@ -2366,7 +2366,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2072</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2078</note>
       </notes>
       <segment>
         <source>HIIT 5 Runden 30/30 s — LS · Burpees · Hampelmänner · Plank</source>
@@ -2374,7 +2374,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2088</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2094</note>
       </notes>
       <segment>
         <source>Aktive Erholung — 15 min Gehen · 2×10 LS · Mobility</source>
@@ -2382,7 +2382,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2095</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2101</note>
       </notes>
       <segment>
         <source>Tabata 8 Runden 20/10 s — LS · Burpees · Mountain Climbers · Jump Squats</source>
@@ -2390,7 +2390,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2114</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2120</note>
       </notes>
       <segment>
         <source>HIIT 5 Runden 40/20 s — LS · Burpees · Mountain Climbers · Squats · Plank</source>
@@ -2398,7 +2398,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2132</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2138</note>
       </notes>
       <segment>
         <source>HIIT-Ladder 8-7-6-5-4-3-2-1 — LS · Burpees (jede Runde 1 Wiederholung weniger)</source>
@@ -2406,7 +2406,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2146</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2152</note>
       </notes>
       <segment>
         <source>Aktive Erholung — 20 min lockeres Cardio · 2×11 LS</source>
@@ -2414,7 +2414,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2153</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2159</note>
       </notes>
       <segment>
         <source>HIIT 6 Runden 30/15 s — LS · Burpees · Mountain Climbers · Jumping Jacks</source>
@@ -2422,7 +2422,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.15.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2172</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2178</note>
       </notes>
       <segment>
         <source>HIIT 4 Runden 45/15 s — 11 LS · 8 Burpees · 12 Kniebeugen · 30 s Mountain Climbers</source>
@@ -2430,7 +2430,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.17.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2189</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2195</note>
       </notes>
       <segment>
         <source>HIIT 6 Runden 40/20 s — LS · Burpees · MC · Hampelmänner · Squats · Plank</source>
@@ -2438,7 +2438,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.18.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2207</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2213</note>
       </notes>
       <segment>
         <source>Aktive Erholung — Yoga 20 min · 2×12 LS</source>
@@ -2446,7 +2446,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.19.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2215</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2221</note>
       </notes>
       <segment>
         <source>Tabata 8 Runden 20/10 s — abwechselnd LS · Burpees · Squats · MC</source>
@@ -2454,7 +2454,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.22.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2234</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2240</note>
       </notes>
       <segment>
         <source>HIIT-Finale 10 Runden 30/15 s — LS · Burpees · MC · Hampelmänner</source>
@@ -2462,7 +2462,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.24.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2251</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2257</note>
       </notes>
       <segment>
         <source>EMOM 12 min — pro Minute 5 LS · 5 Burpees · 10 Hampelmänner</source>
@@ -2470,7 +2470,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.25.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2266</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2272</note>
       </notes>
       <segment>
         <source>Aktive Erholung — Mobility · 2×13 LS</source>
@@ -2478,7 +2478,7 @@
     </unit>
     <unit id="plan.hiit-4w.day.28.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2275</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2281</note>
       </notes>
       <segment>
         <source>Konditionstest: 100 LS + 50 Burpees auf Zeit (Bestzeit notieren)</source>
@@ -2486,7 +2486,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.1.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2290</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2296</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen 10 min · 1×10 saubere LS · 10 min Stretching</source>
@@ -2494,7 +2494,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.2.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2298</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2304</note>
       </notes>
       <segment>
         <source>Yoga-Flow 20 min · 1×10 LS · Brust-Stretching</source>
@@ -2502,7 +2502,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.3.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2306</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2312</note>
       </notes>
       <segment>
         <source>Cat-Cow 3×10 · Hip Opener 2 min · 2×6 LS · 5 min Foam Rolling</source>
@@ -2510,7 +2510,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.4.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2321</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2327</note>
       </notes>
       <segment>
         <source>Ruhetag — Foam Rolling 15 min</source>
@@ -2518,7 +2518,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.5.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2328</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2334</note>
       </notes>
       <segment>
         <source>Brust-Stretching 5 min · 2×6 LS · 10 min Spaziergang</source>
@@ -2526,7 +2526,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.6.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2336</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2342</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen 10 min · 2×7 LS · Schulter-Mobility 5 min</source>
@@ -2534,7 +2534,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.8.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2345</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2351</note>
       </notes>
       <segment>
         <source>Schulter-Mobility 10 min · 2×7 LS · 10 min Stretching</source>
@@ -2542,7 +2542,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.9.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2353</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2359</note>
       </notes>
       <segment>
         <source>Yoga 20 min · 2×8 LS</source>
@@ -2550,7 +2550,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.10.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2361</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2367</note>
       </notes>
       <segment>
         <source>Foam Rolling 10 min · 2×8 LS · Hip Opener 5 min</source>
@@ -2558,7 +2558,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.11.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2369</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2375</note>
       </notes>
       <segment>
         <source>Ruhetag — Stretching nach Bedarf</source>
@@ -2566,7 +2566,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.12.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2376</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2382</note>
       </notes>
       <segment>
         <source>Dynamisches Aufwärmen · 2×9 LS · 10 min Mobility</source>
@@ -2574,7 +2574,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.13.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2384</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2390</note>
       </notes>
       <segment>
         <source>2×10 LS · 15 min Yoga</source>
@@ -2582,7 +2582,7 @@
     </unit>
     <unit id="plan.mobility-2w.day.14.desc">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2392</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2398</note>
       </notes>
       <segment>
         <source>Form-Check: 2×10 saubere LS · vollständige Mobility-Session 20 min</source>
@@ -2590,7 +2590,7 @@
     </unit>
     <unit id="plan.recruit-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2401</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2407</note>
       </notes>
       <segment>
         <source>Von 0 auf 100 — 6-Wochen-Aufbau</source>
@@ -2598,7 +2598,7 @@
     </unit>
     <unit id="plan.recruit-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2402</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2408</note>
       </notes>
       <segment>
         <source>Strukturierter Plan für Einsteiger: drei Trainingstage pro Woche, progressive Belastungssteigerung und ein Endtest in Woche 6.</source>
@@ -2606,7 +2606,7 @@
     </unit>
     <unit id="plan.recruit-6w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2412</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2418</note>
       </notes>
       <segment>
         <source>liegestuetze-steigern</source>
@@ -2614,7 +2614,7 @@
     </unit>
     <unit id="plan.challenge-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2418</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2424</note>
       </notes>
       <segment>
         <source>30-Tage-Challenge</source>
@@ -2622,7 +2622,7 @@
     </unit>
     <unit id="plan.challenge-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2419</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2425</note>
       </notes>
       <segment>
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Liegestütze sind der Kern, dazu kommen Core-, Bein- und Zugübungen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
@@ -2630,7 +2630,7 @@
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2429</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2435</note>
       </notes>
       <segment>
         <source>30-tage-liegestuetze-challenge</source>
@@ -2638,7 +2638,7 @@
     </unit>
     <unit id="plan.over-40-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2437</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2443</note>
       </notes>
       <segment>
         <source>Liegestütze ab 40 — 4-Wochen-Plan</source>
@@ -2646,7 +2646,7 @@
     </unit>
     <unit id="plan.over-40-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2438</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2444</note>
       </notes>
       <segment>
         <source>Schonender 4-Wochen-Plan für Einsteiger ab 40: Fokus auf saubere Technik, ausreichend Pause und langsames Tempo.</source>
@@ -2654,7 +2654,7 @@
     </unit>
     <unit id="plan.over-40-4w.blogSlug">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2448</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2454</note>
       </notes>
       <segment>
         <source>liegestuetze-ab-40</source>
@@ -2662,7 +2662,7 @@
     </unit>
     <unit id="plan.daily-100-30d.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2456</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2462</note>
       </notes>
       <segment>
         <source>Daily 100 — 30 Tage zur 100er-Marke</source>
@@ -2670,7 +2670,7 @@
     </unit>
     <unit id="plan.daily-100-30d.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2457</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2463</note>
       </notes>
       <segment>
         <source>30-Tage-Volumenplan: ramp-up von 50 auf 100 saubere Wiederholungen pro Einheit, danach zwei Wochen Konsolidierung. 5 Trainingstage + 1 leichter + 1 Ruhetag pro Woche.</source>
@@ -2678,7 +2678,7 @@
     </unit>
     <unit id="plan.one-arm-12w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2475</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2481</note>
       </notes>
       <segment>
         <source>Einarmige Liegestütze — 12-Wochen-Aufbau</source>
@@ -2686,7 +2686,7 @@
     </unit>
     <unit id="plan.one-arm-12w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2476</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2482</note>
       </notes>
       <segment>
         <source>Vier-Phasen-Plan in Richtung saubere einarmige Liegestütze: Archer und Wand-Negativen, Bank-Negativen, partielle Einarmige, schließlich volle Einarmige im weiten Stand. 4 aktive Tage + 3 Ruhetage pro Woche.</source>
@@ -2694,7 +2694,7 @@
     </unit>
     <unit id="plan.push-pull-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2491</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2497</note>
       </notes>
       <segment>
         <source>Push &amp; Pull Balance — 6-Wochen-Plan</source>
@@ -2702,7 +2702,7 @@
     </unit>
     <unit id="plan.push-pull-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2492</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2498</note>
       </notes>
       <segment>
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
@@ -2710,7 +2710,7 @@
     </unit>
     <unit id="plan.full-body-6w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2507</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2513</note>
       </notes>
       <segment>
         <source>Full Body Strong — 6-Wochen-Ganzkörperplan</source>
@@ -2718,7 +2718,7 @@
     </unit>
     <unit id="plan.full-body-6w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2508</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2514</note>
       </notes>
       <segment>
         <source>Sechs Wochen Ganzkörper-Zirkel: Liegestütze, Kniebeugen, Ausfallschritte, Glute Bridges und Plank in 3-, 4- und 5-Runden-Zirkeln. Drei Trainingstage pro Woche, klar steigende Volumen, funktioneller Endtest in Woche 6.</source>
@@ -2726,7 +2726,7 @@
     </unit>
     <unit id="plan.core-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2525</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2531</note>
       </notes>
       <segment>
         <source>Core Foundations — 4-Wochen-Rumpfplan</source>
@@ -2734,7 +2734,7 @@
     </unit>
     <unit id="plan.core-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2526</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2532</note>
       </notes>
       <segment>
         <source>Vier Wochen Rumpfstabilität: Plank, Hollow Hold, Dead Bug, Beinheben und Rotation. Pro Trainingstag eine moderate Liegestütze-Aktivierung. Vier Trainingstage und ein leichter Tag pro Woche, Endtest mit Plank-Halt und Hollow Hold.</source>
@@ -2742,7 +2742,7 @@
     </unit>
     <unit id="plan.hiit-4w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2544</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2550</note>
       </notes>
       <segment>
         <source>HIIT Burner — 4-Wochen-Konditionsplan</source>
@@ -2750,7 +2750,7 @@
     </unit>
     <unit id="plan.hiit-4w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2545</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2551</note>
       </notes>
       <segment>
         <source>Vier Wochen hochintensives Intervalltraining mit Liegestützen, Burpees, Mountain Climbers, Hampelmännern und Kniebeugen. Tabata, Pyramide und EMOM-Strukturen. Eignet sich als Konditions-Booster zwischen klassischen Liegestütze-Plänen.</source>
@@ -2758,7 +2758,7 @@
     </unit>
     <unit id="plan.mobility-2w.title">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2560</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2566</note>
       </notes>
       <segment>
         <source>Mobility &amp; Recovery — 2-Wochen-Deload</source>
@@ -2766,7 +2766,7 @@
     </unit>
     <unit id="plan.mobility-2w.summary">
       <notes>
-        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2561</note>
+        <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:2567</note>
       </notes>
       <segment>
         <source>Zwei Wochen aktive Erholung: tägliche Mobility-, Yoga- und Stretching-Einheiten mit leichtem Liegestütze-Volumen. Ideal als Deload zwischen zwei harten Plänen oder zum Wiedereinstieg nach einer Trainingspause.</source>

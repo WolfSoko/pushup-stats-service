@@ -217,7 +217,7 @@ const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.challenge-30d.day.3.desc:Leichter Tag — 2×50 % vom Maximum · 10 min Mobility`,
+    $localize`:@@plan.challenge-30d.day.3.desc:Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss`,
     { exercises: [x(LS, 20, [10, 10]), x(STRETCH, 600)] }
   ),
   d(
@@ -331,7 +331,7 @@ const CHALLENGE_30_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     110,
     [24, 22, 22, 22, 20],
-    $localize`:@@plan.challenge-30d.day.19.desc:5 Sätze Zielwiederholungen · 3×20 Ausfallschritte`,
+    $localize`:@@plan.challenge-30d.day.19.desc:5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss`,
     {
       exercises: [
         x(LS, 110, [24, 22, 22, 22, 20]),
@@ -421,7 +421,7 @@ const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     24,
     [8, 8, 8],
-    $localize`:@@plan.over-40-4w.day.2.desc:3×8 Knie- oder erhöhte Liegestütze`
+    $localize`:@@plan.over-40-4w.day.2.desc:Drei Sätze Knie- oder erhöhte Liegestütze`
   ),
   d(3, 'rest', 0, undefined, REST_DAY),
   d(
@@ -429,7 +429,7 @@ const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     27,
     [9, 9, 9],
-    $localize`:@@plan.over-40-4w.day.4.desc:3×9 saubere Liegestütze`
+    $localize`:@@plan.over-40-4w.day.4.desc:Drei Sätze, saubere Technik`
   ),
   d(
     5,
@@ -443,18 +443,24 @@ const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.over-40-4w.day.6.desc:3×10 saubere Liegestütze`
+    $localize`:@@plan.over-40-4w.day.6.desc:Drei Sätze, volle Bewegungsamplitude`
   ),
   d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — slight volume increase.
-  d(8, 'main', 33, [11, 11, 11], $localize`:@@plan.over-40-4w.day.8.desc:3×11`),
+  d(
+    8,
+    'main',
+    33,
+    [11, 11, 11],
+    $localize`:@@plan.over-40-4w.day.8.desc:Drei Sätze, gleiche Technik wie in Woche 1`
+  ),
   d(9, 'rest', 0, undefined, REST_DAY),
   d(
     10,
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.over-40-4w.day.10.desc:3×12`
+    $localize`:@@plan.over-40-4w.day.10.desc:Drei Sätze, etwas mehr Volumen`
   ),
   d(11, 'rest', 0, undefined, REST_DAY),
   d(
@@ -462,7 +468,7 @@ const OVER_40_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     39,
     [13, 13, 13],
-    $localize`:@@plan.over-40-4w.day.12.desc:3×13`
+    $localize`:@@plan.over-40-4w.day.12.desc:Drei Sätze — letzte Steigerung dieser Woche`
   ),
   d(13, 'light', 16, [8, 8], LIGHT_DAY),
   d(14, 'rest', 0, undefined, REST_DAY),
@@ -519,35 +525,35 @@ const DAILY_100_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     50,
     [10, 10, 10, 10, 10],
-    $localize`:@@plan.daily-100-30d.day.2.desc:5×10 saubere Wiederholungen, 60 s Pause`
+    $localize`:@@plan.daily-100-30d.day.2.desc:Fünf Sätze, saubere Wiederholungen, 60 s Pause`
   ),
   d(
     3,
     'main',
     60,
     [12, 12, 12, 12, 12],
-    $localize`:@@plan.daily-100-30d.day.3.desc:5×12, 60 s Pause`
+    $localize`:@@plan.daily-100-30d.day.3.desc:Fünf Sätze, 60 s Pause`
   ),
   d(
     4,
     'main',
     60,
     [12, 12, 12, 12, 12],
-    $localize`:@@plan.daily-100-30d.day.4.desc:5×12, 60 s Pause`
+    $localize`:@@plan.daily-100-30d.day.4.desc:Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern`
   ),
   d(
     5,
     'main',
     70,
     [14, 14, 14, 14, 14],
-    $localize`:@@plan.daily-100-30d.day.5.desc:5×14, 60 s Pause`
+    $localize`:@@plan.daily-100-30d.day.5.desc:Fünf Sätze, 60 s Pause — Volumen steigt`
   ),
   d(
     6,
     'light',
     30,
     [15, 15],
-    $localize`:@@plan.daily-100-30d.day.6.desc:Leichter Tag — 2×15 in lockerem Tempo`
+    $localize`:@@plan.daily-100-30d.day.6.desc:Leichter Tag — zwei Sätze in lockerem Tempo`
   ),
   d(7, 'rest', 0, undefined, REST_DAY),
   // Week 2 — push to 100 reps daily.
@@ -556,35 +562,35 @@ const DAILY_100_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     80,
     [16, 16, 16, 16, 16],
-    $localize`:@@plan.daily-100-30d.day.8.desc:5×16`
+    $localize`:@@plan.daily-100-30d.day.8.desc:Fünf Sätze, gleichbleibendes Tempo`
   ),
   d(
     9,
     'main',
     80,
     [16, 16, 16, 16, 16],
-    $localize`:@@plan.daily-100-30d.day.9.desc:5×16`
+    $localize`:@@plan.daily-100-30d.day.9.desc:Fünf Sätze — Technik vor Tempo`
   ),
   d(
     10,
     'main',
     90,
     [18, 18, 18, 18, 18],
-    $localize`:@@plan.daily-100-30d.day.10.desc:5×18`
+    $localize`:@@plan.daily-100-30d.day.10.desc:Fünf Sätze, Volumen steigt`
   ),
   d(
     11,
     'main',
     90,
     [18, 18, 18, 18, 18],
-    $localize`:@@plan.daily-100-30d.day.11.desc:5×18`
+    $localize`:@@plan.daily-100-30d.day.11.desc:Fünf Sätze, gleiches Volumen`
   ),
   d(
     12,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    $localize`:@@plan.daily-100-30d.day.12.desc:Erstes Hundert: 5×20`
+    $localize`:@@plan.daily-100-30d.day.12.desc:Erstes Hundert — fünf Sätze`
   ),
   d(13, 'light', 40, [20, 20], LIGHT_DAY),
   d(14, 'rest', 0, undefined, REST_DAY),
@@ -594,35 +600,35 @@ const DAILY_100_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     100,
     [25, 25, 25, 25],
-    $localize`:@@plan.daily-100-30d.day.15.desc:4×25 (weniger Sätze, mehr Wiederholungen)`
+    $localize`:@@plan.daily-100-30d.day.15.desc:Weniger Sätze, dafür mehr Wiederholungen je Satz`
   ),
   d(
     16,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    $localize`:@@plan.daily-100-30d.day.16.desc:5×20`
+    $localize`:@@plan.daily-100-30d.day.16.desc:Fünf Sätze wie gehabt`
   ),
   d(
     17,
     'main',
     100,
     [25, 25, 25, 25],
-    $localize`:@@plan.daily-100-30d.day.17.desc:4×25`
+    $localize`:@@plan.daily-100-30d.day.17.desc:Vier längere Sätze`
   ),
   d(
     18,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    $localize`:@@plan.daily-100-30d.day.18.desc:5×20`
+    $localize`:@@plan.daily-100-30d.day.18.desc:Fünf Sätze`
   ),
   d(
     19,
     'main',
     100,
     [25, 25, 25, 25],
-    $localize`:@@plan.daily-100-30d.day.19.desc:4×25 — Tempo bewusst verlangsamen`
+    $localize`:@@plan.daily-100-30d.day.19.desc:Vier Sätze — Tempo bewusst verlangsamen`
   ),
   d(20, 'light', 40, [20, 20], LIGHT_DAY),
   d(21, 'rest', 0, undefined, REST_DAY),
@@ -632,35 +638,35 @@ const DAILY_100_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     100,
     [20, 20, 20, 20, 20],
-    $localize`:@@plan.daily-100-30d.day.22.desc:5×20`
+    $localize`:@@plan.daily-100-30d.day.22.desc:Fünf Sätze, letzte volle Woche`
   ),
   d(
     23,
     'main',
     100,
     [25, 25, 25, 25],
-    $localize`:@@plan.daily-100-30d.day.23.desc:4×25`
+    $localize`:@@plan.daily-100-30d.day.23.desc:Vier längere Sätze`
   ),
   d(
     24,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    $localize`:@@plan.daily-100-30d.day.24.desc:5×20`
+    $localize`:@@plan.daily-100-30d.day.24.desc:Fünf Sätze, unverändertes Volumen`
   ),
   d(
     25,
     'main',
     100,
     [25, 25, 25, 25],
-    $localize`:@@plan.daily-100-30d.day.25.desc:4×25`
+    $localize`:@@plan.daily-100-30d.day.25.desc:Vier Sätze, ruhiges Tempo`
   ),
   d(
     26,
     'main',
     100,
     [20, 20, 20, 20, 20],
-    $localize`:@@plan.daily-100-30d.day.26.desc:Letzter 100er-Tag vor dem Test`
+    $localize`:@@plan.daily-100-30d.day.26.desc:Letzter großer Tag vor dem Test`
   ),
   d(
     27,
@@ -1429,7 +1435,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.2.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank`,
+    $localize`:@@plan.full-body-6w.day.2.desc:Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank`,
     {
       exercises: [
         x(LS, 30, [10, 10, 10]),
@@ -1445,7 +1451,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.4.desc:Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank`,
+    $localize`:@@plan.full-body-6w.day.4.desc:Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 30, [10, 10, 10]),
@@ -1460,7 +1466,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     20,
     [10, 10],
-    $localize`:@@plan.full-body-6w.day.5.desc:Leichter Tag — 2×10 LS · Mobility 10 min`,
+    $localize`:@@plan.full-body-6w.day.5.desc:Leichter Tag — zwei Sätze Liegestütze · Mobility`,
     { exercises: [x(LS, 20, [10, 10]), x(STRETCH, 600)] }
   ),
   d(
@@ -1468,7 +1474,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.6.desc:Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold`,
+    $localize`:@@plan.full-body-6w.day.6.desc:Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold`,
     {
       exercises: [
         x(LS, 30, [10, 10, 10]),
@@ -1485,7 +1491,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.8.desc:Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank`,
+    $localize`:@@plan.full-body-6w.day.8.desc:Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank`,
     {
       exercises: [
         x(LS, 36, [12, 12, 12]),
@@ -1501,7 +1507,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.10.desc:Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank`,
+    $localize`:@@plan.full-body-6w.day.10.desc:Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 36, [12, 12, 12]),
@@ -1516,7 +1522,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     22,
     [11, 11],
-    $localize`:@@plan.full-body-6w.day.11.desc:Leichter Tag — 2×11 LS · Hip Opener 10 min`,
+    $localize`:@@plan.full-body-6w.day.11.desc:Leichter Tag — zwei Sätze Liegestütze · Hip Opener`,
     { exercises: [x(LS, 22, [11, 11]), x(HIPOPENER, 600)] }
   ),
   d(
@@ -1524,7 +1530,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.12.desc:Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank`,
+    $localize`:@@plan.full-body-6w.day.12.desc:Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank`,
     {
       exercises: [
         x(LS, 36, [12, 12, 12]),
@@ -1542,7 +1548,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     40,
     [10, 10, 10, 10],
-    $localize`:@@plan.full-body-6w.day.15.desc:Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank`,
+    $localize`:@@plan.full-body-6w.day.15.desc:Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 40, [10, 10, 10, 10]),
@@ -1558,7 +1564,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     44,
     [11, 11, 11, 11],
-    $localize`:@@plan.full-body-6w.day.17.desc:Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank`,
+    $localize`:@@plan.full-body-6w.day.17.desc:Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 44, [11, 11, 11, 11]),
@@ -1573,7 +1579,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     24,
     [12, 12],
-    $localize`:@@plan.full-body-6w.day.18.desc:Leichter Tag — 2×12 LS · Yoga 20 min`,
+    $localize`:@@plan.full-body-6w.day.18.desc:Leichter Tag — zwei Sätze Liegestütze · Yoga`,
     { exercises: [x(LS, 24, [12, 12]), x(YOGA, 1200)] }
   ),
   d(
@@ -1581,7 +1587,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     48,
     [12, 12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.19.desc:Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank`,
+    $localize`:@@plan.full-body-6w.day.19.desc:Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 48, [12, 12, 12, 12]),
@@ -1599,7 +1605,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     52,
     [13, 13, 13, 13],
-    $localize`:@@plan.full-body-6w.day.22.desc:Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank`,
+    $localize`:@@plan.full-body-6w.day.22.desc:Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 52, [13, 13, 13, 13]),
@@ -1615,7 +1621,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     56,
     [14, 14, 14, 14],
-    $localize`:@@plan.full-body-6w.day.24.desc:Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank`,
+    $localize`:@@plan.full-body-6w.day.24.desc:Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank`,
     {
       exercises: [
         x(LS, 56, [14, 14, 14, 14]),
@@ -1630,7 +1636,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     26,
     [13, 13],
-    $localize`:@@plan.full-body-6w.day.25.desc:Leichter Tag — 2×13 LS · Foam Rolling 15 min`,
+    $localize`:@@plan.full-body-6w.day.25.desc:Leichter Tag — zwei Sätze Liegestütze · Foam Rolling`,
     { exercises: [x(LS, 26, [13, 13]), x(FOAM, 900)] }
   ),
   d(
@@ -1638,7 +1644,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.26.desc:Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank`,
+    $localize`:@@plan.full-body-6w.day.26.desc:Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 60, [15, 15, 15, 15]),
@@ -1656,7 +1662,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [12, 12, 12, 12, 12],
-    $localize`:@@plan.full-body-6w.day.29.desc:Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`,
+    $localize`:@@plan.full-body-6w.day.29.desc:Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 60, [12, 12, 12, 12, 12]),
@@ -1672,7 +1678,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     65,
     [13, 13, 13, 13, 13],
-    $localize`:@@plan.full-body-6w.day.31.desc:Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank`,
+    $localize`:@@plan.full-body-6w.day.31.desc:Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 65, [13, 13, 13, 13, 13]),
@@ -1687,7 +1693,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     28,
     [14, 14],
-    $localize`:@@plan.full-body-6w.day.32.desc:Leichter Tag — 2×14 LS · Mobility 15 min`,
+    $localize`:@@plan.full-body-6w.day.32.desc:Leichter Tag — zwei Sätze Liegestütze · Mobility`,
     { exercises: [x(LS, 28, [14, 14]), x(STRETCH, 900)] }
   ),
   d(
@@ -1695,7 +1701,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     70,
     [14, 14, 14, 14, 14],
-    $localize`:@@plan.full-body-6w.day.33.desc:Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank`,
+    $localize`:@@plan.full-body-6w.day.33.desc:Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank`,
     {
       exercises: [
         x(LS, 70, [14, 14, 14, 14, 14]),
@@ -1713,7 +1719,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     75,
     [15, 15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.36.desc:Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank`,
+    $localize`:@@plan.full-body-6w.day.36.desc:Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 75, [15, 15, 15, 15, 15]),
@@ -1729,7 +1735,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     60,
     [15, 15, 15, 15],
-    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank`,
+    $localize`:@@plan.full-body-6w.day.38.desc:Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank`,
     {
       exercises: [
         x(LS, 60, [15, 15, 15, 15]),
@@ -1744,7 +1750,7 @@ const FULL_BODY_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     24,
     [12, 12],
-    $localize`:@@plan.full-body-6w.day.39.desc:Leichter Tag — 2×12 LS · Mobility`
+    $localize`:@@plan.full-body-6w.day.39.desc:Leichter Tag — zwei Sätze Liegestütze · Mobility`
   ),
   d(40, 'rest', 0, undefined, REST_DAY_MOBILITY),
   d(41, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
@@ -1778,7 +1784,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     20,
     [10, 10],
-    $localize`:@@plan.core-4w.day.2.desc:Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10`,
+    $localize`:@@plan.core-4w.day.2.desc:Plank · Hollow Hold · Dead Bug je Seite · Liegestütze`,
     {
       exercises: [
         x(PLANK, 90, [30, 30, 30]),
@@ -1793,7 +1799,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.core-4w.day.3.desc:Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12`,
+    $localize`:@@plan.core-4w.day.3.desc:Beinheben · Russian Twist · Plank · Liegestütze`,
     {
       exercises: [
         x(LEGRAISE, 30, [10, 10, 10], 'lying'),
@@ -1809,7 +1815,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     20,
     [10, 10],
-    $localize`:@@plan.core-4w.day.5.desc:Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10`,
+    $localize`:@@plan.core-4w.day.5.desc:Mountain Climbers · Dead Bug · Plank · Liegestütze`,
     {
       exercises: [
         x(CLIMBERS, 90, [30, 30, 30]),
@@ -1824,7 +1830,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     14,
     [7, 7],
-    $localize`:@@plan.core-4w.day.6.desc:Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS`,
+    $localize`:@@plan.core-4w.day.6.desc:Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze`,
     {
       exercises: [
         x(CATCOW, 30, [10, 10, 10]),
@@ -1840,7 +1846,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     22,
     [11, 11],
-    $localize`:@@plan.core-4w.day.8.desc:Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11`,
+    $localize`:@@plan.core-4w.day.8.desc:Plank · Hollow Hold · Dead Bug · Liegestütze`,
     {
       exercises: [
         x(PLANK, 120, [40, 40, 40]),
@@ -1855,7 +1861,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.core-4w.day.9.desc:Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12`,
+    $localize`:@@plan.core-4w.day.9.desc:Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen`,
     {
       exercises: [
         x(LEGRAISE, 36, [12, 12, 12], 'lying'),
@@ -1871,7 +1877,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     24,
     [12, 12],
-    $localize`:@@plan.core-4w.day.11.desc:Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12`,
+    $localize`:@@plan.core-4w.day.11.desc:Mountain Climbers · Side Plank je Seite · Liegestütze`,
     {
       exercises: [
         x(CLIMBERS, 120, [30, 30, 30, 30]),
@@ -1885,7 +1891,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     16,
     [8, 8],
-    $localize`:@@plan.core-4w.day.12.desc:Leichter Tag — Mobility 10 min · 2×8 LS`,
+    $localize`:@@plan.core-4w.day.12.desc:Leichter Tag — Mobility · lockere Liegestütze`,
     { exercises: [x(STRETCH, 600), x(LS, 16, [8, 8])] }
   ),
   d(
@@ -1893,7 +1899,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.core-4w.day.13.desc:Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS`,
+    $localize`:@@plan.core-4w.day.13.desc:Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze`,
     {
       exercises: [
         x(PLANK, 120, [40, 40, 40]),
@@ -1910,7 +1916,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [15, 15],
-    $localize`:@@plan.core-4w.day.15.desc:Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15`,
+    $localize`:@@plan.core-4w.day.15.desc:Plank · Side Plank je Seite · Hollow Hold · Liegestütze`,
     {
       exercises: [
         x(PLANK, 150, [50, 50, 50]),
@@ -1925,7 +1931,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [15, 15],
-    $localize`:@@plan.core-4w.day.16.desc:Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15`,
+    $localize`:@@plan.core-4w.day.16.desc:Hängendes Knieheben · Russian Twist · Plank · Liegestütze`,
     {
       exercises: [
         x(LEGRAISE, 24, [8, 8, 8], 'hanging-knee'),
@@ -1941,7 +1947,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [15, 15],
-    $localize`:@@plan.core-4w.day.18.desc:Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15`,
+    $localize`:@@plan.core-4w.day.18.desc:Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze`,
     {
       exercises: [
         x(PLANK, 180, [60, 60, 60]),
@@ -1956,7 +1962,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     18,
     [9, 9],
-    $localize`:@@plan.core-4w.day.19.desc:Leichter Tag — 2×9 LS · Stretching 10 min`,
+    $localize`:@@plan.core-4w.day.19.desc:Leichter Tag — lockere Liegestütze · Stretching`,
     { exercises: [x(LS, 18, [9, 9]), x(STRETCH, 600)] }
   ),
   d(
@@ -1964,7 +1970,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     30,
     [10, 10, 10],
-    $localize`:@@plan.core-4w.day.20.desc:Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS`,
+    $localize`:@@plan.core-4w.day.20.desc:Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze`,
     {
       exercises: [
         x(PLANK, 150, [50, 50, 50]),
@@ -1981,7 +1987,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     32,
     [16, 16],
-    $localize`:@@plan.core-4w.day.22.desc:Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16`,
+    $localize`:@@plan.core-4w.day.22.desc:Plank · Hollow Hold · Hängendes Knieheben · Liegestütze`,
     {
       exercises: [
         x(PLANK, 180, [60, 60, 60]),
@@ -1996,7 +2002,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     36,
     [12, 12, 12],
-    $localize`:@@plan.core-4w.day.23.desc:Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS`,
+    $localize`:@@plan.core-4w.day.23.desc:Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze`,
     {
       exercises: [
         x(PLANK, 180, [60, 60, 60]),
@@ -2012,7 +2018,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'main',
     32,
     [16, 16],
-    $localize`:@@plan.core-4w.day.25.desc:Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16`,
+    $localize`:@@plan.core-4w.day.25.desc:Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze`,
     {
       exercises: [
         x(PLANK, 240, [40, 40, 40, 40, 40, 40], 'side'),
@@ -2027,7 +2033,7 @@ const CORE_FOUNDATIONS_DAYS: ReadonlyArray<TrainingPlanDay> = [
     'light',
     18,
     [9, 9],
-    $localize`:@@plan.core-4w.day.26.desc:Leichter Tag — 2×9 LS · Mobility`
+    $localize`:@@plan.core-4w.day.26.desc:Leichter Tag — lockere Liegestütze · Mobility`
   ),
   d(27, 'rest', 0, undefined, REST_DAY_PREP_FINAL),
   d(

@@ -1020,8 +1020,8 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:186</note>
       </notes>
-      <segment state="translated">
-        <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
       <target>轻量日 — 2×50%（最大值）· 10 min 活动度训练</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
@@ -1076,16 +1076,16 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:264</note>
       </notes>
-      <segment state="translated">
-        <source>3×8 Knie- oder erhöhte Liegestütze</source>
+      <segment state="initial">
+        <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
       <target>3×8 膝盖俯卧撑或提高俯卧撑</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:272</note>
       </notes>
-      <segment state="translated">
-        <source>3×9 saubere Liegestütze</source>
+      <segment state="initial">
+        <source>Drei Sätze, saubere Technik</source>
       <target>3×9 标准俯卧撑</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
@@ -1100,32 +1100,32 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:286</note>
       </notes>
-      <segment state="translated">
-        <source>3×10 saubere Liegestütze</source>
+      <segment state="initial">
+        <source>Drei Sätze, volle Bewegungsamplitude</source>
       <target>3×10 标准俯卧撑</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:290</note>
       </notes>
-      <segment state="translated">
-        <source>3×11</source>
+      <segment state="initial">
+        <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
       <target>3×11</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:297</note>
       </notes>
-      <segment state="translated">
-        <source>3×12</source>
+      <segment state="initial">
+        <source>Drei Sätze, etwas mehr Volumen</source>
       <target>3×12</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:305</note>
       </notes>
-      <segment state="translated">
-        <source>3×13</source>
+      <segment state="initial">
+        <source>Drei Sätze — letzte Steigerung dieser Woche</source>
       <target>3×13</target></segment>
     </unit>
     <unit id="plan.over-40-4w.day.22.desc">
@@ -1164,160 +1164,160 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:362</note>
       </notes>
-      <segment state="translated">
-        <source>5×10 saubere Wiederholungen, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
       <target>5×10 标准重复，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:369</note>
       </notes>
-      <segment state="translated">
-        <source>5×12, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, 60 s Pause</source>
       <target>5×12，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:376</note>
       </notes>
-      <segment state="translated">
-        <source>5×12, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
       <target>5×12，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:383</note>
       </notes>
-      <segment state="translated">
-        <source>5×14, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
       <target>5×14，60 秒休息</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:390</note>
       </notes>
-      <segment state="translated">
-        <source>Leichter Tag — 2×15 in lockerem Tempo</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
       <target>轻量级训练日 — 2×15，轻松节奏</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:399</note>
       </notes>
-      <segment state="translated">
-        <source>5×16</source>
+      <segment state="initial">
+        <source>Fünf Sätze, gleichbleibendes Tempo</source>
       <target>5×16</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:406</note>
       </notes>
-      <segment state="translated">
-        <source>5×16</source>
+      <segment state="initial">
+        <source>Fünf Sätze — Technik vor Tempo</source>
       <target>5×16</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:413</note>
       </notes>
-      <segment state="translated">
-        <source>5×18</source>
+      <segment state="initial">
+        <source>Fünf Sätze, Volumen steigt</source>
       <target>5×18</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:420</note>
       </notes>
-      <segment state="translated">
-        <source>5×18</source>
+      <segment state="initial">
+        <source>Fünf Sätze, gleiches Volumen</source>
       <target>5×18</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:427</note>
       </notes>
-      <segment state="translated">
-        <source>Erstes Hundert: 5×20</source>
+      <segment state="initial">
+        <source>Erstes Hundert — fünf Sätze</source>
       <target>首个百位数：5×20</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:437</note>
       </notes>
-      <segment state="translated">
-        <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
+      <segment state="initial">
+        <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
       <target>4×25（较少的组，更多的重复）</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:444</note>
       </notes>
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze wie gehabt</source>
       <target>5×20</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:451</note>
       </notes>
-      <segment state="translated">
-        <source>4×25</source>
+      <segment state="initial">
+        <source>Vier längere Sätze</source>
       <target>4×25</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:458</note>
       </notes>
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze</source>
       <target>5×20</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:465</note>
       </notes>
-      <segment state="translated">
-        <source>4×25 — Tempo bewusst verlangsamen</source>
+      <segment state="initial">
+        <source>Vier Sätze — Tempo bewusst verlangsamen</source>
       <target>4×25 — 刻意放慢速度</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:475</note>
       </notes>
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze, letzte volle Woche</source>
       <target>5×20</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:482</note>
       </notes>
-      <segment state="translated">
-        <source>4×25</source>
+      <segment state="initial">
+        <source>Vier längere Sätze</source>
       <target>4×25</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:489</note>
       </notes>
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze, unverändertes Volumen</source>
       <target>5×20</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:496</note>
       </notes>
-      <segment state="translated">
-        <source>4×25</source>
+      <segment state="initial">
+        <source>Vier Sätze, ruhiges Tempo</source>
       <target>4×25</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:503</note>
       </notes>
-      <segment state="translated">
-        <source>Letzter 100er-Tag vor dem Test</source>
+      <segment state="initial">
+        <source>Letzter großer Tag vor dem Test</source>
       <target>测试前最后一个百位数日</target></segment>
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
@@ -8456,140 +8456,140 @@
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
         <target>循环 3 轮 — 10 俯卧撑 · 15 深蹲 · 10 弓步 每条腿 · 30 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 3 轮 — 10 俯卧撑 · 15 相扑深蹲 · 12 臀桥 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>轻量日 — 2×10 俯卧撑 · 活动度 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
         <target>循环 3 轮 — 10 俯卧撑 · 15 深蹲 · 10 臀桥 · 30 s 空心支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
         <target>循环 3 轮 — 12 俯卧撑 · 18 深蹲 · 12 弓步 每条腿 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 3 轮 — 12 俯卧撑 · 18 相扑深蹲 · 15 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
         <target>轻量日 — 2×11 俯卧撑 · 开髋 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
         <target>循环 3 轮 — 12 俯卧撑 · 12 台阶上跨 每条腿 · 15 俄罗斯转体 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 10 俯卧撑 · 15 深蹲 · 12 臀桥 · 40 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 11 俯卧撑 · 16 弓步 每条腿 · 15 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
         <target>轻量日 — 2×12 俯卧撑 · 瑜伽 20 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 12 俯卧撑 · 15 跳跃深蹲 · 12 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 13 俯卧撑 · 18 深蹲 · 15 臀桥 · 50 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
         <target>循环 4 轮 — 14 俯卧撑 · 18 弓步 每条腿 · 15 臀冲 · 50 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
         <target>轻量日 — 2×13 俯卧撑 · 泡沫轴放松 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
         <target>循环 4 轮 — 15 俯卧撑 · 18 跳跃深蹲 · 15 臀桥 · 60 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="translated">
-        <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>循环 5 轮 — 12 俯卧撑 · 15 深蹲 · 12 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="translated">
-        <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
         <target>循环 5 轮 — 13 俯卧撑 · 16 弓步 每条腿 · 13 臀桥 · 50 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>轻量日 — 2×14 俯卧撑 · 活动度 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="translated">
-        <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
         <target>循环 5 轮 — 14 俯卧撑 · 18 跳跃深蹲 · 15 臀冲 · 60 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="translated">
-        <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
+      <segment state="initial">
+        <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>峰值循环 5 轮 — 15 俯卧撑 · 20 深蹲 · 15 臀桥 · 60 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="translated">
-        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>减载循环 4 轮, 控制节奏 — 15 俯卧撑 · 15 深蹲 · 12 臀桥 · 45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×12 LS · Mobility</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>轻量日 — 2×12 俯卧撑 · 活动度</target>
       </segment>
     </unit>
@@ -8606,110 +8606,110 @@
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="translated">
-        <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
+      <segment state="initial">
+        <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
         <target>平板支撑 3×30 s · 空心支撑 3×20 s · 死虫 3×10 每侧 · 俯卧撑 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="translated">
-        <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
+      <segment state="initial">
+        <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
         <target>抬腿 3×10 · 俄罗斯转体 3×15 · 平板支撑 3×30 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="translated">
-        <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
+      <segment state="initial">
+        <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
         <target>登山者 3×30 s · 死虫 3×12 · 平板支撑 3×35 s · 俯卧撑 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="translated">
-        <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
+      <segment state="initial">
+        <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
         <target>轻量日 — 猫牛式 3×10 · 开髋 2 min · 2×7 标准的 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="translated">
-        <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
+      <segment state="initial">
+        <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
         <target>平板支撑 3×40 s · 空心支撑 3×25 s · 死虫 3×12 · 俯卧撑 2×11</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="translated">
-        <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
+      <segment state="initial">
+        <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
         <target>抬腿 3×12 · 俄罗斯转体 3×18 · 平板支撑 3×40 s · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="translated">
-        <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
+      <segment state="initial">
+        <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
         <target>登山者 4×30 s · 侧平板支撑 2×25 s 每侧 · 俯卧撑 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="translated">
-        <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
+      <segment state="initial">
+        <source>Leichter Tag — Mobility · lockere Liegestütze</source>
         <target>轻量日 — 活动度 10 min · 2×8 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="translated">
-        <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
+      <segment state="initial">
+        <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
         <target>核心循环 3 轮 — 40 s 平板支撑 · 20 s 空心支撑 · 12 死虫 · 10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="translated">
-        <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
+      <segment state="initial">
+        <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
         <target>平板支撑 3×50 s · 侧平板支撑 3×30 s 每侧 · 空心支撑 3×30 s · 俯卧撑 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="translated">
-        <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
+      <segment state="initial">
+        <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
         <target>悬挂屈膝抬腿 3×8 · 俄罗斯转体 3×20 · 平板支撑 3×50 s · 俯卧撑 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="translated">
-        <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
+      <segment state="initial">
+        <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
         <target>核心力量: 平板支撑 3×60 s · 死虫 3×15 · 登山者 3×45 s · 俯卧撑 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — lockere Liegestütze · Stretching</source>
         <target>轻量日 — 2×9 俯卧撑 · 拉伸 10 min</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="translated">
-        <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
+      <segment state="initial">
+        <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
         <target>核心循环 3 轮 — 50 s 平板支撑 · 12 抬腿 · 20 俄罗斯转体 · 10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="translated">
-        <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
+      <segment state="initial">
+        <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
         <target>平板支撑 3×60 s · 空心支撑 3×40 s · 悬挂屈膝抬腿 3×10 · 俯卧撑 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="translated">
-        <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
+      <segment state="initial">
+        <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
         <target>核心循环 3 轮 — 1 min 平板支撑 · 30 俄罗斯转体 · 12 抬腿 · 12 俯卧撑</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="translated">
-        <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
+      <segment state="initial">
+        <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
         <target>侧平板支撑 3×40 s 每侧 · 死虫 3×16 · 空心支撑 3×40 s · 俯卧撑 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×9 LS · Mobility</source>
+      <segment state="initial">
+        <source>Leichter Tag — lockere Liegestütze · Mobility</source>
         <target>轻量日 — 2×9 俯卧撑 · 活动度</target>
       </segment>
     </unit>
@@ -12264,8 +12264,8 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="translated">
-        <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
+      <segment state="initial">
+        <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
         <target>5 组目标次数 · 3×20 弓步</target>
       </segment>
     </unit>

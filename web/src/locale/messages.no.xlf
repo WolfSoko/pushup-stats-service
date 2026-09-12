@@ -6378,8 +6378,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
         <target>Lett dag — 2×50 % av maksimum · 10 min mobilitet</target>
       </segment>
     </unit>
@@ -6438,14 +6438,14 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.2.desc">
-      <segment state="translated">
-        <source>3×8 Knie- oder erhöhte Liegestütze</source>
+      <segment state="initial">
+        <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
         <target>3×8 kne- eller hevede armhevninger</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
-      <segment state="translated">
-        <source>3×9 saubere Liegestütze</source>
+      <segment state="initial">
+        <source>Drei Sätze, saubere Technik</source>
         <target>3×9 rene armhevninger</target>
       </segment>
     </unit>
@@ -6456,26 +6456,26 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.6.desc">
-      <segment state="translated">
-        <source>3×10 saubere Liegestütze</source>
+      <segment state="initial">
+        <source>Drei Sätze, volle Bewegungsamplitude</source>
         <target>3×10 rene armhevninger</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
-      <segment state="translated">
-        <source>3×11</source>
+      <segment state="initial">
+        <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
         <target>3×11</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
-      <segment state="translated">
-        <source>3×12</source>
+      <segment state="initial">
+        <source>Drei Sätze, etwas mehr Volumen</source>
         <target>3×12</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
-      <segment state="translated">
-        <source>3×13</source>
+      <segment state="initial">
+        <source>Drei Sätze — letzte Steigerung dieser Woche</source>
         <target>3×13</target>
       </segment>
     </unit>
@@ -6516,122 +6516,122 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
-      <segment state="translated">
-        <source>5×10 saubere Wiederholungen, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
         <target>5×10 rene repetisjoner, 60 s hvile</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
-      <segment state="translated">
-        <source>5×12, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, 60 s Pause</source>
         <target>5×12, 60 s hvile</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
-      <segment state="translated">
-        <source>5×12, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
         <target>5×12, 60 s hvile</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
-      <segment state="translated">
-        <source>5×14, 60 s Pause</source>
+      <segment state="initial">
+        <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
         <target>5×14, 60 s hvile</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×15 in lockerem Tempo</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
         <target>Lett dag — 2×15 i rolig tempo</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
-      <segment state="translated">
-        <source>5×16</source>
+      <segment state="initial">
+        <source>Fünf Sätze, gleichbleibendes Tempo</source>
         <target>5×16</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
-      <segment state="translated">
-        <source>5×16</source>
+      <segment state="initial">
+        <source>Fünf Sätze — Technik vor Tempo</source>
         <target>5×16</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
-      <segment state="translated">
-        <source>5×18</source>
+      <segment state="initial">
+        <source>Fünf Sätze, Volumen steigt</source>
         <target>5×18</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
-      <segment state="translated">
-        <source>5×18</source>
+      <segment state="initial">
+        <source>Fünf Sätze, gleiches Volumen</source>
         <target>5×18</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
-      <segment state="translated">
-        <source>Erstes Hundert: 5×20</source>
+      <segment state="initial">
+        <source>Erstes Hundert — fünf Sätze</source>
         <target>Første hundre: 5×20</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
-      <segment state="translated">
-        <source>4×25 (weniger Sätze, mehr Wiederholungen)</source>
+      <segment state="initial">
+        <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
         <target>4×25 (færre sett, flere repetisjoner)</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze wie gehabt</source>
         <target>5×20</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
-      <segment state="translated">
-        <source>4×25</source>
+      <segment state="initial">
+        <source>Vier längere Sätze</source>
         <target>4×25</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze</source>
         <target>5×20</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
-      <segment state="translated">
-        <source>4×25 — Tempo bewusst verlangsamen</source>
+      <segment state="initial">
+        <source>Vier Sätze — Tempo bewusst verlangsamen</source>
         <target>4×25 — reduser tempo med vilje</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze, letzte volle Woche</source>
         <target>5×20</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
-      <segment state="translated">
-        <source>4×25</source>
+      <segment state="initial">
+        <source>Vier längere Sätze</source>
         <target>4×25</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
-      <segment state="translated">
-        <source>5×20</source>
+      <segment state="initial">
+        <source>Fünf Sätze, unverändertes Volumen</source>
         <target>5×20</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
-      <segment state="translated">
-        <source>4×25</source>
+      <segment state="initial">
+        <source>Vier Sätze, ruhiges Tempo</source>
         <target>4×25</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
-      <segment state="translated">
-        <source>Letzter 100er-Tag vor dem Test</source>
+      <segment state="initial">
+        <source>Letzter großer Tag vor dem Test</source>
         <target>Siste 100-dag før testen</target>
       </segment>
     </unit>
@@ -8238,140 +8238,140 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Ausfallschritte je Bein · 30 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
         <target>Sirkel 3 runder — 10 push-ups · 15 knebøy · 10 utfall per bein · 30 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 10 LS · 15 Sumo-Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
         <target>Sirkel 3 runder — 10 push-ups · 15 sumo-knebøy · 12 glute bridges · 40 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×10 LS · Mobility 10 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>Lett dag — 2×10 push-ups · mobilitet 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 10 LS · 15 Kniebeugen · 10 Glute Bridges · 30 s Hollow Hold</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
         <target>Sirkel 3 runder — 10 push-ups · 15 knebøy · 10 glute bridges · 30 s hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 12 LS · 18 Kniebeugen · 12 Ausfallschritte je Bein · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
         <target>Sirkel 3 runder — 12 push-ups · 18 knebøy · 12 utfall per bein · 40 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 12 LS · 18 Sumo-Kniebeugen · 15 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
         <target>Sirkel 3 runder — 12 push-ups · 18 sumo-knebøy · 15 glute bridges · 45 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×11 LS · Hip Opener 10 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
         <target>Lett dag — 2×11 push-ups · hip opener 10 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="translated">
-        <source>Zirkel 3 Runden — 12 LS · 12 Step-Ups je Bein · 15 Russian Twists · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
         <target>Sirkel 3 runder — 12 push-ups · 12 step-ups per bein · 15 russian twists · 40 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 10 LS · 15 Kniebeugen · 12 Glute Bridges · 40 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>Sirkel 4 runder — 10 push-ups · 15 knebøy · 12 glute bridges · 40 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 11 LS · 16 Ausfallschritte je Bein · 15 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
         <target>Sirkel 4 runder — 11 push-ups · 16 utfall per bein · 15 glute bridges · 45 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×12 LS · Yoga 20 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
         <target>Lett dag — 2×12 push-ups · yoga 20 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 12 LS · 15 Jump Squats · 12 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
         <target>Sirkel 4 runder — 12 push-ups · 15 jump squats · 12 glute bridges · 45 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 13 LS · 18 Kniebeugen · 15 Glute Bridges · 50 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>Sirkel 4 runder — 13 push-ups · 18 knebøy · 15 glute bridges · 50 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 14 LS · 18 Ausfallschritte je Bein · 15 Hip Thrusts · 50 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
         <target>Sirkel 4 runder — 14 push-ups · 18 utfall per bein · 15 hip thrusts · 50 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×13 LS · Foam Rolling 15 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
         <target>Lett dag — 2×13 push-ups · foam rolling 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="translated">
-        <source>Zirkel 4 Runden — 15 LS · 18 Jump Squats · 15 Glute Bridges · 60 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
         <target>Sirkel 4 runder — 15 push-ups · 18 jump squats · 15 glute bridges · 60 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="translated">
-        <source>Zirkel 5 Runden — 12 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>Sirkel 5 runder — 12 push-ups · 15 knebøy · 12 glute bridges · 45 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="translated">
-        <source>Zirkel 5 Runden — 13 LS · 16 Ausfallschritte je Bein · 13 Glute Bridges · 50 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
         <target>Sirkel 5 runder — 13 push-ups · 16 utfall per bein · 13 glute bridges · 50 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×14 LS · Mobility 15 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>Lett dag — 2×14 push-ups · mobilitet 15 min</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="translated">
-        <source>Zirkel 5 Runden — 14 LS · 18 Jump Squats · 15 Hip Thrusts · 60 s Plank</source>
+      <segment state="initial">
+        <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
         <target>Sirkel 5 runder — 14 push-ups · 18 jump squats · 15 hip thrusts · 60 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="translated">
-        <source>Peak-Zirkel 5 Runden — 15 LS · 20 Kniebeugen · 15 Glute Bridges · 60 s Plank</source>
+      <segment state="initial">
+        <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>Topp-sirkel 5 runder — 15 push-ups · 20 knebøy · 15 glute bridges · 60 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="translated">
-        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — 15 LS · 15 Kniebeugen · 12 Glute Bridges · 45 s Plank</source>
+      <segment state="initial">
+        <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
         <target>Taper-sirkel 4 runder, kontrollert tempo — 15 push-ups · 15 knebøy · 12 glute bridges · 45 s planke</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×12 LS · Mobility</source>
+      <segment state="initial">
+        <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
         <target>Lett dag — 2×12 push-ups · mobilitet</target>
       </segment>
     </unit>
@@ -8388,110 +8388,110 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="translated">
-        <source>Plank 3×30 s · Hollow Hold 3×20 s · Dead Bug 3×10 je Seite · LS 2×10</source>
+      <segment state="initial">
+        <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
         <target>planke 3×30 s · hollow hold 3×20 s · dead bug 3×10 per side · push-ups 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="translated">
-        <source>Beinheben 3×10 · Russian Twist 3×15 · Plank 3×30 s · LS 2×12</source>
+      <segment state="initial">
+        <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
         <target>Beinheben 3×10 · russian twist 3×15 · planke 3×30 s · push-ups 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="translated">
-        <source>Mountain Climbers 3×30 s · Dead Bug 3×12 · Plank 3×35 s · LS 2×10</source>
+      <segment state="initial">
+        <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
         <target>mountain climbers 3×30 s · dead bug 3×12 · planke 3×35 s · push-ups 2×10</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="translated">
-        <source>Leichter Tag — Cat-Cow 3×10 · Hip Opener 2 min · 2×7 saubere LS</source>
+      <segment state="initial">
+        <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
         <target>Lett dag — katt-ku 3×10 · hip opener 2 min · 2×7 rene push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="translated">
-        <source>Plank 3×40 s · Hollow Hold 3×25 s · Dead Bug 3×12 · LS 2×11</source>
+      <segment state="initial">
+        <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
         <target>planke 3×40 s · hollow hold 3×25 s · dead bug 3×12 · push-ups 2×11</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="translated">
-        <source>Beinheben 3×12 · Russian Twist 3×18 · Plank 3×40 s · LS 2×12</source>
+      <segment state="initial">
+        <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
         <target>Beinheben 3×12 · russian twist 3×18 · planke 3×40 s · push-ups 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="translated">
-        <source>Mountain Climbers 4×30 s · Side Plank 2×25 s je Seite · LS 2×12</source>
+      <segment state="initial">
+        <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
         <target>mountain climbers 4×30 s · sideplanke 2×25 s per side · push-ups 2×12</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="translated">
-        <source>Leichter Tag — Mobility 10 min · 2×8 LS</source>
+      <segment state="initial">
+        <source>Leichter Tag — Mobility · lockere Liegestütze</source>
         <target>Lett dag — mobilitet 10 min · 2×8 push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="translated">
-        <source>Core-Zirkel 3 Runden — 40 s Plank · 20 s Hollow Hold · 12 Dead Bugs · 10 LS</source>
+      <segment state="initial">
+        <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
         <target>Core-sirkel 3 runder — 40 s planke · 20 s hollow hold · 12 dead bugs · 10 push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="translated">
-        <source>Plank 3×50 s · Side Plank 3×30 s je Seite · Hollow Hold 3×30 s · LS 2×15</source>
+      <segment state="initial">
+        <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
         <target>planke 3×50 s · sideplanke 3×30 s per side · hollow hold 3×30 s · push-ups 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="translated">
-        <source>Hängendes Knieheben 3×8 · Russian Twist 3×20 · Plank 3×50 s · LS 2×15</source>
+      <segment state="initial">
+        <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
         <target>hengende kne-hev 3×8 · russian twist 3×20 · planke 3×50 s · push-ups 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="translated">
-        <source>Core-Power: Plank 3×60 s · Dead Bug 3×15 · Mountain Climbers 3×45 s · LS 2×15</source>
+      <segment state="initial">
+        <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
         <target>Core-power: planke 3×60 s · dead bug 3×15 · mountain climbers 3×45 s · push-ups 2×15</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×9 LS · Stretching 10 min</source>
+      <segment state="initial">
+        <source>Leichter Tag — lockere Liegestütze · Stretching</source>
         <target>Lett dag — 2×9 push-ups · stretching 10 min</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="translated">
-        <source>Core-Zirkel 3 Runden — 50 s Plank · 12 Beinheben · 20 Russian Twists · 10 LS</source>
+      <segment state="initial">
+        <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
         <target>Core-sirkel 3 runder — 50 s planke · 12 Beinheben · 20 russian twists · 10 push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="translated">
-        <source>Plank 3×60 s · Hollow Hold 3×40 s · Hängendes Knieheben 3×10 · LS 2×16</source>
+      <segment state="initial">
+        <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
         <target>planke 3×60 s · hollow hold 3×40 s · hengende kne-hev 3×10 · push-ups 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="translated">
-        <source>Core-Zirkel 3 Runden — 1 min Plank · 30 Russian Twists · 12 Beinheben · 12 LS</source>
+      <segment state="initial">
+        <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
         <target>Core-sirkel 3 runder — 1 min planke · 30 russian twists · 12 Beinheben · 12 push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="translated">
-        <source>Side Plank 3×40 s je Seite · Dead Bug 3×16 · Hollow Hold 3×40 s · LS 2×16</source>
+      <segment state="initial">
+        <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
         <target>sideplanke 3×40 s per side · dead bug 3×16 · hollow hold 3×40 s · push-ups 2×16</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="translated">
-        <source>Leichter Tag — 2×9 LS · Mobility</source>
+      <segment state="initial">
+        <source>Leichter Tag — lockere Liegestütze · Mobility</source>
         <target>Lett dag — 2×9 push-ups · mobilitet</target>
       </segment>
     </unit>
@@ -12046,8 +12046,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="translated">
-        <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
+      <segment state="initial">
+        <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
         <target>5 sett målreps · 3×20 utfall</target>
       </segment>
     </unit>
