@@ -51,33 +51,36 @@ import type {
         <li [class.is-viewer]="entry.isViewer" data-testid="board-row">
           <span class="rank">{{ i + 1 }}</span>
           <span class="board-name">{{ label(entry) }}</span>
-          @if (entry.cheers > 0) {
-            <span
-              class="cheers"
-              data-testid="board-cheers"
-              [attr.aria-label]="cheersLabel(entry.cheers)"
-              [matTooltip]="cheersLabel(entry.cheers)"
-              >🔥 {{ entry.cheers }}</span
-            >
-          }
+          <span class="cheers">
+            @if (entry.cheers > 0) {
+              <span
+                data-testid="board-cheers"
+                [attr.aria-label]="cheersLabel(entry.cheers)"
+                [matTooltip]="cheersLabel(entry.cheers)"
+                >🔥 {{ entry.cheers }}</span
+              >
+            }
+          </span>
           <strong>{{ entry.value }}</strong>
-          @if (!entry.isViewer) {
-            <button
-              mat-icon-button
-              type="button"
-              class="cheer-button"
-              data-testid="board-cheer"
-              [class.is-cheered]="entry.cheered"
-              [disabled]="entry.cheered"
-              [attr.aria-label]="entry.cheered ? cheeredAria : cheerAria"
-              [matTooltip]="entry.cheered ? cheeredAria : cheerAria"
-              (click)="cheer.emit(entry.uid)"
-            >
-              <mat-icon>{{
-                entry.cheered ? 'local_fire_department' : 'whatshot'
-              }}</mat-icon>
-            </button>
-          }
+          <span class="cheer-slot">
+            @if (!entry.isViewer) {
+              <button
+                mat-icon-button
+                type="button"
+                class="cheer-button"
+                data-testid="board-cheer"
+                [class.is-cheered]="entry.cheered"
+                [disabled]="entry.cheered"
+                [attr.aria-label]="entry.cheered ? cheeredAria : cheerAria"
+                [matTooltip]="entry.cheered ? cheeredAria : cheerAria"
+                (click)="cheer.emit(entry.uid)"
+              >
+                <mat-icon>{{
+                  entry.cheered ? 'local_fire_department' : 'whatshot'
+                }}</mat-icon>
+              </button>
+            }
+          </span>
         </li>
       }
     </ol>
@@ -92,20 +95,23 @@ import type {
     }
     .board li {
       display: grid;
-      grid-template-columns: 2rem 1fr auto auto auto;
+      grid-template-columns: 2rem 1fr auto auto 40px;
       align-items: center;
       gap: 8px;
       padding: 4px 4px 4px 12px;
       border-radius: 8px;
       background: rgba(0, 0, 0, 0.04);
-      min-height: 44px;
+      min-height: 48px;
     }
     :host-context(.dark-theme) .board li {
       background: rgba(255, 255, 255, 0.05);
     }
     .board li.is-viewer {
       outline: 2px solid var(--mat-sys-primary, #3f51b5);
-      padding-right: 44px;
+    }
+    .cheer-slot {
+      display: inline-flex;
+      justify-content: center;
     }
     .rank {
       opacity: 0.6;
