@@ -48,7 +48,10 @@
         (click)="navOpen.set(false)"
       >
         <mat-icon matListItemIcon>group</mat-icon>
-        <span matListItemTitle i18n="@@nav.friends">Freunde</span>
+        <span matListItemTitle
+          ><ng-container i18n="@@nav.friends">Freunde</ng-container
+          ><app-friend-request-badge
+        /></span>
       </a>
       }
       <a

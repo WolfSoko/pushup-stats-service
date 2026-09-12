@@ -213,6 +213,22 @@ The per-section switch on the profile **cycles** public → friends → off → 
 
 Two rules worth knowing: a friend appears only if their own `total` section is visible to friends (the board is "my numbers, shown to friends"), and **the viewer always appears**, whatever they set — a board missing the person reading it would be strange. Participants at zero stay on the board; on a day nobody trained, the zeros are the nudge.
 
+#### Where friends show up outside `/freunde`
+
+- **Nav badge.** `FriendRequestBadgeComponent` sits inside the sidenav's "Freunde" label and renders `FriendsStore.pendingCount()`. It loads the lists itself (browser only), so the app shell knows nothing about friends beyond placing it.
+- **Dashboard card.** `FriendsTeaserCardComponent` shows this week's standing among friends (top three of the `week` board, "Du bist auf Platz k von n"), waiting requests, running challenges — or, without friends, the invite CTA. It renders nothing for guests and does its own loading, so `StatsDashboardComponent` only mounts it. Specs for anything that mounts it (dashboard, app shell) provide `FriendsApiService` / `ChallengesApiService` fakes: the real ones need the `Functions` injector.
+- **Push.** `notifyFriendshipWrite` (a `friendships` trigger, so the referral flow's auto-request is covered too) pushes a new request to the person asked and an acceptance to the person who asked; declines and removals stay silent. Cheers and challenge invitations push from their callables. All of them go through `push/deliver-user.ts` → `push/deliver.ts`, the same delivery the reminder dispatcher uses, with `data.url = /<locale>/freunde` and one collapse topic per kind (`friendPushOptions`). Texts live server-side in `friends/push-text.ts` (one entry per `SUPPORTED_REMINDER_LOCALES`).
+
+#### Cheers
+
+One friend telling another "keep going": `cheers/{from}__{to}__{YYYY-MM-DD}`, written by `sendCheer` with `create` so a second tap the same day is `already-exists` rather than a second push. Only confirmed friends may cheer, once a day per recipient. `getFriendsLeaderboard` reads today's cheers in two queries (by viewer, and `to in <chunk of 30>`) and puts `cheers` / `cheered` on each row; the board renders a fire button per friend that disables once used. `FriendsStore.cheer` re-reads the board only — the lists did not change.
+
+#### Friend challenges
+
+`challenges/{id}`: `createdBy`, `participants` (creator first), one `exerciseId` with `measurement: 'reps'`, an integer `target`, and an inclusive `from`/`to` date range chosen from `CHALLENGE_DURATIONS_DAYS`. `challengeRejection` in `@pu-stats/models` is shared by the dialog (early refusal) and `createChallenge` (the one that counts). Everyone invited is a participant immediately — there is no accept step; leaving is `leaveChallenge`, and the last one out deletes the document. Rules: participants read, nobody writes.
+
+Progress is **summed from `exerciseEntries` on read** (`AggregateField.sum('reps')` per participant, bounded by ISO-date prefixes), not from `userStats` buckets: those only keep the current day/week/month, and a challenge's result has to survive the week rolling over. That query rides the existing `(userId, exerciseId, timestamp)` composite index. Known imprecision: an entry stored in UTC (`…Z`) in the last two Berlin hours of a boundary day lands on the neighbouring date. Ended challenges stay listed for `CHALLENGE_RESULT_VISIBLE_DAYS` so the result can be seen, then drop off; `MAX_ACTIVE_CHALLENGES` caps what one creator may run at once.
+
 ### Analysis page: chart bucketing per period
 
 The filter period picks the chart's bucket size — `granularityForRange` (`web/src/app/stats/analysis/chart-granularity.ts`) maps day → `hourly`, week → `daily`, month → `weekly`, year → `monthly`. `AnalysisStore.viewGranularity` derives it from `rangeMode` (i.e. from `from`/`to` via `inferRangeMode`), so no extra state stores the period. Every range therefore stays at a few dozen bars instead of stretching a year across 365 of them.

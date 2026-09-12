@@ -64,6 +64,11 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
   `libs/stats/src/lib/models/pushup-type.models.ts`
 - **10 Trainingspläne** — `TRAINING_PLANS` in
   `libs/stats/src/lib/models/training-plan.catalog.ts`
+- **Freunde-Board, Anfeuern per Push, gemeinsame Challenges** — `getFriendsLeaderboard`,
+  `sendCheer` und `createChallenge` in `data-store/functions/src/`; das
+  Beispiel „500 Liegestütze in 7 Tagen“ liegt innerhalb von
+  `MIN_CHALLENGE_TARGET`/`MAX_CHALLENGE_TARGET` und `CHALLENGE_DURATIONS_DAYS`
+  (`libs/stats/src/lib/models/challenge.models.ts`).
 - **9 Sprachen** — `localize`-Liste in `web/project.json`:
   `de, en, fr, es, it, nl, el, no, zh`. Latein ist nicht mehr dabei und darf
   im Listing nicht mehr auftauchen.

@@ -55,6 +55,7 @@ import { QuickAddConfigDialogComponent } from '../components/quick-add-config-di
 import { DashboardStore } from '../dashboard.store';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
 import { InviteService } from '../../core/invite.service';
+import { FriendsTeaserCardComponent } from '../../friends/friends-teaser-card.component';
 import {
   ExerciseToggle,
   PlanDayExercisesComponent,
@@ -78,6 +79,7 @@ import {
     DatePipe,
     AllTimeBadgesComponent,
     AnalysisTeaserCardComponent,
+    FriendsTeaserCardComponent,
     DailyGoalChecklistComponent,
     PlanDayExercisesComponent,
     PreviewBannerComponent,

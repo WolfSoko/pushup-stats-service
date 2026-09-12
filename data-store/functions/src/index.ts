@@ -78,6 +78,13 @@ export {
   respondFriendRequest,
   sendFriendRequest,
 } from './functions-friends';
+export { notifyFriendshipWrite } from './functions-friends-notify';
+export { sendCheer } from './functions-cheers';
+export {
+  createChallenge,
+  leaveChallenge,
+  listChallenges,
+} from './functions-challenges';
 export { claimReferral } from './functions-referral';
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 

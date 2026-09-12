@@ -1,13 +1,8 @@
-import {
-  normalizeReminderLocale,
-  shouldPauseForReachedGoal,
-} from '@pu-stats/models';
+import { shouldPauseForReachedGoal } from '@pu-stats/models';
 import { FieldValue } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
-import { defineSecret } from 'firebase-functions/params';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
-import webpush from 'web-push';
 
 import { berlinDateParts } from './datetime';
 import { db, TZ } from './firebase-app';
@@ -15,7 +10,6 @@ import type { ReminderConfig } from './push';
 import {
   buildNotificationPayload,
   buildReminderPushPayload,
-  isExpiredSubscriptionError,
   isLeaseStale,
   loadMotivationPool,
   loadReminderGoal,
@@ -28,6 +22,10 @@ import {
   STALE_LEASE_MS,
   validateSubscriptionPayload,
 } from './push';
+import { sendToSubscriptions } from './push/deliver';
+import { logFailedSends } from './push/deliver-user';
+import { pushLocaleFromConfig } from './push/user-locale';
+import { configureWebPush, VAPID_SECRETS } from './push/vapid';
 
 export async function deleteAllPushSubscriptions(uid: string) {
   const userRef = db.collection('pushSubscriptions').doc(uid);
@@ -171,30 +169,18 @@ export const revokeAllSessions = onCall({ region: 'europe-west3' }, (request) =>
   handleUnsubscribeAllPushDevices(request.auth, 'revokeAllSessions')
 );
 
-const VAPID_PRIVATE_KEY = defineSecret('VAPID_PRIVATE_KEY');
-const VAPID_PUBLIC_KEY = defineSecret('VAPID_PUBLIC_KEY');
-
 export const dispatchPushReminders = onSchedule(
   {
     schedule: 'every 5 minutes',
     timeZone: TZ,
     region: 'europe-west3',
-    secrets: [VAPID_PRIVATE_KEY, VAPID_PUBLIC_KEY],
+    secrets: VAPID_SECRETS,
   },
   async () => {
-    const vapidPrivate = VAPID_PRIVATE_KEY.value().trim();
-    const vapidPublic = VAPID_PUBLIC_KEY.value().trim();
-
-    if (!vapidPrivate || !vapidPublic) {
+    if (!configureWebPush()) {
       logger.warn('dispatchPushReminders: VAPID secrets not set, skipping');
       return;
     }
-
-    webpush.setVapidDetails(
-      'mailto:einstein-openclaw@gmail.com',
-      vapidPublic,
-      vapidPrivate
-    );
 
     const nowMs = Date.now();
 
@@ -216,18 +202,7 @@ export const dispatchPushReminders = onSchedule(
         const userConfigData = userConfigSnap.data() ?? {};
         const reminder = userConfigData.reminder as
           Partial<ReminderConfig> | undefined;
-        // Prefer the explicit top-level `locale` written by recent clients.
-        // Fall back to the legacy `reminder.language` field on docs created
-        // before that field migrated up — without this, a user who set
-        // English reminders and never re-saved settings would silently
-        // start receiving German push body / actions / URLs after deploy.
-        // Final fallback (`undefined`) lands on the default locale via
-        // `normalizeReminderLocale`.
-        const legacyLanguage = (reminder as { language?: unknown } | undefined)
-          ?.language;
-        const userLocale = normalizeReminderLocale(
-          userConfigData.locale ?? legacyLanguage
-        );
+        const userLocale = pushLocaleFromConfig(userConfigData);
 
         const dispatchRef = db.collection('reminderDispatchState').doc(uid);
         let leaseAcquired = false;
@@ -335,53 +310,19 @@ export const dispatchPushReminders = onSchedule(
             actionUrl: reminderActionUrl(),
           });
 
-          const expiredSubs: FirebaseFirestore.DocumentReference[] = [];
+          const delivery = await sendToSubscriptions(
+            subsCol.docs.map((doc) => ({ key: doc.ref, data: doc.data() })),
+            payload,
+            PUSH_SEND_OPTIONS
+          );
+          sentToUser = delivery.sent > 0;
+          logFailedSends('dispatchPushReminders', uid, delivery.failed);
+          results.errors += delivery.failed.length;
+          results.expired += delivery.expired.length;
 
-          for (const subDoc of subsCol.docs) {
-            const { endpoint, keys } = subDoc.data();
-            if (!endpoint || !keys?.p256dh || !keys?.auth) continue;
-
-            const pushSub = {
-              endpoint,
-              keys: { p256dh: keys.p256dh, auth: keys.auth },
-            };
-
-            try {
-              await webpush.sendNotification(
-                pushSub,
-                payload,
-                PUSH_SEND_OPTIONS
-              );
-              sentToUser = true;
-            } catch (err: unknown) {
-              const pushErr = err as {
-                statusCode?: number;
-                code?: string;
-                message?: string;
-              };
-              if (isExpiredSubscriptionError(pushErr, endpoint)) {
-                expiredSubs.push(subDoc.ref);
-                results.expired++;
-              } else {
-                // Log message+code alongside status so the next unknown
-                // failure mode (e.g. the zombie `.invalid` endpoints that
-                // silently DNS-failed for weeks) is diagnosable in one
-                // dispatch cycle instead of needing a separate investigation.
-                logger.warn('dispatchPushReminders: send failed', {
-                  uid,
-                  endpoint: endpoint.slice(-20),
-                  status: pushErr.statusCode,
-                  code: pushErr.code,
-                  message: pushErr.message,
-                });
-                results.errors++;
-              }
-            }
-          }
-
-          if (expiredSubs.length > 0) {
+          if (delivery.expired.length > 0) {
             const batch = db.batch();
-            expiredSubs.forEach((ref) => batch.delete(ref));
+            delivery.expired.forEach((ref) => batch.delete(ref));
             await batch.commit();
           }
 
