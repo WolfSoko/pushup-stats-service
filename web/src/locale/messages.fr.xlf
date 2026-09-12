@@ -5393,9 +5393,9 @@
       </segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source> In der Bestenliste erscheinst du erst, wenn mindestens ein Bereich deines Profils für alle sichtbar ist. Das stellst du direkt im Profil ein. </source>
-        <target> Seuls les profils avec Profil public activé apparaissent dans le classement. Activez « Profil public » ci-dessous pour utiliser cette option. </target>
+        <target> Tu n'apparais dans le classement que lorsqu'au moins une partie de ton profil est visible pour tous. Tu peux le régler directement dans ton profil. </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
@@ -5411,9 +5411,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:107,110</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer welchen Teil deines Profils sieht, stellst du direkt im Profil ein: für alle, nur für Freunde, oder für niemanden. Dein Anzeigename ist für jeden sichtbar, der dein Profil öffnen darf; E-Mail, Ziele und Erinnerungen bleiben immer privat. </source>
-        <target> Permet à toute personne disposant du lien d'accéder à vos répétitions, séquences et meilleures performances. Votre nom d'affichage est visible; Les e-mails, les objectifs et les rappels restent privés. </target>
+        <target> Tu décides directement dans ton profil qui voit quelle partie de celui-ci : tout le monde, seulement les amis, ou personne. Ton nom d'affichage est visible par toute personne autorisée à ouvrir ton profil ; l'e-mail, les objectifs et les rappels restent toujours privés. </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
@@ -5780,36 +5780,36 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,46</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamt</source>
-        <target>Total de tous les temps</target>
+        <target>Total</target>
       </segment>
     </unit>
     <unit id="allTimeDays">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:49,50</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage</source>
-        <target>Jours de tous les temps</target>
+        <target>Jours</target>
       </segment>
     </unit>
     <unit id="allTimeEntries">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:53,54</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Entrées de tous les temps</target>
+        <target>Entrées</target>
       </segment>
     </unit>
     <unit id="allTimeAvg">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:57,58</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ø pro Tag</source>
-        <target>Ø/jour de tous les temps</target>
+        <target>Moy./jour</target>
       </segment>
     </unit>
     <unit id="trainingPlans.day">
@@ -6917,9 +6917,9 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Liegestütze sind der Kern, dazu kommen Core-, Bein- und Zugübungen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
-        <target>Trente jours d'entraînement quotidien avec des jours de repos ciblés. Jour 1 est le test max, jour 30 le test final.</target>
+        <target>Trente jours d'entraînement quotidien avec des jours de repos ciblés. Les pompes sont au cœur du programme, complétées par des exercices de gainage, de jambes et de tirage. Le jour 1 est le test maximum, le jour 30 le test final.</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
@@ -6935,27 +6935,27 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
-        <target>Journée légère — 2×50 % du maximum</target>
+        <target>Jour léger — 2×50 % du maximum · 10 min mobilité</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 3×60 % vom Maximum · 3×12 Glute Bridges</source>
-        <target>Journée légère — 3×60 % du maximum</target>
+        <target>Jour léger — 3×60 % du maximum · 3×12 ponts fessiers</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze à ~80 % vom Maximum · 4×10 Ruderzüge</source>
-        <target>5 séries à ~80 % du maximum</target>
+        <target>5 séries à ~80 % du maximum · 4×10 rangées</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % — Qualität vor Quantität · 2×60 s Plank</source>
-        <target>3 séries à 70 % — qualité avant quantité</target>
+        <target>3 séries à 70 % — qualité avant quantité · 2×60 s planche</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.27.desc">
@@ -7913,9 +7913,9 @@
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Profil und Sichtbarkeit </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Aperçu</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Profil et visibilité </target>
       </segment>
     </unit>
     <unit id="settings.goals.planOverrideHint">
@@ -11610,9 +11610,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.private.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.</source>
-        <target>Personne d'autre que vous ne peut le voir. Activez-le dans les paramètres pour pouvoir le partager.</target>
+        <target>Personne d'autre que toi ne peut le voir. Appuie sur l'icône à côté d'un élément ci-dessous et choisis « Afficher à tous » pour pouvoir partager ton profil.</target>
       </segment>
     </unit>
     <unit id="publicProfile.private.cta">
@@ -11778,9 +11778,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Besucher</source>
-        <target>Voir en tant que visiteur</target>
+        <target>En tant que visiteur</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.photoEdit">
@@ -12468,225 +12468,225 @@
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.group">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ansicht wählen</source>
-        <target>Ansicht wählen</target>
+        <target>Choisir la vue</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.owner">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bearbeiten</source>
-        <target>Bearbeiten</target>
+        <target>Modifier</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.friend">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Freund</source>
-        <target>Als Freund</target>
+        <target>En tant qu'ami</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.locked">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
-        <target>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</target>
+        <target>La vue visiteur n'est disponible que lorsque ton profil est public.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.noteFriend">
-      <segment state="initial">
+      <segment state="translated">
         <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
-        <target>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</target>
+        <target>Voici à quoi ressemble ton profil pour les amis qui ont accepté ta demande.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.notePublic">
-      <segment state="initial">
+      <segment state="translated">
         <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
-        <target>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</target>
+        <target>Voici à quoi ressemble ton profil pour toute personne ayant le lien de ton profil.</target>
       </segment>
     </unit>
     <unit id="publicProfile.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzte Übungen</source>
-        <target>Letzte Übungen</target>
+        <target>Exercices récents</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.heading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Liegestütze seit Beginn</source>
-        <target>Alle Liegestütze seit Beginn</target>
+        <target>Toutes les pompes depuis le début</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.total">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</source>
-        <target>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</target>
+        <target>Toutes les pompes que tu as jamais enregistrées. Les autres exercices ne comptent pas ici.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</source>
-        <target>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</target>
+        <target>Jours pendant lesquels tu as enregistré au moins une pompe.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.entries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</source>
-        <target>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</target>
+        <target>Nombre de tes entrées de pompes – chaque série enregistrée compte comme une entrée.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.avg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</source>
-        <target>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</target>
+        <target>Pompes moyennes par jour d'entraînement : total divisé par les jours.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan teilen</source>
-        <target>Plan teilen</target>
+        <target>Partager le plan</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.plain">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</source>
-        <target>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</target>
+        <target>Je m'entraîne avec le plan « <ph id="0" equiv="title" disp="title"/> » 💪 Rejoins-moi :</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</source>
-        <target>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</target>
+        <target>Mon plan « <ph id="0" equiv="title" disp="title"/> » m'attend au jour <ph id="1" equiv="day" disp="day"/> sur <ph id="2" equiv="total" disp="totalDays"/> – je m'y remets 💪</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.day">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</source>
-        <target>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</target>
+        <target>Jour <ph id="0" equiv="day" disp="day"/> sur <ph id="1" equiv="total" disp="totalDays"/> dans le plan « <ph id="2" equiv="title" disp="title"/> » 💪 <ph id="3" equiv="percent" disp="done"/> % accompli.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker Trainingsplan</source>
-        <target>Pushup Tracker Trainingsplan</target>
+        <target>Plan d'entraînement Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×30 s Plank</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×30 s Plank</target>
+        <target>3×AMRAP pompes, 90 s de pause · 3×30 s planche</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</target>
+        <target>3×AMRAP pompes, 90 s de pause · 3×15 squats</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 3×20 s Hollow Hold</source>
-        <target>Leichter Tag · 3×20 s Hollow Hold</target>
+        <target>Jour léger · 3×20 s hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</target>
+        <target>3×AMRAP pompes, 90 s de pause · 3×10 rangées</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</target>
+        <target>4×AMRAP pompes, 60 s de pause · 3×30 s mountain climbers</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×45 s Plank</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×45 s Plank</target>
+        <target>4×AMRAP pompes, 60 s de pause · 3×45 s planche</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 10 min Mobility</source>
-        <target>Leichter Tag · 10 min Mobility</target>
+        <target>Jour léger · 10 min mobilité</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</target>
+        <target>4×AMRAP pompes, 60 s de pause · 3×12 squats sautés</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 3×10 Dead Bugs</source>
-        <target>Leichter Tag · 3×10 Dead Bugs</target>
+        <target>Jour léger · 3×10 dead bugs</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</source>
-        <target>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</target>
+        <target>5 séries de répétitions cibles · 4×25 s hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
-        <target>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</target>
+        <target>5 séries de répétitions cibles · 3×20 fentes</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</source>
-        <target>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</target>
+        <target>5 séries de répétitions cibles · 3×8 burpees pour finir</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % · 10 min Mobility</source>
-        <target>Leichter Tag — 2×50 % · 10 min Mobility</target>
+        <target>Jour léger — 2×50 % · 10 min mobilité</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % · 3×15 Face Pulls</source>
-        <target>3 Sätze à 70 % · 3×15 Face Pulls</target>
+        <target>3 séries à 70 % · 3×15 face pulls</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % · 10 min Dehnen</source>
-        <target>Leichter Tag — 2×50 % · 10 min Dehnen</target>
+        <target>Jour léger — 2×50 % · 10 min étirements</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % · 2×30 s Hollow Hold</source>
-        <target>3 Sätze à 70 % · 2×30 s Hollow Hold</target>
+        <target>3 séries à 70 % · 2×30 s hollow hold</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan</source>
-        <target>Trainingsplan</target>
+        <target>Plan d'entraînement</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert</source>
-        <target>Pausiert</target>
+        <target>En pause</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan ansehen</source>
-        <target>Plan ansehen</target>
+        <target>Voir le plan</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.day">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></source>
-        <target>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></target>
+        <target>Jour <ph id="0" equiv="day" disp="progress.dayIndex"/> sur <ph id="1" equiv="total" disp="progress.totalDays"/></target>
       </segment>
     </unit>
 </file>
