@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import type { User } from '@pu-auth/auth';
+import { AuthStore, type User } from '@pu-auth/auth';
 
 import { CallableFunctionsService } from '../../admin/callable-functions.service';
 import { ReferralService } from '../referral.service';
@@ -9,7 +9,11 @@ import { ReferralClaimHook } from './referral-claim.hook';
 describe('ReferralClaimHook', () => {
   const user = { uid: 'newcomer-1' } as User;
 
-  function setup(pending: string | null, callable = vitest.fn()) {
+  function setup(
+    pending: string | null,
+    callable = vitest.fn(),
+    signedIn: string | null = null
+  ) {
     const clear = vitest.fn();
     const referralMock = { pending: signal(pending), clear };
     TestBed.resetTestingModule();
@@ -20,6 +24,10 @@ describe('ReferralClaimHook', () => {
         {
           provide: CallableFunctionsService,
           useValue: { call: () => callable },
+        },
+        {
+          provide: AuthStore,
+          useValue: { user: signal(signedIn ? { uid: signedIn } : null) },
         },
       ],
     });
@@ -49,6 +57,42 @@ describe('ReferralClaimHook', () => {
     // then
     expect(callable).not.toHaveBeenCalled();
     expect(clear).not.toHaveBeenCalled();
+  });
+
+  describe('Following your own invite link while signed in', () => {
+    it('should drop the invitation without waiting for the next sign-in', async () => {
+      // given — a restored session never runs the post-auth hooks, so the
+      // banner sat on the user's own pages for good
+      const { clear } = setup('wolf-1', vitest.fn(), 'wolf-1');
+
+      // when the effect sees the signed-in user
+      TestBed.tick();
+
+      // then
+      expect(clear).toHaveBeenCalled();
+    });
+
+    it('should keep an invitation from somebody else', async () => {
+      // given — a real invitation still belongs to the next sign-up
+      const { clear } = setup('inviter-1', vitest.fn(), 'wolf-1');
+
+      // when
+      TestBed.tick();
+
+      // then
+      expect(clear).not.toHaveBeenCalled();
+    });
+
+    it('should do nothing while nobody is signed in', async () => {
+      // given
+      const { clear } = setup('inviter-1');
+
+      // when
+      TestBed.tick();
+
+      // then
+      expect(clear).not.toHaveBeenCalled();
+    });
   });
 
   it('should never claim the user own link', async () => {

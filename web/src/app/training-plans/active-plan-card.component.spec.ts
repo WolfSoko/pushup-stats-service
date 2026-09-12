@@ -39,6 +39,29 @@ describe('ActivePlanCardComponent', () => {
     expect(document.body.textContent).toContain('Aktiver Plan');
   });
 
+  it('should offer sharing the plan', async () => {
+    // given — a plan is the one thing on this page worth showing off
+    const sharePlan = vitest.fn();
+    await render(ActivePlanCardComponent, {
+      inputs: { view, dayIndex: 3, today: day },
+      on: { sharePlan },
+    });
+
+    // when
+    screen.getByTestId('active-plan-share').click();
+
+    // then
+    expect(sharePlan).toHaveBeenCalled();
+  });
+
+  it('should keep offering it while the plan is paused', async () => {
+    // given — coming back to a plan is worth telling people about too
+    await renderCard({ paused: true });
+
+    // then
+    expect(screen.getByTestId('active-plan-share')).toBeTruthy();
+  });
+
   it('should offer resuming instead of logging while the plan is paused', async () => {
     // given
     await renderCard({ paused: true });

@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { PostAuthHook, type User } from '@pu-auth/auth';
+import { effect, inject, Injectable, Injector } from '@angular/core';
+import { AuthStore, PostAuthHook, type User } from '@pu-auth/auth';
 
 import { CallableFunctionsService } from '../../admin/callable-functions.service';
 import { ReferralService } from '../referral.service';
@@ -19,11 +19,27 @@ interface ClaimResponse {
  * attribution for the same account. Whatever the verdict, the pending
  * invitation is dropped afterwards: retrying forever would mean every
  * later login re-asks a question the server already answered.
+ *
+ * It also cleans up after a user who followed their own invite link while
+ * already signed in — see the effect below.
  */
 @Injectable()
 export class ReferralClaimHook implements PostAuthHook {
   private readonly referral = inject(ReferralService);
   private readonly callables = inject(CallableFunctionsService);
+  private readonly injector = inject(Injector);
+
+  constructor() {
+    // A restored session never runs the post-auth hooks, so an invitation
+    // captured from the user's own link stayed pending forever — and with
+    // it the "X hat dich eingeladen" banner on their own pages. Read
+    // lazily: `AuthStore` depends on the `AuthService` that constructs
+    // this hook, so injecting it as a field would close a DI cycle.
+    effect(() => {
+      const uid = this.injector.get(AuthStore, null)?.user()?.uid;
+      if (uid && this.referral.pending() === uid) this.referral.clear();
+    });
+  }
 
   async onAuthenticated(user: User): Promise<void> {
     const referrerUid = this.referral.pending();

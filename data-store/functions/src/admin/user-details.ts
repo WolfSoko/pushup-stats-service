@@ -5,6 +5,8 @@
  * publicProfile / active-plan extraction unit-testable without the Admin SDK.
  */
 
+import { isProfilePublic, type ProfileVisibilityUi } from '@pu-stats/models';
+
 export interface AdminActivePlan {
   planId: string;
   /** ISO date (YYYY-MM-DD) the user started the plan, when stored. */
@@ -42,15 +44,15 @@ export function validateGetUserDetailsPayload(
 }
 
 /**
- * `true` iff the `userConfigs/{uid}` doc has opted into a public profile
- * (`ui.publicProfile === true`). Mirrors `isPublicProfileAllowed` — anything
- * else (missing config, missing flag, non-boolean) is treated as private.
+ * `true` iff the `userConfigs/{uid}` doc publishes any section to the
+ * world. Mirrors `isPublicProfileAllowed` — anything else (missing config,
+ * missing levels) is treated as private.
  */
 export function readPublicProfile(config: unknown): boolean {
   if (!config || typeof config !== 'object') return false;
   const ui = (config as Record<string, unknown>).ui;
   if (!ui || typeof ui !== 'object') return false;
-  return (ui as Record<string, unknown>).publicProfile === true;
+  return isProfilePublic(ui as ProfileVisibilityUi);
 }
 
 /**

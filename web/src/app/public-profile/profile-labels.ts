@@ -10,12 +10,15 @@ import type { ExerciseGroupKind } from './profile-view.model';
  */
 export const PROFILE_LABELS = {
   privateTitle: $localize`:@@publicProfile.private.title:Dein Profil ist noch privat`,
-  privateBody: $localize`:@@publicProfile.private.body:Niemand außer dir kann es sehen. Schalte es in den Einstellungen frei, um es teilen zu können.`,
-  privateCta: $localize`:@@publicProfile.private.cta:Profil öffentlich machen`,
+  privateBody: $localize`:@@publicProfile.private.body:Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.`,
   week: $localize`:@@publicProfile.week:Diese Woche`,
   month: $localize`:@@publicProfile.month:Dieser Monat`,
   exercises: $localize`:@@publicProfile.exercises:Übungen`,
   heatmap: $localize`:@@publicProfile.heatmap:Wann trainiert wird`,
+  recent: $localize`:@@publicProfile.recent:Letzte Übungen`,
+  plan: $localize`:@@publicProfile.plan:Trainingsplan`,
+  planPaused: $localize`:@@publicProfile.plan.paused:Pausiert`,
+  planCta: $localize`:@@publicProfile.plan.cta:Plan ansehen`,
   heatmapAria: $localize`:@@publicProfile.heatmap.aria:Trainingsverteilung über Wochentage und Tageszeit`,
   memberSince: $localize`:@@publicProfile.memberSince:Dabei seit`,
   notFoundTitle: $localize`:@@publicProfile.notFound.title:Profil nicht gefunden`,
@@ -40,7 +43,14 @@ export const PROFILE_LABELS = {
   legendPublic: $localize`:@@publicProfile.owner.legend.public:Für alle sichtbar, die deinen Profil-Link haben.`,
   legendFriends: $localize`:@@publicProfile.owner.legend.friends:Nur für Freunde, die deine Anfrage bestätigt haben.`,
   legendOff: $localize`:@@publicProfile.owner.legend.off:Für niemanden – nur du siehst es, hier abgeblendet dargestellt.`,
-  previewAsVisitor: $localize`:@@publicProfile.owner.preview:Als Besucher ansehen`,
+  /** The preview picker: whose view of the profile is on screen. */
+  previewGroup: $localize`:@@publicProfile.owner.preview.group:Ansicht wählen`,
+  previewOwner: $localize`:@@publicProfile.owner.preview.owner:Bearbeiten`,
+  previewFriend: $localize`:@@publicProfile.owner.preview.friend:Als Freund`,
+  previewPublic: $localize`:@@publicProfile.owner.preview:Als Besucher`,
+  previewLocked: $localize`:@@publicProfile.owner.preview.locked:Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.`,
+  previewNoteFriend: $localize`:@@publicProfile.owner.preview.noteFriend:So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.`,
+  previewNotePublic: $localize`:@@publicProfile.owner.preview.notePublic:So sieht dein Profil für alle aus, die deinen Profil-Link haben.`,
   photoEdit: $localize`:@@publicProfile.owner.photoEdit:Profilbild ändern`,
   /** Current audience of one element, for the switch's tooltip. */
   visibilityPublic: $localize`:@@publicProfile.owner.visibility.public:Für alle sichtbar`,

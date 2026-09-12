@@ -14,6 +14,8 @@ export interface UserConfigForPublicProfile extends UserProfile {
     hideAccountPhoto?: boolean;
     /** Ids from `PROFILE_SECTIONS` the owner switched off. */
     profileHidden?: unknown;
+    /** Level per section, keyed by `PROFILE_SECTIONS`. */
+    profileVisibility?: Readonly<Record<string, string>>;
   };
   createdAt?: string;
   /** Set by the client after a photo upload; drives the photo URL. */
@@ -40,6 +42,23 @@ export interface UserStatsForPublicProfile {
   /** Cumulative reps per `<weekday>-<HH>` slot, zero slots pruned. */
   heatmap?: Record<string, number>;
   updatedAt?: string;
+}
+
+/** Where the owner stands in their training plan. */
+export interface PlanProgress {
+  planId: string;
+  dayIndex: number;
+  totalDays: number;
+  paused: boolean;
+}
+
+/** One logged workout, as a profile visitor may see it. */
+export interface RecentEntry {
+  exerciseId: string;
+  /** Reps, seconds or metres — see {@link ExerciseTotal.measurement}. */
+  value: number;
+  measurement: MeasurementType;
+  timestamp: string;
 }
 
 /** One entry of the per-exercise breakdown. */
@@ -92,6 +111,10 @@ export interface PublicProfileProjection {
   heatmap: Record<string, number>;
   /** Top exercises by volume, grouped and formatted by the client. */
   exercises: ExerciseTotal[];
+  /** The last few workouts, newest first. Empty when not visible. */
+  recent: RecentEntry[];
+  /** The running training plan, `null` when there is none or it is hidden. */
+  plan: PlanProgress | null;
   /**
    * True only when the projection is handed to its own owner despite the
    * profile being private. Never true for a third party — the callable
@@ -128,6 +151,8 @@ export interface PublicProfileExtras {
   readonly achievements?: UserAchievementsForPublicProfile | null;
   readonly photoURL?: string | null;
   readonly exercises?: ReadonlyArray<ExerciseTotal>;
+  readonly recent?: ReadonlyArray<RecentEntry>;
+  readonly plan?: PlanProgress | null;
   /** Berlin period keys for "now", used to reject stale buckets. */
   readonly currentWeeklyKey?: string;
   readonly currentMonthlyKey?: string;

@@ -57,32 +57,12 @@
     </div>
   </header>
 
-  <a
-    class="mini-badges mini-badges--link"
-    routerLink="/analysis"
-    data-testid="dashboard-all-time-badges-link"
-  >
-    <span class="badge"
-      ><small i18n="@@allTimeTotal">All-Time Gesamt</small
-      ><b>{{ allTimeTotal() }}</b></span
-    >
-    <span class="badge"
-      ><small i18n="@@allTimeDays">All-Time Tage</small
-      ><b>{{ allTimeDays() }}</b></span
-    >
-    <span class="badge"
-      ><small i18n="@@allTimeEntries">All-Time Einträge</small
-      ><b>{{ allTimeEntries() }}</b></span
-    >
-    <span class="badge"
-      ><small i18n="@@allTimeAvg">All-Time Ø/Tag</small
-      ><b>{{ allTimeAvg() }}</b></span
-    >
-    <span class="badges-cta">
-      <mat-icon aria-hidden="true">insights</mat-icon>
-      <span i18n="@@dashboard.allTimeBadges.cta">Zur Analyse</span>
-    </span>
-  </a>
+  <app-all-time-badges
+    [total]="allTimeTotal()"
+    [days]="allTimeDays()"
+    [entries]="allTimeEntries()"
+    [avg]="allTimeAvg()"
+  />
 
   @if (planActive()) {
     <mat-card class="plan-banner">

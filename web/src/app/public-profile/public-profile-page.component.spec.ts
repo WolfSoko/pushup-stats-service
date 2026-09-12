@@ -34,6 +34,8 @@ const sampleProfile: PublicProfile = {
   monthlyReps: 0,
   heatmap: {},
   exercises: [],
+  recent: [],
+  plan: null,
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],
@@ -269,7 +271,9 @@ describe('PublicProfilePageComponent', () => {
       // given — the server hands the owner their own private profile;
       // replacing the content with a hint would hide exactly what the
       // owner came to look at
-      await setup({ resolve: { ...sampleProfile, isPrivate: true } });
+      await setup({
+        resolve: { ...sampleProfile, isPrivate: true, viewerIsOwner: true },
+      });
 
       // then
       expect(
@@ -284,17 +288,25 @@ describe('PublicProfilePageComponent', () => {
       ).not.toBeNull();
     });
 
-    it('should link to the settings tab that flips the switch', async () => {
-      // given
-      await setup({ resolve: { ...sampleProfile, isPrivate: true } });
-
-      // when
-      const cta = fixture.nativeElement.querySelector(
-        '[data-testid="public-profile-enable"]'
-      ) as HTMLAnchorElement | null;
+    it('should say how to publish something, on this page', async () => {
+      // given — the settings switch is gone; the switches next to each
+      // element are the opt-in, so a trip to the settings would be a
+      // dead end
+      await setup({
+        resolve: { ...sampleProfile, isPrivate: true, viewerIsOwner: true },
+      });
 
       // then
-      expect(cta?.getAttribute('href')).toContain('/settings/profil');
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-enable"]'
+        )
+      ).toBeNull();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        ).textContent
+      ).toContain('Symbol');
     });
 
     it('should not show the hint on a public profile', async () => {
@@ -307,6 +319,31 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-private"]'
         )
       ).toBeNull();
+    });
+
+    it('should not show the owner hint to a friend of a private profile', async () => {
+      // given — a friendship gets you the page even while it is private,
+      // and "Dein Profil ist noch privat" is not addressed to you
+      await setup({
+        resolve: {
+          ...sampleProfile,
+          isPrivate: true,
+          viewerIsOwner: false,
+          viewerIsFriend: true,
+        },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-private"]'
+        )
+      ).toBeNull();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-name"]'
+        )
+      ).not.toBeNull();
     });
 
     it('should still show the generic not-found when there is no profile', async () => {
@@ -411,6 +448,182 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-exercises"]'
         )
       ).toBeNull();
+    });
+  });
+
+  describe('Active training plan', () => {
+    const plan = {
+      planId: 'challenge-30d-v1',
+      dayIndex: 12,
+      totalDays: 30,
+      paused: false,
+    };
+
+    it('should name the plan and the day the owner is on', async () => {
+      // given
+      await setup({ resolve: { ...sampleProfile, plan } });
+
+      // then
+      const section = fixture.nativeElement.querySelector(
+        '[data-testid="public-profile-plan"]'
+      );
+      expect(section).toBeTruthy();
+      expect(section.textContent).toContain('30-Tage-Challenge');
+      expect(section.textContent).toContain('12');
+      expect(section.textContent).toContain('30');
+    });
+
+    it('should link to the plan so a visitor can start it too', async () => {
+      // given — the whole point of showing it
+      await setup({ resolve: { ...sampleProfile, plan } });
+
+      // then
+      expect(
+        fixture.nativeElement
+          .querySelector('[data-testid="public-profile-plan-link"]')
+          .getAttribute('href')
+      ).toContain('/training-plans/challenge-30d');
+    });
+
+    it('should say when the plan is on hold', async () => {
+      // given — "Tag 12 von 30" alone would claim progress that is paused
+      await setup({
+        resolve: { ...sampleProfile, plan: { ...plan, paused: true } },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-plan"]'
+        ).textContent
+      ).toContain('Pausiert');
+    });
+
+    it('should omit the section when the viewer gets no plan', async () => {
+      // given — no plan, or one the owner keeps to themselves
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-plan"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should keep the switch for the owner without a plan', async () => {
+      // given — the switch has to exist before there is anything to show,
+      // or the owner could never publish it
+      await setup({
+        resolve: { ...sampleProfile, viewerIsOwner: true, plan: null },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="profile-toggle-plan"]'
+        )
+      ).toBeTruthy();
+    });
+
+    it('should ignore a plan the catalog no longer knows', async () => {
+      // given — a retired plan id must not render an empty card
+      await setup({
+        resolve: { ...sampleProfile, plan: { ...plan, planId: 'retired' } },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-plan-link"]'
+        )
+      ).toBeNull();
+    });
+  });
+
+  describe('Recent workouts', () => {
+    const recent = [
+      {
+        exerciseId: 'pushup',
+        value: 40,
+        measurement: 'reps' as const,
+        timestamp: '2026-09-11T18:00:00.000Z',
+      },
+      {
+        exerciseId: 'plank',
+        value: 90,
+        measurement: 'time' as const,
+        timestamp: '2026-09-11T17:00:00.000Z',
+      },
+    ];
+
+    it('should render one tile per workout', async () => {
+      // given — the same "what did you just train" the dashboard shows,
+      // seen from the visitor's side
+      await setup({ resolve: { ...sampleProfile, recent } });
+
+      // then
+      const tiles = fixture.nativeElement.querySelectorAll(
+        '[data-testid="public-profile-recent-tile"]'
+      );
+      expect(tiles.length).toBe(2);
+      expect(tiles[0].textContent).toContain('Liegestütze');
+    });
+
+    it('should format every workout in its own unit', async () => {
+      // given — 90 under a plank is seconds, not repetitions
+      await setup({ resolve: { ...sampleProfile, recent } });
+
+      // then
+      const tiles = fixture.nativeElement.querySelectorAll(
+        '[data-testid="public-profile-recent-tile"]'
+      );
+      expect(tiles[1].textContent).toContain('1:30 min');
+    });
+
+    it('should show the workout time in Berlin time', async () => {
+      // given — every other number on this profile is bucketed in Berlin,
+      // so a tile must not land on another weekday for a visitor abroad
+      await setup({ resolve: { ...sampleProfile, recent } });
+
+      // then — 18:00 UTC is 20:00 in Berlin (CEST)
+      const tiles = fixture.nativeElement.querySelectorAll(
+        '[data-testid="public-profile-recent-tile"]'
+      );
+      expect(tiles[0].textContent).toContain('8:00');
+    });
+
+    it('should omit the section when the viewer gets no workouts', async () => {
+      // given — a visitor of a profile that keeps them for friends gets
+      // an empty list, and an empty heading would announce what is hidden
+      await setup({ resolve: sampleProfile });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-recent"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should keep the section and its switch for the owner', async () => {
+      // given — the owner needs the switch even before they ever logged
+      // anything, or they could never publish this
+      await setup({
+        resolve: { ...sampleProfile, viewerIsOwner: true, recent: [] },
+      });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-recent"]'
+        )
+      ).toBeTruthy();
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="profile-toggle-recent"]'
+        )
+      ).toBeTruthy();
     });
   });
 
@@ -624,35 +837,90 @@ describe('PublicProfilePageComponent', () => {
       ).toBeTruthy();
     });
 
-    describe('Preview as visitor', () => {
-      it('should not be offered while the profile is private', async () => {
+    describe('Previewing another audience', () => {
+      const pick = (mode: string) => {
+        const button = q(
+          '[data-testid="profile-preview-' + mode + '"] button'
+        ) as HTMLButtonElement;
+        button.click();
+        fixture.detectChanges();
+      };
+
+      it('should offer the picker to the owner', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // then
+        expect(q('[data-testid="profile-preview-modes"]')).toBeTruthy();
+        expect(q('[data-testid="profile-preview-friend"]')).toBeTruthy();
+        expect(q('[data-testid="profile-preview-public"]')).toBeTruthy();
+      });
+
+      it('should not offer it to a visitor', async () => {
+        // given
+        await setup({ resolve: sampleProfile });
+
+        // then
+        expect(q('[data-testid="profile-preview-modes"]')).toBeNull();
+      });
+
+      it('should lock the visitor view while the profile is private', async () => {
         // given — there is no visitor view to preview yet
         await setup({ resolve: owner({ isPrivate: true }) });
 
         // then
-        expect(q('[data-testid="profile-preview-toggle"]')).toBeNull();
+        expect(
+          q('[data-testid="profile-preview-public"] button').disabled
+        ).toBe(true);
       });
 
-      it('should be offered once the profile is public', async () => {
-        // given
-        await setup({ resolve: owner({ isPrivate: false }) });
+      it('should still offer the friends view on a private profile', async () => {
+        // given — a friendship gets you the page without the public opt-in
+        await setup({ resolve: owner({ isPrivate: true }) });
 
         // then
-        expect(q('[data-testid="profile-preview-toggle"]')).toBeTruthy();
+        expect(
+          q('[data-testid="profile-preview-friend"] button').disabled
+        ).toBe(false);
       });
 
-      it('should drop switched-off elements entirely', async () => {
+      it('should keep a friends-only element in the friends view', async () => {
         // given
-        await setup({
-          resolve: owner({ visibility: { streak: 'off' } }),
-        });
+        await setup({ resolve: owner({ visibility: { streak: 'friends' } }) });
 
         // when
-        fixture.componentInstance['previewAsVisitor'].set(true);
-        fixture.detectChanges();
+        pick('friend');
 
-        // then — a preview that still showed it would be a lie about
-        // what visitors get
+        // then
+        expect(q('[data-testid="public-profile-streak"]')).toBeTruthy();
+      });
+
+      it('should drop a friends-only element from the visitor view', async () => {
+        // given — the one difference the two previews exist to show
+        await setup({ resolve: owner({ visibility: { streak: 'friends' } }) });
+
+        // when
+        pick('public');
+
+        // then
+        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+      });
+
+      it('should drop switched-off elements from both previews', async () => {
+        // given
+        await setup({ resolve: owner({ visibility: { streak: 'off' } }) });
+
+        // when
+        pick('friend');
+
+        // then — a preview that still showed it would be a lie about what
+        // the other side gets
+        expect(q('[data-testid="public-profile-streak"]')).toBeNull();
+
+        // when
+        pick('public');
+
+        // then
         expect(q('[data-testid="public-profile-streak"]')).toBeNull();
       });
 
@@ -661,11 +929,61 @@ describe('PublicProfilePageComponent', () => {
         await setup({ resolve: owner() });
 
         // when
-        fixture.componentInstance['previewAsVisitor'].set(true);
-        fixture.detectChanges();
+        pick('friend');
 
         // then
         expect(q('[data-testid="profile-toggle-streak"]')).toBeNull();
+        expect(q('[data-testid="profile-owner-legend"]')).toBeNull();
+      });
+
+      it('should name the audience on screen', async () => {
+        // given — three icons in a row do not say which one is active
+        await setup({ resolve: owner() });
+
+        // when
+        pick('friend');
+
+        // then
+        expect(q('[data-testid="profile-preview-note"]').textContent).toContain(
+          'Freunde'
+        );
+      });
+
+      it('should show what a friend gets instead of the owner actions', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        pick('friend');
+
+        // then
+        expect(q('[data-testid="public-profile-invite"]')).toBeNull();
+        expect(fixture.nativeElement.textContent).toContain('Ihr seid Freunde');
+      });
+
+      it('should show a visitor the friend request, without being able to send it', async () => {
+        // given
+        await setup({ resolve: owner() });
+
+        // when
+        pick('public');
+
+        // then — you cannot befriend yourself, so the button is only shape
+        const button = q('[data-testid="public-profile-add-friend"]');
+        expect(button).toBeTruthy();
+        expect(button.disabled).toBe(true);
+      });
+
+      it('should come back to the switches when editing is picked again', async () => {
+        // given
+        await setup({ resolve: owner() });
+        pick('public');
+
+        // when
+        pick('owner');
+
+        // then
+        expect(q('[data-testid="profile-toggle-streak"]')).toBeTruthy();
       });
     });
 

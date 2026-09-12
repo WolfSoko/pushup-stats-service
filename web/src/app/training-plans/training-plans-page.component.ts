@@ -16,6 +16,7 @@ import { AuthStore } from '@pu-auth/auth';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ActivePlanCardComponent } from './active-plan-card.component';
 import { PlanPauseService } from './plan-pause.service';
+import { PlanShareService } from './plan-share.service';
 import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
 
 @Component({
@@ -91,6 +92,7 @@ import { LogPlanDayResult, TrainingPlanStore } from './training-plan.store';
           (pausePlan)="pause()"
           (resumePlan)="resume()"
           (logToday)="logToday()"
+          (sharePlan)="sharePlan()"
         />
       }
 
@@ -224,6 +226,7 @@ export class TrainingPlansPageComponent {
   readonly store = inject(TrainingPlanStore);
   private readonly snackbar = inject(MatSnackBar);
   private readonly planPause = inject(PlanPauseService);
+  private readonly planShare = inject(PlanShareService);
   private readonly authStore = inject(AuthStore);
 
   readonly isAuthenticated = this.authStore.isAuthenticated;
@@ -272,6 +275,10 @@ export class TrainingPlansPageComponent {
 
   abandon(): void {
     void this.store.abandon();
+  }
+
+  sharePlan(): void {
+    void this.planShare.sharePlan();
   }
 
   pause(): void {

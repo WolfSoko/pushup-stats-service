@@ -452,16 +452,16 @@ describe('StatsDashboardComponent', () => {
         expect(hint?.textContent).toContain('schwebenden');
       });
 
-      it('Then the all-time mini-badges sit directly under the hero header', () => {
+      it('Then the all-time badges sit directly under the hero header', () => {
         const root = fixture.nativeElement as HTMLElement;
         const header = root.querySelector('.page-header');
-        const miniBadges = root.querySelector('.mini-badges');
+        const badges = root.querySelector('app-all-time-badges');
 
         expect(header).toBeTruthy();
-        expect(miniBadges).toBeTruthy();
+        expect(badges).toBeTruthy();
         if (!header) return;
-        // Mini-badges must come right after the hero header, not after today-focus.
-        expect(header.nextElementSibling).toBe(miniBadges);
+        // The badges must come right after the hero header, not after today-focus.
+        expect(header.nextElementSibling).toBe(badges);
       });
 
       it('Then the latest exercises section renders as per-entry tile links and the section is no longer a global click target', () => {

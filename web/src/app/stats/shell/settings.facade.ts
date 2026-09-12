@@ -19,6 +19,7 @@ import { PushSubscriptionService } from '@pu-push/push';
 import {
   DEFAULT_SNAP_QUALITY,
   DisplayNameViolation,
+  isProfilePublic,
   SnapQuality,
   validateDisplayName,
 } from '@pu-stats/models';
@@ -73,13 +74,21 @@ export class SettingsFacade implements OnDestroy {
     validateDisplayName(this.displayNameDraft())
   );
   readonly leaderboardOptOutDraft = signal(false);
-  readonly publicProfileDraft = signal(false);
   readonly hideAccountPhotoDraft = signal(false);
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
 
   readonly profileUrl = computed(() =>
     buildProfileShareUrl(this.userId(), this.localeId)
+  );
+
+  /**
+   * Whether the world sees anything at all. There is no master switch any
+   * more — the per-section levels on the profile page are the opt-in, so
+   * this reads the persisted config rather than a draft of its own.
+   */
+  readonly profileIsPublic = computed(() =>
+    isProfilePublic(this.userConfigStore.config()?.ui)
   );
 
   readonly deletingAccount = signal(false);
@@ -190,7 +199,6 @@ export class SettingsFacade implements OnDestroy {
     return {
       displayName: this.displayNameDraft().trim(),
       hideFromLeaderboard: this.leaderboardOptOutDraft(),
-      publicProfile: this.publicProfileDraft(),
       hideAccountPhoto: this.hideAccountPhotoDraft(),
       adsConsent: this.adsConsentDraft(),
       snapQuality: this.snapQualityDraft(),
@@ -200,7 +208,6 @@ export class SettingsFacade implements OnDestroy {
   private applyConfigToDrafts(cfg: ResolvedConfig): void {
     this.displayNameDraft.set(cfg.displayName);
     this.leaderboardOptOutDraft.set(cfg.hideFromLeaderboard);
-    this.publicProfileDraft.set(cfg.publicProfile);
     this.hideAccountPhotoDraft.set(cfg.hideAccountPhoto);
     this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     this.snapQualityDraft.set(cfg.snapQuality);
@@ -209,7 +216,6 @@ export class SettingsFacade implements OnDestroy {
   private trackSaved(draft: DraftSnapshot): void {
     this.trackAnalytics('settings_saved', {
       hideFromLeaderboard: draft.hideFromLeaderboard,
-      publicProfile: draft.publicProfile,
       adsConsent: draft.adsConsent,
     });
   }

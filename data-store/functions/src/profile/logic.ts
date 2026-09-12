@@ -3,9 +3,17 @@
  * Pure logic, no Firebase dependencies
  */
 
+import { isProfilePublic } from '@pu-stats/models';
+
 export interface UserProfile {
   displayName?: string;
-  ui?: { hideFromLeaderboard?: boolean; publicProfile?: boolean };
+  ui?: {
+    hideFromLeaderboard?: boolean;
+    /** Legacy master switch; `isProfilePublic` reads it as a default. */
+    publicProfile?: boolean;
+    profileHidden?: unknown;
+    profileVisibility?: Readonly<Record<string, string>>;
+  };
   role?: string;
   /**
    * Admin-only moderation flag. When `true`, the user is excluded from
@@ -57,7 +65,8 @@ export function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
  * Three independent gates:
  * 1. Leaderboard name is allowed (`hideFromLeaderboard === false`) so the
  *    displayed alias is the real name.
- * 2. Public profile is enabled (`publicProfile === true`).
+ * 2. Something on the profile is public — the per-section levels decide,
+ *    the legacy master switch only as their default.
  * 3. `displayName` is non-empty after trimming. Without this, a user with
  *    both opt-ins but a blank name would render as `anonym` (via
  *    `toPublicDisplayName`'s fallback) AND get a clickable `/u/<uid>` —
@@ -66,7 +75,7 @@ export function isLeaderboardNameAllowed(profile?: UserProfile): boolean {
  */
 export function isPublicProfileLinkAllowed(profile?: UserProfile): boolean {
   if (!isLeaderboardNameAllowed(profile)) return false;
-  if (profile?.ui?.publicProfile !== true) return false;
+  if (!isProfilePublic(profile?.ui)) return false;
   return String(profile?.displayName || '').trim().length > 0;
 }
 

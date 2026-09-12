@@ -51,6 +51,10 @@ export interface PublicProfile {
   readonly heatmap: Readonly<Record<string, number>>;
   /** Top exercises by volume. */
   readonly exercises: ReadonlyArray<PublicProfileExercise>;
+  /** The last handful of workouts, newest first. */
+  readonly recent: ReadonlyArray<PublicProfileEntry>;
+  /** The training plan the owner is running, `null` when there is none. */
+  readonly plan: PublicProfilePlan | null;
   /**
    * True only when the viewer is the owner and has not opted in yet. The
    * page keeps showing the content and adds a hint; nobody else ever
@@ -77,6 +81,31 @@ export interface PublicProfile {
   readonly updatedAt: string;
 }
 
+/**
+ * One logged workout, as far as a profile visitor may see it: what was
+ * trained, how much, and when. No id, no note, no source — those belong
+ * to the owner's history.
+ */
+export interface PublicProfileEntry {
+  readonly exerciseId: string;
+  readonly value: number;
+  readonly measurement: ProfileMeasurement;
+  /** ISO timestamp of the entry. */
+  readonly timestamp: string;
+}
+
+/**
+ * Where the owner stands in their plan. The plan itself is named by id —
+ * title, slug and length come from the local catalog, so the visitor sees
+ * them in their own language.
+ */
+export interface PublicProfilePlan {
+  readonly planId: string;
+  readonly dayIndex: number;
+  readonly totalDays: number;
+  readonly paused: boolean;
+}
+
 export interface PublicProfileExercise {
   readonly exerciseId: string;
   readonly total: number;
@@ -86,6 +115,8 @@ export interface PublicProfileExercise {
    * depending on the exercise — so the client groups and formats by this
    * instead of summing across entries.
    */
-  readonly measurement:
-    'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
+  readonly measurement: ProfileMeasurement;
 }
+
+export type ProfileMeasurement =
+  'reps' | 'time' | 'distance' | 'weight' | 'distance-time';

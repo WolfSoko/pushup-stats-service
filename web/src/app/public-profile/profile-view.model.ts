@@ -129,3 +129,35 @@ export function buildExerciseGroups<
       };
     });
 }
+
+export interface RecentRow {
+  /** Unique per tile; the position keeps two identical entries apart. */
+  readonly key: string;
+  readonly name: string;
+  readonly value: string;
+  /** Already formatted — see `createProfileRows` for the timezone. */
+  readonly time: string;
+}
+
+/**
+ * The "what did they just train" tiles. Formatting is handed in so this
+ * stays free of `$localize` and the locale — the page owns both.
+ */
+export function buildRecentRows(
+  entries: ReadonlyArray<{
+    exerciseId: string;
+    value: number;
+    measurement: string;
+    timestamp: string;
+  }>,
+  name: (exerciseId: string) => string,
+  value: (entry: { value: number; measurement: string }) => string,
+  time: (timestamp: string) => string
+): ReadonlyArray<RecentRow> {
+  return entries.map((entry, index) => ({
+    key: `${entry.timestamp}-${entry.exerciseId}-${index}`,
+    name: name(entry.exerciseId),
+    value: value(entry),
+    time: time(entry.timestamp),
+  }));
+}

@@ -197,9 +197,10 @@ export interface UserConfig {
     showSourceColumn?: boolean;
     hideFromLeaderboard?: boolean;
     /**
-     * Public-profile opt-in. When `true`, the `getPublicProfile(uid)` Cloud
-     * Function returns a sanitized projection of this user's stats; otherwise
-     * it returns `not-found`. Defaults to `false` (private).
+     * Legacy public-profile opt-in. Superseded by {@link profileVisibility}:
+     * whether the world sees anything is now decided per section, and this
+     * flag only supplies the default for configs written before that — see
+     * `sectionVisibility` / `isProfilePublic`. No longer written.
      */
     publicProfile?: boolean;
     /**

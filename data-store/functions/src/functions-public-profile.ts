@@ -5,10 +5,19 @@ import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 // Imported for its init side effects (Sentry + admin.initializeApp) so this
 // module is safe to load before any other firebase-app consumer.
 import {
+  currentPlanDayIndex,
   findExerciseDefinition,
+  findPlanById,
   friendshipId,
+  isPausedPlan,
+  isSectionVisibleTo,
   isValidFriendUid,
+  pausedPlanDayIndex,
+  sectionVisibility,
   type Friendship,
+  type ProfileSection,
+  type ProfileViewer,
+  type UserTrainingPlan,
 } from '@pu-stats/models';
 
 import { berlinDateParts } from './datetime';
@@ -21,6 +30,8 @@ import {
   type UserConfigForPublicProfile,
   type ExerciseTotal,
   type UserAchievementsForPublicProfile,
+  type PlanProgress,
+  type RecentEntry,
   type UserStatsForPublicProfile,
 } from './profile';
 // `renderProfileOg` lives behind a dynamic `import()` call inside the
@@ -61,6 +72,74 @@ async function readExerciseTotals(uid: string): Promise<ExerciseTotal[]> {
 }
 
 const MAX_PROFILE_EXERCISES = 8;
+
+const MAX_RECENT_ENTRIES = 10;
+
+/**
+ * The workouts behind the numbers, newest first — the same "what did you
+ * just train" the owner sees on their dashboard.
+ *
+ * Only fetched when the viewer may actually see them: it is the one extra
+ * query per profile view, and a section set to `friends` would otherwise
+ * be paid for by every anonymous visitor.
+ */
+async function readRecentEntries(uid: string): Promise<RecentEntry[]> {
+  const snap = await db
+    .collection('exerciseEntries')
+    .where('userId', '==', uid)
+    .orderBy('timestamp', 'desc')
+    .limit(MAX_RECENT_ENTRIES)
+    .get();
+  const rows: RecentEntry[] = [];
+  for (const doc of snap.docs) {
+    const data = doc.data();
+    const definition = findExerciseDefinition(String(data['exerciseId'] ?? ''));
+    const timestamp = data['timestamp'];
+    if (!definition || typeof timestamp !== 'string' || !timestamp) continue;
+    // Same fallback order as the stats trigger: a run carries both
+    // `distanceM` and `durationSec`, and distance is its primary value.
+    const value = Number(
+      data['reps'] ?? data['distanceM'] ?? data['durationSec'] ?? 0
+    );
+    if (!Number.isFinite(value) || value <= 0) continue;
+    rows.push({
+      exerciseId: definition.id,
+      value,
+      measurement: definition.measurement,
+      timestamp,
+    });
+  }
+  return rows;
+}
+
+/**
+ * The plan the user is running, as far as a visitor may see it: which
+ * plan, how far in, and whether it is on hold. Named by id — the client
+ * resolves title and length from its own catalog, in its own language.
+ */
+async function readActivePlan(
+  uid: string,
+  today: string
+): Promise<PlanProgress | null> {
+  const snap = await db.collection('userTrainingPlans').doc(uid).get();
+  const data = snap.data() as UserTrainingPlan | undefined;
+  if (!data || (data.status !== 'active' && data.status !== 'paused')) {
+    return null;
+  }
+  const plan = findPlanById(data.planId);
+  if (!plan) return null;
+  // A paused plan shows the day it was left on, not one the break ran past.
+  const dayIndex =
+    pausedPlanDayIndex(data, plan.totalDays) ??
+    currentPlanDayIndex(plan, data.startDate, today);
+  if (dayIndex === null) return null;
+  return {
+    planId: plan.id,
+    dayIndex,
+    totalDays: plan.totalDays,
+    paused: isPausedPlan(data),
+  };
+}
 
 async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
@@ -103,14 +182,26 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
 
   const parts = berlinDateParts();
   const keys = periodKeys(parts);
-  const [photoURL, exercises] = await Promise.all([
+  const viewer: ProfileViewer = viewerIsOwner
+    ? 'owner'
+    : viewerIsFriend
+      ? 'friend'
+      : 'public';
+  // Skip the extra read entirely when the viewer may not see the section.
+  const shows = (section: ProfileSection): boolean =>
+    isSectionVisibleTo(sectionVisibility(config?.ui, section), viewer);
+  const [photoURL, exercises, recent, plan] = await Promise.all([
     resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
     readExerciseTotals(uid),
+    shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
+    shows('plan') ? readActivePlan(uid, parts.isoDate) : Promise.resolve(null),
   ]);
   return buildPublicProfile(uid, config, stats, {
     achievements,
     photoURL,
     exercises,
+    recent,
+    plan,
     currentWeeklyKey: keys.weeklyKey,
     currentMonthlyKey: keys.monthlyKey,
     viewerIsOwner,

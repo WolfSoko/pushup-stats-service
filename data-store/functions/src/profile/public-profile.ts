@@ -10,6 +10,7 @@
 
 import {
   canViewProfile,
+  isProfilePublic,
   isSectionVisibleTo,
   profileVisibilityMap,
   PROFILE_SECTIONS,
@@ -27,13 +28,13 @@ import type {
 } from './public-profile.types';
 
 /**
- * Returns true iff the user has explicitly opted in to a public profile.
+ * Returns true iff some part of the profile is published to the world.
  * Defaults to private — undefined / missing fields = false.
  */
 export function isPublicProfileAllowed(
   config: UserConfigForPublicProfile | undefined | null
 ): boolean {
-  return config?.ui?.publicProfile === true;
+  return isProfilePublic(config?.ui);
 }
 
 /**
@@ -132,6 +133,8 @@ export function buildPublicProfile(
     ),
     heatmap: show('heatmap', publicHeatmap(stats?.heatmap), {}),
     exercises: show('exercises', [...(extras.exercises ?? [])], []),
+    recent: show('recent', [...(extras.recent ?? [])], []),
+    plan: show('plan', extras.plan ?? null, null),
     isPrivate: !isPublic,
     viewerIsOwner,
     viewerIsFriend,

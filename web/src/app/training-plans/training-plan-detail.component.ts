@@ -27,6 +27,7 @@ import { TrainingPlanStore } from './training-plan.store';
 import { PlanStartService } from './plan-start.service';
 import { PlanDayActionsService } from './plan-day-actions.service';
 import { PlanPauseService } from './plan-pause.service';
+import { PlanShareService } from './plan-share.service';
 import { isPlanActive, isPlanPaused } from './training-plan-store.selectors';
 import { PlanDayExercisesComponent } from './plan-day-exercises.component';
 import { planDayExpansion } from './plan-day-expansion';
@@ -76,6 +77,7 @@ export class TrainingPlanDetailComponent {
   private readonly snackbar = inject(MatSnackBar);
   private readonly planStart = inject(PlanStartService);
   private readonly planPause = inject(PlanPauseService);
+  private readonly planShare = inject(PlanShareService);
   /** Bound directly from the template — see `PlanDayActionsService`. */
   protected readonly dayActions = inject(PlanDayActionsService);
   private readonly locale = inject(LOCALE_ID) as string;
@@ -216,6 +218,10 @@ export class TrainingPlanDetailComponent {
         replaceUrl: true,
       });
     }
+  }
+
+  sharePlan(): void {
+    void this.planShare.sharePlan();
   }
 
   pause(): Promise<void> {

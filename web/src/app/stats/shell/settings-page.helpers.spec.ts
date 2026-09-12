@@ -20,7 +20,6 @@ describe('settings-page.helpers', () => {
       expect(result).toEqual({
         displayName: '',
         hideFromLeaderboard: false,
-        publicProfile: false,
         hideAccountPhoto: false,
         consent: { targetedAds: true },
         snapQuality: DEFAULT_SNAP_QUALITY,
@@ -43,7 +42,6 @@ describe('settings-page.helpers', () => {
         displayName: 'Wolf',
         ui: {
           hideFromLeaderboard: true,
-          publicProfile: true,
           hideAccountPhoto: false,
           snapQuality: 'high',
         },
@@ -57,7 +55,6 @@ describe('settings-page.helpers', () => {
       expect(result).toEqual({
         displayName: 'Wolf',
         hideFromLeaderboard: true,
-        publicProfile: true,
         hideAccountPhoto: false,
         consent: { targetedAds: false, dataProcessing: true },
         snapQuality: 'high',
@@ -73,7 +70,6 @@ describe('settings-page.helpers', () => {
 
       // then
       expect(result.hideFromLeaderboard).toBe(false);
-      expect(result.publicProfile).toBe(false);
       expect(result.snapQuality).toBe(DEFAULT_SNAP_QUALITY);
       expect(result.consent).toEqual({ targetedAds: true });
     });
@@ -94,7 +90,7 @@ describe('settings-page.helpers', () => {
       // given
       const raw = {
         displayName: 42,
-        ui: { hideFromLeaderboard: 'yes', publicProfile: 1 },
+        ui: { hideFromLeaderboard: 'yes' },
         consent: { targetedAds: 'nope' },
       };
 
@@ -104,7 +100,6 @@ describe('settings-page.helpers', () => {
       // then
       expect(result.displayName).toBe('');
       expect(result.hideFromLeaderboard).toBe(false);
-      expect(result.publicProfile).toBe(false);
       expect(result.consent.targetedAds).toBe(true);
     });
 
@@ -127,7 +122,6 @@ describe('settings-page.helpers', () => {
     const base: ResolvedConfig = {
       displayName: '  Wolf  ',
       hideFromLeaderboard: true,
-      publicProfile: false,
       hideAccountPhoto: false,
       consent: { targetedAds: false },
       snapQuality: 'middle',
@@ -165,7 +159,6 @@ describe('settings-page.helpers', () => {
     const a: DraftSnapshot = {
       displayName: 'Wolf',
       hideFromLeaderboard: false,
-      publicProfile: true,
       hideAccountPhoto: false,
       adsConsent: true,
       snapQuality: 'low',
@@ -200,7 +193,6 @@ describe('settings-page.helpers', () => {
       expect(snapshotsEqual(a, { ...a, hideFromLeaderboard: true })).toBe(
         false
       );
-      expect(snapshotsEqual(a, { ...a, publicProfile: false })).toBe(false);
       expect(snapshotsEqual(a, { ...a, adsConsent: false })).toBe(false);
     });
   });
@@ -209,7 +201,6 @@ describe('settings-page.helpers', () => {
     const draft: DraftSnapshot = {
       displayName: 'Wolf',
       hideFromLeaderboard: true,
-      publicProfile: true,
       hideAccountPhoto: false,
       adsConsent: false,
       snapQuality: 'high',
@@ -220,7 +211,6 @@ describe('settings-page.helpers', () => {
       const current: ResolvedConfig = {
         displayName: 'Wolf',
         hideFromLeaderboard: false,
-        publicProfile: false,
         hideAccountPhoto: false,
         consent: { targetedAds: true, dataProcessing: true },
         snapQuality: 'low',
@@ -235,7 +225,6 @@ describe('settings-page.helpers', () => {
         consent: { targetedAds: false, dataProcessing: true },
         ui: {
           hideFromLeaderboard: true,
-          publicProfile: true,
           hideAccountPhoto: false,
           snapQuality: 'high',
         },
@@ -247,7 +236,6 @@ describe('settings-page.helpers', () => {
       const current: ResolvedConfig = {
         displayName: 'Wolf',
         hideFromLeaderboard: false,
-        publicProfile: false,
         hideAccountPhoto: false,
         consent: undefined as unknown as ResolvedConfig['consent'],
         snapQuality: 'low',
@@ -336,7 +324,6 @@ describe('hideAccountPhoto round trip', () => {
   const base: ResolvedConfig = {
     displayName: 'Wolf',
     hideFromLeaderboard: false,
-    publicProfile: true,
     hideAccountPhoto: false,
     consent: { targetedAds: true },
     snapQuality: 'low',

@@ -1,4 +1,7 @@
-import { formatExerciseTotal } from './exercise-total.format';
+import {
+  formatExerciseTotal,
+  formatExerciseValue,
+} from './exercise-total.format';
 
 describe('formatExerciseTotal', () => {
   describe('Given a rep-counted exercise', () => {
@@ -46,5 +49,28 @@ describe('formatExerciseTotal', () => {
 
   it('should follow the locale for grouping', () => {
     expect(formatExerciseTotal(3600, 'reps', 'en-US')).toBe('3,600');
+  });
+});
+
+describe('formatExerciseValue', () => {
+  it('should keep the seconds of a single hold', () => {
+    // given — rounding 90 seconds to "2 min" would be wrong in the one
+    // place the user can check it against their own memory
+    expect(formatExerciseValue(90, 'time', 'de')).toBe('1:30 min');
+  });
+
+  it('should pad the seconds', () => {
+    // given
+    expect(formatExerciseValue(65, 'time', 'de')).toBe('1:05 min');
+  });
+
+  it('should format everything else like a total', () => {
+    // given
+    expect(formatExerciseValue(40, 'reps', 'de')).toBe(
+      formatExerciseTotal(40, 'reps', 'de')
+    );
+    expect(formatExerciseValue(1500, 'distance', 'de')).toBe(
+      formatExerciseTotal(1500, 'distance', 'de')
+    );
   });
 });

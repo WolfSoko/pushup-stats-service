@@ -19,6 +19,8 @@ export const PROFILE_SECTIONS = [
   'achievements',
   'exercises',
   'heatmap',
+  'recent',
+  'plan',
 ] as const;
 
 export type ProfileSection = (typeof PROFILE_SECTIONS)[number];

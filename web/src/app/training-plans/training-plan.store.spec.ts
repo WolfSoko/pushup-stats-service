@@ -28,6 +28,16 @@ const PLAN = TRAINING_PLANS.find(
 ) as (typeof TRAINING_PLANS)[number];
 
 /**
+ * A plan whose main days prescribe push-ups and nothing else. The 30-day
+ * challenge mixes in core and leg work, so a day of it writes one entry
+ * per exercise — the wrong fixture for the tests that are about the
+ * single pushup write path.
+ */
+const PUSHUP_ONLY_PLAN = TRAINING_PLANS.find(
+  (p) => p.id === 'recruit-6w-v1'
+) as (typeof TRAINING_PLANS)[number];
+
+/**
  * A curated plan the shipped catalog does NOT contain, used to drive the
  * non-pushup `logPlanDay` write path. Day 2 is a reps-measured catalog
  * exercise (`legs.squats`) so it routes through `ExerciseFirestoreService`.
@@ -778,35 +788,35 @@ describe('TrainingPlanStore', () => {
 
   describe('logPlanDay', () => {
     it('creates a pushup entry with the plan sets and marks the day done', async () => {
-      // Day 2 is a main day with sets [20, 20, 20] and target 60.
-      // We seed startDate one day in the past so day 2 == today
+      // Day 1 of the pushup-only plan is a main day with sets
+      // [10, 10, 10]; starting today makes it the current day
       // (logPlanDay rejects future days).
-      const yesterdayIso = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
+      const todayIso = toBerlinIsoDate(new Date());
       const { store, mocks } = setup({
         userId: 'u1',
-        planId: PLAN.id,
-        startDate: yesterdayIso,
+        planId: PUSHUP_ONLY_PLAN.id,
+        startDate: todayIso,
         status: 'active',
         completedDays: [],
       });
       await flush();
 
-      const day2 = PLAN.days[1];
-      expect(day2.kind).toBe('main');
-      expect(day2.targetReps).toBeGreaterThan(0);
+      const day1 = PUSHUP_ONLY_PLAN.days[0];
+      expect(day1.kind).toBe('main');
+      expect(day1.targetReps).toBeGreaterThan(0);
 
-      await store.logPlanDay(2);
+      await store.logPlanDay(1);
       await flush();
 
       expect(mocks.exerciseApiMock.createEntry).toHaveBeenCalledTimes(1);
       const [userId, call] = mocks.exerciseApiMock.createEntry.mock.calls[0];
       expect(userId).toBe('u1');
       expect(call.exerciseId).toBe('pushup');
-      expect(call.reps).toBe(day2.targetReps);
-      expect(call.sets).toEqual(day2.sets);
+      expect(call.reps).toBe(day1.targetReps);
+      expect(call.sets).toEqual(day1.sets);
       expect(call.source).toBe('plan');
 
-      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+      expect(mocks.apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 1);
     });
 
     it('skips the pushup write when the day is already covered by existing entries', async () => {
@@ -1093,19 +1103,19 @@ describe('TrainingPlanStore', () => {
     });
 
     it('should leave the pushup path unchanged', async () => {
-      // given — a real pushup plan day 2 (no exerciseId)
-      const yesterdayIso = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
+      // given — a real pushup-only plan day (no exerciseId, no items)
+      const todayIso = toBerlinIsoDate(new Date());
       const { store, mocks } = setup({
         userId: 'u1',
-        planId: PLAN.id,
-        startDate: yesterdayIso,
+        planId: PUSHUP_ONLY_PLAN.id,
+        startDate: todayIso,
         status: 'active',
         completedDays: [],
       });
       await flush();
 
       // when
-      await store.logPlanDay(2);
+      await store.logPlanDay(1);
       await flush();
 
       // then — pushup routes through createEntry (exerciseId:'pushup'); legacy createPushup is not called
@@ -1244,11 +1254,13 @@ describe('TrainingPlanStore', () => {
       // that would also start the setInterval — so we control the
       // setup carefully and resetTestingModule at the end.
       const today = toBerlinIsoDate(new Date());
-      const target = PLAN.days[1].targetReps;
-      const startDate = toBerlinIsoDate(new Date(Date.now() - 86_400_000));
+      // A pushup-only day: a day that also prescribes core work is done
+      // when every item is covered, not when the reps alone are.
+      const target = PUSHUP_ONLY_PLAN.days[0].targetReps;
+      const startDate = today;
       const initial: UserTrainingPlan = {
         userId: 'u1',
-        planId: PLAN.id,
+        planId: PUSHUP_ONLY_PLAN.id,
         startDate,
         status: 'active',
         completedDays: [],
@@ -1329,7 +1341,7 @@ describe('TrainingPlanStore', () => {
       ]);
       await flush();
 
-      expect(apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 2);
+      expect(apiMock.addCompletedDay).toHaveBeenCalledWith('u1', 1);
       // No pushup created — the auto-mark NEVER writes a new entry.
       expect(statsApiMock.createPushup).not.toHaveBeenCalled();
 

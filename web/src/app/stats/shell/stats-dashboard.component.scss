@@ -219,83 +219,6 @@ h1 {
   font-weight: 600;
 }
 
-.mini-badges {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.mini-badges--link {
-  text-decoration: none;
-  color: inherit;
-  border-radius: 999px;
-  transition:
-    transform 0.15s ease,
-    filter 0.2s ease;
-
-  &:hover,
-  &:focus-visible {
-    transform: translateY(-1px);
-    filter: brightness(1.1);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--mat-sys-primary, #8fb4ff);
-    outline-offset: 4px;
-  }
-}
-
-.badges-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  padding: 6px 10px;
-  font-size: 0.78rem;
-  color: var(--mat-sys-primary, #8fb4ff);
-
-  mat-icon {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mini-badges--link {
-    transition: filter 0.2s ease;
-
-    &:hover,
-    &:focus-visible {
-      transform: none;
-    }
-  }
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(128, 160, 230, 0.32);
-  background: rgba(31, 47, 84, 0.45);
-  color: #dbe7ff;
-
-  small {
-    color: #9fb3de;
-    font-size: 0.74rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  b {
-    font-variant-numeric: tabular-nums;
-    font-size: 0.86rem;
-  }
-}
-
 .panel {
   border: 1px solid rgba(123, 159, 255, 0.24);
   border-radius: 18px;
@@ -745,16 +668,6 @@ h1 {
 
   .own-rank {
     color: #047857;
-  }
-
-  .badge {
-    border-color: rgba(59, 130, 246, 0.25);
-    background: rgba(241, 245, 249, 0.8);
-    color: #1e293b;
-
-    small {
-      color: #64748b;
-    }
   }
 
   .panel {

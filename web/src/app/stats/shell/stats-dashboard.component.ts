@@ -42,6 +42,7 @@ import type { DailyGoalItemView } from '../../core/daily-goal.helpers';
 import { DailyGoalChecklistComponent } from '../../core/daily-goal/daily-goal-checklist.component';
 import { registerDashboardDeepLinks } from './stats-dashboard.deep-links';
 import { AdSlotComponent } from '@pu-stats/ads';
+import { AllTimeBadgesComponent } from '../dashboard/all-time-badges.component';
 import { AnalysisTeaserCardComponent } from '../components/analysis-teaser-card/analysis-teaser-card.component';
 import { PreviewBannerComponent } from '../components/preview-banner/preview-banner.component';
 import { TrainingEntryDialogComponent } from '../components/training-entry-dialog/training-entry-dialog.component';
@@ -75,6 +76,7 @@ import {
     MatProgressBarModule,
     MatSnackBarModule,
     DatePipe,
+    AllTimeBadgesComponent,
     AnalysisTeaserCardComponent,
     DailyGoalChecklistComponent,
     PlanDayExercisesComponent,

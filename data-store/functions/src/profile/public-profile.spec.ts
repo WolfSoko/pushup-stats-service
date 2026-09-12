@@ -1,3 +1,5 @@
+import { PROFILE_SECTIONS } from '@pu-stats/models';
+
 import {
   buildPublicProfile,
   isPublicProfileAllowed,
@@ -49,6 +51,31 @@ describe('isPublicProfileAllowed', () => {
       isPublicProfileAllowed({
         displayName: 'Wolfi',
         ui: { publicProfile: false },
+      })
+    ).toBe(false);
+  });
+
+  it('Given a section published to everyone, Then returns true', () => {
+    // The settings master switch is gone: a level of `public` on any one
+    // section is what publishes the profile now.
+    expect(
+      isPublicProfileAllowed({
+        displayName: 'Wolfi',
+        ui: { profileVisibility: { streak: 'public' } },
+      })
+    ).toBe(true);
+  });
+
+  it('Given every section narrowed to friends, Then returns false', () => {
+    expect(
+      isPublicProfileAllowed({
+        displayName: 'Wolfi',
+        ui: {
+          publicProfile: true,
+          profileVisibility: Object.fromEntries(
+            PROFILE_SECTIONS.map((section) => [section, 'friends'])
+          ),
+        },
       })
     ).toBe(false);
   });
@@ -112,6 +139,8 @@ describe('buildPublicProfile', () => {
       monthlyReps: 0,
       heatmap: {},
       exercises: [],
+      recent: [],
+      plan: null,
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
@@ -151,6 +180,8 @@ describe('buildPublicProfile', () => {
       monthlyReps: 0,
       heatmap: {},
       exercises: [],
+      recent: [],
+      plan: null,
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
@@ -271,6 +302,8 @@ describe('buildPublicProfile', () => {
       'monthlyReps',
       'heatmap',
       'exercises',
+      'recent',
+      'plan',
       'isPrivate',
       'viewerIsOwner',
       'viewerIsFriend',
@@ -571,7 +604,9 @@ describe('buildPublicProfile element visibility', () => {
         stats,
         { ...extras, viewerIsOwner: true }
       );
-      expect(result?.hidden).toEqual(['streak', 'heatmap']);
+      // Sections that are off by default until the owner publishes them
+      // belong in the list too — it is what the owner's page dims.
+      expect(result?.hidden).toEqual(['streak', 'heatmap', 'recent', 'plan']);
       expect(result?.viewerIsOwner).toBe(true);
     });
   });
@@ -664,5 +699,97 @@ describe('buildPublicProfile for friends', () => {
     // then
     expect(owner?.visibility.total).toBe('friends');
     expect(visitor?.visibility).toEqual({});
+  });
+});
+
+describe('buildPublicProfile › recent workouts', () => {
+  const uid = 'abcdef1234567890';
+  const recent = [
+    {
+      exerciseId: 'pushup',
+      value: 40,
+      measurement: 'reps' as const,
+      timestamp: '2026-09-11T18:00:00.000Z',
+    },
+  ];
+  const config = {
+    displayName: 'Wolfi',
+    ui: { publicProfile: true, hideFromLeaderboard: false },
+  };
+
+  it('should keep them from a visitor of a legacy public profile', () => {
+    // given — the old master switch was never consent for publishing
+    // what was trained and when
+    const result = buildPublicProfile(uid, config, null, { recent });
+
+    // then
+    expect(result?.recent).toEqual([]);
+  });
+
+  it('should keep them from a friend who was never told about them', () => {
+    // given — the friendship was accepted before this section existed
+    const result = buildPublicProfile(uid, config, null, {
+      recent,
+      viewerIsFriend: true,
+    });
+
+    // then
+    expect(result?.recent).toEqual([]);
+  });
+
+  it('should show them to a friend once the owner chose that', () => {
+    // given
+    const result = buildPublicProfile(
+      uid,
+      {
+        ...config,
+        ui: { ...config.ui, profileVisibility: { recent: 'friends' } },
+      },
+      null,
+      { recent, viewerIsFriend: true }
+    );
+
+    // then
+    expect(result?.recent).toEqual(recent);
+  });
+
+  it('should show them to the owner', () => {
+    // given — the owner needs to see what the switch governs
+    const result = buildPublicProfile(uid, config, null, {
+      recent,
+      viewerIsOwner: true,
+    });
+
+    // then
+    expect(result?.recent).toEqual(recent);
+  });
+
+  it('should show them to everyone once the owner says so', () => {
+    // given
+    const result = buildPublicProfile(
+      uid,
+      {
+        ...config,
+        ui: { ...config.ui, profileVisibility: { recent: 'public' } },
+      },
+      null,
+      { recent }
+    );
+
+    // then
+    expect(result?.recent).toEqual(recent);
+  });
+
+  it('should drop them when the section is switched off', () => {
+    // given
+    const result = buildPublicProfile(
+      uid,
+      { ...config, ui: { ...config.ui, profileVisibility: { recent: 'off' } } },
+      null,
+      { recent, viewerIsFriend: true }
+    );
+
+    // then
+    expect(result?.recent).toEqual([]);
   });
 });
