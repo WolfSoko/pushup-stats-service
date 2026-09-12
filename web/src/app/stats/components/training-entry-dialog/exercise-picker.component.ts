@@ -3,7 +3,9 @@ import {
   Component,
   computed,
   effect,
+  inject,
   input,
+  LOCALE_ID,
   output,
   signal,
 } from '@angular/core';
@@ -17,15 +19,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { MeasurementType } from '@pu-stats/models';
+import {
+  exerciseRefTooltip,
+  resolveExerciseRef,
+} from '../../../core/exercise-ref/exercise-ref.model';
 import { exerciseDisplayName } from '../../i18n/exercise-display-names';
 import {
   buildExercisePickerGroups,
   filterExercisePickerGroups,
 } from './exercise-picker.groups';
-import {
-  exerciseWikiLink,
-  exerciseWikiTooltip,
-} from './training-entry-dialog.display';
 import {
   ExerciseSuggestions,
   PUSHUP_EXERCISE_ID,
@@ -63,6 +65,8 @@ import {
   templateUrl: './exercise-picker.component.html',
 })
 export class ExercisePickerComponent {
+  private readonly locale = inject(LOCALE_ID) as string;
+
   readonly exerciseId = input.required<string>();
   readonly suggestions = input<ExerciseSuggestions>({});
   /** Only exercises of these measurement types are offered; absent = all. */
@@ -93,8 +97,11 @@ export class ExercisePickerComponent {
   readonly showWikiLink = computed(
     () => this.exerciseId() !== PUSHUP_EXERCISE_ID
   );
-  readonly wikiLink = computed(() => exerciseWikiLink(this.exerciseId()));
-  readonly wikiTooltip = computed(() => exerciseWikiTooltip(this.exerciseId()));
+  private readonly exerciseRef = computed(() =>
+    resolveExerciseRef(this.exerciseId(), undefined, this.locale)
+  );
+  readonly wikiLink = computed(() => this.exerciseRef().wikiLink);
+  readonly wikiTooltip = computed(() => exerciseRefTooltip(this.exerciseRef()));
 
   readonly displayExercise = (id: string | null | undefined): string =>
     id ? exerciseDisplayName(id) : '';

@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ExerciseRefComponent } from '../core/exercise-ref/exercise-ref.component';
 import { DayExerciseRow } from './training-plan-detail.models';
 
 /** Emitted when the user ticks an exercise on or off by hand. */
@@ -36,6 +37,7 @@ export interface ExerciseToggle {
     MatIconModule,
     MatProgressBarModule,
     MatTooltipModule,
+    ExerciseRefComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './plan-day-exercises.component.html',

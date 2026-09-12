@@ -2,7 +2,6 @@ import { UnifiedEntry } from '@pu-stats/models';
 import {
   buildDisplayedColumns,
   exerciseLabel,
-  exerciseWikiLink,
   formatDuration,
   formatEntry,
   formatSets,
@@ -129,39 +128,6 @@ describe('exerciseLabel', () => {
     const row = entry({ exerciseId: 'made.up.exercise' });
     // when / then
     expect(exerciseLabel(row)).toBe('made.up.exercise');
-  });
-});
-
-describe('exerciseWikiLink', () => {
-  it('should drill into the pushup wiki detail for a known variant', () => {
-    // given
-    const row = entry({ exerciseId: 'pushup', variantId: 'diamond' });
-    // when
-    const link = exerciseWikiLink(row);
-    // then
-    expect(link[0]).toBe('/wiki/liegestuetz-typen');
-    expect(link.length).toBe(2);
-  });
-
-  it('should fall back to the pushup wiki list for an unknown variant', () => {
-    // given
-    const row = entry({ exerciseId: 'pushup', variantId: undefined });
-    // when / then
-    expect(exerciseWikiLink(row)).toEqual(['/wiki/liegestuetz-typen']);
-  });
-
-  it('should route a catalog exercise to its /wiki/uebungen detail', () => {
-    // given
-    const row = entry({ exerciseId: 'abs.situps' });
-    // when / then
-    expect(exerciseWikiLink(row)).toEqual(['/wiki/uebungen', 'sit-ups']);
-  });
-
-  it('should fall back to the /wiki/uebungen list for an unknown catalog id', () => {
-    // given
-    const row = entry({ exerciseId: 'made.up.exercise' });
-    // when / then
-    expect(exerciseWikiLink(row)).toEqual(['/wiki/uebungen']);
   });
 });
 

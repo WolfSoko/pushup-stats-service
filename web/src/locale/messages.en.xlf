@@ -13013,6 +13013,12 @@ Active:         </target>
         <target>Day <ph id="0" equiv="day" disp="progress.dayIndex"/> of <ph id="1" equiv="total" disp="progress.totalDays"/></target>
       </segment>
     </unit>
+    <unit id="exerciseRef.tooltip.cta">
+      <segment state="initial">
+        <source>Zum Wiki-Eintrag</source>
+        <target>Zum Wiki-Eintrag</target>
+      </segment>
+    </unit>
     <unit id="challenge.create.title">
       <segment state="translated">
         <source>Challenge starten</source>

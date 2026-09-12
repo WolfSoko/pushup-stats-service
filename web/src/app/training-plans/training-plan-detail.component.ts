@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthStore } from '@pu-auth/auth';
 import { findPlanBySlug, localizeTrainingPlanContent } from '@pu-stats/models';
 import { previewDayProgress } from './training-plan-detail.exercises';
+import { ExerciseRefComponent } from '../core/exercise-ref/exercise-ref.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { TrainingPlanStore } from './training-plan.store';
 import { PlanStartService } from './plan-start.service';
@@ -60,6 +61,7 @@ import { DayRow } from './training-plan-detail.models';
     MatProgressBarModule,
     MatSnackBarModule,
     MatTooltipModule,
+    ExerciseRefComponent,
     PageHeaderComponent,
     PlanDayExercisesComponent,
     PlanTestInputComponent,
@@ -168,20 +170,16 @@ export class TrainingPlanDetailComponent {
   readonly pausedAt = computed(() => this.store.activePlan()?.pausedAt ?? null);
 
   readonly weeks = computed(() =>
-    weeksFor(
-      this.plan(),
-      {
-        active: this.isThisPlanStarted(),
-        currentDayIndex: this.store.currentDayIndex(),
-        completedDays: this.store.activePlan()?.completedDays ?? [],
-        skippedDays: this.store.activePlan()?.skippedDays ?? [],
-        dayProgress: (dayIndex) => this.store.dayProgress(dayIndex),
-        previewProgress: previewDayProgress,
-        testResults: (dayIndex) => this.store.testResults(dayIndex),
-        scaleFactors: this.store.scaleFactors(),
-      },
-      this.locale
-    )
+    weeksFor(this.plan(), {
+      active: this.isThisPlanStarted(),
+      currentDayIndex: this.store.currentDayIndex(),
+      completedDays: this.store.activePlan()?.completedDays ?? [],
+      skippedDays: this.store.activePlan()?.skippedDays ?? [],
+      dayProgress: (dayIndex) => this.store.dayProgress(dayIndex),
+      previewProgress: previewDayProgress,
+      testResults: (dayIndex) => this.store.testResults(dayIndex),
+      scaleFactors: this.store.scaleFactors(),
+    })
   );
 
   readonly sessionLink = computed(() =>
