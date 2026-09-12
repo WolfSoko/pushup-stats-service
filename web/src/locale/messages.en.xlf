@@ -13014,9 +13014,9 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="exerciseRef.tooltip.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Wiki-Eintrag</source>
-        <target>Zum Wiki-Eintrag</target>
+        <target>View wiki entry</target>
       </segment>
     </unit>
     <unit id="challenge.create.title">

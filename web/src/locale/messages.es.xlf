@@ -6942,9 +6942,9 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
-        <target>Día ligero — 2×50 % del máximo · 10 min movilidad</target>
+        <target>Día ligero — dos series a mitad de carga · movilidad para terminar</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
@@ -7002,15 +7002,15 @@
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
-        <target>3×8 flexiones de rodillas o elevadas</target>
+        <target>Tres series de flexiones de rodillas o elevadas</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, saubere Technik</source>
-        <target>3×9 flexiones limpias</target>
+        <target>Tres series, técnica limpia</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
@@ -7020,27 +7020,27 @@
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, volle Bewegungsamplitude</source>
-        <target>3×10 flexiones limpias</target>
+        <target>Tres series, amplitud de movimiento completa</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
-        <target>3×11</target>
+        <target>Tres series, misma técnica que en la semana 1</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, etwas mehr Volumen</source>
-        <target>3×12</target>
+        <target>Tres series, un poco más de volumen</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze — letzte Steigerung dieser Woche</source>
-        <target>3×13</target>
+        <target>Tres series — último incremento de esta semana</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.22.desc">
@@ -7080,123 +7080,123 @@
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
-        <target>5×10 repeticiones limpias, 60 s de pausa</target>
+        <target>Cinco series, repeticiones limpias, 60 s de descanso</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause</source>
-        <target>5×12, 60 s de pausa</target>
+        <target>Cinco series, 60 s de descanso</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
-        <target>5×12, 60 s de pausa</target>
+        <target>Cinco series, 60 s de descanso — mismo volumen que ayer</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
-        <target>5×14, 60 s de pausa</target>
+        <target>Cinco series, 60 s de descanso — el volumen aumenta</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
-        <target>Día ligero — 2×15 a tempo relajado</target>
+        <target>Día ligero — dos series a ritmo relajado</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleichbleibendes Tempo</source>
-        <target>5×16</target>
+        <target>Cinco series, ritmo constante</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze — Technik vor Tempo</source>
-        <target>5×16</target>
+        <target>Cinco series — técnica antes que ritmo</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, Volumen steigt</source>
-        <target>5×18</target>
+        <target>Cinco series, el volumen aumenta</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleiches Volumen</source>
-        <target>5×18</target>
+        <target>Cinco series, mismo volumen</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erstes Hundert — fünf Sätze</source>
-        <target>Primer centenar: 5×20</target>
+        <target>Primer centenar — cinco series</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
-        <target>4×25 (menos series, más repeticiones)</target>
+        <target>Menos series, pero más repeticiones por serie</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze wie gehabt</source>
-        <target>5×20</target>
+        <target>Cinco series como siempre</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
-        <target>4×25</target>
+        <target>Cuatro series más largas</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze</source>
-        <target>5×20</target>
+        <target>Cinco series</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze — Tempo bewusst verlangsamen</source>
-        <target>4×25 — ralentiza el tempo conscientemente</target>
+        <target>Cuatro series — ritmo deliberadamente más lento</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, letzte volle Woche</source>
-        <target>5×20</target>
+        <target>Cinco series, última semana completa</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
-        <target>4×25</target>
+        <target>Cuatro series más largas</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, unverändertes Volumen</source>
-        <target>5×20</target>
+        <target>Cinco series, volumen sin cambios</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze, ruhiges Tempo</source>
-        <target>4×25</target>
+        <target>Cuatro series, ritmo tranquilo</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter großer Tag vor dem Test</source>
-        <target>Último día de 100 antes del test</target>
+        <target>Último gran día antes de la prueba</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
@@ -8946,141 +8946,141 @@
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
-        <target>Circuito 3 rondas — 10 flexiones · 15 sentadillas · 10 zancadas por pierna · 30 s plancha</target>
+        <target>Circuito 3 rondas — flexiones · sentadillas · zancadas por pierna · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito 3 rondas — 10 flexiones · 15 sentadillas sumo · 12 puentes de glúteo · 40 s plancha</target>
+        <target>Circuito 3 rondas — flexiones · sentadillas sumo · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Día ligero — 2×10 flexiones · movilidad 10 min</target>
+        <target>Día ligero — dos series de flexiones · movilidad</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
-        <target>Circuito 3 rondas — 10 flexiones · 15 sentadillas · 10 puentes de glúteo · 30 s hollow hold</target>
+        <target>Circuito 3 rondas — flexiones · sentadillas · puentes de glúteo · hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
-        <target>Circuito 3 rondas — 12 flexiones · 18 sentadillas · 12 zancadas por pierna · 40 s plancha</target>
+        <target>Circuito 3 rondas — flexiones · sentadillas · zancadas por pierna · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito 3 rondas — 12 flexiones · 18 sentadillas sumo · 15 puentes de glúteo · 45 s plancha</target>
+        <target>Circuito 3 rondas — flexiones · sentadillas sumo · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
-        <target>Día ligero — 2×11 flexiones · apertura de cadera 10 min</target>
+        <target>Día ligero — dos series de flexiones · apertura de cadera</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
-        <target>Circuito 3 rondas — 12 flexiones · 12 subidas al cajón por pierna · 15 giros rusos · 40 s plancha</target>
+        <target>Circuito 3 rondas — flexiones · step-ups por pierna · giros rusos · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito 4 rondas — 10 flexiones · 15 sentadillas · 12 puentes de glúteo · 40 s plancha</target>
+        <target>Circuito 4 rondas — flexiones · sentadillas · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
-        <target>Circuito 4 rondas — 11 flexiones · 16 zancadas por pierna · 15 puentes de glúteo · 45 s plancha</target>
+        <target>Circuito 4 rondas — flexiones · zancadas por pierna · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
-        <target>Día ligero — 2×12 flexiones · yoga 20 min</target>
+        <target>Día ligero — dos series de flexiones · yoga</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
-        <target>Circuito 4 rondas — 12 flexiones · 15 sentadillas con salto · 12 puentes de glúteo · 45 s plancha</target>
+        <target>Circuito 4 rondas — flexiones · sentadillas con salto · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito 4 rondas — 13 flexiones · 18 sentadillas · 15 puentes de glúteo · 50 s plancha</target>
+        <target>Circuito 4 rondas — flexiones · sentadillas · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
-        <target>Circuito 4 rondas — 14 flexiones · 18 zancadas por pierna · 15 empujes de cadera · 50 s plancha</target>
+        <target>Circuito 4 rondas — flexiones · zancadas por pierna · hip thrusts · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
-        <target>Día ligero — 2×13 flexiones · rodillo de espuma 15 min</target>
+        <target>Día ligero — dos series de flexiones · rodillo de espuma</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
-        <target>Circuito 4 rondas — 15 flexiones · 18 sentadillas con salto · 15 puentes de glúteo · 60 s plancha</target>
+        <target>Circuito 4 rondas — flexiones · sentadillas con salto · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito 5 rondas — 12 flexiones · 15 sentadillas · 12 puentes de glúteo · 45 s plancha</target>
+        <target>Circuito 5 rondas — flexiones · sentadillas · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
-        <target>Circuito 5 rondas — 13 flexiones · 16 zancadas por pierna · 13 puentes de glúteo · 50 s plancha</target>
+        <target>Circuito 5 rondas — flexiones · zancadas por pierna · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Día ligero — 2×14 flexiones · movilidad 15 min</target>
+        <target>Día ligero — dos series de flexiones · movilidad</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
-        <target>Circuito 5 rondas — 14 flexiones · 18 sentadillas con salto · 15 empujes de cadera · 60 s plancha</target>
+        <target>Circuito 5 rondas — flexiones · sentadillas con salto · hip thrusts · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito pico 5 rondas — 15 flexiones · 20 sentadillas · 15 puentes de glúteo · 60 s plancha</target>
+        <target>Circuito pico 5 rondas — flexiones · sentadillas · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuito de descarga 4 rondas, ritmo controlado — 15 flexiones · 15 sentadillas · 12 puentes de glúteo · 45 s plancha</target>
+        <target>Circuito de descarga 4 rondas, ritmo controlado — flexiones · sentadillas · puentes de glúteo · plancha</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Día ligero — 2×12 flexiones · movilidad</target>
+        <target>Día ligero — dos series de flexiones · movilidad</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.42.desc">
@@ -9096,111 +9096,111 @@
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
-        <target>plancha 3×30 s · hollow hold 3×20 s · dead bug 3×10 por lado · flexiones 2×10</target>
+        <target>Plancha · hollow hold · dead bug por lado · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
-        <target>Beinheben 3×10 · giro ruso 3×15 · plancha 3×30 s · flexiones 2×12</target>
+        <target>Elevaciones de piernas · giro ruso · plancha · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
-        <target>escaladores 3×30 s · dead bug 3×12 · plancha 3×35 s · flexiones 2×10</target>
+        <target>Mountain climbers · dead bug · plancha · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
-        <target>Día ligero — gato-vaca 3×10 · apertura de cadera 2 min · 2×7 limpias flexiones</target>
+        <target>Día ligero — cat-cow · apertura de cadera · flexiones limpias</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
-        <target>plancha 3×40 s · hollow hold 3×25 s · dead bug 3×12 · flexiones 2×11</target>
+        <target>Plancha · hollow hold · dead bug · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
-        <target>Beinheben 3×12 · giro ruso 3×18 · plancha 3×40 s · flexiones 2×12</target>
+        <target>Elevaciones de piernas · giro ruso · plancha · flexiones — más volumen</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
-        <target>escaladores 4×30 s · plancha lateral 2×25 s por lado · flexiones 2×12</target>
+        <target>Mountain climbers · plancha lateral por lado · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Mobility · lockere Liegestütze</source>
-        <target>Día ligero — movilidad 10 min · 2×8 flexiones</target>
+        <target>Día ligero — movilidad · flexiones suaves</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
-        <target>Circuito de core 3 rondas — 40 s plancha · 20 s hollow hold · 12 dead bugs · 10 flexiones</target>
+        <target>Circuito de core 3 rondas — plancha · hollow hold · dead bugs · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
-        <target>plancha 3×50 s · plancha lateral 3×30 s por lado · hollow hold 3×30 s · flexiones 2×15</target>
+        <target>Plancha · plancha lateral por lado · hollow hold · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
-        <target>elevación de rodillas colgado 3×8 · giro ruso 3×20 · plancha 3×50 s · flexiones 2×15</target>
+        <target>Elevación de rodillas colgado · giro ruso · plancha · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
-        <target>Core potencia: plancha 3×60 s · dead bug 3×15 · escaladores 3×45 s · flexiones 2×15</target>
+        <target>Core power: plancha · dead bug · mountain climbers · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Stretching</source>
-        <target>Día ligero — 2×9 flexiones · estiramientos 10 min</target>
+        <target>Día ligero — flexiones suaves · estiramientos</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
-        <target>Circuito de core 3 rondas — 50 s plancha · 12 Beinheben · 20 giros rusos · 10 flexiones</target>
+        <target>Circuito de core 3 rondas — plancha · elevaciones de piernas · giros rusos · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
-        <target>plancha 3×60 s · hollow hold 3×40 s · elevación de rodillas colgado 3×10 · flexiones 2×16</target>
+        <target>Plancha · hollow hold · elevación de rodillas colgado · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
-        <target>Circuito de core 3 rondas — 1 min plancha · 30 giros rusos · 12 Beinheben · 12 flexiones</target>
+        <target>Circuito de core 3 rondas — plancha · giros rusos · elevaciones de piernas · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
-        <target>plancha lateral 3×40 s por lado · dead bug 3×16 · hollow hold 3×40 s · flexiones 2×16</target>
+        <target>Plancha lateral por lado · dead bug · hollow hold · flexiones</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Mobility</source>
-        <target>Día ligero — 2×9 flexiones · movilidad</target>
+        <target>Día ligero — flexiones suaves · movilidad</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.28.desc">
@@ -12304,9 +12304,9 @@
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
-        <target>Entrena conmigo: cuenta repeticiones con la cámara, completa un plan de entrenamiento y compite en la clasificación. Gratis:</target>
+        <target>Entrena conmigo: cuenta repeticiones con la cámara, anímense mutuamente y empiecen challenges juntos. Gratis:</target>
       </segment>
     </unit>
     <unit id="invite.action">
@@ -12754,9 +12754,9 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
-        <target>5 series de repeticiones objetivo · 3×20 zancadas</target>
+        <target>5 series con repeticiones objetivo · zancadas al final</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
@@ -12814,219 +12814,219 @@
       </segment>
     </unit>
     <unit id="exerciseRef.tooltip.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Wiki-Eintrag</source>
-        <target>Zum Wiki-Eintrag</target>
+        <target>Ir a la entrada del wiki</target>
       </segment>
     </unit>
     <unit id="challenge.create.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>Iniciar challenge</target>
       </segment>
     </unit>
     <unit id="challenge.create.friendsHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer macht mit?</source>
-        <target>Wer macht mit?</target>
+        <target>¿Quién participa?</target>
       </segment>
     </unit>
     <unit id="challenge.create.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Ejercicio</target>
       </segment>
     </unit>
     <unit id="challenge.create.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Wiederholungen)</source>
-        <target>Ziel (Wiederholungen)</target>
+        <target>Objetivo (repeticiones)</target>
       </segment>
     </unit>
     <unit id="challenge.create.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer</source>
-        <target>Dauer</target>
+        <target>Duración</target>
       </segment>
     </unit>
     <unit id="challenge.create.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target>Cancelar</target>
       </segment>
     </unit>
     <unit id="challenge.create.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Los geht’s </source>
-        <target> Los geht’s </target>
+        <target>¡Vamos!</target>
       </segment>
     </unit>
     <unit id="challenge.create.days">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target><ph id="0" equiv="days" disp="days"/> días</target>
       </segment>
     </unit>
     <unit id="challenges.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges</source>
         <target>Challenges</target>
       </segment>
     </unit>
     <unit id="challenges.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>Iniciar challenge</target>
       </segment>
     </unit>
     <unit id="challenges.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
-        <target> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </target>
+        <target>Aún no hay ningún challenge. Reta a tus amigos: una meta, unos días, todos juntos.</target>
       </segment>
     </unit>
     <unit id="challenges.ended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beendet</source>
-        <target>Beendet</target>
+        <target>Finalizado</target>
       </segment>
     </unit>
     <unit id="challenges.leave">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verlassen </source>
-        <target> Verlassen </target>
+        <target>Abandonar</target>
       </segment>
     </unit>
     <unit id="challenges.lastDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter Tag</source>
-        <target>Letzter Tag</target>
+        <target>Último día</target>
       </segment>
     </unit>
     <unit id="challenges.daysLeft">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target>Noch <ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target>Quedan <ph id="0" equiv="days" disp="days"/> días</target>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</source>
-        <target><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</target>
+        <target><ph id="0" equiv="count" disp="count"/> solicitudes de amistad pendientes</target>
       </segment>
     </unit>
     <unit id="friends.board.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuern</source>
-        <target>Anfeuern</target>
+        <target>Animar</target>
       </segment>
     </unit>
     <unit id="friends.board.cheered">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>Ya animado hoy</target>
       </segment>
     </unit>
     <unit id="friends.board.cheersToday">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</target>
+        <target><ph id="0" equiv="count" disp="count"/> ánimos hoy</target>
       </segment>
     </unit>
     <unit id="friends.error.cheeredAlready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert – morgen wieder.</source>
-        <target>Heute schon angefeuert – morgen wieder.</target>
+        <target>Ya animaste hoy – vuelve mañana.</target>
       </segment>
     </unit>
     <unit id="friends.error.notFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das geht nur unter bestätigten Freunden.</source>
-        <target>Das geht nur unter bestätigten Freunden.</target>
+        <target>Esto solo funciona entre amigos confirmados.</target>
       </segment>
     </unit>
     <unit id="challenge.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>Elige al menos un amigo.</target>
       </segment>
     </unit>
     <unit id="challenge.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Teilnehmer für eine Challenge.</source>
-        <target>Zu viele Teilnehmer für eine Challenge.</target>
+        <target>Demasiados participantes para un challenge.</target>
       </segment>
     </unit>
     <unit id="challenge.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für diese Übung geht keine Challenge.</source>
-        <target>Für diese Übung geht keine Challenge.</target>
+        <target>No hay challenge disponible para este ejercicio.</target>
       </segment>
     </unit>
     <unit id="challenge.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Ziel muss zwischen 10 und 100.000 liegen.</source>
-        <target>Das Ziel muss zwischen 10 und 100.000 liegen.</target>
+        <target>El objetivo debe estar entre 10 y 100.000.</target>
       </segment>
     </unit>
     <unit id="challenge.error.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Dauer gibt es nicht.</source>
-        <target>Diese Dauer gibt es nicht.</target>
+        <target>Esa duración no existe.</target>
       </segment>
     </unit>
     <unit id="challenge.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon genug Challenges laufen. Warte, bis eine endet.</source>
-        <target>Du hast schon genug Challenges laufen. Warte, bis eine endet.</target>
+        <target>Ya tienes suficientes challenges en marcha. Espera a que termine uno.</target>
       </segment>
     </unit>
     <unit id="challenge.error.gone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Challenge gibt es nicht mehr.</source>
-        <target>Diese Challenge gibt es nicht mehr.</target>
+        <target>Este challenge ya no existe.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Amigos</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
-        <target> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </target>
+        <target>Entrena con amigos: compárense, anímense y empiecen challenges juntos.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Ir a amigos</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.leading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</source>
-        <target>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</target>
+        <target>Vas en cabeza esta semana entre <ph id="0" equiv="total" disp="total"/> amigos.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.rank">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</source>
-        <target>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</target>
+        <target>Esta semana estás en el puesto <ph id="0" equiv="rank" disp="rank"/> de <ph id="1" equiv="total" disp="total"/>.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</target>
+        <target><ph id="0" equiv="count" disp="count"/> solicitudes esperando</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.activeChallenges">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenges laufen</target>
+        <target><ph id="0" equiv="count" disp="count"/> challenges en marcha</target>
       </segment>
     </unit>
 </file>

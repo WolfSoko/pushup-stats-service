@@ -12818,9 +12818,9 @@
       </segment>
     </unit>
     <unit id="exerciseRef.tooltip.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Wiki-Eintrag</source>
-        <target>Zum Wiki-Eintrag</target>
+        <target>Μετάβαση στο άρθρο του wiki</target>
       </segment>
     </unit>
     <unit id="challenge.create.title">
