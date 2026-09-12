@@ -939,7 +939,7 @@
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
         <target> Elimina usuarios anónimos sin flexiones en los últimos días <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" />. </target>
       </segment>
@@ -1823,7 +1823,7 @@
       <notes>
         <note category="location">web/src/app/app.ts:224</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
         <target>Realice un seguimiento de repeticiones, tendencias y rachas con Pushup Tracker.</target>
       </segment>
@@ -2131,7 +2131,7 @@
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:74,76</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
         <target> Tu puesto: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> repeticiones </target>
       </segment>
@@ -2537,7 +2537,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
         <target> Registra tus flexiones en segundos — con tendencias, rachas y sincronización en vivo. Además abdominales, sentadillas, plancha y carrera cuando quieras más. </target>
       </segment>
@@ -2714,7 +2714,7 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>Coloca el teléfono, abre el conteo automático y empieza tus flexiones, sentadillas, dominadas o abdominales: nuestra IA reconoce tu movimiento en tiempo real, directamente en el navegador, y cuenta automáticamente por ti. El Form Check en vivo muestra ángulo y confianza para que sepas que el conteo es limpio.</target>
       </segment>
@@ -2732,7 +2732,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:284,286</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Sätze &amp; Intervalle</source>
         <target>Seguimiento de conjuntos múltiples</target>
       </segment>
@@ -2741,7 +2741,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
         <target>Registre cada oración individualmente – p.e. P.ej. 12 + 10 + 8. La aplicación suma y muestra automáticamente el tamaño promedio del conjunto.</target>
       </segment>
@@ -2759,7 +2759,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:357,360</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
         <target>Gráficos de tendencia y tarjetas KPI para cada ejercicio: variantes de flexión (Standard, Wide, Diamond), abdominales, sentadillas, plancha y carrera — con un periodo libremente seleccionable.</target>
       </segment>
@@ -2777,7 +2777,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:458,461</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
         <target>La triple barra de progreso te mantiene encaminado. La visualización de rachas te recompensa por seguir adelante, el confeti celebra tu objetivo diario alcanzado.</target>
       </segment>
@@ -2813,7 +2813,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:520,523</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
         <target>Entrada en 2 segundos usando el botón de acción flotante o acciones rápidas directamente en el tablero, sin ningún diálogo.</target>
       </segment>
@@ -2831,7 +2831,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:534,538</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
         <target>Las acciones rápidas aprenden de su historial y sugieren repeticiones adecuadas, o puede configurar sus propios botones.</target>
       </segment>
@@ -2849,7 +2849,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:548,551</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
         <target>Instálala directamente desde el navegador como una app, con sincronización en tiempo real entre todos tus dispositivos y comparte tu resultado diario con un solo botón.</target>
       </segment>
@@ -2894,7 +2894,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:562,566</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
         <target>Cumple con GDPR con consentimiento de cookies personalizable. ¿Tu nombre en la clasificación? Sólo si lo deseas. Sin suscripción, sin tarjeta de crédito.</target>
       </segment>
@@ -3146,7 +3146,7 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
         <target><ph id="0" equiv="name" disp="profile.displayName" /> hizo flexiones <ph id="1" equiv="total" disp="profile.total" /> en Pushup Tracker 💪 Compruébalo:</target>
       </segment>
@@ -3838,7 +3838,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:169,170</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Auswählen oder eintippen</source>
         <target>Elige uno / Personalizado</target>
       </segment>
@@ -3856,7 +3856,7 @@
       <notes>
         <note category="location">web/src/app/stats/components/create-entry-dialog/create-entry-dialog.component.ts:186,187</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>web / whatsapp / eigene Quelle</source>
         <target>web/whatsapp/Personalizado</target>
       </segment>
@@ -5400,9 +5400,9 @@
       </segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source> In der Bestenliste erscheinst du erst, wenn mindestens ein Bereich deines Profils für alle sichtbar ist. Das stellst du direkt im Profil ein. </source>
-        <target> Solo los perfiles con Perfil público activado aparecen en la tabla de clasificación. Activa «Perfil público» abajo para usar esta opción. </target>
+        <target> Solo apareces en la clasificación cuando al menos una parte de tu perfil es visible para todos. Puedes configurarlo directamente en tu perfil. </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
@@ -5418,9 +5418,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:107,110</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer welchen Teil deines Profils sieht, stellst du direkt im Profil ein: für alle, nur für Freunde, oder für niemanden. Dein Anzeigename ist für jeden sichtbar, der dein Profil öffnen darf; E-Mail, Ziele und Erinnerungen bleiben immer privat. </source>
-        <target> Permite que cualquier persona con el enlace acceda a sus repeticiones, rachas y mejores actuaciones. Su nombre para mostrar es visible; El correo electrónico, los objetivos y los recordatorios permanecen privados. </target>
+        <target> Decides directamente en tu perfil quién ve qué parte de él: todos, solo amigos o nadie. Tu nombre visible lo puede ver cualquiera que tenga permiso para abrir tu perfil; el correo, los objetivos y los recordatorios siempre permanecen privados. </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
@@ -5706,7 +5706,7 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:321,323</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte exakt „löschen“ eingeben.</source>
         <target>Ingrese “eliminar” exactamente.</target>
       </segment>
@@ -5751,16 +5751,16 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Trainingsübersicht</source>
-        <target>Estadísticas de flexiones</target>
+        <target>Resumen de mi entrenamiento</target>
       </segment>
     </unit>
     <unit id="dashboardSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,18</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
         <target> Controla el volumen y el progreso del entrenamiento: de forma clara, rápida y optimizada para dispositivos móviles. </target>
       </segment>
@@ -5787,36 +5787,36 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,46</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamt</source>
-        <target>Total de todos los tiempos</target>
+        <target>Total</target>
       </segment>
     </unit>
     <unit id="allTimeDays">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:49,50</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage</source>
-        <target>Días de todos los tiempos</target>
+        <target>Días</target>
       </segment>
     </unit>
     <unit id="allTimeEntries">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:53,54</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-        <target>Entradas de todos los tiempos</target>
+        <target>Entradas</target>
       </segment>
     </unit>
     <unit id="allTimeAvg">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:57,58</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ø pro Tag</source>
-        <target>Todo el tiempo Ø/día</target>
+        <target>Prom./día</target>
       </segment>
     </unit>
     <unit id="trainingPlans.day">
@@ -6251,7 +6251,7 @@
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:143,144</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
         <target> Atención: Este reemplaza el plan actualmente activo. </target>
       </segment>
@@ -6708,7 +6708,7 @@
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> Ejercicios </target>
       </segment>
@@ -6924,9 +6924,9 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Liegestütze sind der Kern, dazu kommen Core-, Bein- und Zugübungen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
-        <target>Treinta días de entrenamiento diario con días de descanso estratégicos. Día 1 es el test máximo, día 30 el test final.</target>
+        <target>Treinta días de entrenamiento diario con días de descanso específicos. Las flexiones son el núcleo, junto con ejercicios de core, piernas y tirón. El día 1 es el test máximo, el día 30 el test final.</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
@@ -6942,27 +6942,27 @@
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
-        <target>Día ligero — 2×50 % del máximo</target>
+        <target>Día ligero — 2×50 % del máximo · 10 min movilidad</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 3×60 % vom Maximum · 3×12 Glute Bridges</source>
-        <target>Día ligero — 3×60 % del máximo</target>
+        <target>Día ligero — 3×60 % del máximo · 3×12 puentes de glúteo</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze à ~80 % vom Maximum · 4×10 Ruderzüge</source>
-        <target>5 series al ~80 % del máximo</target>
+        <target>5 series al ~80 % del máximo · 4×10 remos</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % — Qualität vor Quantität · 2×60 s Plank</source>
-        <target>3 series al 70 % — calidad antes que cantidad</target>
+        <target>3 series al 70 % — calidad antes que cantidad · 2×60 s plancha</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.27.desc">
@@ -7632,7 +7632,7 @@
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>Tipos de flexiones</target>
       </segment>
@@ -7920,9 +7920,9 @@
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Profil und Sichtbarkeit </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Vista previa</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Perfil y visibilidad </target>
       </segment>
     </unit>
     <unit id="settings.goals.planOverrideHint">
@@ -9390,7 +9390,7 @@
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
         <target>Plan simétrico de 6 semanas para flexiones y trabajo de tracción (remos, dominadas negativas, face pulls). Evita el clásico desequilibrio "solo empuje" y fortalece la cadena posterior por igual. Un día dedicado a la tracción por semana, además de la progresión de empuje.</target>
       </segment>
@@ -9886,7 +9886,7 @@
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>Con este botón + puedes registrar ejercicios al instante – desde cualquier página.</target>
       </segment>
@@ -11734,9 +11734,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.private.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.</source>
-        <target>Nadie más que tú puede verlo. Actívalo en los ajustes para poder compartirlo.</target>
+        <target>Nadie más que tú puede verlo. Toca el icono junto a un elemento a continuación y elige “Mostrar a todos” para poder compartir tu perfil.</target>
       </segment>
     </unit>
     <unit id="publicProfile.private.cta">
@@ -11896,15 +11896,15 @@
       </segment>
     </unit>
         <unit id="publicProfile.owner.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.</source>
         <target>Toca el icono del ojo en un elemento para decidir si aparece en tu perfil público. Solo tú ves esta sección y los iconos de ojo.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Besucher</source>
-        <target>Ver como visitante</target>
+        <target>Como visitante</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.photoEdit">
@@ -12568,249 +12568,249 @@
       </segment>
     </unit>
     <unit id="invite.banner.invitedBy">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
-        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</target>
+        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> te ha invitado a Pushup Tracker.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.public">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für alle sichtbar, die deinen Profil-Link haben.</source>
-        <target>Für alle sichtbar, die deinen Profil-Link haben.</target>
+        <target>Visible para todos los que tengan tu enlace de perfil.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für Freunde, die deine Anfrage bestätigt haben.</source>
-        <target>Nur für Freunde, die deine Anfrage bestätigt haben.</target>
+        <target>Solo para amigos que hayan confirmado tu solicitud.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.off">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
-        <target>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</target>
+        <target>Para nadie – solo tú lo ves, aquí se muestra atenuado.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.group">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ansicht wählen</source>
-        <target>Ansicht wählen</target>
+        <target>Elegir vista</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.owner">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bearbeiten</source>
-        <target>Bearbeiten</target>
+        <target>Editar</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.friend">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Freund</source>
-        <target>Als Freund</target>
+        <target>Como amigo</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.locked">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
-        <target>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</target>
+        <target>La vista de visitante solo está disponible cuando tu perfil es público.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.noteFriend">
-      <segment state="initial">
+      <segment state="translated">
         <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
-        <target>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</target>
+        <target>Así se ve tu perfil para los amigos que han aceptado tu solicitud.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.notePublic">
-      <segment state="initial">
+      <segment state="translated">
         <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
-        <target>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</target>
+        <target>Así se ve tu perfil para cualquiera que tenga tu enlace de perfil.</target>
       </segment>
     </unit>
     <unit id="publicProfile.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzte Übungen</source>
-        <target>Letzte Übungen</target>
+        <target>Ejercicios recientes</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.heading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Liegestütze seit Beginn</source>
-        <target>Alle Liegestütze seit Beginn</target>
+        <target>Todas las flexiones desde el inicio</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.total">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</source>
-        <target>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</target>
+        <target>Todas las flexiones que has registrado alguna vez. Otros ejercicios no cuentan aquí.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</source>
-        <target>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</target>
+        <target>Días en los que registraste al menos una flexión.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.entries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</source>
-        <target>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</target>
+        <target>Número de tus entradas de flexiones: cada serie registrada cuenta como una.</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.avg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</source>
-        <target>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</target>
+        <target>Flexiones promedio por día de entrenamiento: total dividido entre días.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan teilen</source>
-        <target>Plan teilen</target>
+        <target>Compartir plan</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.plain">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</source>
-        <target>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</target>
+        <target>Estoy entrenando con el plan “<ph id="0" equiv="title" disp="title"/>” 💪 Únete:</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</source>
-        <target>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</target>
+        <target>Mi plan “<ph id="0" equiv="title" disp="title"/>” me espera en el día <ph id="1" equiv="day" disp="day"/> de <ph id="2" equiv="total" disp="totalDays"/> – vuelvo a retomarlo 💪</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.day">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</source>
-        <target>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</target>
+        <target>Día <ph id="0" equiv="day" disp="day"/> de <ph id="1" equiv="total" disp="totalDays"/> en el plan “<ph id="2" equiv="title" disp="title"/>” 💪 <ph id="3" equiv="percent" disp="done"/> % completado.</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker Trainingsplan</source>
-        <target>Pushup Tracker Trainingsplan</target>
+        <target>Plan de entrenamiento de Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×30 s Plank</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×30 s Plank</target>
+        <target>3×AMRAP flexiones, 90 s de pausa · 3×30 s plancha</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</target>
+        <target>3×AMRAP flexiones, 90 s de pausa · 3×15 sentadillas</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 3×20 s Hollow Hold</source>
-        <target>Leichter Tag · 3×20 s Hollow Hold</target>
+        <target>Día ligero · 3×20 s hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</target>
+        <target>3×AMRAP flexiones, 90 s de pausa · 3×10 remos</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</target>
+        <target>4×AMRAP flexiones, 60 s de pausa · 3×30 s escaladores</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×45 s Plank</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×45 s Plank</target>
+        <target>4×AMRAP flexiones, 60 s de pausa · 3×45 s plancha</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 10 min Mobility</source>
-        <target>Leichter Tag · 10 min Mobility</target>
+        <target>Día ligero · 10 min movilidad</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</target>
+        <target>4×AMRAP flexiones, 60 s de pausa · 3×12 sentadillas con salto</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 3×10 Dead Bugs</source>
-        <target>Leichter Tag · 3×10 Dead Bugs</target>
+        <target>Día ligero · 3×10 dead bugs</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</source>
-        <target>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</target>
+        <target>5 series de repeticiones objetivo · 4×25 s hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
-        <target>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</target>
+        <target>5 series de repeticiones objetivo · 3×20 zancadas</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</source>
-        <target>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</target>
+        <target>5 series de repeticiones objetivo · 3×8 burpees para terminar</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % · 10 min Mobility</source>
-        <target>Leichter Tag — 2×50 % · 10 min Mobility</target>
+        <target>Día ligero — 2×50 % · 10 min movilidad</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % · 3×15 Face Pulls</source>
-        <target>3 Sätze à 70 % · 3×15 Face Pulls</target>
+        <target>3 series al 70 % · 3×15 face pulls</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % · 10 min Dehnen</source>
-        <target>Leichter Tag — 2×50 % · 10 min Dehnen</target>
+        <target>Día ligero — 2×50 % · 10 min estiramientos</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % · 2×30 s Hollow Hold</source>
-        <target>3 Sätze à 70 % · 2×30 s Hollow Hold</target>
+        <target>3 series al 70 % · 2×30 s hollow hold</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan</source>
-        <target>Trainingsplan</target>
+        <target>Plan de entrenamiento</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert</source>
-        <target>Pausiert</target>
+        <target>En pausa</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan ansehen</source>
-        <target>Plan ansehen</target>
+        <target>Ver plan</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.day">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></source>
-        <target>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></target>
+        <target>Día <ph id="0" equiv="day" disp="progress.dayIndex"/> de <ph id="1" equiv="total" disp="progress.totalDays"/></target>
       </segment>
     </unit>
 </file>

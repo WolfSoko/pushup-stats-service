@@ -1020,33 +1020,33 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:186</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % vom Maximum · 10 min Mobility</source>
-      <target>轻量级训练日 — 最大值的 2×50%</target></segment>
+      <target>轻量日 — 2×50%（最大值）· 10 min 活动度训练</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:199</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 3×60 % vom Maximum · 3×12 Glute Bridges</source>
-      <target>轻量级训练日 — 最大值的 3×60%</target></segment>
+      <target>轻量日 — 3×60%（最大值）· 3×12 臀桥</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.15.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:212</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze à ~80 % vom Maximum · 4×10 Ruderzüge</source>
-      <target>5 组 × 最大值的约 80%</target></segment>
+      <target>5 组 × ~80%（最大值）· 4×10 划船</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.22.desc">
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:226</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % — Qualität vor Quantität · 2×60 s Plank</source>
-      <target>3 组 × 70% — 质量优于数量</target></segment>
+      <target>3 组 × 70% — 质量优于数量 · 2×60 s 平板支撑</target></segment>
     </unit>
     <unit id="plan.challenge-30d.day.27.desc">
       <notes>
@@ -1716,9 +1716,9 @@
       <notes>
         <note category="location">libs/stats/src/lib/models/training-plan.catalog.ts:909</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Dreißig Tage tägliches Training mit gezielten Ruhetagen. Liegestütze sind der Kern, dazu kommen Core-, Bein- und Zugübungen. Tag 1 ist der Maximaltest, Tag 30 der Endtest.</source>
-      <target>30 天每日训练，有针对性的休息日。第 1 天是最大值测试，第 30 天是最终测试。</target></segment>
+      <target>为期三十天的每日训练，并安排有针对性的休息日。俯卧撑是核心，再加上核心、腿部和拉力训练。第 1 天是最大值测试，第 30 天是最终测试。</target></segment>
     </unit>
     <unit id="plan.challenge-30d.blogSlug">
       <notes>
@@ -1812,7 +1812,7 @@
       <notes>
         <note category="location">web/src/app/admin/admin-page.component.ts:97,100</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
       <target> 删除在过去 <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}" /> 天内没有俯卧撑记录的匿名用户。 </target></segment>
     </unit>
@@ -2627,7 +2627,7 @@
       <notes>
         <note category="location">web/src/app/app.ts:287</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
       <target>追踪次数、趋势和连续天数，使用Pushup Tracker。</target></segment>
     </unit>
@@ -2905,7 +2905,7 @@
       <notes>
         <note category="location">web/src/app/leaderboard/shell/leaderboard-page.component.html:75,77</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
       <target> 您的排名：#<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}" /> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ me.reps }}" /> 次 </target></segment>
     </unit>
@@ -3266,7 +3266,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,23</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Reps live per Kamera-KI zählen – Liegestütze, Kniebeugen, Klimmzüge, Sit-ups sowie Halte-Timer für Plank &amp; Hollow-Hold. Dazu Trainingspläne, Heatmap, Streaks, Tagesziele und Live-Sync auf allen Geräten. </source>
       <target> 几秒钟记录俯卧撑 — 提供趋势、连续天数与实时同步。需要更多时还可记录仰卧起坐、深蹲、平板支撑和跑步。</target></segment>
     </unit>
@@ -3426,7 +3426,7 @@
       </segment>
     </unit>
     <unit id="landing.feature.autoCount.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
         <target>把手机放好,打开自动计数,然后开始做俯卧撑、深蹲、引体向上或仰卧起坐——我们的 AI 直接在浏览器中实时识别你的动作并自动计数。实时动作检查显示角度和置信度,让你随时知道计数是否准确。</target>
       </segment>
@@ -3443,7 +3443,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:288,290</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Sätze &amp; Intervalle</source>
       <target>多组次数追踪</target></segment>
     </unit>
@@ -3451,7 +3451,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:292,294</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
       <target>逐组记录每一组 — 例如 12 + 10 + 8 次。应用会自动求和，并计算你的平均每组次数。</target></segment>
     </unit>
@@ -3467,7 +3467,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:361,364</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
       <target>为每项练习提供趋势图与 KPI 卡片：俯卧撑变体(Standard、Wide、Diamond)、仰卧起坐、深蹲、平板支撑与跑步 — 可自由选择时间范围。</target></segment>
     </unit>
@@ -3483,7 +3483,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:462,465</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
       <target>三重进度条让你保持正轨。连续记录显示会显示你的坚持情况，达成每日目标时还有彩纸庆祝。</target></segment>
     </unit>
@@ -3515,7 +3515,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:524,527</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
       <target>通过悬浮操作按钮或仪表板快速操作，只需2秒就能记录一次训练 — 无需打开对话框。</target></segment>
     </unit>
@@ -3531,7 +3531,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:538,542</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
       <target>快速操作按钮会学习你的历史数据并推荐合适的次数 — 或者你可以自定义按钮。</target></segment>
     </unit>
@@ -3547,7 +3547,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:552,555</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
       <target>直接从浏览器作为应用安装 — 在所有设备之间实时同步,并通过分享按钮发送当日成绩。</target></segment>
     </unit>
@@ -3590,7 +3590,7 @@
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:566,570</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
       <target>符合GDPR标准，可自定义Cookie同意设置。想要你的名字出现在排行榜上？只有在你同意时才会显示。无需订阅，无需信用卡。</target></segment>
     </unit>
@@ -3814,7 +3814,7 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
 
         <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 Pushup Tracker 上完成了 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑！</target>
@@ -4042,7 +4042,7 @@
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164,167</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt einen &quot;Eintragen&quot;-Button auf der Push-Benachrichtigung. Ein Tipp darauf speichert den Eintrag sofort und bestätigt ihn in der Benachrichtigung – die App muss dafür nicht geöffnet werden. </source>
       <target> 在推送通知上显示"记录"按钮。如果应用已打开，记录会在后台保存；否则会打开一个标签页自动创建记录。 </target></segment>
     </unit>
@@ -6000,9 +6000,9 @@
       <target> 如果禁用，你的资料将不会显示在排行榜中。 </target></segment>
     </unit>
     <unit id="settings.leaderboardRequiresPublicProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source> In der Bestenliste erscheinst du erst, wenn mindestens ein Bereich deines Profils für alle sichtbar ist. Das stellst du direkt im Profil ein. </source>
-        <target> 只有启用了「公开档案」的用户才会出现在排行榜上。请在下方启用「公开档案」以使用此选项。 </target>
+        <target> 只有当你的个人资料至少有一部分对所有人可见时，你才会出现在排行榜上。你可以直接在个人资料中设置这一点。 </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.toggle">
@@ -6017,9 +6017,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:206,209</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer welchen Teil deines Profils sieht, stellst du direkt im Profil ein: für alle, nur für Freunde, oder für niemanden. Dein Anzeigename ist für jeden sichtbar, der dein Profil öffnen darf; E-Mail, Ziele und Erinnerungen bleiben immer privat. </source>
-      <target> 允许任何拥有链接的人访问你的次数、连续天数和个人最佳成绩。你的显示名称是可见的；邮箱、目标和提醒保持私密。 </target></segment>
+      <target> 你可以直接在个人资料中设置谁能看到哪部分内容：对所有人、仅对好友，或对任何人都不显示。你的显示名称对所有能打开你个人资料的人可见；邮箱、目标和提醒始终保持私密。 </target></segment>
     </unit>
     <unit id="settings.publicProfile.shareCta">
       <notes>
@@ -6303,9 +6303,9 @@
       <notes>
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:451,453</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Bitte exakt „löschen“ eingeben.</source>
-      <target>请准确输入"löscchen"。</target></segment>
+      <target>请准确输入"删除"。</target></segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
       <notes>
@@ -6343,15 +6343,15 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:13,14</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Trainingsübersicht</source>
-      <target>俯卧撑统计</target></segment>
+      <target>我的训练概览</target></segment>
     </unit>
     <unit id="dashboardSubtitle">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,18</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Behalte Training, Volumen und Verlauf im Blick – klar, schnell und mobil optimiert. </source>
       <target> 快速掌握训练量和进度 – 清晰、快速且移动设备优化。 </target></segment>
     </unit>
@@ -6375,33 +6375,33 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:45,46</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Gesamt</source>
-      <target>全时间总计</target></segment>
+      <target>总计</target></segment>
     </unit>
     <unit id="allTimeDays">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:49,50</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage</source>
-      <target>全时间天数</target></segment>
+      <target>天数</target></segment>
     </unit>
     <unit id="allTimeEntries">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:53,54</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Einträge</source>
-      <target>全时间记录数</target></segment>
+      <target>记录</target></segment>
     </unit>
     <unit id="allTimeAvg">
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:57,58</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source>Ø pro Tag</source>
-      <target>全时间 Ø/天</target></segment>
+      <target>日均</target></segment>
     </unit>
     <unit id="trainingPlans.day">
       <notes>
@@ -6797,7 +6797,7 @@
       <notes>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.ts:154,155</note>
       </notes>
-      <segment state="initial">
+      <segment state="translated">
         <source> Dies löst deinen aktuell aktiven Plan ab — du wirst gefragt, ob du dessen Fortschritt behalten willst. </source>
       <target> 警告：这将替换当前活跃的计划。 </target></segment>
     </unit>
@@ -7219,7 +7219,7 @@
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.back">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
         <target> 训练动作 </target>
       </segment>
@@ -7259,7 +7259,7 @@
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.back">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
         <target>俯卧撑类型</target>
       </segment>
@@ -7547,9 +7547,9 @@
       </segment>
     </unit>
     <unit id="settings.publicProfile.previewCta">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> Profil und Sichtbarkeit </source>
-        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> 预览</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">visibility</pc> 个人资料与可见性 </target>
       </segment>
     </unit>
     <unit id="settings.goals.planOverrideHint">
@@ -8900,7 +8900,7 @@
       </segment>
     </unit>
     <unit id="plan.push-pull-6w.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Symmetrischer 6-Wochen-Plan für Liegestütze und Rückenübungen (Rudern, Klimmzug-Negative, Face Pulls). Vermeidet das klassische &quot;nur Push&quot;-Ungleichgewicht und stärkt die hintere Kette gleichwertig. Pull-Tag pro Woche zusätzlich zur Push-Progression.</source>
         <target>6周对称推拉训练计划：俯卧撑配合拉力训练（划船、引体向上离心、面拉）。避免经典的"只推不拉"失衡，均衡强化后链。每周一天专门的拉日，作为推力进阶之外的补充。</target>
       </segment>
@@ -9396,7 +9396,7 @@
       </segment>
     </unit>
     <unit id="quickAdd.coachmark.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Über diesen +‑Button erfasst du Übungen blitzschnell – von jeder Seite aus.</source>
         <target>使用此 + 按钮，可从任意页面闪速记录练习。</target>
       </segment>
@@ -11244,9 +11244,9 @@
       </segment>
     </unit>
     <unit id="publicProfile.private.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.</source>
-        <target>除了你，没有人能看到它。在设置中开启后即可分享。</target>
+        <target>除你之外没有人能看到它。点击下方某个项目旁边的图标，选择"对所有人显示"，即可分享你的个人资料。</target>
       </segment>
     </unit>
     <unit id="publicProfile.private.cta">
@@ -11406,15 +11406,15 @@
       </segment>
     </unit>
         <unit id="publicProfile.owner.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.</source>
         <target>点击某个项目上的眼睛图标，决定它是否显示在你的公开资料上。只有你能看到这个区域和眼睛图标。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Besucher</source>
-        <target>以访客身份查看</target>
+        <target>以访客身份</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.photoEdit">
@@ -12078,249 +12078,249 @@
       </segment>
     </unit>
     <unit id="invite.banner.invitedBy">
-      <segment state="initial">
+      <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
-        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</target>
+        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> 邀请你加入 Pushup Tracker。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.public">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für alle sichtbar, die deinen Profil-Link haben.</source>
-        <target>Für alle sichtbar, die deinen Profil-Link haben.</target>
+        <target>对拥有你资料链接的所有人可见。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.friends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nur für Freunde, die deine Anfrage bestätigt haben.</source>
-        <target>Nur für Freunde, die deine Anfrage bestätigt haben.</target>
+        <target>仅对已确认你请求的好友可见。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.off">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
-        <target>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</target>
+        <target>谁都不可见——只有你能看到，这里以灰色显示。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.group">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ansicht wählen</source>
-        <target>Ansicht wählen</target>
+        <target>选择视图</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.owner">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bearbeiten</source>
-        <target>Bearbeiten</target>
+        <target>编辑</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.friend">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Freund</source>
-        <target>Als Freund</target>
+        <target>以好友身份</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.locked">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
-        <target>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</target>
+        <target>只有当你的个人资料公开后，才能使用访客视图。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.noteFriend">
-      <segment state="initial">
+      <segment state="translated">
         <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
-        <target>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</target>
+        <target>这是已确认你请求的好友所看到的个人资料样式。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.preview.notePublic">
-      <segment state="initial">
+      <segment state="translated">
         <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
-        <target>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</target>
+        <target>这是拥有你个人资料链接的任何人所看到的样式。</target>
       </segment>
     </unit>
     <unit id="publicProfile.recent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzte Übungen</source>
-        <target>Letzte Übungen</target>
+        <target>最近的训练</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.heading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Liegestütze seit Beginn</source>
-        <target>Alle Liegestütze seit Beginn</target>
+        <target>自开始以来的全部俯卧撑</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.total">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</source>
-        <target>Alle Liegestütze, die du je eingetragen hast. Andere Übungen zählen hier nicht mit.</target>
+        <target>你有史以来记录的所有俯卧撑。其他训练项目在这里不计入。</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</source>
-        <target>Tage, an denen du mindestens einen Liegestütz eingetragen hast.</target>
+        <target>你至少记录过一次俯卧撑的天数。</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.entries">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</source>
-        <target>Anzahl deiner Liegestütz-Einträge – jede erfasste Serie zählt als einer.</target>
+        <target>你的俯卧撑记录数量——每记录一组算作一条。</target>
       </segment>
     </unit>
     <unit id="dashboard.allTime.hint.avg">
-      <segment state="initial">
+      <segment state="translated">
         <source>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</source>
-        <target>Liegestütze pro Trainingstag im Schnitt: Gesamt geteilt durch Tage.</target>
+        <target>每个训练日的平均俯卧撑数：总数除以天数。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan teilen</source>
-        <target>Plan teilen</target>
+        <target>分享计划</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.plain">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</source>
-        <target>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</target>
+        <target>我正在使用"<ph id="0" equiv="title" disp="title"/>"计划训练 💪 一起加入吧：</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</source>
-        <target>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</target>
+        <target>我的"<ph id="0" equiv="title" disp="title"/>"计划在第 <ph id="1" equiv="day" disp="day"/> 天等着我（共 <ph id="2" equiv="total" disp="totalDays"/> 天）——我要重新开始了 💪</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.day">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</source>
-        <target>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</target>
+        <target>第 <ph id="0" equiv="day" disp="day"/> 天，共 <ph id="1" equiv="total" disp="totalDays"/> 天，计划"<ph id="2" equiv="title" disp="title"/>" 💪 已完成 <ph id="3" equiv="percent" disp="done"/>%。</target>
       </segment>
     </unit>
     <unit id="trainingPlans.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pushup Tracker Trainingsplan</source>
-        <target>Pushup Tracker Trainingsplan</target>
+        <target>Pushup Tracker 训练计划</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×30 s Plank</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×30 s Plank</target>
+        <target>3×AMRAP 俯卧撑，90 秒休息 · 3×30 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×15 Kniebeugen</target>
+        <target>3×AMRAP 俯卧撑，90 秒休息 · 3×15 深蹲</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 3×20 s Hollow Hold</source>
-        <target>Leichter Tag · 3×20 s Hollow Hold</target>
+        <target>轻量日 · 3×20 s 空心支撑</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</source>
-        <target>3×AMRAP LS, 90 s Pause · 3×10 Ruderzüge</target>
+        <target>3×AMRAP 俯卧撑，90 秒休息 · 3×10 划船</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×30 s Mountain Climbers</target>
+        <target>4×AMRAP 俯卧撑，60 秒休息 · 3×30 s 登山者</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×45 s Plank</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×45 s Plank</target>
+        <target>4×AMRAP 俯卧撑，60 秒休息 · 3×45 s 平板支撑</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 10 min Mobility</source>
-        <target>Leichter Tag · 10 min Mobility</target>
+        <target>轻量日 · 10 min 活动度训练</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</source>
-        <target>4×AMRAP LS, 60 s Pause · 3×12 Sprungkniebeugen</target>
+        <target>4×AMRAP 俯卧撑，60 秒休息 · 3×12 跳跃深蹲</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag · 3×10 Dead Bugs</source>
-        <target>Leichter Tag · 3×10 Dead Bugs</target>
+        <target>轻量日 · 3×10 死虫</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</source>
-        <target>5 Sätze Zielwiederholungen · 4×25 s Hollow Hold</target>
+        <target>5 组目标次数 · 4×25 s 空心支撑</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</source>
-        <target>5 Sätze Zielwiederholungen · 3×20 Ausfallschritte</target>
+        <target>5 组目标次数 · 3×20 弓步</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</source>
-        <target>5 Sätze Zielwiederholungen · 3×8 Burpees zum Abschluss</target>
+        <target>5 组目标次数 · 3×8 波比跳作为收尾</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % · 10 min Mobility</source>
-        <target>Leichter Tag — 2×50 % · 10 min Mobility</target>
+        <target>轻量日 — 2×50% · 10 min 活动度训练</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % · 3×15 Face Pulls</source>
-        <target>3 Sätze à 70 % · 3×15 Face Pulls</target>
+        <target>3 组 × 70% · 3×15 面拉</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — 2×50 % · 10 min Dehnen</source>
-        <target>Leichter Tag — 2×50 % · 10 min Dehnen</target>
+        <target>轻量日 — 2×50% · 10 min 拉伸</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 Sätze à 70 % · 2×30 s Hollow Hold</source>
-        <target>3 Sätze à 70 % · 2×30 s Hollow Hold</target>
+        <target>3 组 × 70% · 2×30 s 空心支撑</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan</source>
-        <target>Trainingsplan</target>
+        <target>训练计划</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.paused">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausiert</source>
-        <target>Pausiert</target>
+        <target>已暂停</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plan ansehen</source>
-        <target>Plan ansehen</target>
+        <target>查看计划</target>
       </segment>
     </unit>
     <unit id="publicProfile.plan.day">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></source>
-        <target>Tag <ph id="0" equiv="day" disp="progress.dayIndex"/> von <ph id="1" equiv="total" disp="progress.totalDays"/></target>
+        <target>第 <ph id="0" equiv="day" disp="progress.dayIndex"/> / <ph id="1" equiv="total" disp="progress.totalDays"/> 天</target>
       </segment>
     </unit>
 </file>
