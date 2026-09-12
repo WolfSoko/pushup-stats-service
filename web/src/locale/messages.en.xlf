@@ -7351,9 +7351,9 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze auf halber Last · Mobility zum Abschluss</source>
-        <target>Light day — 2×50% of max · 10 min mobility</target>
+        <target>Light day — two sets at half load · mobility to finish</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.9.desc">
@@ -7411,15 +7411,15 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze Knie- oder erhöhte Liegestütze</source>
-        <target>3×8 knee or elevated push-ups</target>
+        <target>Three sets of knee or elevated push-ups</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, saubere Technik</source>
-        <target>3×9 clean push-ups</target>
+        <target>Three sets, clean technique</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.5.desc">
@@ -7429,27 +7429,27 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, volle Bewegungsamplitude</source>
-        <target>3×10 clean push-ups</target>
+        <target>Three sets, full range of motion</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, gleiche Technik wie in Woche 1</source>
-        <target>3×11</target>
+        <target>Three sets, same technique as week 1</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze, etwas mehr Volumen</source>
-        <target>3×12</target>
+        <target>Three sets, slightly more volume</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Drei Sätze — letzte Steigerung dieser Woche</source>
-        <target>3×13</target>
+        <target>Three sets — this week's final increase</target>
       </segment>
     </unit>
     <unit id="plan.over-40-4w.day.22.desc">
@@ -7489,123 +7489,123 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, saubere Wiederholungen, 60 s Pause</source>
-        <target>5×10 clean reps, 60 s rest</target>
+        <target>Five sets, clean reps, 60 s rest</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause</source>
-        <target>5×12, 60 s rest</target>
+        <target>Five sets, 60 s rest</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — gleiches Volumen wie gestern</source>
-        <target>5×12, 60 s rest</target>
+        <target>Five sets, 60 s rest — same volume as yesterday</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, 60 s Pause — Volumen steigt</source>
-        <target>5×14, 60 s rest</target>
+        <target>Five sets, 60 s rest — volume increases</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze in lockerem Tempo</source>
-        <target>Light day — 2×15 at easy pace</target>
+        <target>Light day — two sets at an easy pace</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleichbleibendes Tempo</source>
-        <target>5×16</target>
+        <target>Five sets, steady pace</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze — Technik vor Tempo</source>
-        <target>5×16</target>
+        <target>Five sets — technique over pace</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, Volumen steigt</source>
-        <target>5×18</target>
+        <target>Five sets, volume increases</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, gleiches Volumen</source>
-        <target>5×18</target>
+        <target>Five sets, same volume</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erstes Hundert — fünf Sätze</source>
-        <target>First hundred: 5×20</target>
+        <target>First hundred — five sets</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weniger Sätze, dafür mehr Wiederholungen je Satz</source>
-        <target>4×25 (fewer sets, more reps)</target>
+        <target>Fewer sets, more reps per set</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze wie gehabt</source>
-        <target>5×20</target>
+        <target>Five sets as usual</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
-        <target>4×25</target>
+        <target>Four longer sets</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze</source>
-        <target>5×20</target>
+        <target>Five sets</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze — Tempo bewusst verlangsamen</source>
-        <target>4×25 — slow tempo intentionally</target>
+        <target>Four sets — deliberately slow the tempo</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, letzte volle Woche</source>
-        <target>5×20</target>
+        <target>Five sets, last full week</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier längere Sätze</source>
-        <target>4×25</target>
+        <target>Four longer sets</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fünf Sätze, unverändertes Volumen</source>
-        <target>5×20</target>
+        <target>Five sets, unchanged volume</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vier Sätze, ruhiges Tempo</source>
-        <target>4×25</target>
+        <target>Four sets, calm pace</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter großer Tag vor dem Test</source>
-        <target>Last 100-rep day before the test</target>
+        <target>Last big day before the test</target>
       </segment>
     </unit>
     <unit id="plan.daily-100-30d.day.27.desc">
@@ -9182,141 +9182,141 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
-        <target>Circuit 3 rounds — 10 push-ups · 15 squats · 10 lunges per leg · 30 s plank</target>
+        <target>Circuit, 3 rounds — push-ups · squats · lunges per leg · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.4.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuit 3 rounds — 10 push-ups · 15 sumo squats · 12 glute bridges · 40 s plank</target>
+        <target>Circuit, 3 rounds — push-ups · sumo squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Light day — 2×10 push-ups · mobility 10 min</target>
+        <target>Light day — two sets of push-ups · mobility</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Glute Bridges · Hollow Hold</source>
-        <target>Circuit 3 rounds — 10 push-ups · 15 squats · 10 glute bridges · 30 s hollow hold</target>
+        <target>Circuit, 3 rounds — push-ups · squats · glute bridges · hollow hold</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Kniebeugen · Ausfallschritte je Bein · Plank</source>
-        <target>Circuit 3 rounds — 12 push-ups · 18 squats · 12 lunges per leg · 40 s plank</target>
+        <target>Circuit, 3 rounds — push-ups · squats · lunges per leg · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.10.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Sumo-Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuit 3 rounds — 12 push-ups · 18 sumo squats · 15 glute bridges · 45 s plank</target>
+        <target>Circuit, 3 rounds — push-ups · sumo squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Hip Opener</source>
-        <target>Light day — 2×11 push-ups · hip opener 10 min</target>
+        <target>Light day — two sets of push-ups · hip opener</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 3 Runden — Liegestütze · Step-Ups je Bein · Russian Twists · Plank</source>
-        <target>Circuit 3 rounds — 12 push-ups · 12 step-ups per leg · 15 Russian twists · 40 s plank</target>
+        <target>Circuit, 3 rounds — push-ups · step-ups per leg · Russian twists · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuit 4 rounds — 10 push-ups · 15 squats · 12 glute bridges · 40 s plank</target>
+        <target>Circuit, 4 rounds — push-ups · squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.17.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
-        <target>Circuit 4 rounds — 11 push-ups · 16 lunges per leg · 15 glute bridges · 45 s plank</target>
+        <target>Circuit, 4 rounds — push-ups · lunges per leg · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Yoga</source>
-        <target>Light day — 2×12 push-ups · yoga 20 min</target>
+        <target>Light day — two sets of push-ups · yoga</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
-        <target>Circuit 4 rounds — 12 push-ups · 15 jump squats · 12 glute bridges · 45 s plank</target>
+        <target>Circuit, 4 rounds — push-ups · jump squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuit 4 rounds — 13 push-ups · 18 squats · 15 glute bridges · 50 s plank</target>
+        <target>Circuit, 4 rounds — push-ups · squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.24.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Ausfallschritte je Bein · Hip Thrusts · Plank</source>
-        <target>Circuit 4 rounds — 14 push-ups · 18 lunges per leg · 15 hip thrusts · 50 s plank</target>
+        <target>Circuit, 4 rounds — push-ups · lunges per leg · hip thrusts · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Foam Rolling</source>
-        <target>Light day — 2×13 push-ups · foam rolling 15 min</target>
+        <target>Light day — two sets of push-ups · foam rolling</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 4 Runden — Liegestütze · Jump Squats · Glute Bridges · Plank</source>
-        <target>Circuit 4 rounds — 15 push-ups · 18 jump squats · 15 glute bridges · 60 s plank</target>
+        <target>Circuit, 4 rounds — push-ups · jump squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.29.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Circuit 5 rounds — 12 push-ups · 15 squats · 12 glute bridges · 45 s plank</target>
+        <target>Circuit, 5 rounds — push-ups · squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.31.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Ausfallschritte je Bein · Glute Bridges · Plank</source>
-        <target>Circuit 5 rounds — 13 push-ups · 16 lunges per leg · 13 glute bridges · 50 s plank</target>
+        <target>Circuit, 5 rounds — push-ups · lunges per leg · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.32.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Light day — 2×14 push-ups · mobility 15 min</target>
+        <target>Light day — two sets of push-ups · mobility</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.33.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zirkel 5 Runden — Liegestütze · Jump Squats · Hip Thrusts · Plank</source>
-        <target>Circuit 5 rounds — 14 push-ups · 18 jump squats · 15 hip thrusts · 60 s plank</target>
+        <target>Circuit, 5 rounds — push-ups · jump squats · hip thrusts · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.36.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Peak-Zirkel 5 Runden — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Peak circuit 5 rounds — 15 push-ups · 20 squats · 15 glute bridges · 60 s plank</target>
+        <target>Peak circuit, 5 rounds — push-ups · squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.38.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Taper-Zirkel 4 Runden, kontrolliertes Tempo — Liegestütze · Kniebeugen · Glute Bridges · Plank</source>
-        <target>Taper circuit 4 rounds, controlled tempo — 15 push-ups · 15 squats · 12 glute bridges · 45 s plank</target>
+        <target>Taper circuit, 4 rounds, controlled tempo — push-ups · squats · glute bridges · plank</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.39.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — zwei Sätze Liegestütze · Mobility</source>
-        <target>Light day — 2×12 push-ups · mobility</target>
+        <target>Light day — two sets of push-ups · mobility</target>
       </segment>
     </unit>
     <unit id="plan.full-body-6w.day.42.desc">
@@ -9332,111 +9332,111 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.2.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug je Seite · Liegestütze</source>
-        <target>plank 3×30 s · hollow hold 3×20 s · dead bug 3×10 per side · push-ups 2×10</target>
+        <target>Plank · hollow hold · dead bug per side · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.3.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze</source>
-        <target>Beinheben 3×10 · Russian twist 3×15 · plank 3×30 s · push-ups 2×12</target>
+        <target>Leg raises · Russian twist · plank · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.5.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Dead Bug · Plank · Liegestütze</source>
-        <target>mountain climbers 3×30 s · dead bug 3×12 · plank 3×35 s · push-ups 2×10</target>
+        <target>Mountain climbers · dead bug · plank · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.6.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Cat-Cow · Hip Opener · saubere Liegestütze</source>
-        <target>Light day — cat-cow 3×10 · hip opener 2 min · 2×7 clean push-ups</target>
+        <target>Light day — cat-cow · hip opener · clean push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.8.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Dead Bug · Liegestütze</source>
-        <target>plank 3×40 s · hollow hold 3×25 s · dead bug 3×12 · push-ups 2×11</target>
+        <target>Plank · hollow hold · dead bug · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.9.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beinheben · Russian Twist · Plank · Liegestütze — mehr Volumen</source>
-        <target>Beinheben 3×12 · Russian twist 3×18 · plank 3×40 s · push-ups 2×12</target>
+        <target>Leg raises · Russian twist · plank · push-ups — more volume</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.11.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mountain Climbers · Side Plank je Seite · Liegestütze</source>
-        <target>mountain climbers 4×30 s · side plank 2×25 s per side · push-ups 2×12</target>
+        <target>Mountain climbers · side plank per side · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.12.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — Mobility · lockere Liegestütze</source>
-        <target>Light day — mobility 10 min · 2×8 push-ups</target>
+        <target>Light day — mobility · easy push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.13.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Hollow Hold · Dead Bugs · Liegestütze</source>
-        <target>Core circuit 3 rounds — 40 s plank · 20 s hollow hold · 12 dead bugs · 10 push-ups</target>
+        <target>Core circuit, 3 rounds — plank · hollow hold · dead bugs · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.15.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Side Plank je Seite · Hollow Hold · Liegestütze</source>
-        <target>plank 3×50 s · side plank 3×30 s per side · hollow hold 3×30 s · push-ups 2×15</target>
+        <target>Plank · side plank per side · hollow hold · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.16.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Hängendes Knieheben · Russian Twist · Plank · Liegestütze</source>
-        <target>hanging knee raises 3×8 · Russian twist 3×20 · plank 3×50 s · push-ups 2×15</target>
+        <target>Hanging knee raises · Russian twist · plank · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.18.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Power: Plank · Dead Bug · Mountain Climbers · Liegestütze</source>
-        <target>Core power: plank 3×60 s · dead bug 3×15 · mountain climbers 3×45 s · push-ups 2×15</target>
+        <target>Core power: plank · dead bug · mountain climbers · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Stretching</source>
-        <target>Light day — 2×9 push-ups · stretching 10 min</target>
+        <target>Light day — easy push-ups · stretching</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.20.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Beinheben · Russian Twists · Liegestütze</source>
-        <target>Core circuit 3 rounds — 50 s plank · 12 Beinheben · 20 Russian twists · 10 push-ups</target>
+        <target>Core circuit, 3 rounds — plank · leg raises · Russian twists · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.22.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plank · Hollow Hold · Hängendes Knieheben · Liegestütze</source>
-        <target>plank 3×60 s · hollow hold 3×40 s · hanging knee raises 3×10 · push-ups 2×16</target>
+        <target>Plank · hollow hold · hanging knee raises · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.23.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Core-Zirkel 3 Runden — Plank · Russian Twists · Beinheben · Liegestütze</source>
-        <target>Core circuit 3 rounds — 1 min plank · 30 Russian twists · 12 Beinheben · 12 push-ups</target>
+        <target>Core circuit, 3 rounds — plank · Russian twists · leg raises · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.25.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Side Plank je Seite · Dead Bug · Hollow Hold · Liegestütze</source>
-        <target>side plank 3×40 s per side · dead bug 3×16 · hollow hold 3×40 s · push-ups 2×16</target>
+        <target>Side plank per side · dead bug · hollow hold · push-ups</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.26.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>Leichter Tag — lockere Liegestütze · Mobility</source>
-        <target>Light day — 2×9 push-ups · mobility</target>
+        <target>Light day — easy push-ups · mobility</target>
       </segment>
     </unit>
     <unit id="plan.core-4w.day.28.desc">
@@ -12504,9 +12504,9 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
-        <target>Train with me: count reps by camera, work through a training plan, compete on the leaderboard. Free:</target>
+        <target>Train with me: count reps by camera, cheer each other on, and start challenges together. Free:</target>
       </segment>
     </unit>
     <unit id="invite.action">
@@ -12954,9 +12954,9 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.19.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source>5 Sätze Zielwiederholungen · Ausfallschritte im Anschluss</source>
-        <target>5 sets target reps · 3×20 lunges</target>
+        <target>5 sets of target reps · lunges to finish</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.21.desc">
@@ -13014,183 +13014,183 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="challenge.create.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>Start challenge</target>
       </segment>
     </unit>
     <unit id="challenge.create.friendsHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wer macht mit?</source>
-        <target>Wer macht mit?</target>
+        <target>Who's joining?</target>
       </segment>
     </unit>
     <unit id="challenge.create.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Exercise</target>
       </segment>
     </unit>
     <unit id="challenge.create.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel (Wiederholungen)</source>
-        <target>Ziel (Wiederholungen)</target>
+        <target>Target (reps)</target>
       </segment>
     </unit>
     <unit id="challenge.create.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dauer</source>
-        <target>Dauer</target>
+        <target>Duration</target>
       </segment>
     </unit>
     <unit id="challenge.create.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target>Cancel</target>
       </segment>
     </unit>
     <unit id="challenge.create.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Los geht’s </source>
-        <target> Los geht’s </target>
+        <target>Let's go</target>
       </segment>
     </unit>
     <unit id="challenge.create.days">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target><ph id="0" equiv="days" disp="days"/> days</target>
       </segment>
     </unit>
     <unit id="challenges.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges</source>
         <target>Challenges</target>
       </segment>
     </unit>
     <unit id="challenges.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge starten</source>
-        <target>Challenge starten</target>
+        <target>Start challenge</target>
       </segment>
     </unit>
     <unit id="challenges.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
-        <target> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </target>
+        <target>No challenges yet. Challenge your friends: one goal, a few days, everyone together.</target>
       </segment>
     </unit>
     <unit id="challenges.ended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beendet</source>
-        <target>Beendet</target>
+        <target>Ended</target>
       </segment>
     </unit>
     <unit id="challenges.leave">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verlassen </source>
-        <target> Verlassen </target>
+        <target>Leave</target>
       </segment>
     </unit>
     <unit id="challenges.lastDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzter Tag</source>
-        <target>Letzter Tag</target>
+        <target>Last day</target>
       </segment>
     </unit>
     <unit id="challenges.daysLeft">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
-        <target>Noch <ph id="0" equiv="days" disp="days"/> Tage</target>
+        <target><ph id="0" equiv="days" disp="days"/> days left</target>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAria">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</source>
-        <target><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</target>
+        <target><ph id="0" equiv="count" disp="count"/> pending friend requests</target>
       </segment>
     </unit>
     <unit id="friends.board.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuern</source>
-        <target>Anfeuern</target>
+        <target>Cheer</target>
       </segment>
     </unit>
     <unit id="friends.board.cheered">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>Already cheered today</target>
       </segment>
     </unit>
     <unit id="friends.board.cheersToday">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
-        <target><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</target>
+        <target><ph id="0" equiv="count" disp="count"/> cheers today</target>
       </segment>
     </unit>
     <unit id="friends.error.cheeredAlready">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert – morgen wieder.</source>
-        <target>Heute schon angefeuert – morgen wieder.</target>
+        <target>Already cheered today — try again tomorrow.</target>
       </segment>
     </unit>
     <unit id="friends.error.notFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das geht nur unter bestätigten Freunden.</source>
-        <target>Das geht nur unter bestätigten Freunden.</target>
+        <target>This only works between confirmed friends.</target>
       </segment>
     </unit>
     <unit id="challenge.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>Select at least one friend.</target>
       </segment>
     </unit>
     <unit id="challenge.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Teilnehmer für eine Challenge.</source>
-        <target>Zu viele Teilnehmer für eine Challenge.</target>
+        <target>Too many participants for a challenge.</target>
       </segment>
     </unit>
     <unit id="challenge.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Für diese Übung geht keine Challenge.</source>
-        <target>Für diese Übung geht keine Challenge.</target>
+        <target>Challenges aren't available for this exercise.</target>
       </segment>
     </unit>
     <unit id="challenge.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Das Ziel muss zwischen 10 und 100.000 liegen.</source>
-        <target>Das Ziel muss zwischen 10 und 100.000 liegen.</target>
+        <target>The target must be between 10 and 100,000.</target>
       </segment>
     </unit>
     <unit id="challenge.error.duration">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Dauer gibt es nicht.</source>
-        <target>Diese Dauer gibt es nicht.</target>
+        <target>This duration isn't available.</target>
       </segment>
     </unit>
     <unit id="challenge.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon genug Challenges laufen. Warte, bis eine endet.</source>
-        <target>Du hast schon genug Challenges laufen. Warte, bis eine endet.</target>
+        <target>You already have enough challenges running. Wait for one to end.</target>
       </segment>
     </unit>
     <unit id="challenge.error.gone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Challenge gibt es nicht mehr.</source>
-        <target>Diese Challenge gibt es nicht mehr.</target>
+        <target>This challenge no longer exists.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde</source>
-        <target>Freunde</target>
+        <target>Friends</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
-        <target> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </target>
+        <target>Train with friends: compare progress, cheer each other on, and start challenges together.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.open">
