@@ -106,9 +106,30 @@ export const FriendsStore = signalStore(
       }
     }
 
+    /**
+     * A cheer changes the board (the count, and the button that sent it),
+     * not the lists — so it re-reads the board rather than everything.
+     */
+    async function cheer(uid: string): Promise<boolean> {
+      patchState(store, { lastRejection: undefined });
+      try {
+        const result = await _api.cheer(uid);
+        if (!result.ok) {
+          patchState(store, { lastRejection: result.reason ?? 'failed' });
+          return false;
+        }
+        await loadBoard();
+        return true;
+      } catch {
+        patchState(store, { lastRejection: 'failed' });
+        return false;
+      }
+    }
+
     return {
       reload,
       loadBoard,
+      cheer,
       requestFriend: (uid: string) => act(() => _api.request(uid)),
       accept: (id: string) => act(() => _api.respond(id, true)),
       decline: (id: string) => act(() => _api.respond(id, false)),

@@ -28,6 +28,7 @@ describe('FriendsStore', () => {
       respond: vitest.fn().mockResolvedValue({ ok: true }),
       remove: vitest.fn().mockResolvedValue({ ok: true }),
       board: vitest.fn().mockResolvedValue([]),
+      cheer: vitest.fn().mockResolvedValue({ ok: true }),
     };
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
@@ -150,6 +151,36 @@ describe('FriendsStore', () => {
 
     // then
     expect(api.board).toHaveBeenCalledWith('month');
+  });
+
+  it('should re-read the board, not the lists, after a cheer', async () => {
+    // given
+    const { store, api } = setup();
+    await store.loadBoard('daily');
+    api.board.mockClear();
+
+    // when
+    const ok = await store.cheer('b');
+
+    // then
+    expect(ok).toBe(true);
+    expect(api.cheer).toHaveBeenCalledWith('b');
+    expect(api.board).toHaveBeenCalledWith('daily');
+    expect(api.list).not.toHaveBeenCalled();
+  });
+
+  it('should keep the reason a cheer was refused', async () => {
+    // given
+    const { store, api } = setup();
+    api.cheer.mockResolvedValue({ ok: false, reason: 'already' });
+
+    // when
+    const ok = await store.cheer('b');
+
+    // then
+    expect(ok).toBe(false);
+    expect(store.lastRejection()).toBe('already');
+    expect(api.board).not.toHaveBeenCalled();
   });
 
   it('should empty the board rather than break the page', async () => {

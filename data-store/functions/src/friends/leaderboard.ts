@@ -50,7 +50,21 @@ export interface FriendsLeaderboardEntry {
   readonly displayName: string | null;
   readonly value: number;
   readonly isViewer: boolean;
+  /** Cheers this participant received today. */
+  readonly cheers: number;
+  /** Whether the viewer already cheered them today. */
+  readonly cheered: boolean;
 }
+
+export interface CheersToday {
+  readonly received: ReadonlyMap<string, number>;
+  readonly cheeredByViewer: ReadonlySet<string>;
+}
+
+export const NO_CHEERS: CheersToday = {
+  received: new Map(),
+  cheeredByViewer: new Set(),
+};
 
 /** Current period keys, so a rolled-over bucket counts as zero. */
 export interface PeriodKeys {
@@ -112,7 +126,8 @@ export function participates(row: FriendStatsRow): boolean {
 export function rankFriends(
   rows: ReadonlyArray<FriendStatsRow>,
   period: FriendsLeaderboardPeriod,
-  keys: PeriodKeys
+  keys: PeriodKeys,
+  cheers: CheersToday = NO_CHEERS
 ): FriendsLeaderboardEntry[] {
   return rows
     .filter(participates)
@@ -121,6 +136,8 @@ export function rankFriends(
       displayName: row.displayName,
       value: Math.round(periodValue(row, period, keys)),
       isViewer: row.isViewer,
+      cheers: cheers.received.get(row.uid) ?? 0,
+      cheered: cheers.cheeredByViewer.has(row.uid),
     }))
     .sort(
       (a, b) =>

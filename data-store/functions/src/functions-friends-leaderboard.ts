@@ -15,6 +15,7 @@ import {
   rankFriends,
   type FriendStatsRow,
 } from './friends';
+import { readCheersToday } from './functions-cheers';
 import { periodKeys } from './user-stats-delta';
 
 /**
@@ -79,7 +80,9 @@ export const getFriendsLeaderboard = onCall(
       };
     });
 
-    const entries = rankFriends(rows, period, periodKeys(berlinDateParts()));
+    const today = berlinDateParts();
+    const cheers = await readCheersToday(uid, uids, today.isoDate);
+    const entries = rankFriends(rows, period, periodKeys(today), cheers);
     logger.info('getFriendsLeaderboard', {
       uid,
       exerciseId,

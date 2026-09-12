@@ -2,7 +2,12 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
 import { InviteService } from '../core/invite.service';
-import { FriendsApiService, type FriendRow } from './friends-api.service';
+import { ChallengesApiService } from './challenges-api.service';
+import {
+  FriendsApiService,
+  type FriendRow,
+  type FriendsBoardEntry,
+} from './friends-api.service';
 import { FriendsPageComponent } from './friends-page.component';
 
 describe('FriendsPageComponent', () => {
@@ -22,13 +27,8 @@ describe('FriendsPageComponent', () => {
       incoming: FriendRow[];
       outgoing: FriendRow[];
     }> = {},
-    overrides: Partial<Record<'respond' | 'remove', unknown>> = {},
-    boardEntries?: ReadonlyArray<{
-      uid: string;
-      displayName: string | null;
-      value: number;
-      isViewer: boolean;
-    }>
+    overrides: Partial<Record<'respond' | 'remove' | 'cheer', unknown>> = {},
+    boardEntries?: ReadonlyArray<FriendsBoardEntry>
   ) {
     const api = {
       list: vitest.fn().mockResolvedValue({
@@ -40,13 +40,16 @@ describe('FriendsPageComponent', () => {
       respond: vitest.fn().mockResolvedValue({ ok: true }),
       remove: vitest.fn().mockResolvedValue({ ok: true }),
       board: vitest.fn().mockResolvedValue(boardEntries ?? []),
+      cheer: vitest.fn().mockResolvedValue({ ok: true }),
       ...overrides,
     };
+    const challengesApi = { list: vitest.fn().mockResolvedValue([]) };
     const invite = { inviteFriend: vitest.fn().mockResolvedValue('native') };
     const { fixture } = await render(FriendsPageComponent, {
       providers: [
         provideRouter([]),
         { provide: FriendsApiService, useValue: api },
+        { provide: ChallengesApiService, useValue: challengesApi },
         { provide: InviteService, useValue: invite },
       ],
     });
@@ -138,10 +141,70 @@ describe('FriendsPageComponent', () => {
   });
 
   describe('the board', () => {
-    const entries = [
-      { uid: 'b', displayName: 'Bob', value: 900, isViewer: false },
-      { uid: 'me', displayName: 'Wolf', value: 300, isViewer: true },
+    const entries: FriendsBoardEntry[] = [
+      {
+        uid: 'b',
+        displayName: 'Bob',
+        value: 900,
+        isViewer: false,
+        cheers: 2,
+        cheered: false,
+      },
+      {
+        uid: 'me',
+        displayName: 'Wolf',
+        value: 300,
+        isViewer: true,
+        cheers: 0,
+        cheered: false,
+      },
     ];
+
+    it('should let the viewer cheer a friend, once', async () => {
+      // given
+      const { api, fixture } = await renderPage(
+        { friends: [row()] },
+        {},
+        entries
+      );
+      api.board.mockResolvedValue([
+        { ...entries[0], cheered: true, cheers: 3 },
+        entries[1],
+      ]);
+
+      // when — only Bob's row has a button; the viewer cannot cheer themselves
+      const buttons = screen.getAllByTestId('board-cheer');
+      expect(buttons).toHaveLength(1);
+      buttons[0].click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(api.cheer).toHaveBeenCalledWith('b');
+      expect((buttons[0] as HTMLButtonElement).disabled).toBe(true);
+      expect(screen.getByTestId('board-cheers').textContent).toContain('3');
+    });
+
+    it('should explain a cheer the server refused', async () => {
+      // given
+      const { fixture } = await renderPage(
+        { friends: [row()] },
+        {
+          cheer: vitest
+            .fn()
+            .mockResolvedValue({ ok: false, reason: 'already' }),
+        },
+        entries
+      );
+
+      // when
+      screen.getByTestId('board-cheer').click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then
+      expect(document.body.textContent).toContain('Heute schon angefeuert');
+    });
 
     it('should rank the group and mark the viewer', async () => {
       // given

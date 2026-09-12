@@ -4,6 +4,8 @@ export * from './lib/models/user-config.models';
 export * from './lib/models/profile-sections';
 export * from './lib/models/profile-visibility.models';
 export * from './lib/models/friendship.models';
+export * from './lib/models/cheer.models';
+export * from './lib/models/challenge.models';
 export * from './lib/models/android-test.models';
 export * from './lib/models/reminder-config.models';
 export * from './lib/models/reminder-i18n.models';

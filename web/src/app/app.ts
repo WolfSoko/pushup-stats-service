@@ -67,6 +67,7 @@ import { AchievementCelebrationService } from './achievements/achievement-celebr
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { FeedbackDialogComponent } from './core/feedback/feedback-dialog.component';
 import { FeedbackService } from './core/feedback/feedback.service';
+import { FriendRequestBadgeComponent } from './friends/friend-request-badge.component';
 import {
   FeedbackDialogData,
   FeedbackResult,
@@ -133,6 +134,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     ThemeToggleComponent,
     AiAssistantNavButtonComponent,
     DailyGoalChecklistComponent,
+    FriendRequestBadgeComponent,
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,

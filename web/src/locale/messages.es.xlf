@@ -12304,8 +12304,8 @@
       </segment>
     </unit>
     <unit id="invite.share.text">
-      <segment state="translated">
-        <source>Trainier mit mir: Reps per Kamera zählen, Trainingsplan abarbeiten, in der Bestenliste gegeneinander antreten. Kostenlos:</source>
+      <segment state="initial">
+        <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
         <target>Entrena conmigo: cuenta repeticiones con la cámara, completa un plan de entrenamiento y compite en la clasificación. Gratis:</target>
       </segment>
     </unit>
@@ -12817,6 +12817,216 @@
       <segment state="initial">
         <source>Zum Wiki-Eintrag</source>
         <target>Zum Wiki-Eintrag</target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.title">
+      <segment state="initial">
+        <source>Challenge starten</source>
+        <target>Challenge starten</target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.friendsHint">
+      <segment state="initial">
+        <source>Wer macht mit?</source>
+        <target>Wer macht mit?</target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.exercise">
+      <segment state="initial">
+        <source>Übung</source>
+        <target>Übung</target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.target">
+      <segment state="initial">
+        <source>Ziel (Wiederholungen)</source>
+        <target>Ziel (Wiederholungen)</target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.duration">
+      <segment state="initial">
+        <source>Dauer</source>
+        <target>Dauer</target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.submit">
+      <segment state="initial">
+        <source> Los geht’s </source>
+        <target> Los geht’s </target>
+      </segment>
+    </unit>
+    <unit id="challenge.create.days">
+      <segment state="initial">
+        <source><ph id="0" equiv="days" disp="days"/> Tage</source>
+        <target><ph id="0" equiv="days" disp="days"/> Tage</target>
+      </segment>
+    </unit>
+    <unit id="challenges.title">
+      <segment state="initial">
+        <source>Challenges</source>
+        <target>Challenges</target>
+      </segment>
+    </unit>
+    <unit id="challenges.start">
+      <segment state="initial">
+        <source>Challenge starten</source>
+        <target>Challenge starten</target>
+      </segment>
+    </unit>
+    <unit id="challenges.empty">
+      <segment state="initial">
+        <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
+        <target> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </target>
+      </segment>
+    </unit>
+    <unit id="challenges.ended">
+      <segment state="initial">
+        <source>Beendet</source>
+        <target>Beendet</target>
+      </segment>
+    </unit>
+    <unit id="challenges.leave">
+      <segment state="initial">
+        <source> Verlassen </source>
+        <target> Verlassen </target>
+      </segment>
+    </unit>
+    <unit id="challenges.lastDay">
+      <segment state="initial">
+        <source>Letzter Tag</source>
+        <target>Letzter Tag</target>
+      </segment>
+    </unit>
+    <unit id="challenges.daysLeft">
+      <segment state="initial">
+        <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
+        <target>Noch <ph id="0" equiv="days" disp="days"/> Tage</target>
+      </segment>
+    </unit>
+    <unit id="nav.friends.pendingAria">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</source>
+        <target><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheer">
+      <segment state="initial">
+        <source>Anfeuern</source>
+        <target>Anfeuern</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheered">
+      <segment state="initial">
+        <source>Heute schon angefeuert</source>
+        <target>Heute schon angefeuert</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheersToday">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
+        <target><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.cheeredAlready">
+      <segment state="initial">
+        <source>Heute schon angefeuert – morgen wieder.</source>
+        <target>Heute schon angefeuert – morgen wieder.</target>
+      </segment>
+    </unit>
+    <unit id="friends.error.notFriends">
+      <segment state="initial">
+        <source>Das geht nur unter bestätigten Freunden.</source>
+        <target>Das geht nur unter bestätigten Freunden.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.noFriends">
+      <segment state="initial">
+        <source>Wähle mindestens einen Freund aus.</source>
+        <target>Wähle mindestens einen Freund aus.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.tooMany">
+      <segment state="initial">
+        <source>Zu viele Teilnehmer für eine Challenge.</source>
+        <target>Zu viele Teilnehmer für eine Challenge.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.exercise">
+      <segment state="initial">
+        <source>Für diese Übung geht keine Challenge.</source>
+        <target>Für diese Übung geht keine Challenge.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.target">
+      <segment state="initial">
+        <source>Das Ziel muss zwischen 10 und 100.000 liegen.</source>
+        <target>Das Ziel muss zwischen 10 und 100.000 liegen.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.duration">
+      <segment state="initial">
+        <source>Diese Dauer gibt es nicht.</source>
+        <target>Diese Dauer gibt es nicht.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.limit">
+      <segment state="initial">
+        <source>Du hast schon genug Challenges laufen. Warte, bis eine endet.</source>
+        <target>Du hast schon genug Challenges laufen. Warte, bis eine endet.</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.gone">
+      <segment state="initial">
+        <source>Diese Challenge gibt es nicht mehr.</source>
+        <target>Diese Challenge gibt es nicht mehr.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.title">
+      <segment state="initial">
+        <source>Freunde</source>
+        <target>Freunde</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.empty">
+      <segment state="initial">
+        <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
+        <target> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.open">
+      <segment state="initial">
+        <source>Zu den Freunden</source>
+        <target>Zu den Freunden</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.leading">
+      <segment state="initial">
+        <source>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</source>
+        <target>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.rank">
+      <segment state="initial">
+        <source>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</source>
+        <target>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.pending">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</source>
+        <target><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.activeChallenges">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
+        <target><ph id="0" equiv="count" disp="count"/> Challenges laufen</target>
       </segment>
     </unit>
 </file>

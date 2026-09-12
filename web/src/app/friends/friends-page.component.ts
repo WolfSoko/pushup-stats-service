@@ -13,6 +13,9 @@ import { RouterLink } from '@angular/router';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { InviteService } from '../core/invite.service';
+import { ChallengesSectionComponent } from './challenges-section.component';
+import { ChallengesStore } from './challenges.store';
+import { FriendRequestsComponent } from './friend-requests.component';
 import { FriendsStore } from './friends.store';
 import { FriendsBoardComponent } from './friends-board.component';
 import { friendRejectionMessage } from './friends-messages';
@@ -31,6 +34,8 @@ import type { FriendsBoardPeriod } from './friends-api.service';
     MatCardModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    ChallengesSectionComponent,
+    FriendRequestsComponent,
     FriendsBoardComponent,
     PageHeaderComponent,
     RouterLink,
@@ -56,36 +61,11 @@ import type { FriendsBoardPeriod } from './friends-api.service';
 
       @if (store.incoming().length > 0) {
         <section>
-          <h2 i18n="@@friends.incoming">Anfragen an dich</h2>
-          @for (row of store.incoming(); track row.id) {
-            <mat-card class="friend-card" data-testid="friend-incoming">
-              <mat-card-content>
-                <a [routerLink]="['/u', row.uid]">{{
-                  name(row.displayName)
-                }}</a>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                <button
-                  mat-stroked-button
-                  type="button"
-                  (click)="store.decline(row.id)"
-                  i18n="@@friends.decline"
-                >
-                  Ablehnen
-                </button>
-                <button
-                  mat-flat-button
-                  color="primary"
-                  type="button"
-                  data-testid="friend-accept"
-                  (click)="store.accept(row.id)"
-                  i18n="@@friends.accept"
-                >
-                  Annehmen
-                </button>
-              </mat-card-actions>
-            </mat-card>
-          }
+          <app-friend-requests
+            [rows]="store.incoming()"
+            (accept)="store.accept($event)"
+            (decline)="store.decline($event)"
+          />
         </section>
       }
 
@@ -96,7 +76,14 @@ import type { FriendsBoardPeriod } from './friends-api.service';
             [entries]="store.board()"
             [period]="store.boardPeriod()"
             (periodChange)="changePeriod($event)"
+            (cheer)="store.cheer($event)"
           />
+        </section>
+      }
+
+      @if (store.friends().length > 0) {
+        <section>
+          <app-challenges-section [friends]="store.friends()" />
         </section>
       }
 
@@ -212,6 +199,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
 })
 export class FriendsPageComponent implements OnInit {
   protected readonly store = inject(FriendsStore);
+  private readonly challenges = inject(ChallengesStore);
   private readonly invites = inject(InviteService);
 
   protected readonly rejection = computed(() =>
@@ -221,6 +209,7 @@ export class FriendsPageComponent implements OnInit {
   ngOnInit(): void {
     void this.store.reload();
     void this.store.loadBoard();
+    void this.challenges.reload();
   }
 
   protected changePeriod(period: unknown): void {
