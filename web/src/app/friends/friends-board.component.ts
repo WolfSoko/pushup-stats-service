@@ -148,6 +148,8 @@ export class FriendsBoardComponent {
   }
 
   protected cheersLabel(count: number): string {
-    return $localize`:@@friends.board.cheersToday:${count}:count: Anfeuerungen heute`;
+    return count === 1
+      ? $localize`:@@friends.board.cheersTodayOne:Eine Anfeuerung heute`
+      : $localize`:@@friends.board.cheersToday:${count}:count: Anfeuerungen heute`;
   }
 }

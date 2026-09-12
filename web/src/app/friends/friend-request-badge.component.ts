@@ -60,6 +60,8 @@ export class FriendRequestBadgeComponent implements OnInit {
   }
 
   protected ariaLabel(count: number): string {
-    return $localize`:@@nav.friends.pendingAria:${count}:count: offene Freundschaftsanfragen`;
+    return count === 1
+      ? $localize`:@@nav.friends.pendingAriaOne:Eine offene Freundschaftsanfrage`
+      : $localize`:@@nav.friends.pendingAria:${count}:count: offene Freundschaftsanfragen`;
   }
 }

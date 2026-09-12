@@ -70,7 +70,7 @@ describe('FriendsTeaserCardComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, invite, fixture };
+    return { api, challengesApi, invite, fixture };
   }
 
   it('should invite when the user has no friends yet', async () => {
@@ -97,7 +97,7 @@ describe('FriendsTeaserCardComponent', () => {
       ],
     });
 
-    // then
+    // then — a preview that must not reset the friends page's period
     expect(api.board).toHaveBeenCalledWith('week');
     expect(
       screen.getByTestId('dashboard-friends-standing').textContent
@@ -122,25 +122,58 @@ describe('FriendsTeaserCardComponent', () => {
 
   it('should count the requests waiting for an answer', async () => {
     // given
+    await renderCard({
+      incoming: [friend, { ...friend, id: 'me__c', uid: 'c' }],
+    });
+
+    // then
+    expect(
+      screen.getByTestId('dashboard-friends-pending').textContent
+    ).toContain('2 Anfragen warten');
+  });
+
+  it('should word a single request in the singular', async () => {
+    // given
     await renderCard({ incoming: [friend] });
 
     // then
     expect(
       screen.getByTestId('dashboard-friends-pending').textContent
-    ).toContain('1 Anfragen');
+    ).toContain('Eine Anfrage wartet');
   });
 
-  it('should mention running challenges', async () => {
+  it('should mention running challenges without asking for their sums', async () => {
+    // given
+    const { challengesApi } = await renderCard({
+      friends: [friend],
+      challenges: [
+        { id: 'c1', status: 'active', entries: [], viewerInvited: false },
+        { id: 'c2', status: 'active', entries: [], viewerInvited: false },
+      ],
+    });
+
+    // then
+    expect(challengesApi.list).toHaveBeenCalledWith({ progress: false });
+    expect(
+      screen.getByTestId('dashboard-friends-challenges').textContent
+    ).toContain('2 Challenges laufen');
+  });
+
+  it('should put a waiting invitation before running challenges', async () => {
     // given
     await renderCard({
       friends: [friend],
-      challenges: [{ id: 'c1', status: 'active', entries: [] }],
+      challenges: [
+        { id: 'c1', status: 'active', entries: [], viewerInvited: false },
+        { id: 'c2', status: 'active', entries: [], viewerInvited: true },
+      ],
     });
 
     // then
     expect(
-      screen.getByTestId('dashboard-friends-challenges').textContent
-    ).toContain('1 Challenges');
+      screen.getByTestId('dashboard-friends-invitations').textContent
+    ).toContain('Eine Challenge-Einladung wartet');
+    expect(screen.queryByTestId('dashboard-friends-challenges')).toBeNull();
   });
 
   it('should render nothing for a guest and ask the server nothing', async () => {

@@ -44,6 +44,14 @@ const TOP_ROWS = 3;
               data-testid="dashboard-friends-pending"
               >{{ pendingLabel(friends.pendingCount()) }}</mat-card-subtitle
             >
+          } @else if (challenges.invitations().length > 0) {
+            <mat-card-subtitle
+              class="pending"
+              data-testid="dashboard-friends-invitations"
+              >{{
+                invitationsLabel(challenges.invitations().length)
+              }}</mat-card-subtitle
+            >
           } @else if (challenges.active().length > 0) {
             <mat-card-subtitle data-testid="dashboard-friends-challenges">{{
               challengesLabel(challenges.active().length)
@@ -185,8 +193,10 @@ export class FriendsTeaserCardComponent implements OnInit {
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId) || !this.visible()) return;
     void this.friends.reload();
-    void this.friends.loadBoard('week');
-    void this.challenges.reload();
+    // A preview: the friends page keeps whatever period the user picked.
+    void this.friends.loadBoard('week', { remember: false });
+    // Only counted here — no need for every participant's sums.
+    void this.challenges.reload({ progress: false });
   }
 
   protected label(entry: { isViewer: boolean; displayName: string | null }) {
@@ -195,11 +205,21 @@ export class FriendsTeaserCardComponent implements OnInit {
   }
 
   protected pendingLabel(count: number): string {
-    return $localize`:@@dashboard.friends.pending:${count}:count: Anfragen warten auf dich`;
+    return count === 1
+      ? $localize`:@@dashboard.friends.pendingOne:Eine Anfrage wartet auf dich`
+      : $localize`:@@dashboard.friends.pending:${count}:count: Anfragen warten auf dich`;
+  }
+
+  protected invitationsLabel(count: number): string {
+    return count === 1
+      ? $localize`:@@dashboard.friends.invitationOne:Eine Challenge-Einladung wartet`
+      : $localize`:@@dashboard.friends.invitations:${count}:count: Challenge-Einladungen warten`;
   }
 
   protected challengesLabel(count: number): string {
-    return $localize`:@@dashboard.friends.activeChallenges:${count}:count: Challenges laufen`;
+    return count === 1
+      ? $localize`:@@dashboard.friends.activeChallengeOne:Eine Challenge läuft`
+      : $localize`:@@dashboard.friends.activeChallenges:${count}:count: Challenges laufen`;
   }
 
   protected invite(): void {

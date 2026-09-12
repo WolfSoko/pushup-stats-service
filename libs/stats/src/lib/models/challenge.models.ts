@@ -11,8 +11,13 @@ import { isValidFriendUid } from './friendship.models';
 
 export interface Challenge {
   createdBy: string;
-  /** Everyone whose progress counts, the creator included. */
+  /**
+   * Everyone whose progress counts, the creator first. Only they see
+   * each other's numbers — being in here is the consent for that.
+   */
   participants: string[];
+  /** Asked, not yet answered. They see the challenge, not the numbers. */
+  invited: string[];
   exerciseId: string;
   target: number;
   /** First and last day that count, inclusive, as `YYYY-MM-DD`. */
@@ -91,6 +96,24 @@ export function addDays(isoDate: string, days: number): string {
   const [y, m, d] = isoDate.split('-').map(Number);
   const date = new Date(Date.UTC(y, m - 1, d + days));
   return date.toISOString().slice(0, 10);
+}
+
+export type ChallengeRespondRejection = 'not-found' | 'not-invited' | 'ended';
+
+/**
+ * Whether `uid` may answer this invitation: only someone still on the
+ * invited list, and only while the challenge is running — accepting a
+ * finished challenge would add a participant to a result.
+ */
+export function challengeRespondRejection(
+  challenge: Pick<Challenge, 'invited' | 'to'> | undefined,
+  uid: string,
+  todayIso: string
+): ChallengeRespondRejection | null {
+  if (!challenge) return 'not-found';
+  if (!challenge.invited.includes(uid)) return 'not-invited';
+  if (challengeStatus(challenge, todayIso) === 'ended') return 'ended';
+  return null;
 }
 
 export type ChallengeStatus = 'active' | 'ended';

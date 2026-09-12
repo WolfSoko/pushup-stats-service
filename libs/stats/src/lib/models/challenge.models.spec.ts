@@ -6,6 +6,7 @@ import {
   challengeEndDate,
   challengePercent,
   challengeRejection,
+  challengeRespondRejection,
   challengeStatus,
   MAX_ACTIVE_CHALLENGES,
   MAX_CHALLENGE_PARTICIPANTS,
@@ -86,6 +87,30 @@ describe('challenge.models', () => {
       expect(
         challengeRejection({ ...ok, activeCount: MAX_ACTIVE_CHALLENGES })
       ).toBe('limit');
+    });
+  });
+
+  describe('challengeRespondRejection', () => {
+    const open = { invited: ['b', 'c'], to: '2026-09-20' };
+
+    it('should let an invited user answer while it runs', () => {
+      // when / then
+      expect(challengeRespondRejection(open, 'b', '2026-09-15')).toBeNull();
+    });
+
+    it('should refuse outsiders, participants and a missing challenge', () => {
+      // when / then
+      expect(challengeRespondRejection(open, 'x', '2026-09-15')).toBe(
+        'not-invited'
+      );
+      expect(challengeRespondRejection(undefined, 'b', '2026-09-15')).toBe(
+        'not-found'
+      );
+    });
+
+    it('should refuse once the challenge is over', () => {
+      // when / then
+      expect(challengeRespondRejection(open, 'b', '2026-09-21')).toBe('ended');
     });
   });
 

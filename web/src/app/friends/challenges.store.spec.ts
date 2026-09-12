@@ -16,13 +16,21 @@ describe('ChallengesStore', () => {
     to: '2026-09-20',
     status: 'active',
     entries: [],
+    invited: [],
+    viewerInvited: false,
   };
   const ended: ChallengeView = { ...active, id: 'c0', status: 'ended' };
+  const invitation: ChallengeView = {
+    ...active,
+    id: 'c2',
+    viewerInvited: true,
+  };
 
   function setup(challenges: ChallengeView[] = []) {
     const api = {
       list: vitest.fn().mockResolvedValue(challenges),
       create: vitest.fn().mockResolvedValue({ ok: true }),
+      respond: vitest.fn().mockResolvedValue({ ok: true }),
       leave: vitest.fn().mockResolvedValue({ ok: true }),
     };
     TestBed.resetTestingModule();
@@ -32,16 +40,28 @@ describe('ChallengesStore', () => {
     return { store: TestBed.inject(ChallengesStore), api };
   }
 
-  it('should split running and finished challenges', async () => {
+  it('should split invitations, running and finished challenges', async () => {
     // given
-    const { store } = setup([active, ended]);
+    const { store } = setup([active, ended, invitation]);
 
     // when
     await store.reload();
 
-    // then
+    // then — an invitation is not "running" for the viewer yet
+    expect(store.invitations().map((c) => c.id)).toEqual(['c2']);
     expect(store.active().map((c) => c.id)).toEqual(['c1']);
     expect(store.ended().map((c) => c.id)).toEqual(['c0']);
+  });
+
+  it('should pass the progress flag through', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when
+    await store.reload({ progress: false });
+
+    // then
+    expect(api.list).toHaveBeenCalledWith({ progress: false });
   });
 
   it('should re-read after creating one', async () => {
@@ -62,6 +82,19 @@ describe('ChallengesStore', () => {
     expect(ok).toBe(true);
     expect(api.create).toHaveBeenCalledWith(input);
     expect(api.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('should answer an invitation with the same call either way', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when
+    await store.accept('c2');
+    await store.decline('c2');
+
+    // then
+    expect(api.respond).toHaveBeenNthCalledWith(1, 'c2', true);
+    expect(api.respond).toHaveBeenNthCalledWith(2, 'c2', false);
   });
 
   it('should keep the refusal reason and not reload', async () => {

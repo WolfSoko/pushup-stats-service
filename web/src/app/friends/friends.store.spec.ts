@@ -140,6 +140,32 @@ describe('FriendsStore', () => {
     expect(store.boardPeriod()).toBe('allTime');
   });
 
+  it('should share one reload between consumers mounting at once', async () => {
+    // given — the nav badge and the dashboard card both ask on init
+    const { store, api } = setup({ friends: [friend] });
+
+    // when
+    await Promise.all([store.reload(), store.reload()]);
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.friendCount()).toBe(1);
+    expect(store.loading()).toBe(false);
+  });
+
+  it('should leave the remembered period alone for a preview', async () => {
+    // given — the user picked a month on the friends page
+    const { store, api } = setup();
+    await store.loadBoard('month');
+
+    // when — the dashboard card previews the week
+    await store.loadBoard('week', { remember: false });
+
+    // then
+    expect(api.board).toHaveBeenLastCalledWith('week');
+    expect(store.boardPeriod()).toBe('month');
+  });
+
   it('should reuse the last period when none is given', async () => {
     // given
     const { store, api } = setup();

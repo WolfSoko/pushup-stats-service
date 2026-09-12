@@ -8,6 +8,7 @@ import {
   type Friendship,
 } from '@pu-stats/models';
 
+import { requireUid } from './callable-auth';
 import { db, DEMO_USER_ID } from './firebase-app';
 import {
   friendLists,
@@ -15,6 +16,7 @@ import {
   respondRejection,
   type FriendshipDoc,
 } from './friends';
+import { readDisplayNames } from './user-config-read';
 
 /**
  * Friendships — mutual, and therefore the thing that unlocks the
@@ -26,13 +28,6 @@ import {
  */
 
 const COLLECTION = 'friendships';
-
-function requireUid(auth: { uid?: string } | undefined): string {
-  if (!auth?.uid) {
-    throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
-  }
-  return auth.uid;
-}
 
 /** Every friendship document `uid` is part of. */
 async function readFriendships(uid: string): Promise<FriendshipDoc[]> {
@@ -166,22 +161,11 @@ export const listFriends = onCall(
     const uid = requireUid(request.auth);
     const lists = friendLists(await readFriendships(uid), uid);
 
-    const uids = [
-      ...new Set(
-        [...lists.friends, ...lists.incoming, ...lists.outgoing].map(
-          (entry) => entry.uid
-        )
-      ),
-    ];
-    const names = new Map<string, string>();
-    if (uids.length > 0) {
-      const col = db.collection('userConfigs');
-      const snaps = await db.getAll(...uids.map((id) => col.doc(id)));
-      for (const snap of snaps) {
-        const name = String(snap.data()?.['displayName'] ?? '').trim();
-        if (name) names.set(snap.id, name);
-      }
-    }
+    const names = await readDisplayNames(
+      [...lists.friends, ...lists.incoming, ...lists.outgoing].map(
+        (entry) => entry.uid
+      )
+    );
 
     const withNames = (entries: typeof lists.friends) =>
       entries.map((entry) => ({
