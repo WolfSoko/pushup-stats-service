@@ -262,15 +262,19 @@ describe('scaleTrainingPlanDay', () => {
     expect(byId.get('core.hollowhold')?.target).toBe(60);
   });
 
-  it('should move an unmeasured exercise with the pushup factor', () => {
+  it('should leave an unmeasured exercise as the plan prescribes it', () => {
     // given Dead Bug, which the opening test never measured
+    const before = MULTI_PLAN.days[1].exercises?.find(
+      (e) => e.exerciseId === 'core.deadbug'
+    );
     const scaled = scaleTrainingPlanDay(MULTI_PLAN.days[1], f);
     const deadbug = (scaled.exercises ?? []).find(
       (e) => e.exerciseId === 'core.deadbug'
     );
 
-    // then the plan does not end up half-adjusted
-    expect(deadbug?.target).toBe(30);
+    // then — a push-up max says nothing about it, and moving it anyway
+    // would contradict the day's own description
+    expect(deadbug?.target).toBe(before?.target);
   });
 
   it('should scale targetReps with the headline exercise', () => {
@@ -420,6 +424,56 @@ describe('scaling the shipped catalog', () => {
     // then the plank moved and the pushups did not
     expect(after?.target).toBe((before?.target ?? 0) * 2);
     expect(scaled.days[1].targetReps).toBe(core.days[1].targetReps);
+  });
+
+  it('should keep the challenge supporting work at the prescribed numbers', () => {
+    // given a user who tested at half the 30-day challenge's baseline of
+    // 20 — the case that showed "3×20 s Hollow Hold" above items of 10 s
+    const challenge = findPlanBySlug('challenge-30d') as TrainingPlan;
+    const scaled = scaledPlanFor(
+      challenge,
+      userPlan([planTestResultId(1, 0, 10)])
+    ) as TrainingPlan;
+    const dayIndex = challenge.days.findIndex((d) =>
+      d.exercises?.some((e) => e.exerciseId === 'core.hollowhold')
+    );
+
+    // when the hollow hold of that day is compared
+    const before = challenge.days[dayIndex].exercises?.find(
+      (e) => e.exerciseId === 'core.hollowhold'
+    );
+    const after = scaled.days[dayIndex].exercises?.find(
+      (e) => e.exerciseId === 'core.hollowhold'
+    );
+
+    // then it holds its own seconds — the day's description names them —
+    // while the push-ups follow the measured max
+    expect(after?.target).toBe(before?.target);
+    expect(after?.sets).toEqual(before?.sets);
+    expect(scaled.days[dayIndex].targetReps).toBeLessThan(
+      challenge.days[dayIndex].targetReps
+    );
+  });
+
+  it('should keep a mobility block at full length', () => {
+    // given the same user: 10 minutes of mobility are 10 minutes
+    const challenge = findPlanBySlug('challenge-30d') as TrainingPlan;
+    const scaled = scaledPlanFor(
+      challenge,
+      userPlan([planTestResultId(1, 0, 10)])
+    ) as TrainingPlan;
+    const dayIndex = challenge.days.findIndex((d) =>
+      d.exercises?.some((e) => e.exerciseId === 'mobility.stretching')
+    );
+
+    // then
+    const after = scaled.days[dayIndex].exercises?.find(
+      (e) => e.exerciseId === 'mobility.stretching'
+    );
+    const before = challenge.days[dayIndex].exercises?.find(
+      (e) => e.exerciseId === 'mobility.stretching'
+    );
+    expect(after?.target).toBe(before?.target);
   });
 
   it('should hold the catalog invariants after scaling', () => {

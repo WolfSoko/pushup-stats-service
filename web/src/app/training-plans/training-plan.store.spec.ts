@@ -2322,7 +2322,7 @@ describe('TrainingPlanStore', () => {
       expect(day2?.targetReps).toBe(20);
     });
 
-    it('should move an unmeasured exercise with the pushup factor', async () => {
+    it('should leave an unmeasured exercise at its prescribed target', async () => {
       // given Dead Bug, which the baseline never measured
       const { store } = multiSetup();
       await flush();
@@ -2331,11 +2331,12 @@ describe('TrainingPlanStore', () => {
       await store.recordTestResult(1, 1, 15);
       await flush();
 
-      // then the plan does not end up half-adjusted
+      // then it keeps the number the plan names — a push-up max says
+      // nothing about it, and the day's description spells it out
       const deadbug = store
         .activeCatalog()
         ?.days[1].exercises?.find((e) => e.exerciseId === 'core.deadbug');
-      expect(deadbug?.target).toBe(30);
+      expect(deadbug?.target).toBe(20);
     });
 
     it('should scale off one field while another is still blank', async () => {

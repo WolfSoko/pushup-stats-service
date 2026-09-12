@@ -22,7 +22,10 @@ import {
  * A test can measure several things — Core Foundations opens with a plank
  * hold, pushups and a hollow hold — and each measured exercise scales its
  * own prescriptions across the plan. Exercises the test never measured
- * follow the pushup factor, so a plan does not end up half-adjusted.
+ * keep the numbers the plan prescribes: a max of ten push-ups says nothing
+ * about how long someone holds a hollow hold, and moving it anyway made
+ * the day contradict its own description ("3×20 s" next to items of 10 s)
+ * and shrank even the mobility blocks.
  *
  * Skipping the test leaves every factor at 1, and that case returns the
  * catalog object itself — the untouched path is not merely numerically
@@ -39,7 +42,7 @@ import {
 export const MIN_PLAN_SCALE = 0.5;
 export const MAX_PLAN_SCALE = 2;
 
-/** The exercise whose factor stands in for everything unmeasured. */
+/** The exercise `targetReps` and the dashboard goal are about. */
 const PRIMARY_EXERCISE = 'pushup';
 
 /** Factor resolution — 1 % steps are finer than any rounded target can
@@ -51,7 +54,7 @@ const FACTOR_PRECISION = 100;
  * the plan was written for.
  */
 export interface PlanScaleFactors {
-  /** Applied to `targetReps` and to every exercise without its own factor. */
+  /** The push-up factor — what `targetReps` is measured in. */
   readonly primary: number;
   readonly byExercise: ReadonlyMap<string, number>;
 }
@@ -150,8 +153,14 @@ export function scaleBreakdown(
   return out;
 }
 
+/**
+ * What the test says about this exercise. Nothing measured it means
+ * nothing to say: the prescription stands.
+ */
 function factorFor(factors: PlanScaleFactors, exerciseId: string): number {
-  return factors.byExercise.get(exerciseId) ?? factors.primary;
+  const measured = factors.byExercise.get(exerciseId);
+  if (measured !== undefined) return measured;
+  return exerciseId === PRIMARY_EXERCISE ? factors.primary : 1;
 }
 
 /**
