@@ -12962,5 +12962,17 @@
         <target>Eine Challenge läuft</target>
       </segment>
     </unit>
+    <unit id="friends.badge.invitationOne">
+      <segment state="initial">
+        <source>Eine Challenge-Einladung wartet</source>
+        <target>Eine Challenge-Einladung wartet</target>
+      </segment>
+    </unit>
+    <unit id="friends.badge.invitations">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
+        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
