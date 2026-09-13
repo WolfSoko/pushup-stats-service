@@ -15,7 +15,7 @@ analog zu `web/src/locale/messages.xlf`.
 > | Kurzbeschreibung          | `store/play/<locale>/short-description.txt` | 80    |
 > | Vollständige Beschreibung | `store/play/<locale>/full-description.txt`  | 4000  |
 >
-> Gepflegt: `de-DE` (Quelle) und `en-US`. Die Limits prüft
+> Gepflegt: alle neun Play-Locales, `de-DE` ist die Quelle. Die Limits prüft
 > `pnpm nx test tools` — zu langer Text scheitert in CI, nicht erst beim
 > Veröffentlichen.
 
@@ -121,17 +121,24 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
 
 ## Was noch fehlt
 
-- **Weitere Sprachen.** `de-DE` und `en-US` sind gepflegt. Die Store-Texte
-  laufen bewusst **nicht** über die tägliche Übersetzungs-Routine (die
-  arbeitet auf XLIFF und `content/`), jede weitere Sprache ist also
-  dauerhafte Handarbeit. Welche sich lohnen:
-  [`docs/play-store-publishing.md`](play-store-publishing.md#welche-sprachen-sich-lohnen).
-- **`en-US` ist kein Übersetzungs-Klon.** Titel, Kurzbeschreibung und der
-  Einstieg sind eigenständig getextet, weil englisches ASO auf andere
-  Suchbegriffe zielt („push-up counter“, „workout tracker“) als das
-  deutsche Original. Eine Änderung am deutschen Text ist deshalb **nicht**
-  automatisch eine am englischen — beide Dateien wollen einzeln gepflegt
-  werden, und die Beleg-Liste unten gilt für beide.
+- **Neun Sprachen, neun Dateien.** Alle Play-Locales des Mappings haben ein
+  Listing. Die Store-Texte laufen bewusst **nicht** über die tägliche
+  Übersetzungs-Routine (die arbeitet auf XLIFF und `content/`) — eine
+  inhaltliche Änderung ist also neunfache Handarbeit, und was das kostet
+  steht in
+  [`docs/play-store-publishing.md`](play-store-publishing.md#was-die-neun-sprachen-kosten).
+- **Kein Listing ist ein Übersetzungs-Klon.** Titel, Kurzbeschreibung und
+  Einstieg sind pro Sprache eigenständig getextet, weil ASO je Markt auf
+  andere Suchbegriffe zielt („push-up counter" und „workout tracker" im
+  Englischen, „pompes", „flexiones", „flessioni", „armhevninger"). Eine
+  Änderung am deutschen Text ist deshalb **nicht** automatisch eine an den
+  anderen acht — die Beleg-Liste oben gilt aber für alle.
+- **Das Vokabular kommt aus der App, nicht aus dem Bauch.** Plan-Titel und
+  Kategorienamen in den Listings sind aus `web/src/locale/messages.<lang>.xlf`
+  übernommen, damit Store-Eintrag und App dieselben Namen benutzen. Eine
+  Ausnahme ist bewusst: `it-IT` wirbt mit „flessioni" (der gesuchte Begriff),
+  behält in den Plan-Titeln aber „Piegamenti", weil die App sie so anzeigt —
+  deshalb nennt der italienische Einstieg beide Wörter.
 - **KI-Coach.** Nicht im Listing erwähnt: `aiAssistantConfig.runtimeUrl` ist
   leer, im ausgelieferten Build ist der Assistent also nicht nutzbar.
 - **Grafiken.** Screenshots, Feature-Grafik und Icon pflegt weiterhin die
