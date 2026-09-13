@@ -148,5 +148,9 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
   deshalb nennt der italienische Einstieg beide Wörter.
 - **KI-Coach.** Nicht im Listing erwähnt: `aiAssistantConfig.runtimeUrl` ist
   leer, im ausgelieferten Build ist der Assistent also nicht nutzbar.
-- **Grafiken.** Screenshots, Feature-Grafik und Icon pflegt weiterhin die
-  Console — das Script veröffentlicht nur Text.
+- **Grafiken.** Screenshots und Feature-Grafik erzeugt
+  `tools/src/store-graphics/` aus der laufenden App gegen die Emulatoren und
+  legt sie in `store/graphics/` ab; hochgeladen werden sie weiter von Hand in
+  der Console, weil das Publish-Script bewusst nur Text veröffentlicht.
+  Bisher nur `de-DE` — Play fällt für die anderen acht Sprachen auf diese
+  Assets zurück.

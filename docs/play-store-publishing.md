@@ -144,6 +144,39 @@ Was die einzelnen Sprachen wert sind, unterscheidet sich stark:
 Belastbar entscheidet das aber nur die Play Console unter **Statistiken →
 Nutzer nach Land/Sprache**, nicht diese Liste.
 
+## Screenshots und Feature-Grafik
+
+Die Assets unter `store/graphics/` entstehen aus der **laufenden App** gegen
+die lokalen Emulatoren — keine nachgebauten Mockups, keine Produktionsdaten.
+Drei Schritte, jeder einzeln wiederholbar:
+
+```bash
+nx run data-store:serve                                   # Auth + Firestore + Functions
+nx run web:serve:development-emulator                     # App gegen die Emulatoren
+node tools/src/store-graphics/seed-demo-data.mjs          # Demo-Konto + Trainingshistorie
+node tools/src/store-graphics/capture-screenshots.mjs     # rohe Screens → tmp/store-graphics
+node tools/src/store-graphics/compose-graphics.mjs        # Rahmen + Text → store/graphics
+```
+
+- **Der Firestore-Emulator braucht Java.** Ohne JRE startet er nicht; eine
+  portable reicht (`JAVA_HOME` auf ein entpacktes Temurin-Verzeichnis).
+- **Nur Rohdaten werden geseedet.** Streak, Bestenliste und
+  Challenge-Fortschritt rechnen die echten Trigger aus — deshalb stimmen die
+  Zahlen in den Screenshots mit dem überein, was die App produziert.
+- **Die Übungs-IDs im Seed müssen im `EXERCISE_CATALOG` stehen.** Eine
+  erfundene ID rendert als roher Schlüssel (`squat.bodyweight` statt
+  „Kniebeugen") und sieht im Store wie ein Bug aus.
+- **Nur öffentliche Profile stehen auf der Bestenliste**
+  (`isPublicProfileLinkAllowed`). Demo-Nutzer ohne `profileVisibility`
+  fehlen dort, und die Liste sieht leer aus.
+- **Grenzen prüft `pnpm nx test tools`**: Seitenlängen, Seitenverhältnis
+  (höchstens 2:1), Anzahl je Sprache und die exakten Maße von
+  Feature-Grafik (1024×500) und Icon (512×512).
+
+Hochgeladen wird in der Play Console: **Store-Eintrag → Grafiken**. Die
+Bildtexte sind deutsch; für andere Sprachen fällt Play auf die
+Default-Sprache zurück, bis dort eigene Assets liegen.
+
 ## Gotchas
 
 - **Review-Queue.** Ein committeter Listing-Text ist nicht sofort live,
@@ -160,6 +193,6 @@ Nutzer nach Land/Sprache**, nicht diese Liste.
   Beschreibung ist voller Emoji: Codepoint-Zählung lag ~10 Zeichen zu niedrig
   und hätte einen 4004 Zeichen langen Text als „3994" durchgewunken.
   `countCharacters()` zählt deshalb Code-Units.
-- **Grafiken bleiben Handarbeit.** Screenshots, Feature-Grafik und Icon
-  gehen über diesen Weg nicht mit; die API kann sie zwar, das Script macht
-  bewusst nur Text.
+- **Grafiken lädt weiterhin die Console hoch.** Das Publish-Script macht
+  bewusst nur Text. Erzeugt werden sie aber nicht mehr von Hand — siehe
+  „Screenshots und Feature-Grafik" unten.
