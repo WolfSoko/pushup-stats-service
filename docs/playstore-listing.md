@@ -28,6 +28,9 @@ bindet.
 Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne (`TRAINING_PLANS`),
 Liegestütz-Varianten (`PUSHUP_TYPES`) oder die Locale-Liste in
 `web/project.json` änderst, gehören die Zahlen im Store-Text mit angepasst.
+Dasselbe gilt für Eigenschaften ohne Zahl: Der Text beschreibt inzwischen
+auch Freunde, die Sichtbarkeitsstufen des Profils und die Skalierung der
+Pläne auf den Maximaltest — wer daran etwas ändert, prüft die Belege unten.
 
 ## Anzeigename: „Pushup Tracker"
 
@@ -85,6 +88,36 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
 - **Sechs Schnellaktionen insgesamt** — `MAX_QUICK_ADDS = 6` in
   `libs/stats/src/lib/models/user-config.models.ts`. Die sechs Slots teilen
   sich alle Übungen, es sind keine sechs Presets _pro_ Übung.
+- **Fünf Pläne rechnen auf den Maximaltest um** — `baselineMax` in
+  `training-plan.catalog.ts` (30-Tage-Challenge, Liegestütze ab 40, Daily 100,
+  Full Body Strong, Core Foundations), angewandt von `scaleTrainingPlan()` in
+  `training-plan-scaling.ts`. Ohne absolvierten Test bleibt der Plan, wie er
+  veröffentlicht ist, und jeder Faktor ist auf 0,5–2× begrenzt
+  (`MIN_PLAN_SCALE` / `MAX_PLAN_SCALE`) — das Listing darf also weder eine
+  Anpassung ohne Test noch eine unbegrenzte versprechen. Nur gemessene
+  Übungen skalieren.
+- **Drei Sichtbarkeitsstufen pro Profil-Element** — `ProfileSectionVisibility`
+  (`off` | `friends` | `public`) über die 13 Elemente in
+  `PROFILE_SECTIONS`. Einen Hauptschalter gibt es nicht mehr:
+  `isProfilePublic()` leitet sich aus den Stufen ab. Ein Listing-Satz wie
+  „öffentliches Profil aktivieren" beschreibt die App nicht mehr.
+- **Profil-Vorschau als Freund und als Fremder** — `ProfileAudienceView` in
+  `web/src/app/public-profile/profile-audience.view.ts`.
+- **Letzte 10 Workouts im Profil** — `readRecentEntries()` in
+  `data-store/functions/src/functions-public-profile.ts` (`limit(10)`), nur
+  wenn die Stufe des Elements den Betrachter einschließt.
+- **Aktiver Plan im Profil, Plan als Link teilen** — `readActivePlan()` ebenda
+  und `buildSharePlanPayload()` in
+  `web/src/app/training-plans/plan-share.ts`.
+- **Vier Zeiträume im Freundes-Board, kein Übungsfilter** —
+  `FriendsBoardPeriod` (`daily` | `week` | `month` | `allTime`) in
+  `web/src/app/friends/friends-api.service.ts`; die UI bietet genau diese
+  vier als Chips in `friends-board.component.ts` und **keinen**
+  Übungsfilter, obwohl die API einen `exerciseId` kennt — das Listing darf
+  also keinen versprechen.
+- **„Miss dich mit anderen oder bleib privat"** — `hideFromLeaderboard` in der
+  User-Config; das ist der Schalter, den der Satz meint, nicht die
+  Profil-Stufen.
 
 ## Was noch fehlt
 
