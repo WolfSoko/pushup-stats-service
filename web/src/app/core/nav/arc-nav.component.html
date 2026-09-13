@@ -1,0 +1,40 @@
+<nav
+  class="arc-nav"
+  aria-label="Hauptnavigation"
+  i18n-aria-label="@@nav.desktop.aria"
+  data-testid="arc-nav"
+>
+  <div
+    #track
+    class="track"
+    (scroll)="onScroll()"
+    (wheel)="onWheel($event)"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp()"
+    (pointercancel)="onPointerLeave()"
+    (pointerleave)="onPointerLeave()"
+  >
+    @for (item of items(); track item.path; let i = $index) {
+      <a
+        class="item"
+        [routerLink]="item.path"
+        [class.active]="activeIndex() === i"
+        [attr.aria-current]="activeIndex() === i ? 'page' : null"
+        [style.transform]="transformFor(i)"
+        [style.opacity]="opacityFor(i)"
+        draggable="false"
+      >
+        <span class="disc">
+          <mat-icon aria-hidden="true">{{ item.icon }}</mat-icon>
+          @if (item.badge) {
+            <span class="badge-slot">
+              <ng-container *ngComponentOutlet="item.badge" />
+            </span>
+          }
+        </span>
+        <span class="label">{{ item.label }}</span>
+      </a>
+    }
+  </div>
+</nav>

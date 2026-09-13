@@ -1549,15 +1549,6 @@
         <target> Impostazioni dei cookie </target>
       </segment>
     </unit>
-    <unit id="nav.bottom.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:218,219</note>
-      </notes>
-      <segment state="translated">
-        <source>Mobile-Navigation</source>
-        <target>Navigazione mobile</target>
-      </segment>
-    </unit>
     <unit id="seo.landing.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>

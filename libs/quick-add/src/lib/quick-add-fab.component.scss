@@ -1,13 +1,10 @@
 :host {
   position: fixed;
   right: max(16px, calc((100vw - 1200px) / 2));
-  bottom: 16px;
+  // Clears the arc nav along the bottom edge (76px plus the safe area).
+  bottom: calc(92px + env(safe-area-inset-bottom, 0px));
   z-index: 1000;
   display: block;
-
-  @media (max-width: 767px) {
-    bottom: 72px;
-  }
 }
 
 .speed-dial {

@@ -1138,7 +1138,7 @@ describe('App (testing-library)', () => {
     expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.webp');
   });
 
-  it('given app is rendered, when reading bottom navigation, then it exposes five primary links', async () => {
+  it('given a signed-in user, when reading the arc navigation, then it lists every section with friends in the familiar spot', async () => {
     // Given
     await render(App, {
       providers: [
@@ -1176,20 +1176,24 @@ describe('App (testing-library)', () => {
     });
 
     // When
-    const bottomNav = document.querySelector('.bottom-nav');
+    const arcNav = screen.getByTestId('arc-nav');
 
-    // Then
-    expect(bottomNav).toBeTruthy();
-    if (!bottomNav) {
-      throw new Error('Expected .bottom-nav to be rendered');
-    }
-    const links = bottomNav.querySelectorAll('a');
-    expect(links.length).toBe(5);
-    expect(links[0].getAttribute('href')).toBe('/app');
-    expect(links[1].getAttribute('href')).toBe('/analysis');
-    expect(links[2].getAttribute('href')).toBe('/leaderboard');
-    expect(links[3].getAttribute('href')).toBe('/training-plans');
-    expect(links[4].getAttribute('href')).toBe('/blog');
+    // Then — one bar for every viewport; the old desktop link row is gone
+    expect(document.querySelector('.desktop-nav')).toBeNull();
+    const hrefs = Array.from(arcNav.querySelectorAll('a')).map((a) =>
+      a.getAttribute('href')
+    );
+    expect(hrefs).toEqual([
+      '/app',
+      '/analysis',
+      '/leaderboard',
+      '/freunde',
+      '/training-plans',
+      '/blog',
+      '/history',
+      '/wiki/uebungen',
+      '/wiki/liegestuetz-typen',
+    ]);
   });
 
   describe('speed-dial coachmark', () => {

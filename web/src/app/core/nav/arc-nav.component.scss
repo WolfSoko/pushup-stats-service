@@ -1,0 +1,139 @@
+// The strip: fixed to the bottom edge, its top bulging upward like a
+// segment cut from a large circle. The component sets each item's
+// transform and opacity from its distance to the middle (see
+// arc-nav.geometry.ts); this file only shapes the strip and the items.
+$item-width: 76px;
+$bar-height: 76px;
+
+:host {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: block;
+  pointer-events: none;
+}
+
+.arc-nav {
+  pointer-events: auto;
+  height: calc(#{$bar-height} + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--mat-toolbar-container-background-color, #1e1e1e);
+  color: var(--mat-toolbar-container-text-color, #fff);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50% 50% 0 0 / 28px 28px 0 0;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.25);
+  // Clip the items to the curved outline so nothing pokes out at the corners.
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  touch-action: pan-x;
+  user-select: none;
+  cursor: grab;
+  // Half the strip minus half an item on each side, so the first and the
+  // last entry can sit in the middle like every other.
+  padding-inline: calc(50% - #{$item-width * 0.5});
+  padding-top: 6px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.item {
+  flex: 0 0 $item-width;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: inherit;
+  text-decoration: none;
+  transform-origin: top center;
+  transition:
+    transform 120ms ease-out,
+    opacity 120ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+
+  .disc {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background 150ms ease;
+  }
+
+  .badge-slot {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    line-height: 0;
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .label {
+    font-size: 0.66rem;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: $item-width;
+  }
+
+  &.active {
+    color: var(--mat-sys-primary, #81a1e8);
+    font-weight: 600;
+
+    .disc {
+      background: color-mix(
+        in srgb,
+        var(--mat-sys-primary, #81a1e8) 18%,
+        transparent
+      );
+    }
+  }
+
+  &:focus-visible .disc {
+    outline: 2px solid var(--mat-sys-primary, #81a1e8);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+}
+
+:host-context(html.light-theme) {
+  .arc-nav {
+    background: #ffffff;
+    color: #334155;
+    border-top-color: rgba(148, 163, 184, 0.3);
+    box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.12);
+  }
+  .item.active {
+    color: #1d4ed8;
+    .disc {
+      background: rgba(59, 130, 246, 0.12);
+    }
+  }
+}
