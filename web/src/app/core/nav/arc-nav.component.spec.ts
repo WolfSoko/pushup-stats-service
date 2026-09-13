@@ -58,7 +58,7 @@ describe('ArcNavComponent', () => {
     // given
     await renderNav();
 
-    // then
+    // then — the copies that make the strip wrap stay out of the tab order
     const links = screen.getAllByRole('link');
     expect(links.map((a) => a.getAttribute('href'))).toEqual([
       '/app',
@@ -66,6 +66,54 @@ describe('ArcNavComponent', () => {
       '/blog',
     ]);
     expect(links[0].textContent).toContain('Dashboard');
+  });
+
+  it('should wrap around: the last entries sit before the first', async () => {
+    // given
+    await renderNav();
+
+    // then — three copies, clones hidden from assistive tech
+    const all = Array.from(
+      screen.getByTestId('arc-nav').querySelectorAll<HTMLElement>('a')
+    );
+    expect(all.map((a) => a.getAttribute('href'))).toEqual([
+      '/app',
+      '/analysis',
+      '/blog',
+      '/app',
+      '/analysis',
+      '/blog',
+      '/app',
+      '/analysis',
+      '/blog',
+    ]);
+    expect(all.map((a) => a.getAttribute('aria-hidden'))).toEqual([
+      'true',
+      'true',
+      'true',
+      null,
+      null,
+      null,
+      'true',
+      'true',
+      'true',
+    ]);
+    expect(all[2].getAttribute('tabindex')).toBe('-1');
+    expect(all[3].getAttribute('tabindex')).toBeNull();
+  });
+
+  it('should highlight every copy of the active entry but mark only the real one', async () => {
+    // given
+    await renderNav('/blog');
+
+    // then
+    const all = Array.from(
+      screen.getByTestId('arc-nav').querySelectorAll<HTMLElement>('a')
+    );
+    expect(all.filter((a) => a.classList.contains('active')).length).toBe(3);
+    expect(
+      all.filter((a) => a.getAttribute('aria-current') === 'page')
+    ).toEqual([all[5]]);
   });
 
   it('should mark the current route and centre it', async () => {
@@ -76,6 +124,131 @@ describe('ArcNavComponent', () => {
     const active = screen.getByRole('link', { current: 'page' });
     expect(active.getAttribute('href')).toBe('/analysis');
     expect(scrollTo).toHaveBeenCalled();
+  });
+
+  it('should still settle in the middle copy when no entry is active', async () => {
+    // given — a route none of the entries covers
+    const { scrollTo } = await renderNav('/');
+
+    // then — scrolled once, to the first entry of the real copy, and no
+    // link at all (clones included) claims to be the current page
+    const all = screen.getByTestId('arc-nav').querySelectorAll('a');
+    expect(
+      Array.from(all).filter((a) => a.hasAttribute('aria-current'))
+    ).toEqual([]);
+    expect(scrollTo).toHaveBeenCalled();
+  });
+
+  describe('with a measured layout', () => {
+    // jsdom lays nothing out; model 88px items behind 151px of padding in a
+    // 390px strip, the numbers a phone would report.
+    const ITEM = 88;
+    const PAD = 151;
+    let offsetLeft: PropertyDescriptor | undefined;
+    let offsetWidth: PropertyDescriptor | undefined;
+    let clientWidth: PropertyDescriptor | undefined;
+
+    beforeEach(() => {
+      offsetLeft = Object.getOwnPropertyDescriptor(
+        HTMLElement.prototype,
+        'offsetLeft'
+      );
+      offsetWidth = Object.getOwnPropertyDescriptor(
+        HTMLElement.prototype,
+        'offsetWidth'
+      );
+      Object.defineProperty(HTMLElement.prototype, 'offsetLeft', {
+        configurable: true,
+        get(this: HTMLElement) {
+          const siblings = Array.from(this.parentElement?.children ?? []);
+          return PAD + siblings.indexOf(this) * ITEM;
+        },
+      });
+      Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+        configurable: true,
+        get: () => ITEM,
+      });
+      clientWidth = Object.getOwnPropertyDescriptor(
+        Element.prototype,
+        'clientWidth'
+      );
+      Object.defineProperty(Element.prototype, 'clientWidth', {
+        configurable: true,
+        get: () => 390,
+      });
+    });
+
+    afterEach(() => {
+      if (offsetLeft)
+        Object.defineProperty(HTMLElement.prototype, 'offsetLeft', offsetLeft);
+      if (offsetWidth)
+        Object.defineProperty(
+          HTMLElement.prototype,
+          'offsetWidth',
+          offsetWidth
+        );
+      if (clientWidth)
+        Object.defineProperty(Element.prototype, 'clientWidth', clientWidth);
+    });
+
+    async function renderMeasured(startUrl: string) {
+      const rendered = await renderNav(startUrl);
+      const track = screen
+        .getByTestId('arc-nav')
+        .querySelector<HTMLElement>('.track');
+      if (!track) throw new Error('track missing');
+      return { ...rendered, track };
+    }
+
+    it('should centre the real copy of the active entry, not a clone', async () => {
+      // given — three entries: the real "Blog" is rendered fifth
+      const { scrollTo } = await renderMeasured('/blog');
+
+      // then — scrollLeft = renderedIndex * item width
+      expect(scrollTo).toHaveBeenLastCalledWith(
+        expect.objectContaining({ left: 5 * ITEM })
+      );
+    });
+
+    it('should jump back by a copy once a scroll settles in a clone', async () => {
+      // given — resting on the last clone before the real copy
+      const { track } = await renderMeasured('/app');
+      track.scrollLeft = 2 * ITEM;
+
+      // when
+      track.dispatchEvent(new Event('scroll'));
+
+      // then — one copy (three items) further right, same picture
+      await vitest.waitFor(() => expect(track.scrollLeft).toBe(5 * ITEM));
+    });
+
+    it('should leave a scroll alone that settles in the real copy', async () => {
+      // given
+      const { track } = await renderMeasured('/app');
+      track.scrollLeft = 4 * ITEM;
+
+      // when
+      track.dispatchEvent(new Event('scroll'));
+      await new Promise((resolve) => setTimeout(resolve, 250));
+
+      // then
+      expect(track.scrollLeft).toBe(4 * ITEM);
+    });
+
+    it('should carry a mouse drag across the jump without a leap', async () => {
+      // given — dragging leftwards from the real first entry
+      const { track } = await renderMeasured('/app');
+      track.scrollLeft = 3 * ITEM;
+      track.dispatchEvent(pointer('pointerdown', 300));
+
+      // when — far enough to rest on a clone, then a little further
+      track.dispatchEvent(pointer('pointermove', 300 + 2 * ITEM));
+      track.dispatchEvent(new Event('scroll'));
+      track.dispatchEvent(pointer('pointermove', 300 + 2 * ITEM + 10));
+
+      // then — the strip continues from where the jump put it
+      expect(track.scrollLeft).toBe(4 * ITEM - 10);
+    });
   });
 
   it('should treat a nested route as its section', async () => {
@@ -154,8 +327,8 @@ describe('ArcNavComponent', () => {
       providers: [provideRouter([])],
     });
 
-    // then
-    expect(screen.getByTestId('badge-stub')).toBeTruthy();
+    // then — once per copy, so the badge shows wherever the entry is seen
+    expect(screen.getAllByTestId('badge-stub')).toHaveLength(3);
     expect(
       screen
         .getByRole('link', { name: /Dashboard/ })

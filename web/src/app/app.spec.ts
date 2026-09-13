@@ -1180,9 +1180,9 @@ describe('App (testing-library)', () => {
 
     // then — one bar for every viewport; the old desktop link row is gone
     expect(document.querySelector('.desktop-nav')).toBeNull();
-    const hrefs = Array.from(arcNav.querySelectorAll('a')).map((a) =>
-      a.getAttribute('href')
-    );
+    const hrefs = Array.from(
+      arcNav.querySelectorAll('a:not([aria-hidden])')
+    ).map((a) => a.getAttribute('href'));
     expect(hrefs).toEqual([
       '/app',
       '/analysis',

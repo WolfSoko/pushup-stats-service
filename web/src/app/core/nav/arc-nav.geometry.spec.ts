@@ -6,6 +6,7 @@ import {
   centeredScrollLeft,
   nearestIndex,
   seedOffsets,
+  wrapShift,
 } from './arc-nav.geometry';
 
 describe('arc-nav geometry', () => {
@@ -37,6 +38,22 @@ describe('arc-nav geometry', () => {
     // when / then — the active one is the middle, neighbours a width apart
     expect(seedOffsets(5, 2)).toEqual([-2, -1, 0, 1, 2]);
     expect(seedOffsets(5, -1)).toEqual([0, 1, 2, 2.5, 2.5]);
+  });
+
+  it('should jump a whole copy once the scroll leaves the middle one', () => {
+    // given — 8 items of 88px, three copies: the middle one rests at 704..1320
+    const copy = 8 * 88;
+
+    // then — every resting position of the middle copy stays put
+    expect(wrapShift(704, copy, 88)).toBe(0);
+    expect(wrapShift(1320, copy, 88)).toBe(0);
+    // the neighbouring clones' resting positions jump back
+    expect(wrapShift(616, copy, 88)).toBe(copy);
+    expect(wrapShift(1408, copy, 88)).toBe(-copy);
+    // half an item beyond the copy is still the middle, a little more is not
+    expect(wrapShift(661, copy, 88)).toBe(0);
+    expect(wrapShift(659, copy, 88)).toBe(copy);
+    expect(wrapShift(100, 0, 88)).toBe(0);
   });
 
   it('should find the item nearest the middle', () => {

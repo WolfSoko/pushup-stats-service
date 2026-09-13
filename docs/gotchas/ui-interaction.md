@@ -16,3 +16,13 @@ Touch swipes are unaffected: the browser owns the gesture and snaps only when it
 ## Seed layout-derived state for the server render
 
 State that only exists after measuring the DOM (item offsets, scroll position) is empty during SSR and on the first client paint, so every item renders with the fallback value and the layout pops once `afterNextRender` measures. Derive a plausible seed from data that is available on the server (index distance to the active route, in the arc nav) and only replace it with the measured value.
+
+## Wrapping strip: three copies and a silent jump
+
+The arc nav wraps by rendering its entries three times and keeping the scroll position inside the middle copy; the scroll handler jumps by exactly one copy width when the position drifts into an outer copy (`wrapShift` in `arc-nav.geometry.ts`). Things that follow from that:
+
+- The outer copies are `aria-hidden` with `tabindex="-1"`, so screen readers and the tab order only see one set of links; `aria-current` goes on the middle copy, the `.active` class on all three.
+- Everything that scrolls to an item must address the middle copy (`count + index`), and a mouse drag's start position must be shifted by the same amount as the jump, or the strip leaps under the pointer.
+- An item rests centred at `scrollLeft = renderedIndex × itemWidth` (the strip's inline padding makes the centre term cancel), so the middle copy spans `[copyWidth, 2·copyWidth − itemWidth]`. Put the jump thresholds half an item outside that range — a window centred on `copyWidth` looks plausible and is off by half a copy.
+- Writing `scrollLeft` cuts a smooth `scrollTo` or a touch fling short, so the jump waits until scroll events have been quiet for a moment (`SETTLE_MS`). A mouse drag is the exception: its writes are our own, so it wraps immediately.
+- Track the `@for` by index, not by route: the same path appears three times.

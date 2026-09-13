@@ -30,7 +30,11 @@ import {
   nearestIndex,
   seedOffsets,
   WHEEL_STEP_PX,
+  wrapShift,
 } from './arc-nav.geometry';
+
+/** A scroll that has been quiet this long has settled, so a jump interrupts nothing. */
+const SETTLE_MS = 150;
 
 /**
  * The app's one navigation bar: a horizontal strip along the bottom edge,
@@ -39,6 +43,10 @@ import {
  * the strip swipes (touch), drags (mouse) and scrolls (wheel) sideways so
  * it can hold more entries than fit in one row. Navigating centres the
  * active entry.
+ *
+ * The strip wraps: the entries are rendered three times, the middle copy
+ * is the one assistive tech sees, and whenever the scroll position drifts
+ * into an outer copy it jumps back by exactly one copy.
  */
 @Component({
   selector: 'app-arc-nav',
@@ -55,10 +63,21 @@ export class ArcNavComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly track = viewChild.required<ElementRef<HTMLElement>>('track');
 
-  /** Signed distance of each item from the strip's centre, in item widths. */
+  /** The entries three times over; index `count + i` is the real copy of item `i`. */
+  protected readonly loop = computed(() => {
+    const items = this.items();
+    return [...items, ...items, ...items];
+  });
+  protected readonly count = computed(() => this.items().length);
+
+  /** Signed distance of each rendered link from the strip's centre, in item widths. */
   protected readonly offsets = computed(
     () =>
-      this.measured() ?? seedOffsets(this.items().length, this.activeIndex())
+      this.measured() ??
+      seedOffsets(
+        this.loop().length,
+        this.count() + Math.max(0, this.activeIndex())
+      )
   );
 
   /** Mouse drag in progress: scroll snapping is off so the strip follows the pointer. */
@@ -79,6 +98,7 @@ export class ArcNavComponent {
   private readonly routeChange = signal(0);
   private readonly measured = signal<ReadonlyArray<number> | null>(null);
   private frame: number | null = null;
+  private settle: ReturnType<typeof setTimeout> | null = null;
   private wheelTravel = 0;
   private drag: { startX: number; startLeft: number; moved: boolean } | null =
     null;
@@ -113,6 +133,7 @@ export class ArcNavComponent {
         window.removeEventListener('resize', onResize);
         track.removeEventListener('click', onClick, { capture: true });
         if (this.frame !== null) cancelAnimationFrame(this.frame);
+        if (this.settle !== null) clearTimeout(this.settle);
       });
     });
   }
@@ -126,12 +147,31 @@ export class ArcNavComponent {
     return arcOpacity(this.offsets()[index] ?? 0);
   }
 
+  /**
+   * Wrapping writes scrollLeft, which would cut a smooth scroll or a touch
+   * fling short — so it waits for the scroll to settle. Only a mouse drag
+   * wraps at once: those writes are our own, nothing is in flight.
+   */
   protected onScroll(): void {
-    if (this.frame !== null) return;
-    this.frame = requestAnimationFrame(() => {
-      this.frame = null;
+    if (this.drag) this.wrap();
+    if (this.frame === null) {
+      this.frame = requestAnimationFrame(() => {
+        this.frame = null;
+        this.measure();
+      });
+    }
+    if (this.settle !== null) clearTimeout(this.settle);
+    this.settle = setTimeout(() => {
+      this.settle = null;
+      this.wrap();
       this.measure();
-    });
+    }, SETTLE_MS);
+  }
+
+  /** Real copy or a clone — clones are decoration for the wrap, not targets. */
+  protected isClone(index: number): boolean {
+    const n = this.count();
+    return index < n || index >= 2 * n;
   }
 
   /**
@@ -199,8 +239,26 @@ export class ArcNavComponent {
     this.measured.set(arcOffsets(links, track));
   }
 
+  private wrap(): void {
+    const track = this.track().nativeElement;
+    const links = track.querySelectorAll<HTMLElement>('a');
+    const first = links[0];
+    const middle = links[this.count()];
+    if (!first || !middle) return;
+    const shift = wrapShift(
+      track.scrollLeft,
+      middle.offsetLeft - first.offsetLeft,
+      first.offsetWidth
+    );
+    if (shift === 0) return;
+    track.scrollLeft += shift;
+    if (this.drag) this.drag.startLeft += shift;
+  }
+
+  /** With no active entry (landing, login) the first one takes the middle. */
   private centerActive(behavior: ScrollBehavior): void {
-    this.centerItem(this.activeIndex(), behavior);
+    const index = Math.max(0, this.activeIndex());
+    this.centerItem(this.count() + index, behavior);
   }
 
   private centerItem(index: number, behavior: ScrollBehavior): void {
