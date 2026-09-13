@@ -28,7 +28,8 @@ describe('FriendsPageComponent', () => {
       outgoing: FriendRow[];
     }> = {},
     overrides: Partial<Record<'respond' | 'remove' | 'cheer', unknown>> = {},
-    boardEntries?: ReadonlyArray<FriendsBoardEntry>
+    boardEntries?: ReadonlyArray<FriendsBoardEntry>,
+    challenges: unknown[] = []
   ) {
     const api = {
       list: vitest.fn().mockResolvedValue({
@@ -43,7 +44,7 @@ describe('FriendsPageComponent', () => {
       cheer: vitest.fn().mockResolvedValue({ ok: true }),
       ...overrides,
     };
-    const challengesApi = { list: vitest.fn().mockResolvedValue([]) };
+    const challengesApi = { list: vitest.fn().mockResolvedValue(challenges) };
     const invite = { inviteFriend: vitest.fn().mockResolvedValue('native') };
     const { fixture } = await render(FriendsPageComponent, {
       providers: [
@@ -57,6 +58,32 @@ describe('FriendsPageComponent', () => {
     fixture.detectChanges();
     return { api, invite, fixture };
   }
+
+  it('should show a challenge even before the friends list has arrived', async () => {
+    // given — the friends call failed, but the invitation is there
+    await renderPage(
+      {},
+      {},
+      [],
+      [
+        {
+          id: 'c1',
+          createdBy: 'b',
+          exerciseId: 'pushup',
+          target: 500,
+          from: '2026-09-14',
+          to: '2099-12-31',
+          status: 'active',
+          entries: [],
+          invited: [{ uid: 'me', displayName: null }],
+          viewerInvited: true,
+        },
+      ]
+    );
+
+    // then
+    expect(screen.getAllByTestId('challenge-card')).toHaveLength(1);
+  });
 
   it('should list confirmed friends with a link to their profile', async () => {
     // given

@@ -81,7 +81,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
         </section>
       }
 
-      @if (store.friends().length > 0) {
+      @if (store.friends().length > 0 || challenges.challenges().length > 0) {
         <section>
           <app-challenges-section [friends]="store.friends()" />
         </section>
@@ -199,7 +199,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
 })
 export class FriendsPageComponent implements OnInit {
   protected readonly store = inject(FriendsStore);
-  private readonly challenges = inject(ChallengesStore);
+  protected readonly challenges = inject(ChallengesStore);
   private readonly invites = inject(InviteService);
 
   protected readonly rejection = computed(() =>
