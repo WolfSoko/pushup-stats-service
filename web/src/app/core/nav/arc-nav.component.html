@@ -16,12 +16,14 @@
     (pointercancel)="onPointerLeave()"
     (pointerleave)="onPointerLeave()"
   >
-    @for (item of items(); track item.path; let i = $index) {
+    @for (item of loop(); track i; let i = $index) {
       <a
         class="item"
         [routerLink]="item.path"
-        [class.active]="activeIndex() === i"
-        [attr.aria-current]="activeIndex() === i ? 'page' : null"
+        [class.active]="activeIndex() === i % count()"
+        [attr.aria-current]="activeIndex() === i - count() ? 'page' : null"
+        [attr.aria-hidden]="isClone(i) ? 'true' : null"
+        [attr.tabindex]="isClone(i) ? -1 : null"
         [style.transform]="transformFor(i)"
         [style.opacity]="opacityFor(i)"
         draggable="false"

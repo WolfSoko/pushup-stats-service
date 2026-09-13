@@ -58,7 +58,7 @@ describe('ArcNavComponent', () => {
     // given
     await renderNav();
 
-    // then
+    // then — the copies that make the strip wrap stay out of the tab order
     const links = screen.getAllByRole('link');
     expect(links.map((a) => a.getAttribute('href'))).toEqual([
       '/app',
@@ -66,6 +66,54 @@ describe('ArcNavComponent', () => {
       '/blog',
     ]);
     expect(links[0].textContent).toContain('Dashboard');
+  });
+
+  it('should wrap around: the last entries sit before the first', async () => {
+    // given
+    await renderNav();
+
+    // then — three copies, clones hidden from assistive tech
+    const all = Array.from(
+      screen.getByTestId('arc-nav').querySelectorAll<HTMLElement>('a')
+    );
+    expect(all.map((a) => a.getAttribute('href'))).toEqual([
+      '/app',
+      '/analysis',
+      '/blog',
+      '/app',
+      '/analysis',
+      '/blog',
+      '/app',
+      '/analysis',
+      '/blog',
+    ]);
+    expect(all.map((a) => a.getAttribute('aria-hidden'))).toEqual([
+      'true',
+      'true',
+      'true',
+      null,
+      null,
+      null,
+      'true',
+      'true',
+      'true',
+    ]);
+    expect(all[2].getAttribute('tabindex')).toBe('-1');
+    expect(all[3].getAttribute('tabindex')).toBeNull();
+  });
+
+  it('should highlight every copy of the active entry but mark only the real one', async () => {
+    // given
+    await renderNav('/blog');
+
+    // then
+    const all = Array.from(
+      screen.getByTestId('arc-nav').querySelectorAll<HTMLElement>('a')
+    );
+    expect(all.filter((a) => a.classList.contains('active')).length).toBe(3);
+    expect(
+      all.filter((a) => a.getAttribute('aria-current') === 'page')
+    ).toEqual([all[5]]);
   });
 
   it('should mark the current route and centre it', async () => {
@@ -154,8 +202,8 @@ describe('ArcNavComponent', () => {
       providers: [provideRouter([])],
     });
 
-    // then
-    expect(screen.getByTestId('badge-stub')).toBeTruthy();
+    // then — once per copy, so the badge shows wherever the entry is seen
+    expect(screen.getAllByTestId('badge-stub')).toHaveLength(3);
     expect(
       screen
         .getByRole('link', { name: /Dashboard/ })

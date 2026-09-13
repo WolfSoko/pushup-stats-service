@@ -30,6 +30,7 @@ import {
   nearestIndex,
   seedOffsets,
   WHEEL_STEP_PX,
+  wrapShift,
 } from './arc-nav.geometry';
 
 /**
@@ -39,6 +40,10 @@ import {
  * the strip swipes (touch), drags (mouse) and scrolls (wheel) sideways so
  * it can hold more entries than fit in one row. Navigating centres the
  * active entry.
+ *
+ * The strip wraps: the entries are rendered three times, the middle copy
+ * is the one assistive tech sees, and whenever the scroll position drifts
+ * into an outer copy it jumps back by exactly one copy.
  */
 @Component({
   selector: 'app-arc-nav',
@@ -55,10 +60,21 @@ export class ArcNavComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly track = viewChild.required<ElementRef<HTMLElement>>('track');
 
-  /** Signed distance of each item from the strip's centre, in item widths. */
+  /** The entries three times over; index `count + i` is the real copy of item `i`. */
+  protected readonly loop = computed(() => {
+    const items = this.items();
+    return [...items, ...items, ...items];
+  });
+  protected readonly count = computed(() => this.items().length);
+
+  /** Signed distance of each rendered link from the strip's centre, in item widths. */
   protected readonly offsets = computed(
     () =>
-      this.measured() ?? seedOffsets(this.items().length, this.activeIndex())
+      this.measured() ??
+      seedOffsets(
+        this.loop().length,
+        this.count() + Math.max(0, this.activeIndex())
+      )
   );
 
   /** Mouse drag in progress: scroll snapping is off so the strip follows the pointer. */
@@ -130,8 +146,15 @@ export class ArcNavComponent {
     if (this.frame !== null) return;
     this.frame = requestAnimationFrame(() => {
       this.frame = null;
+      this.wrap();
       this.measure();
     });
+  }
+
+  /** Real copy or a clone — clones are decoration for the wrap, not targets. */
+  protected isClone(index: number): boolean {
+    const n = this.count();
+    return index < n || index >= 2 * n;
   }
 
   /**
@@ -199,8 +222,25 @@ export class ArcNavComponent {
     this.measured.set(arcOffsets(links, track));
   }
 
+  private wrap(): void {
+    const track = this.track().nativeElement;
+    const links = track.querySelectorAll<HTMLElement>('a');
+    const first = links[0];
+    const middle = links[this.count()];
+    if (!first || !middle) return;
+    const shift = wrapShift(
+      track.scrollLeft,
+      middle.offsetLeft - first.offsetLeft
+    );
+    if (shift === 0) return;
+    track.scrollLeft += shift;
+    if (this.drag) this.drag.startLeft += shift;
+  }
+
   private centerActive(behavior: ScrollBehavior): void {
-    this.centerItem(this.activeIndex(), behavior);
+    const index = this.activeIndex();
+    if (index < 0) return;
+    this.centerItem(this.count() + index, behavior);
   }
 
   private centerItem(index: number, behavior: ScrollBehavior): void {

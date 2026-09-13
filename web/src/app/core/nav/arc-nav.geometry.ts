@@ -51,6 +51,19 @@ export function seedOffsets(count: number, active: number): number[] {
   );
 }
 
+/**
+ * The strip renders its entries three times so it can wrap. Given the
+ * current scroll position and the width of one copy, the shift that
+ * brings the position back into the middle copy — zero while it is
+ * still there. The jump is a whole copy, so it is invisible.
+ */
+export function wrapShift(scrollLeft: number, copyWidth: number): number {
+  if (copyWidth <= 0) return 0;
+  if (scrollLeft < copyWidth / 2) return copyWidth;
+  if (scrollLeft > copyWidth * 1.5) return -copyWidth;
+  return 0;
+}
+
 /** Index of the item closest to the middle, given measured offsets. */
 export function nearestIndex(offsets: ReadonlyArray<number>): number {
   let best = 0;
