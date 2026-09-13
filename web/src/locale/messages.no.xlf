@@ -3715,12 +3715,6 @@ Aktiv:         </target>
         <target>Hovednavigasjon</target>
       </segment>
     </unit>
-    <unit id="nav.bottom.aria">
-      <segment state="translated">
-        <source>Mobile-Navigation</source>
-        <target>Mobilnavigasjon</target>
-      </segment>
-    </unit>
     <unit id="auth.register.error.profileSaveFailed">
       <segment state="translated">
         <source>Profil konnte nicht gespeichert werden. Bitte erneut versuchen.</source>

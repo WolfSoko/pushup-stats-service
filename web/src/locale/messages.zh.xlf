@@ -2367,14 +2367,6 @@
         <source> Cookie-Einstellungen </source>
       <target> Cookie 设置 </target></segment>
     </unit>
-    <unit id="nav.bottom.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:227,228</note>
-      </notes>
-      <segment state="translated">
-        <source>Mobile-Navigation</source>
-      <target>移动菜单</target></segment>
-    </unit>
     <unit id="seo.landing.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>

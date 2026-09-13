@@ -67,6 +67,8 @@ import { AchievementCelebrationService } from './achievements/achievement-celebr
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { FeedbackDialogComponent } from './core/feedback/feedback-dialog.component';
 import { FeedbackService } from './core/feedback/feedback.service';
+import { ArcNavComponent } from './core/nav/arc-nav.component';
+import { mainNavItems } from './core/nav/main-nav-items';
 import { FriendRequestBadgeComponent } from './friends/friend-request-badge.component';
 import {
   FeedbackDialogData,
@@ -134,6 +136,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     ThemeToggleComponent,
     AiAssistantNavButtonComponent,
     DailyGoalChecklistComponent,
+    ArcNavComponent,
     FriendRequestBadgeComponent,
     MatDialogModule,
     MatFormFieldModule,
@@ -170,6 +173,7 @@ export class App {
   readonly isLoggedIn = computed(
     () => !!this.user.userIdSafe() && !this.user.isGuest()
   );
+  readonly navItems = computed(() => mainNavItems(this.isLoggedIn()));
   // The speed-dial FAB is for anyone who can persist an entry — guests have a
   // real (anonymous) auth uid and can quick-add too, so it shows for them as
   // well, unlike the reminders nav which is gated to signed-in accounts.

@@ -248,37 +248,6 @@
       <pus-user-menu [avatarUrl]="avatar.avatarUrl()" />
     </mat-toolbar>
 
-    <nav
-      class="desktop-nav"
-      aria-label="Hauptnavigation"
-      i18n-aria-label="@@nav.desktop.aria"
-    >
-      <a
-        routerLink="/app"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
-      >
-        <mat-icon>dashboard</mat-icon>
-        <span i18n="@@nav.dashboard">Dashboard</span>
-      </a>
-      <a routerLink="/analysis" routerLinkActive="active">
-        <mat-icon>insights</mat-icon>
-        <span i18n="@@nav.analysis">Analyse</span>
-      </a>
-      <a routerLink="/leaderboard" routerLinkActive="active">
-        <mat-icon>leaderboard</mat-icon>
-        <span i18n="@@nav.leaderboard">Bestenliste</span>
-      </a>
-      <a routerLink="/training-plans" routerLinkActive="active">
-        <mat-icon>fitness_center</mat-icon>
-        <span i18n="@@nav.trainingPlans">Trainingspläne</span>
-      </a>
-      <a routerLink="/blog" routerLinkActive="active">
-        <mat-icon>article</mat-icon>
-        <span i18n="@@nav.blog">Blog</span>
-      </a>
-    </nav>
-
     <main class="app-content">
       <router-outlet />
     </main>
@@ -311,36 +280,7 @@
       </nav>
     </footer>
 
-    <nav
-      class="bottom-nav"
-      aria-label="Mobile-Navigation"
-      i18n-aria-label="@@nav.bottom.aria"
-    >
-      <a
-        routerLink="/app"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <mat-icon>dashboard</mat-icon>
-        <span i18n="@@nav.dashboard">Dashboard</span>
-      </a>
-      <a routerLink="/analysis" routerLinkActive="active">
-        <mat-icon>insights</mat-icon>
-        <span i18n="@@nav.analysis">Analyse</span>
-      </a>
-      <a routerLink="/leaderboard" routerLinkActive="active">
-        <mat-icon>leaderboard</mat-icon>
-        <span i18n="@@nav.leaderboard">Bestenliste</span>
-      </a>
-      <a routerLink="/training-plans" routerLinkActive="active">
-        <mat-icon>fitness_center</mat-icon>
-        <span i18n="@@nav.trainingPlans">Trainingspläne</span>
-      </a>
-      <a routerLink="/blog" routerLinkActive="active">
-        <mat-icon>article</mat-icon>
-        <span i18n="@@nav.blog">Blog</span>
-      </a>
-    </nav>
+    <app-arc-nav [items]="navItems()" />
   </mat-sidenav-content>
 </mat-sidenav-container>
 
