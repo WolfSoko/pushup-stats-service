@@ -75,6 +75,33 @@ describe('ChallengesStore', () => {
     expect(store.loading()).toBe(false);
   });
 
+  it('should share one call between callers asking for the same thing at once', async () => {
+    // given — the drawer's badge and the nav's copies all count on start-up
+    const { store, api } = setup([invitation]);
+
+    // when
+    await Promise.all([
+      store.reload({ progress: false }),
+      store.reload({ progress: false }),
+      store.reload({ progress: false }),
+    ]);
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.invitations().map((c) => c.id)).toEqual(['c2']);
+  });
+
+  it('should not let a count-only call stand in for the full list', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when — the page asks for progress while the badge's count is in flight
+    await Promise.all([store.reload({ progress: false }), store.reload()]);
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(2);
+  });
+
   it('should pass the progress flag through', async () => {
     // given
     const { store, api } = setup();
