@@ -70,7 +70,12 @@ const TOP_ROWS = 3;
                   data-testid="dashboard-friends-row"
                 >
                   <span class="rank">{{ i + 1 }}</span>
-                  <span class="name">{{ label(entry) }}</span>
+                  <a
+                    class="name"
+                    [routerLink]="['/u', entry.uid]"
+                    data-testid="dashboard-friends-name"
+                    >{{ label(entry) }}</a
+                  >
                   <strong>{{ entry.value }}</strong>
                 </li>
               }
@@ -155,6 +160,12 @@ const TOP_ROWS = 3;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: inherit;
+      text-decoration: none;
+    }
+    .name:hover,
+    .name:focus-visible {
+      text-decoration: underline;
     }
     mat-card-actions {
       flex-wrap: wrap;

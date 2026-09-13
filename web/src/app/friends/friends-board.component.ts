@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 
 import type {
   FriendsBoardEntry,
@@ -25,7 +26,13 @@ import type {
 @Component({
   selector: 'app-friends-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatChipsModule, MatIconModule, MatTooltipModule],
+  imports: [
+    MatButtonModule,
+    MatChipsModule,
+    MatIconModule,
+    MatTooltipModule,
+    RouterLink,
+  ],
   template: `
     <mat-chip-listbox
       [value]="period()"
@@ -50,7 +57,12 @@ import type {
       @for (entry of entries(); track entry.uid; let i = $index) {
         <li [class.is-viewer]="entry.isViewer" data-testid="board-row">
           <span class="rank">{{ i + 1 }}</span>
-          <span class="board-name">{{ label(entry) }}</span>
+          <a
+            class="board-name"
+            [routerLink]="['/u', entry.uid]"
+            data-testid="board-name"
+            >{{ label(entry) }}</a
+          >
           <span class="cheers">
             @if (entry.cheers > 0) {
               <span
@@ -121,6 +133,12 @@ import type {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: inherit;
+      text-decoration: none;
+    }
+    .board-name:hover,
+    .board-name:focus-visible {
+      text-decoration: underline;
     }
     .cheers {
       font-size: 0.85rem;

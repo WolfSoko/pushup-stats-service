@@ -40,6 +40,8 @@ export const ChallengesStore = signalStore(
     _api: inject(ChallengesApiService),
     /** Ticket of the newest reload; older answers arriving later are dropped. */
     _reloadSeq: 0,
+    /** The reload in flight, so several badges asking at once share one call. */
+    _inFlight: null as { progress: boolean; promise: Promise<void> } | null,
   })),
   withComputed((store) => ({
     /** Asked, not yet answered — these want a decision first. */
@@ -65,16 +67,28 @@ export const ChallengesStore = signalStore(
      * kept, so a slow count-only reply cannot overwrite the page's full
      * list after the fact.
      */
-    async function reload(options?: { progress?: boolean }): Promise<void> {
+    function reload(options?: { progress?: boolean }): Promise<void> {
+      const progress = options?.progress !== false;
+      if (store._inFlight?.progress === progress) {
+        return store._inFlight.promise;
+      }
       const ticket = ++store._reloadSeq;
       patchState(store, { loading: true });
-      try {
-        const challenges = await _api.list(options);
-        if (ticket !== store._reloadSeq) return;
-        patchState(store, { challenges, loading: false });
-      } catch {
-        if (ticket === store._reloadSeq) patchState(store, { loading: false });
-      }
+      const promise = _api
+        .list(options)
+        .then((challenges) => {
+          if (ticket !== store._reloadSeq) return;
+          patchState(store, { challenges, loading: false });
+        })
+        .catch(() => {
+          if (ticket === store._reloadSeq)
+            patchState(store, { loading: false });
+        })
+        .finally(() => {
+          if (store._inFlight?.promise === promise) store._inFlight = null;
+        });
+      store._inFlight = { progress, promise };
+      return promise;
     }
 
     const refresh = () => reload();
