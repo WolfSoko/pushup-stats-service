@@ -27,6 +27,9 @@ import {
   arcScale,
   centeredScrollLeft,
   DRAG_THRESHOLD_PX,
+  nearestIndex,
+  seedOffsets,
+  WHEEL_STEP_PX,
 } from './arc-nav.geometry';
 
 /**
@@ -53,7 +56,13 @@ export class ArcNavComponent {
   private readonly track = viewChild.required<ElementRef<HTMLElement>>('track');
 
   /** Signed distance of each item from the strip's centre, in item widths. */
-  protected readonly offsets = signal<ReadonlyArray<number>>([]);
+  protected readonly offsets = computed(
+    () =>
+      this.measured() ?? seedOffsets(this.items().length, this.activeIndex())
+  );
+
+  /** Mouse drag in progress: scroll snapping is off so the strip follows the pointer. */
+  protected readonly dragging = signal(false);
 
   protected readonly activeIndex = computed(() => {
     this.routeChange();
@@ -68,7 +77,9 @@ export class ArcNavComponent {
   });
 
   private readonly routeChange = signal(0);
+  private readonly measured = signal<ReadonlyArray<number> | null>(null);
   private frame: number | null = null;
+  private wheelTravel = 0;
   private drag: { startX: number; startLeft: number; moved: boolean } | null =
     null;
 
@@ -101,6 +112,7 @@ export class ArcNavComponent {
       this.destroyRef.onDestroy(() => {
         window.removeEventListener('resize', onResize);
         track.removeEventListener('click', onClick, { capture: true });
+        if (this.frame !== null) cancelAnimationFrame(this.frame);
       });
     });
   }
@@ -122,7 +134,11 @@ export class ArcNavComponent {
     });
   }
 
-  /** A vertical wheel moves the strip sideways — there is nothing else to scroll here. */
+  /**
+   * A vertical wheel moves the strip sideways, one item at a time — with
+   * mandatory snapping, nudging scrollLeft by a few pixels would only snap
+   * straight back.
+   */
   protected onWheel(event: WheelEvent): void {
     const delta =
       Math.abs(event.deltaY) > Math.abs(event.deltaX)
@@ -130,7 +146,12 @@ export class ArcNavComponent {
         : event.deltaX;
     if (delta === 0) return;
     event.preventDefault();
-    this.track().nativeElement.scrollLeft += delta;
+    if (Math.sign(delta) !== Math.sign(this.wheelTravel)) this.wheelTravel = 0;
+    this.wheelTravel += delta;
+    if (Math.abs(this.wheelTravel) < WHEEL_STEP_PX) return;
+    const direction = Math.sign(this.wheelTravel);
+    this.wheelTravel = 0;
+    this.centerItem(nearestIndex(this.offsets()) + direction, 'smooth');
   }
 
   protected onPointerDown(event: PointerEvent): void {
@@ -140,6 +161,7 @@ export class ArcNavComponent {
       startLeft: this.track().nativeElement.scrollLeft,
       moved: false,
     };
+    this.dragging.set(true);
   }
 
   protected onPointerMove(event: PointerEvent): void {
@@ -150,12 +172,14 @@ export class ArcNavComponent {
   }
 
   protected onPointerUp(): void {
+    this.dragging.set(false);
     // Kept until the click that ends the drag has been swallowed.
     if (this.drag && !this.drag.moved) this.drag = null;
   }
 
   /** No click follows a pointer that left the strip, so nothing to swallow. */
   protected onPointerLeave(): void {
+    this.dragging.set(false);
     this.drag = null;
   }
 
@@ -172,13 +196,15 @@ export class ArcNavComponent {
     if (!isPlatformBrowser(this.platformId)) return;
     const track = this.track().nativeElement;
     const links = Array.from(track.querySelectorAll<HTMLElement>('a'));
-    this.offsets.set(arcOffsets(links, track));
+    this.measured.set(arcOffsets(links, track));
   }
 
   private centerActive(behavior: ScrollBehavior): void {
+    this.centerItem(this.activeIndex(), behavior);
+  }
+
+  private centerItem(index: number, behavior: ScrollBehavior): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    const index = this.activeIndex();
-    if (index < 0) return;
     const track = this.track().nativeElement;
     const link = track.querySelectorAll<HTMLElement>('a')[index];
     if (!link) return;

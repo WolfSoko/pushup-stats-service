@@ -26,10 +26,8 @@ mat-card-content + mat-card-footer {
 
 mat-sidenav-content {
   // Toolbar height — drives the sticky offset of any page-level sticky
-  // element (e.g. the analysis filter bar). The main nav sits at the
-  // bottom edge now, so nothing stacks under the toolbar any more.
+  // element (e.g. the analysis filter bar).
   --top-nav-height: 64px;
-  --desktop-nav-height: 0px;
 
   height: 100svh;
   overflow: auto;

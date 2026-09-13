@@ -1138,8 +1138,8 @@ describe('App (testing-library)', () => {
     expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.webp');
   });
 
-  it('given a signed-in user, when reading the arc navigation, then it lists every section with friends in the familiar spot', async () => {
-    // Given
+  it('should list every section in the arc nav for a signed-in user, friends in its familiar spot', async () => {
+    // given
     await render(App, {
       providers: [
         provideRouter([]),
@@ -1175,10 +1175,10 @@ describe('App (testing-library)', () => {
       ],
     });
 
-    // When
+    // when
     const arcNav = screen.getByTestId('arc-nav');
 
-    // Then — one bar for every viewport; the old desktop link row is gone
+    // then — one bar for every viewport; the old desktop link row is gone
     expect(document.querySelector('.desktop-nav')).toBeNull();
     const hrefs = Array.from(arcNav.querySelectorAll('a')).map((a) =>
       a.getAttribute('href')

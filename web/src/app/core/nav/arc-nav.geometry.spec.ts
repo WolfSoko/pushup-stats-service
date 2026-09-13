@@ -4,6 +4,8 @@ import {
   arcOpacity,
   arcScale,
   centeredScrollLeft,
+  nearestIndex,
+  seedOffsets,
 } from './arc-nav.geometry';
 
 describe('arc-nav geometry', () => {
@@ -29,6 +31,18 @@ describe('arc-nav geometry', () => {
 
     // when / then — nothing beyond ±2.5 matters visually
     expect(arcOffsets(items, viewport)[4]).toBe(2.5);
+  });
+
+  it('should seed the same shape around the active item before measuring', () => {
+    // when / then — the active one is the middle, neighbours a width apart
+    expect(seedOffsets(5, 2)).toEqual([-2, -1, 0, 1, 2]);
+    expect(seedOffsets(5, -1)).toEqual([0, 1, 2, 2.5, 2.5]);
+  });
+
+  it('should find the item nearest the middle', () => {
+    // when / then
+    expect(nearestIndex([-1.6, -0.4, 0.6, 1.6])).toBe(1);
+    expect(nearestIndex([])).toBe(0);
   });
 
   it('should compute the scroll position that centres an item', () => {

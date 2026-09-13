@@ -7,6 +7,7 @@
   <div
     #track
     class="track"
+    [class.dragging]="dragging()"
     (scroll)="onScroll()"
     (wheel)="onWheel($event)"
     (pointerdown)="onPointerDown($event)"

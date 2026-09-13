@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, PLATFORM_ID } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
@@ -161,6 +161,78 @@ describe('ArcNavComponent', () => {
         .getByRole('link', { name: /Dashboard/ })
         .querySelector('.badge-slot')
     ).toBeTruthy();
+  });
+
+  it('should shape the strip around the active item before anything is measured', async () => {
+    // given — a server render: no layout to measure, no scrolling
+    const scrollTo = vitest.fn();
+    Object.defineProperty(HTMLElement.prototype, 'scrollTo', {
+      configurable: true,
+      writable: true,
+      value: scrollTo,
+    });
+    await render(ArcNavComponent, {
+      inputs: { items },
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'server' },
+      ],
+    });
+
+    // then — first item in the middle, the others shrinking away from it
+    const links = screen.getAllByRole('link');
+    expect(links[0].style.transform).toBe('translateY(0px) scale(1.3)');
+    expect(links[2].style.transform).toBe('translateY(8.96px) scale(0.9)');
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('should move on by one item per wheel step', async () => {
+    // given
+    const { scrollTo } = await renderNav('/app');
+    const track = screen.getByTestId('arc-nav').querySelector('.track');
+    if (!track) throw new Error('track missing');
+    scrollTo.mockClear();
+
+    // when — small nudges add up to one step
+    track.dispatchEvent(new WheelEvent('wheel', { deltaY: 25, bubbles: true }));
+    expect(scrollTo).not.toHaveBeenCalled();
+    track.dispatchEvent(new WheelEvent('wheel', { deltaY: 25, bubbles: true }));
+
+    // then
+    expect(scrollTo).toHaveBeenCalledTimes(1);
+  });
+
+  it('should switch snapping off while the mouse drags', async () => {
+    // given
+    const { fixture } = await renderNav('/app');
+    const track = screen.getByTestId('arc-nav').querySelector('.track');
+    if (!track) throw new Error('track missing');
+
+    // when / then
+    track.dispatchEvent(pointer('pointerdown', 100));
+    fixture.detectChanges();
+    expect(track.classList.contains('dragging')).toBe(true);
+    track.dispatchEvent(pointer('pointerup', 100));
+    fixture.detectChanges();
+    expect(track.classList.contains('dragging')).toBe(false);
+  });
+
+  it('should let go of its listeners and pending frame on destroy', async () => {
+    // given — a scroll has a measurement frame pending
+    const { fixture, scrollTo } = await renderNav('/app');
+    const track = screen.getByTestId('arc-nav').querySelector('.track');
+    if (!track) throw new Error('track missing');
+    const cancel = vitest.spyOn(window, 'cancelAnimationFrame');
+    track.dispatchEvent(new Event('scroll'));
+    scrollTo.mockClear();
+
+    // when
+    fixture.destroy();
+    window.dispatchEvent(new Event('resize'));
+
+    // then
+    expect(cancel).toHaveBeenCalled();
+    expect(scrollTo).not.toHaveBeenCalled();
   });
 
   it('should still navigate on a plain click', async () => {

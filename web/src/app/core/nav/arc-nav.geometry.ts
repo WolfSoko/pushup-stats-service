@@ -6,6 +6,9 @@
 /** Pointer travel below this still counts as a click, not a drag. */
 export const DRAG_THRESHOLD_PX = 6;
 
+/** Accumulated wheel travel that moves the strip on by one item. */
+export const WHEEL_STEP_PX = 40;
+
 /** How far from the centre, in item widths, an item stops shrinking. */
 const EDGE = 2.5;
 
@@ -34,6 +37,27 @@ export function arcOffsets(
     const d = (center - middle) / width;
     return Math.max(-EDGE, Math.min(EDGE, d));
   });
+}
+
+/**
+ * Offsets before anything has been measured: item `active` in the middle,
+ * its neighbours one width apart. Gives the server render and the first
+ * paint the same shape the measured strip will have.
+ */
+export function seedOffsets(count: number, active: number): number[] {
+  const middle = active < 0 ? 0 : active;
+  return Array.from({ length: count }, (_, i) =>
+    Math.max(-EDGE, Math.min(EDGE, i - middle))
+  );
+}
+
+/** Index of the item closest to the middle, given measured offsets. */
+export function nearestIndex(offsets: ReadonlyArray<number>): number {
+  let best = 0;
+  offsets.forEach((d, i) => {
+    if (Math.abs(d) < Math.abs(offsets[best])) best = i;
+  });
+  return best;
 }
 
 /** The scrollLeft that puts `item` in the middle of `viewport`. */

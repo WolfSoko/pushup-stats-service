@@ -46,7 +46,8 @@ $bar-height: 76px;
   &::-webkit-scrollbar {
     display: none;
   }
-  &:active {
+  &.dragging {
+    scroll-snap-type: none;
     cursor: grabbing;
   }
 }
@@ -111,9 +112,13 @@ $bar-height: 76px;
     }
   }
 
-  &:focus-visible .disc {
-    outline: 2px solid var(--mat-sys-primary, #81a1e8);
-    outline-offset: 2px;
+  &:focus-visible {
+    outline: none;
+
+    .disc {
+      outline: 2px solid var(--mat-sys-primary, #81a1e8);
+      outline-offset: 2px;
+    }
   }
 }
 
