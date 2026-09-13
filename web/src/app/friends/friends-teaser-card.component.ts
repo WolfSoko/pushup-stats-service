@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
 
 import { InviteService } from '../core/invite.service';
+import { boardValueLabel } from './board-value-label';
 import { ChallengesStore } from './challenges.store';
 import { FriendsStore } from './friends.store';
 
@@ -76,7 +77,7 @@ const TOP_ROWS = 3;
                     data-testid="dashboard-friends-name"
                     >{{ label(entry) }}</a
                   >
-                  <strong>{{ entry.value }}</strong>
+                  <strong>{{ valueLabel(entry) }}</strong>
                 </li>
               }
             </ol>
@@ -208,6 +209,10 @@ export class FriendsTeaserCardComponent implements OnInit {
     void this.friends.loadBoard('week', { remember: false });
     // Only counted here — no need for every participant's sums.
     void this.challenges.reload({ progress: false });
+  }
+
+  protected valueLabel(entry: { value: number }): string {
+    return boardValueLabel(this.friends.boardComparison().metric, entry.value);
   }
 
   protected label(entry: { isViewer: boolean; displayName: string | null }) {

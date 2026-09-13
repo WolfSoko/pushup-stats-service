@@ -1,10 +1,15 @@
 import { describe, expect, it } from '@jest/globals';
 
 import {
+  countDistinctDays,
+  isFriendsBoardMetric,
   isFriendsLeaderboardPeriod,
+  metricValue,
   participates,
+  periodStartIso,
   periodValue,
   rankFriends,
+  streakValue,
   type FriendStatsRow,
 } from './leaderboard';
 
@@ -34,6 +39,95 @@ function row(over: Partial<FriendStatsRow> = {}): FriendStatsRow {
 }
 
 describe('friends/leaderboard', () => {
+  describe('metricValue', () => {
+    const rooted = row({
+      stats: {
+        total: 5000,
+        totalDays: 42,
+        currentStreak: 6,
+        lastEntryDate: KEYS.dailyKey,
+        dailyReps: 40,
+        dailyKey: KEYS.dailyKey,
+      },
+      days: 3,
+    });
+
+    it('should count training days from the entries for a week or month', () => {
+      // when / then
+      expect(metricValue(rooted, 'days', 'week', KEYS)).toBe(3);
+      expect(metricValue(rooted, 'days', 'month', KEYS)).toBe(3);
+    });
+
+    it('should take all-time days from the aggregate and today as 0 or 1', () => {
+      // when / then
+      expect(metricValue(rooted, 'days', 'allTime', KEYS)).toBe(42);
+      expect(metricValue(rooted, 'days', 'daily', KEYS)).toBe(1);
+      expect(
+        metricValue(row({ stats: { dailyReps: 0 } }), 'days', 'daily', KEYS)
+      ).toBe(0);
+    });
+
+    it('should only count a streak that is still alive', () => {
+      // when / then — today or yesterday keeps it, older breaks it
+      expect(streakValue(rooted, KEYS.dailyKey)).toBe(6);
+      expect(
+        streakValue(
+          row({ stats: { currentStreak: 6, lastEntryDate: '2026-09-09' } }),
+          KEYS.dailyKey
+        )
+      ).toBe(6);
+      expect(
+        streakValue(
+          row({ stats: { currentStreak: 6, lastEntryDate: '2026-09-08' } }),
+          KEYS.dailyKey
+        )
+      ).toBe(0);
+      expect(metricValue(rooted, 'streak', 'month', KEYS)).toBe(6);
+    });
+
+    it('should still read reps per period', () => {
+      // when / then
+      expect(metricValue(row(), 'reps', 'week', KEYS)).toBe(300);
+    });
+
+    it('should recognise the metrics it knows', () => {
+      // when / then
+      expect(isFriendsBoardMetric('days')).toBe(true);
+      expect(isFriendsBoardMetric('streak')).toBe(true);
+      expect(isFriendsBoardMetric('reps')).toBe(true);
+      expect(isFriendsBoardMetric('points')).toBe(false);
+    });
+  });
+
+  describe('periodStartIso', () => {
+    it('should start the week on Monday and the month on the 1st', () => {
+      // when / then — 2026-09-10 is a Thursday
+      expect(periodStartIso('week', '2026-09-10')).toBe('2026-09-07');
+      expect(periodStartIso('week', '2026-09-07')).toBe('2026-09-07');
+      expect(periodStartIso('week', '2026-09-13')).toBe('2026-09-07');
+      expect(periodStartIso('month', '2026-09-10')).toBe('2026-09-01');
+    });
+  });
+
+  describe('countDistinctDays', () => {
+    it('should count each day once and only inside the window', () => {
+      // when / then
+      expect(
+        countDistinctDays(
+          [
+            '2026-09-06',
+            '2026-09-07',
+            '2026-09-07',
+            '2026-09-09',
+            '2026-09-11',
+          ],
+          '2026-09-07',
+          '2026-09-10'
+        )
+      ).toBe(2);
+    });
+  });
+
   describe('periodValue', () => {
     it('should read the bucket the period asks for', () => {
       // when / then
@@ -187,5 +281,24 @@ describe('friends/leaderboard', () => {
       expect(isFriendsLeaderboardPeriod('yearly')).toBe(false);
       expect(isFriendsLeaderboardPeriod(undefined)).toBe(false);
     });
+  });
+
+  it('should rank by the metric asked for', () => {
+    // given — Ada trained more days, Bob did more reps
+    const ada = row({ uid: 'a', displayName: 'Ada', days: 5 });
+    const bob = row({
+      uid: 'b',
+      displayName: 'Bob',
+      days: 2,
+      stats: { weeklyReps: 900, weeklyKey: KEYS.weeklyKey },
+    });
+
+    // when / then
+    expect(
+      rankFriends([bob, ada], 'week', KEYS, undefined, 'days').map((e) => e.uid)
+    ).toEqual(['a', 'b']);
+    expect(
+      rankFriends([bob, ada], 'week', KEYS, undefined, 'reps').map((e) => e.uid)
+    ).toEqual(['b', 'a']);
   });
 });

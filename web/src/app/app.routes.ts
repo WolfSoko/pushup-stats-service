@@ -16,7 +16,7 @@ export const appRoutes: Routes = [
     pathMatch: 'full',
     data: {
       seoTitle: $localize`:@@seo.landing.title:Liegestütze per Kamera zählen – kostenlos im Browser`,
-      seoDescription: $localize`:@@seo.landing.description:Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.`,
+      seoDescription: $localize`:@@seo.landing.description:Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.`,
     },
     loadComponent: () =>
       import('./marketing/shell/landing-page.component').then(

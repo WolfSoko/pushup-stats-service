@@ -19,6 +19,18 @@ export interface FriendListsResponse {
 
 export type FriendsBoardPeriod = 'daily' | 'week' | 'month' | 'allTime';
 
+/**
+ * What the board compares: training days or the live streak (fair whatever
+ * everyone's favourite exercise is), or one exercise's reps.
+ */
+export type FriendsBoardMetric = 'days' | 'streak' | 'reps';
+
+export interface FriendsBoardComparison {
+  readonly metric: FriendsBoardMetric;
+  /** Only with `reps`. */
+  readonly exerciseId?: string;
+}
+
 export interface FriendsBoardEntry {
   readonly uid: string;
   readonly displayName: string | null;
@@ -101,12 +113,20 @@ export class FriendsApiService {
 
   async board(
     period: FriendsBoardPeriod,
-    exerciseId?: string
+    comparison: FriendsBoardComparison
   ): Promise<ReadonlyArray<FriendsBoardEntry>> {
     const result = await this.callables.call<
-      { period: FriendsBoardPeriod; exerciseId?: string },
+      {
+        period: FriendsBoardPeriod;
+        metric: FriendsBoardMetric;
+        exerciseId?: string;
+      },
       FriendsBoardResponse
-    >('getFriendsLeaderboard')({ period, exerciseId });
+    >('getFriendsLeaderboard')({
+      period,
+      metric: comparison.metric,
+      exerciseId: comparison.exerciseId,
+    });
     return result.data?.entries ?? [];
   }
 

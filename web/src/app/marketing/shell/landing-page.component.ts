@@ -103,6 +103,10 @@ export class LandingPageComponent {
     this.track('landing_discover_click', { target });
   }
 
+  onFriendsCtaClick(target: 'friends' | 'signup'): void {
+    this.track('landing_friends_cta_click', { target });
+  }
+
   onPlanCardClick(planSlug: string): void {
     this.track('landing_plan_card_click', { plan: planSlug });
   }
