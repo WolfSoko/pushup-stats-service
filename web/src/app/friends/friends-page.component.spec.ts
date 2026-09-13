@@ -244,6 +244,18 @@ describe('FriendsPageComponent', () => {
       expect(rows[1].textContent).toContain('Du');
     });
 
+    it('should link every name on the board to that profile', async () => {
+      // given
+      await renderPage({ friends: [row()] }, {}, entries);
+
+      // then — the viewer's own row too, like the public leaderboard
+      const names = screen.getAllByTestId('board-name');
+      expect(names.map((a) => a.getAttribute('href'))).toEqual([
+        '/u/b',
+        '/u/me',
+      ]);
+    });
+
     it('should reload the board when the period changes', async () => {
       // given
       const { api, fixture } = await renderPage(

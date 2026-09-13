@@ -106,6 +106,24 @@ describe('FriendsTeaserCardComponent', () => {
     expect(screen.queryByTestId('dashboard-friends-invite')).toBeNull();
   });
 
+  it('should link the names on the mini board to their profiles', async () => {
+    // given
+    await renderCard({
+      friends: [friend],
+      board: [
+        entry({ uid: 'b', displayName: 'Bob', value: 900 }),
+        entry({ uid: 'me', displayName: 'Me', value: 300, isViewer: true }),
+      ],
+    });
+
+    // then
+    expect(
+      screen
+        .getAllByTestId('dashboard-friends-name')
+        .map((a) => a.getAttribute('href'))
+    ).toEqual(['/u/b', '/u/me']);
+  });
+
   it('should say so when the user leads', async () => {
     // given
     await renderCard({
