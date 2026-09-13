@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { firstValueFrom } from 'rxjs';
 
 import { ChallengeCardComponent } from './challenge-card.component';
@@ -30,6 +31,7 @@ import { challengeRejectionMessage } from './friends-messages';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   template: `
     <div class="section-head">
@@ -56,10 +58,14 @@ import { challengeRejectionMessage } from './friends-messages';
     }
 
     @if (store.challenges().length === 0) {
-      <p class="muted" i18n="@@challenges.empty">
-        Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar
-        Tage, alle zusammen.
-      </p>
+      @if (store.loading()) {
+        <mat-spinner diameter="32" data-testid="challenges-loading" />
+      } @else {
+        <p class="muted" i18n="@@challenges.empty">
+          Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar
+          Tage, alle zusammen.
+        </p>
+      }
     }
 
     @for (challenge of ordered(); track challenge.id) {

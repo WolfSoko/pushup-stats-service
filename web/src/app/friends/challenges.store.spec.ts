@@ -53,6 +53,28 @@ describe('ChallengesStore', () => {
     expect(store.ended().map((c) => c.id)).toEqual(['c0']);
   });
 
+  it('should keep the newest reload’s answer when an older one arrives late', async () => {
+    // given — the dashboard's count-only call is still in flight when the
+    // friends page asks for the full list
+    const { store, api } = setup();
+    let resolveSlow: (value: ChallengeView[]) => void = () => undefined;
+    api.list
+      .mockReturnValueOnce(
+        new Promise<ChallengeView[]>((resolve) => (resolveSlow = resolve))
+      )
+      .mockResolvedValueOnce([active, invitation]);
+
+    // when
+    const slow = store.reload({ progress: false });
+    await store.reload();
+    resolveSlow([{ ...active, entries: [] }]);
+    await slow;
+
+    // then — the full list stands, the stale count-only reply is dropped
+    expect(store.challenges().map((c) => c.id)).toEqual(['c1', 'c2']);
+    expect(store.loading()).toBe(false);
+  });
+
   it('should pass the progress flag through', async () => {
     // given
     const { store, api } = setup();
