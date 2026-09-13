@@ -85,6 +85,25 @@ describe('friends/challenges', () => {
   });
 
   describe('buildChallengeView', () => {
+    it('should say so when a sum could not be read', () => {
+      // given — one participant's aggregate failed
+      const view = buildChallengeView(
+        doc(),
+        new Map([['a', 10]]),
+        new Map(),
+        'a',
+        '2026-09-15',
+        new Set(['b'])
+      );
+
+      // then
+      expect(view.progressUnavailable).toBe(true);
+      expect(
+        buildChallengeView(doc(), new Map(), new Map(), 'a', '2026-09-15')
+          .progressUnavailable
+      ).toBe(false);
+    });
+
     it('should rank participants, keep zeros and mark the viewer', () => {
       // given
       const sums = new Map([['b', 320]]);

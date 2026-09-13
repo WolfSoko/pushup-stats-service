@@ -31,6 +31,8 @@ export interface ChallengeView {
   readonly entries: ReadonlyArray<ChallengeEntry>;
   readonly invited: ReadonlyArray<ChallengeInvitee>;
   readonly viewerInvited: boolean;
+  /** A participant's sum could not be read; the numbers shown are not to be trusted. */
+  readonly progressUnavailable?: boolean;
 }
 
 export interface CreateChallengeInput {

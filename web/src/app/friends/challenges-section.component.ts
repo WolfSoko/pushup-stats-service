@@ -14,6 +14,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { ChallengeCardComponent } from './challenge-card.component';
 import { ChallengesStore } from './challenges.store';
+import { onEntriesChanged } from './on-entries-changed';
 import type { FriendRow } from './friends-api.service';
 import { challengeRejectionMessage } from './friends-messages';
 
@@ -129,6 +130,10 @@ export class ChallengesSectionComponent {
   protected readonly rejection = computed(() =>
     challengeRejectionMessage(this.store.lastRejection())
   );
+
+  constructor() {
+    onEntriesChanged(() => void this.store.reload());
+  }
 
   protected readonly ordered = computed(() => [
     ...this.store.invitations(),
