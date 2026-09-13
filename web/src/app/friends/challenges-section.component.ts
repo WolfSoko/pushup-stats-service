@@ -57,6 +57,26 @@ import { challengeRejectionMessage } from './friends-messages';
       </mat-card>
     }
 
+    @if (store.loadFailed()) {
+      <mat-card class="challenge-error" data-testid="challenges-load-failed">
+        <mat-card-content>
+          <mat-icon aria-hidden="true">cloud_off</mat-icon>
+          <span i18n="@@challenges.loadFailed"
+            >Challenges konnten nicht geladen werden.</span
+          >
+          <button
+            mat-button
+            type="button"
+            data-testid="challenges-retry"
+            (click)="store.reload()"
+            i18n="@@challenges.retry"
+          >
+            Erneut laden
+          </button>
+        </mat-card-content>
+      </mat-card>
+    }
+
     @if (store.challenges().length === 0) {
       @if (store.loading()) {
         <mat-spinner diameter="32" data-testid="challenges-loading" />

@@ -1,9 +1,12 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   inject,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -206,7 +209,28 @@ export class FriendsPageComponent implements OnInit {
     friendRejectionMessage(this.store.lastRejection())
   );
 
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  constructor() {
+    // Everything here is other people's doing — a friend accepts, logs
+    // reps, cheers — so coming back to the tab re-reads it all.
+    if (!isPlatformBrowser(this.platformId)) return;
+    const onVisible = () => {
+      if (this.document.visibilityState === 'visible') this.refresh();
+    };
+    this.document.addEventListener('visibilitychange', onVisible);
+    this.destroyRef.onDestroy(() =>
+      this.document.removeEventListener('visibilitychange', onVisible)
+    );
+  }
+
   ngOnInit(): void {
+    this.refresh();
+  }
+
+  private refresh(): void {
     void this.store.reload();
     void this.store.loadBoard();
     void this.challenges.reload();

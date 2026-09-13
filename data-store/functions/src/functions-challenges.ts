@@ -133,9 +133,12 @@ export const createChallenge = onCall(
   }
 );
 
-/** Accepting moves the user onto the board; declining just takes them off the list. */
+/**
+ * Accepting moves the user onto the board and tells the people already
+ * on it; declining just takes them off the list, quietly.
+ */
 export const respondChallenge = onCall(
-  { region: 'europe-west3', timeoutSeconds: 30 },
+  { region: 'europe-west3', timeoutSeconds: 30, secrets: VAPID_SECRETS },
   async (request) => {
     const uid = requireUid(request.auth);
     const id = requireId(request.data?.id);
@@ -156,11 +159,38 @@ export const respondChallenge = onCall(
         invited: FieldValue.arrayRemove(uid),
         ...(accept ? { participants: FieldValue.arrayUnion(uid) } : {}),
       });
-      return { ok: true as const, accepted: accept };
+      const others = (doc?.participants ?? []).filter((p) => p !== uid);
+      return { ok: true as const, accepted: accept, others };
     });
 
-    logger.info('respondChallenge', { uid, id, ...result });
-    return result;
+    if (result.ok && result.accepted && configureWebPush()) {
+      const recipients = await readPushRecipients([uid, ...result.others]);
+      const actorName = recipients.get(uid)?.displayName ?? null;
+      await Promise.all(
+        result.others.map((participant) =>
+          deliverPushToUser(
+            participant,
+            buildFriendPushPayload({
+              kind: 'challengeAccepted',
+              locale: recipients.get(participant)?.locale ?? 'de',
+              actorName,
+            }),
+            friendPushOptions('challengeAccepted'),
+            'respondChallenge'
+          )
+        )
+      );
+    }
+
+    logger.info('respondChallenge', {
+      uid,
+      id,
+      ok: result.ok,
+      ...(result.ok
+        ? { accepted: result.accepted }
+        : { reason: result.reason }),
+    });
+    return result.ok ? { ok: true, accepted: result.accepted } : result;
   }
 );
 
@@ -185,12 +215,23 @@ export const listChallenges = onCall(
       docs.map(async (doc) => {
         const sums = new Map<string, number>();
         if (withProgress && !invitedOf(doc).includes(uid)) {
+          // One participant's failed sum must not take the whole list
+          // down — the invitation buttons live on this list.
           await Promise.all(
             doc.participants.map(async (participant) => {
-              sums.set(
-                participant,
-                await sumChallengeEntries(participant, doc)
-              );
+              try {
+                sums.set(
+                  participant,
+                  await sumChallengeEntries(participant, doc)
+                );
+              } catch (error) {
+                logger.error('listChallenges: sum failed', {
+                  uid,
+                  id: doc.id,
+                  participant,
+                  error: error instanceof Error ? error.message : String(error),
+                });
+              }
             })
           );
         }
