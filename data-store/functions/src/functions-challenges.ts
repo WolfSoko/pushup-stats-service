@@ -160,9 +160,7 @@ export const respondChallenge = onCall(
         ...(accept ? { participants: FieldValue.arrayUnion(uid) } : {}),
       });
       // Narrowed by `challengeRespondRejection`.
-      const others = (doc as ChallengeDoc).participants.filter(
-        (p) => p !== uid
-      );
+      const others = (doc?.participants ?? []).filter((p) => p !== uid);
       return { ok: true as const, accepted: accept, others };
     });
 
