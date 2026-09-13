@@ -126,6 +126,15 @@ describe('ArcNavComponent', () => {
     expect(scrollTo).toHaveBeenCalled();
   });
 
+  it('should still settle in the middle copy when no entry is active', async () => {
+    // given — a route none of the entries covers
+    const { scrollTo } = await renderNav('/');
+
+    // then — scrolled once, to the first entry of the real copy
+    expect(screen.queryByRole('link', { current: 'page' })).toBeNull();
+    expect(scrollTo).toHaveBeenCalled();
+  });
+
   it('should treat a nested route as its section', async () => {
     // given — an article belongs to the blog entry
     await renderNav('/blog/some-article');

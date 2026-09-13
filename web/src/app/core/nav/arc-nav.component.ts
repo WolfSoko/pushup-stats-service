@@ -237,9 +237,9 @@ export class ArcNavComponent {
     if (this.drag) this.drag.startLeft += shift;
   }
 
+  /** With no active entry (landing, login) the first one takes the middle. */
   private centerActive(behavior: ScrollBehavior): void {
-    const index = this.activeIndex();
-    if (index < 0) return;
+    const index = Math.max(0, this.activeIndex());
     this.centerItem(this.count() + index, behavior);
   }
 
