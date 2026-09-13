@@ -13110,5 +13110,23 @@
         <target> Erneut laden </target>
       </segment>
     </unit>
+    <unit id="dashboard.challenge.invited">
+      <segment state="initial">
+        <source>Challenge-Einladung</source>
+        <target>Challenge-Einladung</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.running">
+      <segment state="initial">
+        <source>Freunde-Challenge</source>
+        <target>Freunde-Challenge</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.more">
+      <segment state="initial">
+        <source>Alle Challenges</source>
+        <target>Alle Challenges</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
