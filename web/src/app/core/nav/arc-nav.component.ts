@@ -33,6 +33,9 @@ import {
   wrapShift,
 } from './arc-nav.geometry';
 
+/** A scroll that has been quiet this long has settled, so a jump interrupts nothing. */
+const SETTLE_MS = 150;
+
 /**
  * The app's one navigation bar: a horizontal strip along the bottom edge,
  * shaped like a segment of a circle. Icons sit on the arc — the one in the
@@ -95,6 +98,7 @@ export class ArcNavComponent {
   private readonly routeChange = signal(0);
   private readonly measured = signal<ReadonlyArray<number> | null>(null);
   private frame: number | null = null;
+  private settle: ReturnType<typeof setTimeout> | null = null;
   private wheelTravel = 0;
   private drag: { startX: number; startLeft: number; moved: boolean } | null =
     null;
@@ -129,6 +133,7 @@ export class ArcNavComponent {
         window.removeEventListener('resize', onResize);
         track.removeEventListener('click', onClick, { capture: true });
         if (this.frame !== null) cancelAnimationFrame(this.frame);
+        if (this.settle !== null) clearTimeout(this.settle);
       });
     });
   }
@@ -142,13 +147,25 @@ export class ArcNavComponent {
     return arcOpacity(this.offsets()[index] ?? 0);
   }
 
+  /**
+   * Wrapping writes scrollLeft, which would cut a smooth scroll or a touch
+   * fling short — so it waits for the scroll to settle. Only a mouse drag
+   * wraps at once: those writes are our own, nothing is in flight.
+   */
   protected onScroll(): void {
-    if (this.frame !== null) return;
-    this.frame = requestAnimationFrame(() => {
-      this.frame = null;
+    if (this.drag) this.wrap();
+    if (this.frame === null) {
+      this.frame = requestAnimationFrame(() => {
+        this.frame = null;
+        this.measure();
+      });
+    }
+    if (this.settle !== null) clearTimeout(this.settle);
+    this.settle = setTimeout(() => {
+      this.settle = null;
       this.wrap();
       this.measure();
-    });
+    }, SETTLE_MS);
   }
 
   /** Real copy or a clone — clones are decoration for the wrap, not targets. */
@@ -230,7 +247,8 @@ export class ArcNavComponent {
     if (!first || !middle) return;
     const shift = wrapShift(
       track.scrollLeft,
-      middle.offsetLeft - first.offsetLeft
+      middle.offsetLeft - first.offsetLeft,
+      first.offsetWidth
     );
     if (shift === 0) return;
     track.scrollLeft += shift;

@@ -40,13 +40,20 @@ describe('arc-nav geometry', () => {
     expect(seedOffsets(5, -1)).toEqual([0, 1, 2, 2.5, 2.5]);
   });
 
-  it('should jump a whole copy once the scroll drifts out of the middle one', () => {
-    // given — three copies of 800px each; the middle one spans 800..1600
-    // when / then
-    expect(wrapShift(1000, 800)).toBe(0);
-    expect(wrapShift(399, 800)).toBe(800);
-    expect(wrapShift(1201, 800)).toBe(-800);
-    expect(wrapShift(100, 0)).toBe(0);
+  it('should jump a whole copy once the scroll leaves the middle one', () => {
+    // given — 8 items of 88px, three copies: the middle one rests at 704..1320
+    const copy = 8 * 88;
+
+    // then — every resting position of the middle copy stays put
+    expect(wrapShift(704, copy, 88)).toBe(0);
+    expect(wrapShift(1320, copy, 88)).toBe(0);
+    // the neighbouring clones' resting positions jump back
+    expect(wrapShift(616, copy, 88)).toBe(copy);
+    expect(wrapShift(1408, copy, 88)).toBe(-copy);
+    // half an item beyond the copy is still the middle, a little more is not
+    expect(wrapShift(661, copy, 88)).toBe(0);
+    expect(wrapShift(659, copy, 88)).toBe(copy);
+    expect(wrapShift(100, 0, 88)).toBe(0);
   });
 
   it('should find the item nearest the middle', () => {

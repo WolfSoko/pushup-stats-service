@@ -130,9 +130,125 @@ describe('ArcNavComponent', () => {
     // given — a route none of the entries covers
     const { scrollTo } = await renderNav('/');
 
-    // then — scrolled once, to the first entry of the real copy
-    expect(screen.queryByRole('link', { current: 'page' })).toBeNull();
+    // then — scrolled once, to the first entry of the real copy, and no
+    // link at all (clones included) claims to be the current page
+    const all = screen.getByTestId('arc-nav').querySelectorAll('a');
+    expect(
+      Array.from(all).filter((a) => a.hasAttribute('aria-current'))
+    ).toEqual([]);
     expect(scrollTo).toHaveBeenCalled();
+  });
+
+  describe('with a measured layout', () => {
+    // jsdom lays nothing out; model 88px items behind 151px of padding in a
+    // 390px strip, the numbers a phone would report.
+    const ITEM = 88;
+    const PAD = 151;
+    let offsetLeft: PropertyDescriptor | undefined;
+    let offsetWidth: PropertyDescriptor | undefined;
+    let clientWidth: PropertyDescriptor | undefined;
+
+    beforeEach(() => {
+      offsetLeft = Object.getOwnPropertyDescriptor(
+        HTMLElement.prototype,
+        'offsetLeft'
+      );
+      offsetWidth = Object.getOwnPropertyDescriptor(
+        HTMLElement.prototype,
+        'offsetWidth'
+      );
+      Object.defineProperty(HTMLElement.prototype, 'offsetLeft', {
+        configurable: true,
+        get(this: HTMLElement) {
+          const siblings = Array.from(this.parentElement?.children ?? []);
+          return PAD + siblings.indexOf(this) * ITEM;
+        },
+      });
+      Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+        configurable: true,
+        get: () => ITEM,
+      });
+      clientWidth = Object.getOwnPropertyDescriptor(
+        Element.prototype,
+        'clientWidth'
+      );
+      Object.defineProperty(Element.prototype, 'clientWidth', {
+        configurable: true,
+        get: () => 390,
+      });
+    });
+
+    afterEach(() => {
+      if (offsetLeft)
+        Object.defineProperty(HTMLElement.prototype, 'offsetLeft', offsetLeft);
+      if (offsetWidth)
+        Object.defineProperty(
+          HTMLElement.prototype,
+          'offsetWidth',
+          offsetWidth
+        );
+      if (clientWidth)
+        Object.defineProperty(Element.prototype, 'clientWidth', clientWidth);
+    });
+
+    async function renderMeasured(startUrl: string) {
+      const rendered = await renderNav(startUrl);
+      const track = screen
+        .getByTestId('arc-nav')
+        .querySelector<HTMLElement>('.track');
+      if (!track) throw new Error('track missing');
+      return { ...rendered, track };
+    }
+
+    it('should centre the real copy of the active entry, not a clone', async () => {
+      // given — three entries: the real "Blog" is rendered fifth
+      const { scrollTo } = await renderMeasured('/blog');
+
+      // then — scrollLeft = renderedIndex * item width
+      expect(scrollTo).toHaveBeenLastCalledWith(
+        expect.objectContaining({ left: 5 * ITEM })
+      );
+    });
+
+    it('should jump back by a copy once a scroll settles in a clone', async () => {
+      // given — resting on the last clone before the real copy
+      const { track } = await renderMeasured('/app');
+      track.scrollLeft = 2 * ITEM;
+
+      // when
+      track.dispatchEvent(new Event('scroll'));
+
+      // then — one copy (three items) further right, same picture
+      await vitest.waitFor(() => expect(track.scrollLeft).toBe(5 * ITEM));
+    });
+
+    it('should leave a scroll alone that settles in the real copy', async () => {
+      // given
+      const { track } = await renderMeasured('/app');
+      track.scrollLeft = 4 * ITEM;
+
+      // when
+      track.dispatchEvent(new Event('scroll'));
+      await new Promise((resolve) => setTimeout(resolve, 250));
+
+      // then
+      expect(track.scrollLeft).toBe(4 * ITEM);
+    });
+
+    it('should carry a mouse drag across the jump without a leap', async () => {
+      // given — dragging leftwards from the real first entry
+      const { track } = await renderMeasured('/app');
+      track.scrollLeft = 3 * ITEM;
+      track.dispatchEvent(pointer('pointerdown', 300));
+
+      // when — far enough to rest on a clone, then a little further
+      track.dispatchEvent(pointer('pointermove', 300 + 2 * ITEM));
+      track.dispatchEvent(new Event('scroll'));
+      track.dispatchEvent(pointer('pointermove', 300 + 2 * ITEM + 10));
+
+      // then — the strip continues from where the jump put it
+      expect(track.scrollLeft).toBe(4 * ITEM - 10);
+    });
   });
 
   it('should treat a nested route as its section', async () => {

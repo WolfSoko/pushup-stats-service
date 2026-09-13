@@ -53,14 +53,22 @@ export function seedOffsets(count: number, active: number): number[] {
 
 /**
  * The strip renders its entries three times so it can wrap. Given the
- * current scroll position and the width of one copy, the shift that
- * brings the position back into the middle copy — zero while it is
- * still there. The jump is a whole copy, so it is invisible.
+ * current scroll position, the width of one copy and of one item, the
+ * shift that brings the position back into the middle copy — zero while
+ * it is still there. The jump is a whole copy, so it is invisible.
+ *
+ * An item rests centred at `scrollLeft = renderedIndex * itemWidth`, so
+ * the middle copy occupies [copyWidth, 2 * copyWidth - itemWidth]; the
+ * thresholds sit half an item outside that, where no item ever rests.
  */
-export function wrapShift(scrollLeft: number, copyWidth: number): number {
+export function wrapShift(
+  scrollLeft: number,
+  copyWidth: number,
+  itemWidth: number
+): number {
   if (copyWidth <= 0) return 0;
-  if (scrollLeft < copyWidth / 2) return copyWidth;
-  if (scrollLeft > copyWidth * 1.5) return -copyWidth;
+  if (scrollLeft < copyWidth - itemWidth / 2) return copyWidth;
+  if (scrollLeft > 2 * copyWidth - itemWidth / 2) return -copyWidth;
   return 0;
 }
 

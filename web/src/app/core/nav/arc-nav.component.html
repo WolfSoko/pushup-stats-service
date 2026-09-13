@@ -21,7 +21,9 @@
         class="item"
         [routerLink]="item.path"
         [class.active]="activeIndex() === i % count()"
-        [attr.aria-current]="activeIndex() === i - count() ? 'page' : null"
+        [attr.aria-current]="
+          activeIndex() >= 0 && i === count() + activeIndex() ? 'page' : null
+        "
         [attr.aria-hidden]="isClone(i) ? 'true' : null"
         [attr.tabindex]="isClone(i) ? -1 : null"
         [style.transform]="transformFor(i)"
