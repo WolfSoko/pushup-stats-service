@@ -1,19 +1,31 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   output,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { EXERCISE_CATALOG } from '@pu-stats/models';
 
+import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import { boardValueLabel } from './board-value-label';
 import type {
+  FriendsBoardComparison,
   FriendsBoardEntry,
   FriendsBoardPeriod,
 } from './friends-api.service';
+
+/** The exercises one can race on: those counted in reps. */
+const REP_EXERCISES = EXERCISE_CATALOG.filter(
+  (exercise) => exercise.measurement === 'reps'
+);
 
 /**
  * The friends board: the same numbers as the public leaderboard, over a
@@ -29,30 +41,65 @@ import type {
   imports: [
     MatButtonModule,
     MatChipsModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatSelectModule,
     MatTooltipModule,
     RouterLink,
   ],
   template: `
-    <mat-chip-listbox
-      [value]="period()"
-      (change)="periodChange.emit($event.value)"
-      aria-label="Zeitraum"
-      i18n-aria-label="@@friends.board.periodAria"
+    <mat-form-field
+      appearance="outline"
+      class="comparison"
+      subscriptSizing="dynamic"
     >
-      <mat-chip-option value="daily" i18n="@@friends.board.daily"
-        >Heute</mat-chip-option
+      <mat-label i18n="@@friends.board.compare">Vergleich</mat-label>
+      <mat-select
+        [value]="comparisonKey()"
+        (selectionChange)="changeComparison($event.value)"
+        data-testid="board-comparison"
       >
-      <mat-chip-option value="week" i18n="@@friends.board.week"
-        >7 Tage</mat-chip-option
+        <mat-option value="days" i18n="@@friends.board.metric.days"
+          >Trainingstage</mat-option
+        >
+        <mat-option value="streak" i18n="@@friends.board.metric.streak"
+          >Streak</mat-option
+        >
+        <mat-optgroup>
+          <span *matOptgroupLabel i18n="@@friends.board.metric.reps"
+            >Wiederholungen</span
+          >
+          @for (exercise of repExercises; track exercise.id) {
+            <mat-option [value]="'reps:' + exercise.id">{{
+              exerciseName(exercise.id)
+            }}</mat-option>
+          }
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+    @if (comparison().metric !== 'streak') {
+      <mat-chip-listbox
+        [value]="period()"
+        (change)="periodChange.emit($event.value)"
+        aria-label="Zeitraum"
+        i18n-aria-label="@@friends.board.periodAria"
       >
-      <mat-chip-option value="month" i18n="@@friends.board.month"
-        >30 Tage</mat-chip-option
-      >
-      <mat-chip-option value="allTime" i18n="@@friends.board.allTime"
-        >Gesamt</mat-chip-option
-      >
-    </mat-chip-listbox>
+        @if (comparison().metric !== 'days') {
+          <mat-chip-option value="daily" i18n="@@friends.board.daily"
+            >Heute</mat-chip-option
+          >
+        }
+        <mat-chip-option value="week" i18n="@@friends.board.week"
+          >7 Tage</mat-chip-option
+        >
+        <mat-chip-option value="month" i18n="@@friends.board.month"
+          >30 Tage</mat-chip-option
+        >
+        <mat-chip-option value="allTime" i18n="@@friends.board.allTime"
+          >Gesamt</mat-chip-option
+        >
+      </mat-chip-listbox>
+    }
     <ol class="board">
       @for (entry of entries(); track entry.uid; let i = $index) {
         <li [class.is-viewer]="entry.isViewer" data-testid="board-row">
@@ -73,7 +120,7 @@ import type {
               >
             }
           </span>
-          <strong>{{ entry.value }}</strong>
+          <strong data-testid="board-value">{{ valueLabel(entry) }}</strong>
           <span class="cheer-slot">
             @if (!entry.isViewer) {
               <button
@@ -98,6 +145,10 @@ import type {
     </ol>
   `,
   styles: `
+    .comparison {
+      width: 100%;
+      margin-bottom: 8px;
+    }
     .board {
       list-style: none;
       margin: 8px 0 0;
@@ -153,8 +204,34 @@ import type {
 export class FriendsBoardComponent {
   readonly entries = input.required<ReadonlyArray<FriendsBoardEntry>>();
   readonly period = input.required<FriendsBoardPeriod>();
+  readonly comparison = input.required<FriendsBoardComparison>();
   readonly periodChange = output<unknown>();
+  readonly comparisonChange = output<FriendsBoardComparison>();
   readonly cheer = output<string>();
+
+  protected readonly repExercises = REP_EXERCISES;
+
+  /** The select's value: one key per choice, reps keyed by exercise. */
+  protected readonly comparisonKey = computed(() => {
+    const { metric, exerciseId } = this.comparison();
+    return metric === 'reps' ? `reps:${exerciseId ?? ''}` : metric;
+  });
+
+  protected changeComparison(key: string): void {
+    this.comparisonChange.emit(
+      key.startsWith('reps:')
+        ? { metric: 'reps', exerciseId: key.slice('reps:'.length) }
+        : { metric: key === 'streak' ? 'streak' : 'days' }
+    );
+  }
+
+  protected exerciseName(id: string): string {
+    return exerciseDisplayName(id);
+  }
+
+  protected valueLabel(entry: FriendsBoardEntry): string {
+    return boardValueLabel(this.comparison().metric, entry.value);
+  }
 
   protected readonly cheerAria = $localize`:@@friends.board.cheer:Anfeuern`;
   protected readonly cheeredAria = $localize`:@@friends.board.cheered:Heute schon angefeuert`;

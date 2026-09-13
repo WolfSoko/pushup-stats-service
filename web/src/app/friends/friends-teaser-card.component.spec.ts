@@ -98,7 +98,7 @@ describe('FriendsTeaserCardComponent', () => {
     });
 
     // then — a preview that must not reset the friends page's period
-    expect(api.board).toHaveBeenCalledWith('week');
+    expect(api.board).toHaveBeenCalledWith('week', { metric: 'days' });
     expect(
       screen.getByTestId('dashboard-friends-standing').textContent
     ).toContain('Platz 2 von 4');

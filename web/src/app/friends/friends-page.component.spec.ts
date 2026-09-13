@@ -268,6 +268,40 @@ describe('FriendsPageComponent', () => {
       expect(rows[1].textContent).toContain('Du');
     });
 
+    it('should show training days with their unit by default', async () => {
+      // given
+      await renderPage({ friends: [row()] }, {}, [
+        { ...entries[0], value: 5 },
+        { ...entries[1], value: 1 },
+      ]);
+
+      // then
+      expect(
+        screen.getAllByTestId('board-value').map((el) => el.textContent?.trim())
+      ).toEqual(['5 Tage', '1 Tag']);
+    });
+
+    it('should switch the board to the streak when picked', async () => {
+      // given
+      const { api, fixture } = await renderPage(
+        { friends: [row()] },
+        {},
+        entries
+      );
+      api.board.mockClear();
+
+      // when
+      (screen.getByTestId('board-comparison') as HTMLElement).click();
+      await fixture.whenStable();
+      (screen.getByRole('option', { name: 'Streak' }) as HTMLElement).click();
+      await fixture.whenStable();
+
+      // then — no period for a streak, so the chips are gone too
+      expect(api.board).toHaveBeenLastCalledWith('week', { metric: 'streak' });
+      fixture.detectChanges();
+      expect(screen.queryByRole('option', { name: 'Gesamt' })).toBeNull();
+    });
+
     it('should link every name on the board to that profile', async () => {
       // given
       await renderPage({ friends: [row()] }, {}, entries);
@@ -294,7 +328,7 @@ describe('FriendsPageComponent', () => {
       await fixture.whenStable();
 
       // then
-      expect(api.board).toHaveBeenCalledWith('allTime');
+      expect(api.board).toHaveBeenCalledWith('allTime', { metric: 'days' });
     });
 
     it('should stay away with nobody to compare against', async () => {

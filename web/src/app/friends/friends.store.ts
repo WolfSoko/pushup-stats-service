@@ -14,6 +14,7 @@ import {
   type FriendRow,
   type FriendsBoardEntry,
   type FriendsBoardPeriod,
+  type FriendsBoardComparison,
 } from './friends-api.service';
 import { runStoreAction } from './store-action';
 
@@ -26,6 +27,7 @@ type FriendsState = {
   lastRejection: FriendActionReason;
   board: ReadonlyArray<FriendsBoardEntry>;
   boardPeriod: FriendsBoardPeriod;
+  boardComparison: FriendsBoardComparison;
 };
 
 const initialState: FriendsState = {
@@ -36,6 +38,7 @@ const initialState: FriendsState = {
   lastRejection: undefined,
   board: [],
   boardPeriod: 'week',
+  boardComparison: { metric: 'days' },
 };
 
 /**
@@ -104,16 +107,25 @@ export const FriendsStore = signalStore(
       const next = period ?? store.boardPeriod();
       if (options.remember !== false) patchState(store, { boardPeriod: next });
       try {
-        patchState(store, { board: await _api.board(next) });
+        patchState(store, {
+          board: await _api.board(next, store.boardComparison()),
+        });
       } catch {
         // The board is the extra on this page, not the page.
         patchState(store, { board: [] });
       }
     }
 
+    /** Switch what the board compares, then re-read it. */
+    function compareBy(comparison: FriendsBoardComparison): Promise<void> {
+      patchState(store, { boardComparison: comparison });
+      return loadBoard();
+    }
+
     return {
       reload,
       loadBoard,
+      compareBy,
       requestFriend: (uid: string) =>
         runStoreAction(store, () => _api.request(uid), reload),
       accept: (id: string) =>

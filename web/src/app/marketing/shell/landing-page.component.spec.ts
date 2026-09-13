@@ -207,6 +207,27 @@ describe('LandingPageComponent', () => {
     ).toBeTruthy();
   });
 
+  it('should pitch training with friends and send guests to sign up', async () => {
+    // given
+    const view = await render(LandingPageComponent, {
+      providers: [
+        provideRouter([]),
+        { provide: AdsStore, useValue: adsConfigMock },
+        { provide: AuthService, useValue: makeAuthServiceMock() },
+        { provide: AuthStore, useValue: makeAuthStoreMock() },
+      ],
+    });
+    const host = view.fixture.nativeElement as HTMLElement;
+
+    // then — three cards, and the CTA lands on the friends page after sign-up
+    const section = host.querySelector('section.friends-feature');
+    expect(section).toBeTruthy();
+    expect(section?.querySelectorAll('mat-card')).toHaveLength(3);
+    const cta = section?.querySelector('.friends-cta a');
+    expect(cta?.getAttribute('href')).toContain('/register');
+    expect(cta?.getAttribute('href')).toContain('returnUrl=%2Ffreunde');
+  });
+
   it('does not render the live leaderboard section anymore', async () => {
     const view = await render(LandingPageComponent, {
       providers: [

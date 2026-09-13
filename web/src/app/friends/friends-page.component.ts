@@ -78,7 +78,9 @@ import type { FriendsBoardPeriod } from './friends-api.service';
           <app-friends-board
             [entries]="store.board()"
             [period]="store.boardPeriod()"
+            [comparison]="store.boardComparison()"
             (periodChange)="changePeriod($event)"
+            (comparisonChange)="store.compareBy($event)"
             (cheer)="store.cheer($event)"
           />
         </section>
