@@ -147,6 +147,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 | Build & tooling (font flakes, pnpm dlx, Nx Cloud agents)     | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md)               |
 | Precomputed data (period-key staleness, timestamp formats)   | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md)                 |
 | Firestore client (`setDoc({merge:true})` nested-map clobber) | [`docs/gotchas/firestore.md`](docs/gotchas/firestore.md)                               |
+| UI interaction (scroll-snap vs scripted scroll, drag-click)  | [`docs/gotchas/ui-interaction.md`](docs/gotchas/ui-interaction.md)                     |
 
 ## Workflow
 
