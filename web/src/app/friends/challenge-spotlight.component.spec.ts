@@ -1,4 +1,5 @@
-import { PLATFORM_ID } from '@angular/core';
+import { PLATFORM_ID, signal } from '@angular/core';
+import { LiveDataStore } from '@pu-stats/data-access-state';
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
@@ -44,9 +45,14 @@ describe('ChallengeSpotlightComponent', () => {
       respond: vitest.fn().mockResolvedValue({ ok: true }),
       leave: vitest.fn().mockResolvedValue({ ok: true }),
     };
+    const live = {
+      updateTick: signal(0),
+      exerciseEntriesLoaded: signal(false),
+    };
     const { fixture } = await render(ChallengeSpotlightComponent, {
       providers: [
         provideRouter([]),
+        { provide: LiveDataStore, useValue: live },
         { provide: PLATFORM_ID, useValue: options.platform ?? 'browser' },
         { provide: ChallengesApiService, useValue: api },
         {
@@ -60,7 +66,7 @@ describe('ChallengeSpotlightComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, fixture };
+    return { api, fixture, live };
   }
 
   it('should show the running challenge that ends soonest, with progress', async () => {
@@ -101,6 +107,23 @@ describe('ChallengeSpotlightComponent', () => {
     // then
     expect(api.respond).toHaveBeenCalledWith('c2', true);
     expect(screen.queryByTestId('challenge-accept')).toBeNull();
+  });
+
+  it('should re-read once a workout is logged, not on the first snapshot', async () => {
+    // given — the live mirror delivers its first snapshot after mount
+    const { api, fixture, live } = await renderSpotlight([running]);
+    api.list.mockClear();
+    live.exerciseEntriesLoaded.set(true);
+    live.updateTick.set(1);
+    await fixture.whenStable();
+    expect(api.list).not.toHaveBeenCalled();
+
+    // when — an entry lands
+    live.updateTick.set(2);
+    await fixture.whenStable();
+
+    // then — counted, then summed, as on mount
+    expect(api.list).toHaveBeenCalledTimes(2);
   });
 
   it('should not ask for sums when nothing is running', async () => {

@@ -20,6 +20,7 @@ import { ChallengesSectionComponent } from './challenges-section.component';
 import { ChallengesStore } from './challenges.store';
 import { FriendRequestsComponent } from './friend-requests.component';
 import { FriendsStore } from './friends.store';
+import { onEntriesChanged } from './on-entries-changed';
 import { FriendsBoardComponent } from './friends-board.component';
 import { friendRejectionMessage } from './friends-messages';
 import type { FriendsBoardPeriod } from './friends-api.service';
@@ -216,6 +217,7 @@ export class FriendsPageComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
 
   constructor() {
+    onEntriesChanged(() => void this.store.loadBoard());
     // Everything here is other people's doing — a friend accepts, logs
     // reps, cheers — so coming back to the tab re-reads it all.
     if (!isPlatformBrowser(this.platformId)) return;

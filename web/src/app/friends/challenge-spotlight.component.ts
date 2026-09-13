@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
 import { ChallengeCardComponent } from './challenge-card.component';
 import { ChallengesStore } from './challenges.store';
+import { onEntriesChanged } from './on-entries-changed';
 
 /**
  * The one challenge that matters right now, at the top of the dashboard:
@@ -102,6 +103,12 @@ export class ChallengeSpotlightComponent implements OnInit {
       null
     );
   });
+
+  constructor() {
+    onEntriesChanged(() => {
+      if (this.visible()) void this.load();
+    });
+  }
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId) || !this.visible()) return;

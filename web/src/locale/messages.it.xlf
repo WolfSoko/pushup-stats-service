@@ -13234,5 +13234,11 @@
         <target>Konto erstellen &amp; Freunde einladen</target>
       </segment>
     </unit>
+    <unit id="challenges.progressUnavailable">
+      <segment state="initial">
+        <source> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </source>
+        <target> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

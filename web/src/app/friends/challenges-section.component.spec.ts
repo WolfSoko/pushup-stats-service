@@ -1,3 +1,5 @@
+import { LiveDataStore } from '@pu-stats/data-access-state';
+import { signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { render, screen } from '@testing-library/angular';
 import { of } from 'rxjs';
@@ -58,18 +60,39 @@ describe('ChallengesSectionComponent', () => {
         .fn()
         .mockReturnValue({ afterClosed: () => of(dialogResult) }),
     };
+    const live = {
+      updateTick: signal(0),
+      exerciseEntriesLoaded: signal(false),
+    };
     const { fixture } = await render(ChallengesSectionComponent, {
       inputs: { friends },
       providers: [
         { provide: ChallengesApiService, useValue: api },
         { provide: MatDialog, useValue: dialog },
+        { provide: LiveDataStore, useValue: live },
       ],
     });
     // The page loads the store; the section only renders it.
     await fixture.debugElement.injector.get(ChallengesStore).reload();
     fixture.detectChanges();
-    return { api, dialog, fixture };
+    return { api, dialog, fixture, live };
   }
+
+  it('should re-read the challenges when a workout is logged', async () => {
+    // given
+    const { api, fixture, live } = await renderSection([challenge]);
+    live.exerciseEntriesLoaded.set(true);
+    live.updateTick.set(1);
+    await fixture.whenStable();
+    api.list.mockClear();
+
+    // when
+    live.updateTick.set(2);
+    await fixture.whenStable();
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+  });
 
   it('should say so and offer a retry when the list could not be loaded', async () => {
     // given — the first read fails, the retry succeeds

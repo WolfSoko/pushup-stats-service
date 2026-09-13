@@ -30,6 +30,14 @@ describe('ChallengeCardComponent', () => {
     return { accept, leave };
   }
 
+  it('should warn when the progress could not be read', async () => {
+    // given
+    await renderCard({ ...base, progressUnavailable: true });
+
+    // then
+    expect(screen.getByTestId('challenge-progress-unavailable')).toBeTruthy();
+  });
+
   it('should show progress and who has not answered yet', async () => {
     // given
     await renderCard(base);

@@ -41,6 +41,8 @@ export interface ChallengeView {
   readonly invited: ReadonlyArray<ChallengeInvitee>;
   /** The viewer was asked and has not answered. */
   readonly viewerInvited: boolean;
+  /** A participant's sum could not be read — their number shows 0 and is not to be trusted. */
+  readonly progressUnavailable: boolean;
 }
 
 /** Documents written before invitations existed carry no `invited`. */
@@ -118,7 +120,8 @@ export function buildChallengeView(
   sums: ReadonlyMap<string, number>,
   names: ReadonlyMap<string, string>,
   viewerUid: string,
-  todayIso: string
+  todayIso: string,
+  failedSums: ReadonlySet<string> = new Set()
 ): ChallengeView {
   const invited = invitedOf(doc);
   const viewerInvited = invited.includes(viewerUid);
@@ -150,5 +153,7 @@ export function buildChallengeView(
       displayName: names.get(uid) ?? null,
     })),
     viewerInvited,
+    progressUnavailable:
+      !viewerInvited && doc.participants.some((uid) => failedSums.has(uid)),
   };
 }

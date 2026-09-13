@@ -1,3 +1,5 @@
+import { LiveDataStore } from '@pu-stats/data-access-state';
+import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
@@ -46,9 +48,14 @@ describe('FriendsPageComponent', () => {
     };
     const challengesApi = { list: vitest.fn().mockResolvedValue(challenges) };
     const invite = { inviteFriend: vitest.fn().mockResolvedValue('native') };
+    const live = {
+      updateTick: signal(0),
+      exerciseEntriesLoaded: signal(false),
+    };
     const { fixture } = await render(FriendsPageComponent, {
       providers: [
         provideRouter([]),
+        { provide: LiveDataStore, useValue: live },
         { provide: FriendsApiService, useValue: api },
         { provide: ChallengesApiService, useValue: challengesApi },
         { provide: InviteService, useValue: invite },
@@ -56,7 +63,7 @@ describe('FriendsPageComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, invite, fixture };
+    return { api, invite, fixture, live };
   }
 
   it('should show a challenge even before the friends list has arrived', async () => {
@@ -181,6 +188,22 @@ describe('FriendsPageComponent', () => {
     expect(api.list).toHaveBeenCalledTimes(1);
     expect(api.board).toHaveBeenCalledTimes(1);
     expect(challengesApi.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('should re-read the board when a workout is logged', async () => {
+    // given
+    const { api, fixture, live } = await renderPage({ friends: [row()] });
+    live.exerciseEntriesLoaded.set(true);
+    live.updateTick.set(1);
+    await fixture.whenStable();
+    api.board.mockClear();
+
+    // when
+    live.updateTick.set(2);
+    await fixture.whenStable();
+
+    // then
+    expect(api.board).toHaveBeenCalledTimes(1);
   });
 
   it('should label a friend without a display name', async () => {

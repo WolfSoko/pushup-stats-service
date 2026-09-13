@@ -214,6 +214,7 @@ export const listChallenges = onCall(
     const challenges = await Promise.all(
       docs.map(async (doc) => {
         const sums = new Map<string, number>();
+        const failed = new Set<string>();
         if (withProgress && !invitedOf(doc).includes(uid)) {
           // One participant's failed sum must not take the whole list
           // down — the invitation buttons live on this list.
@@ -225,6 +226,7 @@ export const listChallenges = onCall(
                   await sumChallengeEntries(participant, doc)
                 );
               } catch (error) {
+                failed.add(participant);
                 logger.error('listChallenges: sum failed', {
                   uid,
                   id: doc.id,
@@ -235,7 +237,7 @@ export const listChallenges = onCall(
             })
           );
         }
-        return buildChallengeView(doc, sums, names, uid, today);
+        return buildChallengeView(doc, sums, names, uid, today, failed);
       })
     );
 

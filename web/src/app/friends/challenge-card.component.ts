@@ -48,6 +48,16 @@ import type { ChallengeEntry, ChallengeView } from './challenges-api.service';
             Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre.
           </p>
         } @else {
+          @if (challenge().progressUnavailable) {
+            <p
+              class="muted"
+              data-testid="challenge-progress-unavailable"
+              i18n="@@challenges.progressUnavailable"
+            >
+              Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen
+              unten sind unvollständig.
+            </p>
+          }
           @for (entry of challenge().entries; track entry.uid) {
             <div
               class="participant"
