@@ -25,15 +25,9 @@ mat-card-content + mat-card-footer {
 }
 
 mat-sidenav-content {
-  // Toolbar heights — drive sticky offsets for .desktop-nav and any
-  // page-level sticky element (e.g. the analysis filter bar) so they
-  // stay in sync if the nav layout changes.
+  // Toolbar height — drives the sticky offset of any page-level sticky
+  // element (e.g. the analysis filter bar).
   --top-nav-height: 64px;
-  --desktop-nav-height: 0px;
-
-  @media (min-width: 768px) {
-    --desktop-nav-height: 40px;
-  }
 
   height: 100svh;
   overflow: auto;
@@ -195,73 +189,8 @@ mat-sidenav-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 12px;
-
-  @media (max-width: 767px) {
-    padding-bottom: 72px;
-  }
-}
-
-.desktop-nav {
-  display: none;
-  @media (min-width: 768px) {
-    display: flex;
-    align-items: center;
-    // Couple the actual rendered height to --desktop-nav-height so the
-    // variable is the single source of truth for sticky offset stacking
-    // (e.g. analysis page filter bar) and won't drift if typography or
-    // padding inside the nav links changes.
-    min-height: var(--desktop-nav-height);
-    gap: 8px;
-    padding-inline: max(16px, calc((100vw - 1200px) / 2));
-    background: var(--mat-toolbar-container-background-color, #1e1e1e);
-
-    // Stack below the sticky toolbar; offset is driven by --top-nav-height
-    // declared on mat-sidenav-content.
-    position: sticky;
-    top: var(--top-nav-height);
-    z-index: 9;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-
-    // Fade background at the edges on wide viewports
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black clamp(0px, calc((100vw - 1200px) / 2), 100vw),
-      black calc(100vw - clamp(0px, (100vw - 1200px) / 2, 100vw)),
-      transparent
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black clamp(0px, calc((100vw - 1200px) / 2), 100vw),
-      black calc(100vw - clamp(0px, (100vw - 1200px) / 2, 100vw)),
-      transparent
-    );
-    a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      color: inherit;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 0.9rem;
-
-      mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-      }
-
-      &.active {
-        font-weight: 600;
-        background: rgba(255, 255, 255, 0.08);
-      }
-      &:hover {
-        background: rgba(255, 255, 255, 0.05);
-      }
-    }
-  }
+  // Room for the arc nav along the bottom edge, on every viewport.
+  padding-bottom: 96px;
 }
 
 @media (max-width: 560px) {
@@ -285,57 +214,11 @@ mat-sidenav-content {
     gap: 24px;
   }
 
-  @media (max-width: 767px) {
-    padding-bottom: 72px;
+  padding-bottom: 96px;
 
+  @media (max-width: 767px) {
     nav {
       gap: 4px 12px;
-    }
-  }
-}
-
-.bottom-nav {
-  display: none;
-
-  @media (max-width: 767px) {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: var(--mat-toolbar-container-background-color, #1e1e1e);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    justify-content: space-around;
-    align-items: stretch;
-    height: 56px;
-    padding: 0;
-
-    a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      gap: 2px;
-      color: inherit;
-      text-decoration: none;
-      opacity: 0.6;
-      font-size: 0.68rem;
-      padding: 4px 0;
-      transition: opacity 150ms ease;
-
-      mat-icon {
-        font-size: 22px;
-        width: 22px;
-        height: 22px;
-      }
-
-      &.active {
-        opacity: 1;
-        font-weight: 600;
-        color: var(--mat-sys-primary, #81a1e8);
-      }
     }
   }
 }
@@ -367,36 +250,8 @@ html.light-theme {
     }
   }
 
-  .desktop-nav {
-    background: #f1f5f9 !important;
-    border-bottom-color: rgba(148, 163, 184, 0.3);
-    a {
-      color: #334155;
-    }
-    a.active {
-      background: rgba(59, 130, 246, 0.1);
-      color: #1d4ed8;
-    }
-    a:hover {
-      background: rgba(0, 0, 0, 0.05);
-    }
-  }
-
   .app-footer {
     border-top-color: rgba(148, 163, 184, 0.25);
-  }
-
-  .bottom-nav {
-    background: #ffffff !important;
-    border-top-color: rgba(148, 163, 184, 0.3);
-
-    a {
-      color: #334155;
-    }
-
-    a.active {
-      color: #1d4ed8;
-    }
   }
 }
 

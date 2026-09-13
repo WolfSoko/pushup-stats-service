@@ -3885,8 +3885,7 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:262,264</note>
-        <note category="location">web/src/app/app.html:325,327</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:18</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3895,8 +3894,7 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:32,34</note>
-        <note category="location">web/src/app/app.html:266,268</note>
-        <note category="location">web/src/app/app.html:329,331</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:21</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3905,8 +3903,7 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:41,43</note>
-        <note category="location">web/src/app/app.html:270,272</note>
-        <note category="location">web/src/app/app.html:333,335</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:25</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3915,6 +3912,7 @@
     <unit id="nav.friends">
       <notes>
         <note category="location">web/src/app/app.html:52,53</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:32</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -3923,8 +3921,7 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:64,67</note>
-        <note category="location">web/src/app/app.html:274,276</note>
-        <note category="location">web/src/app/app.html:337,339</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:39</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3933,8 +3930,7 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:73,75</note>
-        <note category="location">web/src/app/app.html:278,280</note>
-        <note category="location">web/src/app/app.html:341,343</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:41</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3951,6 +3947,7 @@
     <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:84,86</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:42</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -3959,6 +3956,7 @@
     <unit id="nav.pushupTypes">
       <notes>
         <note category="location">web/src/app/app.html:93,96</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:51</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3967,6 +3965,7 @@
     <unit id="nav.exercises">
       <notes>
         <note category="location">web/src/app/app.html:102,105</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:46</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4028,17 +4027,9 @@
         <source>Admin-Bereich</source>
       </segment>
     </unit>
-    <unit id="nav.desktop.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:253,254</note>
-      </notes>
-      <segment>
-        <source>Hauptnavigation</source>
-      </segment>
-    </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:287</note>
+        <note category="location">web/src/app/app.html:256</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4046,7 +4037,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:292,294</note>
+        <note category="location">web/src/app/app.html:261,263</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4054,7 +4045,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:295,297</note>
+        <note category="location">web/src/app/app.html:264,266</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4062,7 +4053,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:297,298</note>
+        <note category="location">web/src/app/app.html:266,267</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4070,7 +4061,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:299,301</note>
+        <note category="location">web/src/app/app.html:268,270</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4078,7 +4069,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:302,305</note>
+        <note category="location">web/src/app/app.html:271,274</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4086,18 +4077,10 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:309,311</note>
+        <note category="location">web/src/app/app.html:278,280</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
-      </segment>
-    </unit>
-    <unit id="nav.bottom.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:316,317</note>
-      </notes>
-      <segment>
-        <source>Mobile-Navigation</source>
       </segment>
     </unit>
     <unit id="seo.landing.title">
@@ -4406,7 +4389,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:153</note>
+        <note category="location">web/src/app/app.ts:156</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4414,7 +4397,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:154</note>
+        <note category="location">web/src/app/app.ts:157</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4422,7 +4405,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:284</note>
+        <note category="location">web/src/app/app.ts:288</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4430,7 +4413,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:379</note>
+        <note category="location">web/src/app/app.ts:383</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4438,7 +4421,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:382</note>
+        <note category="location">web/src/app/app.ts:386</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4446,7 +4429,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:450</note>
+        <note category="location">web/src/app/app.ts:454</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4454,7 +4437,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:479</note>
+        <note category="location">web/src/app/app.ts:483</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4462,7 +4445,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:486</note>
+        <note category="location">web/src/app/app.ts:490</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5143,6 +5126,14 @@
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
       </segment>
     </unit>
+    <unit id="nav.desktop.aria">
+      <notes>
+        <note category="location">web/src/app/core/nav/arc-nav.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Hauptnavigation</source>
+      </segment>
+    </unit>
     <unit id="admin.release.label">
       <notes>
         <note category="location">web/src/app/core/observability/release-badge.component.ts:27,29</note>
@@ -5426,7 +5417,7 @@
     </unit>
     <unit id="challenges.title">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:36,38</note>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:38,40</note>
       </notes>
       <segment>
         <source>Challenges</source>
@@ -5434,7 +5425,7 @@
     </unit>
     <unit id="challenges.start">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:45,47</note>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:47,49</note>
       </notes>
       <segment>
         <source>Challenge starten</source>
@@ -5442,7 +5433,7 @@
     </unit>
     <unit id="challenges.empty">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:60,63</note>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:65,67</note>
       </notes>
       <segment>
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>

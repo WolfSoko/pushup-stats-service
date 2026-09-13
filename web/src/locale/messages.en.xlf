@@ -4693,12 +4693,6 @@ Active:         </target>
         <target>Main navigation</target>
       </segment>
     </unit>
-    <unit id="nav.bottom.aria">
-      <segment state="translated">
-        <source>Mobile-Navigation</source>
-        <target>Mobile navigation</target>
-      </segment>
-    </unit>
     <unit id="auth.register.error.profileSaveFailed">
       <segment state="translated">
         <source>Profil konnte nicht gespeichert werden. Bitte erneut versuchen.</source>
