@@ -118,6 +118,13 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
 - **„Miss dich mit anderen oder bleib privat"** — `hideFromLeaderboard` in der
   User-Config; das ist der Schalter, den der Satz meint, nicht die
   Profil-Stufen.
+- **Der Knopf in der Benachrichtigung** — jedes Listing zitiert ihn wörtlich,
+  und der Text kommt aus `QUICK_LOG_LABELS` in
+  `libs/stats/src/lib/models/reminder-i18n.models.ts` (de „50 eintragen", en
+  „Log 50", fr „Enregistrer 50", es „Registrar 50", it „Registra 50", nl
+  „Registreer 50", el „Καταχώριση 50", no „Logg 50", zh „记录 50"). Erfundene
+  Übersetzungen davon sind der naheliegendste Fehler in diesem Text: sie
+  lesen sich plausibel und stehen trotzdem nicht auf dem Knopf.
 
 ## Was noch fehlt
 

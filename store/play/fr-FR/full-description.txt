@@ -38,7 +38,7 @@ Mesure-toi aux autres ou reste discret. Classements du jour, des 7 et des 30 der
 Invite tes amis : votre tableau montre qui mène cette semaine. Encouragez-vous par notification et lancez des défis communs — 500 pompes en 7 jours, chacun avec sa progression.
 
 🔔 RAPPELS INTELLIGENTS
-Notifications avec intervalle, heures calmes, jours et fuseau horaire — même app fermée. Le chemin le plus court : un appui sur « Ajouter 50 » dans la notification.
+Notifications avec intervalle, heures calmes, jours et fuseau horaire — même app fermée. Le chemin le plus court : un appui sur « Enregistrer 50 » dans la notification.
 
 📚 SAVOIR PLUTÔT QUE DEVINER
 Wiki d'exercices avec exécution propre et erreurs classiques, plus un blog.

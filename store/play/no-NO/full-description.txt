@@ -1,9 +1,9 @@
 Pushup Tracker gjør armhevninger og 41 andre øvelser til et spill du vil vinne.
 
-Enten du starter på null eller alt er på ditt første hundre: denne appen holder deg i gang. Kameraet teller repetisjonene automatisk, treningsplanene gir deg en klar oppgave hver dag, og venner og resultatlista motiverer uten å mase.
+Enten du starter på null eller allerede er på ditt første hundre: denne appen holder deg i gang. Kameraet teller repetisjonene automatisk, treningsplanene gir deg en klar oppgave hver dag, og venner og resultatlista motiverer uten å mase.
 
 📷 AUTOMATISK REP-TELLING
-Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner armhevninger, knebøy, pullups og sit-ups i sanntid og teller hver rene repetisjon. For planke og hollow hold går det i stedet en automatisk holdetid. Alt kjører på enheten din — ingen video forlater telefonen.
+Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner armhevninger, knebøy, pullups og sit-ups i sanntid og teller hver rene repetisjon. For planke og hollow hold starter i stedet en automatisk tidtaker for holdet. Alt kjører på enheten din — ingen video forlater telefonen.
 
 🏋️ MER ENN BARE ARMHEVNINGER
 • 13 varianter av armhevning: kne, incline, decline, bred, diamant, pike, archer og helt til énarmet — med instruksjon per type
@@ -32,13 +32,13 @@ Hver dag den oppgaven som passer, med hviledager, lette dager og testdager. Fem 
 • Rekorder: beste dag, beste sett, beste økt
 
 🏆 RESULTATLISTE OG PROFIL
-Mål deg mot andre eller hold deg privat. Lister for i dag, de siste 7 og 30 dagene. Profilen deler du med en lenke: totale reps, streak, rekorder, heatmap, de siste 10 øktene og den aktive planen — hver rute settes hver for seg til av, bare venner eller offentlig. Forhåndsvisningen viser profilen slik venner eller fremmede ser den.
+Mål deg mot andre eller hold deg privat. Lister for i dag, de siste 7 og 30 dagene. Profilen deler du med en lenke: totale reps, streak, rekorder, heatmap, de siste 10 øktene og den aktive planen — hver rute stiller du inn hver for seg på av, bare venner eller offentlig. Forhåndsvisningen viser profilen slik venner eller fremmede ser den.
 
 👥 VENNER OG FELLES UTFORDRINGER
-Inviter venner: tavla deres viser hvem som leder denne uka. Hei hverandre fram med et varsel og start felles utfordringer — 500 armhevninger på 7 dager, hver med sin egen fremgang.
+Inviter venner: tavla deres viser hvem som leder denne uka. Send hverandre et heiarop og start felles utfordringer — 500 armhevninger på 7 dager, hver med sin egen fremgang.
 
 🔔 SMARTE PÅMINNELSER
-Varsler med intervall, stilletid, ukedager og tidssone — også når appen er lukket. Den korteste veien: ett trykk på «Legg inn 50» i varselet.
+Varsler med intervall, stilletid, ukedager og tidssone — også når appen er lukket. Den korteste veien: ett trykk på «Logg 50» i varselet.
 
 📚 KUNNSKAP FRAMFOR GJETTING
 Øvelses-wiki med ren utførelse og de typiske feilene, i tillegg til en blogg.
