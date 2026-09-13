@@ -19,12 +19,15 @@ import { runStoreAction } from './store-action';
 type ChallengesState = {
   challenges: ReadonlyArray<ChallengeView>;
   loading: boolean;
+  /** The last reload threw — what is shown may be stale, say so. */
+  loadFailed: boolean;
   lastRejection: ChallengeActionReason;
 };
 
 const initialState: ChallengesState = {
   challenges: [],
   loading: false,
+  loadFailed: false,
   lastRejection: undefined,
 };
 
@@ -78,11 +81,12 @@ export const ChallengesStore = signalStore(
         .list(options)
         .then((challenges) => {
           if (ticket !== store._reloadSeq) return;
-          patchState(store, { challenges, loading: false });
+          patchState(store, { challenges, loading: false, loadFailed: false });
         })
         .catch(() => {
-          if (ticket === store._reloadSeq)
-            patchState(store, { loading: false });
+          if (ticket === store._reloadSeq) {
+            patchState(store, { loading: false, loadFailed: true });
+          }
         })
         .finally(() => {
           if (store._inFlight?.promise === promise) store._inFlight = null;

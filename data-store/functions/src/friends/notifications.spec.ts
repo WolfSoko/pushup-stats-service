@@ -93,11 +93,32 @@ describe('friends/notifications', () => {
       );
     });
 
+    it('should tell the others who joined', () => {
+      // when
+      const data = JSON.parse(
+        buildFriendPushPayload({
+          kind: 'challengeAccepted',
+          locale: 'de',
+          actorName: 'Bob',
+        })
+      );
+
+      // then
+      expect(data.title).toBe('🏁 Challenge angenommen');
+      expect(data.body).toBe('Bob macht bei der Challenge mit.');
+      expect(data.tag).toBe('friend-challengeAccepted');
+    });
+
     it.each(SUPPORTED_REMINDER_LOCALES)(
       'should have every text for locale %s',
       (locale) => {
         // when / then — no locale falls through to an empty string
-        for (const kind of ['request', 'accepted', 'cheer'] as const) {
+        for (const kind of [
+          'request',
+          'accepted',
+          'cheer',
+          'challengeAccepted',
+        ] as const) {
           const data = JSON.parse(
             buildFriendPushPayload({ kind, locale, actorName: 'X' })
           );

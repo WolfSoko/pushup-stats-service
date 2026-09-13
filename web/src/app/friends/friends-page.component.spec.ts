@@ -159,6 +159,30 @@ describe('FriendsPageComponent', () => {
     expect(document.body.textContent).toContain('wartet noch');
   });
 
+  it('should re-read everything when the tab becomes visible again', async () => {
+    // given
+    const { api, fixture } = await renderPage({ friends: [row()] });
+    const challengesApi = fixture.debugElement.injector.get(
+      ChallengesApiService
+    ) as unknown as { list: ReturnType<typeof vitest.fn> };
+    api.list.mockClear();
+    api.board.mockClear();
+    challengesApi.list.mockClear();
+    Object.defineProperty(document, 'visibilityState', {
+      configurable: true,
+      get: () => 'visible',
+    });
+
+    // when
+    document.dispatchEvent(new Event('visibilitychange'));
+    await fixture.whenStable();
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(api.board).toHaveBeenCalledTimes(1);
+    expect(challengesApi.list).toHaveBeenCalledTimes(1);
+  });
+
   it('should label a friend without a display name', async () => {
     // given
     await renderPage({ friends: [row({ displayName: null })] });

@@ -179,6 +179,25 @@ describe('ChallengesStore', () => {
     expect(store.lastRejection()).toBe('failed');
   });
 
+  it('should flag a failed reload and clear the flag on the next success', async () => {
+    // given
+    const { store, api } = setup([active]);
+    api.list.mockRejectedValueOnce(new Error('offline'));
+
+    // when
+    await store.reload();
+
+    // then — nothing pretends to be fresh
+    expect(store.loadFailed()).toBe(true);
+
+    // when
+    await store.reload();
+
+    // then
+    expect(store.loadFailed()).toBe(false);
+    expect(store.challenges().map((c) => c.id)).toEqual(['c1']);
+  });
+
   it('should keep what it had when a reload fails', async () => {
     // given
     const { store, api } = setup([active]);

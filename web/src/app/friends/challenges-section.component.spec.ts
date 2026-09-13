@@ -71,6 +71,24 @@ describe('ChallengesSectionComponent', () => {
     return { api, dialog, fixture };
   }
 
+  it('should say so and offer a retry when the list could not be loaded', async () => {
+    // given — the first read fails, the retry succeeds
+    const { api, fixture } = await renderSection([challenge]);
+    api.list.mockRejectedValueOnce(new Error('offline'));
+    await fixture.debugElement.injector.get(ChallengesStore).reload();
+    fixture.detectChanges();
+    expect(screen.getByTestId('challenges-load-failed')).toBeTruthy();
+
+    // when
+    screen.getByTestId('challenges-retry').click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(3);
+    expect(screen.queryByTestId('challenges-load-failed')).toBeNull();
+  });
+
   it('should show each participant with progress against the target', async () => {
     // given
     await renderSection([challenge]);

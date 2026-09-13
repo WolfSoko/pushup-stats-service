@@ -12393,5 +12393,17 @@ Aktiv:         </target>
         <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
       </segment>
     </unit>
+    <unit id="challenges.loadFailed">
+      <segment state="initial">
+        <source>Challenges konnten nicht geladen werden.</source>
+        <target>Challenges konnten nicht geladen werden.</target>
+      </segment>
+    </unit>
+    <unit id="challenges.retry">
+      <segment state="initial">
+        <source> Erneut laden </source>
+        <target> Erneut laden </target>
+      </segment>
+    </unit>
 </file>
 </xliff>
