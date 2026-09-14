@@ -4,6 +4,9 @@
 // arc-nav.geometry.ts); this file only shapes the strip and the items.
 $item-width: 88px;
 $bar-height: 76px;
+// Keeps the strip from running wider than the page on desktop. Mirrored by
+// `STRIP_MAX_PX` in arc-nav.geometry.ts, which seeds the curve from it.
+$strip-max-width: 760px;
 
 :host {
   position: fixed;
@@ -17,6 +20,8 @@ $bar-height: 76px;
 
 .arc-nav {
   pointer-events: auto;
+  max-width: $strip-max-width;
+  margin-inline: auto;
   height: calc(#{$bar-height} + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--mat-toolbar-container-background-color, #1e1e1e);
@@ -29,6 +34,12 @@ $bar-height: 76px;
 }
 
 .track {
+  // Makes the track the items' `offsetParent`, so their `offsetLeft` and
+  // its own `scrollLeft` are measured from the same origin — which is what
+  // arc-nav.geometry.ts assumes. Without it the nearest positioned ancestor
+  // is the host, which spans the viewport, and every offset would carry the
+  // centring margin above while `scrollLeft` would not.
+  position: relative;
   display: flex;
   height: 100%;
   overflow-x: auto;

@@ -21,17 +21,20 @@ import { filter } from 'rxjs';
 
 import type { MainNavItem } from './main-nav-items';
 import {
-  arcDrop,
-  arcOffsets,
+  ARC_ORIGIN,
   arcOpacity,
+  arcPositions,
   arcScale,
   centeredScrollLeft,
   DRAG_THRESHOLD_PX,
   nearestIndex,
-  seedOffsets,
+  seedPositions,
+  STRIP_MAX_PX,
+  stripHalf,
   WHEEL_STEP_PX,
   wrapShift,
 } from './arc-nav.geometry';
+import type { ArcPosition } from './arc-nav.geometry';
 
 /** A scroll that has been quiet this long has settled, so a jump interrupts nothing. */
 const SETTLE_MS = 150;
@@ -70,13 +73,14 @@ export class ArcNavComponent {
   });
   protected readonly count = computed(() => this.items().length);
 
-  /** Signed distance of each rendered link from the strip's centre, in item widths. */
-  protected readonly offsets = computed(
+  /** Where each rendered link sits on the arc, measured from the strip's centre. */
+  protected readonly positions = computed(
     () =>
       this.measured() ??
-      seedOffsets(
+      seedPositions(
         this.loop().length,
-        this.count() + Math.max(0, this.activeIndex())
+        this.count() + Math.max(0, this.activeIndex()),
+        this.seedHalf()
       )
   );
 
@@ -96,7 +100,7 @@ export class ArcNavComponent {
   });
 
   private readonly routeChange = signal(0);
-  private readonly measured = signal<ReadonlyArray<number> | null>(null);
+  private readonly measured = signal<ReadonlyArray<ArcPosition> | null>(null);
   private frame: number | null = null;
   private settle: ReturnType<typeof setTimeout> | null = null;
   private wheelTravel = 0;
@@ -138,13 +142,36 @@ export class ArcNavComponent {
     });
   }
 
+  /**
+   * Drop and tilt come from the strip's own curve, the scale from the
+   * distance in item widths — so an item travels along the arc and leans
+   * with it while it grows towards the middle, rather than all three
+   * being one and the same falloff.
+   *
+   * Read right to left, as the browser applies them: the item is sized,
+   * then turned onto the tangent, then lowered onto the curve. It pivots
+   * about `transform-origin: top center`, the point that rides the arc.
+   */
   protected transformFor(index: number): string {
-    const d = this.offsets()[index] ?? 0;
-    return `translateY(${arcDrop(d)}px) scale(${arcScale(d)})`;
+    const { d, drop, tilt } = this.positions()[index] ?? ARC_ORIGIN;
+    return `translateY(${drop}px) rotate(${tilt}deg) scale(${arcScale(d)})`;
   }
 
   protected opacityFor(index: number): number {
-    return arcOpacity(this.offsets()[index] ?? 0);
+    return arcOpacity((this.positions()[index] ?? ARC_ORIGIN).d);
+  }
+
+  /**
+   * There is no layout to measure yet, but in the browser the strip's
+   * width already follows from the viewport's — and drop and tilt are cut
+   * from that width. On the server, where there is no viewport, the widest
+   * strip is the only guess available. Measurement corrects either one on
+   * the first render; this only has to keep that correction invisible.
+   */
+  private seedHalf(): number {
+    return isPlatformBrowser(this.platformId)
+      ? stripHalf(window.innerWidth)
+      : STRIP_MAX_PX / 2;
   }
 
   /**
@@ -191,7 +218,7 @@ export class ArcNavComponent {
     if (Math.abs(this.wheelTravel) < WHEEL_STEP_PX) return;
     const direction = Math.sign(this.wheelTravel);
     this.wheelTravel = 0;
-    this.centerItem(nearestIndex(this.offsets()) + direction, 'smooth');
+    this.centerItem(nearestIndex(this.positions()) + direction, 'smooth');
   }
 
   protected onPointerDown(event: PointerEvent): void {
@@ -236,7 +263,7 @@ export class ArcNavComponent {
     if (!isPlatformBrowser(this.platformId)) return;
     const track = this.track().nativeElement;
     const links = Array.from(track.querySelectorAll<HTMLElement>('a'));
-    this.measured.set(arcOffsets(links, track));
+    this.measured.set(arcPositions(links, track));
   }
 
   private wrap(): void {

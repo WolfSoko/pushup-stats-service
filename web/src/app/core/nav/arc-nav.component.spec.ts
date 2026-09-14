@@ -354,8 +354,12 @@ describe('ArcNavComponent', () => {
 
     // then — first item in the middle, the others shrinking away from it
     const links = screen.getAllByRole('link');
-    expect(links[0].style.transform).toBe('translateY(0px) scale(1.3)');
-    expect(links[2].style.transform).toBe('translateY(8.96px) scale(0.9)');
+    expect(links[0].style.transform).toBe(
+      'translateY(0px) rotate(0deg) scale(1.3)'
+    );
+    expect(links[2].style.transform).toBe(
+      'translateY(3.18px) rotate(2.21deg) scale(0.9)'
+    );
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
