@@ -11,8 +11,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { InviteService } from '../core/invite.service';
@@ -22,6 +20,7 @@ import { FriendRequestsComponent } from './friend-requests.component';
 import { FriendsStore } from './friends.store';
 import { onEntriesChanged } from './on-entries-changed';
 import { FriendsBoardComponent } from './friends-board.component';
+import { FriendsListComponent } from './friends-list.component';
 import { friendRejectionMessage } from './friends-messages';
 import type { FriendsBoardPeriod } from './friends-api.service';
 
@@ -37,12 +36,11 @@ import type { FriendsBoardPeriod } from './friends-api.service';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     ChallengesSectionComponent,
     FriendRequestsComponent,
     FriendsBoardComponent,
+    FriendsListComponent,
     PageHeaderComponent,
-    RouterLink,
   ],
   template: `
     <main class="page-wrap">
@@ -94,51 +92,12 @@ import type { FriendsBoardPeriod } from './friends-api.service';
       }
 
       <section>
-        <h2 i18n="@@friends.list">Deine Freunde</h2>
-        @if (store.loading() && store.isEmpty()) {
-          <mat-spinner diameter="32" />
-        } @else if (store.friends().length === 0) {
-          <mat-card class="friends-empty">
-            <mat-card-content>
-              <p i18n="@@friends.empty">
-                Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil
-                und schicke eine Anfrage.
-              </p>
-            </mat-card-content>
-            <mat-card-actions align="end">
-              <button
-                mat-flat-button
-                color="primary"
-                type="button"
-                (click)="invite()"
-              >
-                <mat-icon>person_add</mat-icon>
-                <span i18n="@@invite.action">Freunde einladen</span>
-              </button>
-            </mat-card-actions>
-          </mat-card>
-        } @else {
-          @for (row of store.friends(); track row.id) {
-            <mat-card class="friend-card" data-testid="friend-row">
-              <mat-card-content>
-                <a [routerLink]="['/u', row.uid]">{{
-                  name(row.displayName)
-                }}</a>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                <button
-                  mat-stroked-button
-                  type="button"
-                  data-testid="friend-remove"
-                  (click)="store.remove(row.id)"
-                  i18n="@@friends.remove"
-                >
-                  Entfernen
-                </button>
-              </mat-card-actions>
-            </mat-card>
-          }
-        }
+        <app-friends-list
+          [rows]="store.friends()"
+          [loading]="store.loading() && store.isEmpty()"
+          (remove)="store.remove($event)"
+          (invite)="invite()"
+        />
       </section>
 
       @if (store.outgoing().length > 0) {

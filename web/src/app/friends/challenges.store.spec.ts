@@ -25,6 +25,17 @@ describe('ChallengesStore', () => {
     id: 'c2',
     viewerInvited: true,
   };
+  const zeroed = [
+    { uid: 'friend', displayName: 'Ada', value: 0, isViewer: false },
+    { uid: 'me', displayName: 'Wolf', value: 0, isViewer: true },
+  ];
+  const scored: ChallengeView = {
+    ...active,
+    entries: [
+      { uid: 'friend', displayName: 'Ada', value: 300, isViewer: false },
+      { uid: 'me', displayName: 'Wolf', value: 120, isViewer: true },
+    ],
+  };
 
   function setup(challenges: ChallengeView[] = []) {
     const api = {
@@ -210,5 +221,36 @@ describe('ChallengesStore', () => {
     // then
     expect(store.challenges()).toHaveLength(1);
     expect(store.loading()).toBe(false);
+  });
+  it('should keep the sums when a count-only reload follows a full one', async () => {
+    // given — the page read the progress, then the nav badge counts
+    const { store, api } = setup();
+    api.list
+      .mockResolvedValueOnce([scored])
+      .mockResolvedValueOnce([{ ...scored, entries: zeroed }]);
+    await store.reload();
+
+    // when
+    await store.reload({ progress: false });
+
+    // then — the badge asked for counts, not for the board to be blanked
+    expect(store.challenges()[0].entries.map((e) => e.value)).toEqual([
+      300, 120,
+    ]);
+  });
+
+  it('should let a count-only caller join a full call already in flight', async () => {
+    // given — the friends page is loading when the badge mounts
+    const { store, api } = setup([scored]);
+
+    // when
+    await Promise.all([store.reload(), store.reload({ progress: false })]);
+
+    // then — one call, and its sums survive: a second ticket would have
+    // dropped the full answer unread and shown everyone at 0
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.challenges()[0].entries.map((e) => e.value)).toEqual([
+      300, 120,
+    ]);
   });
 });

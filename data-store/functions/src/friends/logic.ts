@@ -82,6 +82,43 @@ export function friendLists(
   };
 }
 
+/** One row as the friends screen reads it. */
+export interface FriendListRow extends FriendListEntry {
+  readonly displayName: string | null;
+  readonly photoURL: string | null;
+}
+
+export interface FriendListsWithProfiles {
+  readonly friends: ReadonlyArray<FriendListRow>;
+  readonly incoming: ReadonlyArray<FriendListRow>;
+  readonly outgoing: ReadonlyArray<FriendListRow>;
+}
+
+/**
+ * Puts the names and pictures on the three lists.
+ *
+ * Only confirmed friends get a picture. A pending request is not yet an
+ * audience anyone agreed to, and a stranger's request should not be a way
+ * to pull someone's photo — the name they already typed to find each
+ * other is a different matter.
+ */
+export function withProfiles(
+  lists: FriendLists,
+  names: ReadonlyMap<string, string>,
+  photos: ReadonlyMap<string, string>
+): FriendListsWithProfiles {
+  const row = (entry: FriendListEntry, photoURL: string | null) => ({
+    ...entry,
+    displayName: names.get(entry.uid) ?? null,
+    photoURL,
+  });
+  return {
+    friends: lists.friends.map((e) => row(e, photos.get(e.uid) ?? null)),
+    incoming: lists.incoming.map((e) => row(e, null)),
+    outgoing: lists.outgoing.map((e) => row(e, null)),
+  };
+}
+
 /** Uids of confirmed friends — the set the `friends` visibility tier uses. */
 export function acceptedFriendUids(
   docs: ReadonlyArray<FriendshipDoc>,

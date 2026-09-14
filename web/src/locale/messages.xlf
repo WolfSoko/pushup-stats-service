@@ -5358,7 +5358,8 @@
         <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:152</note>
         <note category="location">web/src/app/friends/friend-requests.component.ts:75</note>
         <note category="location">web/src/app/friends/friends-board.component.ts:242</note>
-        <note category="location">web/src/app/friends/friends-page.component.ts:249</note>
+        <note category="location">web/src/app/friends/friends-list.component.ts:106</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:208</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:220</note>
       </notes>
       <segment>
@@ -5663,6 +5664,41 @@
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
       </segment>
     </unit>
+    <unit id="friends.list">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:29,30</note>
+      </notes>
+      <segment>
+        <source>Deine Freunde</source>
+      </segment>
+    </unit>
+    <unit id="friends.empty">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:36,38</note>
+      </notes>
+      <segment>
+        <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
+      </segment>
+    </unit>
+    <unit id="invite.action">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:48,50</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:100,101</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:183,184</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
+      </notes>
+      <segment>
+        <source>Freunde einladen</source>
+      </segment>
+    </unit>
+    <unit id="friends.remove">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:70,71</note>
+      </notes>
+      <segment>
+        <source> Entfernen </source>
+      </segment>
+    </unit>
     <unit id="friends.error.self">
       <notes>
         <note category="location">web/src/app/friends/friends-messages.ts:16</note>
@@ -5819,7 +5855,7 @@
     </unit>
     <unit id="friends.title">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:50,51</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:48,49</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -5827,7 +5863,7 @@
     </unit>
     <unit id="friends.intro">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:52,54</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:50,52</note>
       </notes>
       <segment>
         <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
@@ -5835,50 +5871,15 @@
     </unit>
     <unit id="friends.board">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:78,79</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:76,77</note>
       </notes>
       <segment>
         <source>Euer Vergleich</source>
       </segment>
     </unit>
-    <unit id="friends.list">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:97,98</note>
-      </notes>
-      <segment>
-        <source>Deine Freunde</source>
-      </segment>
-    </unit>
-    <unit id="friends.empty">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:104,105</note>
-      </notes>
-      <segment>
-        <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
-      </segment>
-    </unit>
-    <unit id="invite.action">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:116,117</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:100,101</note>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:183,184</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
-      </notes>
-      <segment>
-        <source>Freunde einladen</source>
-      </segment>
-    </unit>
-    <unit id="friends.remove">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:136,137</note>
-      </notes>
-      <segment>
-        <source> Entfernen </source>
-      </segment>
-    </unit>
     <unit id="friends.outgoing">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:146,147</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:105,106</note>
       </notes>
       <segment>
         <source>Von dir angefragt</source>
@@ -5886,7 +5887,7 @@
     </unit>
     <unit id="friends.waiting">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:151,152</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:110,111</note>
       </notes>
       <segment>
         <source>wartet noch</source>
@@ -5894,7 +5895,7 @@
     </unit>
     <unit id="friends.withdraw">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:160,161</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:119,120</note>
       </notes>
       <segment>
         <source> Zurückziehen </source>

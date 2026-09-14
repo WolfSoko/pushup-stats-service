@@ -6,6 +6,7 @@ import {
   friendLists,
   requestRejection,
   respondRejection,
+  withProfiles,
   type FriendshipDoc,
 } from './logic';
 
@@ -221,5 +222,57 @@ describe('friends/logic', () => {
         'settled'
       );
     });
+  });
+});
+
+describe('withProfiles', () => {
+  const entry = (uid: string) => ({ id: `me__${uid}`, uid, since: 'x' });
+  const lists = {
+    friends: [entry('a')],
+    incoming: [entry('b')],
+    outgoing: [entry('c')],
+  };
+  const names = new Map([
+    ['a', 'Ada'],
+    ['b', 'Bo'],
+    ['c', 'Cy'],
+  ]);
+  const photos = new Map([
+    ['a', 'https://g.test/a.jpg'],
+    ['b', 'https://g.test/b.jpg'],
+  ]);
+
+  it('should give a confirmed friend their picture', () => {
+    // given / when
+    const result = withProfiles(lists, names, photos);
+
+    // then
+    expect(result.friends[0]).toEqual({
+      id: 'me__a',
+      uid: 'a',
+      since: 'x',
+      displayName: 'Ada',
+      photoURL: 'https://g.test/a.jpg',
+    });
+  });
+
+  it('should withhold the picture from a request either way', () => {
+    // given / when — a pending request is not an audience anyone agreed
+    // to, so a photo must not travel with it even when one is known
+    const result = withProfiles(lists, names, photos);
+
+    // then
+    expect(result.incoming[0].photoURL).toBeNull();
+    expect(result.outgoing[0].photoURL).toBeNull();
+    expect(result.incoming[0].displayName).toBe('Bo');
+  });
+
+  it('should leave the name null for someone who never set one', () => {
+    // given / when
+    const result = withProfiles(lists, new Map(), new Map());
+
+    // then
+    expect(result.friends[0].displayName).toBeNull();
+    expect(result.friends[0].photoURL).toBeNull();
   });
 });

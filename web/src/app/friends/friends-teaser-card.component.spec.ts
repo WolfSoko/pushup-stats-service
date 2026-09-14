@@ -18,6 +18,7 @@ describe('FriendsTeaserCardComponent', () => {
     uid: 'b',
     since: '2026-09-01T10:00:00.000Z',
     displayName: 'Bob',
+    photoURL: null,
   };
 
   function entry(over: Partial<FriendsBoardEntry>): FriendsBoardEntry {

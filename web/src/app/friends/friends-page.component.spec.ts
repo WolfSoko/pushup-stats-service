@@ -19,6 +19,7 @@ describe('FriendsPageComponent', () => {
       uid: 'b',
       since: '2026-09-01T10:00:00.000Z',
       displayName: 'Wolf',
+      photoURL: null,
       ...over,
     };
   }
@@ -99,6 +100,26 @@ describe('FriendsPageComponent', () => {
     // then
     const link = screen.getByRole('link', { name: 'Wolf' });
     expect(link.getAttribute('href')).toBe('/u/b');
+  });
+
+  it('should show a friend’s picture in the list', async () => {
+    // given
+    await renderPage({
+      friends: [row({ photoURL: 'https://example.test/wolf.jpg' })],
+    });
+
+    // then
+    expect(screen.getByTestId('friend-avatar-photo').getAttribute('src')).toBe(
+      'https://example.test/wolf.jpg'
+    );
+  });
+
+  it('should fall back to the initial for a friend without a picture', async () => {
+    // given
+    await renderPage({ friends: [row({ displayName: 'Wolf' })] });
+
+    // then
+    expect(screen.getByTestId('friend-avatar-initial').textContent).toBe('W');
   });
 
   it('should put requests that want an answer on the page', async () => {

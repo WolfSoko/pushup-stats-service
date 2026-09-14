@@ -9,6 +9,8 @@ export interface FriendRow {
   readonly uid: string;
   readonly since: string;
   readonly displayName: string | null;
+  /** Avatar, confirmed friends only — `null` for a pending request. */
+  readonly photoURL: string | null;
 }
 
 export interface FriendListsResponse {

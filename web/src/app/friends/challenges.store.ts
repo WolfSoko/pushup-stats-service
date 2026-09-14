@@ -14,6 +14,7 @@ import {
   type ChallengeView,
   type CreateChallengeInput,
 } from './challenges-api.service';
+import { withKnownProgress } from './merge-challenge-progress';
 import { runStoreAction } from './store-action';
 
 type ChallengesState = {
@@ -72,15 +73,21 @@ export const ChallengesStore = signalStore(
      */
     function reload(options?: { progress?: boolean }): Promise<void> {
       const progress = options?.progress !== false;
-      if (store._inFlight?.progress === progress) {
+      // A full call answers a count-only one too, so a badge asking for
+      // counts joins it instead of superseding it — otherwise its ticket
+      // wins the race and the page's sums are thrown away unread.
+      if (store._inFlight && (store._inFlight.progress || !progress)) {
         return store._inFlight.promise;
       }
       const ticket = ++store._reloadSeq;
       patchState(store, { loading: true });
       const promise = _api
         .list(options)
-        .then((challenges) => {
+        .then((fresh) => {
           if (ticket !== store._reloadSeq) return;
+          const challenges = progress
+            ? fresh
+            : withKnownProgress(fresh, store.challenges());
           patchState(store, { challenges, loading: false, loadFailed: false });
         })
         .catch(() => {

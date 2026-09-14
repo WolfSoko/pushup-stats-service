@@ -14,6 +14,7 @@ describe('FriendRequestBadgeComponent', () => {
     uid: 'b',
     since: '2026-09-14T10:00:00.000Z',
     displayName: 'Ada',
+    photoURL: null,
   };
 
   const invitation: Partial<ChallengeView> = {

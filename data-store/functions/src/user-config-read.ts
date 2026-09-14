@@ -23,13 +23,19 @@ export function displayNameOf(
 }
 
 /** Display names by uid; users without one are absent from the map. */
-export async function readDisplayNames(
-  uids: ReadonlyArray<string>
-): Promise<Map<string, string>> {
+export function displayNames(
+  configs: ReadonlyMap<string, FirebaseFirestore.DocumentData | undefined>
+): Map<string, string> {
   const names = new Map<string, string>();
-  for (const [uid, config] of await readUserConfigs(uids)) {
+  for (const [uid, config] of configs) {
     const name = displayNameOf(config);
     if (name) names.set(uid, name);
   }
   return names;
+}
+
+export async function readDisplayNames(
+  uids: ReadonlyArray<string>
+): Promise<Map<string, string>> {
+  return displayNames(await readUserConfigs(uids));
 }

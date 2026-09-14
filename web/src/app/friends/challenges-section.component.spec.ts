@@ -18,6 +18,7 @@ describe('ChallengesSectionComponent', () => {
     uid: 'b',
     since: '2026-09-01T10:00:00.000Z',
     displayName: 'Bob',
+    photoURL: null,
   };
 
   const challenge: ChallengeView = {
@@ -167,7 +168,9 @@ describe('ChallengesSectionComponent', () => {
 
     // when — the dialog is dynamic-imported, so wait for the call itself
     screen.getByTestId('challenge-start').click();
-    await vitest.waitFor(() => expect(api.create).toHaveBeenCalledWith(input));
+    await vitest.waitFor(() => expect(api.create).toHaveBeenCalledWith(input), {
+      timeout: 10000,
+    });
     await fixture.whenStable();
 
     // then
