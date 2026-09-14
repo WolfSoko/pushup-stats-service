@@ -161,53 +161,60 @@ describe('firestore.indexes.json ⇄ single-field index exemptions', () => {
 /**
  * TTL policies are field configuration, and `firebase deploy --only
  * firestore` reconciles field configuration against this file: a policy the
- * file does not declare is **removed** on the next deploy. That is what kept
- * happening — `infra/setup-firestore-ttl.sh` enabled the three policies by
- * hand, and the next merge to `main` deleted them again, silently, while the
- * collections kept growing.
+ * file does not declare is **removed** on the next deploy. That is not
+ * theory — the three policies below were enabled by hand and deleted again
+ * minutes later by the next merge, twice, while the collections kept growing.
  *
- * So the script and this file have to agree. The script stays the way to
- * bootstrap an environment that has never been deployed to; the file is what
- * makes the policy survive.
+ * The declaration in `firestore.indexes.json` is therefore the only thing
+ * that keeps a policy alive, and this guard pins the list: a collection that
+ * writes `expiresAt` and loses its entry here stops expiring silently —
+ * nothing fails, documents just accumulate forever.
  */
 describe('Firestore TTL policies', () => {
-  const scriptPath = join(
-    __dirname,
-    '..',
-    '..',
-    '..',
-    'infra',
-    'setup-firestore-ttl.sh'
-  );
+  /**
+   * Every collection whose documents expire, with the field carrying the
+   * timestamp. Adding a collection that writes `expiresAt` means adding it
+   * here and to `firestore.indexes.json`.
+   */
+  const TTL_FIELDS: ReadonlyArray<
+    [collectionGroup: string, fieldPath: string]
+  > = [
+    ['deletedExerciseEntries', 'expiresAt'],
+    ['cheers', 'expiresAt'],
+    ['challenges', 'expiresAt'],
+  ];
 
-  /** The `collection:field` pairs the setup script enables. */
-  function ttlPairsFromScript(): Array<[string, string]> {
-    const script = readFileSync(scriptPath, 'utf8');
-    const block = script.match(/TTL_FIELDS=\(([^)]*)\)/);
-    if (!block)
-      throw new Error('TTL_FIELDS array not found in setup-firestore-ttl.sh');
-    return [...block[1].matchAll(/"([^":]+):([^"]+)"/g)].map((m) => [
-      m[1],
-      m[2],
-    ]);
+  function ttlOverrides(): Array<FieldOverride & { ttl?: boolean }> {
+    return loadConfig().fieldOverrides as Array<
+      FieldOverride & { ttl?: boolean }
+    >;
   }
 
-  it('should declare every TTL field the setup script enables', () => {
-    // given the fields the script turns into TTL policies
-    const pairs = ttlPairsFromScript();
-    expect(pairs.length).toBeGreaterThan(0);
-    const { fieldOverrides } = loadConfig();
+  it('should declare a TTL policy for every expiring collection', () => {
+    // given the collections that write an expiry timestamp
+    const declared = ttlOverrides();
 
     // when each is looked up in the deployed field configuration
-    const missing = pairs.filter(([collectionGroup, fieldPath]) => {
-      const override = fieldOverrides.find(
-        (o) =>
-          o.collectionGroup === collectionGroup && o.fieldPath === fieldPath
-      ) as (FieldOverride & { ttl?: boolean }) | undefined;
-      return override?.ttl !== true;
-    });
+    const missing = TTL_FIELDS.filter(
+      ([collectionGroup, fieldPath]) =>
+        declared.find(
+          (o) =>
+            o.collectionGroup === collectionGroup && o.fieldPath === fieldPath
+        )?.ttl !== true
+    );
 
     // then none is missing — otherwise the next deploy drops the policy
     expect(missing).toEqual([]);
+  });
+
+  it('should not declare a TTL policy on any other field', () => {
+    // given every field the config marks as expiring
+    const marked = ttlOverrides()
+      .filter((o) => o.ttl === true)
+      .map((o) => [o.collectionGroup, o.fieldPath]);
+
+    // then the set matches the list above — a typo in a collection or field
+    // name would otherwise expire nothing and be invisible
+    expect(marked.sort()).toEqual([...TTL_FIELDS].sort());
   });
 });

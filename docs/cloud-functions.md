@@ -29,14 +29,9 @@ All modules include comprehensive Jest tests (no Firebase dependencies for pure 
 
 Sitting on the delete trigger rather than in the client's delete call means every path is covered: entries page, training-plan reset, the admin entry-delete callable, Admin-SDK cleanup. Reusing the entry id keeps the trigger's at-least-once delivery idempotent.
 
-**Retention is a Firestore TTL policy on `expiresAt`, not a scheduled function.** TTL policies are project state — they are NOT part of `firestore.rules` / `firestore.indexes.json` and `firebase deploy` does not create them. A new environment has to run:
+**Retention is a Firestore TTL policy on `expiresAt`, not a scheduled function.** The policy is declared in `firestore.indexes.json` as a `fieldOverrides` entry with `"ttl": true`, and `firebase deploy --only firestore` applies it. Declaring it there is not optional bookkeeping: the deploy reconciles field configuration against that file and **removes** any policy it does not find — a hand-enabled TTL survives until the next merge and no further. See [`docs/gotchas/cloud-functions.md`](gotchas/cloud-functions.md).
 
-```bash
-./infra/setup-firestore-ttl.sh                       # prod
-./infra/setup-firestore-ttl.sh --project <staging>   # any other environment
-```
-
-The same script covers `cheers` (a friend cheer matters today; expires two days out) and `challenges` (a week past the end date, when the result stops being shown). Any collection that grows per user action and has no owner to delete it belongs on that list.
+The same applies to `cheers` (a friend cheer matters today; expires two days out) and `challenges` (a week past the end date, when the result stops being shown). Any collection that grows per user action and has no owner to delete it belongs in that list — and a guard test in `firestore-indexes.spec.ts` fails if one is missing from it.
 
 Two consequences worth remembering:
 

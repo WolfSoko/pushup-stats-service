@@ -102,16 +102,17 @@ The renderer caches its own state (font bytes, `initWasm()` result) in module sc
 
 `firebase deploy --only firestore` gleicht die **Feldkonfiguration** gegen
 `data-store/firestore.indexes.json` ab. Was dort nicht steht, wird entfernt —
-TTL-Richtlinien eingeschlossen. Von Hand über `infra/setup-firestore-ttl.sh`
-gesetzte Policies waren deshalb nach dem nächsten Merge auf `main` wieder weg,
-ohne Fehlermeldung: In den Firestore-Operationen steht ein `REMOVE` wenige
+TTL-Richtlinien eingeschlossen. Von Hand über `gcloud firestore fields ttls
+update` gesetzte Policies waren deshalb nach dem nächsten Merge auf `main`
+wieder weg, ohne Fehlermeldung: In den Firestore-Operationen steht ein `REMOVE` wenige
 Minuten nach dem `ADD`, und die Sammlungen wachsen still weiter.
 
 Deklariert werden sie als `fieldOverrides`-Eintrag mit `"ttl": true` (und
 `"indexes": []`, weil ein indiziertes TTL-Feld beim Schreiben unnötig heiß
-läuft). Ein Guard-Test in `firestore-indexes.spec.ts` hält die Liste im Skript
-und die Datei zusammen — wer eine Sammlung ergänzt, ohne sie zu deklarieren,
-bricht CI statt Wochen später die Aufbewahrung.
+läuft). Ein Guard-Test in `firestore-indexes.spec.ts` pinnt die Liste in beide
+Richtungen — wer eine Sammlung ergänzt, ohne sie zu deklarieren, bricht CI
+statt Wochen später die Aufbewahrung; und eine Deklaration auf einem
+vertippten Feld fliegt ebenso auf, statt stillschweigend nichts abzuräumen.
 
 Nachsehen, was wirklich aktiv ist:
 
