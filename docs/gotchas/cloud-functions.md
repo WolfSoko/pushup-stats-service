@@ -97,3 +97,26 @@ export const ogProfile = onRequest({/* … */}, async (req, res) => {
 And keep the heavy module **out** of the shared `./profile/index.ts` barrel — direct path imports (`./profile/og-render`) inside the dynamic `import()` only.
 
 The renderer caches its own state (font bytes, `initWasm()` result) in module scope, so the dynamic import runs once per warm container and is free thereafter. First OG request after a cold start still pays the full cost — bump function memory (`512MiB` minimum for satori) and `timeoutSeconds` accordingly.
+
+## Firestore-TTL überlebt den Deploy nur, wenn sie deklariert ist
+
+`firebase deploy --only firestore` gleicht die **Feldkonfiguration** gegen
+`data-store/firestore.indexes.json` ab. Was dort nicht steht, wird entfernt —
+TTL-Richtlinien eingeschlossen. Von Hand über `infra/setup-firestore-ttl.sh`
+gesetzte Policies waren deshalb nach dem nächsten Merge auf `main` wieder weg,
+ohne Fehlermeldung: In den Firestore-Operationen steht ein `REMOVE` wenige
+Minuten nach dem `ADD`, und die Sammlungen wachsen still weiter.
+
+Deklariert werden sie als `fieldOverrides`-Eintrag mit `"ttl": true` (und
+`"indexes": []`, weil ein indiziertes TTL-Feld beim Schreiben unnötig heiß
+läuft). Ein Guard-Test in `firestore-indexes.spec.ts` hält die Liste im Skript
+und die Datei zusammen — wer eine Sammlung ergänzt, ohne sie zu deklarieren,
+bricht CI statt Wochen später die Aufbewahrung.
+
+Nachsehen, was wirklich aktiv ist:
+
+```bash
+gcloud firestore fields ttls list --collection-group=cheers --project=pushup-stats
+gcloud firestore operations list --project=pushup-stats --limit=10 \
+  --format="value(metadata.field, metadata.state, metadata.ttlConfigDelta.changeType)"
+```

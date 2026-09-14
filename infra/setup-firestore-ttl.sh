@@ -12,9 +12,16 @@
 # challenges, kept a week past their end so the result can be seen) carry
 # the same field and would otherwise grow forever.
 #
-# TTL policies are project state, NOT part of `firestore.rules` /
-# `firestore.indexes.json`, so `firebase deploy` does not create them. Without
-# this script the archive grows forever and nothing enforces the 365 days.
+# TTL policies are field configuration, and `firebase deploy --only firestore`
+# reconciles field configuration against `firestore.indexes.json`: a policy
+# that file does not declare is REMOVED on the next deploy. That is why the
+# policies kept vanishing — enabled here by hand, deleted minutes later by the
+# next merge to `main`, while the collections kept growing.
+#
+# The declarations therefore live in `firestore.indexes.json` (`"ttl": true`),
+# and a guard test keeps them in sync with the list below. This script stays
+# useful for bootstrapping an environment before its first deploy, and for
+# turning the policies on without waiting for one.
 #
 # Note: expiry is not exact. Firestore deletes expired documents typically
 # within 24 hours of `expiresAt`, and they remain readable/queryable until

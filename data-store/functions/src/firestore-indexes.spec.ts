@@ -157,3 +157,57 @@ describe('firestore.indexes.json ⇄ single-field index exemptions', () => {
     }
   );
 });
+
+/**
+ * TTL policies are field configuration, and `firebase deploy --only
+ * firestore` reconciles field configuration against this file: a policy the
+ * file does not declare is **removed** on the next deploy. That is what kept
+ * happening — `infra/setup-firestore-ttl.sh` enabled the three policies by
+ * hand, and the next merge to `main` deleted them again, silently, while the
+ * collections kept growing.
+ *
+ * So the script and this file have to agree. The script stays the way to
+ * bootstrap an environment that has never been deployed to; the file is what
+ * makes the policy survive.
+ */
+describe('Firestore TTL policies', () => {
+  const scriptPath = join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'infra',
+    'setup-firestore-ttl.sh'
+  );
+
+  /** The `collection:field` pairs the setup script enables. */
+  function ttlPairsFromScript(): Array<[string, string]> {
+    const script = readFileSync(scriptPath, 'utf8');
+    const block = script.match(/TTL_FIELDS=\(([^)]*)\)/);
+    if (!block)
+      throw new Error('TTL_FIELDS array not found in setup-firestore-ttl.sh');
+    return [...block[1].matchAll(/"([^":]+):([^"]+)"/g)].map((m) => [
+      m[1],
+      m[2],
+    ]);
+  }
+
+  it('should declare every TTL field the setup script enables', () => {
+    // given the fields the script turns into TTL policies
+    const pairs = ttlPairsFromScript();
+    expect(pairs.length).toBeGreaterThan(0);
+    const { fieldOverrides } = loadConfig();
+
+    // when each is looked up in the deployed field configuration
+    const missing = pairs.filter(([collectionGroup, fieldPath]) => {
+      const override = fieldOverrides.find(
+        (o) =>
+          o.collectionGroup === collectionGroup && o.fieldPath === fieldPath
+      ) as (FieldOverride & { ttl?: boolean }) | undefined;
+      return override?.ttl !== true;
+    });
+
+    // then none is missing — otherwise the next deploy drops the policy
+    expect(missing).toEqual([]);
+  });
+});
