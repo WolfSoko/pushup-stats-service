@@ -92,7 +92,11 @@ $bar-height: 76px;
 
   .label {
     font-size: 0.66rem;
-    line-height: 1;
+    // `overflow: hidden` below is for the horizontal ellipsis, and it clips
+    // vertically just as happily: a line box exactly one font-size tall cuts
+    // whatever sits above the cap height, which is where the dots of a
+    // capital umlaut live — „Übungen" rendered as „Ubungen".
+    line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
