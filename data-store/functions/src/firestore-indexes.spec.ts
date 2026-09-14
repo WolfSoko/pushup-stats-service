@@ -9,6 +9,10 @@ import { join } from 'node:path';
  * index over (…equality fields…, orderBy field); if it is absent the query is
  * rejected at runtime with FAILED_PRECONDITION — nothing fails at build time,
  * so every such query must ship its index in `firestore.indexes.json`.
+ *
+ * An aggregation needs one field more: `aggregate({ sum('reps') })` is served
+ * only from an index that *also* carries `reps`, after the range field. The
+ * index for the same query without the aggregate does not satisfy it.
  */
 
 interface IndexField {
@@ -110,6 +114,24 @@ describe('firestore.indexes.json ⇄ exerciseEntries queries', () => {
     const declared = hasIndex(indexes, 'exerciseEntries', [
       ['userId', 'ASCENDING'],
       ['timestamp', 'DESCENDING'],
+    ]);
+    // then it is declared
+    expect(declared).toBe(true);
+  });
+
+  it('should declare the (exerciseId, userId, timestamp, reps) index the challenge sum reads from', () => {
+    // given `sumChallengeEntries`' per-participant total
+    // (where('userId','==').where('exerciseId','==').where('timestamp', range)
+    // .aggregate({ total: sum('reps') })) — an aggregation needs the summed
+    // field in the index too, so the three-field index above does NOT serve
+    // it; without this one every participant's progress reads 0 and the
+    // challenge card shows everyone at 0 / target
+    // when looking up its supporting composite index
+    const declared = hasIndex(indexes, 'exerciseEntries', [
+      ['exerciseId', 'ASCENDING'],
+      ['userId', 'ASCENDING'],
+      ['timestamp', 'ASCENDING'],
+      ['reps', 'ASCENDING'],
     ]);
     // then it is declared
     expect(declared).toBe(true);
