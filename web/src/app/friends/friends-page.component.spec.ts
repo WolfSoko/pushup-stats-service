@@ -280,6 +280,80 @@ describe('FriendsPageComponent', () => {
       expect(screen.getByTestId('board-cheers').textContent).toContain('3');
     });
 
+    it('should spin the tapped flame while its cheer is away', async () => {
+      // given — a send the server has not answered yet
+      let answer: (result: { ok: boolean }) => void = () => undefined;
+      const { fixture } = await renderPage(
+        { friends: [row()] },
+        {
+          cheer: vitest.fn().mockReturnValue(
+            new Promise((resolve) => {
+              answer = resolve;
+            })
+          ),
+        },
+        entries
+      );
+
+      // when
+      screen.getByTestId('board-cheer').click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — still the flame, now turning, and not tappable a second time
+      const button = screen.getByTestId('board-cheer') as HTMLButtonElement;
+      expect(button.textContent).toContain('whatshot');
+      expect(button.querySelector('mat-icon.is-sending')).toBeTruthy();
+      expect(button.disabled).toBe(true);
+      expect(button.getAttribute('aria-label')).toBe(
+        'Anfeuerung wird gesendet'
+      );
+
+      // when — the server answers and the board is re-read
+      answer({ ok: true });
+      // the answer starts a chain — re-read, then clear — that only a
+      // turn of the event loop drains, not a single stability check
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — it comes to rest, and only then
+      expect(
+        screen.getByTestId('board-cheer').querySelector('mat-icon.is-sending')
+      ).toBeNull();
+      expect(screen.getByTestId('board-cheer').textContent).toContain(
+        'whatshot'
+      );
+    });
+
+    it('should leave the other friends flames still while one cheer is away', async () => {
+      // given — two friends to cheer, one send left hanging
+      const third = {
+        uid: 'c',
+        displayName: 'Cara',
+        value: 600,
+        isViewer: false,
+        cheers: 0,
+        cheered: false,
+      };
+      const { fixture } = await renderPage(
+        { friends: [row()] },
+        { cheer: vitest.fn().mockReturnValue(new Promise(() => undefined)) },
+        [entries[0], third, entries[1]]
+      );
+
+      // when — Bob's button is the one tapped
+      screen.getAllByTestId('board-cheer')[0].click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — Cara's flame neither turns nor locks
+      const buttons = screen.getAllByTestId('board-cheer');
+      expect(document.querySelectorAll('mat-icon.is-sending')).toHaveLength(1);
+      expect(buttons[1].querySelector('mat-icon.is-sending')).toBeNull();
+      expect((buttons[1] as HTMLButtonElement).disabled).toBe(false);
+    });
+
     it('should explain a cheer the server refused', async () => {
       // given
       const { fixture } = await renderPage(

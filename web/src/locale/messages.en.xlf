@@ -13439,5 +13439,11 @@ Active:         </target>
         <target> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </target>
       </segment>
     </unit>
+    <unit id="friends.board.cheering">
+      <segment state="initial">
+        <source>Anfeuerung wird gesendet</source>
+        <target>Anfeuerung wird gesendet</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

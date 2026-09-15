@@ -33,7 +33,9 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
  * are the point on a day nobody trained.
  *
  * Each friend's row carries a cheer button: one tap a day, and the row
- * shows how many cheers they collected today.
+ * shows how many cheers they collected today. While a cheer is on its way
+ * the flame that was tapped spins — the send and the board re-read behind
+ * it take long enough that a still icon reads as a tap that missed.
  */
 @Component({
   selector: 'app-friends-board',
@@ -129,12 +131,12 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
                 class="cheer-button"
                 data-testid="board-cheer"
                 [class.is-cheered]="entry.cheered"
-                [disabled]="entry.cheered"
-                [attr.aria-label]="entry.cheered ? cheeredAria : cheerAria"
-                [matTooltip]="entry.cheered ? cheeredAria : cheerAria"
+                [disabled]="entry.cheered || isCheering(entry.uid)"
+                [attr.aria-label]="cheerLabel(entry)"
+                [matTooltip]="cheerLabel(entry)"
                 (click)="cheer.emit(entry.uid)"
               >
-                <mat-icon>{{
+                <mat-icon [class.is-sending]="isCheering(entry.uid)">{{
                   entry.cheered ? 'local_fire_department' : 'whatshot'
                 }}</mat-icon>
               </button>
@@ -199,6 +201,26 @@ const REP_EXERCISES = EXERCISE_CATALOG.filter(
     .cheer-button.is-cheered {
       color: var(--mat-sys-tertiary, #ff7043);
     }
+    /* The flame itself is the spinner while its cheer is away. The button
+       is disabled meanwhile, so the icon takes the lit colour explicitly
+       — inherited, it would be the greyed-out disabled one. */
+    .cheer-button mat-icon.is-sending {
+      color: var(--mat-sys-tertiary, #ff7043);
+      animation: cheer-spin 900ms linear infinite;
+    }
+    @keyframes cheer-spin {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+    /* No spinning for anyone who asked for less of it: the lit colour and
+       the dimmed flame still say the tap landed and is on its way. */
+    @media (prefers-reduced-motion: reduce) {
+      .cheer-button mat-icon.is-sending {
+        animation: none;
+        opacity: 0.6;
+      }
+    }
   `,
 })
 export class FriendsBoardComponent {
@@ -208,6 +230,8 @@ export class FriendsBoardComponent {
   readonly periodChange = output<unknown>();
   readonly comparisonChange = output<FriendsBoardComparison>();
   readonly cheer = output<string>();
+  /** The friend whose cheer is in flight, if any. */
+  readonly cheering = input<string | null>(null);
 
   protected readonly repExercises = REP_EXERCISES;
 
@@ -235,6 +259,17 @@ export class FriendsBoardComponent {
 
   protected readonly cheerAria = $localize`:@@friends.board.cheer:Anfeuern`;
   protected readonly cheeredAria = $localize`:@@friends.board.cheered:Heute schon angefeuert`;
+  protected readonly cheeringAria = $localize`:@@friends.board.cheering:Anfeuerung wird gesendet`;
+
+  protected isCheering(uid: string): boolean {
+    return this.cheering() === uid;
+  }
+
+  /** What the button is doing, for the tooltip and for screen readers. */
+  protected cheerLabel(entry: FriendsBoardEntry): string {
+    if (this.isCheering(entry.uid)) return this.cheeringAria;
+    return entry.cheered ? this.cheeredAria : this.cheerAria;
+  }
 
   /** The viewer's own row says so, rather than repeating their name. */
   protected label(entry: FriendsBoardEntry): string {

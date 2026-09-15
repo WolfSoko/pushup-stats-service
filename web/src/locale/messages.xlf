@@ -5357,9 +5357,9 @@
         <note category="location">web/src/app/friends/challenge-card.component.ts:179</note>
         <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:152</note>
         <note category="location">web/src/app/friends/friend-requests.component.ts:75</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:242</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:277</note>
         <note category="location">web/src/app/friends/friends-list.component.ts:106</note>
-        <note category="location">web/src/app/friends/friends-page.component.ts:208</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:209</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:220</note>
       </notes>
       <segment>
@@ -5369,7 +5369,7 @@
     <unit id="friends.board.you">
       <notes>
         <note category="location">web/src/app/friends/challenge-card.component.ts:182</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:241</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:276</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:219</note>
       </notes>
       <segment>
@@ -5562,7 +5562,7 @@
     </unit>
     <unit id="friends.board.compare">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:56,58</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:58,60</note>
       </notes>
       <segment>
         <source>Vergleich</source>
@@ -5570,7 +5570,7 @@
     </unit>
     <unit id="friends.board.metric.days">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:63,65</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:65,67</note>
       </notes>
       <segment>
         <source>Trainingstage</source>
@@ -5578,7 +5578,7 @@
     </unit>
     <unit id="friends.board.metric.streak">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:66,68</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:68,70</note>
       </notes>
       <segment>
         <source>Streak</source>
@@ -5586,7 +5586,7 @@
     </unit>
     <unit id="friends.board.metric.reps">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:70,72</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:72,74</note>
       </notes>
       <segment>
         <source>Wiederholungen</source>
@@ -5594,7 +5594,7 @@
     </unit>
     <unit id="friends.board.periodAria">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:84,85</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:86,87</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -5602,7 +5602,7 @@
     </unit>
     <unit id="friends.board.daily">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:89,91</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:91,93</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -5610,7 +5610,7 @@
     </unit>
     <unit id="friends.board.week">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:93,95</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:95,97</note>
       </notes>
       <segment>
         <source>7 Tage</source>
@@ -5618,7 +5618,7 @@
     </unit>
     <unit id="friends.board.month">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:96,98</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:98,100</note>
       </notes>
       <segment>
         <source>30 Tage</source>
@@ -5626,7 +5626,7 @@
     </unit>
     <unit id="friends.board.allTime">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:99,101</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:101,103</note>
       </notes>
       <segment>
         <source>Gesamt</source>
@@ -5634,7 +5634,7 @@
     </unit>
     <unit id="friends.board.cheer">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:236</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:260</note>
       </notes>
       <segment>
         <source>Anfeuern</source>
@@ -5642,15 +5642,23 @@
     </unit>
     <unit id="friends.board.cheered">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:237</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:261</note>
       </notes>
       <segment>
         <source>Heute schon angefeuert</source>
       </segment>
     </unit>
+    <unit id="friends.board.cheering">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:262</note>
+      </notes>
+      <segment>
+        <source>Anfeuerung wird gesendet</source>
+      </segment>
+    </unit>
     <unit id="friends.board.cheersTodayOne">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:247</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:282</note>
       </notes>
       <segment>
         <source>Eine Anfeuerung heute</source>
@@ -5658,7 +5666,7 @@
     </unit>
     <unit id="friends.board.cheersToday">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:248</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:283</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
@@ -5879,7 +5887,7 @@
     </unit>
     <unit id="friends.outgoing">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:105,106</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:106,107</note>
       </notes>
       <segment>
         <source>Von dir angefragt</source>
@@ -5887,7 +5895,7 @@
     </unit>
     <unit id="friends.waiting">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:110,111</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:111,112</note>
       </notes>
       <segment>
         <source>wartet noch</source>
@@ -5895,7 +5903,7 @@
     </unit>
     <unit id="friends.withdraw">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:119,120</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:120,121</note>
       </notes>
       <segment>
         <source> Zurückziehen </source>

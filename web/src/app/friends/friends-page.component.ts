@@ -78,6 +78,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
             [entries]="store.board()"
             [period]="store.boardPeriod()"
             [comparison]="store.boardComparison()"
+            [cheering]="store.cheering()"
             (periodChange)="changePeriod($event)"
             (comparisonChange)="store.compareBy($event)"
             (cheer)="store.cheer($event)"

@@ -28,6 +28,13 @@ type FriendsState = {
   board: ReadonlyArray<FriendsBoardEntry>;
   boardPeriod: FriendsBoardPeriod;
   boardComparison: FriendsBoardComparison;
+  /**
+   * The friend whose cheer is in flight, so the board can turn the flame
+   * that was tapped. A cheer is two round trips — send, then re-read the
+   * board — long enough that a still flame reads as a tap that did not
+   * land, and invites a second one.
+   */
+  cheering: string | null;
 };
 
 const initialState: FriendsState = {
@@ -39,6 +46,7 @@ const initialState: FriendsState = {
   board: [],
   boardPeriod: 'week',
   boardComparison: { metric: 'days' },
+  cheering: null,
 };
 
 /**
@@ -135,13 +143,21 @@ export const FriendsStore = signalStore(
       remove: (id: string) =>
         runStoreAction(store, () => _api.remove(id), reload),
       // A cheer changes the board (the count, and the button that sent
-      // it), not the lists.
-      cheer: (uid: string) =>
-        runStoreAction(
-          store,
-          () => _api.cheer(uid),
-          () => loadBoard()
-        ),
+      // it), not the lists. `cheering` is cleared only once the re-read
+      // is in too, so the flame stops turning on the lit icon rather than
+      // coming to rest on the unlit one and lighting a moment later.
+      cheer: async (uid: string) => {
+        patchState(store, { cheering: uid });
+        try {
+          return await runStoreAction(
+            store,
+            () => _api.cheer(uid),
+            () => loadBoard()
+          );
+        } finally {
+          patchState(store, { cheering: null });
+        }
+      },
     };
   })
 );
