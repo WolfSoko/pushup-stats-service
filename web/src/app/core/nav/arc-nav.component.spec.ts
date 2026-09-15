@@ -423,4 +423,28 @@ describe('ArcNavComponent', () => {
     // then
     expect(router.url).toBe('/blog');
   });
+
+  it('should fade the strip out at its ends, and measure from the track', () => {
+    // given — the component's compiled styles. jsdom resolves neither a
+    // mask nor a scroll container's layout, so these two rules are
+    // asserted where they are written, the way
+    // analysis-page.component.spec.ts does it.
+    const styles = (
+      ArcNavComponent as unknown as { ɵcmp: { styles: string[] } }
+    ).ɵcmp.styles.join(' ');
+
+    // then — background, border and shadow run out into nothing at either
+    // end instead of stopping at a cut edge
+    expect(styles).toMatch(
+      /\.arc-nav[^}]*mask-image:\s*linear-gradient\(\s*to right,\s*transparent/
+    );
+
+    // and — Regression: arc-nav.geometry.ts reads the items' `offsetLeft`
+    // against the track's `scrollLeft`, which agree only while the track
+    // is their `offsetParent`. Unpositioned, the host is — and it spans
+    // the viewport, so every offset would carry the strip's centring
+    // margin while `scrollLeft` would not, and a wide screen would
+    // enlarge an item several slots off from the one in the middle.
+    expect(styles).toMatch(/\.track[^}]*position:\s*relative/);
+  });
 });

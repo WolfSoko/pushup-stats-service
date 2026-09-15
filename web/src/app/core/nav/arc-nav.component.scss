@@ -31,6 +31,31 @@ $strip-max-width: 760px;
   box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.25);
   // Clip the items to the curved outline so nothing pokes out at the corners.
   overflow: hidden;
+
+  // The ends run out into nothing — background, border and shadow with
+  // them — rather than stopping at a cut edge. The same treatment the top
+  // toolbar gets in app.scss, and on a strip that scrolls sideways it is
+  // also what hides the wrap: an item leaves by dissolving, not by
+  // vanishing mid-stride.
+  //
+  // Held in a custom property so Sass leaves the mixed units alone: the
+  // fade is about an item wide, but never so wide on a narrow phone that
+  // the two ends eat the row between them.
+  --edge-fade: clamp(24px, 10%, #{$item-width * 0.75});
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--edge-fade),
+    black calc(100% - var(--edge-fade)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--edge-fade),
+    black calc(100% - var(--edge-fade)),
+    transparent
+  );
 }
 
 .track {
