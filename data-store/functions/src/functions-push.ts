@@ -201,7 +201,8 @@ export const dispatchPushReminders = onSchedule(
           .get();
         const userConfigData = userConfigSnap.data() ?? {};
         const reminder = userConfigData.reminder as
-          Partial<ReminderConfig> | undefined;
+          | Partial<ReminderConfig>
+          | undefined;
         const userLocale = pushLocaleFromConfig(userConfigData);
 
         const dispatchRef = db.collection('reminderDispatchState').doc(uid);

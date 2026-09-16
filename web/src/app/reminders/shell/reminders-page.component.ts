@@ -131,11 +131,9 @@ export class RemindersPageComponent {
   async onUnsubscribeAllDevices(): Promise<void> {
     const confirmed = await firstValueFrom(
       this.dialog
-        .open<
-          UnsubscribeAllDevicesDialogComponent,
-          void,
-          boolean
-        >(UnsubscribeAllDevicesDialogComponent)
+        .open<UnsubscribeAllDevicesDialogComponent, void, boolean>(
+          UnsubscribeAllDevicesDialogComponent
+        )
         .afterClosed()
     );
     if (!confirmed) return;

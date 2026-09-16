@@ -7,8 +7,7 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.mjs",
+      "!{projectRoot}/.oxlintrc.json",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
@@ -22,15 +21,6 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
-    },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.mjs"
-      ]
     },
     "@nx/jest:jest": {
       "cache": true,
@@ -57,19 +47,19 @@
   "generators": {
     "@nx/angular:application": {
       "e2eTestRunner": "none",
-      "linter": "eslint",
+      "linter": "none",
       "style": "scss",
       "unitTestRunner": "angular"
     },
     "@nx/angular:library": {
-      "linter": "eslint",
+      "linter": "none",
       "unitTestRunner": "angular"
     },
     "@nx/angular:component": {
       "style": "css"
     },
     "@nx/nest:application": {
-      "linter": "eslint",
+      "linter": "none",
       "unitTestRunner": "jest"
     }
   },
@@ -128,43 +118,21 @@
       }
     },
     {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "eslint:lint"
-      }
-    },
-    {
       "plugin": "@nx/playwright/plugin",
       "options": {
         "targetName": "e2e"
       }
     },
     {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      },
-      "include": [
-        "data-store/functions/**/*",
-        "libs/ads/**/*",
-        "libs/auth/**/*",
-        "libs/auto-count/**/*",
-        "libs/data-access/**/*",
-        "libs/data-access-state/**/*",
-        "libs/motivation/**/*",
-        "libs/push/**/*",
-        "libs/quick-add/**/*",
-        "libs/reminders/**/*",
-        "libs/stats/**/*",
-        "libs/stats-date/**/*",
-        "libs/sw-push/**/*",
-        "web/**/*"
-      ]
-    },
-    {
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/oxlint",
+      "options": {
+        "targetName": "lint"
       }
     }
   ],

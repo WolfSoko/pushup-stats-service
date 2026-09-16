@@ -108,7 +108,7 @@ function firstChartBreakdown(
     By.directive(MockStatsChartComponent)
   );
   return (
-    chart?.componentInstance as MockStatsChartComponent
+    chart.componentInstance as MockStatsChartComponent
   ).breakdown() as Array<{
     label: string;
   }>;

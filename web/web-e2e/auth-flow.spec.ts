@@ -16,7 +16,9 @@ test.describe('Login page', () => {
     await expect(loginPage.submitButton).toBeDisabled();
   });
 
-  test('submit button is disabled with invalid email', async ({ loginPage }) => {
+  test('submit button is disabled with invalid email', async ({
+    loginPage,
+  }) => {
     await loginPage.goto();
     await loginPage.fillEmail('not-an-email');
     await loginPage.fillPassword('password123');

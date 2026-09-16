@@ -239,7 +239,12 @@ type LeaderboardState = {
   error: string | null;
 };
 
-export const LeaderboardStore = signalStore({ providedIn: 'root' }, withState<LeaderboardState>({ data: null, loading: false, error: null }), withMethods(/* load() */), withComputed(/* entriesForPeriod, currentUserEntry */));
+export const LeaderboardStore = signalStore(
+  { providedIn: 'root' },
+  withState<LeaderboardState>({ data: null, loading: false, error: null }),
+  withMethods(/* load() */),
+  withComputed(/* entriesForPeriod, currentUserEntry */)
+);
 ```
 
 ### Dateien

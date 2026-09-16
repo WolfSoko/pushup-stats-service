@@ -22,7 +22,9 @@ function nextId(): string {
  * Creates a single PushupRecord with sensible defaults.
  * Each call generates a unique `_id`.
  */
-export function makePushupRecord(overrides: Partial<PushupRecord> = {}): PushupRecord {
+export function makePushupRecord(
+  overrides: Partial<PushupRecord> = {}
+): PushupRecord {
   return {
     _id: nextId(),
     timestamp: '2024-01-15T10:00:00.000Z',

@@ -170,10 +170,11 @@ Create a new user account.
 ### Request
 
 **Headers:**
-| Header | Value | Required |
-|--------|-------|----------|
-| Content-Type | application/json | Yes |
-| Authorization | Bearer {token} | No |
+
+| Header        | Value            | Required |
+| ------------- | ---------------- | -------- |
+| Content-Type  | application/json | Yes      |
+| Authorization | Bearer {token}   | No       |
 
 **Body:**
 

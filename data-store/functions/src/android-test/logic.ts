@@ -17,7 +17,11 @@ export interface AndroidTestActivity {
 }
 
 export type AndroidTestStatus =
-  'candidate' | 'confirmed' | 'declined' | 'optedIn' | 'notified';
+  | 'candidate'
+  | 'confirmed'
+  | 'declined'
+  | 'optedIn'
+  | 'notified';
 
 const TIMESTAMP_FIELD: Partial<Record<AndroidTestStatus, string>> = {
   confirmed: 'confirmedAt',

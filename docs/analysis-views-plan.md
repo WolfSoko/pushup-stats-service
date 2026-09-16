@@ -52,7 +52,11 @@ activeView: 'overview' | ExerciseCategoryId; // default 'overview'
 Neuer Selector vor allen bisherigen computeds einziehen:
 
 ```ts
-viewFilteredRows = computed(() => (activeView() === 'overview' ? rows() : rows().filter((e) => unifiedEntryCategoryId(e) === activeView())));
+viewFilteredRows = computed(() =>
+  activeView() === 'overview'
+    ? rows()
+    : rows().filter((e) => unifiedEntryCategoryId(e) === activeView())
+);
 ```
 
 Alle bestehenden Aggregate (`chartSeries`, `typeBreakdown`, `bestSingleEntry`, `bestDay`, `currentStreak`, `longestStreak`, `setsDistribution`, `avgSetSize`, `heatmapData`) auf `viewFilteredRows` umstellen.
@@ -105,7 +109,9 @@ Die bestehende „Kind"-Mehrfachauswahl entfällt durch die Tab-Auswahl. Empfehl
 ```ts
 visibleTabs = computed(() => {
   const cats = new Set(rows().map(unifiedEntryCategoryId));
-  return EXERCISE_CATEGORIES.filter((c) => cats.has(c.id)).sort((a, b) => a.order - b.order);
+  return EXERCISE_CATEGORIES.filter((c) => cats.has(c.id)).sort(
+    (a, b) => a.order - b.order
+  );
 });
 ```
 

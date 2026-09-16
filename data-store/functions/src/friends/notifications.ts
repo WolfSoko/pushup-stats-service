@@ -11,7 +11,11 @@ import { friendPushTexts } from './push-text';
  */
 
 export type FriendPushKind =
-  'request' | 'accepted' | 'cheer' | 'challenge' | 'challengeAccepted';
+  | 'request'
+  | 'accepted'
+  | 'cheer'
+  | 'challenge'
+  | 'challengeAccepted';
 
 export interface FriendshipPushEvent {
   readonly kind: 'request' | 'accepted';

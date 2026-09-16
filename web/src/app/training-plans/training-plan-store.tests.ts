@@ -46,7 +46,12 @@ type Store = TrainingPlanActionsStore;
  *  - `noop` / `in-flight` — nothing was written
  */
 export type RecordTestResultOutcome =
-  'recorded' | 'updated' | 'invalid' | 'noop' | 'in-flight' | 'not-ready';
+  | 'recorded'
+  | 'updated'
+  | 'invalid'
+  | 'noop'
+  | 'in-flight'
+  | 'not-ready';
 
 /** Resolve one field of a test day, or null when the day has no such field. */
 function testFieldAt(

@@ -46,7 +46,10 @@ export interface CreateChallengeInput {
 
 /** Why the server refused; `failed` covers a thrown call. */
 export type ChallengeActionReason =
-  ChallengeRejection | ChallengeRespondRejection | 'failed' | undefined;
+  | ChallengeRejection
+  | ChallengeRespondRejection
+  | 'failed'
+  | undefined;
 
 export interface ChallengeActionResponse {
   readonly ok: boolean;

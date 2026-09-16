@@ -27,12 +27,11 @@ function generateContentTarget() {
   return project.targets['generate-content'];
 }
 
-function prettierIgnoreEntries() {
-  return readFileSync(resolve(ROOT, '.prettierignore'), 'utf-8')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('#'))
-    .map((line) => line.replace(/\/$/, ''));
+function oxfmtIgnoreEntries() {
+  const config = JSON.parse(
+    readFileSync(resolve(ROOT, '.oxfmtrc.json'), 'utf-8')
+  );
+  return config.ignorePatterns.map((pattern) => pattern.replace(/\/$/, ''));
 }
 
 /**
@@ -44,7 +43,7 @@ function prettierIgnoreEntries() {
  * depend on whether the generator ran, `web:build`'s hash differs per machine,
  * and the App Hosting rollout misses the remote cache it needs to avoid
  * rebuilding on the ~8 GB builder (docs/gotchas/build-and-tooling.md). A
- * generated file that Prettier reformats on commit drifts the same way, and an
+ * generated file that oxfmt reformats on commit drifts the same way, and an
  * undeclared source glob leaves stale content cached after a content edit.
  */
 describe('generate-content path declarations', () => {
@@ -71,10 +70,10 @@ describe('generate-content path declarations', () => {
     }
   });
 
-  it('should keep every generated path out of Prettier', () => {
+  it('should keep every generated path out of oxfmt', () => {
     // given the committed generated files
-    // when Prettier's ignore list is resolved
-    const ignored = prettierIgnoreEntries();
+    // when oxfmt's ignore list is resolved
+    const ignored = oxfmtIgnoreEntries();
     // then no commit hook can reformat them away from the generator's output
     for (const path of generatedPaths) {
       expect(ignored).toContain(path);

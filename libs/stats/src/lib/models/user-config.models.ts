@@ -316,7 +316,9 @@ export const DISPLAY_NAME_MAX_LENGTH = 30;
 export const DISPLAY_NAME_PATTERN = /^[\p{L}\p{N} _.-]+$/u;
 
 export type DisplayNameViolation =
-  'too-short' | 'too-long' | 'invalid-characters';
+  | 'too-short'
+  | 'too-long'
+  | 'invalid-characters';
 
 /**
  * Returns null if the candidate passes display-name validation, otherwise

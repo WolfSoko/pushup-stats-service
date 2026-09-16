@@ -177,7 +177,7 @@ export async function authorizedFetch(auth, url, init = {}) {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-      ...(init.headers ?? {}),
+      ...init.headers,
     },
   });
 
