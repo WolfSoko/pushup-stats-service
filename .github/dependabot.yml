@@ -31,7 +31,9 @@ updates:
       linting:
         patterns:
           - 'oxlint'
+          - 'oxlint-tsgolint'
           - 'oxfmt'
+          - 'eslint'
           - 'eslint-plugin-playwright'
           - '@typescript-eslint/*'
       # Group testing frameworks

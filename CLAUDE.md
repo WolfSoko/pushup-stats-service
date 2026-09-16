@@ -19,7 +19,8 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Issue work → feature branch + PR.** When implementing a tracked issue (e.g. `claude/implement-NNN-*` branches), open a PR proactively once the change is pushed and CI-ready, without waiting for an explicit ask. Link the issue with `Closes #ID`.
 - **Ad-hoc trunk changes still go straight to `main`.** Only open a PR when there is an issue, when the change is risky/large, or when the user requests one.
 - **After opening the PR, subscribe to its activity** via `subscribe_pr_activity` so review comments and CI failures are addressed in the same session without prompting.
-- **Merge proactively once CI is green and review threads are resolved** — no need to wait for an explicit "merge it" from the user. Squash by default; preserve the issue link in the squash body. Stop only on an unresolvable review comment or a CI failure outside the change's scope, in which case report and wait.
+- **Trigger the CodeRabbit review yourself.** The repo gets no automatic reviews (CodeRabbit skips repos under 10 stars), so post `@coderabbitai review` as a PR comment right after opening the PR and after every substantive push. If CodeRabbit (or any other review bot) reports a usage limit, skips, or does not answer within a few minutes, run the review yourself with the `/code-review` skill against the PR and treat its findings like review comments. A PR is not merge-ready until one of the two reviews has been worked through.
+- **Merge proactively once CI is green, a review (CodeRabbit or your own) has been worked through, and review threads are resolved** — no need to wait for an explicit "merge it" from the user. Squash by default; preserve the issue link in the squash body. Stop only on an unresolvable review comment or a CI failure outside the change's scope, in which case report and wait.
 
 ## Development Flow (Project Board)
 
@@ -72,13 +73,13 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 - **UI:** Angular Material 21, Chart.js
 - **Cloud Functions:** TypeScript, esbuild bundle, Jest tests
 - **Testing:** Vitest (web), Jest (libs + cloud-functions), Playwright (e2e)
-- **Lint / format:** oxlint (`.oxlintrc.json`, type-aware, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). No ESLint, no Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
+- **Lint / format:** oxlint (`.oxlintrc.json`, type-aware, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). ESLint survives only for Angular HTML templates (`eslint.config.mjs`, inferred `lint-templates` target that `lint` depends on). No Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
 
 ## Commands
 
 ```bash
 pnpm nx test <project>           # Run tests for a specific project
-pnpm nx lint <project>           # Lint a specific project (oxlint)
+pnpm nx lint <project>           # Lint a specific project (oxlint + template rules via lint-templates)
 pnpm format                      # Format the workspace with oxfmt (`pnpm format:check` to verify)
 pnpm nx build web --configuration=development  # Build (dev)
 pnpm nx run-many --target=test   # Run all tests
