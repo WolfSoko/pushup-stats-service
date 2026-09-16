@@ -1,0 +1,32 @@
+import templatePlugin from '@angular-eslint/eslint-plugin-template';
+import templateParser from '@angular-eslint/template-parser';
+
+// ESLint lints only Angular HTML templates. Everything else is oxlint's job
+// (`.oxlintrc.json`); oxlint cannot load the custom parser these rules need.
+export default [
+  {
+    ignores: ['**/dist', '**/out-tsc', '**/public/push/**'],
+  },
+  {
+    files: ['**/*.html'],
+    languageOptions: { parser: templateParser },
+    plugins: { '@angular-eslint/template': templatePlugin },
+    rules: {
+      '@angular-eslint/template/banana-in-box': 'error',
+      '@angular-eslint/template/eqeqeq': 'error',
+      '@angular-eslint/template/no-negated-async': 'error',
+      '@angular-eslint/template/prefer-control-flow': 'error',
+      '@angular-eslint/template/alt-text': 'error',
+      '@angular-eslint/template/click-events-have-key-events': 'error',
+      '@angular-eslint/template/elements-content': 'error',
+      '@angular-eslint/template/interactive-supports-focus': 'error',
+      '@angular-eslint/template/label-has-associated-control': 'error',
+      '@angular-eslint/template/mouse-events-have-key-events': 'error',
+      '@angular-eslint/template/no-autofocus': 'error',
+      '@angular-eslint/template/no-distracting-elements': 'error',
+      '@angular-eslint/template/role-has-required-aria': 'error',
+      '@angular-eslint/template/table-scope': 'error',
+      '@angular-eslint/template/valid-aria': 'error',
+    },
+  },
+];

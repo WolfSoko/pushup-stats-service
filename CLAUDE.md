@@ -72,13 +72,13 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 - **UI:** Angular Material 21, Chart.js
 - **Cloud Functions:** TypeScript, esbuild bundle, Jest tests
 - **Testing:** Vitest (web), Jest (libs + cloud-functions), Playwright (e2e)
-- **Lint / format:** oxlint (`.oxlintrc.json`, type-aware, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). No ESLint, no Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
+- **Lint / format:** oxlint (`.oxlintrc.json`, type-aware, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). ESLint survives only for Angular HTML templates (`eslint.config.mjs`, inferred `lint-templates` target that `lint` depends on). No Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
 
 ## Commands
 
 ```bash
 pnpm nx test <project>           # Run tests for a specific project
-pnpm nx lint <project>           # Lint a specific project (oxlint)
+pnpm nx lint <project>           # Lint a specific project (oxlint + template rules via lint-templates)
 pnpm format                      # Format the workspace with oxfmt (`pnpm format:check` to verify)
 pnpm nx build web --configuration=development  # Build (dev)
 pnpm nx run-many --target=test   # Run all tests
