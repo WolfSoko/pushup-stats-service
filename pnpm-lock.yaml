@@ -89,8 +89,8 @@ importers:
         specifier: ^10.70.0
         version: 10.70.0(@opentelemetry/core@2.10.0(@opentelemetry/api@1.9.1))(supports-color@7.2.0)
       '@wolsok/thanos':
-        specifier: ^17.0.18
-        version: 17.0.18(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2))(html2canvas@1.4.1)(rxjs@7.8.2)
+        specifier: ^17.0.27
+        version: 17.0.27(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2))(html2canvas@1.4.1)(rxjs@7.8.2)
       axios:
         specifier: 1.19.0
         version: 1.19.0(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
@@ -6310,8 +6310,8 @@ packages:
   '@webassemblyjs/wast-printer@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
 
-  '@wolsok/thanos@17.0.18':
-    resolution: {integrity: sha512-BZ/kJPBus2Pg1ESkuWIKiweinD8DlZ+1Nm1v1viD2wt3gw3BcGclgqLv3ciTs2SWty/QNu3DhZ671Jnm370m3w==}
+  '@wolsok/thanos@17.0.27':
+    resolution: {integrity: sha512-G35fXi2CnK9GWuTfXvVnVwfwCeE92smPD1EshstRMY02FTWnRkivosIRPeVTo4toyfihgkPuPEKnyTt3L6biww==}
     peerDependencies:
       '@angular/core': 20.3.7
       html2canvas: ^1.4.1
@@ -18992,7 +18992,7 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@wolsok/thanos@17.0.18(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2))(html2canvas@1.4.1)(rxjs@7.8.2)':
+  '@wolsok/thanos@17.0.27(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2))(html2canvas@1.4.1)(rxjs@7.8.2)':
     dependencies:
       '@angular/core': 22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)
       html2canvas: 1.4.1
