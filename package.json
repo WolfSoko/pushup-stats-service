@@ -47,7 +47,7 @@
     "@nx/web": "23.2.1",
     "@nx/webpack": "23.2.1",
     "@nx/workspace": "23.2.1",
-    "@playwright/test": "^1.62.1",
+    "@playwright/test": "^1.63.0",
     "@schematics/angular": "22.1.8",
     "@sentry/cli": "^3.3.3",
     "@swc-node/register": "1.11.1",
