@@ -151,6 +151,6 @@ export class AnalysisTeaserCardComponent {
   }
 
   navigateToAnalysis(): void {
-    this.router.navigate(['/analysis']);
+    void this.router.navigate(['/analysis']);
   }
 }

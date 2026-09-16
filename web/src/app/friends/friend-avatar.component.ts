@@ -76,6 +76,6 @@ export class FriendAvatarComponent {
   // Spread, not `charAt(0)`: a name starting with an emoji is a surrogate
   // pair, and half of one renders as a replacement character.
   protected readonly initial = computed(
-    () => [...(this.displayName() ?? '').trim()][0]?.toUpperCase() ?? ''
+    () => Array.from((this.displayName() ?? '').trim())[0]?.toUpperCase() ?? ''
   );
 }

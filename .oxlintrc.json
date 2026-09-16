@@ -5,6 +5,9 @@
   "categories": {
     "correctness": "error"
   },
+  "options": {
+    "typeAware": true
+  },
   "env": {
     "builtin": true,
     "browser": true,
@@ -172,9 +175,22 @@
           }
         ]
       }
+    ],
+    "typescript/no-base-to-string": "off",
+    "typescript/require-array-sort-compare": [
+      "error",
+      {
+        "ignoreStringArrays": true
+      }
     ]
   },
   "overrides": [
+    {
+      "files": ["**/*.spec.ts", "**/*.spec.js", "**/*.test.ts"],
+      "rules": {
+        "typescript/unbound-method": "off"
+      }
+    },
     {
       "files": [
         "web/**/*.ts",

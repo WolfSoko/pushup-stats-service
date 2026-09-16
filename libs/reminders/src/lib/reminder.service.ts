@@ -71,7 +71,7 @@ export class ReminderService {
 
     this.initialTickTimeoutId = setTimeout(() => {
       this.initialTickTimeoutId = null;
-      this.tick();
+      void this.tick();
     }, initialDelay);
 
     this.intervalId = setInterval(() => this.tick(), intervalMs);

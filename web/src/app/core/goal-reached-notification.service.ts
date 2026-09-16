@@ -288,7 +288,7 @@ export class GoalReachedNotificationService {
       writeFlag(key);
       const maxParticleCount =
         SNAP_QUALITY_PARTICLES[this.userConfig.snapQuality()];
-      untracked(() =>
+      void untracked(() =>
         this.openDialog(spec.kind, { total, goal, maxParticleCount })
       );
     });

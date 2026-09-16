@@ -72,7 +72,7 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 - **UI:** Angular Material 21, Chart.js
 - **Cloud Functions:** TypeScript, esbuild bundle, Jest tests
 - **Testing:** Vitest (web), Jest (libs + cloud-functions), Playwright (e2e)
-- **Lint / format:** oxlint (`.oxlintrc.json`, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). No ESLint, no Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
+- **Lint / format:** oxlint (`.oxlintrc.json`, type-aware, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). No ESLint, no Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
 
 ## Commands
 

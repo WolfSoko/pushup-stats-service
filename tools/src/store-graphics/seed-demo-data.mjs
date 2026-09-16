@@ -263,7 +263,7 @@ await batch.commit();
 console.log(`  ${entries.length} entries`);
 
 console.log('friendships …');
-const pairId = (a, b) => [a, b].sort().join('__');
+const pairId = (a, b) => (a < b ? [a, b] : [b, a]).join('__');
 for (const f of FRIENDS) {
   await db
     .collection('friendships')
