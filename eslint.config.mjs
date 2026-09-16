@@ -5,7 +5,16 @@ import templateParser from '@angular-eslint/template-parser';
 // (`.oxlintrc.json`); oxlint cannot load the custom parser these rules need.
 export default [
   {
-    ignores: ['**/dist', '**/out-tsc', '**/public/push/**'],
+    ignores: [
+      '**/dist',
+      '**/out-tsc',
+      '**/coverage',
+      '**/test-output',
+      '**/test-results',
+      '**/playwright-report',
+      '**/.angular',
+      '**/public/push/**',
+    ],
   },
   {
     files: ['**/*.html'],
