@@ -56,6 +56,18 @@ describe('Angular template lint wiring', () => {
     expect(lintDefaults.dependsOn).toContain('lint-templates');
   });
 
+  it('should run ESLint on staged templates and keep the hook serial', () => {
+    // given the pre-commit wiring
+    const hook = readFileSync(resolve(ROOT, '.husky/pre-commit'), 'utf-8');
+    const lintStaged = readFileSync(
+      resolve(ROOT, 'lint-staged.config.mjs'),
+      'utf-8'
+    );
+    // then templates go through eslint and oxlint/oxfmt cannot race on a file
+    expect(lintStaged).toMatch(/'\*\.html':\s*'eslint'/);
+    expect(hook).toContain('lint-staged --concurrent false');
+  });
+
   it('should fail a template that violates a recommended rule', () => {
     // given a template with the wrong banana-in-box syntax
     const [result] = lintTemplate('<div ([value])="model"></div>\n');
