@@ -137,7 +137,7 @@ export function handlePush(event: PushEventLike, ctx: SwContext): void {
     tag: payload.tag || 'reminder',
     // `renotify` is a valid web spec field but missing from lib.dom's
     // NotificationOptions in some TS lib versions — cast to keep it typed.
-    data: { ...(payload.data ?? {}), locale: localeTag || undefined },
+    data: { ...payload.data, locale: localeTag || undefined },
     actions,
   } as NotificationOptions & {
     renotify?: boolean;

@@ -40,48 +40,48 @@ Drei-Ebenen-Hierarchie: **Kategorie → Übung → Variante (optional)**.
 export type MeasurementType = 'reps' | 'time' | 'distance' | 'weight';
 
 export type ExerciseCategoryId =
-  | 'pushup' | 'abs' | 'legs' | 'plank' | 'cardio' | 'strength' | 'mobility';
+  'pushup' | 'abs' | 'legs' | 'plank' | 'cardio' | 'strength' | 'mobility';
 
 export interface ExerciseCategoryInfo {
   id: ExerciseCategoryId;
-  nameKey: string;             // i18n XLIFF-ID, z. B. '@@exercise.category.abs'
-  icon: string;                // Material icon name
-  order: number;               // Anzeige-Reihenfolge im Dashboard
+  nameKey: string; // i18n XLIFF-ID, z. B. '@@exercise.category.abs'
+  icon: string; // Material icon name
+  order: number; // Anzeige-Reihenfolge im Dashboard
 }
 
 export interface ExerciseDefinition {
-  id: string;                  // 'pushup' | 'abs.crunches' | 'legs.squats' | custom uid
+  id: string; // 'pushup' | 'abs.crunches' | 'legs.squats' | custom uid
   categoryId: ExerciseCategoryId;
-  ownerId?: string;            // null für Standard-Katalog, userId für Custom
+  ownerId?: string; // null für Standard-Katalog, userId für Custom
   measurement: MeasurementType;
   // Caps pro Measurement (reps 1..500, durationSec 1..7200, distanceM 1..100000)
   min: number;
   max: number;
-  unit: string;                // 'reps' | 's' | 'm' | 'kg'
-  nameKey?: string;            // i18n XLIFF-ID für Standard-Übungen
-  customName?: string;         // freier Name für User-Übungen
+  unit: string; // 'reps' | 's' | 'm' | 'kg'
+  nameKey?: string; // i18n XLIFF-ID für Standard-Übungen
+  customName?: string; // freier Name für User-Übungen
   icon?: string;
-  variants?: readonly ExerciseVariant[];   // optional, z. B. nur bei Pushup/Plank
+  variants?: readonly ExerciseVariant[]; // optional, z. B. nur bei Pushup/Plank
 }
 
 export interface ExerciseVariant {
-  id: string;                  // 'diamond' | 'wide' | 'forearm' …
-  nameKey: string;             // i18n XLIFF-ID
+  id: string; // 'diamond' | 'wide' | 'forearm' …
+  nameKey: string; // i18n XLIFF-ID
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
 }
 
 export interface ExerciseEntry {
   _id: string;
   userId: string;
-  exerciseId: string;          // FK in ExerciseDefinition
-  variantId?: string;          // optional FK in ExerciseDefinition.variants[]
+  exerciseId: string; // FK in ExerciseDefinition
+  variantId?: string; // optional FK in ExerciseDefinition.variants[]
   timestamp: string;
   // Genau eines der folgenden Felder ist gesetzt — durch Measurement bestimmt:
   reps?: number;
   durationSec?: number;
   distanceM?: number;
-  weightKg?: number;           // bei measurement='weight' kombiniert mit reps
-  sets?: number[];             // optional, nur reps/weight
+  weightKg?: number; // bei measurement='weight' kombiniert mit reps
+  sets?: number[]; // optional, nur reps/weight
   source: string;
   createdAt?: string;
   updatedAt?: string;
@@ -90,15 +90,15 @@ export interface ExerciseEntry {
 
 ### Vorgesehener Standard-Katalog (Endausbau)
 
-| Kategorie | Übungen | Measurement |
-| --- | --- | --- |
-| Pushup | Pushup (mit 13 Varianten — bestehender Katalog) | reps |
-| Bauch | Crunches, Sit-ups, Beinheben, Russian Twist, Mountain Climbers | reps |
-| Beine | Kniebeugen (Squats), Ausfallschritte (Lunges), Hüftheben (Glute Bridge), Wadenheben, Jump Squats, Wandsitz (`time`) | reps / time |
-| Plank | Plank (Varianten: Standard, Forearm, Side, Hollow Hold) | time |
-| Cardio | Laufen, Radfahren, Rudern | distance + optional time |
-| Strength | Squat, Bench Press, Deadlift, Overhead Press | weight × reps |
-| Mobility | Stretching-Routine | time |
+| Kategorie | Übungen                                                                                                             | Measurement              |
+| --------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| Pushup    | Pushup (mit 13 Varianten — bestehender Katalog)                                                                     | reps                     |
+| Bauch     | Crunches, Sit-ups, Beinheben, Russian Twist, Mountain Climbers                                                      | reps                     |
+| Beine     | Kniebeugen (Squats), Ausfallschritte (Lunges), Hüftheben (Glute Bridge), Wadenheben, Jump Squats, Wandsitz (`time`) | reps / time              |
+| Plank     | Plank (Varianten: Standard, Forearm, Side, Hollow Hold)                                                             | time                     |
+| Cardio    | Laufen, Radfahren, Rudern                                                                                           | distance + optional time |
+| Strength  | Squat, Bench Press, Deadlift, Overhead Press                                                                        | weight × reps            |
+| Mobility  | Stretching-Routine                                                                                                  | time                     |
 
 **Firestore-Collections**
 
@@ -243,12 +243,12 @@ Der Validator (`validateExerciseEntry` in `exercise.models.ts`) erlaubt
 seit dem Companion-Fix Fields jetzt aus einer expliziten Liste pro
 Measurement:
 
-| Measurement | Primär | Companion (optional) | Companion (required) |
-| --- | --- | --- | --- |
-| `reps` | `reps` | — | — |
-| `time` | `durationSec` | — | — |
-| `distance` | `distanceM` | `durationSec` | — |
-| `weight` | `reps` | — | `weightKg` |
+| Measurement | Primär        | Companion (optional) | Companion (required) |
+| ----------- | ------------- | -------------------- | -------------------- |
+| `reps`      | `reps`        | —                    | —                    |
+| `time`      | `durationSec` | —                    | —                    |
+| `distance`  | `distanceM`   | `durationSec`        | —                    |
+| `weight`    | `reps`        | —                    | `weightKg`           |
 
 Caps liegen aktuell hartcodiert in `COMPANION_BOUNDS` (z. B. `weightKg`
 0.25..500 mit Fließkomma für 2.5-kg-Inkremente, `durationSec` 1..86 400).

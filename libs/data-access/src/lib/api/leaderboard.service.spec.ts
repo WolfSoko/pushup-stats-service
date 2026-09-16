@@ -8,12 +8,10 @@ jest.mock('@angular/fire/firestore', () => ({
   getDoc: jest.fn(),
   getDocs: jest.fn(),
   orderBy: jest.fn(),
-  query: jest.fn(
-    (ref: { __collection?: string } | unknown, ...constraints: unknown[]) => ({
-      __ref: ref,
-      __constraints: constraints,
-    })
-  ),
+  query: jest.fn((ref: unknown, ...constraints: unknown[]) => ({
+    __ref: ref,
+    __constraints: constraints,
+  })),
   where: jest.fn((field: string, op: string, value: unknown) => ({
     __where: { field, op, value },
   })),

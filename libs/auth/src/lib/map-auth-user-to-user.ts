@@ -1,9 +1,7 @@
 import { User as FbUser } from '@angular/fire/auth';
 import { AuthProvider, User } from './core/model/user.type';
 
-export function mapAuthUserToPUSUser(
-  fbUser?: FbUser | null | undefined
-): User | null {
+export function mapAuthUserToPUSUser(fbUser?: FbUser | null): User | null {
   if (!fbUser) return null;
 
   return {

@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { SW_SUPPORTED_LOCALES } from './handlers';
 
 /**
- * `sw-push` is an isolated service-worker bundle (eslint `scope:sw-push` →
+ * `sw-push` is an isolated service-worker bundle (oxlint `scope:sw-push` →
  * `onlyDependOnLibsWithTags: []`), so it cannot import `@pu-stats/models` at
  * runtime — the locale list is inlined in `handlers.ts`.
  *

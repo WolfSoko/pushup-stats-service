@@ -54,7 +54,7 @@ describe('HeatmapComponent', () => {
 
     const component = fixture.componentInstance;
     const data = component.chartData();
-    const dl = (component.chartOptions()?.plugins as any)
+    const dl = (component.chartOptions() as any).plugins
       .datalabels as unknown as {
       display: (ctx: { dataset: unknown; dataIndex: number }) => boolean;
       formatter: (value: unknown) => string;

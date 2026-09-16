@@ -35,7 +35,8 @@ export const reminderAction = onCall(
         configRef
       );
       const pending = dispatchSnap.data()?.['pendingAction'] as
-        PendingReminderAction | undefined;
+        | PendingReminderAction
+        | undefined;
       const timezone = (
         configSnap.data()?.['reminder'] as { timezone?: string } | undefined
       )?.timezone;

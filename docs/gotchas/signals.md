@@ -13,7 +13,9 @@ Firebase reuses the **same** `User` object after `linkWithCredential` (guest →
 Fix: wrap the observable with `{ equal: () => false }` so every emission propagates. See `libs/auth/src/lib/adapters/to-auth-user-signal.ts` for the pattern:
 
 ```ts
-export function toAuthUserSignal(obs$: Observable<User | null>): Signal<User | null | undefined> {
+export function toAuthUserSignal(
+  obs$: Observable<User | null>
+): Signal<User | null | undefined> {
   return toSignal(obs$, { equal: () => false });
 }
 ```

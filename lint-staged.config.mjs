@@ -1,3 +1,3 @@
 export default {
-  '*': ['npx eslint --fix', 'prettier --write --ignore-unknown'],
+  '*': ['oxlint --fix', 'oxfmt --no-error-on-unmatched-pattern'],
 };

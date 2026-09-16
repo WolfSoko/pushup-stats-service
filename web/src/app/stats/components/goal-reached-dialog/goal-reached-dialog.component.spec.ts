@@ -29,7 +29,7 @@ vi.mock('@wolsok/thanos', async () => {
         animationLength: 5000,
         maxParticleCount: 200_000,
         particleAcceleration: 30,
-        ...(opts ?? {}),
+        ...opts,
       };
       mocks.capturedOptions.last = merged;
       return merged;

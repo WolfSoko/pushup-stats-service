@@ -12,7 +12,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **A push to `main` ships to production.** Green CI fast-forwards the `deploy` branch, which deploys Hosting, Cloud Functions, and Firestore rules & indexes — no manual step, no separate approval. Treat the pre-push checklist below as the last gate before production, and expect backend changes to go live within minutes. Details: [`docs/ci-cd.md`](docs/ci-cd.md).
 - Feature branches or worktrees only when explicitly requested.
 - **Never commit secrets or user-identifiable data** (API keys, service account JSON, database UIDs, user email addresses) to the repository. Pass them as CLI arguments, environment variables, or Firebase Secrets instead.
-- **Pre-commit reformats files:** Husky + lint-staged run `eslint --fix` + `prettier --write` on every commit. Your staged files may differ from what you wrote. Re-read the file before further edits after a commit.
+- **Pre-commit reformats files:** Husky + lint-staged run `oxlint --fix` + `oxfmt` on every commit. Your staged files may differ from what you wrote. Re-read the file before further edits after a commit.
 
 ## Pull Requests
 
@@ -72,12 +72,14 @@ More test pitfalls: [`docs/gotchas/testing.md`](docs/gotchas/testing.md).
 - **UI:** Angular Material 21, Chart.js
 - **Cloud Functions:** TypeScript, esbuild bundle, Jest tests
 - **Testing:** Vitest (web), Jest (libs + cloud-functions), Playwright (e2e)
+- **Lint / format:** oxlint (`.oxlintrc.json`, type-aware, inferred `lint` targets via `@nx/oxlint`) + oxfmt (`.oxfmtrc.json`, also backs `nx format`). No ESLint, no Prettier. Details: [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md#oxlint--oxfmt).
 
 ## Commands
 
 ```bash
 pnpm nx test <project>           # Run tests for a specific project
-pnpm nx lint <project>           # Lint a specific project
+pnpm nx lint <project>           # Lint a specific project (oxlint)
+pnpm format                      # Format the workspace with oxfmt (`pnpm format:check` to verify)
 pnpm nx build web --configuration=development  # Build (dev)
 pnpm nx run-many --target=test   # Run all tests
 pnpm nx run-many --target=lint   # Lint all projects

@@ -119,4 +119,8 @@ export interface PublicProfileExercise {
 }
 
 export type ProfileMeasurement =
-  'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
+  | 'reps'
+  | 'time'
+  | 'distance'
+  | 'weight'
+  | 'distance-time';

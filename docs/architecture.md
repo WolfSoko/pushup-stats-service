@@ -27,7 +27,7 @@ Detailed architecture reference for the Pushup Stats Service. CLAUDE.md keeps th
 
 ## Module Boundary Rules
 
-Enforced via `@nx/enforce-module-boundaries` in `eslint.config.mjs`:
+Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rule runs inside oxlint through the `@nx/oxlint/boundaries-plugin` bridge):
 
 - `scope:date` -> nothing (standalone leaf — pure date/time helpers, no library deps)
 - `scope:auth` -> `scope:models`, `scope:date` only (no data-access!)

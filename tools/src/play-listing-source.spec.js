@@ -225,7 +225,7 @@ describe('countCharacters', () => {
 
     // then
     expect(result.value).toBe(description.length);
-    expect(result.value).toBeGreaterThan([...description].length);
+    expect(result.value).toBeGreaterThan(Array.from(description).length);
   });
 });
 
@@ -286,7 +286,10 @@ describe('PLAY_LOCALE_BY_APP_LOCALE', () => {
     const result = runInModule(SOURCE_MODULE, 'mod.PLAY_LOCALE_BY_APP_LOCALE');
 
     // then
-    expect(Object.keys(result.value).sort()).toEqual([...appLocales].sort());
+    const byCodeUnit = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    expect(Object.keys(result.value).sort(byCodeUnit)).toEqual(
+      [...appLocales].sort(byCodeUnit)
+    );
   });
 });
 

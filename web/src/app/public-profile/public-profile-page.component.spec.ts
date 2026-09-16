@@ -224,7 +224,8 @@ describe('PublicProfilePageComponent', () => {
       expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as
-        { imageUrl?: string; imageAlt?: string } | undefined;
+        | { imageUrl?: string; imageAlt?: string }
+        | undefined;
       // URL must be derived from the active FirebaseApp.options.projectId
       // so PR previews / staging / prod each hit their own function host.
       expect(ogExtras?.imageUrl).toContain('-pushup-stats.cloudfunctions.net');
@@ -242,7 +243,8 @@ describe('PublicProfilePageComponent', () => {
       expect(args).toBeDefined();
       if (!args) return;
       const ogExtras = args[3] as
-        { imageUrl?: string; imageAlt?: string } | undefined;
+        | { imageUrl?: string; imageAlt?: string }
+        | undefined;
       expect(ogExtras?.imageAlt).toContain('Wolfi');
     });
 

@@ -107,7 +107,7 @@ export class AdminPageComponent {
       if (s) this.usersDataSource.sort = s;
     });
 
-    this.loadUsers();
+    void this.loadUsers();
   }
 
   async loadUsers(): Promise<void> {

@@ -232,6 +232,8 @@ function hasMarkdownBody(path) {
   return source.slice(closeIdx + 4).trim().length > 0;
 }
 
+const byKey = ([a], [b]) => (a < b ? -1 : a > b ? 1 : 0);
+
 function groupBy(items, key) {
   const map = new Map();
   for (const item of items) {
@@ -317,7 +319,7 @@ function renderReport(allGaps, locales) {
     );
     lines.push('');
     const byLocale = groupBy(xliffGaps, 'locale');
-    for (const [locale, items] of [...byLocale].sort()) {
+    for (const [locale, items] of [...byLocale].sort(byKey)) {
       lines.push(`### \`${locale}\` — ${items.length} unit(s)`);
       lines.push('');
       const fileMissing = items.find((g) => g.kind === 'xliff-file-missing');
@@ -355,7 +357,7 @@ function renderReport(allGaps, locales) {
     );
     lines.push('');
     const byLocale = groupBy(blogGaps, 'locale');
-    for (const [locale, items] of [...byLocale].sort()) {
+    for (const [locale, items] of [...byLocale].sort(byKey)) {
       lines.push(`### \`${locale}\` — ${items.length} post(s) to create`);
       lines.push('');
       for (const g of items) {
@@ -376,7 +378,7 @@ function renderReport(allGaps, locales) {
     );
     lines.push('');
     const byLocale = groupBy(wikiArticleGaps, 'locale');
-    for (const [locale, items] of [...byLocale].sort()) {
+    for (const [locale, items] of [...byLocale].sort(byKey)) {
       lines.push(
         `### \`${locale}\` — ${items.length} body/bodies to translate`
       );
@@ -398,7 +400,7 @@ function renderReport(allGaps, locales) {
     );
     lines.push('');
     const byLocale = groupBy(wikiGaps, 'locale');
-    for (const [locale, items] of [...byLocale].sort()) {
+    for (const [locale, items] of [...byLocale].sort(byKey)) {
       lines.push(`### \`${locale}\` — ${items.length} entry/entries to create`);
       lines.push('');
       for (const g of items) {

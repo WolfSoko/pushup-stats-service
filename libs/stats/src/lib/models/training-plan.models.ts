@@ -157,7 +157,10 @@ export interface TrainingPlan {
  * (see `training-plan-pause.models.ts`).
  */
 export type TrainingPlanStatus =
-  'active' | 'paused' | 'completed' | 'abandoned';
+  | 'active'
+  | 'paused'
+  | 'completed'
+  | 'abandoned';
 
 /**
  * Per-user state for an activated plan. Stored at

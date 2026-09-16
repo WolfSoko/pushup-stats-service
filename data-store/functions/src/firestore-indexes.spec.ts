@@ -237,6 +237,8 @@ describe('Firestore TTL policies', () => {
 
     // then the set matches the list above — a typo in a collection or field
     // name would otherwise expire nothing and be invisible
-    expect(marked.sort()).toEqual([...TTL_FIELDS].sort());
+    const byPair = (a: readonly string[], b: readonly string[]) =>
+      String(a).localeCompare(String(b));
+    expect(marked.sort(byPair)).toEqual([...TTL_FIELDS].sort(byPair));
   });
 });

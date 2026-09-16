@@ -46,7 +46,10 @@ export function normalizeSessionMode(value: unknown): SessionMode {
  * - `'manual'` — everything else: the prefilled entry dialog.
  */
 export type SessionToolKind =
-  'auto-count' | 'hold-timer' | 'stopwatch' | 'manual';
+  | 'auto-count'
+  | 'hold-timer'
+  | 'stopwatch'
+  | 'manual';
 
 /** One exercise of the day, as the session walks it. */
 export interface SessionStep {
