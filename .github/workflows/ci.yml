@@ -261,13 +261,34 @@ jobs:
           # semver, and `nx release version` rejects it outright.
           SPECIFIER="0.0.0-g${SHA}"
           TAG="deploy-${SPECIFIER}"
-          FIRST_RELEASE_FLAG=""
-          if ! git ls-remote --tags origin "refs/tags/deploy-*" | grep -q .; then
-            FIRST_RELEASE_FLAG="--first-release"
+
+          # Resumable on purpose. The tag is pushed before the artifact is
+          # uploaded, so a run that dies in between — cancelled, runner
+          # reclaimed, network blip — used to leave the commit permanently
+          # unreleasable: every retry died on "tag already exists", and with
+          # `promote-to-deploy` gated on this job, production stayed behind
+          # main until someone deleted the tag by hand. An existing tag now
+          # means "an earlier attempt got this far", so the job finishes the
+          # release instead of starting it over.
+          if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q .; then
+            echo "Tag ${TAG} already exists — resuming the release for this commit."
+          else
+            FIRST_RELEASE_FLAG=""
+            if ! git ls-remote --tags origin "refs/tags/deploy-*" | grep -q .; then
+              FIRST_RELEASE_FLAG="--first-release"
+            fi
+            pnpm exec nx release version "$SPECIFIER" $FIRST_RELEASE_FLAG --git-commit=false --stage-changes=false
+            pnpm exec nx release changelog "$SPECIFIER" $FIRST_RELEASE_FLAG --git-commit=false --git-tag=true --git-push=true
           fi
-          pnpm exec nx release version "$SPECIFIER" $FIRST_RELEASE_FLAG --git-commit=false --stage-changes=false
-          pnpm exec nx release changelog "$SPECIFIER" $FIRST_RELEASE_FLAG --git-commit=false --git-tag=true --git-push=true
-          gh release upload "$TAG" dist-web.tar.gz
+
+          # The release can be missing while the tag is not: the interrupted
+          # run may have died between pushing the tag and creating it.
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --prerelease --title "$TAG" --notes "Deploy build for ${SHA}."
+
+          # --clobber: a resumed run re-uploads the artifact it just rebuilt,
+          # replacing whatever a partial attempt left behind.
+          gh release upload "$TAG" dist-web.tar.gz --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
