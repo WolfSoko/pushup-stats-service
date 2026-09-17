@@ -196,3 +196,120 @@ Default-Sprache zurück, bis dort eigene Assets liegen.
 - **Grafiken lädt weiterhin die Console hoch.** Das Publish-Script macht
   bewusst nur Text. Erzeugt werden sie aber nicht mehr von Hand — siehe
   „Screenshots und Feature-Grafik" unten.
+
+---
+
+# Die App selbst veröffentlichen (AAB-Upload)
+
+Der Abschnitt oben betrifft nur den **Store-Text**. Das App-Bundle geht einen
+eigenen Weg — dieselbe API, dasselbe Dienstkonto, aber andere Rechte und ein
+Signaturschlüssel.
+
+| Was                  | Wo                                   |
+| -------------------- | ------------------------------------ |
+| Build + Upload       | `.github/workflows/play-release.yml` |
+| Upload-Script        | `tools/src/publish-play-release.mjs` |
+| Gemeinsame API-Teile | `tools/src/play-api.mjs`             |
+| Build-Check auf PRs  | `.github/workflows/android-twa.yml`  |
+
+## Wie es läuft
+
+Ein Push auf `main`, der `mobile/android-twa/**` berührt, baut ein signiertes
+Bundle und lädt es in den **`internal`**-Track. Der ist in Minuten verfügbar,
+durchläuft keine Google-Review und erreicht nur die Tester dieses Tracks.
+
+Genau dort soll es auch landen: R8 läuft im Full Mode, und dessen Fehler
+schlagen **zur Laufzeit** zu, nicht beim Bauen. Kein CI-Job der Welt kann
+beweisen, dass das Bundle startet — nur ein Gerät.
+
+**Die Promotion von `internal` auf Produktion bleibt Handarbeit** in der Play
+Console. Für den seltenen Fall, dass ein anderer Track direkt bedient werden
+soll, gibt es `workflow_dispatch` mit Track-Auswahl und einem
+„Upload for real"-Haken, der ohne Ankreuzen nur einen Dry-Run macht.
+
+## versionCode
+
+Kommt aus `git rev-list --count HEAD`, gesetzt über die Umgebungsvariable
+`ANDROID_VERSION_CODE`. Play lehnt jeden versionCode ab, den es schon gesehen
+hat, und ein vergessener Bump von Hand fällt erst beim Upload auf — nach dem
+Build, nach dem Signieren.
+
+Ein lokaler Build ohne die Variable fällt auf den Wert in `app/build.gradle`
+zurück und bleibt unsigniert. Er taugt damit als Build-Beweis, nicht als
+Upload-Kandidat. Das ist Absicht.
+
+> Der erste automatische Upload springt von versionCode 4 auf die aktuelle
+> Commit-Zahl (vierstellig). Das ist erlaubt — die Obergrenze liegt bei
+> 2.100.000.000 — und passiert genau einmal.
+
+## Einrichtung
+
+### 1. Dienstkonto-Rechte erweitern
+
+Das Konto aus Schritt 2 oben darf bisher nur den Store-Eintrag bearbeiten.
+Play Console → **Nutzer und Berechtigungen** → das Dienstkonto → **App-Berechtigungen**
+für `com.pushupstats.app` zusätzlich:
+
+- **„App-Bundles und APKs hochladen"** (_Upload app bundles and APKs_)
+- **„Versionen für Testtracks verwalten"** (_Manage testing track releases_)
+
+Produktionsrechte braucht es **nicht** — der Workflow schreibt nur in
+`internal`, und die Promotion passiert per Hand. Wer den Dispatch auch für
+`production` nutzen will, muss zusätzlich „Produktionsversionen verwalten"
+vergeben; das ist eine bewusste Entscheidung, keine Voraussetzung.
+
+> Rechte propagieren verzögert. Ein `403` beim ersten Lauf heißt meistens
+> nicht, dass etwas falsch konfiguriert ist — später nochmal.
+
+### 2. Upload-Keystore als Secrets hinterlegen
+
+Der Keystore signiert das Bundle, damit Play es der bestehenden Listung
+zuordnet. **Ohne ihn ist kein Update möglich** — Play App Signing verwaltet
+nur den finalen Signaturschlüssel, nicht den Upload-Key.
+
+Prüfen, ob eine gefundene Datei die richtige ist:
+
+```bash
+keytool -list -v -keystore <datei> | grep -A1 SHA256
+```
+
+Der SHA-256 muss dem `Upload Key`-Fingerprint in
+`mobile/android-twa/twa-manifest.json` entsprechen. Tut er das nicht, führt
+der Weg über **Play Console → App-Integrität → App-Signatur → Upload-Key
+zurücksetzen** (Google schaltet den neuen Key in 1–2 Werktagen frei).
+
+Dann vier Secrets unter **Settings → Secrets and variables → Actions**:
+
+| Secret                      | Inhalt                                             |
+| --------------------------- | -------------------------------------------------- |
+| `ANDROID_KEYSTORE_BASE64`   | `base64 -w0 < android.keystore` — die ganze Zeile  |
+| `ANDROID_KEYSTORE_PASSWORD` | Keystore-Passwort                                  |
+| `ANDROID_KEY_ALIAS`         | Alias im Keystore (bei Bubblewrap meist `android`) |
+| `ANDROID_KEY_PASSWORD`      | Passwort des Schlüssels (oft identisch)            |
+
+Die Keystore-Datei selbst gehört **nicht** ins Repo — `.gitignore` sperrt
+`*.keystore` und `*.jks` bereits. Im Workflow landet sie unter `$RUNNER_TEMP`,
+außerhalb des Workspace, und wird in einem `if: always()`-Schritt wieder
+gelöscht.
+
+### 3. Erster Lauf als Dry-Run
+
+Actions → **Play Release** → **Run workflow**, „Upload for real" **nicht**
+ankreuzen. Der Lauf baut und signiert vollständig und bricht vor dem Upload
+ab. Sieht das gut aus, denselben Workflow mit Haken starten — oder einfach
+die nächste Wrapper-Änderung nach `main` schieben.
+
+## Gotchas (Release)
+
+- **Ein Bundle pro versionCode.** Ein erneuter Lauf auf demselben Commit
+  erzeugt denselben versionCode und wird von Play abgelehnt. Das ist kein
+  Bug: derselbe Code soll nicht zweimal unterschiedlich hochgeladen werden.
+- **`fetch-depth: 0` ist Pflicht.** Ein flacher Clone zählt weniger Commits
+  und erzeugt einen _niedrigeren_ versionCode als der letzte Upload.
+- **Der Track-Aufruf ist ein Vollersatz.** `edits.tracks.update` ersetzt die
+  Release-Liste des Tracks. Das Script schreibt genau einen Release mit genau
+  einem versionCode — ein gestaffelter Rollout müsste hier erweitert werden.
+- **Release-Notes fehlen noch.** Play akzeptiert Releases ohne Notizen; die
+  Tester sehen dann nur die Versionsnummer. Sinnvolle Erweiterung wäre eine
+  `release-notes.txt` je Locale unter `store/play/`, die dann auch die
+  Übersetzungs-Routine mitnehmen könnte.

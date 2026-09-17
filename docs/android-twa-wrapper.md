@@ -33,13 +33,19 @@ ein Update leitet daraus also schon das Richtige ab — aber eben nur daraus.
 ## Bauen
 
 Lokal braucht es ein Android SDK, das auf diesem Rechner nicht installiert ist. Der
-Nachweis läuft deshalb über CI: `.github/workflows/android-twa.yml` baut bei jeder
-Änderung unter `mobile/android-twa/**` ein **unsigniertes** `bundleRelease` und hängt
-das AAB als Artefakt an den Lauf. Der Upload-Keystore liegt nicht im Repo und gehört
-auch nicht hinein — signiert wird lokal per Bubblewrap.
+Nachweis läuft deshalb über CI, in zwei Stufen:
 
-Der Job ist **nicht** Teil des `promote-to-deploy`-Gates: der Wrapper geht nicht über
-Firebase raus, sondern per Hand in die Play Console.
+- **Auf PRs:** `.github/workflows/android-twa.yml` baut ein **unsigniertes**
+  `bundleRelease` und hängt das AAB als Artefakt an den Lauf. Reiner Build-Beweis.
+- **Auf `main`:** `.github/workflows/play-release.yml` baut signiert, mit einem
+  versionCode aus der Commit-Zahl, und lädt in den `internal`-Track hoch. Details:
+  [`play-store-publishing.md`](play-store-publishing.md#die-app-selbst-veröffentlichen-aab-upload).
+
+Der Upload-Keystore liegt nicht im Repo und gehört auch nicht hinein — er kommt als
+GitHub-Secret und existiert im Lauf nur unter `$RUNNER_TEMP`.
+
+Keiner der beiden Jobs ist Teil des `promote-to-deploy`-Gates: der Wrapper geht nicht
+über Firebase raus, sondern über die Play Console.
 
 ## Was CI nicht beweist
 

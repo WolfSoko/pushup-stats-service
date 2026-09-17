@@ -1,16 +1,14 @@
-# Builds the Android TWA wrapper so wrapper changes are proven before an AAB
-# is uploaded to the Play Console by hand.
+# Proves the Android TWA wrapper still builds, before a PR is merged. The
+# release itself is play-release.yml, which runs on main.
 #
 # Own workflow rather than a job in ci.yml for two reasons: `paths` filters
 # only exist at the workflow level, and the wrapper is not part of the
 # `promote-to-deploy` gate — it does not ship through Firebase.
 name: Android TWA
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'mobile/android-twa/**'
-      - '.github/workflows/android-twa.yml'
+  # Pull requests only. On main the same build runs inside play-release.yml,
+  # signed and on its way to the Play Console — running it twice would just
+  # burn five minutes.
   pull_request:
     paths:
       - 'mobile/android-twa/**'
@@ -39,8 +37,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # Unsigned on purpose — the upload keystore is not in the repo and must
-      # not be. This proves the build, not the release artifact.
+      # Unsigned, and with no versionCode override: this bundle is a build
+      # check, never an upload candidate. play-release.yml supplies both.
       - name: Build release bundle
         working-directory: mobile/android-twa
         run: ./gradlew --no-daemon bundleRelease

@@ -50,6 +50,16 @@ def twaManifest = [
     orientation: 'any',
 ]
 
+// Read through `providers` rather than System.getenv(): Gradle 9 has the
+// configuration cache on, and only the provider API registers the variable as
+// a build input instead of silently baking in the value from the first run.
+//
+// Both are absent for a local or PR build. That build then stays unsigned and
+// keeps the versionCode from twa-manifest.json — enough to prove the wrapper
+// compiles, not enough to upload, which is the intent.
+def versionCodeOverride = providers.environmentVariable('ANDROID_VERSION_CODE').orNull
+def uploadKeystorePath = providers.environmentVariable('ANDROID_KEYSTORE_PATH').orNull
+
 android {
     compileSdk = 36
     namespace = "com.pushupstats.app"
@@ -65,8 +75,11 @@ android {
         // androidbrowserhelper 2.7.x requires 23.
         minSdk = 23
         targetSdk = 36
-        versionCode = 4
-        versionName = "4"
+        // Play rejects a versionCode it has already seen, and a forgotten
+        // manual bump is only found at upload time. CI derives it from the
+        // commit count; "4" is what a local build falls back to.
+        versionCode = (versionCodeOverride?.trim() ?: '4') as int
+        versionName = versionCodeOverride?.trim() ?: "4"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name
@@ -158,8 +171,24 @@ android {
 
         
     }
+    signingConfigs {
+        release {
+            if (uploadKeystorePath) {
+                storeFile = file(uploadKeystorePath)
+                storePassword = providers.environmentVariable('ANDROID_KEYSTORE_PASSWORD').orNull
+                keyAlias = providers.environmentVariable('ANDROID_KEY_ALIAS').orNull
+                keyPassword = providers.environmentVariable('ANDROID_KEY_PASSWORD').orNull
+            }
+        }
+    }
     buildTypes {
         release {
+            // Left unsigned when no keystore was handed in, rather than
+            // falling back to the debug key: an accidentally debug-signed
+            // bundle is rejected by Play, but only after the upload.
+            if (uploadKeystorePath) {
+                signingConfig = signingConfigs.release
+            }
             minifyEnabled = true
             shrinkResources = true
             // proguard-android-optimize.txt, not proguard-android.txt: the
