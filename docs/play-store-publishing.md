@@ -234,6 +234,12 @@ Kommt aus `git rev-list --count HEAD`, gesetzt über die Umgebungsvariable
 hat, und ein vergessener Bump von Hand fällt erst beim Upload auf — nach dem
 Build, nach dem Signieren.
 
+Der **versionName** läuft bewusst mit: Er zeigt denselben Wert, wie schon bei
+den Versionen 3 und 4. Play erzwingt Eindeutigkeit nur auf dem versionCode, der
+Name ist frei — aber ein fester Name würde bedeuten, dass zwei verschiedene
+Bundles im Internal-Track gleich heißen und die Tester sie nicht
+auseinanderhalten können.
+
 Ein lokaler Build ohne die Variable fällt auf den Wert in `app/build.gradle`
 zurück und bleibt unsigniert. Er taugt damit als Build-Beweis, nicht als
 Upload-Kandidat. Das ist Absicht.

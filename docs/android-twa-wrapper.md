@@ -47,6 +47,22 @@ GitHub-Secret und existiert im Lauf nur unter `$RUNNER_TEMP`.
 Keiner der beiden Jobs ist Teil des `promote-to-deploy`-Gates: der Wrapper geht nicht
 über Firebase raus, sondern über die Play Console.
 
+## `signingKey.path` ist maschinenlokal
+
+`twa-manifest.json` trägt einen **absoluten** Pfad zum Keystore — Bubblewrap
+verlangt das so und unterstützt weder relative Pfade noch Platzhalter. Der Wert
+gilt damit nur auf genau einem Rechner und zeigt auf jedem anderen ins Leere.
+
+Für die Veröffentlichung spielt er **keine Rolle**: `play-release.yml` baut über
+Gradle und bekommt den Keystore aus `ANDROID_KEYSTORE_PATH`, nicht aus dem
+Manifest. Relevant ist das Feld nur, wenn jemand lokal `bubblewrap build`
+aufruft — und dort gehört der Pfad auf die Kommandozeile statt in die
+eingecheckte Datei:
+
+```bash
+bubblewrap build --signingKeyPath="/pfad/zu/upload.keystore"
+```
+
 ## Was CI nicht beweist
 
 R8 läuft im Release-Build mit Full Mode, Shrinking und (ab AGP 9)
