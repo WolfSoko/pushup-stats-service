@@ -53,6 +53,13 @@ def twaManifest = [
 android {
     compileSdk = 36
     namespace = "com.pushupstats.app"
+    buildFeatures {
+        // AGP 9 flipped `android.defaults.buildfeatures.resvalues` to false.
+        // Nearly the whole TWA configuration — launch URL, colors, splash
+        // screen, orientation — reaches the app as `resValue` entries below,
+        // so without this the build fails at configuration time.
+        resValues = true
+    }
     defaultConfig {
         applicationId = "com.pushupstats.app"
         // androidbrowserhelper 2.7.x requires 23.
