@@ -1,0 +1,51 @@
+# Proves the Android TWA wrapper still builds, before a PR is merged. The
+# release itself is play-release.yml, which runs on main.
+#
+# Own workflow rather than a job in ci.yml for two reasons: `paths` filters
+# only exist at the workflow level, and the wrapper is not part of the
+# `promote-to-deploy` gate — it does not ship through Firebase.
+name: Android TWA
+on:
+  # Pull requests only. On main the same build runs inside play-release.yml,
+  # signed and on its way to the Play Console — running it twice would just
+  # burn five minutes.
+  pull_request:
+    paths:
+      - 'mobile/android-twa/**'
+      - '.github/workflows/android-twa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  build:
+    runs-on: ubuntu-latest # ships with the Android SDK preinstalled
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # AGP 9 requires JDK 17+; 21 matches the local toolchain.
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # Unsigned, and with no versionCode override: this bundle is a build
+      # check, never an upload candidate. play-release.yml supplies both.
+      - name: Build release bundle
+        working-directory: mobile/android-twa
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-unsigned-aab
+          path: mobile/android-twa/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error

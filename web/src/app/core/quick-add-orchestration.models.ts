@@ -23,8 +23,8 @@ import type {
 export const AUTO_COUNT_DIALOG_CONFIG = {
   width: '100vw',
   maxWidth: '100vw',
-  height: '100vh',
-  maxHeight: '100vh',
+  height: '100dvh',
+  maxHeight: '100dvh',
   panelClass: 'auto-count-dialog-panel',
 } as const;
 

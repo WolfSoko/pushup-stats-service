@@ -47,18 +47,39 @@ def twaManifest = [
     // 'customtabs' and 'webview'.
     fallbackType: 'customtabs',
     enableSiteSettingsShortcut: 'true',
-    orientation: 'portrait',
+    orientation: 'any',
 ]
 
+// Read through `providers` rather than System.getenv(): Gradle 9 has the
+// configuration cache on, and only the provider API registers the variable as
+// a build input instead of silently baking in the value from the first run.
+//
+// Both are absent for a local or PR build. That build then stays unsigned and
+// keeps the versionCode from twa-manifest.json — enough to prove the wrapper
+// compiles, not enough to upload, which is the intent.
+def versionCodeOverride = providers.environmentVariable('ANDROID_VERSION_CODE').orNull
+def uploadKeystorePath = providers.environmentVariable('ANDROID_KEYSTORE_PATH').orNull
+
 android {
-    compileSdkVersion 36
-    namespace "com.pushupstats.app"
+    compileSdk = 36
+    namespace = "com.pushupstats.app"
+    buildFeatures {
+        // AGP 9 flipped `android.defaults.buildfeatures.resvalues` to false.
+        // Nearly the whole TWA configuration — launch URL, colors, splash
+        // screen, orientation — reaches the app as `resValue` entries below,
+        // so without this the build fails at configuration time.
+        resValues = true
+    }
     defaultConfig {
-        applicationId "com.pushupstats.app"
-        minSdkVersion 21
-        targetSdkVersion 36
-        versionCode 3
-        versionName "3"
+        applicationId = "com.pushupstats.app"
+        // androidbrowserhelper 2.7.x requires 23.
+        minSdk = 23
+        targetSdk = 36
+        // Play rejects a versionCode it has already seen, and a forgotten
+        // manual bump is only found at upload time. CI derives it from the
+        // commit count; "4" is what a local build falls back to.
+        versionCode = (versionCodeOverride?.trim() ?: '4') as int
+        versionName = versionCodeOverride?.trim() ?: "4"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name
@@ -150,56 +171,87 @@ android {
 
         
     }
+    signingConfigs {
+        release {
+            if (uploadKeystorePath) {
+                storeFile = file(uploadKeystorePath)
+                storePassword = providers.environmentVariable('ANDROID_KEYSTORE_PASSWORD').orNull
+                keyAlias = providers.environmentVariable('ANDROID_KEY_ALIAS').orNull
+                keyPassword = providers.environmentVariable('ANDROID_KEY_PASSWORD').orNull
+            }
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled true
+            // Left unsigned when no keystore was handed in, rather than
+            // falling back to the debug key: an accidentally debug-signed
+            // bundle is rejected by Play, but only after the upload.
+            if (uploadKeystorePath) {
+                signingConfig = signingConfigs.release
+            }
+            minifyEnabled = true
+            shrinkResources = true
+            // proguard-android-optimize.txt, not proguard-android.txt: the
+            // latter carries -dontoptimize, which is what the Play Console
+            // reports as "optimization is not enabled".
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    lintOptions {
-        checkReleaseBuilds false
+    lint {
+        checkReleaseBuilds = false
     }
 }
 
-task generateShorcutsFile {
-    assert twaManifest.shortcuts.size() < 5, "You can have at most 4 shortcuts."
-    twaManifest.shortcuts.eachWithIndex { s, i ->
-        assert s.name != null, 'Missing `name` in shortcut #' + i
-        assert s.short_name != null, 'Missing `short_name` in shortcut #' + i
-        assert s.url != null, 'Missing `icon` in shortcut #' + i
-        assert s.icon != null, 'Missing `url` in shortcut #' + i
-    }
-
+// Bubblewrap generates this as a bare `task { … }` whose body runs during the
+// configuration phase. Gradle 9 turns the configuration cache on by default,
+// which forbids writing files there — hence the doLast block.
+tasks.register('generateShorcutsFile') {
+    def shortcuts = twaManifest.shortcuts
+    def applicationId = twaManifest.applicationId
     def shortcutsFile = new File("$projectDir/src/main/res/xml", "shortcuts.xml")
 
-    def xmlWriter = new StringWriter()
-    def xmlMarkup = new MarkupBuilder(new IndentPrinter(xmlWriter, "    ", true))
+    doLast {
+        assert shortcuts.size() < 5, "You can have at most 4 shortcuts."
+        shortcuts.eachWithIndex { s, i ->
+            assert s.name != null, 'Missing `name` in shortcut #' + i
+            assert s.short_name != null, 'Missing `short_name` in shortcut #' + i
+            assert s.url != null, 'Missing `icon` in shortcut #' + i
+            assert s.icon != null, 'Missing `url` in shortcut #' + i
+        }
 
-    xmlMarkup
-        .'shortcuts'('xmlns:android': 'http://schemas.android.com/apk/res/android') {
-            twaManifest.shortcuts.eachWithIndex { s, i ->
-                'shortcut'(
-                        'android:shortcutId': 'shortcut' + i,
-                        'android:enabled': 'true',
-                        'android:icon': '@drawable/' + s.icon,
-                        'android:shortcutShortLabel': '@string/shortcut_short_name_' + i,
-                        'android:shortcutLongLabel': '@string/shortcut_name_' + i) {
-                    'intent'(
-                            'android:action': 'android.intent.action.MAIN',
-                            'android:targetPackage': twaManifest.applicationId,
-                            'android:targetClass': twaManifest.applicationId + '.LauncherActivity',
-                            'android:data': s.url)
-                    'categories'('android:name': 'android.intent.category.LAUNCHER')
+        def xmlWriter = new StringWriter()
+        def xmlMarkup = new MarkupBuilder(new IndentPrinter(xmlWriter, "    ", true))
+
+        xmlMarkup
+            .'shortcuts'('xmlns:android': 'http://schemas.android.com/apk/res/android') {
+                shortcuts.eachWithIndex { s, i ->
+                    'shortcut'(
+                            'android:shortcutId': 'shortcut' + i,
+                            'android:enabled': 'true',
+                            'android:icon': '@drawable/' + s.icon,
+                            'android:shortcutShortLabel': '@string/shortcut_short_name_' + i,
+                            'android:shortcutLongLabel': '@string/shortcut_name_' + i) {
+                        'intent'(
+                                'android:action': 'android.intent.action.MAIN',
+                                'android:targetPackage': applicationId,
+                                'android:targetClass': applicationId + '.LauncherActivity',
+                                'android:data': s.url)
+                        'categories'('android:name': 'android.intent.category.LAUNCHER')
+                    }
                 }
             }
-        }
-    shortcutsFile.text = xmlWriter.toString() + '\n'
+        shortcutsFile.text = xmlWriter.toString() + '\n'
+    }
 }
 
-preBuild.dependsOn(generateShorcutsFile)
+tasks.named('preBuild') {
+    dependsOn('generateShorcutsFile')
+}
 
 repositories {
     
@@ -210,6 +262,6 @@ dependencies {
     
         implementation 'com.google.androidbrowserhelper:locationdelegation:1.1.2'
     
-        implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.6.2'
+        implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.7.3'
     
 }

@@ -16,17 +16,21 @@
  */
 
 import { pathToFileURL } from 'node:url';
-import { GoogleAuth } from 'google-auth-library';
 import {
   FIELD_FILES,
   countCharacters,
   readListings,
 } from './play-listing-source.mjs';
+import {
+  authorizedFetch,
+  buildAuth,
+  createEditsApi,
+  editsUrl,
+} from './play-api.mjs';
 
-const PACKAGE_NAME = 'com.pushupstats.app';
-const API_ROOT = 'https://androidpublisher.googleapis.com/androidpublisher/v3';
-const SCOPE = 'https://www.googleapis.com/auth/androidpublisher';
-const CREDENTIALS_ENV = 'GOOGLE_PLAY_SERVICE_ACCOUNT_JSON';
+// Re-exported because the spec exercises them through this module, and
+// because "the Play tools' auth" is one thing wherever it is imported from.
+export { authorizedFetch, buildAuth };
 
 export function parseArgs(argv) {
   const args = { commit: false, locale: null };
@@ -164,42 +168,12 @@ export async function publishListings({
   }
 }
 
-/**
- * Adds the bearer token and turns a non-OK response into an Error carrying
- * `status`, which `getListing` reads to tell "this locale has no listing
- * yet" (404) from a real failure such as a missing permission (403).
- */
-export async function authorizedFetch(auth, url, init = {}) {
-  const client = await auth.getClient();
-  const { token } = await client.getAccessToken();
-  const response = await fetch(url, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      ...init.headers,
-    },
-  });
-
-  if (!response.ok) {
-    const body = await response.text();
-    const error = new Error(
-      `${init.method ?? 'GET'} ${url} → ${response.status}\n${body}`
-    );
-    error.status = response.status;
-    throw error;
-  }
-
-  return response.status === 204 ? null : response.json();
-}
-
 export function createPlayApi(auth) {
-  const editsUrl = `${API_ROOT}/applications/${PACKAGE_NAME}/edits`;
   const listingUrl = (editId, language) =>
     `${editsUrl}/${editId}/listings/${language}`;
 
   return {
-    createEdit: () => authorizedFetch(auth, editsUrl, { method: 'POST' }),
+    ...createEditsApi(auth),
     getListing: async (editId, language) => {
       try {
         return await authorizedFetch(auth, listingUrl(editId, language));
@@ -214,31 +188,7 @@ export function createPlayApi(auth) {
         method: 'PUT',
         body: JSON.stringify(body),
       }),
-    commitEdit: (editId) =>
-      authorizedFetch(auth, `${editsUrl}/${editId}:commit`, { method: 'POST' }),
-    deleteEdit: (editId) =>
-      authorizedFetch(auth, `${editsUrl}/${editId}`, { method: 'DELETE' }),
   };
-}
-
-export function buildAuth(env = process.env) {
-  const raw = env[CREDENTIALS_ENV];
-  if (!raw) {
-    throw new Error(
-      `${CREDENTIALS_ENV} is not set. See docs/play-store-publishing.md for how to create the service account and store its key.`
-    );
-  }
-
-  let credentials;
-  try {
-    credentials = JSON.parse(raw);
-  } catch {
-    throw new Error(
-      `${CREDENTIALS_ENV} is not valid JSON — paste the whole service-account key file.`
-    );
-  }
-
-  return new GoogleAuth({ credentials, scopes: [SCOPE] });
 }
 
 export function selectListings(all, locale) {

@@ -26,3 +26,47 @@ The arc nav wraps by rendering its entries three times and keeping the scroll po
 - An item rests centred at `scrollLeft = renderedIndex × itemWidth` (the strip's inline padding makes the centre term cancel), so the middle copy spans `[copyWidth, 2·copyWidth − itemWidth]`. Put the jump thresholds half an item outside that range — a window centred on `copyWidth` looks plausible and is off by half a copy.
 - Writing `scrollLeft` cuts a smooth `scrollTo` or a touch fling short, so the jump waits until scroll events have been quiet for a moment (`SETTLE_MS`). A mouse drag is the exception: its writes are our own, so it wraps immediately.
 - Track the `@for` by index, not by route: the same path appears three times.
+
+## Die Arc-Nav parkt auf dem Desktop unter dem Rand
+
+Auf `(min-width: 900px) and (hover: hover) and (pointer: fine)` schiebt sich die
+Leiste bis auf einen 10px-Streifen aus dem Bild und fährt zurück, sobald die Maus
+in die unteren 110px kommt (`REVEAL_ZONE_PX` in `arc-nav.component.ts`). Was daran
+hängt:
+
+- **Die Media-Query braucht `pointer: fine`.** Ein Touchgerät hat kein Hover, das
+  die Leiste zurückholen könnte — dort muss sie fest stehen bleiben. Der
+  `pointermove`-Listener filtert aus demselben Grund auf `pointerType === 'mouse'`.
+- **`:focus-within` ist kein Schmuck.** Hineintabben ist der einzige Weg der
+  Tastatur, die geparkte Leiste zu holen.
+- **`.app-content`/`.app-footer` behalten ihre 96px unten**, obwohl die Leiste dort
+  meist nicht steht. Sie fährt genau dann ein, wenn der Zeiger am unteren Rand ist —
+  also genau dann, wenn jemand nach einem Footer-Link greift. Ohne die Reserve würde
+  sie ihn verdecken.
+
+## Edge-to-Edge und Safe-Area-Insets
+
+Die Play-Store-App ist eine TWA — Chrome rendert die Website, und ab targetSdk 35
+zeichnet Android hinter Status- und Navigationsleiste. Der Web-Teil davon:
+
+- **`env(safe-area-inset-*)` ist ohne `viewport-fit=cover` immer `0px`.** Genau das war
+  der Fehler: `arc-nav.component.scss` und der Quick-Add-FAB rechneten seit jeher mit
+  den Insets, das Viewport-Meta in `web/src/index.html` gab sie aber nie frei — die
+  Arc-Nav saß unter der Gestenleiste. Neue fixierte Elemente an einer Bildschirmkante
+  brauchen den passenden Inset im Padding, nicht nur einen festen Abstand.
+- **Links und rechts zählen auch.** Im Querformat liegt der Displayausschnitt seitlich;
+  `safe-area-inset-left`/`-right` gehören in das Inline-Padding von `.top-nav` und
+  `.app-content` (`web/src/app/app.scss`).
+- **`100vh` ist im Querformat falsch.** Mit eingeblendeter URL-Leiste überschießt `vh`
+  den sichtbaren Viewport und schiebt die Aktionszeile eines Vollbild-Dialogs unter den
+  Rand. `100dvh` nehmen — siehe `AUTO_COUNT_DIALOG_CONFIG` in
+  `web/src/app/core/quick-add-orchestration.models.ts`.
+- **Breakpoints auf die Breite taugen nicht für die Arc-Nav.** Sie ist auf jedem
+  Viewport fixiert; ein Querformat-Telefon ist breit genug, um an `max-width: 767px`
+  vorbeizulaufen, und trotzdem so flach, dass die Leiste ein Viertel des Schirms
+  einnimmt. Der Snackbar-Abstand in `web/src/styles.scss` hing an so einer Regel und
+  ließ den Toast im Querformat unter der Leiste landen.
+
+Keine dieser Kanten ist in jsdom sichtbar — die Regressionstests dafür stehen in
+`web/web-e2e/landscape-layout.spec.ts`. Der Android-Teil steht in
+[`../android-twa-wrapper.md`](../android-twa-wrapper.md).

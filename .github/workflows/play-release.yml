@@ -1,0 +1,126 @@
+# Builds, signs and uploads the Android App Bundle to the Play Console.
+#
+# A push to main that touches the wrapper goes to the `internal` track: it
+# skips Google's review, is live within minutes, and reaches only the testers
+# on that track. That is where an R8 runtime failure is supposed to surface —
+# CI can prove the bundle builds, never that it runs.
+#
+# Promotion from internal to production stays a deliberate click in the
+# Console. `workflow_dispatch` can target another track for the rare case
+# where that is the right call.
+name: Play Release
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/android-twa/**'
+      - 'tools/src/publish-play-release.mjs'
+      - 'tools/src/play-api.mjs'
+      - '.github/workflows/play-release.yml'
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'Play track to release to'
+        type: choice
+        default: internal
+        options: [internal, alpha, beta, production]
+      commit:
+        description: 'Upload for real (unchecked = build + dry run only)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  # Two runs would fight over the same Play edit and one would fail with a
+  # conflict. Never cancel a run in progress: it may already have committed.
+  group: play-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest # ships with the Android SDK preinstalled
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Full history: the versionCode is the commit count, and a shallow
+          # clone would produce a lower number than the last upload.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable corepack
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Derive versionCode from the commit count
+        id: version
+        run: |
+          code=$(git rev-list --count HEAD)
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "versionCode $code"
+
+      # Written outside the workspace so no build step can sweep it into an
+      # artifact, and removed again in a step that runs even on failure.
+      - name: Materialise the upload keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [[ -z "$KEYSTORE_BASE64" ]]; then
+            echo "::error::ANDROID_KEYSTORE_BASE64 is not set — see docs/play-store-publishing.md"
+            exit 1
+          fi
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/upload.keystore"
+
+      - name: Build signed bundle
+        working-directory: mobile/android-twa
+        env:
+          ANDROID_VERSION_CODE: ${{ steps.version.outputs.code }}
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/upload.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Upload to Play
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          # A push to main always publishes; a manual run has to opt in.
+          RELEASE_TRACK: ${{ inputs.track || 'internal' }}
+          RELEASE_COMMIT: ${{ github.event_name == 'push' && 'true' || inputs.commit }}
+        run: |
+          # argv array rather than string interpolation: an unquoted expansion
+          # word-splits, and a crafted track input must not be able to turn a
+          # dry run into a real upload. See the same note in play-listing.yml.
+          args=(--bundle=mobile/android-twa/app/build/outputs/bundle/release/app-release.aab)
+          args+=("--track=$RELEASE_TRACK")
+          if [[ "$RELEASE_COMMIT" == "true" ]]; then
+            args+=(--commit)
+          fi
+          node tools/src/publish-play-release.mjs "${args[@]}"
+
+      - name: Shred the keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/upload.keystore"

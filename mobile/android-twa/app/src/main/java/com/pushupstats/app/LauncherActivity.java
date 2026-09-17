@@ -15,32 +15,21 @@
  */
 package com.pushupstats.app;
 
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 
 
 
 public class LauncherActivity
         extends com.google.androidbrowserhelper.trusted.LauncherActivity {
-    
 
-    
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Setting an orientation crashes the app due to the transparent background on Android 8.0
-        // Oreo and below. We only set the orientation on Oreo and above. This only affects the
-        // splash screen and Chrome will still respect the orientation.
-        // See https://github.com/GoogleChromeLabs/bubblewrap/issues/496 for details.
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        }
-    }
+
+
+    // Bubblewrap generates an onCreate override here that pins the splash screen
+    // to portrait via setRequestedOrientation. It is deliberately absent: Android
+    // 16 ignores orientation restrictions on large screens anyway, and the Play
+    // Console flags the call as a large-screen compatibility issue. Do not let a
+    // `bubblewrap update` write it back — see docs/android-twa-wrapper.md.
 
     @Override
     protected Uri getLaunchingUrl() {
