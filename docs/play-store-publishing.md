@@ -278,6 +278,38 @@ Der SHA-256 muss dem `Upload Key`-Fingerprint in
 der Weg über **Play Console → App-Integrität → App-Signatur → Upload-Key
 zurücksetzen** (Google schaltet den neuen Key in 1–2 Werktagen frei).
 
+#### Wenn der Upload-Key weg ist
+
+Kein Totalschaden, solange **Play App Signing** aktiv ist — und das ist es hier
+(`twa-manifest.json` führt zwei Fingerprints: `Upload Key` und
+`Play App Signing`). Der Schlüssel, gegen den die Geräte der Nutzer die App
+verifizieren, liegt bei Google und ändert sich nie. Der Upload-Key ist nur die
+Tür zum Hochladen, und die lässt sich neu einsetzen.
+
+Neuen Schlüssel erzeugen — **selbst ausführen und sofort in den
+Passwortmanager legen**, samt Passwort und Alias:
+
+```bash
+keytool -genkeypair -v \
+  -keystore upload.keystore -storetype PKCS12 \
+  -alias android -keyalg RSA -keysize 2048 -validity 10000 \
+  -dname "CN=Pushup Tracker, O=Wolfram Sokollek, C=DE"
+```
+
+Dann das Zertifikat exportieren:
+
+```bash
+keytool -export -rfc -alias android -keystore upload.keystore -file upload_certificate.pem
+```
+
+Play Console → **App-Integrität → App-Signatur → Upload-Schlüssel zurücksetzen**
+→ `upload_certificate.pem` hochladen. Google schaltet den neuen Schlüssel in
+1–2 Werktagen frei; bis dahin lehnt der Upload weiterhin ab. Danach die vier
+Secrets unten mit den neuen Werten füllen.
+
+Die App behält ihre Identität, ihre Bewertungen und ihre Installationen — für
+die Nutzer ändert sich nichts.
+
 Dann vier Secrets unter **Settings → Secrets and variables → Actions**:
 
 | Secret                      | Inhalt                                             |
