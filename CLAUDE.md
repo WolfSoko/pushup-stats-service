@@ -129,6 +129,7 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 | Sentry source maps, releases, `SENTRY_AUTH_TOKEN` setup                 | [`docs/observability/sentry.md`](docs/observability/sentry.md)                                                                 |
 | Play-Store-Text: Quelldateien, Publish-Script, Setup                    | [`docs/play-store-publishing.md`](docs/play-store-publishing.md), [`docs/playstore-listing.md`](docs/playstore-listing.md)     |
 | Android Closed-Test: Kandidaten-Scan, Invite-Popup, Tester-Rekrutierung | [`docs/android-test-program.md`](docs/android-test-program.md)                                                                 |
+| TWA-Wrapper: Bubblewrap-Regeneration, AGP/R8-Handarbeit, CI-Build       | [`docs/android-twa-wrapper.md`](docs/android-twa-wrapper.md)                                                                   |
 
 ### Push notifications
 

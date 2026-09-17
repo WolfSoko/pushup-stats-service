@@ -26,8 +26,9 @@ mat-card-content + mat-card-footer {
 
 mat-sidenav-content {
   // Toolbar height — drives the sticky offset of any page-level sticky
-  // element (e.g. the analysis filter bar).
-  --top-nav-height: 64px;
+  // element (e.g. the analysis filter bar). Includes the status bar inset,
+  // because the toolbar pads itself by the same amount.
+  --top-nav-height: calc(64px + env(safe-area-inset-top, 0px));
 
   height: 100svh;
   overflow: auto;
@@ -45,6 +46,9 @@ mat-sidenav-content {
     top: 0;
     z-index: 1;
     font-weight: 700;
+    --mat-toolbar-standard-height: calc(64px + env(safe-area-inset-top, 0px));
+    --mat-toolbar-mobile-height: calc(56px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   .sidenav-language {
@@ -71,8 +75,22 @@ mat-sidenav-content {
   z-index: 10;
   gap: 8px;
 
-  // Center content within 1200px max-width
-  padding-inline: max(8px, calc((100vw - 1200px) / 2));
+  // Edge-to-edge: the status bar sits on top of the page, so the toolbar
+  // grows by that inset instead of letting its content slide underneath.
+  // Written as Material's own height tokens rather than a flat min-height,
+  // so the 64/56px desktop-mobile split survives.
+  --mat-toolbar-standard-height: calc(64px + env(safe-area-inset-top, 0px));
+  --mat-toolbar-mobile-height: calc(56px + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+
+  // Center content within 1200px max-width, clearing a landscape display
+  // cutout on either side.
+  padding-inline: max(
+      8px,
+      env(safe-area-inset-left, 0px),
+      calc((100vw - 1200px) / 2)
+    )
+    max(8px, env(safe-area-inset-right, 0px), calc((100vw - 1200px) / 2));
 
   // Fade toolbar background at the edges on wide viewports
   -webkit-mask-image: linear-gradient(
@@ -189,8 +207,10 @@ mat-sidenav-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 12px;
+  padding-inline: max(12px, env(safe-area-inset-left, 0px))
+    max(12px, env(safe-area-inset-right, 0px));
   // Room for the arc nav along the bottom edge, on every viewport.
-  padding-bottom: 96px;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width: 560px) {
@@ -214,7 +234,7 @@ mat-sidenav-content {
     gap: 24px;
   }
 
-  padding-bottom: 96px;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 
   @media (max-width: 767px) {
     nav {

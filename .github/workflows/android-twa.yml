@@ -1,0 +1,53 @@
+# Builds the Android TWA wrapper so wrapper changes are proven before an AAB
+# is uploaded to the Play Console by hand.
+#
+# Own workflow rather than a job in ci.yml for two reasons: `paths` filters
+# only exist at the workflow level, and the wrapper is not part of the
+# `promote-to-deploy` gate — it does not ship through Firebase.
+name: Android TWA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/android-twa/**'
+      - '.github/workflows/android-twa.yml'
+  pull_request:
+    paths:
+      - 'mobile/android-twa/**'
+      - '.github/workflows/android-twa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  build:
+    runs-on: ubuntu-latest # ships with the Android SDK preinstalled
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # AGP 9 requires JDK 17+; 21 matches the local toolchain.
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # Unsigned on purpose — the upload keystore is not in the repo and must
+      # not be. This proves the build, not the release artifact.
+      - name: Build release bundle
+        working-directory: mobile/android-twa
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-unsigned-aab
+          path: mobile/android-twa/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error

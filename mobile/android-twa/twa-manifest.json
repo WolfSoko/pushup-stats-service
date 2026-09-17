@@ -17,11 +17,11 @@
   "maskableIconUrl": "https://pushup-stats.com/de/icons/icon-512x512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
-    "path": "/home/wolf/repo/pushup-stats-service/mobile/android-twa/android.keystore",
+    "path": "/home/wolf/repos/pushup-stats-service/mobile/android-twa/android.keystore",
     "alias": "android"
   },
-  "appVersionName": "3",
-  "appVersionCode": 3,
+  "appVersionName": "4",
+  "appVersionCode": 4,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://pushup-stats.com/de/manifest.webmanifest",
@@ -38,8 +38,8 @@
   "isChromeOSOnly": false,
   "isMetaQuest": false,
   "fullScopeUrl": "https://pushup-stats.com/de/",
-  "minSdkVersion": 21,
-  "orientation": "portrait",
+  "minSdkVersion": 23,
+  "orientation": "any",
   "fingerprints": [
     {
       "name": "Upload Key",
@@ -56,5 +56,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "3"
+  "appVersion": "4"
 }

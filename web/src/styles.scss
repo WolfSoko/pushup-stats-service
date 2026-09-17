@@ -168,11 +168,13 @@ mat-card-header + mat-card-footer {
   margin-top: 10px;
 }
 
-// Offset snackbar above mobile bottom nav (56px height)
-@media (max-width: 767px) {
-  .mat-mdc-snack-bar-container {
-    margin-bottom: 56px !important;
-  }
+// Lift the snackbar clear of the arc nav. That strip is fixed to the bottom
+// edge on every viewport — a width breakpoint would miss the landscape phone,
+// which is wide enough to look like a desktop and short enough that the strip
+// still covers a quarter of the screen. 76px is `$bar-height` in
+// arc-nav.component.scss.
+.mat-mdc-snack-bar-container {
+  margin-bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .mdc-text-field--outlined {
@@ -237,8 +239,11 @@ mat-card-header + mat-card-footer {
 .auto-count-dialog-panel {
   width: 100vw !important;
   max-width: 100vw !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
+  // dvh, not vh: with the URL bar showing, 100vh overshoots the visual
+  // viewport and pushes the action row below the fold — invisible in
+  // portrait, fatal in landscape.
+  height: 100dvh !important;
+  max-height: 100dvh !important;
 
   .mat-mdc-dialog-surface,
   .mdc-dialog__surface {
@@ -253,6 +258,30 @@ mat-card-header + mat-card-footer {
     max-height: none;
     display: flex;
     flex-direction: column;
+  }
+
+  // Landscape phone: ~390px of height is not enough to stack picker, mode
+  // toggle, hint and preview — `.video-stage` is the flexible one, so it is
+  // what collapses to nothing. Put the controls beside the preview instead.
+  @media (orientation: landscape) and (max-height: 560px) {
+    mat-dialog-content {
+      flex-direction: row;
+      gap: 16px;
+    }
+
+    .auto-count-controls {
+      flex: 0 0 clamp(200px, 32%, 320px);
+      overflow-y: auto;
+    }
+
+    .video-stage {
+      min-width: 0;
+    }
+
+    .mat-mdc-dialog-title {
+      margin-bottom: 0;
+      padding-bottom: 4px;
+    }
   }
 }
 
