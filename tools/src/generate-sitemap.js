@@ -394,7 +394,9 @@ function readCatalogSource(relativePath) {
 
 function buildWikiRoutes(slugFor, articlesById) {
   const routes = [];
-  for (const [id, localesWithArticle] of [...articlesById].sort()) {
+  for (const [id, localesWithArticle] of [...articlesById].sort(([a], [b]) =>
+    a < b ? -1 : a > b ? 1 : 0
+  )) {
     const emitted = LOCALES.filter((lang) => localesWithArticle.has(lang));
     if (emitted.length === 0) continue;
     const alternates = emitted

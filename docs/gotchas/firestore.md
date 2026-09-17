@@ -108,7 +108,8 @@ For real-time data:
 
    configResource: rxResource({
      params: () => ({ userId: store._user.userIdSafe() }),
-     stream: ({ params }) => (params.userId ? store._api.getConfig(params.userId) : of(null)),
+     stream: ({ params }) =>
+       params.userId ? store._api.getConfig(params.userId) : of(null),
    });
    ```
 
@@ -125,7 +126,9 @@ When migrating, audit consumers that subscribe directly without unsubscription (
 ```ts
 const HAS_TIMEZONE = /(Z|[+-]\d{2}:?\d{2})$/;
 function entryBerlinDate(timestamp: string): string {
-  return HAS_TIMEZONE.test(timestamp) ? toBerlinIsoDate(new Date(timestamp)) : timestamp.slice(0, 10); // already a Berlin-local date prefix
+  return HAS_TIMEZONE.test(timestamp)
+    ? toBerlinIsoDate(new Date(timestamp))
+    : timestamp.slice(0, 10); // already a Berlin-local date prefix
 }
 ```
 

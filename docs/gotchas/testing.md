@@ -40,7 +40,9 @@ The general rule: a `web` spec must leave the shared world exactly as it found i
     docData: jest.fn(),
   }));
   // ...
-  beforeEach(() => jest.mocked(docData).mockReturnValue(of(undefined) as never));
+  beforeEach(() =>
+    jest.mocked(docData).mockReturnValue(of(undefined) as never)
+  );
   ```
   …or `require()` the dependency inside the factory. Mirrors the Vitest `vi.hoisted` pattern below.
 - **Cloud Function pure logic testing:** Extract business logic to separate modules (not in Cloud Function triggers) for testability. See `user-stats-delta.ts` pattern: pure functions tested separately via Jest without Firebase mocks; triggers are thin wrappers that call the logic. This enables testing calculation correctness without mocking Firestore.

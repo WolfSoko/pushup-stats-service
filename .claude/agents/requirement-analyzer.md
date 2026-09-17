@@ -156,7 +156,9 @@ Generate a structured analysis report:
     "approach": "incremental",
     "order": ["step1", "step2", "step3"],
     "estimated_iterations": 5,
-    "risks": [{ "risk": "Risk description", "mitigation": "Mitigation strategy" }]
+    "risks": [
+      { "risk": "Risk description", "mitigation": "Mitigation strategy" }
+    ]
   },
   "codebase_context": {
     "related_files": ["file1.ts", "file2.ts"],

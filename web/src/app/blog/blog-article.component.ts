@@ -129,7 +129,7 @@ export class BlogArticleComponent implements OnInit {
     const found = (slug && findBlogPost(slug, this.locale)) ?? null;
 
     if (!found) {
-      this.router.navigateByUrl('/blog');
+      void this.router.navigateByUrl('/blog');
       return;
     }
 

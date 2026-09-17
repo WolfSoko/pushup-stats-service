@@ -108,7 +108,8 @@ export function configuredDailyGoal(
   userConfigData: Record<string, unknown> | undefined
 ): number {
   const goals = userConfigData?.['goals'] as
-    { daily?: ComplexGoalEntry[] } | undefined;
+    | { daily?: ComplexGoalEntry[] }
+    | undefined;
   const daily = goals?.daily;
   const sum = Array.isArray(daily) ? sumRepsTarget(daily) : 0;
   if (sum > 0) return sum;

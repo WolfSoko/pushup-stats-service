@@ -9,9 +9,7 @@ describe('QuickAddFabCoachmarkComponent', () => {
 
     // then
     expect(screen.getByText('Schnellerfassung')).toBeTruthy();
-    expect(
-      screen.getByText(/erfasst du Übungen blitzschnell/i)
-    ).toBeTruthy();
+    expect(screen.getByText(/erfasst du Übungen blitzschnell/i)).toBeTruthy();
   });
 
   it('should emit dismiss when the primary button is clicked', async () => {

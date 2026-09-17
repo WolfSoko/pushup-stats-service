@@ -281,7 +281,7 @@ export class StatsDashboardComponent {
       openCreateDialog: () => this.openCreateDialog(),
     });
 
-    this.store.loadQuote();
+    void this.store.loadQuote();
   }
 
   /**

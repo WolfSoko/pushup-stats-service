@@ -396,7 +396,7 @@ describe('TypePieComponent', () => {
 
   it('should empty the pie and show the no-selection placeholder when the last selected type is removed', () => {
     // When: the user unchecks every default-selected type
-    for (const id of [...component.selectedIds()]) {
+    for (const id of Array.from(component.selectedIds())) {
       component.toggle(id);
     }
     fixture.detectChanges();

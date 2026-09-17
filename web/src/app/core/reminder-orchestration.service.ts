@@ -18,7 +18,7 @@ export class ReminderOrchestrationService {
     if (user && !user.isAnonymous) {
       const uid = user.uid;
       const displayName = user.displayName ?? undefined;
-      this.reminderStore.loadConfig(uid).then(() => {
+      void this.reminderStore.loadConfig(uid).then(() => {
         if (this.auth.user()?.uid === uid) {
           this.reminderService.start({ userId: uid, displayName });
         }

@@ -250,12 +250,14 @@ describe('auto-count / hold-timer catalog capabilities', () => {
       (d) => [d.id, d.autoCountProfileId]
     );
     // then
-    expect(profiles.sort()).toEqual([
-      ['abs.situps', 'situp'],
-      ['legs.squats', 'squat'],
-      ['pull.pullups', 'pullup'],
-      ['pushup', 'pushup'],
-    ]);
+    expect(profiles.sort((a, b) => String(a).localeCompare(String(b)))).toEqual(
+      [
+        ['abs.situps', 'situp'],
+        ['legs.squats', 'squat'],
+        ['pull.pullups', 'pullup'],
+        ['pushup', 'pushup'],
+      ]
+    );
   });
 
   it('should use only auto-count profile ids the web AutoCountExerciseId union supports', () => {

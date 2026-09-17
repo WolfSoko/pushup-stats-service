@@ -28,7 +28,11 @@ type Store = TrainingPlanActionsStore;
  *  - `noop` / `in-flight` — nothing was written
  */
 export type ResetExerciseResult =
-  'reset' | 'kept-entries' | 'noop' | 'in-flight' | 'not-ready';
+  | 'reset'
+  | 'kept-entries'
+  | 'noop'
+  | 'in-flight'
+  | 'not-ready';
 
 /**
  * The plan's own entries for one exercise on one day, newest first. Only

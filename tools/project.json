@@ -16,9 +16,12 @@
         "{workspaceRoot}/scripts/*.sh",
         "{workspaceRoot}/pnpm-workspace.yaml",
         "{workspaceRoot}/patches/**/*",
-        "{workspaceRoot}/.prettierignore",
         "{workspaceRoot}/store/play/**/*",
-        "{workspaceRoot}/web/project.json"
+        "{workspaceRoot}/web/project.json",
+        "{workspaceRoot}/.oxfmtrc.json",
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/lint-staged.config.mjs",
+        "{workspaceRoot}/.husky/pre-commit"
       ],
       "options": {
         "passWithNoTests": true

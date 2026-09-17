@@ -67,7 +67,9 @@ Both callables default to `dryRun: true`. Run the migration dry-run first:
 
 ```js
 // authenticated as an admin (Firebase callable)
-await firebase.functions('europe-west3').httpsCallable('migratePushupsToExerciseEntries')({ dryRun: true });
+await firebase
+  .functions('europe-west3')
+  .httpsCallable('migratePushupsToExerciseEntries')({ dryRun: true });
 // → { dryRun: true, wouldCopy, wouldSkipExisting, wouldSkipInvalid }
 ```
 
@@ -81,7 +83,9 @@ Run during a low-traffic window — the job reads the whole `pushups`
 collection and writes in ≤500-doc batches.
 
 ```js
-await firebase.functions('europe-west3').httpsCallable('migratePushupsToExerciseEntries')({ dryRun: false });
+await firebase
+  .functions('europe-west3')
+  .httpsCallable('migratePushupsToExerciseEntries')({ dryRun: false });
 // → { copied, skippedExisting, skippedInvalid }
 ```
 
@@ -109,7 +113,9 @@ await firebase.functions('europe-west3').httpsCallable('migratePushupsToExercise
 Re-run the dry-run after a committed run:
 
 ```js
-await firebase.functions('europe-west3').httpsCallable('migratePushupsToExerciseEntries')({ dryRun: true });
+await firebase
+  .functions('europe-west3')
+  .httpsCallable('migratePushupsToExerciseEntries')({ dryRun: true });
 // → wouldCopy: 0, wouldSkipExisting: <all valid>, wouldSkipInvalid: <same as before>
 ```
 
@@ -122,10 +128,14 @@ Deletes only `exerciseEntries` docs carrying `migratedFrom:'pushups'`
 never be deleted). Dry-run first:
 
 ```js
-await firebase.functions('europe-west3').httpsCallable('rollbackPushupUnification')({ dryRun: true });
+await firebase
+  .functions('europe-west3')
+  .httpsCallable('rollbackPushupUnification')({ dryRun: true });
 // → { dryRun: true, wouldDelete }
 
-await firebase.functions('europe-west3').httpsCallable('rollbackPushupUnification')({ dryRun: false });
+await firebase
+  .functions('europe-west3')
+  .httpsCallable('rollbackPushupUnification')({ dryRun: false });
 // → { deleted }
 ```
 

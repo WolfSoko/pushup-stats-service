@@ -38,7 +38,9 @@ Implement TDD for: $ARGUMENTS
 ```typescript
 // auth/login.test.ts
 it('should return JWT token for valid credentials', async () => {
-  const res = await request(app).post('/auth/login').send({ email: 'test@example.com', password: 'password123' });
+  const res = await request(app)
+    .post('/auth/login')
+    .send({ email: 'test@example.com', password: 'password123' });
 
   expect(res.status).toBe(200);
   expect(res.body.token).toBeDefined();

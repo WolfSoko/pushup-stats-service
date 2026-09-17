@@ -11,7 +11,11 @@ import type { ExerciseDefinition } from './exercise.models';
  *  - `manual`     — the entry dialog; always available.
  */
 export type CaptureMethod =
-  'pose' | 'proximity' | 'hold-timer' | 'stopwatch' | 'manual';
+  | 'pose'
+  | 'proximity'
+  | 'hold-timer'
+  | 'stopwatch'
+  | 'manual';
 
 export type CaptureCapableDefinition = Pick<
   ExerciseDefinition,

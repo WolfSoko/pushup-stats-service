@@ -24,17 +24,18 @@ updates:
           - '@angular/*'
           - '@angular-devkit/*'
           - '@schematics/*'
-          - 'angular-eslint'
+          - '@angular-eslint/*'
           - 'jest-preset-angular'
           - 'ng2-charts'
-      # Group ESLint and TypeScript-related packages
+      # Group linting and formatting packages
       linting:
         patterns:
-          - 'eslint*'
-          - '@eslint/*'
-          - 'typescript-eslint'
+          - 'oxlint'
+          - 'oxlint-tsgolint'
+          - 'oxfmt'
+          - 'eslint'
+          - 'eslint-plugin-playwright'
           - '@typescript-eslint/*'
-          - 'prettier'
       # Group testing frameworks
       testing:
         patterns:

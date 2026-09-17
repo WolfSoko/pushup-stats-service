@@ -10,7 +10,11 @@
  */
 
 export type MeasurementType =
-  'reps' | 'time' | 'distance' | 'weight' | 'distance-time';
+  | 'reps'
+  | 'time'
+  | 'distance'
+  | 'weight'
+  | 'distance-time';
 
 /**
  * Categories follow a movement-pattern taxonomy (Dan John / functional

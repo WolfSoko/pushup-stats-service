@@ -404,15 +404,15 @@ export class App {
   }
 
   handleOpenAutoCount(): void {
-    this.quickAdd.openAutoCount();
+    void this.quickAdd.openAutoCount();
   }
 
   handleOpenExerciseTimer(): void {
-    this.quickAdd.openExerciseTimer();
+    void this.quickAdd.openExerciseTimer();
   }
 
   handleOpenStopwatch(): void {
-    this.quickAdd.openStopwatch();
+    void this.quickAdd.openStopwatch();
   }
 
   handleFillToGoal(): void {

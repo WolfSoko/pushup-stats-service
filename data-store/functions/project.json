@@ -33,17 +33,6 @@
         }
       }
     },
-    "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.mjs",
-        {
-          "externalDependencies": ["eslint"]
-        }
-      ]
-    },
     "generate-exercise-rules": {
       "executor": "nx:run-commands",
       "inputs": [
