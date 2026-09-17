@@ -18,6 +18,32 @@ $strip-max-width: 760px;
   pointer-events: none;
 }
 
+// A wide viewport driven by a mouse has room to spare for content, and the
+// strip occupying 76px of it permanently buys nothing there — a mouse can
+// reach the bottom edge in one throw. So it parks below the edge, leaving a
+// sliver as the affordance, and slides back in once the pointer comes near.
+// Touch and narrow viewports keep it pinned: there is no hover to bring it
+// back, and `pointer: fine` is what tells the two apart.
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  :host {
+    transform: translateY(calc(100% - 10px));
+    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // `:focus-within` is not decoration: tabbing into the strip is the
+  // keyboard's only way to bring it back.
+  :host(.revealed),
+  :host(:focus-within) {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host {
+      transition: none;
+    }
+  }
+}
+
 .arc-nav {
   pointer-events: auto;
   max-width: $strip-max-width;

@@ -18,6 +18,13 @@ function pointer(type: string, clientX: number): MouseEvent {
   return event;
 }
 
+/** The same stand-in, for the document-level reveal listener. */
+function verticalPointer(clientY: number, pointerType = 'mouse'): MouseEvent {
+  const event = new MouseEvent('pointermove', { clientY, bubbles: true });
+  Object.defineProperty(event, 'pointerType', { value: pointerType });
+  return event;
+}
+
 describe('ArcNavComponent', () => {
   const items: MainNavItem[] = [
     { path: '/app', icon: 'dashboard', label: 'Dashboard', exact: true },
@@ -422,6 +429,56 @@ describe('ArcNavComponent', () => {
 
     // then
     expect(router.url).toBe('/blog');
+  });
+
+  it('should slide the parked strip back in while the mouse is near the bottom edge', async () => {
+    // given the nav on a viewport whose bottom edge is at `innerHeight`
+    const { fixture } = await renderNav();
+    // The strip's parent is the component host, which carries the class.
+    const host = screen.getByTestId('arc-nav').parentElement;
+
+    // when the mouse comes within the reveal zone
+    document.dispatchEvent(verticalPointer(window.innerHeight - 20));
+    fixture.detectChanges();
+
+    // then the strip is called back in
+    expect(host?.classList.contains('revealed')).toBe(true);
+
+    // and when the mouse leaves that zone again
+    document.dispatchEvent(verticalPointer(10));
+    fixture.detectChanges();
+
+    // then it parks
+    expect(host?.classList.contains('revealed')).toBe(false);
+  });
+
+  it('should ignore a touch pointer near the bottom edge', async () => {
+    // given the nav
+    const { fixture } = await renderNav();
+    // The strip's parent is the component host, which carries the class.
+    const host = screen.getByTestId('arc-nav').parentElement;
+
+    // when a finger passes along the bottom edge — a touch device never
+    // parks the strip, and a touch has no way to un-reveal it afterwards
+    document.dispatchEvent(verticalPointer(window.innerHeight - 20, 'touch'));
+    fixture.detectChanges();
+
+    // then nothing latches
+    expect(host?.classList.contains('revealed')).toBe(false);
+  });
+
+  it('should park the strip only on a wide viewport with a fine pointer', () => {
+    // given the component's compiled styles — jsdom resolves no media
+    // query, so the guard is asserted where it is written
+    const styles = (
+      ArcNavComponent as unknown as { ɵcmp: { styles: string[] } }
+    ).ɵcmp.styles.join(' ');
+
+    // then the parking transform sits behind both conditions: a touch
+    // phone has no hover to bring the strip back, so it must stay pinned
+    expect(styles).toMatch(
+      /@media[^{]*min-width:\s*900px[^{]*hover:\s*hover[^{]*pointer:\s*fine[^{]*\{[^@]*translateY\(/
+    );
   });
 
   it('should fade the strip out at its ends, and measure from the track', () => {

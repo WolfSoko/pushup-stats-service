@@ -27,6 +27,23 @@ The arc nav wraps by rendering its entries three times and keeping the scroll po
 - Writing `scrollLeft` cuts a smooth `scrollTo` or a touch fling short, so the jump waits until scroll events have been quiet for a moment (`SETTLE_MS`). A mouse drag is the exception: its writes are our own, so it wraps immediately.
 - Track the `@for` by index, not by route: the same path appears three times.
 
+## Die Arc-Nav parkt auf dem Desktop unter dem Rand
+
+Auf `(min-width: 900px) and (hover: hover) and (pointer: fine)` schiebt sich die
+Leiste bis auf einen 10px-Streifen aus dem Bild und fährt zurück, sobald die Maus
+in die unteren 110px kommt (`REVEAL_ZONE_PX` in `arc-nav.component.ts`). Was daran
+hängt:
+
+- **Die Media-Query braucht `pointer: fine`.** Ein Touchgerät hat kein Hover, das
+  die Leiste zurückholen könnte — dort muss sie fest stehen bleiben. Der
+  `pointermove`-Listener filtert aus demselben Grund auf `pointerType === 'mouse'`.
+- **`:focus-within` ist kein Schmuck.** Hineintabben ist der einzige Weg der
+  Tastatur, die geparkte Leiste zu holen.
+- **`.app-content`/`.app-footer` behalten ihre 96px unten**, obwohl die Leiste dort
+  meist nicht steht. Sie fährt genau dann ein, wenn der Zeiger am unteren Rand ist —
+  also genau dann, wenn jemand nach einem Footer-Link greift. Ohne die Reserve würde
+  sie ihn verdecken.
+
 ## Edge-to-Edge und Safe-Area-Insets
 
 Die Play-Store-App ist eine TWA — Chrome rendert die Website, und ab targetSdk 35
