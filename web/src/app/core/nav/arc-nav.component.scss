@@ -96,7 +96,11 @@ $parked-sliver: 10px;
   background: var(--mat-toolbar-container-background-color, #1e1e1e);
   color: var(--mat-toolbar-container-text-color, #fff);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50% 50% 0 0 / 28px 28px 0 0;
+  // How far the top edge bulges above the corners, as one ellipse across
+  // the whole width. Named because the items ride this very curve —
+  // `ARC_RISE_PX` in arc-nav.geometry.ts is its other half.
+  --arc-rise: 28px;
+  border-radius: 50% 50% 0 0 / var(--arc-rise) var(--arc-rise) 0 0;
   box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.25);
   // Clip the items to the curved outline so nothing pokes out at the corners.
   overflow: hidden;

@@ -94,8 +94,16 @@ test.describe('Arc nav labels @smoke', () => {
         return null;
       }
       const box = strip.getBoundingClientRect();
-      const rise = 28; // the border-radius' vertical radius
+      const rise = Number.parseFloat(
+        getComputedStyle(strip).getPropertyValue('--arc-rise')
+      );
       const half = track.clientWidth / 2;
+      // The curve climbs across an item, so the tightest point of a disc is
+      // its inner side, not its middle.
+      const edgeAt = (offset: number) => {
+        const u = Math.min(1, Math.abs(offset) / half);
+        return rise * (1 - Math.sqrt(1 - u * u));
+      };
       const middle = track.scrollLeft + half;
       const tight: string[] = [];
       let measured = 0;
@@ -110,13 +118,14 @@ test.describe('Arc nav labels @smoke', () => {
           continue;
         }
         measured += 1;
-        const u = Math.min(1, Math.abs(dx) / half);
-        const edge = rise * (1 - Math.sqrt(1 - u * u));
+        const reach = (disc.width / 2) * Math.sign(dx || 1);
+        const edge = Math.min(edgeAt(dx - reach), edgeAt(dx + reach));
         const above = disc.top - box.top - edge;
         const below = box.bottom - label.bottom;
-        // 7px and 0px: the strip that was too short left 5px above the
-        // curve and put the label 5px past the bottom edge.
-        if (above < 7 || below < 0) {
+        // Measured on the strip that was too short, the tightest item had
+        // about 2px over the curve and put its label 5px past the bottom
+        // edge; with room it keeps over 6px and stays inside.
+        if (above < 5 || below < 0) {
           tight.push(
             `${item.textContent?.trim()}: ${Math.round(above)}px above the edge, ${Math.round(below)}px below the label`
           );

@@ -177,7 +177,11 @@ mat-card-header + mat-card-footer {
   // make the fixed part, and the item's label — `0.66rem` over a 1.4 line,
   // scaled the same 1.3 — makes the rest. Written in `rem` so a system font
   // scaled up grows the strip instead of being clipped by it.
-  --arc-nav-height: calc(64.6px + 1.21rem);
+  //
+  // The fixed part carries a few px over that arithmetic: a line box is a
+  // little taller than font-size times line-height, and the outermost items
+  // lean (`arcTilt`), which lifts the top of the box they are measured by.
+  --arc-nav-height: calc(68px + 1.21rem);
 }
 
 // Lift the snackbar clear of the arc nav. That strip is fixed to the bottom
