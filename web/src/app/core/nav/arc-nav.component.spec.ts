@@ -5,6 +5,7 @@ import { render, screen } from '@testing-library/angular';
 
 import { AUTO_HIDE_DELAY_MS } from './arc-nav-reveal';
 import { ArcNavComponent } from './arc-nav.component';
+import { STRIP_MAX_PX } from './arc-nav.geometry';
 import type { MainNavItem } from './main-nav-items';
 
 @Component({ template: '' })
@@ -661,6 +662,37 @@ describe('ArcNavComponent', () => {
     // and it is no longer behind the mouse-only query that kept a phone
     // pinned: on touch the reveal comes from that drag instead
     expect(styles).not.toMatch(/pointer:\s*fine/);
+  });
+
+  it('should fade a phone-width strip out over less than a wide one', () => {
+    // given the `--edge-fade` the stylesheet derives from the strip's own
+    // width — jsdom resolves no mask, so the rule is read where it is
+    // written and the two widths are worked out here
+    const styles = (
+      ArcNavComponent as unknown as { ɵcmp: { styles: string[] } }
+    ).ɵcmp.styles.join(' ');
+    const clamp =
+      /--edge-fade:\s*clamp\(\s*(\d+)px,\s*calc\(\s*(\d+)%\s*-\s*(\d+)px\s*\),\s*(\d+)px\s*\)/.exec(
+        styles
+      );
+    if (!clamp) {
+      throw new Error('--edge-fade is no longer a clamp of min, share, max');
+    }
+    const [min, share, offset, max] = clamp.slice(1).map(Number);
+    const fadeFor = (strip: number) =>
+      Math.min(Math.max(min, (share / 100) * strip - offset), max);
+
+    // then the widest strip fades over three quarters of an item, as it
+    // always has — the desktop end of this is not the one that was wrong
+    expect(fadeFor(STRIP_MAX_PX)).toBe(66);
+
+    // and a phone, where the strip is the viewport, fades over about half
+    // of that instead of eating half an item at each end
+    expect(fadeFor(390)).toBeGreaterThan(14);
+    expect(fadeFor(390)).toBeLessThan(26);
+
+    // and it never runs out altogether on the narrowest phone
+    expect(fadeFor(320)).toBeGreaterThanOrEqual(12);
   });
 
   it('should fade the strip out at its ends, and measure from the track', () => {
