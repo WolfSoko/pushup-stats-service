@@ -647,6 +647,23 @@ describe('ArcNavComponent', () => {
     expect(host?.classList.contains('revealed')).toBe(true);
   });
 
+  it('should bring the parked strip back when its grip is taken hold of', async () => {
+    // given the parked nav
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    const grip = screen.getByTestId('arc-nav-grip');
+    await park(fixture);
+    expect(host?.classList.contains('revealed')).toBe(false);
+
+    // when a finger lands on the tab that is left standing on screen
+    grip.dispatchEvent(pointer('pointerdown', 0, 'touch'));
+    fixture.detectChanges();
+
+    // then the strip comes in
+    expect(host?.classList.contains('revealed')).toBe(true);
+  });
+
   it('should park the strip on every viewport, phone included', () => {
     // given the component's compiled styles — jsdom resolves no media
     // query, so the rule is asserted where it is written

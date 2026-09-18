@@ -45,6 +45,38 @@ $parked-sliver: 10px;
   }
 }
 
+// Something to take hold of. Parked, the strip leaves a 10px line of its own
+// background, and a line reads as an edge rather than as a handle. The tab
+// stands on the arc's highest point — its own height is what rises above
+// that line — and it rides along when the strip comes in, where it reads as
+// the handle of the drawer it just opened.
+.grip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 14px;
+  pointer-events: auto;
+  cursor: pointer;
+  background: var(--mat-toolbar-container-background-color, #1e1e1e);
+  color: var(--mat-toolbar-container-text-color, #fff);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.22);
+
+  // The grab lines every drawer handle wears.
+  &::after {
+    content: '';
+    width: 24px;
+    height: 3px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+}
+
 .arc-nav {
   pointer-events: auto;
   max-width: $strip-max-width;
@@ -201,6 +233,11 @@ $parked-sliver: 10px;
 }
 
 :host-context(html.light-theme) {
+  .grip {
+    background: #ffffff;
+    color: #334155;
+    box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.12);
+  }
   .arc-nav {
     background: #ffffff;
     color: #334155;
