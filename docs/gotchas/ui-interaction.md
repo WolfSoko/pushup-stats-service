@@ -54,7 +54,8 @@ in `web/src/app/core/nav/arc-nav-reveal.ts`:
   oben beginnt, gehört dem Inhalt und lässt sie stehen.
 - **`:focus-within` ist kein Schmuck.** Hineintabben ist der einzige Weg der
   Tastatur, die geparkte Leiste zu holen.
-- **`.app-content`/`.app-footer` behalten ihre 96px unten**, obwohl die Leiste dort
+- **`.app-content`/`.app-footer` reservieren `--arc-nav-height` plus 20px unten**
+  (die Leiste plus die Lasche, die auf ihr steht), obwohl die Leiste dort
   meist nicht steht. Sie kommt zurück, sobald jemand an den unteren Rand greift —
   also auch dann, wenn dort ein Footer-Link liegt. Ohne die Reserve würde sie ihn
   verdecken.

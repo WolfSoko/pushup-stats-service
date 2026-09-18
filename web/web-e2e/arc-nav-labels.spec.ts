@@ -64,14 +64,13 @@ test.describe('Arc nav labels @smoke', () => {
   test('keeps every item inside the strip it is clipped to', async ({
     page,
   }) => {
-    // given the nav, with the strip out
+    // given the nav, held out by a pointer resting at the bottom edge —
+    // not by its grip, which stops taking pointer events the moment the
+    // strip is out and would hand the click a moving target
     await page.goto('/');
     await expect(page.getByTestId('arc-nav')).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
-    // A click, not a tap: this project drives a mouse, and it doubles as
-    // the hover that holds the strip out. The strip slides, so wait for it
-    // to arrive rather than for a moment to pass.
-    await page.getByTestId('arc-nav-grip').click();
+    await page.mouse.move(206, 845);
     await expect
       .poll(() =>
         page.evaluate(() => {
@@ -83,31 +82,35 @@ test.describe('Arc nav labels @smoke', () => {
       )
       .toBeGreaterThan(60);
 
-    // when each item is measured against the strip it is clipped to — the
-    // top edge is an ellipse the items ride (`arcDrop`), so an item's room
-    // above itself is measured against that curve, not against the box
-    const overrun = await page.evaluate(() => {
-      const nav = document.querySelector('[data-testid="arc-nav"]');
-      if (!nav) {
+    // when each item is measured against the strip it is clipped to. The
+    // top edge is an ellipse the items ride (`arcDrop`), so the room an
+    // item keeps above itself is measured against that curve rather than
+    // against the box — and from the same untransformed offsets the
+    // component measures, since the tilt swings a transformed rect sideways.
+    const fit = await page.evaluate(() => {
+      const strip = document.querySelector('[data-testid="arc-nav"]');
+      const track = strip?.querySelector<HTMLElement>('.track');
+      if (!strip || !track) {
         return null;
       }
-      const box = nav.getBoundingClientRect();
+      const box = strip.getBoundingClientRect();
       const rise = 28; // the border-radius' vertical radius
-      const half = box.width / 2;
-      const items = [...nav.querySelectorAll<HTMLElement>('.track a')];
+      const half = track.clientWidth / 2;
+      const middle = track.scrollLeft + half;
       const tight: string[] = [];
-      for (const item of items) {
-        const rect = item.getBoundingClientRect();
-        const centre = rect.left + rect.width / 2 - box.left;
-        if (centre < 0 || centre > box.width) {
-          continue; // a wrap clone, parked off to the side
+      let measured = 0;
+      for (const item of track.querySelectorAll<HTMLElement>('a')) {
+        const dx = item.offsetLeft + item.offsetWidth / 2 - middle;
+        if (Math.abs(dx) > half) {
+          continue; // a wrap clone, waiting off to the side
         }
         const disc = item.querySelector('.disc')?.getBoundingClientRect();
         const label = item.querySelector('.label')?.getBoundingClientRect();
         if (!disc || !label) {
           continue;
         }
-        const u = Math.min(1, Math.abs(centre - half) / half);
+        measured += 1;
+        const u = Math.min(1, Math.abs(dx) / half);
         const edge = rise * (1 - Math.sqrt(1 - u * u));
         const above = disc.top - box.top - edge;
         const below = box.bottom - label.bottom;
@@ -119,14 +122,14 @@ test.describe('Arc nav labels @smoke', () => {
           );
         }
       }
-      return { count: items.length, tight };
+      return { measured, tight };
     });
 
-    // then items were measured at all …
-    expect(overrun).not.toBeNull();
-    expect(overrun?.count).toBeGreaterThan(0);
+    // then items were actually measured — an empty set must not pass …
+    expect(fit).not.toBeNull();
+    expect(fit?.measured).toBeGreaterThan(2);
     // … and none of them is grazed by the curved edge or runs out the
     // bottom, which is what a strip too short for its own scaled items did
-    expect(overrun?.tight).toEqual([]);
+    expect(fit?.tight).toEqual([]);
   });
 });
