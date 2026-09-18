@@ -3,7 +3,6 @@
 // transform and opacity from its distance to the middle (see
 // arc-nav.geometry.ts); this file only shapes the strip and the items.
 $item-width: 88px;
-$bar-height: 76px;
 // Keeps the strip from running wider than the page on desktop. Mirrored by
 // `STRIP_MAX_PX` in arc-nav.geometry.ts, which seeds the curve from it.
 $strip-max-width: 760px;
@@ -21,7 +20,7 @@ $parked-sliver: 10px;
   pointer-events: none;
 }
 
-// The strip occupying 76px of the viewport permanently buys
+// The strip occupying a row of the viewport permanently buys
 // nothing once it has been seen: it is one throw of the mouse or one pull
 // from the bottom edge away. So it parks below the edge on every viewport,
 // leaving a sliver as the affordance, and comes back on what
@@ -89,12 +88,19 @@ $parked-sliver: 10px;
   pointer-events: auto;
   max-width: $strip-max-width;
   margin-inline: auto;
-  height: calc(#{$bar-height} + env(safe-area-inset-bottom, 0px));
+  // Tall enough for the middle item, which the arc scales up — see
+  // `--arc-nav-height` in styles.scss. At a flat 76px its label ran out the
+  // bottom and the curved top edge grazed every icon.
+  height: calc(var(--arc-nav-height) + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--mat-toolbar-container-background-color, #1e1e1e);
   color: var(--mat-toolbar-container-text-color, #fff);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50% 50% 0 0 / 28px 28px 0 0;
+  // How far the top edge bulges above the corners, as one ellipse across
+  // the whole width. Named because the items ride this very curve —
+  // `ARC_RISE_PX` in arc-nav.geometry.ts is its other half.
+  --arc-rise: 28px;
+  border-radius: 50% 50% 0 0 / var(--arc-rise) var(--arc-rise) 0 0;
   box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.25);
   // Clip the items to the curved outline so nothing pokes out at the corners.
   overflow: hidden;
@@ -149,7 +155,10 @@ $parked-sliver: 10px;
   // Half the strip minus half an item on each side, so the first and the
   // last entry can sit in the middle like every other.
   padding-inline: calc(50% - #{$item-width * 0.5});
-  padding-top: 6px;
+  // Also the clearance between an item and the strip's curved top edge:
+  // items ride that same ellipse (`arcDrop`), so whatever is set here is
+  // what every one of them keeps above itself, wherever it sits.
+  padding-top: 10px;
 
   &::-webkit-scrollbar {
     display: none;

@@ -168,13 +168,30 @@ mat-card-header + mat-card-footer {
   margin-top: 10px;
 }
 
+:root {
+  // The arc nav's height, in one place — `arc-nav.component.scss` shapes the
+  // strip, `app.scss` reserves room for it and the snackbar clears it.
+  //
+  // The tallest thing it has to hold is its middle item, which `arcScale`
+  // scales 1.3: the track's 10px top padding, a 40px disc and the 2px gap
+  // make the fixed part, and the item's label — `0.66rem` over a 1.4 line,
+  // scaled the same 1.3 — makes the rest. Written in `rem` so a system font
+  // scaled up grows the strip instead of being clipped by it.
+  //
+  // The fixed part carries a few px over that arithmetic: a line box is a
+  // little taller than font-size times line-height, and the outermost items
+  // lean (`arcTilt`), which lifts the top of the box they are measured by.
+  --arc-nav-height: calc(68px + 1.21rem);
+}
+
 // Lift the snackbar clear of the arc nav. That strip is fixed to the bottom
 // edge on every viewport — a width breakpoint would miss the landscape phone,
 // which is wide enough to look like a desktop and short enough that the strip
-// still covers a quarter of the screen. 76px is `$bar-height` in
-// arc-nav.component.scss.
+// still covers a quarter of the screen.
 .mat-mdc-snack-bar-container {
-  margin-bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
+  margin-bottom: calc(
+    var(--arc-nav-height) + 8px + env(safe-area-inset-bottom, 0px)
+  ) !important;
 }
 
 .mdc-text-field--outlined {
