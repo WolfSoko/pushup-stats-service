@@ -60,4 +60,63 @@ test.describe('Arc nav labels @smoke', () => {
     // … and none of them crops its own ascenders
     expect(measured.clipped).toEqual([]);
   });
+
+  test('keeps every item inside the strip it is clipped to', async ({
+    page,
+  }) => {
+    // given the nav, with the strip out
+    await page.goto('/');
+    await expect(page.getByTestId('arc-nav')).toBeVisible();
+    await page.evaluate(() => document.fonts.ready);
+    // A click, not a tap: this project drives a mouse, and it doubles as
+    // the hover that holds the strip out.
+    await page.getByTestId('arc-nav-grip').click();
+    await page.waitForTimeout(500);
+
+    // when each item is measured against the strip it is clipped to — the
+    // top edge is an ellipse the items ride (`arcDrop`), so an item's room
+    // above itself is measured against that curve, not against the box
+    const overrun = await page.evaluate(() => {
+      const nav = document.querySelector('[data-testid="arc-nav"]');
+      if (!nav) {
+        return null;
+      }
+      const box = nav.getBoundingClientRect();
+      const rise = 28; // the border-radius' vertical radius
+      const half = box.width / 2;
+      const items = [...nav.querySelectorAll<HTMLElement>('.track a')];
+      const tight: string[] = [];
+      for (const item of items) {
+        const rect = item.getBoundingClientRect();
+        const centre = rect.left + rect.width / 2 - box.left;
+        if (centre < 0 || centre > box.width) {
+          continue; // a wrap clone, parked off to the side
+        }
+        const disc = item.querySelector('.disc')?.getBoundingClientRect();
+        const label = item.querySelector('.label')?.getBoundingClientRect();
+        if (!disc || !label) {
+          continue;
+        }
+        const u = Math.min(1, Math.abs(centre - half) / half);
+        const edge = rise * (1 - Math.sqrt(1 - u * u));
+        const above = disc.top - box.top - edge;
+        const below = box.bottom - label.bottom;
+        // 7px and 0px: the strip that was too short left 5px above the
+        // curve and put the label 5px past the bottom edge.
+        if (above < 7 || below < 0) {
+          tight.push(
+            `${item.textContent?.trim()}: ${Math.round(above)}px above the edge, ${Math.round(below)}px below the label`
+          );
+        }
+      }
+      return { count: items.length, tight };
+    });
+
+    // then items were measured at all …
+    expect(overrun).not.toBeNull();
+    expect(overrun?.count).toBeGreaterThan(0);
+    // … and none of them is grazed by the curved edge or runs out the
+    // bottom, which is what a strip too short for its own scaled items did
+    expect(overrun?.tight).toEqual([]);
+  });
 });

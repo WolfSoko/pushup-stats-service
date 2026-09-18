@@ -171,10 +171,10 @@ mat-card-header + mat-card-footer {
 // Lift the snackbar clear of the arc nav. That strip is fixed to the bottom
 // edge on every viewport — a width breakpoint would miss the landscape phone,
 // which is wide enough to look like a desktop and short enough that the strip
-// still covers a quarter of the screen. 76px is `$bar-height` in
+// still covers a quarter of the screen. 88px is `$bar-height` in
 // arc-nav.component.scss.
 .mat-mdc-snack-bar-container {
-  margin-bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
+  margin-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .mdc-text-field--outlined {

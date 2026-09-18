@@ -3,7 +3,12 @@
 // transform and opacity from its distance to the middle (see
 // arc-nav.geometry.ts); this file only shapes the strip and the items.
 $item-width: 88px;
-$bar-height: 76px;
+// Room for the tallest item the arc makes: the middle one is scaled 1.3
+// (`arcScale`), so its 40px disc, the 2px gap and its label come to ~74px —
+// and that stack starts `padding-top` below the strip's top edge. At 76px
+// the labels ran out the bottom and the curved edge grazed the icons. The
+// few px over the 74 are what a system font scaled up a notch eats.
+$bar-height: 88px;
 // Keeps the strip from running wider than the page on desktop. Mirrored by
 // `STRIP_MAX_PX` in arc-nav.geometry.ts, which seeds the curve from it.
 $strip-max-width: 760px;
@@ -149,7 +154,10 @@ $parked-sliver: 10px;
   // Half the strip minus half an item on each side, so the first and the
   // last entry can sit in the middle like every other.
   padding-inline: calc(50% - #{$item-width * 0.5});
-  padding-top: 6px;
+  // Also the clearance between an item and the strip's curved top edge:
+  // items ride that same ellipse (`arcDrop`), so whatever is set here is
+  // what every one of them keeps above itself, wherever it sits.
+  padding-top: 10px;
 
   &::-webkit-scrollbar {
     display: none;

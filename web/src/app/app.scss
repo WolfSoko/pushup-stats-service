@@ -209,8 +209,9 @@ mat-sidenav-content {
   padding: 12px;
   padding-inline: max(12px, env(safe-area-inset-left, 0px))
     max(12px, env(safe-area-inset-right, 0px));
-  // Room for the arc nav along the bottom edge, on every viewport.
-  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  // Room for the arc nav along the bottom edge, on every viewport: the
+  // strip plus the grip standing on it.
+  padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width: 560px) {
@@ -234,7 +235,7 @@ mat-sidenav-content {
     gap: 24px;
   }
 
-  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
 
   @media (max-width: 767px) {
     nav {
