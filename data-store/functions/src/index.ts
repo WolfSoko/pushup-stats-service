@@ -35,6 +35,7 @@ export {
   adminUpdateUserEntry,
 } from './functions-admin-user-entries';
 export { adminGetUserDetails } from './functions-admin-user-details';
+export { adminFriendshipGraph } from './functions-admin-network';
 
 export {
   getMigrationStatuses,

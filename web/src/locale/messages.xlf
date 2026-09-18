@@ -2959,9 +2959,18 @@
         <source>Android-App-Test</source>
       </segment>
     </unit>
+    <unit id="admin.network.title">
+      <notes>
+        <note category="location">web/src/app/admin/admin-page.component.html:29,32</note>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Freundschaftsnetz</source>
+      </segment>
+    </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:30,32</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:36,38</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -2969,7 +2978,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:35,37</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:41,43</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -2977,7 +2986,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:45,48</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:51,54</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -2985,7 +2994,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:61,62</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:67,68</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -2993,7 +3002,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:69,70</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:75,76</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -3001,7 +3010,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:71,72</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:77,78</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -3009,7 +3018,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:90,92</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:96,98</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -3017,7 +3026,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:115,116</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:121,122</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -3025,7 +3034,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:130,131</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:136,137</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -3033,7 +3042,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:141,142</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:147,148</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -3041,7 +3050,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:152,153</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:158,159</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -3049,7 +3058,7 @@
     </unit>
     <unit id="admin.col.entries">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:169,171</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:175,177</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -3057,7 +3066,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:180,182</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:186,188</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3065,7 +3074,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:193,195</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:199,201</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -3519,6 +3528,190 @@
       </notes>
       <segment>
         <source>Zurück zum Admin-Bereich</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.legend.accepted">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-graph.component.ts:234</note>
+      </notes>
+      <segment>
+        <source>Bestätigte Freundschaft</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.legend.pending">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-graph.component.ts:239</note>
+      </notes>
+      <segment>
+        <source>Offene Anfrage (Pfeil: wer gefragt hat)</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.legend.declined">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-graph.component.ts:244</note>
+      </notes>
+      <segment>
+        <source>Abgelehnt</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.summary">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-graph.component.ts:281</note>
+      </notes>
+      <segment>
+        <source>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.intro">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:5,8</note>
+      </notes>
+      <segment>
+        <source> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </source>
+      </segment>
+    </unit>
+    <unit id="admin.network.back">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:10,12</note>
+      </notes>
+      <segment>
+        <source>Zur Adminseite</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.retry">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:27,29</note>
+      </notes>
+      <segment>
+        <source> Erneut versuchen </source>
+      </segment>
+    </unit>
+    <unit id="admin.network.empty">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:40,42</note>
+      </notes>
+      <segment>
+        <source>Noch niemand ist mit jemandem vernetzt.</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.truncated">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:50,53</note>
+      </notes>
+      <segment>
+        <source>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.users">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:62,65</note>
+      </notes>
+      <segment>
+        <source>vernetzte Konten</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.accepted">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:66,69</note>
+      </notes>
+      <segment>
+        <source>Freundschaften</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.pending">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:70,73</note>
+      </notes>
+      <segment>
+        <source>offene Anfragen</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.declined">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:74,77</note>
+      </notes>
+      <segment>
+        <source>abgelehnt</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.isolated">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:78,81</note>
+      </notes>
+      <segment>
+        <source>ohne Verbindung</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.toggleTable">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:99,101</note>
+      </notes>
+      <segment>
+        <source>Als Tabelle</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.col.source">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:111,113</note>
+      </notes>
+      <segment>
+        <source> Konto </source>
+      </segment>
+    </unit>
+    <unit id="admin.network.col.status">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:121,123</note>
+      </notes>
+      <segment>
+        <source> Beziehung </source>
+      </segment>
+    </unit>
+    <unit id="admin.network.col.target">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:133,135</note>
+      </notes>
+      <segment>
+        <source> Gegenüber </source>
+      </segment>
+    </unit>
+    <unit id="admin.network.toggleIsolated">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.html:155,158</note>
+      </notes>
+      <segment>
+        <source>Konten ohne Verbindung</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.anonymous">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.ts:111</note>
+      </notes>
+      <segment>
+        <source>Ohne Namen</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.status.accepted">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.ts:117</note>
+      </notes>
+      <segment>
+        <source>befreundet mit</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.status.pending">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.ts:120</note>
+      </notes>
+      <segment>
+        <source>hat angefragt</source>
+      </segment>
+    </unit>
+    <unit id="admin.network.status.declined">
+      <notes>
+        <note category="location">web/src/app/admin/network/friendship-network-page.component.ts:122</note>
+      </notes>
+      <segment>
+        <source>wurde abgelehnt von</source>
       </segment>
     </unit>
     <unit id="admin.details.title">
@@ -5128,7 +5321,7 @@
     </unit>
     <unit id="nav.desktop.aria">
       <notes>
-        <note category="location">web/src/app/core/nav/arc-nav.component.html:3,4</note>
+        <note category="location">web/src/app/core/nav/arc-nav.component.html:11,12</note>
       </notes>
       <segment>
         <source>Hauptnavigation</source>

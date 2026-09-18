@@ -332,6 +332,14 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'admin/network',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/network/friendship-network-page.component').then(
+        (m) => m.FriendshipNetworkPageComponent
+      ),
+  },
+  {
     path: 'admin/android-test',
     canActivate: [adminGuard],
     loadComponent: () =>

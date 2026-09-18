@@ -1,0 +1,171 @@
+<main class="page-wrap">
+  <app-page-header icon="hub" variant="admin">
+    <h1 page-title i18n="@@admin.network.title">Freundschaftsnetz</h1>
+    <p page-subtitle i18n="@@admin.network.intro">
+      Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine
+      Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde.
+    </p>
+    <a page-actions mat-stroked-button routerLink="/admin">
+      <mat-icon>arrow_back</mat-icon>
+      <span i18n="@@admin.network.back">Zur Adminseite</span>
+    </a>
+  </app-page-header>
+
+  @if (error(); as message) {
+    <mat-card class="notice">
+      <mat-card-content>
+        <mat-icon aria-hidden="true">error_outline</mat-icon>
+        <span data-testid="network-error">{{ message }}</span>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="load()"
+          i18n="@@admin.network.retry"
+        >
+          Erneut versuchen
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+
+  @if (loading()) {
+    <div class="centered"><mat-spinner diameter="40" /></div>
+  } @else if (graph().nodes.length === 0 && !error()) {
+    <mat-card class="notice">
+      <mat-card-content>
+        <mat-icon aria-hidden="true">hub</mat-icon>
+        <span i18n="@@admin.network.empty"
+          >Noch niemand ist mit jemandem vernetzt.</span
+        >
+      </mat-card-content>
+    </mat-card>
+  } @else if (graph().nodes.length > 0) {
+    @if (graph().truncated) {
+      <mat-card class="notice">
+        <mat-card-content>
+          <mat-icon aria-hidden="true">warning_amber</mat-icon>
+          <span i18n="@@admin.network.truncated"
+            >Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt
+            nur einen Ausschnitt.</span
+          >
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <mat-card>
+      <mat-card-content>
+        <ul class="stats" data-testid="network-stats">
+          <li>
+            <strong>{{ graph().nodes.length }}</strong>
+            <span i18n="@@admin.network.stat.users">vernetzte Konten</span>
+          </li>
+          <li>
+            <strong>{{ counts().accepted }}</strong>
+            <span i18n="@@admin.network.stat.accepted">Freundschaften</span>
+          </li>
+          <li>
+            <strong>{{ counts().pending }}</strong>
+            <span i18n="@@admin.network.stat.pending">offene Anfragen</span>
+          </li>
+          <li>
+            <strong>{{ counts().declined }}</strong>
+            <span i18n="@@admin.network.stat.declined">abgelehnt</span>
+          </li>
+          <li>
+            <strong>{{ graph().isolated.length }}</strong>
+            <span i18n="@@admin.network.stat.isolated">ohne Verbindung</span>
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <app-friendship-graph [nodes]="graph().nodes" [edges]="graph().edges" />
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-actions>
+        <button
+          mat-stroked-button
+          type="button"
+          data-testid="toggle-table"
+          (click)="showTable.set(!showTable())"
+        >
+          <mat-icon>table_rows</mat-icon>
+          <span i18n="@@admin.network.toggleTable">Als Tabelle</span>
+        </button>
+      </mat-card-actions>
+      @if (showTable()) {
+        <mat-card-content>
+          <table mat-table [dataSource]="rows()" data-testid="network-table">
+            <ng-container matColumnDef="source">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.network.col.source"
+              >
+                Konto
+              </th>
+              <td mat-cell *matCellDef="let row">{{ name(row.source) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.network.col.status"
+              >
+                Beziehung
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ statusLabel(row.status) }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="target">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                i18n="@@admin.network.col.target"
+              >
+                Gegenüber
+              </th>
+              <td mat-cell *matCellDef="let row">{{ name(row.target) }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: tableColumns"></tr>
+          </table>
+        </mat-card-content>
+      }
+    </mat-card>
+
+    @if (graph().isolated.length > 0) {
+      <mat-card>
+        <mat-card-actions>
+          <button
+            mat-stroked-button
+            type="button"
+            data-testid="toggle-isolated"
+            (click)="showIsolated.set(!showIsolated())"
+          >
+            <mat-icon>person_off</mat-icon>
+            <span i18n="@@admin.network.toggleIsolated"
+              >Konten ohne Verbindung</span
+            >
+          </button>
+        </mat-card-actions>
+        @if (showIsolated()) {
+          <mat-card-content>
+            <ul class="isolated" data-testid="isolated-list">
+              @for (user of graph().isolated; track user.uid) {
+                <li>{{ user.displayName ?? user.uid }}</li>
+              }
+            </ul>
+          </mat-card-content>
+        }
+      </mat-card>
+    }
+  }
+</main>

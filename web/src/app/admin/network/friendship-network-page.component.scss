@@ -1,0 +1,59 @@
+.page-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.notice mat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  li {
+    display: grid;
+    gap: 2px;
+  }
+
+  strong {
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--text-heading-secondary);
+  }
+
+  span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+}
+
+.isolated {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-body-secondary);
+  columns: 2;
+
+  @media (max-width: 600px) {
+    columns: 1;
+  }
+}
+
+table {
+  width: 100%;
+}

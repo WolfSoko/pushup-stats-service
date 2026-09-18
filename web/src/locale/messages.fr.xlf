@@ -13172,5 +13172,149 @@
         <target>Ajouter un ami</target>
       </segment>
     </unit>
+    <unit id="admin.network.title">
+      <segment state="initial">
+        <source>Freundschaftsnetz</source>
+        <target>Freundschaftsnetz</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.legend.accepted">
+      <segment state="initial">
+        <source>Bestätigte Freundschaft</source>
+        <target>Bestätigte Freundschaft</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.legend.pending">
+      <segment state="initial">
+        <source>Offene Anfrage (Pfeil: wer gefragt hat)</source>
+        <target>Offene Anfrage (Pfeil: wer gefragt hat)</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.legend.declined">
+      <segment state="initial">
+        <source>Abgelehnt</source>
+        <target>Abgelehnt</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.summary">
+      <segment state="initial">
+        <source>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</source>
+        <target>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.intro">
+      <segment state="initial">
+        <source> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </source>
+        <target> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </target>
+      </segment>
+    </unit>
+    <unit id="admin.network.back">
+      <segment state="initial">
+        <source>Zur Adminseite</source>
+        <target>Zur Adminseite</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.retry">
+      <segment state="initial">
+        <source> Erneut versuchen </source>
+        <target> Erneut versuchen </target>
+      </segment>
+    </unit>
+    <unit id="admin.network.empty">
+      <segment state="initial">
+        <source>Noch niemand ist mit jemandem vernetzt.</source>
+        <target>Noch niemand ist mit jemandem vernetzt.</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.truncated">
+      <segment state="initial">
+        <source>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</source>
+        <target>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.users">
+      <segment state="initial">
+        <source>vernetzte Konten</source>
+        <target>vernetzte Konten</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.accepted">
+      <segment state="initial">
+        <source>Freundschaften</source>
+        <target>Freundschaften</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.pending">
+      <segment state="initial">
+        <source>offene Anfragen</source>
+        <target>offene Anfragen</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.declined">
+      <segment state="initial">
+        <source>abgelehnt</source>
+        <target>abgelehnt</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.stat.isolated">
+      <segment state="initial">
+        <source>ohne Verbindung</source>
+        <target>ohne Verbindung</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.toggleTable">
+      <segment state="initial">
+        <source>Als Tabelle</source>
+        <target>Als Tabelle</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.col.source">
+      <segment state="initial">
+        <source> Konto </source>
+        <target> Konto </target>
+      </segment>
+    </unit>
+    <unit id="admin.network.col.status">
+      <segment state="initial">
+        <source> Beziehung </source>
+        <target> Beziehung </target>
+      </segment>
+    </unit>
+    <unit id="admin.network.col.target">
+      <segment state="initial">
+        <source> Gegenüber </source>
+        <target> Gegenüber </target>
+      </segment>
+    </unit>
+    <unit id="admin.network.toggleIsolated">
+      <segment state="initial">
+        <source>Konten ohne Verbindung</source>
+        <target>Konten ohne Verbindung</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.anonymous">
+      <segment state="initial">
+        <source>Ohne Namen</source>
+        <target>Ohne Namen</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.status.accepted">
+      <segment state="initial">
+        <source>befreundet mit</source>
+        <target>befreundet mit</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.status.pending">
+      <segment state="initial">
+        <source>hat angefragt</source>
+        <target>hat angefragt</target>
+      </segment>
+    </unit>
+    <unit id="admin.network.status.declined">
+      <segment state="initial">
+        <source>wurde abgelehnt von</source>
+        <target>wurde abgelehnt von</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

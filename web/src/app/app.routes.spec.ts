@@ -41,6 +41,7 @@ describe('appRoutes', () => {
       'assistant',
       'admin',
       'admin/migrations',
+      'admin/network',
       'admin/android-test',
       'admin/users/:uid/entries',
       '**',
