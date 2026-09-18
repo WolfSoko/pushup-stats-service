@@ -36,6 +36,11 @@ in `web/src/app/core/nav/arc-nav-reveal.ts`:
 - **Nach dem Start bleibt sie 5 Sekunden stehen** (`AUTO_HIDE_DELAY_MS`), damit die
   Navigation wenigstens einmal gesehen wird. Derselbe Timer läuft nach jeder
   Interaktion mit der Leiste neu an — sonst fährt sie mitten in einer Geste weg.
+- **Die Lasche gehört in den Host, nicht in die Leiste.** `.arc-nav` clippt auf
+  seine eigene gebogene Kontur (`overflow: hidden`), damit an den Ecken nichts
+  heraussteht — ein Griff, der oben herausragen soll, wird dort abgeschnitten.
+  Er sitzt deshalb als Geschwister der Leiste im Host und wird über
+  `bottom: 100%` auf deren Oberkante gestellt.
 - **Der Ausgangszustand ist „eingefahren", nicht „geparkt".** Die Park-Transform
   hängt an keiner Media-Query mehr, also stünde die einzige Navigation der App im
   server-gerenderten HTML zu 90% außerhalb des Bildes — und dauerhaft, wo kein

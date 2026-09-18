@@ -1,3 +1,11 @@
+<!-- Held in the host, not in the strip: the strip clips to its own curved
+     outline, and a tab that sticks out above it would be cut off. -->
+<span
+  class="grip"
+  aria-hidden="true"
+  data-testid="arc-nav-grip"
+  (pointerdown)="reveal.hold()"
+></span>
 <nav
   class="arc-nav"
   aria-label="Hauptnavigation"
