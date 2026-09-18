@@ -66,12 +66,14 @@ $parked-sliver: 10px;
   // vanishing mid-stride.
   //
   // Held in a custom property so Sass leaves the mixed units alone. The
-  // fade grows with the strip and only the widest one gets the full three
-  // quarters of an item: on a phone the strip is the viewport, and the
-  // same share of it would swallow half the item at each end. The offset
-  // is what tilts the share — a 760px strip still lands on the value it
-  // always had, a 390px one fades over about 20px instead of 39.
-  --edge-fade: clamp(12px, calc(12% - 25px), #{$item-width * 0.75});
+  // fade is three quarters of an item wherever there is room for it, and
+  // only a narrow strip gets less: on a phone the strip is the viewport,
+  // so a flat share of it would swallow half the item at each end. The
+  // share and its offset are a line through the two ends of that — every
+  // strip from about 660px up still fades over the same 66px as it always
+  // did, a 390px one over 22px instead of 39, and the floor keeps the
+  // narrowest phone from losing the effect altogether.
+  --edge-fade: clamp(12px, calc(16% - 40px), #{$item-width * 0.75});
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,

@@ -686,13 +686,19 @@ describe('ArcNavComponent', () => {
     // always has — the desktop end of this is not the one that was wrong
     expect(fadeFor(STRIP_MAX_PX)).toBe(66);
 
+    // and neither is the window that is merely narrower than that: the
+    // full fade is reached well before the strip stops growing
+    expect(fadeFor(663)).toBe(66);
+
     // and a phone, where the strip is the viewport, fades over about half
     // of that instead of eating half an item at each end
     expect(fadeFor(390)).toBeGreaterThan(14);
     expect(fadeFor(390)).toBeLessThan(26);
 
-    // and it never runs out altogether on the narrowest phone
-    expect(fadeFor(320)).toBeGreaterThanOrEqual(12);
+    // and the narrowest phone lands on the floor itself — the effect also
+    // hides the strip's wrap, so it must not be allowed to run out
+    expect(fadeFor(320)).toBe(min);
+    expect(min).toBeGreaterThan(0);
   });
 
   it('should fade the strip out at its ends, and measure from the track', () => {
