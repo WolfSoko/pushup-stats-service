@@ -37,6 +37,14 @@ $parked-sliver: 10px;
 :host(.revealed),
 :host(:focus-within) {
   transform: translateY(0);
+
+  // A strip that is already out needs no handle to pull it out by, and the
+  // grip would otherwise keep a band of the page under it untappable —
+  // `.app-content` reserves room for the strip, not for something standing
+  // on top of it.
+  .grip {
+    pointer-events: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

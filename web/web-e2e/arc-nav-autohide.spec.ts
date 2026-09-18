@@ -118,10 +118,16 @@ test.describe('Arc nav auto-hide on a phone @smoke', () => {
     expect(Math.round(viewport.height - box.y)).toBeGreaterThan(20);
     expect(Math.round(viewport.height - box.y)).toBeLessThan(40);
 
-    // and when it is taken hold of
-    await grip.tap();
+    // and when it is taken hold of. Like the pull above, the tap is
+    // repeated on every attempt: what it buys expires after
+    // AUTO_HIDE_DELAY_MS, and a stalled runner would else measure a strip
+    // that has parked again.
+    const takeHold = async (): Promise<number | null> => {
+      await grip.tap();
+      return shownHeight(page);
+    };
 
     // then the strip comes in
-    await expect.poll(() => shownHeight(page)).toBeGreaterThan(60);
+    await expect.poll(takeHold, { timeout: 15_000 }).toBeGreaterThan(60);
   });
 });
