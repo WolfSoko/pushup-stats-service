@@ -72,8 +72,7 @@ test.describe('App shell on a landscape phone @smoke', () => {
       }
       const strip = navEl.getBoundingClientRect().height;
       return Math.round(
-        snackbarEl.getBoundingClientRect().bottom -
-          (window.innerHeight - strip)
+        snackbarEl.getBoundingClientRect().bottom - (window.innerHeight - strip)
       );
     });
 
