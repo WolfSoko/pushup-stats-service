@@ -671,14 +671,21 @@ describe('ArcNavComponent', () => {
     const styles = (
       ArcNavComponent as unknown as { ɵcmp: { styles: string[] } }
     ).ɵcmp.styles.join(' ');
-    const clamp =
-      /--edge-fade:\s*clamp\(\s*(\d+)px,\s*calc\(\s*(\d+)%\s*-\s*(\d+)px\s*\),\s*(\d+)px\s*\)/.exec(
-        styles
-      );
-    if (!clamp) {
-      throw new Error('--edge-fade is no longer a clamp of min, share, max');
+    const declaration = /--edge-fade:([^;}]+)[;}]/.exec(styles);
+    if (!declaration) {
+      throw new Error('--edge-fade is gone from the compiled styles');
     }
-    const [min, share, offset, max] = clamp.slice(1).map(Number);
+    // Read as tokens rather than matched as written: the CSS pipeline is
+    // free to collapse the whitespace and to drop the `calc()` that is
+    // redundant inside a `clamp()`, and neither changes the fade.
+    const terms = [...declaration[1].matchAll(/(\d+(?:\.\d+)?)(px|%)/g)];
+    const shape = terms.map((term) => term[2]).join(' ');
+    if (shape !== 'px % px px') {
+      throw new Error(
+        `--edge-fade is no longer a floor, a share, an offset and a ceiling: ${declaration[1]}`
+      );
+    }
+    const [min, share, offset, max] = terms.map((term) => Number(term[1]));
     const fadeFor = (strip: number) =>
       Math.min(Math.max(min, (share / 100) * strip - offset), max);
 
