@@ -26,6 +26,19 @@ export const EDGE_SWIPE_ZONE_PX = 48;
 export const SWIPE_REVEAL_PX = 24;
 
 /**
+ * The one contact of a multi-touch gesture that the pull is being measured
+ * on. `touches[0]` is whichever finger landed first — a thumb resting on
+ * the page while the other hand pulls at the edge would be the one measured.
+ */
+function contact(points: TouchList, id: number): Touch | null {
+  for (let index = 0; index < points.length; index++) {
+    const point = points.item(index);
+    if (point?.identifier === id) return point;
+  }
+  return null;
+}
+
+/**
  * Whether the arc nav is parked below the bottom edge or on screen, and
  * everything that flips between the two: the startup grace period, the
  * mouse coming near the edge, and the upward pull from the edge that is
@@ -42,7 +55,7 @@ export class ArcNavReveal {
   private readonly pointerNearBottom = signal(false);
   private readonly held = signal(false);
   private timer: ReturnType<typeof setTimeout> | null = null;
-  private swipeStartY: number | null = null;
+  private swipe: { id: number; startY: number } | null = null;
 
   /** Brings the strip on screen and restarts the countdown that parks it. */
   hold(): void {
@@ -78,22 +91,27 @@ export class ArcNavReveal {
       );
     };
     const onPointerLeave = () => this.pointerNearBottom.set(false);
+    // A finger that lands away from the edge starts nothing and ends
+    // nothing: an edge pull already under way keeps its own contact.
     const onTouchStart = (event: TouchEvent) => {
-      const y = event.touches[0]?.clientY;
-      this.swipeStartY =
-        y !== undefined && y >= window.innerHeight - EDGE_SWIPE_ZONE_PX
-          ? y
-          : null;
+      const point = event.changedTouches.item(0);
+      if (!point || point.clientY < window.innerHeight - EDGE_SWIPE_ZONE_PX) {
+        return;
+      }
+      this.swipe = { id: point.identifier, startY: point.clientY };
     };
     const onTouchMove = (event: TouchEvent) => {
-      if (this.swipeStartY === null) return;
-      const y = event.touches[0]?.clientY;
-      if (y === undefined || this.swipeStartY - y < SWIPE_REVEAL_PX) return;
-      this.swipeStartY = null;
+      const swipe = this.swipe;
+      if (!swipe) return;
+      const point = contact(event.changedTouches, swipe.id);
+      if (!point || swipe.startY - point.clientY < SWIPE_REVEAL_PX) return;
+      this.swipe = null;
       this.hold();
     };
-    const onTouchEnd = () => {
-      this.swipeStartY = null;
+    const onTouchEnd = (event: TouchEvent) => {
+      if (this.swipe && contact(event.changedTouches, this.swipe.id)) {
+        this.swipe = null;
+      }
     };
 
     document.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -113,6 +131,7 @@ export class ArcNavReveal {
       document.removeEventListener('touchcancel', onTouchEnd);
       if (this.timer !== null) clearTimeout(this.timer);
       this.timer = null;
+      this.swipe = null;
     };
   }
 }

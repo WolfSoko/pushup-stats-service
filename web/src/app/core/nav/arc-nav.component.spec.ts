@@ -24,10 +24,20 @@ function pointer(
   return event;
 }
 
-/** Same story for TouchEvent, of which the nav reads one coordinate. */
-function touch(type: string, clientY: number): Event {
+/**
+ * Same story for TouchEvent: a plain Event carrying the `changedTouches`
+ * list the nav reads — the contacts this event changed, identified so a
+ * second finger elsewhere cannot be mistaken for this one.
+ */
+function touch(type: string, clientY: number, identifier = 1): Event {
   const event = new Event(type, { bubbles: true });
-  Object.defineProperty(event, 'touches', { value: [{ clientY }] });
+  const point = { identifier, clientY };
+  Object.defineProperty(event, 'changedTouches', {
+    value: {
+      length: 1,
+      item: (index: number) => (index === 0 ? point : null),
+    },
+  });
   return event;
 }
 
@@ -533,6 +543,25 @@ describe('ArcNavComponent', () => {
 
     // then it parks again
     expect(host?.classList.contains('revealed')).toBe(false);
+  });
+
+  it('should pull the strip back in even while another finger rests on the page', async () => {
+    // given the parked nav and a thumb already resting mid-screen —
+    // Regression: the gesture was measured on the first active contact,
+    // which is that thumb, not the finger doing the pulling
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
+    document.dispatchEvent(touch('touchstart', window.innerHeight - 300, 1));
+
+    // when a second finger lands on the bottom edge and pulls upward
+    document.dispatchEvent(touch('touchstart', window.innerHeight - 4, 2));
+    document.dispatchEvent(touch('touchmove', window.innerHeight - 40, 2));
+    fixture.detectChanges();
+
+    // then the strip comes back
+    expect(host?.classList.contains('revealed')).toBe(true);
   });
 
   it('should leave the strip parked on an upward drag that starts away from the edge', async () => {
