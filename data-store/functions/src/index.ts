@@ -84,6 +84,7 @@ export {
   createChallenge,
   leaveChallenge,
   listChallenges,
+  respondChallenge,
 } from './functions-challenges';
 export { claimReferral } from './functions-referral';
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';

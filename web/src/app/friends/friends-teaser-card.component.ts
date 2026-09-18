@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { UserContextService } from '@pu-auth/auth';
 
 import { InviteService } from '../core/invite.service';
+import { boardValueLabel } from './board-value-label';
 import { ChallengesStore } from './challenges.store';
 import { FriendsStore } from './friends.store';
 
@@ -44,6 +45,14 @@ const TOP_ROWS = 3;
               data-testid="dashboard-friends-pending"
               >{{ pendingLabel(friends.pendingCount()) }}</mat-card-subtitle
             >
+          } @else if (challenges.invitations().length > 0) {
+            <mat-card-subtitle
+              class="pending"
+              data-testid="dashboard-friends-invitations"
+              >{{
+                invitationsLabel(challenges.invitations().length)
+              }}</mat-card-subtitle
+            >
           } @else if (challenges.active().length > 0) {
             <mat-card-subtitle data-testid="dashboard-friends-challenges">{{
               challengesLabel(challenges.active().length)
@@ -62,8 +71,13 @@ const TOP_ROWS = 3;
                   data-testid="dashboard-friends-row"
                 >
                   <span class="rank">{{ i + 1 }}</span>
-                  <span class="name">{{ label(entry) }}</span>
-                  <strong>{{ entry.value }}</strong>
+                  <a
+                    class="name"
+                    [routerLink]="['/u', entry.uid]"
+                    data-testid="dashboard-friends-name"
+                    >{{ label(entry) }}</a
+                  >
+                  <strong>{{ valueLabel(entry) }}</strong>
                 </li>
               }
             </ol>
@@ -147,6 +161,12 @@ const TOP_ROWS = 3;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: inherit;
+      text-decoration: none;
+    }
+    .name:hover,
+    .name:focus-visible {
+      text-decoration: underline;
     }
     mat-card-actions {
       flex-wrap: wrap;
@@ -185,8 +205,14 @@ export class FriendsTeaserCardComponent implements OnInit {
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId) || !this.visible()) return;
     void this.friends.reload();
-    void this.friends.loadBoard('week');
-    void this.challenges.reload();
+    // A preview: the friends page keeps whatever period the user picked.
+    void this.friends.loadBoard('week', { remember: false });
+    // Only counted here — no need for every participant's sums.
+    void this.challenges.reload({ progress: false });
+  }
+
+  protected valueLabel(entry: { value: number }): string {
+    return boardValueLabel(this.friends.boardComparison().metric, entry.value);
   }
 
   protected label(entry: { isViewer: boolean; displayName: string | null }) {
@@ -195,11 +221,21 @@ export class FriendsTeaserCardComponent implements OnInit {
   }
 
   protected pendingLabel(count: number): string {
-    return $localize`:@@dashboard.friends.pending:${count}:count: Anfragen warten auf dich`;
+    return count === 1
+      ? $localize`:@@dashboard.friends.pendingOne:Eine Anfrage wartet auf dich`
+      : $localize`:@@dashboard.friends.pending:${count}:count: Anfragen warten auf dich`;
+  }
+
+  protected invitationsLabel(count: number): string {
+    return count === 1
+      ? $localize`:@@dashboard.friends.invitationOne:Eine Challenge-Einladung wartet`
+      : $localize`:@@dashboard.friends.invitations:${count}:count: Challenge-Einladungen warten`;
   }
 
   protected challengesLabel(count: number): string {
-    return $localize`:@@dashboard.friends.activeChallenges:${count}:count: Challenges laufen`;
+    return count === 1
+      ? $localize`:@@dashboard.friends.activeChallengeOne:Eine Challenge läuft`
+      : $localize`:@@dashboard.friends.activeChallenges:${count}:count: Challenges laufen`;
   }
 
   protected invite(): void {

@@ -375,7 +375,11 @@ Only store essential state:
   "task_type": "auth",
   "pattern_matched": "auth",
   "skill_versions": { "executor": 1, "validator": 1, "fixer": 1 },
-  "skill_lifecycle": { "executor": "task-scoped", "validator": "task-scoped", "fixer": "task-scoped" },
+  "skill_lifecycle": {
+    "executor": "task-scoped",
+    "validator": "task-scoped",
+    "fixer": "task-scoped"
+  },
   "ac_completed": 3,
   "ac_total": 5,
   "last_score": 85,

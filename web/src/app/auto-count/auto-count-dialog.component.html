@@ -1,84 +1,86 @@
 <h2 mat-dialog-title i18n="@@autoCount.title">Übungen automatisch zählen</h2>
 <mat-dialog-content>
-  <mat-form-field
-    appearance="outline"
-    subscriptSizing="dynamic"
-    class="exercise-picker"
-  >
-    <mat-label i18n="@@autoCount.exercisePickerLabel">Übung</mat-label>
-    <mat-select
-      [value]="exerciseId()"
-      (selectionChange)="onExerciseChange($event.value)"
-      [disabled]="switching()"
-      data-testid="auto-count-exercise"
-      aria-label="Übung wählen"
-      i18n-aria-label="@@autoCount.exercisePickerAria"
+  <div class="auto-count-controls">
+    <mat-form-field
+      appearance="outline"
+      subscriptSizing="dynamic"
+      class="exercise-picker"
     >
-      @for (option of exercises; track option.id) {
-        <mat-option [value]="option.id">
-          <mat-icon>{{ option.icon }}</mat-icon>
-          <span>{{ option.label }}</span>
-        </mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-button-toggle-group
-    class="mode-picker"
-    [value]="mode()"
-    (change)="onModeChange($event.value)"
-    [disabled]="switching() || isStarting()"
-    aria-label="Erkennungsmodus wählen"
-    i18n-aria-label="@@autoCount.modePickerAria"
-  >
-    <mat-button-toggle
-      value="pose"
-      data-testid="auto-count-mode-pose"
-      [disabled]="!poseSupported()"
+      <mat-label i18n="@@autoCount.exercisePickerLabel">Übung</mat-label>
+      <mat-select
+        [value]="exerciseId()"
+        (selectionChange)="onExerciseChange($event.value)"
+        [disabled]="switching()"
+        data-testid="auto-count-exercise"
+        aria-label="Übung wählen"
+        i18n-aria-label="@@autoCount.exercisePickerAria"
+      >
+        @for (option of exercises; track option.id) {
+          <mat-option [value]="option.id">
+            <mat-icon>{{ option.icon }}</mat-icon>
+            <span>{{ option.label }}</span>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-button-toggle-group
+      class="mode-picker"
+      [value]="mode()"
+      (change)="onModeChange($event.value)"
+      [disabled]="switching() || isStarting()"
+      aria-label="Erkennungsmodus wählen"
+      i18n-aria-label="@@autoCount.modePickerAria"
     >
-      <mat-icon>accessibility_new</mat-icon>
-      <span i18n="@@autoCount.mode.pose">Kamera vor dir</span>
-    </mat-button-toggle>
-    <mat-button-toggle
-      value="proximity"
-      data-testid="auto-count-mode-proximity"
-      [disabled]="!proximitySupported()"
-    >
-      <mat-icon>smartphone</mat-icon>
-      <span i18n="@@autoCount.mode.proximity">Handy unter dir</span>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-  @if (!proximitySupported()) {
-    <p
-      class="hint mode-hint"
-      data-testid="auto-count-proximity-unavailable"
-      i18n="@@autoCount.mode.proximityUnavailable"
-    >
-      „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum
-      Boden hin bewegt – bei dieser Übung nicht.
-    </p>
-  } @else if (!poseSupported()) {
-    <p
-      class="hint mode-hint"
-      data-testid="auto-count-pose-unavailable"
-      i18n="@@autoCount.mode.poseUnavailable"
-    >
-      Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter
-      dir.
-    </p>
-  }
-  @if (isProximity()) {
-    <p class="hint" i18n="@@autoCount.instructions.proximity">
-      Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts-
-      und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden
-      die Reps gezählt. Kein Pose-Tracking nötig.
-    </p>
-  } @else {
-    <p class="hint" i18n="@@autoCount.instructions">
-      Halte das Gerät so, dass die relevanten Gelenke
-      (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps
-      werden bei sauberem Down‑Up gezählt.
-    </p>
-  }
+      <mat-button-toggle
+        value="pose"
+        data-testid="auto-count-mode-pose"
+        [disabled]="!poseSupported()"
+      >
+        <mat-icon>accessibility_new</mat-icon>
+        <span i18n="@@autoCount.mode.pose">Kamera vor dir</span>
+      </mat-button-toggle>
+      <mat-button-toggle
+        value="proximity"
+        data-testid="auto-count-mode-proximity"
+        [disabled]="!proximitySupported()"
+      >
+        <mat-icon>smartphone</mat-icon>
+        <span i18n="@@autoCount.mode.proximity">Handy unter dir</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    @if (!proximitySupported()) {
+      <p
+        class="hint mode-hint"
+        data-testid="auto-count-proximity-unavailable"
+        i18n="@@autoCount.mode.proximityUnavailable"
+      >
+        „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum
+        Boden hin bewegt – bei dieser Übung nicht.
+      </p>
+    } @else if (!poseSupported()) {
+      <p
+        class="hint mode-hint"
+        data-testid="auto-count-pose-unavailable"
+        i18n="@@autoCount.mode.poseUnavailable"
+      >
+        Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter
+        dir.
+      </p>
+    }
+    @if (isProximity()) {
+      <p class="hint" i18n="@@autoCount.instructions.proximity">
+        Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts-
+        und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus
+        werden die Reps gezählt. Kein Pose-Tracking nötig.
+      </p>
+    } @else {
+      <p class="hint" i18n="@@autoCount.instructions">
+        Halte das Gerät so, dass die relevanten Gelenke
+        (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps
+        werden bei sauberem Down‑Up gezählt.
+      </p>
+    }
+  </div>
   <div class="video-stage">
     <video #video class="preview" autoplay playsinline muted></video>
     @if (isStarting() || switching()) {

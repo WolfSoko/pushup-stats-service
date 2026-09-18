@@ -10,7 +10,12 @@ import { friendPushTexts } from './push-text';
  * `functions-challenges.ts` do the reads and the sending.
  */
 
-export type FriendPushKind = 'request' | 'accepted' | 'cheer' | 'challenge';
+export type FriendPushKind =
+  | 'request'
+  | 'accepted'
+  | 'cheer'
+  | 'challenge'
+  | 'challengeAccepted';
 
 export interface FriendshipPushEvent {
   readonly kind: 'request' | 'accepted';
@@ -76,6 +81,8 @@ export function buildFriendPushPayload(input: FriendPushInput): string {
         return [t.acceptedTitle, t.acceptedBody(name)];
       case 'cheer':
         return [t.cheerTitle, t.cheerBody(name)];
+      case 'challengeAccepted':
+        return [t.challengeAcceptedTitle, t.challengeAcceptedBody(name)];
       case 'challenge': {
         const c = input.challenge;
         return [

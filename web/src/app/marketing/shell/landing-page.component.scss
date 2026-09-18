@@ -458,6 +458,7 @@ h1 {
 }
 
 .training-plans-feature,
+.friends-feature,
 .ai-ready {
   display: grid;
   gap: 16px;
@@ -470,7 +471,8 @@ h1 {
     rgba(14, 19, 33, 0.7)
   );
 
-  .training-plans-intro {
+  .training-plans-intro,
+  .friends-intro {
     display: grid;
     gap: 6px;
   }
@@ -494,18 +496,21 @@ h1 {
     color: #c4d2f2;
   }
 
-  .plans-cards {
+  .plans-cards,
+  .friends-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 12px;
   }
 
-  .plan-card-mini .key-features-header {
+  .plan-card-mini .key-features-header,
+  .friend-card .key-features-header {
     align-items: end;
     gap: 0.5rem;
   }
 
-  .plans-cta {
+  .plans-cta,
+  .friends-cta {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -514,6 +519,7 @@ h1 {
 
 :host-context(html.light-theme) {
   .training-plans-feature,
+  .friends-feature,
   .ai-ready {
     border-color: rgba(59, 130, 246, 0.25);
     background: linear-gradient(
@@ -746,6 +752,15 @@ mat-card-header mat-icon {
 }
 
 // Per-section flavour overrides.
+.friends-feature.scroll-reveal {
+  --reveal-translate-x: 260px;
+  --reveal-translate-y: 100px;
+  --reveal-rotate: 3deg;
+  --reveal-scale: 0.9;
+  --reveal-blur: 10px;
+  --reveal-range-end: cover 70%;
+}
+
 .training-plans-feature.scroll-reveal {
   --reveal-translate-x: -260px;
   --reveal-translate-y: 100px;

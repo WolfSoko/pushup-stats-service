@@ -15,7 +15,7 @@ analog zu `web/src/locale/messages.xlf`.
 > | Kurzbeschreibung          | `store/play/<locale>/short-description.txt` | 80    |
 > | Vollständige Beschreibung | `store/play/<locale>/full-description.txt`  | 4000  |
 >
-> Gepflegt: `de-DE` (Quelle) und `en-US`. Die Limits prüft
+> Gepflegt: alle neun Play-Locales, `de-DE` ist die Quelle. Die Limits prüft
 > `pnpm nx test tools` — zu langer Text scheitert in CI, nicht erst beim
 > Veröffentlichen.
 
@@ -28,6 +28,9 @@ bindet.
 Wenn du Übungen (`EXERCISE_CATALOG`), Trainingspläne (`TRAINING_PLANS`),
 Liegestütz-Varianten (`PUSHUP_TYPES`) oder die Locale-Liste in
 `web/project.json` änderst, gehören die Zahlen im Store-Text mit angepasst.
+Dasselbe gilt für Eigenschaften ohne Zahl: Der Text beschreibt inzwischen
+auch Freunde, die Sichtbarkeitsstufen des Profils und die Skalierung der
+Pläne auf den Maximaltest — wer daran etwas ändert, prüft die Belege unten.
 
 ## Anzeigename: „Pushup Tracker"
 
@@ -85,21 +88,69 @@ bleiben `Pushups`: der Launcher schneidet längere Labels ohnehin ab.
 - **Sechs Schnellaktionen insgesamt** — `MAX_QUICK_ADDS = 6` in
   `libs/stats/src/lib/models/user-config.models.ts`. Die sechs Slots teilen
   sich alle Übungen, es sind keine sechs Presets _pro_ Übung.
+- **Fünf Pläne rechnen auf den Maximaltest um** — `baselineMax` in
+  `training-plan.catalog.ts` (30-Tage-Challenge, Liegestütze ab 40, Daily 100,
+  Full Body Strong, Core Foundations), angewandt von `scaleTrainingPlan()` in
+  `training-plan-scaling.ts`. Ohne absolvierten Test bleibt der Plan, wie er
+  veröffentlicht ist, und jeder Faktor ist auf 0,5–2× begrenzt
+  (`MIN_PLAN_SCALE` / `MAX_PLAN_SCALE`) — das Listing darf also weder eine
+  Anpassung ohne Test noch eine unbegrenzte versprechen. Nur gemessene
+  Übungen skalieren.
+- **Drei Sichtbarkeitsstufen pro Profil-Element** — `ProfileSectionVisibility`
+  (`off` | `friends` | `public`) über die 13 Elemente in
+  `PROFILE_SECTIONS`. Einen Hauptschalter gibt es nicht mehr:
+  `isProfilePublic()` leitet sich aus den Stufen ab. Ein Listing-Satz wie
+  „öffentliches Profil aktivieren" beschreibt die App nicht mehr.
+- **Profil-Vorschau als Freund und als Fremder** — `ProfileAudienceView` in
+  `web/src/app/public-profile/profile-audience.view.ts`.
+- **Letzte 10 Workouts im Profil** — `readRecentEntries()` in
+  `data-store/functions/src/functions-public-profile.ts` (`limit(10)`), nur
+  wenn die Stufe des Elements den Betrachter einschließt.
+- **Aktiver Plan im Profil, Plan als Link teilen** — `readActivePlan()` ebenda
+  und `buildSharePlanPayload()` in
+  `web/src/app/training-plans/plan-share.ts`.
+- **Vier Zeiträume im Freundes-Board, kein Übungsfilter** —
+  `FriendsBoardPeriod` (`daily` | `week` | `month` | `allTime`) in
+  `web/src/app/friends/friends-api.service.ts`; die UI bietet genau diese
+  vier als Chips in `friends-board.component.ts` und **keinen**
+  Übungsfilter, obwohl die API einen `exerciseId` kennt — das Listing darf
+  also keinen versprechen.
+- **„Miss dich mit anderen oder bleib privat"** — `hideFromLeaderboard` in der
+  User-Config; das ist der Schalter, den der Satz meint, nicht die
+  Profil-Stufen.
+- **Der Knopf in der Benachrichtigung** — jedes Listing zitiert ihn wörtlich,
+  und der Text kommt aus `QUICK_LOG_LABELS` in
+  `libs/stats/src/lib/models/reminder-i18n.models.ts` (de „50 eintragen", en
+  „Log 50", fr „Enregistrer 50", es „Registrar 50", it „Registra 50", nl
+  „Registreer 50", el „Καταχώριση 50", no „Logg 50", zh „记录 50"). Erfundene
+  Übersetzungen davon sind der naheliegendste Fehler in diesem Text: sie
+  lesen sich plausibel und stehen trotzdem nicht auf dem Knopf.
 
 ## Was noch fehlt
 
-- **Weitere Sprachen.** `de-DE` und `en-US` sind gepflegt. Die Store-Texte
-  laufen bewusst **nicht** über die tägliche Übersetzungs-Routine (die
-  arbeitet auf XLIFF und `content/`), jede weitere Sprache ist also
-  dauerhafte Handarbeit. Welche sich lohnen:
-  [`docs/play-store-publishing.md`](play-store-publishing.md#welche-sprachen-sich-lohnen).
-- **`en-US` ist kein Übersetzungs-Klon.** Titel, Kurzbeschreibung und der
-  Einstieg sind eigenständig getextet, weil englisches ASO auf andere
-  Suchbegriffe zielt („push-up counter“, „workout tracker“) als das
-  deutsche Original. Eine Änderung am deutschen Text ist deshalb **nicht**
-  automatisch eine am englischen — beide Dateien wollen einzeln gepflegt
-  werden, und die Beleg-Liste unten gilt für beide.
+- **Neun Sprachen, neun Dateien.** Alle Play-Locales des Mappings haben ein
+  Listing. Die Store-Texte laufen bewusst **nicht** über die tägliche
+  Übersetzungs-Routine (die arbeitet auf XLIFF und `content/`) — eine
+  inhaltliche Änderung ist also neunfache Handarbeit, und was das kostet
+  steht in
+  [`docs/play-store-publishing.md`](play-store-publishing.md#was-die-neun-sprachen-kosten).
+- **Kein Listing ist ein Übersetzungs-Klon.** Titel, Kurzbeschreibung und
+  Einstieg sind pro Sprache eigenständig getextet, weil ASO je Markt auf
+  andere Suchbegriffe zielt („push-up counter" und „workout tracker" im
+  Englischen, „pompes", „flexiones", „flessioni", „armhevninger"). Eine
+  Änderung am deutschen Text ist deshalb **nicht** automatisch eine an den
+  anderen acht — die Beleg-Liste oben gilt aber für alle.
+- **Das Vokabular kommt aus der App, nicht aus dem Bauch.** Plan-Titel und
+  Kategorienamen in den Listings sind aus `web/src/locale/messages.<lang>.xlf`
+  übernommen, damit Store-Eintrag und App dieselben Namen benutzen. Eine
+  Ausnahme ist bewusst: `it-IT` wirbt mit „flessioni" (der gesuchte Begriff),
+  behält in den Plan-Titeln aber „Piegamenti", weil die App sie so anzeigt —
+  deshalb nennt der italienische Einstieg beide Wörter.
 - **KI-Coach.** Nicht im Listing erwähnt: `aiAssistantConfig.runtimeUrl` ist
   leer, im ausgelieferten Build ist der Assistent also nicht nutzbar.
-- **Grafiken.** Screenshots, Feature-Grafik und Icon pflegt weiterhin die
-  Console — das Script veröffentlicht nur Text.
+- **Grafiken.** Screenshots und Feature-Grafik erzeugt
+  `tools/src/store-graphics/` aus der laufenden App gegen die Emulatoren und
+  legt sie in `store/graphics/` ab; hochgeladen werden sie weiter von Hand in
+  der Console, weil das Publish-Script bewusst nur Text veröffentlicht.
+  Bisher nur `de-DE` — Play fällt für die anderen acht Sprachen auf diese
+  Assets zurück.

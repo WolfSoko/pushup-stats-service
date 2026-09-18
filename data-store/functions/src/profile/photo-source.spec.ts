@@ -1,4 +1,4 @@
-import { photoSource } from './photo-source';
+import { photoEndpointUrl, photoSource, planPhotoUrls } from './photo-source';
 
 describe('photoSource', () => {
   const uploaded = { photoUpdatedAt: '2026-09-06T10:00:00.000Z' };
@@ -94,5 +94,64 @@ describe('photoSource', () => {
     it('should fall back even on a public profile', () => {
       expect(photoSource({ ...publicUi }, false)).toEqual({ kind: 'account' });
     });
+  });
+});
+
+describe('photoEndpointUrl', () => {
+  it('should carry the upload timestamp so a new photo is a new URL', () => {
+    // given / when
+    const url = photoEndpointUrl('u1', '2026-09-06T10:00:00.000Z');
+
+    // then
+    expect(url).toContain('/profilePhoto?uid=u1&v=');
+    expect(url).toContain(encodeURIComponent('2026-09-06T10:00:00.000Z'));
+  });
+});
+
+describe('planPhotoUrls', () => {
+  const uploaded = { photoUpdatedAt: '2026-09-06T10:00:00.000Z' };
+  const publicUi = { ui: { publicProfile: true } };
+
+  it('should resolve a public upload without asking Auth', () => {
+    // given / when
+    const plan = planPhotoUrls(new Map([['u1', { ...uploaded, ...publicUi }]]));
+
+    // then
+    expect(plan.fromAccount).toEqual([]);
+    expect(plan.urls.get('u1')).toContain('uid=u1');
+  });
+
+  it('should collect the users whose picture Auth has to answer for', () => {
+    // given — no upload, so the Google account picture applies
+    const plan = planPhotoUrls(
+      new Map([
+        ['u1', {}],
+        ['u2', { ui: { hideAccountPhoto: true } }],
+      ])
+    );
+
+    // then — one lookup, and none for the user who switched it off
+    expect(plan.fromAccount).toEqual(['u1']);
+    expect(plan.urls.size).toBe(0);
+  });
+
+  it('should skip a user whose config document is gone', () => {
+    // given / when — `buildPublicProfile` returns not-found without a
+    // config, so a half-deleted account must not surface a picture here
+    const plan = planPhotoUrls(new Map([['u1', undefined]]));
+
+    // then
+    expect(plan.urls.size).toBe(0);
+    expect(plan.fromAccount).toEqual([]);
+  });
+
+  it('should give a friend nothing for a private upload', () => {
+    // given / when — the endpoint would 404, and an <img> cannot prove
+    // who is asking
+    const plan = planPhotoUrls(new Map([['u1', { ...uploaded }]]));
+
+    // then
+    expect(plan.urls.size).toBe(0);
+    expect(plan.fromAccount).toEqual([]);
   });
 });

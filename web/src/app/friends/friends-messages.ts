@@ -1,12 +1,13 @@
+import type { ChallengeActionReason } from './challenges-api.service';
+import type { FriendActionReason } from './friends-api.service';
+
 /**
  * Turns the server's refusal code into something a person can act on.
- *
- * The codes come from `friendRequestRejection` / `respondRejection` in the
- * Cloud Functions; anything unmapped falls back to a generic line rather
- * than showing the raw token.
+ * The unions are exhaustive, so a code added on the server without a
+ * line here fails to compile rather than showing the raw token.
  */
 export function friendRejectionMessage(
-  reason: string | undefined
+  reason: FriendActionReason
 ): string | null {
   switch (reason) {
     case undefined:
@@ -33,14 +34,13 @@ export function friendRejectionMessage(
       return $localize`:@@friends.error.cheeredAlready:Heute schon angefeuert – morgen wieder.`;
     case 'not-friends':
       return $localize`:@@friends.error.notFriends:Das geht nur unter bestätigten Freunden.`;
-    default:
+    case 'failed':
       return $localize`:@@friends.error.failed:Das hat nicht funktioniert. Bitte später erneut versuchen.`;
   }
 }
 
-/** The challenge callables' refusal codes (`challengeRejection`). */
 export function challengeRejectionMessage(
-  reason: string | undefined
+  reason: ChallengeActionReason
 ): string | null {
   switch (reason) {
     case undefined:
@@ -60,8 +60,11 @@ export function challengeRejectionMessage(
     case 'limit':
       return $localize`:@@challenge.error.limit:Du hast schon genug Challenges laufen. Warte, bis eine endet.`;
     case 'not-found':
-      return $localize`:@@challenge.error.gone:Diese Challenge gibt es nicht mehr.`;
-    default:
+    case 'not-invited':
+      return $localize`:@@challenge.error.gone:Diese Einladung ist nicht mehr offen.`;
+    case 'ended':
+      return $localize`:@@challenge.error.ended:Die Challenge ist schon vorbei.`;
+    case 'failed':
       return $localize`:@@friends.error.failed:Das hat nicht funktioniert. Bitte später erneut versuchen.`;
   }
 }

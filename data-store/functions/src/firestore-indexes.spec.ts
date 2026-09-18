@@ -9,6 +9,10 @@ import { join } from 'node:path';
  * index over (…equality fields…, orderBy field); if it is absent the query is
  * rejected at runtime with FAILED_PRECONDITION — nothing fails at build time,
  * so every such query must ship its index in `firestore.indexes.json`.
+ *
+ * An aggregation needs one field more: `aggregate({ sum('reps') })` is served
+ * only from an index that *also* carries `reps`, after the range field. The
+ * index for the same query without the aggregate does not satisfy it.
  */
 
 interface IndexField {
@@ -115,6 +119,24 @@ describe('firestore.indexes.json ⇄ exerciseEntries queries', () => {
     expect(declared).toBe(true);
   });
 
+  it('should declare the (exerciseId, userId, timestamp, reps) index the challenge sum reads from', () => {
+    // given `sumChallengeEntries`' per-participant total
+    // (where('userId','==').where('exerciseId','==').where('timestamp', range)
+    // .aggregate({ total: sum('reps') })) — an aggregation needs the summed
+    // field in the index too, so the three-field index above does NOT serve
+    // it; without this one every participant's progress reads 0 and the
+    // challenge card shows everyone at 0 / target
+    // when looking up its supporting composite index
+    const declared = hasIndex(indexes, 'exerciseEntries', [
+      ['exerciseId', 'ASCENDING'],
+      ['userId', 'ASCENDING'],
+      ['timestamp', 'ASCENDING'],
+      ['reps', 'ASCENDING'],
+    ]);
+    // then it is declared
+    expect(declared).toBe(true);
+  });
+
   it('should not declare indexes for the emptied pushups collection', () => {
     // given the pushups collection, fully migrated into exerciseEntries and
     // no longer written or queried by any live code path
@@ -156,4 +178,67 @@ describe('firestore.indexes.json ⇄ single-field index exemptions', () => {
       expect(isExempt('exerciseEntries', fieldPath)).toBe(true);
     }
   );
+});
+
+/**
+ * TTL policies are field configuration, and `firebase deploy --only
+ * firestore` reconciles field configuration against this file: a policy the
+ * file does not declare is **removed** on the next deploy. That is not
+ * theory — the three policies below were enabled by hand and deleted again
+ * minutes later by the next merge, twice, while the collections kept growing.
+ *
+ * The declaration in `firestore.indexes.json` is therefore the only thing
+ * that keeps a policy alive, and this guard pins the list: a collection that
+ * writes `expiresAt` and loses its entry here stops expiring silently —
+ * nothing fails, documents just accumulate forever.
+ */
+describe('Firestore TTL policies', () => {
+  /**
+   * Every collection whose documents expire, with the field carrying the
+   * timestamp. Adding a collection that writes `expiresAt` means adding it
+   * here and to `firestore.indexes.json`.
+   */
+  const TTL_FIELDS: ReadonlyArray<
+    [collectionGroup: string, fieldPath: string]
+  > = [
+    ['deletedExerciseEntries', 'expiresAt'],
+    ['cheers', 'expiresAt'],
+    ['challenges', 'expiresAt'],
+  ];
+
+  function ttlOverrides(): Array<FieldOverride & { ttl?: boolean }> {
+    return loadConfig().fieldOverrides as Array<
+      FieldOverride & { ttl?: boolean }
+    >;
+  }
+
+  it('should declare a TTL policy for every expiring collection', () => {
+    // given the collections that write an expiry timestamp
+    const declared = ttlOverrides();
+
+    // when each is looked up in the deployed field configuration
+    const missing = TTL_FIELDS.filter(
+      ([collectionGroup, fieldPath]) =>
+        declared.find(
+          (o) =>
+            o.collectionGroup === collectionGroup && o.fieldPath === fieldPath
+        )?.ttl !== true
+    );
+
+    // then none is missing — otherwise the next deploy drops the policy
+    expect(missing).toEqual([]);
+  });
+
+  it('should not declare a TTL policy on any other field', () => {
+    // given every field the config marks as expiring
+    const marked = ttlOverrides()
+      .filter((o) => o.ttl === true)
+      .map((o) => [o.collectionGroup, o.fieldPath]);
+
+    // then the set matches the list above — a typo in a collection or field
+    // name would otherwise expire nothing and be invisible
+    const byPair = (a: readonly string[], b: readonly string[]) =>
+      String(a).localeCompare(String(b));
+    expect(marked.sort(byPair)).toEqual([...TTL_FIELDS].sort(byPair));
+  });
 });

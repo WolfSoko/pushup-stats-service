@@ -2,6 +2,7 @@ import { logger } from 'firebase-functions';
 import type { ReminderLocale } from '@pu-stats/models';
 
 import { db } from '../firebase-app';
+import { displayNameOf, readUserConfigs } from '../user-config-read';
 import {
   sendToSubscriptions,
   type FailedSend,
@@ -70,14 +71,10 @@ export async function readPushRecipients(
   uids: ReadonlyArray<string>
 ): Promise<Map<string, PushRecipient>> {
   const recipients = new Map<string, PushRecipient>();
-  if (uids.length === 0) return recipients;
-  const col = db.collection('userConfigs');
-  const snaps = await db.getAll(...uids.map((uid) => col.doc(uid)));
-  for (const snap of snaps) {
-    const data = snap.data();
-    recipients.set(snap.id, {
-      locale: pushLocaleFromConfig(data),
-      displayName: String(data?.['displayName'] ?? '').trim() || null,
+  for (const [uid, config] of await readUserConfigs(uids)) {
+    recipients.set(uid, {
+      locale: pushLocaleFromConfig(config),
+      displayName: displayNameOf(config),
     });
   }
   return recipients;

@@ -82,7 +82,7 @@ export function buildSaveUpdate(
   return {
     displayName: draft.displayName,
     consent: {
-      ...(current.consent ?? {}),
+      ...current.consent,
       targetedAds: draft.adsConsent,
     },
     ui: {

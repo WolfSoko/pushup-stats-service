@@ -1,13 +1,10 @@
 :host {
   position: fixed;
   right: max(16px, calc((100vw - 1200px) / 2));
-  bottom: 16px;
+  // Clears the arc nav along the bottom edge (76px plus the safe area).
+  bottom: calc(92px + env(safe-area-inset-bottom, 0px));
   z-index: 1000;
   display: block;
-
-  @media (max-width: 767px) {
-    bottom: 72px;
-  }
 }
 
 .speed-dial {
@@ -23,6 +20,18 @@
   align-items: flex-end;
   gap: 8px;
   margin-bottom: 4px;
+
+  // The stack grows upward from a bottom-anchored host, so on a short
+  // viewport — a landscape phone — its top items end up off-screen and
+  // unclickable. Cap it at the space above the main FAB and let the
+  // overflow wrap into a further column; `wrap-reverse` puts that column
+  // to the left, towards the middle of the screen rather than off its
+  // right edge. Subtracted: the host's 92px bottom offset, the main FAB
+  // and the gap above it.
+  max-height: calc(100dvh - 170px);
+  flex-wrap: wrap-reverse;
+  align-content: flex-end;
+  column-gap: 8px;
 }
 
 .dial-actions > button {

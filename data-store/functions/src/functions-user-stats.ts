@@ -21,14 +21,16 @@ export const updateExerciseStatsOnEntryWrite = onDocumentWritten(
     const afterData = event.data?.after?.data();
 
     const userId = (afterData?.userId ?? beforeData?.userId) as
-      string | undefined;
+      | string
+      | undefined;
     if (!userId) {
       logger.warn('updateExerciseStatsOnEntryWrite: no userId found, skipping');
       return;
     }
 
     const exerciseId = (afterData?.exerciseId ?? beforeData?.exerciseId) as
-      string | undefined;
+      | string
+      | undefined;
     if (!exerciseId) {
       logger.warn(
         'updateExerciseStatsOnEntryWrite: no exerciseId found, skipping'

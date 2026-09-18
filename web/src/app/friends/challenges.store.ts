@@ -10,20 +10,25 @@ import {
 
 import {
   ChallengesApiService,
+  type ChallengeActionReason,
   type ChallengeView,
   type CreateChallengeInput,
 } from './challenges-api.service';
-import type { FriendActionReason } from './friends-api.service';
+import { withKnownProgress } from './merge-challenge-progress';
+import { runStoreAction } from './store-action';
 
 type ChallengesState = {
   challenges: ReadonlyArray<ChallengeView>;
   loading: boolean;
-  lastRejection: FriendActionReason;
+  /** The last reload threw — what is shown may be stale, say so. */
+  loadFailed: boolean;
+  lastRejection: ChallengeActionReason;
 };
 
 const initialState: ChallengesState = {
   challenges: [],
   loading: false,
+  loadFailed: false,
   lastRejection: undefined,
 };
 
@@ -35,47 +40,79 @@ const initialState: ChallengesState = {
 export const ChallengesStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withProps(() => ({ _api: inject(ChallengesApiService) })),
+  withProps(() => ({
+    _api: inject(ChallengesApiService),
+    /** Ticket of the newest reload; older answers arriving later are dropped. */
+    _reloadSeq: 0,
+    /** The reload in flight, so several badges asking at once share one call. */
+    _inFlight: null as { progress: boolean; promise: Promise<void> } | null,
+  })),
   withComputed((store) => ({
+    /** Asked, not yet answered — these want a decision first. */
+    invitations: computed(() =>
+      store.challenges().filter((c) => c.viewerInvited)
+    ),
     active: computed(() =>
-      store.challenges().filter((c) => c.status === 'active')
+      store
+        .challenges()
+        .filter((c) => c.status === 'active' && !c.viewerInvited)
     ),
     ended: computed(() =>
       store.challenges().filter((c) => c.status === 'ended')
     ),
   })),
-  withMethods(({ _api, ...store }) => {
-    async function reload(): Promise<void> {
+  withMethods((store) => {
+    const { _api } = store;
+
+    /**
+     * `progress: false` for a surface that only counts, like the dashboard
+     * card. The dashboard and the friends page share this store and may
+     * ask at nearly the same time; only the newest request's answer is
+     * kept, so a slow count-only reply cannot overwrite the page's full
+     * list after the fact.
+     */
+    function reload(options?: { progress?: boolean }): Promise<void> {
+      const progress = options?.progress !== false;
+      // A full call answers a count-only one too, so a badge asking for
+      // counts joins it instead of superseding it — otherwise its ticket
+      // wins the race and the page's sums are thrown away unread.
+      if (store._inFlight && (store._inFlight.progress || !progress)) {
+        return store._inFlight.promise;
+      }
+      const ticket = ++store._reloadSeq;
       patchState(store, { loading: true });
-      try {
-        patchState(store, { challenges: await _api.list(), loading: false });
-      } catch {
-        patchState(store, { loading: false });
-      }
+      const promise = _api
+        .list(options)
+        .then((fresh) => {
+          if (ticket !== store._reloadSeq) return;
+          const challenges = progress
+            ? fresh
+            : withKnownProgress(fresh, store.challenges());
+          patchState(store, { challenges, loading: false, loadFailed: false });
+        })
+        .catch(() => {
+          if (ticket === store._reloadSeq) {
+            patchState(store, { loading: false, loadFailed: true });
+          }
+        })
+        .finally(() => {
+          if (store._inFlight?.promise === promise) store._inFlight = null;
+        });
+      store._inFlight = { progress, promise };
+      return promise;
     }
 
-    async function act(
-      action: () => Promise<{ ok: boolean; reason?: FriendActionReason }>
-    ): Promise<boolean> {
-      patchState(store, { lastRejection: undefined });
-      try {
-        const result = await action();
-        if (!result.ok) {
-          patchState(store, { lastRejection: result.reason ?? 'failed' });
-          return false;
-        }
-        await reload();
-        return true;
-      } catch {
-        patchState(store, { lastRejection: 'failed' });
-        return false;
-      }
-    }
-
+    const refresh = () => reload();
     return {
       reload,
-      create: (input: CreateChallengeInput) => act(() => _api.create(input)),
-      leave: (id: string) => act(() => _api.leave(id)),
+      create: (input: CreateChallengeInput) =>
+        runStoreAction(store, () => _api.create(input), refresh),
+      accept: (id: string) =>
+        runStoreAction(store, () => _api.respond(id, true), refresh),
+      decline: (id: string) =>
+        runStoreAction(store, () => _api.respond(id, false), refresh),
+      leave: (id: string) =>
+        runStoreAction(store, () => _api.leave(id), refresh),
     };
   })
 );

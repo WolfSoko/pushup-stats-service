@@ -39,7 +39,8 @@ export const claimReferral = onCall(
 
     const configRef = db.collection('userConfigs').doc(uid);
     const existing = (await configRef.get()).data()?.['referral'] as
-      ReferralState | undefined;
+      | ReferralState
+      | undefined;
 
     const self = await getAuth()
       .getUser(uid)
@@ -82,7 +83,8 @@ export const claimReferral = onCall(
       const plan = claimPlan({
         referrerUid: referrer,
         inviterReferral: inviterConfig.data()?.['referral'] as
-          ReferralState | undefined,
+          | ReferralState
+          | undefined,
         inviterEarned: earned,
         nowIso,
       });
@@ -101,7 +103,8 @@ export const claimReferral = onCall(
           userId: referrer,
           referral: {
             ...(inviterConfig.data()?.['referral'] as
-              ReferralState | undefined),
+              | ReferralState
+              | undefined),
             invitedCount: plan.inviterCount,
           },
           updatedAt: nowIso,

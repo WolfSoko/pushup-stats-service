@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import type { CheerRejection, FriendRequestRejection } from '@pu-stats/models';
 
 import { CallableFunctionsService } from '../admin/callable-functions.service';
 
@@ -8,6 +9,8 @@ export interface FriendRow {
   readonly uid: string;
   readonly since: string;
   readonly displayName: string | null;
+  /** Avatar, confirmed friends only — `null` for a pending request. */
+  readonly photoURL: string | null;
 }
 
 export interface FriendListsResponse {
@@ -17,6 +20,18 @@ export interface FriendListsResponse {
 }
 
 export type FriendsBoardPeriod = 'daily' | 'week' | 'month' | 'allTime';
+
+/**
+ * What the board compares: training days or the live streak (fair whatever
+ * everyone's favourite exercise is), or one exercise's reps.
+ */
+export type FriendsBoardMetric = 'days' | 'streak' | 'reps';
+
+export interface FriendsBoardComparison {
+  readonly metric: FriendsBoardMetric;
+  /** Only with `reps`. */
+  readonly exerciseId?: string;
+}
 
 export interface FriendsBoardEntry {
   readonly uid: string;
@@ -35,8 +50,20 @@ export interface FriendsBoardResponse {
   readonly entries: ReadonlyArray<FriendsBoardEntry>;
 }
 
-/** Why the server refused a request; `undefined` when it accepted. */
-export type FriendActionReason = string | undefined;
+/**
+ * Why the server refused; `undefined` when it accepted. The codes are
+ * `friendRequestRejection` / `cheerRejection` from the models, the
+ * callables' own `respondRejection`, and two the client adds itself.
+ */
+export type FriendActionReason =
+  | FriendRequestRejection
+  | CheerRejection
+  | 'not-found'
+  | 'not-yours'
+  | 'settled'
+  | 'unauthenticated'
+  | 'failed'
+  | undefined;
 
 export interface FriendActionResponse {
   readonly ok: boolean;
@@ -88,12 +115,20 @@ export class FriendsApiService {
 
   async board(
     period: FriendsBoardPeriod,
-    exerciseId?: string
+    comparison: FriendsBoardComparison
   ): Promise<ReadonlyArray<FriendsBoardEntry>> {
     const result = await this.callables.call<
-      { period: FriendsBoardPeriod; exerciseId?: string },
+      {
+        period: FriendsBoardPeriod;
+        metric: FriendsBoardMetric;
+        exerciseId?: string;
+      },
       FriendsBoardResponse
-    >('getFriendsLeaderboard')({ period, exerciseId });
+    >('getFriendsLeaderboard')({
+      period,
+      metric: comparison.metric,
+      exerciseId: comparison.exerciseId,
+    });
     return result.data?.entries ?? [];
   }
 

@@ -6,6 +6,7 @@ import { db } from './firebase-app';
 import {
   isPublicProfileAllowed,
   isValidUid,
+  photoEndpointUrl,
   photoSource,
   type UserConfigForPublicProfile,
 } from './profile';
@@ -60,11 +61,7 @@ export async function resolvePhotoUrl(
   const source = photoSource(config, viewerIsOwner);
   if (source.kind === 'none') return null;
   if (source.kind === 'inline') return inlinePhoto(uid);
-  if (source.kind === 'endpoint') {
-    const project = process.env['GCLOUD_PROJECT'] ?? 'pushup-stats';
-    const version = encodeURIComponent(source.version);
-    return `https://europe-west3-${project}.cloudfunctions.net/profilePhoto?uid=${encodeURIComponent(uid)}&v=${version}`;
-  }
+  if (source.kind === 'endpoint') return photoEndpointUrl(uid, source.version);
   try {
     const user = await getAuth().getUser(uid);
     return user.photoURL ?? null;

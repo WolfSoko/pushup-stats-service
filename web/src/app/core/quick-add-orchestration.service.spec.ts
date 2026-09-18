@@ -673,7 +673,8 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     await service.openAutoCount('abs.situps');
 
     const config = dialogMock.open.mock.calls[0][1] as
-      { data?: { initialExerciseId?: string } } | undefined;
+      | { data?: { initialExerciseId?: string } }
+      | undefined;
     expect(config?.data?.initialExerciseId).toBe('abs.situps');
   });
 
@@ -683,7 +684,8 @@ describe('QuickAddOrchestrationService.openAutoCount', () => {
     await service.openAutoCount();
 
     const config = dialogMock.open.mock.calls[0][1] as
-      { data?: unknown } | undefined;
+      | { data?: unknown }
+      | undefined;
     expect(config?.data).toBeUndefined();
   });
 });

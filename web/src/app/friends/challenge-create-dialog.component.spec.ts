@@ -6,8 +6,8 @@ import type { FriendRow } from './friends-api.service';
 
 describe('ChallengeCreateDialogComponent', () => {
   const friends: FriendRow[] = [
-    { id: 'me__b', uid: 'b', since: 'x', displayName: 'Bob' },
-    { id: 'me__c', uid: 'c', since: 'x', displayName: null },
+    { id: 'me__b', uid: 'b', since: 'x', displayName: 'Bob', photoURL: null },
+    { id: 'me__c', uid: 'c', since: 'x', displayName: null, photoURL: null },
   ];
 
   async function renderDialog() {

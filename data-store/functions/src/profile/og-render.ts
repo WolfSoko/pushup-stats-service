@@ -131,7 +131,7 @@ const OG_COPY: Readonly<Record<OgLocale, OgCopy>> = {
   },
 };
 
-function copyFor(locale: OgLocale | string | undefined): OgCopy {
+function copyFor(locale: string | undefined): OgCopy {
   return OG_COPY[locale === 'en' ? 'en' : 'de'];
 }
 
@@ -228,7 +228,7 @@ function badgeRow(
 /** Build the satori-friendly element tree for the profile OG card. */
 export function buildOgTree(
   profile: PublicProfileProjection,
-  locale: OgLocale | string | undefined = 'de'
+  locale: string | undefined = 'de'
 ): SatoriElement {
   const copy = copyFor(locale);
   return el('div', {
@@ -305,7 +305,7 @@ export function buildOgTree(
  */
 export async function renderProfileOg(
   profile: PublicProfileProjection,
-  locale: OgLocale | string | undefined = 'de'
+  locale: string | undefined = 'de'
 ): Promise<Buffer> {
   const [font] = await Promise.all([loadFont(), ensureResvgInitialised()]);
 

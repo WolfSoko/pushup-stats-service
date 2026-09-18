@@ -50,7 +50,12 @@ stopped updating".
 `SwUpdate` only checks the manifest once on app stabilisation (`registerWhenStable:2000` in `app.config.ts`). PWA / TWA users who never close the tab consequently **never** receive `VERSION_READY` after a deploy. Poll explicitly, and pair the timer with a visibility hook:
 
 ```ts
-merge(interval(10 * 60 * 1000), fromEvent(document, 'visibilitychange').pipe(filter(() => document.visibilityState === 'visible')))
+merge(
+  interval(10 * 60 * 1000),
+  fromEvent(document, 'visibilitychange').pipe(
+    filter(() => document.visibilityState === 'visible')
+  )
+)
   .pipe(takeUntilDestroyed(this.destroyRef))
   .subscribe(() => void swUpdate.checkForUpdate());
 ```

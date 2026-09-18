@@ -37,7 +37,10 @@ export interface PendingReminderAction {
 }
 
 export type ReminderActionRejection =
-  'no-pending-action' | 'token-mismatch' | 'expired' | 'quick-log-not-offered';
+  | 'no-pending-action'
+  | 'token-mismatch'
+  | 'expired'
+  | 'quick-log-not-offered';
 
 export type ReminderActionDecision =
   | { ok: true; action: 'quick-log'; reps: number; entry: QuickLogEntryData }

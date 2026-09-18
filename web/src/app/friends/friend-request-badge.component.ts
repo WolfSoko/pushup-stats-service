@@ -7,17 +7,32 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 
+import { MatIconModule } from '@angular/material/icon';
+
+import { ChallengesStore } from './challenges.store';
 import { FriendsStore } from './friends.store';
 
 /**
- * The count of friend requests waiting for an answer, next to the nav
- * entry. Self-loading, so the app shell needs to know nothing about
- * friends — it just places the badge where the label is.
+ * What waits for the user under "Freunde", next to the nav entry: a
+ * count of friend requests, and a small envelope while a challenge
+ * invitation wants an answer. Self-loading, so the app shell needs to
+ * know nothing about friends — it just places the badge where the
+ * label is.
  */
 @Component({
   selector: 'app-friend-request-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatIconModule],
   template: `
+    @if (challenges.invitations().length > 0) {
+      <mat-icon
+        class="invite"
+        data-testid="challenge-invite-badge"
+        [attr.aria-label]="inviteLabel(challenges.invitations().length)"
+        role="img"
+        >mail</mat-icon
+      >
+    }
     @if (store.pendingCount() > 0) {
       <span
         class="badge"
@@ -30,7 +45,15 @@ import { FriendsStore } from './friends.store';
   styles: `
     :host {
       display: inline-flex;
+      align-items: center;
       vertical-align: middle;
+    }
+    .invite {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      margin-left: 6px;
+      color: var(--mat-sys-primary, #81a1e8);
     }
     .badge {
       display: inline-flex;
@@ -51,15 +74,26 @@ import { FriendsStore } from './friends.store';
 })
 export class FriendRequestBadgeComponent implements OnInit {
   protected readonly store = inject(FriendsStore);
+  protected readonly challenges = inject(ChallengesStore);
   private readonly platformId = inject(PLATFORM_ID);
 
   ngOnInit(): void {
     // Only the browser has a signed-in user; the server render has no
     // requests to count and no callable to ask.
-    if (isPlatformBrowser(this.platformId)) void this.store.reload();
+    if (!isPlatformBrowser(this.platformId)) return;
+    void this.store.reload();
+    void this.challenges.reload({ progress: false });
+  }
+
+  protected inviteLabel(count: number): string {
+    return count === 1
+      ? $localize`:@@friends.badge.invitationOne:Eine Challenge-Einladung wartet`
+      : $localize`:@@friends.badge.invitations:${count}:count: Challenge-Einladungen warten`;
   }
 
   protected ariaLabel(count: number): string {
-    return $localize`:@@nav.friends.pendingAria:${count}:count: offene Freundschaftsanfragen`;
+    return count === 1
+      ? $localize`:@@nav.friends.pendingAriaOne:Eine offene Freundschaftsanfrage`
+      : $localize`:@@nav.friends.pendingAria:${count}:count: offene Freundschaftsanfragen`;
   }
 }

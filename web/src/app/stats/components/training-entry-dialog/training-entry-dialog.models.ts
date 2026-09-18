@@ -36,7 +36,8 @@ export interface ExerciseEntryDialogData {
 }
 
 export type TrainingEntryDialogData =
-  PushupEntryDialogData | ExerciseEntryDialogData;
+  | PushupEntryDialogData
+  | ExerciseEntryDialogData;
 
 /**
  * Ranking context for the exercise picker. The dialog has no view on
@@ -73,7 +74,9 @@ export interface TrainingEntryCreateDialogData {
 
 /** Everything `MAT_DIALOG_DATA` may carry for this dialog. */
 export type TrainingEntryDialogInput =
-  TrainingEntryDialogData | TrainingEntryCreateDialogData | null;
+  | TrainingEntryDialogData
+  | TrainingEntryCreateDialogData
+  | null;
 
 /** Narrows the dialog input to an entry the dialog should prefill and lock. */
 export function isEntryPrefill(
@@ -123,7 +126,8 @@ export interface ExerciseEntryDialogResult {
 }
 
 export type TrainingEntryDialogResult =
-  PushupEntryDialogResult | ExerciseEntryDialogResult;
+  | PushupEntryDialogResult
+  | ExerciseEntryDialogResult;
 
 /** One row of the exercise autocomplete. */
 export interface ExercisePickerOption {

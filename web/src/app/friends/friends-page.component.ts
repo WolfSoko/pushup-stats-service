@@ -1,15 +1,16 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   inject,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { InviteService } from '../core/invite.service';
@@ -17,7 +18,9 @@ import { ChallengesSectionComponent } from './challenges-section.component';
 import { ChallengesStore } from './challenges.store';
 import { FriendRequestsComponent } from './friend-requests.component';
 import { FriendsStore } from './friends.store';
+import { onEntriesChanged } from './on-entries-changed';
 import { FriendsBoardComponent } from './friends-board.component';
+import { FriendsListComponent } from './friends-list.component';
 import { friendRejectionMessage } from './friends-messages';
 import type { FriendsBoardPeriod } from './friends-api.service';
 
@@ -33,12 +36,11 @@ import type { FriendsBoardPeriod } from './friends-api.service';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     ChallengesSectionComponent,
     FriendRequestsComponent,
     FriendsBoardComponent,
+    FriendsListComponent,
     PageHeaderComponent,
-    RouterLink,
   ],
   template: `
     <main class="page-wrap">
@@ -75,64 +77,28 @@ import type { FriendsBoardPeriod } from './friends-api.service';
           <app-friends-board
             [entries]="store.board()"
             [period]="store.boardPeriod()"
+            [comparison]="store.boardComparison()"
+            [cheering]="store.cheering()"
             (periodChange)="changePeriod($event)"
+            (comparisonChange)="store.compareBy($event)"
             (cheer)="store.cheer($event)"
           />
         </section>
       }
 
-      @if (store.friends().length > 0) {
+      @if (store.friends().length > 0 || challenges.challenges().length > 0) {
         <section>
           <app-challenges-section [friends]="store.friends()" />
         </section>
       }
 
       <section>
-        <h2 i18n="@@friends.list">Deine Freunde</h2>
-        @if (store.loading() && store.isEmpty()) {
-          <mat-spinner diameter="32" />
-        } @else if (store.friends().length === 0) {
-          <mat-card class="friends-empty">
-            <mat-card-content>
-              <p i18n="@@friends.empty">
-                Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil
-                und schicke eine Anfrage.
-              </p>
-            </mat-card-content>
-            <mat-card-actions align="end">
-              <button
-                mat-flat-button
-                color="primary"
-                type="button"
-                (click)="invite()"
-              >
-                <mat-icon>person_add</mat-icon>
-                <span i18n="@@invite.action">Freunde einladen</span>
-              </button>
-            </mat-card-actions>
-          </mat-card>
-        } @else {
-          @for (row of store.friends(); track row.id) {
-            <mat-card class="friend-card" data-testid="friend-row">
-              <mat-card-content>
-                <a [routerLink]="['/u', row.uid]">{{
-                  name(row.displayName)
-                }}</a>
-              </mat-card-content>
-              <mat-card-actions align="end">
-                <button
-                  mat-stroked-button
-                  type="button"
-                  data-testid="friend-remove"
-                  (click)="store.remove(row.id)"
-                  i18n="@@friends.remove"
-                >
-                  Entfernen
-                </button>
-              </mat-card-actions>
-            </mat-card>
-          }
-        }
+        <app-friends-list
+          [rows]="store.friends()"
+          [loading]="store.loading() && store.isEmpty()"
+          (remove)="store.remove($event)"
+          (invite)="invite()"
+        />
       </section>
 
       @if (store.outgoing().length > 0) {
@@ -199,14 +165,36 @@ import type { FriendsBoardPeriod } from './friends-api.service';
 })
 export class FriendsPageComponent implements OnInit {
   protected readonly store = inject(FriendsStore);
-  private readonly challenges = inject(ChallengesStore);
+  protected readonly challenges = inject(ChallengesStore);
   private readonly invites = inject(InviteService);
 
   protected readonly rejection = computed(() =>
     friendRejectionMessage(this.store.lastRejection())
   );
 
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  constructor() {
+    onEntriesChanged(() => void this.store.loadBoard());
+    // Everything here is other people's doing — a friend accepts, logs
+    // reps, cheers — so coming back to the tab re-reads it all.
+    if (!isPlatformBrowser(this.platformId)) return;
+    const onVisible = () => {
+      if (this.document.visibilityState === 'visible') this.refresh();
+    };
+    this.document.addEventListener('visibilitychange', onVisible);
+    this.destroyRef.onDestroy(() =>
+      this.document.removeEventListener('visibilitychange', onVisible)
+    );
+  }
+
   ngOnInit(): void {
+    this.refresh();
+  }
+
+  private refresh(): void {
     void this.store.reload();
     void this.store.loadBoard();
     void this.challenges.reload();

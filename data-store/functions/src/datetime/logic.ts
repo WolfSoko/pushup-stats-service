@@ -49,7 +49,11 @@ export function berlinDateParts(date = new Date()): BerlinDateParts {
  * @param day Day of month
  * @returns Object with ISO year and week number (1-53)
  */
-export function isoWeekFromYmd(year: number, month: number, day: number): IsoWeekParts {
+export function isoWeekFromYmd(
+  year: number,
+  month: number,
+  day: number
+): IsoWeekParts {
   const d = new Date(Date.UTC(year, month - 1, day));
   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));

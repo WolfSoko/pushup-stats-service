@@ -80,7 +80,7 @@ export class AdminFeedbackSectionComponent {
       const s = this.feedbackSort();
       if (s) this.feedbackDataSource.sort = s;
     });
-    this.loadFeedback();
+    void this.loadFeedback();
   }
 
   async loadFeedback(): Promise<void> {

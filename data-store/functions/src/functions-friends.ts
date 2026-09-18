@@ -8,13 +8,17 @@ import {
   type Friendship,
 } from '@pu-stats/models';
 
+import { requireUid } from './callable-auth';
 import { db, DEMO_USER_ID } from './firebase-app';
 import {
   friendLists,
   requestRejection,
   respondRejection,
+  withProfiles,
   type FriendshipDoc,
 } from './friends';
+import { readFriendPhotoUrls } from './friends/photos-read';
+import { displayNames, readUserConfigs } from './user-config-read';
 
 /**
  * Friendships — mutual, and therefore the thing that unlocks the
@@ -26,13 +30,6 @@ import {
  */
 
 const COLLECTION = 'friendships';
-
-function requireUid(auth: { uid?: string } | undefined): string {
-  if (!auth?.uid) {
-    throw new HttpsError('unauthenticated', 'Nicht angemeldet.');
-  }
-  return auth.uid;
-}
 
 /** Every friendship document `uid` is part of. */
 async function readFriendships(uid: string): Promise<FriendshipDoc[]> {
@@ -159,6 +156,10 @@ export const removeFriend = onCall(
  * requests waiting on someone else — each with the display name the other
  * user's config carries, so the client needs no second round of lookups
  * (and no read access to other users' configs).
+ *
+ * Only the confirmed friends carry an avatar. A pending request is not
+ * yet an audience anyone agreed to, and a picture is exactly the kind of
+ * thing a stranger's request should not hand out.
  */
 export const listFriends = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },
@@ -166,33 +167,15 @@ export const listFriends = onCall(
     const uid = requireUid(request.auth);
     const lists = friendLists(await readFriendships(uid), uid);
 
-    const uids = [
-      ...new Set(
-        [...lists.friends, ...lists.incoming, ...lists.outgoing].map(
-          (entry) => entry.uid
-        )
-      ),
-    ];
-    const names = new Map<string, string>();
-    if (uids.length > 0) {
-      const col = db.collection('userConfigs');
-      const snaps = await db.getAll(...uids.map((id) => col.doc(id)));
-      for (const snap of snaps) {
-        const name = String(snap.data()?.['displayName'] ?? '').trim();
-        if (name) names.set(snap.id, name);
-      }
-    }
+    const configs = await readUserConfigs(
+      [...lists.friends, ...lists.incoming, ...lists.outgoing].map(
+        (entry) => entry.uid
+      )
+    );
+    const photos = await readFriendPhotoUrls(
+      new Map(lists.friends.map((entry) => [entry.uid, configs.get(entry.uid)]))
+    );
 
-    const withNames = (entries: typeof lists.friends) =>
-      entries.map((entry) => ({
-        ...entry,
-        displayName: names.get(entry.uid) ?? null,
-      }));
-
-    return {
-      friends: withNames(lists.friends),
-      incoming: withNames(lists.incoming),
-      outgoing: withNames(lists.outgoing),
-    };
+    return withProfiles(lists, displayNames(configs), photos);
   }
 );

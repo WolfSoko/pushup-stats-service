@@ -36,3 +36,43 @@ export function photoSource(
     ? { kind: 'none' }
     : { kind: 'account' };
 }
+
+/**
+ * The public `profilePhoto` URL for an uploaded photo. `version` is the
+ * upload's timestamp and doubles as the cache-buster, so a new upload can
+ * never be served from a stale CDN entry.
+ */
+export function photoEndpointUrl(uid: string, version: string): string {
+  const project = process.env['GCLOUD_PROJECT'] ?? 'pushup-stats';
+  return `https://europe-west3-${project}.cloudfunctions.net/profilePhoto?uid=${encodeURIComponent(uid)}&v=${encodeURIComponent(version)}`;
+}
+
+/**
+ * Splits a group of users into the photo URLs already decided and those
+ * whose picture still has to be read from their Auth record.
+ *
+ * Batching that read is the reason this exists: a friends list would
+ * otherwise make one `getUser` round-trip per row.
+ */
+export function planPhotoUrls(
+  configs: ReadonlyMap<string, UserConfigForPublicProfile | undefined>
+): {
+  readonly urls: Map<string, string>;
+  readonly fromAccount: string[];
+} {
+  const urls = new Map<string, string>();
+  const fromAccount: string[] = [];
+  for (const [uid, config] of configs) {
+    // No config document, no profile: `buildPublicProfile` returns
+    // not-found for this user, so their Auth picture must not surface
+    // here either. Happens to a half-deleted account.
+    if (!config) continue;
+    const source = photoSource(config, false);
+    if (source.kind === 'endpoint') {
+      urls.set(uid, photoEndpointUrl(uid, source.version));
+    } else if (source.kind === 'account') {
+      fromAccount.push(uid);
+    }
+  }
+  return { urls, fromAccount };
+}

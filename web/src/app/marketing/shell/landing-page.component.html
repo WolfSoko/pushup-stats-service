@@ -191,6 +191,90 @@
     </div>
   </section>
 
+  <section
+    class="friends-feature scroll-reveal scroll-reveal--from-right"
+    aria-labelledby="friends-title"
+  >
+    <div class="friends-intro">
+      <span class="section-eyebrow" i18n="@@landing.friends.eyebrow"
+        >Gemeinsam dranbleiben</span
+      >
+      <h2 id="friends-title" i18n="@@landing.friends.title">
+        Trainier mit Freunden
+      </h2>
+      <p i18n="@@landing.friends.subtitle">
+        Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und
+        startet gemeinsame Challenges. Wer sich verabredet, bleibt dran.
+      </p>
+    </div>
+
+    <div class="friends-cards scroll-reveal-stagger">
+      <mat-card class="friend-card">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">group</mat-icon>
+          <mat-card-title i18n="@@landing.friends.board.title"
+            >Euer Vergleich</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.friends.board.body">
+          Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak
+          zählen für alle gleich, egal welche Übung. Wer will, misst sich bei
+          Liegestützen, Kniebeugen oder Klimmzügen.
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="friend-card">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">whatshot</mat-icon>
+          <mat-card-title i18n="@@landing.friends.cheer.title"
+            >Anfeuern</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.friends.cheer.body">
+          Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs
+          Handy. Einmal am Tag, pro Person. Klein, aber es wirkt.
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="friend-card">
+        <mat-card-header class="key-features-header">
+          <mat-icon aria-hidden="true">flag</mat-icon>
+          <mat-card-title i18n="@@landing.friends.challenge.title"
+            >Challenges</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content i18n="@@landing.friends.challenge.body">
+          Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche
+          zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten
+          Tag.
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="friends-cta">
+      @if (isAuthenticated()) {
+        <a
+          mat-flat-button
+          color="primary"
+          routerLink="/freunde"
+          (click)="onFriendsCtaClick('friends')"
+          i18n="@@landing.friends.cta.open"
+          >Zu den Freunden</a
+        >
+      } @else if (authResolved()) {
+        <a
+          mat-flat-button
+          color="primary"
+          routerLink="/register"
+          [queryParams]="{ returnUrl: '/freunde' }"
+          (click)="onFriendsCtaClick('signup')"
+          i18n="@@landing.friends.cta.signup"
+          >Konto erstellen &amp; Freunde einladen</a
+        >
+      }
+    </div>
+  </section>
+
   @defer (hydrate on viewport) {
     <app-session-feature-section
       class="scroll-reveal scroll-reveal--from-right"

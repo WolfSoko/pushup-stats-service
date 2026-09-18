@@ -9,6 +9,7 @@ describe('FriendsStore', () => {
     uid: 'b',
     since: '2026-09-01T10:00:00.000Z',
     displayName: 'Wolf',
+    photoURL: null,
   };
 
   function setup(
@@ -136,8 +137,53 @@ describe('FriendsStore', () => {
     await store.loadBoard('allTime');
 
     // then
-    expect(api.board).toHaveBeenCalledWith('allTime');
+    expect(api.board).toHaveBeenCalledWith('allTime', { metric: 'days' });
     expect(store.boardPeriod()).toBe('allTime');
+  });
+
+  it('should share one reload between consumers mounting at once', async () => {
+    // given — the nav badge and the dashboard card both ask on init
+    const { store, api } = setup({ friends: [friend] });
+
+    // when
+    await Promise.all([store.reload(), store.reload()]);
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.friendCount()).toBe(1);
+    expect(store.loading()).toBe(false);
+  });
+
+  it('should leave the remembered period alone for a preview', async () => {
+    // given — the user picked a month on the friends page
+    const { store, api } = setup();
+    await store.loadBoard('month');
+
+    // when — the dashboard card previews the week
+    await store.loadBoard('week', { remember: false });
+
+    // then
+    expect(api.board).toHaveBeenLastCalledWith('week', { metric: 'days' });
+    expect(store.boardPeriod()).toBe('month');
+  });
+
+  it('should re-read the board with the comparison the user picked', async () => {
+    // given
+    const { store, api } = setup();
+    await store.loadBoard('month');
+
+    // when — racing on pull-ups instead of counting days
+    await store.compareBy({ metric: 'reps', exerciseId: 'pullup' });
+
+    // then
+    expect(api.board).toHaveBeenLastCalledWith('month', {
+      metric: 'reps',
+      exerciseId: 'pullup',
+    });
+    expect(store.boardComparison()).toEqual({
+      metric: 'reps',
+      exerciseId: 'pullup',
+    });
   });
 
   it('should reuse the last period when none is given', async () => {
@@ -150,7 +196,7 @@ describe('FriendsStore', () => {
     await store.loadBoard();
 
     // then
-    expect(api.board).toHaveBeenCalledWith('month');
+    expect(api.board).toHaveBeenCalledWith('month', { metric: 'days' });
   });
 
   it('should re-read the board, not the lists, after a cheer', async () => {
@@ -165,7 +211,7 @@ describe('FriendsStore', () => {
     // then
     expect(ok).toBe(true);
     expect(api.cheer).toHaveBeenCalledWith('b');
-    expect(api.board).toHaveBeenCalledWith('daily');
+    expect(api.board).toHaveBeenCalledWith('daily', { metric: 'days' });
     expect(api.list).not.toHaveBeenCalled();
   });
 

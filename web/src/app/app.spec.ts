@@ -28,6 +28,7 @@ import { GoalReachedNotificationService } from './core/goal-reached-notification
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
 import { SwUpdateService } from './core/sw-update.service';
 import { FriendsApiService } from './friends/friends-api.service';
+import { ChallengesApiService } from './friends/challenges-api.service';
 
 describe('App (testing-library)', () => {
   let userNameSignal: WritableSignal<string>;
@@ -46,6 +47,8 @@ describe('App (testing-library)', () => {
   };
 
   // The nav badge asks for the friends lists; nothing waits here.
+  const challengesApiMock = { list: vitest.fn().mockResolvedValue([]) };
+
   const friendsApiMock = {
     list: vitest
       .fn()
@@ -136,6 +139,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -179,6 +183,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -240,6 +245,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -301,6 +307,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -370,6 +377,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -428,6 +436,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -497,6 +506,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -788,6 +798,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -843,6 +854,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -898,6 +910,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -953,6 +966,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -1011,6 +1025,7 @@ describe('App (testing-library)', () => {
             { provide: AdsStore, useValue: adsStoreMock },
             { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
             { provide: FriendsApiService, useValue: friendsApiMock },
+            { provide: ChallengesApiService, useValue: challengesApiMock },
             {
               provide: ExerciseFirestoreService,
               useValue: exerciseFirestoreMock,
@@ -1065,6 +1080,7 @@ describe('App (testing-library)', () => {
             { provide: AdsStore, useValue: adsStoreMock },
             { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
             { provide: FriendsApiService, useValue: friendsApiMock },
+            { provide: ChallengesApiService, useValue: challengesApiMock },
             {
               provide: ExerciseFirestoreService,
               useValue: exerciseFirestoreMock,
@@ -1118,6 +1134,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -1138,8 +1155,8 @@ describe('App (testing-library)', () => {
     expect(logo?.getAttribute('src')).toBe('assets/pushup-logo.webp');
   });
 
-  it('given app is rendered, when reading bottom navigation, then it exposes five primary links', async () => {
-    // Given
+  it('should list every section in the arc nav for a signed-in user, friends in its familiar spot', async () => {
+    // given
     await render(App, {
       providers: [
         provideRouter([]),
@@ -1162,6 +1179,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -1175,21 +1193,25 @@ describe('App (testing-library)', () => {
       ],
     });
 
-    // When
-    const bottomNav = document.querySelector('.bottom-nav');
+    // when
+    const arcNav = screen.getByTestId('arc-nav');
 
-    // Then
-    expect(bottomNav).toBeTruthy();
-    if (!bottomNav) {
-      throw new Error('Expected .bottom-nav to be rendered');
-    }
-    const links = bottomNav.querySelectorAll('a');
-    expect(links.length).toBe(5);
-    expect(links[0].getAttribute('href')).toBe('/app');
-    expect(links[1].getAttribute('href')).toBe('/analysis');
-    expect(links[2].getAttribute('href')).toBe('/leaderboard');
-    expect(links[3].getAttribute('href')).toBe('/training-plans');
-    expect(links[4].getAttribute('href')).toBe('/blog');
+    // then — one bar for every viewport; the old desktop link row is gone
+    expect(document.querySelector('.desktop-nav')).toBeNull();
+    const hrefs = Array.from(
+      arcNav.querySelectorAll('a:not([aria-hidden])')
+    ).map((a) => a.getAttribute('href'));
+    expect(hrefs).toEqual([
+      '/app',
+      '/analysis',
+      '/leaderboard',
+      '/freunde',
+      '/training-plans',
+      '/blog',
+      '/history',
+      '/wiki/uebungen',
+      '/wiki/liegestuetz-typen',
+    ]);
   });
 
   describe('speed-dial coachmark', () => {
@@ -1217,6 +1239,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -1311,6 +1334,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -1392,6 +1416,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -1486,6 +1511,7 @@ describe('App (testing-library)', () => {
         { provide: AdsStore, useValue: adsStoreMock },
         { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
         { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
         { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
         {
           provide: LiveDataStore,
@@ -1532,6 +1558,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -1581,6 +1608,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,
@@ -1639,6 +1667,7 @@ describe('App (testing-library)', () => {
           { provide: AdsStore, useValue: adsStoreMock },
           { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
           { provide: FriendsApiService, useValue: friendsApiMock },
+          { provide: ChallengesApiService, useValue: challengesApiMock },
           {
             provide: ExerciseFirestoreService,
             useValue: exerciseFirestoreMock,

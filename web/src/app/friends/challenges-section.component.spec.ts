@@ -1,3 +1,5 @@
+import { LiveDataStore } from '@pu-stats/data-access-state';
+import { signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { render, screen } from '@testing-library/angular';
 import { of } from 'rxjs';
@@ -7,6 +9,7 @@ import {
   type ChallengeView,
 } from './challenges-api.service';
 import { ChallengesSectionComponent } from './challenges-section.component';
+import { ChallengesStore } from './challenges.store';
 import type { FriendRow } from './friends-api.service';
 
 describe('ChallengesSectionComponent', () => {
@@ -15,6 +18,7 @@ describe('ChallengesSectionComponent', () => {
     uid: 'b',
     since: '2026-09-01T10:00:00.000Z',
     displayName: 'Bob',
+    photoURL: null,
   };
 
   const challenge: ChallengeView = {
@@ -29,6 +33,16 @@ describe('ChallengesSectionComponent', () => {
       { uid: 'b', displayName: 'Bob', value: 320, isViewer: false },
       { uid: 'me', displayName: 'Me', value: 100, isViewer: true },
     ],
+    invited: [],
+    viewerInvited: false,
+  };
+
+  const invitation: ChallengeView = {
+    ...challenge,
+    id: 'c2',
+    entries: [],
+    invited: [{ uid: 'me', displayName: 'Me' }],
+    viewerInvited: true,
   };
 
   async function renderSection(
@@ -39,6 +53,7 @@ describe('ChallengesSectionComponent', () => {
     const api = {
       list: vitest.fn().mockResolvedValue(challenges),
       create: vitest.fn().mockResolvedValue({ ok: true }),
+      respond: vitest.fn().mockResolvedValue({ ok: true }),
       leave: vitest.fn().mockResolvedValue({ ok: true }),
     };
     const dialog = {
@@ -46,24 +61,61 @@ describe('ChallengesSectionComponent', () => {
         .fn()
         .mockReturnValue({ afterClosed: () => of(dialogResult) }),
     };
+    const live = {
+      updateTick: signal(0),
+      exerciseEntriesLoaded: signal(false),
+    };
     const { fixture } = await render(ChallengesSectionComponent, {
       inputs: { friends },
       providers: [
         { provide: ChallengesApiService, useValue: api },
         { provide: MatDialog, useValue: dialog },
+        { provide: LiveDataStore, useValue: live },
       ],
     });
+    // The page loads the store; the section only renders it.
+    await fixture.debugElement.injector.get(ChallengesStore).reload();
+    fixture.detectChanges();
+    return { api, dialog, fixture, live };
+  }
+
+  it('should re-read the challenges when a workout is logged', async () => {
+    // given
+    const { api, fixture, live } = await renderSection([challenge]);
+    live.exerciseEntriesLoaded.set(true);
+    live.updateTick.set(1);
+    await fixture.whenStable();
+    api.list.mockClear();
+
+    // when
+    live.updateTick.set(2);
+    await fixture.whenStable();
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('should say so and offer a retry when the list could not be loaded', async () => {
+    // given — the first read fails, the retry succeeds
+    const { api, fixture } = await renderSection([challenge]);
+    api.list.mockRejectedValueOnce(new Error('offline'));
+    await fixture.debugElement.injector.get(ChallengesStore).reload();
+    fixture.detectChanges();
+    expect(screen.getByTestId('challenges-load-failed')).toBeTruthy();
+
+    // when
+    screen.getByTestId('challenges-retry').click();
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, dialog, fixture };
-  }
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(3);
+    expect(screen.queryByTestId('challenges-load-failed')).toBeNull();
+  });
 
   it('should show each participant with progress against the target', async () => {
     // given
-    const { fixture } = await renderSection([challenge]);
-    const { ChallengesStore } = await import('./challenges.store');
-    await fixture.debugElement.injector.get(ChallengesStore).reload();
-    fixture.detectChanges();
+    await renderSection([challenge]);
 
     // then
     const rows = screen.getAllByTestId('challenge-participant');
@@ -72,6 +124,24 @@ describe('ChallengesSectionComponent', () => {
     expect(rows[0].textContent).toContain('320 / 500');
     expect(rows[1].textContent).toContain('Du');
     expect(screen.getByTestId('challenge-meta').textContent).toContain('Noch');
+  });
+
+  it('should put invitations first and answer them', async () => {
+    // given
+    const { api } = await renderSection([challenge, invitation]);
+
+    // then — the invitation shows no numbers and sits on top
+    const cards = screen.getAllByTestId('challenge-card');
+    expect(cards[0].textContent).toContain('Du bist eingeladen');
+    expect(
+      cards[0].querySelector('[data-testid="challenge-participant"]')
+    ).toBeNull();
+
+    // when
+    screen.getByTestId('challenge-accept').click();
+
+    // then
+    expect(api.respond).toHaveBeenCalledWith('c2', true);
   });
 
   it('should offer starting one only with friends to invite', async () => {
@@ -98,7 +168,9 @@ describe('ChallengesSectionComponent', () => {
 
     // when — the dialog is dynamic-imported, so wait for the call itself
     screen.getByTestId('challenge-start').click();
-    await vitest.waitFor(() => expect(api.create).toHaveBeenCalledWith(input));
+    await vitest.waitFor(() => expect(api.create).toHaveBeenCalledWith(input), {
+      timeout: 10000,
+    });
     await fixture.whenStable();
 
     // then
@@ -107,15 +179,26 @@ describe('ChallengesSectionComponent', () => {
 
   it('should let a participant leave', async () => {
     // given
-    const { api, fixture } = await renderSection([challenge]);
-    const { ChallengesStore } = await import('./challenges.store');
-    await fixture.debugElement.injector.get(ChallengesStore).reload();
-    fixture.detectChanges();
+    const { api } = await renderSection([challenge]);
 
     // when
     screen.getByTestId('challenge-leave').click();
 
     // then
     expect(api.leave).toHaveBeenCalledWith('c1');
+  });
+
+  it('should explain a refused answer', async () => {
+    // given
+    const { api, fixture } = await renderSection([invitation]);
+    api.respond.mockResolvedValue({ ok: false, reason: 'ended' });
+
+    // when
+    screen.getByTestId('challenge-decline').click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    // then
+    expect(document.body.textContent).toContain('schon vorbei');
   });
 });

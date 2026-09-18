@@ -16,13 +16,32 @@ describe('ChallengesStore', () => {
     to: '2026-09-20',
     status: 'active',
     entries: [],
+    invited: [],
+    viewerInvited: false,
   };
   const ended: ChallengeView = { ...active, id: 'c0', status: 'ended' };
+  const invitation: ChallengeView = {
+    ...active,
+    id: 'c2',
+    viewerInvited: true,
+  };
+  const zeroed = [
+    { uid: 'friend', displayName: 'Ada', value: 0, isViewer: false },
+    { uid: 'me', displayName: 'Wolf', value: 0, isViewer: true },
+  ];
+  const scored: ChallengeView = {
+    ...active,
+    entries: [
+      { uid: 'friend', displayName: 'Ada', value: 300, isViewer: false },
+      { uid: 'me', displayName: 'Wolf', value: 120, isViewer: true },
+    ],
+  };
 
   function setup(challenges: ChallengeView[] = []) {
     const api = {
       list: vitest.fn().mockResolvedValue(challenges),
       create: vitest.fn().mockResolvedValue({ ok: true }),
+      respond: vitest.fn().mockResolvedValue({ ok: true }),
       leave: vitest.fn().mockResolvedValue({ ok: true }),
     };
     TestBed.resetTestingModule();
@@ -32,16 +51,77 @@ describe('ChallengesStore', () => {
     return { store: TestBed.inject(ChallengesStore), api };
   }
 
-  it('should split running and finished challenges', async () => {
+  it('should split invitations, running and finished challenges', async () => {
     // given
-    const { store } = setup([active, ended]);
+    const { store } = setup([active, ended, invitation]);
 
     // when
     await store.reload();
 
-    // then
+    // then — an invitation is not "running" for the viewer yet
+    expect(store.invitations().map((c) => c.id)).toEqual(['c2']);
     expect(store.active().map((c) => c.id)).toEqual(['c1']);
     expect(store.ended().map((c) => c.id)).toEqual(['c0']);
+  });
+
+  it('should keep the newest reload’s answer when an older one arrives late', async () => {
+    // given — the dashboard's count-only call is still in flight when the
+    // friends page asks for the full list
+    const { store, api } = setup();
+    let resolveSlow: (value: ChallengeView[]) => void = () => undefined;
+    api.list
+      .mockReturnValueOnce(
+        new Promise<ChallengeView[]>((resolve) => (resolveSlow = resolve))
+      )
+      .mockResolvedValueOnce([active, invitation]);
+
+    // when
+    const slow = store.reload({ progress: false });
+    await store.reload();
+    resolveSlow([{ ...active, entries: [] }]);
+    await slow;
+
+    // then — the full list stands, the stale count-only reply is dropped
+    expect(store.challenges().map((c) => c.id)).toEqual(['c1', 'c2']);
+    expect(store.loading()).toBe(false);
+  });
+
+  it('should share one call between callers asking for the same thing at once', async () => {
+    // given — the drawer's badge and the nav's copies all count on start-up
+    const { store, api } = setup([invitation]);
+
+    // when
+    await Promise.all([
+      store.reload({ progress: false }),
+      store.reload({ progress: false }),
+      store.reload({ progress: false }),
+    ]);
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.invitations().map((c) => c.id)).toEqual(['c2']);
+  });
+
+  it('should not let a count-only call stand in for the full list', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when — the page asks for progress while the badge's count is in flight
+    await Promise.all([store.reload({ progress: false }), store.reload()]);
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(2);
+  });
+
+  it('should pass the progress flag through', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when
+    await store.reload({ progress: false });
+
+    // then
+    expect(api.list).toHaveBeenCalledWith({ progress: false });
   });
 
   it('should re-read after creating one', async () => {
@@ -62,6 +142,19 @@ describe('ChallengesStore', () => {
     expect(ok).toBe(true);
     expect(api.create).toHaveBeenCalledWith(input);
     expect(api.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('should answer an invitation with the same call either way', async () => {
+    // given
+    const { store, api } = setup();
+
+    // when
+    await store.accept('c2');
+    await store.decline('c2');
+
+    // then
+    expect(api.respond).toHaveBeenNthCalledWith(1, 'c2', true);
+    expect(api.respond).toHaveBeenNthCalledWith(2, 'c2', false);
   });
 
   it('should keep the refusal reason and not reload', async () => {
@@ -97,6 +190,25 @@ describe('ChallengesStore', () => {
     expect(store.lastRejection()).toBe('failed');
   });
 
+  it('should flag a failed reload and clear the flag on the next success', async () => {
+    // given
+    const { store, api } = setup([active]);
+    api.list.mockRejectedValueOnce(new Error('offline'));
+
+    // when
+    await store.reload();
+
+    // then — nothing pretends to be fresh
+    expect(store.loadFailed()).toBe(true);
+
+    // when
+    await store.reload();
+
+    // then
+    expect(store.loadFailed()).toBe(false);
+    expect(store.challenges().map((c) => c.id)).toEqual(['c1']);
+  });
+
   it('should keep what it had when a reload fails', async () => {
     // given
     const { store, api } = setup([active]);
@@ -109,5 +221,36 @@ describe('ChallengesStore', () => {
     // then
     expect(store.challenges()).toHaveLength(1);
     expect(store.loading()).toBe(false);
+  });
+  it('should keep the sums when a count-only reload follows a full one', async () => {
+    // given — the page read the progress, then the nav badge counts
+    const { store, api } = setup();
+    api.list
+      .mockResolvedValueOnce([scored])
+      .mockResolvedValueOnce([{ ...scored, entries: zeroed }]);
+    await store.reload();
+
+    // when
+    await store.reload({ progress: false });
+
+    // then — the badge asked for counts, not for the board to be blanked
+    expect(store.challenges()[0].entries.map((e) => e.value)).toEqual([
+      300, 120,
+    ]);
+  });
+
+  it('should let a count-only caller join a full call already in flight', async () => {
+    // given — the friends page is loading when the badge mounts
+    const { store, api } = setup([scored]);
+
+    // when
+    await Promise.all([store.reload(), store.reload({ progress: false })]);
+
+    // then — one call, and its sums survive: a second ticket would have
+    // dropped the full answer unread and shown everyone at 0
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(store.challenges()[0].entries.map((e) => e.value)).toEqual([
+      300, 120,
+    ]);
   });
 });

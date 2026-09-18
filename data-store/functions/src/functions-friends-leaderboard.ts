@@ -11,20 +11,26 @@ import { berlinDateParts } from './datetime';
 import { db } from './firebase-app';
 import {
   acceptedFriendUids,
+  isFriendsBoardMetric,
   isFriendsLeaderboardPeriod,
+  periodStartIso,
   rankFriends,
   type FriendStatsRow,
 } from './friends';
-import { readCheersToday } from './functions-cheers';
+import { readCheersToday } from './friends/cheers-read';
+import { readTrainingDays } from './friends/training-days-read';
 import { periodKeys } from './user-stats-delta';
 
 /**
- * The friends board for one exercise and period.
+ * The friends board for one metric and period: training days (the
+ * default — fair whatever everyone's favourite exercise is), the live
+ * streak, or one exercise's reps.
  *
  * Not served from the public leaderboard snapshot: that one is a top-N
  * list, and friends are an arbitrary set of at most `MAX_FRIENDS` users
- * who will mostly not be in it. Their values come from the per-exercise
- * aggregates, one `getAll` per collection.
+ * who will mostly not be in it. Their values come from the aggregates,
+ * one `getAll` per collection; only training days within a week or
+ * month are counted from the entries.
  */
 export const getFriendsLeaderboard = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },
@@ -42,6 +48,9 @@ export const getFriendsLeaderboard = onCall(
     const period = isFriendsLeaderboardPeriod(request.data?.period)
       ? request.data.period
       : 'week';
+    const metric = isFriendsBoardMetric(request.data?.metric)
+      ? request.data.metric
+      : 'days';
 
     const friendsSnap = await db
       .collection('friendships')
@@ -56,17 +65,25 @@ export const getFriendsLeaderboard = onCall(
     );
 
     const uids = [uid, ...friendUids];
-    const [configs, stats] = await Promise.all([
+    const today = berlinDateParts();
+    const statsDoc = (id: string) => {
+      const root = db.collection('userStats').doc(id);
+      return metric === 'reps'
+        ? root.collection('perExercise').doc(exerciseId)
+        : root;
+    };
+    const countDays =
+      metric === 'days' && (period === 'week' || period === 'month');
+    const [configs, stats, days] = await Promise.all([
       db.getAll(...uids.map((id) => db.collection('userConfigs').doc(id))),
-      db.getAll(
-        ...uids.map((id) =>
-          db
-            .collection('userStats')
-            .doc(id)
-            .collection('perExercise')
-            .doc(exerciseId)
-        )
-      ),
+      db.getAll(...uids.map(statsDoc)),
+      countDays
+        ? readTrainingDays(
+            uids,
+            periodStartIso(period, today.isoDate),
+            today.isoDate
+          )
+        : new Map<string, number>(),
     ]);
 
     const rows: FriendStatsRow[] = uids.map((id, index) => {
@@ -75,21 +92,28 @@ export const getFriendsLeaderboard = onCall(
         uid: id,
         displayName: String(config?.['displayName'] ?? '').trim() || null,
         stats: stats[index]?.data() ?? null,
+        days: days.get(id),
         ui: config?.['ui'] as ProfileVisibilityUi | undefined,
         isViewer: id === uid,
       };
     });
 
-    const today = berlinDateParts();
     const cheers = await readCheersToday(uid, uids, today.isoDate);
-    const entries = rankFriends(rows, period, periodKeys(today), cheers);
+    const entries = rankFriends(
+      rows,
+      period,
+      periodKeys(today),
+      cheers,
+      metric
+    );
     logger.info('getFriendsLeaderboard', {
       uid,
+      metric,
       exerciseId,
       period,
       friends: friendUids.length,
       shown: entries.length,
     });
-    return { exerciseId, period, entries };
+    return { metric, exerciseId, period, entries };
   }
 );

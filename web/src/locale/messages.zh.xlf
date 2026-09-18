@@ -2367,14 +2367,6 @@
         <source> Cookie-Einstellungen </source>
       <target> Cookie 设置 </target></segment>
     </unit>
-    <unit id="nav.bottom.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:227,228</note>
-      </notes>
-      <segment state="translated">
-        <source>Mobile-Navigation</source>
-      <target>移动菜单</target></segment>
-    </unit>
     <unit id="seo.landing.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:15</note>
@@ -2387,8 +2379,8 @@
       <notes>
         <note category="location">web/src/app/app.routes.ts:16</note>
       </notes>
-      <segment state="translated">
-        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
+      <segment state="initial">
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.</source>
       <target>摄像头自动计数你的俯卧撑 — 在浏览器中进行，无需上传。此外还有训练计划、连续天数和排行榜，现在也支持深蹲和引体向上。</target></segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -12493,8 +12485,8 @@
     </unit>
     <unit id="challenge.error.gone">
       <segment state="translated">
-        <source>Diese Challenge gibt es nicht mehr.</source>
-        <target>该挑战已不存在。</target>
+        <source>Diese Einladung ist nicht mehr offen.</source>
+        <target>该邀请已失效。</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
@@ -12537,6 +12529,228 @@
       <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
         <target><ph id="0" equiv="count" disp="count"/> 个挑战正在进行</target>
+      </segment>
+    </unit>
+    <unit id="challenges.invitation">
+      <segment state="initial">
+        <source> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </source>
+        <target> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </target>
+      </segment>
+    </unit>
+    <unit id="challenges.stillInvited">
+      <segment state="initial">
+        <source>Noch eingeladen:</source>
+        <target>Noch eingeladen:</target>
+      </segment>
+    </unit>
+    <unit id="challenges.decline">
+      <segment state="initial">
+        <source> Ablehnen </source>
+        <target> Ablehnen </target>
+      </segment>
+    </unit>
+    <unit id="challenges.accept">
+      <segment state="initial">
+        <source> Mitmachen </source>
+        <target> Mitmachen </target>
+      </segment>
+    </unit>
+    <unit id="nav.friends.pendingAriaOne">
+      <segment state="initial">
+        <source>Eine offene Freundschaftsanfrage</source>
+        <target>Eine offene Freundschaftsanfrage</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheersTodayOne">
+      <segment state="initial">
+        <source>Eine Anfeuerung heute</source>
+        <target>Eine Anfeuerung heute</target>
+      </segment>
+    </unit>
+    <unit id="challenge.error.ended">
+      <segment state="initial">
+        <source>Die Challenge ist schon vorbei.</source>
+        <target>Die Challenge ist schon vorbei.</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.pendingOne">
+      <segment state="initial">
+        <source>Eine Anfrage wartet auf dich</source>
+        <target>Eine Anfrage wartet auf dich</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.invitationOne">
+      <segment state="initial">
+        <source>Eine Challenge-Einladung wartet</source>
+        <target>Eine Challenge-Einladung wartet</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.invitations">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
+        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.activeChallengeOne">
+      <segment state="initial">
+        <source>Eine Challenge läuft</source>
+        <target>Eine Challenge läuft</target>
+      </segment>
+    </unit>
+    <unit id="friends.badge.invitationOne">
+      <segment state="initial">
+        <source>Eine Challenge-Einladung wartet</source>
+        <target>Eine Challenge-Einladung wartet</target>
+      </segment>
+    </unit>
+    <unit id="friends.badge.invitations">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
+        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+      </segment>
+    </unit>
+    <unit id="challenges.loadFailed">
+      <segment state="initial">
+        <source>Challenges konnten nicht geladen werden.</source>
+        <target>Challenges konnten nicht geladen werden.</target>
+      </segment>
+    </unit>
+    <unit id="challenges.retry">
+      <segment state="initial">
+        <source> Erneut laden </source>
+        <target> Erneut laden </target>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.invited">
+      <segment state="initial">
+        <source>Challenge-Einladung</source>
+        <target>Challenge-Einladung</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.running">
+      <segment state="initial">
+        <source>Freunde-Challenge</source>
+        <target>Freunde-Challenge</target>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.more">
+      <segment state="initial">
+        <source>Alle Challenges</source>
+        <target>Alle Challenges</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.dayOne">
+      <segment state="initial">
+        <source>1 Tag</source>
+        <target>1 Tag</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.days">
+      <segment state="initial">
+        <source><ph id="0" equiv="count" disp="value"/> Tage</source>
+        <target><ph id="0" equiv="count" disp="value"/> Tage</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.compare">
+      <segment state="initial">
+        <source>Vergleich</source>
+        <target>Vergleich</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.days">
+      <segment state="initial">
+        <source>Trainingstage</source>
+        <target>Trainingstage</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.streak">
+      <segment state="initial">
+        <source>Streak</source>
+        <target>Streak</target>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.reps">
+      <segment state="initial">
+        <source>Wiederholungen</source>
+        <target>Wiederholungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.eyebrow">
+      <segment state="initial">
+        <source>Gemeinsam dranbleiben</source>
+        <target>Gemeinsam dranbleiben</target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.title">
+      <segment state="initial">
+        <source> Trainier mit Freunden </source>
+        <target> Trainier mit Freunden </target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.subtitle">
+      <segment state="initial">
+        <source> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </source>
+        <target> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.board.title">
+      <segment state="initial">
+        <source>Euer Vergleich</source>
+        <target>Euer Vergleich</target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.board.body">
+      <segment state="initial">
+        <source> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </source>
+        <target> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cheer.title">
+      <segment state="initial">
+        <source>Anfeuern</source>
+        <target>Anfeuern</target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cheer.body">
+      <segment state="initial">
+        <source> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </source>
+        <target> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.challenge.title">
+      <segment state="initial">
+        <source>Challenges</source>
+        <target>Challenges</target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.challenge.body">
+      <segment state="initial">
+        <source> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </source>
+        <target> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cta.open">
+      <segment state="initial">
+        <source>Zu den Freunden</source>
+        <target>Zu den Freunden</target>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cta.signup">
+      <segment state="initial">
+        <source>Konto erstellen &amp; Freunde einladen</source>
+        <target>Konto erstellen &amp; Freunde einladen</target>
+      </segment>
+    </unit>
+    <unit id="challenges.progressUnavailable">
+      <segment state="initial">
+        <source> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </source>
+        <target> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </target>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheering">
+      <segment state="initial">
+        <source>Anfeuerung wird gesendet</source>
+        <target>Anfeuerung wird gesendet</target>
       </segment>
     </unit>
 </file>

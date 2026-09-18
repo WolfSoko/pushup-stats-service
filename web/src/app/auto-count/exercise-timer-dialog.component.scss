@@ -193,3 +193,16 @@
     }
   }
 }
+
+// Landscape phone: the 220px floor plus picker, mode row and hint overflow a
+// ~390px viewport and push the actions out of reach. The stage holds nothing
+// but a centred readout over the preview, so it is the part that may shrink.
+@media (orientation: landscape) and (max-height: 560px) {
+  .timer-stage {
+    min-height: 120px;
+  }
+
+  .hint {
+    margin-top: 8px;
+  }
+}

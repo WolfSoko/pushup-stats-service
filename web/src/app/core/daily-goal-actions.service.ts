@@ -15,7 +15,10 @@ import { notifyEntrySaved, notifyError } from './quick-add-notify';
 
 /** Outcome of a single check-off, for callers that report it. */
 export type CompleteGoalResult =
-  'logged' | 'already-reached' | 'noop' | 'error';
+  | 'logged'
+  | 'already-reached'
+  | 'noop'
+  | 'error';
 
 /**
  * Checking a daily goal off writes the entry that closes its gap — goals

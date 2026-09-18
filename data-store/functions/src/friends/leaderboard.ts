@@ -14,6 +14,19 @@ import {
 
 export type FriendsLeaderboardPeriod = 'daily' | 'week' | 'month' | 'allTime';
 
+/**
+ * What the board compares. `days` and `streak` do not care which exercise
+ * anyone does — the fair default among friends with different favourites;
+ * `reps` is one exercise's count, for those who want to race.
+ */
+export type FriendsBoardMetric = 'days' | 'streak' | 'reps';
+
+export function isFriendsBoardMetric(
+  value: unknown
+): value is FriendsBoardMetric {
+  return value === 'days' || value === 'streak' || value === 'reps';
+}
+
 export function isFriendsLeaderboardPeriod(
   value: unknown
 ): value is FriendsLeaderboardPeriod {
@@ -29,9 +42,15 @@ export function isFriendsLeaderboardPeriod(
 export interface FriendStatsRow {
   readonly uid: string;
   readonly displayName: string | null;
-  /** `userStats/{uid}/perExercise/{exerciseId}`, or null when absent. */
+  /**
+   * `userStats/{uid}/perExercise/{exerciseId}` for `reps`, the root
+   * `userStats/{uid}` for `days` and `streak`; null when absent.
+   */
   readonly stats: {
     total?: unknown;
+    totalDays?: unknown;
+    currentStreak?: unknown;
+    lastEntryDate?: unknown;
     dailyReps?: unknown;
     dailyKey?: unknown;
     weeklyReps?: unknown;
@@ -39,6 +58,8 @@ export interface FriendStatsRow {
     monthlyReps?: unknown;
     monthlyKey?: unknown;
   } | null;
+  /** Training days in the period, counted from the entries (`days`, week/month). */
+  readonly days?: number;
   /** The participant's own profile settings, for the visibility gate. */
   readonly ui: ProfileVisibilityUi | undefined;
   /** True for the user who asked — they always see themselves. */
@@ -105,6 +126,58 @@ export function periodValue(
 }
 
 /**
+ * A streak only counts while it is alive: the last entry was today or
+ * yesterday. An older one has broken, whatever the stored number says.
+ */
+export function streakValue(row: FriendStatsRow, todayIso: string): number {
+  const stats = row.stats;
+  if (!stats || typeof stats.lastEntryDate !== 'string') return 0;
+  const last = stats.lastEntryDate;
+  if (last !== todayIso && last !== previousDay(todayIso)) return 0;
+  return numberOrZero(stats.currentStreak);
+}
+
+/** The participant's value for the metric the board compares. */
+export function metricValue(
+  row: FriendStatsRow,
+  metric: FriendsBoardMetric,
+  period: FriendsLeaderboardPeriod,
+  keys: PeriodKeys
+): number {
+  if (metric === 'reps') return periodValue(row, period, keys);
+  if (metric === 'streak') return streakValue(row, keys.dailyKey);
+  if (period === 'allTime') return numberOrZero(row.stats?.totalDays);
+  if (period === 'daily') return periodValue(row, 'daily', keys) > 0 ? 1 : 0;
+  return row.days ?? 0;
+}
+
+/** First day of the period holding `todayIso`: the ISO week's Monday, or the 1st. */
+export function periodStartIso(
+  period: 'week' | 'month',
+  todayIso: string
+): string {
+  if (period === 'month') return `${todayIso.slice(0, 7)}-01`;
+  const date = new Date(`${todayIso}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
+  return date.toISOString().slice(0, 10);
+}
+
+export function previousDay(isoDate: string): string {
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() - 1);
+  return date.toISOString().slice(0, 10);
+}
+
+/** Distinct days among `isoDates` that fall into [from, to]. */
+export function countDistinctDays(
+  isoDates: ReadonlyArray<string>,
+  from: string,
+  to: string
+): number {
+  return new Set(isoDates.filter((day) => day >= from && day <= to)).size;
+}
+
+/**
  * Whether this participant's numbers may appear at all.
  *
  * Gated on their own `total` section: the friends leaderboard is "my
@@ -127,14 +200,15 @@ export function rankFriends(
   rows: ReadonlyArray<FriendStatsRow>,
   period: FriendsLeaderboardPeriod,
   keys: PeriodKeys,
-  cheers: CheersToday = NO_CHEERS
+  cheers: CheersToday = NO_CHEERS,
+  metric: FriendsBoardMetric = 'reps'
 ): FriendsLeaderboardEntry[] {
   return rows
     .filter(participates)
     .map((row) => ({
       uid: row.uid,
       displayName: row.displayName,
-      value: Math.round(periodValue(row, period, keys)),
+      value: Math.round(metricValue(row, metric, period, keys)),
       isViewer: row.isViewer,
       cheers: cheers.received.get(row.uid) ?? 0,
       cheered: cheers.cheeredByViewer.has(row.uid),

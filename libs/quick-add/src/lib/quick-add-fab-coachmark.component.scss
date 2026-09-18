@@ -1,17 +1,14 @@
 :host {
   // Anchored to the same right gutter as the speed-dial FAB and lifted just
-  // above it (FAB host sits at bottom:16px and the main button is ~56px tall,
-  // so 84px clears it with a small gap). z-index one above the FAB (1000).
+  // above it (FAB host sits at bottom:92px above the arc nav and the main
+  // button is ~56px tall, so 160px clears it with a small gap). z-index one
+  // above the FAB (1000).
   position: fixed;
   right: max(16px, calc((100vw - 1200px) / 2));
-  bottom: 84px;
+  bottom: calc(160px + env(safe-area-inset-bottom, 0px));
   z-index: 1001;
   display: block;
   max-width: min(320px, calc(100vw - 32px));
-
-  @media (max-width: 767px) {
-    bottom: 140px;
-  }
 }
 
 .coachmark {

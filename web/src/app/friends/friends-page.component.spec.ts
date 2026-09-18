@@ -1,3 +1,5 @@
+import { LiveDataStore } from '@pu-stats/data-access-state';
+import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
@@ -17,6 +19,7 @@ describe('FriendsPageComponent', () => {
       uid: 'b',
       since: '2026-09-01T10:00:00.000Z',
       displayName: 'Wolf',
+      photoURL: null,
       ...over,
     };
   }
@@ -28,7 +31,8 @@ describe('FriendsPageComponent', () => {
       outgoing: FriendRow[];
     }> = {},
     overrides: Partial<Record<'respond' | 'remove' | 'cheer', unknown>> = {},
-    boardEntries?: ReadonlyArray<FriendsBoardEntry>
+    boardEntries?: ReadonlyArray<FriendsBoardEntry>,
+    challenges: unknown[] = []
   ) {
     const api = {
       list: vitest.fn().mockResolvedValue({
@@ -43,11 +47,16 @@ describe('FriendsPageComponent', () => {
       cheer: vitest.fn().mockResolvedValue({ ok: true }),
       ...overrides,
     };
-    const challengesApi = { list: vitest.fn().mockResolvedValue([]) };
+    const challengesApi = { list: vitest.fn().mockResolvedValue(challenges) };
     const invite = { inviteFriend: vitest.fn().mockResolvedValue('native') };
+    const live = {
+      updateTick: signal(0),
+      exerciseEntriesLoaded: signal(false),
+    };
     const { fixture } = await render(FriendsPageComponent, {
       providers: [
         provideRouter([]),
+        { provide: LiveDataStore, useValue: live },
         { provide: FriendsApiService, useValue: api },
         { provide: ChallengesApiService, useValue: challengesApi },
         { provide: InviteService, useValue: invite },
@@ -55,8 +64,34 @@ describe('FriendsPageComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, invite, fixture };
+    return { api, invite, fixture, live };
   }
+
+  it('should show a challenge even before the friends list has arrived', async () => {
+    // given — the friends call failed, but the invitation is there
+    await renderPage(
+      {},
+      {},
+      [],
+      [
+        {
+          id: 'c1',
+          createdBy: 'b',
+          exerciseId: 'pushup',
+          target: 500,
+          from: '2026-09-14',
+          to: '2099-12-31',
+          status: 'active',
+          entries: [],
+          invited: [{ uid: 'me', displayName: null }],
+          viewerInvited: true,
+        },
+      ]
+    );
+
+    // then
+    expect(screen.getAllByTestId('challenge-card')).toHaveLength(1);
+  });
 
   it('should list confirmed friends with a link to their profile', async () => {
     // given
@@ -65,6 +100,26 @@ describe('FriendsPageComponent', () => {
     // then
     const link = screen.getByRole('link', { name: 'Wolf' });
     expect(link.getAttribute('href')).toBe('/u/b');
+  });
+
+  it('should show a friend’s picture in the list', async () => {
+    // given
+    await renderPage({
+      friends: [row({ photoURL: 'https://example.test/wolf.jpg' })],
+    });
+
+    // then
+    expect(screen.getByTestId('friend-avatar-photo').getAttribute('src')).toBe(
+      'https://example.test/wolf.jpg'
+    );
+  });
+
+  it('should fall back to the initial for a friend without a picture', async () => {
+    // given
+    await renderPage({ friends: [row({ displayName: 'Wolf' })] });
+
+    // then
+    expect(screen.getByTestId('friend-avatar-initial').textContent).toBe('W');
   });
 
   it('should put requests that want an answer on the page', async () => {
@@ -132,6 +187,46 @@ describe('FriendsPageComponent', () => {
     expect(document.body.textContent).toContain('wartet noch');
   });
 
+  it('should re-read everything when the tab becomes visible again', async () => {
+    // given
+    const { api, fixture } = await renderPage({ friends: [row()] });
+    const challengesApi = fixture.debugElement.injector.get(
+      ChallengesApiService
+    ) as unknown as { list: ReturnType<typeof vitest.fn> };
+    api.list.mockClear();
+    api.board.mockClear();
+    challengesApi.list.mockClear();
+    Object.defineProperty(document, 'visibilityState', {
+      configurable: true,
+      get: () => 'visible',
+    });
+
+    // when
+    document.dispatchEvent(new Event('visibilitychange'));
+    await fixture.whenStable();
+
+    // then
+    expect(api.list).toHaveBeenCalledTimes(1);
+    expect(api.board).toHaveBeenCalledTimes(1);
+    expect(challengesApi.list).toHaveBeenCalledTimes(1);
+  });
+
+  it('should re-read the board when a workout is logged', async () => {
+    // given
+    const { api, fixture, live } = await renderPage({ friends: [row()] });
+    live.exerciseEntriesLoaded.set(true);
+    live.updateTick.set(1);
+    await fixture.whenStable();
+    api.board.mockClear();
+
+    // when
+    live.updateTick.set(2);
+    await fixture.whenStable();
+
+    // then
+    expect(api.board).toHaveBeenCalledTimes(1);
+  });
+
   it('should label a friend without a display name', async () => {
     // given
     await renderPage({ friends: [row({ displayName: null })] });
@@ -185,6 +280,80 @@ describe('FriendsPageComponent', () => {
       expect(screen.getByTestId('board-cheers').textContent).toContain('3');
     });
 
+    it('should spin the tapped flame while its cheer is away', async () => {
+      // given — a send the server has not answered yet
+      let answer: (result: { ok: boolean }) => void = () => undefined;
+      const { fixture } = await renderPage(
+        { friends: [row()] },
+        {
+          cheer: vitest.fn().mockReturnValue(
+            new Promise((resolve) => {
+              answer = resolve;
+            })
+          ),
+        },
+        entries
+      );
+
+      // when
+      screen.getByTestId('board-cheer').click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — still the flame, now turning, and not tappable a second time
+      const button = screen.getByTestId('board-cheer') as HTMLButtonElement;
+      expect(button.textContent).toContain('whatshot');
+      expect(button.querySelector('mat-icon.is-sending')).toBeTruthy();
+      expect(button.disabled).toBe(true);
+      expect(button.getAttribute('aria-label')).toBe(
+        'Anfeuerung wird gesendet'
+      );
+
+      // when — the server answers and the board is re-read
+      answer({ ok: true });
+      // the answer starts a chain — re-read, then clear — that only a
+      // turn of the event loop drains, not a single stability check
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — it comes to rest, and only then
+      expect(
+        screen.getByTestId('board-cheer').querySelector('mat-icon.is-sending')
+      ).toBeNull();
+      expect(screen.getByTestId('board-cheer').textContent).toContain(
+        'whatshot'
+      );
+    });
+
+    it('should leave the other friends flames still while one cheer is away', async () => {
+      // given — two friends to cheer, one send left hanging
+      const third = {
+        uid: 'c',
+        displayName: 'Cara',
+        value: 600,
+        isViewer: false,
+        cheers: 0,
+        cheered: false,
+      };
+      const { fixture } = await renderPage(
+        { friends: [row()] },
+        { cheer: vitest.fn().mockReturnValue(new Promise(() => undefined)) },
+        [entries[0], third, entries[1]]
+      );
+
+      // when — Bob's button is the one tapped
+      screen.getAllByTestId('board-cheer')[0].click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      // then — Cara's flame neither turns nor locks
+      const buttons = screen.getAllByTestId('board-cheer');
+      expect(document.querySelectorAll('mat-icon.is-sending')).toHaveLength(1);
+      expect(buttons[1].querySelector('mat-icon.is-sending')).toBeNull();
+      expect((buttons[1] as HTMLButtonElement).disabled).toBe(false);
+    });
+
     it('should explain a cheer the server refused', async () => {
       // given
       const { fixture } = await renderPage(
@@ -217,6 +386,52 @@ describe('FriendsPageComponent', () => {
       expect(rows[1].textContent).toContain('Du');
     });
 
+    it('should show training days with their unit by default', async () => {
+      // given
+      await renderPage({ friends: [row()] }, {}, [
+        { ...entries[0], value: 5 },
+        { ...entries[1], value: 1 },
+      ]);
+
+      // then
+      expect(
+        screen.getAllByTestId('board-value').map((el) => el.textContent?.trim())
+      ).toEqual(['5 Tage', '1 Tag']);
+    });
+
+    it('should switch the board to the streak when picked', async () => {
+      // given
+      const { api, fixture } = await renderPage(
+        { friends: [row()] },
+        {},
+        entries
+      );
+      api.board.mockClear();
+
+      // when
+      (screen.getByTestId('board-comparison') as HTMLElement).click();
+      await fixture.whenStable();
+      (screen.getByRole('option', { name: 'Streak' }) as HTMLElement).click();
+      await fixture.whenStable();
+
+      // then — no period for a streak, so the chips are gone too
+      expect(api.board).toHaveBeenLastCalledWith('week', { metric: 'streak' });
+      fixture.detectChanges();
+      expect(screen.queryByRole('option', { name: 'Gesamt' })).toBeNull();
+    });
+
+    it('should link every name on the board to that profile', async () => {
+      // given
+      await renderPage({ friends: [row()] }, {}, entries);
+
+      // then — the viewer's own row too, like the public leaderboard
+      const names = screen.getAllByTestId('board-name');
+      expect(names.map((a) => a.getAttribute('href'))).toEqual([
+        '/u/b',
+        '/u/me',
+      ]);
+    });
+
     it('should reload the board when the period changes', async () => {
       // given
       const { api, fixture } = await renderPage(
@@ -231,7 +446,7 @@ describe('FriendsPageComponent', () => {
       await fixture.whenStable();
 
       // then
-      expect(api.board).toHaveBeenCalledWith('allTime');
+      expect(api.board).toHaveBeenCalledWith('allTime', { metric: 'days' });
     });
 
     it('should stay away with nobody to compare against', async () => {

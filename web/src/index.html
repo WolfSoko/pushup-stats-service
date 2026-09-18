@@ -4,7 +4,13 @@
     <meta charset="utf-8" />
     <title>Liegestütze per Kamera zählen – kostenlos im Browser</title>
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- viewport-fit=cover is what makes `env(safe-area-inset-*)` report real
+         values; without it every inset resolves to 0px and the edge-to-edge
+         TWA (targetSdk 36) draws the arc nav under the gesture bar. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta
       name="description"
       content="Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge."

@@ -3885,8 +3885,7 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/app.html:262,264</note>
-        <note category="location">web/src/app/app.html:325,327</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:24</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -3895,8 +3894,7 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:32,34</note>
-        <note category="location">web/src/app/app.html:266,268</note>
-        <note category="location">web/src/app/app.html:329,331</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:30</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -3905,8 +3903,7 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:41,43</note>
-        <note category="location">web/src/app/app.html:270,272</note>
-        <note category="location">web/src/app/app.html:333,335</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:35</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -3915,6 +3912,7 @@
     <unit id="nav.friends">
       <notes>
         <note category="location">web/src/app/app.html:52,53</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:42</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -3923,8 +3921,7 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:64,67</note>
-        <note category="location">web/src/app/app.html:274,276</note>
-        <note category="location">web/src/app/app.html:337,339</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:50</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -3933,8 +3930,7 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:73,75</note>
-        <note category="location">web/src/app/app.html:278,280</note>
-        <note category="location">web/src/app/app.html:341,343</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:52</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -3951,6 +3947,7 @@
     <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:84,86</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:56</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -3959,6 +3956,7 @@
     <unit id="nav.pushupTypes">
       <notes>
         <note category="location">web/src/app/app.html:93,96</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -3967,6 +3965,7 @@
     <unit id="nav.exercises">
       <notes>
         <note category="location">web/src/app/app.html:102,105</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:61</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4028,17 +4027,9 @@
         <source>Admin-Bereich</source>
       </segment>
     </unit>
-    <unit id="nav.desktop.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:253,254</note>
-      </notes>
-      <segment>
-        <source>Hauptnavigation</source>
-      </segment>
-    </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:287</note>
+        <note category="location">web/src/app/app.html:256</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4046,7 +4037,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:292,294</note>
+        <note category="location">web/src/app/app.html:261,263</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4054,7 +4045,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:295,297</note>
+        <note category="location">web/src/app/app.html:264,266</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4062,7 +4053,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:297,298</note>
+        <note category="location">web/src/app/app.html:266,267</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4070,7 +4061,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:299,301</note>
+        <note category="location">web/src/app/app.html:268,270</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4078,7 +4069,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:302,305</note>
+        <note category="location">web/src/app/app.html:271,274</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4086,18 +4077,10 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:309,311</note>
+        <note category="location">web/src/app/app.html:278,280</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
-      </segment>
-    </unit>
-    <unit id="nav.bottom.aria">
-      <notes>
-        <note category="location">web/src/app/app.html:316,317</note>
-      </notes>
-      <segment>
-        <source>Mobile-Navigation</source>
       </segment>
     </unit>
     <unit id="seo.landing.title">
@@ -4113,7 +4096,7 @@
         <note category="location">web/src/app/app.routes.ts:19</note>
       </notes>
       <segment>
-        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks und Bestenliste, auch für Kniebeugen und Klimmzüge.</source>
+        <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.</source>
       </segment>
     </unit>
     <unit id="seo.dashboard.title">
@@ -4406,7 +4389,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:153</note>
+        <note category="location">web/src/app/app.ts:156</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4414,7 +4397,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:154</note>
+        <note category="location">web/src/app/app.ts:157</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4422,7 +4405,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:284</note>
+        <note category="location">web/src/app/app.ts:288</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4430,7 +4413,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:379</note>
+        <note category="location">web/src/app/app.ts:383</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4438,7 +4421,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:382</note>
+        <note category="location">web/src/app/app.ts:386</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4446,7 +4429,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:450</note>
+        <note category="location">web/src/app/app.ts:454</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4454,7 +4437,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:479</note>
+        <note category="location">web/src/app/app.ts:483</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4462,7 +4445,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:486</note>
+        <note category="location">web/src/app/app.ts:490</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4993,7 +4976,7 @@
     <unit id="dailyGoal.check.manual">
       <notes>
         <note category="location">web/src/app/core/daily-goal-actions.service.ts:61</note>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:61</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
       </notes>
       <segment>
         <source>Dieses Ziel braucht einen manuellen Eintrag</source>
@@ -5017,7 +5000,7 @@
     </unit>
     <unit id="dailyGoal.check.reached">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:58</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:56</note>
       </notes>
       <segment>
         <source>Ziel erreicht</source>
@@ -5025,7 +5008,7 @@
     </unit>
     <unit id="dailyGoal.check.fill">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:63</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:61</note>
       </notes>
       <segment>
         <source>Rest eintragen und abhaken: +<ph id="0" equiv="REMAINING" disp="item.remainingDisplay"/></source>
@@ -5033,7 +5016,7 @@
     </unit>
     <unit id="dailyGoal.check.aria">
       <notes>
-        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:67</note>
+        <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:65</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="EXERCISE" disp="item.exerciseName"/> abhaken</source>
@@ -5057,7 +5040,7 @@
     </unit>
     <unit id="exerciseRef.tooltip.cta">
       <notes>
-        <note category="location">web/src/app/core/exercise-ref/exercise-ref.model.ts:29</note>
+        <note category="location">web/src/app/core/exercise-ref/exercise-ref.model.ts:34</note>
       </notes>
       <segment>
         <source>Zum Wiki-Eintrag</source>
@@ -5141,6 +5124,14 @@
       </notes>
       <segment>
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
+      </segment>
+    </unit>
+    <unit id="nav.desktop.aria">
+      <notes>
+        <note category="location">web/src/app/core/nav/arc-nav.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Hauptnavigation</source>
       </segment>
     </unit>
     <unit id="admin.release.label">
@@ -5273,6 +5264,118 @@
         <source>Dunkles Design aktiv. Klicken zum Wechseln</source>
       </segment>
     </unit>
+    <unit id="friends.board.dayOne">
+      <notes>
+        <note category="location">web/src/app/friends/board-value-label.ts:10</note>
+      </notes>
+      <segment>
+        <source>1 Tag</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.days">
+      <notes>
+        <note category="location">web/src/app/friends/board-value-label.ts:11</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="count" disp="value"/> Tage</source>
+      </segment>
+    </unit>
+    <unit id="challenges.ended">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:38,39</note>
+      </notes>
+      <segment>
+        <source>Beendet</source>
+      </segment>
+    </unit>
+    <unit id="challenges.invitation">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:47,49</note>
+      </notes>
+      <segment>
+        <source> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </source>
+      </segment>
+    </unit>
+    <unit id="challenges.progressUnavailable">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:57,60</note>
+      </notes>
+      <segment>
+        <source> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </source>
+      </segment>
+    </unit>
+    <unit id="challenges.stillInvited">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:76,78</note>
+      </notes>
+      <segment>
+        <source>Noch eingeladen:</source>
+      </segment>
+    </unit>
+    <unit id="challenges.decline">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:91,93</note>
+      </notes>
+      <segment>
+        <source> Ablehnen </source>
+      </segment>
+    </unit>
+    <unit id="challenges.accept">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:101,103</note>
+      </notes>
+      <segment>
+        <source> Mitmachen </source>
+      </segment>
+    </unit>
+    <unit id="challenges.leave">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:111,112</note>
+      </notes>
+      <segment>
+        <source> Verlassen </source>
+      </segment>
+    </unit>
+    <unit id="challenges.lastDay">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:175</note>
+      </notes>
+      <segment>
+        <source>Letzter Tag</source>
+      </segment>
+    </unit>
+    <unit id="challenges.daysLeft">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:176</note>
+      </notes>
+      <segment>
+        <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
+      </segment>
+    </unit>
+    <unit id="friends.anonymous">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:179</note>
+        <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:152</note>
+        <note category="location">web/src/app/friends/friend-requests.component.ts:75</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:277</note>
+        <note category="location">web/src/app/friends/friends-list.component.ts:106</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:209</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:220</note>
+      </notes>
+      <segment>
+        <source>Ohne Namen</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.you">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-card.component.ts:182</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:276</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:219</note>
+      </notes>
+      <segment>
+        <source>Du</source>
+      </segment>
+    </unit>
     <unit id="challenge.create.title">
       <notes>
         <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:54,55</note>
@@ -5329,19 +5432,6 @@
         <source> Los geht’s </source>
       </segment>
     </unit>
-    <unit id="friends.anonymous">
-      <notes>
-        <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:152</note>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:180</note>
-        <note category="location">web/src/app/friends/friend-requests.component.ts:75</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:147</note>
-        <note category="location">web/src/app/friends/friends-page.component.ts:221</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:194</note>
-      </notes>
-      <segment>
-        <source>Ohne Namen</source>
-      </segment>
-    </unit>
     <unit id="challenge.create.days">
       <notes>
         <note category="location">web/src/app/friends/challenge-create-dialog.component.ts:190</note>
@@ -5350,9 +5440,33 @@
         <source><ph id="0" equiv="days" disp="days"/> Tage</source>
       </segment>
     </unit>
+    <unit id="dashboard.challenge.invited">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-spotlight.component.ts:40,42</note>
+      </notes>
+      <segment>
+        <source>Challenge-Einladung</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.running">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-spotlight.component.ts:44,47</note>
+      </notes>
+      <segment>
+        <source>Freunde-Challenge</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.challenge.more">
+      <notes>
+        <note category="location">web/src/app/friends/challenge-spotlight.component.ts:60,61</note>
+      </notes>
+      <segment>
+        <source>Alle Challenges</source>
+      </segment>
+    </unit>
     <unit id="challenges.title">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:40,42</note>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:39,41</note>
       </notes>
       <segment>
         <source>Challenges</source>
@@ -5360,65 +5474,63 @@
     </unit>
     <unit id="challenges.start">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:49,51</note>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:48,50</note>
       </notes>
       <segment>
         <source>Challenge starten</source>
       </segment>
     </unit>
+    <unit id="challenges.loadFailed">
+      <notes>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:66,68</note>
+      </notes>
+      <segment>
+        <source>Challenges konnten nicht geladen werden.</source>
+      </segment>
+    </unit>
+    <unit id="challenges.retry">
+      <notes>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:75,76</note>
+      </notes>
+      <segment>
+        <source> Erneut laden </source>
+      </segment>
+    </unit>
     <unit id="challenges.empty">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:64,67</note>
+        <note category="location">web/src/app/friends/challenges-section.component.ts:86,88</note>
       </notes>
       <segment>
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
       </segment>
     </unit>
-    <unit id="challenges.ended">
+    <unit id="friends.badge.invitationOne">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:81,82</note>
+        <note category="location">web/src/app/friends/friend-request-badge.component.ts:90</note>
       </notes>
       <segment>
-        <source>Beendet</source>
+        <source>Eine Challenge-Einladung wartet</source>
       </segment>
     </unit>
-    <unit id="challenges.leave">
+    <unit id="friends.badge.invitations">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:113,114</note>
+        <note category="location">web/src/app/friends/friend-request-badge.component.ts:91</note>
       </notes>
       <segment>
-        <source> Verlassen </source>
+        <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
       </segment>
     </unit>
-    <unit id="friends.board.you">
+    <unit id="nav.friends.pendingAriaOne">
       <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:179</note>
-        <note category="location">web/src/app/friends/friends-board.component.ts:146</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:193</note>
+        <note category="location">web/src/app/friends/friend-request-badge.component.ts:96</note>
       </notes>
       <segment>
-        <source>Du</source>
-      </segment>
-    </unit>
-    <unit id="challenges.lastDay">
-      <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:190</note>
-      </notes>
-      <segment>
-        <source>Letzter Tag</source>
-      </segment>
-    </unit>
-    <unit id="challenges.daysLeft">
-      <notes>
-        <note category="location">web/src/app/friends/challenges-section.component.ts:191</note>
-      </notes>
-      <segment>
-        <source>Noch <ph id="0" equiv="days" disp="days"/> Tage</source>
+        <source>Eine offene Freundschaftsanfrage</source>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAria">
       <notes>
-        <note category="location">web/src/app/friends/friend-request-badge.component.ts:63</note>
+        <note category="location">web/src/app/friends/friend-request-badge.component.ts:97</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> offene Freundschaftsanfragen</source>
@@ -5448,9 +5560,41 @@
         <source> Annehmen </source>
       </segment>
     </unit>
+    <unit id="friends.board.compare">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:58,60</note>
+      </notes>
+      <segment>
+        <source>Vergleich</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.days">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:65,67</note>
+      </notes>
+      <segment>
+        <source>Trainingstage</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.streak">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:68,70</note>
+      </notes>
+      <segment>
+        <source>Streak</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.metric.reps">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:72,74</note>
+      </notes>
+      <segment>
+        <source>Wiederholungen</source>
+      </segment>
+    </unit>
     <unit id="friends.board.periodAria">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:33,34</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:86,87</note>
       </notes>
       <segment>
         <source>Zeitraum</source>
@@ -5458,7 +5602,7 @@
     </unit>
     <unit id="friends.board.daily">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:37,39</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:91,93</note>
       </notes>
       <segment>
         <source>Heute</source>
@@ -5466,7 +5610,7 @@
     </unit>
     <unit id="friends.board.week">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:40,42</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:95,97</note>
       </notes>
       <segment>
         <source>7 Tage</source>
@@ -5474,7 +5618,7 @@
     </unit>
     <unit id="friends.board.month">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:43,45</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:98,100</note>
       </notes>
       <segment>
         <source>30 Tage</source>
@@ -5482,7 +5626,7 @@
     </unit>
     <unit id="friends.board.allTime">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:46,48</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:101,103</note>
       </notes>
       <segment>
         <source>Gesamt</source>
@@ -5490,7 +5634,7 @@
     </unit>
     <unit id="friends.board.cheer">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:141</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:260</note>
       </notes>
       <segment>
         <source>Anfeuern</source>
@@ -5498,23 +5642,74 @@
     </unit>
     <unit id="friends.board.cheered">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:142</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:261</note>
       </notes>
       <segment>
         <source>Heute schon angefeuert</source>
       </segment>
     </unit>
+    <unit id="friends.board.cheering">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:262</note>
+      </notes>
+      <segment>
+        <source>Anfeuerung wird gesendet</source>
+      </segment>
+    </unit>
+    <unit id="friends.board.cheersTodayOne">
+      <notes>
+        <note category="location">web/src/app/friends/friends-board.component.ts:282</note>
+      </notes>
+      <segment>
+        <source>Eine Anfeuerung heute</source>
+      </segment>
+    </unit>
     <unit id="friends.board.cheersToday">
       <notes>
-        <note category="location">web/src/app/friends/friends-board.component.ts:151</note>
+        <note category="location">web/src/app/friends/friends-board.component.ts:283</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> Anfeuerungen heute</source>
       </segment>
     </unit>
+    <unit id="friends.list">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:29,30</note>
+      </notes>
+      <segment>
+        <source>Deine Freunde</source>
+      </segment>
+    </unit>
+    <unit id="friends.empty">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:36,38</note>
+      </notes>
+      <segment>
+        <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
+      </segment>
+    </unit>
+    <unit id="invite.action">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:48,50</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:100,101</note>
+        <note category="location">web/src/app/public-profile/public-profile-page.component.html:183,184</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
+      </notes>
+      <segment>
+        <source>Freunde einladen</source>
+      </segment>
+    </unit>
+    <unit id="friends.remove">
+      <notes>
+        <note category="location">web/src/app/friends/friends-list.component.ts:70,71</note>
+      </notes>
+      <segment>
+        <source> Entfernen </source>
+      </segment>
+    </unit>
     <unit id="friends.error.self">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:15</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:16</note>
       </notes>
       <segment>
         <source>Das ist dein eigenes Profil.</source>
@@ -5522,7 +5717,7 @@
     </unit>
     <unit id="friends.error.exists">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:17</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:18</note>
       </notes>
       <segment>
         <source>Ihr seid schon Freunde.</source>
@@ -5530,7 +5725,7 @@
     </unit>
     <unit id="friends.error.pending">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:19</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:20</note>
       </notes>
       <segment>
         <source>Die Anfrage läuft schon.</source>
@@ -5538,7 +5733,7 @@
     </unit>
     <unit id="friends.error.declined">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:21</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:22</note>
       </notes>
       <segment>
         <source>Die Anfrage wurde abgelehnt. Warte, bis die andere Seite sich meldet.</source>
@@ -5546,7 +5741,7 @@
     </unit>
     <unit id="friends.error.limit">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:23</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:24</note>
       </notes>
       <segment>
         <source>Deine Freundesliste ist voll.</source>
@@ -5554,7 +5749,7 @@
     </unit>
     <unit id="friends.error.unauthenticated">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:25</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:26</note>
       </notes>
       <segment>
         <source>Dafür brauchst du ein Konto.</source>
@@ -5562,7 +5757,7 @@
     </unit>
     <unit id="friends.error.invalid">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:27</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:28</note>
       </notes>
       <segment>
         <source>Dieses Profil gibt es nicht.</source>
@@ -5570,7 +5765,7 @@
     </unit>
     <unit id="friends.error.gone">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:31</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:32</note>
       </notes>
       <segment>
         <source>Diese Anfrage ist nicht mehr offen.</source>
@@ -5578,7 +5773,7 @@
     </unit>
     <unit id="friends.error.cheeredAlready">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:33</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:34</note>
       </notes>
       <segment>
         <source>Heute schon angefeuert – morgen wieder.</source>
@@ -5586,7 +5781,7 @@
     </unit>
     <unit id="friends.error.notFriends">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:35</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:36</note>
         <note category="location">web/src/app/friends/friends-messages.ts:53</note>
       </notes>
       <segment>
@@ -5595,8 +5790,8 @@
     </unit>
     <unit id="friends.error.failed">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:37</note>
-        <note category="location">web/src/app/friends/friends-messages.ts:65</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:38</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:68</note>
       </notes>
       <segment>
         <source>Das hat nicht funktioniert. Bitte später erneut versuchen.</source>
@@ -5652,15 +5847,23 @@
     </unit>
     <unit id="challenge.error.gone">
       <notes>
-        <note category="location">web/src/app/friends/friends-messages.ts:63</note>
+        <note category="location">web/src/app/friends/friends-messages.ts:64</note>
       </notes>
       <segment>
-        <source>Diese Challenge gibt es nicht mehr.</source>
+        <source>Diese Einladung ist nicht mehr offen.</source>
+      </segment>
+    </unit>
+    <unit id="challenge.error.ended">
+      <notes>
+        <note category="location">web/src/app/friends/friends-messages.ts:66</note>
+      </notes>
+      <segment>
+        <source>Die Challenge ist schon vorbei.</source>
       </segment>
     </unit>
     <unit id="friends.title">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:46,47</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:48,49</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -5668,7 +5871,7 @@
     </unit>
     <unit id="friends.intro">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:48,50</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:50,52</note>
       </notes>
       <segment>
         <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
@@ -5676,50 +5879,15 @@
     </unit>
     <unit id="friends.board">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:74,75</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:76,77</note>
       </notes>
       <segment>
         <source>Euer Vergleich</source>
       </segment>
     </unit>
-    <unit id="friends.list">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:91,92</note>
-      </notes>
-      <segment>
-        <source>Deine Freunde</source>
-      </segment>
-    </unit>
-    <unit id="friends.empty">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:98,99</note>
-      </notes>
-      <segment>
-        <source> Noch keine Freunde. Lade jemanden ein — oder öffne ein Profil und schicke eine Anfrage. </source>
-      </segment>
-    </unit>
-    <unit id="invite.action">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:110,111</note>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:86,87</note>
-        <note category="location">web/src/app/public-profile/public-profile-page.component.html:183,184</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:50,51</note>
-      </notes>
-      <segment>
-        <source>Freunde einladen</source>
-      </segment>
-    </unit>
-    <unit id="friends.remove">
-      <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:130,131</note>
-      </notes>
-      <segment>
-        <source> Entfernen </source>
-      </segment>
-    </unit>
     <unit id="friends.outgoing">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:140,141</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:106,107</note>
       </notes>
       <segment>
         <source>Von dir angefragt</source>
@@ -5727,7 +5895,7 @@
     </unit>
     <unit id="friends.waiting">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:145,146</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:111,112</note>
       </notes>
       <segment>
         <source>wartet noch</source>
@@ -5735,7 +5903,7 @@
     </unit>
     <unit id="friends.withdraw">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:154,155</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:120,121</note>
       </notes>
       <segment>
         <source> Zurückziehen </source>
@@ -5743,7 +5911,7 @@
     </unit>
     <unit id="dashboard.friends.title">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:39,41</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:40,42</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -5751,7 +5919,7 @@
     </unit>
     <unit id="dashboard.friends.empty">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:72,74</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:86,88</note>
       </notes>
       <segment>
         <source> Trainier mit Freunden: vergleicht euch, feuert euch an und startet gemeinsame Challenges. </source>
@@ -5759,7 +5927,7 @@
     </unit>
     <unit id="dashboard.friends.open">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:94,95</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:108,109</note>
       </notes>
       <segment>
         <source>Zu den Freunden</source>
@@ -5767,7 +5935,7 @@
     </unit>
     <unit id="dashboard.friends.leading">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:180</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:200</note>
       </notes>
       <segment>
         <source>Du führst diese Woche unter <ph id="0" equiv="total" disp="total"/> Freunden.</source>
@@ -5775,23 +5943,55 @@
     </unit>
     <unit id="dashboard.friends.rank">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:182</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:202</note>
       </notes>
       <segment>
         <source>Du bist diese Woche auf Platz <ph id="0" equiv="rank" disp="rank"/> von <ph id="1" equiv="total" disp="total"/>.</source>
       </segment>
     </unit>
+    <unit id="dashboard.friends.pendingOne">
+      <notes>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:225</note>
+      </notes>
+      <segment>
+        <source>Eine Anfrage wartet auf dich</source>
+      </segment>
+    </unit>
     <unit id="dashboard.friends.pending">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:198</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:226</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> Anfragen warten auf dich</source>
       </segment>
     </unit>
+    <unit id="dashboard.friends.invitationOne">
+      <notes>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:231</note>
+      </notes>
+      <segment>
+        <source>Eine Challenge-Einladung wartet</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.invitations">
+      <notes>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:232</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
+      </segment>
+    </unit>
+    <unit id="dashboard.friends.activeChallengeOne">
+      <notes>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:237</note>
+      </notes>
+      <segment>
+        <source>Eine Challenge läuft</source>
+      </segment>
+    </unit>
     <unit id="dashboard.friends.activeChallenges">
       <notes>
-        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:202</note>
+        <note category="location">web/src/app/friends/friends-teaser-card.component.ts:238</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="count" disp="count"/> Challenges laufen</source>
@@ -6942,9 +7142,97 @@
         <source>Konto erstellen &amp; Plan starten</source>
       </segment>
     </unit>
+    <unit id="landing.friends.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:200,202</note>
+      </notes>
+      <segment>
+        <source>Gemeinsam dranbleiben</source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:203,205</note>
+      </notes>
+      <segment>
+        <source> Trainier mit Freunden </source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:206,211</note>
+      </notes>
+      <segment>
+        <source> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.board.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:216,218</note>
+      </notes>
+      <segment>
+        <source>Euer Vergleich</source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.board.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,223</note>
+      </notes>
+      <segment>
+        <source> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cheer.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:230,232</note>
+      </notes>
+      <segment>
+        <source>Anfeuern</source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cheer.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:234,236</note>
+      </notes>
+      <segment>
+        <source> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.challenge.title">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:243,245</note>
+      </notes>
+      <segment>
+        <source>Challenges</source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.challenge.body">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:247,250</note>
+      </notes>
+      <segment>
+        <source> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cta.open">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:262,264</note>
+      </notes>
+      <segment>
+        <source>Zu den Freunden</source>
+      </segment>
+    </unit>
+    <unit id="landing.friends.cta.signup">
+      <notes>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:272,276</note>
+      </notes>
+      <segment>
+        <source>Konto erstellen &amp; Freunde einladen</source>
+      </segment>
+    </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:208,212</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:292,296</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -6952,7 +7240,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:213,214</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:297,298</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -6960,7 +7248,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:220,221</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:304,305</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -6968,7 +7256,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:231,233</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:315,317</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -6976,7 +7264,7 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:235,240</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:319,324</note>
       </notes>
       <segment>
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
@@ -6984,7 +7272,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:303,305</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:387,389</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -6992,7 +7280,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:307,311</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:391,395</note>
       </notes>
       <segment>
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
@@ -7000,7 +7288,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:407,409</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:491,493</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -7008,7 +7296,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:411,414</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:495,498</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
@@ -7016,7 +7304,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:456,458</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:540,542</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -7024,7 +7312,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:460,464</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:544,548</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -7032,7 +7320,7 @@
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:551,553</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:635,637</note>
       </notes>
       <segment>
         <source>Sätze &amp; Intervalle</source>
@@ -7040,7 +7328,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:555,558</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:639,642</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
@@ -7048,7 +7336,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:567,569</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:651,653</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -7056,7 +7344,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:571,574</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:655,658</note>
       </notes>
       <segment>
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
@@ -7064,7 +7352,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:582,584</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:666,668</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -7072,7 +7360,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:586,590</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:670,674</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
@@ -7080,7 +7368,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:597,599</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:681,683</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -7088,7 +7376,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:601,604</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:685,688</note>
       </notes>
       <segment>
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
@@ -7096,7 +7384,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:609,611</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:693,695</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -7104,7 +7392,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:622,624</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:706,708</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -7112,7 +7400,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:629,632</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:713,716</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -7120,7 +7408,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:640,642</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:724,726</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -7128,7 +7416,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:644,648</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:728,732</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -7136,7 +7424,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:651</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:735</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -7144,7 +7432,7 @@
     </unit>
     <unit id="landing.ai.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:659,660</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:743,744</note>
       </notes>
       <segment>
         <source>AI ready</source>
@@ -7152,7 +7440,7 @@
     </unit>
     <unit id="landing.ai.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:661,663</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:745,747</note>
       </notes>
       <segment>
         <source> Bereit für deinen KI-Coach </source>
@@ -7160,7 +7448,7 @@
     </unit>
     <unit id="landing.ai.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:664,668</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:748,752</note>
       </notes>
       <segment>
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
@@ -7168,7 +7456,7 @@
     </unit>
     <unit id="landing.ai.chip.protocol">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:672,675</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:756,759</note>
       </notes>
       <segment>
         <source>AG-UI-Protokoll</source>
@@ -7176,7 +7464,7 @@
     </unit>
     <unit id="landing.ai.chip.copilotkit">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:676,679</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:760,763</note>
       </notes>
       <segment>
         <source>CopilotKit für Angular</source>
@@ -7184,7 +7472,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:681,684</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:765,768</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -7192,7 +7480,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:686,689</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:770,773</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -7200,7 +7488,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:697,700</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:781,784</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -7208,7 +7496,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:705,707</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:789,791</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -7216,7 +7504,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:712,713</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:796,797</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -7224,7 +7512,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:853,854</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:937,938</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -7232,7 +7520,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:859,861</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:943,945</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -7240,7 +7528,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:863,866</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:947,950</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -7248,7 +7536,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:873,876</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:957,960</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -7256,7 +7544,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:882,884</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:966,968</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -7264,7 +7552,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:886,889</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:970,973</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -7272,7 +7560,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:896,898</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:980,982</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -11944,7 +12232,7 @@
     </unit>
     <unit id="trainingPlans.day">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:75,76</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:77,78</note>
         <note category="location">web/src/app/training-plans/active-plan-card.component.ts:59,60</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:8,9</note>
       </notes>
@@ -11954,8 +12242,8 @@
     </unit>
     <unit id="trainingPlans.kind.rest">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:78,79</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:290,292</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:80,81</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:292,294</note>
         <note category="location">web/src/app/training-plans/active-plan-card.component.ts:70,71</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:11,12</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:269,270</note>
@@ -11966,7 +12254,7 @@
     </unit>
     <unit id="trainingPlans.kind.light">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:81,82</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:83,84</note>
         <note category="location">web/src/app/training-plans/active-plan-card.component.ts:73,74</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:13,14</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:273,274</note>
@@ -11977,7 +12265,7 @@
     </unit>
     <unit id="trainingPlans.kind.test">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:83,85</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:85,87</note>
         <note category="location">web/src/app/training-plans/active-plan-card.component.ts:76,78</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:15,16</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:271,272</note>
@@ -11988,8 +12276,8 @@
     </unit>
     <unit id="trainingPlans.reps">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:86,88</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:303,305</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:88,90</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:305,307</note>
         <note category="location">web/src/app/training-plans/active-plan-card.component.ts:92,94</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:18,20</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:278,279</note>
@@ -12002,7 +12290,7 @@
     </unit>
     <unit id="trainingPlans.startSession">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:98,101</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:100,103</note>
         <note category="location">web/src/app/training-plans/plan-today-card.component.html:59,62</note>
         <note category="location">web/src/app/training-plans/training-plan-detail.component.html:352,354</note>
       </notes>
@@ -12012,7 +12300,7 @@
     </unit>
     <unit id="trainingPlans.openDetail">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:107,109</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:109,111</note>
         <note category="location">web/src/app/training-plans/active-plan-card.component.ts:158,160</note>
       </notes>
       <segment>
@@ -12021,7 +12309,7 @@
     </unit>
     <unit id="dashboard.noPlanTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:120,122</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:122,124</note>
       </notes>
       <segment>
         <source>Noch kein aktiver Trainingsplan</source>
@@ -12029,7 +12317,7 @@
     </unit>
     <unit id="dashboard.noPlanSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:123,125</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:125,127</note>
       </notes>
       <segment>
         <source> Wähle einen Plan, um dein Tagesziel automatisch setzen zu lassen. </source>
@@ -12037,7 +12325,7 @@
     </unit>
     <unit id="dashboard.noPlanCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:132,134</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:134,136</note>
       </notes>
       <segment>
         <source> Plan wählen </source>
@@ -12045,7 +12333,7 @@
     </unit>
     <unit id="quickActionsTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:142,144</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:144,146</note>
       </notes>
       <segment>
         <source>Schnellaktionen</source>
@@ -12053,7 +12341,7 @@
     </unit>
     <unit id="quickActionsSubtitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:145,147</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:147,149</note>
       </notes>
       <segment>
         <source>Schnell eintragen ohne Dialog</source>
@@ -12061,7 +12349,7 @@
     </unit>
     <unit id="quickActions.edit.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:152,153</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:154,155</note>
       </notes>
       <segment>
         <source>Schnellaktionen bearbeiten</source>
@@ -12069,7 +12357,7 @@
     </unit>
     <unit id="dashboard.quickAdd.autoPrefix">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:177,178</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:179,180</note>
       </notes>
       <segment>
         <source>Auto:</source>
@@ -12077,8 +12365,8 @@
     </unit>
     <unit id="dashboard.goalFill.reached">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:196,198</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:218,220</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:198,200</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:220,222</note>
       </notes>
       <segment>
         <source>Ziel erreicht ✓</source>
@@ -12086,7 +12374,7 @@
     </unit>
     <unit id="dashboard.goalFill.fillPlan">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:199,202</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:201,204</note>
       </notes>
       <segment>
         <source>Alle Übungen eintragen</source>
@@ -12094,7 +12382,7 @@
     </unit>
     <unit id="dashboard.goalFill.fill">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:221,222</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:223,224</note>
       </notes>
       <segment>
         <source>+<ph id="0" equiv="INTERPOLATION" disp="{{ remainingToGoal() }}"/> bis zum Ziel</source>
@@ -12102,7 +12390,7 @@
     </unit>
     <unit id="quickAddNew">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:233,235</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:235,237</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">edit_note</pc> Neu </source>
@@ -12110,7 +12398,7 @@
     </unit>
     <unit id="dashboard.quickActions.speedDialHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:239,243</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:241,245</note>
       </notes>
       <segment>
         <source>Tipp: Über den schwebenden +‑Button unten rechts erfasst du von jeder Seite aus blitzschnell.</source>
@@ -12118,7 +12406,7 @@
     </unit>
     <unit id="todayFocusAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:248,249</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:250,251</note>
       </notes>
       <segment>
         <source>Tagesfokus</source>
@@ -12126,7 +12414,7 @@
     </unit>
     <unit id="dashboard.todayTotal">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:254,256</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:256,258</note>
       </notes>
       <segment>
         <source>Heute Gesamt</source>
@@ -12134,7 +12422,7 @@
     </unit>
     <unit id="goalProgressTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:265,267</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:267,269</note>
       </notes>
       <segment>
         <source>Zielfortschritt</source>
@@ -12142,7 +12430,7 @@
     </unit>
     <unit id="dashboard.goalEditAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:273,274</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:275,276</note>
       </notes>
       <segment>
         <source>Tagesziel in Einstellungen öffnen</source>
@@ -12150,10 +12438,10 @@
     </unit>
     <unit id="dashboard.dailyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:282,284</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:309,310</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:319</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:328,329</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:284,286</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:311,312</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:321</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:330,331</note>
       </notes>
       <segment>
         <source>Tag</source>
@@ -12161,7 +12449,7 @@
     </unit>
     <unit id="dashboard.restDay.configuredGoalHint">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:299,301</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:301,303</note>
       </notes>
       <segment>
         <source>Konfiguriertes Tagesziel:</source>
@@ -12169,7 +12457,7 @@
     </unit>
     <unit id="dashboard.weeklyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:338,339</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:340,341</note>
       </notes>
       <segment>
         <source>Woche</source>
@@ -12177,7 +12465,7 @@
     </unit>
     <unit id="dashboard.monthlyGoalLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:347,348</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:349,350</note>
       </notes>
       <segment>
         <source>Monat</source>
@@ -12185,7 +12473,7 @@
     </unit>
     <unit id="dashboard.lastEntryLinkAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:372,373</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:374,375</note>
       </notes>
       <segment>
         <source>Letzten Eintrag in der Historie öffnen</source>
@@ -12193,7 +12481,7 @@
     </unit>
     <unit id="lastEntryTitle">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:376,377</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:378,379</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -12201,8 +12489,8 @@
     </unit>
     <unit id="dashboard.noEntryYet">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:386,388</note>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:458,461</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:388,390</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:460,463</note>
       </notes>
       <segment>
         <source>Noch kein Eintrag.</source>
@@ -12210,7 +12498,7 @@
     </unit>
     <unit id="loadingStats">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:409,413</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:411,415</note>
       </notes>
       <segment>
         <source> Lade Statistikdaten… </source>
@@ -12218,7 +12506,7 @@
     </unit>
     <unit id="dashboard.latestExercises">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:414,415</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:416,417</note>
       </notes>
       <segment>
         <source>Letzte Übungen</source>
@@ -12226,7 +12514,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCtaAriaLabel">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:465,466</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:467,468</note>
       </notes>
       <segment>
         <source>Zur Historie navigieren</source>
@@ -12234,7 +12522,7 @@
     </unit>
     <unit id="dashboard.latestEntriesCta">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:470,473</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:472,475</note>
       </notes>
       <segment>
         <source>Zur Historie</source>
@@ -12242,7 +12530,7 @@
     </unit>
     <unit id="ads.dashboard.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:476</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:478</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -12250,7 +12538,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:133</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:135</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -12258,7 +12546,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:136</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:138</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -12266,7 +12554,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:137</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:139</note>
       </notes>
       <segment>
         <source>Teilen</source>

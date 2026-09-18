@@ -246,7 +246,7 @@ export class PushupTypeDetailComponent implements OnInit {
     const slug = this.route.snapshot.paramMap.get('slug');
     const found = (slug && findPushupTypeBySlug(slug)) ?? null;
     if (!found) {
-      this.router.navigateByUrl('/wiki/liegestuetz-typen');
+      void this.router.navigateByUrl('/wiki/liegestuetz-typen');
       return;
     }
 

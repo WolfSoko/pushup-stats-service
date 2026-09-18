@@ -1,18 +1,31 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   output,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
+import { EXERCISE_CATALOG } from '@pu-stats/models';
 
+import { exerciseDisplayName } from '../stats/i18n/exercise-display-names';
+import { boardValueLabel } from './board-value-label';
 import type {
+  FriendsBoardComparison,
   FriendsBoardEntry,
   FriendsBoardPeriod,
 } from './friends-api.service';
+
+/** The exercises one can race on: those counted in reps. */
+const REP_EXERCISES = EXERCISE_CATALOG.filter(
+  (exercise) => exercise.measurement === 'reps'
+);
 
 /**
  * The friends board: the same numbers as the public leaderboard, over a
@@ -20,37 +33,85 @@ import type {
  * are the point on a day nobody trained.
  *
  * Each friend's row carries a cheer button: one tap a day, and the row
- * shows how many cheers they collected today.
+ * shows how many cheers they collected today. While a cheer is on its way
+ * the flame that was tapped spins — the send and the board re-read behind
+ * it take long enough that a still icon reads as a tap that missed.
  */
 @Component({
   selector: 'app-friends-board',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatChipsModule, MatIconModule, MatTooltipModule],
+  imports: [
+    MatButtonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule,
+    MatTooltipModule,
+    RouterLink,
+  ],
   template: `
-    <mat-chip-listbox
-      [value]="period()"
-      (change)="periodChange.emit($event.value)"
-      aria-label="Zeitraum"
-      i18n-aria-label="@@friends.board.periodAria"
+    <mat-form-field
+      appearance="outline"
+      class="comparison"
+      subscriptSizing="dynamic"
     >
-      <mat-chip-option value="daily" i18n="@@friends.board.daily"
-        >Heute</mat-chip-option
+      <mat-label i18n="@@friends.board.compare">Vergleich</mat-label>
+      <mat-select
+        [value]="comparisonKey()"
+        (selectionChange)="changeComparison($event.value)"
+        data-testid="board-comparison"
       >
-      <mat-chip-option value="week" i18n="@@friends.board.week"
-        >7 Tage</mat-chip-option
+        <mat-option value="days" i18n="@@friends.board.metric.days"
+          >Trainingstage</mat-option
+        >
+        <mat-option value="streak" i18n="@@friends.board.metric.streak"
+          >Streak</mat-option
+        >
+        <mat-optgroup>
+          <span *matOptgroupLabel i18n="@@friends.board.metric.reps"
+            >Wiederholungen</span
+          >
+          @for (exercise of repExercises; track exercise.id) {
+            <mat-option [value]="'reps:' + exercise.id">{{
+              exerciseName(exercise.id)
+            }}</mat-option>
+          }
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+    @if (comparison().metric !== 'streak') {
+      <mat-chip-listbox
+        [value]="period()"
+        (change)="periodChange.emit($event.value)"
+        aria-label="Zeitraum"
+        i18n-aria-label="@@friends.board.periodAria"
       >
-      <mat-chip-option value="month" i18n="@@friends.board.month"
-        >30 Tage</mat-chip-option
-      >
-      <mat-chip-option value="allTime" i18n="@@friends.board.allTime"
-        >Gesamt</mat-chip-option
-      >
-    </mat-chip-listbox>
+        @if (comparison().metric !== 'days') {
+          <mat-chip-option value="daily" i18n="@@friends.board.daily"
+            >Heute</mat-chip-option
+          >
+        }
+        <mat-chip-option value="week" i18n="@@friends.board.week"
+          >7 Tage</mat-chip-option
+        >
+        <mat-chip-option value="month" i18n="@@friends.board.month"
+          >30 Tage</mat-chip-option
+        >
+        <mat-chip-option value="allTime" i18n="@@friends.board.allTime"
+          >Gesamt</mat-chip-option
+        >
+      </mat-chip-listbox>
+    }
     <ol class="board">
       @for (entry of entries(); track entry.uid; let i = $index) {
         <li [class.is-viewer]="entry.isViewer" data-testid="board-row">
           <span class="rank">{{ i + 1 }}</span>
-          <span class="board-name">{{ label(entry) }}</span>
+          <a
+            class="board-name"
+            [routerLink]="['/u', entry.uid]"
+            data-testid="board-name"
+            >{{ label(entry) }}</a
+          >
           <span class="cheers">
             @if (entry.cheers > 0) {
               <span
@@ -61,7 +122,7 @@ import type {
               >
             }
           </span>
-          <strong>{{ entry.value }}</strong>
+          <strong data-testid="board-value">{{ valueLabel(entry) }}</strong>
           <span class="cheer-slot">
             @if (!entry.isViewer) {
               <button
@@ -70,12 +131,12 @@ import type {
                 class="cheer-button"
                 data-testid="board-cheer"
                 [class.is-cheered]="entry.cheered"
-                [disabled]="entry.cheered"
-                [attr.aria-label]="entry.cheered ? cheeredAria : cheerAria"
-                [matTooltip]="entry.cheered ? cheeredAria : cheerAria"
+                [disabled]="entry.cheered || isCheering(entry.uid)"
+                [attr.aria-label]="cheerLabel(entry)"
+                [matTooltip]="cheerLabel(entry)"
                 (click)="cheer.emit(entry.uid)"
               >
-                <mat-icon>{{
+                <mat-icon [class.is-sending]="isCheering(entry.uid)">{{
                   entry.cheered ? 'local_fire_department' : 'whatshot'
                 }}</mat-icon>
               </button>
@@ -86,6 +147,10 @@ import type {
     </ol>
   `,
   styles: `
+    .comparison {
+      width: 100%;
+      margin-bottom: 8px;
+    }
     .board {
       list-style: none;
       margin: 8px 0 0;
@@ -121,6 +186,12 @@ import type {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: inherit;
+      text-decoration: none;
+    }
+    .board-name:hover,
+    .board-name:focus-visible {
+      text-decoration: underline;
     }
     .cheers {
       font-size: 0.85rem;
@@ -130,16 +201,75 @@ import type {
     .cheer-button.is-cheered {
       color: var(--mat-sys-tertiary, #ff7043);
     }
+    /* The flame itself is the spinner while its cheer is away. The button
+       is disabled meanwhile, so the icon takes the lit colour explicitly
+       — inherited, it would be the greyed-out disabled one. */
+    .cheer-button mat-icon.is-sending {
+      color: var(--mat-sys-tertiary, #ff7043);
+      animation: cheer-spin 900ms linear infinite;
+    }
+    @keyframes cheer-spin {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+    /* No spinning for anyone who asked for less of it: the lit colour and
+       the dimmed flame still say the tap landed and is on its way. */
+    @media (prefers-reduced-motion: reduce) {
+      .cheer-button mat-icon.is-sending {
+        animation: none;
+        opacity: 0.6;
+      }
+    }
   `,
 })
 export class FriendsBoardComponent {
   readonly entries = input.required<ReadonlyArray<FriendsBoardEntry>>();
   readonly period = input.required<FriendsBoardPeriod>();
+  readonly comparison = input.required<FriendsBoardComparison>();
   readonly periodChange = output<unknown>();
+  readonly comparisonChange = output<FriendsBoardComparison>();
   readonly cheer = output<string>();
+  /** The friend whose cheer is in flight, if any. */
+  readonly cheering = input<string | null>(null);
+
+  protected readonly repExercises = REP_EXERCISES;
+
+  /** The select's value: one key per choice, reps keyed by exercise. */
+  protected readonly comparisonKey = computed(() => {
+    const { metric, exerciseId } = this.comparison();
+    return metric === 'reps' ? `reps:${exerciseId ?? ''}` : metric;
+  });
+
+  protected changeComparison(key: string): void {
+    this.comparisonChange.emit(
+      key.startsWith('reps:')
+        ? { metric: 'reps', exerciseId: key.slice('reps:'.length) }
+        : { metric: key === 'streak' ? 'streak' : 'days' }
+    );
+  }
+
+  protected exerciseName(id: string): string {
+    return exerciseDisplayName(id);
+  }
+
+  protected valueLabel(entry: FriendsBoardEntry): string {
+    return boardValueLabel(this.comparison().metric, entry.value);
+  }
 
   protected readonly cheerAria = $localize`:@@friends.board.cheer:Anfeuern`;
   protected readonly cheeredAria = $localize`:@@friends.board.cheered:Heute schon angefeuert`;
+  protected readonly cheeringAria = $localize`:@@friends.board.cheering:Anfeuerung wird gesendet`;
+
+  protected isCheering(uid: string): boolean {
+    return this.cheering() === uid;
+  }
+
+  /** What the button is doing, for the tooltip and for screen readers. */
+  protected cheerLabel(entry: FriendsBoardEntry): string {
+    if (this.isCheering(entry.uid)) return this.cheeringAria;
+    return entry.cheered ? this.cheeredAria : this.cheerAria;
+  }
 
   /** The viewer's own row says so, rather than repeating their name. */
   protected label(entry: FriendsBoardEntry): string {
@@ -148,6 +278,8 @@ export class FriendsBoardComponent {
   }
 
   protected cheersLabel(count: number): string {
-    return $localize`:@@friends.board.cheersToday:${count}:count: Anfeuerungen heute`;
+    return count === 1
+      ? $localize`:@@friends.board.cheersTodayOne:Eine Anfeuerung heute`
+      : $localize`:@@friends.board.cheersToday:${count}:count: Anfeuerungen heute`;
   }
 }

@@ -161,7 +161,7 @@ interface VisibleTab {
       flex-direction: column;
       gap: 12px;
       position: sticky;
-      top: calc(var(--top-nav-height, 64px) + var(--desktop-nav-height, 0px));
+      top: var(--top-nav-height, 64px);
       z-index: 8;
       margin-inline: -16px;
       padding: 12px 16px;

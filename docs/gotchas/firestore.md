@@ -64,6 +64,32 @@ This is the documented Firestore behaviour, not a bug, and it bites every nested
 
 When in doubt, write a test that saves a partial `ui` patch and asserts the unrelated `ui.*` keys survive — none exist today, which is why the regression has slipped through repeatedly.
 
+## An aggregation needs the summed field in the index (Admin SDK)
+
+`aggregate({ total: AggregateField.sum('reps') })` is **not** served by the
+index that serves the same `where`/`orderBy` query without the aggregate. The
+summed field has to be in the composite index too, appended after the range
+field:
+
+```
+where userId == , where exerciseId == , where timestamp >= / <
+  .aggregate({ total: sum('reps') })
+→ needs (exerciseId, userId, timestamp, reps)
+```
+
+The three-field `(userId, exerciseId, timestamp)` index next to it looks like
+it covers the query and does not. The failure is a runtime
+`9 FAILED_PRECONDITION: The query requires an index`, so it only shows up in
+the Cloud Function logs — the caller sees whatever the `catch` puts on screen.
+This shipped once: every friend challenge showed all participants at
+`0 / target`, including the viewer, because `sumChallengeEntries` threw on
+every call and the handler counted it as an unreadable sum.
+
+The guard is in `firestore-indexes.spec.ts`; every new aggregation needs an
+entry there and in `firestore.indexes.json`. To read the index a query
+actually wants, take the `create_composite=` URL out of the error and decode
+the base64 — the field list is in it, in order.
+
 ## `getDoc` after `setDoc` race
 
 `setDoc` resolves once the local mutation is queued, not once the server has acknowledged it. A `getDoc` immediately afterwards may return the cached value from before the write. If you need to assert the persisted shape (mostly in tests), force a server fetch with `getDoc(ref, { source: 'server' })`.
@@ -82,7 +108,8 @@ For real-time data:
 
    configResource: rxResource({
      params: () => ({ userId: store._user.userIdSafe() }),
-     stream: ({ params }) => (params.userId ? store._api.getConfig(params.userId) : of(null)),
+     stream: ({ params }) =>
+       params.userId ? store._api.getConfig(params.userId) : of(null),
    });
    ```
 
@@ -99,7 +126,9 @@ When migrating, audit consumers that subscribe directly without unsubscription (
 ```ts
 const HAS_TIMEZONE = /(Z|[+-]\d{2}:?\d{2})$/;
 function entryBerlinDate(timestamp: string): string {
-  return HAS_TIMEZONE.test(timestamp) ? toBerlinIsoDate(new Date(timestamp)) : timestamp.slice(0, 10); // already a Berlin-local date prefix
+  return HAS_TIMEZONE.test(timestamp)
+    ? toBerlinIsoDate(new Date(timestamp))
+    : timestamp.slice(0, 10); // already a Berlin-local date prefix
 }
 ```
 

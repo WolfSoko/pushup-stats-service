@@ -264,13 +264,13 @@ export class ExerciseDetailComponent implements OnInit {
     const slug = this.route.snapshot.paramMap.get('slug');
     const found = (slug && this.findEntryBySlug(slug)) ?? null;
     if (!found) {
-      this.router.navigateByUrl('/wiki/uebungen');
+      void this.router.navigateByUrl('/wiki/uebungen');
       return;
     }
 
     const localized = this.localizeEntry(found, this.locale);
     if (!localized) {
-      this.router.navigateByUrl('/wiki/uebungen');
+      void this.router.navigateByUrl('/wiki/uebungen');
       return;
     }
 
