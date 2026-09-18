@@ -3738,9 +3738,9 @@ Active:         </target>
       
         </unit>
     <unit id="seo.landing.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.</source>
-        <target>Your camera counts your push-ups automatically – in the browser, no upload. Plus training plans, streaks and a leaderboard, also for squats and pull-ups.</target>
+        <target>The camera counts your push-ups automatically – in the browser, no upload. Plus training plans, streaks, a leaderboard and challenges with friends – also for squats and pull-ups.</target>
 
 
 
@@ -13176,9 +13176,9 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="challenge.error.gone">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Einladung ist nicht mehr offen.</source>
-        <target>This challenge no longer exists.</target>
+        <target>This invitation is no longer open.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.title">
@@ -13224,225 +13224,225 @@ Active:         </target>
       </segment>
     </unit>
     <unit id="challenges.invitation">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </source>
-        <target> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </target>
+        <target>You've been invited. If you join, participants can see your reps for this exercise during the challenge period – and you can see theirs.</target>
       </segment>
     </unit>
     <unit id="challenges.stillInvited">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch eingeladen:</source>
-        <target>Noch eingeladen:</target>
+        <target>Still invited:</target>
       </segment>
     </unit>
     <unit id="challenges.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target>Decline</target>
       </segment>
     </unit>
     <unit id="challenges.accept">
-      <segment state="initial">
+      <segment state="translated">
         <source> Mitmachen </source>
-        <target> Mitmachen </target>
+        <target>Join</target>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAriaOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine offene Freundschaftsanfrage</source>
-        <target>Eine offene Freundschaftsanfrage</target>
+        <target>One pending friend request</target>
       </segment>
     </unit>
     <unit id="friends.board.cheersTodayOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Anfeuerung heute</source>
-        <target>Eine Anfeuerung heute</target>
+        <target>One cheer today</target>
       </segment>
     </unit>
     <unit id="challenge.error.ended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Challenge ist schon vorbei.</source>
-        <target>Die Challenge ist schon vorbei.</target>
+        <target>This challenge is already over.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.pendingOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Anfrage wartet auf dich</source>
-        <target>Eine Anfrage wartet auf dich</target>
+        <target>One request is waiting for you</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.invitationOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Challenge-Einladung wartet</source>
-        <target>Eine Challenge-Einladung wartet</target>
+        <target>One challenge invitation waiting</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.invitations">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+        <target><ph id="0" equiv="count" disp="count"/> challenge invitations waiting</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.activeChallengeOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Challenge läuft</source>
-        <target>Eine Challenge läuft</target>
+        <target>One challenge running</target>
       </segment>
     </unit>
     <unit id="friends.badge.invitationOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Challenge-Einladung wartet</source>
-        <target>Eine Challenge-Einladung wartet</target>
+        <target>One challenge invitation waiting</target>
       </segment>
     </unit>
     <unit id="friends.badge.invitations">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+        <target><ph id="0" equiv="count" disp="count"/> challenge invitations waiting</target>
       </segment>
     </unit>
     <unit id="challenges.loadFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges konnten nicht geladen werden.</source>
-        <target>Challenges konnten nicht geladen werden.</target>
+        <target>Challenges could not be loaded.</target>
       </segment>
     </unit>
     <unit id="challenges.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut laden </source>
-        <target> Erneut laden </target>
+        <target>Reload</target>
       </segment>
     </unit>
     <unit id="dashboard.challenge.invited">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge-Einladung</source>
-        <target>Challenge-Einladung</target>
+        <target>Challenge invitation</target>
       </segment>
     </unit>
     <unit id="dashboard.challenge.running">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde-Challenge</source>
-        <target>Freunde-Challenge</target>
+        <target>Friend challenge</target>
       </segment>
     </unit>
     <unit id="dashboard.challenge.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Challenges</source>
-        <target>Alle Challenges</target>
+        <target>All challenges</target>
       </segment>
     </unit>
     <unit id="friends.board.dayOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>1 Tag</source>
-        <target>1 Tag</target>
+        <target>1 day</target>
       </segment>
     </unit>
     <unit id="friends.board.days">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="value"/> Tage</source>
-        <target><ph id="0" equiv="count" disp="value"/> Tage</target>
+        <target><ph id="0" equiv="count" disp="value"/> days</target>
       </segment>
     </unit>
     <unit id="friends.board.compare">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vergleich</source>
-        <target>Vergleich</target>
+        <target>Compare</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingstage</source>
-        <target>Trainingstage</target>
+        <target>Training days</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Streak</source>
         <target>Streak</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Reps</target>
       </segment>
     </unit>
     <unit id="landing.friends.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gemeinsam dranbleiben</source>
-        <target>Gemeinsam dranbleiben</target>
+        <target>Stick with it together</target>
       </segment>
     </unit>
     <unit id="landing.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainier mit Freunden </source>
-        <target> Trainier mit Freunden </target>
+        <target>Train with friends</target>
       </segment>
     </unit>
     <unit id="landing.friends.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </source>
-        <target> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </target>
+        <target>Invite friends, compare your training days, cheer each other on and start challenges together. Making plans together keeps you going.</target>
       </segment>
     </unit>
     <unit id="landing.friends.board.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Euer Vergleich</source>
-        <target>Euer Vergleich</target>
+        <target>Your comparison</target>
       </segment>
     </unit>
     <unit id="landing.friends.board.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </source>
-        <target> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </target>
+        <target>Who trained on more days this week? Training days and streak count the same for everyone, no matter the exercise. If you want, compare push-ups, squats or pull-ups.</target>
       </segment>
     </unit>
     <unit id="landing.friends.cheer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuern</source>
-        <target>Anfeuern</target>
+        <target>Cheer</target>
       </segment>
     </unit>
     <unit id="landing.friends.cheer.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </source>
-        <target> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </target>
+        <target>Tap the flame, and your friend gets a message on their phone. Once a day, per person. Small, but it works.</target>
       </segment>
     </unit>
     <unit id="landing.friends.challenge.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges</source>
         <target>Challenges</target>
       </segment>
     </unit>
     <unit id="landing.friends.challenge.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </source>
-        <target> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </target>
+        <target>One goal, a few days, everyone together: 500 push-ups in a week, for example. Everyone sees everyone else's progress until the last day.</target>
       </segment>
     </unit>
     <unit id="landing.friends.cta.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Go to friends</target>
       </segment>
     </unit>
     <unit id="landing.friends.cta.signup">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto erstellen &amp; Freunde einladen</source>
-        <target>Konto erstellen &amp; Freunde einladen</target>
+        <target>Create account &amp; invite friends</target>
       </segment>
     </unit>
     <unit id="challenges.progressUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </source>
-        <target> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </target>
+        <target>Progress couldn't be loaded right now – the numbers below are incomplete.</target>
       </segment>
     </unit>
     <unit id="friends.board.cheering">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerung wird gesendet</source>
-        <target>Anfeuerung wird gesendet</target>
+        <target>Sending cheer</target>
       </segment>
     </unit>
 </file>
