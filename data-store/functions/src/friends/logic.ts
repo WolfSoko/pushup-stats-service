@@ -3,6 +3,7 @@ import {
   friendRequestRejection,
   isIncomingRequest,
   isOutgoingRequest,
+  isValidFriendUid,
   type Friendship,
   type FriendRequestRejection,
 } from '@pu-stats/models';
@@ -41,6 +42,31 @@ export function requestRejection(args: {
     target: args.target,
     existing: args.existing,
     requesterFriendCount: args.requesterFriendCount,
+  });
+}
+
+/**
+ * Whether someone arriving on an invite link may be turned into a pending
+ * request *from the inviter*.
+ *
+ * Same rules as a request the inviter sent by hand — they are the
+ * requester here, so their friend cap and a record they already declined
+ * both still apply. The one addition is validating the inviter: on this
+ * path the uid comes off a link the caller controls, not from their auth
+ * token.
+ */
+export function inviteRejection(args: {
+  readonly inviter: unknown;
+  readonly invitee: string;
+  readonly existing: FriendshipDoc | undefined;
+  readonly inviterFriendCount: number;
+}): FriendRequestRejection | null {
+  if (!isValidFriendUid(args.inviter)) return 'invalid';
+  return friendRequestRejection({
+    requester: args.inviter,
+    target: args.invitee,
+    existing: args.existing,
+    requesterFriendCount: args.inviterFriendCount,
   });
 }
 

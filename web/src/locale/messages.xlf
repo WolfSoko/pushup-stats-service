@@ -4389,7 +4389,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:156</note>
+        <note category="location">web/src/app/app.ts:157</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4397,7 +4397,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:157</note>
+        <note category="location">web/src/app/app.ts:158</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4405,7 +4405,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:288</note>
+        <note category="location">web/src/app/app.ts:290</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4413,7 +4413,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:383</note>
+        <note category="location">web/src/app/app.ts:388</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4421,7 +4421,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:386</note>
+        <note category="location">web/src/app/app.ts:391</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4429,7 +4429,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:454</note>
+        <note category="location">web/src/app/app.ts:459</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4437,7 +4437,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:483</note>
+        <note category="location">web/src/app/app.ts:488</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4445,7 +4445,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:490</note>
+        <note category="location">web/src/app/app.ts:495</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -4461,7 +4461,7 @@
     </unit>
     <unit id="autoCount.exercisePickerLabel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:8,10</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:9,11</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -4469,7 +4469,7 @@
     </unit>
     <unit id="autoCount.exercisePickerAria">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:14,15</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:15,16</note>
       </notes>
       <segment>
         <source>Übung wählen</source>
@@ -4477,7 +4477,7 @@
     </unit>
     <unit id="autoCount.modePickerAria">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:30,31</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:31,32</note>
       </notes>
       <segment>
         <source>Erkennungsmodus wählen</source>
@@ -4485,7 +4485,7 @@
     </unit>
     <unit id="autoCount.mode.pose">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:39,41</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:40,41</note>
       </notes>
       <segment>
         <source>Kamera vor dir</source>
@@ -4493,7 +4493,7 @@
     </unit>
     <unit id="autoCount.mode.proximity">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:47,49</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:48,50</note>
       </notes>
       <segment>
         <source>Handy unter dir</source>
@@ -4501,7 +4501,7 @@
     </unit>
     <unit id="autoCount.mode.proximityUnavailable">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:56,59</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:57,60</note>
       </notes>
       <segment>
         <source> „Handy unter dir“ gibt es nur für Übungen, bei denen sich der Körper zum Boden hin bewegt – bei dieser Übung nicht. </source>
@@ -4509,7 +4509,7 @@
     </unit>
     <unit id="autoCount.mode.poseUnavailable">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:65,69</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:66,70</note>
       </notes>
       <segment>
         <source> Für diese Übung gibt es keine Pose-Erkennung – zähle mit dem Handy unter dir. </source>
@@ -4517,7 +4517,7 @@
     </unit>
     <unit id="autoCount.instructions.proximity">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:71,76</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:72,76</note>
       </notes>
       <segment>
         <source> Leg das Handy mit dem Display nach oben unter deine Brust. Jede Abwärts- und Aufwärtsbewegung verdunkelt und erhellt das Kamerabild – daraus werden die Reps gezählt. Kein Pose-Tracking nötig. </source>
@@ -4525,7 +4525,7 @@
     </unit>
     <unit id="autoCount.instructions">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:77,82</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:78,82</note>
       </notes>
       <segment>
         <source> Halte das Gerät so, dass die relevanten Gelenke (Schulter/Ellbogen/Handgelenk bzw. Hüfte/Knie/Fuß) im Bild sind. Reps werden bei sauberem Down‑Up gezählt. </source>
@@ -4533,7 +4533,7 @@
     </unit>
     <unit id="autoCount.cameraStarting">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:87,90</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:89,92</note>
       </notes>
       <segment>
         <source>Kamera startet …</source>
@@ -4541,7 +4541,7 @@
     </unit>
     <unit id="autoCount.unavailable">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:94,96</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:96,98</note>
       </notes>
       <segment>
         <source> Auto‑Zählen nicht verfügbar </source>
@@ -4549,7 +4549,7 @@
     </unit>
     <unit id="autoCount.repsLabel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:102,104</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:104,106</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -4557,7 +4557,7 @@
     </unit>
     <unit id="autoCount.formCheck.toggleAria">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:110,111</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:112,113</note>
       </notes>
       <segment>
         <source>Form-Check anzeigen oder ausblenden</source>
@@ -4565,7 +4565,7 @@
     </unit>
     <unit id="autoCount.formCheck.proximity">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:127,128</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:129,130</note>
       </notes>
       <segment>
         <source>Nähe</source>
@@ -4573,7 +4573,7 @@
     </unit>
     <unit id="autoCount.formCheck.signal">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:137,139</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:139,141</note>
       </notes>
       <segment>
         <source>Signal</source>
@@ -4581,7 +4581,7 @@
     </unit>
     <unit id="autoCount.formCheck.angle">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:148,150</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:150,152</note>
       </notes>
       <segment>
         <source>Winkel</source>
@@ -4589,7 +4589,7 @@
     </unit>
     <unit id="autoCount.formCheck.confidence">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:158,160</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:160,162</note>
       </notes>
       <segment>
         <source>Sicherheit</source>
@@ -4597,7 +4597,7 @@
     </unit>
     <unit id="autoCount.formCheck.phase">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:169,170</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:171,172</note>
       </notes>
       <segment>
         <source>Phase</source>
@@ -4605,7 +4605,7 @@
     </unit>
     <unit id="autoCount.positionHint.proximity">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:177,180</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:179,182</note>
       </notes>
       <segment>
         <source> Erste Wiederholung kalibriert die Helligkeit </source>
@@ -4613,7 +4613,7 @@
     </unit>
     <unit id="autoCount.positionHint">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:181,183</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:183,185</note>
       </notes>
       <segment>
         <source> In Startposition gehen </source>
@@ -4621,7 +4621,7 @@
     </unit>
     <unit id="autoCount.reset">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:195,197</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:197,199</note>
       </notes>
       <segment>
         <source> Zurücksetzen </source>
@@ -4629,7 +4629,7 @@
     </unit>
     <unit id="autoCount.cancel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:198,201</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:200,203</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -4637,7 +4637,7 @@
     </unit>
     <unit id="autoCount.save">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:207,209</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:209,211</note>
       </notes>
       <segment>
         <source> Übernehmen </source>
@@ -4975,7 +4975,7 @@
     </unit>
     <unit id="dailyGoal.check.manual">
       <notes>
-        <note category="location">web/src/app/core/daily-goal-actions.service.ts:61</note>
+        <note category="location">web/src/app/core/daily-goal-actions.service.ts:64</note>
         <note category="location">web/src/app/core/daily-goal/daily-goal-checklist.component.ts:59</note>
       </notes>
       <segment>
@@ -5112,7 +5112,7 @@
     </unit>
     <unit id="invite.share.title">
       <notes>
-        <note category="location">web/src/app/core/invite.service.ts:39</note>
+        <note category="location">web/src/app/core/invite.service.ts:73</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -5120,7 +5120,7 @@
     </unit>
     <unit id="invite.share.text">
       <notes>
-        <note category="location">web/src/app/core/invite.service.ts:40</note>
+        <note category="location">web/src/app/core/invite.service.ts:74</note>
       </notes>
       <segment>
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
@@ -5201,16 +5201,26 @@
     </unit>
     <unit id="share.error.unavailable">
       <notes>
-        <note category="location">web/src/app/core/share.service.ts:72</note>
-        <note category="location">web/src/app/core/share.service.ts:87</note>
+        <note category="location">web/src/app/core/share.service.ts:77</note>
+        <note category="location">web/src/app/core/share.service.ts:91</note>
+        <note category="location">web/src/app/core/share.service.ts:105</note>
+        <note category="location">web/src/app/core/share.service.ts:120</note>
       </notes>
       <segment>
         <source>Teilen ist auf diesem Gerät nicht möglich.</source>
       </segment>
     </unit>
+    <unit id="share.success.linkCopied">
+      <notes>
+        <note category="location">web/src/app/core/share.service.ts:85</note>
+      </notes>
+      <segment>
+        <source>Link kopiert.</source>
+      </segment>
+    </unit>
     <unit id="share.success.clipboard">
       <notes>
-        <note category="location">web/src/app/core/share.service.ts:81</note>
+        <note category="location">web/src/app/core/share.service.ts:114</note>
       </notes>
       <segment>
         <source>In die Zwischenablage kopiert. Jetzt einfügen und teilen!</source>
@@ -5359,7 +5369,7 @@
         <note category="location">web/src/app/friends/friend-requests.component.ts:75</note>
         <note category="location">web/src/app/friends/friends-board.component.ts:277</note>
         <note category="location">web/src/app/friends/friends-list.component.ts:106</note>
-        <note category="location">web/src/app/friends/friends-page.component.ts:209</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:224</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:220</note>
       </notes>
       <segment>
@@ -5502,6 +5512,62 @@
       </notes>
       <segment>
         <source> Noch keine Challenge. Fordere deine Freunde heraus: ein Ziel, ein paar Tage, alle zusammen. </source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.title">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:43,44</note>
+      </notes>
+      <segment>
+        <source>Freund hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.hint">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:49,52</note>
+      </notes>
+      <segment>
+        <source> Schick diesen Link an jemanden, mit dem du trainieren möchtest. Wer ihn öffnet, bekommt eine Anfrage von dir und muss sie nur noch annehmen. </source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.link">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:55,57</note>
+      </notes>
+      <segment>
+        <source>Dein Einladungslink</source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.unavailable">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:71,75</note>
+      </notes>
+      <segment>
+        <source> Einladungslinks gibt es nur für angemeldete Konten. Melde dich an, dann kannst du Freunde hinzufügen. </source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.close">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:83,85</note>
+      </notes>
+      <segment>
+        <source> Schließen </source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.copy">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:93,95</note>
+      </notes>
+      <segment>
+        <source>Kopieren</source>
+      </segment>
+    </unit>
+    <unit id="friends.invite.share">
+      <notes>
+        <note category="location">web/src/app/friends/friend-invite-dialog.component.ts:102,105</note>
+      </notes>
+      <segment>
+        <source>Teilen</source>
       </segment>
     </unit>
     <unit id="friends.badge.invitationOne">
@@ -5877,9 +5943,17 @@
         <source> Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre Profil-Einstellungen für Freunde freigeben. </source>
       </segment>
     </unit>
+    <unit id="friends.addAction">
+      <notes>
+        <note category="location">web/src/app/friends/friends-page.component.ts:62,64</note>
+      </notes>
+      <segment>
+        <source>Freund hinzufügen</source>
+      </segment>
+    </unit>
     <unit id="friends.board">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:76,77</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:87,88</note>
       </notes>
       <segment>
         <source>Euer Vergleich</source>
@@ -5887,7 +5961,7 @@
     </unit>
     <unit id="friends.outgoing">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:106,107</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:117,118</note>
       </notes>
       <segment>
         <source>Von dir angefragt</source>
@@ -5895,7 +5969,7 @@
     </unit>
     <unit id="friends.waiting">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:111,112</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:122,123</note>
       </notes>
       <segment>
         <source>wartet noch</source>
@@ -5903,7 +5977,7 @@
     </unit>
     <unit id="friends.withdraw">
       <notes>
-        <note category="location">web/src/app/friends/friends-page.component.ts:120,121</note>
+        <note category="location">web/src/app/friends/friends-page.component.ts:131,132</note>
       </notes>
       <segment>
         <source> Zurückziehen </source>
@@ -8601,7 +8675,7 @@
     <unit id="push.subscribe.error">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:118</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:224</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:222</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -8610,12 +8684,12 @@
     <unit id="snackbar.close">
       <notes>
         <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:147</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:163</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:178</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:197</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:213</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:225</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:145</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:161</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:176</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:195</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:211</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:223</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -8623,7 +8697,7 @@
     </unit>
     <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:146</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:144</note>
       </notes>
       <segment>
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
@@ -8631,7 +8705,7 @@
     </unit>
     <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:162</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:160</note>
       </notes>
       <segment>
         <source>Push-Abos aller Geräte entfernt.</source>
@@ -8639,7 +8713,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:177</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:175</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -8647,8 +8721,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:196</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:212</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:194</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:210</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>

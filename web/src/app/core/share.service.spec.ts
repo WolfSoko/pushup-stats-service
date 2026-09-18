@@ -188,4 +188,47 @@ describe('ShareService', () => {
       expect(snackBarMock.open).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('copyLink', () => {
+    it('should copy the bare link, without the share pitch', async () => {
+      // given — the caller already shows the URL; the pitch would be noise
+      const writeText = vitest.fn().mockResolvedValue(undefined);
+      setNavigator({ clipboard: { writeText } });
+      const service = setup();
+
+      // when
+      const copied = await service.copyLink(payload.url);
+
+      // then
+      expect(copied).toBe(true);
+      expect(writeText).toHaveBeenCalledWith('https://pushup-stats.com');
+      expect(snackBarMock.open.mock.calls[0][0]).toContain('kopiert');
+    });
+
+    it('should report a refused clipboard instead of claiming success', async () => {
+      // given
+      const writeText = vitest
+        .fn()
+        .mockRejectedValue(new Error('No clipboard'));
+      setNavigator({ clipboard: { writeText } });
+      const service = setup();
+
+      // when
+      const copied = await service.copyLink(payload.url);
+
+      // then
+      expect(copied).toBe(false);
+      expect(snackBarMock.open.mock.calls[0][0]).toContain('nicht möglich');
+    });
+
+    it('should stay off navigator on the server', async () => {
+      // given
+      setNavigator(null);
+      const service = setup('server');
+
+      // when / then
+      expect(await service.copyLink(payload.url)).toBe(false);
+      expect(snackBarMock.open).not.toHaveBeenCalled();
+    });
+  });
 });

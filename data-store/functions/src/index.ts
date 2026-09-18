@@ -78,6 +78,10 @@ export {
   respondFriendRequest,
   sendFriendRequest,
 } from './functions-friends';
+export {
+  claimFriendInvite,
+  createFriendInvite,
+} from './functions-friend-invite';
 export { notifyFriendshipWrite } from './functions-friends-notify';
 export { sendCheer } from './functions-cheers';
 export {

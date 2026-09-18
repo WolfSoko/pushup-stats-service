@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import { FriendInviteApiService } from '../../core/friend-invite-api.service';
 import { StatsDashboardComponent } from './stats-dashboard.component';
 import {
   ExerciseFirestoreService,
@@ -269,6 +270,12 @@ describe('StatsDashboardComponent', () => {
       imports: [StatsDashboardComponent],
       providers: [
         provideRouter([]),
+        // `InviteService` mints an invite token through this; the real
+        // one needs the `Functions` injector this harness has none of.
+        {
+          provide: FriendInviteApiService,
+          useValue: { create: vitest.fn().mockResolvedValue(null) },
+        },
         // NOTE: this spec stays on the default browser PLATFORM_ID even
         // though stores constructed by the component start `setInterval`
         // timers in `withHooks`. Pinning to `server` was suggested but
@@ -1178,6 +1185,12 @@ describe('StatsDashboardComponent', () => {
         imports: [StatsDashboardComponent],
         providers: [
           provideRouter([]),
+          // `InviteService` mints an invite token through this; the real
+          // one needs the `Functions` injector this harness has none of.
+          {
+            provide: FriendInviteApiService,
+            useValue: { create: vitest.fn().mockResolvedValue(null) },
+          },
           { provide: StatsApiService, useValue: serviceMock },
           {
             provide: UserStatsApiService,

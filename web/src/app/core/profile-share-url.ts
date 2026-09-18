@@ -1,4 +1,4 @@
-import { REFERRAL_PARAM } from '@pu-stats/models';
+import { FRIEND_INVITE_PARAM, REFERRAL_PARAM } from '@pu-stats/models';
 
 import { SUPPORTED_LOCALES } from '../../server-locale-redirect';
 
@@ -56,10 +56,17 @@ export function buildPlanShareUrl(
 export function buildInviteUrl(
   uid: string | null | undefined,
   localeId: string | null | undefined,
-  publicProfile: boolean
+  publicProfile: boolean,
+  inviteToken?: string | null
 ): string {
   if (!uid) return SHARE_URL_BASE;
-  const ref = `${REFERRAL_PARAM}=${encodeURIComponent(uid)}`;
-  if (publicProfile) return `${buildProfileShareUrl(uid, localeId)}?${ref}`;
-  return `${SHARE_URL_BASE}/${shareLocalePrefix(localeId)}?${ref}`;
+  const params = [`${REFERRAL_PARAM}=${encodeURIComponent(uid)}`];
+  // Only the token turns the link into a friend request; without one the
+  // link still attributes a signup, which is what it always did.
+  if (inviteToken) {
+    params.push(`${FRIEND_INVITE_PARAM}=${encodeURIComponent(inviteToken)}`);
+  }
+  const query = params.join('&');
+  if (publicProfile) return `${buildProfileShareUrl(uid, localeId)}?${query}`;
+  return `${SHARE_URL_BASE}/${shareLocalePrefix(localeId)}?${query}`;
 }

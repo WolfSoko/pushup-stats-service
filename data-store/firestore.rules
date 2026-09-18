@@ -401,6 +401,16 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Invite tokens — id is the token itself. Closed on both sides, and
+    // the read matters as much as the write: the token is the credential
+    // that lets a link open a friend request in its owner's name, so
+    // being able to list or guess one would undo the point of having it.
+    // `createFriendInvite` / `claimFriendInvite` reach it via the Admin
+    // SDK. Records self-destruct through the `expiresAt` TTL policy.
+    match /friendInvites/{token} {
+      allow read, write: if false;
+    }
+
     // Cheers — one doc per (sender, recipient, day), id
     // `<from>__<to>__<YYYY-MM-DD>`. Written only by the `sendCheer`
     // callable, which is what limits them to confirmed friends and one a

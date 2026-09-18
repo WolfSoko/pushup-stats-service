@@ -39,6 +39,7 @@ import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 import { AvatarService } from './core/avatar.service';
 import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
+import { FriendInviteService } from './core/friend-invite.service';
 import { ReferralService } from './core/referral.service';
 import { SeoService } from './core/seo.service';
 import { FeatureFlagsService, UserContextService } from '@pu-auth/auth';
@@ -231,6 +232,7 @@ export class App {
 
   private readonly seo = inject(SeoService);
   private readonly referral = inject(ReferralService);
+  private readonly friendInvite = inject(FriendInviteService);
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly auth = inject(AuthStore);
   private readonly authService = inject(AuthService);
@@ -359,10 +361,13 @@ export class App {
   readonly navOpen = signal(false);
 
   constructor() {
-    // Invitations arrive as `?ref=` on a shared link and are gone after the
-    // first navigation, so they are captured before anything else runs.
+    // Invitations arrive as `?ref=` (who to credit) and `?fi=` (the token
+    // that opens the friend request) on a shared link, and are gone after
+    // the first navigation — so both are captured before anything else runs.
     if (isPlatformBrowser(this.platformId)) {
-      this.referral.capture(globalThis.location?.search ?? '');
+      const search = globalThis.location?.search ?? '';
+      this.referral.capture(search);
+      this.friendInvite.capture(search);
     }
 
     this.router.events

@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
-import { InviteService } from '../core/invite.service';
 import { ChallengesSectionComponent } from './challenges-section.component';
 import { ChallengesStore } from './challenges.store';
 import { FriendRequestsComponent } from './friend-requests.component';
@@ -50,6 +50,17 @@ import type { FriendsBoardPeriod } from './friends-api.service';
           Trainiert gemeinsam: bestätigte Freunde sehen voneinander, was ihre
           Profil-Einstellungen für Freunde freigeben.
         </p>
+        <button
+          page-actions
+          mat-flat-button
+          color="primary"
+          type="button"
+          data-testid="friends-add"
+          (click)="invite()"
+        >
+          <mat-icon>person_add</mat-icon>
+          <span i18n="@@friends.addAction">Freund hinzufügen</span>
+        </button>
       </app-page-header>
 
       @if (rejection(); as message) {
@@ -166,7 +177,7 @@ import type { FriendsBoardPeriod } from './friends-api.service';
 export class FriendsPageComponent implements OnInit {
   protected readonly store = inject(FriendsStore);
   protected readonly challenges = inject(ChallengesStore);
-  private readonly invites = inject(InviteService);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly rejection = computed(() =>
     friendRejectionMessage(this.store.lastRejection())
@@ -175,8 +186,12 @@ export class FriendsPageComponent implements OnInit {
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
+  private destroyed = false;
 
   constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.destroyed = true;
+    });
     onEntriesChanged(() => void this.store.loadBoard());
     // Everything here is other people's doing — a friend accepts, logs
     // reps, cheers — so coming back to the tab re-reads it all.
@@ -209,8 +224,14 @@ export class FriendsPageComponent implements OnInit {
     return displayName ?? $localize`:@@friends.anonymous:Ohne Namen`;
   }
 
-  protected invite(): void {
-    void this.invites.inviteFriend();
+  protected async invite(): Promise<void> {
+    const { FriendInviteDialogComponent } =
+      await import('./friend-invite-dialog.component');
+    // The chunk can land after the user has navigated on; `MatDialog` is
+    // root-provided, so without this the dialog would open over whatever
+    // page they went to.
+    if (this.destroyed) return;
+    this.dialog.open(FriendInviteDialogComponent, { autoFocus: 'dialog' });
   }
 }
 

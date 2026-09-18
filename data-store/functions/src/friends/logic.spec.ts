@@ -4,6 +4,7 @@ import { MAX_FRIENDS } from '@pu-stats/models';
 import {
   acceptedFriendUids,
   friendLists,
+  inviteRejection,
   requestRejection,
   respondRejection,
   withProfiles,
@@ -193,6 +194,87 @@ describe('friends/logic', () => {
 
       // when / then
       expect(acceptedFriendUids(docs, 'a')).toEqual(['c']);
+    });
+  });
+
+  describe('inviteRejection', () => {
+    it('should turn a followed link into a request from the inviter', () => {
+      // when / then
+      expect(
+        inviteRejection({
+          inviter: 'a',
+          invitee: 'b',
+          existing: undefined,
+          inviterFriendCount: 0,
+        })
+      ).toBeNull();
+    });
+
+    it('should refuse an inviter the link never could have named', () => {
+      // given — on this path the uid comes off a link the caller controls
+      const base = {
+        invitee: 'b',
+        existing: undefined,
+        inviterFriendCount: 0,
+      };
+
+      // when / then
+      expect(inviteRejection({ ...base, inviter: 'a/b' })).toBe('invalid');
+      expect(inviteRejection({ ...base, inviter: '' })).toBe('invalid');
+      expect(inviteRejection({ ...base, inviter: 99 })).toBe('invalid');
+      expect(inviteRejection({ ...base, inviter: null })).toBe('invalid');
+    });
+
+    it('should refuse your own link', () => {
+      // when / then
+      expect(
+        inviteRejection({
+          inviter: 'a',
+          invitee: 'a',
+          existing: undefined,
+          inviterFriendCount: 0,
+        })
+      ).toBe('self');
+    });
+
+    it('should leave an existing friendship or request untouched', () => {
+      // given
+      const base = { inviter: 'a', invitee: 'b', inviterFriendCount: 1 };
+
+      // when / then
+      expect(inviteRejection({ ...base, existing: doc() })).toBe('pending');
+      expect(
+        inviteRejection({ ...base, existing: doc({ status: 'accepted' }) })
+      ).toBe('exists');
+    });
+
+    it('should not let a forwarded link revive a request the inviter declined', () => {
+      // given — a said no to b once; b re-following a's link is not a
+      // second ask
+      const existing = doc({ status: 'declined', requestedBy: 'a' });
+
+      // when / then
+      expect(
+        inviteRejection({
+          inviter: 'a',
+          invitee: 'b',
+          existing,
+          inviterFriendCount: 0,
+        })
+      ).toBe('declined');
+    });
+
+    it('should stop at the inviter’s friend cap', () => {
+      // given — the inviter is the requester, so it is their cap
+      // when / then
+      expect(
+        inviteRejection({
+          inviter: 'a',
+          invitee: 'b',
+          existing: undefined,
+          inviterFriendCount: MAX_FRIENDS,
+        })
+      ).toBe('limit');
     });
   });
 

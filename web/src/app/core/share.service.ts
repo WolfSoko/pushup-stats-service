@@ -62,6 +62,39 @@ export class ShareService {
     return this.copyToClipboard(payload, nav);
   }
 
+  /**
+   * Copies a bare link, for a surface that already shows the link itself
+   * — `share()` prepends its pitch, which reads as noise next to the URL
+   * the user is looking at.
+   */
+  async copyLink(url: string): Promise<boolean> {
+    if (!isPlatformBrowser(this.platformId)) return false;
+    const clipboard = (
+      globalThis.navigator as ShareCapableNavigator | undefined
+    )?.clipboard;
+    if (!clipboard?.writeText) {
+      this.openSnackBar(
+        $localize`:@@share.error.unavailable:Teilen ist auf diesem Gerät nicht möglich.`,
+        4000
+      );
+      return false;
+    }
+    try {
+      await clipboard.writeText(url);
+      this.openSnackBar(
+        $localize`:@@share.success.linkCopied:Link kopiert.`,
+        3000
+      );
+      return true;
+    } catch {
+      this.openSnackBar(
+        $localize`:@@share.error.unavailable:Teilen ist auf diesem Gerät nicht möglich.`,
+        4000
+      );
+      return false;
+    }
+  }
+
   private async copyToClipboard(
     payload: SharePayload,
     nav: ShareCapableNavigator

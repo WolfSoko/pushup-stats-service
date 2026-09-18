@@ -31,7 +31,9 @@ Sitting on the delete trigger rather than in the client's delete call means ever
 
 **Retention is a Firestore TTL policy on `expiresAt`, not a scheduled function.** The policy is declared in `firestore.indexes.json` as a `fieldOverrides` entry with `"ttl": true`, and `firebase deploy --only firestore` applies it. Declaring it there is not optional bookkeeping: the deploy reconciles field configuration against that file and **removes** any policy it does not find — a hand-enabled TTL survives until the next merge and no further. See [`docs/gotchas/cloud-functions.md`](gotchas/cloud-functions.md).
 
-The same applies to `cheers` (a friend cheer matters today; expires two days out) and `challenges` (a week past the end date, when the result stops being shown). Any collection that grows per user action and has no owner to delete it belongs in that list — and a guard test in `firestore-indexes.spec.ts` fails if one is missing from it.
+The same applies to `cheers` (a friend cheer matters today; expires two days out), `challenges` (a week past the end date, when the result stops being shown) and `friendInvites` (30 days, refreshed whenever the owner asks for their link again). Any collection that grows per user action and has no owner to delete it belongs in that list — and a guard test in `firestore-indexes.spec.ts` fails if one is missing from it.
+
+`friendInvites` is the one where expiry is a security property rather than housekeeping: the token is what lets a link open a friend request in its owner's name. Because the deletion below is only approximate, `claimFriendInvite` compares `expiresAtMs` itself and refuses a stale token the sweeper has not reached yet — the TTL policy is there to stop the collection growing, not to enforce the deadline.
 
 Two consequences worth remembering:
 

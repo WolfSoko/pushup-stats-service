@@ -13,6 +13,25 @@
 /** Query parameter carrying the inviter's uid on a shared link. */
 export const REFERRAL_PARAM = 'ref';
 
+/**
+ * Query parameter carrying the inviter's invite token, which is what
+ * turns a followed link into a friend request from them. Separate from
+ * `ref`: that one is a public uid and attributes a signup, this one is a
+ * credential and must be unguessable — see `friends/invites.ts` in the
+ * functions for why the uid could not do both jobs.
+ */
+export const FRIEND_INVITE_PARAM = 'fi';
+
+/** Token shape as minted by `createFriendInvite`; mirrors the server's check. */
+export function isValidInviteToken(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    value.length >= 16 &&
+    value.length <= 128 &&
+    /^[A-Za-z0-9_-]+$/.test(value)
+  );
+}
+
 /** Per-user invitation state, stored on `userConfigs/{uid}.referral`. */
 export interface ReferralState {
   /** Uid of the user whose link brought this account in. Server-written. */

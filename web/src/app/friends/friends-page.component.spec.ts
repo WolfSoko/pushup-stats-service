@@ -1,5 +1,5 @@
 import { LiveDataStore } from '@pu-stats/data-access-state';
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
@@ -22,6 +22,16 @@ describe('FriendsPageComponent', () => {
       photoURL: null,
       ...over,
     };
+  }
+
+  /**
+   * The invite link as the dialog renders it. `findBy` rather than
+   * `getBy`: the dialog is dynamic-imported, which no fixture tick waits
+   * for — resolving it after teardown throws on a destroyed injector.
+   */
+  async function link(): Promise<string> {
+    const field = await screen.findByTestId('invite-link');
+    return (field as HTMLInputElement).value;
   }
 
   async function renderPage(
@@ -48,7 +58,15 @@ describe('FriendsPageComponent', () => {
       ...overrides,
     };
     const challengesApi = { list: vitest.fn().mockResolvedValue(challenges) };
-    const invite = { inviteFriend: vitest.fn().mockResolvedValue('native') };
+    const inviteToken = signal<string | null>('tok-AAAAAAAAAAAAAAAA');
+    const invite = {
+      inviteFriend: vitest.fn().mockResolvedValue('native'),
+      inviteUrl: signal('https://pushup-stats.com/de/u/me?ref=me&fi=tok'),
+      canAddFriend: computed(() => inviteToken() !== null),
+      ensureToken: vitest
+        .fn()
+        .mockImplementation(() => Promise.resolve(inviteToken())),
+    };
     const live = {
       updateTick: signal(0),
       exerciseEntriesLoaded: signal(false),
@@ -64,7 +82,7 @@ describe('FriendsPageComponent', () => {
     });
     await fixture.whenStable();
     fixture.detectChanges();
-    return { api, invite, fixture, live };
+    return { api, invite, inviteToken, fixture, live };
   }
 
   it('should show a challenge even before the friends list has arrived', async () => {
@@ -148,14 +166,53 @@ describe('FriendsPageComponent', () => {
 
   it('should offer inviting someone when the list is empty', async () => {
     // given
-    const { invite } = await renderPage();
+    await renderPage();
 
     // when
     screen.getByRole('button', { name: /Freunde einladen/ }).click();
 
     // then
-    expect(invite.inviteFriend).toHaveBeenCalled();
+    expect(await link()).toBe('https://pushup-stats.com/de/u/me?ref=me&fi=tok');
     expect(document.body.textContent).toContain('Noch keine Freunde');
+  });
+
+  it('should still offer adding a friend once the list has someone in it', async () => {
+    // given — the invite button used to live in the empty state alone, so
+    // a first friend left no way to gain a second
+    await renderPage({ friends: [row()] });
+
+    // when
+    screen.getByTestId('friends-add').click();
+
+    // then
+    expect(await link()).toBe('https://pushup-stats.com/de/u/me?ref=me&fi=tok');
+  });
+
+  it('should hand the link to the share sheet', async () => {
+    // given
+    const { invite } = await renderPage();
+
+    // when
+    screen.getByTestId('friends-add').click();
+    (await screen.findByTestId('invite-share')).click();
+
+    // then
+    expect(invite.inviteFriend).toHaveBeenCalled();
+  });
+
+  it('should not offer a link the server refused to mint a token for', async () => {
+    // given — a guest: their account does not outlive the session, so a
+    // link tied to it would leave the recipient asking a dead uid
+    const { inviteToken } = await renderPage();
+    inviteToken.set(null);
+
+    // when
+    screen.getByTestId('friends-add').click();
+
+    // then
+    await screen.findByTestId('invite-unavailable');
+    expect(screen.queryByTestId('invite-link')).toBeNull();
+    expect(screen.queryByTestId('invite-share')).toBeNull();
   });
 
   it('should explain a refusal in words', async () => {

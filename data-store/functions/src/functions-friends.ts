@@ -17,6 +17,11 @@ import {
   withProfiles,
   type FriendshipDoc,
 } from './friends';
+import {
+  acceptedCount,
+  FRIENDSHIPS_COLLECTION,
+  readFriendships,
+} from './friends/friendships-read';
 import { readFriendPhotoUrls } from './friends/photos-read';
 import { displayNames, readUserConfigs } from './user-config-read';
 
@@ -28,20 +33,6 @@ import { displayNames, readUserConfigs } from './user-config-read';
  * other side may see, so `friendships` is Admin-SDK-only in
  * `firestore.rules`. Clients read their own records directly.
  */
-
-const COLLECTION = 'friendships';
-
-/** Every friendship document `uid` is part of. */
-async function readFriendships(uid: string): Promise<FriendshipDoc[]> {
-  const snap = await db
-    .collection(COLLECTION)
-    .where('users', 'array-contains', uid)
-    .get();
-  return snap.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Friendship),
-  }));
-}
 
 export const sendFriendRequest = onCall(
   { region: 'europe-west3', timeoutSeconds: 30 },
@@ -57,7 +48,7 @@ export const sendFriendRequest = onCall(
       requester: uid,
       target,
       existing,
-      requesterFriendCount: docs.filter((d) => d.status === 'accepted').length,
+      requesterFriendCount: acceptedCount(docs),
     });
     if (rejection) return { ok: false, reason: rejection };
 
@@ -74,7 +65,7 @@ export const sendFriendRequest = onCall(
     // not be silently replaced, and a concurrent duplicate request loses
     // here instead of overwriting the first one's state.
     await db
-      .collection(COLLECTION)
+      .collection(FRIENDSHIPS_COLLECTION)
       .doc(id)
       .create(friendship)
       .catch(async (err: unknown) => {
@@ -100,7 +91,7 @@ export const respondFriendRequest = onCall(
       throw new HttpsError('invalid-argument', 'id fehlt.');
     }
 
-    const ref = db.collection(COLLECTION).doc(id);
+    const ref = db.collection(FRIENDSHIPS_COLLECTION).doc(id);
     const result = await db.runTransaction(async (tx) => {
       const snap = await tx.get(ref);
       const doc = snap.exists
@@ -136,7 +127,7 @@ export const removeFriend = onCall(
       throw new HttpsError('invalid-argument', 'id fehlt.');
     }
 
-    const ref = db.collection(COLLECTION).doc(id);
+    const ref = db.collection(FRIENDSHIPS_COLLECTION).doc(id);
     const removed = await db.runTransaction(async (tx) => {
       const snap = await tx.get(ref);
       if (!snap.exists) return false;
