@@ -69,9 +69,19 @@ test.describe('Arc nav labels @smoke', () => {
     await expect(page.getByTestId('arc-nav')).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     // A click, not a tap: this project drives a mouse, and it doubles as
-    // the hover that holds the strip out.
+    // the hover that holds the strip out. The strip slides, so wait for it
+    // to arrive rather than for a moment to pass.
     await page.getByTestId('arc-nav-grip').click();
-    await page.waitForTimeout(500);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const strip = document.querySelector('[data-testid="arc-nav"]');
+          return strip
+            ? Math.round(window.innerHeight - strip.getBoundingClientRect().y)
+            : 0;
+        })
+      )
+      .toBeGreaterThan(60);
 
     // when each item is measured against the strip it is clipped to — the
     // top edge is an ellipse the items ride (`arcDrop`), so an item's room
