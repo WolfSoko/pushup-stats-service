@@ -72,10 +72,15 @@ function setup(): Harness {
   return { tools, contexts, navigateByUrl };
 }
 
-function tool(harness: Harness, name: string): AnyToolConfig {
+type ToolWithHandler = AnyToolConfig & {
+  handler: NonNullable<AnyToolConfig['handler']>;
+};
+
+function tool(harness: Harness, name: string): ToolWithHandler {
   const match = harness.tools.find((config) => config.name === name);
   if (!match) throw new Error(`Tool "${name}" was never registered`);
-  return match;
+  if (!match.handler) throw new Error(`Tool "${name}" has no handler`);
+  return match as ToolWithHandler;
 }
 
 describe('registerAiAssistantTools', () => {
