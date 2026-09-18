@@ -30,12 +30,19 @@ function pointer(
  * second finger elsewhere cannot be mistaken for this one.
  */
 function touch(type: string, clientY: number, identifier = 1): Event {
+  return multiTouch(type, [{ identifier, clientY }]);
+}
+
+/** The same, for an event that changes more than one contact at once. */
+function multiTouch(
+  type: string,
+  points: ReadonlyArray<{ identifier: number; clientY: number }>
+): Event {
   const event = new Event(type, { bubbles: true });
-  const point = { identifier, clientY };
   Object.defineProperty(event, 'changedTouches', {
     value: {
-      length: 1,
-      item: (index: number) => (index === 0 ? point : null),
+      length: points.length,
+      item: (index: number) => points[index] ?? null,
     },
   });
   return event;
@@ -513,7 +520,8 @@ describe('ArcNavComponent', () => {
     const host = screen.getByTestId('arc-nav').parentElement;
     fixture.detectChanges();
 
-    // then the nav is on screen to begin with, so it is seen at least once
+    // then the nav is on screen to begin with, so it is seen at least once —
+    // and so is the server-rendered markup, which never runs the countdown
     expect(host?.classList.contains('revealed')).toBe(true);
 
     // when the grace period runs out
@@ -561,6 +569,47 @@ describe('ArcNavComponent', () => {
     fixture.detectChanges();
 
     // then the strip comes back
+    expect(host?.classList.contains('revealed')).toBe(true);
+  });
+
+  it('should find the edge contact when one touch event carries several', async () => {
+    // given the parked nav — Regression: only the first changed contact was
+    // looked at, so a two-finger landing whose first contact is mid-screen
+    // threw the edge one away
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
+
+    // when two fingers land at once and only the second one is at the edge
+    document.dispatchEvent(
+      multiTouch('touchstart', [
+        { identifier: 1, clientY: window.innerHeight - 300 },
+        { identifier: 2, clientY: window.innerHeight - 4 },
+      ])
+    );
+    document.dispatchEvent(touch('touchmove', window.innerHeight - 40, 2));
+    fixture.detectChanges();
+
+    // then the edge one is the one being measured
+    expect(host?.classList.contains('revealed')).toBe(true);
+  });
+
+  it('should keep measuring the finger that started the pull', async () => {
+    // given the parked nav and a pull under way from the bottom edge
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
+    document.dispatchEvent(touch('touchstart', window.innerHeight - 4, 1));
+
+    // when a second finger lands at the edge and stays put, and the first
+    // one carries on upward
+    document.dispatchEvent(touch('touchstart', window.innerHeight - 2, 2));
+    document.dispatchEvent(touch('touchmove', window.innerHeight - 40, 1));
+    fixture.detectChanges();
+
+    // then the pull still counts — the latecomer did not take it over
     expect(host?.classList.contains('revealed')).toBe(true);
   });
 

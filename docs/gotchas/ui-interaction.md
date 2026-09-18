@@ -36,6 +36,10 @@ in `web/src/app/core/nav/arc-nav-reveal.ts`:
 - **Nach dem Start bleibt sie 5 Sekunden stehen** (`AUTO_HIDE_DELAY_MS`), damit die
   Navigation wenigstens einmal gesehen wird. Derselbe Timer läuft nach jeder
   Interaktion mit der Leiste neu an — sonst fährt sie mitten in einer Geste weg.
+- **Der Ausgangszustand ist „eingefahren", nicht „geparkt".** Die Park-Transform
+  hängt an keiner Media-Query mehr, also stünde die einzige Navigation der App im
+  server-gerenderten HTML zu 90% außerhalb des Bildes — und dauerhaft, wo kein
+  Skript läuft. Der Countdown startet erst in `start()`, also im Browser.
 - **Maus:** kommt der Zeiger in die unteren 110px (`REVEAL_ZONE_PX`), fährt sie ein;
   verlässt er die Zone, parkt sie sofort wieder. Der `pointermove`-Listener filtert
   auf `pointerType === 'mouse'`, denn ein liegender Finger hätte nichts, was ihn

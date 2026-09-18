@@ -53,7 +53,14 @@ export class ArcNavReveal {
   readonly revealed = computed(() => this.pointerNearBottom() || this.held());
 
   private readonly pointerNearBottom = signal(false);
-  private readonly held = signal(false);
+  /**
+   * Starts out on screen, which is also what the server renders: the
+   * parking transform applies on every viewport now, so a strip that
+   * started parked would leave the app's one navigation 90% off screen
+   * until hydration — and for good where scripts never run. The countdown
+   * that parks it begins at `start()`, in the browser.
+   */
+  private readonly held = signal(true);
   private timer: ReturnType<typeof setTimeout> | null = null;
   private swipe: { id: number; startY: number } | null = null;
 
@@ -91,14 +98,19 @@ export class ArcNavReveal {
       );
     };
     const onPointerLeave = () => this.pointerNearBottom.set(false);
-    // A finger that lands away from the edge starts nothing and ends
-    // nothing: an edge pull already under way keeps its own contact.
+    // The first contact to qualify owns the gesture until it ends: a finger
+    // that lands away from the edge starts nothing, and one that lands later
+    // must not take the measurement over. One `touchstart` can carry several
+    // new contacts, so all of them are considered.
     const onTouchStart = (event: TouchEvent) => {
-      const point = event.changedTouches.item(0);
-      if (!point || point.clientY < window.innerHeight - EDGE_SWIPE_ZONE_PX) {
+      if (this.swipe) return;
+      const edge = window.innerHeight - EDGE_SWIPE_ZONE_PX;
+      for (let index = 0; index < event.changedTouches.length; index++) {
+        const point = event.changedTouches.item(index);
+        if (!point || point.clientY < edge) continue;
+        this.swipe = { id: point.identifier, startY: point.clientY };
         return;
       }
-      this.swipe = { id: point.identifier, startY: point.clientY };
     };
     const onTouchMove = (event: TouchEvent) => {
       const swipe = this.swipe;

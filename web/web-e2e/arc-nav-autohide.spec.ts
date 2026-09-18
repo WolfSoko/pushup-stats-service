@@ -69,28 +69,33 @@ test.describe('Arc nav auto-hide on a phone @smoke', () => {
 
     // when a finger lands on the bottom edge and pulls upward. Playwright
     // drives taps, not drags, so the gesture is dispatched in the page.
-    await page.evaluate(() => {
-      const startY = window.innerHeight - 4;
-      const gesture = (type: string, clientY: number): TouchEvent => {
-        const point = new Touch({
-          identifier: 1,
-          target: document.body,
-          clientX: 40,
-          clientY,
-        });
-        return new TouchEvent(type, {
-          touches: type === 'touchend' ? [] : [point],
-          changedTouches: [point],
-          bubbles: true,
-          cancelable: true,
-        });
-      };
-      document.body.dispatchEvent(gesture('touchstart', startY));
-      document.body.dispatchEvent(gesture('touchmove', startY - 60));
-      document.body.dispatchEvent(gesture('touchend', startY - 60));
-    });
+    const pullUp = async (): Promise<number | null> => {
+      await page.evaluate(() => {
+        const startY = window.innerHeight - 4;
+        const gesture = (type: string, clientY: number): TouchEvent => {
+          const point = new Touch({
+            identifier: 1,
+            target: document.body,
+            clientX: 40,
+            clientY,
+          });
+          return new TouchEvent(type, {
+            touches: type === 'touchend' ? [] : [point],
+            changedTouches: [point],
+            bubbles: true,
+            cancelable: true,
+          });
+        };
+        document.body.dispatchEvent(gesture('touchstart', startY));
+        document.body.dispatchEvent(gesture('touchmove', startY - 60));
+        document.body.dispatchEvent(gesture('touchend', startY - 60));
+      });
+      return shownHeight();
+    };
 
-    // then the whole strip is back
-    await expect.poll(shownHeight).toBeGreaterThan(60);
+    // then the whole strip is back. The pull is repeated on every attempt:
+    // what it buys expires after AUTO_HIDE_DELAY_MS, so a runner that
+    // stalls once would otherwise measure a strip that has parked again.
+    await expect.poll(pullUp, { timeout: 15_000 }).toBeGreaterThan(60);
   });
 });
