@@ -65,10 +65,15 @@ $parked-sliver: 10px;
   // also what hides the wrap: an item leaves by dissolving, not by
   // vanishing mid-stride.
   //
-  // Held in a custom property so Sass leaves the mixed units alone: the
-  // fade is about an item wide, but never so wide on a narrow phone that
-  // the two ends eat the row between them.
-  --edge-fade: clamp(24px, 10%, #{$item-width * 0.75});
+  // Held in a custom property so Sass leaves the mixed units alone. The
+  // fade is three quarters of an item wherever there is room for it, and
+  // only a narrow strip gets less: on a phone the strip is the viewport,
+  // so a flat share of it would swallow half the item at each end. The
+  // share and its offset are a line through the two ends of that — every
+  // strip from about 660px up still fades over the same 66px as it always
+  // did, a 390px one over 22px instead of 39, and the floor keeps the
+  // narrowest phone from losing the effect altogether.
+  --edge-fade: clamp(12px, calc(16% - 40px), #{$item-width * 0.75});
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,
