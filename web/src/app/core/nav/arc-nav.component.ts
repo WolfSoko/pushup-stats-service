@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 
+import { ArcNavReveal } from './arc-nav-reveal';
 import type { MainNavItem } from './main-nav-items';
 import {
   ARC_ORIGIN,
@@ -40,14 +41,6 @@ import type { ArcPosition } from './arc-nav.geometry';
 const SETTLE_MS = 150;
 
 /**
- * How close to the bottom edge the mouse has to come before the parked
- * strip slides back in. Deliberately taller than the strip: the reveal
- * starts while the pointer is still approaching, so the strip is there by
- * the time the pointer arrives instead of chasing it.
- */
-const REVEAL_ZONE_PX = 110;
-
-/**
  * The app's one navigation bar: a horizontal strip along the bottom edge,
  * shaped like a segment of a circle. Icons sit on the arc — the one in the
  * middle is the largest, the ones towards the edges shrink and sink — and
@@ -58,6 +51,10 @@ const REVEAL_ZONE_PX = 110;
  * The strip wraps: the entries are rendered three times, the middle copy
  * is the one assistive tech sees, and whenever the scroll position drifts
  * into an outer copy it jumps back by exactly one copy.
+ *
+ * It also parks below the bottom edge once it has been idle for a while,
+ * leaving a sliver as the affordance — see arc-nav-reveal.ts for what
+ * brings it back.
  */
 @Component({
   selector: 'app-arc-nav',
@@ -66,17 +63,14 @@ const REVEAL_ZONE_PX = 110;
   templateUrl: './arc-nav.component.html',
   styleUrl: './arc-nav.component.scss',
   host: {
-    '[class.revealed]': 'pointerNearBottom()',
+    '[class.revealed]': 'reveal.revealed()',
   },
 })
 export class ArcNavComponent {
   readonly items = input.required<ReadonlyArray<MainNavItem>>();
 
-  /**
-   * Drives the slide-in on a wide mouse-driven viewport; the stylesheet
-   * decides whether that viewport is one where the strip parks at all.
-   */
-  protected readonly pointerNearBottom = signal(false);
+  /** Drives the slide-in; the stylesheet only animates what it reports. */
+  protected readonly reveal = new ArcNavReveal();
 
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
@@ -150,24 +144,11 @@ export class ArcNavComponent {
       const onClick = (event: MouseEvent) => this.onClick(event);
       const track = this.track().nativeElement;
       track.addEventListener('click', onClick, { capture: true });
-      // Only a mouse: a touch pointermove would latch the strip open with
-      // nothing to close it again, and on touch it never parks anyway.
-      const onDocumentPointerMove = (event: PointerEvent) => {
-        if (event.pointerType !== 'mouse') return;
-        this.pointerNearBottom.set(
-          event.clientY >= window.innerHeight - REVEAL_ZONE_PX
-        );
-      };
-      const onDocumentPointerLeave = () => this.pointerNearBottom.set(false);
-      document.addEventListener('pointermove', onDocumentPointerMove, {
-        passive: true,
-      });
-      document.addEventListener('pointerleave', onDocumentPointerLeave);
+      const stopReveal = this.reveal.start();
       this.destroyRef.onDestroy(() => {
         window.removeEventListener('resize', onResize);
         track.removeEventListener('click', onClick, { capture: true });
-        document.removeEventListener('pointermove', onDocumentPointerMove);
-        document.removeEventListener('pointerleave', onDocumentPointerLeave);
+        stopReveal();
         if (this.frame !== null) cancelAnimationFrame(this.frame);
         if (this.settle !== null) clearTimeout(this.settle);
       });
@@ -212,6 +193,7 @@ export class ArcNavComponent {
    * wraps at once: those writes are our own, nothing is in flight.
    */
   protected onScroll(): void {
+    this.reveal.keepOpen();
     if (this.drag) this.wrap();
     if (this.frame === null) {
       this.frame = requestAnimationFrame(() => {
@@ -239,6 +221,7 @@ export class ArcNavComponent {
    * straight back.
    */
   protected onWheel(event: WheelEvent): void {
+    this.reveal.hold();
     const delta =
       Math.abs(event.deltaY) > Math.abs(event.deltaX)
         ? event.deltaY
@@ -254,6 +237,9 @@ export class ArcNavComponent {
   }
 
   protected onPointerDown(event: PointerEvent): void {
+    // Before the mouse-only guard: a finger landing on the strip is what
+    // keeps it from parking away under that finger.
+    this.reveal.hold();
     if (event.pointerType !== 'mouse') return;
     this.drag = {
       startX: event.clientX,
