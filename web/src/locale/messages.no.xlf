@@ -3060,9 +3060,9 @@ Aktiv:         </target>
 
         </unit>
     <unit id="seo.landing.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.</source>
-        <target>Kameraet teller armhevningene dine automatisk – i nettleseren, uten opplasting. I tillegg treningsplaner, streaks og topplister, nå også for knebøy og kroppshevinger.</target>
+        <target>Kameraet teller armhevningene dine automatisk – i nettleseren, uten opplasting. I tillegg treningsplaner, streaks, topplister og utfordringer med venner – nå også for knebøy og kroppshevinger.</target>
 
             </segment>
 
@@ -12316,225 +12316,225 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="challenges.invitation">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </source>
-        <target> Du bist eingeladen. Nimmst du an, sehen die Teilnehmer deine Wiederholungen dieser Übung im Challenge-Zeitraum – und du ihre. </target>
+        <target>Du er invitert. Hvis du deltar, ser deltakerne repetisjonene dine for denne øvelsen i utfordringsperioden – og du ser deres.</target>
       </segment>
     </unit>
     <unit id="challenges.stillInvited">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch eingeladen:</source>
-        <target>Noch eingeladen:</target>
+        <target>Fortsatt invitert:</target>
       </segment>
     </unit>
     <unit id="challenges.decline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ablehnen </source>
-        <target> Ablehnen </target>
+        <target>Avslå</target>
       </segment>
     </unit>
     <unit id="challenges.accept">
-      <segment state="initial">
+      <segment state="translated">
         <source> Mitmachen </source>
-        <target> Mitmachen </target>
+        <target>Delta</target>
       </segment>
     </unit>
     <unit id="nav.friends.pendingAriaOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine offene Freundschaftsanfrage</source>
-        <target>Eine offene Freundschaftsanfrage</target>
+        <target>En åpen venneforespørsel</target>
       </segment>
     </unit>
     <unit id="friends.board.cheersTodayOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Anfeuerung heute</source>
-        <target>Eine Anfeuerung heute</target>
+        <target>Ett heiarop i dag</target>
       </segment>
     </unit>
     <unit id="challenge.error.ended">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Challenge ist schon vorbei.</source>
-        <target>Die Challenge ist schon vorbei.</target>
+        <target>Utfordringen er allerede over.</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.pendingOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Anfrage wartet auf dich</source>
-        <target>Eine Anfrage wartet auf dich</target>
+        <target>En forespørsel venter på deg</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.invitationOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Challenge-Einladung wartet</source>
-        <target>Eine Challenge-Einladung wartet</target>
+        <target>En utfordringsinvitasjon venter</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.invitations">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+        <target><ph id="0" equiv="count" disp="count"/> utfordringsinvitasjoner venter</target>
       </segment>
     </unit>
     <unit id="dashboard.friends.activeChallengeOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Challenge läuft</source>
-        <target>Eine Challenge läuft</target>
+        <target>En utfordring pågår</target>
       </segment>
     </unit>
     <unit id="friends.badge.invitationOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Challenge-Einladung wartet</source>
-        <target>Eine Challenge-Einladung wartet</target>
+        <target>En utfordringsinvitasjon venter</target>
       </segment>
     </unit>
     <unit id="friends.badge.invitations">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</source>
-        <target><ph id="0" equiv="count" disp="count"/> Challenge-Einladungen warten</target>
+        <target><ph id="0" equiv="count" disp="count"/> utfordringsinvitasjoner venter</target>
       </segment>
     </unit>
     <unit id="challenges.loadFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges konnten nicht geladen werden.</source>
-        <target>Challenges konnten nicht geladen werden.</target>
+        <target>Utfordringene kunne ikke lastes.</target>
       </segment>
     </unit>
     <unit id="challenges.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut laden </source>
-        <target> Erneut laden </target>
+        <target>Last på nytt</target>
       </segment>
     </unit>
     <unit id="dashboard.challenge.invited">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge-Einladung</source>
-        <target>Challenge-Einladung</target>
+        <target>Utfordringsinvitasjon</target>
       </segment>
     </unit>
     <unit id="dashboard.challenge.running">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freunde-Challenge</source>
-        <target>Freunde-Challenge</target>
+        <target>Venneutfordring</target>
       </segment>
     </unit>
     <unit id="dashboard.challenge.more">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle Challenges</source>
-        <target>Alle Challenges</target>
+        <target>Alle utfordringer</target>
       </segment>
     </unit>
     <unit id="friends.board.dayOne">
-      <segment state="initial">
+      <segment state="translated">
         <source>1 Tag</source>
-        <target>1 Tag</target>
+        <target>1 dag</target>
       </segment>
     </unit>
     <unit id="friends.board.days">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="count" disp="value"/> Tage</source>
-        <target><ph id="0" equiv="count" disp="value"/> Tage</target>
+        <target><ph id="0" equiv="count" disp="value"/> dager</target>
       </segment>
     </unit>
     <unit id="friends.board.compare">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vergleich</source>
-        <target>Vergleich</target>
+        <target>Sammenligning</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.days">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingstage</source>
-        <target>Trainingstage</target>
+        <target>Treningsdager</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.streak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Streak</source>
-        <target>Streak</target>
+        <target>Serie</target>
       </segment>
     </unit>
     <unit id="friends.board.metric.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wiederholungen</source>
-        <target>Wiederholungen</target>
+        <target>Repetisjoner</target>
       </segment>
     </unit>
     <unit id="landing.friends.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gemeinsam dranbleiben</source>
-        <target>Gemeinsam dranbleiben</target>
+        <target>Hold ut sammen</target>
       </segment>
     </unit>
     <unit id="landing.friends.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Trainier mit Freunden </source>
-        <target> Trainier mit Freunden </target>
+        <target>Tren med venner</target>
       </segment>
     </unit>
     <unit id="landing.friends.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </source>
-        <target> Lade Freunde ein, vergleicht eure Trainingstage, feuert euch an und startet gemeinsame Challenges. Wer sich verabredet, bleibt dran. </target>
+        <target>Inviter venner, sammenlign treningsdagene deres, hei på hverandre og start utfordringer sammen. Å ha en avtale sammen holder deg i gang.</target>
       </segment>
     </unit>
     <unit id="landing.friends.board.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Euer Vergleich</source>
-        <target>Euer Vergleich</target>
+        <target>Sammenligningen deres</target>
       </segment>
     </unit>
     <unit id="landing.friends.board.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </source>
-        <target> Wer war diese Woche an mehr Tagen dran? Trainingstage und Streak zählen für alle gleich, egal welche Übung. Wer will, misst sich bei Liegestützen, Kniebeugen oder Klimmzügen. </target>
+        <target>Hvem trente flest dager denne uken? Treningsdager og serie telles likt for alle, uansett øvelse. Hvis du vil, kan du sammenligne armhevninger, knebøy eller kroppshevinger.</target>
       </segment>
     </unit>
     <unit id="landing.friends.cheer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuern</source>
-        <target>Anfeuern</target>
+        <target>Heia</target>
       </segment>
     </unit>
     <unit id="landing.friends.cheer.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </source>
-        <target> Ein Tipp aufs Feuer, und dein Freund bekommt eine Nachricht aufs Handy. Einmal am Tag, pro Person. Klein, aber es wirkt. </target>
+        <target>Trykk på flammen, og vennen din får en melding på telefonen. En gang om dagen, per person. Lite, men det virker.</target>
       </segment>
     </unit>
     <unit id="landing.friends.challenge.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenges</source>
-        <target>Challenges</target>
+        <target>Utfordringer</target>
       </segment>
     </unit>
     <unit id="landing.friends.challenge.body">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </source>
-        <target> Ein Ziel, ein paar Tage, alle zusammen: 500 Liegestütze in einer Woche zum Beispiel. Jeder sieht den Fortschritt der anderen, bis zum letzten Tag. </target>
+        <target>Ett mål, noen dager, alle sammen: for eksempel 500 armhevninger på en uke. Alle ser fremgangen til de andre til siste dag.</target>
       </segment>
     </unit>
     <unit id="landing.friends.cta.open">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Gå til venner</target>
       </segment>
     </unit>
     <unit id="landing.friends.cta.signup">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konto erstellen &amp; Freunde einladen</source>
-        <target>Konto erstellen &amp; Freunde einladen</target>
+        <target>Opprett konto &amp; inviter venner</target>
       </segment>
     </unit>
     <unit id="challenges.progressUnavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </source>
-        <target> Der Fortschritt konnte gerade nicht gelesen werden – die Zahlen unten sind unvollständig. </target>
+        <target>Fremgangen kunne ikke lastes akkurat nå – tallene under er ufullstendige.</target>
       </segment>
     </unit>
     <unit id="friends.board.cheering">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerung wird gesendet</source>
-        <target>Anfeuerung wird gesendet</target>
+        <target>Sender heiarop</target>
       </segment>
     </unit>
 </file>
