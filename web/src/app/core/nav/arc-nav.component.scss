@@ -7,6 +7,9 @@ $bar-height: 76px;
 // Keeps the strip from running wider than the page on desktop. Mirrored by
 // `STRIP_MAX_PX` in arc-nav.geometry.ts, which seeds the curve from it.
 $strip-max-width: 760px;
+// What is left of the parked strip on screen: enough to grab and pull up,
+// small enough to give the page back the row it was eating.
+$parked-sliver: 10px;
 
 :host {
   position: fixed;
@@ -18,29 +21,27 @@ $strip-max-width: 760px;
   pointer-events: none;
 }
 
-// A wide viewport driven by a mouse has room to spare for content, and the
-// strip occupying 76px of it permanently buys nothing there — a mouse can
-// reach the bottom edge in one throw. So it parks below the edge, leaving a
-// sliver as the affordance, and slides back in once the pointer comes near.
-// Touch and narrow viewports keep it pinned: there is no hover to bring it
-// back, and `pointer: fine` is what tells the two apart.
-@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+// The strip occupying 76px of the viewport permanently buys
+// nothing once it has been seen: it is one throw of the mouse or one pull
+// from the bottom edge away. So it parks below the edge on every viewport,
+// leaving a sliver as the affordance, and comes back on what
+// arc-nav-reveal.ts recognizes — a mouse near the edge, an upward drag from
+// it, or the startup grace period.
+:host {
+  transform: translateY(calc(100% - #{$parked-sliver}));
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+// `:focus-within` is not decoration: tabbing into the strip is the
+// keyboard's only way to bring it back.
+:host(.revealed),
+:host(:focus-within) {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
   :host {
-    transform: translateY(calc(100% - 10px));
-    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  // `:focus-within` is not decoration: tabbing into the strip is the
-  // keyboard's only way to bring it back.
-  :host(.revealed),
-  :host(:focus-within) {
-    transform: translateY(0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :host {
-      transition: none;
-    }
+    transition: none;
   }
 }
 

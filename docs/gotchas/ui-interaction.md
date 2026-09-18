@@ -27,22 +27,32 @@ The arc nav wraps by rendering its entries three times and keeping the scroll po
 - Writing `scrollLeft` cuts a smooth `scrollTo` or a touch fling short, so the jump waits until scroll events have been quiet for a moment (`SETTLE_MS`). A mouse drag is the exception: its writes are our own, so it wraps immediately.
 - Track the `@for` by index, not by route: the same path appears three times.
 
-## Die Arc-Nav parkt auf dem Desktop unter dem Rand
+## Die Arc-Nav parkt auf jedem Viewport unter dem Rand
 
-Auf `(min-width: 900px) and (hover: hover) and (pointer: fine)` schiebt sich die
-Leiste bis auf einen 10px-Streifen aus dem Bild und fährt zurück, sobald die Maus
-in die unteren 110px kommt (`REVEAL_ZONE_PX` in `arc-nav.component.ts`). Was daran
-hängt:
+Die Leiste schiebt sich bis auf einen 10px-Streifen aus dem Bild, sobald sie eine
+Weile in Ruhe war — auf dem Desktop wie auf dem Telefon. Wer sie zurückholt, steht
+in `web/src/app/core/nav/arc-nav-reveal.ts`:
 
-- **Die Media-Query braucht `pointer: fine`.** Ein Touchgerät hat kein Hover, das
-  die Leiste zurückholen könnte — dort muss sie fest stehen bleiben. Der
-  `pointermove`-Listener filtert aus demselben Grund auf `pointerType === 'mouse'`.
+- **Nach dem Start bleibt sie 5 Sekunden stehen** (`AUTO_HIDE_DELAY_MS`), damit die
+  Navigation wenigstens einmal gesehen wird. Derselbe Timer läuft nach jeder
+  Interaktion mit der Leiste neu an — sonst fährt sie mitten in einer Geste weg.
+- **Maus:** kommt der Zeiger in die unteren 110px (`REVEAL_ZONE_PX`), fährt sie ein;
+  verlässt er die Zone, parkt sie sofort wieder. Der `pointermove`-Listener filtert
+  auf `pointerType === 'mouse'`, denn ein liegender Finger hätte nichts, was ihn
+  wieder wegnimmt, und würde die Leiste dauerhaft offen halten.
+- **Touch:** dort gibt es kein Hover, also holt ein Zug nach oben aus den unteren
+  48px (`EDGE_SWIPE_ZONE_PX`, ab 24px Weg) die Leiste zurück. Ein Zug, der weiter
+  oben beginnt, gehört dem Inhalt und lässt sie stehen.
 - **`:focus-within` ist kein Schmuck.** Hineintabben ist der einzige Weg der
   Tastatur, die geparkte Leiste zu holen.
 - **`.app-content`/`.app-footer` behalten ihre 96px unten**, obwohl die Leiste dort
-  meist nicht steht. Sie fährt genau dann ein, wenn der Zeiger am unteren Rand ist —
-  also genau dann, wenn jemand nach einem Footer-Link greift. Ohne die Reserve würde
-  sie ihn verdecken.
+  meist nicht steht. Sie kommt zurück, sobald jemand an den unteren Rand greift —
+  also auch dann, wenn dort ein Footer-Link liegt. Ohne die Reserve würde sie ihn
+  verdecken.
+- **E2E-Tests dürfen die Leiste nicht als sichtbar voraussetzen.** Wer gegen ihre
+  Lage misst, misst nach ein paar Sekunden gegen die geparkte Lage und bekommt ein
+  Ergebnis geschenkt; gegen ihre `height` zu messen (`landscape-layout.spec.ts`)
+  bleibt unabhängig davon. Wer sie anklicken will, holt sie vorher zurück.
 
 ## Edge-to-Edge und Safe-Area-Insets
 

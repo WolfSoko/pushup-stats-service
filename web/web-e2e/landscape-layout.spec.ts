@@ -60,16 +60,20 @@ test.describe('App shell on a landscape phone @smoke', () => {
     const snackbar = page.locator('.mat-mdc-snack-bar-container');
     await expect(snackbar).toBeVisible();
 
-    // then the toast sits entirely above the strip
+    // then the toast sits entirely above the strip. Measured against the
+    // room the strip takes when it is out, not against where it happens to
+    // sit: it parks below the bottom edge when it is left alone, and a toast
+    // clearing a parked strip would prove nothing.
     const overlap = await page.evaluate(() => {
       const snackbarEl = document.querySelector('.mat-mdc-snack-bar-container');
       const navEl = document.querySelector('[data-testid="arc-nav"]');
       if (!snackbarEl || !navEl) {
         return null;
       }
+      const strip = navEl.getBoundingClientRect().height;
       return Math.round(
         snackbarEl.getBoundingClientRect().bottom -
-          navEl.getBoundingClientRect().top
+          (window.innerHeight - strip)
       );
     });
 

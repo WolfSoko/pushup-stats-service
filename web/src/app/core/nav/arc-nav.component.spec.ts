@@ -1,7 +1,9 @@
 import { Component, PLATFORM_ID } from '@angular/core';
+import type { ComponentFixture } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
+import { AUTO_HIDE_DELAY_MS } from './arc-nav-reveal';
 import { ArcNavComponent } from './arc-nav.component';
 import type { MainNavItem } from './main-nav-items';
 
@@ -12,9 +14,20 @@ class BlankComponent {}
 class BadgeStubComponent {}
 
 /** jsdom has no PointerEvent; a MouseEvent with the one field the nav reads does. */
-function pointer(type: string, clientX: number): MouseEvent {
+function pointer(
+  type: string,
+  clientX: number,
+  pointerType = 'mouse'
+): MouseEvent {
   const event = new MouseEvent(type, { clientX, bubbles: true });
-  Object.defineProperty(event, 'pointerType', { value: 'mouse' });
+  Object.defineProperty(event, 'pointerType', { value: pointerType });
+  return event;
+}
+
+/** Same story for TouchEvent, of which the nav reads one coordinate. */
+function touch(type: string, clientY: number): Event {
+  const event = new Event(type, { bubbles: true });
+  Object.defineProperty(event, 'touches', { value: [{ clientY }] });
   return event;
 }
 
@@ -57,7 +70,18 @@ describe('ArcNavComponent', () => {
     return { fixture, router, scrollTo };
   }
 
+  /**
+   * Runs out the grace period that keeps the strip on screen after startup,
+   * leaving it parked — the state the reveal tests start from.
+   */
+  async function park(fixture: ComponentFixture<ArcNavComponent>) {
+    vitest.advanceTimersByTime(AUTO_HIDE_DELAY_MS);
+    await fixture.whenStable();
+    fixture.detectChanges();
+  }
+
   afterEach(() => {
+    vitest.useRealTimers();
     delete (HTMLElement.prototype as { scrollTo?: unknown }).scrollTo;
   });
 
@@ -432,10 +456,13 @@ describe('ArcNavComponent', () => {
   });
 
   it('should slide the parked strip back in while the mouse is near the bottom edge', async () => {
-    // given the nav on a viewport whose bottom edge is at `innerHeight`
+    // given the nav on a viewport whose bottom edge is at `innerHeight`,
+    // parked after the startup grace period
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
     const { fixture } = await renderNav();
     // The strip's parent is the component host, which carries the class.
     const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
 
     // when the mouse comes within the reveal zone
     document.dispatchEvent(verticalPointer(window.innerHeight - 20));
@@ -453,13 +480,15 @@ describe('ArcNavComponent', () => {
   });
 
   it('should ignore a touch pointer near the bottom edge', async () => {
-    // given the nav
+    // given the parked nav
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
     const { fixture } = await renderNav();
     // The strip's parent is the component host, which carries the class.
     const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
 
-    // when a finger passes along the bottom edge — a touch device never
-    // parks the strip, and a touch has no way to un-reveal it afterwards
+    // when a finger merely passes along the bottom edge — hover is a mouse
+    // idea, and a resting finger would latch the strip open for good
     document.dispatchEvent(verticalPointer(window.innerHeight - 20, 'touch'));
     fixture.detectChanges();
 
@@ -467,18 +496,93 @@ describe('ArcNavComponent', () => {
     expect(host?.classList.contains('revealed')).toBe(false);
   });
 
-  it('should park the strip only on a wide viewport with a fine pointer', () => {
+  it('should keep the strip on screen for the grace period after startup', async () => {
+    // given a fresh visit
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    fixture.detectChanges();
+
+    // then the nav is on screen to begin with, so it is seen at least once
+    expect(host?.classList.contains('revealed')).toBe(true);
+
+    // when the grace period runs out
+    await park(fixture);
+
+    // then it parks below the bottom edge
+    expect(host?.classList.contains('revealed')).toBe(false);
+  });
+
+  it('should pull the parked strip back in on an upward drag from the bottom edge', async () => {
+    // given the parked nav — on touch there is no hover to call it back
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
+
+    // when a finger lands on the bottom edge and pulls upward
+    document.dispatchEvent(touch('touchstart', window.innerHeight - 4));
+    document.dispatchEvent(touch('touchmove', window.innerHeight - 40));
+    fixture.detectChanges();
+
+    // then the strip comes back
+    expect(host?.classList.contains('revealed')).toBe(true);
+
+    // and when it has been left alone for the grace period
+    await park(fixture);
+
+    // then it parks again
+    expect(host?.classList.contains('revealed')).toBe(false);
+  });
+
+  it('should leave the strip parked on an upward drag that starts away from the edge', async () => {
+    // given the parked nav
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    await park(fixture);
+
+    // when the page itself is scrolled — a drag starting well above the
+    // edge belongs to the content, not to the nav
+    document.dispatchEvent(touch('touchstart', window.innerHeight - 300));
+    document.dispatchEvent(touch('touchmove', window.innerHeight - 400));
+    fixture.detectChanges();
+
+    // then the strip stays parked
+    expect(host?.classList.contains('revealed')).toBe(false);
+  });
+
+  it('should bring the parked strip back when a finger lands on its sliver', async () => {
+    // given the parked nav
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    const { fixture } = await renderNav();
+    const host = screen.getByTestId('arc-nav').parentElement;
+    const track = screen.getByTestId('arc-nav').querySelector('.track');
+    if (!track) throw new Error('track missing');
+    await park(fixture);
+
+    // when a finger lands on what is left of it on screen
+    track.dispatchEvent(pointer('pointerdown', 0, 'touch'));
+    fixture.detectChanges();
+
+    // then it slides back in
+    expect(host?.classList.contains('revealed')).toBe(true);
+  });
+
+  it('should park the strip on every viewport, phone included', () => {
     // given the component's compiled styles — jsdom resolves no media
-    // query, so the guard is asserted where it is written
+    // query, so the rule is asserted where it is written
     const styles = (
       ArcNavComponent as unknown as { ɵcmp: { styles: string[] } }
     ).ɵcmp.styles.join(' ');
 
-    // then the parking transform sits behind both conditions: a touch
-    // phone has no hover to bring the strip back, so it must stay pinned
-    expect(styles).toMatch(
-      /@media[^{]*min-width:\s*900px[^{]*hover:\s*hover[^{]*pointer:\s*fine[^{]*\{[^@]*translateY\(/
-    );
+    // then the parking transform is unconditional, leaving the sliver that
+    // an upward drag grabs
+    expect(styles).toContain('translateY(calc(100% - 10px))');
+
+    // and it is no longer behind the mouse-only query that kept a phone
+    // pinned: on touch the reveal comes from that drag instead
+    expect(styles).not.toMatch(/pointer:\s*fine/);
   });
 
   it('should fade the strip out at its ends, and measure from the track', () => {
