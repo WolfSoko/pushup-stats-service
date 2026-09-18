@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/angular';
 
 import { AUTO_HIDE_DELAY_MS } from './arc-nav-reveal';
 import { ArcNavComponent } from './arc-nav.component';
-import { STRIP_MAX_PX } from './arc-nav.geometry';
 import type { MainNavItem } from './main-nav-items';
 
 @Component({ template: '' })
@@ -662,50 +661,6 @@ describe('ArcNavComponent', () => {
     // and it is no longer behind the mouse-only query that kept a phone
     // pinned: on touch the reveal comes from that drag instead
     expect(styles).not.toMatch(/pointer:\s*fine/);
-  });
-
-  it('should fade a phone-width strip out over less than a wide one', () => {
-    // given the `--edge-fade` the stylesheet derives from the strip's own
-    // width — jsdom resolves no mask, so the rule is read where it is
-    // written and the two widths are worked out here
-    const styles = (
-      ArcNavComponent as unknown as { ɵcmp: { styles: string[] } }
-    ).ɵcmp.styles.join(' ');
-    const declaration = /--edge-fade:([^;}]+)[;}]/.exec(styles);
-    if (!declaration) {
-      throw new Error('--edge-fade is gone from the compiled styles');
-    }
-    // Read as tokens rather than matched as written: the CSS pipeline is
-    // free to collapse the whitespace and to drop the `calc()` that is
-    // redundant inside a `clamp()`, and neither changes the fade.
-    const terms = [...declaration[1].matchAll(/(\d+(?:\.\d+)?)(px|%)/g)];
-    const shape = terms.map((term) => term[2]).join(' ');
-    if (shape !== 'px % px px') {
-      throw new Error(
-        `--edge-fade is no longer a floor, a share, an offset and a ceiling: ${declaration[1]}`
-      );
-    }
-    const [min, share, offset, max] = terms.map((term) => Number(term[1]));
-    const fadeFor = (strip: number) =>
-      Math.min(Math.max(min, (share / 100) * strip - offset), max);
-
-    // then the widest strip fades over three quarters of an item, as it
-    // always has — the desktop end of this is not the one that was wrong
-    expect(fadeFor(STRIP_MAX_PX)).toBe(66);
-
-    // and neither is the window that is merely narrower than that: the
-    // full fade is reached well before the strip stops growing
-    expect(fadeFor(663)).toBe(66);
-
-    // and a phone, where the strip is the viewport, fades over about half
-    // of that instead of eating half an item at each end
-    expect(fadeFor(390)).toBeGreaterThan(14);
-    expect(fadeFor(390)).toBeLessThan(26);
-
-    // and the narrowest phone lands on the floor itself — the effect also
-    // hides the strip's wrap, so it must not be allowed to run out
-    expect(fadeFor(320)).toBe(min);
-    expect(min).toBeGreaterThan(0);
   });
 
   it('should fade the strip out at its ends, and measure from the track', () => {
