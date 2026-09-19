@@ -5555,10 +5555,50 @@
     </unit>
     <unit id="cheer.overlay.message">
       <notes>
-        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:34,36</note>
+        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:35,37</note>
       </notes>
       <segment>
         <source> 🔥 Ein Freund feuert dich an! </source>
+      </segment>
+    </unit>
+    <unit id="cheer.overlay.cheerBack.idle">
+      <notes>
+        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:202</note>
+      </notes>
+      <segment>
+        <source>Zurück anfeuern</source>
+      </segment>
+    </unit>
+    <unit id="cheer.overlay.cheerBack.sending">
+      <notes>
+        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:203</note>
+      </notes>
+      <segment>
+        <source>Anfeuerung wird gesendet</source>
+      </segment>
+    </unit>
+    <unit id="cheer.overlay.cheerBack.sent">
+      <notes>
+        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:204</note>
+      </notes>
+      <segment>
+        <source>Zurückgefeuert!</source>
+      </segment>
+    </unit>
+    <unit id="cheer.overlay.cheerBack.already">
+      <notes>
+        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:205</note>
+      </notes>
+      <segment>
+        <source>Heute schon angefeuert</source>
+      </segment>
+    </unit>
+    <unit id="cheer.overlay.cheerBack.error">
+      <notes>
+        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:206</note>
+      </notes>
+      <segment>
+        <source>Fehlgeschlagen – nochmal?</source>
       </segment>
     </unit>
     <unit id="dailyGoal.check.manual">

@@ -9,7 +9,7 @@ import { CheerAnimationStore } from './cheer-animation.store';
  * {@link CheerAnimationStore}, which also backs the admin preview button.
  *
  * `pointer-events: none` on the overlay keeps the app usable underneath;
- * only the message chip is tappable, to dismiss early.
+ * only the message chip (dismiss) and the cheer-back button are tappable.
  */
 @Component({
   selector: 'app-cheer-fireworks-overlay',
@@ -25,14 +25,31 @@ import { CheerAnimationStore } from './cheer-animation.store';
             burstEmoji(burst)
           }}</span>
         }
-        <button
-          type="button"
-          class="cheer-message"
-          (click)="store.dismiss()"
-          i18n="@@cheer.overlay.message"
-        >
-          🔥 Ein Freund feuert dich an!
-        </button>
+        <div class="cheer-panel">
+          <button
+            type="button"
+            class="cheer-message"
+            (click)="store.dismiss()"
+            i18n="@@cheer.overlay.message"
+          >
+            🔥 Ein Freund feuert dich an!
+          </button>
+          <button
+            type="button"
+            class="cheer-back-button"
+            data-testid="cheer-back-button"
+            [disabled]="cheerBackDisabled()"
+            [attr.aria-label]="cheerBackLabel()"
+            (click)="store.cheerBack()"
+          >
+            <span
+              class="cheer-back-icon"
+              [class.is-sending]="store.cheerBackStatus() === 'sending'"
+              >🔥</span
+            >
+            {{ cheerBackLabel() }}
+          </button>
+        </div>
       </div>
     }
   `,
@@ -106,12 +123,19 @@ import { CheerAnimationStore } from './cheer-animation.store';
         transform: scale(1);
       }
     }
-    .cheer-message {
+    .cheer-panel {
       position: absolute;
       left: 50%;
       top: 12%;
       transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
       pointer-events: auto;
+    }
+    .cheer-message,
+    .cheer-back-button {
       cursor: pointer;
       border: none;
       border-radius: 999px;
@@ -121,6 +145,29 @@ import { CheerAnimationStore } from './cheer-animation.store';
       color: #fff;
       background: rgba(0, 0, 0, 0.55);
       backdrop-filter: blur(2px);
+    }
+    .cheer-back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      background: rgba(255, 112, 67, 0.85);
+    }
+    .cheer-back-button:disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+    /* The flame spins while the cheer-back is in flight — same idea as
+       the friends board's cheer button (cheer-spin), a different
+       component so the animation is duplicated rather than shared. */
+    .cheer-back-icon.is-sending {
+      display: inline-block;
+      animation: cheer-spin 900ms linear infinite;
+    }
+    @keyframes cheer-spin {
+      to {
+        transform: rotate(1turn);
+      }
     }
     /* Fireworks without the fire: a still emoji row says the same thing
        without the motion, matching the cheer-spin precedent on the
@@ -134,6 +181,10 @@ import { CheerAnimationStore } from './cheer-animation.store';
         opacity: 1;
         bottom: unset;
       }
+      .cheer-back-icon.is-sending {
+        animation: none;
+        opacity: 0.6;
+      }
     }
   `,
 })
@@ -146,5 +197,32 @@ export class CheerFireworksOverlayComponent {
 
   protected burstEmoji(index: number): string {
     return CheerFireworksOverlayComponent.BURST_EMOJIS[index];
+  }
+
+  private readonly cheerBackIdleLabel = $localize`:@@cheer.overlay.cheerBack.idle:Zurück anfeuern`;
+  private readonly cheerBackSendingLabel = $localize`:@@cheer.overlay.cheerBack.sending:Anfeuerung wird gesendet`;
+  private readonly cheerBackSentLabel = $localize`:@@cheer.overlay.cheerBack.sent:Zurückgefeuert!`;
+  private readonly cheerBackAlreadyLabel = $localize`:@@cheer.overlay.cheerBack.already:Heute schon angefeuert`;
+  private readonly cheerBackErrorLabel = $localize`:@@cheer.overlay.cheerBack.error:Fehlgeschlagen – nochmal?`;
+
+  /** Only one attempt at a time, and no point retrying once it landed. */
+  protected cheerBackDisabled(): boolean {
+    const status = this.store.cheerBackStatus();
+    return status === 'sending' || status === 'sent' || status === 'already';
+  }
+
+  protected cheerBackLabel(): string {
+    switch (this.store.cheerBackStatus()) {
+      case 'sending':
+        return this.cheerBackSendingLabel;
+      case 'sent':
+        return this.cheerBackSentLabel;
+      case 'already':
+        return this.cheerBackAlreadyLabel;
+      case 'error':
+        return this.cheerBackErrorLabel;
+      default:
+        return this.cheerBackIdleLabel;
+    }
   }
 }

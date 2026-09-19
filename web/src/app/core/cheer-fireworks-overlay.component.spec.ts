@@ -5,18 +5,24 @@ import { CheerFireworksOverlayComponent } from './cheer-fireworks-overlay.compon
 
 describe('CheerFireworksOverlayComponent', () => {
   const activeCheerFrom = signal<string | null>(null);
+  const cheerBackStatus = signal<
+    'idle' | 'sending' | 'sent' | 'already' | 'error'
+  >('idle');
   const dismiss = vitest.fn();
+  const cheerBack = vitest.fn();
   let fixture: ComponentFixture<CheerFireworksOverlayComponent>;
 
   beforeEach(async () => {
     activeCheerFrom.set(null);
+    cheerBackStatus.set('idle');
     dismiss.mockClear();
+    cheerBack.mockClear();
     await TestBed.configureTestingModule({
       imports: [CheerFireworksOverlayComponent],
       providers: [
         {
           provide: CheerAnimationStore,
-          useValue: { activeCheerFrom, dismiss },
+          useValue: { activeCheerFrom, cheerBackStatus, dismiss, cheerBack },
         },
       ],
     }).compileComponents();
@@ -59,5 +65,70 @@ describe('CheerFireworksOverlayComponent', () => {
 
     // then
     expect(dismiss).toHaveBeenCalled();
+  });
+
+  describe('cheer-back button', () => {
+    function cheerBackButton(): HTMLButtonElement {
+      return fixture.nativeElement.querySelector(
+        '[data-testid="cheer-back-button"]'
+      ) as HTMLButtonElement;
+    }
+
+    it('should trigger cheerBack() on the store when tapped', () => {
+      // given
+      activeCheerFrom.set('friend-1');
+      fixture.detectChanges();
+
+      // when
+      cheerBackButton().click();
+
+      // then
+      expect(cheerBack).toHaveBeenCalled();
+    });
+
+    it('should be enabled while idle', () => {
+      // given
+      activeCheerFrom.set('friend-1');
+
+      // when
+      fixture.detectChanges();
+
+      // then
+      expect(cheerBackButton().disabled).toBe(false);
+    });
+
+    it.each([
+      ['sending', true],
+      ['sent', true],
+      ['already', true],
+      ['error', false],
+    ] as const)(
+      'when the status is "%s" then disabled becomes %s',
+      (status, disabled) => {
+        // given
+        activeCheerFrom.set('friend-1');
+        cheerBackStatus.set(status);
+
+        // when
+        fixture.detectChanges();
+
+        // then
+        expect(cheerBackButton().disabled).toBe(disabled);
+      }
+    );
+
+    it('should spin the flame icon only while sending', () => {
+      // given
+      activeCheerFrom.set('friend-1');
+      cheerBackStatus.set('sending');
+
+      // when
+      fixture.detectChanges();
+
+      // then
+      expect(
+        cheerBackButton().querySelector('.cheer-back-icon.is-sending')
+      ).toBeTruthy();
+    });
   });
 });

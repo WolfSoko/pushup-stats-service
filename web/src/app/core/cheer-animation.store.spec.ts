@@ -6,15 +6,28 @@ import type { CheerPing } from '@pu-stats/models';
 import { BehaviorSubject } from 'rxjs';
 import {
   CHEER_ANIMATION_DURATION_MS,
+  CHEER_BACK_CONFIRM_MS,
   CheerAnimationStore,
 } from './cheer-animation.store';
+import { FriendsApiService } from '../friends/friends-api.service';
 import { UserConfigStore } from './user-config.store';
 
 describe('CheerAnimationStore', () => {
   const cheerAnimationEnabled = signal(true);
   let pingStream: BehaviorSubject<CheerPing | null>;
+  let friendsApiCheer: ReturnType<typeof vitest.fn>;
 
-  function setup(platform: 'browser' | 'server' = 'browser'): {
+  type CheerResult = { ok: boolean; reason?: string };
+
+  function friendsApiProvider(impl?: (uid: string) => Promise<CheerResult>) {
+    friendsApiCheer = vitest.fn(impl ?? (() => Promise.resolve({ ok: true })));
+    return { provide: FriendsApiService, useValue: { cheer: friendsApiCheer } };
+  }
+
+  function setup(
+    platform: 'browser' | 'server' = 'browser',
+    friendsApiImpl?: (uid: string) => Promise<CheerResult>
+  ): {
     store: InstanceType<typeof CheerAnimationStore>;
   } {
     pingStream = new BehaviorSubject<CheerPing | null>(null);
@@ -35,6 +48,7 @@ describe('CheerAnimationStore', () => {
           provide: UserConfigStore,
           useValue: { cheerAnimationEnabled },
         },
+        friendsApiProvider(friendsApiImpl),
       ],
     });
     return { store: TestBed.inject(CheerAnimationStore) };
@@ -90,6 +104,7 @@ describe('CheerAnimationStore', () => {
         },
         { provide: UserContextService, useValue: { userIdSafe: () => 'u1' } },
         { provide: UserConfigStore, useValue: { cheerAnimationEnabled } },
+        friendsApiProvider(),
       ],
     });
 
@@ -207,6 +222,7 @@ describe('CheerAnimationStore', () => {
           useValue: { userIdSafe: () => userId() },
         },
         { provide: UserConfigStore, useValue: { cheerAnimationEnabled } },
+        friendsApiProvider(),
       ],
     });
     const store = TestBed.inject(CheerAnimationStore);
@@ -246,6 +262,101 @@ describe('CheerAnimationStore', () => {
       // when
       store.dismiss();
       vi.advanceTimersByTime(CHEER_ANIMATION_DURATION_MS);
+
+      // then
+      expect(store.activeCheerFrom()).toBeNull();
+    });
+  });
+
+  describe('cheerBack', () => {
+    it('should send a cheer to the friend who triggered the overlay', async () => {
+      // given
+      const { store } = setup();
+      store.play('friend-1');
+
+      // when
+      await store.cheerBack();
+
+      // then
+      expect(friendsApiCheer).toHaveBeenCalledWith('friend-1');
+      expect(store.cheerBackStatus()).toBe('sent');
+    });
+
+    it('should report already-cheered without a second call in flight', async () => {
+      // given
+      const { store } = setup('browser', () =>
+        Promise.resolve({ ok: false, reason: 'already' })
+      );
+      store.play('friend-1');
+
+      // when
+      await store.cheerBack();
+
+      // then
+      expect(store.cheerBackStatus()).toBe('already');
+    });
+
+    it('should report an error for any other rejection or a thrown failure', async () => {
+      // given
+      const { store } = setup('browser', () =>
+        Promise.reject(new Error('boom'))
+      );
+      store.play('friend-1');
+
+      // when
+      await store.cheerBack();
+
+      // then
+      expect(store.cheerBackStatus()).toBe('error');
+    });
+
+    it('should do nothing without an active cheer', async () => {
+      // given
+      const { store } = setup();
+
+      // when
+      await store.cheerBack();
+
+      // then
+      expect(friendsApiCheer).not.toHaveBeenCalled();
+    });
+
+    it('should ignore a second tap while a cheer-back is already in flight', async () => {
+      // given
+      let resolveCheer!: (value: CheerResult) => void;
+      const { store } = setup(
+        'browser',
+        () => new Promise((resolve) => (resolveCheer = resolve))
+      );
+      store.play('friend-1');
+
+      // when
+      const first = store.cheerBack();
+      const second = store.cheerBack();
+      resolveCheer({ ok: true });
+      await Promise.all([first, second]);
+
+      // then
+      expect(friendsApiCheer).toHaveBeenCalledTimes(1);
+    });
+
+    it('should extend the overlay past the animation duration while confirming the result', async () => {
+      // given
+      const { store } = setup();
+      store.play('friend-1');
+      vi.advanceTimersByTime(CHEER_ANIMATION_DURATION_MS - 100);
+
+      // when — a tap just before the original auto-hide would have fired
+      const pending = store.cheerBack();
+      vi.advanceTimersByTime(200);
+      await pending;
+
+      // then — still visible past the original hide time, showing the result
+      expect(store.activeCheerFrom()).toBe('friend-1');
+      expect(store.cheerBackStatus()).toBe('sent');
+
+      // when — the post-result grace period elapses
+      vi.advanceTimersByTime(CHEER_BACK_CONFIRM_MS);
 
       // then
       expect(store.activeCheerFrom()).toBeNull();
