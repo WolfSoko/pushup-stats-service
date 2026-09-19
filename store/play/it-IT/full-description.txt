@@ -24,6 +24,9 @@ Appoggia il telefono, apri il contatore automatico e parti: l'IA riconosce fless
 • Piegamenti a un braccio, Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
 Ogni giorno il compito giusto, con giorni di riposo, giorni leggeri e giorni di test. Cinque piani ricalcolano ogni obiettivo giornaliero sul tuo test massimale: niente 3×20 se ne fai 8. I giorni completati si spuntano da soli appena raggiungi l'obiettivo, e il piano attivo puoi condividerlo.
 
+🧩 LE TUE SESSIONI
+Componi il tuo allenamento: esercizi, obiettivi e serie nel tuo ordine. L'app ti guida come in un giorno di piano. Mostra le tue sessioni sul profilo o inviale direttamente agli amici.
+
 🎯 OBIETTIVI, STREAK E STATISTICHE
 • Obiettivi di giorno, settimana e mese — per esercizio, con filtro sui giorni
 • Barre di progresso, coriandoli all'obiettivo, contatore di streak per non mollare
@@ -32,7 +35,7 @@ Ogni giorno il compito giusto, con giorni di riposo, giorni leggeri e giorni di 
 • Record: miglior giorno, miglior serie, miglior sessione
 
 🏆 CLASSIFICA E PROFILO
-Misurati con gli altri o resta privato. Classifiche di oggi, degli ultimi 7 e 30 giorni. Il profilo lo condividi con un link: ripetizioni totali, streak, record, heatmap, i tuoi ultimi 10 allenamenti e il piano attivo — ogni riquadro si imposta a parte su nascosto, solo amici o pubblico. L'anteprima ti mostra il profilo come lo vedono gli amici o uno sconosciuto.
+Misurati con gli altri o resta privato. Classifiche di oggi, degli ultimi 7 e 30 giorni. Il profilo lo condividi con un link: ripetizioni totali, streak, record, heatmap, i tuoi ultimi 10 allenamenti e il piano attivo — ogni riquadro si imposta a parte su nascosto, solo amici o pubblico.
 
 👥 AMICI E SFIDE
 Invita gli amici: la vostra lavagna mostra chi è avanti questa settimana. Fatevi il tifo con una notifica e lanciate sfide comuni — 500 flessioni in 7 giorni, ognuno con il suo progresso.
@@ -53,5 +56,4 @@ Gli stessi dati sul telefono e nel browser, sincronizzati in tempo reale su tutt
 
 Gratis. Nessun abbonamento. Nessuna carta.
 
-Pushup Tracker è un'app onesta per chi si allena davvero, non per chi colleziona adesivi.
 Scaricala e fai la prima.

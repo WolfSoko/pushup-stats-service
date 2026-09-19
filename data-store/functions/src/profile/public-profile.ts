@@ -135,6 +135,7 @@ export function buildPublicProfile(
     exercises: show('exercises', [...(extras.exercises ?? [])], []),
     recent: show('recent', [...(extras.recent ?? [])], []),
     plan: show('plan', extras.plan ?? null, null),
+    workouts: show('workouts', [...(extras.workouts ?? [])], []),
     isPrivate: !isPublic,
     viewerIsOwner,
     viewerIsFriend,

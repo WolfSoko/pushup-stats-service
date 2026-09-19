@@ -21,6 +21,7 @@ export const PROFILE_SECTIONS = [
   'heatmap',
   'recent',
   'plan',
+  'workouts',
 ] as const;
 
 export type ProfileSection = (typeof PROFILE_SECTIONS)[number];

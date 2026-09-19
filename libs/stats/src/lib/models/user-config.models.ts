@@ -251,6 +251,12 @@ export interface UserConfig {
      * {@link SESSION_MODE_DEFAULT}; read through `normalizeSessionMode`.
      */
     sessionMode?: SessionMode;
+    /**
+     * Ids of feature announcements the user has closed (see
+     * `FeatureAnnouncementService`). Persisted per account so a
+     * walkthrough shown on one device is not shown again on the next.
+     */
+    seenAnnouncements?: string[];
   };
   /**
    * ISO timestamp of the last profile-photo upload, absent when none was

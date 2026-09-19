@@ -35,6 +35,7 @@ import { PROFILE_LABELS } from './profile-labels';
 import { UserConfigStore } from '../core/user-config.store';
 import { ProfilePhotoService } from '../core/profile-photo.service';
 import { InviteBannerComponent } from '../core/invite-banner.component';
+import { ProfileWorkoutsComponent } from './profile-workouts.component';
 import { InviteService } from '../core/invite.service';
 import { FriendsStore } from '../friends/friends.store';
 
@@ -57,6 +58,7 @@ type LoadState =
     MatProgressSpinnerModule,
     MatTooltipModule,
     InviteBannerComponent,
+    ProfileWorkoutsComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PublicProfileSeo],

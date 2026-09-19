@@ -13440,5 +13440,611 @@
         <target>wurde abgelehnt von</target>
       </segment>
     </unit>
+    <unit id="seo.workouts.title">
+      <segment state="initial">
+        <source>Meine Sessions – Pushup Tracker</source>
+        <target>Meine Sessions – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.workouts.description">
+      <segment state="initial">
+        <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
+        <target>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</target>
+      </segment>
+    </unit>
+    <unit id="nav.workouts">
+      <segment state="initial">
+        <source>Sessions</source>
+        <target>Sessions</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts">
+      <segment state="initial">
+        <source>Sessions</source>
+        <target>Sessions</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copy">
+      <segment state="initial">
+        <source>Übernehmen</source>
+        <target>Übernehmen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copied">
+      <segment state="initial">
+        <source>Übernommen</source>
+        <target>Übernommen</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.own">
+      <segment state="initial">
+        <source>Zu meinen Sessions</source>
+        <target>Zu meinen Sessions</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copiedNote">
+      <segment state="initial">
+        <source>Gespeichert unter „Meine Sessions“.</source>
+        <target>Gespeichert unter „Meine Sessions“.</target>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copyFailed">
+      <segment state="initial">
+        <source>Konnte nicht übernommen werden. Bitte später erneut versuchen.</source>
+        <target>Konnte nicht übernommen werden. Bitte später erneut versuchen.</target>
+      </segment>
+    </unit>
+    <unit id="workoutSession.title">
+      <segment state="initial">
+        <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></source>
+        <target>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
+      </segment>
+    </unit>
+    <unit id="workoutSession.done.action">
+      <segment state="initial">
+        <source>Zu meinen Sessions</source>
+        <target>Zu meinen Sessions</target>
+      </segment>
+    </unit>
+    <unit id="workoutSession.unknown">
+      <segment state="initial">
+        <source> Diese Session gibt es nicht. </source>
+        <target> Diese Session gibt es nicht. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.back">
+      <segment state="initial">
+        <source>Zu meinen Sessions</source>
+        <target>Zu meinen Sessions</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.from">
+      <segment state="initial">
+        <source>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></source>
+        <target>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.onProfile">
+      <segment state="initial">
+        <source>Auf deinem Profil</source>
+        <target>Auf deinem Profil</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.run">
+      <segment state="initial">
+        <source>Starten</source>
+        <target>Starten</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.edit">
+      <segment state="initial">
+        <source>Bearbeiten</source>
+        <target>Bearbeiten</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.share">
+      <segment state="initial">
+        <source>An Freunde schicken</source>
+        <target>An Freunde schicken</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.delete">
+      <segment state="initial">
+        <source>Löschen</source>
+        <target>Löschen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.hideFromProfile">
+      <segment state="initial">
+        <source>Vom Profil nehmen</source>
+        <target>Vom Profil nehmen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.card.showOnProfile">
+      <segment state="initial">
+        <source>Auf dem Profil zeigen</source>
+        <target>Auf dem Profil zeigen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.title">
+      <segment state="initial">
+        <source>Session löschen</source>
+        <target>Session löschen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.confirm">
+      <segment state="initial">
+        <source> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </source>
+        <target> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.button">
+      <segment state="initial">
+        <source> Löschen </source>
+        <target> Löschen </target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.editTitle">
+      <segment state="initial">
+        <source>Session bearbeiten</source>
+        <target>Session bearbeiten</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.newTitle">
+      <segment state="initial">
+        <source>Neue Session</source>
+        <target>Neue Session</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.intro">
+      <segment state="initial">
+        <source> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </source>
+        <target> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.loading">
+      <segment state="initial">
+        <source>Session wird geladen …</source>
+        <target>Session wird geladen …</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.missing">
+      <segment state="initial">
+        <source>Diese Session gibt es nicht.</source>
+        <target>Diese Session gibt es nicht.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.name">
+      <segment state="initial">
+        <source>Name</source>
+        <target>Name</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.description">
+      <segment state="initial">
+        <source>Beschreibung (optional)</source>
+        <target>Beschreibung (optional)</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.exercises">
+      <segment state="initial">
+        <source>Übungen</source>
+        <target>Übungen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.exercise">
+      <segment state="initial">
+        <source>Übung</source>
+        <target>Übung</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.variant">
+      <segment state="initial">
+        <source>Variante</source>
+        <target>Variante</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.noVariant">
+      <segment state="initial">
+        <source>Keine</source>
+        <target>Keine</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.target">
+      <segment state="initial">
+        <source>Ziel</source>
+        <target>Ziel</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.sets">
+      <segment state="initial">
+        <source>Sätze (optional)</source>
+        <target>Sätze (optional)</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.addExercise">
+      <segment state="initial">
+        <source>Übung hinzufügen</source>
+        <target>Übung hinzufügen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.onProfile">
+      <segment state="initial">
+        <source>Auf meinem Profil zeigen</source>
+        <target>Auf meinem Profil zeigen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.onProfileHint">
+      <segment state="initial">
+        <source> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </source>
+        <target> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.cancel">
+      <segment state="initial">
+        <source>Abbrechen</source>
+        <target>Abbrechen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.save">
+      <segment state="initial">
+        <source>Speichern</source>
+        <target>Speichern</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.moveUp">
+      <segment state="initial">
+        <source>Nach oben</source>
+        <target>Nach oben</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.moveDown">
+      <segment state="initial">
+        <source>Nach unten</source>
+        <target>Nach unten</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.removeExercise">
+      <segment state="initial">
+        <source>Übung entfernen</source>
+        <target>Übung entfernen</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.unit.seconds">
+      <segment state="initial">
+        <source>Sek.</source>
+        <target>Sek.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.unit.meters">
+      <segment state="initial">
+        <source>m</source>
+        <target>m</target>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.unit.reps">
+      <segment state="initial">
+        <source>Wdh.</source>
+        <target>Wdh.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.share.title">
+      <segment state="initial">
+        <source> Session an Freunde schicken </source>
+        <target> Session an Freunde schicken </target>
+      </segment>
+    </unit>
+    <unit id="workouts.share.noFriends">
+      <segment state="initial">
+        <source> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </source>
+        <target> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.share.toFriends">
+      <segment state="initial">
+        <source>Zu den Freunden</source>
+        <target>Zu den Freunden</target>
+      </segment>
+    </unit>
+    <unit id="workouts.share.hint">
+      <segment state="initial">
+        <source> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </source>
+        <target> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.share.cancel">
+      <segment state="initial">
+        <source> Abbrechen </source>
+        <target> Abbrechen </target>
+      </segment>
+    </unit>
+    <unit id="workouts.share.submit">
+      <segment state="initial">
+        <source> Schicken </source>
+        <target> Schicken </target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.title">
+      <segment state="initial">
+        <source>Gib der Session einen Namen (höchstens 60 Zeichen).</source>
+        <target>Gib der Session einen Namen (höchstens 60 Zeichen).</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.description">
+      <segment state="initial">
+        <source>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</source>
+        <target>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.noExercises">
+      <segment state="initial">
+        <source>Füge mindestens eine Übung hinzu.</source>
+        <target>Füge mindestens eine Übung hinzu.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.tooManyExercises">
+      <segment state="initial">
+        <source>Höchstens 20 Übungen pro Session.</source>
+        <target>Höchstens 20 Übungen pro Session.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.exercise">
+      <segment state="initial">
+        <source>Eine Übung ist ungültig. Wähle eine aus der Liste.</source>
+        <target>Eine Übung ist ungültig. Wähle eine aus der Liste.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.target">
+      <segment state="initial">
+        <source>Jede Übung braucht ein Ziel größer als 0.</source>
+        <target>Jede Übung braucht ein Ziel größer als 0.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.sets">
+      <segment state="initial">
+        <source>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</source>
+        <target>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.limit">
+      <segment state="initial">
+        <source>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</source>
+        <target>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.notFound">
+      <segment state="initial">
+        <source>Diese Session gibt es nicht mehr.</source>
+        <target>Diese Session gibt es nicht mehr.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.noFriends">
+      <segment state="initial">
+        <source>Wähle mindestens einen Freund aus.</source>
+        <target>Wähle mindestens einen Freund aus.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.tooMany">
+      <segment state="initial">
+        <source>Zu viele Empfänger auf einmal.</source>
+        <target>Zu viele Empfänger auf einmal.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.error.invalid">
+      <segment state="initial">
+        <source>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</source>
+        <target>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.title">
+      <segment state="initial">
+        <source>Meine Sessions</source>
+        <target>Meine Sessions</target>
+      </segment>
+    </unit>
+    <unit id="workouts.intro">
+      <segment state="initial">
+        <source> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </source>
+        <target> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.new">
+      <segment state="initial">
+        <source>Neue Session</source>
+        <target>Neue Session</target>
+      </segment>
+    </unit>
+    <unit id="workouts.empty">
+      <segment state="initial">
+        <source> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </source>
+        <target> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.profileHint">
+      <segment state="initial">
+        <source> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </source>
+        <target> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </target>
+      </segment>
+    </unit>
+    <unit id="workouts.toProfile">
+      <segment state="initial">
+        <source>Zum Profil</source>
+        <target>Zum Profil</target>
+      </segment>
+    </unit>
+    <unit id="workouts.shared">
+      <segment state="initial">
+        <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>
+        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.title">
+      <segment state="initial">
+        <source>Ganzkörper kurz</source>
+        <target>Ganzkörper kurz</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.subtitle">
+      <segment state="initial">
+        <source>Von Anna · 3 Übungen</source>
+        <target>Von Anna · 3 Übungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.line1">
+      <segment state="initial">
+        <source>3×10 Liegestütze</source>
+        <target>3×10 Liegestütze</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.line2">
+      <segment state="initial">
+        <source>0:50 Plank</source>
+        <target>0:50 Plank</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.line3">
+      <segment state="initial">
+        <source>20 Kniebeugen</source>
+        <target>20 Kniebeugen</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.action">
+      <segment state="initial">
+        <source>Session starten</source>
+        <target>Session starten</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.eyebrow">
+      <segment state="initial">
+        <source>Neu · Eigene Sessions</source>
+        <target>Neu · Eigene Sessions</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.headline">
+      <segment state="initial">
+        <source> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </source>
+        <target> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.desc">
+      <segment state="initial">
+        <source> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </source>
+        <target> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.chip.compose">
+      <segment state="initial">
+        <source>Übungen, Ziele und Sätze frei kombinieren</source>
+        <target>Übungen, Ziele und Sätze frei kombinieren</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.chip.run">
+      <segment state="initial">
+        <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
+        <target>Geführt durchführen — mit Kamera-Zähler und Timer</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.chip.share">
+      <segment state="initial">
+        <source>Auf dem Profil zeigen oder Freunden schicken</source>
+        <target>Auf dem Profil zeigen oder Freunden schicken</target>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.cta">
+      <segment state="initial">
+        <source>Eigene Session erstellen</source>
+        <target>Eigene Session erstellen</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.title">
+      <segment state="initial">
+        <source>Eigene Sessions</source>
+        <target>Eigene Sessions</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.start">
+      <segment state="initial">
+        <source>Erste Session anlegen</source>
+        <target>Erste Session anlegen</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step1.title">
+      <segment state="initial">
+        <source>Zusammenstellen</source>
+        <target>Zusammenstellen</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step1.body">
+      <segment state="initial">
+        <source>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</source>
+        <target>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step2.title">
+      <segment state="initial">
+        <source>Geführt durchführen</source>
+        <target>Geführt durchführen</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step2.body">
+      <segment state="initial">
+        <source>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</source>
+        <target>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step3.title">
+      <segment state="initial">
+        <source>Teilen</source>
+        <target>Teilen</target>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step3.body">
+      <segment state="initial">
+        <source>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</source>
+        <target>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</target>
+      </segment>
+    </unit>
+    <unit id="workouts.sharedPartly">
+      <segment state="initial">
+        <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
+        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

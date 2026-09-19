@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserContextService } from '@pu-auth/auth';
 import { nowLocalIsoTimestamp } from '@pu-stats/date';
@@ -39,6 +39,16 @@ export interface SessionCaptureOutcome {
   value: number;
 }
 
+/**
+ * The `source` written on every entry a session produces. Defaults to
+ * the plan session's; a workout session provides its own at component
+ * level so its entries stay distinguishable in the history.
+ */
+export const SESSION_ENTRY_SOURCE_TOKEN = new InjectionToken<string>(
+  'SESSION_ENTRY_SOURCE',
+  { providedIn: 'root', factory: () => SESSION_ENTRY_SOURCE }
+);
+
 const CANCELLED: SessionCaptureOutcome = { status: 'cancelled', value: 0 };
 const FAILED: SessionCaptureOutcome = { status: 'error', value: 0 };
 
@@ -61,6 +71,7 @@ export class SessionCaptureService {
   private readonly userContext = inject(UserContextService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly appData = inject(AppDataFacade);
+  private readonly source = inject(SESSION_ENTRY_SOURCE_TOKEN);
 
   /** Run the step's primary tool. */
   capture(step: SessionStep): Promise<SessionCaptureOutcome> {
@@ -88,7 +99,11 @@ export class SessionCaptureService {
    */
   logPrescribed(step: SessionStep): Promise<SessionCaptureOutcome> {
     return this.guard(async () => {
-      const prescribed = prescribedCaptureFor(step, nowLocalIsoTimestamp());
+      const prescribed = prescribedCaptureFor(
+        step,
+        nowLocalIsoTimestamp(),
+        this.source
+      );
       // Nothing left to write means the round is already covered — the
       // session should move on, not sit on a step it can't advance past.
       if (!prescribed) return { status: 'captured', value: 0 };
@@ -168,11 +183,11 @@ export class SessionCaptureService {
     step: SessionStep
   ): Promise<SessionCaptureOutcome> {
     const result = await this.dialogs.openEntryDialog(
-      entryPrefillForStep(step, nowLocalIsoTimestamp())
+      entryPrefillForStep(step, nowLocalIsoTimestamp(), this.source)
     );
     if (!result) return CANCELLED;
     return this.write(
-      buildConfirmedEntryPayload(result, SESSION_ENTRY_SOURCE),
+      buildConfirmedEntryPayload(result, this.source),
       stepValueFromDialogResult(step, result)
     );
   }
@@ -198,6 +213,7 @@ export class SessionCaptureService {
         timestamp: nowLocalIsoTimestamp(),
         valueField,
         value,
+        source: this.source,
       }),
       matchesStep ? value : 0
     );

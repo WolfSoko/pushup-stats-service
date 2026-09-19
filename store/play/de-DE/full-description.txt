@@ -24,6 +24,9 @@ Handy hinstellen, Auto-Zähler öffnen, loslegen: Die KI erkennt Liegestütze, K
 • Einarmige Liegestütze, Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
 Jeden Tag die passende Vorgabe — mit Ruhe-, leichten und Test-Tagen. Fünf Pläne rechnen nach dem Maximaltest jede Tagesvorgabe auf dein Ergebnis um: keine 3×20, wenn du 8 schaffst. Erledigte Tage markieren sich automatisch, sobald du dein Tagesziel erreichst, und deinen aktiven Plan kannst du teilen.
 
+🧩 EIGENE SESSIONS
+Stell dir dein Workout selbst zusammen: Übungen, Ziele und Sätze in deiner Reihenfolge. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde.
+
 🎯 ZIELE, STREAKS & STATISTIKEN
 • Tages-, Wochen- und Monatsziele — pro Übung, mit Wochentag-Filter
 • Fortschrittsbalken, Konfetti beim Ziel, Streak-Zähler fürs Dranbleiben
@@ -32,7 +35,7 @@ Jeden Tag die passende Vorgabe — mit Ruhe-, leichten und Test-Tagen. Fünf Pl�
 • Bestwerte: bester Tag, bester Satz, beste Einzeleinheit
 
 🏆 BESTENLISTE & PROFIL
-Miss dich mit anderen oder bleib privat. Ranglisten für heute, die letzten 7 und 30 Tage. Dein Profil teilst du per Link: Gesamt-Reps, Streak, Bestleistungen, Heatmap, die letzten 10 Workouts und der aktive Plan — jede Kachel einzeln auf aus, nur für Freunde oder öffentlich. In der Vorschau siehst du dein Profil so, wie Freunde oder Fremde es sehen.
+Miss dich mit anderen oder bleib privat. Ranglisten für heute, die letzten 7 und 30 Tage. Dein Profil teilst du per Link: Gesamt-Reps, Streak, Bestleistungen, Heatmap, die letzten 10 Workouts und der aktive Plan — jede Kachel einzeln auf aus, nur für Freunde oder öffentlich.
 
 👥 FREUNDE & CHALLENGES
 Lade Freunde ein: euer Board zeigt, wer diese Woche vorne liegt. Feuert euch per Push an und startet gemeinsame Challenges — 500 Liegestütze in 7 Tagen, jeder mit eigenem Fortschritt.
@@ -53,5 +56,4 @@ Gleiche Daten auf Phone und im Browser, Echtzeit-Sync über alle Geräte. Login 
 
 Kostenlos. Kein Abo. Keine Kreditkarte.
 
-Pushup Tracker ist eine ehrliche App für Leute, die wirklich trainieren — nicht für Sticker-Sammler.
 Lade sie jetzt runter und mach den ersten.

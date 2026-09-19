@@ -173,6 +173,46 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'workouts',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.workouts.title:Meine Sessions – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.workouts.description:Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.`,
+      noindex: true,
+    },
+    loadComponent: () =>
+      import('./workouts/workouts-page.component').then(
+        (m) => m.WorkoutsPageComponent
+      ),
+  },
+  {
+    path: 'workouts/new',
+    canActivate: [authGuard],
+    data: { noindex: true },
+    loadComponent: () =>
+      import('./workouts/workout-editor.component').then(
+        (m) => m.WorkoutEditorComponent
+      ),
+  },
+  {
+    path: 'workouts/:id/edit',
+    canActivate: [authGuard],
+    data: { noindex: true },
+    loadComponent: () =>
+      import('./workouts/workout-editor.component').then(
+        (m) => m.WorkoutEditorComponent
+      ),
+  },
+  {
+    path: 'workouts/:id/run',
+    canActivate: [authGuard],
+    data: { noindex: true },
+    loadComponent: () =>
+      import('./workouts/session/workout-session.component').then(
+        (m) => m.WorkoutSessionComponent
+      ),
+  },
+  {
     path: 'wiki/liegestuetz-typen',
     children: [
       {

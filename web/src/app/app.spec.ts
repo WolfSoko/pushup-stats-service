@@ -1207,6 +1207,7 @@ describe('App (testing-library)', () => {
       '/leaderboard',
       '/freunde',
       '/training-plans',
+      '/workouts',
       '/blog',
       '/history',
       '/wiki/uebungen',

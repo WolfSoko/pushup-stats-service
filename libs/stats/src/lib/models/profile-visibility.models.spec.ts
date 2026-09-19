@@ -189,6 +189,7 @@ describe('profile-visibility.models', () => {
       expect(map.total).toBe('public');
       expect(map.recent).toBe('off');
       expect(map.plan).toBe('off');
+      expect(map.workouts).toBe('off');
     });
   });
 });

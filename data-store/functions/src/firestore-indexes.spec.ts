@@ -243,3 +243,19 @@ describe('Firestore TTL policies', () => {
     expect(marked.sort(byPair)).toEqual([...TTL_FIELDS].sort(byPair));
   });
 });
+
+describe('firestore.indexes.json ⇄ workouts queries', () => {
+  const { indexes } = loadConfig();
+
+  it('should declare the (ownerId ASC, updatedAt DESC) index the workouts list reads from', () => {
+    // given `WorkoutsApiService.listWorkouts`:
+    // where('ownerId','==').orderBy('updatedAt','desc')
+    const declared = hasIndex(indexes, 'workouts', [
+      ['ownerId', 'ASCENDING'],
+      ['updatedAt', 'DESCENDING'],
+    ]);
+
+    // then
+    expect(declared).toBe(true);
+  });
+});

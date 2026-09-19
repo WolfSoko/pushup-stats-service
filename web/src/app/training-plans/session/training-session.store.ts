@@ -17,8 +17,8 @@ import {
 } from '@pu-stats/models';
 
 import { UserConfigStore } from '../../core/user-config.store';
-import { TrainingPlanStore } from '../training-plan.store';
 import { registerRestCountdown } from './session-rest.countdown';
+import { SESSION_SOURCE } from './session-source';
 import { sessionSelectors } from './training-session.selectors';
 
 /**
@@ -59,25 +59,26 @@ const INITIAL: TrainingSessionState = {
 };
 
 /**
- * Drives one guided training session over the exercises of the active
- * plan day. Component-scoped: a session is page state, and leaving the
- * page ends it.
+ * Drives one guided training session over the exercises of a day —
+ * today's plan day by default, or a workout through a component-level
+ * `SESSION_SOURCE`. Component-scoped: a session is page state, and
+ * leaving the page ends it.
  *
- * The store owns no progress of its own — `steps` is derived from
- * `TrainingPlanStore.dayProgress()`, so a step closes exactly when the
- * entry it produced lands in the live mirror, and re-entering the page
+ * The store owns no progress of its own — `steps` is derived from the
+ * source's `dayProgress()`, so a step closes exactly when the entry it
+ * produced lands in the live mirror, and re-entering the page
  * mid-workout resumes where the logged entries say the user is.
  */
 export const TrainingSessionStore = signalStore(
   withState(INITIAL),
   withProps(() => ({
-    _plan: inject(TrainingPlanStore),
+    _source: inject(SESSION_SOURCE),
     _config: inject(UserConfigStore),
     _isBrowser: isPlatformBrowser(inject(PLATFORM_ID)),
   })),
   withComputed((store) =>
     sessionSelectors({
-      plan: store._plan,
+      source: store._source,
       config: store._config,
       stepIndex: store.stepIndex,
       restOverride: store.restOverride,

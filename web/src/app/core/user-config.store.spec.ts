@@ -386,4 +386,78 @@ describe('UserConfigStore', () => {
       expect(updateConfig).not.toHaveBeenCalled();
     });
   });
+
+  describe('markAnnouncementSeen', () => {
+    it('should append the id to the seen list, keeping the rest of ui', async () => {
+      // given
+      const updateConfig = vitest.fn((uid: string, patch: UserConfigUpdate) =>
+        of({ userId: uid, ...patch })
+      );
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: UserConfigApiService,
+            useValue: {
+              getConfig: vitest.fn(() =>
+                of({
+                  userId: 'u1',
+                  ui: { sessionMode: 'circuit', seenAnnouncements: ['old'] },
+                })
+              ),
+              updateConfig,
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => 'u1' },
+          },
+        ],
+      });
+      const store = TestBed.inject(UserConfigStore);
+      await flush();
+
+      // when
+      await store.markAnnouncementSeen('workouts-2026-09');
+
+      // then
+      expect(updateConfig).toHaveBeenCalledWith('u1', {
+        ui: {
+          sessionMode: 'circuit',
+          seenAnnouncements: ['old', 'workouts-2026-09'],
+        },
+      });
+    });
+
+    it('should not write an id that is already there', async () => {
+      // given
+      const updateConfig = vitest.fn();
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: UserConfigApiService,
+            useValue: {
+              getConfig: vitest.fn(() =>
+                of({ userId: 'u1', ui: { seenAnnouncements: ['x'] } })
+              ),
+              updateConfig,
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => 'u1' },
+          },
+        ],
+      });
+      const store = TestBed.inject(UserConfigStore);
+      await flush();
+
+      // when
+      await store.markAnnouncementSeen('x');
+
+      // then
+      expect(updateConfig).not.toHaveBeenCalled();
+    });
+  });
 });

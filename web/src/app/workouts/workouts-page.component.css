@@ -1,0 +1,15 @@
+.page-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.workouts-error mat-card-content,
+.workouts-hint mat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}

@@ -24,6 +24,9 @@ Apoya el móvil, abre el contador automático y empieza: la IA reconoce flexione
 • Flexiones a un brazo, Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
 Cada día la consigna que toca, con días de descanso, días suaves y días de test. Cinco planes recalculan cada objetivo diario según tu test máximo: nada de 3×20 si haces 8. Los días cumplidos se marcan solos en cuanto alcanzas tu objetivo, y puedes compartir tu plan activo.
 
+🧩 TUS PROPIAS SESIONES
+Monta tu propio entrenamiento: ejercicios, objetivos y series en tu orden. La app te guía como en un día de plan. Muestra tus sesiones en tu perfil o envíalas a tus amigos.
+
 🎯 OBJETIVOS, RACHAS Y ESTADÍSTICAS
 • Objetivos de día, semana y mes — por ejercicio, con filtro por día de la semana
 • Barras de progreso, confeti al llegar al objetivo, contador de racha para no fallar
@@ -32,7 +35,7 @@ Cada día la consigna que toca, con días de descanso, días suaves y días de t
 • Récords: mejor día, mejor serie, mejor sesión
 
 🏆 CLASIFICACIÓN Y PERFIL
-Mídete con los demás o quédate en privado. Rankings de hoy, de los últimos 7 y 30 días. Tu perfil se comparte por enlace: repeticiones totales, racha, récords, heatmap, tus últimos 10 entrenamientos y el plan activo — cada tarjeta se pone por separado en oculta, solo amigos o pública. La vista previa te muestra tu perfil tal como lo ven tus amigos o un desconocido.
+Mídete con los demás o quédate en privado. Rankings de hoy, de los últimos 7 y 30 días. Tu perfil se comparte por enlace: repeticiones totales, racha, récords, heatmap, tus últimos 10 entrenamientos y el plan activo — cada tarjeta se pone por separado en oculta, solo amigos o pública.
 
 👥 AMIGOS Y RETOS
 Invita a tus amigos: vuestro tablero muestra quién va por delante esta semana. Animaos con notificaciones y lanzad retos en común — 500 flexiones en 7 días, cada uno con su progreso.
@@ -53,5 +56,4 @@ Los mismos datos en el móvil y en el navegador, sincronización en tiempo real 
 
 Gratis. Sin suscripción. Sin tarjeta.
 
-Pushup Tracker es una app honesta para quien entrena de verdad, no para coleccionistas de cromos.
 Descárgala y haz la primera.

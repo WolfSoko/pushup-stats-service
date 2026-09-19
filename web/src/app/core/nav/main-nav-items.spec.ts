@@ -12,6 +12,7 @@ describe('mainNavItems', () => {
       '/leaderboard',
       '/freunde',
       '/training-plans',
+      '/workouts',
       '/blog',
       '/history',
       '/wiki/uebungen',
@@ -23,6 +24,13 @@ describe('mainNavItems', () => {
     // when / then — a friends list needs an account
     expect(mainNavItems(false).map((item) => item.path)).not.toContain(
       '/freunde'
+    );
+  });
+
+  it('should leave the own sessions out for guests', () => {
+    // when / then — there is nothing to list without an account
+    expect(mainNavItems(false).map((item) => item.path)).not.toContain(
+      '/workouts'
     );
   });
 
