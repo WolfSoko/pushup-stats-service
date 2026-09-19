@@ -58,7 +58,14 @@ export class AutoCountFeedbackFlow {
     }
   }
 
-  /** Proximity counting has no joint profile, so there is nothing to report. */
+  /**
+   * Proximity counting has no joint profile, so there is nothing to
+   * report. For pose runs this must go through `angleOverrideFor`, not
+   * `valuesFor`: the latter returns a tuned profile even when it does
+   * not apply to this user (unpublished, non-admin), which would file
+   * the run under a threshold set the detector never used — corrupting
+   * the very comparison the admin panel exists to make.
+   */
   private thresholdsFor(
     context: AutoCountRunContext
   ): Readonly<Record<string, number>> {
@@ -66,7 +73,7 @@ export class AutoCountFeedbackFlow {
     return effectiveThresholds(
       'angle',
       profileFor(context.profileId),
-      this.tuning.valuesFor(context.profileId)
+      this.tuning.angleOverrideFor(context.profileId) ?? {}
     );
   }
 }

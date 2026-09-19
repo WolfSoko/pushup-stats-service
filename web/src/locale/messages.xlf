@@ -4903,7 +4903,7 @@
     </unit>
     <unit id="autoCount.cameraStarting">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:94,97</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:108,111</note>
       </notes>
       <segment>
         <source>Kamera startet …</source>
@@ -4911,7 +4911,7 @@
     </unit>
     <unit id="autoCount.unavailable">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:101,103</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:115,117</note>
       </notes>
       <segment>
         <source> Auto‑Zählen nicht verfügbar </source>
@@ -4919,7 +4919,7 @@
     </unit>
     <unit id="autoCount.repsLabel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:109,111</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:123,125</note>
       </notes>
       <segment>
         <source>Reps</source>
@@ -4927,7 +4927,7 @@
     </unit>
     <unit id="autoCount.formCheck.toggleAria">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:117,118</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:131,132</note>
       </notes>
       <segment>
         <source>Form-Check anzeigen oder ausblenden</source>
@@ -4935,7 +4935,7 @@
     </unit>
     <unit id="autoCount.formCheck.proximity">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:134,135</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:148,149</note>
       </notes>
       <segment>
         <source>Nähe</source>
@@ -4943,7 +4943,7 @@
     </unit>
     <unit id="autoCount.formCheck.signal">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:144,146</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:158,160</note>
       </notes>
       <segment>
         <source>Signal</source>
@@ -4951,7 +4951,7 @@
     </unit>
     <unit id="autoCount.formCheck.angle">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:155,157</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:169,171</note>
       </notes>
       <segment>
         <source>Winkel</source>
@@ -4959,7 +4959,7 @@
     </unit>
     <unit id="autoCount.formCheck.confidence">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:165,167</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:179,181</note>
       </notes>
       <segment>
         <source>Sicherheit</source>
@@ -4967,7 +4967,7 @@
     </unit>
     <unit id="autoCount.formCheck.phase">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:176,177</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:190,191</note>
       </notes>
       <segment>
         <source>Phase</source>
@@ -4975,7 +4975,7 @@
     </unit>
     <unit id="autoCount.positionHint.proximity">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:193,196</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:198,201</note>
       </notes>
       <segment>
         <source> Erste Wiederholung kalibriert die Helligkeit </source>
@@ -4983,7 +4983,7 @@
     </unit>
     <unit id="autoCount.positionHint">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:197,199</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:202,204</note>
       </notes>
       <segment>
         <source> In Startposition gehen </source>
@@ -4991,7 +4991,7 @@
     </unit>
     <unit id="autoCount.reset">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:218,220</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:223,225</note>
       </notes>
       <segment>
         <source> Zurücksetzen </source>
@@ -4999,7 +4999,7 @@
     </unit>
     <unit id="autoCount.cancel">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:221,223</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:226,228</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -5007,7 +5007,7 @@
     </unit>
     <unit id="autoCount.save">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:230,232</note>
+        <note category="location">web/src/app/auto-count/auto-count-dialog.component.html:235,237</note>
       </notes>
       <segment>
         <source> Übernehmen </source>
@@ -5087,15 +5087,23 @@
     </unit>
     <unit id="autoCount.tuning.save">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-tuning-panel.component.html:86,89</note>
+        <note category="location">web/src/app/auto-count/auto-count-tuning-panel.component.html:86,88</note>
       </notes>
       <segment>
         <source> Speichern </source>
       </segment>
     </unit>
+    <unit id="autoCount.tuning.unpublish">
+      <notes>
+        <note category="location">web/src/app/auto-count/auto-count-tuning-panel.component.html:96,99</note>
+      </notes>
+      <segment>
+        <source> Nur für mich </source>
+      </segment>
+    </unit>
     <unit id="autoCount.tuning.publish">
       <notes>
-        <note category="location">web/src/app/auto-count/auto-count-tuning-panel.component.html:96,100</note>
+        <note category="location">web/src/app/auto-count/auto-count-tuning-panel.component.html:107,110</note>
       </notes>
       <segment>
         <source> Für alle </source>
@@ -5275,7 +5283,7 @@
     </unit>
     <unit id="exerciseTimer.cameraStarting">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:47,50</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:61,64</note>
       </notes>
       <segment>
         <source>Kamera startet …</source>
@@ -5283,7 +5291,7 @@
     </unit>
     <unit id="exerciseTimer.cameraUnavailable">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:54,56</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:68,70</note>
       </notes>
       <segment>
         <source> Kamera nicht verfügbar </source>
@@ -5291,7 +5299,7 @@
     </unit>
     <unit id="exerciseTimer.target">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:68,69</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:82,83</note>
       </notes>
       <segment>
         <source>Ziel: <ph id="0" equiv="INTERPOLATION" disp="{{ targetMmSs }}"/></source>
@@ -5299,7 +5307,7 @@
     </unit>
     <unit id="exerciseTimer.formCheck.toggleAria">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:80,81</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:94,95</note>
       </notes>
       <segment>
         <source>Form-Check anzeigen oder ausblenden</source>
@@ -5307,7 +5315,7 @@
     </unit>
     <unit id="exerciseTimer.formCheck.angle">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:99,101</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:104,106</note>
       </notes>
       <segment>
         <source>Winkel</source>
@@ -5315,7 +5323,7 @@
     </unit>
     <unit id="exerciseTimer.formCheck.confidence">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:109,111</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:114,116</note>
       </notes>
       <segment>
         <source>Sicherheit</source>
@@ -5323,7 +5331,7 @@
     </unit>
     <unit id="exerciseTimer.pause">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:133,135</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:138,140</note>
       </notes>
       <segment>
         <source>Pause</source>
@@ -5331,7 +5339,7 @@
     </unit>
     <unit id="exerciseTimer.start">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:135,138</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:140,143</note>
       </notes>
       <segment>
         <source>Start</source>
@@ -5339,7 +5347,7 @@
     </unit>
     <unit id="exerciseTimer.cameraHint">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:141,146</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:146,151</note>
       </notes>
       <segment>
         <source> Stelle die Kamera so auf, dass Schulter, Hüfte und Knie sichtbar sind. Der Timer startet automatisch, sobald du in Position bist, und pausiert, wenn du die Position verlässt. </source>
@@ -5347,7 +5355,7 @@
     </unit>
     <unit id="exerciseTimer.reset">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:154,156</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:159,161</note>
       </notes>
       <segment>
         <source> Zurücksetzen </source>
@@ -5355,7 +5363,7 @@
     </unit>
     <unit id="exerciseTimer.cancel">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:157,160</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:162,165</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -5363,7 +5371,7 @@
     </unit>
     <unit id="exerciseTimer.save">
       <notes>
-        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:166,168</note>
+        <note category="location">web/src/app/auto-count/exercise-timer-dialog.component.html:171,173</note>
       </notes>
       <segment>
         <source> Übernehmen </source>
@@ -9813,7 +9821,7 @@
         <note category="location">web/src/app/settings/settings-privacy.component.html:51,55</note>
       </notes>
       <segment>
-        <source> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </source>
+        <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
       </segment>
     </unit>
     <unit id="settings.dangerZoneTitle">

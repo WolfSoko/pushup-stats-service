@@ -558,4 +558,71 @@ describe('AutoCountDialogComponent', () => {
     expect(dialogClose).toHaveBeenCalledWith({ exerciseId: 'pushup', reps: 5 });
     expect(feedbackRecord).not.toHaveBeenCalled();
   });
+  it('given a stray rep after save, when confirmed, then the frozen count is booked and reported', async () => {
+    // given — the user finishes 5 and presses save
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    state.set({ count: 5, phase: 'up', lastRepAtMs: 10 });
+    fixture.detectChanges();
+    (fixture.componentInstance as unknown as { save: () => void }).save();
+    fixture.detectChanges();
+
+    // when — the camera catches one more movement while they reach for the phone
+    state.set({ count: 6, phase: 'up', lastRepAtMs: 20 });
+    fixture.detectChanges();
+    (
+      fixture.componentInstance as unknown as {
+        onConfirmed: (reps: number) => void;
+      }
+    ).onConfirmed(5);
+
+    // then — the question was about 5, so 5 is what gets booked and filed
+    expect(dialogClose).toHaveBeenCalledWith({ exerciseId: 'pushup', reps: 5 });
+    expect(feedbackRecord).toHaveBeenCalledWith(
+      expect.objectContaining({ detectedReps: 5 }),
+      5
+    );
+  });
+
+  it('given the accuracy question opens, when it is shown, then the detector is stopped', async () => {
+    // given
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    state.set({ count: 5, phase: 'up', lastRepAtMs: 10 });
+    fixture.detectChanges();
+    counter.stopSpy.mockClear();
+
+    // when
+    (fixture.componentInstance as unknown as { save: () => void }).save();
+
+    // then
+    expect(counter.stopSpy).toHaveBeenCalled();
+  });
+
+  it('given the question is open, when it renders, then it shows the count as it was at save time', async () => {
+    // given
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+    state.set({ count: 5, phase: 'up', lastRepAtMs: 10 });
+    fixture.detectChanges();
+    (fixture.componentInstance as unknown as { save: () => void }).save();
+    fixture.detectChanges();
+
+    // when — a late frame bumps the live counter
+    state.set({ count: 9, phase: 'up', lastRepAtMs: 30 });
+    fixture.detectChanges();
+
+    // then
+    const confirm = fixture.nativeElement.querySelector(
+      '[data-testid="auto-count-confirm"]'
+    ) as HTMLElement;
+    expect(confirm.textContent).toContain('5');
+    expect(confirm.textContent).not.toContain('9');
+  });
 });

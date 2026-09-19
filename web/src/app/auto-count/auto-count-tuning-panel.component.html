@@ -78,22 +78,34 @@
     </button>
     <button
       mat-stroked-button
-      (click)="onSave(false)"
+      (click)="onSaveKeepingRollout()"
       [disabled]="saving()"
       data-testid="auto-count-tuning-save"
       i18n="@@autoCount.tuning.save"
     >
       Speichern
     </button>
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="onSave(true)"
-      [disabled]="saving()"
-      data-testid="auto-count-tuning-publish"
-      i18n="@@autoCount.tuning.publish"
-    >
-      Für alle
-    </button>
+    @if (published()) {
+      <button
+        mat-flat-button
+        (click)="onSave(false)"
+        [disabled]="saving()"
+        data-testid="auto-count-tuning-unpublish"
+        i18n="@@autoCount.tuning.unpublish"
+      >
+        Nur für mich
+      </button>
+    } @else {
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="onSave(true)"
+        [disabled]="saving()"
+        data-testid="auto-count-tuning-publish"
+        i18n="@@autoCount.tuning.publish"
+      >
+        Für alle
+      </button>
+    }
   </footer>
 </div>

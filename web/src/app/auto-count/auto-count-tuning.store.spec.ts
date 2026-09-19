@@ -203,4 +203,18 @@ describe('AutoCountTuningStore', () => {
     // then
     expect(store.angleOverrideFor('pushup')).toEqual({ upAngleDeg: 160 });
   });
+  it('given a load that failed, when the dialog is opened again, then it is retried rather than cached', async () => {
+    // given — offline on the first open
+    const store = setup({ isAdmin: false, profiles: [PUBLISHED] });
+    load.mockRejectedValueOnce(new Error('offline'));
+    await store.ensureLoaded();
+    expect(store.angleOverrideFor('pushup')).toBeNull();
+
+    // when — connectivity is back on the next open
+    await store.ensureLoaded();
+
+    // then
+    expect(load).toHaveBeenCalledTimes(2);
+    expect(store.angleOverrideFor('pushup')).toEqual({ downAngleDeg: 80 });
+  });
 });

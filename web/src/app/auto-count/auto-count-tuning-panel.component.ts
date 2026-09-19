@@ -90,6 +90,11 @@ export class AutoCountTuningPanelComponent {
     this.changed.emit();
   }
 
+  /** Persists without touching the rollout state — see the template. */
+  protected async onSaveKeepingRollout(): Promise<void> {
+    await this.onSave(this.published());
+  }
+
   protected async onSave(published: boolean): Promise<void> {
     if (this.saving()) return;
     this.saving.set(true);

@@ -14477,9 +14477,15 @@
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackHint">
-      <segment state="translated">
-        <source> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </source>
+      <segment state="initial">
+        <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
         <target> La tua risposta migliora il rilevamento. Vengono trasmessi solo il numero contato e quello reale, oltre alle impostazioni di rilevamento – nessun video e nessuna immagine. </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.unpublish">
+      <segment state="initial">
+        <source> Nur für mich </source>
+        <target> Nur für mich </target>
       </segment>
     </unit>
 </file>

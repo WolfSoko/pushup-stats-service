@@ -106,8 +106,16 @@ export class AutoCountDialogComponent {
     initialExerciseId(this.dialogData?.initialExerciseId, this.exercises)
   );
   protected readonly formCheckOpen = signal(true);
-  /** Shows the "was that right?" step instead of the dialog actions. */
-  protected readonly confirming = signal(false);
+  /**
+   * The count as it stood when the user pressed save, or null while
+   * still counting. Frozen on purpose: the detector is stopped at that
+   * moment, but an in-flight frame or a stray movement must not be able
+   * to change the number the user is being asked about — answering
+   * "Passt" would then book a different count than the one on screen,
+   * and file it as an exact run.
+   */
+  protected readonly submittedReps = signal<number | null>(null);
+  protected readonly confirming = computed(() => this.submittedReps() !== null);
   protected readonly option = computed(
     () =>
       this.exercises.find((o) => o.id === this.exerciseId()) ??
@@ -211,30 +219,34 @@ export class AutoCountDialogComponent {
       this.closeWith(reps);
       return;
     }
-    this.confirming.set(true);
+    // The set is over; keep the camera from counting the walk back.
+    void this.counter().stop();
+    this.submittedReps.set(reps);
   }
 
   /** The user's answer decides the entry, not just the telemetry. */
   protected onConfirmed(actualReps: number): void {
-    void this.feedback.record(this.runContext(), actualReps);
+    const detectedReps = this.submittedReps();
+    if (detectedReps === null) return;
+    void this.feedback.record(this.runContext(detectedReps), actualReps);
     this.closeWith(actualReps);
   }
 
   protected onFeedbackDismissed(): void {
     this.feedback.disable();
-    this.closeWith(this.count());
+    this.closeWith(this.submittedReps() ?? this.count());
   }
 
   private closeWith(reps: number): void {
     this.dialogRef.close({ exerciseId: this.exerciseId(), reps });
   }
 
-  private runContext(): AutoCountRunContext {
+  private runContext(detectedReps: number): AutoCountRunContext {
     return {
       exerciseId: this.exerciseId(),
       profileId: this.detectorExerciseId(),
       mode: this.mode(),
-      detectedReps: this.count(),
+      detectedReps,
     };
   }
 

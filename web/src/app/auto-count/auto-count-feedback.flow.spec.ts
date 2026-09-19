@@ -19,17 +19,17 @@ const POSE_RUN: AutoCountRunContext = {
 
 describe('AutoCountFeedbackFlow', () => {
   let submit: ReturnType<typeof vi.fn>;
-  let valuesFor: ReturnType<typeof vi.fn>;
+  let angleOverrideFor: ReturnType<typeof vi.fn>;
   let flow: AutoCountFeedbackFlow;
 
   const setup = (): void => {
     TestBed.resetTestingModule();
     submit = vi.fn().mockResolvedValue(undefined);
-    valuesFor = vi.fn().mockReturnValue({});
+    angleOverrideFor = vi.fn().mockReturnValue(null);
     TestBed.configureTestingModule({
       providers: [
         { provide: AutoCountFeedbackService, useValue: { submit } },
-        { provide: AutoCountTuningStore, useValue: { valuesFor } },
+        { provide: AutoCountTuningStore, useValue: { angleOverrideFor } },
       ],
     });
     flow = TestBed.inject(AutoCountFeedbackFlow);
@@ -80,7 +80,7 @@ describe('AutoCountFeedbackFlow', () => {
 
   it('given a tuned profile, when recorded, then the override wins over the default', async () => {
     // given
-    valuesFor.mockReturnValue({ downAngleDeg: 75 });
+    angleOverrideFor.mockReturnValue({ downAngleDeg: 75 });
 
     // when
     await flow.record(POSE_RUN, 12);
@@ -89,6 +89,19 @@ describe('AutoCountFeedbackFlow', () => {
     const { thresholds } = submit.mock.calls[0][0];
     expect(thresholds.downAngleDeg).toBe(75);
     expect(thresholds.upAngleDeg).toBe(PUSHUP_PROFILE.upAngleDeg);
+  });
+
+  it('given a tuned profile that does not apply to this user, when recorded, then the defaults are reported', async () => {
+    // given — an unpublished profile: the store gates it, the detector
+    // ran on the catalog values, so that is what must be filed
+    angleOverrideFor.mockReturnValue(null);
+
+    // when
+    await flow.record(POSE_RUN, 12);
+
+    // then
+    const { thresholds } = submit.mock.calls[0][0];
+    expect(thresholds.downAngleDeg).toBe(PUSHUP_PROFILE.downAngleDeg);
   });
 
   it('given a proximity run, when recorded, then no joint thresholds are claimed', async () => {

@@ -168,6 +168,9 @@ export class AutoCountTuningStore implements ProfileOverrideSource {
     } catch (err) {
       // A failed load is not fatal: the detector falls back to the
       // catalog defaults, which is exactly what shipped before tuning.
+      // Drop the cached promise so the next dialog open retries — one
+      // offline moment must not pin the whole session to the defaults.
+      this.loadPromise = null;
       this._error.set(err instanceof Error ? err.message : String(err));
     } finally {
       this._loading.set(false);

@@ -178,4 +178,46 @@ describe('AutoCountTuningPanelComponent', () => {
     ) as HTMLElement;
     expect(error.textContent).toContain('permission denied');
   });
+  it('given a profile that is live for everyone, when saved, then it stays live', () => {
+    // given
+    values = { downAngleDeg: 75 };
+    store.publishedFor = vi.fn(() => true);
+    const { click } = render();
+
+    // when
+    click('auto-count-tuning-save');
+
+    // then — saving persists the edit, it does not roll anyone back
+    expect(store.save).toHaveBeenCalledWith('pushup', 'angle', true);
+  });
+
+  it('given a published profile, when the admin wants it back to themselves, then it can be unpublished', () => {
+    // given
+    values = { downAngleDeg: 75 };
+    store.publishedFor = vi.fn(() => true);
+    const { click } = render();
+
+    // when
+    click('auto-count-tuning-unpublish');
+
+    // then
+    expect(store.save).toHaveBeenCalledWith('pushup', 'angle', false);
+  });
+
+  it('given an unpublished profile, when rendered, then the rollout button offers publishing', () => {
+    // given / when
+    const { fixture } = render();
+
+    // then
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-tuning-publish"]'
+      )
+    ).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-tuning-unpublish"]'
+      )
+    ).toBeNull();
+  });
 });

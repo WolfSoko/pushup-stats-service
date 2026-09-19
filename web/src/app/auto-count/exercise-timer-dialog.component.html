@@ -40,6 +40,20 @@
       [skeleton]="skeleton()"
       [angleDeg]="frame()?.angleDeg ?? null"
     />
+    <!--
+      Outside the isStarting/switching guard on purpose: each slider move
+      restarts the timer, and a panel that unmounts every time cannot be
+      used to tune against a live camera.
+    -->
+    @if (showTuning() && !error()) {
+      <app-auto-count-tuning-panel
+        class="tuning-overlay"
+        [exerciseId]="exerciseId()"
+        kind="hold"
+        [defaults]="tuningDefaults()"
+        (changed)="onTuningChanged()"
+      />
+    }
 
     @if (cameraMode() && (isStarting() || switching())) {
       <div class="overlay-message">
@@ -84,15 +98,6 @@
           formCheckOpen() ? 'visibility' : 'visibility_off'
         }}</mat-icon>
       </button>
-      @if (showTuning()) {
-        <app-auto-count-tuning-panel
-          class="tuning-overlay"
-          [exerciseId]="exerciseId()"
-          kind="hold"
-          [defaults]="tuningDefaults()"
-          (changed)="onTuningChanged()"
-        />
-      }
       @if (formCheckOpen()) {
         <div class="form-check-panel">
           <div class="form-check-cell">

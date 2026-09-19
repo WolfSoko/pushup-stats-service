@@ -88,6 +88,20 @@
       [skeleton]="skeleton()"
       [angleDeg]="frame()?.angleDeg ?? null"
     />
+    <!--
+      Deliberately outside the isStarting/switching guard: every slider
+      move restarts the detector, and a panel that unmounts on each
+      adjustment cannot be used to tune against a live camera.
+    -->
+    @if (showTuning() && !error()) {
+      <app-auto-count-tuning-panel
+        class="tuning-overlay"
+        [exerciseId]="detectorExerciseId()"
+        kind="angle"
+        [defaults]="tuningDefaults()"
+        (changed)="onTuningChanged()"
+      />
+    }
     @if (isStarting() || switching()) {
       <div class="overlay-message">
         <mat-spinner diameter="32" />
@@ -178,15 +192,6 @@
           </div>
         </div>
       }
-      @if (showTuning()) {
-        <app-auto-count-tuning-panel
-          class="tuning-overlay"
-          [exerciseId]="detectorExerciseId()"
-          kind="angle"
-          [defaults]="tuningDefaults()"
-          (changed)="onTuningChanged()"
-        />
-      }
       @if (phase() === 'awaiting-up') {
         @if (isProximity()) {
           <div class="position-hint" i18n="@@autoCount.positionHint.proximity">
@@ -203,7 +208,7 @@
 </mat-dialog-content>
 @if (confirming()) {
   <app-auto-count-confirm
-    [detectedReps]="count()"
+    [detectedReps]="submittedReps() ?? 0"
     (confirmed)="onConfirmed($event)"
     (dismissed)="onFeedbackDismissed()"
   />
