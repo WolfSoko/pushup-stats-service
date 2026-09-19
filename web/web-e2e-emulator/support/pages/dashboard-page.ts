@@ -27,8 +27,22 @@ export class DashboardPage {
     await this.page.goto(appPath('/app'));
   }
 
+  /**
+   * Waits until the dashboard is the page in front of the user.
+   *
+   * The "what's new" walkthrough (`FeatureAnnouncementService`) opens
+   * over the dashboard for an account that has not seen it yet, and
+   * Material marks everything behind a dialog `aria-hidden` — which is
+   * the tree a role locator reads, so the heading is simply gone while
+   * the dialog is up. It opens once the user config has arrived, which
+   * against a real backend can be after the first look: dismissing and
+   * checking is therefore retried instead of done once.
+   */
   async expectLoaded(): Promise<void> {
-    await expect(this.heading).toBeVisible({ timeout: 20_000 });
+    await expect(async () => {
+      await dismissOverlay(this.page);
+      await expect(this.heading).toBeVisible({ timeout: 5_000 });
+    }).toPass({ timeout: 30_000 });
   }
 
   /**

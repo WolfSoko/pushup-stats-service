@@ -1,5 +1,28 @@
 import type { Page, TestInfo } from '@playwright/test';
 
+/**
+ * A query value can be a credential: the friends flow carries the
+ * invitation token in `fi`, and a job log is readable by anyone who can
+ * see the repository's Actions tab. Names are kept, values are not.
+ */
+function redactUrl(raw: string): string {
+  try {
+    const url = new URL(raw);
+    const masked = new URLSearchParams();
+    for (const key of url.searchParams.keys()) masked.set(key, 'redacted');
+    url.search = masked.toString();
+    if (url.hash) url.hash = 'redacted';
+    return url.toString();
+  } catch {
+    return redactText(raw);
+  }
+}
+
+/** The same, for text that merely happens to contain a URL. */
+function redactText(text: string): string {
+  return text.replace(/([?&][\w.-]+=)[^&\s"'<>]+/g, '$1redacted');
+}
+
 /** Nothing is printed on a green run, so this can stay generous. */
 const MAX_LINES = 60;
 const MAX_BODY_CHARS = 500;
@@ -22,18 +45,22 @@ export function collectDiagnostics(page: Page): () => string[] {
 
   page.on('console', (message) => {
     const type = message.type();
-    if (type === 'error' || type === 'warning')
-      note(`${type}: ${message.text()}`);
+    if (type === 'error' || type === 'warning') {
+      note(`${type}: ${redactText(message.text())}`);
+    }
   });
-  page.on('pageerror', (error) => note(`pageerror: ${error.message}`));
+  page.on('pageerror', (error) =>
+    note(`pageerror: ${redactText(error.message)}`)
+  );
   page.on('requestfailed', (request) =>
     note(
-      `requestfailed: ${request.url()} — ${request.failure()?.errorText ?? 'unknown'}`
+      `requestfailed: ${redactUrl(request.url())} — ${request.failure()?.errorText ?? 'unknown'}`
     )
   );
   page.on('response', (response) => {
-    if (response.status() >= 400)
-      note(`http ${response.status()}: ${response.url()}`);
+    if (response.status() >= 400) {
+      note(`http ${response.status()}: ${redactUrl(response.url())}`);
+    }
   });
 
   return () => lines;
@@ -52,8 +79,8 @@ export async function reportDiagnostics(
   console.log(
     [
       `[diagnose] ${testInfo.titlePath.join(' › ')}`,
-      `  url: ${page.url()}`,
-      `  body: ${body.replace(/\s+/g, ' ').slice(0, MAX_BODY_CHARS)}`,
+      `  url: ${redactUrl(page.url())}`,
+      `  body: ${redactText(body.replace(/\s+/g, ' ')).slice(0, MAX_BODY_CHARS)}`,
       ...lines.map((line) => `  ${line}`),
     ].join('\n')
   );
