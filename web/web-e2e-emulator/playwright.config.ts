@@ -8,6 +8,15 @@ import { workspaceRoot } from '@nx/devkit';
  * emulators. See README.md.
  */
 const isStaging = process.env['E2E_TARGET'] === 'staging';
+
+/**
+ * Set here, in the runner, before any worker exists: workers inherit the
+ * environment, so seeding (in a worker) and cleanup (in global setup and
+ * teardown) agree on which accounts belong to this run. In CI the
+ * workflow passes the GitHub run id instead.
+ */
+process.env['E2E_RUN_ID'] ??= `local${Date.now().toString(36)}`;
+
 const baseURL =
   process.env['E2E_BASE_URL'] ||
   process.env['E2E_EMULATOR_BASE_URL'] ||

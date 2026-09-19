@@ -66,7 +66,7 @@ test.describe('Login', () => {
     await dashboardPage.signOut();
 
     // then — the auth guard sends a signed-out visitor to the login page
-    await page.goto('/app');
+    await dashboardPage.goto();
     await expect(page).toHaveURL(/\/login/, { timeout: 20_000 });
   });
 });

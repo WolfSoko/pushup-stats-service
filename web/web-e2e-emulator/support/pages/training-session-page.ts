@@ -2,6 +2,8 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 import { dismissOverlay } from '../overlay';
 
+import { appPath } from '../routes';
+
 /**
  * A guided training session: the intro, one card per set, the rest
  * countdown between them, and the closing screen.
@@ -28,7 +30,7 @@ export class TrainingSessionPage {
   }
 
   async goto(slug: string): Promise<void> {
-    await this.page.goto(`/training-plans/${slug}/session`);
+    await this.page.goto(appPath(`/training-plans/${slug}/session`));
   }
 
   /** Starts the session, asking for no rest so the sets follow each other. */

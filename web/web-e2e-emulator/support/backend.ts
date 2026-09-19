@@ -48,9 +48,16 @@ export function adminApp(): App {
  *
  * Staging is shared — two pull requests can be running this suite at the
  * same time — so teardown has to be able to tell its own accounts from
- * somebody else's. In CI this is the GitHub run id.
+ * somebody else's. In CI this is the GitHub run id; `playwright.config.ts`
+ * puts one into the environment for a local run, which the workers then
+ * inherit.
+ *
+ * The fallback is deliberately constant rather than a timestamp: this
+ * module is loaded once per process, and the accounts are created in a
+ * worker while cleanup runs in the runner. Anything derived from the
+ * clock would differ between the two, and teardown would match nothing.
  */
-export const RUN_ID = (process.env['E2E_RUN_ID'] ?? `local${Date.now()}`)
+export const RUN_ID = (process.env['E2E_RUN_ID'] ?? 'local')
   .toLowerCase()
   .replace(/[^a-z0-9]/g, '');
 

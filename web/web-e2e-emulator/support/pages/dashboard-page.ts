@@ -2,6 +2,8 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 import { dismissOverlay } from '../overlay';
 
+import { appPath } from '../routes';
+
 export class DashboardPage {
   readonly heading: Locator;
   readonly userMenuTrigger: Locator;
@@ -22,7 +24,7 @@ export class DashboardPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/app');
+    await this.page.goto(appPath('/app'));
   }
 
   async expectLoaded(): Promise<void> {

@@ -56,6 +56,9 @@ Two things follow from staging being a real, shared project:
 - **No extra credentials.** The Admin SDK uses the keyless Workload
   Identity credential the deploy steps already exported, and the job is
   gated to same-repo pull requests, so forks skip it.
+- **One run at a time.** The workflow carries a `concurrency` group, so a
+  second pull request cannot deploy new rules or functions into the
+  project while this run is testing the ones it just deployed.
 
 The project name says `emulator` because that is its default target and
 what gates every PR in `ci.yml`; the staging run is the same specs
@@ -73,3 +76,10 @@ pointed elsewhere.
   only runs its post-auth hooks on a real sign-in.
 - Assert on `data-testid` attributes where they exist; they are part of
   the app's markup and survive copy changes.
+- Navigate through `appPath()` from `support/routes.ts`, never with a
+  bare `page.goto('/login')`. Hosting serves the built app only under a
+  locale folder (`/de{,/**}` … `/zh{,/**}` in `data-store/firebase.json`),
+  so on staging every path needs the `/de` prefix, while the dev server
+  serves a single locale at the root. Putting the prefix in `baseURL`
+  does not work — Playwright resolves a leading-slash `goto()` against
+  the origin and drops the base URL's path.

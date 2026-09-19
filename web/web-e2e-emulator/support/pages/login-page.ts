@@ -1,6 +1,8 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-import type { E2eAccount } from '../emulator';
+import type { E2eAccount } from '../backend';
+
+import { appPath } from '../routes';
 
 export class LoginPage {
   readonly title: Locator;
@@ -21,7 +23,7 @@ export class LoginPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/login');
+    await this.page.goto(appPath('/login'));
     await expect(this.title).toBeVisible();
   }
 
