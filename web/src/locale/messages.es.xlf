@@ -13269,7 +13269,7 @@
     <unit id="friends.invite.unavailable">
       <segment state="translated">
         <source> Einladungslinks gibt es nur für angemeldete Konten. Melde dich an, dann kannst du Freunde hinzufügen. </source>
-        <target> Los enlaces de invitación solo están disponibles para cuentas registradas. Inicia sesión para poder añadir amigos. </target>
+        <target> Los enlaces de invitación solo están disponibles para cuentas con sesión iniciada. Inicia sesión para poder añadir amigos. </target>
       </segment>
     </unit>
     <unit id="friends.invite.close">
