@@ -14150,7 +14150,7 @@ Active:         </target>
     <unit id="landing.workouts.chip.run">
       <segment state="translated">
         <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
-        <target>Guided runs — with camera counter and timer</target>
+        <target>Guided workouts — with camera counter and timer</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.share">
@@ -14222,7 +14222,7 @@ Active:         </target>
     <unit id="workoutsIntro.step2.title">
       <segment state="translated">
         <source>Geführt durchführen</source>
-        <target>Guided run</target>
+        <target>Guided workout</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.body">
