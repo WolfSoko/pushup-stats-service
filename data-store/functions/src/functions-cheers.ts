@@ -56,15 +56,23 @@ export const sendCheer = onCall(
       createdAt: new Date(nowMs).toISOString(),
     };
     // `create`: a second tap racing this one finds the document and is
-    // refused instead of sending a second push.
+    // refused instead of sending a second push. Batched with the live
+    // ping write so a failure partway through can't leave a persisted
+    // cheer whose recipient never gets the animation trigger.
     try {
-      await db
-        .collection('cheers')
-        .doc(id)
-        .create({
-          ...cheer,
-          expiresAt: Timestamp.fromMillis(nowMs + CHEER_RETENTION_MS),
-        });
+      const batch = db.batch();
+      batch.create(db.collection('cheers').doc(id), {
+        ...cheer,
+        expiresAt: Timestamp.fromMillis(nowMs + CHEER_RETENTION_MS),
+      });
+      // Live trigger for the recipient's fireworks animation if their
+      // dashboard is open right now — overwritten (not appended) each
+      // time, there is no history to keep here, that's `cheers/{cheerId}`.
+      batch.set(db.collection('cheerPings').doc(target), {
+        from: uid,
+        at: cheer.createdAt,
+      });
+      await batch.commit();
     } catch (err: unknown) {
       const code = (err as { code?: number | string }).code;
       if (code === 6 || code === 'already-exists') {

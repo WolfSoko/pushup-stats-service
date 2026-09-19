@@ -143,6 +143,10 @@ export const UserConfigStore = signalStore(
         () =>
           store.configResource.value()?.ui?.snapQuality ?? DEFAULT_SNAP_QUALITY
       ),
+      /** Opt-out — absent/`true` shows the cheer fireworks animation. */
+      cheerAnimationEnabled: computed<boolean>(
+        () => store.configResource.value()?.ui?.cheerAnimationEnabled ?? true
+      ),
       /** Rest between guided-session exercises, clamped to the valid range. */
       sessionRestSec: computed<number>(() =>
         normalizeRestSec(store.configResource.value()?.ui?.sessionRestSec)

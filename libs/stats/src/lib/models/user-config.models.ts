@@ -252,6 +252,12 @@ export interface UserConfig {
      */
     sessionMode?: SessionMode;
     /**
+     * Whether a friend's cheer plays the fireworks overlay on this user's
+     * dashboard. Absent ⇒ enabled — the feature is opt-out, matching the
+     * push notification `sendCheer` always sends regardless of this flag.
+     */
+    cheerAnimationEnabled?: boolean;
+    /**
      * Ids of feature announcements the user has closed (see
      * `FeatureAnnouncementService`). Persisted per account so a
      * walkthrough shown on one device is not shown again on the next.

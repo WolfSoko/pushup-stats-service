@@ -18,6 +18,7 @@ export function resolveConfig(val: unknown): ResolvedConfig {
       hideAccountPhoto: false,
       consent: { targetedAds: true },
       snapQuality: DEFAULT_SNAP_QUALITY,
+      cheerAnimationEnabled: true,
     };
   }
   const record = val as Record<string, unknown>;
@@ -52,6 +53,10 @@ export function resolveConfig(val: unknown): ResolvedConfig {
                 : true,
           },
     snapQuality: (ui['snapQuality'] as SnapQuality) ?? DEFAULT_SNAP_QUALITY,
+    cheerAnimationEnabled:
+      typeof ui['cheerAnimationEnabled'] === 'boolean'
+        ? ui['cheerAnimationEnabled']
+        : true,
   };
 }
 
@@ -62,6 +67,7 @@ export function snapshotFromConfig(cfg: ResolvedConfig): DraftSnapshot {
     hideAccountPhoto: cfg.hideAccountPhoto,
     adsConsent: cfg.consent?.targetedAds ?? true,
     snapQuality: cfg.snapQuality,
+    cheerAnimationEnabled: cfg.cheerAnimationEnabled,
   };
 }
 
@@ -71,7 +77,8 @@ export function snapshotsEqual(a: DraftSnapshot, b: DraftSnapshot): boolean {
     a.hideFromLeaderboard === b.hideFromLeaderboard &&
     a.hideAccountPhoto === b.hideAccountPhoto &&
     a.adsConsent === b.adsConsent &&
-    a.snapQuality === b.snapQuality
+    a.snapQuality === b.snapQuality &&
+    a.cheerAnimationEnabled === b.cheerAnimationEnabled
   );
 }
 
@@ -89,6 +96,7 @@ export function buildSaveUpdate(
       hideFromLeaderboard: draft.hideFromLeaderboard,
       hideAccountPhoto: draft.hideAccountPhoto,
       snapQuality: draft.snapQuality,
+      cheerAnimationEnabled: draft.cheerAnimationEnabled,
     },
   };
 }

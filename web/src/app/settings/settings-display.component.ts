@@ -2,13 +2,19 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { SettingsFacade } from '../stats/shell/settings.facade';
 
 @Component({
   selector: 'app-settings-display',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonToggleModule, MatCardModule, MatIconModule],
+  imports: [
+    MatButtonToggleModule,
+    MatCardModule,
+    MatIconModule,
+    MatSlideToggleModule,
+  ],
   templateUrl: './settings-display.component.html',
   styleUrl: './settings-section.scss',
 })

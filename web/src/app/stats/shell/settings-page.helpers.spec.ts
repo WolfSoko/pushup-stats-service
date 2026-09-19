@@ -23,6 +23,7 @@ describe('settings-page.helpers', () => {
         hideAccountPhoto: false,
         consent: { targetedAds: true },
         snapQuality: DEFAULT_SNAP_QUALITY,
+        cheerAnimationEnabled: true,
       });
     });
 
@@ -58,6 +59,7 @@ describe('settings-page.helpers', () => {
         hideAccountPhoto: false,
         consent: { targetedAds: false, dataProcessing: true },
         snapQuality: 'high',
+        cheerAnimationEnabled: true,
       });
     });
 
@@ -125,6 +127,7 @@ describe('settings-page.helpers', () => {
       hideAccountPhoto: false,
       consent: { targetedAds: false },
       snapQuality: 'middle',
+      cheerAnimationEnabled: true,
     };
 
     it('should trim the displayName when snapshotted', () => {
@@ -162,6 +165,7 @@ describe('settings-page.helpers', () => {
       hideAccountPhoto: false,
       adsConsent: true,
       snapQuality: 'low',
+      cheerAnimationEnabled: true,
     };
 
     it('should report two identical snapshots as equal', () => {
@@ -194,6 +198,9 @@ describe('settings-page.helpers', () => {
         false
       );
       expect(snapshotsEqual(a, { ...a, adsConsent: false })).toBe(false);
+      expect(snapshotsEqual(a, { ...a, cheerAnimationEnabled: false })).toBe(
+        false
+      );
     });
   });
 
@@ -204,6 +211,7 @@ describe('settings-page.helpers', () => {
       hideAccountPhoto: false,
       adsConsent: false,
       snapQuality: 'high',
+      cheerAnimationEnabled: false,
     };
 
     it('should preserve existing consent keys when building the update', () => {
@@ -214,6 +222,7 @@ describe('settings-page.helpers', () => {
         hideAccountPhoto: false,
         consent: { targetedAds: true, dataProcessing: true },
         snapQuality: 'low',
+        cheerAnimationEnabled: true,
       };
 
       // when
@@ -227,6 +236,7 @@ describe('settings-page.helpers', () => {
           hideFromLeaderboard: true,
           hideAccountPhoto: false,
           snapQuality: 'high',
+          cheerAnimationEnabled: false,
         },
       });
     });
@@ -239,6 +249,7 @@ describe('settings-page.helpers', () => {
         hideAccountPhoto: false,
         consent: undefined as unknown as ResolvedConfig['consent'],
         snapQuality: 'low',
+        cheerAnimationEnabled: true,
       };
 
       // when
@@ -327,6 +338,7 @@ describe('hideAccountPhoto round trip', () => {
     hideAccountPhoto: false,
     consent: { targetedAds: true },
     snapQuality: 'low',
+    cheerAnimationEnabled: true,
   };
 
   it.each([[true], [false]])('should read %s back from the config', (flag) => {
@@ -365,5 +377,58 @@ describe('hideAccountPhoto round trip', () => {
 
     // then
     expect(snapshotsEqual(a, { ...a, hideAccountPhoto: true })).toBe(false);
+  });
+});
+
+describe('cheerAnimationEnabled round trip', () => {
+  const base: ResolvedConfig = {
+    displayName: 'Wolf',
+    hideFromLeaderboard: false,
+    hideAccountPhoto: false,
+    consent: { targetedAds: true },
+    snapQuality: 'low',
+    cheerAnimationEnabled: true,
+  };
+
+  it.each([[true], [false]])('should read %s back from the config', (flag) => {
+    // then
+    expect(
+      resolveConfig({ ui: { cheerAnimationEnabled: flag } })
+        .cheerAnimationEnabled
+    ).toBe(flag);
+  });
+
+  it('should default to enabled', () => {
+    // then — the animation is opt-out, so an absent flag stays on
+    expect(resolveConfig({ ui: {} }).cheerAnimationEnabled).toBe(true);
+  });
+
+  it('should ignore a non-boolean value', () => {
+    // then
+    expect(
+      resolveConfig({ ui: { cheerAnimationEnabled: 'yes' } })
+        .cheerAnimationEnabled
+    ).toBe(true);
+  });
+
+  it('should survive the save round trip', () => {
+    // given
+    const draft = snapshotFromConfig({ ...base, cheerAnimationEnabled: false });
+
+    // when
+    const update = buildSaveUpdate(draft, base);
+
+    // then
+    expect(update.ui?.cheerAnimationEnabled).toBe(false);
+  });
+
+  it('should count as an unsaved change', () => {
+    // given — otherwise the auto-save never fires for this toggle
+    const a = snapshotFromConfig(base);
+
+    // then
+    expect(snapshotsEqual(a, { ...a, cheerAnimationEnabled: false })).toBe(
+      false
+    );
   });
 });

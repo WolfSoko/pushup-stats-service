@@ -387,6 +387,52 @@ describe('UserConfigStore', () => {
     });
   });
 
+  describe('cheerAnimationEnabled', () => {
+    function setupWithUi(ui: NonNullable<UserConfig['ui']>): {
+      store: InstanceType<typeof UserConfigStore>;
+    } {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: UserConfigApiService,
+            useValue: {
+              getConfig: vitest.fn((uid: string) => of({ userId: uid, ui })),
+              updateConfig: vitest.fn(),
+            },
+          },
+          {
+            provide: UserContextService,
+            useValue: { userIdSafe: () => 'u1' },
+          },
+        ],
+      });
+      return { store: TestBed.inject(UserConfigStore) };
+    }
+
+    it('should default to enabled when the config carries no flag', async () => {
+      // given
+      const { store } = setupWithUi({});
+
+      // when
+      await flush();
+
+      // then
+      expect(store.cheerAnimationEnabled()).toBe(true);
+    });
+
+    it('should surface an explicit opt-out', async () => {
+      // given
+      const { store } = setupWithUi({ cheerAnimationEnabled: false });
+
+      // when
+      await flush();
+
+      // then
+      expect(store.cheerAnimationEnabled()).toBe(false);
+    });
+  });
+
   describe('markAnnouncementSeen', () => {
     it('should append the id to the seen list, keeping the rest of ui', async () => {
       // given
