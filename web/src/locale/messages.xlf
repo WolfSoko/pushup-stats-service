@@ -2968,18 +2968,9 @@
         <source>Freundschaftsnetz</source>
       </segment>
     </unit>
-    <unit id="admin.uiFeatures.title">
-      <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:39,42</note>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:28,29</note>
-      </notes>
-      <segment>
-        <source>UI-Features testen</source>
-      </segment>
-    </unit>
     <unit id="admin.bulk.title">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:46,48</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:36,38</note>
       </notes>
       <segment>
         <source>Anonyme Benutzer aufräumen</source>
@@ -2987,7 +2978,7 @@
     </unit>
     <unit id="admin.bulk.daysLabel">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:51,53</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:41,43</note>
       </notes>
       <segment>
         <source>Inaktiv seit (Tage)</source>
@@ -2995,7 +2986,7 @@
     </unit>
     <unit id="admin.bulk.hint">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:61,64</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:51,54</note>
       </notes>
       <segment>
         <source> Löscht anonyme Benutzer ohne Übungseinträge in den letzten <ph id="0" equiv="INTERPOLATION" disp="{{ inactiveDays() }}"/> Tagen. </source>
@@ -3003,7 +2994,7 @@
     </unit>
     <unit id="admin.bulk.button">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:77,78</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:67,68</note>
       </notes>
       <segment>
         <source>Inaktive löschen</source>
@@ -3011,7 +3002,7 @@
     </unit>
     <unit id="admin.bulk.deleted">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:85,86</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:75,76</note>
       </notes>
       <segment>
         <source>Gelöscht:</source>
@@ -3019,7 +3010,7 @@
     </unit>
     <unit id="admin.bulk.skipped">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:87,88</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:77,78</note>
       </notes>
       <segment>
         <source>Übersprungen:</source>
@@ -3027,7 +3018,7 @@
     </unit>
     <unit id="admin.filter.anonymous">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:106,108</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:96,98</note>
       </notes>
       <segment>
         <source> Nur anonyme Benutzer </source>
@@ -3035,7 +3026,7 @@
     </unit>
     <unit id="admin.col.uid">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:131,132</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:121,122</note>
       </notes>
       <segment>
         <source>UID</source>
@@ -3043,7 +3034,7 @@
     </unit>
     <unit id="admin.col.name">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:146,147</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:136,137</note>
       </notes>
       <segment>
         <source>Name</source>
@@ -3051,7 +3042,7 @@
     </unit>
     <unit id="admin.col.email">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:157,158</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:147,148</note>
       </notes>
       <segment>
         <source>E-Mail</source>
@@ -3059,7 +3050,7 @@
     </unit>
     <unit id="admin.col.anon">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:168,169</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:158,159</note>
       </notes>
       <segment>
         <source>Anon</source>
@@ -3067,7 +3058,7 @@
     </unit>
     <unit id="admin.col.entries">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:185,187</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:175,177</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -3075,7 +3066,7 @@
     </unit>
     <unit id="admin.col.lastEntry">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:196,198</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:186,188</note>
       </notes>
       <segment>
         <source>Letzter Eintrag</source>
@@ -3083,7 +3074,7 @@
     </unit>
     <unit id="admin.col.createdAt">
       <notes>
-        <note category="location">web/src/app/admin/admin-page.component.html:209,211</note>
+        <note category="location">web/src/app/admin/admin-page.component.html:199,201</note>
       </notes>
       <segment>
         <source>Erstellt</source>
@@ -3723,54 +3714,6 @@
         <source>wurde abgelehnt von</source>
       </segment>
     </unit>
-    <unit id="admin.uiFeatures.subtitle">
-      <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:30,32</note>
-      </notes>
-      <segment>
-        <source> Animationen und Overlays ohne den auslösenden Fall vorschauen. </source>
-      </segment>
-    </unit>
-    <unit id="admin.uiFeatures.backToAdmin">
-      <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:37,41</note>
-      </notes>
-      <segment>
-        <source>Zurück zum Admin-Bereich</source>
-      </segment>
-    </unit>
-    <unit id="admin.uiFeatures.cheer.title">
-      <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:44,46</note>
-      </notes>
-      <segment>
-        <source>Anfeuerungs-Feuerwerk</source>
-      </segment>
-    </unit>
-    <unit id="admin.uiFeatures.cheer.description">
-      <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:49,52</note>
-      </notes>
-      <segment>
-        <source> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </source>
-      </segment>
-    </unit>
-    <unit id="admin.uiFeatures.cheer.preview">
-      <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:62,65</note>
-      </notes>
-      <segment>
-        <source>Vorschau starten</source>
-      </segment>
-    </unit>
-    <unit id="admin.uiFeatures.cheer.previewSender">
-      <notes>
-        <note category="location">web/src/app/admin/ui-features-test-page.component.ts:82</note>
-      </notes>
-      <segment>
-        <source>Vorschau</source>
-      </segment>
-    </unit>
     <unit id="admin.details.title">
       <notes>
         <note category="location">web/src/app/admin/user-details-dialog.component.ts:13,14</note>
@@ -4135,7 +4078,7 @@
     <unit id="nav.dashboard">
       <notes>
         <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:24</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:25</note>
       </notes>
       <segment>
         <source>Dashboard</source>
@@ -4144,7 +4087,7 @@
     <unit id="nav.analysis">
       <notes>
         <note category="location">web/src/app/app.html:32,34</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:30</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:31</note>
       </notes>
       <segment>
         <source>Analyse</source>
@@ -4153,7 +4096,7 @@
     <unit id="nav.leaderboard">
       <notes>
         <note category="location">web/src/app/app.html:41,43</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:35</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:36</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -4162,7 +4105,7 @@
     <unit id="nav.friends">
       <notes>
         <note category="location">web/src/app/app.html:52,53</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:42</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:43</note>
       </notes>
       <segment>
         <source>Freunde</source>
@@ -4171,7 +4114,7 @@
     <unit id="nav.trainingPlans">
       <notes>
         <note category="location">web/src/app/app.html:64,67</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:50</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:51</note>
       </notes>
       <segment>
         <source>Trainingspläne</source>
@@ -4180,7 +4123,7 @@
     <unit id="nav.blog">
       <notes>
         <note category="location">web/src/app/app.html:73,75</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:52</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:62</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -4197,7 +4140,7 @@
     <unit id="nav.history">
       <notes>
         <note category="location">web/src/app/app.html:84,86</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:56</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -4206,7 +4149,7 @@
     <unit id="nav.pushupTypes">
       <notes>
         <note category="location">web/src/app/app.html:93,96</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4215,7 +4158,7 @@
     <unit id="nav.exercises">
       <notes>
         <note category="location">web/src/app/app.html:102,105</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:61</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4493,9 +4436,25 @@
         <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
       </segment>
     </unit>
+    <unit id="seo.workouts.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:179</note>
+      </notes>
+      <segment>
+        <source>Meine Sessions – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.workouts.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:180</note>
+      </notes>
+      <segment>
+        <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
+      </segment>
+    </unit>
     <unit id="seo.wiki.pushupTypes.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:182</note>
+        <note category="location">web/src/app/app.routes.ts:222</note>
       </notes>
       <segment>
         <source>Liegestütztypen erklärt – Pushup Tracker</source>
@@ -4503,7 +4462,7 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:183</note>
+        <note category="location">web/src/app/app.routes.ts:223</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
@@ -4511,7 +4470,7 @@
     </unit>
     <unit id="seo.wiki.exercises.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:206</note>
+        <note category="location">web/src/app/app.routes.ts:246</note>
       </notes>
       <segment>
         <source>Übungen erklärt – Pushup Tracker</source>
@@ -4519,7 +4478,7 @@
     </unit>
     <unit id="seo.wiki.exercises.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:207</note>
+        <note category="location">web/src/app/app.routes.ts:247</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
@@ -4527,7 +4486,7 @@
     </unit>
     <unit id="seo.friends.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:227</note>
+        <note category="location">web/src/app/app.routes.ts:267</note>
       </notes>
       <segment>
         <source>Freunde – Pushup Tracker</source>
@@ -4535,7 +4494,7 @@
     </unit>
     <unit id="seo.friends.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:228</note>
+        <note category="location">web/src/app/app.routes.ts:268</note>
       </notes>
       <segment>
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
@@ -4543,7 +4502,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:239</note>
+        <note category="location">web/src/app/app.routes.ts:279</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -4551,7 +4510,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:240</note>
+        <note category="location">web/src/app/app.routes.ts:280</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4559,7 +4518,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:250</note>
+        <note category="location">web/src/app/app.routes.ts:290</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -4567,7 +4526,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:251</note>
+        <note category="location">web/src/app/app.routes.ts:291</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4575,7 +4534,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:265</note>
+        <note category="location">web/src/app/app.routes.ts:305</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4583,7 +4542,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:266</note>
+        <note category="location">web/src/app/app.routes.ts:306</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4591,7 +4550,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:283</note>
+        <note category="location">web/src/app/app.routes.ts:323</note>
       </notes>
       <segment>
         <source>Über uns – Pushup Tracker</source>
@@ -4599,7 +4558,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:284</note>
+        <note category="location">web/src/app/app.routes.ts:324</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4607,7 +4566,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:294</note>
+        <note category="location">web/src/app/app.routes.ts:334</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -4615,7 +4574,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:295</note>
+        <note category="location">web/src/app/app.routes.ts:335</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -4623,7 +4582,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:305</note>
+        <note category="location">web/src/app/app.routes.ts:345</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -4631,7 +4590,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:306</note>
+        <note category="location">web/src/app/app.routes.ts:346</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -4639,7 +4598,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:159</note>
+        <note category="location">web/src/app/app.ts:158</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4647,7 +4606,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:160</note>
+        <note category="location">web/src/app/app.ts:159</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4655,7 +4614,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:292</note>
+        <note category="location">web/src/app/app.ts:294</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4663,7 +4622,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:390</note>
+        <note category="location">web/src/app/app.ts:392</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4671,7 +4630,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:393</note>
+        <note category="location">web/src/app/app.ts:395</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4679,7 +4638,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:461</note>
+        <note category="location">web/src/app/app.ts:463</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4687,7 +4646,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:490</note>
+        <note category="location">web/src/app/app.ts:492</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4695,7 +4654,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:497</note>
+        <note category="location">web/src/app/app.ts:499</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5223,14 +5182,6 @@
         <source><ph id="0" equiv="REPS" disp="cfg.reps"/> <ph id="1" equiv="EXERCISE" disp="exerciseLabel"/> hinzufügen</source>
       </segment>
     </unit>
-    <unit id="cheer.overlay.message">
-      <notes>
-        <note category="location">web/src/app/core/cheer-fireworks-overlay.component.ts:32,34</note>
-      </notes>
-      <segment>
-        <source> 🔥 Ein Freund feuert dich an! </source>
-      </segment>
-    </unit>
     <unit id="dailyGoal.check.manual">
       <notes>
         <note category="location">web/src/app/core/daily-goal-actions.service.ts:64</note>
@@ -5390,6 +5341,14 @@
       </notes>
       <segment>
         <source>Hauptnavigation</source>
+      </segment>
+    </unit>
+    <unit id="nav.workouts">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:58</note>
+      </notes>
+      <segment>
+        <source>Sessions</source>
       </segment>
     </unit>
     <unit id="admin.release.label">
@@ -5629,6 +5588,8 @@
         <note category="location">web/src/app/friends/friends-list.component.ts:106</note>
         <note category="location">web/src/app/friends/friends-page.component.ts:224</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:220</note>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:167</note>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:108</note>
       </notes>
       <segment>
         <source>Ohne Namen</source>
@@ -6107,6 +6068,7 @@
       <notes>
         <note category="location">web/src/app/friends/friends-messages.ts:36</note>
         <note category="location">web/src/app/friends/friends-messages.ts:53</note>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:37</note>
       </notes>
       <segment>
         <source>Das geht nur unter bestätigten Freunden.</source>
@@ -6116,6 +6078,7 @@
       <notes>
         <note category="location">web/src/app/friends/friends-messages.ts:38</note>
         <note category="location">web/src/app/friends/friends-messages.ts:68</note>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:41</note>
       </notes>
       <segment>
         <source>Das hat nicht funktioniert. Bitte später erneut versuchen.</source>
@@ -7030,6 +6993,110 @@
         <source> Als Nächstes: 20 Russian Twists </source>
       </segment>
     </unit>
+    <unit id="landing.workouts.mock.title">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:6,8</note>
+      </notes>
+      <segment>
+        <source>Ganzkörper kurz</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:9,11</note>
+      </notes>
+      <segment>
+        <source>Von Anna · 3 Übungen</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.line1">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:16,19</note>
+      </notes>
+      <segment>
+        <source>3×10 Liegestütze</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.line2">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:20,23</note>
+      </notes>
+      <segment>
+        <source>0:50 Plank</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.line3">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:24,27</note>
+      </notes>
+      <segment>
+        <source>20 Kniebeugen</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.mock.action">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:29,31</note>
+      </notes>
+      <segment>
+        <source>Session starten</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:37,39</note>
+      </notes>
+      <segment>
+        <source> Neu · Eigene Sessions </source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.headline">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:40,42</note>
+      </notes>
+      <segment>
+        <source> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.desc">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:43,48</note>
+      </notes>
+      <segment>
+        <source> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.chip.compose">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:52,56</note>
+      </notes>
+      <segment>
+        <source>Übungen, Ziele und Sätze frei kombinieren</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.chip.run">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:58,62</note>
+      </notes>
+      <segment>
+        <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.chip.share">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:64,69</note>
+      </notes>
+      <segment>
+        <source>Auf dem Profil zeigen oder Freunden schicken</source>
+      </segment>
+    </unit>
+    <unit id="landing.workouts.cta">
+      <notes>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:75,79</note>
+      </notes>
+      <segment>
+        <source>Eigene Session erstellen</source>
+      </segment>
+    </unit>
     <unit id="datenschutz.title">
       <notes>
         <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:7,10</note>
@@ -7564,7 +7631,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:292,296</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:299,303</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -7572,7 +7639,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:297,298</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:304,305</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -7580,7 +7647,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:304,305</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:311,312</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -7588,7 +7655,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:315,317</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:322,324</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -7596,7 +7663,7 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:319,324</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:326,331</note>
       </notes>
       <segment>
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
@@ -7604,7 +7671,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:387,389</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:394,396</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -7612,7 +7679,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:391,395</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:398,402</note>
       </notes>
       <segment>
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
@@ -7620,7 +7687,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:491,493</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:498,500</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -7628,7 +7695,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:495,498</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:502,505</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
@@ -7636,7 +7703,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:540,542</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:547,549</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -7644,7 +7711,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:544,548</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:551,555</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -7652,7 +7719,7 @@
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:635,637</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642,644</note>
       </notes>
       <segment>
         <source>Sätze &amp; Intervalle</source>
@@ -7660,7 +7727,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:639,642</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:646,649</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
@@ -7668,7 +7735,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:651,653</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:658,660</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -7676,7 +7743,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:655,658</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:662,665</note>
       </notes>
       <segment>
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
@@ -7684,7 +7751,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:666,668</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:673,675</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -7692,7 +7759,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:670,674</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:677,681</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
@@ -7700,7 +7767,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:681,683</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:688,690</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -7708,7 +7775,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:685,688</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:692,695</note>
       </notes>
       <segment>
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
@@ -7716,7 +7783,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:693,695</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:700,702</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -7724,7 +7791,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:706,708</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:713,715</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -7732,7 +7799,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:713,716</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:720,723</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -7740,7 +7807,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:724,726</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:731,733</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -7748,7 +7815,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:728,732</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:735,739</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -7756,7 +7823,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:735</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:742</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -7764,7 +7831,7 @@
     </unit>
     <unit id="landing.ai.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:743,744</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:750,751</note>
       </notes>
       <segment>
         <source>AI ready</source>
@@ -7772,7 +7839,7 @@
     </unit>
     <unit id="landing.ai.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:745,747</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:752,754</note>
       </notes>
       <segment>
         <source> Bereit für deinen KI-Coach </source>
@@ -7780,7 +7847,7 @@
     </unit>
     <unit id="landing.ai.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:748,752</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:755,759</note>
       </notes>
       <segment>
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
@@ -7788,7 +7855,7 @@
     </unit>
     <unit id="landing.ai.chip.protocol">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:756,759</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:763,766</note>
       </notes>
       <segment>
         <source>AG-UI-Protokoll</source>
@@ -7796,7 +7863,7 @@
     </unit>
     <unit id="landing.ai.chip.copilotkit">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:760,763</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:767,770</note>
       </notes>
       <segment>
         <source>CopilotKit für Angular</source>
@@ -7804,7 +7871,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:765,768</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:772,775</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -7812,7 +7879,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:770,773</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:777,780</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -7820,7 +7887,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:781,784</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:788,791</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -7828,7 +7895,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:789,791</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:796,798</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -7836,7 +7903,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:796,797</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,804</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -7844,7 +7911,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:937,938</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:944,945</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -7852,7 +7919,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:943,945</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:950,952</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -7860,7 +7927,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:947,950</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:954,957</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -7868,7 +7935,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:957,960</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:964,967</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -7876,7 +7943,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:966,968</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:973,975</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -7884,7 +7951,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:970,973</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:977,980</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -7892,7 +7959,7 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:980,982</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:987,989</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
@@ -8018,9 +8085,57 @@
         <source>Plan ansehen</source>
       </segment>
     </unit>
-    <unit id="publicProfile.heatmap.aria">
+    <unit id="publicProfile.workouts">
       <notes>
         <note category="location">web/src/app/public-profile/profile-labels.ts:22</note>
+      </notes>
+      <segment>
+        <source>Sessions</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copy">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
+      </notes>
+      <segment>
+        <source>Übernehmen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copied">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
+      </notes>
+      <segment>
+        <source>Übernommen</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.own">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
+      </notes>
+      <segment>
+        <source>Zu meinen Sessions</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copiedNote">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
+      </notes>
+      <segment>
+        <source>Gespeichert unter „Meine Sessions“.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.workouts.copyFailed">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
+      </notes>
+      <segment>
+        <source>Konnte nicht übernommen werden. Bitte später erneut versuchen.</source>
+      </segment>
+    </unit>
+    <unit id="publicProfile.heatmap.aria">
+      <notes>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
       </notes>
       <segment>
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
@@ -8028,7 +8143,7 @@
     </unit>
     <unit id="publicProfile.memberSince">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
       </notes>
       <segment>
         <source>Dabei seit</source>
@@ -8036,7 +8151,7 @@
     </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
       </notes>
       <segment>
         <source>Profil nicht gefunden</source>
@@ -8044,7 +8159,7 @@
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
@@ -8052,7 +8167,7 @@
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
       </notes>
       <segment>
         <source>Profil konnte nicht geladen werden</source>
@@ -8060,7 +8175,7 @@
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
       </notes>
       <segment>
         <source>Bitte versuche es später erneut.</source>
@@ -8068,7 +8183,7 @@
     </unit>
     <unit id="publicProfile.retry">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
       </notes>
       <segment>
         <source>Erneut versuchen</source>
@@ -8076,7 +8191,7 @@
     </unit>
     <unit id="publicProfile.toHome">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
       </notes>
       <segment>
         <source>Zur Startseite</source>
@@ -8084,7 +8199,7 @@
     </unit>
     <unit id="publicProfile.stats">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
       </notes>
       <segment>
         <source>Statistik</source>
@@ -8092,7 +8207,7 @@
     </unit>
     <unit id="publicProfile.total">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
       </notes>
       <segment>
         <source>Gesamte Reps</source>
@@ -8100,7 +8215,7 @@
     </unit>
     <unit id="publicProfile.streak">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
       </notes>
       <segment>
         <source>Aktuelle Streak</source>
@@ -8108,7 +8223,7 @@
     </unit>
     <unit id="publicProfile.days">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
       </notes>
       <segment>
         <source>Aktive Tage</source>
@@ -8116,7 +8231,7 @@
     </unit>
     <unit id="publicProfile.entries">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -8124,7 +8239,7 @@
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
       </notes>
       <segment>
         <source>Bester Einzel-Eintrag</source>
@@ -8132,7 +8247,7 @@
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
       </notes>
       <segment>
         <source>Bester Tag</source>
@@ -8140,7 +8255,7 @@
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
       </notes>
       <segment>
         <source>Profil teilen</source>
@@ -8148,7 +8263,7 @@
     </unit>
     <unit id="publicProfile.achievements">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
       </notes>
       <segment>
         <source>Trainingsplan-Erfolge</source>
@@ -8156,7 +8271,7 @@
     </unit>
     <unit id="publicProfile.share">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -8164,7 +8279,7 @@
     </unit>
     <unit id="publicProfile.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
       </notes>
       <segment>
         <source>Selbst tracken – pushup-stats.com</source>
@@ -8172,7 +8287,7 @@
     </unit>
     <unit id="publicProfile.owner.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
       </notes>
       <segment>
         <source>Nur für dich sichtbar</source>
@@ -8180,7 +8295,7 @@
     </unit>
     <unit id="publicProfile.owner.hint">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
       </notes>
       <segment>
         <source>Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.</source>
@@ -8188,7 +8303,7 @@
     </unit>
     <unit id="publicProfile.owner.legend.public">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
       </notes>
       <segment>
         <source>Für alle sichtbar, die deinen Profil-Link haben.</source>
@@ -8196,7 +8311,7 @@
     </unit>
     <unit id="publicProfile.owner.legend.friends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
       </notes>
       <segment>
         <source>Nur für Freunde, die deine Anfrage bestätigt haben.</source>
@@ -8204,7 +8319,7 @@
     </unit>
     <unit id="publicProfile.owner.legend.off">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
       </notes>
       <segment>
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
@@ -8212,7 +8327,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.group">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
       </notes>
       <segment>
         <source>Ansicht wählen</source>
@@ -8220,7 +8335,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.owner">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -8228,7 +8343,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.friend">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:55</note>
       </notes>
       <segment>
         <source>Als Freund</source>
@@ -8236,7 +8351,7 @@
     </unit>
     <unit id="publicProfile.owner.preview">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:56</note>
       </notes>
       <segment>
         <source>Als Besucher</source>
@@ -8244,7 +8359,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.locked">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:57</note>
       </notes>
       <segment>
         <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
@@ -8252,7 +8367,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.noteFriend">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
       </notes>
       <segment>
         <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
@@ -8260,7 +8375,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.notePublic">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
       </notes>
       <segment>
         <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
@@ -8268,7 +8383,7 @@
     </unit>
     <unit id="publicProfile.owner.photoEdit">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
       </notes>
       <segment>
         <source>Profilbild ändern</source>
@@ -8276,7 +8391,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.public">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:56</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:62</note>
       </notes>
       <segment>
         <source>Für alle sichtbar</source>
@@ -8284,7 +8399,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.friends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:57</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:63</note>
       </notes>
       <segment>
         <source>Nur für Freunde sichtbar</source>
@@ -8292,7 +8407,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.off">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:64</note>
       </notes>
       <segment>
         <source>Für niemanden sichtbar</source>
@@ -8300,7 +8415,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextFriends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:66</note>
       </notes>
       <segment>
         <source>Tippen: nur Freunde</source>
@@ -8308,7 +8423,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextOff">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:61</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:67</note>
       </notes>
       <segment>
         <source>Tippen: ausblenden</source>
@@ -8316,7 +8431,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextPublic">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:62</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
       </notes>
       <segment>
         <source>Tippen: für alle zeigen</source>
@@ -8324,7 +8439,7 @@
     </unit>
     <unit id="publicProfile.exercises.reps">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:74</note>
       </notes>
       <segment>
         <source>Stückübungen</source>
@@ -8332,7 +8447,7 @@
     </unit>
     <unit id="publicProfile.exercises.time">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:69</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:75</note>
       </notes>
       <segment>
         <source>Zeitübungen</source>
@@ -8340,7 +8455,7 @@
     </unit>
     <unit id="publicProfile.exercises.distance">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:70</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:76</note>
       </notes>
       <segment>
         <source>Streckenübungen</source>
@@ -8348,7 +8463,7 @@
     </unit>
     <unit id="publicProfile.exercises.weight">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:71</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:77</note>
       </notes>
       <segment>
         <source>Gewichtsübungen</source>
@@ -8356,7 +8471,7 @@
     </unit>
     <unit id="weekday.short.mon">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:75</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:81</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -8364,7 +8479,7 @@
     </unit>
     <unit id="weekday.short.tue">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:76</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:82</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -8372,7 +8487,7 @@
     </unit>
     <unit id="weekday.short.wed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:77</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:83</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -8380,7 +8495,7 @@
     </unit>
     <unit id="weekday.short.thu">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:78</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:84</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -8388,7 +8503,7 @@
     </unit>
     <unit id="weekday.short.fri">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:79</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:85</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -8396,7 +8511,7 @@
     </unit>
     <unit id="weekday.short.sat">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:80</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:86</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -8404,7 +8519,7 @@
     </unit>
     <unit id="weekday.short.sun">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:81</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:87</note>
       </notes>
       <segment>
         <source>So</source>
@@ -9092,26 +9207,10 @@
     </unit>
     <unit id="settings.snapQualityHint">
       <notes>
-        <note category="location">web/src/app/settings/settings-display.component.html:37,42</note>
+        <note category="location">web/src/app/settings/settings-display.component.html:37,41</note>
       </notes>
       <segment>
         <source> Steuert die Partikelanzahl der „Ziel erreicht“-Animation (40k / 120k / 200k). </source>
-      </segment>
-    </unit>
-    <unit id="settings.cheerAnimation.label">
-      <notes>
-        <note category="location">web/src/app/settings/settings-display.component.html:48,50</note>
-      </notes>
-      <segment>
-        <source> Anfeuerungs-Animation anzeigen </source>
-      </segment>
-    </unit>
-    <unit id="settings.cheerAnimation.hint">
-      <notes>
-        <note category="location">web/src/app/settings/settings-display.component.html:51,54</note>
-      </notes>
-      <segment>
-        <source> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </source>
       </segment>
     </unit>
     <unit id="settings.section.ads.title">
@@ -9221,7 +9320,7 @@
     <unit id="settings.delete.confirmPlaceholder">
       <notes>
         <note category="location">web/src/app/settings/settings-privacy.component.html:84,85</note>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:99</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:98</note>
       </notes>
       <segment>
         <source>löschen</source>
@@ -12524,7 +12623,7 @@
     </unit>
     <unit id="settings.publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:141</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:140</note>
       </notes>
       <segment>
         <source>Mein Pushup Tracker Profil</source>
@@ -12532,7 +12631,7 @@
     </unit>
     <unit id="settings.publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:142</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:141</note>
       </notes>
       <segment>
         <source>Schau dir mein Pushup-Profil an:</source>
@@ -12540,7 +12639,7 @@
     </unit>
     <unit id="settings.delete.error">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:170</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:169</note>
       </notes>
       <segment>
         <source>Bitte exakt „löschen“ eingeben.</source>
@@ -12548,7 +12647,7 @@
     </unit>
     <unit id="settings.anonymizedName">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:182</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:181</note>
       </notes>
       <segment>
         <source>Gelöschter Benutzer</source>
@@ -13555,6 +13654,7 @@
     <unit id="session.loading">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:19,21</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:121,124</note>
       </notes>
       <segment>
         <source> Session wird geladen … </source>
@@ -13588,6 +13688,7 @@
     <unit id="session.progressSteps">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:48,50</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:23,25</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </source>
@@ -13596,6 +13697,7 @@
     <unit id="session.progress">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:53,55</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:28,30</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </source>
@@ -13604,6 +13706,7 @@
     <unit id="session.done.title">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:102,104</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:77,79</note>
       </notes>
       <segment>
         <source> Session geschafft </source>
@@ -13612,6 +13715,7 @@
     <unit id="session.done.textSteps">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:106,108</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:81,83</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </source>
@@ -13620,6 +13724,7 @@
     <unit id="session.done.text">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:111,113</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:86,88</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </source>
@@ -13636,6 +13741,7 @@
     <unit id="session.done.reopen">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:127,129</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:102,104</note>
       </notes>
       <segment>
         <source>Offene Übungen ansehen</source>
@@ -13660,6 +13766,7 @@
     <unit id="session.close">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.ts:75</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.ts:78</note>
       </notes>
       <segment>
         <source>Session beenden</source>
@@ -14344,6 +14451,640 @@
       </notes>
       <segment>
         <source>Detailseite öffnen</source>
+      </segment>
+    </unit>
+    <unit id="workoutSession.title">
+      <notes>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:4,6</note>
+      </notes>
+      <segment>
+        <source> Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="workoutSession.done.action">
+      <notes>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:97,99</note>
+      </notes>
+      <segment>
+        <source>Zu meinen Sessions</source>
+      </segment>
+    </unit>
+    <unit id="workoutSession.unknown">
+      <notes>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:112,114</note>
+      </notes>
+      <segment>
+        <source> Diese Session gibt es nicht. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.back">
+      <notes>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:116,119</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:27,29</note>
+      </notes>
+      <segment>
+        <source>Zu meinen Sessions</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.from">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:44,45</note>
+      </notes>
+      <segment>
+        <source>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.onProfile">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:50,52</note>
+      </notes>
+      <segment>
+        <source>Auf deinem Profil</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.run">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:63,66</note>
+      </notes>
+      <segment>
+        <source>Starten</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.edit">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:71,73</note>
+      </notes>
+      <segment>
+        <source>Bearbeiten</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.share">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:157</note>
+      </notes>
+      <segment>
+        <source>An Freunde schicken</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.delete">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:158</note>
+      </notes>
+      <segment>
+        <source>Löschen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.hideFromProfile">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:172</note>
+      </notes>
+      <segment>
+        <source>Vom Profil nehmen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.card.showOnProfile">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-card.component.ts:173</note>
+      </notes>
+      <segment>
+        <source>Auf dem Profil zeigen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-delete-dialog.component.ts:19,21</note>
+      </notes>
+      <segment>
+        <source>Session löschen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.confirm">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-delete-dialog.component.ts:22,24</note>
+      </notes>
+      <segment>
+        <source> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.cancel">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-delete-dialog.component.ts:28,30</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="workouts.delete.button">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-delete-dialog.component.ts:37,39</note>
+      </notes>
+      <segment>
+        <source> Löschen </source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.editTitle">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:4,6</note>
+      </notes>
+      <segment>
+        <source>Session bearbeiten</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.newTitle">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:6,8</note>
+      </notes>
+      <segment>
+        <source>Neue Session</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.intro">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:9,12</note>
+      </notes>
+      <segment>
+        <source> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.loading">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:16,18</note>
+      </notes>
+      <segment>
+        <source>Session wird geladen …</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.missing">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:22,24</note>
+      </notes>
+      <segment>
+        <source>Diese Session gibt es nicht.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.name">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:34,36</note>
+      </notes>
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.description">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:46,49</note>
+      </notes>
+      <segment>
+        <source>Beschreibung (optional)</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.exercises">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:58,60</note>
+      </notes>
+      <segment>
+        <source>Übungen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.exercise">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:64,66</note>
+      </notes>
+      <segment>
+        <source>Übung</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.variant">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:86,88</note>
+      </notes>
+      <segment>
+        <source>Variante</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.noVariant">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:94,96</note>
+      </notes>
+      <segment>
+        <source>Keine</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.target">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:107,109</note>
+      </notes>
+      <segment>
+        <source>Ziel</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.sets">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:122,124</note>
+      </notes>
+      <segment>
+        <source>Sätze (optional)</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.addExercise">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:177,180</note>
+      </notes>
+      <segment>
+        <source>Übung hinzufügen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.onProfile">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:185,187</note>
+      </notes>
+      <segment>
+        <source>Auf meinem Profil zeigen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.onProfileHint">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:188,192</note>
+      </notes>
+      <segment>
+        <source> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.cancel">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:200,203</note>
+      </notes>
+      <segment>
+        <source>Abbrechen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.save">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:210,212</note>
+      </notes>
+      <segment>
+        <source>Speichern</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.moveUp">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.ts:78</note>
+      </notes>
+      <segment>
+        <source>Nach oben</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.moveDown">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.ts:79</note>
+      </notes>
+      <segment>
+        <source>Nach unten</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.removeExercise">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-editor.component.ts:80</note>
+      </notes>
+      <segment>
+        <source>Übung entfernen</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.unit.seconds">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-form.ts:166</note>
+      </notes>
+      <segment>
+        <source>Sek.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.unit.meters">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-form.ts:169</note>
+      </notes>
+      <segment>
+        <source>m</source>
+      </segment>
+    </unit>
+    <unit id="workouts.editor.unit.reps">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-form.ts:171</note>
+      </notes>
+      <segment>
+        <source>Wdh.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.share.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:35,37</note>
+      </notes>
+      <segment>
+        <source> Session an Freunde schicken </source>
+      </segment>
+    </unit>
+    <unit id="workouts.share.noFriends">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:42,45</note>
+      </notes>
+      <segment>
+        <source> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.share.toFriends">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:46,49</note>
+      </notes>
+      <segment>
+        <source>Zu den Freunden</source>
+      </segment>
+    </unit>
+    <unit id="workouts.share.hint">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:50,52</note>
+      </notes>
+      <segment>
+        <source> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.share.cancel">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:76,78</note>
+      </notes>
+      <segment>
+        <source> Abbrechen </source>
+      </segment>
+    </unit>
+    <unit id="workouts.share.submit">
+      <notes>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:86,88</note>
+      </notes>
+      <segment>
+        <source> Schicken </source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.badge">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:31,32</note>
+      </notes>
+      <segment>
+        <source>Neu</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:32,34</note>
+      </notes>
+      <segment>
+        <source>Eigene Sessions</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.stepCount">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:48,50</note>
+      </notes>
+      <segment>
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.later">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:59,61</note>
+      </notes>
+      <segment>
+        <source> Später </source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.back">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:68,70</note>
+      </notes>
+      <segment>
+        <source>Zurück</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.start">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:80,82</note>
+      </notes>
+      <segment>
+        <source>Erste Session anlegen</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.next">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:90,91</note>
+      </notes>
+      <segment>
+        <source>Weiter</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step1.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:165</note>
+      </notes>
+      <segment>
+        <source>Zusammenstellen</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step1.body">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:166</note>
+      </notes>
+      <segment>
+        <source>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step2.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:170</note>
+      </notes>
+      <segment>
+        <source>Geführt durchführen</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step2.body">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:171</note>
+      </notes>
+      <segment>
+        <source>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step3.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:175</note>
+      </notes>
+      <segment>
+        <source>Teilen</source>
+      </segment>
+    </unit>
+    <unit id="workoutsIntro.step3.body">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:176</note>
+      </notes>
+      <segment>
+        <source>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:15</note>
+      </notes>
+      <segment>
+        <source>Gib der Session einen Namen (höchstens 60 Zeichen).</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.description">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:17</note>
+      </notes>
+      <segment>
+        <source>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.noExercises">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:19</note>
+      </notes>
+      <segment>
+        <source>Füge mindestens eine Übung hinzu.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.tooManyExercises">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:21</note>
+      </notes>
+      <segment>
+        <source>Höchstens 20 Übungen pro Session.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.exercise">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:23</note>
+      </notes>
+      <segment>
+        <source>Eine Übung ist ungültig. Wähle eine aus der Liste.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.target">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:25</note>
+      </notes>
+      <segment>
+        <source>Jede Übung braucht ein Ziel größer als 0.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.sets">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:27</note>
+      </notes>
+      <segment>
+        <source>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.limit">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:29</note>
+      </notes>
+      <segment>
+        <source>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.notFound">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:31</note>
+      </notes>
+      <segment>
+        <source>Diese Session gibt es nicht mehr.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.noFriends">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:33</note>
+      </notes>
+      <segment>
+        <source>Wähle mindestens einen Freund aus.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.tooMany">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:35</note>
+      </notes>
+      <segment>
+        <source>Zu viele Empfänger auf einmal.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.error.invalid">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-messages.ts:39</note>
+      </notes>
+      <segment>
+        <source>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</source>
+      </segment>
+    </unit>
+    <unit id="workouts.title">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Meine Sessions</source>
+      </segment>
+    </unit>
+    <unit id="workouts.intro">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:5,9</note>
+      </notes>
+      <segment>
+        <source> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.new">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:17,19</note>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:43,45</note>
+      </notes>
+      <segment>
+        <source>Neue Session</source>
+      </segment>
+    </unit>
+    <unit id="workouts.empty">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:36,38</note>
+      </notes>
+      <segment>
+        <source> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.profileHint">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:53,55</note>
+      </notes>
+      <segment>
+        <source> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </source>
+      </segment>
+    </unit>
+    <unit id="workouts.toProfile">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.html:57,59</note>
+      </notes>
+      <segment>
+        <source>Zum Profil</source>
+      </segment>
+    </unit>
+    <unit id="workouts.sharedPartly">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.ts:101</note>
+      </notes>
+      <segment>
+        <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
+      </segment>
+    </unit>
+    <unit id="workouts.shared">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.ts:102</note>
+      </notes>
+      <segment>
+        <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>
       </segment>
     </unit>
   </file>

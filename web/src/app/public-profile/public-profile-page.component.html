@@ -459,6 +459,32 @@
           </section>
         }
 
+        @if (audience.renders('workouts', p.workouts.length > 0)) {
+          <section
+            class="plan-section"
+            data-testid="public-profile-workouts"
+            [class.is-hidden]="!audience.isVisible('workouts')"
+          >
+            <h2>
+              {{ labels.workouts }}
+              <ng-container
+                *ngTemplateOutlet="
+                  sectionToggle;
+                  context: { $implicit: 'workouts', label: labels.workouts }
+                "
+              ></ng-container>
+            </h2>
+            @if (p.workouts.length > 0) {
+              <app-profile-workouts
+                [workouts]="p.workouts"
+                [ownerUid]="p.uid"
+                [ownerName]="p.displayName"
+                [isOwner]="audience.isOwner()"
+              />
+            }
+          </section>
+        }
+
         @if (audience.renders('recent', rows.recentRows().length > 0)) {
           <section
             class="recent"

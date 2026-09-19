@@ -257,6 +257,12 @@ export interface UserConfig {
      * push notification `sendCheer` always sends regardless of this flag.
      */
     cheerAnimationEnabled?: boolean;
+    /**
+     * Ids of feature announcements the user has closed (see
+     * `FeatureAnnouncementService`). Persisted per account so a
+     * walkthrough shown on one device is not shown again on the next.
+     */
+    seenAnnouncements?: string[];
   };
   /**
    * ISO timestamp of the last profile-photo upload, absent when none was

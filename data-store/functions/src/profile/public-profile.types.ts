@@ -2,6 +2,7 @@ import {
   type MeasurementType,
   type ProfileSection,
   type ProfileSectionVisibility,
+  type PublicProfileWorkout,
 } from '@pu-stats/models';
 
 import { type UserProfile } from './logic';
@@ -115,6 +116,8 @@ export interface PublicProfileProjection {
   recent: RecentEntry[];
   /** The running training plan, `null` when there is none or it is hidden. */
   plan: PlanProgress | null;
+  /** Workouts the owner put on their profile. Empty when not visible. */
+  workouts: PublicProfileWorkout[];
   /**
    * True only when the projection is handed to its own owner despite the
    * profile being private. Never true for a third party — the callable
@@ -153,6 +156,7 @@ export interface PublicProfileExtras {
   readonly exercises?: ReadonlyArray<ExerciseTotal>;
   readonly recent?: ReadonlyArray<RecentEntry>;
   readonly plan?: PlanProgress | null;
+  readonly workouts?: ReadonlyArray<PublicProfileWorkout>;
   /** Berlin period keys for "now", used to reject stale buckets. */
   readonly currentWeeklyKey?: string;
   readonly currentMonthlyKey?: string;

@@ -26,7 +26,12 @@ export class PublicProfileApiService {
     );
     try {
       const result = await callable({ uid });
-      return result.data ?? null;
+      const data = result.data;
+      if (!data) return null;
+      // Hosting can serve ahead of a functions deploy for a moment, and a
+      // cached response may predate a section — a missing list must read
+      // as empty, not crash the page.
+      return { ...data, workouts: data.workouts ?? [] };
     } catch (err) {
       // Distinguish opt-out / nonexistent (treat as null) from other errors.
       if (isNotFoundError(err)) return null;

@@ -24,6 +24,7 @@ import { berlinDateParts } from './datetime';
 import { db } from './firebase-app';
 import { periodKeys } from './user-stats-delta';
 import { resolvePhotoUrl } from './functions-profile-photo';
+import { profileWorkouts } from './workouts/logic';
 import {
   buildPublicProfile,
   isValidUid,
@@ -141,6 +142,21 @@ async function readActivePlan(
   };
 }
 
+/**
+ * The workouts the owner put on their profile. Two equality filters, so
+ * no composite index; the sort and cap happen in `profileWorkouts`.
+ */
+async function readProfileWorkouts(uid: string) {
+  const snap = await db
+    .collection('workouts')
+    .where('ownerId', '==', uid)
+    .where('onProfile', '==', true)
+    .get();
+  return profileWorkouts(
+    snap.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+  );
+}
+
 async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   if (!isValidUid(uid)) return null;
   const [cfgSnap, statsSnap, achievementsSnap] = await Promise.all([
@@ -190,11 +206,12 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
   // Skip the extra read entirely when the viewer may not see the section.
   const shows = (section: ProfileSection): boolean =>
     isSectionVisibleTo(sectionVisibility(config?.ui, section), viewer);
-  const [photoURL, exercises, recent, plan] = await Promise.all([
+  const [photoURL, exercises, recent, plan, workouts] = await Promise.all([
     resolvePhotoUrl(uid, config ?? {}, viewerIsOwner),
     readExerciseTotals(uid),
     shows('recent') ? readRecentEntries(uid) : Promise.resolve([]),
     shows('plan') ? readActivePlan(uid, parts.isoDate) : Promise.resolve(null),
+    shows('workouts') ? readProfileWorkouts(uid) : Promise.resolve([]),
   ]);
   return buildPublicProfile(uid, config, stats, {
     achievements,
@@ -202,6 +219,7 @@ async function fetchPublicProfileProjection(uid: string, viewerUid = '') {
     exercises,
     recent,
     plan,
+    workouts,
     currentWeeklyKey: keys.weeklyKey,
     currentMonthlyKey: keys.monthlyKey,
     viewerIsOwner,

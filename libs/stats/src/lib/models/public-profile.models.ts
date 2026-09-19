@@ -1,5 +1,6 @@
 import type { ProfileSection } from './profile-sections';
 import type { ProfileSectionVisibility } from './profile-visibility.models';
+import type { TrainingPlanExercise } from './training-plan.models';
 
 /**
  * Sanitized projection of a user's stats for the public profile route.
@@ -55,6 +56,8 @@ export interface PublicProfile {
   readonly recent: ReadonlyArray<PublicProfileEntry>;
   /** The training plan the owner is running, `null` when there is none. */
   readonly plan: PublicProfilePlan | null;
+  /** Workouts the owner put on their profile, for visitors to copy. */
+  readonly workouts: ReadonlyArray<PublicProfileWorkout>;
   /**
    * True only when the viewer is the owner and has not opted in yet. The
    * page keeps showing the content and adds a hint; nobody else ever
@@ -104,6 +107,17 @@ export interface PublicProfilePlan {
   readonly dayIndex: number;
   readonly totalDays: number;
   readonly paused: boolean;
+}
+
+/**
+ * A workout as a profile visitor sees it: enough to run it or take a
+ * copy, nothing about who else has it.
+ */
+export interface PublicProfileWorkout {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly exercises: ReadonlyArray<TrainingPlanExercise>;
 }
 
 export interface PublicProfileExercise {

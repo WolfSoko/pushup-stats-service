@@ -62,6 +62,7 @@ import { createGoalPillOverlay } from './core/daily-goal/goal-pill-overlay';
 import { ThemeToggleComponent } from './core/theme';
 import { ReminderOrchestrationService } from './core/reminder-orchestration.service';
 import { AndroidTestInviteOrchestrationService } from './core/android-test-invite-orchestration.service';
+import { FeatureAnnouncementService } from './core/feature-announcement.service';
 import { SwUpdateService } from './core/sw-update.service';
 import { AppDataFacade } from './core/app-data.facade';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
@@ -255,6 +256,9 @@ export class App {
   private readonly _androidTestInvite = inject(
     AndroidTestInviteOrchestrationService
   );
+  // Eager-inject so the "what's new" walkthrough fires once the dashboard
+  // is up, whichever page the user signed in from.
+  private readonly _announcements = inject(FeatureAnnouncementService);
 
   // Delegate to facade
   readonly quickAddSuggestions = this.appData.quickAddSuggestions;

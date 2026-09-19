@@ -1,0 +1,78 @@
+<section class="workouts-section">
+  <div class="workouts-mock-wrap" aria-hidden="true">
+    <mat-card class="workouts-mock">
+      <mat-card-header>
+        <mat-card-title i18n="@@landing.workouts.mock.title"
+          >Ganzkörper kurz</mat-card-title
+        >
+        <mat-card-subtitle i18n="@@landing.workouts.mock.subtitle"
+          >Von Anna · 3 Übungen</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="mock-list">
+          <li>
+            <mat-icon aria-hidden="true">fitness_center</mat-icon>
+            <span i18n="@@landing.workouts.mock.line1">3×10 Liegestütze</span>
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">self_improvement</mat-icon>
+            <span i18n="@@landing.workouts.mock.line2">0:50 Plank</span>
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">airline_seat_legroom_reduced</mat-icon>
+            <span i18n="@@landing.workouts.mock.line3">20 Kniebeugen</span>
+          </li>
+        </ul>
+        <p class="mock-action">
+          <mat-icon aria-hidden="true">play_arrow</mat-icon>
+          <span i18n="@@landing.workouts.mock.action">Session starten</span>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="workouts-content">
+    <p class="eyebrow" i18n="@@landing.workouts.eyebrow">
+      Neu · Eigene Sessions
+    </p>
+    <h2 i18n="@@landing.workouts.headline">
+      Dein Workout, deine Regeln — und deine Freunde trainieren mit.
+    </h2>
+    <p class="workouts-desc" i18n="@@landing.workouts.desc">
+      Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele,
+      Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine
+      Sessions auf dem Profil oder schick sie direkt an Freunde.
+    </p>
+
+    <ul class="workouts-chips">
+      <li>
+        <mat-icon aria-hidden="true">edit_note</mat-icon>
+        <span i18n="@@landing.workouts.chip.compose"
+          >Übungen, Ziele und Sätze frei kombinieren</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">play_circle</mat-icon>
+        <span i18n="@@landing.workouts.chip.run"
+          >Geführt durchführen — mit Kamera-Zähler und Timer</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">send</mat-icon>
+        <span i18n="@@landing.workouts.chip.share"
+          >Auf dem Profil zeigen oder Freunden schicken</span
+        >
+      </li>
+    </ul>
+
+    <a
+      mat-flat-button
+      color="primary"
+      routerLink="/workouts"
+      (click)="ctaClick.emit()"
+      i18n="@@landing.workouts.cta"
+      >Eigene Session erstellen</a
+    >
+  </div>
+</section>

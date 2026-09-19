@@ -22,6 +22,8 @@ type Texts = {
   ) => string;
   readonly challengeAcceptedTitle: string;
   readonly challengeAcceptedBody: (name: string) => string;
+  readonly workoutTitle: string;
+  readonly workoutBody: (name: string, title: string) => string;
 };
 
 const TEXTS: Record<ReminderLocale, Texts> = {
@@ -38,6 +40,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `${n} fordert dich heraus: ${t} ${e} in ${d} Tagen.`,
     challengeAcceptedTitle: '🏁 Challenge angenommen',
     challengeAcceptedBody: (n) => `${n} macht bei der Challenge mit.`,
+    workoutTitle: '🏋️ Neue Session',
+    workoutBody: (n, t) => `${n} hat dir eine Session geschickt: ${t}`,
   },
   en: {
     anonymous: 'Someone',
@@ -52,6 +56,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `${n} challenges you: ${t} ${e} in ${d} days.`,
     challengeAcceptedTitle: '🏁 Challenge accepted',
     challengeAcceptedBody: (n) => `${n} joined the challenge.`,
+    workoutTitle: '🏋️ New session',
+    workoutBody: (n, t) => `${n} sent you a session: ${t}`,
   },
   fr: {
     anonymous: 'Quelqu’un',
@@ -66,6 +72,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `${n} te lance un défi : ${t} ${e} en ${d} jours.`,
     challengeAcceptedTitle: '🏁 Défi accepté',
     challengeAcceptedBody: (n) => `${n} a rejoint le défi.`,
+    workoutTitle: '🏋️ Nouvelle séance',
+    workoutBody: (n, t) => `${n} t’a envoyé une séance : ${t}`,
   },
   es: {
     anonymous: 'Alguien',
@@ -79,6 +87,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
     challengeBody: (n, t, e, d) => `${n} te reta: ${t} ${e} en ${d} días.`,
     challengeAcceptedTitle: '🏁 Reto aceptado',
     challengeAcceptedBody: (n) => `${n} se ha unido al reto.`,
+    workoutTitle: '🏋️ Nueva sesión',
+    workoutBody: (n, t) => `${n} te ha enviado una sesión: ${t}`,
   },
   it: {
     anonymous: 'Qualcuno',
@@ -92,6 +102,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
     challengeBody: (n, t, e, d) => `${n} ti sfida: ${t} ${e} in ${d} giorni.`,
     challengeAcceptedTitle: '🏁 Sfida accettata',
     challengeAcceptedBody: (n) => `${n} partecipa alla sfida.`,
+    workoutTitle: '🏋️ Nuova sessione',
+    workoutBody: (n, t) => `${n} ti ha inviato una sessione: ${t}`,
   },
   nl: {
     anonymous: 'Iemand',
@@ -106,6 +118,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `${n} daagt je uit: ${t} ${e} in ${d} dagen.`,
     challengeAcceptedTitle: '🏁 Challenge geaccepteerd',
     challengeAcceptedBody: (n) => `${n} doet mee aan de challenge.`,
+    workoutTitle: '🏋️ Nieuwe sessie',
+    workoutBody: (n, t) => `${n} heeft je een sessie gestuurd: ${t}`,
   },
   el: {
     anonymous: 'Κάποιος',
@@ -120,6 +134,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `Ο/Η ${n} σε προκαλεί: ${t} ${e} σε ${d} ημέρες.`,
     challengeAcceptedTitle: '🏁 Η πρόκληση έγινε δεκτή',
     challengeAcceptedBody: (n) => `Ο/Η ${n} μπήκε στην πρόκληση.`,
+    workoutTitle: '🏋️ Νέα προπόνηση',
+    workoutBody: (n, t) => `Ο/Η ${n} σου έστειλε μια προπόνηση: ${t}`,
   },
   no: {
     anonymous: 'Noen',
@@ -134,6 +150,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `${n} utfordrer deg: ${t} ${e} på ${d} dager.`,
     challengeAcceptedTitle: '🏁 Utfordring godtatt',
     challengeAcceptedBody: (n) => `${n} er med i utfordringen.`,
+    workoutTitle: '🏋️ Ny økt',
+    workoutBody: (n, t) => `${n} sendte deg en økt: ${t}`,
   },
   zh: {
     anonymous: '有人',
@@ -148,6 +166,8 @@ const TEXTS: Record<ReminderLocale, Texts> = {
       `${n} 向你发起挑战：${d} 天内完成 ${t} 个${e}。`,
     challengeAcceptedTitle: '🏁 挑战已接受',
     challengeAcceptedBody: (n) => `${n} 加入了挑战。`,
+    workoutTitle: '🏋️ 新训练',
+    workoutBody: (n, t) => `${n} 给你发送了一个训练：${t}`,
   },
 };
 

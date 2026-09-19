@@ -390,6 +390,65 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Workouts a user composed themselves — owner-only, one doc each.
+    // Copies from friends arrive through the `shareWorkout` callable
+    // (Admin SDK); visitors see a profile's workouts through
+    // `getPublicProfile`, never by reading here. The exercise lines are
+    // validated in full by `workoutRejection` on every read of another
+    // user's document, so the rule only pins the shape and caps sizes
+    // (limits mirror `WORKOUT_*` in
+    // `libs/stats/src/lib/models/workout.models.ts`).
+    function isValidWorkout(data) {
+      return data.keys().hasOnly([
+               'ownerId', 'title', 'description', 'exercises', 'onProfile',
+               'sharedBy', 'createdAt', 'updatedAt'
+             ])
+             && data.title is string
+             && data.title.trim().size() >= 1
+             && data.title.size() <= 60
+             && data.description is string
+             && data.description.size() <= 300
+             && data.exercises is list
+             && data.exercises.size() >= 1
+             && data.exercises.size() <= 20
+             && data.onProfile is bool
+             && data.createdAt is string
+             && data.updatedAt is string
+             && (!('sharedBy' in data.keys()) || isWorkoutSource(data.sharedBy));
+    }
+
+    // Where a copy came from. Only the shape is pinned — a client may
+    // claim any source on its own document, which nobody but the owner
+    // ever reads; the cap keeps a forged one from carrying a payload.
+    function isWorkoutSource(source) {
+      return source is map
+             && source.keys().hasOnly(['uid', 'workoutId', 'displayName'])
+             && source.uid is string
+             && source.uid.size() >= 1
+             && source.uid.size() <= 128
+             && source.workoutId is string
+             && source.workoutId.size() >= 1
+             && source.workoutId.size() <= 128
+             && (!('displayName' in source.keys())
+                 || source.displayName == null
+                 || (source.displayName is string
+                     && source.displayName.size() <= 30));
+    }
+
+    match /workouts/{workoutId} {
+      allow read: if request.auth != null
+                  && resource.data.ownerId == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerId == request.auth.uid
+                    && isValidWorkout(request.resource.data);
+      allow update: if request.auth != null
+                    && resource.data.ownerId == request.auth.uid
+                    && request.resource.data.ownerId == request.auth.uid
+                    && isValidWorkout(request.resource.data);
+      allow delete: if request.auth != null
+                    && resource.data.ownerId == request.auth.uid;
+    }
+
     // Friendships — one doc per pair, id `<loUid>__<hiUid>`. Participants
     // read their own records (the friends screen queries
     // `array-contains` on `users`); every write goes through the

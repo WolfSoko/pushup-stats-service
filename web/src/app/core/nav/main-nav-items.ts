@@ -13,8 +13,9 @@ export interface MainNavItem {
 }
 
 /**
- * The bottom arc nav's entries, in order. Friends needs an account, so it
- * only appears for a signed-in user; everything else is open to guests.
+ * The bottom arc nav's entries, in order. Friends and the user's own
+ * sessions need an account, so they only appear for a signed-in user;
+ * everything else is open to guests.
  */
 export function mainNavItems(loggedIn: boolean): MainNavItem[] {
   return [
@@ -49,6 +50,15 @@ export function mainNavItems(loggedIn: boolean): MainNavItem[] {
       icon: 'fitness_center',
       label: $localize`:@@nav.trainingPlans:Trainingspläne`,
     },
+    ...(loggedIn
+      ? [
+          {
+            path: '/workouts',
+            icon: 'playlist_add_check',
+            label: $localize`:@@nav.workouts:Sessions`,
+          },
+        ]
+      : []),
     { path: '/blog', icon: 'article', label: $localize`:@@nav.blog:Blog` },
     {
       path: '/history',
