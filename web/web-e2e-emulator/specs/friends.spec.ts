@@ -1,9 +1,5 @@
 import { createAccount } from '../support/emulator';
-import {
-  FriendsPage,
-  invitePathFor,
-  waitForInviteRedeemed,
-} from '../support/pages/friends-page';
+import { FriendsPage, invitePathFor } from '../support/pages/friends-page';
 import { LoginPage } from '../support/pages/login-page';
 import { expect, test } from '../support/test-fixtures';
 
@@ -32,12 +28,11 @@ test.describe('Friends', () => {
     try {
       const inviteePage = await inviteeContext.newPage();
       await new LoginPage(inviteePage).signIn(invitee);
-      await inviteePage.goto(invitePathFor(token, inviter.uid));
-      await waitForInviteRedeemed(inviteePage);
+
+      const inviteeFriends = new FriendsPage(inviteePage);
+      await inviteeFriends.redeemInvite(invitePathFor(token, inviter.uid));
 
       // then — the invitation is waiting, named after the inviter
-      const inviteeFriends = new FriendsPage(inviteePage);
-      await inviteeFriends.expectIncomingCount(1);
       await expect(inviteeFriends.incomingRequests.first()).toContainText(
         inviter.displayName
       );
@@ -47,7 +42,7 @@ test.describe('Friends', () => {
 
       // then — the request becomes a friendship on their side
       await expect(inviteeFriends.friendRows).toHaveCount(1, {
-        timeout: 30_000,
+        timeout: 20_000,
       });
       await expect(inviteeFriends.friendRows.first()).toContainText(
         inviter.displayName
@@ -57,7 +52,7 @@ test.describe('Friends', () => {
       await inviteeContext.close();
     }
 
-    // and — on the inviter's side too
+    // and — on the inviter's side too, with nothing left pending
     await friendsPage.expectFriendCount(1);
     await expect(friendsPage.friendRows.first()).toContainText(
       invitee.displayName
@@ -65,39 +60,41 @@ test.describe('Friends', () => {
     await expect(friendsPage.outgoingRequests).toHaveCount(0);
   });
 
-  test('should leave a declined request out of both friend lists', async ({
+  test('should settle a declined request on both sides', async ({
     loginPage,
     friendsPage,
     browser,
   }) => {
-    // given
+    // given — a request the inviter can see waiting
     const inviter = await createAccount('decline-inviter');
     const invitee = await createAccount('decline-invitee');
     await loginPage.signIn(inviter);
     await friendsPage.goto();
     const token = await friendsPage.readInviteToken();
 
-    // when — the invitee turns the request down
     const inviteeContext = await browser.newContext({ locale: 'de-DE' });
     try {
       const inviteePage = await inviteeContext.newPage();
       await new LoginPage(inviteePage).signIn(invitee);
-      await inviteePage.goto(invitePathFor(token, inviter.uid));
-      await waitForInviteRedeemed(inviteePage);
 
       const inviteeFriends = new FriendsPage(inviteePage);
-      await inviteeFriends.expectIncomingCount(1);
+      await inviteeFriends.redeemInvite(invitePathFor(token, inviter.uid));
+      await friendsPage.expectOutgoingCount(1);
+
+      // when — the invitee turns it down
       await inviteeFriends.declineButtons.first().click();
 
-      // then
+      // then — it is gone from their screen and never became a friendship
       await expect(inviteeFriends.incomingRequests).toHaveCount(0, {
-        timeout: 30_000,
+        timeout: 20_000,
       });
       await expect(inviteeFriends.friendRows).toHaveCount(0);
     } finally {
       await inviteeContext.close();
     }
 
-    await friendsPage.expectFriendCount(0);
+    // and — the inviter stops waiting on it, without gaining a friend
+    await friendsPage.expectOutgoingCount(0);
+    await expect(friendsPage.friendRows).toHaveCount(0);
   });
 });

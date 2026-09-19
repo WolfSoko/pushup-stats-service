@@ -19,7 +19,7 @@ test.describe('Registration', () => {
     await registerPage.register(email, E2E_PASSWORD, displayName);
 
     // then
-    await expect(registerPage.successPanel).toBeVisible({ timeout: 30_000 });
+    await expect(registerPage.successPanel).toBeVisible({ timeout: 20_000 });
     expect(await accountExists(email)).toBe(true);
 
     await registerPage.toDashboardButton.click();
@@ -37,7 +37,7 @@ test.describe('Registration', () => {
     const { email, displayName } = uniqueIdentity('register-login');
     await registerPage.goto();
     await registerPage.register(email, E2E_PASSWORD, displayName);
-    await expect(registerPage.successPanel).toBeVisible({ timeout: 30_000 });
+    await expect(registerPage.successPanel).toBeVisible({ timeout: 20_000 });
     await registerPage.toDashboardButton.click();
     await dashboardPage.expectLoaded();
     await dashboardPage.signOut();

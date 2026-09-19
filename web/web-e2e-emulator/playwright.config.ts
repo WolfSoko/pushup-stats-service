@@ -57,11 +57,13 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   /**
-   * Generous on purpose: every spec here signs in for real and waits on
-   * callables running in the Functions emulator, which is slower than
-   * the deployed runtime and has no warm instances.
+   * Above the sum of the per-step budgets in the heaviest spec (the
+   * friends ones chain two sign-ins, an invite round trip and several
+   * list reloads, ~235 s of budget for a path that normally takes 13 s).
+   * Under that sum the test timeout fires first and the report says only
+   * that the test was too slow, instead of naming the step that hung.
    */
-  timeout: 120_000,
+  timeout: 240_000,
   retries: process.env['CI'] ? 2 : 0,
   projects: [
     {

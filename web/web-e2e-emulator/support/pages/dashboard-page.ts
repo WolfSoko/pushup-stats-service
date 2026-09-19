@@ -24,7 +24,7 @@ export class DashboardPage {
   }
 
   async expectLoaded(): Promise<void> {
-    await expect(this.heading).toBeVisible({ timeout: 30_000 });
+    await expect(this.heading).toBeVisible({ timeout: 20_000 });
   }
 
   /**
@@ -36,6 +36,6 @@ export class DashboardPage {
   async signOut(): Promise<void> {
     await this.userMenuTrigger.click();
     await this.signOutItem.click();
-    await expect(this.anonMenuTrigger).toBeVisible({ timeout: 30_000 });
+    await expect(this.anonMenuTrigger).toBeVisible({ timeout: 20_000 });
   }
 }

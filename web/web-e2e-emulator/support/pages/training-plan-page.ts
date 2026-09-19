@@ -18,8 +18,8 @@ export class TrainingPlanPage {
 
   /** Activates the plan and waits for the page to switch to the active view. */
   async startPlan(): Promise<void> {
-    await expect(this.startPlanButton).toBeVisible({ timeout: 30_000 });
+    await expect(this.startPlanButton).toBeVisible({ timeout: 20_000 });
     await this.startPlanButton.click();
-    await expect(this.endPlanButton).toBeVisible({ timeout: 30_000 });
+    await expect(this.endPlanButton).toBeVisible({ timeout: 20_000 });
   }
 }

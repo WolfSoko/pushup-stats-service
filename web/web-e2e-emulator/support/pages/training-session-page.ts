@@ -36,7 +36,7 @@ export class TrainingSessionPage {
 
   /** Starts the session, asking for no rest so the sets follow each other. */
   async begin(): Promise<void> {
-    await expect(this.startButton).toBeVisible({ timeout: 30_000 });
+    await expect(this.startButton).toBeVisible({ timeout: 20_000 });
     await this.restSlider.fill('0');
     await this.startButton.click();
   }
@@ -56,7 +56,7 @@ export class TrainingSessionPage {
       await this.waitForSetCard(set, sets);
       await this.logAsPrescribedButton.click();
       await expect(this.setsDoneLabel(set, sets)).toBeVisible({
-        timeout: 30_000,
+        timeout: 20_000,
       });
     }
   }
@@ -68,7 +68,7 @@ export class TrainingSessionPage {
    */
   async dismissGoalReached(): Promise<void> {
     await this.goalReachedClose.click();
-    await expect(this.goalReachedCard).toBeHidden({ timeout: 30_000 });
+    await expect(this.goalReachedCard).toBeHidden({ timeout: 20_000 });
   }
 
   /** The session's own count of finished sets. */

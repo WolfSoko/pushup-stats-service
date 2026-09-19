@@ -31,7 +31,7 @@ test.describe('Login', () => {
     await loginPage.submitButton.click();
 
     // then
-    await expect(loginPage.error).toBeVisible({ timeout: 30_000 });
+    await expect(loginPage.error).toBeVisible({ timeout: 20_000 });
     await expect(page).toHaveURL(/\/login/);
   });
 
@@ -49,7 +49,7 @@ test.describe('Login', () => {
     await loginPage.submitButton.click();
 
     // then
-    await expect(loginPage.error).toBeVisible({ timeout: 30_000 });
+    await expect(loginPage.error).toBeVisible({ timeout: 20_000 });
     await expect(page).toHaveURL(/\/login/);
   });
 
@@ -67,6 +67,6 @@ test.describe('Login', () => {
 
     // then — the auth guard sends a signed-out visitor to the login page
     await page.goto('/app');
-    await expect(page).toHaveURL(/\/login/, { timeout: 30_000 });
+    await expect(page).toHaveURL(/\/login/, { timeout: 20_000 });
   });
 });

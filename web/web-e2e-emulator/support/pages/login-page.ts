@@ -40,7 +40,7 @@ export class LoginPage {
       await this.emailInput.fill(email);
       await this.passwordInput.fill(password);
       await expect(this.submitButton).toBeEnabled({ timeout: 1000 });
-    }).toPass({ timeout: 30_000 });
+    }).toPass({ timeout: 20_000 });
   }
 
   /** Signs in and waits until the app has left the login page. */
@@ -49,7 +49,7 @@ export class LoginPage {
     await this.fillCredentials(account.email, account.password);
     await this.submitButton.click();
     await this.page.waitForURL((url) => !url.pathname.includes('/login'), {
-      timeout: 30_000,
+      timeout: 20_000,
     });
   }
 }

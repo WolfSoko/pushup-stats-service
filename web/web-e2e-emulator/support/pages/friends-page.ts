@@ -1,8 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-/** Where `FriendInviteService` parks a captured token until it is redeemed. */
-const PENDING_INVITE_KEY = 'pu:friendInvite:pending';
-
 /** `/freunde` — requests waiting for an answer, and confirmed friends. */
 export class FriendsPage {
   readonly heading: Locator;
@@ -38,7 +35,7 @@ export class FriendsPage {
    */
   async readInviteToken(): Promise<string> {
     await this.addFriendButton.click();
-    await expect(this.inviteLink).toBeVisible({ timeout: 30_000 });
+    await expect(this.inviteLink).toBeVisible({ timeout: 20_000 });
     const url = await this.inviteLink.inputValue();
     const token = new URL(url).searchParams.get('fi');
     if (!token) throw new Error(`Invite link carries no token: ${url}`);
@@ -46,23 +43,44 @@ export class FriendsPage {
   }
 
   /**
-   * Reopens the page until it shows `count` incoming requests.
+   * Follows an invite link and waits until the request it carries is
+   * waiting on this page.
    *
-   * The lists are read once per visit — everything on this screen is
-   * somebody else's doing, so the page re-reads on becoming visible
-   * again, not on a timer. A request that lands while the page is
-   * already open is therefore only seen on the next visit, which is
-   * exactly what a reload reproduces.
+   * Both halves are retried together on purpose. The token is parked in
+   * `localStorage` while the app boots and redeemed afterwards from a
+   * post-auth hook, and neither step shows on screen — so there is no
+   * point at which navigating on is known to be safe, and leaving too
+   * early throws the only copy of the token away. Re-opening the link is
+   * idempotent (the server upserts the same friendship), so a retry
+   * costs one round trip and nothing else.
    */
-  async expectIncomingCount(count: number, timeout = 60_000): Promise<void> {
-    await this.reloadUntil(this.incomingRequests, count, timeout);
+  async redeemInvite(path: string): Promise<void> {
+    await expect(async () => {
+      await this.page.goto(path);
+      await this.goto();
+      await expect(this.incomingRequests).toHaveCount(1, { timeout: 5_000 });
+    }).toPass({ timeout: 60_000 });
   }
 
-  /** Same as {@link expectIncomingCount}, for confirmed friends. */
-  async expectFriendCount(count: number, timeout = 60_000): Promise<void> {
+  /** Reopens the page until it shows `count` confirmed friends. */
+  async expectFriendCount(count: number, timeout = 20_000): Promise<void> {
     await this.reloadUntil(this.friendRows, count, timeout);
   }
 
+  /** Reopens the page until it shows `count` requests this user sent. */
+  async expectOutgoingCount(count: number, timeout = 20_000): Promise<void> {
+    await this.reloadUntil(this.outgoingRequests, count, timeout);
+  }
+
+  /**
+   * Reopens the page until `rows` has `count` entries.
+   *
+   * The lists are read once per visit — everything on this screen is
+   * somebody else's doing, so the page re-reads on becoming visible
+   * again, not on a timer. A change that lands while the page is already
+   * open is therefore only seen on the next visit, which is what the
+   * reload reproduces.
+   */
   private async reloadUntil(
     rows: Locator,
     count: number,
@@ -78,23 +96,4 @@ export class FriendsPage {
 /** The path a recipient opens to redeem `token` on the app under test. */
 export function invitePathFor(token: string, referrerUid: string): string {
   return `/?fi=${encodeURIComponent(token)}&ref=${encodeURIComponent(referrerUid)}`;
-}
-
-/**
- * Resolves once the app has handed the captured token to the server.
- *
- * Redeeming happens in a post-auth hook, off the navigation the link
- * triggered, so nothing on screen marks it done. The parked token being
- * dropped is the one observable end of that round trip — and without
- * waiting for it a cold Functions emulator is slow enough that the
- * friends page gets read before the request exists.
- */
-export async function waitForInviteRedeemed(page: Page): Promise<void> {
-  await expect(async () => {
-    const pending = await page.evaluate(
-      (key) => localStorage.getItem(key),
-      PENDING_INVITE_KEY
-    );
-    expect(pending).toBeNull();
-  }).toPass({ timeout: 60_000 });
 }

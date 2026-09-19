@@ -183,16 +183,17 @@ describe('training-plan exercise items', () => {
     it('should count a set logged in the same minute the day was activated', () => {
       // given — the plan was started at 15:00:28 and the first set of the
       // session followed seconds later; entry timestamps carry no
-      // seconds, so the set reads as 15:00:00
+      // seconds, so the set reads as 15:00. `dayActivatedAt` is written
+      // as `toISOString()`, so the test uses that shape too.
       const sameMinuteEntries = [
-        entry('legs.squats', '2026-04-01T15:00+02:00', { reps: 20 }),
+        entry('legs.squats', '2026-04-01T15:00+00:00', { reps: 20 }),
       ];
       // when
       const total = planExerciseLoggedTotal(
         sameMinuteEntries,
         '2026-04-01',
         { exerciseId: 'legs.squats' },
-        '2026-04-01T15:00:28.327+02:00'
+        '2026-04-01T15:00:28.327Z'
       );
       // then — the set counts instead of being cut off by its own minute
       expect(total).toBe(20);

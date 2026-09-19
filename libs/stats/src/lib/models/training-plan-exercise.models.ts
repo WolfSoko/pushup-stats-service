@@ -113,6 +113,14 @@ function startOfMinute(date: Date): number {
   return new Date(date).setSeconds(0, 0);
 }
 
+/** The calendar date `date` falls on where the user is, as `YYYY-MM-DD`. */
+function localDateIso(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 /**
  * Sum of everything logged for a plan item on one local date, read from
  * the `exerciseEntries` mirror. Reads the entry field that matches the
@@ -128,11 +136,20 @@ function startOfMinute(date: Date): number {
  * date (the normal case — no activation happened today) this is a no-op,
  * so Quick-Add entries still retroactively cover the active plan day.
  *
- * The cutoff is taken at the start of its minute, because entry
- * timestamps carry no seconds (`nowLocalIsoTimestamp`). Comparing them
- * against an `activatedAt` that does dropped every set logged in the
- * same minute the plan was started — the first set of the session a
- * user begins right after picking a plan.
+ * Two details of that comparison are load-bearing, because `activatedAt`
+ * and the entries are written in different shapes:
+ *
+ * - Whether it falls on `dateIso` is decided by `activatedAt`'s *local*
+ *   calendar date. It is stored as `toISOString()`, so its UTC date runs
+ *   ahead of (or behind) the local one for part of every day — reading
+ *   the date off the string dropped the cutoff for anyone who activated
+ *   a plan in the evening west of UTC, and let the reps it exists to
+ *   exclude count again.
+ * - The cutoff itself is taken at the start of its minute, because entry
+ *   timestamps carry no seconds (`nowLocalIsoTimestamp`). Comparing them
+ *   against an `activatedAt` that does dropped every set logged in the
+ *   same minute the plan was started — the first set of the session a
+ *   user begins right after picking a plan.
  */
 export function planExerciseLoggedTotal(
   entries: ReadonlyArray<PlanExerciseEntryLike>,
@@ -144,9 +161,13 @@ export function planExerciseLoggedTotal(
   if (!measurement) return 0;
   const field = measurementValueField(measurement);
   if (field === 'weightKg') return 0;
+  // An unparseable `activatedAt` needs no guard of its own: its local
+  // date reads as `NaN-NaN-NaN`, which matches no `dateIso`, so the
+  // cutoff falls away exactly as it does for a different date.
+  const activated = activatedAt ? new Date(activatedAt) : null;
   const cutoff =
-    activatedAt && activatedAt.slice(0, 10) === dateIso
-      ? startOfMinute(new Date(activatedAt))
+    activated && localDateIso(activated) === dateIso
+      ? startOfMinute(activated)
       : null;
   return entries
     .filter(

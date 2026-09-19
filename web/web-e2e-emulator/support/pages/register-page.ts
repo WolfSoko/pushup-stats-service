@@ -50,7 +50,7 @@ export class RegisterPage {
       await this.emailInput.fill(email);
       await expect(this.emailInput).toHaveValue(email);
       await expect(this.nextButton).toBeEnabled({ timeout: 1000 });
-    }).toPass({ timeout: 30_000 });
+    }).toPass({ timeout: 20_000 });
   }
 
   /** Walks the first two steps, stopping on the username step. */

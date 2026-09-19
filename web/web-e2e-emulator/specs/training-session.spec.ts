@@ -32,7 +32,7 @@ test.describe('Training session', () => {
 
     // then
     await expect(trainingSessionPage.doneTitle).toBeVisible({
-      timeout: 30_000,
+      timeout: 20_000,
     });
 
     await expect(async () => {
@@ -44,11 +44,11 @@ test.describe('Training session', () => {
       expect(
         entries.reduce((sum, entry) => sum + Number(entry['reps'] ?? 0), 0)
       ).toBe(DAY_TARGET);
-    }).toPass({ timeout: 30_000 });
+    }).toPass({ timeout: 20_000 });
 
     // and — hitting the day's target is celebrated
     await expect(trainingSessionPage.goalReachedCard).toBeVisible({
-      timeout: 30_000,
+      timeout: 20_000,
     });
     await trainingSessionPage.dismissGoalReached();
 
@@ -69,7 +69,7 @@ test.describe('Training session', () => {
 
     // then
     await expect(trainingSessionPage.inactivePlanNote).toBeVisible({
-      timeout: 30_000,
+      timeout: 20_000,
     });
     await expect(trainingSessionPage.startButton).toBeHidden();
   });

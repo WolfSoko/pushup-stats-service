@@ -30,10 +30,11 @@ Java is required — the Firestore emulator is a JAR.
 
 ## Writing tests
 
-- Accounts come from the `accounts` fixture, which creates them through
-  the Admin SDK against the Auth emulator. Every account gets a unique
-  e-mail, so specs never collide over emulator state and nothing has to
-  be wiped between them.
+- Accounts come from `createAccount()` in `support/emulator.ts`, which
+  creates them through the Admin SDK against the Auth emulator. Every
+  account gets a unique e-mail, so specs never collide over emulator
+  state and nothing has to be wiped between them. The `test` fixture in
+  `support/test-fixtures.ts` only hands out page objects.
 - Sign in through the UI (`loginPage.signIn(...)`) rather than injecting
   a token: the login path is one of the things under test, and the app
   only runs its post-auth hooks on a real sign-in.
