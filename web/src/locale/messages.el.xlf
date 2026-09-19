@@ -13301,813 +13301,813 @@
       </segment>
     </unit>
     <unit id="admin.network.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaftsnetz</source>
-        <target>Freundschaftsnetz</target>
+        <target>Δίκτυο φιλιών</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestätigte Freundschaft</source>
-        <target>Bestätigte Freundschaft</target>
+        <target>Επιβεβαιωμένη φιλία</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Offene Anfrage (Pfeil: wer gefragt hat)</source>
-        <target>Offene Anfrage (Pfeil: wer gefragt hat)</target>
+        <target>Εκκρεμές αίτημα (βέλος: ποιος ρώτησε)</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgelehnt</source>
-        <target>Abgelehnt</target>
+        <target>Απορρίφθηκε</target>
       </segment>
     </unit>
     <unit id="admin.network.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</source>
-        <target>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</target>
+        <target>Δίκτυο <ph id="0" equiv="count" disp="this.nodes().length"/> χρηστών και <ph id="1" equiv="edges" disp="this.edges().length"/> συνδέσεων</target>
       </segment>
     </unit>
     <unit id="admin.network.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </source>
-        <target> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </target>
+        <target> Ποιος είναι συνδεδεμένος με ποιον. Κάθε κουκκίδα είναι ένας λογαριασμός, κάθε γραμμή μια σχέση· το μέγεθος μιας κουκκίδας δείχνει τον αριθμό επιβεβαιωμένων φίλων. </target>
       </segment>
     </unit>
     <unit id="admin.network.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur Adminseite</source>
-        <target>Zur Adminseite</target>
+        <target>Στη σελίδα διαχείρισης</target>
       </segment>
     </unit>
     <unit id="admin.network.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Erneut versuchen </target>
+        <target> Δοκίμασε ξανά </target>
       </segment>
     </unit>
     <unit id="admin.network.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch niemand ist mit jemandem vernetzt.</source>
-        <target>Noch niemand ist mit jemandem vernetzt.</target>
+        <target>Ακόμη κανείς δεν είναι συνδεδεμένος με κανέναν.</target>
       </segment>
     </unit>
     <unit id="admin.network.truncated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</source>
-        <target>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</target>
+        <target>Υπάρχουν περισσότερες σχέσεις από όσες εμφανίζονται — η εικόνα δείχνει μόνο ένα απόσπασμα.</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.users">
-      <segment state="initial">
+      <segment state="translated">
         <source>vernetzte Konten</source>
-        <target>vernetzte Konten</target>
+        <target>συνδεδεμένοι λογαριασμοί</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaften</source>
-        <target>Freundschaften</target>
+        <target>φιλίες</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>offene Anfragen</source>
-        <target>offene Anfragen</target>
+        <target>εκκρεμή αιτήματα</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>abgelehnt</source>
-        <target>abgelehnt</target>
+        <target>απορρίφθηκαν</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.isolated">
-      <segment state="initial">
+      <segment state="translated">
         <source>ohne Verbindung</source>
-        <target>ohne Verbindung</target>
+        <target>χωρίς σύνδεση</target>
       </segment>
     </unit>
     <unit id="admin.network.toggleTable">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Tabelle</source>
-        <target>Als Tabelle</target>
+        <target>Ως πίνακας</target>
       </segment>
     </unit>
     <unit id="admin.network.col.source">
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto </source>
-        <target> Konto </target>
+        <target> Λογαριασμός </target>
       </segment>
     </unit>
     <unit id="admin.network.col.status">
-      <segment state="initial">
+      <segment state="translated">
         <source> Beziehung </source>
-        <target> Beziehung </target>
+        <target> Σχέση </target>
       </segment>
     </unit>
     <unit id="admin.network.col.target">
-      <segment state="initial">
+      <segment state="translated">
         <source> Gegenüber </source>
-        <target> Gegenüber </target>
+        <target> Απέναντι </target>
       </segment>
     </unit>
     <unit id="admin.network.toggleIsolated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konten ohne Verbindung</source>
-        <target>Konten ohne Verbindung</target>
+        <target>Λογαριασμοί χωρίς σύνδεση</target>
       </segment>
     </unit>
     <unit id="admin.network.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ohne Namen</source>
-        <target>Ohne Namen</target>
+        <target>Χωρίς όνομα</target>
       </segment>
     </unit>
     <unit id="admin.network.status.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>befreundet mit</source>
-        <target>befreundet mit</target>
+        <target>φίλος με</target>
       </segment>
     </unit>
     <unit id="admin.network.status.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>hat angefragt</source>
-        <target>hat angefragt</target>
+        <target>έχει ζητήσει</target>
       </segment>
     </unit>
     <unit id="admin.network.status.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>wurde abgelehnt von</source>
-        <target>wurde abgelehnt von</target>
+        <target>απορρίφθηκε από</target>
       </segment>
     </unit>
     <unit id="seo.workouts.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Sessions – Pushup Tracker</source>
-        <target>Meine Sessions – Pushup Tracker</target>
+        <target>Οι συνεδρίες μου – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.workouts.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
-        <target>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</target>
+        <target>Σύνθεσε δικές σου συνεδρίες προπόνησης, εκτέλεσέ τες καθοδηγούμενα και μοιράσου τες με φίλους.</target>
       </segment>
     </unit>
     <unit id="nav.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sessions</source>
-        <target>Sessions</target>
+        <target>Συνεδρίες</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sessions</source>
-        <target>Sessions</target>
+        <target>Συνεδρίες</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übernehmen</source>
-        <target>Übernehmen</target>
+        <target>Υιοθέτηση</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übernommen</source>
-        <target>Übernommen</target>
+        <target>Υιοθετήθηκε</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.own">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>Στις συνεδρίες μου</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copiedNote">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gespeichert unter „Meine Sessions“.</source>
-        <target>Gespeichert unter „Meine Sessions“.</target>
+        <target>Αποθηκεύτηκε στις «Οι συνεδρίες μου».</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copyFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konnte nicht übernommen werden. Bitte später erneut versuchen.</source>
-        <target>Konnte nicht übernommen werden. Bitte später erneut versuchen.</target>
+        <target>Δεν ήταν δυνατή η υιοθέτηση. Δοκίμασε ξανά αργότερα.</target>
       </segment>
     </unit>
     <unit id="workoutSession.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></source>
-        <target>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
+        <target>Συνεδρία · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
       </segment>
     </unit>
     <unit id="workoutSession.done.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>Στις συνεδρίες μου</target>
       </segment>
     </unit>
     <unit id="workoutSession.unknown">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Session gibt es nicht. </source>
-        <target> Diese Session gibt es nicht. </target>
+        <target> Αυτή η συνεδρία δεν υπάρχει. </target>
       </segment>
     </unit>
     <unit id="workouts.editor.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>Στις συνεδρίες μου</target>
       </segment>
     </unit>
     <unit id="workouts.card.from">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></source>
-        <target>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
+        <target>Από <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
       </segment>
     </unit>
     <unit id="workouts.card.onProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf deinem Profil</source>
-        <target>Auf deinem Profil</target>
+        <target>Στο προφίλ σου</target>
       </segment>
     </unit>
     <unit id="workouts.card.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Starten</source>
-        <target>Starten</target>
+        <target>Έναρξη</target>
       </segment>
     </unit>
     <unit id="workouts.card.edit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bearbeiten</source>
-        <target>Bearbeiten</target>
+        <target>Επεξεργασία</target>
       </segment>
     </unit>
     <unit id="workouts.card.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>An Freunde schicken</source>
-        <target>An Freunde schicken</target>
+        <target>Αποστολή σε φίλους</target>
       </segment>
     </unit>
     <unit id="workouts.card.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Löschen</source>
-        <target>Löschen</target>
+        <target>Διαγραφή</target>
       </segment>
     </unit>
     <unit id="workouts.card.hideFromProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vom Profil nehmen</source>
-        <target>Vom Profil nehmen</target>
+        <target>Αφαίρεση από το προφίλ</target>
       </segment>
     </unit>
     <unit id="workouts.card.showOnProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem Profil zeigen</source>
-        <target>Auf dem Profil zeigen</target>
+        <target>Εμφάνιση στο προφίλ</target>
       </segment>
     </unit>
     <unit id="workouts.delete.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session löschen</source>
-        <target>Session löschen</target>
+        <target>Διαγραφή συνεδρίας</target>
       </segment>
     </unit>
     <unit id="workouts.delete.confirm">
-      <segment state="initial">
+      <segment state="translated">
         <source> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </source>
-        <target> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </target>
+        <target> Να διαγραφεί όντως η «<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>»; Οι καταχωρημένες ασκήσεις διατηρούνται. </target>
       </segment>
     </unit>
     <unit id="workouts.delete.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Άκυρο </target>
       </segment>
     </unit>
     <unit id="workouts.delete.button">
-      <segment state="initial">
+      <segment state="translated">
         <source> Löschen </source>
-        <target> Löschen </target>
+        <target> Διαγραφή </target>
       </segment>
     </unit>
     <unit id="workouts.editor.editTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session bearbeiten</source>
-        <target>Session bearbeiten</target>
+        <target>Επεξεργασία συνεδρίας</target>
       </segment>
     </unit>
     <unit id="workouts.editor.newTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Session</source>
-        <target>Neue Session</target>
+        <target>Νέα συνεδρία</target>
       </segment>
     </unit>
     <unit id="workouts.editor.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </source>
-        <target> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </target>
+        <target> Ασκήσεις, στόχοι και σετ — με τη σειρά που τα κάνεις. </target>
       </segment>
     </unit>
     <unit id="workouts.editor.loading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session wird geladen …</source>
-        <target>Session wird geladen …</target>
+        <target>Φόρτωση συνεδρίας…</target>
       </segment>
     </unit>
     <unit id="workouts.editor.missing">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session gibt es nicht.</source>
-        <target>Diese Session gibt es nicht.</target>
+        <target>Αυτή η συνεδρία δεν υπάρχει.</target>
       </segment>
     </unit>
     <unit id="workouts.editor.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Name</source>
-        <target>Name</target>
+        <target>Όνομα</target>
       </segment>
     </unit>
     <unit id="workouts.editor.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beschreibung (optional)</source>
-        <target>Beschreibung (optional)</target>
+        <target>Περιγραφή (προαιρετικό)</target>
       </segment>
     </unit>
     <unit id="workouts.editor.exercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Ασκήσεις</target>
       </segment>
     </unit>
     <unit id="workouts.editor.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Άσκηση</target>
       </segment>
     </unit>
     <unit id="workouts.editor.variant">
-      <segment state="initial">
+      <segment state="translated">
         <source>Variante</source>
-        <target>Variante</target>
+        <target>Παραλλαγή</target>
       </segment>
     </unit>
     <unit id="workouts.editor.noVariant">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine</source>
-        <target>Keine</target>
+        <target>Καμία</target>
       </segment>
     </unit>
     <unit id="workouts.editor.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel</source>
-        <target>Ziel</target>
+        <target>Στόχος</target>
       </segment>
     </unit>
     <unit id="workouts.editor.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sätze (optional)</source>
-        <target>Sätze (optional)</target>
+        <target>Σετ (προαιρετικό)</target>
       </segment>
     </unit>
     <unit id="workouts.editor.addExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung hinzufügen</source>
-        <target>Übung hinzufügen</target>
+        <target>Προσθήκη άσκησης</target>
       </segment>
     </unit>
     <unit id="workouts.editor.onProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf meinem Profil zeigen</source>
-        <target>Auf meinem Profil zeigen</target>
+        <target>Εμφάνιση στο προφίλ μου</target>
       </segment>
     </unit>
     <unit id="workouts.editor.onProfileHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </source>
-        <target> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </target>
+        <target> Ποιος το βλέπει εκεί το ορίζεις στο προφίλ σου, στην ενότητα «Συνεδρίες»: φίλοι, όλοι ή κανείς. </target>
       </segment>
     </unit>
     <unit id="workouts.editor.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abbrechen</source>
-        <target>Abbrechen</target>
+        <target>Άκυρο</target>
       </segment>
     </unit>
     <unit id="workouts.editor.save">
-      <segment state="initial">
+      <segment state="translated">
         <source>Speichern</source>
-        <target>Speichern</target>
+        <target>Αποθήκευση</target>
       </segment>
     </unit>
     <unit id="workouts.editor.moveUp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach oben</source>
-        <target>Nach oben</target>
+        <target>Μετακίνηση επάνω</target>
       </segment>
     </unit>
     <unit id="workouts.editor.moveDown">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach unten</source>
-        <target>Nach unten</target>
+        <target>Μετακίνηση κάτω</target>
       </segment>
     </unit>
     <unit id="workouts.editor.removeExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung entfernen</source>
-        <target>Übung entfernen</target>
+        <target>Αφαίρεση άσκησης</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.seconds">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sek.</source>
-        <target>Sek.</target>
+        <target>δευτ.</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.meters">
-      <segment state="initial">
+      <segment state="translated">
         <source>m</source>
-        <target>m</target>
+        <target>μ</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wdh.</source>
-        <target>Wdh.</target>
+        <target>επαν.</target>
       </segment>
     </unit>
     <unit id="workouts.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Session an Freunde schicken </source>
-        <target> Session an Freunde schicken </target>
+        <target> Αποστολή συνεδρίας σε φίλους </target>
       </segment>
     </unit>
     <unit id="workouts.share.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </source>
-        <target> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </target>
+        <target> Δεν έχεις ακόμη επιβεβαιωμένους φίλους. Προσκάλεσε κάποιον — τότε θα μπορείς να μοιράζεσαι συνεδρίες απευθείας. </target>
       </segment>
     </unit>
     <unit id="workouts.share.toFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Στους φίλους</target>
       </segment>
     </unit>
     <unit id="workouts.share.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </source>
-        <target> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </target>
+        <target> Ο καθένας λαμβάνει το δικό του αντίγραφο, που μπορεί να επεξεργαστεί. </target>
       </segment>
     </unit>
     <unit id="workouts.share.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Άκυρο </target>
       </segment>
     </unit>
     <unit id="workouts.share.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schicken </source>
-        <target> Schicken </target>
+        <target> Αποστολή </target>
       </segment>
     </unit>
     <unit id="workouts.error.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gib der Session einen Namen (höchstens 60 Zeichen).</source>
-        <target>Gib der Session einen Namen (höchstens 60 Zeichen).</target>
+        <target>Δώσε στη συνεδρία ένα όνομα (το πολύ 60 χαρακτήρες).</target>
       </segment>
     </unit>
     <unit id="workouts.error.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</source>
-        <target>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</target>
+        <target>Η περιγραφή είναι πολύ μεγάλη (το πολύ 300 χαρακτήρες).</target>
       </segment>
     </unit>
     <unit id="workouts.error.noExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Füge mindestens eine Übung hinzu.</source>
-        <target>Füge mindestens eine Übung hinzu.</target>
+        <target>Πρόσθεσε τουλάχιστον μία άσκηση.</target>
       </segment>
     </unit>
     <unit id="workouts.error.tooManyExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Höchstens 20 Übungen pro Session.</source>
-        <target>Höchstens 20 Übungen pro Session.</target>
+        <target>Το πολύ 20 ασκήσεις ανά συνεδρία.</target>
       </segment>
     </unit>
     <unit id="workouts.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Übung ist ungültig. Wähle eine aus der Liste.</source>
-        <target>Eine Übung ist ungültig. Wähle eine aus der Liste.</target>
+        <target>Μία άσκηση δεν είναι έγκυρη. Επίλεξε μία από τη λίστα.</target>
       </segment>
     </unit>
     <unit id="workouts.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Übung braucht ein Ziel größer als 0.</source>
-        <target>Jede Übung braucht ein Ziel größer als 0.</target>
+        <target>Κάθε άσκηση χρειάζεται στόχο μεγαλύτερο από 0.</target>
       </segment>
     </unit>
     <unit id="workouts.error.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</source>
-        <target>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</target>
+        <target>Τα σετ πρέπει να αθροίζουν στον στόχο, π.χ. 10, 10, 10.</target>
       </segment>
     </unit>
     <unit id="workouts.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</source>
-        <target>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</target>
+        <target>Έχεις ήδη 50 συνεδρίες. Διάγραψε μία για να κάνεις χώρο.</target>
       </segment>
     </unit>
     <unit id="workouts.error.notFound">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session gibt es nicht mehr.</source>
-        <target>Diese Session gibt es nicht mehr.</target>
+        <target>Αυτή η συνεδρία δεν υπάρχει πια.</target>
       </segment>
     </unit>
     <unit id="workouts.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>Επίλεξε τουλάχιστον έναν φίλο.</target>
       </segment>
     </unit>
     <unit id="workouts.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Empfänger auf einmal.</source>
-        <target>Zu viele Empfänger auf einmal.</target>
+        <target>Πάρα πολλοί παραλήπτες ταυτόχρονα.</target>
       </segment>
     </unit>
     <unit id="workouts.error.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</source>
-        <target>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</target>
+        <target>Αυτή η συνεδρία δεν είναι πια έγκυρη. Επεξεργάσου την πρώτα.</target>
       </segment>
     </unit>
     <unit id="workouts.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Sessions</source>
-        <target>Meine Sessions</target>
+        <target>Οι συνεδρίες μου</target>
       </segment>
     </unit>
     <unit id="workouts.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </source>
-        <target> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </target>
+        <target> Σύνθεσε δικές σου συνεδρίες προπόνησης, εκτέλεσέ τες καθοδηγούμενα και μοιράσου τες στο προφίλ σου ή απευθείας με φίλους. </target>
       </segment>
     </unit>
     <unit id="workouts.new">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Session</source>
-        <target>Neue Session</target>
+        <target>Νέα συνεδρία</target>
       </segment>
     </unit>
     <unit id="workouts.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </source>
-        <target> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </target>
+        <target> Ακόμη καμία συνεδρία. Δημιούργησε την πρώτη — με τις ασκήσεις, τους στόχους και τα σετ που σου ταιριάζουν. </target>
       </segment>
     </unit>
     <unit id="workouts.profileHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </source>
-        <target> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </target>
+        <target> Το προφίλ σου δεν δείχνει ακόμη συνεδρίες σε κανέναν. Ενεργοποίησε την ενότητα «Συνεδρίες» στο προφίλ σου για φίλους ή για όλους. </target>
       </segment>
     </unit>
     <unit id="workouts.toProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Profil</source>
-        <target>Zum Profil</target>
+        <target>Στο προφίλ</target>
       </segment>
     </unit>
     <unit id="workouts.shared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>
-        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</target>
+        <target>Η συνεδρία στάλθηκε σε <ph id="0" equiv="count" disp="sent"/> φίλο(-ους).</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ganzkörper kurz</source>
-        <target>Ganzkörper kurz</target>
+        <target>Σύντομο ολόσωμο</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von Anna · 3 Übungen</source>
-        <target>Von Anna · 3 Übungen</target>
+        <target>Από την Anna · 3 ασκήσεις</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line1">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×10 Liegestütze</source>
-        <target>3×10 Liegestütze</target>
+        <target>3×10 κάμψεις</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line2">
-      <segment state="initial">
+      <segment state="translated">
         <source>0:50 Plank</source>
-        <target>0:50 Plank</target>
+        <target>0:50 plank</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line3">
-      <segment state="initial">
+      <segment state="translated">
         <source>20 Kniebeugen</source>
-        <target>20 Kniebeugen</target>
+        <target>20 καθίσματα</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session starten</source>
-        <target>Session starten</target>
+        <target>Έναρξη συνεδρίας</target>
       </segment>
     </unit>
     <unit id="landing.workouts.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu · Eigene Sessions</source>
-        <target>Neu · Eigene Sessions</target>
+        <target>Νέο · Προσωπικές συνεδρίες</target>
       </segment>
     </unit>
     <unit id="landing.workouts.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </source>
-        <target> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </target>
+        <target> Η προπόνησή σου, οι κανόνες σου — και οι φίλοι σου προπονούνται μαζί σου. </target>
       </segment>
     </unit>
     <unit id="landing.workouts.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </source>
-        <target> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </target>
+        <target> Δημιούργησε τις δικές σου συνεδρίες από τον κατάλογο ασκήσεων: ασκήσεις, στόχους, σετ. Η εφαρμογή σε καθοδηγεί όπως σε μια ημέρα προγράμματος. Δείξε τις συνεδρίες σου στο προφίλ σου ή στείλε τις απευθείας σε φίλους. </target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.compose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen, Ziele und Sätze frei kombinieren</source>
-        <target>Übungen, Ziele und Sätze frei kombinieren</target>
+        <target>Συνδύασε ελεύθερα ασκήσεις, στόχους και σετ</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
-        <target>Geführt durchführen — mit Kamera-Zähler und Timer</target>
+        <target>Καθοδηγούμενη εκτέλεση — με μετρητή κάμερας και χρονόμετρο</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem Profil zeigen oder Freunden schicken</source>
-        <target>Auf dem Profil zeigen oder Freunden schicken</target>
+        <target>Εμφάνιση στο προφίλ ή αποστολή σε φίλους</target>
       </segment>
     </unit>
     <unit id="landing.workouts.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Session erstellen</source>
-        <target>Eigene Session erstellen</target>
+        <target>Δημιουργία δικής σου συνεδρίας</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Νέο</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Sessions</source>
-        <target>Eigene Sessions</target>
+        <target>Προσωπικές συνεδρίες</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> Βήμα <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> από <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
       </segment>
     </unit>
     <unit id="workoutsIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Αργότερα </target>
       </segment>
     </unit>
     <unit id="workoutsIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Πίσω</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erste Session anlegen</source>
-        <target>Erste Session anlegen</target>
+        <target>Δημιουργία πρώτης συνεδρίας</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Επόμενο</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zusammenstellen</source>
-        <target>Zusammenstellen</target>
+        <target>Σύνθεση</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</source>
-        <target>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</target>
+        <target>Επίλεξε ασκήσεις από τον κατάλογο, δώσε σε κάθε μία έναν στόχο και προαιρετικά σετ — με τη σειρά που τις εκτελείς.</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführt durchführen</source>
-        <target>Geführt durchführen</target>
+        <target>Καθοδηγούμενη εκτέλεση</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</source>
-        <target>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</target>
+        <target>Η εφαρμογή σε καθοδηγεί άσκηση προς άσκηση, μετράει μέσω κάμερας ή χρονομέτρου και καταγράφει αυτόματα κάθε σετ — ως κύκλο ή το ένα μετά το άλλο.</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>Κοινοποίηση</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</source>
-        <target>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</target>
+        <target>Δείξε τη συνεδρία σου στο προφίλ σου ή στείλε την απευθείας σε φίλους. Ο καθένας λαμβάνει το δικό του αντίγραφο που μπορεί να προσαρμόσει.</target>
       </segment>
     </unit>
     <unit id="workouts.sharedPartly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
-        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</target>
+        <target>Η συνεδρία στάλθηκε σε <ph id="0" equiv="count" disp="sent"/> φίλο/-ους. <ph id="1" equiv="full" disp="full"/> δεν είχαν πλέον χώρο (το πολύ 50 συνεδρίες).</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>UI-Features testen</source>
-        <target>UI-Features testen</target>
+        <target>Δοκιμή λειτουργιών περιβάλλοντος εργασίας</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Animationen und Overlays ohne den auslösenden Fall vorschauen. </source>
-        <target> Animationen und Overlays ohne den auslösenden Fall vorschauen. </target>
+        <target> Προεπισκόπηση κινούμενων εικόνων και επικαλύψεων χωρίς την περίπτωση ενεργοποίησης. </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>Πίσω στη διαχείριση</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungs-Feuerwerk</source>
-        <target>Anfeuerungs-Feuerwerk</target>
+        <target>Πυροτεχνήματα ενθάρρυνσης</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </source>
-        <target> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </target>
+        <target> Εμφανίζει το κινούμενο σχέδιο πυροτεχνημάτων που εμφανίζεται όταν σε ενθαρρύνει ένας φίλος — ανεξάρτητα από τη δική σου ρύθμιση κινούμενων εικόνων. </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau starten</source>
-        <target>Vorschau starten</target>
+        <target>Έναρξη προεπισκόπησης</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.previewSender">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau</source>
-        <target>Vorschau</target>
+        <target>Προεπισκόπηση</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.message">
-      <segment state="initial">
+      <segment state="translated">
         <source> 🔥 Ein Freund feuert dich an! </source>
-        <target> 🔥 Ein Freund feuert dich an! </target>
+        <target> 🔥 Ένας φίλος σε ενθαρρύνει! </target>
       </segment>
     </unit>
     <unit id="settings.cheerAnimation.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Anfeuerungs-Animation anzeigen </source>
-        <target> Anfeuerungs-Animation anzeigen </target>
+        <target> Εμφάνιση κινούμενου σχεδίου ενθάρρυνσης </target>
       </segment>
     </unit>
     <unit id="settings.cheerAnimation.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </source>
-        <target> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </target>
+        <target> Εμφανίζει πυροτεχνήματα στον πίνακα ελέγχου όταν σε ενθαρρύνει ένας φίλος. </target>
       </segment>
     </unit>
 </file>

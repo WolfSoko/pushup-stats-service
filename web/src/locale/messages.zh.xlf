@@ -12808,813 +12808,813 @@
       </segment>
     </unit>
     <unit id="admin.network.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaftsnetz</source>
-        <target>Freundschaftsnetz</target>
+        <target>好友网络</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestätigte Freundschaft</source>
-        <target>Bestätigte Freundschaft</target>
+        <target>已确认的好友关系</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Offene Anfrage (Pfeil: wer gefragt hat)</source>
-        <target>Offene Anfrage (Pfeil: wer gefragt hat)</target>
+        <target>待处理请求（箭头：谁发起的）</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgelehnt</source>
-        <target>Abgelehnt</target>
+        <target>已拒绝</target>
       </segment>
     </unit>
     <unit id="admin.network.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</source>
-        <target>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</target>
+        <target>网络包含 <ph id="0" equiv="count" disp="this.nodes().length"/> 位用户和 <ph id="1" equiv="edges" disp="this.edges().length"/> 条连接</target>
       </segment>
     </unit>
     <unit id="admin.network.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </source>
-        <target> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </target>
+        <target> 谁与谁有连接。每个点代表一个账户，每条线代表一段关系；点的大小表示已确认好友的数量。 </target>
       </segment>
     </unit>
     <unit id="admin.network.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur Adminseite</source>
-        <target>Zur Adminseite</target>
+        <target>返回管理页面</target>
       </segment>
     </unit>
     <unit id="admin.network.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Erneut versuchen </target>
+        <target> 重试 </target>
       </segment>
     </unit>
     <unit id="admin.network.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch niemand ist mit jemandem vernetzt.</source>
-        <target>Noch niemand ist mit jemandem vernetzt.</target>
+        <target>目前还没有人与他人建立连接。</target>
       </segment>
     </unit>
     <unit id="admin.network.truncated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</source>
-        <target>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</target>
+        <target>实际关系比图中显示的更多 — 该图仅展示一部分。</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.users">
-      <segment state="initial">
+      <segment state="translated">
         <source>vernetzte Konten</source>
-        <target>vernetzte Konten</target>
+        <target>已连接账户</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaften</source>
-        <target>Freundschaften</target>
+        <target>好友关系</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>offene Anfragen</source>
-        <target>offene Anfragen</target>
+        <target>待处理请求</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>abgelehnt</source>
-        <target>abgelehnt</target>
+        <target>已拒绝</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.isolated">
-      <segment state="initial">
+      <segment state="translated">
         <source>ohne Verbindung</source>
-        <target>ohne Verbindung</target>
+        <target>无连接</target>
       </segment>
     </unit>
     <unit id="admin.network.toggleTable">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Tabelle</source>
-        <target>Als Tabelle</target>
+        <target>以表格显示</target>
       </segment>
     </unit>
     <unit id="admin.network.col.source">
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto </source>
-        <target> Konto </target>
+        <target> 账户 </target>
       </segment>
     </unit>
     <unit id="admin.network.col.status">
-      <segment state="initial">
+      <segment state="translated">
         <source> Beziehung </source>
-        <target> Beziehung </target>
+        <target> 关系 </target>
       </segment>
     </unit>
     <unit id="admin.network.col.target">
-      <segment state="initial">
+      <segment state="translated">
         <source> Gegenüber </source>
-        <target> Gegenüber </target>
+        <target> 对方 </target>
       </segment>
     </unit>
     <unit id="admin.network.toggleIsolated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konten ohne Verbindung</source>
-        <target>Konten ohne Verbindung</target>
+        <target>无连接的账户</target>
       </segment>
     </unit>
     <unit id="admin.network.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ohne Namen</source>
-        <target>Ohne Namen</target>
+        <target>未命名</target>
       </segment>
     </unit>
     <unit id="admin.network.status.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>befreundet mit</source>
-        <target>befreundet mit</target>
+        <target>是好友</target>
       </segment>
     </unit>
     <unit id="admin.network.status.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>hat angefragt</source>
-        <target>hat angefragt</target>
+        <target>已发起请求</target>
       </segment>
     </unit>
     <unit id="admin.network.status.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>wurde abgelehnt von</source>
-        <target>wurde abgelehnt von</target>
+        <target>被拒绝</target>
       </segment>
     </unit>
     <unit id="seo.workouts.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Sessions – Pushup Tracker</source>
-        <target>Meine Sessions – Pushup Tracker</target>
+        <target>我的训练 – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.workouts.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
-        <target>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</target>
+        <target>自定义你的训练，按引导完成，并与好友分享。</target>
       </segment>
     </unit>
     <unit id="nav.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sessions</source>
-        <target>Sessions</target>
+        <target>自定义训练</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sessions</source>
-        <target>Sessions</target>
+        <target>自定义训练</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übernehmen</source>
-        <target>Übernehmen</target>
+        <target>添加到我的训练</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übernommen</source>
-        <target>Übernommen</target>
+        <target>已添加</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.own">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>前往我的训练</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copiedNote">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gespeichert unter „Meine Sessions“.</source>
-        <target>Gespeichert unter „Meine Sessions“.</target>
+        <target>已保存到“我的训练”。</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copyFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konnte nicht übernommen werden. Bitte später erneut versuchen.</source>
-        <target>Konnte nicht übernommen werden. Bitte später erneut versuchen.</target>
+        <target>添加失败，请稍后重试。</target>
       </segment>
     </unit>
     <unit id="workoutSession.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></source>
-        <target>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
+        <target>训练 · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
       </segment>
     </unit>
     <unit id="workoutSession.done.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>前往我的训练</target>
       </segment>
     </unit>
     <unit id="workoutSession.unknown">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Session gibt es nicht. </source>
-        <target> Diese Session gibt es nicht. </target>
+        <target> 该训练不存在。 </target>
       </segment>
     </unit>
     <unit id="workouts.editor.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>前往我的训练</target>
       </segment>
     </unit>
     <unit id="workouts.card.from">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></source>
-        <target>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
+        <target>来自 <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
       </segment>
     </unit>
     <unit id="workouts.card.onProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf deinem Profil</source>
-        <target>Auf deinem Profil</target>
+        <target>在你的个人资料上</target>
       </segment>
     </unit>
     <unit id="workouts.card.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Starten</source>
-        <target>Starten</target>
+        <target>开始</target>
       </segment>
     </unit>
     <unit id="workouts.card.edit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bearbeiten</source>
-        <target>Bearbeiten</target>
+        <target>编辑</target>
       </segment>
     </unit>
     <unit id="workouts.card.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>An Freunde schicken</source>
-        <target>An Freunde schicken</target>
+        <target>发送给好友</target>
       </segment>
     </unit>
     <unit id="workouts.card.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Löschen</source>
-        <target>Löschen</target>
+        <target>删除</target>
       </segment>
     </unit>
     <unit id="workouts.card.hideFromProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vom Profil nehmen</source>
-        <target>Vom Profil nehmen</target>
+        <target>从个人资料移除</target>
       </segment>
     </unit>
     <unit id="workouts.card.showOnProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem Profil zeigen</source>
-        <target>Auf dem Profil zeigen</target>
+        <target>在个人资料显示</target>
       </segment>
     </unit>
     <unit id="workouts.delete.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session löschen</source>
-        <target>Session löschen</target>
+        <target>删除训练</target>
       </segment>
     </unit>
     <unit id="workouts.delete.confirm">
-      <segment state="initial">
+      <segment state="translated">
         <source> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </source>
-        <target> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </target>
+        <target> 确定要删除“<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>”吗？已记录的动作会保留。 </target>
       </segment>
     </unit>
     <unit id="workouts.delete.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> 取消 </target>
       </segment>
     </unit>
     <unit id="workouts.delete.button">
-      <segment state="initial">
+      <segment state="translated">
         <source> Löschen </source>
-        <target> Löschen </target>
+        <target> 删除 </target>
       </segment>
     </unit>
     <unit id="workouts.editor.editTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session bearbeiten</source>
-        <target>Session bearbeiten</target>
+        <target>编辑训练</target>
       </segment>
     </unit>
     <unit id="workouts.editor.newTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Session</source>
-        <target>Neue Session</target>
+        <target>新建训练</target>
       </segment>
     </unit>
     <unit id="workouts.editor.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </source>
-        <target> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </target>
+        <target> 动作、目标和组数 — 按你执行的顺序排列。 </target>
       </segment>
     </unit>
     <unit id="workouts.editor.loading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session wird geladen …</source>
-        <target>Session wird geladen …</target>
+        <target>正在加载训练…</target>
       </segment>
     </unit>
     <unit id="workouts.editor.missing">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session gibt es nicht.</source>
-        <target>Diese Session gibt es nicht.</target>
+        <target>该训练不存在。</target>
       </segment>
     </unit>
     <unit id="workouts.editor.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Name</source>
-        <target>Name</target>
+        <target>名称</target>
       </segment>
     </unit>
     <unit id="workouts.editor.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beschreibung (optional)</source>
-        <target>Beschreibung (optional)</target>
+        <target>描述（可选）</target>
       </segment>
     </unit>
     <unit id="workouts.editor.exercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>动作</target>
       </segment>
     </unit>
     <unit id="workouts.editor.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>动作</target>
       </segment>
     </unit>
     <unit id="workouts.editor.variant">
-      <segment state="initial">
+      <segment state="translated">
         <source>Variante</source>
-        <target>Variante</target>
+        <target>变体</target>
       </segment>
     </unit>
     <unit id="workouts.editor.noVariant">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine</source>
-        <target>Keine</target>
+        <target>无</target>
       </segment>
     </unit>
     <unit id="workouts.editor.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel</source>
-        <target>Ziel</target>
+        <target>目标</target>
       </segment>
     </unit>
     <unit id="workouts.editor.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sätze (optional)</source>
-        <target>Sätze (optional)</target>
+        <target>组数（可选）</target>
       </segment>
     </unit>
     <unit id="workouts.editor.addExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung hinzufügen</source>
-        <target>Übung hinzufügen</target>
+        <target>添加动作</target>
       </segment>
     </unit>
     <unit id="workouts.editor.onProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf meinem Profil zeigen</source>
-        <target>Auf meinem Profil zeigen</target>
+        <target>在我的个人资料上显示</target>
       </segment>
     </unit>
     <unit id="workouts.editor.onProfileHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </source>
-        <target> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </target>
+        <target> 谁能在那里看到，由你在个人资料的“自定义训练”区域设置：好友、所有人或无人。 </target>
       </segment>
     </unit>
     <unit id="workouts.editor.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abbrechen</source>
-        <target>Abbrechen</target>
+        <target>取消</target>
       </segment>
     </unit>
     <unit id="workouts.editor.save">
-      <segment state="initial">
+      <segment state="translated">
         <source>Speichern</source>
-        <target>Speichern</target>
+        <target>保存</target>
       </segment>
     </unit>
     <unit id="workouts.editor.moveUp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach oben</source>
-        <target>Nach oben</target>
+        <target>上移</target>
       </segment>
     </unit>
     <unit id="workouts.editor.moveDown">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach unten</source>
-        <target>Nach unten</target>
+        <target>下移</target>
       </segment>
     </unit>
     <unit id="workouts.editor.removeExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung entfernen</source>
-        <target>Übung entfernen</target>
+        <target>移除动作</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.seconds">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sek.</source>
-        <target>Sek.</target>
+        <target>秒</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.meters">
-      <segment state="initial">
+      <segment state="translated">
         <source>m</source>
-        <target>m</target>
+        <target>米</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wdh.</source>
-        <target>Wdh.</target>
+        <target>次</target>
       </segment>
     </unit>
     <unit id="workouts.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Session an Freunde schicken </source>
-        <target> Session an Freunde schicken </target>
+        <target> 将训练发送给好友 </target>
       </segment>
     </unit>
     <unit id="workouts.share.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </source>
-        <target> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </target>
+        <target> 你还没有已确认的好友。邀请一位好友，就可以直接分享训练了。 </target>
       </segment>
     </unit>
     <unit id="workouts.share.toFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>前往好友</target>
       </segment>
     </unit>
     <unit id="workouts.share.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </source>
-        <target> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </target>
+        <target> 每个人都会收到自己的副本，可以自行编辑。 </target>
       </segment>
     </unit>
     <unit id="workouts.share.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> 取消 </target>
       </segment>
     </unit>
     <unit id="workouts.share.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schicken </source>
-        <target> Schicken </target>
+        <target> 发送 </target>
       </segment>
     </unit>
     <unit id="workouts.error.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gib der Session einen Namen (höchstens 60 Zeichen).</source>
-        <target>Gib der Session einen Namen (höchstens 60 Zeichen).</target>
+        <target>请为训练命名（最多 60 个字符）。</target>
       </segment>
     </unit>
     <unit id="workouts.error.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</source>
-        <target>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</target>
+        <target>描述过长（最多 300 个字符）。</target>
       </segment>
     </unit>
     <unit id="workouts.error.noExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Füge mindestens eine Übung hinzu.</source>
-        <target>Füge mindestens eine Übung hinzu.</target>
+        <target>请至少添加一个动作。</target>
       </segment>
     </unit>
     <unit id="workouts.error.tooManyExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Höchstens 20 Übungen pro Session.</source>
-        <target>Höchstens 20 Übungen pro Session.</target>
+        <target>每个训练最多 20 个动作。</target>
       </segment>
     </unit>
     <unit id="workouts.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Übung ist ungültig. Wähle eine aus der Liste.</source>
-        <target>Eine Übung ist ungültig. Wähle eine aus der Liste.</target>
+        <target>有一个动作无效，请从列表中选择。</target>
       </segment>
     </unit>
     <unit id="workouts.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Übung braucht ein Ziel größer als 0.</source>
-        <target>Jede Übung braucht ein Ziel größer als 0.</target>
+        <target>每个动作的目标必须大于 0。</target>
       </segment>
     </unit>
     <unit id="workouts.error.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</source>
-        <target>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</target>
+        <target>各组数之和必须等于目标，例如 10、10、10。</target>
       </segment>
     </unit>
     <unit id="workouts.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</source>
-        <target>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</target>
+        <target>你已有 50 个训练。请删除一个以腾出空间。</target>
       </segment>
     </unit>
     <unit id="workouts.error.notFound">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session gibt es nicht mehr.</source>
-        <target>Diese Session gibt es nicht mehr.</target>
+        <target>该训练已不存在。</target>
       </segment>
     </unit>
     <unit id="workouts.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>请至少选择一位好友。</target>
       </segment>
     </unit>
     <unit id="workouts.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Empfänger auf einmal.</source>
-        <target>Zu viele Empfänger auf einmal.</target>
+        <target>一次发送的人数过多。</target>
       </segment>
     </unit>
     <unit id="workouts.error.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</source>
-        <target>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</target>
+        <target>该训练已失效，请先编辑。</target>
       </segment>
     </unit>
     <unit id="workouts.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Sessions</source>
-        <target>Meine Sessions</target>
+        <target>我的训练</target>
       </segment>
     </unit>
     <unit id="workouts.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </source>
-        <target> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </target>
+        <target> 自定义你的训练，按引导完成，并在个人资料上或直接与好友分享。 </target>
       </segment>
     </unit>
     <unit id="workouts.new">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Session</source>
-        <target>Neue Session</target>
+        <target>新建训练</target>
       </segment>
     </unit>
     <unit id="workouts.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </source>
-        <target> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </target>
+        <target> 还没有训练。创建第一个 — 挑选适合你的动作、目标和组数。 </target>
       </segment>
     </unit>
     <unit id="workouts.profileHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </source>
-        <target> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </target>
+        <target> 你的个人资料目前还没有向任何人展示训练。在个人资料中为好友或所有人开启“自定义训练”区域。 </target>
       </segment>
     </unit>
     <unit id="workouts.toProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Profil</source>
-        <target>Zum Profil</target>
+        <target>前往个人资料</target>
       </segment>
     </unit>
     <unit id="workouts.shared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>
-        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</target>
+        <target>训练已发送给 <ph id="0" equiv="count" disp="sent"/> 位好友。</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ganzkörper kurz</source>
-        <target>Ganzkörper kurz</target>
+        <target>简短全身</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von Anna · 3 Übungen</source>
-        <target>Von Anna · 3 Übungen</target>
+        <target>来自 Anna · 3 个动作</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line1">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×10 Liegestütze</source>
-        <target>3×10 Liegestütze</target>
+        <target>3×10 俯卧撑</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line2">
-      <segment state="initial">
+      <segment state="translated">
         <source>0:50 Plank</source>
-        <target>0:50 Plank</target>
+        <target>0:50 平板支撑</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line3">
-      <segment state="initial">
+      <segment state="translated">
         <source>20 Kniebeugen</source>
-        <target>20 Kniebeugen</target>
+        <target>20 深蹲</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session starten</source>
-        <target>Session starten</target>
+        <target>开始训练</target>
       </segment>
     </unit>
     <unit id="landing.workouts.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu · Eigene Sessions</source>
-        <target>Neu · Eigene Sessions</target>
+        <target>新功能 · 自定义训练</target>
       </segment>
     </unit>
     <unit id="landing.workouts.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </source>
-        <target> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </target>
+        <target> 你的训练，你的规则——朋友们和你一起练。 </target>
       </segment>
     </unit>
     <unit id="landing.workouts.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </source>
-        <target> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </target>
+        <target> 从动作库中组建你自己的训练：动作、目标、组数。应用会像计划日一样引导你完成。在个人主页展示训练，或直接发送给朋友。 </target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.compose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen, Ziele und Sätze frei kombinieren</source>
-        <target>Übungen, Ziele und Sätze frei kombinieren</target>
+        <target>自由组合动作、目标和组数</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
-        <target>Geführt durchführen — mit Kamera-Zähler und Timer</target>
+        <target>引导完成——配备摄像头计数与计时器</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem Profil zeigen oder Freunden schicken</source>
-        <target>Auf dem Profil zeigen oder Freunden schicken</target>
+        <target>在主页展示或发送给朋友</target>
       </segment>
     </unit>
     <unit id="landing.workouts.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Session erstellen</source>
-        <target>Eigene Session erstellen</target>
+        <target>创建自定义训练</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>新</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Sessions</source>
-        <target>Eigene Sessions</target>
+        <target>自定义训练</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> 第 <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> 步，共 <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> 步 </target>
       </segment>
     </unit>
     <unit id="workoutsIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> 稍后 </target>
       </segment>
     </unit>
     <unit id="workoutsIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>返回</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erste Session anlegen</source>
-        <target>Erste Session anlegen</target>
+        <target>创建第一个训练</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>下一步</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zusammenstellen</source>
-        <target>Zusammenstellen</target>
+        <target>组建</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</source>
-        <target>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</target>
+        <target>从动作库中选择动作，为每个动作设定目标并可选设置组数——按你训练的顺序排列。</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführt durchführen</source>
-        <target>Geführt durchführen</target>
+        <target>引导完成</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</source>
-        <target>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</target>
+        <target>应用会逐个动作引导你，通过摄像头或计时器计数，并自动记录每组——可循环进行或依次完成。</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>分享</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</source>
-        <target>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</target>
+        <target>在主页展示训练，或直接发送给朋友。每个人都会获得可自行调整的独立副本。</target>
       </segment>
     </unit>
     <unit id="workouts.sharedPartly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
-        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</target>
+        <target>训练已发送给 <ph id="0" equiv="count" disp="sent"/> 位朋友。<ph id="1" equiv="full" disp="full"/> 位已无空间（最多 50 个训练）。</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>UI-Features testen</source>
-        <target>UI-Features testen</target>
+        <target>测试界面功能</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Animationen und Overlays ohne den auslösenden Fall vorschauen. </source>
-        <target> Animationen und Overlays ohne den auslösenden Fall vorschauen. </target>
+        <target> 在不触发实际场景的情况下预览动画和叠加层。 </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>返回管理区</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungs-Feuerwerk</source>
-        <target>Anfeuerungs-Feuerwerk</target>
+        <target>加油烟花</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </source>
-        <target> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </target>
+        <target> 显示当朋友为你加油时出现的烟花动画——与你自己的动画设置无关。 </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau starten</source>
-        <target>Vorschau starten</target>
+        <target>开始预览</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.previewSender">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau</source>
-        <target>Vorschau</target>
+        <target>预览</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.message">
-      <segment state="initial">
+      <segment state="translated">
         <source> 🔥 Ein Freund feuert dich an! </source>
-        <target> 🔥 Ein Freund feuert dich an! </target>
+        <target> 🔥 一位朋友在为你加油！ </target>
       </segment>
     </unit>
     <unit id="settings.cheerAnimation.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Anfeuerungs-Animation anzeigen </source>
-        <target> Anfeuerungs-Animation anzeigen </target>
+        <target> 显示加油动画 </target>
       </segment>
     </unit>
     <unit id="settings.cheerAnimation.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </source>
-        <target> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </target>
+        <target> 当朋友为你加油时，在仪表盘上显示烟花。 </target>
       </segment>
     </unit>
 </file>

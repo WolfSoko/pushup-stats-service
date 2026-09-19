@@ -13301,813 +13301,813 @@
       </segment>
     </unit>
     <unit id="admin.network.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaftsnetz</source>
-        <target>Freundschaftsnetz</target>
+        <target>Vriendennetwerk</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bestätigte Freundschaft</source>
-        <target>Bestätigte Freundschaft</target>
+        <target>Bevestigde vriendschap</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Offene Anfrage (Pfeil: wer gefragt hat)</source>
-        <target>Offene Anfrage (Pfeil: wer gefragt hat)</target>
+        <target>Openstaand verzoek (pijl: wie heeft gevraagd)</target>
       </segment>
     </unit>
     <unit id="admin.network.legend.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgelehnt</source>
-        <target>Abgelehnt</target>
+        <target>Afgewezen</target>
       </segment>
     </unit>
     <unit id="admin.network.summary">
-      <segment state="initial">
+      <segment state="translated">
         <source>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</source>
-        <target>Netzwerk aus <ph id="0" equiv="count" disp="this.nodes().length"/> Nutzern und <ph id="1" equiv="edges" disp="this.edges().length"/> Verbindungen</target>
+        <target>Netwerk van <ph id="0" equiv="count" disp="this.nodes().length"/> gebruikers en <ph id="1" equiv="edges" disp="this.edges().length"/> verbindingen</target>
       </segment>
     </unit>
     <unit id="admin.network.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </source>
-        <target> Wer mit wem vernetzt ist. Jeder Punkt ist ein Konto, jede Linie eine Beziehung; die Größe eines Punkts zeigt die Zahl bestätigter Freunde. </target>
+        <target> Wie met wie verbonden is. Elk punt is een account, elke lijn een relatie; de grootte van een punt toont het aantal bevestigde vrienden. </target>
       </segment>
     </unit>
     <unit id="admin.network.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zur Adminseite</source>
-        <target>Zur Adminseite</target>
+        <target>Naar de adminpagina</target>
       </segment>
     </unit>
     <unit id="admin.network.retry">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erneut versuchen </source>
-        <target> Erneut versuchen </target>
+        <target> Opnieuw proberen </target>
       </segment>
     </unit>
     <unit id="admin.network.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source>Noch niemand ist mit jemandem vernetzt.</source>
-        <target>Noch niemand ist mit jemandem vernetzt.</target>
+        <target>Nog niemand is met iemand verbonden.</target>
       </segment>
     </unit>
     <unit id="admin.network.truncated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</source>
-        <target>Es gibt mehr Beziehungen als dargestellt werden — das Bild zeigt nur einen Ausschnitt.</target>
+        <target>Er zijn meer relaties dan getoond — de afbeelding toont slechts een deel.</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.users">
-      <segment state="initial">
+      <segment state="translated">
         <source>vernetzte Konten</source>
-        <target>vernetzte Konten</target>
+        <target>verbonden accounts</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaften</source>
-        <target>Freundschaften</target>
+        <target>vriendschappen</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>offene Anfragen</source>
-        <target>offene Anfragen</target>
+        <target>openstaande verzoeken</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>abgelehnt</source>
-        <target>abgelehnt</target>
+        <target>afgewezen</target>
       </segment>
     </unit>
     <unit id="admin.network.stat.isolated">
-      <segment state="initial">
+      <segment state="translated">
         <source>ohne Verbindung</source>
-        <target>ohne Verbindung</target>
+        <target>zonder verbinding</target>
       </segment>
     </unit>
     <unit id="admin.network.toggleTable">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Tabelle</source>
-        <target>Als Tabelle</target>
+        <target>Als tabel</target>
       </segment>
     </unit>
     <unit id="admin.network.col.source">
-      <segment state="initial">
+      <segment state="translated">
         <source> Konto </source>
-        <target> Konto </target>
+        <target> Account </target>
       </segment>
     </unit>
     <unit id="admin.network.col.status">
-      <segment state="initial">
+      <segment state="translated">
         <source> Beziehung </source>
-        <target> Beziehung </target>
+        <target> Relatie </target>
       </segment>
     </unit>
     <unit id="admin.network.col.target">
-      <segment state="initial">
+      <segment state="translated">
         <source> Gegenüber </source>
-        <target> Gegenüber </target>
+        <target> Tegenpartij </target>
       </segment>
     </unit>
     <unit id="admin.network.toggleIsolated">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konten ohne Verbindung</source>
-        <target>Konten ohne Verbindung</target>
+        <target>Accounts zonder verbinding</target>
       </segment>
     </unit>
     <unit id="admin.network.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ohne Namen</source>
-        <target>Ohne Namen</target>
+        <target>Zonder naam</target>
       </segment>
     </unit>
     <unit id="admin.network.status.accepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>befreundet mit</source>
-        <target>befreundet mit</target>
+        <target>bevriend met</target>
       </segment>
     </unit>
     <unit id="admin.network.status.pending">
-      <segment state="initial">
+      <segment state="translated">
         <source>hat angefragt</source>
-        <target>hat angefragt</target>
+        <target>heeft gevraagd</target>
       </segment>
     </unit>
     <unit id="admin.network.status.declined">
-      <segment state="initial">
+      <segment state="translated">
         <source>wurde abgelehnt von</source>
-        <target>wurde abgelehnt von</target>
+        <target>werd afgewezen door</target>
       </segment>
     </unit>
     <unit id="seo.workouts.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Sessions – Pushup Tracker</source>
-        <target>Meine Sessions – Pushup Tracker</target>
+        <target>Mijn sessies – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.workouts.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
-        <target>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</target>
+        <target>Stel je eigen trainingssessies samen, voer ze begeleid uit en deel ze met vrienden.</target>
       </segment>
     </unit>
     <unit id="nav.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sessions</source>
-        <target>Sessions</target>
+        <target>Sessies</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sessions</source>
-        <target>Sessions</target>
+        <target>Sessies</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übernehmen</source>
-        <target>Übernehmen</target>
+        <target>Overnemen</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übernommen</source>
-        <target>Übernommen</target>
+        <target>Overgenomen</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.own">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>Naar mijn sessies</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copiedNote">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gespeichert unter „Meine Sessions“.</source>
-        <target>Gespeichert unter „Meine Sessions“.</target>
+        <target>Opgeslagen onder ‘Mijn sessies’.</target>
       </segment>
     </unit>
     <unit id="publicProfile.workouts.copyFailed">
-      <segment state="initial">
+      <segment state="translated">
         <source>Konnte nicht übernommen werden. Bitte später erneut versuchen.</source>
-        <target>Konnte nicht übernommen werden. Bitte später erneut versuchen.</target>
+        <target>Kon niet worden overgenomen. Probeer het later opnieuw.</target>
       </segment>
     </unit>
     <unit id="workoutSession.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></source>
-        <target>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
+        <target>Sessie · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></target>
       </segment>
     </unit>
     <unit id="workoutSession.done.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>Naar mijn sessies</target>
       </segment>
     </unit>
     <unit id="workoutSession.unknown">
-      <segment state="initial">
+      <segment state="translated">
         <source> Diese Session gibt es nicht. </source>
-        <target> Diese Session gibt es nicht. </target>
+        <target> Deze sessie bestaat niet. </target>
       </segment>
     </unit>
     <unit id="workouts.editor.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu meinen Sessions</source>
-        <target>Zu meinen Sessions</target>
+        <target>Naar mijn sessies</target>
       </segment>
     </unit>
     <unit id="workouts.card.from">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></source>
-        <target>Von <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
+        <target>Van <ph id="0" equiv="INTERPOLATION" disp="{{ sourceName() }}"/></target>
       </segment>
     </unit>
     <unit id="workouts.card.onProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf deinem Profil</source>
-        <target>Auf deinem Profil</target>
+        <target>Op je profiel</target>
       </segment>
     </unit>
     <unit id="workouts.card.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Starten</source>
         <target>Starten</target>
       </segment>
     </unit>
     <unit id="workouts.card.edit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Bearbeiten</source>
-        <target>Bearbeiten</target>
+        <target>Bewerken</target>
       </segment>
     </unit>
     <unit id="workouts.card.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>An Freunde schicken</source>
-        <target>An Freunde schicken</target>
+        <target>Naar vrienden sturen</target>
       </segment>
     </unit>
     <unit id="workouts.card.delete">
-      <segment state="initial">
+      <segment state="translated">
         <source>Löschen</source>
-        <target>Löschen</target>
+        <target>Verwijderen</target>
       </segment>
     </unit>
     <unit id="workouts.card.hideFromProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vom Profil nehmen</source>
-        <target>Vom Profil nehmen</target>
+        <target>Van profiel halen</target>
       </segment>
     </unit>
     <unit id="workouts.card.showOnProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem Profil zeigen</source>
-        <target>Auf dem Profil zeigen</target>
+        <target>Op profiel tonen</target>
       </segment>
     </unit>
     <unit id="workouts.delete.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session löschen</source>
-        <target>Session löschen</target>
+        <target>Sessie verwijderen</target>
       </segment>
     </unit>
     <unit id="workouts.delete.confirm">
-      <segment state="initial">
+      <segment state="translated">
         <source> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </source>
-        <target> „<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>“ wirklich löschen? Eingetragene Übungen bleiben erhalten. </target>
+        <target> ‘<ph id="0" equiv="INTERPOLATION" disp="{{ data.title }}"/>’ echt verwijderen? Ingevoerde oefeningen blijven bewaard. </target>
       </segment>
     </unit>
     <unit id="workouts.delete.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Annuleren </target>
       </segment>
     </unit>
     <unit id="workouts.delete.button">
-      <segment state="initial">
+      <segment state="translated">
         <source> Löschen </source>
-        <target> Löschen </target>
+        <target> Verwijderen </target>
       </segment>
     </unit>
     <unit id="workouts.editor.editTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session bearbeiten</source>
-        <target>Session bearbeiten</target>
+        <target>Sessie bewerken</target>
       </segment>
     </unit>
     <unit id="workouts.editor.newTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Session</source>
-        <target>Neue Session</target>
+        <target>Nieuwe sessie</target>
       </segment>
     </unit>
     <unit id="workouts.editor.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </source>
-        <target> Übungen, Ziele und Sätze — in der Reihenfolge, in der du sie machst. </target>
+        <target> Oefeningen, doelen en sets — in de volgorde waarin je ze doet. </target>
       </segment>
     </unit>
     <unit id="workouts.editor.loading">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session wird geladen …</source>
-        <target>Session wird geladen …</target>
+        <target>Sessie laden…</target>
       </segment>
     </unit>
     <unit id="workouts.editor.missing">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session gibt es nicht.</source>
-        <target>Diese Session gibt es nicht.</target>
+        <target>Deze sessie bestaat niet.</target>
       </segment>
     </unit>
     <unit id="workouts.editor.name">
-      <segment state="initial">
+      <segment state="translated">
         <source>Name</source>
-        <target>Name</target>
+        <target>Naam</target>
       </segment>
     </unit>
     <unit id="workouts.editor.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Beschreibung (optional)</source>
-        <target>Beschreibung (optional)</target>
+        <target>Beschrijving (optioneel)</target>
       </segment>
     </unit>
     <unit id="workouts.editor.exercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen</source>
-        <target>Übungen</target>
+        <target>Oefeningen</target>
       </segment>
     </unit>
     <unit id="workouts.editor.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung</source>
-        <target>Übung</target>
+        <target>Oefening</target>
       </segment>
     </unit>
     <unit id="workouts.editor.variant">
-      <segment state="initial">
+      <segment state="translated">
         <source>Variante</source>
-        <target>Variante</target>
+        <target>Variant</target>
       </segment>
     </unit>
     <unit id="workouts.editor.noVariant">
-      <segment state="initial">
+      <segment state="translated">
         <source>Keine</source>
-        <target>Keine</target>
+        <target>Geen</target>
       </segment>
     </unit>
     <unit id="workouts.editor.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ziel</source>
-        <target>Ziel</target>
+        <target>Doel</target>
       </segment>
     </unit>
     <unit id="workouts.editor.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sätze (optional)</source>
-        <target>Sätze (optional)</target>
+        <target>Sets (optioneel)</target>
       </segment>
     </unit>
     <unit id="workouts.editor.addExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung hinzufügen</source>
-        <target>Übung hinzufügen</target>
+        <target>Oefening toevoegen</target>
       </segment>
     </unit>
     <unit id="workouts.editor.onProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf meinem Profil zeigen</source>
-        <target>Auf meinem Profil zeigen</target>
+        <target>Op mijn profiel tonen</target>
       </segment>
     </unit>
     <unit id="workouts.editor.onProfileHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </source>
-        <target> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </target>
+        <target> Wie het daar ziet, bepaal je op je profiel in het gedeelte ‘Sessies’: vrienden, iedereen of niemand. </target>
       </segment>
     </unit>
     <unit id="workouts.editor.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abbrechen</source>
-        <target>Abbrechen</target>
+        <target>Annuleren</target>
       </segment>
     </unit>
     <unit id="workouts.editor.save">
-      <segment state="initial">
+      <segment state="translated">
         <source>Speichern</source>
-        <target>Speichern</target>
+        <target>Opslaan</target>
       </segment>
     </unit>
     <unit id="workouts.editor.moveUp">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach oben</source>
-        <target>Nach oben</target>
+        <target>Omhoog</target>
       </segment>
     </unit>
     <unit id="workouts.editor.moveDown">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nach unten</source>
-        <target>Nach unten</target>
+        <target>Omlaag</target>
       </segment>
     </unit>
     <unit id="workouts.editor.removeExercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übung entfernen</source>
-        <target>Übung entfernen</target>
+        <target>Oefening verwijderen</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.seconds">
-      <segment state="initial">
+      <segment state="translated">
         <source>Sek.</source>
-        <target>Sek.</target>
+        <target>sec.</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.meters">
-      <segment state="initial">
+      <segment state="translated">
         <source>m</source>
         <target>m</target>
       </segment>
     </unit>
     <unit id="workouts.editor.unit.reps">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wdh.</source>
-        <target>Wdh.</target>
+        <target>herh.</target>
       </segment>
     </unit>
     <unit id="workouts.share.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Session an Freunde schicken </source>
-        <target> Session an Freunde schicken </target>
+        <target> Sessie naar vrienden sturen </target>
       </segment>
     </unit>
     <unit id="workouts.share.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </source>
-        <target> Du hast noch keine bestätigten Freunde. Lade jemanden ein — dann kannst du Sessions direkt teilen. </target>
+        <target> Je hebt nog geen bevestigde vrienden. Nodig iemand uit — dan kun je sessies direct delen. </target>
       </segment>
     </unit>
     <unit id="workouts.share.toFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu den Freunden</source>
-        <target>Zu den Freunden</target>
+        <target>Naar de vrienden</target>
       </segment>
     </unit>
     <unit id="workouts.share.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </source>
-        <target> Jeder bekommt eine eigene Kopie, die er bearbeiten kann. </target>
+        <target> Iedereen krijgt een eigen kopie, die diegene kan bewerken. </target>
       </segment>
     </unit>
     <unit id="workouts.share.cancel">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abbrechen </source>
-        <target> Abbrechen </target>
+        <target> Annuleren </target>
       </segment>
     </unit>
     <unit id="workouts.share.submit">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schicken </source>
-        <target> Schicken </target>
+        <target> Versturen </target>
       </segment>
     </unit>
     <unit id="workouts.error.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gib der Session einen Namen (höchstens 60 Zeichen).</source>
-        <target>Gib der Session einen Namen (höchstens 60 Zeichen).</target>
+        <target>Geef de sessie een naam (maximaal 60 tekens).</target>
       </segment>
     </unit>
     <unit id="workouts.error.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</source>
-        <target>Die Beschreibung ist zu lang (höchstens 300 Zeichen).</target>
+        <target>De beschrijving is te lang (maximaal 300 tekens).</target>
       </segment>
     </unit>
     <unit id="workouts.error.noExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Füge mindestens eine Übung hinzu.</source>
-        <target>Füge mindestens eine Übung hinzu.</target>
+        <target>Voeg minstens één oefening toe.</target>
       </segment>
     </unit>
     <unit id="workouts.error.tooManyExercises">
-      <segment state="initial">
+      <segment state="translated">
         <source>Höchstens 20 Übungen pro Session.</source>
-        <target>Höchstens 20 Übungen pro Session.</target>
+        <target>Maximaal 20 oefeningen per sessie.</target>
       </segment>
     </unit>
     <unit id="workouts.error.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Übung ist ungültig. Wähle eine aus der Liste.</source>
-        <target>Eine Übung ist ungültig. Wähle eine aus der Liste.</target>
+        <target>Een oefening is ongeldig. Kies er een uit de lijst.</target>
       </segment>
     </unit>
     <unit id="workouts.error.target">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jede Übung braucht ein Ziel größer als 0.</source>
-        <target>Jede Übung braucht ein Ziel größer als 0.</target>
+        <target>Elke oefening heeft een doel groter dan 0 nodig.</target>
       </segment>
     </unit>
     <unit id="workouts.error.sets">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</source>
-        <target>Die Sätze müssen zusammen das Ziel ergeben, z. B. 10, 10, 10.</target>
+        <target>De sets moeten samen het doel opleveren, bijv. 10, 10, 10.</target>
       </segment>
     </unit>
     <unit id="workouts.error.limit">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</source>
-        <target>Du hast schon 50 Sessions. Lösche eine, um Platz zu machen.</target>
+        <target>Je hebt al 50 sessies. Verwijder er een om ruimte te maken.</target>
       </segment>
     </unit>
     <unit id="workouts.error.notFound">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session gibt es nicht mehr.</source>
-        <target>Diese Session gibt es nicht mehr.</target>
+        <target>Deze sessie bestaat niet meer.</target>
       </segment>
     </unit>
     <unit id="workouts.error.noFriends">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle mindestens einen Freund aus.</source>
-        <target>Wähle mindestens einen Freund aus.</target>
+        <target>Kies minstens één vriend.</target>
       </segment>
     </unit>
     <unit id="workouts.error.tooMany">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu viele Empfänger auf einmal.</source>
-        <target>Zu viele Empfänger auf einmal.</target>
+        <target>Te veel ontvangers tegelijk.</target>
       </segment>
     </unit>
     <unit id="workouts.error.invalid">
-      <segment state="initial">
+      <segment state="translated">
         <source>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</source>
-        <target>Diese Session ist nicht mehr gültig. Bearbeite sie zuerst.</target>
+        <target>Deze sessie is niet meer geldig. Bewerk hem eerst.</target>
       </segment>
     </unit>
     <unit id="workouts.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Meine Sessions</source>
-        <target>Meine Sessions</target>
+        <target>Mijn sessies</target>
       </segment>
     </unit>
     <unit id="workouts.intro">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </source>
-        <target> Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und teile sie auf deinem Profil oder direkt mit Freunden. </target>
+        <target> Stel je eigen trainingssessies samen, voer ze begeleid uit en deel ze op je profiel of rechtstreeks met vrienden. </target>
       </segment>
     </unit>
     <unit id="workouts.new">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neue Session</source>
-        <target>Neue Session</target>
+        <target>Nieuwe sessie</target>
       </segment>
     </unit>
     <unit id="workouts.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </source>
-        <target> Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und Sätzen, die zu dir passen. </target>
+        <target> Nog geen sessie. Maak de eerste aan — met de oefeningen, doelen en sets die bij je passen. </target>
       </segment>
     </unit>
     <unit id="workouts.profileHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </source>
-        <target> Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich „Sessions“ auf deinem Profil für Freunde oder alle frei. </target>
+        <target> Je profiel toont sessies nog aan niemand. Schakel het gedeelte ‘Sessies’ op je profiel vrij voor vrienden of iedereen. </target>
       </segment>
     </unit>
     <unit id="workouts.toProfile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zum Profil</source>
-        <target>Zum Profil</target>
+        <target>Naar profiel</target>
       </segment>
     </unit>
     <unit id="workouts.shared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>
-        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</target>
+        <target>Sessie naar <ph id="0" equiv="count" disp="sent"/> vriend(en) gestuurd.</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ganzkörper kurz</source>
-        <target>Ganzkörper kurz</target>
+        <target>Kort volledig lichaam</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Von Anna · 3 Übungen</source>
-        <target>Von Anna · 3 Übungen</target>
+        <target>Van Anna · 3 oefeningen</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line1">
-      <segment state="initial">
+      <segment state="translated">
         <source>3×10 Liegestütze</source>
-        <target>3×10 Liegestütze</target>
+        <target>3×10 push-ups</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line2">
-      <segment state="initial">
+      <segment state="translated">
         <source>0:50 Plank</source>
-        <target>0:50 Plank</target>
+        <target>0:50 plank</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.line3">
-      <segment state="initial">
+      <segment state="translated">
         <source>20 Kniebeugen</source>
-        <target>20 Kniebeugen</target>
+        <target>20 squats</target>
       </segment>
     </unit>
     <unit id="landing.workouts.mock.action">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session starten</source>
-        <target>Session starten</target>
+        <target>Sessie starten</target>
       </segment>
     </unit>
     <unit id="landing.workouts.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu · Eigene Sessions</source>
-        <target>Neu · Eigene Sessions</target>
+        <target>Nieuw · Eigen sessies</target>
       </segment>
     </unit>
     <unit id="landing.workouts.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </source>
-        <target> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </target>
+        <target> Jouw training, jouw regels — en je vrienden trainen mee. </target>
       </segment>
     </unit>
     <unit id="landing.workouts.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </source>
-        <target> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </target>
+        <target> Stel je eigen sessies samen uit de oefeningencatalogus: oefeningen, doelen, sets. De app begeleidt je zoals op een plandag. Toon je sessies op je profiel of stuur ze direct naar vrienden. </target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.compose">
-      <segment state="initial">
+      <segment state="translated">
         <source>Übungen, Ziele und Sätze frei kombinieren</source>
-        <target>Übungen, Ziele und Sätze frei kombinieren</target>
+        <target>Combineer oefeningen, doelen en sets vrij</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.run">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
-        <target>Geführt durchführen — mit Kamera-Zähler und Timer</target>
+        <target>Begeleide uitvoering — met camera-teller en timer</target>
       </segment>
     </unit>
     <unit id="landing.workouts.chip.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf dem Profil zeigen oder Freunden schicken</source>
-        <target>Auf dem Profil zeigen oder Freunden schicken</target>
+        <target>Tonen op je profiel of naar vrienden sturen</target>
       </segment>
     </unit>
     <unit id="landing.workouts.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Session erstellen</source>
-        <target>Eigene Session erstellen</target>
+        <target>Eigen sessie maken</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Nieuw</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eigene Sessions</source>
-        <target>Eigene Sessions</target>
+        <target>Eigen sessies</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target> Stap <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> van <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
       </segment>
     </unit>
     <unit id="workoutsIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target> Later </target>
       </segment>
     </unit>
     <unit id="workoutsIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Terug</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erste Session anlegen</source>
-        <target>Erste Session anlegen</target>
+        <target>Eerste sessie aanmaken</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Volgende</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zusammenstellen</source>
-        <target>Zusammenstellen</target>
+        <target>Samenstellen</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</source>
-        <target>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</target>
+        <target>Kies oefeningen uit de catalogus, geef elke oefening een doel en eventueel sets — in de volgorde waarin je ze uitvoert.</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geführt durchführen</source>
-        <target>Geführt durchführen</target>
+        <target>Begeleide uitvoering</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</source>
-        <target>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</target>
+        <target>De app begeleidt je oefening voor oefening, telt mee via camera of timer, en registreert elke set automatisch — als circuit of na elkaar.</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step3.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>Delen</target>
       </segment>
     </unit>
     <unit id="workoutsIntro.step3.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</source>
-        <target>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</target>
+        <target>Toon je sessie op je profiel of stuur hem direct naar vrienden. Iedereen krijgt een eigen kopie die hij kan aanpassen.</target>
       </segment>
     </unit>
     <unit id="workouts.sharedPartly">
-      <segment state="initial">
+      <segment state="translated">
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
-        <target>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</target>
+        <target>Sessie verstuurd naar <ph id="0" equiv="count" disp="sent"/> vriend(en). <ph id="1" equiv="full" disp="full"/> hadden geen ruimte meer (maximaal 50 sessies).</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>UI-Features testen</source>
-        <target>UI-Features testen</target>
+        <target>UI-functies testen</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Animationen und Overlays ohne den auslösenden Fall vorschauen. </source>
-        <target> Animationen und Overlays ohne den auslösenden Fall vorschauen. </target>
+        <target> Bekijk animaties en overlays zonder het geval dat ze veroorzaakt. </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.backToAdmin">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück zum Admin-Bereich</source>
-        <target>Zurück zum Admin-Bereich</target>
+        <target>Terug naar het adminbereik</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungs-Feuerwerk</source>
-        <target>Anfeuerungs-Feuerwerk</target>
+        <target>Aanmoedigingsvuurwerk</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.description">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </source>
-        <target> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </target>
+        <target> Toont de vuurwerkanimatie die verschijnt wanneer een vriend je aanmoedigt — onafhankelijk van je eigen animatie-instelling. </target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.preview">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau starten</source>
-        <target>Vorschau starten</target>
+        <target>Voorbeeld starten</target>
       </segment>
     </unit>
     <unit id="admin.uiFeatures.cheer.previewSender">
-      <segment state="initial">
+      <segment state="translated">
         <source>Vorschau</source>
-        <target>Vorschau</target>
+        <target>Voorbeeld</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.message">
-      <segment state="initial">
+      <segment state="translated">
         <source> 🔥 Ein Freund feuert dich an! </source>
-        <target> 🔥 Ein Freund feuert dich an! </target>
+        <target> 🔥 Een vriend moedigt je aan! </target>
       </segment>
     </unit>
     <unit id="settings.cheerAnimation.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Anfeuerungs-Animation anzeigen </source>
-        <target> Anfeuerungs-Animation anzeigen </target>
+        <target> Aanmoedigingsanimatie tonen </target>
       </segment>
     </unit>
     <unit id="settings.cheerAnimation.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </source>
-        <target> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </target>
+        <target> Toont vuurwerk op het dashboard wanneer een vriend je aanmoedigt. </target>
       </segment>
     </unit>
 </file>
