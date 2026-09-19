@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
+import { dismissOverlay } from '../overlay';
+
 export class DashboardPage {
   readonly heading: Locator;
   readonly userMenuTrigger: Locator;
@@ -28,17 +30,23 @@ export class DashboardPage {
   }
 
   /**
-   * Signs out and waits until the session is really gone. Logging out
-   * does not navigate — the nav menu swapping to its anonymous form is
-   * the first observable sign that auth has cleared, and without waiting
-   * for it the next sign-in can race the old session.
+   * Signs out and waits until the session is really gone.
+   *
+   * Opening the menu is retried because the toolbar is only reachable
+   * while nothing is laid over it: a Material dialog covers the page
+   * with a full-screen backdrop, and in CI a click on the user menu
+   * waited out its whole budget against `cdk-overlay-dark-backdrop`
+   * instead of ever landing. Signing out does not navigate, so the nav
+   * menu swapping to its anonymous form is the first observable sign
+   * that auth has cleared — without waiting for it the next sign-in can
+   * race the old session.
    */
   async signOut(): Promise<void> {
-    await this.userMenuTrigger.click();
-    // The menu renders into an overlay: waiting for the item to be on
-    // screen before clicking keeps the failure on the menu that did not
-    // open, rather than on a click that had nothing to hit.
-    await expect(this.signOutItem).toBeVisible();
+    await expect(async () => {
+      await dismissOverlay(this.page);
+      await this.userMenuTrigger.click({ timeout: 5_000 });
+      await expect(this.signOutItem).toBeVisible({ timeout: 5_000 });
+    }).toPass({ timeout: 30_000 });
     await this.signOutItem.click();
     await expect(this.anonMenuTrigger).toBeVisible({ timeout: 20_000 });
   }

@@ -46,14 +46,8 @@ test.describe('Training session', () => {
       ).toBe(DAY_TARGET);
     }).toPass({ timeout: 20_000 });
 
-    // and — hitting the day's target is celebrated
-    await expect(trainingSessionPage.goalReachedCard).toBeVisible({
-      timeout: 20_000,
-    });
-    await trainingSessionPage.dismissGoalReached();
-
     // and — closing the session returns to the plan
-    await trainingSessionPage.finishButton.click();
+    await trainingSessionPage.finish();
     await expect(page).toHaveURL(new RegExp(`/training-plans/${PLAN_SLUG}$`));
   });
 

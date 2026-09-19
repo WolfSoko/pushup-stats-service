@@ -62,14 +62,21 @@ export function uniqueIdentity(prefix: string): {
 
 /**
  * Creates a signed-up account: the Auth record the login form
- * authenticates against, plus the `userConfigs` document the app would
- * otherwise only get around to writing after the first sign-in.
+ * authenticates against, plus the `userConfigs` document registration
+ * would have written.
+ *
+ * `dailyGoal` and `consent.acceptedAt` are part of that document on
+ * purpose. An account missing them is one the app's own registration
+ * never produces — it reads as "signed up but never finished
+ * onboarding", and the app then greets it with something the specs are
+ * not about.
  */
 export async function createAccount(
   prefix: string,
   options: { publicProfile?: boolean } = {}
 ): Promise<E2eAccount> {
   const { email, displayName } = uniqueIdentity(prefix);
+  const now = new Date().toISOString();
   const app = adminApp();
   const user = await getAuth(app).createUser({
     email,
@@ -84,7 +91,14 @@ export async function createAccount(
         userId: user.uid,
         email,
         displayName,
-        createdAt: new Date().toISOString(),
+        dailyGoal: 100,
+        createdAt: now,
+        consent: {
+          dataProcessing: true,
+          statistics: true,
+          targetedAds: false,
+          acceptedAt: now,
+        },
         ui: { publicProfile: options.publicProfile ?? true },
       },
       { merge: true }

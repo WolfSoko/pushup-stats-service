@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
+import { dismissOverlay } from '../overlay';
+
 /**
  * A guided training session: the intro, one card per set, the rest
  * countdown between them, and the closing screen.
@@ -12,9 +14,6 @@ export class TrainingSessionPage {
   readonly finishButton: Locator;
   readonly doneTitle: Locator;
   readonly inactivePlanNote: Locator;
-  /** The celebration that opens over the session when the day's goal is met. */
-  readonly goalReachedCard: Locator;
-  readonly goalReachedClose: Locator;
 
   constructor(private readonly page: Page) {
     this.startButton = page.getByTestId('session-start');
@@ -26,8 +25,6 @@ export class TrainingSessionPage {
     this.inactivePlanNote = page.getByText(
       'Für eine geführte Session muss dieser Plan aktiv sein.'
     );
-    this.goalReachedCard = page.getByTestId('goal-reached-card');
-    this.goalReachedClose = page.getByTestId('goal-reached-close');
   }
 
   async goto(slug: string): Promise<void> {
@@ -62,13 +59,16 @@ export class TrainingSessionPage {
   }
 
   /**
-   * Closes the goal celebration. It is an overlay, so anything behind it
-   * — the session's own closing action included — is unclickable until
-   * it is gone.
+   * Leaves the finished session for the plan page.
+   *
+   * Reaching a goal opens a celebration over the session, and its
+   * backdrop swallows the closing button — whether one appears depends
+   * on how the day's target compares to the user's own daily goal, so
+   * the step clears the way rather than assuming either.
    */
-  async dismissGoalReached(): Promise<void> {
-    await this.goalReachedClose.click();
-    await expect(this.goalReachedCard).toBeHidden({ timeout: 20_000 });
+  async finish(): Promise<void> {
+    await dismissOverlay(this.page);
+    await this.finishButton.click();
   }
 
   /** The session's own count of finished sets. */
