@@ -24,6 +24,19 @@
         "command": "bash -lc 'echo $$ > .firebase-emulators.pid; exec npx firebase emulators:start --only auth,firestore,functions'"
       }
     },
+    "serve-e2e": {
+      "continuous": true,
+      "executor": "nx:run-commands",
+      "dependsOn": ["cloud-functions:build"],
+      "options": {
+        "cwd": "data-store",
+        "commands": [
+          "node ../tools/src/link-functions-emulator-deps.mjs",
+          "npx firebase emulators:start --only auth,firestore,functions"
+        ],
+        "parallel": false
+      }
+    },
     "emulate:stop": {
       "executor": "nx:run-commands",
       "options": {

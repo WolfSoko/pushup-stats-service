@@ -180,6 +180,25 @@ describe('training-plan exercise items', () => {
       expect(total).toBe(25);
     });
 
+    it('should count a set logged in the same minute the day was activated', () => {
+      // given — the plan was started at 15:00:28 and the first set of the
+      // session followed seconds later; entry timestamps carry no
+      // seconds, so the set reads as 15:00. `dayActivatedAt` is written
+      // as `toISOString()`, so the test uses that shape too.
+      const sameMinuteEntries = [
+        entry('legs.squats', '2026-04-01T15:00+00:00', { reps: 20 }),
+      ];
+      // when
+      const total = planExerciseLoggedTotal(
+        sameMinuteEntries,
+        '2026-04-01',
+        { exerciseId: 'legs.squats' },
+        '2026-04-01T15:00:28.327Z'
+      );
+      // then — the set counts instead of being cut off by its own minute
+      expect(total).toBe(20);
+    });
+
     it('should ignore dayActivatedAt when it falls on a different date', () => {
       // given — the plan was last (re)activated on an earlier date, so
       // today's normal Quick-Add crediting is unaffected

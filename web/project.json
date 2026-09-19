@@ -237,6 +237,15 @@
           "NG_ALLOWED_HOSTS": "127.0.0.1,localhost"
         }
       }
+    },
+    "serve-e2e-emulator": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "buildTarget": "web:build:development-emulator",
+        "port": 4302,
+        "host": "127.0.0.1"
+      }
     }
   }
 }
