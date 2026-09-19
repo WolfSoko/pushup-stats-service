@@ -28,9 +28,45 @@ pnpm nx run web-e2e-emulator:e2e
 
 Java is required — the Firestore emulator is a JAR.
 
+## The second target: staging
+
+The same specs also run against the deployed PR preview and the real
+staging Firebase project, from the `build_and_preview` job in
+`.github/workflows/firebase-hosting-pull-request.yml` — right after that
+job has deployed the rules, the functions and the hosting channel it is
+about to test.
+
+```bash
+E2E_TARGET=staging E2E_BASE_URL=https://…web.app pnpm nx run web-e2e-emulator:e2e-staging
+```
+
+What it buys over the emulator run: deployed `firestore.rules` rather
+than locally evaluated ones, real callables with real cold starts, and
+real composite indexes — a query missing an index passes against the
+emulator and fails in production.
+
+Two things follow from staging being a real, shared project:
+
+- **Everything is cleaned up again.** `support/cleanup.ts` deletes the
+  accounts a run created and the documents hanging off them. Accounts are
+  matched on the run id stamped into their address, so two pull requests
+  running at once cannot delete each other's data; anything older than a
+  day is swept as well, which recovers the residue of a run that died
+  before its teardown.
+- **No extra credentials.** The Admin SDK uses the keyless Workload
+  Identity credential the deploy steps already exported, and the job is
+  gated to same-repo pull requests, so forks skip it.
+- **One run at a time.** The workflow carries a `concurrency` group, so a
+  second pull request cannot deploy new rules or functions into the
+  project while this run is testing the ones it just deployed.
+
+The project name says `emulator` because that is its default target and
+what gates every PR in `ci.yml`; the staging run is the same specs
+pointed elsewhere.
+
 ## Writing tests
 
-- Accounts come from `createAccount()` in `support/emulator.ts`, which
+- Accounts come from `createAccount()` in `support/backend.ts`, which
   creates them through the Admin SDK against the Auth emulator. Every
   account gets a unique e-mail, so specs never collide over emulator
   state and nothing has to be wiped between them. The `test` fixture in
@@ -40,3 +76,10 @@ Java is required — the Firestore emulator is a JAR.
   only runs its post-auth hooks on a real sign-in.
 - Assert on `data-testid` attributes where they exist; they are part of
   the app's markup and survive copy changes.
+- Navigate through `appPath()` from `support/routes.ts`, never with a
+  bare `page.goto('/login')`. Hosting serves the built app only under a
+  locale folder (`/de{,/**}` … `/zh{,/**}` in `data-store/firebase.json`),
+  so on staging every path needs the `/de` prefix, while the dev server
+  serves a single locale at the root. Putting the prefix in `baseURL`
+  does not work — Playwright resolves a leading-slash `goto()` against
+  the origin and drops the base URL's path.

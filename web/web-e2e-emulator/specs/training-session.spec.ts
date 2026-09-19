@@ -1,4 +1,4 @@
-import { createAccount, readEntries } from '../support/emulator';
+import { createAccount, readEntries } from '../support/backend';
 import { expect, test } from '../support/test-fixtures';
 
 /**

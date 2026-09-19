@@ -2,7 +2,25 @@ import { defineConfig, devices } from '@playwright/test';
 import { nxE2EPreset } from '@nx/playwright/preset';
 import { workspaceRoot } from '@nx/devkit';
 
-const baseURL = process.env['E2E_EMULATOR_BASE_URL'] || 'http://127.0.0.1:4302';
+/**
+ * `staging` points the same specs at the deployed preview and the real
+ * staging Firebase project; the default runs them against the local
+ * emulators. See README.md.
+ */
+const isStaging = process.env['E2E_TARGET'] === 'staging';
+
+/**
+ * Set here, in the runner, before any worker exists: workers inherit the
+ * environment, so seeding (in a worker) and cleanup (in global setup and
+ * teardown) agree on which accounts belong to this run. In CI the
+ * workflow passes the GitHub run id instead.
+ */
+process.env['E2E_RUN_ID'] ??= `local${Date.now().toString(36)}`;
+
+const baseURL =
+  process.env['E2E_BASE_URL'] ||
+  process.env['E2E_EMULATOR_BASE_URL'] ||
+  'http://127.0.0.1:4302';
 
 /**
  * The critical-path suite: the flows that need a real backend, run
@@ -12,6 +30,7 @@ const baseURL = process.env['E2E_EMULATOR_BASE_URL'] || 'http://127.0.0.1:4302';
 export default defineConfig({
   ...nxE2EPreset(__filename, { testDir: './specs' }),
   globalSetup: './support/global-setup.ts',
+  globalTeardown: './support/global-teardown.ts',
   use: {
     baseURL,
     /**
@@ -38,24 +57,29 @@ export default defineConfig({
    * answers with the registry of running emulators — see
    * `support/global-setup.ts`, which waits for all three to appear in it
    * before the first test runs.
+   *
+   * Against staging there is nothing to start: the app is already
+   * deployed and `E2E_BASE_URL` points at it.
    */
-  webServer: [
-    {
-      command: 'npx nx run data-store:serve-e2e',
-      url: 'http://127.0.0.1:4400/emulators',
-      reuseExistingServer: true,
-      cwd: workspaceRoot,
-      timeout: 300_000,
-    },
-    {
-      command: 'npx nx run web:serve-e2e-emulator',
-      url: baseURL,
-      reuseExistingServer: true,
-      cwd: workspaceRoot,
-      // A cold Angular build of the whole app, ahead of the first test.
-      timeout: 900_000,
-    },
-  ],
+  webServer: isStaging
+    ? []
+    : [
+        {
+          command: 'npx nx run data-store:serve-e2e',
+          url: 'http://127.0.0.1:4400/emulators',
+          reuseExistingServer: true,
+          cwd: workspaceRoot,
+          timeout: 300_000,
+        },
+        {
+          command: 'npx nx run web:serve-e2e-emulator',
+          url: baseURL,
+          reuseExistingServer: true,
+          cwd: workspaceRoot,
+          // A cold Angular build of the whole app, ahead of the first test.
+          timeout: 900_000,
+        },
+      ],
   /**
    * One worker on purpose. The specs share one Functions emulator, whose
    * callables are what every friends assertion goes through, and a

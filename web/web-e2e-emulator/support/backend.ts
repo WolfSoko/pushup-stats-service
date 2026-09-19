@@ -3,29 +3,66 @@ import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
 /**
- * Talking to the emulators as the backend does.
+ * The backend the run is pointed at.
  *
- * Seeding through the Admin SDK rather than through the UI keeps a spec
- * about the one flow it is named after: the friends spec should fail
- * because accepting a request broke, not because registering did.
- *
- * The project id is the one in `web/src/env/fire.config.ts`, which is
- * what the browser sends — the emulators partition by project, so a
- * different id here would seed accounts the app never sees.
+ * `emulator` is the default and what CI gates every PR on. `staging`
+ * points the same specs at the deployed preview and the real staging
+ * Firebase project — deployed rules, real callables, real indexes, which
+ * is the part emulators cannot vouch for.
  */
-export const PROJECT_ID = 'pushup-stats';
-export const AUTH_EMULATOR_HOST = '127.0.0.1:9099';
-export const FIRESTORE_EMULATOR_HOST = '127.0.0.1:8080';
+export type E2eTarget = 'emulator' | 'staging';
+
+export const TARGET: E2eTarget =
+  process.env['E2E_TARGET'] === 'staging' ? 'staging' : 'emulator';
+
+/**
+ * The project the browser talks to, which the Admin SDK has to match —
+ * both backends partition by project, so a mismatch here would seed
+ * accounts the app never sees. The emulator id comes from
+ * `web/src/env/fire.config.ts`, the staging one from
+ * `fire.config.staging.ts`.
+ */
+export const PROJECT_ID =
+  TARGET === 'staging' ? 'pushup-stats-staging-867b7' : 'pushup-stats';
+
 export const EMULATOR_HUB_URL = 'http://127.0.0.1:4400';
 
-/** The Admin SDK reads these on `initializeApp`, so they are set first. */
-process.env['FIREBASE_AUTH_EMULATOR_HOST'] ??= AUTH_EMULATOR_HOST;
-process.env['FIRESTORE_EMULATOR_HOST'] ??= FIRESTORE_EMULATOR_HOST;
-process.env['GCLOUD_PROJECT'] ??= PROJECT_ID;
+/**
+ * Against the emulators the Admin SDK is pointed at them by environment;
+ * against staging it must NOT be, and authenticates with whatever
+ * application-default credentials the runner holds (in CI the keyless
+ * Workload Identity federation the staging deploy already sets up).
+ */
+if (TARGET === 'emulator') {
+  process.env['FIREBASE_AUTH_EMULATOR_HOST'] ??= '127.0.0.1:9099';
+  process.env['FIRESTORE_EMULATOR_HOST'] ??= '127.0.0.1:8080';
+  process.env['GCLOUD_PROJECT'] ??= PROJECT_ID;
+}
 
-function adminApp(): App {
+export function adminApp(): App {
   return getApps()[0] ?? initializeApp({ projectId: PROJECT_ID });
 }
+
+/**
+ * Stamped into every address this run creates.
+ *
+ * Staging is shared — two pull requests can be running this suite at the
+ * same time — so teardown has to be able to tell its own accounts from
+ * somebody else's. In CI this is the GitHub run id; `playwright.config.ts`
+ * puts one into the environment for a local run, which the workers then
+ * inherit.
+ *
+ * The fallback is deliberately constant rather than a timestamp: this
+ * module is loaded once per process, and the accounts are created in a
+ * worker while cleanup runs in the runner. Anything derived from the
+ * clock would differ between the two, and teardown would match nothing.
+ */
+export const RUN_ID = (process.env['E2E_RUN_ID'] ?? 'local')
+  .toLowerCase()
+  .replace(/[^a-z0-9]/g, '');
+
+/** The domain every account this suite creates lives on. Never routable. */
+export const E2E_EMAIL_DOMAIN = 'e2e.test';
 
 /**
  * Strong enough for `hasStrongPasswordPolicy`, so the same constant works
@@ -43,10 +80,10 @@ export interface E2eAccount {
 let sequence = 0;
 
 /**
- * A fresh identity per call. Specs share one emulator and never wipe it:
- * unique accounts are what keeps them from reading each other's
- * friendships, and it is also what lets a failed run be inspected
- * afterwards instead of being cleaned away.
+ * A fresh identity per call. Specs share one backend and never wipe it
+ * mid-run: unique accounts are what keeps them from reading each other's
+ * friendships, and on staging the run id is what makes them removable
+ * afterwards.
  */
 export function uniqueIdentity(prefix: string): {
   email: string;
@@ -55,7 +92,7 @@ export function uniqueIdentity(prefix: string): {
   sequence += 1;
   const tag = `${Date.now().toString(36)}${sequence}`;
   return {
-    email: `${prefix}-${tag}@e2e.test`,
+    email: `e2e-${RUN_ID}-${prefix}-${tag}@${E2E_EMAIL_DOMAIN}`,
     displayName: `${prefix}-${tag}`,
   };
 }
@@ -106,7 +143,7 @@ export async function createAccount(
   return { uid: user.uid, email, password: E2E_PASSWORD, displayName };
 }
 
-/** Whether the Auth emulator knows an address — proof a signup landed. */
+/** Whether Auth knows an address — proof a signup landed. */
 export async function accountExists(email: string): Promise<boolean> {
   return getAuth(adminApp())
     .getUserByEmail(email)

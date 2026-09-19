@@ -1,5 +1,7 @@
 import { test as base } from '@playwright/test';
 
+import { collectDiagnostics, reportDiagnostics } from './diagnostics';
+
 import { DashboardPage } from './pages/dashboard-page';
 import { FriendsPage } from './pages/friends-page';
 import { LoginPage } from './pages/login-page';
@@ -17,6 +19,17 @@ type AppFixtures = {
 };
 
 export const test = base.extend<AppFixtures>({
+  /**
+   * The stock page, plus a log of what the browser complained about that
+   * is printed when the test ends badly. See `support/diagnostics.ts`.
+   */
+  page: async ({ page }, use, testInfo) => {
+    const lines = collectDiagnostics(page);
+    await use(page);
+    if (testInfo.status !== testInfo.expectedStatus) {
+      await reportDiagnostics(page, testInfo, lines());
+    }
+  },
   dashboardPage: async ({ page }, use) => {
     await use(new DashboardPage(page));
   },

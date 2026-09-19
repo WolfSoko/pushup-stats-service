@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
+import { appPath } from '../routes';
+
 /** `/freunde` — requests waiting for an answer, and confirmed friends. */
 export class FriendsPage {
   readonly heading: Locator;
@@ -23,7 +25,7 @@ export class FriendsPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/freunde');
+    await this.page.goto(appPath('/freunde'));
     await expect(this.heading).toBeVisible();
   }
 
@@ -95,5 +97,5 @@ export class FriendsPage {
 
 /** The path a recipient opens to redeem `token` on the app under test. */
 export function invitePathFor(token: string, referrerUid: string): string {
-  return `/?fi=${encodeURIComponent(token)}&ref=${encodeURIComponent(referrerUid)}`;
+  return `${appPath('/')}?fi=${encodeURIComponent(token)}&ref=${encodeURIComponent(referrerUid)}`;
 }

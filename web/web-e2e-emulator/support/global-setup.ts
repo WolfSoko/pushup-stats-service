@@ -1,11 +1,19 @@
-import { waitForEmulators } from './emulator';
+import { TARGET, waitForEmulators } from './backend';
+import { cleanupStagingData } from './cleanup';
 
 /**
- * Playwright's `webServer` waits for the emulator hub, which answers
- * before the emulators behind it have registered. Every spec here needs
- * Auth, Firestore and Functions, so the run waits for all three rather
- * than letting the first spec discover it by timing out.
+ * Against the emulators: Playwright's `webServer` waits for the emulator
+ * hub, which answers before the emulators behind it have registered, and
+ * every spec needs Auth, Firestore and Functions.
+ *
+ * Against staging: nothing to boot, but the residue of any run that
+ * crashed before its own teardown is swept first, so a project that has
+ * collected junk heals on the next run instead of accumulating.
  */
 export default async function globalSetup(): Promise<void> {
-  await waitForEmulators();
+  if (TARGET === 'emulator') {
+    await waitForEmulators();
+    return;
+  }
+  await cleanupStagingData();
 }

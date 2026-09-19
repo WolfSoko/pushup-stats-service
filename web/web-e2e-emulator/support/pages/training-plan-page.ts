@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
+import { appPath } from '../routes';
+
 /** A plan's detail page: where a plan is activated and a session starts. */
 export class TrainingPlanPage {
   readonly startPlanButton: Locator;
@@ -13,7 +15,7 @@ export class TrainingPlanPage {
   }
 
   async goto(slug: string): Promise<void> {
-    await this.page.goto(`/training-plans/${slug}`);
+    await this.page.goto(appPath(`/training-plans/${slug}`));
   }
 
   /** Activates the plan and waits for the page to switch to the active view. */

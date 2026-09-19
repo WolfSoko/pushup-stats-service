@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
+import { appPath } from '../routes';
+
 /** The three-step registration stepper: e-mail, password, username. */
 export class RegisterPage {
   readonly title: Locator;
@@ -33,7 +35,7 @@ export class RegisterPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/register');
+    await this.page.goto(appPath('/register'));
     await expect(this.title).toBeVisible();
   }
 

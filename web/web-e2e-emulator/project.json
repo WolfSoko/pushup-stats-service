@@ -5,5 +5,14 @@
   "sourceRoot": "web/web-e2e-emulator",
   "tags": ["scope:e2e"],
   "implicitDependencies": ["web", "data-store"],
-  "targets": {}
+  "targets": {
+    "e2e-staging": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "options": {
+        "cwd": "web/web-e2e-emulator",
+        "command": "playwright test"
+      }
+    }
+  }
 }
