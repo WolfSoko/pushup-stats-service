@@ -54,7 +54,7 @@ export function collectDiagnostics(page: Page): () => string[] {
   );
   page.on('requestfailed', (request) =>
     note(
-      `requestfailed: ${redactUrl(request.url())} — ${request.failure()?.errorText ?? 'unknown'}`
+      `requestfailed: ${redactUrl(request.url())} — ${redactText(request.failure()?.errorText ?? 'unknown')}`
     )
   );
   page.on('response', (response) => {
