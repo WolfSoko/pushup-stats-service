@@ -14111,375 +14111,375 @@
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.idle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück anfeuern</source>
-        <target>Zurück anfeuern</target>
+        <target>Ανταπόδωση επευφημίας</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.sending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerung wird gesendet</source>
-        <target>Anfeuerung wird gesendet</target>
+        <target>Αποστολή επευφημίας…</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.sent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgefeuert!</source>
-        <target>Zurückgefeuert!</target>
+        <target>Η επευφημία ανταποδόθηκε!</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.already">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>Έγινε ήδη επευφημία σήμερα</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fehlgeschlagen – nochmal?</source>
-        <target>Fehlgeschlagen – nochmal?</target>
+        <target>Απέτυχε – ξανά;</target>
       </segment>
     </unit>
     <unit id="nav.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil</source>
-        <target>Profil</target>
+        <target>Προφίλ</target>
       </segment>
     </unit>
     <unit id="nav.settings">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einstellungen</source>
-        <target>Einstellungen</target>
+        <target>Ρυθμίσεις</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-Zähler: Genauigkeit</source>
-        <target>Kamera-Zähler: Genauigkeit</target>
+        <target>Μετρητής κάμερας: ακρίβεια</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.total">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> ανατροφοδοτήσεις αξιολογήθηκαν </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Rückmeldungen zur Zählgenauigkeit. </source>
-        <target> Noch keine Rückmeldungen zur Zählgenauigkeit. </target>
+        <target> Δεν υπάρχει ακόμη ανατροφοδότηση σχετικά με την ακρίβεια μέτρησης. </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source> Profil </source>
-        <target> Profil </target>
+        <target> Προφίλ </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.thresholds">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schwellwerte </source>
-        <target> Schwellwerte </target>
+        <target> Όρια </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.runs">
-      <segment state="initial">
+      <segment state="translated">
         <source> Läufe </source>
-        <target> Läufe </target>
+        <target> Εκτελέσεις </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.thinEvidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu wenige Läufe für eine belastbare Aussage</source>
-        <target>Zu wenige Läufe für eine belastbare Aussage</target>
+        <target>Πολύ λίγες εκτελέσεις για αξιόπιστο συμπέρασμα</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.exact">
-      <segment state="initial">
+      <segment state="translated">
         <source> Exakt </source>
-        <target> Exakt </target>
+        <target> Ακριβές </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.meanAbsDelta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ø Fehler </source>
-        <target> Ø Fehler </target>
+        <target> Μ.Ο. σφάλμα </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.meanDeltaHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plus heißt: es wurden Reps übersehen</source>
-        <target>Plus heißt: es wurden Reps übersehen</target>
+        <target>Θετικό σημαίνει: παραλείφθηκαν επαναλήψεις</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.meanDelta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tendenz </source>
-        <target> Tendenz </target>
+        <target> Τάση </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.recentTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzte Rückmeldungen</source>
-        <target>Letzte Rückmeldungen</target>
+        <target>Πρόσφατη ανατροφοδότηση</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.date">
-      <segment state="initial">
+      <segment state="translated">
         <source> Datum </source>
-        <target> Datum </target>
+        <target> Ημερομηνία </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übung </source>
-        <target> Übung </target>
+        <target> Άσκηση </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.detected">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erkannt </source>
-        <target> Erkannt </target>
+        <target> Ανιχνεύθηκε </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.actual">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tatsächlich </source>
-        <target> Tatsächlich </target>
+        <target> Πραγματικό </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.delta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abweichung </source>
-        <target> Abweichung </target>
+        <target> Απόκλιση </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.question">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </source>
-        <target> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </target>
+        <target> Ανιχνεύθηκαν: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> επαναλήψεις. Ήταν σωστό; </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.yes">
-      <segment state="initial">
+      <segment state="translated">
         <source>Passt</source>
-        <target>Passt</target>
+        <target>Σωστό</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.correct">
-      <segment state="initial">
+      <segment state="translated">
         <source> Andere Zahl </source>
-        <target> Andere Zahl </target>
+        <target> Άλλος αριθμός </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.dismiss">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nicht mehr fragen </source>
-        <target> Nicht mehr fragen </target>
+        <target> Να μην ερωτηθώ ξανά </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.correctQuestion">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wie viele waren es wirklich? </source>
-        <target> Wie viele waren es wirklich? </target>
+        <target> Πόσες ήταν πραγματικά; </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.decrementAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Wiederholung weniger</source>
-        <target>Eine Wiederholung weniger</target>
+        <target>Μία επανάληψη λιγότερη</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.incrementAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Wiederholung mehr</source>
-        <target>Eine Wiederholung mehr</target>
+        <target>Μία επανάληψη περισσότερη</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Εφαρμογή </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Parameter (Admin) </source>
-        <target> Parameter (Admin) </target>
+        <target> Παράμετροι (Διαχειριστής) </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unsaved">
-      <segment state="initial">
+      <segment state="translated">
         <source> ungespeichert </source>
-        <target> ungespeichert </target>
+        <target> μη αποθηκευμένο </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.published">
-      <segment state="initial">
+      <segment state="translated">
         <source> für alle aktiv </source>
-        <target> für alle aktiv </target>
+        <target> ενεργό για όλους </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.clearAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf Standardwert zurücksetzen</source>
-        <target>Auf Standardwert zurücksetzen</target>
+        <target>Επαναφορά στην προεπιλεγμένη τιμή</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.resetAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Standard </source>
-        <target> Standard </target>
+        <target> Προεπιλογή </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.discard">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verwerfen </source>
-        <target> Verwerfen </target>
+        <target> Απόρριψη </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> Αποθήκευση </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.publish">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für alle </source>
-        <target> Für alle </target>
+        <target> Για όλους </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.upAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Oben ab</source>
-        <target>Oben ab</target>
+        <target>Πάνω από</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.upAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelenk gilt ab diesem Winkel als gestreckt</source>
-        <target>Gelenk gilt ab diesem Winkel als gestreckt</target>
+        <target>Η άρθρωση θεωρείται τεντωμένη από αυτή τη γωνία</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.downAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unten bis</source>
-        <target>Unten bis</target>
+        <target>Κάτω έως</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.downAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelenk gilt bis zu diesem Winkel als gebeugt</source>
-        <target>Gelenk gilt bis zu diesem Winkel als gebeugt</target>
+        <target>Η άρθρωση θεωρείται λυγισμένη έως αυτή τη γωνία</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minDwell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haltezeit</source>
-        <target>Haltezeit</target>
+        <target>Χρόνος παραμονής</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minDwellHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss eine Phase anliegen, bevor sie zählt</source>
-        <target>So lange muss eine Phase anliegen, bevor sie zählt</target>
+        <target>Μια φάση πρέπει να διαρκέσει τόσο πριν μετρήσει</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minConfidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mindestsicherheit</source>
-        <target>Mindestsicherheit</target>
+        <target>Ελάχιστη βεβαιότητα</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minConfidenceHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Frames mit schlechter Erkennung werden verworfen</source>
-        <target>Frames mit schlechter Erkennung werden verworfen</target>
+        <target>Καρέ με κακή ανίχνευση απορρίπτονται</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.maxFrameGap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Max. Lücke</source>
-        <target>Max. Lücke</target>
+        <target>Μέγ. κενό</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.maxFrameGapHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Längere Tracking-Aussetzer verwerfen die laufende Phase</source>
-        <target>Längere Tracking-Aussetzer verwerfen die laufende Phase</target>
+        <target>Μεγαλύτερες διακοπές παρακολούθησης ακυρώνουν την τρέχουσα φάση</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.inPoseAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>In Position ab</source>
-        <target>In Position ab</target>
+        <target>Σε θέση από</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.inPoseAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab diesem Winkel gilt die Haltung als sauber</source>
-        <target>Ab diesem Winkel gilt die Haltung als sauber</target>
+        <target>Από αυτή τη γωνία η στάση θεωρείται σωστή</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.outPoseAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Raus bis</source>
-        <target>Raus bis</target>
+        <target>Έξω έως</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.outPoseAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darunter gilt die Haltung als verlassen</source>
-        <target>Darunter gilt die Haltung als verlassen</target>
+        <target>Κάτω από αυτό η στάση θεωρείται εγκαταλελειμμένη</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minHold">
-      <segment state="initial">
+      <segment state="translated">
         <source>Startverzögerung</source>
-        <target>Startverzögerung</target>
+        <target>Καθυστέρηση έναρξης</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minHoldHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss die Position stehen, bevor die Uhr läuft</source>
-        <target>So lange muss die Position stehen, bevor die Uhr läuft</target>
+        <target>Η θέση πρέπει να διατηρηθεί τόσο πριν ξεκινήσει το ρολόι</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minBreak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausenverzögerung</source>
-        <target>Pausenverzögerung</target>
+        <target>Καθυστέρηση παύσης</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minBreakHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss die Position verlassen sein, bevor pausiert wird</source>
-        <target>So lange muss die Position verlassen sein, bevor pausiert wird</target>
+        <target>Η θέση πρέπει να έχει εγκαταλειφθεί τόσο πριν γίνει παύση</target>
       </segment>
     </unit>
     <unit id="settings.section.autoCountFeedback.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera-Zähler </source>
-        <target> Kamera-Zähler </target>
+        <target> Μετρητής κάμερας </target>
       </segment>
     </unit>
     <unit id="settings.section.autoCountFeedback.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rückmeldung zur Zählgenauigkeit. </source>
-        <target> Rückmeldung zur Zählgenauigkeit. </target>
+        <target> Ανατροφοδότηση σχετικά με την ακρίβεια μέτρησης. </target>
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackToggle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nach dem Zählen nach der echten Anzahl fragen </source>
-        <target> Nach dem Zählen nach der echten Anzahl fragen </target>
+        <target> Ερώτηση για τον πραγματικό αριθμό μετά τη μέτρηση </target>
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </source>
-        <target> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </target>
+        <target> Η απάντησή σου βελτιώνει την ανίχνευση. Μεταδίδονται μόνο ο μετρημένος και ο πραγματικός αριθμός καθώς και οι ρυθμίσεις ανίχνευσης – όχι βίντεο ή εικόνα. </target>
       </segment>
     </unit>
 </file>

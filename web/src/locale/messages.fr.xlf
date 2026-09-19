@@ -13983,375 +13983,375 @@
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.idle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück anfeuern</source>
-        <target>Zurück anfeuern</target>
+        <target>Encourager en retour</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.sending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerung wird gesendet</source>
-        <target>Anfeuerung wird gesendet</target>
+        <target>Envoi de l'encouragement…</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.sent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgefeuert!</source>
-        <target>Zurückgefeuert!</target>
+        <target>Encouragement renvoyé !</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.already">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>Déjà encouragé aujourd'hui</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fehlgeschlagen – nochmal?</source>
-        <target>Fehlgeschlagen – nochmal?</target>
+        <target>Échec – réessayer ?</target>
       </segment>
     </unit>
     <unit id="nav.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil</source>
         <target>Profil</target>
       </segment>
     </unit>
     <unit id="nav.settings">
-      <segment state="initial">
+      <segment state="translated">
         <source>Einstellungen</source>
-        <target>Einstellungen</target>
+        <target>Paramètres</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-Zähler: Genauigkeit</source>
-        <target>Kamera-Zähler: Genauigkeit</target>
+        <target>Compteur caméra : précision</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.total">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> retours évalués </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Rückmeldungen zur Zählgenauigkeit. </source>
-        <target> Noch keine Rückmeldungen zur Zählgenauigkeit. </target>
+        <target> Pas encore de retour sur la précision du comptage. </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source> Profil </source>
         <target> Profil </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.thresholds">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schwellwerte </source>
-        <target> Schwellwerte </target>
+        <target> Seuils </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.runs">
-      <segment state="initial">
+      <segment state="translated">
         <source> Läufe </source>
-        <target> Läufe </target>
+        <target> Séries </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.thinEvidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu wenige Läufe für eine belastbare Aussage</source>
-        <target>Zu wenige Läufe für eine belastbare Aussage</target>
+        <target>Trop peu de séries pour une conclusion fiable</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.exact">
-      <segment state="initial">
+      <segment state="translated">
         <source> Exakt </source>
-        <target> Exakt </target>
+        <target> Exact </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.meanAbsDelta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ø Fehler </source>
-        <target> Ø Fehler </target>
+        <target> Erreur moy. </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.meanDeltaHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plus heißt: es wurden Reps übersehen</source>
-        <target>Plus heißt: es wurden Reps übersehen</target>
+        <target>Positif signifie : des répétitions ont été manquées</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.meanDelta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tendenz </source>
-        <target> Tendenz </target>
+        <target> Tendance </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.recentTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzte Rückmeldungen</source>
-        <target>Letzte Rückmeldungen</target>
+        <target>Derniers retours</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.date">
-      <segment state="initial">
+      <segment state="translated">
         <source> Datum </source>
-        <target> Datum </target>
+        <target> Date </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übung </source>
-        <target> Übung </target>
+        <target> Exercice </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.detected">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erkannt </source>
-        <target> Erkannt </target>
+        <target> Détecté </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.actual">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tatsächlich </source>
-        <target> Tatsächlich </target>
+        <target> Réel </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.delta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abweichung </source>
-        <target> Abweichung </target>
+        <target> Écart </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.question">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </source>
-        <target> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </target>
+        <target> Détecté : <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> répétitions. Était-ce correct ? </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.yes">
-      <segment state="initial">
+      <segment state="translated">
         <source>Passt</source>
-        <target>Passt</target>
+        <target>Correct</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.correct">
-      <segment state="initial">
+      <segment state="translated">
         <source> Andere Zahl </source>
-        <target> Andere Zahl </target>
+        <target> Autre nombre </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.dismiss">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nicht mehr fragen </source>
-        <target> Nicht mehr fragen </target>
+        <target> Ne plus demander </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.correctQuestion">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wie viele waren es wirklich? </source>
-        <target> Wie viele waren es wirklich? </target>
+        <target> Combien y en avait-il vraiment ? </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.decrementAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Wiederholung weniger</source>
-        <target>Eine Wiederholung weniger</target>
+        <target>Une répétition de moins</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.incrementAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Wiederholung mehr</source>
-        <target>Eine Wiederholung mehr</target>
+        <target>Une répétition de plus</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Appliquer </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Parameter (Admin) </source>
-        <target> Parameter (Admin) </target>
+        <target> Paramètres (Admin) </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unsaved">
-      <segment state="initial">
+      <segment state="translated">
         <source> ungespeichert </source>
-        <target> ungespeichert </target>
+        <target> non enregistré </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.published">
-      <segment state="initial">
+      <segment state="translated">
         <source> für alle aktiv </source>
-        <target> für alle aktiv </target>
+        <target> actif pour tous </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.clearAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf Standardwert zurücksetzen</source>
-        <target>Auf Standardwert zurücksetzen</target>
+        <target>Réinitialiser à la valeur par défaut</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.resetAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Standard </source>
-        <target> Standard </target>
+        <target> Par défaut </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.discard">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verwerfen </source>
-        <target> Verwerfen </target>
+        <target> Annuler </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> Enregistrer </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.publish">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für alle </source>
-        <target> Für alle </target>
+        <target> Pour tous </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.upAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Oben ab</source>
-        <target>Oben ab</target>
+        <target>Haut à partir de</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.upAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelenk gilt ab diesem Winkel als gestreckt</source>
-        <target>Gelenk gilt ab diesem Winkel als gestreckt</target>
+        <target>L'articulation est considérée comme tendue à partir de cet angle</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.downAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unten bis</source>
-        <target>Unten bis</target>
+        <target>Bas jusqu'à</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.downAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelenk gilt bis zu diesem Winkel als gebeugt</source>
-        <target>Gelenk gilt bis zu diesem Winkel als gebeugt</target>
+        <target>L'articulation est considérée comme fléchie jusqu'à cet angle</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minDwell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haltezeit</source>
-        <target>Haltezeit</target>
+        <target>Temps de maintien</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minDwellHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss eine Phase anliegen, bevor sie zählt</source>
-        <target>So lange muss eine Phase anliegen, bevor sie zählt</target>
+        <target>Une phase doit être maintenue aussi longtemps avant de compter</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minConfidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mindestsicherheit</source>
-        <target>Mindestsicherheit</target>
+        <target>Confiance minimale</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minConfidenceHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Frames mit schlechter Erkennung werden verworfen</source>
-        <target>Frames mit schlechter Erkennung werden verworfen</target>
+        <target>Les images avec une mauvaise détection sont rejetées</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.maxFrameGap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Max. Lücke</source>
-        <target>Max. Lücke</target>
+        <target>Écart max.</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.maxFrameGapHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Längere Tracking-Aussetzer verwerfen die laufende Phase</source>
-        <target>Längere Tracking-Aussetzer verwerfen die laufende Phase</target>
+        <target>Des interruptions de suivi plus longues annulent la phase en cours</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.inPoseAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>In Position ab</source>
-        <target>In Position ab</target>
+        <target>En position à partir de</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.inPoseAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab diesem Winkel gilt die Haltung als sauber</source>
-        <target>Ab diesem Winkel gilt die Haltung als sauber</target>
+        <target>À partir de cet angle, la posture est considérée comme correcte</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.outPoseAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Raus bis</source>
-        <target>Raus bis</target>
+        <target>Sortie jusqu'à</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.outPoseAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darunter gilt die Haltung als verlassen</source>
-        <target>Darunter gilt die Haltung als verlassen</target>
+        <target>En dessous, la posture est considérée comme quittée</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minHold">
-      <segment state="initial">
+      <segment state="translated">
         <source>Startverzögerung</source>
-        <target>Startverzögerung</target>
+        <target>Délai de démarrage</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minHoldHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss die Position stehen, bevor die Uhr läuft</source>
-        <target>So lange muss die Position stehen, bevor die Uhr läuft</target>
+        <target>La position doit être maintenue aussi longtemps avant que le chronomètre démarre</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minBreak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausenverzögerung</source>
-        <target>Pausenverzögerung</target>
+        <target>Délai de pause</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minBreakHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss die Position verlassen sein, bevor pausiert wird</source>
-        <target>So lange muss die Position verlassen sein, bevor pausiert wird</target>
+        <target>La position doit être quittée aussi longtemps avant la mise en pause</target>
       </segment>
     </unit>
     <unit id="settings.section.autoCountFeedback.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera-Zähler </source>
-        <target> Kamera-Zähler </target>
+        <target> Compteur caméra </target>
       </segment>
     </unit>
     <unit id="settings.section.autoCountFeedback.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rückmeldung zur Zählgenauigkeit. </source>
-        <target> Rückmeldung zur Zählgenauigkeit. </target>
+        <target> Retour sur la précision du comptage. </target>
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackToggle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nach dem Zählen nach der echten Anzahl fragen </source>
-        <target> Nach dem Zählen nach der echten Anzahl fragen </target>
+        <target> Demander le nombre réel après le comptage </target>
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </source>
-        <target> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </target>
+        <target> Ta réponse améliore la détection. Seuls le nombre compté, le nombre réel et les réglages de détection sont transmis – ni vidéo ni image. </target>
       </segment>
     </unit>
 </file>
