@@ -2,7 +2,7 @@ import {
   accountExists,
   E2E_PASSWORD,
   uniqueIdentity,
-} from '../support/emulator';
+} from '../support/backend';
 import { DashboardPage } from '../support/pages/dashboard-page';
 import { LoginPage } from '../support/pages/login-page';
 import { expect, test } from '../support/test-fixtures';

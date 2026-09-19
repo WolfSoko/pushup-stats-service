@@ -1,4 +1,4 @@
-import { accountExists, createAccount } from '../support/emulator';
+import { accountExists, createAccount } from '../support/backend';
 import { expect, test } from '../support/test-fixtures';
 
 test.describe('Login', () => {

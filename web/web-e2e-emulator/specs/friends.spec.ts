@@ -1,4 +1,4 @@
-import { createAccount } from '../support/emulator';
+import { createAccount } from '../support/backend';
 import { FriendsPage, invitePathFor } from '../support/pages/friends-page';
 import { LoginPage } from '../support/pages/login-page';
 import { expect, test } from '../support/test-fixtures';

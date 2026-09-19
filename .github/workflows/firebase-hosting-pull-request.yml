@@ -26,7 +26,7 @@ jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
 
@@ -130,6 +130,33 @@ jobs:
           echo "$DEPLOY_JSON"
           URL=$(printf '%s' "$DEPLOY_JSON" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const m=d.match(/\{[\s\S]*\}/);if(!m)process.exit(0);const r=JSON.parse(m[0]).result||{};const c=Object.values(r)[0]||{};process.stdout.write(c.url||'')})")
           echo "url=$URL" >> "$GITHUB_OUTPUT"
+      # The critical-path suite, this time against the deployment that was
+      # just made: real rules, real callables, real indexes — the part the
+      # emulator run in ci.yml cannot vouch for. Auth for the Admin SDK is
+      # the keyless WIF credential the deploy step already exported via
+      # GOOGLE_APPLICATION_CREDENTIALS, so no extra secret is involved.
+      # Accounts the run creates are removed again in the suite's teardown
+      # (see web/web-e2e-emulator/support/cleanup.ts).
+      - name: Playwright-Browser installieren
+        if: steps.preview.outputs.url != ''
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E gegen die Staging-Preview
+        if: steps.preview.outputs.url != ''
+        env:
+          E2E_TARGET: staging
+          E2E_BASE_URL: ${{ steps.preview.outputs.url }}
+          E2E_RUN_ID: ${{ github.run_id }}
+        run: pnpm exec nx run web-e2e-emulator:e2e-staging --outputStyle=stream
+
+      - name: Report hochladen
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-staging-report
+          path: dist/.playwright/web/web-e2e-emulator
+          retention-days: 7
+
       - name: Comment preview URL on PR
         if: steps.preview.outputs.url != ''
         env:
