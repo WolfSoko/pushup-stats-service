@@ -13119,57 +13119,57 @@
       </segment>
     </unit>
     <unit id="share.success.linkCopied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Link kopiert.</source>
-        <target>Link kopiert.</target>
+        <target>Lien copié.</target>
       </segment>
     </unit>
     <unit id="friends.invite.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freund hinzufügen</source>
-        <target>Freund hinzufügen</target>
+        <target>Ajouter un ami</target>
       </segment>
     </unit>
     <unit id="friends.invite.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schick diesen Link an jemanden, mit dem du trainieren möchtest. Wer ihn öffnet, bekommt eine Anfrage von dir und muss sie nur noch annehmen. </source>
-        <target> Schick diesen Link an jemanden, mit dem du trainieren möchtest. Wer ihn öffnet, bekommt eine Anfrage von dir und muss sie nur noch annehmen. </target>
+        <target> Envoyez ce lien à quelqu'un avec qui vous voulez vous entraîner. La personne qui l'ouvre reçoit une demande de votre part et n'a plus qu'à l'accepter. </target>
       </segment>
     </unit>
     <unit id="friends.invite.link">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Einladungslink</source>
-        <target>Dein Einladungslink</target>
+        <target>Votre lien d'invitation</target>
       </segment>
     </unit>
     <unit id="friends.invite.unavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Einladungslinks gibt es nur für angemeldete Konten. Melde dich an, dann kannst du Freunde hinzufügen. </source>
-        <target> Einladungslinks gibt es nur für angemeldete Konten. Melde dich an, dann kannst du Freunde hinzufügen. </target>
+        <target> Les liens d'invitation sont réservés aux comptes connectés. Connectez-vous pour pouvoir ajouter des amis. </target>
       </segment>
     </unit>
     <unit id="friends.invite.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> Fermer </target>
       </segment>
     </unit>
     <unit id="friends.invite.copy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopieren</source>
-        <target>Kopieren</target>
+        <target>Copier</target>
       </segment>
     </unit>
     <unit id="friends.invite.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>Partager</target>
       </segment>
     </unit>
     <unit id="friends.addAction">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freund hinzufügen</source>
-        <target>Freund hinzufügen</target>
+        <target>Ajouter un ami</target>
       </segment>
     </unit>
 </file>
