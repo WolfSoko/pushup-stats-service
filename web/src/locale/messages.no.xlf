@@ -13402,369 +13402,369 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.idle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück anfeuern</source>
-        <target>Zurück anfeuern</target>
+        <target>Heia tilbake</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.sending">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerung wird gesendet</source>
-        <target>Anfeuerung wird gesendet</target>
+        <target>Sender heiarop…</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.sent">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurückgefeuert!</source>
-        <target>Zurückgefeuert!</target>
+        <target>Heiet tilbake!</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.already">
-      <segment state="initial">
+      <segment state="translated">
         <source>Heute schon angefeuert</source>
-        <target>Heute schon angefeuert</target>
+        <target>Allerede heiet i dag</target>
       </segment>
     </unit>
     <unit id="cheer.overlay.cheerBack.error">
-      <segment state="initial">
+      <segment state="translated">
         <source>Fehlgeschlagen – nochmal?</source>
-        <target>Fehlgeschlagen – nochmal?</target>
+        <target>Mislyktes – prøve igjen?</target>
       </segment>
     </unit>
     <unit id="nav.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source>Profil</source>
         <target>Profil</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kamera-Zähler: Genauigkeit</source>
-        <target>Kamera-Zähler: Genauigkeit</target>
+        <target>Kamerateller: nøyaktighet</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.total">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </target>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> tilbakemeldinger vurdert </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Rückmeldungen zur Zählgenauigkeit. </source>
-        <target> Noch keine Rückmeldungen zur Zählgenauigkeit. </target>
+        <target> Ingen tilbakemeldinger om tellenøyaktighet ennå. </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.profile">
-      <segment state="initial">
+      <segment state="translated">
         <source> Profil </source>
         <target> Profil </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.thresholds">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schwellwerte </source>
-        <target> Schwellwerte </target>
+        <target> Terskler </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.runs">
-      <segment state="initial">
+      <segment state="translated">
         <source> Läufe </source>
-        <target> Läufe </target>
+        <target> Kjøringer </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.thinEvidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zu wenige Läufe für eine belastbare Aussage</source>
-        <target>Zu wenige Läufe für eine belastbare Aussage</target>
+        <target>For få kjøringer for en pålitelig konklusjon</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.exact">
-      <segment state="initial">
+      <segment state="translated">
         <source> Exakt </source>
-        <target> Exakt </target>
+        <target> Eksakt </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.meanAbsDelta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Ø Fehler </source>
-        <target> Ø Fehler </target>
+        <target> Gj.sn. feil </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.meanDeltaHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Plus heißt: es wurden Reps übersehen</source>
-        <target>Plus heißt: es wurden Reps übersehen</target>
+        <target>Pluss betyr: reps ble oversett</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.meanDelta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tendenz </source>
-        <target> Tendenz </target>
+        <target> Tendens </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.recentTitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Letzte Rückmeldungen</source>
-        <target>Letzte Rückmeldungen</target>
+        <target>Nylige tilbakemeldinger</target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.date">
-      <segment state="initial">
+      <segment state="translated">
         <source> Datum </source>
-        <target> Datum </target>
+        <target> Dato </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.exercise">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übung </source>
-        <target> Übung </target>
+        <target> Øvelse </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.detected">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erkannt </source>
-        <target> Erkannt </target>
+        <target> Oppdaget </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.actual">
-      <segment state="initial">
+      <segment state="translated">
         <source> Tatsächlich </source>
-        <target> Tatsächlich </target>
+        <target> Faktisk </target>
       </segment>
     </unit>
     <unit id="admin.autoCount.col.delta">
-      <segment state="initial">
+      <segment state="translated">
         <source> Abweichung </source>
-        <target> Abweichung </target>
+        <target> Avvik </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.question">
-      <segment state="initial">
+      <segment state="translated">
         <source> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </source>
-        <target> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </target>
+        <target> Oppdaget: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> reps. Stemte det? </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.yes">
-      <segment state="initial">
+      <segment state="translated">
         <source>Passt</source>
-        <target>Passt</target>
+        <target>Stemmer</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.correct">
-      <segment state="initial">
+      <segment state="translated">
         <source> Andere Zahl </source>
-        <target> Andere Zahl </target>
+        <target> Annet antall </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.dismiss">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nicht mehr fragen </source>
-        <target> Nicht mehr fragen </target>
+        <target> Ikke spør igjen </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.correctQuestion">
-      <segment state="initial">
+      <segment state="translated">
         <source> Wie viele waren es wirklich? </source>
-        <target> Wie viele waren es wirklich? </target>
+        <target> Hvor mange var det egentlig? </target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.decrementAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Wiederholung weniger</source>
-        <target>Eine Wiederholung weniger</target>
+        <target>Én repetisjon mindre</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.incrementAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eine Wiederholung mehr</source>
-        <target>Eine Wiederholung mehr</target>
+        <target>Én repetisjon mer</target>
       </segment>
     </unit>
     <unit id="autoCount.confirm.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Übernehmen </source>
-        <target> Übernehmen </target>
+        <target> Bruk </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Parameter (Admin) </source>
-        <target> Parameter (Admin) </target>
+        <target> Parametere (Admin) </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unsaved">
-      <segment state="initial">
+      <segment state="translated">
         <source> ungespeichert </source>
-        <target> ungespeichert </target>
+        <target> ulagret </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.published">
-      <segment state="initial">
+      <segment state="translated">
         <source> für alle aktiv </source>
-        <target> für alle aktiv </target>
+        <target> aktiv for alle </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.clearAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Auf Standardwert zurücksetzen</source>
-        <target>Auf Standardwert zurücksetzen</target>
+        <target>Tilbakestill til standardverdi</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.resetAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Standard </source>
         <target> Standard </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.discard">
-      <segment state="initial">
+      <segment state="translated">
         <source> Verwerfen </source>
-        <target> Verwerfen </target>
+        <target> Forkast </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.save">
-      <segment state="initial">
+      <segment state="translated">
         <source> Speichern </source>
-        <target> Speichern </target>
+        <target> Lagre </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.publish">
-      <segment state="initial">
+      <segment state="translated">
         <source> Für alle </source>
-        <target> Für alle </target>
+        <target> For alle </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.upAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Oben ab</source>
-        <target>Oben ab</target>
+        <target>Opp fra</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.upAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelenk gilt ab diesem Winkel als gestreckt</source>
-        <target>Gelenk gilt ab diesem Winkel als gestreckt</target>
+        <target>Leddet regnes som strukket fra denne vinkelen</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.downAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Unten bis</source>
-        <target>Unten bis</target>
+        <target>Ned til</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.downAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Gelenk gilt bis zu diesem Winkel als gebeugt</source>
-        <target>Gelenk gilt bis zu diesem Winkel als gebeugt</target>
+        <target>Leddet regnes som bøyd til denne vinkelen</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minDwell">
-      <segment state="initial">
+      <segment state="translated">
         <source>Haltezeit</source>
-        <target>Haltezeit</target>
+        <target>Holdetid</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minDwellHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss eine Phase anliegen, bevor sie zählt</source>
-        <target>So lange muss eine Phase anliegen, bevor sie zählt</target>
+        <target>En fase må vare så lenge før den telles</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minConfidence">
-      <segment state="initial">
+      <segment state="translated">
         <source>Mindestsicherheit</source>
-        <target>Mindestsicherheit</target>
+        <target>Minste sikkerhet</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minConfidenceHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Frames mit schlechter Erkennung werden verworfen</source>
-        <target>Frames mit schlechter Erkennung werden verworfen</target>
+        <target>Rammer med dårlig gjenkjenning forkastes</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.maxFrameGap">
-      <segment state="initial">
+      <segment state="translated">
         <source>Max. Lücke</source>
-        <target>Max. Lücke</target>
+        <target>Maks. gap</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.maxFrameGapHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Längere Tracking-Aussetzer verwerfen die laufende Phase</source>
-        <target>Längere Tracking-Aussetzer verwerfen die laufende Phase</target>
+        <target>Lengre sporingsavbrudd forkaster den pågående fasen</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.inPoseAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>In Position ab</source>
-        <target>In Position ab</target>
+        <target>I posisjon fra</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.inPoseAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ab diesem Winkel gilt die Haltung als sauber</source>
-        <target>Ab diesem Winkel gilt die Haltung als sauber</target>
+        <target>Fra denne vinkelen regnes holdningen som ren</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.outPoseAngle">
-      <segment state="initial">
+      <segment state="translated">
         <source>Raus bis</source>
-        <target>Raus bis</target>
+        <target>Ut til</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.outPoseAngleHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>Darunter gilt die Haltung als verlassen</source>
-        <target>Darunter gilt die Haltung als verlassen</target>
+        <target>Under dette regnes holdningen som forlatt</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minHold">
-      <segment state="initial">
+      <segment state="translated">
         <source>Startverzögerung</source>
-        <target>Startverzögerung</target>
+        <target>Startforsinkelse</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minHoldHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss die Position stehen, bevor die Uhr läuft</source>
-        <target>So lange muss die Position stehen, bevor die Uhr läuft</target>
+        <target>Posisjonen må holdes så lenge før klokken starter</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minBreak">
-      <segment state="initial">
+      <segment state="translated">
         <source>Pausenverzögerung</source>
-        <target>Pausenverzögerung</target>
+        <target>Pauseforsinkelse</target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.minBreakHint">
-      <segment state="initial">
+      <segment state="translated">
         <source>So lange muss die Position verlassen sein, bevor pausiert wird</source>
-        <target>So lange muss die Position verlassen sein, bevor pausiert wird</target>
+        <target>Posisjonen må være forlatt så lenge før det pauses</target>
       </segment>
     </unit>
     <unit id="settings.section.autoCountFeedback.title">
-      <segment state="initial">
+      <segment state="translated">
         <source> Kamera-Zähler </source>
-        <target> Kamera-Zähler </target>
+        <target> Kamerateller </target>
       </segment>
     </unit>
     <unit id="settings.section.autoCountFeedback.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Rückmeldung zur Zählgenauigkeit. </source>
-        <target> Rückmeldung zur Zählgenauigkeit. </target>
+        <target> Tilbakemelding om tellenøyaktighet. </target>
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackToggle">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nach dem Zählen nach der echten Anzahl fragen </source>
-        <target> Nach dem Zählen nach der echten Anzahl fragen </target>
+        <target> Spør om det faktiske antallet etter telling </target>
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </source>
-        <target> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </target>
+        <target> Svaret ditt forbedrer gjenkjenningen. Kun det talte og det faktiske antallet samt gjenkjenningsinnstillingene overføres – ingen video og intet bilde. </target>
       </segment>
     </unit>
 </file>
