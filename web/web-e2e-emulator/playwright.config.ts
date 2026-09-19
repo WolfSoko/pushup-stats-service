@@ -21,7 +21,15 @@ export default defineConfig({
      */
     locale: 'de-DE',
     trace: 'on-first-retry',
-    video: 'retain-on-failure',
+    /**
+     * Without these, a single click or navigation that never becomes
+     * actionable waits out the whole test timeout, and Playwright
+     * reports "test timeout exceeded" instead of the actionability log
+     * that says why the element could not be clicked. One such click
+     * cost a 25-minute CI job (2 tests x 3 attempts x 240 s).
+     */
+    actionTimeout: 15_000,
+    navigationTimeout: 20_000,
   },
   /**
    * Two servers, both started as Nx tasks so `@nx/playwright/plugin`
@@ -65,6 +73,12 @@ export default defineConfig({
    */
   timeout: 240_000,
   retries: process.env['CI'] ? 2 : 0,
+  /**
+   * A hard ceiling below the CI job's own 30 minutes, so a pathological
+   * run ends as a Playwright report naming the tests that hung rather
+   * than as a runner kill with no summary at all.
+   */
+  globalTimeout: 20 * 60 * 1000,
   projects: [
     {
       name: 'chromium',

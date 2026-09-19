@@ -3,6 +3,8 @@ import {
   E2E_PASSWORD,
   uniqueIdentity,
 } from '../support/emulator';
+import { DashboardPage } from '../support/pages/dashboard-page';
+import { LoginPage } from '../support/pages/login-page';
 import { expect, test } from '../support/test-fixtures';
 
 test.describe('Registration', () => {
@@ -29,30 +31,35 @@ test.describe('Registration', () => {
 
   test('should produce credentials that work on the login page', async ({
     registerPage,
-    loginPage,
     dashboardPage,
-    page,
+    browser,
   }) => {
-    // given — a brand new account, registered and then signed out
+    // given — a brand new account, registered in this browser
     const { email, displayName } = uniqueIdentity('register-login');
     await registerPage.goto();
     await registerPage.register(email, E2E_PASSWORD, displayName);
     await expect(registerPage.successPanel).toBeVisible({ timeout: 20_000 });
     await registerPage.toDashboardButton.click();
     await dashboardPage.expectLoaded();
-    await dashboardPage.signOut();
 
-    // when
-    await loginPage.signIn({
-      uid: '',
-      email,
-      password: E2E_PASSWORD,
-      displayName,
-    });
+    // when — someone signs in with them from a session that never saw
+    // the registration (a second device, in effect)
+    const otherDevice = await browser.newContext({ locale: 'de-DE' });
+    try {
+      const page = await otherDevice.newPage();
+      await new LoginPage(page).signIn({
+        uid: '',
+        email,
+        password: E2E_PASSWORD,
+        displayName,
+      });
 
-    // then
-    await expect(page).toHaveURL(/\/app$/);
-    await dashboardPage.expectLoaded();
+      // then
+      await expect(page).toHaveURL(/\/app$/);
+      await new DashboardPage(page).expectLoaded();
+    } finally {
+      await otherDevice.close();
+    }
   });
 
   test('should refuse to submit while the username is too short', async ({

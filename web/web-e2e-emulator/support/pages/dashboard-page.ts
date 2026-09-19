@@ -35,6 +35,10 @@ export class DashboardPage {
    */
   async signOut(): Promise<void> {
     await this.userMenuTrigger.click();
+    // The menu renders into an overlay: waiting for the item to be on
+    // screen before clicking keeps the failure on the menu that did not
+    // open, rather than on a click that had nothing to hit.
+    await expect(this.signOutItem).toBeVisible();
     await this.signOutItem.click();
     await expect(this.anonMenuTrigger).toBeVisible({ timeout: 20_000 });
   }
