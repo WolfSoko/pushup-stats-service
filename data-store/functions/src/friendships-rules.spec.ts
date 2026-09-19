@@ -67,8 +67,11 @@ describe('firestore.rules — friendships collection security', () => {
     // given — unauthenticated callers must be denied
     const block = extractFriendshipsBlock(rules);
     // when / then
-    expect(block).toMatch(/allow read\s*:/);
-    expect(block).toContain('request.auth != null');
+    const readRules = block.match(/allow read\s*:\s*if[^;]+;/g) ?? [];
+    expect(readRules).toHaveLength(1);
+    expect(readRules[0]).toMatch(
+      /^allow read\s*:\s*if\s*request\.auth\s*!=\s*null\s*&&\s*request\.auth\.uid\s+in\s+resource\.data\.users\s*;$/
+    );
   });
 
   it('should restrict reads to participants via resource.data.users', () => {
