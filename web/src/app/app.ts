@@ -5,24 +5,19 @@ import {
   DestroyRef,
   effect,
   inject,
-  LOCALE_ID,
   PLATFORM_ID,
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { isPlatformBrowser, NgComponentOutlet } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { Auth } from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -70,54 +65,14 @@ import { AchievementCelebrationService } from './achievements/achievement-celebr
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { FeedbackDialogComponent } from './core/feedback/feedback-dialog.component';
 import { FeedbackService } from './core/feedback/feedback.service';
+import { AppSidenavComponent } from './core/nav/app-sidenav.component';
 import { ArcNavComponent } from './core/nav/arc-nav.component';
 import { mainNavItems } from './core/nav/main-nav-items';
+import { ownProfilePath } from './core/profile-share-url';
 import {
   FeedbackDialogData,
   FeedbackResult,
 } from './core/feedback/feedback.models';
-import {
-  SUPPORTED_LOCALES,
-  type SupportedLocale,
-} from '../server-locale-redirect';
-
-interface LanguageOption {
-  readonly code: SupportedLocale;
-  readonly label: string;
-}
-
-/**
- * Language switcher options. Labels are the language's self-name so a
- * speaker of any language can recognise their entry, regardless of the
- * UI's current locale. Hardcoded — these strings are language proper
- * names, not UI copy that needs translation.
- */
-const LANGUAGE_OPTIONS: ReadonlyArray<LanguageOption> = [
-  { code: 'de', label: 'Deutsch' },
-  { code: 'en', label: 'English' },
-  { code: 'fr', label: 'Français' },
-  { code: 'es', label: 'Español' },
-  { code: 'it', label: 'Italiano' },
-  { code: 'nl', label: 'Nederlands' },
-  { code: 'el', label: 'Ελληνικά' },
-  { code: 'no', label: 'Norsk' },
-  { code: 'zh', label: '中文' },
-];
-
-/**
- * Coerce an Angular `LOCALE_ID` (which can arrive as `en-US`, `de-DE`,
- * etc. in dev / test builds) to one of the codes we know how to render.
- * Falls back to the source locale (`de`) when the runtime tag doesn't
- * match any supported language.
- */
-function resolveCurrentLocale(localeId: string): SupportedLocale {
-  const lower = localeId.toLowerCase();
-  return (
-    SUPPORTED_LOCALES.find(
-      (code) => lower === code || lower.startsWith(`${code}-`)
-    ) ?? 'de'
-  );
-}
 
 @Component({
   selector: 'app-root',
@@ -130,8 +85,6 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     MatSnackBarModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule,
-    MatDividerModule,
     UserMenuComponent,
     QuickAddFabComponent,
     QuickAddFabCoachmarkComponent,
@@ -139,10 +92,8 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     AiAssistantNavButtonComponent,
     DailyGoalChecklistComponent,
     ArcNavComponent,
-    NgComponentOutlet,
+    AppSidenavComponent,
     MatDialogModule,
-    MatFormFieldModule,
-    MatSelectModule,
     OverlayModule,
     CheerFireworksOverlayComponent,
   ],
@@ -178,7 +129,7 @@ export class App {
   );
   readonly navItems = computed(() => mainNavItems(this.isLoggedIn()));
   /** The signed-in user's own profile page, for the sidenav. */
-  readonly profileUrl = computed(() => `/u/${this.user.userIdSafe()}`);
+  readonly profileUrl = computed(() => ownProfilePath(this.user.userIdSafe()));
   // The speed-dial FAB is for anyone who can persist an entry — guests have a
   // real (anonymous) auth uid and can quick-add too, so it shows for them as
   // well, unlike the reminders nav which is gated to signed-in accounts.
@@ -333,35 +284,6 @@ export class App {
 
   openCookieSettings(): void {
     this.tcfConsent.openConsentSettings();
-  }
-
-  /** Locale options shown in the sidenav language picker. */
-  readonly languageOptions = LANGUAGE_OPTIONS;
-  /**
-   * The currently active locale. `LOCALE_ID` in dev/test builds may
-   * arrive as `'en-US'` or another extended tag, so we coerce to the
-   * matching short code or fall back to the source locale.
-   */
-  readonly currentLocale: SupportedLocale = resolveCurrentLocale(
-    inject(LOCALE_ID)
-  );
-
-  setLanguage(lang: SupportedLocale, ev?: Event): void {
-    ev?.preventDefault();
-    this.navOpen.set(false);
-    const maxAge = 180 * 24 * 60 * 60; // 180 days
-    document.cookie = `lang=${encodeURIComponent(lang)}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
-    // Preserve current page path when switching language. Strip any
-    // existing locale prefix (one of SUPPORTED_LOCALES) and prepend
-    // the new one. The alternation regex is rebuilt from the locale
-    // list so adding a locale only requires updating one constant.
-    const localesAlt = SUPPORTED_LOCALES.join('|');
-    const stripPrefix = new RegExp(`^/(?:${localesAlt})(/|$)`);
-    const subPath = window.location.pathname.replace(stripPrefix, '/');
-    const suffix = subPath === '/' ? '/' : subPath;
-    const prefix = `/${lang}`;
-    const target = `${prefix}${suffix}${window.location.search}${window.location.hash}`;
-    window.location.replace(target);
   }
 
   /** Whether the sidenav is open (same behavior on all screen sizes). */

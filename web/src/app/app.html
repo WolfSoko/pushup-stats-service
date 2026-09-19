@@ -11,67 +11,12 @@
       <span i18n="@@app.title">Pushups</span>
     </mat-toolbar>
 
-    <mat-nav-list>
-      @for (item of navItems(); track item.path) {
-      <a
-        mat-list-item
-        [routerLink]="item.path"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: item.exact === true }"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-        <span matListItemTitle
-          >{{ item.label }} @if (item.badge) {
-          <ng-container *ngComponentOutlet="item.badge" />
-          }
-        </span>
-      </a>
-      } @if (isLoggedIn()) {
-      <mat-divider></mat-divider>
-      <a
-        mat-list-item
-        [routerLink]="profileUrl()"
-        routerLinkActive="active"
-        data-testid="sidenav-profile"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>account_circle</mat-icon>
-        <span matListItemTitle i18n="@@nav.profile">Profil</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/settings"
-        routerLinkActive="active"
-        data-testid="sidenav-settings"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>settings</mat-icon>
-        <span matListItemTitle i18n="@@nav.settings">Einstellungen</span>
-      </a>
-      }
-
-      <mat-divider></mat-divider>
-
-      <div class="sidenav-language">
-        <mat-icon class="sidenav-language-icon">language</mat-icon>
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="sidenav-language-field"
-        >
-          <mat-label i18n="@@nav.language">Sprache</mat-label>
-          <mat-select
-            [value]="currentLocale"
-            (selectionChange)="setLanguage($event.value)"
-          >
-            @for (option of languageOptions; track option.code) {
-            <mat-option [value]="option.code">{{ option.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </mat-nav-list>
+    <app-sidenav
+      [items]="navItems()"
+      [loggedIn]="isLoggedIn()"
+      [profileUrl]="profileUrl()"
+      (navigate)="navOpen.set(false)"
+    />
   </mat-sidenav>
 
   <mat-sidenav-content>

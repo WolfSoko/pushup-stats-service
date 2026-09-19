@@ -3,7 +3,10 @@ import { FirebaseApp } from '@angular/fire/app';
 import { ActivatedRoute } from '@angular/router';
 import { type PublicProfile } from '@pu-stats/models';
 
-import { buildProfileShareUrl } from '../core/profile-share-url';
+import {
+  buildProfileShareUrl,
+  ownProfilePath,
+} from '../core/profile-share-url';
 import { SeoService } from '../core/seo.service';
 import { ShareService } from '../core/share.service';
 
@@ -64,8 +67,7 @@ export class PublicProfileSeo {
   }
 
   private currentPath(): string {
-    const uid = this.route.snapshot.paramMap.get('uid')?.trim();
-    return uid ? `/u/${encodeURIComponent(uid)}` : '/u/';
+    return ownProfilePath(this.route.snapshot.paramMap.get('uid')?.trim());
   }
 
   private localeShortCode(): string {

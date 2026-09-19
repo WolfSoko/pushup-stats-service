@@ -1,4 +1,20 @@
-import { buildInviteUrl, buildProfileShareUrl } from './profile-share-url';
+import {
+  buildInviteUrl,
+  buildProfileShareUrl,
+  ownProfilePath,
+} from './profile-share-url';
+
+describe('ownProfilePath', () => {
+  it('should build the router path of a profile', () => {
+    expect(ownProfilePath('abc')).toBe('/u/abc');
+  });
+
+  it('should encode reserved characters and fall back without a uid', () => {
+    expect(ownProfilePath('a/b')).toBe('/u/a%2Fb');
+    expect(ownProfilePath('')).toBe('/u/');
+    expect(ownProfilePath(null)).toBe('/u/');
+  });
+});
 
 describe('buildProfileShareUrl', () => {
   it.each([

@@ -18,6 +18,7 @@ import { firstValueFrom } from 'rxjs';
 import { UserContextService } from '@pu-auth/auth';
 
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
+import { ownProfilePath } from '../core/profile-share-url';
 import { UserConfigStore } from '../core/user-config.store';
 import { WorkoutCardComponent } from './workout-card.component';
 import { workoutRejectionMessage } from './workouts-messages';
@@ -65,10 +66,9 @@ export class WorkoutsPageComponent {
   );
 
   /** The switch sits on the user's own profile page, next to the section. */
-  protected readonly profileUrl = computed(() => {
-    const uid = this.user.userIdSafe();
-    return uid ? `/u/${uid}` : '/settings/profil';
-  });
+  protected readonly profileUrl = computed(() =>
+    ownProfilePath(this.user.userIdSafe())
+  );
 
   protected readonly hasProfileWorkouts = computed(() =>
     this.store.workouts().some((w) => w.onProfile)

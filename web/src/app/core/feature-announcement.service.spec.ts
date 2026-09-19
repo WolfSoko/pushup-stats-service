@@ -7,6 +7,7 @@ import type { UserConfig } from '@pu-stats/models';
 import { Subject } from 'rxjs';
 
 import {
+  ANNOUNCEMENTS,
   FeatureAnnouncementService,
   isDashboard,
   WORKOUTS_ANNOUNCEMENT,
@@ -24,6 +25,15 @@ describe('isDashboard', () => {
     ['/u/abc', false],
   ])('should read %s as dashboard: %s', (url, expected) => {
     expect(isDashboard(url)).toBe(expected);
+  });
+});
+
+describe('ANNOUNCEMENTS', () => {
+  it('should never reuse an id', () => {
+    // then — an id is what marks a walkthrough as seen per account
+    const ids = ANNOUNCEMENTS.map((a) => a.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids).toContain(WORKOUTS_ANNOUNCEMENT);
   });
 });
 

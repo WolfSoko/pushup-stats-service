@@ -26,7 +26,7 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 
 Every user-facing feature ships with its own promotion, in the same PR as the feature:
 
-- **Walkthrough on the next dashboard visit.** Add an announcement to `FeatureAnnouncementService` (`web/src/app/core/`) with a fresh id (never reuse one) and a short stepped dialog like `WorkoutsIntroDialogComponent` — what it is, how it works, one button into the feature. It shows once per account (`ui.seenAnnouncements`), only on `/app`, never for guests.
+- **Walkthrough on the next dashboard visit.** Append an entry to `ANNOUNCEMENTS` in `web/src/app/core/feature-announcement.service.ts` — a fresh id (never reuse one) plus a lazy import of a short stepped dialog like `WorkoutsIntroDialogComponent`: what it is, how it works, one button into the feature. The first unseen entry opens once per account (`ui.seenAnnouncements`), only on `/app`, never for guests.
 - **Landing page (overview) section.** A feature section under `web/src/app/marketing/components/`, embedded in `landing-page.component.html`, tagged "Neu" while it is new.
 - **Android app description.** Extend `store/play/<locale>/full-description.txt` for all nine Play locales (de-DE is the source, the others are translated in the same change); `pnpm nx test tools` enforces the 4000-character limit, so trim elsewhere when a new section pushes a locale over.
 - **Navigation.** The left sidenav and the arc nav render the same `mainNavItems()` list; the sidenav only adds Profil and Einstellungen. Add a new page to `main-nav-items.ts`, never to one menu alone.
