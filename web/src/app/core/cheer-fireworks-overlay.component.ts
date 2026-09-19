@@ -16,12 +16,14 @@ import { CheerAnimationStore } from './cheer-animation.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (store.activeCheerFrom()) {
-      <div class="cheer-overlay" data-testid="cheer-overlay" aria-hidden="true">
+      <div class="cheer-overlay" data-testid="cheer-overlay">
         @for (rocket of rockets; track rocket) {
-          <span class="rocket" [style.--i]="rocket">🚀</span>
+          <span class="rocket" aria-hidden="true" [style.--i]="rocket">🚀</span>
         }
         @for (burst of bursts; track burst) {
-          <span class="burst" [style.--i]="burst">{{ burstEmoji(burst) }}</span>
+          <span class="burst" aria-hidden="true" [style.--i]="burst">{{
+            burstEmoji(burst)
+          }}</span>
         }
         <button
           type="button"

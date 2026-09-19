@@ -66,13 +66,23 @@ export const CheerAnimationStore = signalStore(
   withHooks({
     onInit(store) {
       if (!isPlatformBrowser(store._platformId)) return;
-      const sessionStartAtMs = Date.now();
-      // Closure var, not state: a doc rewritten with the same values (e.g.
+      // Closure vars, not state: a doc rewritten with the same values (e.g.
       // a client re-emitting its cached snapshot) must not replay the
-      // animation a second time.
+      // animation a second time. Rebased whenever the signed-in uid
+      // changes — otherwise a switch to a different account mid-session
+      // would judge that account's ping against the *previous* account's
+      // session start, and a cheer sent before the switch could replay.
+      let currentUid: string | null = null;
+      let sessionStartAtMs = Date.now();
       let lastSeenAt: string | null = null;
       effect(() => {
+        const uid = store._user.userIdSafe();
         const ping = store.pingResource.value();
+        if (uid !== currentUid) {
+          currentUid = uid;
+          sessionStartAtMs = Date.now();
+          lastSeenAt = null;
+        }
         if (!store._userConfig.cheerAnimationEnabled()) return;
         if (!ping || ping.at === lastSeenAt) return;
         if (!isFreshCheerPing(ping, sessionStartAtMs)) return;

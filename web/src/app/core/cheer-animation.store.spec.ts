@@ -72,7 +72,10 @@ describe('CheerAnimationStore', () => {
 
   it('should not trigger for a ping already stale when the store starts', async () => {
     // given — the doc already exists from a cheer sent before this tab
-    // opened; the push notification already covered that
+    // opened; the push notification already covered that. This test
+    // bypasses setup(), so the shared enabled signal is reset explicitly
+    // rather than exercising the disabled-setting early return instead.
+    cheerAnimationEnabled.set(true);
     pingStream = new BehaviorSubject<CheerPing | null>({
       from: 'friend-1',
       at: '2000-01-01T00:00:00.000Z',
@@ -158,6 +161,49 @@ describe('CheerAnimationStore', () => {
     await flush();
 
     // then — no browser-only effect subscribed
+    expect(store.activeCheerFrom()).toBeNull();
+  });
+
+  it('should not replay a ping fetched for a previous session baseline after switching accounts', async () => {
+    // given — user A's session starts, then account B logs in; B's ping
+    // doc already existed (written between A's session start and the
+    // switch) but B never saw it live before now
+    const userId = signal('a');
+    const pingA = new BehaviorSubject<CheerPing | null>(null);
+    const pingB = new BehaviorSubject<CheerPing | null>(null);
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: CheerPingApiService,
+          useValue: {
+            watch: vitest.fn((uid: string) =>
+              uid === 'a' ? pingA.asObservable() : pingB.asObservable()
+            ),
+          },
+        },
+        {
+          provide: UserContextService,
+          useValue: { userIdSafe: () => userId() },
+        },
+        { provide: UserConfigStore, useValue: { cheerAnimationEnabled } },
+      ],
+    });
+    const store = TestBed.inject(CheerAnimationStore);
+    await flush();
+
+    // A ping for B, written while A is still signed in on this tab.
+    vi.advanceTimersByTime(10);
+    pingB.next({ from: 'friend-1', at: new Date().toISOString() });
+    await flush();
+
+    // when — the tab switches from A to B without a page reload
+    userId.set('b');
+    await flush();
+
+    // then — B's pre-existing ping must not replay just because it is
+    // newer than A's session start
     expect(store.activeCheerFrom()).toBeNull();
   });
 

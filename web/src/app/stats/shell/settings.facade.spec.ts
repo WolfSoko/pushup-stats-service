@@ -249,6 +249,32 @@ describe('SettingsFacade — auto-save', () => {
     expect(component.saveStatus()).toBe('idle');
   });
 
+  it('should keep every sibling ui flag when auto-saving a tracked draft field', async () => {
+    // given — `setDoc({merge:true})` replaces the `ui` map wholesale, so a
+    // patch carrying only this page's fields would wipe unrelated ones
+    setup({
+      userId: 'u1',
+      displayName: 'Wolf',
+      ui: { sessionRestSec: 90, quickAdds: [{ reps: 10, inSpeedDial: true }] },
+    });
+    vitest.useFakeTimers({ shouldAdvanceTime: true });
+    await flushMicrotasks();
+
+    // when
+    component.displayNameDraft.set('Wolf42');
+    TestBed.tick();
+    vitest.advanceTimersByTime(DEBOUNCE_MS);
+    await flushMicrotasks();
+
+    // then
+    expect(saveSpy.mock.calls[0][0].ui).toEqual(
+      expect.objectContaining({
+        sessionRestSec: 90,
+        quickAdds: [{ reps: 10, inSpeedDial: true }],
+      })
+    );
+  });
+
   describe('account deletion', () => {
     it('should set deleteDialogError when wrong phrase is entered', async () => {
       // given
