@@ -13247,57 +13247,57 @@
       </segment>
     </unit>
     <unit id="share.success.linkCopied">
-      <segment state="initial">
+      <segment state="translated">
         <source>Link kopiert.</source>
-        <target>Link kopiert.</target>
+        <target>Ο σύνδεσμος αντιγράφηκε.</target>
       </segment>
     </unit>
     <unit id="friends.invite.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freund hinzufügen</source>
-        <target>Freund hinzufügen</target>
+        <target>Προσθήκη φίλου</target>
       </segment>
     </unit>
     <unit id="friends.invite.hint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schick diesen Link an jemanden, mit dem du trainieren möchtest. Wer ihn öffnet, bekommt eine Anfrage von dir und muss sie nur noch annehmen. </source>
-        <target> Schick diesen Link an jemanden, mit dem du trainieren möchtest. Wer ihn öffnet, bekommt eine Anfrage von dir und muss sie nur noch annehmen. </target>
+        <target> Στείλε αυτόν τον σύνδεσμο σε κάποιον με τον οποίο θέλεις να προπονείσαι. Όποιος τον ανοίξει θα λάβει ένα αίτημα από εσένα και θα πρέπει απλώς να το αποδεχτεί. </target>
       </segment>
     </unit>
     <unit id="friends.invite.link">
-      <segment state="initial">
+      <segment state="translated">
         <source>Dein Einladungslink</source>
-        <target>Dein Einladungslink</target>
+        <target>Ο σύνδεσμος πρόσκλησής σου</target>
       </segment>
     </unit>
     <unit id="friends.invite.unavailable">
-      <segment state="initial">
+      <segment state="translated">
         <source> Einladungslinks gibt es nur für angemeldete Konten. Melde dich an, dann kannst du Freunde hinzufügen. </source>
-        <target> Einladungslinks gibt es nur für angemeldete Konten. Melde dich an, dann kannst du Freunde hinzufügen. </target>
+        <target> Οι σύνδεσμοι πρόσκλησης είναι διαθέσιμοι μόνο για συνδεδεμένους λογαριασμούς. Συνδέσου για να μπορείς να προσθέτεις φίλους. </target>
       </segment>
     </unit>
     <unit id="friends.invite.close">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schließen </source>
-        <target> Schließen </target>
+        <target> Κλείσιμο </target>
       </segment>
     </unit>
     <unit id="friends.invite.copy">
-      <segment state="initial">
+      <segment state="translated">
         <source>Kopieren</source>
-        <target>Kopieren</target>
+        <target>Αντιγραφή</target>
       </segment>
     </unit>
     <unit id="friends.invite.share">
-      <segment state="initial">
+      <segment state="translated">
         <source>Teilen</source>
-        <target>Teilen</target>
+        <target>Κοινοποίηση</target>
       </segment>
     </unit>
     <unit id="friends.addAction">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freund hinzufügen</source>
-        <target>Freund hinzufügen</target>
+        <target>Προσθήκη φίλου</target>
       </segment>
     </unit>
 </file>
