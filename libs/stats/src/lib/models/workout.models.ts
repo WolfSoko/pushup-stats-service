@@ -1,6 +1,5 @@
 import { findExerciseDefinition } from './exercise.catalog';
 import type { ExerciseDefinition, MeasurementType } from './exercise.models';
-import { isValidFriendUid } from './friendship.models';
 import type {
   TrainingPlanDay,
   TrainingPlanExercise,
@@ -50,7 +49,6 @@ export const WORKOUT_MAX_SETS = 20;
 export const MAX_WORKOUTS = 50;
 /** Workouts a profile lists at most. */
 export const MAX_PROFILE_WORKOUTS = 10;
-export const MAX_WORKOUT_SHARE_RECIPIENTS = 20;
 
 /**
  * Widest target per measurement, in the exercise's unit — the same
@@ -238,54 +236,4 @@ export function workoutToPlanDay(workout: Workout): TrainingPlanDay {
   };
   days.set(workout, day);
   return day;
-}
-
-/** The copy a recipient gets; never on their profile until they say so. */
-export function copyWorkout(
-  source: Workout,
-  args: {
-    readonly ownerId: string;
-    readonly sharedBy: WorkoutSource;
-    readonly now: string;
-  }
-): Omit<Workout, 'id'> {
-  return {
-    ownerId: args.ownerId,
-    title: source.title,
-    description: source.description,
-    exercises: source.exercises.map((e) => ({ ...e })),
-    onProfile: false,
-    sharedBy: args.sharedBy,
-    createdAt: args.now,
-    updatedAt: args.now,
-  };
-}
-
-export type WorkoutShareRejection =
-  | 'not-found' // no such workout, or not the caller's
-  | 'no-friends'
-  | 'too-many'
-  | 'not-friends' // a recipient is not a confirmed friend
-  | 'invalid'; // the stored workout no longer validates
-
-/**
- * Whether `uid` may send this workout to these friends. Shared between
- * the dialog and the `shareWorkout` callable, which is the one that
- * counts.
- */
-export function workoutShareRejection(args: {
-  readonly uid: string;
-  readonly workout: Workout | null;
-  readonly friendUids: unknown;
-  readonly acceptedFriendUids: ReadonlyArray<string>;
-}): WorkoutShareRejection | null {
-  if (!args.workout || args.workout.ownerId !== args.uid) return 'not-found';
-  const uids = args.friendUids;
-  if (!Array.isArray(uids) || uids.length === 0) return 'no-friends';
-  if (uids.length > MAX_WORKOUT_SHARE_RECIPIENTS) return 'too-many';
-  const friends = new Set(args.acceptedFriendUids);
-  if (!uids.every((uid) => isValidFriendUid(uid) && friends.has(uid))) {
-    return 'not-friends';
-  }
-  return null;
 }

@@ -2,6 +2,7 @@ import { PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
+import { UserContextService } from '@pu-auth/auth';
 import type { UserConfig } from '@pu-stats/models';
 import { Subject } from 'rxjs';
 
@@ -32,6 +33,7 @@ describe('FeatureAnnouncementService', () => {
   const afterClosed = new Subject<unknown>();
   const open = vitest.fn(() => ({ afterClosed: () => afterClosed }));
   const markAnnouncementSeen = vitest.fn().mockResolvedValue(undefined);
+  const isGuest = signal(false);
 
   function setup(url = '/app', platform = 'browser'): void {
     TestBed.resetTestingModule();
@@ -44,6 +46,7 @@ describe('FeatureAnnouncementService', () => {
           useValue: { config: config.asReadonly(), markAnnouncementSeen },
         },
         { provide: Router, useValue: { events, url } },
+        { provide: UserContextService, useValue: { isGuest } },
       ],
     });
     TestBed.inject(FeatureAnnouncementService);
@@ -64,6 +67,20 @@ describe('FeatureAnnouncementService', () => {
     open.mockClear();
     markAnnouncementSeen.mockClear();
     config.set(null);
+    isGuest.set(false);
+  });
+
+  it('should leave guests alone', async () => {
+    // given — an anonymous session has no account for the walkthrough to follow
+    isGuest.set(true);
+    setup('/app');
+
+    // when
+    config.set({ userId: 'guest' } as UserConfig);
+    await settle();
+
+    // then
+    expect(open).not.toHaveBeenCalled();
   });
 
   it('should open the walkthrough once the dashboard is up for a user who has not seen it', async () => {

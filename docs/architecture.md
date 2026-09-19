@@ -300,7 +300,8 @@ Split into focused files under `libs/stats/src/lib/models/`:
 - `training-plan-exercise.models.ts` - `planDayExercises()`, `planDayProgress()`, `isPlanDayFulfilled()`, `planExerciseEntryPayload()`, `planDayItemId()` — the per-exercise fulfillment layer shared by the store, the auto-mark effect and the detail UI.
 - `training-session.models.ts` - `buildSessionSteps()`, `sessionToolFor()`, `firstOpenStepIndex()`, `normalizeRestSec()`, `normalizeSessionMode()`, `stepCoveredBy()` — the guided-session layer over `planDayProgress()`.
 - `training-session-circuit.models.ts` - `buildCircuitSteps()`, `circuitRoundCount()`, `circuitPortions()` — the same day re-ordered as a circuit.
-- `workout.models.ts` - `Workout`, `workoutRejection()`, `normalizeWorkout()`, `workoutToPlanDay()`, `copyWorkout()`, `workoutShareRejection()` — user-composed sessions, see "Custom workouts".
+- `workout.models.ts` - `Workout`, `workoutRejection()`, `normalizeWorkout()`, `workoutToPlanDay()` — user-composed sessions, see "Custom workouts".
+- `workout-share.models.ts` - `copyWorkout()`, `workoutShareRejection()` — the copy a friend receives and who may send it.
 - `training-plan.catalog.ts` - curated `TRAINING_PLANS` array + `findPlanById()` / `findPlanBySlug()` lookups. Test invariants: every plan's day indexes form a contiguous `1..totalDays` sequence, rest days have `targetReps === 0`, and every structured exercise item names a real catalog exercise/variant, stays inside its bounds, and sums its sets to its target.
   - UserStats includes a `version` field for migration support. See [`gotchas/cloud-functions.md`](gotchas/cloud-functions.md) for the versioning strategy.
 

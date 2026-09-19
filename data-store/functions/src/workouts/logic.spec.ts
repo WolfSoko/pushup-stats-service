@@ -1,6 +1,6 @@
 import { MAX_PROFILE_WORKOUTS, MAX_WORKOUTS } from '@pu-stats/models';
 
-import { profileWorkouts, splitByRoom } from './logic';
+import { hasRoom, profileWorkouts } from './logic';
 
 const VALID = {
   ownerId: 'owner',
@@ -45,18 +45,9 @@ describe('profileWorkouts', () => {
   });
 });
 
-describe('splitByRoom', () => {
-  it('should skip recipients at their limit instead of failing the share', () => {
-    // given
-    const counts = new Map([
-      ['a', 3],
-      ['b', MAX_WORKOUTS],
-    ]);
-
-    // when
-    const split = splitByRoom(['a', 'b', 'c'], counts);
-
-    // then — an unknown count means an empty list
-    expect(split).toEqual({ send: ['a', 'c'], full: ['b'] });
+describe('hasRoom', () => {
+  it('should refuse the copy that would pass the cap', () => {
+    expect(hasRoom(MAX_WORKOUTS - 1)).toBe(true);
+    expect(hasRoom(MAX_WORKOUTS)).toBe(false);
   });
 });

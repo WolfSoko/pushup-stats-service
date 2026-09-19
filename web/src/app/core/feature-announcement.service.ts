@@ -3,6 +3,7 @@ import { effect, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
+import { UserContextService } from '@pu-auth/auth';
 import { filter, map } from 'rxjs';
 
 import { UserConfigStore } from './user-config.store';
@@ -20,7 +21,8 @@ export const WORKOUTS_ANNOUNCEMENT = 'workouts-2026-09';
  * who has not seen it. Waits for the dashboard rather than firing on the
  * first page after login: a dialog over the login or register form, or
  * over a shared profile the user just landed on, would interrupt what
- * they came for.
+ * they came for. Guests are left alone: a walkthrough is for someone
+ * coming back, and a guest's account does not outlive the session.
  *
  * Inject once in the app root, like `AndroidTestInviteOrchestrationService`.
  */
@@ -30,6 +32,7 @@ export class FeatureAnnouncementService {
   private readonly dialog = inject(MatDialog);
   private readonly userConfig = inject(UserConfigStore);
   private readonly router = inject(Router);
+  private readonly user = inject(UserContextService);
 
   private readonly url = toSignal(
     this.router.events.pipe(
@@ -45,7 +48,7 @@ export class FeatureAnnouncementService {
     if (!isPlatformBrowser(this.platformId) || this.shown) return;
     const config = this.userConfig.config();
     const url = this.url();
-    if (!config || !isDashboard(url)) return;
+    if (!config || !isDashboard(url) || this.user.isGuest()) return;
     if (config.ui?.seenAnnouncements?.includes(WORKOUTS_ANNOUNCEMENT)) return;
 
     this.shown = true;

@@ -107,17 +107,18 @@ export class WorkoutEditorComponent {
     () => this.form().lines.length < this.maxLines
   );
 
-  private seeded = false;
+  /** The id the form was last seeded for, so a later echo of the user's
+   *  own save doesn't overwrite what they are typing — while a route
+   *  change to another workout, on a reused component, seeds afresh. */
+  private seededFor: string | null = null;
 
   constructor() {
-    // Seed once from the store; a later echo of the user's own save must
-    // not overwrite what they are typing.
     effect(() => {
       const id = this.editingId();
-      if (this.seeded || id === null) return;
+      if (id === null || this.seededFor === id) return;
       const workout = this.store.workoutById(id);
       if (!workout) return;
-      this.seeded = true;
+      this.seededFor = id;
       this.form.set(formFromWorkout(workout));
     });
   }

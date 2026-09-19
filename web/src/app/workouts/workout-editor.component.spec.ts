@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import type { Workout } from '@pu-stats/models';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 import { WorkoutEditorComponent } from './workout-editor.component';
 import { WorkoutsStore } from './workouts.store';
@@ -23,6 +23,7 @@ async function setup(
   options: { id?: string; workouts?: Workout[]; loaded?: boolean } = {}
 ) {
   const params = options.id ? { id: options.id } : {};
+  const paramMap$ = new BehaviorSubject(convertToParamMap(params));
   const store = {
     loaded: signal(options.loaded ?? true),
     busy: signal(false),
@@ -38,7 +39,7 @@ async function setup(
       {
         provide: ActivatedRoute,
         useValue: {
-          paramMap: of(convertToParamMap(params)),
+          paramMap: paramMap$.asObservable(),
           snapshot: { paramMap: convertToParamMap(params) },
         },
       },
@@ -54,7 +55,7 @@ async function setup(
       { provide: WorkoutsStore, useValue: store },
     ],
   });
-  return { store, navigateByUrl };
+  return { store, navigateByUrl, paramMap$ };
 }
 
 describe('WorkoutEditorComponent', () => {
@@ -163,6 +164,30 @@ describe('WorkoutEditorComponent', () => {
       exercises: [{ exerciseId: 'legs.squats', target: 30, sets: [15, 15] }],
       onProfile: true,
     });
+  });
+
+  it('should reseed the form when the route moves to another workout', async () => {
+    // given — the same component instance serves /workouts/A/edit and
+    // /workouts/B/edit; B must not inherit A's form
+    const other: Workout = {
+      ...WORKOUT,
+      id: 'w2',
+      title: 'Arme',
+      exercises: [{ exerciseId: 'pushup', target: 10 }],
+    };
+    const { paramMap$ } = await setup({ id: 'w1', workouts: [WORKOUT, other] });
+    expect(
+      (screen.getByTestId('workout-title') as HTMLInputElement).value
+    ).toBe('Beine');
+
+    // when
+    paramMap$.next(convertToParamMap({ id: 'w2' }));
+    await screen.findByDisplayValue('Arme');
+
+    // then
+    expect(
+      (screen.getByTestId('workout-title') as HTMLInputElement).value
+    ).toBe('Arme');
   });
 
   it('should say so when the workout to edit does not exist', async () => {

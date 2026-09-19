@@ -32,6 +32,8 @@ async function setup(
     loaded?: boolean;
     dialogResult?: unknown;
     sectionLevel?: string;
+    full?: number;
+    canAddMore?: boolean;
   } = {}
 ) {
   const workouts = signal<ReadonlyArray<Workout>>(
@@ -43,7 +45,8 @@ async function setup(
     busy: signal(false),
     lastRejection: signal(undefined),
     lastShared: signal(1),
-    canAddMore: signal(true),
+    lastShareFull: signal(options.full ?? 0),
+    canAddMore: signal(options.canAddMore ?? true),
     share: vitest.fn().mockResolvedValue(true),
     setOnProfile: vitest.fn().mockResolvedValue(true),
     remove: vitest.fn().mockResolvedValue(true),
@@ -126,6 +129,30 @@ describe('WorkoutsPageComponent', () => {
     // then — the dialog chunk loads lazily, so the call lands a tick later
     await waitFor(() => expect(store.share).toHaveBeenCalledWith('w1', ['f1']));
     await waitFor(() => expect(snackbar.open).toHaveBeenCalled());
+  });
+
+  it('should tell the sender about friends whose list was full', async () => {
+    // given
+    const { snackbar } = await setup({ dialogResult: ['f1', 'f2'], full: 1 });
+    const user = userEvent.setup();
+
+    // when
+    await user.click(screen.getByTestId('workout-share'));
+
+    // then
+    await waitFor(() => expect(snackbar.open).toHaveBeenCalled());
+    expect(String(snackbar.open.mock.calls[0][0])).toContain('keinen Platz');
+  });
+
+  it('should disable the new-session link once the list is full', async () => {
+    // given
+    await setup({ canAddMore: false });
+
+    // then — a greyed-out link that still navigates would let the user
+    // fill in a session only to be refused on save
+    expect(
+      screen.getByTestId('workouts-new').getAttribute('aria-disabled')
+    ).toBe('true');
   });
 
   it('should not share when the dialog was dismissed', async () => {

@@ -11,7 +11,7 @@
       color="primary"
       routerLink="/workouts/new"
       data-testid="workouts-new"
-      [class.disabled]="!store.canAddMore()"
+      [disabled]="!store.canAddMore()"
     >
       <mat-icon>add</mat-icon>
       <span i18n="@@workouts.new">Neue Session</span>

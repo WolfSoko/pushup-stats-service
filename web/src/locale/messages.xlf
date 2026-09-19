@@ -5589,7 +5589,7 @@
         <note category="location">web/src/app/friends/friends-page.component.ts:224</note>
         <note category="location">web/src/app/friends/friends-teaser-card.component.ts:220</note>
         <note category="location">web/src/app/workouts/workout-card.component.ts:167</note>
-        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:103</note>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:108</note>
       </notes>
       <segment>
         <source>Ohne Namen</source>
@@ -7043,15 +7043,15 @@
     </unit>
     <unit id="landing.workouts.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:36,37</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:37,39</note>
       </notes>
       <segment>
-        <source>Neu · Eigene Sessions</source>
+        <source> Neu · Eigene Sessions </source>
       </segment>
     </unit>
     <unit id="landing.workouts.headline">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:38,40</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:40,42</note>
       </notes>
       <segment>
         <source> Dein Workout, deine Regeln — und deine Freunde trainieren mit. </source>
@@ -7059,7 +7059,7 @@
     </unit>
     <unit id="landing.workouts.desc">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:41,46</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:43,48</note>
       </notes>
       <segment>
         <source> Stell dir eigene Sessions aus dem Übungskatalog zusammen: Übungen, Ziele, Sätze. Die App führt dich hindurch wie durch einen Plan-Tag. Zeig deine Sessions auf dem Profil oder schick sie direkt an Freunde. </source>
@@ -7067,7 +7067,7 @@
     </unit>
     <unit id="landing.workouts.chip.compose">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:50,54</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:52,56</note>
       </notes>
       <segment>
         <source>Übungen, Ziele und Sätze frei kombinieren</source>
@@ -7075,7 +7075,7 @@
     </unit>
     <unit id="landing.workouts.chip.run">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:56,60</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:58,62</note>
       </notes>
       <segment>
         <source>Geführt durchführen — mit Kamera-Zähler und Timer</source>
@@ -7083,7 +7083,7 @@
     </unit>
     <unit id="landing.workouts.chip.share">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:62,67</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:64,69</note>
       </notes>
       <segment>
         <source>Auf dem Profil zeigen oder Freunden schicken</source>
@@ -7091,7 +7091,7 @@
     </unit>
     <unit id="landing.workouts.cta">
       <notes>
-        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:73,77</note>
+        <note category="location">web/src/app/marketing/components/workouts-feature-section/workouts-feature-section.component.html:75,79</note>
       </notes>
       <segment>
         <source>Eigene Session erstellen</source>
@@ -13654,7 +13654,7 @@
     <unit id="session.loading">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:19,21</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:119,122</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:121,124</note>
       </notes>
       <segment>
         <source> Session wird geladen … </source>
@@ -13688,7 +13688,7 @@
     <unit id="session.progressSteps">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:48,50</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:21,23</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:23,25</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen erledigt </source>
@@ -13697,7 +13697,7 @@
     <unit id="session.progress">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:53,55</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:26,28</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:28,30</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen erledigt </source>
@@ -13706,7 +13706,7 @@
     <unit id="session.done.title">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:102,104</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:75,77</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:77,79</note>
       </notes>
       <segment>
         <source> Session geschafft </source>
@@ -13715,7 +13715,7 @@
     <unit id="session.done.textSteps">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:106,108</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:79,81</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:81,83</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Sätzen sind eingetragen. </source>
@@ -13724,7 +13724,7 @@
     <unit id="session.done.text">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:111,113</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:84,86</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:86,88</note>
       </notes>
       <segment>
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ session.stepsDone() }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ session.stepsTotal() }}"/> Übungen sind eingetragen. </source>
@@ -13741,7 +13741,7 @@
     <unit id="session.done.reopen">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.html:127,129</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:100,102</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:102,104</note>
       </notes>
       <segment>
         <source>Offene Übungen ansehen</source>
@@ -13766,7 +13766,7 @@
     <unit id="session.close">
       <notes>
         <note category="location">web/src/app/training-plans/session/training-session.component.ts:75</note>
-        <note category="location">web/src/app/workouts/session/workout-session.component.ts:75</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.ts:78</note>
       </notes>
       <segment>
         <source>Session beenden</source>
@@ -14455,15 +14455,15 @@
     </unit>
     <unit id="workoutSession.title">
       <notes>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:3,4</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:4,6</note>
       </notes>
       <segment>
-        <source>Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/></source>
+        <source> Session · <ph id="0" equiv="INTERPOLATION" disp="{{ workout.title }}"/> </source>
       </segment>
     </unit>
     <unit id="workoutSession.done.action">
       <notes>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:95,97</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:97,99</note>
       </notes>
       <segment>
         <source>Zu meinen Sessions</source>
@@ -14471,7 +14471,7 @@
     </unit>
     <unit id="workoutSession.unknown">
       <notes>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:110,112</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:112,114</note>
       </notes>
       <segment>
         <source> Diese Session gibt es nicht. </source>
@@ -14479,7 +14479,7 @@
     </unit>
     <unit id="workouts.editor.back">
       <notes>
-        <note category="location">web/src/app/workouts/session/workout-session.component.html:114,117</note>
+        <note category="location">web/src/app/workouts/session/workout-session.component.html:116,119</note>
         <note category="location">web/src/app/workouts/workout-editor.component.html:27,29</note>
       </notes>
       <segment>
@@ -14632,7 +14632,7 @@
     </unit>
     <unit id="workouts.editor.description">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:45,47</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:46,49</note>
       </notes>
       <segment>
         <source>Beschreibung (optional)</source>
@@ -14640,7 +14640,7 @@
     </unit>
     <unit id="workouts.editor.exercises">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:56,58</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:58,60</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -14648,7 +14648,7 @@
     </unit>
     <unit id="workouts.editor.exercise">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:62,64</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:64,66</note>
       </notes>
       <segment>
         <source>Übung</source>
@@ -14656,7 +14656,7 @@
     </unit>
     <unit id="workouts.editor.variant">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:81,82</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:86,88</note>
       </notes>
       <segment>
         <source>Variante</source>
@@ -14664,7 +14664,7 @@
     </unit>
     <unit id="workouts.editor.noVariant">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:88,90</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:94,96</note>
       </notes>
       <segment>
         <source>Keine</source>
@@ -14672,7 +14672,7 @@
     </unit>
     <unit id="workouts.editor.target">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:99,101</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:107,109</note>
       </notes>
       <segment>
         <source>Ziel</source>
@@ -14680,7 +14680,7 @@
     </unit>
     <unit id="workouts.editor.sets">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:113,115</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:122,124</note>
       </notes>
       <segment>
         <source>Sätze (optional)</source>
@@ -14688,7 +14688,7 @@
     </unit>
     <unit id="workouts.editor.addExercise">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:167,170</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:177,180</note>
       </notes>
       <segment>
         <source>Übung hinzufügen</source>
@@ -14696,7 +14696,7 @@
     </unit>
     <unit id="workouts.editor.onProfile">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:175,177</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:185,187</note>
       </notes>
       <segment>
         <source>Auf meinem Profil zeigen</source>
@@ -14704,7 +14704,7 @@
     </unit>
     <unit id="workouts.editor.onProfileHint">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:178,182</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:188,192</note>
       </notes>
       <segment>
         <source> Wer sie dort sieht, legst du auf deinem Profil im Bereich „Sessions“ fest: Freunde, alle oder niemand. </source>
@@ -14712,7 +14712,7 @@
     </unit>
     <unit id="workouts.editor.cancel">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:189,191</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:200,203</note>
       </notes>
       <segment>
         <source>Abbrechen</source>
@@ -14720,7 +14720,7 @@
     </unit>
     <unit id="workouts.editor.save">
       <notes>
-        <note category="location">web/src/app/workouts/workout-editor.component.html:198,200</note>
+        <note category="location">web/src/app/workouts/workout-editor.component.html:210,212</note>
       </notes>
       <segment>
         <source>Speichern</source>
@@ -14808,7 +14808,7 @@
     </unit>
     <unit id="workouts.share.cancel">
       <notes>
-        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:71,73</note>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:76,78</note>
       </notes>
       <segment>
         <source> Abbrechen </source>
@@ -14816,7 +14816,7 @@
     </unit>
     <unit id="workouts.share.submit">
       <notes>
-        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:81,83</note>
+        <note category="location">web/src/app/workouts/workout-share-dialog.component.ts:86,88</note>
       </notes>
       <segment>
         <source> Schicken </source>
@@ -14840,7 +14840,7 @@
     </unit>
     <unit id="workoutsIntro.stepCount">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:44,46</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:48,50</note>
       </notes>
       <segment>
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
@@ -14848,7 +14848,7 @@
     </unit>
     <unit id="workoutsIntro.later">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:55,57</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:59,61</note>
       </notes>
       <segment>
         <source> Später </source>
@@ -14856,7 +14856,7 @@
     </unit>
     <unit id="workoutsIntro.back">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:59,61</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:68,70</note>
       </notes>
       <segment>
         <source>Zurück</source>
@@ -14864,7 +14864,7 @@
     </unit>
     <unit id="workoutsIntro.start">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:71,73</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:80,82</note>
       </notes>
       <segment>
         <source>Erste Session anlegen</source>
@@ -14872,7 +14872,7 @@
     </unit>
     <unit id="workoutsIntro.next">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:81,82</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:90,91</note>
       </notes>
       <segment>
         <source>Weiter</source>
@@ -14880,7 +14880,7 @@
     </unit>
     <unit id="workoutsIntro.step1.title">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:156</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:165</note>
       </notes>
       <segment>
         <source>Zusammenstellen</source>
@@ -14888,7 +14888,7 @@
     </unit>
     <unit id="workoutsIntro.step1.body">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:157</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:166</note>
       </notes>
       <segment>
         <source>Wähle Übungen aus dem Katalog, gib jeder ein Ziel und optional Sätze — in der Reihenfolge, in der du trainierst.</source>
@@ -14896,7 +14896,7 @@
     </unit>
     <unit id="workoutsIntro.step2.title">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:161</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:170</note>
       </notes>
       <segment>
         <source>Geführt durchführen</source>
@@ -14904,7 +14904,7 @@
     </unit>
     <unit id="workoutsIntro.step2.body">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:162</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:171</note>
       </notes>
       <segment>
         <source>Die App führt dich Übung für Übung hindurch, zählt per Kamera oder Timer mit und trägt jeden Satz automatisch ein — als Zirkel oder nacheinander.</source>
@@ -14912,7 +14912,7 @@
     </unit>
     <unit id="workoutsIntro.step3.title">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:166</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:175</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -14920,7 +14920,7 @@
     </unit>
     <unit id="workoutsIntro.step3.body">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:167</note>
+        <note category="location">web/src/app/workouts/workouts-intro-dialog.component.ts:176</note>
       </notes>
       <segment>
         <source>Zeig deine Session auf deinem Profil oder schick sie direkt an Freunde. Jeder bekommt eine eigene Kopie, die er anpassen kann.</source>
@@ -15071,9 +15071,17 @@
         <source>Zum Profil</source>
       </segment>
     </unit>
+    <unit id="workouts.sharedPartly">
+      <notes>
+        <note category="location">web/src/app/workouts/workouts-page.component.ts:101</note>
+      </notes>
+      <segment>
+        <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt. <ph id="1" equiv="full" disp="full"/> hatten keinen Platz mehr (höchstens 50 Sessions).</source>
+      </segment>
+    </unit>
     <unit id="workouts.shared">
       <notes>
-        <note category="location">web/src/app/workouts/workouts-page.component.ts:98</note>
+        <note category="location">web/src/app/workouts/workouts-page.component.ts:102</note>
       </notes>
       <segment>
         <source>Session an <ph id="0" equiv="count" disp="sent"/> Freund(e) geschickt.</source>

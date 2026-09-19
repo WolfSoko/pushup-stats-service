@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { UserContextService } from '@pu-auth/auth';
 import { WorkoutsApiService } from '@pu-stats/data-access';
 import type { Workout, WorkoutInput } from '@pu-stats/models';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { WorkoutShareApiService } from './workout-share-api.service';
 import { WorkoutsStore } from './workouts.store';
@@ -25,10 +25,14 @@ const VALID_INPUT: WorkoutInput = {
   onProfile: false,
 };
 
-function setup(options: { userId?: string; workouts?: Workout[] } = {}) {
-  const list$ = new BehaviorSubject<ReadonlyArray<Workout>>(
-    options.workouts ?? [WORKOUT]
-  );
+function setup(
+  options: { userId?: string; workouts?: Workout[]; pending?: boolean } = {}
+) {
+  const list$ = options.pending
+    ? new Subject<ReadonlyArray<Workout>>()
+    : new BehaviorSubject<ReadonlyArray<Workout>>(
+        options.workouts ?? [WORKOUT]
+      );
   const api = {
     listWorkouts: vitest.fn(() => list$.asObservable()),
     createWorkout: vitest.fn().mockResolvedValue('new-id'),
@@ -191,6 +195,35 @@ describe('WorkoutsStore', () => {
       },
       { uid: 'anna', workoutId: 'src', displayName: 'Anna' }
     );
+  });
+
+  it('should wait for the list before judging the limit on an import', async () => {
+    // given — the profile's copy button can be the first thing to touch
+    // this store, before the listener has delivered
+    const { store, api, list$ } = setup({ pending: true });
+    await flush();
+    expect(store.loaded()).toBe(false);
+
+    // when
+    const pending = store.importWorkout(
+      {
+        id: 'src',
+        title: 'X',
+        description: '',
+        exercises: [{ exerciseId: 'pushup', target: 5 }],
+      },
+      { uid: 'anna', workoutId: 'src', displayName: null }
+    );
+    list$.next(
+      Array.from({ length: 50 }, (_, i) => ({ ...WORKOUT, id: `w${i}` }))
+    );
+    await flush();
+    const id = await pending;
+
+    // then
+    expect(id).toBeNull();
+    expect(store.lastRejection()).toBe('limit');
+    expect(api.createWorkout).not.toHaveBeenCalled();
   });
 
   it('should do nothing without a signed-in user', async () => {

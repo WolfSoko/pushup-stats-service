@@ -1,5 +1,5 @@
 import { computed, inject } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { rxResource, toObservable } from '@angular/core/rxjs-interop';
 import {
   patchState,
   signalStore,
@@ -19,7 +19,7 @@ import {
   type WorkoutRejection,
   type WorkoutSource,
 } from '@pu-stats/models';
-import { of } from 'rxjs';
+import { filter, firstValueFrom, of, timeout } from 'rxjs';
 
 import {
   WorkoutShareApiService,
@@ -37,12 +37,15 @@ interface WorkoutsState {
   lastRejection: WorkoutActionReason;
   /** Friends who got the last share, for the confirmation. */
   lastShared: number;
+  /** Friends skipped by the last share because their list is full. */
+  lastShareFull: number;
   busy: boolean;
 }
 
 const initialState: WorkoutsState = {
   lastRejection: undefined,
   lastShared: 0,
+  lastShareFull: 0,
   busy: false,
 };
 
@@ -80,8 +83,25 @@ export const WorkoutsStore = signalStore(
     };
   }),
   withMethods((store) => {
+    const loaded$ = toObservable(store.loaded);
+
     function userId(): string | null {
       return store._user.userIdSafe() || null;
+    }
+
+    /**
+     * The limit check counts the mirrored list, which is empty until the
+     * listener delivers — and the profile's copy button can be the first
+     * thing to touch this store. Bounded, so a broken listener still lets
+     * the write through rather than hanging the button.
+     */
+    function untilLoaded(): Promise<unknown> {
+      return firstValueFrom(
+        loaded$.pipe(
+          filter(Boolean),
+          timeout({ first: 5000, with: () => of(true) })
+        )
+      );
     }
 
     async function run<T>(action: () => Promise<T>, fallback: T): Promise<T> {
@@ -150,7 +170,10 @@ export const WorkoutsStore = signalStore(
             patchState(store, { lastRejection: result.reason ?? 'failed' });
             return false;
           }
-          patchState(store, { lastShared: result.sent ?? 0 });
+          patchState(store, {
+            lastShared: result.sent ?? 0,
+            lastShareFull: result.full?.length ?? 0,
+          });
           return true;
         }, false),
 
@@ -164,6 +187,7 @@ export const WorkoutsStore = signalStore(
         from: WorkoutSource
       ): Promise<string | null> =>
         run(async () => {
+          await untilLoaded();
           const uid = userId();
           const input: WorkoutInput = {
             title: workout.title,

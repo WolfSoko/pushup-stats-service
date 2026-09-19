@@ -22,25 +22,27 @@ describe('WorkoutsIntroDialogComponent', () => {
     // given
     await setup();
     const user = userEvent.setup();
-    expect(screen.getByTestId('intro-step-title').textContent).toBe(
+    expect(screen.getByTestId('intro-step-title').textContent?.trim()).toBe(
       'Zusammenstellen'
     );
     expect(screen.queryByTestId('intro-back')).toBeNull();
 
     // when
     await user.click(screen.getByTestId('intro-next'));
-    expect(screen.getByTestId('intro-step-title').textContent).toBe(
+    expect(screen.getByTestId('intro-step-title').textContent?.trim()).toBe(
       'Geführt durchführen'
     );
     await user.click(screen.getByTestId('intro-next'));
 
     // then — the last step offers the editor instead of "next"
-    expect(screen.getByTestId('intro-step-title').textContent).toBe('Teilen');
+    expect(screen.getByTestId('intro-step-title').textContent?.trim()).toBe(
+      'Teilen'
+    );
     expect(screen.queryByTestId('intro-next')).toBeNull();
     expect(screen.getByTestId('intro-start')).toBeTruthy();
 
     await user.click(screen.getByTestId('intro-back'));
-    expect(screen.getByTestId('intro-step-title').textContent).toBe(
+    expect(screen.getByTestId('intro-step-title').textContent?.trim()).toBe(
       'Geführt durchführen'
     );
   });

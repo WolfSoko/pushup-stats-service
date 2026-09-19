@@ -413,7 +413,26 @@ service cloud.firestore {
              && data.exercises.size() <= 20
              && data.onProfile is bool
              && data.createdAt is string
-             && data.updatedAt is string;
+             && data.updatedAt is string
+             && (!('sharedBy' in data.keys()) || isWorkoutSource(data.sharedBy));
+    }
+
+    // Where a copy came from. Only the shape is pinned — a client may
+    // claim any source on its own document, which nobody but the owner
+    // ever reads; the cap keeps a forged one from carrying a payload.
+    function isWorkoutSource(source) {
+      return source is map
+             && source.keys().hasOnly(['uid', 'workoutId', 'displayName'])
+             && source.uid is string
+             && source.uid.size() >= 1
+             && source.uid.size() <= 128
+             && source.workoutId is string
+             && source.workoutId.size() >= 1
+             && source.workoutId.size() <= 128
+             && (!('displayName' in source.keys())
+                 || source.displayName == null
+                 || (source.displayName is string
+                     && source.displayName.size() <= 30));
     }
 
     match /workouts/{workoutId} {

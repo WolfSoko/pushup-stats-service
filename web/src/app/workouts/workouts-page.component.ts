@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
-import type { Workout } from '@pu-stats/models';
+import { sectionVisibility, type Workout } from '@pu-stats/models';
 import { firstValueFrom } from 'rxjs';
 
 import { UserContextService } from '@pu-auth/auth';
@@ -60,10 +60,9 @@ export class WorkoutsPageComponent {
    * a card's "show on profile" only matters once that switch is open, so
    * the page says so instead of letting the toggle look like it worked.
    */
-  protected readonly profileSectionOff = computed(() => {
-    const level = this.config.config()?.ui?.profileVisibility?.['workouts'];
-    return level !== 'public' && level !== 'friends';
-  });
+  protected readonly profileSectionOff = computed(
+    () => sectionVisibility(this.config.config()?.ui, 'workouts') === 'off'
+  );
 
   /** The switch sits on the user's own profile page, next to the section. */
   protected readonly profileUrl = computed(() => {
@@ -94,11 +93,14 @@ export class WorkoutsPageComponent {
     if (!friendUids || friendUids.length === 0) return;
     if (await this.store.share(id, friendUids)) {
       const sent = this.store.lastShared();
-      this.snackbar.open(
-        $localize`:@@workouts.shared:Session an ${sent}:count: Freund(e) geschickt.`,
-        undefined,
-        { duration: 3000 }
-      );
+      const full = this.store.lastShareFull();
+      // A friend at their limit is skipped, not failed — but the sender
+      // has to hear it, or the copy is silently missing on the other side.
+      const message =
+        full > 0
+          ? $localize`:@@workouts.sharedPartly:Session an ${sent}:count: Freund(e) geschickt. ${full}:full: hatten keinen Platz mehr (höchstens 50 Sessions).`
+          : $localize`:@@workouts.shared:Session an ${sent}:count: Freund(e) geschickt.`;
+      this.snackbar.open(message, undefined, { duration: 4000 });
     }
   }
 

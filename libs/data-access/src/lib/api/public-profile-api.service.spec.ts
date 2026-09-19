@@ -19,7 +19,8 @@ const sampleProfile: PublicProfile = {
   bestSingleEntry: 50,
   bestDayTotal: 250,
   updatedAt: '2026-04-29T08:30:00.000Z',
-};
+  workouts: [],
+} as unknown as PublicProfile;
 
 describe('PublicProfileApiService', () => {
   function setup(callableImpl: (data: unknown) => Promise<unknown>): {
@@ -51,6 +52,20 @@ describe('PublicProfileApiService', () => {
 
       expect(result).toEqual(sampleProfile);
       expect(spy).toHaveBeenCalledWith({ uid: 'abcdef1234567890' });
+    });
+
+    it('Given a projection without a workouts list, Then reads it as empty', async () => {
+      // given — a response from before the section existed, or served
+      // ahead of the functions deploy
+      const { service } = setup(async () => ({
+        data: { ...sampleProfile, workouts: undefined },
+      }));
+
+      // when
+      const result = await service.getProfile('abcdef1234567890');
+
+      // then
+      expect(result?.workouts).toEqual([]);
     });
 
     it('Given the callable rejects with functions/not-found, Then returns null', async () => {

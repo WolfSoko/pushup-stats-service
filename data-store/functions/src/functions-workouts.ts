@@ -3,6 +3,7 @@ import { onCall } from 'firebase-functions/v2/https';
 import {
   copyWorkout,
   normalizeWorkout,
+  type Workout,
   workoutShareRejection,
   type WorkoutSource,
 } from '@pu-stats/models';
@@ -13,7 +14,7 @@ import { buildFriendPushPayload, friendPushOptions } from './friends';
 import { readFriendUids } from './friends/challenges-read';
 import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
-import { splitByRoom } from './workouts/logic';
+import { hasRoom } from './workouts/logic';
 
 const WORKOUTS = 'workouts';
 
@@ -57,38 +58,21 @@ export const shareWorkout = onCall(
 
     // Narrowed by `workoutShareRejection`.
     const recipients = [...new Set(friendUids as string[])];
-    const counts = new Map<string, number>();
-    await Promise.all(
-      recipients.map(async (friend) => {
-        const count = await db
-          .collection(WORKOUTS)
-          .where('ownerId', '==', friend)
-          .count()
-          .get();
-        counts.set(friend, count.data().count);
-      })
-    );
-    const { send, full } = splitByRoom(recipients, counts);
-
-    const pushRecipients = await readPushRecipients([uid, ...send]);
+    const pushRecipients = await readPushRecipients([uid, ...recipients]);
     const sharedBy: WorkoutSource = {
       uid,
       workoutId,
       displayName: pushRecipients.get(uid)?.displayName ?? null,
     };
-    const now = new Date().toISOString();
-    const batch = db.batch();
-    for (const friend of send) {
-      batch.set(
-        db.collection(WORKOUTS).doc(),
-        copyWorkout(workout, { ownerId: friend, sharedBy, now })
-      );
-    }
-    await batch.commit();
+    const outcomes = await Promise.all(
+      recipients.map((friend) => copyTo(friend, workout, sharedBy))
+    );
+    const sent = recipients.filter((_, i) => outcomes[i]);
+    const full = recipients.filter((_, i) => !outcomes[i]);
 
     if (configureWebPush()) {
       await Promise.all(
-        send.map((friend) =>
+        sent.map((friend) =>
           deliverPushToUser(
             friend,
             buildFriendPushPayload({
@@ -107,9 +91,37 @@ export const shareWorkout = onCall(
     logger.info('shareWorkout', {
       uid,
       workoutId,
-      sent: send.length,
+      sent: sent.length,
       full: full.length,
     });
-    return { ok: true, sent: send.length, full };
+    return { ok: true, sent: sent.length, full };
   }
 );
+
+/**
+ * One recipient's copy, written only if they still have room. The count
+ * and the write share a transaction so two friends sharing at the same
+ * moment cannot both slip a 50th and a 51st workout past the cap. A
+ * recipient at the limit is skipped, not failed — the others still want
+ * their copy, and the sender is told.
+ */
+async function copyTo(
+  friend: string,
+  workout: Workout,
+  sharedBy: WorkoutSource
+): Promise<boolean> {
+  const col = db.collection(WORKOUTS);
+  return db.runTransaction(async (tx) => {
+    const count = await tx.get(col.where('ownerId', '==', friend).count());
+    if (!hasRoom(count.data().count)) return false;
+    tx.create(
+      col.doc(),
+      copyWorkout(workout, {
+        ownerId: friend,
+        sharedBy,
+        now: new Date().toISOString(),
+      })
+    );
+    return true;
+  });
+}

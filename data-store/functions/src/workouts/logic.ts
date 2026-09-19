@@ -43,25 +43,7 @@ export function profileWorkouts(
     .map(toPublicWorkout);
 }
 
-export interface ShareSplit {
-  /** Recipients who still have room for one more workout. */
-  readonly send: string[];
-  /** Recipients already at `MAX_WORKOUTS`; the sender is told, not failed. */
-  readonly full: string[];
-}
-
-/**
- * Who gets the copy. A friend at their limit is skipped rather than
- * making the whole share fail — the others still want it.
- */
-export function splitByRoom(
-  recipients: ReadonlyArray<string>,
-  counts: ReadonlyMap<string, number>
-): ShareSplit {
-  const send: string[] = [];
-  const full: string[] = [];
-  for (const uid of recipients) {
-    ((counts.get(uid) ?? 0) >= MAX_WORKOUTS ? full : send).push(uid);
-  }
-  return { send, full };
+/** Whether a list of `count` workouts may take one more. */
+export function hasRoom(count: number): boolean {
+  return count < MAX_WORKOUTS;
 }
