@@ -52,6 +52,7 @@ import { CheerAnimationStore } from './cheer-animation.store';
     }
     .rocket {
       bottom: -10%;
+      transform: rotate(-45deg);
       animation: cheer-rocket-launch 1400ms ease-out forwards;
       animation-delay: calc(var(--i) * 220ms);
     }
@@ -62,10 +63,32 @@ import { CheerAnimationStore } from './cheer-animation.store';
       animation: cheer-burst 900ms ease-out forwards;
       animation-delay: calc(1200ms + var(--i) * 220ms);
     }
+    /* Rotated -45deg so the emoji's default up-right heading points
+       straight up; the translateX zig-zag is layered on top of that
+       fixed rotation so the rocket still stands vertical while it
+       weaves on the way up. */
     @keyframes cheer-rocket-launch {
-      to {
+      0% {
+        bottom: -10%;
+        transform: translateX(0) rotate(-45deg);
+        opacity: 1;
+      }
+      20% {
+        transform: translateX(-14px) rotate(-45deg);
+      }
+      40% {
+        transform: translateX(12px) rotate(-45deg);
+      }
+      60% {
+        transform: translateX(-10px) rotate(-45deg);
+      }
+      80% {
+        bottom: 70%;
+        transform: translateX(8px) rotate(-45deg);
+      }
+      100% {
         bottom: 80%;
-        transform: translateY(0) rotate(-8deg);
+        transform: translateX(0) rotate(-45deg);
         opacity: 0;
       }
     }
