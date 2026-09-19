@@ -9,6 +9,8 @@ import {
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { CameraService } from './camera.service';
+import { UserContextService } from '@pu-auth/auth';
+
 import { ExerciseTimerDialogComponent } from './exercise-timer-dialog.component';
 
 const INITIAL_SNAPSHOT: HoldSnapshot = {
@@ -77,6 +79,15 @@ describe('ExerciseTimerDialogComponent', () => {
         },
         { provide: MatDialogRef, useValue: { close: dialogClose } },
         { provide: HOLD_TIMER, useValue: timer },
+        {
+          // Only the slice of the auth surface the tuning store reads.
+          provide: UserContextService,
+          useValue: {
+            isAdmin: () => false,
+            userIdSafe: () => 'uid',
+            isGuest: () => false,
+          },
+        },
       ],
     });
   });

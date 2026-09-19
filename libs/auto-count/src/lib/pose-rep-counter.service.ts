@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 
 import { profileFor } from './exercise-angle-profile';
+import { applyOverride, PROFILE_OVERRIDES } from './profile-overrides.port';
 import { POSE_DETECTOR_FACTORY, type PoseDetector } from './pose-detector.port';
 import {
   POSE_FRAME_SOURCE,
@@ -39,6 +40,7 @@ export class PoseRepCounterService implements RepCounter {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly detectorFactory = inject(POSE_DETECTOR_FACTORY);
   private readonly frameSource = inject<PoseFrameSource>(POSE_FRAME_SOURCE);
+  private readonly overrides = inject(PROFILE_OVERRIDES, { optional: true });
 
   private readonly _snapshot = signal<RepCountSnapshot>(INITIAL_SNAPSHOT, {
     equal: snapshotEqual,
@@ -80,12 +82,16 @@ export class PoseRepCounterService implements RepCounter {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this._isActive() || this.startPending) return;
 
-    const profile = profileFor(options.exerciseId);
-    if (!profile) {
+    const base = profileFor(options.exerciseId);
+    if (!base) {
       throw new Error(
         `PoseRepCounterService: no profile for exercise "${options.exerciseId}"`
       );
     }
+    const profile = applyOverride(
+      base,
+      this.overrides?.angleOverrideFor(options.exerciseId)
+    );
 
     const video = this.videoEl;
     if (!video) {
@@ -129,6 +135,7 @@ export class PoseRepCounterService implements RepCounter {
         angleDeg: sample.angleDeg,
         confidence: sample.confidence,
         timestampMs: sample.timestampMs,
+        pose: sample.skeleton,
       });
       const out = this.machine.process(sample);
       this._snapshot.set(out.snapshot);

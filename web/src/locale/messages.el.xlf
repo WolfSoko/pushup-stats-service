@@ -14110,16 +14110,334 @@
         <target> Εμφανίζει πυροτεχνήματα στον πίνακα ελέγχου όταν σε ενθαρρύνει ένας φίλος. </target>
       </segment>
     </unit>
-    <unit id="nav.profile">
+    <unit id="autoCount.confirm.question">
       <segment state="initial">
-        <source>Profil</source>
-        <target>Profil</target>
+        <source> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </source>
+        <target> Erkannt: <ph id="0" equiv="INTERPOLATION" disp="{{ detectedReps() }}"/> Reps. Hat das gestimmt? </target>
       </segment>
     </unit>
-    <unit id="nav.settings">
+    <unit id="autoCount.confirm.yes">
       <segment state="initial">
-        <source>Einstellungen</source>
-        <target>Einstellungen</target>
+        <source>Passt</source>
+        <target>Passt</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.confirm.correct">
+      <segment state="initial">
+        <source> Andere Zahl </source>
+        <target> Andere Zahl </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.confirm.dismiss">
+      <segment state="initial">
+        <source> Nicht mehr fragen </source>
+        <target> Nicht mehr fragen </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.confirm.correctQuestion">
+      <segment state="initial">
+        <source> Wie viele waren es wirklich? </source>
+        <target> Wie viele waren es wirklich? </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.confirm.decrementAria">
+      <segment state="initial">
+        <source>Eine Wiederholung weniger</source>
+        <target>Eine Wiederholung weniger</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.confirm.incrementAria">
+      <segment state="initial">
+        <source>Eine Wiederholung mehr</source>
+        <target>Eine Wiederholung mehr</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.confirm.save">
+      <segment state="initial">
+        <source> Übernehmen </source>
+        <target> Übernehmen </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.title">
+      <segment state="initial">
+        <source> Parameter (Admin) </source>
+        <target> Parameter (Admin) </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.unsaved">
+      <segment state="initial">
+        <source> ungespeichert </source>
+        <target> ungespeichert </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.published">
+      <segment state="initial">
+        <source> für alle aktiv </source>
+        <target> für alle aktiv </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.clearAria">
+      <segment state="initial">
+        <source>Auf Standardwert zurücksetzen</source>
+        <target>Auf Standardwert zurücksetzen</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.resetAll">
+      <segment state="initial">
+        <source> Standard </source>
+        <target> Standard </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.discard">
+      <segment state="initial">
+        <source> Verwerfen </source>
+        <target> Verwerfen </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.save">
+      <segment state="initial">
+        <source> Speichern </source>
+        <target> Speichern </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.publish">
+      <segment state="initial">
+        <source> Für alle </source>
+        <target> Für alle </target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.upAngle">
+      <segment state="initial">
+        <source>Oben ab</source>
+        <target>Oben ab</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.upAngleHint">
+      <segment state="initial">
+        <source>Gelenk gilt ab diesem Winkel als gestreckt</source>
+        <target>Gelenk gilt ab diesem Winkel als gestreckt</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.downAngle">
+      <segment state="initial">
+        <source>Unten bis</source>
+        <target>Unten bis</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.downAngleHint">
+      <segment state="initial">
+        <source>Gelenk gilt bis zu diesem Winkel als gebeugt</source>
+        <target>Gelenk gilt bis zu diesem Winkel als gebeugt</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minDwell">
+      <segment state="initial">
+        <source>Haltezeit</source>
+        <target>Haltezeit</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minDwellHint">
+      <segment state="initial">
+        <source>So lange muss eine Phase anliegen, bevor sie zählt</source>
+        <target>So lange muss eine Phase anliegen, bevor sie zählt</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minConfidence">
+      <segment state="initial">
+        <source>Mindestsicherheit</source>
+        <target>Mindestsicherheit</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minConfidenceHint">
+      <segment state="initial">
+        <source>Frames mit schlechter Erkennung werden verworfen</source>
+        <target>Frames mit schlechter Erkennung werden verworfen</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.maxFrameGap">
+      <segment state="initial">
+        <source>Max. Lücke</source>
+        <target>Max. Lücke</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.maxFrameGapHint">
+      <segment state="initial">
+        <source>Längere Tracking-Aussetzer verwerfen die laufende Phase</source>
+        <target>Längere Tracking-Aussetzer verwerfen die laufende Phase</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.inPoseAngle">
+      <segment state="initial">
+        <source>In Position ab</source>
+        <target>In Position ab</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.inPoseAngleHint">
+      <segment state="initial">
+        <source>Ab diesem Winkel gilt die Haltung als sauber</source>
+        <target>Ab diesem Winkel gilt die Haltung als sauber</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.outPoseAngle">
+      <segment state="initial">
+        <source>Raus bis</source>
+        <target>Raus bis</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.outPoseAngleHint">
+      <segment state="initial">
+        <source>Darunter gilt die Haltung als verlassen</source>
+        <target>Darunter gilt die Haltung als verlassen</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minHold">
+      <segment state="initial">
+        <source>Startverzögerung</source>
+        <target>Startverzögerung</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minHoldHint">
+      <segment state="initial">
+        <source>So lange muss die Position stehen, bevor die Uhr läuft</source>
+        <target>So lange muss die Position stehen, bevor die Uhr läuft</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minBreak">
+      <segment state="initial">
+        <source>Pausenverzögerung</source>
+        <target>Pausenverzögerung</target>
+      </segment>
+    </unit>
+    <unit id="autoCount.tuning.minBreakHint">
+      <segment state="initial">
+        <source>So lange muss die Position verlassen sein, bevor pausiert wird</source>
+        <target>So lange muss die Position verlassen sein, bevor pausiert wird</target>
+      </segment>
+    </unit>
+    <unit id="settings.section.autoCountFeedback.title">
+      <segment state="initial">
+        <source> Kamera-Zähler </source>
+        <target> Kamera-Zähler </target>
+      </segment>
+    </unit>
+    <unit id="settings.section.autoCountFeedback.subtitle">
+      <segment state="initial">
+        <source> Rückmeldung zur Zählgenauigkeit. </source>
+        <target> Rückmeldung zur Zählgenauigkeit. </target>
+      </segment>
+    </unit>
+    <unit id="settings.autoCountFeedbackToggle">
+      <segment state="initial">
+        <source> Nach dem Zählen nach der echten Anzahl fragen </source>
+        <target> Nach dem Zählen nach der echten Anzahl fragen </target>
+      </segment>
+    </unit>
+    <unit id="settings.autoCountFeedbackHint">
+      <segment state="initial">
+        <source> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </source>
+        <target> Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video und kein Bild. </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.title">
+      <segment state="initial">
+        <source>Kamera-Zähler: Genauigkeit</source>
+        <target>Kamera-Zähler: Genauigkeit</target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.total">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ totalReports() }}"/> Rückmeldungen ausgewertet </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.empty">
+      <segment state="initial">
+        <source> Noch keine Rückmeldungen zur Zählgenauigkeit. </source>
+        <target> Noch keine Rückmeldungen zur Zählgenauigkeit. </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.profile">
+      <segment state="initial">
+        <source> Profil </source>
+        <target> Profil </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.thresholds">
+      <segment state="initial">
+        <source> Schwellwerte </source>
+        <target> Schwellwerte </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.runs">
+      <segment state="initial">
+        <source> Läufe </source>
+        <target> Läufe </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.thinEvidence">
+      <segment state="initial">
+        <source>Zu wenige Läufe für eine belastbare Aussage</source>
+        <target>Zu wenige Läufe für eine belastbare Aussage</target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.exact">
+      <segment state="initial">
+        <source> Exakt </source>
+        <target> Exakt </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.meanAbsDelta">
+      <segment state="initial">
+        <source> Ø Fehler </source>
+        <target> Ø Fehler </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.meanDeltaHint">
+      <segment state="initial">
+        <source>Plus heißt: es wurden Reps übersehen</source>
+        <target>Plus heißt: es wurden Reps übersehen</target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.meanDelta">
+      <segment state="initial">
+        <source> Tendenz </source>
+        <target> Tendenz </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.recentTitle">
+      <segment state="initial">
+        <source>Letzte Rückmeldungen</source>
+        <target>Letzte Rückmeldungen</target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.date">
+      <segment state="initial">
+        <source> Datum </source>
+        <target> Datum </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.exercise">
+      <segment state="initial">
+        <source> Übung </source>
+        <target> Übung </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.detected">
+      <segment state="initial">
+        <source> Erkannt </source>
+        <target> Erkannt </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.actual">
+      <segment state="initial">
+        <source> Tatsächlich </source>
+        <target> Tatsächlich </target>
+      </segment>
+    </unit>
+    <unit id="admin.autoCount.col.delta">
+      <segment state="initial">
+        <source> Abweichung </source>
+        <target> Abweichung </target>
       </segment>
     </unit>
 </file>

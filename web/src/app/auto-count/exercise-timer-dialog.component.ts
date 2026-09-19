@@ -21,7 +21,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { HOLD_TIMER } from '@pu-stats/auto-count';
+import { HOLD_TIMER, holdProfileFor } from '@pu-stats/auto-count';
 
 import { WakeLockService } from '../core/wake-lock.service';
 import { StopwatchSignalService } from '../stats/components/stopwatch/stopwatch-signal.service';
@@ -30,34 +30,18 @@ import {
   StopwatchState,
   TargetSignal,
 } from '../stats/components/stopwatch/stopwatch.state';
+import { AutoCountTuningPanelComponent } from './auto-count-tuning-panel.component';
+import { AutoCountTuningStore } from './auto-count-tuning.store';
 import { CameraService } from './camera.service';
-
-export type ExerciseTimerExerciseId = 'plank' | 'hollowhold';
-
-export interface ExerciseTimerResult {
-  readonly exerciseId: ExerciseTimerExerciseId;
-  /** Final hold time in whole seconds. */
-  readonly durationSec: number;
-}
-
-/**
- * Optional dialog data. `initialExerciseId` selects which hold is active
- * when the dialog opens, `targetSec` renders the prescription the caller
- * is working towards. Used by the guided training session so a "50 s
- * Plank" step opens on the right hold with its target in view — the
- * timer never stops itself, because cutting a hold short at the target
- * would throw away the seconds the user actually managed.
- */
-export interface ExerciseTimerDialogData {
-  readonly initialExerciseId?: ExerciseTimerExerciseId;
-  readonly targetSec?: number;
-}
-
-interface ExerciseOption {
-  readonly id: ExerciseTimerExerciseId;
-  readonly icon: string;
-  readonly label: string;
-}
+import {
+  buildHoldExerciseOptions,
+  holdPhaseLabel,
+  type ExerciseTimerDialogData,
+  type ExerciseTimerExerciseId,
+  type ExerciseTimerOption,
+  type ExerciseTimerResult,
+} from './exercise-timer-dialog.models';
+import { PoseOverlayComponent } from './pose-overlay.component';
 
 @Component({
   selector: 'app-exercise-timer-dialog',
@@ -70,6 +54,8 @@ interface ExerciseOption {
     MatIconModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
+    AutoCountTuningPanelComponent,
+    PoseOverlayComponent,
   ],
   templateUrl: './exercise-timer-dialog.component.html',
   styleUrl: './exercise-timer-dialog.component.scss',
@@ -82,6 +68,7 @@ export class ExerciseTimerDialogComponent {
     MatDialogRef<ExerciseTimerDialogComponent, ExerciseTimerResult | null>
   );
   private readonly destroyRef = inject(DestroyRef);
+  private readonly tuning = inject(AutoCountTuningStore);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly dialogData = inject<ExerciseTimerDialogData | null>(
     MAT_DIALOG_DATA,
@@ -90,6 +77,8 @@ export class ExerciseTimerDialogComponent {
 
   protected readonly videoRef =
     viewChild<ElementRef<HTMLVideoElement>>('video');
+  /** Set once the camera session is live; the overlay reads its size. */
+  protected readonly videoEl = signal<HTMLVideoElement | null>(null);
 
   protected readonly exerciseId = signal<ExerciseTimerExerciseId>(
     this.dialogData?.initialExerciseId ?? 'plank'
@@ -124,35 +113,36 @@ export class ExerciseTimerDialogComponent {
       ? this.timer.snapshot().phase === 'holding'
       : this.stopwatch.running()
   );
-  protected readonly phaseLabel = computed(() => {
-    if (this.cameraMode()) {
-      switch (this.timer.snapshot().phase) {
-        case 'holding':
-          return $localize`:@@exerciseTimer.phase.holding:Halten`;
-        case 'paused':
-          return $localize`:@@exerciseTimer.phase.paused:Pause`;
-        default:
-          return $localize`:@@exerciseTimer.phase.ready:Bereit`;
-      }
-    }
-    return this.stopwatch.running()
-      ? $localize`:@@exerciseTimer.phase.holding:Halten`
-      : $localize`:@@exerciseTimer.phase.ready:Bereit`;
-  });
+  protected readonly phaseLabel = computed(() =>
+    holdPhaseLabel(
+      this.cameraMode()
+        ? this.timer.snapshot().phase
+        : this.stopwatch.running()
+          ? 'holding'
+          : 'idle'
+    )
+  );
   protected readonly frame = computed(() => this.timer.formCheckFrame());
+  /** Admins get the hold thresholds; only meaningful with the camera on. */
+  protected readonly showTuning = computed(
+    () => this.tuning.isAdmin() && this.cameraMode()
+  );
+  protected readonly tuningDefaults = computed<Record<string, number>>(
+    () =>
+      (holdProfileFor(this.exerciseId()) ?? {}) as unknown as Record<
+        string,
+        number
+      >
+  );
+  /** Null while the camera is off or the form check is collapsed. */
+  protected readonly skeleton = computed(() =>
+    this.cameraMode() && this.formCheckOpen()
+      ? (this.frame()?.pose ?? null)
+      : null
+  );
 
-  protected readonly exercises: ReadonlyArray<ExerciseOption> = [
-    {
-      id: 'plank',
-      icon: 'horizontal_rule',
-      label: $localize`:@@exerciseTimer.exercise.plank:Plank`,
-    },
-    {
-      id: 'hollowhold',
-      icon: 'self_improvement',
-      label: $localize`:@@exerciseTimer.exercise.hollowhold:Hollow Hold`,
-    },
-  ];
+  protected readonly exercises: ReadonlyArray<ExerciseTimerOption> =
+    buildHoldExerciseOptions();
 
   private tornDown = false;
 
@@ -239,6 +229,20 @@ export class ExerciseTimerDialogComponent {
     this.dialogRef.close(null);
   }
 
+  /** A tuned threshold only takes hold on the next timer start. */
+  protected async onTuningChanged(): Promise<void> {
+    if (!this.cameraMode() || this.switching()) return;
+    this.switching.set(true);
+    try {
+      await this.timer.stop();
+      await this.timer.start({ exerciseId: this.exerciseId() });
+    } catch (err) {
+      this.error.set(err instanceof Error ? err.message : String(err));
+    } finally {
+      this.switching.set(false);
+    }
+  }
+
   protected toggleFormCheck(): void {
     this.formCheckOpen.update((open) => !open);
   }
@@ -259,6 +263,10 @@ export class ExerciseTimerDialogComponent {
     this.isStarting.set(true);
     try {
       const video = ref.nativeElement;
+      this.videoEl.set(video);
+      // Before `start()`: the timer reads its thresholds once, when the
+      // state machine is built.
+      await this.tuning.ensureLoaded();
       await this.camera.open(video);
       this.timer.bindVideoElement(video);
       await this.timer.start({ exerciseId: this.exerciseId() });

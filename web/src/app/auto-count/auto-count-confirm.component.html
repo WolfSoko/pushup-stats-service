@@ -1,0 +1,74 @@
+<div class="confirm" data-testid="auto-count-confirm">
+  @if (!correcting()) {
+    <p class="confirm-question" i18n="@@autoCount.confirm.question">
+      Erkannt: {{ detectedReps() }} Reps. Hat das gestimmt?
+    </p>
+    <div class="confirm-actions">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="confirmDetected()"
+        data-testid="auto-count-confirm-yes"
+      >
+        <mat-icon>check</mat-icon>
+        <span i18n="@@autoCount.confirm.yes">Passt</span>
+      </button>
+      <button
+        mat-stroked-button
+        (click)="startCorrection()"
+        data-testid="auto-count-confirm-correct"
+        i18n="@@autoCount.confirm.correct"
+      >
+        Andere Zahl
+      </button>
+      <button
+        mat-button
+        class="confirm-dismiss"
+        (click)="dismiss()"
+        data-testid="auto-count-confirm-dismiss"
+        i18n="@@autoCount.confirm.dismiss"
+      >
+        Nicht mehr fragen
+      </button>
+    </div>
+  } @else {
+    <p class="confirm-question" i18n="@@autoCount.confirm.correctQuestion">
+      Wie viele waren es wirklich?
+    </p>
+    <div class="confirm-stepper">
+      <button
+        type="button"
+        mat-icon-button
+        (click)="step(-1)"
+        [disabled]="!canDecrement()"
+        aria-label="Eine Wiederholung weniger"
+        i18n-aria-label="@@autoCount.confirm.decrementAria"
+      >
+        <mat-icon>remove</mat-icon>
+      </button>
+      <span class="confirm-value" data-testid="auto-count-confirm-value">
+        {{ corrected() }}
+      </span>
+      <button
+        type="button"
+        mat-icon-button
+        (click)="step(1)"
+        aria-label="Eine Wiederholung mehr"
+        i18n-aria-label="@@autoCount.confirm.incrementAria"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div class="confirm-actions">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="confirmCorrected()"
+        data-testid="auto-count-confirm-save"
+        i18n="@@autoCount.confirm.save"
+      >
+        Übernehmen
+      </button>
+    </div>
+  }
+</div>

@@ -2,11 +2,11 @@ import type {
   AutoCountDialogData,
   AutoCountMode,
   AutoCountResult,
-} from '../auto-count/auto-count-dialog.component';
+} from '../auto-count/auto-count-dialog.models';
 import type {
   ExerciseTimerExerciseId,
   ExerciseTimerResult,
-} from '../auto-count/exercise-timer-dialog.component';
+} from '../auto-count/exercise-timer-dialog.models';
 import type {
   StopwatchDialogData,
   StopwatchResult,

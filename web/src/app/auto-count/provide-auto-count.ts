@@ -3,8 +3,10 @@ import {
   FRAME_LUMA_SAMPLER,
   provideAutoCount as provideAutoCountLib,
   POSE_FRAME_SOURCE,
+  PROFILE_OVERRIDES,
 } from '@pu-stats/auto-count';
 
+import { AutoCountTuningStore } from './auto-count-tuning.store';
 import { CanvasLumaSampler } from './canvas-luma-sampler';
 import { provideMediaPipePoseDetector } from './mediapipe-pose-detector';
 import {
@@ -29,5 +31,6 @@ export function provideAutoCount(): Provider[] {
     provideMediaPipePoseDetector(),
     { provide: POSE_FRAME_SOURCE, useExisting: VideoFrameRafSource },
     { provide: FRAME_LUMA_SAMPLER, useExisting: CanvasLumaSampler },
+    { provide: PROFILE_OVERRIDES, useExisting: AutoCountTuningStore },
   ];
 }

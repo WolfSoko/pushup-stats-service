@@ -22,43 +22,35 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import {
-  PROXIMITY_ANGLE_SPAN_DEG,
+  profileFor,
   PROXIMITY_REP_COUNTER,
   REP_COUNTER,
 } from '@pu-stats/auto-count';
-import { PUSHUP_QUICK_ADD_EXERCISE_ID } from '@pu-stats/models';
 
 import { WakeLockService } from '../core/wake-lock.service';
+import type {
+  AutoCountDialogData,
+  AutoCountMode,
+  AutoCountResult,
+} from './auto-count-dialog.models';
 import {
   buildExerciseOptions,
+  detectorExerciseId,
   type ExerciseOption,
+  initialExerciseId,
+  phaseLabelFor,
+  proximityPercent,
   resolveMode,
 } from './auto-count-dialog.options';
+import { AutoCountConfirmComponent } from './auto-count-confirm.component';
+import {
+  AutoCountFeedbackFlow,
+  type AutoCountRunContext,
+} from './auto-count-feedback.flow';
+import { AutoCountTuningPanelComponent } from './auto-count-tuning-panel.component';
+import { AutoCountTuningStore } from './auto-count-tuning.store';
 import { CameraService } from './camera.service';
-
-/**
- * How reps are detected: `pose` reads joint angles with the camera
- * facing the user, `proximity` reads the brightness swing with the
- * phone lying face-up beneath the user. Which of the two an exercise
- * offers comes from the catalog (`captureMethodsFor`).
- */
-export type AutoCountMode = 'pose' | 'proximity';
-
-export interface AutoCountResult {
-  /** Catalog id (or the `'pushup'` sentinel) the reps were counted for. */
-  readonly exerciseId: string;
-  readonly reps: number;
-}
-
-/**
- * Optional dialog data: `initialExerciseId` (a catalog id) selects which
- * exercise is active when the dialog opens, `initialMode` the detector —
- * both fall back to what the exercise supports.
- */
-export interface AutoCountDialogData {
-  readonly initialExerciseId?: string;
-  readonly initialMode?: AutoCountMode;
-}
+import { PoseOverlayComponent } from './pose-overlay.component';
 
 @Component({
   selector: 'app-auto-count-dialog',
@@ -72,6 +64,9 @@ export interface AutoCountDialogData {
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    AutoCountConfirmComponent,
+    AutoCountTuningPanelComponent,
+    PoseOverlayComponent,
   ],
   templateUrl: './auto-count-dialog.component.html',
   styleUrl: './auto-count-dialog.component.scss',
@@ -85,6 +80,8 @@ export class AutoCountDialogComponent {
     MatDialogRef<AutoCountDialogComponent, AutoCountResult | null>
   );
   private readonly destroyRef = inject(DestroyRef);
+  private readonly tuning = inject(AutoCountTuningStore);
+  private readonly feedback = inject(AutoCountFeedbackFlow);
   private readonly dialogData = inject<AutoCountDialogData | null>(
     MAT_DIALOG_DATA,
     { optional: true }
@@ -92,6 +89,12 @@ export class AutoCountDialogComponent {
 
   protected readonly videoRef =
     viewChild.required<ElementRef<HTMLVideoElement>>('video');
+  /**
+   * Set once the camera is live. The overlay needs the element itself
+   * (for `videoWidth`/`videoHeight`), and binding the `viewChild`
+   * directly would read it before the view exists.
+   */
+  protected readonly videoEl = signal<HTMLVideoElement | null>(null);
 
   protected readonly exercises: ReadonlyArray<ExerciseOption> =
     buildExerciseOptions();
@@ -100,9 +103,11 @@ export class AutoCountDialogComponent {
   protected readonly error = signal<string | null>(null);
   protected readonly switching = signal(false);
   protected readonly exerciseId = signal<string>(
-    this.initialExerciseId(this.dialogData?.initialExerciseId)
+    initialExerciseId(this.dialogData?.initialExerciseId, this.exercises)
   );
   protected readonly formCheckOpen = signal(true);
+  /** Shows the "was that right?" step instead of the dialog actions. */
+  protected readonly confirming = signal(false);
   protected readonly option = computed(
     () =>
       this.exercises.find((o) => o.id === this.exerciseId()) ??
@@ -126,22 +131,25 @@ export class AutoCountDialogComponent {
   protected readonly count = computed(() => this.counter().snapshot().count);
   protected readonly phase = computed(() => this.counter().snapshot().phase);
   protected readonly frame = computed(() => this.counter().formCheckFrame());
-  /** Near/far position as a percentage, from the proximity counter's angle. */
-  protected readonly proximityPercent = computed(() => {
-    const f = this.frame();
-    if (!f) return null;
-    return (1 - f.angleDeg / PROXIMITY_ANGLE_SPAN_DEG) * 100;
-  });
-  protected readonly phaseLabel = computed(() => {
-    switch (this.phase()) {
-      case 'up':
-        return $localize`:@@autoCount.formCheck.phase.up:Oben`;
-      case 'down':
-        return $localize`:@@autoCount.formCheck.phase.down:Unten`;
-      default:
-        return $localize`:@@autoCount.formCheck.phase.waiting:Bereit`;
-    }
-  });
+  protected readonly proximityPercent = computed(() =>
+    proximityPercent(this.frame())
+  );
+  protected readonly phaseLabel = computed(() => phaseLabelFor(this.phase()));
+  /** Admins get the threshold sliders; pose mode only — proximity has no profile. */
+  protected readonly showTuning = computed(
+    () => this.tuning.isAdmin() && !this.isProximity()
+  );
+  protected readonly tuningDefaults = computed<Record<string, number>>(
+    () =>
+      (profileFor(this.detectorExerciseId()) ?? {}) as unknown as Record<
+        string,
+        number
+      >
+  );
+  /** Null in proximity mode (no landmarks) and while the overlay is off. */
+  protected readonly skeleton = computed(() =>
+    this.formCheckOpen() ? (this.frame()?.pose ?? null) : null
+  );
 
   private tornDown = false;
 
@@ -149,7 +157,11 @@ export class AutoCountDialogComponent {
     inject(WakeLockService).keepAwakeWhile(() => this.counter().isActive());
     afterNextRender(async () => {
       const video = this.videoRef().nativeElement;
+      this.videoEl.set(video);
       try {
+        // Before `start()`: the detector reads its thresholds once, when
+        // the state machine is built.
+        await this.tuning.ensureLoaded();
         await this.camera.open(video);
         this.counter().bindVideoElement(video);
         await this.counter().start({ exerciseId: this.detectorExerciseId() });
@@ -195,7 +207,35 @@ export class AutoCountDialogComponent {
       this.dialogRef.close(null);
       return;
     }
+    if (!this.feedback.shouldAsk()) {
+      this.closeWith(reps);
+      return;
+    }
+    this.confirming.set(true);
+  }
+
+  /** The user's answer decides the entry, not just the telemetry. */
+  protected onConfirmed(actualReps: number): void {
+    void this.feedback.record(this.runContext(), actualReps);
+    this.closeWith(actualReps);
+  }
+
+  protected onFeedbackDismissed(): void {
+    this.feedback.disable();
+    this.closeWith(this.count());
+  }
+
+  private closeWith(reps: number): void {
     this.dialogRef.close({ exerciseId: this.exerciseId(), reps });
+  }
+
+  private runContext(): AutoCountRunContext {
+    return {
+      exerciseId: this.exerciseId(),
+      profileId: this.detectorExerciseId(),
+      mode: this.mode(),
+      detectedReps: this.count(),
+    };
   }
 
   protected cancel(): void {
@@ -206,25 +246,17 @@ export class AutoCountDialogComponent {
     this.counter().reset();
   }
 
+  /** A tuned threshold only takes hold on the next detector start. */
+  protected async onTuningChanged(): Promise<void> {
+    await this.restart(this.counter());
+  }
+
   protected toggleFormCheck(): void {
     this.formCheckOpen.update((open) => !open);
   }
 
-  /** Pose profile id for the pose detector, catalog id for the proximity one. */
-  private detectorExerciseId(): string {
-    return this.isProximity()
-      ? this.option().id
-      : (this.option().poseProfile ?? this.option().id);
-  }
-
-  private initialExerciseId(requested: string | undefined): string {
-    if (requested && this.exercises.some((o) => o.id === requested)) {
-      return requested;
-    }
-    return (
-      this.exercises.find((o) => o.id === PUSHUP_QUICK_ADD_EXERCISE_ID)?.id ??
-      this.exercises[0].id
-    );
+  protected detectorExerciseId(): string {
+    return detectorExerciseId(this.option(), this.isProximity());
   }
 
   private async restart(previous: {

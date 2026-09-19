@@ -120,4 +120,41 @@ describe('poseToAngleSample', () => {
     const sample = poseToAngleSample({ landmarks: [noVis] }, PUSHUP_PROFILE, 0);
     expect(sample?.confidence).toBe(0);
   });
+  it('given a pushup profile, when mapped, then the skeleton carries the measured triplet and all landmarks', () => {
+    // given
+    const landmarks = STRAIGHT_LEFT_ARM;
+
+    // when
+    const sample = poseToAngleSample(
+      { landmarks: [landmarks] },
+      PUSHUP_PROFILE,
+      0
+    );
+
+    // then
+    expect(sample?.skeleton.landmarks).toBe(landmarks);
+    expect(sample?.skeleton.triplet).toEqual(PUSHUP_PROFILE.tripletLeft);
+  });
+
+  it('given the right side is the more visible one, when mapped, then the skeleton names the right triplet', () => {
+    // given
+    const landmarks = makeLandmarks({
+      [POSE_LANDMARK.LEFT_SHOULDER]: { x: 0, y: 0, visibility: 0.2 },
+      [POSE_LANDMARK.LEFT_ELBOW]: { x: 1, y: 0, visibility: 0.2 },
+      [POSE_LANDMARK.LEFT_WRIST]: { x: 1, y: 1, visibility: 0.2 },
+      [POSE_LANDMARK.RIGHT_SHOULDER]: { x: 0, y: 0, visibility: 0.95 },
+      [POSE_LANDMARK.RIGHT_ELBOW]: { x: 1, y: 0, visibility: 0.95 },
+      [POSE_LANDMARK.RIGHT_WRIST]: { x: 2, y: 0, visibility: 0.95 },
+    });
+
+    // when
+    const sample = poseToAngleSample(
+      { landmarks: [landmarks] },
+      PUSHUP_PROFILE,
+      0
+    );
+
+    // then
+    expect(sample?.skeleton.triplet).toEqual(PUSHUP_PROFILE.tripletRight);
+  });
 });

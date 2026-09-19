@@ -1,0 +1,64 @@
+h2 {
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+h3 {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.error-text {
+  color: var(--mat-sys-error);
+}
+
+.muted {
+  opacity: 0.6;
+  font-size: 0.85em;
+}
+
+mat-table {
+  width: 100%;
+}
+
+mat-cell {
+  gap: 6px;
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+  justify-content: flex-end;
+}
+
+mat-header-cell.numeric {
+  justify-content: flex-end;
+}
+
+// The threshold set is the column worth copying out, so it gets the
+// monospace treatment and room to breathe rather than being truncated.
+.thresholds-cell {
+  font-family: monospace;
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+  flex: 2;
+}
+
+.thin-evidence {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}

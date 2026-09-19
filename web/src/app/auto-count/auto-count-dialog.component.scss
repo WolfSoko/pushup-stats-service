@@ -81,6 +81,15 @@ mat-option mat-icon {
     }
   }
 
+  .tuning-overlay {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    max-height: 52%;
+    overflow-y: auto;
+  }
+
   .position-hint {
     position: absolute;
     bottom: 12px;
