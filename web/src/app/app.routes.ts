@@ -388,6 +388,14 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'admin/ui-features',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/ui-features-test-page.component').then(
+        (m) => m.UiFeaturesTestPageComponent
+      ),
+  },
+  {
     path: 'admin/users/:uid/entries',
     canActivate: [adminGuard],
     loadComponent: () =>

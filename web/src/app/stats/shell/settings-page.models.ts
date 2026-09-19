@@ -11,6 +11,7 @@ export interface DraftSnapshot {
   hideAccountPhoto: boolean;
   adsConsent: boolean;
   snapQuality: SnapQuality;
+  cheerAnimationEnabled: boolean;
 }
 
 export interface ResolvedConfig {
@@ -19,4 +20,5 @@ export interface ResolvedConfig {
   hideAccountPhoto: boolean;
   consent: { targetedAds?: boolean } & Record<string, unknown>;
   snapQuality: SnapQuality;
+  cheerAnimationEnabled: boolean;
 }

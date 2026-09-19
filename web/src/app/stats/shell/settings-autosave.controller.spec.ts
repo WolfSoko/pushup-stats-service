@@ -8,6 +8,7 @@ const CONFIG: ResolvedConfig = {
   hideAccountPhoto: false,
   consent: { targetedAds: true },
   snapQuality: 'low',
+  cheerAnimationEnabled: true,
 };
 
 const PERSISTED: DraftSnapshot = {
@@ -16,6 +17,7 @@ const PERSISTED: DraftSnapshot = {
   hideAccountPhoto: false,
   adsConsent: true,
   snapQuality: 'low',
+  cheerAnimationEnabled: true,
 };
 
 const DIRTY: DraftSnapshot = { ...PERSISTED, displayName: 'WolfEdited' };

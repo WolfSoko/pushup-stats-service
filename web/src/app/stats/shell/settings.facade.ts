@@ -21,6 +21,7 @@ import {
   DisplayNameViolation,
   isProfilePublic,
   SnapQuality,
+  UserConfigUpdate,
   validateDisplayName,
 } from '@pu-stats/models';
 
@@ -77,6 +78,7 @@ export class SettingsFacade implements OnDestroy {
   readonly hideAccountPhotoDraft = signal(false);
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
+  readonly cheerAnimationEnabledDraft = signal(true);
 
   readonly profileUrl = computed(() =>
     buildProfileShareUrl(this.userId(), this.localeId)
@@ -105,7 +107,7 @@ export class SettingsFacade implements OnDestroy {
     readDraft: () => this.draftSnapshot(),
     readConfig: () => this.config(),
     applyConfig: (cfg) => this.applyConfigToDrafts(cfg),
-    save: (update) => this.userConfigStore.save(update),
+    save: (update) => this.userConfigStore.save(this.mergeUiUpdate(update)),
     onSaved: (draft) => this.trackSaved(draft),
     isBrowser: isPlatformBrowser(this.platformId),
   });
@@ -202,7 +204,21 @@ export class SettingsFacade implements OnDestroy {
       hideAccountPhoto: this.hideAccountPhotoDraft(),
       adsConsent: this.adsConsentDraft(),
       snapQuality: this.snapQualityDraft(),
+      cheerAnimationEnabled: this.cheerAnimationEnabledDraft(),
     };
+  }
+
+  /**
+   * `setDoc(..., { merge: true })` replaces the `ui` map wholesale, so a
+   * patch carrying only the fields this page tracks would silently drop
+   * every other `ui.*` flag (session settings, quick-adds, profile
+   * visibility, …) — see docs/gotchas/firestore.md. Read-modify-write the
+   * persisted map before handing the patch to `UserConfigStore.save`.
+   */
+  private mergeUiUpdate(update: UserConfigUpdate): UserConfigUpdate {
+    if (!update.ui) return update;
+    const persistedUi = this.userConfigStore.config()?.ui ?? {};
+    return { ...update, ui: { ...persistedUi, ...update.ui } };
   }
 
   private applyConfigToDrafts(cfg: ResolvedConfig): void {
@@ -211,6 +227,7 @@ export class SettingsFacade implements OnDestroy {
     this.hideAccountPhotoDraft.set(cfg.hideAccountPhoto);
     this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     this.snapQualityDraft.set(cfg.snapQuality);
+    this.cheerAnimationEnabledDraft.set(cfg.cheerAnimationEnabled);
   }
 
   private trackSaved(draft: DraftSnapshot): void {
