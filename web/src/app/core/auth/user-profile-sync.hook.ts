@@ -3,10 +3,17 @@ import { firstValueFrom } from 'rxjs';
 import { PostAuthHook } from '@pu-auth/auth';
 import { User } from '@pu-auth/auth';
 import { UserConfigApiService } from '@pu-stats/data-access';
+import { type UserConfigUpdate } from '@pu-stats/models';
 
 /**
  * Syncs user profile data to the database after authentication.
  * Preserves existing display names set by the user.
+ *
+ * Only fields that have a value are written. Firestore rejects a write
+ * carrying `undefined`, and e-mail registration runs this hook between
+ * creating the account and the username step — with neither side holding
+ * a name, the patch used to carry `displayName: undefined`, the write
+ * threw, and the address never landed either.
  */
 @Injectable()
 export class UserProfileSyncHook implements PostAuthHook {
@@ -18,14 +25,15 @@ export class UserProfileSyncHook implements PostAuthHook {
     );
 
     // Preserve user-set display name over provider display name
-    const nextDisplayName =
-      existingConfig?.displayName?.trim() || user.displayName || undefined;
+    const displayName =
+      existingConfig?.displayName?.trim() || user.displayName?.trim() || '';
 
-    await firstValueFrom(
-      this.userConfigApi.updateConfig(user.uid, {
-        email: user.email ?? undefined,
-        displayName: nextDisplayName,
-      })
-    );
+    const patch: UserConfigUpdate = {
+      ...(user.email ? { email: user.email } : {}),
+      ...(displayName ? { displayName } : {}),
+    };
+    if (Object.keys(patch).length === 0) return;
+
+    await firstValueFrom(this.userConfigApi.updateConfig(user.uid, patch));
   }
 }
