@@ -14360,5 +14360,17 @@
         <target> Nur für mich </target>
       </segment>
     </unit>
+    <unit id="autoCount.tuning.toggleAria">
+      <segment state="initial">
+        <source>Parameter-Regler anzeigen oder ausblenden</source>
+        <target>Parameter-Regler anzeigen oder ausblenden</target>
+      </segment>
+    </unit>
+    <unit id="exerciseTimer.tuning.toggleAria">
+      <segment state="initial">
+        <source>Parameter-Regler anzeigen oder ausblenden</source>
+        <target>Parameter-Regler anzeigen oder ausblenden</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -85,6 +85,21 @@
     </div>
 
     @if (cameraMode() && !isStarting() && !switching() && !error()) {
+      @if (canTune()) {
+        <button
+          type="button"
+          mat-icon-button
+          class="tuning-toggle"
+          [class.active]="tuningOpen()"
+          (click)="toggleTuning()"
+          [attr.aria-pressed]="tuningOpen()"
+          data-testid="exercise-timer-tuning-toggle"
+          aria-label="Parameter-Regler anzeigen oder ausblenden"
+          i18n-aria-label="@@exerciseTimer.tuning.toggleAria"
+        >
+          <mat-icon>tune</mat-icon>
+        </button>
+      }
       <button
         type="button"
         mat-icon-button

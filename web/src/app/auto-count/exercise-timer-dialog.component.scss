@@ -160,6 +160,19 @@
     }
   }
 
+  .tuning-toggle {
+    position: absolute;
+    top: 8px;
+    right: 56px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+
+    &.active {
+      color: #ffc400;
+    }
+  }
+
   .form-check-toggle {
     position: absolute;
     top: 8px;
@@ -169,10 +182,12 @@
     backdrop-filter: blur(4px);
   }
 
+  // Right-to-left along the top edge: eye (8), tune (56), then the
+  // numeric panel — so adding the debug button does not sit on top of it.
   .form-check-panel {
     position: absolute;
     top: 8px;
-    right: 56px;
+    right: 104px;
     display: flex;
     gap: 16px;
     padding: 8px 14px;

@@ -31,6 +31,10 @@ import {
   TargetSignal,
 } from '../stats/components/stopwatch/stopwatch.state';
 import { AutoCountTuningPanelComponent } from './auto-count-tuning-panel.component';
+import {
+  isTuningPanelOpen,
+  setTuningPanelOpen,
+} from './auto-count-tuning.models';
 import { AutoCountTuningStore } from './auto-count-tuning.store';
 import { CameraService } from './camera.service';
 import {
@@ -124,8 +128,12 @@ export class ExerciseTimerDialogComponent {
   );
   protected readonly frame = computed(() => this.timer.formCheckFrame());
   /** Admins get the hold thresholds; only meaningful with the camera on. */
-  protected readonly showTuning = computed(
+  protected readonly canTune = computed(
     () => this.tuning.isAdmin() && this.cameraMode()
+  );
+  protected readonly tuningOpen = signal(isTuningPanelOpen());
+  protected readonly showTuning = computed(
+    () => this.canTune() && this.tuningOpen()
   );
   protected readonly tuningDefaults = computed<Record<string, number>>(
     () =>
@@ -227,6 +235,12 @@ export class ExerciseTimerDialogComponent {
 
   protected cancel(): void {
     this.dialogRef.close(null);
+  }
+
+  protected toggleTuning(): void {
+    const open = !this.tuningOpen();
+    this.tuningOpen.set(open);
+    setTuningPanelOpen(open);
   }
 
   /** A tuned threshold only takes hold on the next timer start. */

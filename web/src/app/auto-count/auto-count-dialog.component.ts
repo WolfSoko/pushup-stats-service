@@ -48,6 +48,10 @@ import {
   type AutoCountRunContext,
 } from './auto-count-feedback.flow';
 import { AutoCountTuningPanelComponent } from './auto-count-tuning-panel.component';
+import {
+  isTuningPanelOpen,
+  setTuningPanelOpen,
+} from './auto-count-tuning.models';
 import { AutoCountTuningStore } from './auto-count-tuning.store';
 import { CameraService } from './camera.service';
 import { PoseOverlayComponent } from './pose-overlay.component';
@@ -144,8 +148,12 @@ export class AutoCountDialogComponent {
   );
   protected readonly phaseLabel = computed(() => phaseLabelFor(this.phase()));
   /** Admins get the threshold sliders; pose mode only — proximity has no profile. */
-  protected readonly showTuning = computed(
+  protected readonly canTune = computed(
     () => this.tuning.isAdmin() && !this.isProximity()
+  );
+  protected readonly tuningOpen = signal(isTuningPanelOpen());
+  protected readonly showTuning = computed(
+    () => this.canTune() && this.tuningOpen()
   );
   protected readonly tuningDefaults = computed<Record<string, number>>(
     () =>
@@ -256,6 +264,12 @@ export class AutoCountDialogComponent {
 
   protected reset(): void {
     this.counter().reset();
+  }
+
+  protected toggleTuning(): void {
+    const open = !this.tuningOpen();
+    this.tuningOpen.set(open);
+    setTuningPanelOpen(open);
   }
 
   /** A tuned threshold only takes hold on the next detector start. */

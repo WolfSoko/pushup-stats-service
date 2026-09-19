@@ -435,7 +435,7 @@ describe('AutoCountDialogComponent', () => {
     ).toBeNull();
   });
 
-  it('given an admin in pose mode, when the dialog opens, then the tuning panel is offered', async () => {
+  it('given an admin in pose mode, when the dialog opens, then the debug toggle is offered but the panel stays closed', async () => {
     // given
     userContext = makeUserContext(true);
     TestBed.resetTestingModule();
@@ -468,11 +468,45 @@ describe('AutoCountDialogComponent', () => {
     await flushAsync();
     await flushAsync();
 
+    // then — the sliders cover the preview, so they are opt-in
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-tuning-toggle"]'
+      )
+    ).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="auto-count-tuning"]')
+    ).toBeNull();
+
+    // when
+    (
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-tuning-toggle"]'
+      ) as HTMLButtonElement
+    ).click();
+    fixture.detectChanges();
+
     // then
     expect(
       fixture.nativeElement.querySelector('[data-testid="auto-count-tuning"]')
     ).not.toBeNull();
   });
+
+  it('given a non-admin, when the dialog opens, then there is no debug toggle at all', async () => {
+    // given / when
+    const fixture = TestBed.createComponent(AutoCountDialogComponent);
+    fixture.detectChanges();
+    await flushAsync();
+    await flushAsync();
+
+    // then
+    expect(
+      fixture.nativeElement.querySelector(
+        '[data-testid="auto-count-tuning-toggle"]'
+      )
+    ).toBeNull();
+  });
+
   it('given a counted set, when save is pressed, then the accuracy question is shown instead of closing', async () => {
     // given
     const fixture = TestBed.createComponent(AutoCountDialogComponent);

@@ -175,3 +175,29 @@ export function asHoldOverride(
 ): HoldProfileOverride {
   return values as HoldProfileOverride;
 }
+
+export const TUNING_PANEL_STORAGE_KEY = 'pus_auto_count_tuning_panel';
+
+/**
+ * Whether the admin wants the threshold sliders on screen. Off by
+ * default: the panel covers a good part of the camera preview, and the
+ * preview is what you are watching while you tune. Remembered per
+ * device so a tuning session survives reopening the dialog between sets.
+ */
+export function isTuningPanelOpen(): boolean {
+  if (typeof localStorage === 'undefined') return false;
+  try {
+    return localStorage.getItem(TUNING_PANEL_STORAGE_KEY) === 'on';
+  } catch {
+    return false;
+  }
+}
+
+export function setTuningPanelOpen(open: boolean): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(TUNING_PANEL_STORAGE_KEY, open ? 'on' : 'off');
+  } catch {
+    // Storage blocked — the toggle then only holds for this session.
+  }
+}

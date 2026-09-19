@@ -1,7 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   ANGLE_TUNING_PARAMS,
+  isTuningPanelOpen,
+  setTuningPanelOpen,
   HOLD_TUNING_PARAMS,
   paramsFor,
   sanitizeTuningValues,
@@ -93,5 +95,47 @@ describe('paramsFor', () => {
       expect(param.step).toBeGreaterThan(0);
       expect(param.label.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('tuning panel visibility', () => {
+  afterEach(() => {
+    localStorage.clear();
+    vi.restoreAllMocks();
+  });
+
+  it('given a device that never opened it, when asked, then the panel starts closed', () => {
+    // given / when / then — it covers the preview you are tuning against
+    expect(isTuningPanelOpen()).toBe(false);
+  });
+
+  it('given the admin opened it, when the dialog is reopened, then it is still open', () => {
+    // given / when
+    setTuningPanelOpen(true);
+
+    // then
+    expect(isTuningPanelOpen()).toBe(true);
+  });
+
+  it('given it was closed again, when asked, then it stays closed', () => {
+    // given
+    setTuningPanelOpen(true);
+
+    // when
+    setTuningPanelOpen(false);
+
+    // then
+    expect(isTuningPanelOpen()).toBe(false);
+  });
+
+  it('given storage that throws, when asked, then it fails closed instead of crashing the dialog', () => {
+    // given
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+
+    // when / then
+    expect(isTuningPanelOpen()).toBe(false);
+    expect(() => setTuningPanelOpen(true)).not.toThrow();
   });
 });
