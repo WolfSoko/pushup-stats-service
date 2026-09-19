@@ -36,6 +36,7 @@ If a bug reaches production, the CI pipeline wasn't good enough. Every change mu
 
 - **Unit tests:** Cover all new/changed logic. High coverage is mandatory, not optional.
 - **Smoke tests:** Ensure critical user flows don't break (dashboard loads, entries CRUD, auth flow).
+- **Critical-path E2E:** login, registration, adding a friend + accepting the request, and a training session run against the Firebase emulators in `web/web-e2e-emulator` — touch those flows and the specs there are part of the change. The static suite in `web/web-e2e` stays for everything that needs no backend. Details: [`web/web-e2e-emulator/README.md`](web/web-e2e-emulator/README.md).
 - **Regression tests:** Every bugfix must include a test that reproduces the bug first (TDD red-green).
 - **Rule of thumb:** If you can't prove a change works via CI, it's not ready to merge.
 
@@ -83,6 +84,7 @@ pnpm nx lint <project>           # Lint a specific project (oxlint + template ru
 pnpm format                      # Format the workspace with oxfmt (`pnpm format:check` to verify)
 pnpm nx build web --configuration=development  # Build (dev)
 pnpm nx run-many --target=test   # Run all tests
+pnpm nx run web-e2e-emulator:e2e # Critical-path E2E against the Firebase emulators (needs Java)
 pnpm nx run-many --target=lint   # Lint all projects
 ```
 

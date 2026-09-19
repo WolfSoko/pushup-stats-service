@@ -61,6 +61,7 @@ Enforced via `@nx/enforce-module-boundaries` in `.oxlintrc.json` (the ESLint rul
 | data-store        | `data-store`              |
 | cloud-functions   | `cloud-functions`         |
 | web app           | `web`                     |
+| e2e (emulators)   | `web-e2e-emulator`        |
 
 ## Key Architectural Patterns
 

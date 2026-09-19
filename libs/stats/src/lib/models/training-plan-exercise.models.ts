@@ -108,6 +108,11 @@ export function planExerciseMeasurement(
   return findExerciseDefinition(exercise.exerciseId)?.measurement ?? null;
 }
 
+/** `date` with seconds and milliseconds cleared. */
+function startOfMinute(date: Date): number {
+  return new Date(date).setSeconds(0, 0);
+}
+
 /**
  * Sum of everything logged for a plan item on one local date, read from
  * the `exerciseEntries` mirror. Reads the entry field that matches the
@@ -122,6 +127,12 @@ export function planExerciseMeasurement(
  * date would also fulfill whichever day claims it next. On every other
  * date (the normal case — no activation happened today) this is a no-op,
  * so Quick-Add entries still retroactively cover the active plan day.
+ *
+ * The cutoff is taken at the start of its minute, because entry
+ * timestamps carry no seconds (`nowLocalIsoTimestamp`). Comparing them
+ * against an `activatedAt` that does dropped every set logged in the
+ * same minute the plan was started — the first set of the session a
+ * user begins right after picking a plan.
  */
 export function planExerciseLoggedTotal(
   entries: ReadonlyArray<PlanExerciseEntryLike>,
@@ -135,7 +146,7 @@ export function planExerciseLoggedTotal(
   if (field === 'weightKg') return 0;
   const cutoff =
     activatedAt && activatedAt.slice(0, 10) === dateIso
-      ? new Date(activatedAt).getTime()
+      ? startOfMinute(new Date(activatedAt))
       : null;
   return entries
     .filter(

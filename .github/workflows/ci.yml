@@ -165,12 +165,89 @@ jobs:
       - name: Nx Cloud distributed run starten
         run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
 
+      # `web-e2e-emulator` is excluded here and runs in its own job: it
+      # needs Java and the Firebase emulator JARs, which the Nx Cloud
+      # agent image is not guaranteed to carry, and atomizing it would
+      # boot one emulator per shard for a suite that takes a minute.
       - name: Nx affected (e2e)
-        run: pnpm exec nx affected -t=e2e-ci -c=production --outputStyle=stream
+        run: pnpm exec nx affected -t=e2e-ci -c=production --outputStyle=stream --exclude=web-e2e-emulator
 
       - name: Nx fix-ci (always)
         if: always()
         run: pnpm exec nx fix-ci
+
+  # The critical-path suite: registering, signing in, adding a friend and
+  # answering the request, and working through a training session. It
+  # runs against the Firebase emulators rather than the live project, so
+  # unlike the `e2e` job above it needs Java (the Firestore emulator is a
+  # JAR) and a browser download. Undistributed on purpose — see
+  # web/web-e2e-emulator/README.md.
+  e2e-emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          filter: tree:0
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup Java (Firestore-Emulator)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Enable corepack
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # The emulator JARs are a ~100 MB download that firebase-tools
+      # otherwise fetches on every run before anything can start.
+      - name: Cache Firebase emulators
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/firebase/emulators
+          key: firebase-emulators-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: firebase-emulators-${{ runner.os }}-
+
+      - name: Playwright-Browser installieren
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E gegen die Emulatoren
+        run: pnpm exec nx run web-e2e-emulator:e2e --outputStyle=stream
+
+      - name: Report hochladen
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-emulator-report
+          path: dist/.playwright/web/web-e2e-emulator
+          retention-days: 7
 
   # Builds web:build:production once (on a plain GitHub Actions runner —
   # the same environment family that seeded the Nx Cloud remote cache in
@@ -183,7 +260,7 @@ jobs:
   # (deploy-0.0.0-g<short-sha>) so the App Hosting build can construct the
   # download URL directly, with no git-tag lookup or API call needed.
   publish-release:
-    needs: [lint-test-build, e2e]
+    needs: [lint-test-build, e2e, e2e-emulator]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -297,7 +374,7 @@ jobs:
   # main, so it only deploys code that passed lint + test + build + e2e
   # AND already has a matching release artifact published.
   promote-to-deploy:
-    needs: [lint-test-build, e2e, publish-release]
+    needs: [lint-test-build, e2e, e2e-emulator, publish-release]
     if: github.ref == 'refs/heads/main'
     # A push failure here must not block the Firebase Hosting deploy
     # (which gates on the overall CI workflow conclusion).
