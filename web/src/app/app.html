@@ -11,120 +11,12 @@
       <span i18n="@@app.title">Pushups</span>
     </mat-toolbar>
 
-    <mat-nav-list>
-      <a
-        mat-list-item
-        routerLink="/app"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>dashboard</mat-icon>
-        <span matListItemTitle i18n="@@nav.dashboard">Dashboard</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/analysis"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>insights</mat-icon>
-        <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/leaderboard"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>leaderboard</mat-icon>
-        <span matListItemTitle i18n="@@nav.leaderboard">Bestenliste</span>
-      </a>
-      @if (isLoggedIn()) {
-      <a
-        mat-list-item
-        routerLink="/freunde"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>group</mat-icon>
-        <span matListItemTitle
-          ><ng-container i18n="@@nav.friends">Freunde</ng-container
-          ><app-friend-request-badge
-        /></span>
-      </a>
-      }
-      <a
-        mat-list-item
-        routerLink="/training-plans"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>fitness_center</mat-icon>
-        <span matListItemTitle i18n="@@nav.trainingPlans">Trainingspläne</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/blog"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>article</mat-icon>
-        <span matListItemTitle i18n="@@nav.blog">Blog</span>
-      </a>
-      <mat-divider></mat-divider>
-      <div class="sidenav-subheader" i18n="@@nav.more">Mehr</div>
-      <a
-        mat-list-item
-        routerLink="/history"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>list</mat-icon>
-        <span matListItemTitle i18n="@@nav.history">Historie</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/wiki/liegestuetz-typen"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>menu_book</mat-icon>
-        <span matListItemTitle i18n="@@nav.pushupTypes">Liegestütztypen</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/wiki/uebungen"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>auto_stories</mat-icon>
-        <span matListItemTitle i18n="@@nav.exercises">Übungen</span>
-      </a>
-
-      @if (isLoggedIn()) { }
-
-      <mat-divider></mat-divider>
-
-      <div class="sidenav-language">
-        <mat-icon class="sidenav-language-icon">language</mat-icon>
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="sidenav-language-field"
-        >
-          <mat-label i18n="@@nav.language">Sprache</mat-label>
-          <mat-select
-            [value]="currentLocale"
-            (selectionChange)="setLanguage($event.value)"
-          >
-            @for (option of languageOptions; track option.code) {
-            <mat-option [value]="option.code">{{ option.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </mat-nav-list>
+    <app-sidenav
+      [items]="navItems()"
+      [loggedIn]="isLoggedIn()"
+      [profileUrl]="profileUrl()"
+      (navigate)="navOpen.set(false)"
+    />
   </mat-sidenav>
 
   <mat-sidenav-content>

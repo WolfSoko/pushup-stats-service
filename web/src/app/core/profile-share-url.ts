@@ -24,6 +24,14 @@ function shareLocalePrefix(localeId: string | null | undefined): string {
   return SUPPORTED_LOCALES.find((locale) => locale === code) ?? 'de';
 }
 
+/**
+ * The in-app path of a profile page, for router links. One place, so a
+ * moved profile route changes every menu and page link at once.
+ */
+export function ownProfilePath(uid: string | null | undefined): string {
+  return uid ? `/u/${encodeURIComponent(uid)}` : '/u/';
+}
+
 export function buildProfileShareUrl(
   uid: string | null | undefined,
   localeId: string | null | undefined

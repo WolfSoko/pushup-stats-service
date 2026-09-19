@@ -4263,112 +4263,15 @@
     <unit id="app.title">
       <notes>
         <note category="location">web/src/app/app.html:11,12</note>
-        <note category="location">web/src/app/app.html:161,162</note>
+        <note category="location">web/src/app/app.html:53,54</note>
       </notes>
       <segment>
         <source>Pushups</source>
       </segment>
     </unit>
-    <unit id="nav.dashboard">
-      <notes>
-        <note category="location">web/src/app/app.html:23,26</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:25</note>
-      </notes>
-      <segment>
-        <source>Dashboard</source>
-      </segment>
-    </unit>
-    <unit id="nav.analysis">
-      <notes>
-        <note category="location">web/src/app/app.html:32,34</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:31</note>
-      </notes>
-      <segment>
-        <source>Analyse</source>
-      </segment>
-    </unit>
-    <unit id="nav.leaderboard">
-      <notes>
-        <note category="location">web/src/app/app.html:41,43</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:36</note>
-      </notes>
-      <segment>
-        <source>Bestenliste</source>
-      </segment>
-    </unit>
-    <unit id="nav.friends">
-      <notes>
-        <note category="location">web/src/app/app.html:52,53</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:43</note>
-      </notes>
-      <segment>
-        <source>Freunde</source>
-      </segment>
-    </unit>
-    <unit id="nav.trainingPlans">
-      <notes>
-        <note category="location">web/src/app/app.html:64,67</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:51</note>
-      </notes>
-      <segment>
-        <source>Trainingspläne</source>
-      </segment>
-    </unit>
-    <unit id="nav.blog">
-      <notes>
-        <note category="location">web/src/app/app.html:73,75</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:62</note>
-      </notes>
-      <segment>
-        <source>Blog</source>
-      </segment>
-    </unit>
-    <unit id="nav.more">
-      <notes>
-        <note category="location">web/src/app/app.html:76,78</note>
-      </notes>
-      <segment>
-        <source>Mehr</source>
-      </segment>
-    </unit>
-    <unit id="nav.history">
-      <notes>
-        <note category="location">web/src/app/app.html:84,86</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
-      </notes>
-      <segment>
-        <source>Historie</source>
-      </segment>
-    </unit>
-    <unit id="nav.pushupTypes">
-      <notes>
-        <note category="location">web/src/app/app.html:93,96</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
-      </notes>
-      <segment>
-        <source>Liegestütztypen</source>
-      </segment>
-    </unit>
-    <unit id="nav.exercises">
-      <notes>
-        <note category="location">web/src/app/app.html:102,105</note>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
-      </notes>
-      <segment>
-        <source>Übungen</source>
-      </segment>
-    </unit>
-    <unit id="nav.language">
-      <notes>
-        <note category="location">web/src/app/app.html:116,117</note>
-      </notes>
-      <segment>
-        <source>Sprache</source>
-      </segment>
-    </unit>
     <unit id="nav.aria">
       <notes>
-        <note category="location">web/src/app/app.html:134,135</note>
+        <note category="location">web/src/app/app.html:26,27</note>
       </notes>
       <segment>
         <source>Pushup Navigation</source>
@@ -4376,7 +4279,7 @@
     </unit>
     <unit id="nav.openMenu">
       <notes>
-        <note category="location">web/src/app/app.html:140,141</note>
+        <note category="location">web/src/app/app.html:32,33</note>
       </notes>
       <segment>
         <source>Menü öffnen</source>
@@ -4384,7 +4287,7 @@
     </unit>
     <unit id="nav.toLanding">
       <notes>
-        <note category="location">web/src/app/app.html:150,151</note>
+        <note category="location">web/src/app/app.html:42,43</note>
       </notes>
       <segment>
         <source>Zur Landingpage</source>
@@ -4392,7 +4295,7 @@
     </unit>
     <unit id="toolbarDailyGoal">
       <notes>
-        <note category="location">web/src/app/app.html:186,187</note>
+        <note category="location">web/src/app/app.html:78,79</note>
       </notes>
       <segment>
         <source>Tagesziel</source>
@@ -4400,7 +4303,7 @@
     </unit>
     <unit id="toolbarDailyGoal.checkHint">
       <notes>
-        <note category="location">web/src/app/app.html:219,221</note>
+        <note category="location">web/src/app/app.html:111,113</note>
       </notes>
       <segment>
         <source> Teilziele abhaken kannst du auf dem Dashboard. </source>
@@ -4408,7 +4311,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:242,243</note>
+        <note category="location">web/src/app/app.html:134,135</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -4416,7 +4319,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:256</note>
+        <note category="location">web/src/app/app.html:148</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4424,7 +4327,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:261,263</note>
+        <note category="location">web/src/app/app.html:153,155</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4432,7 +4335,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:264,266</note>
+        <note category="location">web/src/app/app.html:156,158</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4440,7 +4343,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:266,267</note>
+        <note category="location">web/src/app/app.html:158,159</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4448,7 +4351,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:268,270</note>
+        <note category="location">web/src/app/app.html:160,162</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4456,7 +4359,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:271,274</note>
+        <note category="location">web/src/app/app.html:163,166</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4464,7 +4367,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:278,280</note>
+        <note category="location">web/src/app/app.html:170,172</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -4792,7 +4695,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:160</note>
+        <note category="location">web/src/app/app.ts:110</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4800,7 +4703,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:161</note>
+        <note category="location">web/src/app/app.ts:111</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4808,7 +4711,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:296</note>
+        <note category="location">web/src/app/app.ts:248</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4816,7 +4719,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:394</note>
+        <note category="location">web/src/app/app.ts:317</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4824,7 +4727,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:397</note>
+        <note category="location">web/src/app/app.ts:320</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4832,7 +4735,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:465</note>
+        <note category="location">web/src/app/app.ts:388</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4840,7 +4743,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:494</note>
+        <note category="location">web/src/app/app.ts:417</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4848,7 +4751,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:501</note>
+        <note category="location">web/src/app/app.ts:424</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5811,6 +5714,30 @@
         <source>Trainier mit mir: Reps per Kamera zählen, uns gegenseitig anfeuern und gemeinsame Challenges starten. Kostenlos:</source>
       </segment>
     </unit>
+    <unit id="nav.profile">
+      <notes>
+        <note category="location">web/src/app/core/nav/app-sidenav.component.ts:110,112</note>
+      </notes>
+      <segment>
+        <source>Profil</source>
+      </segment>
+    </unit>
+    <unit id="nav.settings">
+      <notes>
+        <note category="location">web/src/app/core/nav/app-sidenav.component.ts:120,122</note>
+      </notes>
+      <segment>
+        <source>Einstellungen</source>
+      </segment>
+    </unit>
+    <unit id="nav.language">
+      <notes>
+        <note category="location">web/src/app/core/nav/app-sidenav.component.ts:133,134</note>
+      </notes>
+      <segment>
+        <source>Sprache</source>
+      </segment>
+    </unit>
     <unit id="nav.desktop.aria">
       <notes>
         <note category="location">web/src/app/core/nav/arc-nav.component.html:11,12</note>
@@ -5819,12 +5746,84 @@
         <source>Hauptnavigation</source>
       </segment>
     </unit>
+    <unit id="nav.dashboard">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:25</note>
+      </notes>
+      <segment>
+        <source>Dashboard</source>
+      </segment>
+    </unit>
+    <unit id="nav.analysis">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:31</note>
+      </notes>
+      <segment>
+        <source>Analyse</source>
+      </segment>
+    </unit>
+    <unit id="nav.leaderboard">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:36</note>
+      </notes>
+      <segment>
+        <source>Bestenliste</source>
+      </segment>
+    </unit>
+    <unit id="nav.friends">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:43</note>
+      </notes>
+      <segment>
+        <source>Freunde</source>
+      </segment>
+    </unit>
+    <unit id="nav.trainingPlans">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:51</note>
+      </notes>
+      <segment>
+        <source>Trainingspläne</source>
+      </segment>
+    </unit>
     <unit id="nav.workouts">
       <notes>
         <note category="location">web/src/app/core/nav/main-nav-items.ts:58</note>
       </notes>
       <segment>
         <source>Sessions</source>
+      </segment>
+    </unit>
+    <unit id="nav.blog">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:62</note>
+      </notes>
+      <segment>
+        <source>Blog</source>
+      </segment>
+    </unit>
+    <unit id="nav.history">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
+      </notes>
+      <segment>
+        <source>Historie</source>
+      </segment>
+    </unit>
+    <unit id="nav.exercises">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
+      </notes>
+      <segment>
+        <source>Übungen</source>
+      </segment>
+    </unit>
+    <unit id="nav.pushupTypes">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
+      </notes>
+      <segment>
+        <source>Liegestütztypen</source>
       </segment>
     </unit>
     <unit id="admin.release.label">
@@ -9043,7 +9042,7 @@
     </unit>
     <unit id="publicProfile.share.textPlain">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:54</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:57</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
@@ -9051,7 +9050,7 @@
     </unit>
     <unit id="publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:55</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:58</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
@@ -9059,7 +9058,7 @@
     </unit>
     <unit id="publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:57</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:60</note>
       </notes>
       <segment>
         <source>Pushup Tracker Profil</source>
@@ -9067,7 +9066,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:82</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:84</note>
       </notes>
       <segment>
         <source>Profil nicht verfügbar – Pushup Tracker</source>
@@ -9075,7 +9074,7 @@
     </unit>
     <unit id="publicProfile.seo.notFound.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:83</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:85</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder ist nicht öffentlich.</source>
@@ -9083,7 +9082,7 @@
     </unit>
     <unit id="publicProfile.seo.title">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:106</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:108</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · Pushup Tracker</source>
@@ -9091,7 +9090,7 @@
     </unit>
     <unit id="publicProfile.seo.titlePlain">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:107</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:109</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
@@ -9099,7 +9098,7 @@
     </unit>
     <unit id="publicProfile.seo.description">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:109</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:111</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
@@ -9107,7 +9106,7 @@
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:110</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:112</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
@@ -9115,7 +9114,7 @@
     </unit>
     <unit id="publicProfile.seo.imageAlt">
       <notes>
-        <note category="location">web/src/app/public-profile/public-profile-seo.ts:123</note>
+        <note category="location">web/src/app/public-profile/public-profile-seo.ts:125</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker</source>
