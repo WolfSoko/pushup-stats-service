@@ -1,10 +1,3 @@
-import { PLATFORM_ID } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
-import { render } from '@testing-library/angular';
-import { of } from 'rxjs';
-import { CheerPingApiService } from './cheer-ping-api.service';
-
 jest.mock('@angular/fire/auth', () => ({
   Auth: jest.fn(),
 }));
@@ -15,6 +8,14 @@ jest.mock('@angular/fire/firestore', () => ({
   docData: jest.fn(),
 }));
 
+import { PLATFORM_ID } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import * as firestoreFns from '@angular/fire/firestore';
+import { render } from '@testing-library/angular';
+import { of } from 'rxjs';
+import { CheerPingApiService } from './cheer-ping-api.service';
+
 describe('CheerPingApiService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -22,7 +23,6 @@ describe('CheerPingApiService', () => {
 
   it('should stream the latest cheer ping from Firestore when authenticated', async () => {
     // given
-    const firestoreFns = await import('@angular/fire/firestore');
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u1' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(
       of({ from: 'friend-1', at: '2026-09-14T12:00:00.000Z' })
@@ -52,7 +52,6 @@ describe('CheerPingApiService', () => {
 
   it('should emit null when no ping doc exists yet', async () => {
     // given
-    const firestoreFns = await import('@angular/fire/firestore');
     (firestoreFns.doc as jest.Mock).mockReturnValue({ id: 'u1' });
     (firestoreFns.docData as jest.Mock).mockReturnValue(of(undefined));
 

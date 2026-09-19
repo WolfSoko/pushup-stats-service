@@ -116,6 +116,25 @@ describe('CheerAnimationStore', () => {
     expect(store.activeCheerFrom()).toBeNull();
   });
 
+  it('should not replay a cheer that arrived while disabled once the setting is re-enabled', async () => {
+    // given — a cheer arrives while the animation is switched off
+    const { store } = setup();
+    cheerAnimationEnabled.set(false);
+    await flush();
+    vi.advanceTimersByTime(10);
+    pingStream.next({ from: 'friend-1', at: new Date().toISOString() });
+    await flush();
+    expect(store.activeCheerFrom()).toBeNull();
+
+    // when — the user re-enables the setting later, with no new cheer
+    cheerAnimationEnabled.set(true);
+    await flush();
+
+    // then — the old cheer must not surface just because it's newer than
+    // the session start; it was already seen while disabled
+    expect(store.activeCheerFrom()).toBeNull();
+  });
+
   it('should not replay the same ping twice', async () => {
     // given
     const { store } = setup();

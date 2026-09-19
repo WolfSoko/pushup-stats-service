@@ -83,10 +83,13 @@ export const CheerAnimationStore = signalStore(
           sessionStartAtMs = Date.now();
           lastSeenAt = null;
         }
-        if (!store._userConfig.cheerAnimationEnabled()) return;
         if (!ping || ping.at === lastSeenAt) return;
-        if (!isFreshCheerPing(ping, sessionStartAtMs)) return;
+        // Mark the ping seen regardless of the enabled setting: toggling
+        // the setting back on later must not replay a cheer that arrived
+        // while it was off.
+        const fresh = isFreshCheerPing(ping, sessionStartAtMs);
         lastSeenAt = ping.at;
+        if (!fresh || !store._userConfig.cheerAnimationEnabled()) return;
         untracked(() => store.play(ping.from));
       });
     },
