@@ -14,6 +14,10 @@ import {
   type PoseFrameSource,
 } from './pose-frame-source.port';
 import { PoseRepCounterService } from './pose-rep-counter.service';
+import {
+  PROFILE_OVERRIDES,
+  type ProfileOverrideSource,
+} from './profile-overrides.port';
 
 class FakeDetector implements PoseDetector {
   script: ReadonlyArray<ReadonlyArray<PoseLandmark>> = [];
@@ -84,6 +88,7 @@ const configure = (params: {
   frameSource: FakeFrameSource;
   platformId?: object | string;
   detectorFactory?: () => Promise<PoseDetector>;
+  overrides?: ProfileOverrideSource;
 }): void => {
   const factory =
     params.detectorFactory ?? (() => Promise.resolve(params.detector));
@@ -92,6 +97,9 @@ const configure = (params: {
       { provide: PLATFORM_ID, useValue: params.platformId ?? 'browser' },
       { provide: POSE_DETECTOR_FACTORY, useValue: factory },
       { provide: POSE_FRAME_SOURCE, useValue: params.frameSource },
+      ...(params.overrides
+        ? [{ provide: PROFILE_OVERRIDES, useValue: params.overrides }]
+        : []),
       PoseRepCounterService,
     ],
   });
@@ -302,5 +310,52 @@ describe('PoseRepCounterService', () => {
     frameSource.emit(100);
 
     expect(svc.snapshot()).toBe(before);
+  });
+  it('given a threshold override, when counting, then a rep that misses the default depth still counts', async () => {
+    // given — the arm only bends to 90°, which the pushup default (down ≤ 90)
+    // just barely accepts, so raise the bar to 60° and confirm it stops
+    // counting; that proves the override reached the state machine.
+    TestBed.resetTestingModule();
+    configure({
+      detector,
+      frameSource,
+      overrides: {
+        angleOverrideFor: () => ({ downAngleDeg: 60 }),
+        holdOverrideFor: () => null,
+      },
+    });
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+    detector.script = CLEAN_REP_FRAMES;
+    await svc.start({ exerciseId: 'pushup' });
+
+    // when
+    for (const t of CLEAN_REP_TICKS) frameSource.emit(t);
+
+    // then
+    expect(svc.snapshot().count).toBe(0);
+  });
+
+  it('given an override source that returns null, when counting, then the catalog defaults still apply', async () => {
+    // given
+    TestBed.resetTestingModule();
+    configure({
+      detector,
+      frameSource,
+      overrides: {
+        angleOverrideFor: () => null,
+        holdOverrideFor: () => null,
+      },
+    });
+    const svc = TestBed.inject(PoseRepCounterService);
+    svc.bindVideoElement(video);
+    detector.script = CLEAN_REP_FRAMES;
+    await svc.start({ exerciseId: 'pushup' });
+
+    // when
+    for (const t of CLEAN_REP_TICKS) frameSource.emit(t);
+
+    // then
+    expect(svc.snapshot().count).toBe(1);
   });
 });

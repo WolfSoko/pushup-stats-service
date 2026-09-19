@@ -35,6 +35,11 @@
       playsinline
       muted
     ></video>
+    <app-pose-overlay
+      [video]="videoEl()"
+      [skeleton]="skeleton()"
+      [angleDeg]="frame()?.angleDeg ?? null"
+    />
 
     @if (cameraMode() && (isStarting() || switching())) {
       <div class="overlay-message">
@@ -79,6 +84,15 @@
           formCheckOpen() ? 'visibility' : 'visibility_off'
         }}</mat-icon>
       </button>
+      @if (showTuning()) {
+        <app-auto-count-tuning-panel
+          class="tuning-overlay"
+          [exerciseId]="exerciseId()"
+          kind="hold"
+          [defaults]="tuningDefaults()"
+          (changed)="onTuningChanged()"
+        />
+      }
       @if (formCheckOpen()) {
         <div class="form-check-panel">
           <div class="form-check-cell">

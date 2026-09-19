@@ -12,6 +12,7 @@ import {
   type HoldTimerStartOptions,
 } from './hold-timer.port';
 import { POSE_DETECTOR_FACTORY, type PoseDetector } from './pose-detector.port';
+import { applyOverride, PROFILE_OVERRIDES } from './profile-overrides.port';
 import {
   POSE_FRAME_SOURCE,
   type PoseFrameSource,
@@ -43,6 +44,7 @@ export class PoseHoldTimerService implements HoldTimer {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly detectorFactory = inject(POSE_DETECTOR_FACTORY);
   private readonly frameSource = inject<PoseFrameSource>(POSE_FRAME_SOURCE);
+  private readonly overrides = inject(PROFILE_OVERRIDES, { optional: true });
 
   private readonly _snapshot = signal<HoldSnapshot>(INITIAL_SNAPSHOT, {
     equal: snapshotEqual,
@@ -70,12 +72,16 @@ export class PoseHoldTimerService implements HoldTimer {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this._isActive() || this.startPending) return;
 
-    const profile = holdProfileFor(options.exerciseId);
-    if (!profile) {
+    const base = holdProfileFor(options.exerciseId);
+    if (!base) {
       throw new Error(
         `PoseHoldTimerService: no hold profile for exercise "${options.exerciseId}"`
       );
     }
+    const profile = applyOverride(
+      base,
+      this.overrides?.holdOverrideFor(options.exerciseId)
+    );
 
     const video = this.videoEl;
     if (!video) {
@@ -121,6 +127,7 @@ export class PoseHoldTimerService implements HoldTimer {
         angleDeg: sample.angleDeg,
         confidence: sample.confidence,
         timestampMs: sample.timestampMs,
+        pose: sample.skeleton,
       });
       const next = this.machine.process(sample);
       this._snapshot.set(next);

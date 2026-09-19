@@ -28,6 +28,33 @@
   </mat-card-content>
 </mat-card>
 
+<mat-card id="auto-count-feedback" class="section-card">
+  <mat-card-header>
+    <mat-icon mat-card-avatar>videocam</mat-icon>
+    <mat-card-title i18n="@@settings.section.autoCountFeedback.title">
+      Kamera-Zähler
+    </mat-card-title>
+    <mat-card-subtitle i18n="@@settings.section.autoCountFeedback.subtitle">
+      Rückmeldung zur Zählgenauigkeit.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="stack">
+    <mat-slide-toggle
+      [checked]="autoCountFeedback()"
+      (change)="onAutoCountFeedbackChange($event.checked)"
+      data-testid="settings-auto-count-feedback"
+      i18n="@@settings.autoCountFeedbackToggle"
+    >
+      Nach dem Zählen nach der echten Anzahl fragen
+    </mat-slide-toggle>
+    <p class="muted" i18n="@@settings.autoCountFeedbackHint">
+      Deine Antwort verbessert die Erkennung. Übertragen werden nur die gezählte
+      und die tatsächliche Anzahl sowie die Erkennungseinstellungen – kein Video
+      und kein Bild.
+    </p>
+  </mat-card-content>
+</mat-card>
+
 <mat-card id="danger-zone" class="section-card danger-zone">
   <mat-card-header>
     <mat-icon mat-card-avatar class="danger-icon">warning</mat-icon>

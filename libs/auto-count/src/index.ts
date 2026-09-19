@@ -52,7 +52,15 @@ export {
   type FrameTick,
   type PoseFrameSource,
 } from './lib/pose-frame-source.port';
-export { poseToAngleSample } from './lib/pose-to-sample';
+export { poseToAngleSample, type PoseFrameSample } from './lib/pose-to-sample';
+export { POSE_BONES, type PoseSkeleton } from './lib/pose-skeleton';
+export {
+  applyOverride,
+  PROFILE_OVERRIDES,
+  type AngleProfileOverride,
+  type HoldProfileOverride,
+  type ProfileOverrideSource,
+} from './lib/profile-overrides.port';
 export type { ExerciseHoldProfile } from './lib/exercise-hold-profile';
 export {
   PLANK_HOLD_PROFILE,

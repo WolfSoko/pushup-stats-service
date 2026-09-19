@@ -1,4 +1,5 @@
 import { InjectionToken, type Signal } from '@angular/core';
+import type { PoseSkeleton } from './pose-skeleton';
 import type { RepCountSnapshot } from './rep-state-machine';
 
 export interface RepCounterStartOptions {
@@ -13,6 +14,11 @@ export interface FormCheckFrame {
   readonly angleDeg: number;
   readonly confidence: number;
   readonly timestampMs: number;
+  /**
+   * Landmarks behind the angle, for the skeleton overlay. Null whenever
+   * the reading did not come from pose detection (proximity mode).
+   */
+  readonly pose: PoseSkeleton | null;
 }
 
 /**

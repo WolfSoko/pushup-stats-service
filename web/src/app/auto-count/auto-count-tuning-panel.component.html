@@ -1,0 +1,99 @@
+<div class="tuning-panel" data-testid="auto-count-tuning">
+  <header class="tuning-header">
+    <mat-icon aria-hidden="true">tune</mat-icon>
+    <span class="tuning-title" i18n="@@autoCount.tuning.title">
+      Parameter (Admin)
+    </span>
+    @if (dirty()) {
+      <span class="tuning-badge" i18n="@@autoCount.tuning.unsaved">
+        ungespeichert
+      </span>
+    } @else if (published()) {
+      <span class="tuning-badge published" i18n="@@autoCount.tuning.published">
+        für alle aktiv
+      </span>
+    }
+  </header>
+
+  @for (param of params(); track param.key) {
+    <div class="tuning-row">
+      <label class="tuning-label" [for]="'tune-' + param.key">
+        <span>{{ param.label }}</span>
+        <small>{{ param.hint }}</small>
+      </label>
+      <div class="tuning-control">
+        <mat-slider
+          [min]="param.min"
+          [max]="param.max"
+          [step]="param.step"
+          [discrete]="false"
+        >
+          <input
+            matSliderThumb
+            [id]="'tune-' + param.key"
+            [value]="valueOf(param)"
+            (valueChange)="onInput(param, $event)"
+            [attr.aria-label]="param.label"
+          />
+        </mat-slider>
+        <span class="tuning-value" [class.overridden]="isOverridden(param)">
+          {{ valueOf(param) | number: '1.0-2' }}{{ param.unit }}
+        </span>
+        @if (isOverridden(param)) {
+          <button
+            type="button"
+            mat-icon-button
+            class="tuning-clear"
+            (click)="onClear(param)"
+            aria-label="Auf Standardwert zurücksetzen"
+            i18n-aria-label="@@autoCount.tuning.clearAria"
+          >
+            <mat-icon>undo</mat-icon>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  @if (store.error(); as err) {
+    <p class="tuning-error" data-testid="auto-count-tuning-error">{{ err }}</p>
+  }
+
+  <footer class="tuning-actions">
+    <button
+      mat-button
+      (click)="onResetAll()"
+      [disabled]="!store.isTuned(exerciseId())"
+      i18n="@@autoCount.tuning.resetAll"
+    >
+      Standard
+    </button>
+    <button
+      mat-button
+      (click)="onDiscard()"
+      [disabled]="!dirty()"
+      i18n="@@autoCount.tuning.discard"
+    >
+      Verwerfen
+    </button>
+    <button
+      mat-stroked-button
+      (click)="onSave(false)"
+      [disabled]="saving()"
+      data-testid="auto-count-tuning-save"
+      i18n="@@autoCount.tuning.save"
+    >
+      Speichern
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="onSave(true)"
+      [disabled]="saving()"
+      data-testid="auto-count-tuning-publish"
+      i18n="@@autoCount.tuning.publish"
+    >
+      Für alle
+    </button>
+  </footer>
+</div>

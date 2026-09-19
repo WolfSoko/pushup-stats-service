@@ -1,0 +1,166 @@
+<h2 i18n="@@admin.autoCount.title">Kamera-Zähler: Genauigkeit</h2>
+
+<div class="filter-row">
+  <button
+    mat-icon-button
+    (click)="load()"
+    [matTooltip]="refreshTooltip"
+    [attr.aria-label]="refreshTooltip"
+  >
+    <mat-icon>refresh</mat-icon>
+  </button>
+  @if (totalReports() > 0) {
+    <span class="muted" i18n="@@admin.autoCount.total">
+      {{ totalReports() }} Rückmeldungen ausgewertet
+    </span>
+  }
+</div>
+
+@if (loading()) {
+  <div class="spinner-container">
+    <mat-spinner />
+  </div>
+} @else if (error()) {
+  <p class="error-text">{{ error() }}</p>
+} @else if (summaries().length === 0) {
+  <p i18n="@@admin.autoCount.empty">
+    Noch keine Rückmeldungen zur Zählgenauigkeit.
+  </p>
+} @else {
+  <mat-card data-testid="admin-auto-count-summaries">
+    <mat-table [dataSource]="summaries()">
+      <ng-container matColumnDef="profileId">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.autoCount.col.profile">
+          Profil
+        </mat-header-cell>
+        <mat-cell *matCellDef="let s">
+          <span>{{ s.profileId }}</span>
+          <small class="muted">{{ s.mode }}</small>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="thresholds">
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n="@@admin.autoCount.col.thresholds"
+        >
+          Schwellwerte
+        </mat-header-cell>
+        <mat-cell *matCellDef="let s" class="thresholds-cell">
+          {{ thresholds(s.thresholds) }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="runs">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.autoCount.col.runs">
+          Läufe
+        </mat-header-cell>
+        <mat-cell *matCellDef="let s">
+          {{ s.runs }}
+          @if (isThinEvidence(s)) {
+            <mat-icon
+              class="thin-evidence"
+              aria-hidden="true"
+              matTooltip="Zu wenige Läufe für eine belastbare Aussage"
+              i18n-matTooltip="@@admin.autoCount.thinEvidence"
+              >warning</mat-icon
+            >
+          }
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="exactRate">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.autoCount.col.exact">
+          Exakt
+        </mat-header-cell>
+        <mat-cell *matCellDef="let s" class="numeric">
+          {{ s.exactRate | percent: '1.0-0' }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="meanAbsDelta">
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n="@@admin.autoCount.col.meanAbsDelta"
+        >
+          Ø Fehler
+        </mat-header-cell>
+        <mat-cell *matCellDef="let s" class="numeric">
+          {{ s.meanAbsDelta }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="meanDelta">
+        <mat-header-cell
+          *matHeaderCellDef
+          matTooltip="Plus heißt: es wurden Reps übersehen"
+          i18n-matTooltip="@@admin.autoCount.meanDeltaHint"
+          i18n="@@admin.autoCount.col.meanDelta"
+        >
+          Tendenz
+        </mat-header-cell>
+        <mat-cell *matCellDef="let s" class="numeric">
+          {{ signed(s.meanDelta) }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="summaryColumns" />
+      <mat-row *matRowDef="let row; columns: summaryColumns" />
+    </mat-table>
+  </mat-card>
+
+  <h3 i18n="@@admin.autoCount.recentTitle">Letzte Rückmeldungen</h3>
+  <mat-card data-testid="admin-auto-count-recent">
+    <mat-table [dataSource]="recent()">
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.autoCount.col.date">
+          Datum
+        </mat-header-cell>
+        <mat-cell *matCellDef="let r">{{
+          r.createdAt | date: 'short'
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="exerciseId">
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n="@@admin.autoCount.col.exercise"
+        >
+          Übung
+        </mat-header-cell>
+        <mat-cell *matCellDef="let r">{{ r.exerciseId }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="detectedReps">
+        <mat-header-cell
+          *matHeaderCellDef
+          i18n="@@admin.autoCount.col.detected"
+        >
+          Erkannt
+        </mat-header-cell>
+        <mat-cell *matCellDef="let r" class="numeric">{{
+          r.detectedReps
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actualReps">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.autoCount.col.actual">
+          Tatsächlich
+        </mat-header-cell>
+        <mat-cell *matCellDef="let r" class="numeric">{{
+          r.actualReps
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delta">
+        <mat-header-cell *matHeaderCellDef i18n="@@admin.autoCount.col.delta">
+          Abweichung
+        </mat-header-cell>
+        <mat-cell *matCellDef="let r" class="numeric">{{ delta(r) }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="reportColumns" />
+      <mat-row *matRowDef="let row; columns: reportColumns" />
+    </mat-table>
+  </mat-card>
+}

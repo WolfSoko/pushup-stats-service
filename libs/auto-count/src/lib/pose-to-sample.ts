@@ -2,6 +2,7 @@ import { angleAtJointDeg } from './joint-angle';
 import type { JointTriplet } from './exercise-angle-profile';
 import type { PoseDetectionResult, PoseLandmark } from './pose-detector.port';
 import type { PoseSample } from './pose-sample';
+import type { PoseSkeleton } from './pose-skeleton';
 
 /**
  * Minimal shape needed to read a per-frame angle: just the two
@@ -14,15 +15,27 @@ export interface JointTripletPair {
   readonly tripletRight: JointTriplet;
 }
 
+/**
+ * A {@link PoseSample} plus the skeleton it was derived from, so a
+ * renderer can draw what the counter saw without running the
+ * side-picking a second time. The state machines ignore the extra
+ * field and take the sample as-is.
+ */
+export interface PoseFrameSample extends PoseSample {
+  readonly skeleton: PoseSkeleton;
+}
+
 interface SideSample {
   readonly angleDeg: number;
   readonly confidence: number;
+  readonly triplet: JointTriplet;
 }
 
 const tripletSample = (
   landmarks: ReadonlyArray<PoseLandmark>,
-  [proximalIdx, jointIdx, distalIdx]: JointTriplet
+  triplet: JointTriplet
 ): SideSample | null => {
+  const [proximalIdx, jointIdx, distalIdx] = triplet;
   const proximal = landmarks[proximalIdx];
   const joint = landmarks[jointIdx];
   const distal = landmarks[distalIdx];
@@ -36,7 +49,7 @@ const tripletSample = (
     joint.visibility ?? 0,
     distal.visibility ?? 0
   );
-  return { angleDeg, confidence };
+  return { angleDeg, confidence, triplet };
 };
 
 /**
@@ -52,7 +65,7 @@ export function poseToAngleSample(
   result: PoseDetectionResult,
   profile: JointTripletPair,
   timestampMs: number
-): PoseSample | null {
+): PoseFrameSample | null {
   const landmarks = result.landmarks[0];
   if (!landmarks) return null;
 
@@ -71,5 +84,6 @@ export function poseToAngleSample(
     angleDeg: best.angleDeg,
     confidence: best.confidence,
     timestampMs,
+    skeleton: { landmarks, triplet: best.triplet },
   };
 }

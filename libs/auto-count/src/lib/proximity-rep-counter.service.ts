@@ -108,6 +108,7 @@ export class ProximityRepCounterService implements RepCounter {
         angleDeg,
         confidence,
         timestampMs: tick.timestampMs,
+        pose: null,
       });
       const out = this.machine.process({
         angleDeg,

@@ -519,6 +519,64 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Auto-count accuracy reports — how many reps the detector saw
+    // versus how many there actually were, plus the thresholds it ran
+    // on. Create-only for authenticated users, exactly like `feedback`;
+    // read back through the admin callables (Admin SDK bypasses rules).
+    match /autoCountFeedback/{reportId} {
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly(['exerciseId', 'profileId', 'mode', 'detectedReps', 'actualReps', 'thresholds', 'userId', 'userAgent', 'createdAt'])
+                    && request.resource.data.exerciseId is string
+                    && request.resource.data.exerciseId.size() <= 64
+                    && request.resource.data.profileId is string
+                    && request.resource.data.profileId.size() <= 64
+                    && request.resource.data.mode in ['pose', 'proximity']
+                    && request.resource.data.detectedReps is int
+                    && request.resource.data.detectedReps >= 0
+                    && request.resource.data.detectedReps <= 10000
+                    && request.resource.data.actualReps is int
+                    && request.resource.data.actualReps >= 0
+                    && request.resource.data.actualReps <= 10000
+                    && request.resource.data.thresholds is map
+                    && request.resource.data.thresholds.size() <= 10
+                    && (request.resource.data.userId == null
+                        || request.resource.data.userId == request.auth.uid)
+                    && (request.resource.data.userAgent == null
+                        || (request.resource.data.userAgent is string
+                            && request.resource.data.userAgent.size() <= 512))
+                    && request.resource.data.createdAt is timestamp
+                    && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if false;
+    }
+
+    // Tuned auto-count detector profiles, one document per detector
+    // profile id (`pushup`, `plank`, …). Readable by every signed-in
+    // client because a published profile has to reach the detector
+    // wherever it runs; writable only by admins via the `admin` custom
+    // claim, which is set server-side (scripts/set-admin-claim.mjs) and
+    // therefore cannot be forged by a client.
+    //
+    // `published` is the rollout switch: the client applies an
+    // unpublished profile only for admins, so a half-tuned threshold
+    // never changes what everyone else's counter counts.
+    match /autoCountProfiles/{profileId} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null
+                   && request.auth.token.admin == true
+                   && request.resource.data.keys().hasOnly(['kind', 'values', 'published', 'updatedBy', 'updatedAt'])
+                   && request.resource.data.kind in ['angle', 'hold']
+                   && request.resource.data.values is map
+                   && request.resource.data.values.size() <= 10
+                   && request.resource.data.published is bool
+                   && request.resource.data.updatedBy == request.auth.uid
+                   && request.resource.data.updatedAt is timestamp;
+      // Spelled out rather than left to `write`: on a delete there is no
+      // `request.resource`, so the checks above would fail by erroring
+      // rather than by decision. Resetting a profile writes an empty
+      // `values` map, it does not remove the document.
+      allow delete: if false;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;

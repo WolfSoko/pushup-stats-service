@@ -25,6 +25,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CallableFunctionsService } from './callable-functions.service';
 import { DeleteUserDialogComponent } from './delete-user-dialog.component';
 import { UserDetailsDialogComponent } from './user-details-dialog.component';
+import { AdminAutoCountSectionComponent } from './admin-auto-count-section.component';
 import { AdminFeedbackSectionComponent } from './admin-feedback-section.component';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { ReleaseBadgeComponent } from '../core/observability/release-badge.component';
@@ -55,6 +56,7 @@ import {
     PageHeaderComponent,
     ReleaseBadgeComponent,
     RouterLink,
+    AdminAutoCountSectionComponent,
     AdminFeedbackSectionComponent,
   ],
   templateUrl: './admin-page.component.html',

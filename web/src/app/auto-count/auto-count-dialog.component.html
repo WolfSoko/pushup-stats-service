@@ -83,6 +83,11 @@
   </div>
   <div class="video-stage">
     <video #video class="preview" autoplay playsinline muted></video>
+    <app-pose-overlay
+      [video]="videoEl()"
+      [skeleton]="skeleton()"
+      [angleDeg]="frame()?.angleDeg ?? null"
+    />
     @if (isStarting() || switching()) {
       <div class="overlay-message">
         <mat-spinner diameter="32" />
@@ -173,6 +178,15 @@
           </div>
         </div>
       }
+      @if (showTuning()) {
+        <app-auto-count-tuning-panel
+          class="tuning-overlay"
+          [exerciseId]="detectorExerciseId()"
+          kind="angle"
+          [defaults]="tuningDefaults()"
+          (changed)="onTuningChanged()"
+        />
+      }
       @if (phase() === 'awaiting-up') {
         @if (isProximity()) {
           <div class="position-hint" i18n="@@autoCount.positionHint.proximity">
@@ -187,25 +201,33 @@
     }
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button
-    mat-button
-    (click)="reset()"
-    [disabled]="count() === 0"
-    i18n="@@autoCount.reset"
-  >
-    Zurücksetzen
-  </button>
-  <button mat-button (click)="cancel()" i18n="@@autoCount.cancel">
-    Abbrechen
-  </button>
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="save()"
-    [disabled]="count() === 0 || !!error()"
-    i18n="@@autoCount.save"
-  >
-    Übernehmen
-  </button>
-</mat-dialog-actions>
+@if (confirming()) {
+  <app-auto-count-confirm
+    [detectedReps]="count()"
+    (confirmed)="onConfirmed($event)"
+    (dismissed)="onFeedbackDismissed()"
+  />
+} @else {
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      (click)="reset()"
+      [disabled]="count() === 0"
+      i18n="@@autoCount.reset"
+    >
+      Zurücksetzen
+    </button>
+    <button mat-button (click)="cancel()" i18n="@@autoCount.cancel">
+      Abbrechen
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="save()"
+      [disabled]="count() === 0 || !!error()"
+      i18n="@@autoCount.save"
+    >
+      Übernehmen
+    </button>
+  </mat-dialog-actions>
+}

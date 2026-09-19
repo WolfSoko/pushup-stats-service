@@ -1,5 +1,6 @@
 import { InjectionToken, type Signal } from '@angular/core';
 import type { HoldSnapshot } from './hold-state-machine';
+import type { PoseSkeleton } from './pose-skeleton';
 
 export interface HoldTimerStartOptions {
   /** Hold catalog id, e.g. `'plank'`, `'hollowhold'`. */
@@ -14,6 +15,8 @@ export interface HoldFormCheckFrame {
   readonly angleDeg: number;
   readonly confidence: number;
   readonly timestampMs: number;
+  /** Landmarks behind the angle, for the skeleton overlay. */
+  readonly pose: PoseSkeleton | null;
 }
 
 /**

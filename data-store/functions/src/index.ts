@@ -49,6 +49,8 @@ export {
   adminMarkFeedbackRead,
 } from './functions-feedback';
 
+export { adminListAutoCountFeedback } from './functions-auto-count-feedback';
+
 export {
   rebuildExerciseLeaderboards,
   refreshExerciseLeaderboardsOnEntryWrite,
