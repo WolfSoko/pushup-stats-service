@@ -73,6 +73,14 @@ export const sendCheer = onCall(
       throw err;
     }
 
+    // Live trigger for the recipient's fireworks animation if their
+    // dashboard is open right now — overwritten (not appended) each time,
+    // there is no history to keep here, that's `cheers/{cheerId}` above.
+    await db
+      .collection('cheerPings')
+      .doc(target)
+      .set({ from: uid, at: cheer.createdAt });
+
     if (configureWebPush()) {
       const recipients = await readPushRecipients([uid, target]);
       await deliverPushToUser(

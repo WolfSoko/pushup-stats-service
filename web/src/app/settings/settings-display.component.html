@@ -38,5 +38,17 @@
         200k).
       </p>
     </div>
+
+    <mat-slide-toggle
+      [checked]="facade.cheerAnimationEnabledDraft()"
+      (change)="facade.cheerAnimationEnabledDraft.set($event.checked)"
+      data-testid="settings-cheer-animation"
+      i18n="@@settings.cheerAnimation.label"
+    >
+      Anfeuerungs-Animation anzeigen
+    </mat-slide-toggle>
+    <p class="muted" i18n="@@settings.cheerAnimation.hint">
+      Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert.
+    </p>
   </mat-card-content>
 </mat-card>

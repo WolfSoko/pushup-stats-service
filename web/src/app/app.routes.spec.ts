@@ -1,4 +1,5 @@
 import {
+  adminGuard,
   authGuard,
   LoginComponent,
   publicOnlyGuard,
@@ -43,6 +44,7 @@ describe('appRoutes', () => {
       'admin/migrations',
       'admin/network',
       'admin/android-test',
+      'admin/ui-features',
       'admin/users/:uid/entries',
       '**',
     ]);
@@ -228,6 +230,15 @@ describe('appRoutes', () => {
     // hitting a cold-load /u/<uid> see a recognisable title before the
     // component hydrates the dynamic per-profile SEO.
     expect(route?.data?.['seoTitle']).toContain('Pushup Tracker');
+  });
+
+  it('lazy-loads the UI-features admin test page', async () => {
+    const route = appRoutes.find((r) => r.path === 'admin/ui-features');
+    expect(route?.canActivate).toEqual([adminGuard]);
+    const component = await route?.loadComponent?.();
+    const { UiFeaturesTestPageComponent } =
+      await import('./admin/ui-features-test-page.component');
+    expect(component).toBe(UiFeaturesTestPageComponent);
   });
 
   it('does not require auth on /u/:uid (public access)', () => {

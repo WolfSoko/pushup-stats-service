@@ -420,6 +420,15 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Latest-cheer ping per recipient — id is the recipient's uid, written
+    // (overwritten, no history) only by `sendCheer`. Unlike `cheers`
+    // itself this is owner-readable: it's what an open dashboard listens
+    // to for the live fireworks animation.
+    match /cheerPings/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
     // Friend challenges — participants and invitees read their own; every
     // write goes through the `functions-challenges` callables, because the
     // participant list decides whose entries the others get summed.

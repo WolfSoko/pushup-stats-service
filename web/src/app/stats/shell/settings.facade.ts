@@ -77,6 +77,7 @@ export class SettingsFacade implements OnDestroy {
   readonly hideAccountPhotoDraft = signal(false);
   readonly adsConsentDraft = signal(false);
   readonly snapQualityDraft = signal<SnapQuality>(DEFAULT_SNAP_QUALITY);
+  readonly cheerAnimationEnabledDraft = signal(true);
 
   readonly profileUrl = computed(() =>
     buildProfileShareUrl(this.userId(), this.localeId)
@@ -202,6 +203,7 @@ export class SettingsFacade implements OnDestroy {
       hideAccountPhoto: this.hideAccountPhotoDraft(),
       adsConsent: this.adsConsentDraft(),
       snapQuality: this.snapQualityDraft(),
+      cheerAnimationEnabled: this.cheerAnimationEnabledDraft(),
     };
   }
 
@@ -211,6 +213,7 @@ export class SettingsFacade implements OnDestroy {
     this.hideAccountPhotoDraft.set(cfg.hideAccountPhoto);
     this.adsConsentDraft.set(cfg.consent?.targetedAds ?? true);
     this.snapQualityDraft.set(cfg.snapQuality);
+    this.cheerAnimationEnabledDraft.set(cfg.cheerAnimationEnabled);
   }
 
   private trackSaved(draft: DraftSnapshot): void {

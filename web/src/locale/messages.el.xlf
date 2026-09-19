@@ -13444,5 +13444,65 @@
         <target>wurde abgelehnt von</target>
       </segment>
     </unit>
+    <unit id="admin.uiFeatures.title">
+      <segment state="initial">
+        <source>UI-Features testen</source>
+        <target>UI-Features testen</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.subtitle">
+      <segment state="initial">
+        <source> Animationen und Overlays ohne den auslösenden Fall vorschauen. </source>
+        <target> Animationen und Overlays ohne den auslösenden Fall vorschauen. </target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.backToAdmin">
+      <segment state="initial">
+        <source>Zurück zum Admin-Bereich</source>
+        <target>Zurück zum Admin-Bereich</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.cheer.title">
+      <segment state="initial">
+        <source>Anfeuerungs-Feuerwerk</source>
+        <target>Anfeuerungs-Feuerwerk</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.cheer.description">
+      <segment state="initial">
+        <source> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </source>
+        <target> Zeigt die Feuerwerk-Animation, die beim Anfeuern durch einen Freund erscheint — unabhängig von der eigenen Animations-Einstellung. </target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.cheer.preview">
+      <segment state="initial">
+        <source>Vorschau starten</source>
+        <target>Vorschau starten</target>
+      </segment>
+    </unit>
+    <unit id="admin.uiFeatures.cheer.previewSender">
+      <segment state="initial">
+        <source>Vorschau</source>
+        <target>Vorschau</target>
+      </segment>
+    </unit>
+    <unit id="cheer.overlay.message">
+      <segment state="initial">
+        <source> 🔥 Ein Freund feuert dich an! </source>
+        <target> 🔥 Ein Freund feuert dich an! </target>
+      </segment>
+    </unit>
+    <unit id="settings.cheerAnimation.label">
+      <segment state="initial">
+        <source> Anfeuerungs-Animation anzeigen </source>
+        <target> Anfeuerungs-Animation anzeigen </target>
+      </segment>
+    </unit>
+    <unit id="settings.cheerAnimation.hint">
+      <segment state="initial">
+        <source> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </source>
+        <target> Zeigt ein Feuerwerk auf dem Dashboard, wenn dich ein Freund anfeuert. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

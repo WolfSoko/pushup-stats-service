@@ -36,3 +36,30 @@ export function cheerRejection(args: {
   if (args.alreadyToday) return 'already';
   return null;
 }
+
+/**
+ * Live trigger for the recipient's fireworks animation: one doc per
+ * recipient at `cheerPings/{uid}`, overwritten by every `sendCheer` call
+ * (no history — the ledger for that is `cheers/{cheerId}`). Lets a
+ * dashboard that's open right now react without polling the ledger.
+ */
+export interface CheerPing {
+  from: string;
+  /** ISO timestamp of the cheer that produced this ping. */
+  at: string;
+}
+
+/**
+ * Whether a ping should trigger the live animation: newer than the
+ * moment the current tab started watching, so a ping written before this
+ * session existed doesn't replay on load — that case is already covered
+ * by the push notification.
+ */
+export function isFreshCheerPing(
+  ping: CheerPing | null | undefined,
+  sessionStartAtMs: number
+): boolean {
+  if (!ping) return false;
+  const atMs = Date.parse(ping.at);
+  return Number.isFinite(atMs) && atMs > sessionStartAtMs;
+}

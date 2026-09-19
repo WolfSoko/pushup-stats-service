@@ -37,6 +37,7 @@ import {
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 
 import { AvatarService } from './core/avatar.service';
+import { CheerFireworksOverlayComponent } from './core/cheer-fireworks-overlay.component';
 import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { FriendInviteService } from './core/friend-invite.service';
@@ -143,6 +144,7 @@ function resolveCurrentLocale(localeId: string): SupportedLocale {
     MatFormFieldModule,
     MatSelectModule,
     OverlayModule,
+    CheerFireworksOverlayComponent,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

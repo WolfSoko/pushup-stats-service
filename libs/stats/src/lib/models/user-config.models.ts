@@ -251,6 +251,12 @@ export interface UserConfig {
      * {@link SESSION_MODE_DEFAULT}; read through `normalizeSessionMode`.
      */
     sessionMode?: SessionMode;
+    /**
+     * Whether a friend's cheer plays the fireworks overlay on this user's
+     * dashboard. Absent ⇒ enabled — the feature is opt-out, matching the
+     * push notification `sendCheer` always sends regardless of this flag.
+     */
+    cheerAnimationEnabled?: boolean;
   };
   /**
    * ISO timestamp of the last profile-photo upload, absent when none was
