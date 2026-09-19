@@ -36,6 +36,7 @@ const sampleProfile: PublicProfile = {
   exercises: [],
   recent: [],
   plan: null,
+  workouts: [],
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],
@@ -540,6 +541,54 @@ describe('PublicProfilePageComponent', () => {
           '[data-testid="public-profile-plan-link"]'
         )
       ).toBeNull();
+    });
+  });
+
+  describe('Shared sessions', () => {
+    const workouts = [
+      {
+        id: 'w1',
+        title: 'Ganzkörper kurz',
+        description: '',
+        exercises: [{ exerciseId: 'pushup', target: 30, sets: [10, 10, 10] }],
+      },
+    ];
+
+    it('should list the sessions with a copy button for a visitor', async () => {
+      // given
+      await setup({ resolve: { ...sampleProfile, workouts } });
+
+      // then
+      const section = fixture.nativeElement.querySelector(
+        '[data-testid="public-profile-workouts"]'
+      );
+      expect(section).toBeTruthy();
+      expect(section.textContent).toContain('Ganzkörper kurz');
+      expect(section.textContent).toContain('3×10 Liegestütze');
+      expect(
+        section.querySelector('[data-testid="profile-workout-copy"]')
+      ).toBeTruthy();
+    });
+
+    it('should omit the section when the viewer gets none', async () => {
+      await setup({ resolve: sampleProfile });
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="public-profile-workouts"]'
+        )
+      ).toBeNull();
+    });
+
+    it('should keep the switch for the owner without a session on it', async () => {
+      // given — the switch has to exist before there is anything to show
+      await setup({ resolve: { ...sampleProfile, viewerIsOwner: true } });
+
+      // then
+      expect(
+        fixture.nativeElement.querySelector(
+          '[data-testid="profile-toggle-workouts"]'
+        )
+      ).toBeTruthy();
     });
   });
 

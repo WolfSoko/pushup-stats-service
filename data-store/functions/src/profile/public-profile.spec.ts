@@ -141,6 +141,7 @@ describe('buildPublicProfile', () => {
       exercises: [],
       recent: [],
       plan: null,
+      workouts: [],
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
@@ -182,6 +183,7 @@ describe('buildPublicProfile', () => {
       exercises: [],
       recent: [],
       plan: null,
+      workouts: [],
       isPrivate: false,
       viewerIsOwner: false,
       viewerIsFriend: false,
@@ -304,6 +306,7 @@ describe('buildPublicProfile', () => {
       'exercises',
       'recent',
       'plan',
+      'workouts',
       'isPrivate',
       'viewerIsOwner',
       'viewerIsFriend',
@@ -606,7 +609,13 @@ describe('buildPublicProfile element visibility', () => {
       );
       // Sections that are off by default until the owner publishes them
       // belong in the list too — it is what the owner's page dims.
-      expect(result?.hidden).toEqual(['streak', 'heatmap', 'recent', 'plan']);
+      expect(result?.hidden).toEqual([
+        'streak',
+        'heatmap',
+        'recent',
+        'plan',
+        'workouts',
+      ]);
       expect(result?.viewerIsOwner).toBe(true);
     });
   });
@@ -791,5 +800,63 @@ describe('buildPublicProfile › recent workouts', () => {
 
     // then
     expect(result?.recent).toEqual([]);
+  });
+});
+
+describe('buildPublicProfile › shared workouts', () => {
+  const uid = 'abcdef1234567890';
+  const workouts = [
+    {
+      id: 'w1',
+      title: 'Ganzkörper',
+      description: '',
+      exercises: [{ exerciseId: 'pushup', target: 30 }],
+    },
+  ];
+  const config = {
+    displayName: 'Wolfi',
+    ui: { publicProfile: true, hideFromLeaderboard: false },
+  };
+
+  it('should keep them from a visitor of a legacy public profile', () => {
+    // given — a section invented later starts switched off
+    const result = buildPublicProfile(uid, config, null, { workouts });
+
+    // then
+    expect(result?.workouts).toEqual([]);
+  });
+
+  it('should show them to a friend once the owner opened the section to friends', () => {
+    const result = buildPublicProfile(
+      uid,
+      {
+        ...config,
+        ui: { ...config.ui, profileVisibility: { workouts: 'friends' } },
+      },
+      null,
+      { workouts, viewerIsFriend: true }
+    );
+    expect(result?.workouts).toEqual(workouts);
+  });
+
+  it('should keep them from a visitor while the section is friends-only', () => {
+    const result = buildPublicProfile(
+      uid,
+      {
+        ...config,
+        ui: { ...config.ui, profileVisibility: { workouts: 'friends' } },
+      },
+      null,
+      { workouts }
+    );
+    expect(result?.workouts).toEqual([]);
+  });
+
+  it('should always show the owner their own', () => {
+    const result = buildPublicProfile(uid, config, null, {
+      workouts,
+      viewerIsOwner: true,
+    });
+    expect(result?.workouts).toEqual(workouts);
   });
 });

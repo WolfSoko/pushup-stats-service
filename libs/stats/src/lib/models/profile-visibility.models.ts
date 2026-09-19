@@ -49,7 +49,11 @@ export function isProfileSectionVisibility(
  * switch, or a friend request accepted last month — was about the data
  * the profile had then, not about a new kind of it.
  */
-const OFF_UNLESS_CHOSEN: ReadonlyArray<ProfileSection> = ['recent', 'plan'];
+const OFF_UNLESS_CHOSEN: ReadonlyArray<ProfileSection> = [
+  'recent',
+  'plan',
+  'workouts',
+];
 
 /** The level in force for one section, legacy configs included. */
 export function sectionVisibility(

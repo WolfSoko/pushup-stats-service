@@ -85,6 +85,7 @@ export {
 } from './functions-friend-invite';
 export { notifyFriendshipWrite } from './functions-friends-notify';
 export { sendCheer } from './functions-cheers';
+export { shareWorkout } from './functions-workouts';
 export {
   createChallenge,
   leaveChallenge,

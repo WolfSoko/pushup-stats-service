@@ -25,6 +25,7 @@ const sample: PublicProfile = {
   exercises: [],
   recent: [],
   plan: null,
+  workouts: [],
   isPrivate: false,
   viewerIsOwner: false,
   hidden: [],

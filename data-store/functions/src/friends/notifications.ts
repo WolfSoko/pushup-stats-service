@@ -15,7 +15,8 @@ export type FriendPushKind =
   | 'accepted'
   | 'cheer'
   | 'challenge'
-  | 'challengeAccepted';
+  | 'challengeAccepted'
+  | 'workout';
 
 export interface FriendshipPushEvent {
   readonly kind: 'request' | 'accepted';
@@ -63,6 +64,8 @@ export interface FriendPushInput {
     readonly exerciseName: string;
     readonly days: number;
   };
+  /** The workout a friend sent, for the `workout` kind. */
+  readonly workout?: { readonly title: string };
 }
 
 /**
@@ -83,6 +86,11 @@ export function buildFriendPushPayload(input: FriendPushInput): string {
         return [t.cheerTitle, t.cheerBody(name)];
       case 'challengeAccepted':
         return [t.challengeAcceptedTitle, t.challengeAcceptedBody(name)];
+      case 'workout':
+        return [
+          t.workoutTitle,
+          t.workoutBody(name, input.workout?.title ?? ''),
+        ];
       case 'challenge': {
         const c = input.challenge;
         return [
@@ -101,7 +109,11 @@ export function buildFriendPushPayload(input: FriendPushInput): string {
     badge: '/icons/badge-72x72.png',
     tag: `friend-${input.kind}`,
     renotify: true,
-    data: { url: `/${input.locale}/freunde`, locale: input.locale },
+    // A sent workout lands in the recipient's own list, not on the friends screen.
+    data: {
+      url: `/${input.locale}/${input.kind === 'workout' ? 'workouts' : 'freunde'}`,
+      locale: input.locale,
+    },
     actions: [],
   });
 }

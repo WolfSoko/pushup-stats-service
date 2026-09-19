@@ -24,6 +24,9 @@ Pose ton téléphone, ouvre le compteur auto, c'est parti : l'IA reconnaît pomp
 • Pompes à un bras, Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
 Chaque jour la bonne consigne — avec jours de repos, jours légers et jours de test. Cinq plans recalculent chaque objectif quotidien sur ton test max : pas de 3×20 si tu en fais 8. Les jours faits se cochent tout seuls dès que tu atteins ton objectif, et tu peux partager ton plan actif.
 
+🧩 TES PROPRES SÉANCES
+Compose ton entraînement : exercices, objectifs et séries dans ton ordre. L'app te guide comme pour un jour de plan. Affiche tes séances sur ton profil ou envoie-les à des amis.
+
 🎯 OBJECTIFS, SÉRIES & STATS
 • Objectifs du jour, de la semaine et du mois — par exercice, avec filtre par jour
 • Barres de progression, confettis à l'objectif, compteur de série pour tenir
@@ -32,7 +35,7 @@ Chaque jour la bonne consigne — avec jours de repos, jours légers et jours de
 • Records : meilleur jour, meilleure série, meilleure séance
 
 🏆 CLASSEMENT & PROFIL
-Mesure-toi aux autres ou reste discret. Classements du jour, des 7 et des 30 derniers jours. Tu partages ton profil par lien : total de répétitions, série, records, heatmap, tes 10 dernières séances et le plan actif — chaque tuile réglable séparément sur masqué, amis seulement ou public. L'aperçu te montre ton profil tel que tes amis ou des inconnus le voient.
+Mesure-toi aux autres ou reste discret. Classements du jour, des 7 et des 30 derniers jours. Tu partages ton profil par lien : total de répétitions, série, records, heatmap, tes 10 dernières séances et le plan actif — chaque tuile réglable séparément sur masqué, amis seulement ou public.
 
 👥 AMIS & DÉFIS
 Invite tes amis : votre tableau montre qui mène cette semaine. Encouragez-vous par notification et lancez des défis communs — 500 pompes en 7 jours, chacun avec sa progression.
@@ -53,5 +56,4 @@ Mêmes données sur le téléphone et dans le navigateur, synchro en temps réel
 
 Gratuit. Sans abonnement. Sans carte bancaire.
 
-Pushup Tracker est une app honnête pour ceux qui s'entraînent vraiment — pas pour les collectionneurs de badges.
 Télécharge-la et fais la première.

@@ -1,0 +1,72 @@
+<main class="page-wrap">
+  <app-page-header icon="playlist_add_check" variant="training">
+    <h1 page-title i18n="@@workouts.title">Meine Sessions</h1>
+    <p page-subtitle i18n="@@workouts.intro">
+      Stell dir eigene Trainingssessions zusammen, führe sie geführt durch und
+      teile sie auf deinem Profil oder direkt mit Freunden.
+    </p>
+    <a
+      page-actions
+      mat-flat-button
+      color="primary"
+      routerLink="/workouts/new"
+      data-testid="workouts-new"
+      [class.disabled]="!store.canAddMore()"
+    >
+      <mat-icon>add</mat-icon>
+      <span i18n="@@workouts.new">Neue Session</span>
+    </a>
+  </app-page-header>
+
+  @if (rejection(); as message) {
+    <mat-card class="workouts-error" data-testid="workouts-error">
+      <mat-card-content>
+        <mat-icon aria-hidden="true">info</mat-icon>
+        <span>{{ message }}</span>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (!store.loaded()) {
+    <mat-spinner diameter="32" />
+  } @else if (store.workouts().length === 0) {
+    <mat-card class="workouts-empty" data-testid="workouts-empty">
+      <mat-card-content>
+        <p i18n="@@workouts.empty">
+          Noch keine Session. Leg deine erste an — mit den Übungen, Zielen und
+          Sätzen, die zu dir passen.
+        </p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-flat-button color="primary" routerLink="/workouts/new">
+          <mat-icon>add</mat-icon>
+          <span i18n="@@workouts.new">Neue Session</span>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  } @else {
+    @if (hasProfileWorkouts() && profileSectionOff()) {
+      <mat-card class="workouts-hint" data-testid="workouts-profile-hint">
+        <mat-card-content>
+          <mat-icon aria-hidden="true">visibility_off</mat-icon>
+          <span i18n="@@workouts.profileHint">
+            Dein Profil zeigt Sessions noch niemandem. Schalte den Bereich
+            „Sessions“ auf deinem Profil für Freunde oder alle frei.
+          </span>
+          <a mat-button [routerLink]="profileUrl()" i18n="@@workouts.toProfile"
+            >Zum Profil</a
+          >
+        </mat-card-content>
+      </mat-card>
+    }
+    @for (workout of store.workouts(); track workout.id) {
+      <app-workout-card
+        [workout]="workout"
+        [busy]="store.busy()"
+        (share)="share($event)"
+        (toggleProfile)="toggleProfile($event)"
+        (remove)="remove($event)"
+      />
+    }
+  }
+</main>

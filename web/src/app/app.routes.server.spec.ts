@@ -29,6 +29,14 @@ describe('serverRoutes', () => {
     }
   });
 
+  it('renders the own sessions client-side', () => {
+    // given — auth-gated pages whose run state lives in localStorage
+    const route = serverRoutes.find((r) => r.path === 'workouts/**');
+
+    // then
+    expect(route?.renderMode).toBe(RenderMode.Client);
+  });
+
   it('renders the guided session client-side, ahead of the prerendered detail route', () => {
     // given
     const sessionIndex = serverRoutes.findIndex(

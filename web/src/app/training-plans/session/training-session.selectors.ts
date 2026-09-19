@@ -11,11 +11,11 @@ import {
 } from '@pu-stats/models';
 
 import { UserConfigStore } from '../../core/user-config.store';
-import { TrainingPlanStore } from '../training-plan.store';
+import type { SessionSource } from './session-source';
 
 /** What the session store's derived state reads from. */
 interface SessionSources {
-  plan: InstanceType<typeof TrainingPlanStore>;
+  source: SessionSource;
   config: InstanceType<typeof UserConfigStore>;
   stepIndex: Signal<number>;
   restOverride: Signal<number | null>;
@@ -23,13 +23,13 @@ interface SessionSources {
 }
 
 /**
- * Everything the session derives from the plan day and the user config.
+ * Everything the session derives from the day and the user config.
  *
  * Kept out of the store file so the store stays the state machine: this
  * is all read-only projection, and none of it needs `patchState`.
  */
 export function sessionSelectors(sources: SessionSources) {
-  const dayIndex = computed(() => sources.plan.currentDayIndex());
+  const dayIndex = computed(() => sources.source.dayIndex());
 
   const mode = computed<SessionMode>(() =>
     normalizeSessionMode(sources.modeOverride() ?? sources.config.sessionMode())
@@ -40,13 +40,13 @@ export function sessionSelectors(sources: SessionSources) {
   const overviewSteps = computed<ReadonlyArray<SessionStep>>(() => {
     const idx = dayIndex();
     if (idx === null) return [];
-    return buildSessionSteps(sources.plan.dayProgress(idx));
+    return buildSessionSteps(sources.source.dayProgress(idx));
   });
 
   const steps = computed<ReadonlyArray<SessionStep>>(() => {
     const idx = dayIndex();
     if (idx === null || mode() !== 'circuit') return overviewSteps();
-    return buildCircuitSteps(sources.plan.dayProgress(idx));
+    return buildCircuitSteps(sources.source.dayProgress(idx));
   });
 
   return {
@@ -64,7 +64,7 @@ export function sessionSelectors(sources: SessionSources) {
     ),
     /** Rounds the circuit walks; 1 in sequential mode. */
     roundTotal: computed(() => steps()[0]?.roundTotal ?? 1),
-    day: computed(() => sources.plan.todayDay()),
+    day: computed(() => sources.source.day()),
     stepsDone: computed(() => sessionStepsDone(steps())),
     stepsTotal: computed(() => steps().length),
     /** True when the day prescribes nothing trackable (a rest day). */

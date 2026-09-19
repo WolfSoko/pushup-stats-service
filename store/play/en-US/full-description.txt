@@ -24,6 +24,9 @@ Prop up your phone, open the auto counter, start moving: the AI recognizes push-
 • One-Arm Push-Up, Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
 Five plans open with a max test and rescale every daily target to your result — no 3×20 when you can do 8. Rest days, light days and test days included. Completed days tick themselves off the moment you hit your daily goal, and you can share your active plan by link.
 
+🧩 YOUR OWN SESSIONS
+Build your own workout: exercises, targets and sets in your order. The app walks you through it like a plan day. Show your sessions on your profile or send them straight to friends — everyone gets their own copy.
+
 🎯 GOALS, STREAKS & STATS
 • Daily, weekly and monthly goals — per exercise, with a weekday filter
 • Progress bars, confetti when you hit your goal, streak counter for showing up
@@ -35,7 +38,7 @@ Five plans open with a max test and rescale every daily target to your result �
 Send a request, accept, train. Your board ranks you by today, week, month and all time, you cheer each other on by push, and you start shared challenges together — 500 push-ups in 7 days, everyone with their own progress. An invite link brings new ones in.
 
 🏆 LEADERBOARD & PROFILE
-Measure yourself against everyone or stay private. Rankings for today, the last 7 and 30 days. Your profile shows total reps, streak, personal bests, heatmap, your last 10 workouts and your active plan. Every tile is set individually to off, friends only or public — and the preview shows your profile exactly as friends or strangers see it before you share the link.
+Measure yourself against everyone or stay private. Rankings for today, the last 7 and 30 days. Your profile shows total reps, streak, personal bests, heatmap, your last 10 workouts and your active plan.
 
 🔔 SMART REMINDERS
 Push notifications with your own interval, quiet hours, weekdays and time zone — even when the app is closed. The fastest way to log: one tap on "Log 50" right in the notification.
@@ -51,5 +54,4 @@ The same data on your phone and in the browser, synced live across every device.
 
 🌍 Nine languages, from English to Chinese. Free. No subscription. No credit card.
 
-Pushup Tracker is an honest app for people who actually train — not for sticker collectors.
 Download it and knock out your first one.

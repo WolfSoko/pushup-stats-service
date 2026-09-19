@@ -1,0 +1,123 @@
+@if (run.workout(); as workout) {
+  <app-page-header icon="play_circle" variant="training">
+    <h1 page-title i18n="@@workoutSession.title">
+      Session · {{ workout.title }}
+    </h1>
+    <p page-subtitle>{{ workout.description }}</p>
+    <a
+      page-actions
+      mat-icon-button
+      routerLink="/workouts"
+      [attr.aria-label]="closeLabel"
+      [matTooltip]="closeLabel"
+    >
+      <mat-icon>close</mat-icon>
+    </a>
+  </app-page-header>
+
+  <mat-card class="session-card">
+    <div class="session-progress">
+      <mat-progress-bar mode="determinate" [value]="progressPercent()" />
+      @if (session.roundTotal() > 1) {
+        <p class="session-progress-label" i18n="@@session.progressSteps">
+          {{ session.stepsDone() }} von {{ session.stepsTotal() }} Sätzen
+          erledigt
+        </p>
+      } @else {
+        <p class="session-progress-label" i18n="@@session.progress">
+          {{ session.stepsDone() }} von {{ session.stepsTotal() }} Übungen
+          erledigt
+        </p>
+      }
+    </div>
+
+    @switch (session.phase()) {
+      @case ('intro') {
+        <app-session-intro
+          [rows]="overviewRows()"
+          [description]="workout.description"
+          [restSec]="session.restSec()"
+          [mode]="session.mode()"
+          [roundTotal]="session.roundTotal()"
+          (restSecChange)="session.setRestSec($event)"
+          (modeChange)="session.setMode($event)"
+          (start)="begin()"
+        />
+      }
+      @case ('exercise') {
+        @if (currentRow(); as row) {
+          <app-session-step
+            [row]="row"
+            [position]="session.stepIndex() + 1"
+            [total]="session.stepsTotal()"
+            [busy]="busy()"
+            (capture)="captureCurrent()"
+            (enterByHand)="enterByHand()"
+            (logAsPrescribed)="logAsPrescribed()"
+            (checkOff)="checkOff()"
+            (skip)="session.skipStep()"
+          />
+        }
+      }
+      @case ('rest') {
+        <app-session-rest
+          [remainingSec]="session.restRemaining()"
+          [totalSec]="session.restSec()"
+          [next]="currentRow()"
+          (nudge)="session.nudgeRest($event)"
+          (skipRest)="session.endRest()"
+        />
+      }
+      @case ('done') {
+        <section class="session-done">
+          <mat-icon class="session-done-icon" aria-hidden="true"
+            >emoji_events</mat-icon
+          >
+          <h2 class="session-done-title" i18n="@@session.done.title">
+            Session geschafft
+          </h2>
+          @if (session.roundTotal() > 1) {
+            <p class="session-done-text" i18n="@@session.done.textSteps">
+              {{ session.stepsDone() }} von {{ session.stepsTotal() }}
+              Sätzen sind eingetragen.
+            </p>
+          } @else {
+            <p class="session-done-text" i18n="@@session.done.text">
+              {{ session.stepsDone() }} von {{ session.stepsTotal() }}
+              Übungen sind eingetragen.
+            </p>
+          }
+          <button
+            mat-flat-button
+            class="session-done-action"
+            data-testid="session-finish"
+            (click)="finish()"
+          >
+            <mat-icon>done</mat-icon>
+            <span i18n="@@workoutSession.done.action">Zu meinen Sessions</span>
+          </button>
+          @if (!session.allDone()) {
+            <button mat-button (click)="session.backToIntro()">
+              <mat-icon>list</mat-icon>
+              <span i18n="@@session.done.reopen">Offene Übungen ansehen</span>
+            </button>
+          }
+        </section>
+      }
+    }
+  </mat-card>
+} @else if (run.missing()) {
+  <mat-card class="session-card">
+    <p class="session-note" i18n="@@workoutSession.unknown">
+      Diese Session gibt es nicht.
+    </p>
+    <a mat-flat-button routerLink="/workouts">
+      <mat-icon>arrow_back</mat-icon>
+      <span i18n="@@workouts.editor.back">Zu meinen Sessions</span>
+    </a>
+  </mat-card>
+} @else {
+  <mat-card class="session-card">
+    <p class="session-note" i18n="@@session.loading">Session wird geladen …</p>
+  </mat-card>
+}

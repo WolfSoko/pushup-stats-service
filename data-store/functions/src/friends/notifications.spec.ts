@@ -65,6 +65,25 @@ describe('friends/notifications', () => {
       expect(data.tag).toBe('friend-request');
     });
 
+    it('should name the workout a friend sent and point at the list', () => {
+      // when
+      const data = JSON.parse(
+        buildFriendPushPayload({
+          kind: 'workout',
+          locale: 'de',
+          actorName: 'Ada',
+          workout: { title: 'Ganzkörper kurz' },
+        })
+      );
+
+      // then
+      expect(data.body).toBe(
+        'Ada hat dir eine Session geschickt: Ganzkörper kurz'
+      );
+      expect(data.data).toEqual({ url: '/de/workouts', locale: 'de' });
+      expect(data.tag).toBe('friend-workout');
+    });
+
     it('should ship an empty action list so the SW adds no log button', () => {
       // when
       const data = JSON.parse(

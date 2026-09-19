@@ -215,6 +215,20 @@ export const UserConfigStore = signalStore(
       );
       store.configResource.reload();
     },
+    /** Remember that an announcement was closed; same `ui` read-modify-write. */
+    async markAnnouncementSeen(id: string): Promise<void> {
+      const userId = store._user.userIdSafe();
+      if (!userId) return;
+      const ui = store.configResource.value()?.ui ?? {};
+      const seen = ui.seenAnnouncements ?? [];
+      if (seen.includes(id)) return;
+      await firstValueFrom(
+        store._api.updateConfig(userId, {
+          ui: { ...ui, seenAnnouncements: [...seen, id] },
+        })
+      );
+      store.configResource.reload();
+    },
     reload(): void {
       store.configResource.reload();
     },

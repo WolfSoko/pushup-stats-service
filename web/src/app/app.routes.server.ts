@@ -130,6 +130,12 @@ export const serverRoutes: ServerRoute[] = [
     path: 'assistant',
     renderMode: RenderMode.Client,
   },
+  // The user's own sessions: auth-gated, and the run page keeps its state
+  // in localStorage and drives the camera — nothing to render server-side.
+  {
+    path: 'workouts/**',
+    renderMode: RenderMode.Client,
+  },
   {
     path: 'admin',
     renderMode: RenderMode.Client,

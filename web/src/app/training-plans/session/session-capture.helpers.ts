@@ -10,8 +10,10 @@ import type {
   TrainingEntryDialogResult,
 } from '../../core/quick-add-orchestration.models';
 
-/** Attribution every entry a guided session produces carries. */
+/** Attribution every entry a plan session produces carries. */
 export const SESSION_ENTRY_SOURCE = 'plan-session';
+/** The same for a session over a workout the user composed. */
+export const WORKOUT_SESSION_ENTRY_SOURCE = 'workout-session';
 
 /**
  * Dialog prefill for a step's manual entry: the amount that would bring
@@ -24,7 +26,8 @@ export const SESSION_ENTRY_SOURCE = 'plan-session';
  */
 export function entryPrefillForStep(
   step: SessionStep,
-  timestamp: string
+  timestamp: string,
+  source: string = SESSION_ENTRY_SOURCE
 ): TrainingEntryDialogData {
   const { exercise } = step;
   const isPushup = exercise.exerciseId === PUSHUP_QUICK_ADD_EXERCISE_ID;
@@ -34,7 +37,7 @@ export function entryPrefillForStep(
     return {
       kind: 'pushup',
       timestamp,
-      source: SESSION_ENTRY_SOURCE,
+      source,
       ...(exercise.variantId ? { type: exercise.variantId } : {}),
       ...(payload ? { reps: payload.value, sets: [...payload.breakdown] } : {}),
     };
@@ -78,7 +81,8 @@ export interface PrescribedCapture {
  */
 export function prescribedCaptureFor(
   step: SessionStep,
-  timestamp: string
+  timestamp: string,
+  source: string = SESSION_ENTRY_SOURCE
 ): PrescribedCapture | null {
   const payload = planExerciseEntryPayload(step.exercise, step.logged);
   if (!payload) return null;
@@ -87,7 +91,7 @@ export function prescribedCaptureFor(
       exerciseId: payload.exerciseId,
       ...(payload.variantId ? { variantId: payload.variantId } : {}),
       timestamp,
-      source: SESSION_ENTRY_SOURCE,
+      source,
       [payload.valueField]: payload.value,
       [payload.breakdownField]: payload.breakdown,
     } as ExerciseEntryCreate,
@@ -107,11 +111,12 @@ export function captureEntryPayload(args: {
   /** `'reps'` for the rep counter, `'durationSec'` for the hold timer. */
   valueField: 'reps' | 'durationSec';
   value: number;
+  source?: string;
 }): ExerciseEntryCreate {
   const base: ExerciseEntryCreate = {
     exerciseId: args.exerciseId,
     timestamp: args.timestamp,
-    source: SESSION_ENTRY_SOURCE,
+    source: args.source ?? SESSION_ENTRY_SOURCE,
     ...(args.variantId ? { variantId: args.variantId } : {}),
   };
   return args.valueField === 'reps'

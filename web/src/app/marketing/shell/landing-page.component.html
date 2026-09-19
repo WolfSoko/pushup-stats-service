@@ -283,6 +283,13 @@
   }
 
   @defer (hydrate on viewport) {
+    <app-workouts-feature-section
+      class="scroll-reveal scroll-reveal--from-left"
+      (ctaClick)="onWorkoutsCtaClick()"
+    ></app-workouts-feature-section>
+  }
+
+  @defer (hydrate on viewport) {
     <app-reminder-feature-section
       class="scroll-reveal scroll-reveal--from-right"
     ></app-reminder-feature-section>
