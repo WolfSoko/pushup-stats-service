@@ -13982,5 +13982,17 @@
         <target> Affiche un feu d'artifice sur le tableau de bord quand un ami t'encourage. </target>
       </segment>
     </unit>
+    <unit id="nav.profile">
+      <segment state="initial">
+        <source>Profil</source>
+        <target>Profil</target>
+      </segment>
+    </unit>
+    <unit id="nav.settings">
+      <segment state="initial">
+        <source>Einstellungen</source>
+        <target>Einstellungen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

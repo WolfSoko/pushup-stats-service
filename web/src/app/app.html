@@ -12,97 +12,44 @@
     </mat-toolbar>
 
     <mat-nav-list>
+      @for (item of navItems(); track item.path) {
       <a
         mat-list-item
-        routerLink="/app"
+        [routerLink]="item.path"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: item.exact === true }"
         (click)="navOpen.set(false)"
       >
-        <mat-icon matListItemIcon>dashboard</mat-icon>
-        <span matListItemTitle i18n="@@nav.dashboard">Dashboard</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/analysis"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>insights</mat-icon>
-        <span matListItemTitle i18n="@@nav.analysis">Analyse</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/leaderboard"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>leaderboard</mat-icon>
-        <span matListItemTitle i18n="@@nav.leaderboard">Bestenliste</span>
-      </a>
-      @if (isLoggedIn()) {
-      <a
-        mat-list-item
-        routerLink="/freunde"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>group</mat-icon>
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         <span matListItemTitle
-          ><ng-container i18n="@@nav.friends">Freunde</ng-container
-          ><app-friend-request-badge
-        /></span>
+          >{{ item.label }} @if (item.badge) {
+          <ng-container *ngComponentOutlet="item.badge" />
+          }
+        </span>
+      </a>
+      } @if (isLoggedIn()) {
+      <mat-divider></mat-divider>
+      <a
+        mat-list-item
+        [routerLink]="profileUrl()"
+        routerLinkActive="active"
+        data-testid="sidenav-profile"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>account_circle</mat-icon>
+        <span matListItemTitle i18n="@@nav.profile">Profil</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/settings"
+        routerLinkActive="active"
+        data-testid="sidenav-settings"
+        (click)="navOpen.set(false)"
+      >
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span matListItemTitle i18n="@@nav.settings">Einstellungen</span>
       </a>
       }
-      <a
-        mat-list-item
-        routerLink="/training-plans"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>fitness_center</mat-icon>
-        <span matListItemTitle i18n="@@nav.trainingPlans">Trainingspläne</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/blog"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>article</mat-icon>
-        <span matListItemTitle i18n="@@nav.blog">Blog</span>
-      </a>
-      <mat-divider></mat-divider>
-      <div class="sidenav-subheader" i18n="@@nav.more">Mehr</div>
-      <a
-        mat-list-item
-        routerLink="/history"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>list</mat-icon>
-        <span matListItemTitle i18n="@@nav.history">Historie</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/wiki/liegestuetz-typen"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>menu_book</mat-icon>
-        <span matListItemTitle i18n="@@nav.pushupTypes">Liegestütztypen</span>
-      </a>
-      <a
-        mat-list-item
-        routerLink="/wiki/uebungen"
-        routerLinkActive="active"
-        (click)="navOpen.set(false)"
-      >
-        <mat-icon matListItemIcon>auto_stories</mat-icon>
-        <span matListItemTitle i18n="@@nav.exercises">Übungen</span>
-      </a>
-
-      @if (isLoggedIn()) { }
 
       <mat-divider></mat-divider>
 

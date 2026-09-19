@@ -23,6 +23,7 @@ import {
 import { AdsStore } from '@pu-stats/ads';
 import { VAPID_PUBLIC_KEY } from '@pu-push/push';
 import { App } from './app';
+import { mainNavItems } from './core/nav/main-nav-items';
 import { TrainingPlanStore } from './training-plans/training-plan.store';
 import { GoalReachedNotificationService } from './core/goal-reached-notification.service';
 import { QuickAddOrchestrationService } from './core/quick-add-orchestration.service';
@@ -269,6 +270,59 @@ describe('App (testing-library)', () => {
     // label; only the currently-selected option is visible until the
     // panel is opened.
     expect(screen.getByText('Sprache')).toBeTruthy();
+  });
+
+  it('should list the same entries in the sidenav as in the arc nav, plus profile and settings', async () => {
+    // given
+    await render(App, {
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: UserContextService,
+          useValue: {
+            userNameSafe: userNameSignal.asReadonly(),
+            userIdSafe: () => 'u1',
+            accountPhotoUrl: () => null,
+            isAdmin: () => false,
+            isGuest: () => false,
+          },
+        },
+        { provide: AuthStore, useValue: authMock },
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: Auth, useValue: firebaseAuthMock },
+        { provide: UserConfigApiService, useValue: userConfigApiMock },
+        { provide: StatsApiService, useValue: statsApiMock },
+        { provide: AdsStore, useValue: adsStoreMock },
+        { provide: VAPID_PUBLIC_KEY, useValue: 'test-vapid-key' },
+        { provide: FriendsApiService, useValue: friendsApiMock },
+        { provide: ChallengesApiService, useValue: challengesApiMock },
+        { provide: ExerciseFirestoreService, useValue: exerciseFirestoreMock },
+        {
+          provide: LiveDataStore,
+          useValue: {
+            connected: liveConnectedSignal,
+            exerciseEntries: liveEntriesSignal,
+            exerciseEntriesLoaded: liveConnectedSignal,
+            updateTick: signal(0),
+          },
+        },
+      ],
+    });
+
+    // when — one list feeds both menus, so a page added to one cannot go
+    // missing from the other
+    const hrefs = Array.from(
+      document.querySelectorAll('.app-sidenav a[mat-list-item]')
+    ).map((a) => a.getAttribute('href'));
+
+    // then
+    expect(hrefs).toEqual([
+      ...mainNavItems(true).map((item) => item.path),
+      '/u/u1',
+      '/settings',
+    ]);
+    expect(hrefs).toContain('/workouts');
   });
 
   it('shows daily progress and goal in toolbar', async () => {

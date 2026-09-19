@@ -22,6 +22,15 @@ Angular 21 / Nx monorepo for tracking pushup statistics with Firebase backend.
 - **Trigger the CodeRabbit review yourself.** The repo gets no automatic reviews (CodeRabbit skips repos under 10 stars), so post `@coderabbitai review` as a PR comment right after opening the PR and after every substantive push. If CodeRabbit (or any other review bot) reports a usage limit, skips, or does not answer within a few minutes, run the review yourself with the `/code-review` skill against the PR and treat its findings like review comments. A PR is not merge-ready until one of the two reviews has been worked through.
 - **Merge proactively once CI is green, a review (CodeRabbit or your own) has been worked through, and review threads are resolved** — no need to wait for an explicit "merge it" from the user. Squash by default; preserve the issue link in the squash body. Stop only on an unresolvable review comment or a CI failure outside the change's scope, in which case report and wait.
 
+## Feature Launches
+
+Every user-facing feature ships with its own promotion, in the same PR as the feature:
+
+- **Walkthrough on the next dashboard visit.** Add an announcement to `FeatureAnnouncementService` (`web/src/app/core/`) with a fresh id (never reuse one) and a short stepped dialog like `WorkoutsIntroDialogComponent` — what it is, how it works, one button into the feature. It shows once per account (`ui.seenAnnouncements`), only on `/app`, never for guests.
+- **Landing page (overview) section.** A feature section under `web/src/app/marketing/components/`, embedded in `landing-page.component.html`, tagged "Neu" while it is new.
+- **Android app description.** Extend `store/play/<locale>/full-description.txt` for all nine Play locales (de-DE is the source, the others are translated in the same change); `pnpm nx test tools` enforces the 4000-character limit, so trim elsewhere when a new section pushes a locale over.
+- **Navigation.** The left sidenav and the arc nav render the same `mainNavItems()` list; the sidenav only adds Profil and Einstellungen. Add a new page to `main-nav-items.ts`, never to one menu alone.
+
 ## Development Flow (Project Board)
 
 - Create/triage issue → add to **PUS Roadmap** project → Status = **Todo**.

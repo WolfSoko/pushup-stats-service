@@ -13617,5 +13617,17 @@
         <target> 当朋友为你加油时，在仪表盘上显示烟花。 </target>
       </segment>
     </unit>
+    <unit id="nav.profile">
+      <segment state="initial">
+        <source>Profil</source>
+        <target>Profil</target>
+      </segment>
+    </unit>
+    <unit id="nav.settings">
+      <segment state="initial">
+        <source>Einstellungen</source>
+        <target>Einstellungen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

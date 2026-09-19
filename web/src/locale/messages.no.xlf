@@ -13401,5 +13401,11 @@ Aktiv:         </target>
         <target> Viser fyrverkeri på dashbordet når en venn heier på deg. </target>
       </segment>
     </unit>
+    <unit id="nav.profile">
+      <segment state="initial">
+        <source>Profil</source>
+        <target>Profil</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -14110,5 +14110,17 @@
         <target> Toont vuurwerk op het dashboard wanneer een vriend je aanmoedigt. </target>
       </segment>
     </unit>
+    <unit id="nav.profile">
+      <segment state="initial">
+        <source>Profil</source>
+        <target>Profil</target>
+      </segment>
+    </unit>
+    <unit id="nav.settings">
+      <segment state="initial">
+        <source>Einstellungen</source>
+        <target>Einstellungen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

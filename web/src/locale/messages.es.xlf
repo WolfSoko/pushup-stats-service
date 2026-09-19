@@ -14106,5 +14106,17 @@
         <target> Muestra fuegos artificiales en el panel cuando un amigo te anima. </target>
       </segment>
     </unit>
+    <unit id="nav.profile">
+      <segment state="initial">
+        <source>Profil</source>
+        <target>Profil</target>
+      </segment>
+    </unit>
+    <unit id="nav.settings">
+      <segment state="initial">
+        <source>Einstellungen</source>
+        <target>Einstellungen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
