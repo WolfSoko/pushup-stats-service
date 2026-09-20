@@ -13,7 +13,11 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DEFAULT_SNAP_QUALITY, SNAP_QUALITY_PARTICLES } from '@pu-stats/models';
+import {
+  BRAND_URL,
+  DEFAULT_SNAP_QUALITY,
+  SNAP_QUALITY_PARTICLES,
+} from '@pu-stats/models';
 import { finalize } from 'rxjs';
 import { ShareService } from '../../../core/share.service';
 import {
@@ -21,8 +25,6 @@ import {
   type GoalKind,
   goalReachedCopy,
 } from './goal-reached-copy';
-
-const SHARE_URL = 'https://pushup-stats.com';
 
 /**
  * Length of the @wolsok/thanos vaporize animation. The card's frame fade
@@ -128,7 +130,7 @@ export class GoalReachedDialogComponent {
     await this.shareService.share({
       title: shareTitle,
       text: shareText,
-      url: SHARE_URL,
+      url: BRAND_URL,
     });
   }
 

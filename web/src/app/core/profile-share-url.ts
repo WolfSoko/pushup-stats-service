@@ -1,18 +1,10 @@
-import { FRIEND_INVITE_PARAM, REFERRAL_PARAM } from '@pu-stats/models';
+import {
+  BRAND_URL,
+  FRIEND_INVITE_PARAM,
+  REFERRAL_PARAM,
+} from '@pu-stats/models';
 
 import { SUPPORTED_LOCALES } from '../../server-locale-redirect';
-
-/**
- * Builds the canonical public-profile share URL for the current locale.
- *
- * Centralised so the public-profile page (`shareProfile()`) and the Settings
- * page (`profileUrl` computed) produce the same shape — including the
- * locale prefix the SSR redirect would otherwise have to inject. Without
- * the prefix, a recipient pasting the link into a tool that strips 30x
- * hops would land on the static `Cannot GET /u/<uid>` instead of the
- * Angular bundle for their locale.
- */
-const SHARE_URL_BASE = 'https://pushup-stats.com';
 
 /**
  * The locale prefix a shared link should carry. Every locale the i18n
@@ -32,12 +24,22 @@ export function ownProfilePath(uid: string | null | undefined): string {
   return uid ? `/u/${encodeURIComponent(uid)}` : '/u/';
 }
 
+/**
+ * Builds the canonical public-profile share URL for the current locale.
+ *
+ * Centralised so the public-profile page (`shareProfile()`) and the Settings
+ * page (`profileUrl` computed) produce the same shape — including the
+ * locale prefix the SSR redirect would otherwise have to inject. Without
+ * the prefix, a recipient pasting the link into a tool that strips 30x
+ * hops would land on the static `Cannot GET /u/<uid>` instead of the
+ * Angular bundle for their locale.
+ */
 export function buildProfileShareUrl(
   uid: string | null | undefined,
   localeId: string | null | undefined
 ): string {
   if (!uid) return '';
-  return `${SHARE_URL_BASE}/${shareLocalePrefix(localeId)}/u/${encodeURIComponent(uid)}`;
+  return `${BRAND_URL}/${shareLocalePrefix(localeId)}/u/${encodeURIComponent(uid)}`;
 }
 
 /**
@@ -48,9 +50,9 @@ export function buildPlanShareUrl(
   slug: string | null | undefined,
   localeId: string | null | undefined
 ): string {
-  if (!slug) return SHARE_URL_BASE;
+  if (!slug) return BRAND_URL;
   const lang = shareLocalePrefix(localeId);
-  return `${SHARE_URL_BASE}/${lang}/training-plans/${encodeURIComponent(slug)}`;
+  return `${BRAND_URL}/${lang}/training-plans/${encodeURIComponent(slug)}`;
 }
 
 /**
@@ -67,7 +69,7 @@ export function buildInviteUrl(
   publicProfile: boolean,
   inviteToken?: string | null
 ): string {
-  if (!uid) return SHARE_URL_BASE;
+  if (!uid) return BRAND_URL;
   const params = [`${REFERRAL_PARAM}=${encodeURIComponent(uid)}`];
   // Only the token turns the link into a friend request; without one the
   // link still attributes a signup, which is what it always did.
@@ -76,5 +78,5 @@ export function buildInviteUrl(
   }
   const query = params.join('&');
   if (publicProfile) return `${buildProfileShareUrl(uid, localeId)}?${query}`;
-  return `${SHARE_URL_BASE}/${shareLocalePrefix(localeId)}?${query}`;
+  return `${BRAND_URL}/${shareLocalePrefix(localeId)}?${query}`;
 }

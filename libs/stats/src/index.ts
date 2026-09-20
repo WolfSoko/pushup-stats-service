@@ -1,3 +1,4 @@
+export * from './lib/models/brand';
 export * from './lib/models/stats.models';
 export * from './lib/models/pushup.models';
 export * from './lib/models/user-config.models';

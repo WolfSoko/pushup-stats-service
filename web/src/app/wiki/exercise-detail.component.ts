@@ -14,15 +14,15 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
+  BRAND_LOGO_URL,
+  BRAND_NAME,
+  BRAND_URL,
   type ExerciseWikiEntry,
   type ExerciseWikiLocalized,
   findExerciseWikiEntryBySlug,
   localizeExerciseWiki,
 } from '@pu-stats/models';
 import { SeoService } from '../core/seo.service';
-
-const BASE_URL = 'https://pushup-stats.com';
-const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
 
 // `vi.mock` cannot intercept this workspace-internal import in the `web`
 // esbuild unit-test build (see docs/gotchas/testing.md), so the noindex
@@ -302,7 +302,7 @@ export class ExerciseDetailComponent implements OnInit {
     this.removeJsonLd();
 
     const lang = this.locale.toLowerCase().split(/[-_]/)[0];
-    const canonical = `${BASE_URL}/${lang}/wiki/uebungen/${entry.slug}`;
+    const canonical = `${BRAND_URL}/${lang}/wiki/uebungen/${entry.slug}`;
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'HowTo',
@@ -318,11 +318,11 @@ export class ExerciseDetailComponent implements OnInit {
       mainEntityOfPage: canonical,
       publisher: {
         '@type': 'Organization',
-        name: 'Pushup Tracker',
-        url: BASE_URL,
+        name: BRAND_NAME,
+        url: BRAND_URL,
         logo: {
           '@type': 'ImageObject',
-          url: LOGO_URL,
+          url: BRAND_LOGO_URL,
         },
       },
     };

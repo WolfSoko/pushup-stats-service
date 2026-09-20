@@ -142,16 +142,27 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 
 ### Phase 1 — Brand-Layer zentralisieren (vor dem Rename)
 
+**Status: überwiegend erledigt.** Die Konstanten, die Umstellung der Nicht-i18n-Literale und der Guard sind drin. Offen ist der i18n-Schritt (siehe unten).
+
 **Problem:** Es gibt heute **keine zentrale Marken-Konstante.** „Pushup Tracker" steht 22-mal wörtlich in Prod-Quellen, `https://pushup-stats.com` als Literal in mindestens 8 Dateien (`dashboard-share.ts`, `achievement-celebration.service.ts`, `blog-article.component.ts`, `exercise-detail.component.ts`, `pushup-type-detail.component.ts`, `goal-reached-dialog`, `generate-feeds.js`, `generate-sitemap.js`). Ein Rename ohne diesen Schritt ist ein 250-Dateien-Suchen-und-Ersetzen mit hoher Fehlerquote.
 
-**Arbeit:**
+**Erledigt:**
 
-- Neues `web/src/app/core/brand.ts` (bzw. `libs/stats` falls auch Libs zugreifen): `BRAND_NAME`, `BRAND_URL`, `BRAND_CONTACT_EMAIL`, `BRAND_LOGO_PATH`.
-- Alle Literale in Prod-Quellen auf die Konstanten umstellen. i18n-Strings, die die Marke enthalten, bekommen sie als `$localize`-Platzhalter statt fest eingebacken — das reduziert die 52 DE-Units auf eine Handvoll, die beim Rename tatsächlich neu übersetzt werden müssen.
-- `BASE_URL` in `tools/src/generate-feeds.js` und `generate-sitemap.js` aus einer gemeinsamen Quelle ziehen.
-- **Guard-Test:** ein Spec, der fehlschlägt, sobald „Pushup Tracker" oder `pushup-stats.com` wieder als Literal in Prod-Quellen auftaucht. Analog zum bestehenden Drift-Guard für die `firestore.rules`-Allowlists.
+- `libs/stats/src/lib/models/brand.ts`, exportiert über `@pu-stats/models`: `BRAND_NAME`, `BRAND_DOMAIN` und die daraus zusammengesetzten `BRAND_URL`, `BRAND_CONTACT_EMAIL`, `BRAND_LOGO_URL`.
+- Alle Nicht-i18n-Literale in Prod-Quellen umgestellt. Die lokalen `BASE_URL`-/`SHARE_URL`-Aliase sind aufgelöst statt umgebogen.
+- Kontaktadresse in Impressum, Datenschutz und Über uns gebunden — sie stand als Text neben den i18n-Spans.
+- **Guard-Test** `tools/src/brand-literal-guard.spec.js`: scannt `web/src` und `libs`, dazu Drift-Tests für den sw-push-Spiegel und die `BASE_URL` beider Generatoren.
 
-**Tests:** Guard-Test neu; die 23 markenbehafteten Specs auf die Konstanten umstellen, damit der Rename in Phase 2 keine Teständerung mehr braucht.
+**Zwei bewusste Ausnahmen**, beide durch den Guard nachgehalten:
+
+- `libs/sw-push` spiegelt `BRAND_NAME` lokal. Der SW-Bundle bleibt frei von Cross-Package-Imports — dieselbe Entscheidung wie bei `SW_SUPPORTED_LOCALES`. Ein Barrel-Import würde den Übungskatalog in einen Service Worker ziehen, der wenige KB groß bleiben soll.
+- `web/src/index.html` wird ausgeliefert, bevor Angular bootet, und kann nichts importieren.
+
+**Offen — der i18n-Schritt:** 19 Dateien tragen die Marke noch innerhalb von `$localize`-Messages und `i18n`-Template-Text. Diese auf Platzhalter umzustellen ändert den Message-Source und seedet alle acht Ziel-Locales neu, ist also ein eigener Durchgang mit `extract-i18n` + `sync-xliff-locales` und einem Lauf der Übersetzungs-Routine. Die Allowlist `TRANSLATABLE_COPY` im Guard ist die Inventarliste; ein Eintrag, der nicht mehr gebraucht wird, lässt die Suite fehlschlagen, die Liste kann also nur schrumpfen.
+
+Der Aufwand dafür ist nicht zusätzlich, sondern vorgezogen: Ohne Platzhalter müssen dieselben Messages in Phase 2 angefasst werden. Mit Platzhaltern überleben die Übersetzungen auch jeden künftigen Rename.
+
+**Tests:** Guard-Test neu. Die markenbehafteten Specs bleiben unverändert — sie prüfen die URL als Wert, nicht als Literal, und liefen ohne Anpassung durch.
 
 **Ausliefert:** nichts Sichtbares. Reines Refactoring, geht normal über `main`.
 
@@ -163,14 +174,16 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 
 **Arbeit:**
 
-- `BRAND_NAME` in `core/brand.ts` auf den neuen Namen setzen → schlägt auf alle Prod-Quellen aus Phase 1 durch.
-- Deutsche i18n-Quelle anpassen: die verbliebenen Units mit Markenbezug in `messages.xlf` — **nur Deutsch**, laut `CLAUDE.md` schreiben Entwickler keine Fremdsprach-Targets.
+- `BRAND_NAME` in `libs/stats/src/lib/models/brand.ts` auf den neuen Namen setzen → schlägt über `@pu-stats/models` auf alle Prod-Quellen durch, die Phase 1 umgestellt hat. `BRAND_DOMAIN` bleibt hier unberührt; die daraus abgeleiteten URL- und Kontaktwerte wechseln erst mit der Domain in Phase 4.
+- `SW_BRAND_NAME` in `libs/sw-push/src/handlers.ts` mitziehen. Der Service Worker importiert bewusst nicht — ohne diesen Schritt schlägt der Drift-Test in `tools/src/brand-literal-guard.spec.js` fehl. Das ist genau seine Aufgabe.
+- Deutsche i18n-Quelle anpassen: die verbliebenen Units mit Markenbezug in `messages.xlf` — **nur Deutsch**, laut `CLAUDE.md` schreiben Entwickler keine Fremdsprach-Targets. Sind sie zuvor auf Platzhalter umgestellt (offener i18n-Schritt aus Phase 1), entfällt dieser Punkt ersatzlos.
 - `pnpm nx run web:extract-i18n && node tools/src/sync-xliff-locales.mjs` — die Seed-Fallbacks halten den Prod-Build grün, die tägliche Übersetzungs-Routine liefert die echten Targets nach.
-- `web/src/index.html`: `<title>`, `og:site_name`, `og:image:alt`, Feed-Link-Titel.
+- `web/src/index.html`: `<title>`, `og:site_name`, `og:image:alt`, Feed-Link-Titel. Die Datei steht auf der `NO_MODULE_SYSTEM`-Ausnahmeliste des Guards, weil sie nichts importieren kann — hier wird wirklich von Hand editiert.
 - `web/public/manifest.webmanifest`: `name`, `short_name`, `description`.
 - Landing-Page: Eyebrow, Logo-`alt`, Subtitle so umschreiben, dass die Übungsbreite die Botschaft trägt statt sie zu korrigieren.
-- Rechtstexte: neue Kontaktadresse in Impressum, Datenschutz, Über uns.
 - `tools/src/generate-feeds.js`: 9 Blog-Titel.
+
+**Nicht hier:** Die Kontaktadresse in Impressum, Datenschutz und Über uns ist seit Phase 1 an `BRAND_CONTACT_EMAIL` gebunden und folgt automatisch, sobald `BRAND_DOMAIN` in Phase 4 wechselt. Zu tun bleibt dort nur das, was kein Code erledigt: das Postfach einrichten und die alte Adresse weiterleiten.
 
 **Tests:** bestehende Specs laufen dank Phase 1 unverändert durch; Snapshot-/Text-Assertions, die die Marke prüfen, ziehen die Konstante.
 
@@ -202,7 +215,7 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 
 1. Neue Domain in Firebase Hosting **und** App Hosting als Custom Domain eintragen, Zertifikat abwarten.
 2. `apphosting.yaml` → `NG_ALLOWED_HOSTS` um die neue Domain **erweitern** (alte drin lassen). Ohne diesen Schritt weist der Angular-SSR-SSRF-Guard die neue Domain ab.
-3. `BRAND_URL` und die `BASE_URL`-Quelle (Phase 1) auf die neue Domain. Sitemap und Feeds neu generieren.
+3. `BRAND_DOMAIN` auf die neue Domain setzen — `BRAND_URL`, `BRAND_CONTACT_EMAIL` und `BRAND_LOGO_URL` leiten sich daraus ab und folgen. Die `BASE_URL` in `tools/src/generate-feeds.js` und `generate-sitemap.js` von Hand mitziehen: als Node-Skripte können sie die TS-Konstante nicht importieren, der Drift-Test hält sie nur nach. Danach Sitemap und Feeds neu generieren.
 4. Beide Domains parallel live, neue ist kanonisch: `rel=canonical`, `og:url` und alle hreflang-Einträge zeigen auf neu.
 5. **301** (nicht 302) von `pushup-stats.com/*` und `.de/*` auf pfadgleiche Ziele der neuen Domain. Pfade bleiben identisch — inklusive `/de`, `/en`, … Präfixe.
 6. Google Search Console: neue Property, Sitemap einreichen, **Adressänderung** für beide alten Domains melden.
