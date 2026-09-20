@@ -11,13 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { BRAND_LOGO_URL, BRAND_NAME, BRAND_URL } from '@pu-stats/models';
 import { PageHeaderComponent } from '../core/page-header/page-header.component';
 import { SeoService } from '../core/seo.service';
 import { BlogPost, findBlogPost } from './blog-posts.data';
 import { countWords, readingMinutes } from './reading-time';
-
-const BASE_URL = 'https://pushup-stats.com';
-const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
 
 @Component({
   selector: 'app-blog-article',
@@ -173,7 +171,7 @@ export class BlogArticleComponent implements OnInit {
     // to /en/. Without this both canonical URLs (the `<link>` tag and
     // the JSON-LD payload) drifted apart whenever the active build
     // locale wasn't the post's real language.
-    const canonical = `${BASE_URL}/${post.lang}/blog/${post.slug}`;
+    const canonical = `${BRAND_URL}/${post.lang}/blog/${post.slug}`;
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'Article',
@@ -185,16 +183,16 @@ export class BlogArticleComponent implements OnInit {
       inLanguage: post.lang,
       author: {
         '@type': 'Organization',
-        name: 'Pushup Tracker',
-        url: BASE_URL,
+        name: BRAND_NAME,
+        url: BRAND_URL,
       },
       publisher: {
         '@type': 'Organization',
-        name: 'Pushup Tracker',
-        url: BASE_URL,
+        name: BRAND_NAME,
+        url: BRAND_URL,
         logo: {
           '@type': 'ImageObject',
-          url: LOGO_URL,
+          url: BRAND_LOGO_URL,
         },
       },
       url: canonical,

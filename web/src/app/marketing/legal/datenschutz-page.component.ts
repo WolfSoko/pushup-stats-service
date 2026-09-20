@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
 
 @Component({
   selector: 'app-datenschutz-page',
@@ -32,7 +33,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
           Korte Asper 8<br />
           21465 Wentorf<br />
           <span i18n="@@datenschutz.responsible.email">E-Mail:</span>
-          contact&#64;pushup-stats.com
+          {{ contactEmail }}
         </p>
       </section>
 
@@ -157,4 +158,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     }
   `,
 })
-export class DatenschutzPageComponent {}
+export class DatenschutzPageComponent {
+  protected readonly contactEmail = BRAND_CONTACT_EMAIL;
+}

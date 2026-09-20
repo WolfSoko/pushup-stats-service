@@ -8,6 +8,14 @@
  * so jest can call them with plain mocks.
  */
 
+/**
+ * Mirrored from `@pu-stats/models#BRAND_NAME`. Inlined for the same reason as
+ * `SW_SUPPORTED_LOCALES` below: the sw-push bundle stays self-contained, with
+ * no cross-package import in the SW. `tools/src/brand-literal-guard.spec.js`
+ * fails if this drifts from the canonical constant.
+ */
+export const SW_BRAND_NAME = 'Pushup Tracker';
+
 /** Injected at build time by esbuild's `define` option. */
 declare const __SW_PUSH_VERSION__: string;
 
@@ -119,10 +127,10 @@ export function handlePush(event: PushEventLike, ctx: SwContext): void {
   try {
     payload = (event.data.json() ?? {}) as PushPayload;
   } catch {
-    payload = { title: 'Pushup Tracker', body: event.data.text() };
+    payload = { title: SW_BRAND_NAME, body: event.data.text() };
   }
 
-  const title = payload.title || 'Pushup Tracker';
+  const title = payload.title || SW_BRAND_NAME;
   const rawLocale = payload.data?.locale ?? payload.locale ?? '';
   const localeTag = String(rawLocale).toLowerCase();
   const locale = resolveLocale(localeTag);
