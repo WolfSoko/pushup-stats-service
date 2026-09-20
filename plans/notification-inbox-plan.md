@@ -467,6 +467,21 @@ macht (Phase 3 oder 4, je nachdem, welche zuerst fertig ist), nicht in beide.
   Locales. `pnpm nx test tools` erzwingt das 4000-Zeichen-Limit, also bei Bedarf
   an anderer Stelle kürzen.
 
+## Stand (2026-09-20)
+
+Phasen 1–6 sind auf `main` und damit in Produktion:
+
+| Commit     | Inhalt                                       |
+| ---------- | -------------------------------------------- |
+| `072df405` | Collection, Rules, TTL, sechs Schreibstellen |
+| `cb1069cf` | Abzeichen-Bereich `/abzeichen`               |
+| `69d5476f` | Glocke, Panel, `/nachrichten`, User-Menü     |
+| `1aeb1e26` | Gemeinsame Ankündigung, Landing-Sektion      |
+| `3c9c756a` | Motivations-Slot auf dem Dashboard           |
+| `32277884` | `notificationPrefs` und Push-Gating          |
+
+Offen: Phase 7 (`goalReached`, `motivation`) und die Play-Store-Texte.
+
 ## Phasen
 
 1. **Fundament** — Modelle in `@pu-stats/models`, `notifications/write.ts`,
