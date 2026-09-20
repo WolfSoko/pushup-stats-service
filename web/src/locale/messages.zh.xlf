@@ -7213,7 +7213,7 @@
     <unit id="wiki.exercise.detail.back">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
-        <target> 训练动作 </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> 训练动作 </target>
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.toList">
@@ -7253,7 +7253,7 @@
     <unit id="wiki.pushupType.detail.back">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
-        <target>俯卧撑类型</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> 俯卧撑类型 </target>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.toList">

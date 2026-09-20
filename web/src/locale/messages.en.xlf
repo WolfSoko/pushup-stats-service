@@ -2286,7 +2286,7 @@ Active:         </target>
             </notes>
       <segment state="translated">
         <source> Deine Position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> </source>
-        <target> Your position: #{$INTERPOLATION} · {$INTERPOLATION_1} reps </target>
+        <target> Your position: #<ph id="0" equiv="INTERPOLATION" disp="{{ me.rank }}"/> · <ph id="1" equiv="INTERPOLATION_1" disp="{{ formatValue(me.reps) }}"/> reps </target>
 
         
         
@@ -3988,7 +3988,7 @@ Active:         </target>
     <unit id="settings.deleteAccount">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Konto löschen </source>
-        <target>{$START_TAG_MAT_ICON}warning{$CLOSE_TAG_MAT_ICON} Delete account </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">warning</pc> Delete account </target>
       </segment>
     </unit>
     <unit id="settings.deleteConfirmFinal">
@@ -6532,7 +6532,7 @@ Active:         </target>
     <unit id="trainingPlans.abandon">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> Plan beenden </source>
-        <target>End plan</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">cancel</pc> End plan </target>
       </segment>
     </unit>
     <unit id="trainingPlans.started">
@@ -6940,7 +6940,7 @@ Active:         </target>
     <unit id="settings.publicProfile.shareCta">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Profil teilen </source>
-        <target>Share profile</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">share</pc> Share profile </target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.share.title">
@@ -7154,7 +7154,7 @@ Active:         </target>
     <unit id="wiki.exercise.detail.back">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Übungen </source>
-        <target> Exercises </target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Exercises </target>
       </segment>
     </unit>
     <unit id="wiki.exercise.detail.toList">
@@ -7893,7 +7893,7 @@ Active:         </target>
     <unit id="wiki.pushupType.detail.back">
       <segment state="translated">
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Liegestütztypen </source>
-        <target>Push-up types</target>
+        <target><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Push-up types </target>
       </segment>
     </unit>
     <unit id="wiki.pushupType.detail.toList">
