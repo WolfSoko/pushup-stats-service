@@ -1,3 +1,5 @@
+import { shouldPushNotification } from '@pu-stats/models';
+
 import { buildFriendPushPayload, friendPushOptions } from './notifications';
 import { writeNotification } from '../notifications';
 import { deliverPushToUser, readPushRecipients } from '../push/deliver-user';
@@ -48,20 +50,25 @@ export async function notifyChallengeInvited(
   );
 
   if (!configureWebPush()) return;
+  const now = new Date();
   await Promise.all(
-    invited.map((friend) =>
-      deliverPushToUser(
-        friend,
-        buildFriendPushPayload({
-          kind: 'challenge',
-          locale: recipients.get(friend)?.locale ?? 'de',
-          actorName,
-          challenge,
-        }),
-        friendPushOptions('challenge'),
-        'createChallenge'
+    invited
+      .filter((friend) =>
+        shouldPushNotification(recipients.get(friend)?.push, 'challenge', now)
       )
-    )
+      .map((friend) =>
+        deliverPushToUser(
+          friend,
+          buildFriendPushPayload({
+            kind: 'challenge',
+            locale: recipients.get(friend)?.locale ?? 'de',
+            actorName,
+            challenge,
+          }),
+          friendPushOptions('challenge'),
+          'createChallenge'
+        )
+      )
   );
 }
 
@@ -92,18 +99,27 @@ export async function notifyChallengeAccepted(
   );
 
   if (!configureWebPush()) return;
+  const now = new Date();
   await Promise.all(
-    others.map((participant) =>
-      deliverPushToUser(
-        participant,
-        buildFriendPushPayload({
-          kind: 'challengeAccepted',
-          locale: recipients.get(participant)?.locale ?? 'de',
-          actorName,
-        }),
-        friendPushOptions('challengeAccepted'),
-        'respondChallenge'
+    others
+      .filter((participant) =>
+        shouldPushNotification(
+          recipients.get(participant)?.push,
+          'challengeAccepted',
+          now
+        )
       )
-    )
+      .map((participant) =>
+        deliverPushToUser(
+          participant,
+          buildFriendPushPayload({
+            kind: 'challengeAccepted',
+            locale: recipients.get(participant)?.locale ?? 'de',
+            actorName,
+          }),
+          friendPushOptions('challengeAccepted'),
+          'respondChallenge'
+        )
+      )
   );
 }

@@ -1,4 +1,4 @@
-import type { Friendship } from '@pu-stats/models';
+import { shouldPushNotification, type Friendship } from '@pu-stats/models';
 import { logger } from 'firebase-functions';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 
@@ -50,6 +50,12 @@ export const notifyFriendshipWrite = onDocumentWritten(
     // that is precisely when the inbox has to carry the event.
     if (!configureWebPush()) {
       logger.warn('notifyFriendshipWrite: VAPID secrets not set, skipping');
+      return;
+    }
+    if (
+      !shouldPushNotification(recipients.get(push.to)?.push, type, new Date())
+    ) {
+      logger.info('notifyFriendshipWrite: push suppressed', { to: push.to });
       return;
     }
 

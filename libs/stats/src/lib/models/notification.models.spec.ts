@@ -2,6 +2,7 @@ import {
   NOTIFICATION_RETENTION_MS,
   notificationCategory,
   notificationDocId,
+  shouldPushNotification,
 } from './notification.models';
 
 describe('notificationCategory', () => {
@@ -106,5 +107,64 @@ describe('NOTIFICATION_RETENTION_MS', () => {
   it('should keep entries for 30 days', () => {
     // then
     expect(NOTIFICATION_RETENTION_MS).toBe(30 * 24 * 60 * 60 * 1000);
+  });
+});
+
+describe('shouldPushNotification', () => {
+  const NOON = new Date('2026-09-20T12:00:00Z');
+  const NIGHT = new Date('2026-09-20T23:30:00Z');
+  const QUIET = {
+    reminder: {
+      quietHours: [{ from: '22:00', to: '07:00' }],
+      timezone: 'UTC',
+    },
+  };
+
+  it('should push when nothing is configured, keeping the old default', () => {
+    // then
+    expect(shouldPushNotification(undefined, 'cheer', NOON)).toBe(true);
+  });
+
+  it('should push a type the user has not switched off', () => {
+    // then
+    expect(
+      shouldPushNotification(
+        { notificationPrefs: { challenge: false } },
+        'cheer',
+        NOON
+      )
+    ).toBe(true);
+  });
+
+  it('should stay silent for a type the user switched off', () => {
+    // then
+    expect(
+      shouldPushNotification(
+        { notificationPrefs: { cheer: false } },
+        'cheer',
+        NOON
+      )
+    ).toBe(false);
+  });
+
+  it('should treat an explicit true the same as unset', () => {
+    // then
+    expect(
+      shouldPushNotification(
+        { notificationPrefs: { cheer: true } },
+        'cheer',
+        NOON
+      )
+    ).toBe(true);
+  });
+
+  it('should respect the quiet hours the user set for reminders', () => {
+    // then — one switch for one wish, not a second set of night hours
+    expect(shouldPushNotification(QUIET, 'cheer', NIGHT)).toBe(false);
+  });
+
+  it('should push outside quiet hours', () => {
+    // then
+    expect(shouldPushNotification(QUIET, 'cheer', NOON)).toBe(true);
   });
 });

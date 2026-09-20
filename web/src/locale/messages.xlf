@@ -8904,6 +8904,70 @@
         <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
       </segment>
     </unit>
+    <unit id="notificationPrefs.label">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:27,29</note>
+      </notes>
+      <segment>
+        <source> Push von Freunden </source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.desc">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:30,35</note>
+      </notes>
+      <segment>
+        <source> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.cheer">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:69</note>
+      </notes>
+      <segment>
+        <source>Anfeuerungen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendRequest">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:73</note>
+      </notes>
+      <segment>
+        <source>Freundschaftsanfragen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:77</note>
+      </notes>
+      <segment>
+        <source>Angenommene Anfragen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challenge">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:81</note>
+      </notes>
+      <segment>
+        <source>Challenge-Einladungen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challengeAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:85</note>
+      </notes>
+      <segment>
+        <source>Zusagen zu deinen Challenges</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.workoutShared">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:89</note>
+      </notes>
+      <segment>
+        <source>Geteilte Sessions</source>
+      </segment>
+    </unit>
     <unit id="notifications.actor.anonymous">
       <notes>
         <note category="location">web/src/app/notifications/notification-text.ts:23</note>
@@ -10058,7 +10122,7 @@
     </unit>
     <unit id="remindersHeaderTitle">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:44,45</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Erinnerungen</source>
@@ -10066,7 +10130,7 @@
     </unit>
     <unit id="remindersHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:46,48</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:48,50</note>
       </notes>
       <segment>
         <source> Push-Benachrichtigungen, Zeiten und Geräte verwalten. </source>
@@ -10074,8 +10138,8 @@
     </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:118</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:222</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:122</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:226</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -10083,13 +10147,13 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:145</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:161</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:176</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:195</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:211</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:223</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:123</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:149</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:165</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:180</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:199</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:215</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:227</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -10097,7 +10161,7 @@
     </unit>
     <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:144</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:148</note>
       </notes>
       <segment>
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
@@ -10105,7 +10169,7 @@
     </unit>
     <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:160</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164</note>
       </notes>
       <segment>
         <source>Push-Abos aller Geräte entfernt.</source>
@@ -10113,7 +10177,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:175</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:179</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -10121,8 +10185,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:194</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:210</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:198</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:214</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
@@ -14060,7 +14124,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:135</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:137</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -14068,7 +14132,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:138</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:140</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -14076,7 +14140,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:139</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:141</note>
       </notes>
       <segment>
         <source>Teilen</source>

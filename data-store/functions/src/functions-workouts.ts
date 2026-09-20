@@ -3,6 +3,7 @@ import { onCall } from 'firebase-functions/v2/https';
 import {
   copyWorkout,
   normalizeWorkout,
+  shouldPushNotification,
   type Workout,
   workoutShareRejection,
   type WorkoutSource,
@@ -92,20 +93,29 @@ export const shareWorkout = onCall(
     );
 
     if (configureWebPush()) {
+      const now = new Date();
       await Promise.all(
-        sent.map((friend) =>
-          deliverPushToUser(
-            friend,
-            buildFriendPushPayload({
-              kind: 'workout',
-              locale: pushRecipients.get(friend)?.locale ?? 'de',
-              actorName: sharedBy.displayName,
-              workout: { title: workout.title },
-            }),
-            friendPushOptions('workout'),
-            'shareWorkout'
+        sent
+          .filter((friend) =>
+            shouldPushNotification(
+              pushRecipients.get(friend)?.push,
+              'workoutShared',
+              now
+            )
           )
-        )
+          .map((friend) =>
+            deliverPushToUser(
+              friend,
+              buildFriendPushPayload({
+                kind: 'workout',
+                locale: pushRecipients.get(friend)?.locale ?? 'de',
+                actorName: sharedBy.displayName,
+                workout: { title: workout.title },
+              }),
+              friendPushOptions('workout'),
+              'shareWorkout'
+            )
+          )
       );
     }
 

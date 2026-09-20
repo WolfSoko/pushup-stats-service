@@ -6,6 +6,7 @@ import {
   cheerRejection,
   friendshipId,
   isValidFriendUid,
+  shouldPushNotification,
   type Cheer,
   type Friendship,
 } from '@pu-stats/models';
@@ -102,7 +103,10 @@ export const sendCheer = onCall(
       throw err;
     }
 
-    if (configureWebPush()) {
+    if (
+      configureWebPush() &&
+      shouldPushNotification(recipients.get(target)?.push, 'cheer', new Date())
+    ) {
       await deliverPushToUser(
         target,
         buildFriendPushPayload({

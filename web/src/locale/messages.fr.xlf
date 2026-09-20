@@ -14738,5 +14738,53 @@
         <target>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</target>
       </segment>
     </unit>
+    <unit id="notificationPrefs.label">
+      <segment state="initial">
+        <source> Push von Freunden </source>
+        <target> Push von Freunden </target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.desc">
+      <segment state="initial">
+        <source> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </source>
+        <target> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.cheer">
+      <segment state="initial">
+        <source>Anfeuerungen</source>
+        <target>Anfeuerungen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendRequest">
+      <segment state="initial">
+        <source>Freundschaftsanfragen</source>
+        <target>Freundschaftsanfragen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendAccepted">
+      <segment state="initial">
+        <source>Angenommene Anfragen</source>
+        <target>Angenommene Anfragen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challenge">
+      <segment state="initial">
+        <source>Challenge-Einladungen</source>
+        <target>Challenge-Einladungen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challengeAccepted">
+      <segment state="initial">
+        <source>Zusagen zu deinen Challenges</source>
+        <target>Zusagen zu deinen Challenges</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.workoutShared">
+      <segment state="initial">
+        <source>Geteilte Sessions</source>
+        <target>Geteilte Sessions</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

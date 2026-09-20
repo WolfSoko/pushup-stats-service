@@ -1,5 +1,6 @@
 import type { MeasurementType } from './exercise.models';
 import type { ReferralState } from './referral.models';
+import type { NotificationPrefs } from './notification.models';
 import { ReminderConfig } from './reminder-config.models';
 import type { ReminderLocale } from './reminder-i18n.models';
 import type { SessionMode } from './training-session.models';
@@ -274,6 +275,12 @@ export interface UserConfig {
   updatedAt?: string;
   reminder?: ReminderConfig;
   /**
+   * Per-type push opt-out for the message inbox. Absent ⇒ every type
+   * pushes. Suppressing a push is only safe because the inbox entry is
+   * written regardless — see `shouldPushNotification`.
+   */
+  notificationPrefs?: NotificationPrefs;
+  /**
    * Android closed-test tester recruitment state machine. Server-only —
    * writes go exclusively through the `android-test` Cloud Functions
    * callables (`adminComputeAndroidTestCandidates`,
@@ -314,6 +321,7 @@ export type UserConfigUpdate = Partial<
     | 'consent'
     | 'ui'
     | 'reminder'
+    | 'notificationPrefs'
     | 'photoUpdatedAt'
   >
 >;

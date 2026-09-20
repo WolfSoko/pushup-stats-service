@@ -20,6 +20,7 @@ import { UnsubscribeAllDevicesDialogComponent } from './unsubscribe-all-devices-
 import { ReminderFormStore } from './reminder-form.store';
 import { ReminderSettingsSectionComponent } from './reminder-settings-section.component';
 import { PushStatusPanelComponent } from './push-status-panel.component';
+import { NotificationPrefsSectionComponent } from '../../notifications/notification-prefs-section.component';
 import { UnsubscribeAllSectionComponent } from './unsubscribe-all-section.component';
 import {
   resolveTimezone,
@@ -37,6 +38,7 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
     ReminderSettingsSectionComponent,
     PushStatusPanelComponent,
     UnsubscribeAllSectionComponent,
+    NotificationPrefsSectionComponent,
   ],
   template: `
     <main class="page-wrap">
@@ -53,6 +55,8 @@ import { PageHeaderComponent } from '../../core/page-header/page-header.componen
             (reminderToggle)="onReminderToggle($event)"
             (save)="saveReminderSettings()"
           />
+
+          <app-notification-prefs-section />
 
           <app-push-status-panel
             [status]="pushService.status()"
