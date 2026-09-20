@@ -188,9 +188,9 @@ heroImageCredit: 'Bilde: Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong – 6-ukers helkroppsplan</h3>
   <p>
-    Planen dekker fem av de seks mønstrene i tre økter per uke – press, knebøy, hoftehengsel, utfall
-    og kjerne – og øker belastningen automatisk. Draget legger du til selv, for eksempel med roing
-    under et bord, eller du tar &laquo;Push &amp; Pull Balance&raquo; til det.
+    Planen dekker fire av de seks mønstrene i tre økter per uke – press, knebøy, hoftehengsel og
+    kjerne – og øker belastningen automatisk. Drag og utholdenhet legger du til selv: roing under et
+    bord eller &laquo;Push &amp; Pull Balance&raquo; for det ene, en løpetur eller hoppetau for det andre.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Start helkroppsplanen &rarr;</a>

@@ -192,9 +192,9 @@ heroImageCredit: 'Image: Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong — 6-Week Full-Body Plan</h3>
   <p>
-    The plan covers five of the six patterns in three sessions per week – pushing, squat, hip hinge,
-    lunge and core – and increases the load automatically. You add the pulling yourself, for example
-    with rows under a table, or take &ldquo;Push &amp; Pull Balance&rdquo; for that.
+    The plan covers four of the six patterns in three sessions per week – pushing, squat, hip hinge
+    and core – and increases the load automatically. You add pulling and endurance yourself: rows
+    under a table or &ldquo;Push &amp; Pull Balance&rdquo; for the one, a run or a jump rope for the other.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Start the full-body plan &rarr;</a>

@@ -29,7 +29,7 @@ keywords:
 </p>
 <ul>
   <li><strong>Push &amp; Pull Balance</strong> – sechs Wochen gegen das Ungleichgewicht zwischen Drücken und Ziehen</li>
-  <li><strong>Full Body Strong</strong> – sechs Wochen Kniebeuge, Hüftstreckung, Ausfallschritt, Rumpf und Mobility</li>
+  <li><strong>Full Body Strong</strong> – sechs Wochen Kniebeuge, Hüftbeuge, Ausfallschritt, Rumpf und Mobility</li>
   <li><strong>Core Foundations</strong> – vier Wochen Rumpf</li>
   <li><strong>HIIT Burner</strong> – vier Wochen Kondition</li>
   <li><strong>Mobility &amp; Recovery</strong> – zwei Wochen Deload</li>
@@ -37,7 +37,7 @@ keywords:
 <p>
   Liegestütze kommen darin durchaus vor – aber als Baustein, nicht als Zweck. Full Body Strong
   etwa schreibt über sechs Wochen 84 Übungseinheiten vor, 24 davon sind Liegestütze; die
-  übrigen 60 sind Rumpf, Hüftstreckung, Kniebeuge, Ausfallschritt und Mobility.
+  übrigen 60 sind Rumpf, Hüftbeuge, Kniebeuge, Ausfallschritt und Mobility.
 </p>
 <p>
   Dazu kommen frei zusammenstellbare Sessions, Freundesliste und Bestenliste, Abzeichen, Streaks,
@@ -91,7 +91,7 @@ keywords:
   <h3>Full Body Strong – 6-Wochen-Ganzkörperplan</h3>
   <p>
     Wenn du wissen willst, was mit „mehr als Liegestütze" gemeint ist: Dieser Plan kombiniert
-    Liegestütze mit Kniebeuge, Hüftstreckung, Ausfallschritt, Rumpf und Mobility – drei
+    Liegestütze mit Kniebeuge, Hüftbeuge, Ausfallschritt, Rumpf und Mobility – drei
     Einheiten pro Woche, ohne Geräte.
   </p>
   <p>
