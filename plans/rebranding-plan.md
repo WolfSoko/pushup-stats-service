@@ -110,7 +110,7 @@ Ein Kandidat muss **alle** erfüllen:
 2. **DE und EN tragfähig** — Quelle ist Deutsch, ausgeliefert wird in 9 Sprachen. Kein Wortspiel, das nur in einer Sprache funktioniert.
 3. **Play-Titel-Budget** — max. 30 Zeichen inkl. Untertitel. Zum Vergleich der heutige Titel: „Pushup Tracker: Liegestütze" = 27 Zeichen, also praktisch am Limit. Ein Name über ~14 Zeichen lässt keinen Untertitel mehr zu.
 4. **Domain frei** — `.com` bevorzugt, `.de` als Ergänzung (der Bestand hat beide).
-5. **Markenrechtlich unkritisch** — DPMA- und EUIPO-Recherche in Nizza-Klasse 9 (Software) und 41 (Sport/Training). Bekannte Fitness-Marken meiden.
+5. **Markenrechtlich unkritisch** — DPMA- und EUIPO-Recherche in Nizza-Klasse 9 (herunterladbare Software — die Android-App), 41 (Sport und Training) **und 42 (SaaS, Server-Hosting)**. Klasse 42 ist hier keine Formalie: Das Produkt ist in erster Linie eine gehostete Web-App, die Android-App nur ein TWA-Wrapper darum. Eine Recherche ohne 42 prüft den Hauptvertriebsweg nicht. Klassenumfang an den tatsächlich angebotenen Leistungen und Zielmärkten ausrichten (neun Sprachen, EU-weit) und vor der Registrierung von einer Markenfachperson bestätigen lassen. Bekannte Fitness-Marken meiden.
 6. **Play-/App-Store-Kollisionsfrei** — keine bestehende Fitness-App gleichen Namens.
 7. **Aussprechbar und tippbar** — kein Sonderzeichen, keine Umlaute in der Domain.
 
