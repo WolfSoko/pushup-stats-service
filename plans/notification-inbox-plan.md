@@ -36,7 +36,7 @@ geht.
 
 | Frage            | Entscheidung                                                                                                                      |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Datenmodell      | Generische Collection `notifications/{uid}/items/{id}`, jede Quelle schreibt beim Auslösen hinein                                 |
+| Datenmodell      | Generische Collection `notifications/{uid}/inbox/{id}`, jede Quelle schreibt beim Auslösen hinein                                 |
 | Push-Kopplung    | Inbox immer, Push nach Einstellung — inklusive Cheer, das heute alles ignoriert                                                   |
 | Feature-Hinweise | **Kein** Fan-out, clientseitig aus der statischen `ANNOUNCEMENTS`-Liste gemischt                                                  |
 | Launch           | Inbox und Abzeichen-Bereich werden **gemeinsam** angekündigt — ein `ANNOUNCEMENTS`-Eintrag, eine Landing-Sektion, ein Play-Absatz |
@@ -69,9 +69,9 @@ export type NotificationType =
   | 'challenge'
   | 'challengeAccepted'
   | 'workoutShared'
-  | 'achievement'
-  | 'goalReached'
-  | 'motivation';
+  | 'achievement';
+// 'goalReached' und 'motivation' kommen in Phase 7 dazu — ein Union-Mitglied,
+// das niemand schreibt, wäre toter Code (CLAUDE.md).
 
 export interface UserNotification {
   readonly type: NotificationType;
@@ -141,13 +141,13 @@ danebenlegen.
 
 `expiresAt: Timestamp` + TTL-Policy, 30 Tage. Eintrag in
 `data-store/firestore.indexes.json` neben dem bestehenden `cheers`-TTL
-(`firestore.indexes.json:118`), als `collectionGroup: "items"`. Ablauf ist laut
+(`firestore.indexes.json:118`), als `collectionGroup: "inbox"`. Ablauf ist laut
 `docs/cloud-functions.md:32` bis zu 24 h ungenau — für eine Inbox irrelevant.
 
 ### Rules
 
 ```
-match /notifications/{userId}/items/{itemId} {
+match /notifications/{userId}/inbox/{itemId} {
   allow read: if request.auth != null && request.auth.uid == userId;
   allow create, delete: if false;
   allow update: if request.auth != null
