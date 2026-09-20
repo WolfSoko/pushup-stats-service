@@ -14477,27 +14477,27 @@
       </segment>
     </unit>
     <unit id="settings.autoCountFeedbackHint">
-      <segment state="initial">
+      <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
         <target> La tua risposta migliora il rilevamento. Vengono trasmessi solo il numero contato e quello reale, oltre alle impostazioni di rilevamento – nessun video e nessuna immagine. </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unpublish">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nur für mich </source>
-        <target> Nur für mich </target>
+        <target> Solo per me </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Parameter-Regler anzeigen oder ausblenden</source>
-        <target>Parameter-Regler anzeigen oder ausblenden</target>
+        <target>Mostra o nascondi i controlli dei parametri</target>
       </segment>
     </unit>
     <unit id="exerciseTimer.tuning.toggleAria">
-      <segment state="initial">
+      <segment state="translated">
         <source>Parameter-Regler anzeigen oder ausblenden</source>
-        <target>Parameter-Regler anzeigen oder ausblenden</target>
+        <target>Mostra o nascondi i controlli dei parametri</target>
       </segment>
     </unit>
 </file>
