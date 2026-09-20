@@ -27,6 +27,19 @@
     <mat-divider></mat-divider>
     <button
       mat-menu-item
+      (click)="goToNotifications()"
+      data-testid="user-menu-notifications"
+    >
+      <mat-icon>notifications</mat-icon>
+      <span i18n="@@user.menu.notifications">Nachrichten</span>
+      @if (unreadNotifications() > 0) {
+        <span class="menu-badge">{{
+          unreadNotifications() > 9 ? '9+' : unreadNotifications()
+        }}</span>
+      }
+    </button>
+    <button
+      mat-menu-item
       (click)="goToProfile()"
       data-testid="user-menu-profile"
     >

@@ -37,6 +37,7 @@ describe('appRoutes', () => {
       'wiki/liegestuetz-typen',
       'wiki/uebungen',
       'freunde',
+      'nachrichten',
       'abzeichen',
       'leaderboard',
       'u/:uid',

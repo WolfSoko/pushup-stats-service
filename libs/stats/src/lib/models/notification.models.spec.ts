@@ -1,7 +1,31 @@
 import {
   NOTIFICATION_RETENTION_MS,
+  notificationCategory,
   notificationDocId,
 } from './notification.models';
+
+describe('notificationCategory', () => {
+  it('should group a cheer with motivation, not with the social noise', () => {
+    // then
+    expect(notificationCategory('cheer')).toBe('motivation');
+  });
+
+  it('should give an earned badge its own category', () => {
+    // then
+    expect(notificationCategory('achievement')).toBe('achievement');
+  });
+
+  it.each([
+    'friendRequest',
+    'friendAccepted',
+    'challenge',
+    'challengeAccepted',
+    'workoutShared',
+  ] as const)('should treat %s as social', (type) => {
+    // then
+    expect(notificationCategory(type)).toBe('social');
+  });
+});
 
 describe('notificationDocId', () => {
   it('should scope a cheer to sender and day so a second cheer the same day overwrites', () => {

@@ -22,6 +22,29 @@ export type NotificationType =
   | 'workoutShared'
   | 'achievement';
 
+/**
+ * How an entry is presented. Derived from the type rather than stored:
+ * it is a display decision, and baking it into the document would freeze
+ * today's grouping into every row ever written.
+ *
+ * `motivation` exists because an anfeuerung and a reached goal are the
+ * same *feeling* as a motivational quote — they belong together, not
+ * sorted into a grey list.
+ */
+export type NotificationCategory =
+  | 'motivation'
+  | 'social'
+  | 'achievement'
+  | 'system';
+
+export function notificationCategory(
+  type: NotificationType
+): NotificationCategory {
+  if (type === 'cheer') return 'motivation';
+  if (type === 'achievement') return 'achievement';
+  return 'social';
+}
+
 export interface UserNotification {
   readonly type: NotificationType;
   /** ISO timestamp, same convention as `Cheer.createdAt`. */

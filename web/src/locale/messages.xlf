@@ -124,7 +124,7 @@
     <unit id="user.guestName">
       <notes>
         <note category="location">libs/auth/src/lib/core/user-context.service.ts:17</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:57</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:64</note>
       </notes>
       <segment>
         <source>Gast</source>
@@ -515,9 +515,17 @@
         <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
       </segment>
     </unit>
+    <unit id="user.menu.notifications">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
     <unit id="user.menu.profile">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:34,36</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:47,49</note>
       </notes>
       <segment>
         <source>Mein Profil</source>
@@ -525,7 +533,7 @@
     </unit>
     <unit id="user.menu.settings">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:42,44</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:55,57</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -533,7 +541,7 @@
     </unit>
     <unit id="user.menu.logout">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:46,48</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:59,61</note>
       </notes>
       <segment>
         <source>Abmelden</source>
@@ -541,7 +549,7 @@
     </unit>
     <unit id="user.menu.guestHint">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:60,63</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:73,76</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast</source>
@@ -549,7 +557,7 @@
     </unit>
     <unit id="user.menu.convertAccount">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:66,68</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:79,81</note>
       </notes>
       <segment>
         <source>Umwandeln in Nutzerkonto</source>
@@ -557,8 +565,8 @@
     </unit>
     <unit id="user.menu.signIn">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:70,72</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:88,90</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:83,85</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:101,103</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -566,7 +574,7 @@
     </unit>
     <unit id="user.menu.tryAsGuest">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:84,86</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:97,99</note>
       </notes>
       <segment>
         <source>Als Gast ausprobieren</source>
@@ -574,7 +582,7 @@
     </unit>
     <unit id="user.menu.aria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:54</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:61</note>
       </notes>
       <segment>
         <source>Nutzerkonto-Menü</source>
@@ -582,7 +590,7 @@
     </unit>
     <unit id="user.menu.guestAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:55</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:62</note>
       </notes>
       <segment>
         <source>Gast-Menü</source>
@@ -590,7 +598,7 @@
     </unit>
     <unit id="user.menu.anonAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:56</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:63</note>
       </notes>
       <segment>
         <source>Anmelde-Menü</source>
@@ -2862,7 +2870,7 @@
     </unit>
     <unit id="achievements.tile.progress">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-tile.component.ts:25,27</note>
+        <note category="location">web/src/app/achievements/achievement-tile.component.ts:29,32</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
@@ -4415,7 +4423,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:134,135</note>
+        <note category="location">web/src/app/app.html:137,138</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -4423,7 +4431,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:148</note>
+        <note category="location">web/src/app/app.html:154</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4431,7 +4439,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:153,155</note>
+        <note category="location">web/src/app/app.html:159,161</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4439,7 +4447,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:156,158</note>
+        <note category="location">web/src/app/app.html:162,164</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4447,7 +4455,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:158,159</note>
+        <note category="location">web/src/app/app.html:164,165</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4455,7 +4463,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:160,162</note>
+        <note category="location">web/src/app/app.html:166,168</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4463,7 +4471,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:163,166</note>
+        <note category="location">web/src/app/app.html:169,172</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4471,7 +4479,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:170,172</note>
+        <note category="location">web/src/app/app.html:176,178</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -4701,9 +4709,25 @@
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
       </segment>
     </unit>
-    <unit id="seo.achievements.title">
+    <unit id="seo.notifications.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:280</note>
+      </notes>
+      <segment>
+        <source>Nachrichten – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.notifications.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:281</note>
+      </notes>
+      <segment>
+        <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:293</note>
       </notes>
       <segment>
         <source>Abzeichen – Pushup Tracker</source>
@@ -4711,7 +4735,7 @@
     </unit>
     <unit id="seo.achievements.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:281</note>
+        <note category="location">web/src/app/app.routes.ts:294</note>
       </notes>
       <segment>
         <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
@@ -4719,7 +4743,7 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:292</note>
+        <note category="location">web/src/app/app.routes.ts:305</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -4727,7 +4751,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:293</note>
+        <note category="location">web/src/app/app.routes.ts:306</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4735,7 +4759,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:303</note>
+        <note category="location">web/src/app/app.routes.ts:316</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -4743,7 +4767,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:304</note>
+        <note category="location">web/src/app/app.routes.ts:317</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4751,7 +4775,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:318</note>
+        <note category="location">web/src/app/app.routes.ts:331</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4759,7 +4783,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:319</note>
+        <note category="location">web/src/app/app.routes.ts:332</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4767,7 +4791,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:336</note>
+        <note category="location">web/src/app/app.routes.ts:349</note>
       </notes>
       <segment>
         <source>Über uns – Pushup Tracker</source>
@@ -4775,7 +4799,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:337</note>
+        <note category="location">web/src/app/app.routes.ts:350</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4783,7 +4807,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:347</note>
+        <note category="location">web/src/app/app.routes.ts:360</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -4791,7 +4815,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:348</note>
+        <note category="location">web/src/app/app.routes.ts:361</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -4799,7 +4823,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:358</note>
+        <note category="location">web/src/app/app.routes.ts:371</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -4807,7 +4831,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:359</note>
+        <note category="location">web/src/app/app.routes.ts:372</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -4815,7 +4839,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:110</note>
+        <note category="location">web/src/app/app.ts:113</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4823,7 +4847,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:111</note>
+        <note category="location">web/src/app/app.ts:114</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4831,7 +4855,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:248</note>
+        <note category="location">web/src/app/app.ts:255</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4839,7 +4863,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:317</note>
+        <note category="location">web/src/app/app.ts:324</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4847,7 +4871,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:320</note>
+        <note category="location">web/src/app/app.ts:327</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4855,7 +4879,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:388</note>
+        <note category="location">web/src/app/app.ts:395</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4863,7 +4887,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:417</note>
+        <note category="location">web/src/app/app.ts:424</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4871,7 +4895,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:424</note>
+        <note category="location">web/src/app/app.ts:431</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5816,6 +5840,14 @@
       </notes>
       <segment>
         <source>Zum Wiki-Eintrag</source>
+      </segment>
+    </unit>
+    <unit id="announcements.workouts">
+      <notes>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:42</note>
+      </notes>
+      <segment>
+        <source>Neu: eigene Sessions zusammenstellen</source>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">
@@ -8630,6 +8662,142 @@
       </notes>
       <segment>
         <source>Zum Blog</source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.title">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:43,44</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.markAll">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:51,53</note>
+      </notes>
+      <segment>
+        <source> Alle gelesen </source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.empty">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:60,64</note>
+      </notes>
+      <segment>
+        <source> Noch keine Nachrichten. </source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.showAll">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:71,74</note>
+      </notes>
+      <segment>
+        <source> Alle anzeigen </source>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.none">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:138</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.unread">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:139</note>
+      </notes>
+      <segment>
+        <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.actor.anonymous">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:24</note>
+      </notes>
+      <segment>
+        <source>Jemand</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.cheer">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:32</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> feuert dich an</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendRequest">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:34</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:36</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challenge">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:38</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> fordert dich heraus</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challengeAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:40</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.workoutShared">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:42</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.achievement">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:44</note>
+      </notes>
+      <segment>
+        <source>Du hast ein neues Abzeichen verdient</source>
+      </segment>
+    </unit>
+    <unit id="notifications.page.title">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:16,17</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="notifications.page.markAll">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:19,22</note>
+      </notes>
+      <segment>
+        <source>Alle gelesen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.page.empty">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:28,31</note>
+      </notes>
+      <segment>
+        <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
       </segment>
     </unit>
     <unit id="publicProfile.badge.planCompleted">

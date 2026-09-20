@@ -41,6 +41,13 @@ export class UserMenuComponent {
    */
   readonly avatarUrl = input<string | null>(null);
 
+  /**
+   * Unread inbox count, supplied by the host for the same reason as
+   * {@link avatarUrl}: this library must not reach into the app's
+   * notification store, which would invert the dependency.
+   */
+  readonly unreadNotifications = input<number>(0);
+
   readonly user = this.state.user;
   readonly loading = this.state.loading;
   readonly isAuthenticated = this.state.isAuthenticated;
@@ -76,6 +83,10 @@ export class UserMenuComponent {
 
   async goToSettings(): Promise<void> {
     await this.router.navigate(['/settings']);
+  }
+
+  async goToNotifications(): Promise<void> {
+    await this.router.navigate(['/nachrichten']);
   }
 
   async tryAsGuest(): Promise<void> {

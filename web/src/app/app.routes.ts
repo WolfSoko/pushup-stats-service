@@ -274,6 +274,19 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'nachrichten',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.notifications.title:Nachrichten – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.notifications.description:Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.`,
+      noindex: true,
+    },
+    loadComponent: () =>
+      import('./notifications/notifications-page.component').then(
+        (m) => m.NotificationsPageComponent
+      ),
+  },
+  {
     path: 'abzeichen',
     canActivate: [authGuard],
     data: {

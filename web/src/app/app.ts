@@ -33,6 +33,8 @@ import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 
 import { AvatarService } from './core/avatar.service';
 import { CheerFireworksOverlayComponent } from './core/cheer-fireworks-overlay.component';
+import { NotificationBellComponent } from './notifications/notification-bell.component';
+import { NotificationStore } from './notifications/notification.store';
 import { filter } from 'rxjs';
 import { AiAssistantNavButtonComponent } from './ai/ai-assistant-nav-button.component';
 import { FriendInviteService } from './core/friend-invite.service';
@@ -96,6 +98,7 @@ import {
     MatDialogModule,
     OverlayModule,
     CheerFireworksOverlayComponent,
+    NotificationBellComponent,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -128,6 +131,10 @@ export class App {
     () => !!this.user.userIdSafe() && !this.user.isGuest()
   );
   readonly navItems = computed(() => mainNavItems(this.isLoggedIn()));
+  private readonly notifications = inject(NotificationStore);
+  readonly unreadNotifications = computed(() =>
+    this.isLoggedIn() ? this.notifications.unreadCount() : 0
+  );
   /** The signed-in user's own profile page, for the sidenav. */
   readonly profileUrl = computed(() => ownProfilePath(this.user.userIdSafe()));
   // The speed-dial FAB is for anyone who can persist an entry — guests have a

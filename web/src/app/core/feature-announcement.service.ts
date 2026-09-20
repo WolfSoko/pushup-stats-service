@@ -19,6 +19,10 @@ export interface FeatureAnnouncement {
   /** Persisted per account once the dialog closes; never reused. */
   readonly id: string;
   readonly load: () => Promise<Type<unknown>>;
+  /** One line for the message inbox, which lists unseen announcements. */
+  readonly label: string;
+  /** Where the inbox row goes, without locale prefix. */
+  readonly url: string;
 }
 
 export const WORKOUTS_ANNOUNCEMENT = 'workouts-2026-09';
@@ -35,6 +39,8 @@ export const ANNOUNCEMENTS: ReadonlyArray<FeatureAnnouncement> = [
       import('../workouts/workouts-intro-dialog.component').then(
         (m) => m.WorkoutsIntroDialogComponent
       ),
+    label: $localize`:@@announcements.workouts:Neu: eigene Sessions zusammenstellen`,
+    url: '/workouts',
   },
 ];
 

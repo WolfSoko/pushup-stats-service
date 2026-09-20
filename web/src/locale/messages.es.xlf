@@ -14592,5 +14592,131 @@
         <target>Abzeichen</target>
       </segment>
     </unit>
+    <unit id="user.menu.notifications">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="seo.notifications.title">
+      <segment state="initial">
+        <source>Nachrichten – Pushup Tracker</source>
+        <target>Nachrichten – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.notifications.description">
+      <segment state="initial">
+        <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
+        <target>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</target>
+      </segment>
+    </unit>
+    <unit id="announcements.workouts">
+      <segment state="initial">
+        <source>Neu: eigene Sessions zusammenstellen</source>
+        <target>Neu: eigene Sessions zusammenstellen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.title">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.markAll">
+      <segment state="initial">
+        <source> Alle gelesen </source>
+        <target> Alle gelesen </target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.empty">
+      <segment state="initial">
+        <source> Noch keine Nachrichten. </source>
+        <target> Noch keine Nachrichten. </target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.showAll">
+      <segment state="initial">
+        <source> Alle anzeigen </source>
+        <target> Alle anzeigen </target>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.none">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.unread">
+      <segment state="initial">
+        <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
+        <target>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.actor.anonymous">
+      <segment state="initial">
+        <source>Jemand</source>
+        <target>Jemand</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.cheer">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> feuert dich an</source>
+        <target><ph id="0" equiv="name" disp="name"/> feuert dich an</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendRequest">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</source>
+        <target><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendAccepted">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</source>
+        <target><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challenge">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> fordert dich heraus</source>
+        <target><ph id="0" equiv="name" disp="name"/> fordert dich heraus</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challengeAccepted">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</source>
+        <target><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.workoutShared">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</source>
+        <target><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.achievement">
+      <segment state="initial">
+        <source>Du hast ein neues Abzeichen verdient</source>
+        <target>Du hast ein neues Abzeichen verdient</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.title">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.markAll">
+      <segment state="initial">
+        <source>Alle gelesen</source>
+        <target>Alle gelesen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.empty">
+      <segment state="initial">
+        <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
+        <target> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>
