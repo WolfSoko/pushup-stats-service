@@ -15,9 +15,9 @@ Was heute drinsteckt:
 | Bereich           | Umfang                                                                                          |
 | ----------------- | ----------------------------------------------------------------------------------------------- |
 | Übungskatalog     | 9 Kategorien: `pushup`, `push`, `pull`, `squat`, `hinge`, `lunge`, `core`, `cardio`, `mobility` |
-| Übungs-Wiki       | 360 Content-Dateien (`content/wiki/exercises`)                                                  |
-| Liegestütz-Wiki   | 117 Content-Dateien (`content/wiki/pushup-types`) — echter Teil-Bereich, kein Markenkern        |
-| Trainingspläne    | 6 Pläne, `TrainingPlanDay.exerciseId` über den ganzen Katalog                                   |
+| Übungs-Wiki       | 40 Übungen × 9 Locales = 360 Content-Dateien (`content/wiki/exercises`)                         |
+| Liegestütz-Wiki   | 13 Varianten × 9 Locales = 117 Dateien — echter Teil-Bereich, kein Markenkern                   |
+| Trainingspläne    | 10 Pläne, fünf davon ohne Liegestütz-Bezug (Push/Pull, Ganzkörper, Rumpf, HIIT, Mobility)       |
 | Eigene Sessions   | `/workouts` — frei zusammenstellbare Workouts                                                   |
 | Kamera-Autozähler | Reps **und** Halte-Timer (Plank, Hollow-Hold), nicht nur Liegestütze                            |
 | Social            | Freunde, Bestenliste, öffentliche Profile, Nachrichten-Inbox, Abzeichen                         |
