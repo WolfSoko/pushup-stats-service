@@ -3,13 +3,13 @@ Pushup Tracker gjør armhevninger og 41 andre øvelser til et spill du vil vinne
 Enten du starter på null eller allerede er på ditt første hundre: denne appen holder deg i gang. Kameraet teller repetisjonene automatisk, treningsplanene gir deg en klar oppgave hver dag, og venner og resultatlista motiverer uten å mase.
 
 📷 AUTOMATISK REP-TELLING
-Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner armhevninger, knebøy, pullups og sit-ups i sanntid og teller hver rene repetisjon. For planke og hollow hold starter i stedet en automatisk tidtaker for holdet. Alt kjører på enheten din — ingen video forlater telefonen.
+Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner armhevninger, knebøy, pullups og sit-ups i sanntid og teller hver rene repetisjon. For planke og hollow hold starter i stedet en automatisk tidtaker for holdet. Kjører på enheten din — ingen video forlater telefonen.
 
 🏋️ MER ENN BARE ARMHEVNINGER
 • 13 varianter av armhevning: kne, incline, decline, bred, diamant, pike, archer og helt til énarmet — med instruksjon per type
 • 42 øvelser i 9 kategorier: armhevninger, push, pull, knebøy, hinge, utfall, kjerne, kondisjon, mobilitet
 • Pullups, dips, knebøy, utfall, planke, hollow hold, burpees, hoppetau, yoga, uttøying og mer
-• Utholdenhet på distanse og tid: løping, gange, sykling, roing, svømming — med tempo
+• Utholdenhet på distanse og tid: løping, sykling, roing, svømming — med tempo
 
 ⚡ REGISTRERING PÅ TO SEKUNDER
 • Ett trykk på hurtigknappen: oppføringen er ferdig, uten noen dialog
@@ -22,10 +22,10 @@ Sett fra deg telefonen, åpne autotelleren og sett i gang: KI-en gjenkjenner arm
 • Armhevninger etter 40 — skånsom 4-ukers plan
 • Daily 100 — 30 dager til 100 armhevninger
 • Énarmet armhevning, Push & Pull Balance, Full Body Strong, Core Foundations, HIIT Burner, Mobility & Recovery
-Hver dag den oppgaven som passer, med hviledager, lette dager og testdager. Fem planer regner hver dagsoppgave om etter makstesten din: ingen 3×20 hvis du klarer 8. Fullførte dager krysses av selv så snart du når dagsmålet, og den aktive planen kan du dele.
+Hver dag den oppgaven som passer, med hviledager, lette dager og testdager. Fem planer regner hver dagsoppgave om etter makstesten din: ingen 3×20 hvis du klarer 8. Fullførte dager krysses av selv, og den aktive planen kan du dele.
 
 🧩 EGNE ØKTER
-Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder deg gjennom den som en plandag. Vis øktene på profilen din eller send dem rett til venner — alle får sin egen kopi.
+Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder deg gjennom den steg for steg. Vis øktene på profilen din eller send dem rett til venner — alle får sin egen kopi.
 
 🎯 MÅL, STREAKS OG STATISTIKK
 • Dags-, uke- og månedsmål — per øvelse, med ukedagsfilter
@@ -33,15 +33,16 @@ Sett sammen din egen økt: øvelser, mål og sett i din rekkefølge. Appen leder
 • Heatmap-kalender over uker og måneder
 • Analyse med utviklingsgrafer, KPI-kort og sammenligning per kategori
 • Rekorder: beste dag, beste sett, beste økt
+• Merker for milepæler — oppnådde og de som står igjen
 
 🏆 RESULTATLISTE OG PROFIL
 Mål deg mot andre eller hold deg privat. Lister for i dag, de siste 7 og 30 dagene. Profilen deler du med en lenke: totale reps, streak, rekorder, heatmap, de siste 10 øktene og den aktive planen — hver rute stiller du inn hver for seg på av, bare venner eller offentlig.
 
 👥 VENNER OG FELLES UTFORDRINGER
-Inviter venner: tavla deres viser hvem som leder denne uka. Send hverandre et heiarop og start felles utfordringer — 500 armhevninger på 7 dager, hver med sin egen fremgang.
+Inviter venner: tavla deres viser hvem som leder denne uka. Send hverandre heiarop og start felles utfordringer — 500 armhevninger på 7 dager, hver med sin egen fremgang. Hvert heiarop havner i innboksen, også offline.
 
 🔔 SMARTE PÅMINNELSER
-Varsler med intervall, stilletid, ukedager og tidssone — også når appen er lukket. Den korteste veien: ett trykk på «Logg 50» i varselet.
+Varsler med intervall, stilletid, ukedager og tidssone — også når appen er lukket. Raskest: ett trykk på «Logg 50» i varselet.
 
 📚 KUNNSKAP FRAMFOR GJETTING
 Øvelses-wiki med ren utførelse og de typiske feilene, i tillegg til en blogg.

@@ -21,7 +21,11 @@
         "{workspaceRoot}/.oxfmtrc.json",
         "{workspaceRoot}/eslint.config.mjs",
         "{workspaceRoot}/lint-staged.config.mjs",
-        "{workspaceRoot}/.husky/pre-commit"
+        "{workspaceRoot}/.husky/pre-commit",
+        "{workspaceRoot}/web/src/**/*.{ts,html}",
+        "{workspaceRoot}/libs/**/*.{ts,html}",
+        "{workspaceRoot}/tools/src/generate-feeds.js",
+        "{workspaceRoot}/tools/src/generate-sitemap.js"
       ],
       "options": {
         "passWithNoTests": true

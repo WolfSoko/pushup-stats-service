@@ -14,17 +14,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
+  BRAND_LOGO_URL,
+  BRAND_NAME,
+  BRAND_URL,
   findPushupTypeBySlug,
   localizePushupType,
   localizePushupTypeSlug,
-  pushupTypeSlugByLocale,
   type PushupTypeInfo,
+  pushupTypeSlugByLocale,
 } from '@pu-stats/models';
 import { SeoService } from '../core/seo.service';
 import { SUPPORTED_LOCALES } from '../../server-locale-redirect';
-
-const BASE_URL = 'https://pushup-stats.com';
-const LOGO_URL = `${BASE_URL}/assets/pushup-logo.png`;
 
 @Component({
   selector: 'app-pushup-type-detail',
@@ -307,7 +307,7 @@ export class PushupTypeDetailComponent implements OnInit {
 
     const lang = this.locale.toLowerCase().split(/[-_]/)[0];
     const localeSlug = localizePushupTypeSlug(type, this.locale);
-    const canonical = `${BASE_URL}/${lang}/wiki/liegestuetz-typen/${localeSlug}`;
+    const canonical = `${BRAND_URL}/${lang}/wiki/liegestuetz-typen/${localeSlug}`;
     const jsonLd: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'HowTo',
@@ -323,11 +323,11 @@ export class PushupTypeDetailComponent implements OnInit {
       mainEntityOfPage: canonical,
       publisher: {
         '@type': 'Organization',
-        name: 'Pushup Tracker',
-        url: BASE_URL,
+        name: BRAND_NAME,
+        url: BRAND_URL,
         logo: {
           '@type': 'ImageObject',
-          url: LOGO_URL,
+          url: BRAND_LOGO_URL,
         },
       },
     };

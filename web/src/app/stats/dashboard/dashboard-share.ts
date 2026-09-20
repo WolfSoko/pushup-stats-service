@@ -1,3 +1,4 @@
+import { BRAND_URL } from '@pu-stats/models';
 import { buildProfileShareUrl } from '../../core/profile-share-url';
 
 export interface ShareDayInput {
@@ -47,6 +48,6 @@ export function buildShareDayPayload(input: ShareDayInput): SharePayload {
   return {
     title: $localize`:@@dashboard.share.title:Pushup Tracker`,
     text,
-    url: profileUrl || 'https://pushup-stats.com',
+    url: profileUrl || BRAND_URL,
   };
 }

@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
 
 @Component({
   selector: 'app-impressum-page',
@@ -21,7 +22,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
         <h2 i18n="@@impressum.contact.title">Kontakt</h2>
         <p>
           <span i18n="@@impressum.contact.email">E-Mail:</span>
-          contact&#64;pushup-stats.com
+          {{ contactEmail }}
         </p>
       </section>
 
@@ -84,4 +85,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     }
   `,
 })
-export class ImpressumPageComponent {}
+export class ImpressumPageComponent {
+  protected readonly contactEmail = BRAND_CONTACT_EMAIL;
+}

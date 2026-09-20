@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserAchievementsApiService } from '@pu-stats/data-access';
 
 import { UserContextService } from '@pu-auth/auth';
+import { BRAND_URL } from '@pu-stats/models';
 import { resolveAchievementBadge } from '../public-profile/achievement-badge';
 import {
   markCelebrated,
@@ -15,8 +16,6 @@ import {
   AchievementDialogComponent,
   type AchievementDialogData,
 } from './achievement-dialog.component';
-
-const SHARE_URL = 'https://pushup-stats.com';
 
 /**
  * Opens a celebration dialog the first time the user sees a badge.
@@ -72,7 +71,7 @@ export class AchievementCelebrationService {
     if (!badge) return;
 
     this.dialog.open(AchievementDialogComponent, {
-      data: { badge, shareUrl: SHARE_URL } satisfies AchievementDialogData,
+      data: { badge, shareUrl: BRAND_URL } satisfies AchievementDialogData,
       autoFocus: 'dialog',
     });
   }

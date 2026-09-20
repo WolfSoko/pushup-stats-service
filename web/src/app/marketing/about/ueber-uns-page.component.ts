@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
 
 @Component({
   selector: 'app-ueber-uns-page',
@@ -58,7 +59,7 @@ import { RouterLink } from '@angular/router';
           <span i18n="@@about.contact.body"
             >Fragen, Feedback oder Fehler gefunden? Schreib uns:</span
           >
-          contact&#64;pushup-stats.com
+          {{ contactEmail }}
         </p>
         <p class="about-links">
           <a
@@ -103,4 +104,6 @@ import { RouterLink } from '@angular/router';
     }
   `,
 })
-export class UeberUnsPageComponent {}
+export class UeberUnsPageComponent {
+  protected readonly contactEmail = BRAND_CONTACT_EMAIL;
+}

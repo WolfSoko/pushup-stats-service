@@ -2,6 +2,7 @@ import { computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { connectAgentContext, registerFrontendTool } from '@copilotkit/angular';
 import { z } from 'zod';
+import { BRAND_NAME } from '@pu-stats/models';
 import { AppDataFacade } from '../core/app-data.facade';
 import { QuickAddOrchestrationService } from '../core/quick-add-orchestration.service';
 import {
@@ -25,8 +26,7 @@ export function registerAiAssistantTools(): void {
   const summary = computed(() => buildTrainingSummary(appData));
 
   connectAgentContext(() => ({
-    description:
-      "Pushup Tracker app state: exercises that can be logged and the signed-in user's daily goal progress.",
+    description: `${BRAND_NAME} app state: exercises that can be logged and the signed-in user's daily goal progress.`,
     value: JSON.stringify({
       exercises: loggableExercises(),
       today: summary(),

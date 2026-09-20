@@ -1,12 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { BRAND_URL } from '@pu-stats/models';
 import {
   SUPPORTED_LOCALES,
   type SupportedLocale,
 } from '../../server-locale-redirect';
 
-const BASE_URL = 'https://pushup-stats.com';
 // Single source of truth lives in `server-locale-redirect.ts`; a
 // type alias keeps this file's existing references compact.
 const LOCALE_PREFIXES = SUPPORTED_LOCALES;
@@ -79,7 +79,7 @@ export class SeoService {
     const pathWithoutQuery = path.split(/[?#]/)[0] ?? path;
     const strippedPath = this.stripLocalePrefix(pathWithoutQuery);
     const url = (lang: LocalePrefix, p: string): string =>
-      `${BASE_URL}/${lang}${p.startsWith('/') ? p : `/${p}`}`;
+      `${BRAND_URL}/${lang}${p.startsWith('/') ? p : `/${p}`}`;
 
     // Resolve the per-locale path map. Without overrides we treat the
     // current path as locale-agnostic and advertise it for every
