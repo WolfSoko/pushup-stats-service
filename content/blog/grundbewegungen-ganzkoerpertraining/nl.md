@@ -193,8 +193,10 @@ heroImageCredit: 'Beeld: Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong – 6-weken full-body-plan</h3>
   <p>
-    Het plan dekt alle zes patronen af in drie trainingen per week, verhoogt de belasting automatisch en
-    laat je in de analyse zien of duwen en trekken in balans blijven.
+    Het plan dekt vier van de zes patronen af in drie trainingen per week – duwen, squat,
+    heupscharnier en romp – en verhoogt de belasting automatisch. Trekken en uithoudingsvermogen vul
+    je zelf aan: roeien onder een tafel of &bdquo;Push &amp; Pull Balance&rdquo; voor het eerste, hardlopen of
+    touwtjespringen voor het tweede.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Start het full-body-plan &rarr;</a>

@@ -14469,5 +14469,77 @@
         <target> Alles gelesen. </target>
       </segment>
     </unit>
+    <unit id="rebrandIntro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.title">
+      <segment state="initial">
+        <source>Wir benennen uns um</source>
+        <target>Wir benennen uns um</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.start">
+      <segment state="initial">
+        <source>Beitrag lesen</source>
+        <target>Beitrag lesen</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step1.title">
+      <segment state="initial">
+        <source>Ein neuer Name kommt</source>
+        <target>Ein neuer Name kommt</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step1.body">
+      <segment state="initial">
+        <source>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</source>
+        <target>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step2.title">
+      <segment state="initial">
+        <source>Dein Fortschritt bleibt</source>
+        <target>Dein Fortschritt bleibt</target>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step2.body">
+      <segment state="initial">
+        <source>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</source>
+        <target>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</target>
+      </segment>
+    </unit>
+    <unit id="announcements.rebrand">
+      <segment state="initial">
+        <source>Diese App bekommt einen neuen Namen</source>
+        <target>Diese App bekommt einen neuen Namen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -28,3 +28,10 @@ export const BRAND_CONTACT_EMAIL = `contact@${BRAND_DOMAIN}`;
 
 /** Absolute logo URL for schema.org publisher blocks and OG tags. */
 export const BRAND_LOGO_URL = `${BRAND_URL}/assets/pushup-logo.png`;
+
+/**
+ * Site-wide share image, 1200×630 PNG — the dimensions `index.html` declares
+ * statically. Pages that bring no image of their own fall back to it, so a
+ * share card never ends up with dimension tags but no picture.
+ */
+export const BRAND_OG_IMAGE_URL = `${BRAND_URL}/pushup-stats-og.png`;

@@ -27,6 +27,7 @@ export interface FeatureAnnouncement {
 
 export const WORKOUTS_ANNOUNCEMENT = 'workouts-2026-09';
 export const INBOX_ANNOUNCEMENT = 'inbox-achievements-2026-09';
+export const REBRAND_ANNOUNCEMENT = 'rebrand-2026-09';
 
 /**
  * Every announcement, oldest first. A new feature adds an entry with a
@@ -51,6 +52,15 @@ export const ANNOUNCEMENTS: ReadonlyArray<FeatureAnnouncement> = [
       ),
     label: $localize`:@@announcements.inbox:Neu: Nachrichten und deine Abzeichen`,
     url: '/nachrichten',
+  },
+  {
+    id: REBRAND_ANNOUNCEMENT,
+    load: () =>
+      import('../blog/rebrand-intro-dialog.component').then(
+        (m) => m.RebrandIntroDialogComponent
+      ),
+    label: $localize`:@@announcements.rebrand:Diese App bekommt einen neuen Namen`,
+    url: '/blog/neuer-name-kommt',
   },
 ];
 

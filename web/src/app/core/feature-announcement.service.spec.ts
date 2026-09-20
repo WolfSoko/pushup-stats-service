@@ -6,11 +6,13 @@ import { UserContextService } from '@pu-auth/auth';
 import type { UserConfig } from '@pu-stats/models';
 import { Subject } from 'rxjs';
 
+import { GENERATED_BLOG_POSTS } from '../blog/generated';
 import {
   ANNOUNCEMENTS,
   FeatureAnnouncementService,
   INBOX_ANNOUNCEMENT,
   isDashboard,
+  REBRAND_ANNOUNCEMENT,
   WORKOUTS_ANNOUNCEMENT,
 } from './feature-announcement.service';
 import { UserConfigStore } from './user-config.store';
@@ -35,6 +37,24 @@ describe('ANNOUNCEMENTS', () => {
     const ids = ANNOUNCEMENTS.map((a) => a.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids).toContain(WORKOUTS_ANNOUNCEMENT);
+    expect(ids).toContain(REBRAND_ANNOUNCEMENT);
+  });
+
+  it.each(
+    ANNOUNCEMENTS.filter((a) => a.url.startsWith('/blog/')).map((a) => [
+      a.id,
+      a.url,
+    ])
+  )('should point %s at a blog post that exists (%s)', (_id, url) => {
+    // given an announcement whose inbox row links into the blog
+    const slug = url.slice('/blog/'.length);
+
+    // when looking the slug up in the generated posts
+    const post = GENERATED_BLOG_POSTS.find((p) => p.slug === slug);
+
+    // then it resolves — a typo here would send every account that opens
+    // the walkthrough to a 404, and the id is burned once they see it
+    expect(post).toBeDefined();
   });
 });
 
