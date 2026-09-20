@@ -14479,7 +14479,7 @@
     <unit id="settings.autoCountFeedbackHint">
       <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
-        <target> Η απάντησή σου βελτιώνει την ανίχνευση. Μεταδίδονται μόνο ο μετρημένος και ο πραγματικός αριθμός καθώς και οι ρυθμίσεις ανίχνευσης – όχι βίντεο ή εικόνα. </target>
+        <target> Η απάντησή σου βελτιώνει την ανίχνευση. Μεταδίδονται ο μετρημένος και ο πραγματικός αριθμός, οι ρυθμίσεις ανίχνευσης, ο λογαριασμός σου και το αναγνωριστικό συσκευής του προγράμματος περιήγησής σου – όχι βίντεο ή εικόνα. </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unpublish">

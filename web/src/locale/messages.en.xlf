@@ -14672,7 +14672,7 @@ Active:         </target>
     <unit id="settings.autoCountFeedbackHint">
       <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
-        <target> Your answer improves detection. Only the counted and actual number as well as the detection settings are transmitted – no video and no image. </target>
+        <target> Your answer improves detection. What is transmitted is the counted and actual number, the detection settings, your account, and your browser’s device identifier – no video and no image. </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unpublish">

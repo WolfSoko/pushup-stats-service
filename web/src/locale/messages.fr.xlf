@@ -14351,7 +14351,7 @@
     <unit id="settings.autoCountFeedbackHint">
       <segment state="translated">
         <source> Deine Antwort verbessert die Erkennung. Übertragen werden die gezählte und die tatsächliche Anzahl, die Erkennungseinstellungen, dein Konto und die Gerätekennung deines Browsers – kein Video und kein Bild. </source>
-        <target> Ta réponse améliore la détection. Seuls le nombre compté, le nombre réel et les réglages de détection sont transmis – ni vidéo ni image. </target>
+        <target> Ta réponse améliore la détection. Sont transmis le nombre compté et le nombre réel, les réglages de détection, ton compte et l’identifiant de l’appareil de ton navigateur – ni vidéo ni image. </target>
       </segment>
     </unit>
     <unit id="autoCount.tuning.unpublish">
