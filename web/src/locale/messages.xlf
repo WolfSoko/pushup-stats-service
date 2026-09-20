@@ -5579,7 +5579,7 @@
     </unit>
     <unit id="blog.article.back">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:41,43</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:39,41</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Blog </source>
@@ -5587,7 +5587,7 @@
     </unit>
     <unit id="blog.article.readingTime">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:71,72</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:69,70</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Min. Lesezeit</source>
@@ -5595,7 +5595,7 @@
     </unit>
     <unit id="blog.article.updated">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:77,78</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:75,76</note>
       </notes>
       <segment>
         <source>Aktualisiert am</source>
@@ -5603,7 +5603,7 @@
     </unit>
     <unit id="blog.article.cta">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:94,96</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:92,94</note>
       </notes>
       <segment>
         <source> Kostenlos tracken – Jetzt registrieren </source>
@@ -5611,7 +5611,7 @@
     </unit>
     <unit id="blog.article.notFound">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:100,101</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:98,99</note>
       </notes>
       <segment>
         <source>Artikel nicht gefunden.</source>
@@ -5619,7 +5619,7 @@
     </unit>
     <unit id="blog.article.toList">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:102,106</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:100,104</note>
       </notes>
       <segment>
         <source>Zur Übersicht</source>
@@ -7438,7 +7438,7 @@
     </unit>
     <unit id="about.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:10,13</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:11,14</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -7446,7 +7446,7 @@
     </unit>
     <unit id="about.who.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:13,14</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:14,15</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt</source>
@@ -7454,7 +7454,7 @@
     </unit>
     <unit id="about.who.body1">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:15,19</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:16,20</note>
       </notes>
       <segment>
         <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
@@ -7462,7 +7462,7 @@
     </unit>
     <unit id="about.who.body2">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:22,27</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:23,28</note>
       </notes>
       <segment>
         <source> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
@@ -7470,7 +7470,7 @@
     </unit>
     <unit id="about.mission.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:33,34</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:34,35</note>
       </notes>
       <segment>
         <source>Warum es diese Seite gibt</source>
@@ -7478,7 +7478,7 @@
     </unit>
     <unit id="about.mission.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:35,40</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:36,41</note>
       </notes>
       <segment>
         <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
@@ -7486,7 +7486,7 @@
     </unit>
     <unit id="about.content.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:45,46</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Wie unsere Inhalte entstehen</source>
@@ -7494,7 +7494,7 @@
     </unit>
     <unit id="about.content.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:47,51</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:48,52</note>
       </notes>
       <segment>
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
@@ -7502,7 +7502,7 @@
     </unit>
     <unit id="about.contact.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:56,58</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:57,59</note>
       </notes>
       <segment>
         <source>Kontakt</source>
@@ -7510,7 +7510,7 @@
     </unit>
     <unit id="about.contact.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:59,61</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:60,62</note>
       </notes>
       <segment>
         <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
@@ -7518,7 +7518,7 @@
     </unit>
     <unit id="about.toImpressum">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:68,71</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:69,72</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -7526,7 +7526,7 @@
     </unit>
     <unit id="about.toDatenschutz">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:74,77</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:75,78</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -7902,7 +7902,7 @@
     </unit>
     <unit id="datenschutz.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:7,10</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:8,11</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung</source>
@@ -7910,7 +7910,7 @@
     </unit>
     <unit id="datenschutz.overview.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:11,13</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:12,14</note>
       </notes>
       <segment>
         <source> 1. Datenschutz auf einen Blick </source>
@@ -7918,7 +7918,7 @@
     </unit>
     <unit id="datenschutz.overview.general.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:13,14</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:14,15</note>
       </notes>
       <segment>
         <source>Allgemeine Hinweise</source>
@@ -7926,7 +7926,7 @@
     </unit>
     <unit id="datenschutz.overview.general.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:15,18</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:16,19</note>
       </notes>
       <segment>
         <source> Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. </source>
@@ -7934,7 +7934,7 @@
     </unit>
     <unit id="datenschutz.responsible.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:24,26</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:25,27</note>
       </notes>
       <segment>
         <source> 2. Verantwortliche Stelle </source>
@@ -7942,7 +7942,7 @@
     </unit>
     <unit id="datenschutz.responsible.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:27,30</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:28,31</note>
       </notes>
       <segment>
         <source> Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist: </source>
@@ -7950,7 +7950,7 @@
     </unit>
     <unit id="datenschutz.responsible.email">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:34,35</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:35,37</note>
       </notes>
       <segment>
         <source>E-Mail:</source>
@@ -7958,7 +7958,7 @@
     </unit>
     <unit id="datenschutz.hosting.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:40,41</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:41,42</note>
       </notes>
       <segment>
         <source>3. Hosting</source>
@@ -7966,7 +7966,7 @@
     </unit>
     <unit id="datenschutz.hosting.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:42,47</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:43,48</note>
       </notes>
       <segment>
         <source> Diese Website wird bei Google Firebase (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) gehostet. Wenn Sie diese Website besuchen, werden Server-Log-Dateien automatisch erhoben und für kurze Zeit gespeichert. Details entnehmen Sie der Datenschutzerklärung von Google: https://policies.google.com/privacy </source>
@@ -7974,7 +7974,7 @@
     </unit>
     <unit id="datenschutz.account.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:53,55</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:54,56</note>
       </notes>
       <segment>
         <source> 4. Registrierung und Nutzerkonto </source>
@@ -7982,7 +7982,7 @@
     </unit>
     <unit id="datenschutz.account.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:56,60</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:57,61</note>
       </notes>
       <segment>
         <source> Sie können ein Nutzerkonto anlegen, um Trainingseinträge zu speichern. Dabei werden E-Mail-Adresse, ein Anzeigename sowie Ihre Trainingseinträge in Google Cloud Firestore gespeichert. Die Authentifizierung erfolgt über Firebase Authentication. Sie können Ihr Konto und alle zugehörigen Daten jederzeit in den Einstellungen löschen. </source>
@@ -7990,7 +7990,7 @@
     </unit>
     <unit id="datenschutz.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:66,67</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:67,68</note>
       </notes>
       <segment>
         <source>5. Google Analytics</source>
@@ -7998,7 +7998,7 @@
     </unit>
     <unit id="datenschutz.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:68,74</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:69,75</note>
       </notes>
       <segment>
         <source> Diese Website nutzt Google Analytics 4 (Mess-ID: G-5D32B9B1S6), einen Webanalysedienst der Google Ireland Limited. Google Analytics verwendet Cookies und ähnliche Technologien, um Ihre Nutzung der Website zu analysieren. Die erzeugten Informationen werden in der Regel an einen Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert. Google Analytics wird nur aktiviert, wenn Sie dem zugestimmt haben. </source>
@@ -8006,7 +8006,7 @@
     </unit>
     <unit id="datenschutz.ads.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:79,80</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:80,81</note>
       </notes>
       <segment>
         <source>6. Google AdSense</source>
@@ -8014,7 +8014,7 @@
     </unit>
     <unit id="datenschutz.ads.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:81,84</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:82,85</note>
       </notes>
       <segment>
         <source> Diese Website nutzt Google AdSense (Publisher-ID: ca-pub-6346271540341424), einen Dienst der Google Ireland Limited, zur Einbindung von Werbeanzeigen. Google AdSense verwendet Cookies, um relevante Anzeigen zu schalten und die Anzeigenleistung zu messen. </source>
@@ -8022,7 +8022,7 @@
     </unit>
     <unit id="datenschutz.ads.personalized.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:87,89</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:88,90</note>
       </notes>
       <segment>
         <source> Personalisierte und nicht-personalisierte Werbung </source>
@@ -8030,7 +8030,7 @@
     </unit>
     <unit id="datenschutz.ads.personalized.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:90,95</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:91,96</note>
       </notes>
       <segment>
         <source> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </source>
@@ -8038,7 +8038,7 @@
     </unit>
     <unit id="datenschutz.cookies.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:101,102</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:102,103</note>
       </notes>
       <segment>
         <source>7. Cookies</source>
@@ -8046,7 +8046,7 @@
     </unit>
     <unit id="datenschutz.cookies.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:103,108</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:104,109</note>
       </notes>
       <segment>
         <source> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </source>
@@ -8054,7 +8054,7 @@
     </unit>
     <unit id="datenschutz.rights.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:114,115</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:115,116</note>
       </notes>
       <segment>
         <source>8. Ihre Rechte</source>
@@ -8062,7 +8062,7 @@
     </unit>
     <unit id="datenschutz.rights.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:116,120</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:117,121</note>
       </notes>
       <segment>
         <source> Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten sowie das Recht auf Datenübertragbarkeit. Außerdem haben Sie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen und sich bei einer Aufsichtsbehörde zu beschweren. </source>
@@ -8070,7 +8070,7 @@
     </unit>
     <unit id="datenschutz.deletion.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:126,127</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:127,128</note>
       </notes>
       <segment>
         <source>9. Datenlöschung</source>
@@ -8078,7 +8078,7 @@
     </unit>
     <unit id="datenschutz.deletion.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:128,131</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:129,132</note>
       </notes>
       <segment>
         <source> Sie können Ihr Nutzerkonto und alle damit verbundenen Daten jederzeit über die Einstellungsseite der Anwendung löschen. Nach der Löschung werden alle personenbezogenen Daten unverzüglich aus unseren Systemen entfernt. </source>
@@ -8086,7 +8086,7 @@
     </unit>
     <unit id="impressum.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:7,10</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:8,11</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -8094,7 +8094,7 @@
     </unit>
     <unit id="impressum.info.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:11,12</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:12,13</note>
       </notes>
       <segment>
         <source> Angaben gemäß § 5 TMG </source>
@@ -8102,7 +8102,7 @@
     </unit>
     <unit id="impressum.contact.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:21,23</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:22,24</note>
       </notes>
       <segment>
         <source>Kontakt</source>
@@ -8110,7 +8110,7 @@
     </unit>
     <unit id="impressum.contact.email">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:23,24</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:24,26</note>
       </notes>
       <segment>
         <source>E-Mail:</source>
@@ -8118,7 +8118,7 @@
     </unit>
     <unit id="impressum.liability.content.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:30,32</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:31,33</note>
       </notes>
       <segment>
         <source> Haftung für Inhalte </source>
@@ -8126,7 +8126,7 @@
     </unit>
     <unit id="impressum.liability.content.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:33,38</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:34,39</note>
       </notes>
       <segment>
         <source> Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. </source>
@@ -8134,7 +8134,7 @@
     </unit>
     <unit id="impressum.liability.links.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:44,45</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:45,46</note>
       </notes>
       <segment>
         <source>Haftung für Links</source>
@@ -8142,7 +8142,7 @@
     </unit>
     <unit id="impressum.liability.links.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:46,50</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:47,51</note>
       </notes>
       <segment>
         <source> Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. </source>
@@ -8150,7 +8150,7 @@
     </unit>
     <unit id="impressum.copyright.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:55,56</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:56,57</note>
       </notes>
       <segment>
         <source>Urheberrecht</source>
@@ -8158,7 +8158,7 @@
     </unit>
     <unit id="impressum.copyright.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:57,61</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:58,62</note>
       </notes>
       <segment>
         <source> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. </source>
@@ -11375,7 +11375,7 @@
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:108</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
       </notes>
       <segment>
         <source>Erfolg vaporisieren</source>
@@ -11383,7 +11383,7 @@
     </unit>
     <unit id="goalReached.snap">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:109</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -11391,7 +11391,7 @@
     </unit>
     <unit id="goalReached.closeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:112</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -11399,7 +11399,7 @@
     </unit>
     <unit id="goalReached.shareAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:113</note>
       </notes>
       <segment>
         <source>Erfolg teilen</source>
@@ -11407,7 +11407,7 @@
     </unit>
     <unit id="goalReached.share">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:112</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:114</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -11415,7 +11415,7 @@
     </unit>
     <unit id="goalReached.plan.heading">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:113</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:115</note>
       </notes>
       <segment>
         <source>Deine Planziele heute</source>
@@ -11423,7 +11423,7 @@
     </unit>
     <unit id="goalReached.plan.done">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:114</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:116</note>
       </notes>
       <segment>
         <source>erledigt</source>
@@ -11431,7 +11431,7 @@
     </unit>
     <unit id="goalReached.plan.open">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:115</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:117</note>
       </notes>
       <segment>
         <source>offen</source>
@@ -12416,7 +12416,7 @@
     </unit>
     <unit id="dashboard.share.day.profile.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:38</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:39</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
@@ -12424,7 +12424,7 @@
     </unit>
     <unit id="dashboard.share.day.profile.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:39</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:40</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</source>
@@ -12432,7 +12432,7 @@
     </unit>
     <unit id="dashboard.share.day.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:43</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:44</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -12440,7 +12440,7 @@
     </unit>
     <unit id="dashboard.share.day.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:44</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:45</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</source>
@@ -12448,7 +12448,7 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:48</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:49</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>

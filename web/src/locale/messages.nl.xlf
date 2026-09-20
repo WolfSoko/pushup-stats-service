@@ -14501,423 +14501,423 @@
       </segment>
     </unit>
     <unit id="achievements.label.planCompletedNamed">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
-        <target><ph id="0" equiv="plan" disp="title"/> abgeschlossen</target>
+        <target><ph id="0" equiv="plan" disp="title"/> afgerond</target>
       </segment>
     </unit>
     <unit id="achievements.label.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingsplan abgeschlossen</source>
-        <target>Trainingsplan abgeschlossen</target>
+        <target>Trainingsplan afgerond</target>
       </segment>
     </unit>
     <unit id="achievements.label.firstInvite">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ersten Freund eingeladen</source>
-        <target>Ersten Freund eingeladen</target>
+        <target>Eerste vriend uitgenodigd</target>
       </segment>
     </unit>
     <unit id="achievements.label.invites">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
-        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+        <target><ph id="0" equiv="invites" disp="invites"/> vrienden uitgenodigd</target>
       </segment>
     </unit>
     <unit id="achievements.label.firstPlanDay">
-      <segment state="initial">
+      <segment state="translated">
         <source>Erster Plantag</source>
-        <target>Erster Plantag</target>
+        <target>Eerste plandag</target>
       </segment>
     </unit>
     <unit id="achievements.label.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
-        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+        <target><ph id="0" equiv="days" disp="days"/> plandagen</target>
       </segment>
     </unit>
     <unit id="achievements.tile.progress">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
-        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: van <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
       </segment>
     </unit>
     <unit id="achievements.page.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Abzeichen</source>
-        <target>Deine Abzeichen</target>
+        <target>Jouw badges</target>
       </segment>
     </unit>
     <unit id="achievements.page.count">
-      <segment state="initial">
+      <segment state="translated">
         <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
-        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </target>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: van <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: ontgrendeld</target>
       </segment>
     </unit>
     <unit id="achievements.page.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Als Nächstes</source>
-        <target>Als Nächstes</target>
+        <target>Als volgende</target>
       </segment>
     </unit>
     <unit id="achievements.group.planDays">
-      <segment state="initial">
+      <segment state="translated">
         <source>Trainingstage</source>
-        <target>Trainingstage</target>
+        <target>Trainingsdagen</target>
       </segment>
     </unit>
     <unit id="achievements.group.planCompleted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abgeschlossene Pläne</source>
-        <target>Abgeschlossene Pläne</target>
+        <target>Afgeronde plannen</target>
       </segment>
     </unit>
     <unit id="achievements.group.invites">
-      <segment state="initial">
+      <segment state="translated">
         <source>Eingeladene Freunde</source>
-        <target>Eingeladene Freunde</target>
+        <target>Uitgenodigde vrienden</target>
       </segment>
     </unit>
     <unit id="seo.achievements.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen – Pushup Tracker</source>
-        <target>Abzeichen – Pushup Tracker</target>
+        <target>Badges – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.achievements.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
-        <target>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</target>
+        <target>Jouw verdiende badges, de nog openstaande en hoe ver het is tot de volgende.</target>
       </segment>
     </unit>
     <unit id="nav.achievements">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen</source>
-        <target>Abzeichen</target>
+        <target>Badges</target>
       </segment>
     </unit>
     <unit id="user.menu.notifications">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>Berichten</target>
       </segment>
     </unit>
     <unit id="seo.notifications.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten – Pushup Tracker</source>
-        <target>Nachrichten – Pushup Tracker</target>
+        <target>Berichten – Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="seo.notifications.description">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
-        <target>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</target>
+        <target>Aanmoedigingen, vriendschapsverzoeken, uitdagingen en nieuwe badges op één plek.</target>
       </segment>
     </unit>
     <unit id="announcements.workouts">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: eigene Sessions zusammenstellen</source>
-        <target>Neu: eigene Sessions zusammenstellen</target>
+        <target>Nieuw: stel je eigen sessies samen</target>
       </segment>
     </unit>
     <unit id="notifications.panel.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>Berichten</target>
       </segment>
     </unit>
     <unit id="notifications.panel.markAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle gelesen </source>
-        <target> Alle gelesen </target>
+        <target>Alles gelezen</target>
       </segment>
     </unit>
     <unit id="notifications.panel.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Noch keine Nachrichten. </source>
-        <target> Noch keine Nachrichten. </target>
+        <target>Nog geen berichten.</target>
       </segment>
     </unit>
     <unit id="notifications.panel.showAll">
-      <segment state="initial">
+      <segment state="translated">
         <source> Alle anzeigen </source>
-        <target> Alle anzeigen </target>
+        <target>Alles weergeven</target>
       </segment>
     </unit>
     <unit id="notifications.bell.none">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>Berichten</target>
       </segment>
     </unit>
     <unit id="notifications.bell.unread">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
-        <target>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</target>
+        <target>Berichten, <ph id="0" equiv="count" disp="count"/> ongelezen</target>
       </segment>
     </unit>
     <unit id="notifications.actor.anonymous">
-      <segment state="initial">
+      <segment state="translated">
         <source>Jemand</source>
-        <target>Jemand</target>
+        <target>Iemand</target>
       </segment>
     </unit>
     <unit id="notifications.text.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> feuert dich an</source>
-        <target><ph id="0" equiv="name" disp="name"/> feuert dich an</target>
+        <target><ph id="0" equiv="name" disp="name"/> moedigt je aan</target>
       </segment>
     </unit>
     <unit id="notifications.text.friendRequest">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</source>
-        <target><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</target>
+        <target><ph id="0" equiv="name" disp="name"/> wil met je bevriend zijn</target>
       </segment>
     </unit>
     <unit id="notifications.text.friendAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</source>
-        <target><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</target>
+        <target><ph id="0" equiv="name" disp="name"/> heeft je verzoek geaccepteerd</target>
       </segment>
     </unit>
     <unit id="notifications.text.challenge">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> fordert dich heraus</source>
-        <target><ph id="0" equiv="name" disp="name"/> fordert dich heraus</target>
+        <target><ph id="0" equiv="name" disp="name"/> daagt je uit</target>
       </segment>
     </unit>
     <unit id="notifications.text.challengeAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</source>
-        <target><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</target>
+        <target><ph id="0" equiv="name" disp="name"/> doet mee aan jouw uitdaging</target>
       </segment>
     </unit>
     <unit id="notifications.text.workoutShared">
-      <segment state="initial">
+      <segment state="translated">
         <source><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</source>
-        <target><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</target>
+        <target><ph id="0" equiv="name" disp="name"/> heeft je een sessie gestuurd</target>
       </segment>
     </unit>
     <unit id="notifications.text.achievement">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast ein neues Abzeichen verdient</source>
-        <target>Du hast ein neues Abzeichen verdient</target>
+        <target>Je hebt een nieuwe badge verdiend</target>
       </segment>
     </unit>
     <unit id="notifications.page.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>Berichten</target>
       </segment>
     </unit>
     <unit id="notifications.page.markAll">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle gelesen</source>
-        <target>Alle gelesen</target>
+        <target>Alles gelezen</target>
       </segment>
     </unit>
     <unit id="notifications.page.empty">
-      <segment state="initial">
+      <segment state="translated">
         <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
-        <target> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </target>
+        <target>Hier komen aanmoedigingen, vriendschapsverzoeken, uitdagingen en nieuwe badges binnen.</target>
       </segment>
     </unit>
     <unit id="announcements.inbox">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu: Nachrichten und deine Abzeichen</source>
-        <target>Neu: Nachrichten und deine Abzeichen</target>
+        <target>Nieuw: berichten en jouw badges</target>
       </segment>
     </unit>
     <unit id="landing.inbox.eyebrow">
-      <segment state="initial">
+      <segment state="translated">
         <source> Neu · Nachrichten &amp; Abzeichen </source>
-        <target> Neu · Nachrichten &amp; Abzeichen </target>
+        <target>Nieuw · Berichten &amp; badges</target>
       </segment>
     </unit>
     <unit id="landing.inbox.headline">
-      <segment state="initial">
+      <segment state="translated">
         <source> Nichts geht verloren — und du siehst, was du geschafft hast. </source>
-        <target> Nichts geht verloren — und du siehst, was du geschafft hast. </target>
+        <target>Niets gaat verloren — en je ziet wat je hebt bereikt.</target>
       </segment>
     </unit>
     <unit id="landing.inbox.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </source>
-        <target> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </target>
+        <target>Aanmoedigingen, vriendschapsverzoeken, uitdagingen en nieuwe badges komen in je postvak. Ook als je offline was of geen pushmeldingen hebt toegestaan. En alle badges — verdiende en nog openstaande — staan op één plek.</target>
       </segment>
     </unit>
     <unit id="landing.inbox.chip.inbox">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alles an einem Ort, auch ohne Push-Benachrichtigungen</source>
-        <target>Alles an einem Ort, auch ohne Push-Benachrichtigungen</target>
+        <target>Alles op één plek, ook zonder pushmeldingen</target>
       </segment>
     </unit>
     <unit id="landing.inbox.chip.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen von Freunden, jederzeit nachlesbar</source>
-        <target>Anfeuerungen von Freunden, jederzeit nachlesbar</target>
+        <target>Aanmoedigingen van vrienden, altijd terug te lezen</target>
       </segment>
     </unit>
     <unit id="landing.inbox.chip.badges">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</source>
-        <target>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</target>
+        <target>Verzamel badges en zie hoe ver het is tot de volgende</target>
       </segment>
     </unit>
     <unit id="landing.inbox.cta">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen ansehen</source>
-        <target>Abzeichen ansehen</target>
+        <target>Badges bekijken</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten</source>
-        <target>Nachrichten</target>
+        <target>Berichten</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.subtitle">
-      <segment state="initial">
+      <segment state="translated">
         <source>3 ungelesen</source>
-        <target>3 ungelesen</target>
+        <target>3 ongelezen</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.line1">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anna feuert dich an</source>
-        <target>Anna feuert dich an</target>
+        <target>Anna moedigt je aan</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.line2">
-      <segment state="initial">
+      <segment state="translated">
         <source>Du hast ein neues Abzeichen verdient</source>
-        <target>Du hast ein neues Abzeichen verdient</target>
+        <target>Je hebt een nieuwe badge verdiend</target>
       </segment>
     </unit>
     <unit id="landing.inbox.mock.line3">
-      <segment state="initial">
+      <segment state="translated">
         <source>Ben möchte mit dir befreundet sein</source>
-        <target>Ben möchte mit dir befreundet sein</target>
+        <target>Ben wil met je bevriend zijn</target>
       </segment>
     </unit>
     <unit id="inboxIntro.badge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Neu</source>
-        <target>Neu</target>
+        <target>Nieuw</target>
       </segment>
     </unit>
     <unit id="inboxIntro.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nachrichten und Abzeichen</source>
-        <target>Nachrichten und Abzeichen</target>
+        <target>Berichten en badges</target>
       </segment>
     </unit>
     <unit id="inboxIntro.stepCount">
-      <segment state="initial">
+      <segment state="translated">
         <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
-        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+        <target>Stap <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> van <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/></target>
       </segment>
     </unit>
     <unit id="inboxIntro.later">
-      <segment state="initial">
+      <segment state="translated">
         <source> Später </source>
-        <target> Später </target>
+        <target>Later</target>
       </segment>
     </unit>
     <unit id="inboxIntro.back">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zurück</source>
-        <target>Zurück</target>
+        <target>Terug</target>
       </segment>
     </unit>
     <unit id="inboxIntro.start">
-      <segment state="initial">
+      <segment state="translated">
         <source>Abzeichen ansehen</source>
-        <target>Abzeichen ansehen</target>
+        <target>Badges bekijken</target>
       </segment>
     </unit>
     <unit id="inboxIntro.next">
-      <segment state="initial">
+      <segment state="translated">
         <source>Weiter</source>
-        <target>Weiter</target>
+        <target>Volgende</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step1.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Nichts geht mehr verloren</source>
-        <target>Nichts geht mehr verloren</target>
+        <target>Niets gaat meer verloren</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step1.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</source>
-        <target>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</target>
+        <target>Aanmoedigingen, vriendschapsverzoeken en uitdagingen komen bij het belletje bovenaan terecht — ook als je offline was of geen pushmeldingen hebt toegestaan.</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step2.title">
-      <segment state="initial">
+      <segment state="translated">
         <source>Deine Abzeichen an einem Ort</source>
-        <target>Deine Abzeichen an einem Ort</target>
+        <target>Jouw badges op één plek</target>
       </segment>
     </unit>
     <unit id="inboxIntro.step2.body">
-      <segment state="initial">
+      <segment state="translated">
         <source>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</source>
-        <target>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</target>
+        <target>Alle verdiende badges, de nog openstaande en hoe ver het is tot de volgende — onder "Badges&quot; in de navigatie.</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.label">
-      <segment state="initial">
+      <segment state="translated">
         <source> Push von Freunden </source>
-        <target> Push von Freunden </target>
+        <target>Push van vrienden</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.desc">
-      <segment state="initial">
+      <segment state="translated">
         <source> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </source>
-        <target> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </target>
+        <target>Wat hiervan je telefoon mag laten overgaan. Uitgeschakeld betekent alleen: geen push — het staat toch in je berichten. Je rusttijden hierboven gelden ook hier.</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.cheer">
-      <segment state="initial">
+      <segment state="translated">
         <source>Anfeuerungen</source>
-        <target>Anfeuerungen</target>
+        <target>Aanmoedigingen</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.friendRequest">
-      <segment state="initial">
+      <segment state="translated">
         <source>Freundschaftsanfragen</source>
-        <target>Freundschaftsanfragen</target>
+        <target>Vriendschapsverzoeken</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.friendAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Angenommene Anfragen</source>
-        <target>Angenommene Anfragen</target>
+        <target>Geaccepteerde verzoeken</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.challenge">
-      <segment state="initial">
+      <segment state="translated">
         <source>Challenge-Einladungen</source>
-        <target>Challenge-Einladungen</target>
+        <target>Uitdaging-uitnodigingen</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.challengeAccepted">
-      <segment state="initial">
+      <segment state="translated">
         <source>Zusagen zu deinen Challenges</source>
-        <target>Zusagen zu deinen Challenges</target>
+        <target>Toezeggingen voor jouw uitdagingen</target>
       </segment>
     </unit>
     <unit id="notificationPrefs.workoutShared">
-      <segment state="initial">
+      <segment state="translated">
         <source>Geteilte Sessions</source>
-        <target>Geteilte Sessions</target>
+        <target>Gedeelde sessies</target>
       </segment>
     </unit>
     <unit id="notifications.text.goalReached">
-      <segment state="initial">
+      <segment state="translated">
         <source>Tagesziel geschafft</source>
-        <target>Tagesziel geschafft</target>
+        <target>Dagdoel behaald</target>
       </segment>
     </unit>
 </file>
