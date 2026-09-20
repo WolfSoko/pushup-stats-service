@@ -14007,5 +14007,149 @@ Aktiv:         </target>
         <target> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </target>
       </segment>
     </unit>
+    <unit id="announcements.inbox">
+      <segment state="initial">
+        <source>Neu: Nachrichten und deine Abzeichen</source>
+        <target>Neu: Nachrichten und deine Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.eyebrow">
+      <segment state="initial">
+        <source> Neu · Nachrichten &amp; Abzeichen </source>
+        <target> Neu · Nachrichten &amp; Abzeichen </target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.headline">
+      <segment state="initial">
+        <source> Nichts geht verloren — und du siehst, was du geschafft hast. </source>
+        <target> Nichts geht verloren — und du siehst, was du geschafft hast. </target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.desc">
+      <segment state="initial">
+        <source> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </source>
+        <target> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.inbox">
+      <segment state="initial">
+        <source>Alles an einem Ort, auch ohne Push-Benachrichtigungen</source>
+        <target>Alles an einem Ort, auch ohne Push-Benachrichtigungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.cheer">
+      <segment state="initial">
+        <source>Anfeuerungen von Freunden, jederzeit nachlesbar</source>
+        <target>Anfeuerungen von Freunden, jederzeit nachlesbar</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.badges">
+      <segment state="initial">
+        <source>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</source>
+        <target>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.cta">
+      <segment state="initial">
+        <source>Abzeichen ansehen</source>
+        <target>Abzeichen ansehen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.title">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.subtitle">
+      <segment state="initial">
+        <source>3 ungelesen</source>
+        <target>3 ungelesen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line1">
+      <segment state="initial">
+        <source>Anna feuert dich an</source>
+        <target>Anna feuert dich an</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line2">
+      <segment state="initial">
+        <source>Du hast ein neues Abzeichen verdient</source>
+        <target>Du hast ein neues Abzeichen verdient</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line3">
+      <segment state="initial">
+        <source>Ben möchte mit dir befreundet sein</source>
+        <target>Ben möchte mit dir befreundet sein</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.title">
+      <segment state="initial">
+        <source>Nachrichten und Abzeichen</source>
+        <target>Nachrichten und Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.start">
+      <segment state="initial">
+        <source>Abzeichen ansehen</source>
+        <target>Abzeichen ansehen</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step1.title">
+      <segment state="initial">
+        <source>Nichts geht mehr verloren</source>
+        <target>Nichts geht mehr verloren</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step1.body">
+      <segment state="initial">
+        <source>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</source>
+        <target>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step2.title">
+      <segment state="initial">
+        <source>Deine Abzeichen an einem Ort</source>
+        <target>Deine Abzeichen an einem Ort</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step2.body">
+      <segment state="initial">
+        <source>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</source>
+        <target>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

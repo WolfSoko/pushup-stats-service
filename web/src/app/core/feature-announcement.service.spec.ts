@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import {
   ANNOUNCEMENTS,
   FeatureAnnouncementService,
+  INBOX_ANNOUNCEMENT,
   isDashboard,
   WORKOUTS_ANNOUNCEMENT,
 } from './feature-announcement.service';
@@ -119,19 +120,36 @@ describe('FeatureAnnouncementService', () => {
     expect(markAnnouncementSeen).toHaveBeenCalledWith(WORKOUTS_ANNOUNCEMENT);
   });
 
-  it('should stay quiet for a user who already saw it', async () => {
+  it('should stay quiet for a user who already saw every announcement', async () => {
     // given
     setup('/app');
 
     // when
     config.set({
       userId: 'u1',
-      ui: { seenAnnouncements: [WORKOUTS_ANNOUNCEMENT] },
+      ui: { seenAnnouncements: ANNOUNCEMENTS.map((a) => a.id) },
     } as UserConfig);
     await settle();
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
     // then
     expect(open).not.toHaveBeenCalled();
+  });
+
+  it('should move on to the next announcement once an older one is seen', async () => {
+    // given
+    setup('/app');
+
+    // when — only the older walkthrough has been seen
+    config.set({
+      userId: 'u1',
+      ui: { seenAnnouncements: [WORKOUTS_ANNOUNCEMENT] },
+    } as UserConfig);
+
+    // then
+    await opened(1);
+    afterClosed.next('later');
+    expect(markAnnouncementSeen).toHaveBeenCalledWith(INBOX_ANNOUNCEMENT);
   });
 
   it('should wait until the user reaches the dashboard', async () => {

@@ -14,6 +14,7 @@ import {
 import { InstallPromptService } from '../../core/install-prompt.service';
 import { ReminderFeatureSectionComponent } from '../components/reminder-feature-section/reminder-feature-section.component';
 import { SessionFeatureSectionComponent } from '../components/session-feature-section/session-feature-section.component';
+import { InboxFeatureSectionComponent } from '../components/inbox-feature-section/inbox-feature-section.component';
 import { WorkoutsFeatureSectionComponent } from '../components/workouts-feature-section/workouts-feature-section.component';
 import { InviteBannerComponent } from '../../core/invite-banner.component';
 
@@ -52,6 +53,7 @@ const HEATMAP_PATTERN: readonly string[] = [
     ReminderFeatureSectionComponent,
     SessionFeatureSectionComponent,
     WorkoutsFeatureSectionComponent,
+    InboxFeatureSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -127,6 +129,10 @@ export class LandingPageComponent {
 
   onWorkoutsCtaClick(): void {
     this.track('landing_workouts_cta_click', { target: 'workouts' });
+  }
+
+  onInboxCtaClick(): void {
+    this.track('landing_inbox_cta_click', { target: 'achievements' });
   }
 
   async onInstallClick(): Promise<void> {

@@ -1,0 +1,79 @@
+<section class="inbox-section">
+  <div class="inbox-content">
+    <p class="eyebrow" i18n="@@landing.inbox.eyebrow">
+      Neu · Nachrichten & Abzeichen
+    </p>
+    <h2 i18n="@@landing.inbox.headline">
+      Nichts geht verloren — und du siehst, was du geschafft hast.
+    </h2>
+    <p class="inbox-desc" i18n="@@landing.inbox.desc">
+      Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen
+      in deinem Postfach. Auch dann, wenn du offline warst oder keine
+      Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie
+      offene — stehen an einem Ort.
+    </p>
+
+    <ul class="inbox-chips">
+      <li>
+        <mat-icon aria-hidden="true">notifications</mat-icon>
+        <span i18n="@@landing.inbox.chip.inbox"
+          >Alles an einem Ort, auch ohne Push-Benachrichtigungen</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">local_fire_department</mat-icon>
+        <span i18n="@@landing.inbox.chip.cheer"
+          >Anfeuerungen von Freunden, jederzeit nachlesbar</span
+        >
+      </li>
+      <li>
+        <mat-icon aria-hidden="true">military_tech</mat-icon>
+        <span i18n="@@landing.inbox.chip.badges"
+          >Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</span
+        >
+      </li>
+    </ul>
+
+    <a
+      mat-flat-button
+      color="primary"
+      routerLink="/abzeichen"
+      (click)="ctaClick.emit()"
+      i18n="@@landing.inbox.cta"
+      >Abzeichen ansehen</a
+    >
+  </div>
+
+  <div class="inbox-mock-wrap" aria-hidden="true">
+    <mat-card class="inbox-mock">
+      <mat-card-header>
+        <mat-card-title i18n="@@landing.inbox.mock.title"
+          >Nachrichten</mat-card-title
+        >
+        <mat-card-subtitle i18n="@@landing.inbox.mock.subtitle"
+          >3 ungelesen</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="mock-list">
+          <li class="highlight">
+            <mat-icon aria-hidden="true">local_fire_department</mat-icon>
+            <span i18n="@@landing.inbox.mock.line1">Anna feuert dich an</span>
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">military_tech</mat-icon>
+            <span i18n="@@landing.inbox.mock.line2"
+              >Du hast ein neues Abzeichen verdient</span
+            >
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">group</mat-icon>
+            <span i18n="@@landing.inbox.mock.line3"
+              >Ben möchte mit dir befreundet sein</span
+            >
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

@@ -99,6 +99,13 @@ describe('paramsFor', () => {
 });
 
 describe('tuning panel visibility', () => {
+  // Also before: the dialog components write this key, and a spec file that
+  // ran earlier in the same environment leaves it set, which would make the
+  // "starts closed" case depend on file order.
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   afterEach(() => {
     localStorage.clear();
     vi.restoreAllMocks();

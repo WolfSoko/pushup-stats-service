@@ -26,6 +26,7 @@ export interface FeatureAnnouncement {
 }
 
 export const WORKOUTS_ANNOUNCEMENT = 'workouts-2026-09';
+export const INBOX_ANNOUNCEMENT = 'inbox-achievements-2026-09';
 
 /**
  * Every announcement, oldest first. A new feature adds an entry with a
@@ -41,6 +42,15 @@ export const ANNOUNCEMENTS: ReadonlyArray<FeatureAnnouncement> = [
       ),
     label: $localize`:@@announcements.workouts:Neu: eigene Sessions zusammenstellen`,
     url: '/workouts',
+  },
+  {
+    id: INBOX_ANNOUNCEMENT,
+    load: () =>
+      import('../notifications/inbox-intro-dialog.component').then(
+        (m) => m.InboxIntroDialogComponent
+      ),
+    label: $localize`:@@announcements.inbox:Neu: Nachrichten und deine Abzeichen`,
+    url: '/nachrichten',
   },
 ];
 

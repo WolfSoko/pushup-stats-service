@@ -290,6 +290,13 @@
   }
 
   @defer (hydrate on viewport) {
+    <app-inbox-feature-section
+      class="scroll-reveal scroll-reveal--from-right"
+      (ctaClick)="onInboxCtaClick()"
+    ></app-inbox-feature-section>
+  }
+
+  @defer (hydrate on viewport) {
     <app-reminder-feature-section
       class="scroll-reveal scroll-reveal--from-right"
     ></app-reminder-feature-section>

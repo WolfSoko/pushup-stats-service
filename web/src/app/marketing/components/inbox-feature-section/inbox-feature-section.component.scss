@@ -1,0 +1,145 @@
+:host {
+  display: block;
+}
+
+.inbox-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  border: 1px solid rgba(123, 159, 255, 0.25);
+  border-radius: 20px;
+  padding: clamp(18px, 3vw, 36px);
+  background: linear-gradient(
+    155deg,
+    rgba(30, 43, 74, 0.78),
+    rgba(14, 19, 33, 0.86)
+  );
+}
+
+@media (max-width: 640px) {
+  .inbox-section {
+    grid-template-columns: 1fr;
+  }
+  .inbox-mock-wrap {
+    order: 2;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #93adea;
+  font-size: 0.74rem;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.2;
+}
+
+.inbox-desc {
+  margin: 0 0 20px;
+  color: #c4d2f2;
+  max-width: 52ch;
+}
+
+.inbox-chips {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #d8e5ff;
+    font-size: 0.95rem;
+  }
+
+  mat-icon {
+    flex: none;
+    color: #94b1ff;
+    font-size: 1.25rem;
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+}
+
+.inbox-mock-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.inbox-mock {
+  max-width: 340px;
+  width: 100%;
+  border: 1px solid rgba(123, 159, 255, 0.3);
+  border-radius: 12px;
+}
+
+.mock-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(123, 159, 255, 0.25);
+    border-radius: 10px;
+    color: #eaf1ff;
+  }
+
+  /* The cheer row gets the warm accent it has in the app, where a
+     motivational message is a card rather than a list entry. */
+  li.highlight {
+    border-color: rgba(255, 170, 110, 0.45);
+    background: rgba(255, 170, 110, 0.12);
+    font-weight: 600;
+  }
+
+  li.highlight mat-icon {
+    color: #ffb27a;
+  }
+
+  mat-icon {
+    color: #94b1ff;
+  }
+}
+
+:host-context(html.light-theme) {
+  .inbox-section {
+    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(
+      155deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(226, 232, 240, 0.9)
+    );
+  }
+  .eyebrow {
+    color: #2563eb;
+  }
+  .inbox-desc,
+  .inbox-chips li {
+    color: #334155;
+  }
+  .mock-list li {
+    color: #0f172a;
+  }
+  .mock-list li.highlight {
+    border-color: rgba(217, 119, 6, 0.45);
+    background: rgba(251, 191, 36, 0.16);
+  }
+  .mock-list li.highlight mat-icon {
+    color: #b45309;
+  }
+}
