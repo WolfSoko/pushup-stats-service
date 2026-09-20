@@ -65,6 +65,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # `nx-set-shas` setzt NX_BASE/NX_HEAD normalerweise selbst. Liefert es
+      # nichts (beobachtet in Lauf 2710), fällt Nx auf sein Default
+      # `--base=main` zurück — und `main` existiert im PR-Checkout nicht als
+      # lokale Ref: `actions/checkout` holt nur die PR-Ref, `fetch-depth: 0`
+      # vertieft die Historie, legt aber keine zusätzliche Branch-Ref an.
+      # `git diff … main HEAD` bricht dann mit "unknown revision" ab, bevor
+      # ein einziges Target läuft. Dieser Fetch macht den Fallback benutzbar,
+      # statt sich darauf zu verlassen, dass die Action immer liefert.
+      - name: Base-Ref für den Nx-Fallback bereitstellen
+        if: github.event_name == 'pull_request'
+        run: git fetch --no-tags origin '+refs/heads/${{ github.base_ref }}:refs/heads/${{ github.base_ref }}'
+
       - uses: nrwl/nx-set-shas@v5
       - name: Nx Cloud distributed run starten
         # Dynamic agent allocation: small PRs use 4 agents, large changesets
@@ -160,6 +172,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # `nx-set-shas` setzt NX_BASE/NX_HEAD normalerweise selbst. Liefert es
+      # nichts (beobachtet in Lauf 2710), fällt Nx auf sein Default
+      # `--base=main` zurück — und `main` existiert im PR-Checkout nicht als
+      # lokale Ref: `actions/checkout` holt nur die PR-Ref, `fetch-depth: 0`
+      # vertieft die Historie, legt aber keine zusätzliche Branch-Ref an.
+      # `git diff … main HEAD` bricht dann mit "unknown revision" ab, bevor
+      # ein einziges Target läuft. Dieser Fetch macht den Fallback benutzbar,
+      # statt sich darauf zu verlassen, dass die Action immer liefert.
+      - name: Base-Ref für den Nx-Fallback bereitstellen
+        if: github.event_name == 'pull_request'
+        run: git fetch --no-tags origin '+refs/heads/${{ github.base_ref }}:refs/heads/${{ github.base_ref }}'
 
       - uses: nrwl/nx-set-shas@v5
       - name: Nx Cloud distributed run starten
