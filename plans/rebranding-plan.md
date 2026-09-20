@@ -77,21 +77,30 @@ Bewusst außen vor — Änderung wäre teuer und für Nutzer unsichtbar:
 
 `mobile/android-twa/twa-manifest.json` → `packageId: com.pushupstats.app`.
 
-**Eine veröffentlichte Play-Package-ID lässt sich nie ändern.** Drei Optionen, absteigend empfohlen:
+**Die ID ist bereits gebunden — auch im Closed Test.** Eine Play-Package-ID liegt fest, sobald _irgendein_ Bundle in _irgendeinen_ Track hochgeladen wurde; der Closed-Test-Status ändert daran nichts. Ein Update muss dieselbe Application ID tragen, eine andere ID bedeutet zwingend ein **neues Play-Listing**.
 
-| Option                                              | Folge                                                                                                                                            |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **A — ID behalten, Listing umbenennen** (empfohlen) | Titel, Beschreibung, Icon, Grafiken werden neu; Installationen, Bewertungen und Rankings bleiben. Die alte ID sieht nur, wer die APK inspiziert. |
-| B — neue App unter neuer ID                         | Saubere ID, aber Reviews und Installs starten bei null; die alte App muss als „umgezogen" gepflegt oder depubliziert werden.                     |
-| C — vorher handeln                                  | Nur relevant, solange die App im Closed Test und nicht produktiv veröffentlicht ist — dann ist die ID noch frei wählbar. **Vor Phase 5 prüfen.** |
+Dass hier bereits hochgeladen wurde, steht im Repo: `twa-manifest.json` führt neben dem Upload-Key einen **Play-App-Signing-Fingerprint** — den vergibt Google erst nach dem ersten Bundle-Upload. Zusätzlich schiebt `.github/workflows/play-release.yml` bei jedem `main`-Push, der den Wrapper berührt, automatisch in den `internal`-Track.
 
-→ **Aufgabe in Gate 0:** Play-Console-Status prüfen. Ist die App noch im Closed Test, gilt C und die ID wird gleich mitgezogen. Sonst A.
+Damit bleiben zwei Optionen:
+
+| Option                                              | Folge                                                                                                                                                                                                  |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **A — ID behalten, Listing umbenennen** (empfohlen) | Titel, Beschreibung, Icon, Grafiken werden neu; Installationen, Bewertungen und Rankings bleiben. Die alte ID sieht nur, wer die APK inspiziert. Kein Nutzer muss etwas tun.                           |
+| B — neue Play-App unter neuer ID                    | Saubere ID, aber ein eigenes Listing: Installs, Bewertungen und Rankings starten bei null, Bestandsnutzer bekommen **kein** Update und müssen manuell wechseln. Braucht einen eigenen Teilplan (s.u.). |
+
+→ **Empfehlung: A.** Die ID ist ein technischer Bezeichner, den praktisch niemand sieht — der Preis für B (Bewertungen weg, Zwangs-Neuinstallation für alle Tester) steht in keinem Verhältnis.
+
+→ **Falls doch B:** Dann braucht Phase 5 drei zusätzliche Stränge, die in Option A komplett entfallen — ein eigener Test-Durchlauf der neuen App (Signing, Asset-Links, Closed-Test-Track neu aufsetzen), ein Migrationspfad für Bestandsnutzer (In-App-Hinweis plus Store-Link, da kein Update greift) und eine Kommunikation an die geworbenen Tester aus `/admin/android-test`. Das ist ein eigenes Ticket, kein Nebensatz in Phase 5.
+
+→ **Einzige Ausnahme, die B billiger macht:** Google gibt eine Package-ID nur dann wieder frei, wenn die App gelöscht wird **und** sie null Lifetime-Installs hat. Sobald je eine Installation stattfand, ist die ID dauerhaft verbrannt — auch für dasselbe Entwicklerkonto. In Gate 0 also prüfen: Lifetime-Installs der bestehenden App.
 
 ---
 
 ## 3. Gate 0 — Namensentscheidung (kein Code)
 
-Kein Ticket aus Phase 1+ startet, bevor dieses Gate geschlossen ist. Ein halb durchgezogener Rename ist schlimmer als gar keiner.
+Kein Ticket aus **Phase 2 und später** startet, bevor dieses Gate geschlossen ist. Ein halb durchgezogener Rename ist schlimmer als gar keiner.
+
+**Phase 1 ist bewusst ausgenommen:** Sie zieht nur einen Brand-Layer ein und benennt nichts um. Sie funktioniert mit dem heutigen Namen genauso und sollte parallel zur Namensfindung laufen.
 
 ### 3.1 Kriterien
 
@@ -121,9 +130,9 @@ Die Richtung wurde offen gelassen; drei Stoßrichtungen mit unterschiedlichem Ch
 2. Gegen Kriterien 1–3 filtern (Schreibtischarbeit, keine externen Abfragen).
 3. Für die verbleibenden 3–5: Domain-, Marken- und Store-Recherche.
 4. Entscheidung dokumentieren — dieser Plan wird mit dem gewählten Namen aktualisiert, danach werden die Phasen-Issues angelegt.
-5. Domain **vor** Phase 1 registrieren. Ein Rename ohne gesicherte Domain ist ein Rückrufrisiko.
+5. Domain **vor** Phase 2 registrieren — das ist der Punkt, ab dem der Name nach außen geht. Ein Rename ohne gesicherte Domain ist ein Rückrufrisiko.
 
-**Ergebnis von Gate 0:** gewählter Name, registrierte Domain, Play-Strategie (A/B/C), neue Kontaktadresse (`contact@<neue-domain>`).
+**Ergebnis von Gate 0:** gewählter Name, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`).
 
 ---
 
@@ -218,9 +227,24 @@ Setzt Phase 4 voraus: Die TWA ist an den Host gebunden.
 - **Signing-Key unverändert lassen.** Ein neuer Key macht das Update für alle Bestandsnutzer unmöglich.
 - `assetlinks.json` für die neue Domain erzeugen und unter `/.well-known/` der **neuen** Domain ausliefern. Fingerprint bleibt gleich. Solange die alte Domain 301 leitet, prüfen, ob die App-Verifikation weiterhin greift.
 - Play-Listing für alle 9 Locales: `title.txt` (30-Zeichen-Grenze!), `short-description.txt`, `full-description.txt`. Deutsch ist Quelle, die acht Übersetzungen entstehen in derselben Änderung.
-- Achtung Längenbudget: `store/play/de-DE/full-description.txt` liegt bei 4122 Bytes. Das Limit ist 4000 **Zeichen** — Umlaute verbrauchen 2 Bytes, darum passt es noch. `pnpm nx test tools` erzwingt das. Wenn der neue Name länger ist oder ein Absatz über die Übungsbreite dazukommt, muss anderswo gekürzt werden.
+- **Längenbudget ist der Engpass.** Play zählt UTF-16-Code-Units (JVM-Backend), nicht Bytes und nicht Glyphen — `countCharacters` in `tools/src/play-listing-source.mjs` bildet das nach. Emoji zählen dabei 2–3 Units pro Glyphe (`📷` = 2, `🏋️` = 3). Gegen das Limit von 4000 bleibt bei `full-description.txt` fast nichts übrig:
+
+  | Locale | Units | Luft |
+  | ------ | ----- | ---- |
+  | it-IT  | 3996  | 4    |
+  | es-ES  | 3995  | 5    |
+  | fr-FR  | 3990  | 10   |
+  | de-DE  | 3978  | 22   |
+  | el-GR  | 3978  | 22   |
+  | en-US  | 3964  | 36   |
+  | nl-NL  | 3927  | 73   |
+  | no-NO  | 3883  | 117  |
+  | zh-CN  | 1639  | 2361 |
+
+  Ein neuer Absatz über die Übungsbreite passt in **keine** der acht westlichen Locales, ohne dass anderswo gekürzt wird — in `it-IT` reicht es nicht einmal für ein längeres Wort. Der Rename selbst ist netto meist neutral, aber jedes Zeichen, das der neue Name über „Pushup Tracker" hinausgeht, schlägt an jeder Nennung zu. `pnpm nx test tools` bricht bei Überschreitung, also fällt das in CI auf — aber erst nachdem die Übersetzungen schon geschrieben sind. Deshalb: Kürzungen **mit** dem neuen Text planen, nicht danach.
+
 - Play-Grafiken neu erzeugen (`tools/src/store-graphics/`).
-- Gemäß Gate-0-Ergebnis: Package-ID behalten (A) oder neu setzen (C).
+- Package-ID bleibt (Option A). Nur falls Gate 0 doch auf B fällt, kommen die drei Zusatzstränge aus Abschnitt 2.3 als eigenes Ticket dazu.
 
 **Tests:** `pnpm nx test tools` deckt Listing-Längen und Play-Publish-Skripte ab (`play-listing-source.spec.js`, `publish-play-release.spec.js`).
 
@@ -254,7 +278,7 @@ Bewusst am Ende und explizit **optional**. Kein Nutzer sieht das; der Diff ist g
 ## 5. Abhängigkeiten
 
 ```
-Gate 0 (Name + Domain + Play-Status)
+Gate 0 (Name + Domain + Play-Option)
    │
    ├─→ Phase 1 (Brand-Layer)          ← kann vor Gate 0 starten
    │        │
@@ -277,7 +301,7 @@ Gate 0 (Name + Domain + Play-Status)
 | Risiko                                          | Wirkung                                        | Gegenmaßnahme                                                                                       |
 | ----------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | SEO-Einbruch nach Domain-Wechsel                | Organischer Traffic auf 837 URLs               | 301 statt 302, pfadgleich, Search-Console-Adressänderung, alte Domains ≥12 Monate halten            |
-| Play-Package-ID nicht mehr änderbar             | Marke und ID dauerhaft auseinander             | Gate 0 klärt Closed-Test-Status; sonst Option A (Listing umbenennen, ID behalten)                   |
+| Play-Package-ID ist bereits gebunden            | Marke und ID dauerhaft auseinander             | Option A: Listing umbenennen, ID behalten — die ID ist nach außen unsichtbar                        |
 | TWA-Verifikation bricht nach Domain-Wechsel     | App öffnet mit Browser-Chrome statt fullscreen | `assetlinks.json` auf neuer Domain **vor** dem APK-Update ausliefern; Redirect-Ausnahme testen      |
 | Halber Rename (Name neu, Logo/Store alt)        | Wirkt wie Bug, beschädigt Vertrauen            | Phase 2+3 zusammen releasen; Phase 4+5 dicht hintereinander                                         |
 | 8 Locales laufen der deutschen Quelle hinterher | Fremdsprach-UI mischt alte und neue Marke      | `sync-xliff-locales.mjs`-Fallbacks halten den Build grün; Routine-Lauf **vor** dem Release abwarten |
@@ -306,7 +330,7 @@ Gate 0 (Name + Domain + Play-Status)
 
 1. **Name** — Shortlist nach Abschnitt 3, dann Entscheidung.
 2. **Domain** — Verfügbarkeit prüfen, `.com` + `.de` registrieren, **bevor** Phase 2 startet.
-3. **Play-Status** — Ist die App produktiv veröffentlicht oder noch im Closed Test? Entscheidet über Package-ID-Option A oder C.
+3. **Play-Lifetime-Installs** — nur bei null Installs gäbe Google die ID nach einer Löschung wieder frei. Das ist die einzige Zahl, die Option B noch günstiger machen könnte; ansonsten bleibt es bei Option A.
 4. **Kontaktadresse** — `contact@<neue-domain>` einrichten; alte Adresse für die Übergangszeit weiterleiten (steht in Impressum und Datenschutz, also rechtlich relevant).
 5. **Logo-Richtung** — soll die Formsprache des alten Icons erkennbar bleiben (sanfterer Übergang) oder bewusst brechen?
 6. **Route-Slug `/wiki/liegestuetz-typen`** — Empfehlung ist behalten; falls doch neutral, muss es in Phase 4 mit.
