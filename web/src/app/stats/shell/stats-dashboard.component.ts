@@ -53,6 +53,8 @@ import {
 import { exerciseSuggestions } from './stats-dashboard.suggestions';
 import { QuickAddConfigDialogComponent } from '../components/quick-add-config-dialog/quick-add-config-dialog.component';
 import { DashboardStore } from '../dashboard.store';
+import { NotificationStore } from '../../notifications/notification.store';
+import { pickMotivationSlot } from '../motivation-slot';
 import type { QuickAddButtonViewModel } from '../dashboard/quick-add-view-model';
 import { InviteService } from '../../core/invite.service';
 import { ChallengeSpotlightComponent } from '../../friends/challenge-spotlight.component';
@@ -154,6 +156,11 @@ export class StatsDashboardComponent {
   readonly monthlyGoal = this.store.monthlyGoal;
   readonly monthlyGoalProgressPercent = this.store.monthlyGoalProgressPercent;
   readonly todayQuote = this.store.todayQuote;
+  private readonly notifications = inject(NotificationStore);
+  /** A cheer from a friend outranks the generated quote in the same slot. */
+  readonly motivationSlot = computed(() =>
+    pickMotivationSlot(this.notifications.rows(), this.todayQuote(), Date.now())
+  );
   readonly lastEntry = this.store.lastEntry;
   readonly latestEntries = this.store.latestEntries;
   readonly currentStreak = this.store.currentStreak;

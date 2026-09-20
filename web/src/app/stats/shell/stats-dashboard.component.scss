@@ -307,6 +307,19 @@ h1 {
     margin-right: 4px;
     color: var(--mat-sys-secondary, #7c4dff);
   }
+
+  /* A message from a real person is not a generated aside — it gets full
+     contrast and drops the quote styling. */
+  &.personal {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--mat-sys-on-surface, inherit);
+
+    .ai-icon {
+      color: var(--mat-sys-tertiary, #ff8a50);
+    }
+  }
 }
 
 .rest-day-badge {
