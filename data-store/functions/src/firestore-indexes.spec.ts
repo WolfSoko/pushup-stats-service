@@ -205,6 +205,7 @@ describe('Firestore TTL policies', () => {
     ['cheers', 'expiresAt'],
     ['challenges', 'expiresAt'],
     ['friendInvites', 'expiresAt'],
+    ['inbox', 'expiresAt'],
   ];
 
   function ttlOverrides(): Array<FieldOverride & { ttl?: boolean }> {

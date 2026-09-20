@@ -7,6 +7,7 @@ import {
   friendPushOptions,
   friendshipPushEvent,
 } from './friends';
+import { writeNotification } from './notifications';
 import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
 
@@ -29,12 +30,29 @@ export const notifyFriendshipWrite = onDocumentWritten(
     const after = event.data?.after?.data() as Friendship | undefined;
     const push = friendshipPushEvent(before, after);
     if (!push) return;
+
+    const recipients = await readPushRecipients([push.to, push.from]);
+    const type = push.kind === 'request' ? 'friendRequest' : 'friendAccepted';
+    await writeNotification(
+      push.to,
+      { type, actorUid: push.from },
+      {
+        type,
+        createdAt: new Date().toISOString(),
+        readAt: null,
+        actorUid: push.from,
+        actorName: recipients.get(push.from)?.displayName ?? null,
+        url: '/freunde',
+      }
+    );
+
+    // Filed first, on purpose: without VAPID there is no push at all, and
+    // that is precisely when the inbox has to carry the event.
     if (!configureWebPush()) {
       logger.warn('notifyFriendshipWrite: VAPID secrets not set, skipping');
       return;
     }
 
-    const recipients = await readPushRecipients([push.to, push.from]);
     const payload = buildFriendPushPayload({
       kind: push.kind,
       locale: recipients.get(push.to)?.locale ?? 'de',

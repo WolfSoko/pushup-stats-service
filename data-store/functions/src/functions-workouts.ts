@@ -12,6 +12,7 @@ import { requireUid } from './callable-auth';
 import { db } from './firebase-app';
 import { buildFriendPushPayload, friendPushOptions } from './friends';
 import { readFriendUids } from './friends/challenges-read';
+import { writeNotification } from './notifications';
 import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
 import { hasRoom } from './workouts/logic';
@@ -69,6 +70,26 @@ export const shareWorkout = onCall(
     );
     const sent = recipients.filter((_, i) => outcomes[i]);
     const full = recipients.filter((_, i) => !outcomes[i]);
+
+    // Only those who actually got a copy — a friend at the workout cap has
+    // nothing to open, so telling them about it would be a dead end.
+    await Promise.all(
+      sent.map((friend) =>
+        writeNotification(
+          friend,
+          { type: 'workoutShared' },
+          {
+            type: 'workoutShared',
+            createdAt: new Date().toISOString(),
+            readAt: null,
+            actorUid: uid,
+            actorName: sharedBy.displayName,
+            url: '/workouts',
+            payload: { title: workout.title },
+          }
+        )
+      )
+    );
 
     if (configureWebPush()) {
       await Promise.all(

@@ -509,6 +509,19 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // The message inbox. Entries are written only by Cloud Functions
+    // (Admin SDK) — the owner may mark one read and nothing else, so a
+    // client cannot forge a cheer or a badge into its own history. The
+    // `readAt`-only update is what saves a callable for marking read.
+    // Records self-destruct through the `expiresAt` TTL policy.
+    match /notifications/{userId}/inbox/{itemId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create, delete: if false;
+      allow update: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readAt']);
+    }
+
     // Trash bin for deleted entries — written only by the
     // `archiveDeletedExerciseEntry` trigger via the Admin SDK, which
     // bypasses these rules. Kept closed explicitly (the catch-all below
