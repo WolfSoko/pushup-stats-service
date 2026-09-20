@@ -5649,6 +5649,94 @@
         <source>Artikel lesen</source>
       </segment>
     </unit>
+    <unit id="rebrandIntro.badge">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:33,34</note>
+      </notes>
+      <segment>
+        <source>Neu</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.title">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:34,36</note>
+      </notes>
+      <segment>
+        <source>Wir benennen uns um</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.stepCount">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:50,52</note>
+      </notes>
+      <segment>
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.later">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:61,63</note>
+      </notes>
+      <segment>
+        <source> Später </source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.back">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:70,72</note>
+      </notes>
+      <segment>
+        <source>Zurück</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.start">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:82,84</note>
+      </notes>
+      <segment>
+        <source>Beitrag lesen</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.next">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:92,93</note>
+      </notes>
+      <segment>
+        <source>Weiter</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step1.title">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:167</note>
+      </notes>
+      <segment>
+        <source>Ein neuer Name kommt</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step1.body">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:168</note>
+      </notes>
+      <segment>
+        <source>Angefangen hat alles mit Liegestützen. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, es gibt zehn Trainingspläne und ein Übungs-Wiki – der Name wird dem nicht mehr gerecht.</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step2.title">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:173</note>
+      </notes>
+      <segment>
+        <source>Dein Fortschritt bleibt</source>
+      </segment>
+    </unit>
+    <unit id="rebrandIntro.step2.body">
+      <notes>
+        <note category="location">web/src/app/blog/rebrand-intro-dialog.component.ts:174</note>
+      </notes>
+      <segment>
+        <source>Konto, Einträge, Streak und Abzeichen bleiben unverändert – du musst nichts tun. Welcher Name es wird, steht noch nicht fest; wir sagen rechtzeitig Bescheid.</source>
+      </segment>
+    </unit>
     <unit id="androidTest.invite.title">
       <notes>
         <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:40,42</note>
@@ -5844,7 +5932,7 @@
     </unit>
     <unit id="announcements.workouts">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:43</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:44</note>
       </notes>
       <segment>
         <source>Neu: eigene Sessions zusammenstellen</source>
@@ -5852,10 +5940,18 @@
     </unit>
     <unit id="announcements.inbox">
       <notes>
-        <note category="location">web/src/app/core/feature-announcement.service.ts:52</note>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:53</note>
       </notes>
       <segment>
         <source>Neu: Nachrichten und deine Abzeichen</source>
+      </segment>
+    </unit>
+    <unit id="announcements.rebrand">
+      <notes>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:62</note>
+      </notes>
+      <segment>
+        <source>Diese App bekommt einen neuen Namen</source>
       </segment>
     </unit>
     <unit id="feedback.dialog.title">

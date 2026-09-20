@@ -193,8 +193,9 @@ heroImageCredit: 'Bild: Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong – 6-Wochen-Ganzkörperplan</h3>
   <p>
-    Der Plan deckt alle sechs Muster in drei Einheiten pro Woche ab, steigert die Last automatisch und
-    zeigt dir in der Analyse, ob Drücken und Ziehen im Gleichgewicht bleiben.
+    Der Plan deckt fünf der sechs Muster in drei Einheiten pro Woche ab – Drücken, Kniebeuge,
+    Hüftstreckung, Ausfallschritt und Rumpf – und steigert die Last automatisch. Das Ziehen
+    ergänzt du selbst, etwa mit Rudern am Tisch, oder nimmst dafür „Push &amp; Pull Balance".
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Ganzkörperplan starten &rarr;</a>

@@ -202,8 +202,9 @@ heroImageCredit: 'Image : Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong — plan corps entier sur 6 semaines</h3>
   <p>
-    Le plan couvre les six schémas en trois séances par semaine, augmente automatiquement la charge et
-    vous montre dans l'analyse si poussée et tirage restent en équilibre.
+    Le plan couvre cinq des six schémas en trois séances par semaine – poussée, squat, charnière de
+    hanche, fente et gainage – et augmente automatiquement la charge. Le tirage, vous l'ajoutez
+    vous-même, par exemple avec du rowing sous une table, ou vous prenez &laquo;&nbsp;Push &amp; Pull Balance&nbsp;&raquo;.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Démarrer le plan corps entier &rarr;</a>

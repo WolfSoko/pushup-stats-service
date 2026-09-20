@@ -198,8 +198,9 @@ heroImageCredit: 'Immagine: Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong – piano completo di 6 settimane</h3>
   <p>
-    Il piano copre tutti e sei gli schemi in tre sedute a settimana, aumenta automaticamente il carico e
-    ti mostra nell'analisi se spinta e trazione restano in equilibrio.
+    Il piano copre cinque dei sei schemi in tre sedute a settimana – spinta, squat, cerniera d'anca,
+    affondo e core – e aumenta automaticamente il carico. La trazione la aggiungi tu, per esempio con
+    il rematore sotto un tavolo, oppure prendi &laquo;Push &amp; Pull Balance&raquo;.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Inizia il piano completo &rarr;</a>

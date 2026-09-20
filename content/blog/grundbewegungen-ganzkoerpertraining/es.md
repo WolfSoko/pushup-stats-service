@@ -197,8 +197,9 @@ heroImageCredit: 'Imagen: Pushup Tracker'
 <aside class="plan-cta">
   <h3>Full Body Strong: plan de cuerpo completo de 6 semanas</h3>
   <p>
-    El plan cubre los seis patrones en tres sesiones semanales, aumenta la carga automáticamente y te
-    muestra en el análisis si empuje y tirón se mantienen en equilibrio.
+    El plan cubre cinco de los seis patrones en tres sesiones semanales – empuje, sentadilla, bisagra
+    de cadera, zancada y core – y aumenta la carga automáticamente. El tirón lo añades tú, por ejemplo
+    con remo bajo una mesa, o tomas para ello &laquo;Push &amp; Pull Balance&raquo;.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Empezar el plan de cuerpo completo &rarr;</a>
