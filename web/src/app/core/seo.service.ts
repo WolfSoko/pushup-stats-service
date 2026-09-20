@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { BRAND_URL } from '@pu-stats/models';
+import { BRAND_NAME, BRAND_OG_IMAGE_URL, BRAND_URL } from '@pu-stats/models';
 import {
   SUPPORTED_LOCALES,
   type SupportedLocale,
@@ -134,18 +134,21 @@ export class SeoService {
     }
   }
 
+  /**
+   * `index.html` states og:image:width/height/type and a
+   * `summary_large_image` card for every page. Dropping og:image on a page
+   * without one of its own would leave those describing nothing, so a page
+   * that brings no image falls back to the site-wide share image — which is
+   * exactly the 1200x630 PNG those dimensions were written for.
+   */
   private applyImage(imageUrl: string | undefined, alt: string): void {
-    if (imageUrl) {
-      this.setTag('property', 'og:image', imageUrl);
-      this.setTag('property', 'og:image:alt', alt);
-      this.setTag('name', 'twitter:image', imageUrl);
-      this.setTag('name', 'twitter:image:alt', alt);
-    } else {
-      this.removeTag('property', 'og:image');
-      this.removeTag('property', 'og:image:alt');
-      this.removeTag('name', 'twitter:image');
-      this.removeTag('name', 'twitter:image:alt');
-    }
+    const url = imageUrl ?? BRAND_OG_IMAGE_URL;
+    const imageAlt = imageUrl ? alt : BRAND_NAME;
+
+    this.setTag('property', 'og:image', url);
+    this.setTag('property', 'og:image:alt', imageAlt);
+    this.setTag('name', 'twitter:image', url);
+    this.setTag('name', 'twitter:image:alt', imageAlt);
   }
 
   private applyArticleTimes(
