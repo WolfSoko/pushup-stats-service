@@ -23,23 +23,27 @@ export interface InboxRow {
   readonly url: string;
 }
 
+/** Which rows the list shows. Unread is the default — the rest is archive. */
+export type InboxFilter = 'unread' | 'all';
+
 export function buildInboxRows(
   notifications: ReadonlyArray<StoredNotification>,
   announcements: ReadonlyArray<FeatureAnnouncement>,
   seenAnnouncementIds: ReadonlyArray<string>
 ): ReadonlyArray<InboxRow> {
-  const unseen = announcements
-    .filter((a) => !seenAnnouncementIds.includes(a.id))
-    .map((a): InboxRow => ({
-      id: a.id,
-      kind: 'announcement',
-      category: 'system',
-      icon: 'auto_awesome',
-      text: a.label,
-      createdAt: null,
-      unread: true,
-      url: a.url,
-    }));
+  // Seen announcements stay in the list rather than disappearing: reading
+  // something is not the same as wanting it gone. The unread filter keeps
+  // them out of the way by default.
+  const announced = announcements.map((a): InboxRow => ({
+    id: a.id,
+    kind: 'announcement',
+    category: 'system',
+    icon: 'auto_awesome',
+    text: a.label,
+    createdAt: null,
+    unread: !seenAnnouncementIds.includes(a.id),
+    url: a.url,
+  }));
 
   const rows = notifications.map((notification): InboxRow => {
     const view = notificationView(notification);
@@ -57,7 +61,14 @@ export function buildInboxRows(
 
   // Announcements first: they have no timestamp to sort by, and a "what's
   // new" note is stale the moment it scrolls out of sight.
-  return [...unseen, ...rows];
+  return [...announced, ...rows];
+}
+
+export function filterInboxRows(
+  rows: ReadonlyArray<InboxRow>,
+  filter: InboxFilter
+): ReadonlyArray<InboxRow> {
+  return filter === 'unread' ? rows.filter((row) => row.unread) : rows;
 }
 
 export function unreadCount(rows: ReadonlyArray<InboxRow>): number {

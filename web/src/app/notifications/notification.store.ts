@@ -2,10 +2,12 @@ import { isPlatformBrowser } from '@angular/common';
 import { computed, inject, PLATFORM_ID } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
+  patchState,
   signalStore,
   withComputed,
   withMethods,
   withProps,
+  withState,
 } from '@ngrx/signals';
 import { UserContextService } from '@pu-auth/auth';
 import { NotificationsApiService } from '@pu-stats/data-access';
@@ -13,7 +15,13 @@ import { of } from 'rxjs';
 
 import { ANNOUNCEMENTS } from '../core/feature-announcement.service';
 import { UserConfigStore } from '../core/user-config.store';
-import { buildInboxRows, unreadCount, type InboxRow } from './inbox-rows';
+import {
+  buildInboxRows,
+  filterInboxRows,
+  unreadCount,
+  type InboxFilter,
+  type InboxRow,
+} from './inbox-rows';
 
 /**
  * The message inbox behind the toolbar bell.
@@ -25,6 +33,8 @@ import { buildInboxRows, unreadCount, type InboxRow } from './inbox-rows';
  */
 export const NotificationStore = signalStore(
   { providedIn: 'root' },
+  // Unread by default: the inbox is a to-do list first and an archive second.
+  withState({ inboxFilter: 'unread' as InboxFilter }),
   withProps(() => ({
     _api: inject(NotificationsApiService),
     _user: inject(UserContextService),
@@ -50,11 +60,29 @@ export const NotificationStore = signalStore(
     );
     return {
       rows,
+      visibleRows: computed(() => filterInboxRows(rows(), store.inboxFilter())),
       unreadCount: computed(() => unreadCount(rows())),
       hasUnread: computed(() => unreadCount(rows()) > 0),
+      hasAny: computed(() => rows().length > 0),
     };
   }),
   withMethods((store) => ({
+    setFilter(inboxFilter: InboxFilter): void {
+      patchState(store, { inboxFilter });
+    },
+
+    /**
+     * Throws one entry away for good. Only real notifications have a
+     * document to delete — an announcement lives in the static list, so
+     * there is nothing to remove; marking it read is all it can offer.
+     */
+    async remove(row: InboxRow): Promise<void> {
+      if (row.kind !== 'notification') return;
+      const userId = store._user.userIdSafe();
+      if (!userId) return;
+      await store._api.remove(userId, [row.id]).catch(() => undefined);
+    },
+
     /**
      * Marks one row read. An announcement has no document — its "read"
      * lives in `ui.seenAnnouncements`, the same flag the walkthrough

@@ -516,7 +516,12 @@ service cloud.firestore {
     // Records self-destruct through the `expiresAt` TTL policy.
     match /notifications/{userId}/inbox/{itemId} {
       allow read: if request.auth != null && request.auth.uid == userId;
-      allow create, delete: if false;
+      allow create: if false;
+      // Owners may throw their own messages away. Deleting is the only
+      // way out of the list before the TTL fires, and it affects nothing
+      // but their own history — the cheer, badge or friendship the entry
+      // describes lives in its own collection and is untouched.
+      allow delete: if request.auth != null && request.auth.uid == userId;
       allow update: if request.auth != null
                     && request.auth.uid == userId
                     && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readAt']);

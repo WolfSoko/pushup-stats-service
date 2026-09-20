@@ -8858,7 +8858,7 @@
     </unit>
     <unit id="notifications.panel.title">
       <notes>
-        <note category="location">web/src/app/notifications/notification-bell.component.ts:45,46</note>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:47,48</note>
       </notes>
       <segment>
         <source>Nachrichten</source>
@@ -8866,31 +8866,57 @@
     </unit>
     <unit id="notifications.panel.markAll">
       <notes>
-        <note category="location">web/src/app/notifications/notification-bell.component.ts:53,55</note>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:55,57</note>
       </notes>
       <segment>
         <source> Alle gelesen </source>
       </segment>
     </unit>
-    <unit id="notifications.panel.empty">
+    <unit id="notifications.filter.unread">
       <notes>
-        <note category="location">web/src/app/notifications/notification-bell.component.ts:62,66</note>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:67,69</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:36,38</note>
       </notes>
       <segment>
-        <source> Noch keine Nachrichten. </source>
+        <source>Ungelesen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.filter.all">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:70,72</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:39,41</note>
+      </notes>
+      <segment>
+        <source>Alle</source>
       </segment>
     </unit>
     <unit id="notifications.panel.showAll">
       <notes>
-        <note category="location">web/src/app/notifications/notification-bell.component.ts:73,76</note>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:91,94</note>
       </notes>
       <segment>
         <source> Alle anzeigen </source>
       </segment>
     </unit>
+    <unit id="notifications.empty.unread">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:164</note>
+      </notes>
+      <segment>
+        <source>Alles gelesen.</source>
+      </segment>
+    </unit>
+    <unit id="notifications.empty.all">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:165</note>
+      </notes>
+      <segment>
+        <source>Noch keine Nachrichten.</source>
+      </segment>
+    </unit>
     <unit id="notifications.bell.none">
       <notes>
-        <note category="location">web/src/app/notifications/notification-bell.component.ts:140</note>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:171</note>
       </notes>
       <segment>
         <source>Nachrichten</source>
@@ -8898,10 +8924,18 @@
     </unit>
     <unit id="notifications.bell.unread">
       <notes>
-        <note category="location">web/src/app/notifications/notification-bell.component.ts:141</note>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:172</note>
       </notes>
       <segment>
         <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.item.delete">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-item.component.ts:143</note>
+      </notes>
+      <segment>
+        <source>Nachricht löschen</source>
       </segment>
     </unit>
     <unit id="notificationPrefs.label">
@@ -9042,7 +9076,7 @@
     </unit>
     <unit id="notifications.page.title">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:16,17</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:21,22</note>
       </notes>
       <segment>
         <source>Nachrichten</source>
@@ -9050,15 +9084,23 @@
     </unit>
     <unit id="notifications.page.markAll">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:19,22</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:24,27</note>
       </notes>
       <segment>
         <source>Alle gelesen</source>
       </segment>
     </unit>
+    <unit id="notifications.page.allRead">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:52,54</note>
+      </notes>
+      <segment>
+        <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
+      </segment>
+    </unit>
     <unit id="notifications.page.empty">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:28,31</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:56,59</note>
       </notes>
       <segment>
         <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>

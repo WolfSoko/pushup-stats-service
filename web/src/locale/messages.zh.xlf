@@ -14427,5 +14427,41 @@
         <target>Tagesziel geschafft</target>
       </segment>
     </unit>
+    <unit id="notifications.filter.unread">
+      <segment state="initial">
+        <source>Ungelesen</source>
+        <target>Ungelesen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.filter.all">
+      <segment state="initial">
+        <source>Alle</source>
+        <target>Alle</target>
+      </segment>
+    </unit>
+    <unit id="notifications.empty.unread">
+      <segment state="initial">
+        <source>Alles gelesen.</source>
+        <target>Alles gelesen.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.empty.all">
+      <segment state="initial">
+        <source>Noch keine Nachrichten.</source>
+        <target>Noch keine Nachrichten.</target>
+      </segment>
+    </unit>
+    <unit id="notifications.item.delete">
+      <segment state="initial">
+        <source>Nachricht löschen</source>
+        <target>Nachricht löschen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.allRead">
+      <segment state="initial">
+        <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
+        <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

@@ -46,6 +46,16 @@ export class NotificationsApiService {
     );
   }
 
+  async remove(userId: string, ids: ReadonlyArray<string>): Promise<void> {
+    const uid = this.auth?.currentUser?.uid ?? userId;
+    if (!this.firestore || !uid || ids.length === 0) return;
+    const batch = writeBatch(this.firestore);
+    for (const id of ids) {
+      batch.delete(doc(this.firestore, `notifications/${uid}/inbox/${id}`));
+    }
+    await batch.commit();
+  }
+
   async markRead(userId: string, ids: ReadonlyArray<string>): Promise<void> {
     const uid = this.auth?.currentUser?.uid ?? userId;
     if (!this.firestore || !uid || ids.length === 0) return;
