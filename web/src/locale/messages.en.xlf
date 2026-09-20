@@ -15149,5 +15149,11 @@ Active:         </target>
         <target> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </target>
       </segment>
     </unit>
+    <unit id="notifications.panel.allRead">
+      <segment state="initial">
+        <source> Alles gelesen. </source>
+        <target> Alles gelesen. </target>
+      </segment>
+    </unit>
 </file>
 </xliff>

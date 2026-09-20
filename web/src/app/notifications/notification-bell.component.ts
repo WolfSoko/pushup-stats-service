@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 
@@ -15,7 +14,6 @@ const PANEL_ROWS = 10;
   selector: 'app-notification-bell',
   imports: [
     MatButtonModule,
-    MatButtonToggleModule,
     MatIconModule,
     MatMenuModule,
     NotificationItemComponent,
@@ -57,20 +55,6 @@ const PANEL_ROWS = 10;
           }
         </header>
 
-        <mat-button-toggle-group
-          class="filter"
-          [value]="store.inboxFilter()"
-          (change)="store.setFilter($event.value)"
-          [hideSingleSelectionIndicator]="true"
-        >
-          <mat-button-toggle value="unread" i18n="@@notifications.filter.unread"
-            >Ungelesen</mat-button-toggle
-          >
-          <mat-button-toggle value="all" i18n="@@notifications.filter.all"
-            >Alle</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-
         @for (row of visible(); track row.id) {
           <app-notification-item
             [row]="row"
@@ -78,7 +62,9 @@ const PANEL_ROWS = 10;
             (remove)="store.remove($event)"
           />
         } @empty {
-          <p class="empty">{{ emptyText() }}</p>
+          <p class="empty" i18n="@@notifications.panel.allRead">
+            Alles gelesen.
+          </p>
         }
 
         <button
@@ -132,12 +118,6 @@ const PANEL_ROWS = 10;
       font-weight: 600;
     }
 
-    .filter {
-      align-self: center;
-      margin-bottom: 4px;
-      --mat-standard-button-toggle-height: 30px;
-    }
-
     .empty {
       margin: 0;
       padding: 16px 8px;
@@ -155,14 +135,7 @@ export class NotificationBellComponent {
   private readonly router = inject(Router);
 
   protected visible(): ReadonlyArray<InboxRow> {
-    return this.store.visibleRows().slice(0, PANEL_ROWS);
-  }
-
-  /** "Nothing unread" and "nothing at all" are different news. */
-  protected emptyText(): string {
-    return this.store.inboxFilter() === 'unread' && this.store.hasAny()
-      ? $localize`:@@notifications.empty.unread:Alles gelesen.`
-      : $localize`:@@notifications.empty.all:Noch keine Nachrichten.`;
+    return this.store.unreadRows().slice(0, PANEL_ROWS);
   }
 
   protected ariaLabel(): string {
