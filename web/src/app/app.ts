@@ -29,6 +29,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
+import { BRAND_NAME } from '@pu-stats/models';
 import { AuthService, AuthStore, UserMenuComponent } from '@pu-auth/auth';
 
 import { AvatarService } from './core/avatar.service';
@@ -321,7 +322,7 @@ export class App {
         };
 
         const title =
-          data.seoTitle ?? $localize`:@@seo.default.title:Pushup Tracker`;
+          data.seoTitle ?? $localize`:@@seo.default.title:${BRAND_NAME}:brand:`;
         const description =
           data.seoDescription ??
           $localize`:@@seo.default.description:Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.`;

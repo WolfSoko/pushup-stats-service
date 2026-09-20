@@ -142,7 +142,7 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 
 ### Phase 1 — Brand-Layer zentralisieren (vor dem Rename)
 
-**Status: überwiegend erledigt.** Die Konstanten, die Umstellung der Nicht-i18n-Literale und der Guard sind drin. Offen ist der i18n-Schritt (siehe unten).
+**Status: erledigt.** Konstanten, Nicht-i18n-Literale, Guard und die i18n-Platzhalter sind drin.
 
 **Problem:** Es gibt heute **keine zentrale Marken-Konstante.** „Pushup Tracker" steht 22-mal wörtlich in Prod-Quellen, `https://pushup-stats.com` als Literal in mindestens 8 Dateien (`dashboard-share.ts`, `achievement-celebration.service.ts`, `blog-article.component.ts`, `exercise-detail.component.ts`, `pushup-type-detail.component.ts`, `goal-reached-dialog`, `generate-feeds.js`, `generate-sitemap.js`). Ein Rename ohne diesen Schritt ist ein 250-Dateien-Suchen-und-Ersetzen mit hoher Fehlerquote.
 
@@ -158,11 +158,16 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 - `libs/sw-push` spiegelt `BRAND_NAME` lokal. Der SW-Bundle bleibt frei von Cross-Package-Imports — dieselbe Entscheidung wie bei `SW_SUPPORTED_LOCALES`. Ein Barrel-Import würde den Übungskatalog in einen Service Worker ziehen, der wenige KB groß bleiben soll.
 - `web/src/index.html` wird ausgeliefert, bevor Angular bootet, und kann nichts importieren.
 
-**Offen — der i18n-Schritt:** 19 Dateien tragen die Marke noch innerhalb von `$localize`-Messages und `i18n`-Template-Text. Diese auf Platzhalter umzustellen ändert den Message-Source und seedet alle acht Ziel-Locales neu, ist also ein eigener Durchgang mit `extract-i18n` + `sync-xliff-locales` und einem Lauf der Übersetzungs-Routine. Die Allowlist `TRANSLATABLE_COPY` im Guard ist die Inventarliste; ein Eintrag, der nicht mehr gebraucht wird, lässt die Suite fehlschlagen, die Liste kann also nur schrumpfen.
+**Der i18n-Schritt ist umgesetzt:** 52 Messages tragen die Marke jetzt als `$localize`-Platzhalter (`${BRAND_NAME}:brand:`) beziehungsweise als Template-Binding `{{ brandName }}`. `TRANSLATABLE_COPY` im Guard ist leer — die Marke steht in keiner übersetzbaren Zeichenkette mehr.
 
-Der Aufwand dafür ist nicht zusätzlich, sondern vorgezogen: Ohne Platzhalter müssen dieselben Messages in Phase 2 angefasst werden. Mit Platzhaltern überleben die Übersetzungen auch jeden künftigen Rename.
+Die Platzhalter wurden auch in die acht Ziel-Locales nachgezogen, statt 52 × 8 Units neu übersetzen zu lassen: Wo sich die deutsche Quelle ausschließlich durch Literal → Platzhalter unterschied, ist das `<ph>`-Element ins Target übernommen und der Status auf `translated` belassen. Das bewahrt insbesondere die italienische Keyword-Arbeit an `seo.wiki.pushupTypes.title` (siehe [`docs/gotchas/i18n.md`](gotchas/i18n.md)), die eine Neuübersetzung zerstört hätte.
 
-**Tests:** Guard-Test neu. Die markenbehafteten Specs bleiben unverändert — sie prüfen die URL als Wert, nicht als Literal, und liefen ohne Anpassung durch.
+**Zwei Befunde für Phase 2**, beide vorbestehend und nicht durch diesen Schritt entstanden:
+
+- **Mehrere Locales haben den Produktnamen übersetzt**, statt ihn stehen zu lassen — `es` sagt „Estadísticas de flexiones", `zh` „俯卧撑追踪器", `el` „στατιστικά του PushUp". Diese Units bleiben bewusst auf `initial` und werden von der Übersetzungs-Routine gegen die neue Quelle neu erzeugt; mit Platzhalter kann die Marke dann nicht mehr wegübersetzt werden.
+- **`seo.default.description` (alle acht Locales) und `app.title` (`no`) nennen die Marke, obwohl die deutsche Quelle das nicht tut.** Sie stehen auf `translated`, werden also von der Routine nicht angefasst und würden den alten Namen über den Rename hinweg behalten. Vor Phase 2 prüfen.
+
+**Tests:** Guard-Test neu. Die markenbehafteten Specs blieben unverändert. Der Production-Build über alle neun Locales inklusive Prerender ist die eigentliche Absicherung der XLIFF-Änderung.
 
 **Ausliefert:** nichts Sichtbares. Reines Refactoring, geht normal über `main`.
 

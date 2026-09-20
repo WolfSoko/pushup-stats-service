@@ -223,10 +223,10 @@
     </unit>
     <unit id="auth.login.title">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,6</note>
       </notes>
       <segment>
-        <source>Willkommen bei Pushup Tracker</source>
+        <source>Willkommen bei <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
       </segment>
     </unit>
     <unit id="auth.login.subtitle">
@@ -308,7 +308,7 @@
     </unit>
     <unit id="validate.email.required">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:59</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:61</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:123</note>
       </notes>
       <segment>
@@ -317,7 +317,7 @@
     </unit>
     <unit id="validate.email.email">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:62</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:64</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:126</note>
       </notes>
       <segment>
@@ -326,7 +326,7 @@
     </unit>
     <unit id="validate.password.required">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:65</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:67</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:129</note>
       </notes>
       <segment>
@@ -335,7 +335,7 @@
     </unit>
     <unit id="validate.password.minLength">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:68</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:70</note>
         <note category="location">libs/auth/src/lib/ui/register/register.component.ts:132</note>
       </notes>
       <segment>
@@ -344,7 +344,7 @@
     </unit>
     <unit id="auth.login.success">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:108</note>
+        <note category="location">libs/auth/src/lib/ui/login/login.component.ts:110</note>
       </notes>
       <segment>
         <source>Erfolgreich angemeldet! 👋</source>
@@ -2782,7 +2782,7 @@
     </unit>
     <unit id="achievement.dialog.headline">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:85</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:86</note>
       </notes>
       <segment>
         <source>Geschafft!</source>
@@ -2790,7 +2790,7 @@
     </unit>
     <unit id="achievement.dialog.close">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:86</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:87</note>
       </notes>
       <segment>
         <source>Weiter</source>
@@ -2798,7 +2798,7 @@
     </unit>
     <unit id="achievement.dialog.share">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:87</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:88</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -2806,15 +2806,15 @@
     </unit>
     <unit id="achievement.share.title">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:95</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:96</note>
       </notes>
       <segment>
-        <source>Pushup Tracker</source>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="achievement.share.text">
       <notes>
-        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:96</note>
+        <note category="location">web/src/app/achievements/achievement-dialog.component.ts:97</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
@@ -4358,15 +4358,15 @@
     </unit>
     <unit id="seo.assistant.title">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant.routes.ts:30</note>
+        <note category="location">web/src/app/ai/ai-assistant.routes.ts:31</note>
       </notes>
       <segment>
-        <source>KI-Coach – Pushup Tracker</source>
+        <source>KI-Coach – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
       <notes>
-        <note category="location">web/src/app/ai/ai-assistant.routes.ts:31</note>
+        <note category="location">web/src/app/ai/ai-assistant.routes.ts:32</note>
       </notes>
       <segment>
         <source>Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.</source>
@@ -4487,7 +4487,7 @@
     </unit>
     <unit id="seo.landing.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:18</note>
+        <note category="location">web/src/app/app.routes.ts:19</note>
       </notes>
       <segment>
         <source>Liegestütze per Kamera zählen – kostenlos im Browser</source>
@@ -4495,7 +4495,7 @@
     </unit>
     <unit id="seo.landing.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:19</note>
+        <note category="location">web/src/app/app.routes.ts:20</note>
       </notes>
       <segment>
         <source>Die Kamera zählt deine Liegestütze automatisch – im Browser, ohne Upload. Dazu Trainingspläne, Streaks, Bestenliste und Challenges mit Freunden – auch für Kniebeugen und Klimmzüge.</source>
@@ -4503,15 +4503,15 @@
     </unit>
     <unit id="seo.dashboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:30</note>
+        <note category="location">web/src/app/app.routes.ts:31</note>
       </notes>
       <segment>
-        <source>Dashboard – Pushup Tracker</source>
+        <source>Dashboard – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.dashboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:31</note>
+        <note category="location">web/src/app/app.routes.ts:32</note>
       </notes>
       <segment>
         <source>Behalte Trainingsvolumen und Verlauf im Blick – klar, schnell und mobil optimiert.</source>
@@ -4519,15 +4519,15 @@
     </unit>
     <unit id="seo.login.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:47</note>
+        <note category="location">web/src/app/app.routes.ts:48</note>
       </notes>
       <segment>
-        <source>Login – Pushup Tracker</source>
+        <source>Login – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.login.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:48</note>
+        <note category="location">web/src/app/app.routes.ts:49</note>
       </notes>
       <segment>
         <source>Melde dich an und tracke dein Pushup-Training über alle Geräte.</source>
@@ -4535,15 +4535,15 @@
     </unit>
     <unit id="seo.register.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:57</note>
+        <note category="location">web/src/app/app.routes.ts:58</note>
       </notes>
       <segment>
-        <source>Registrierung – Pushup Tracker</source>
+        <source>Registrierung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.register.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:58</note>
+        <note category="location">web/src/app/app.routes.ts:59</note>
       </notes>
       <segment>
         <source>Erstelle dein Konto und richte Profil, Tagesziel und Einwilligungen ein.</source>
@@ -4551,15 +4551,15 @@
     </unit>
     <unit id="seo.history.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:67</note>
+        <note category="location">web/src/app/app.routes.ts:68</note>
       </notes>
       <segment>
-        <source>Historie – Pushup Tracker</source>
+        <source>Historie – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.history.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:68</note>
+        <note category="location">web/src/app/app.routes.ts:69</note>
       </notes>
       <segment>
         <source>Durchsuche deine Trainingshistorie, filtere nach Zeitraum und behalte den Überblick.</source>
@@ -4567,15 +4567,15 @@
     </unit>
     <unit id="seo.analysis.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:79</note>
+        <note category="location">web/src/app/app.routes.ts:80</note>
       </notes>
       <segment>
-        <source>Analyse – Pushup Tracker</source>
+        <source>Analyse – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.analysis.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:80</note>
+        <note category="location">web/src/app/app.routes.ts:81</note>
       </notes>
       <segment>
         <source>Analysiere Trends, Verteilungen und Streaks deines Trainings.</source>
@@ -4583,15 +4583,15 @@
     </unit>
     <unit id="seo.settings.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:94</note>
+        <note category="location">web/src/app/app.routes.ts:95</note>
       </notes>
       <segment>
-        <source>Einstellungen – Pushup Tracker</source>
+        <source>Einstellungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.settings.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:95</note>
+        <note category="location">web/src/app/app.routes.ts:96</note>
       </notes>
       <segment>
         <source>Verwalte Profil, Leaderboard-Sichtbarkeit und Tagesziel-Einstellungen.</source>
@@ -4599,15 +4599,15 @@
     </unit>
     <unit id="seo.goals.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:113</note>
+        <note category="location">web/src/app/app.routes.ts:114</note>
       </notes>
       <segment>
-        <source>Tagesziele – Pushup Tracker</source>
+        <source>Tagesziele – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.goals.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:114</note>
+        <note category="location">web/src/app/app.routes.ts:115</note>
       </notes>
       <segment>
         <source>Plane verschiedene Übungen pro Tag, pro Woche und pro Monat – mit Wochentag-Filter.</source>
@@ -4615,15 +4615,15 @@
     </unit>
     <unit id="seo.reminders.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:124</note>
+        <note category="location">web/src/app/app.routes.ts:125</note>
       </notes>
       <segment>
-        <source>Erinnerungen – Pushup Tracker</source>
+        <source>Erinnerungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.reminders.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:125</note>
+        <note category="location">web/src/app/app.routes.ts:126</note>
       </notes>
       <segment>
         <source>Konfiguriere Liegestütz-Erinnerungen und Push-Benachrichtigungen.</source>
@@ -4631,15 +4631,15 @@
     </unit>
     <unit id="seo.trainingPlans.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:151</note>
+        <note category="location">web/src/app/app.routes.ts:152</note>
       </notes>
       <segment>
-        <source>Trainingspläne – Pushup Tracker</source>
+        <source>Trainingspläne – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.trainingPlans.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:152</note>
+        <note category="location">web/src/app/app.routes.ts:153</note>
       </notes>
       <segment>
         <source>Strukturierte Liegestütz-Trainingspläne mit Tagesziel, Sätzen und automatischer Fortschrittsverfolgung.</source>
@@ -4647,15 +4647,15 @@
     </unit>
     <unit id="seo.workouts.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:179</note>
+        <note category="location">web/src/app/app.routes.ts:180</note>
       </notes>
       <segment>
-        <source>Meine Sessions – Pushup Tracker</source>
+        <source>Meine Sessions – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.workouts.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:180</note>
+        <note category="location">web/src/app/app.routes.ts:181</note>
       </notes>
       <segment>
         <source>Eigene Trainingssessions zusammenstellen, geführt durchführen und mit Freunden teilen.</source>
@@ -4663,15 +4663,15 @@
     </unit>
     <unit id="seo.wiki.pushupTypes.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:222</note>
+        <note category="location">web/src/app/app.routes.ts:223</note>
       </notes>
       <segment>
-        <source>Liegestütztypen erklärt – Pushup Tracker</source>
+        <source>Liegestütztypen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:223</note>
+        <note category="location">web/src/app/app.routes.ts:224</note>
       </notes>
       <segment>
         <source>Saubere Ausführung der wichtigsten Liegestütz-Varianten – Standard, Knie, Diamant, Archer, einarmig und mehr.</source>
@@ -4679,31 +4679,31 @@
     </unit>
     <unit id="seo.wiki.exercises.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:246</note>
+        <note category="location">web/src/app/app.routes.ts:247</note>
       </notes>
       <segment>
-        <source>Übungen erklärt – Pushup Tracker</source>
+        <source>Übungen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.wiki.exercises.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:247</note>
+        <note category="location">web/src/app/app.routes.ts:248</note>
       </notes>
       <segment>
-        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <source>Saubere Ausführung der Übungen, die du in <ph id="0" equiv="brand" disp="BRAND_NAME"/> mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
       </segment>
     </unit>
     <unit id="seo.friends.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:267</note>
+        <note category="location">web/src/app/app.routes.ts:268</note>
       </notes>
       <segment>
-        <source>Freunde – Pushup Tracker</source>
+        <source>Freunde – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.friends.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:268</note>
+        <note category="location">web/src/app/app.routes.ts:269</note>
       </notes>
       <segment>
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
@@ -4711,15 +4711,15 @@
     </unit>
     <unit id="seo.notifications.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:280</note>
+        <note category="location">web/src/app/app.routes.ts:281</note>
       </notes>
       <segment>
-        <source>Nachrichten – Pushup Tracker</source>
+        <source>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.notifications.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:281</note>
+        <note category="location">web/src/app/app.routes.ts:282</note>
       </notes>
       <segment>
         <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
@@ -4727,15 +4727,15 @@
     </unit>
     <unit id="seo.achievements.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:293</note>
+        <note category="location">web/src/app/app.routes.ts:294</note>
       </notes>
       <segment>
-        <source>Abzeichen – Pushup Tracker</source>
+        <source>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.achievements.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:294</note>
+        <note category="location">web/src/app/app.routes.ts:295</note>
       </notes>
       <segment>
         <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
@@ -4743,15 +4743,15 @@
     </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:305</note>
+        <note category="location">web/src/app/app.routes.ts:306</note>
       </notes>
       <segment>
-        <source>Bestenliste – Pushup Tracker</source>
+        <source>Bestenliste – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:306</note>
+        <note category="location">web/src/app/app.routes.ts:307</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4759,15 +4759,15 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:316</note>
+        <note category="location">web/src/app/app.routes.ts:317</note>
       </notes>
       <segment>
-        <source>Profil – Pushup Tracker</source>
+        <source>Profil – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:317</note>
+        <note category="location">web/src/app/app.routes.ts:318</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4775,15 +4775,15 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:331</note>
+        <note category="location">web/src/app/app.routes.ts:332</note>
       </notes>
       <segment>
-        <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
+        <source>Blog – Liegestütze Tipps &amp; Guides | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:332</note>
+        <note category="location">web/src/app/app.routes.ts:333</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4791,55 +4791,55 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:349</note>
+        <note category="location">web/src/app/app.routes.ts:350</note>
       </notes>
       <segment>
-        <source>Über uns – Pushup Tracker</source>
+        <source>Über uns – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:350</note>
+        <note category="location">web/src/app/app.routes.ts:351</note>
       </notes>
       <segment>
-        <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
+        <source>Wer hinter <ph id="0" equiv="brand" disp="BRAND_NAME"/> steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
       </segment>
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:360</note>
+        <note category="location">web/src/app/app.routes.ts:361</note>
       </notes>
       <segment>
-        <source>Impressum – Pushup Tracker</source>
+        <source>Impressum – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:361</note>
+        <note category="location">web/src/app/app.routes.ts:362</note>
       </notes>
       <segment>
-        <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
+        <source>Impressum und Anbieterkennzeichnung von <ph id="0" equiv="brand" disp="BRAND_NAME"/>.</source>
       </segment>
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:371</note>
+        <note category="location">web/src/app/app.routes.ts:372</note>
       </notes>
       <segment>
-        <source>Datenschutzerklärung – Pushup Tracker</source>
+        <source>Datenschutzerklärung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:372</note>
+        <note category="location">web/src/app/app.routes.ts:373</note>
       </notes>
       <segment>
-        <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
+        <source>Datenschutzerklärung von <ph id="0" equiv="brand" disp="BRAND_NAME"/> – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
       </segment>
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:113</note>
+        <note category="location">web/src/app/app.ts:114</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4847,7 +4847,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:114</note>
+        <note category="location">web/src/app/app.ts:115</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4855,7 +4855,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:255</note>
+        <note category="location">web/src/app/app.ts:256</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4863,15 +4863,15 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:324</note>
+        <note category="location">web/src/app/app.ts:325</note>
       </notes>
       <segment>
-        <source>Pushup Tracker</source>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:327</note>
+        <note category="location">web/src/app/app.ts:328</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4879,7 +4879,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:395</note>
+        <note category="location">web/src/app/app.ts:396</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4887,7 +4887,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:424</note>
+        <note category="location">web/src/app/app.ts:425</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4895,7 +4895,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:431</note>
+        <note category="location">web/src/app/app.ts:432</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5579,7 +5579,7 @@
     </unit>
     <unit id="blog.article.back">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:41,43</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:39,41</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon&gt;" dispEnd="&lt;/mat-icon&gt;">arrow_back</pc> Blog </source>
@@ -5587,7 +5587,7 @@
     </unit>
     <unit id="blog.article.readingTime">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:71,72</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:69,70</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="INTERPOLATION" disp="{{ readingTimeMinutes }}"/> Min. Lesezeit</source>
@@ -5595,7 +5595,7 @@
     </unit>
     <unit id="blog.article.updated">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:77,78</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:75,76</note>
       </notes>
       <segment>
         <source>Aktualisiert am</source>
@@ -5603,7 +5603,7 @@
     </unit>
     <unit id="blog.article.cta">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:94,96</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:92,94</note>
       </notes>
       <segment>
         <source> Kostenlos tracken – Jetzt registrieren </source>
@@ -5611,7 +5611,7 @@
     </unit>
     <unit id="blog.article.notFound">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:100,101</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:98,99</note>
       </notes>
       <segment>
         <source>Artikel nicht gefunden.</source>
@@ -5619,7 +5619,7 @@
     </unit>
     <unit id="blog.article.toList">
       <notes>
-        <note category="location">web/src/app/blog/blog-article.component.ts:102,106</note>
+        <note category="location">web/src/app/blog/blog-article.component.ts:100,104</note>
       </notes>
       <segment>
         <source>Zur Übersicht</source>
@@ -5651,7 +5651,7 @@
     </unit>
     <unit id="androidTest.invite.title">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:39,41</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:40,42</note>
       </notes>
       <segment>
         <source> Werde Android-App-Tester </source>
@@ -5659,15 +5659,15 @@
     </unit>
     <unit id="androidTest.invite.body">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:43,46</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:44,46</note>
       </notes>
       <segment>
-        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <source> Wir bauen gerade die <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:58,60</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:59,61</note>
       </notes>
       <segment>
         <source> Nicht jetzt </source>
@@ -5675,7 +5675,7 @@
     </unit>
     <unit id="androidTest.invite.join">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:67,73</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:68,74</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_BLOCK_IF" equivEnd="CLOSE_BLOCK_IF" type="other" dispStart="@if (loading()) {" dispEnd="}"><pc id="1" equivStart="START_TAG_MAT_SPINNER" equivEnd="CLOSE_TAG_MAT_SPINNER" type="other" dispStart="&lt;mat-spinner diameter=&quot;18&quot;&gt;" dispEnd="&lt;/mat-spinner&gt;"></pc></pc><pc id="2" equivStart="START_BLOCK_ELSE" equivEnd="CLOSE_BLOCK_ELSE" type="other" dispStart="@else {" dispEnd="}"> Ich bin dabei </pc></source>
@@ -5683,7 +5683,7 @@
     </unit>
     <unit id="androidTest.invite.thanksTitle">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:75,77</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:76,78</note>
       </notes>
       <segment>
         <source>Danke!</source>
@@ -5691,7 +5691,7 @@
     </unit>
     <unit id="androidTest.invite.thanksBody">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:78,81</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:79,82</note>
       </notes>
       <segment>
         <source> Du wirst per Push-Benachrichtigung informiert, sobald du als Tester freigeschaltet bist. </source>
@@ -5699,7 +5699,7 @@
     </unit>
     <unit id="androidTest.invite.close">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:89,91</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:90,92</note>
       </notes>
       <segment>
         <source> Schließen </source>
@@ -5707,7 +5707,7 @@
     </unit>
     <unit id="androidTest.invite.error">
       <notes>
-        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:115</note>
+        <note category="location">web/src/app/core/android-test-invite-dialog.component.ts:117</note>
       </notes>
       <segment>
         <source>Das hat leider nicht geklappt. Bitte versuch es später erneut.</source>
@@ -5908,18 +5908,18 @@
     </unit>
     <unit id="invite.banner.invitedBy">
       <notes>
-        <note category="location">web/src/app/core/invite-banner.component.ts:39,40</note>
+        <note category="location">web/src/app/core/invite-banner.component.ts:40,42</note>
       </notes>
       <segment>
-        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
+        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu <ph id="2" equiv="INTERPOLATION_1" disp="{{ brandName }}"/> eingeladen.</source>
       </segment>
     </unit>
     <unit id="invite.banner.anonymous">
       <notes>
-        <note category="location">web/src/app/core/invite-banner.component.ts:44,46</note>
+        <note category="location">web/src/app/core/invite-banner.component.ts:45,46</note>
       </notes>
       <segment>
-        <source> Du wurdest zu Pushup Tracker eingeladen. </source>
+        <source> Du wurdest zu <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> eingeladen. </source>
       </segment>
     </unit>
     <unit id="invite.share.title">
@@ -5927,7 +5927,7 @@
         <note category="location">web/src/app/core/invite.service.ts:73</note>
       </notes>
       <segment>
-        <source>Pushup Tracker</source>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="invite.share.text">
@@ -6100,11 +6100,11 @@
     </unit>
     <unit id="eyebrowTitle">
       <notes>
-        <note category="location">web/src/app/core/page-header/page-header.component.ts:27,28</note>
+        <note category="location">web/src/app/core/page-header/page-header.component.ts:28,29</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:15,16</note>
       </notes>
       <segment>
-        <source>Pushup Tracker</source>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
       </segment>
     </unit>
     <unit id="quickAdd.success.create">
@@ -7438,7 +7438,7 @@
     </unit>
     <unit id="about.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:10,13</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:11,14</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -7446,23 +7446,23 @@
     </unit>
     <unit id="about.who.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:13,14</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:14,15</note>
       </notes>
       <segment>
-        <source>Wer hinter Pushup Tracker steckt</source>
+        <source>Wer hinter <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> steckt</source>
       </segment>
     </unit>
     <unit id="about.who.body1">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:15,19</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:16,20</note>
       </notes>
       <segment>
-        <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
       </segment>
     </unit>
     <unit id="about.who.body2">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:22,27</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:23,28</note>
       </notes>
       <segment>
         <source> Was als kleines Wochenendprojekt für Liegestütze begann, ist heute ein vollwertiger Trainings-Tracker für dutzende Übungen – von Liegestützen, Klimmzügen und Kniebeugen über Planks und Ausfallschritte bis hin zu Cardio- und Mobility-Einheiten. Mit Trainingsplänen, Tageszielen, Streaks, Bestenliste und automatischer Wiederholungszählung per Kamera – komplett im Browser, kostenlos und ohne App-Store. </source>
@@ -7470,7 +7470,7 @@
     </unit>
     <unit id="about.mission.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:33,34</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:34,35</note>
       </notes>
       <segment>
         <source>Warum es diese Seite gibt</source>
@@ -7478,15 +7478,15 @@
     </unit>
     <unit id="about.mission.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:35,40</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:36,41</note>
       </notes>
       <segment>
-        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
+        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
       </segment>
     </unit>
     <unit id="about.content.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:45,46</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Wie unsere Inhalte entstehen</source>
@@ -7494,7 +7494,7 @@
     </unit>
     <unit id="about.content.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:47,51</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:48,52</note>
       </notes>
       <segment>
         <source> Die Guides und Blog-Artikel basieren auf eigener Trainingserfahrung und allgemein anerkannten Trainingsprinzipien; wo Studien zitiert werden, sind sie im Artikel verlinkt. Die Inhalte ersetzen keine medizinische Beratung – hol dir bei Vorerkrankungen oder Schmerzen zuerst ärztlichen Rat. </source>
@@ -7502,7 +7502,7 @@
     </unit>
     <unit id="about.contact.title">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:56,58</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:57,59</note>
       </notes>
       <segment>
         <source>Kontakt</source>
@@ -7510,7 +7510,7 @@
     </unit>
     <unit id="about.contact.body">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:59,61</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:60,62</note>
       </notes>
       <segment>
         <source>Fragen, Feedback oder Fehler gefunden? Schreib uns:</source>
@@ -7518,7 +7518,7 @@
     </unit>
     <unit id="about.toImpressum">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:68,71</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:69,72</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -7526,7 +7526,7 @@
     </unit>
     <unit id="about.toDatenschutz">
       <notes>
-        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:74,77</note>
+        <note category="location">web/src/app/marketing/about/ueber-uns-page.component.ts:75,78</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -7902,7 +7902,7 @@
     </unit>
     <unit id="datenschutz.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:7,10</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:8,11</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung</source>
@@ -7910,7 +7910,7 @@
     </unit>
     <unit id="datenschutz.overview.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:11,13</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:12,14</note>
       </notes>
       <segment>
         <source> 1. Datenschutz auf einen Blick </source>
@@ -7918,7 +7918,7 @@
     </unit>
     <unit id="datenschutz.overview.general.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:13,14</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:14,15</note>
       </notes>
       <segment>
         <source>Allgemeine Hinweise</source>
@@ -7926,7 +7926,7 @@
     </unit>
     <unit id="datenschutz.overview.general.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:15,18</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:16,19</note>
       </notes>
       <segment>
         <source> Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. </source>
@@ -7934,7 +7934,7 @@
     </unit>
     <unit id="datenschutz.responsible.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:24,26</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:25,27</note>
       </notes>
       <segment>
         <source> 2. Verantwortliche Stelle </source>
@@ -7942,7 +7942,7 @@
     </unit>
     <unit id="datenschutz.responsible.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:27,30</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:28,31</note>
       </notes>
       <segment>
         <source> Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist: </source>
@@ -7950,7 +7950,7 @@
     </unit>
     <unit id="datenschutz.responsible.email">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:34,35</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:35,37</note>
       </notes>
       <segment>
         <source>E-Mail:</source>
@@ -7958,7 +7958,7 @@
     </unit>
     <unit id="datenschutz.hosting.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:40,41</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:41,42</note>
       </notes>
       <segment>
         <source>3. Hosting</source>
@@ -7966,7 +7966,7 @@
     </unit>
     <unit id="datenschutz.hosting.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:42,47</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:43,48</note>
       </notes>
       <segment>
         <source> Diese Website wird bei Google Firebase (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) gehostet. Wenn Sie diese Website besuchen, werden Server-Log-Dateien automatisch erhoben und für kurze Zeit gespeichert. Details entnehmen Sie der Datenschutzerklärung von Google: https://policies.google.com/privacy </source>
@@ -7974,7 +7974,7 @@
     </unit>
     <unit id="datenschutz.account.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:53,55</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:54,56</note>
       </notes>
       <segment>
         <source> 4. Registrierung und Nutzerkonto </source>
@@ -7982,7 +7982,7 @@
     </unit>
     <unit id="datenschutz.account.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:56,60</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:57,61</note>
       </notes>
       <segment>
         <source> Sie können ein Nutzerkonto anlegen, um Trainingseinträge zu speichern. Dabei werden E-Mail-Adresse, ein Anzeigename sowie Ihre Trainingseinträge in Google Cloud Firestore gespeichert. Die Authentifizierung erfolgt über Firebase Authentication. Sie können Ihr Konto und alle zugehörigen Daten jederzeit in den Einstellungen löschen. </source>
@@ -7990,7 +7990,7 @@
     </unit>
     <unit id="datenschutz.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:66,67</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:67,68</note>
       </notes>
       <segment>
         <source>5. Google Analytics</source>
@@ -7998,7 +7998,7 @@
     </unit>
     <unit id="datenschutz.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:68,74</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:69,75</note>
       </notes>
       <segment>
         <source> Diese Website nutzt Google Analytics 4 (Mess-ID: G-5D32B9B1S6), einen Webanalysedienst der Google Ireland Limited. Google Analytics verwendet Cookies und ähnliche Technologien, um Ihre Nutzung der Website zu analysieren. Die erzeugten Informationen werden in der Regel an einen Server von Google übertragen und dort gespeichert. Die IP-Anonymisierung ist aktiviert. Google Analytics wird nur aktiviert, wenn Sie dem zugestimmt haben. </source>
@@ -8006,7 +8006,7 @@
     </unit>
     <unit id="datenschutz.ads.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:79,80</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:80,81</note>
       </notes>
       <segment>
         <source>6. Google AdSense</source>
@@ -8014,7 +8014,7 @@
     </unit>
     <unit id="datenschutz.ads.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:81,84</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:82,85</note>
       </notes>
       <segment>
         <source> Diese Website nutzt Google AdSense (Publisher-ID: ca-pub-6346271540341424), einen Dienst der Google Ireland Limited, zur Einbindung von Werbeanzeigen. Google AdSense verwendet Cookies, um relevante Anzeigen zu schalten und die Anzeigenleistung zu messen. </source>
@@ -8022,7 +8022,7 @@
     </unit>
     <unit id="datenschutz.ads.personalized.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:87,89</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:88,90</note>
       </notes>
       <segment>
         <source> Personalisierte und nicht-personalisierte Werbung </source>
@@ -8030,7 +8030,7 @@
     </unit>
     <unit id="datenschutz.ads.personalized.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:90,95</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:91,96</note>
       </notes>
       <segment>
         <source> Beim ersten Besuch der Website werden Sie über einen Consent-Banner gefragt, ob Sie personalisierte Werbung zulassen möchten. Wenn Sie nur „Notwendige“ wählen, werden ausschließlich nicht-personalisierte Anzeigen ausgeliefert, die keine Tracking-Cookies für Werbeprofile setzen. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer der Seite ändern. </source>
@@ -8038,7 +8038,7 @@
     </unit>
     <unit id="datenschutz.cookies.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:101,102</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:102,103</note>
       </notes>
       <segment>
         <source>7. Cookies</source>
@@ -8046,7 +8046,7 @@
     </unit>
     <unit id="datenschutz.cookies.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:103,108</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:104,109</note>
       </notes>
       <segment>
         <source> Diese Website verwendet Cookies. Technisch notwendige Cookies (Session, Spracheinstellung) werden ohne Einwilligung gesetzt. Cookies für Analyse (Google Analytics) und personalisierte Werbung (Google AdSense) werden erst nach Ihrer ausdrücklichen Einwilligung aktiviert. Sie können Ihre Einwilligung jederzeit über den Link „Cookie-Einstellungen“ im Footer widerrufen. </source>
@@ -8054,7 +8054,7 @@
     </unit>
     <unit id="datenschutz.rights.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:114,115</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:115,116</note>
       </notes>
       <segment>
         <source>8. Ihre Rechte</source>
@@ -8062,7 +8062,7 @@
     </unit>
     <unit id="datenschutz.rights.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:116,120</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:117,121</note>
       </notes>
       <segment>
         <source> Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten sowie das Recht auf Datenübertragbarkeit. Außerdem haben Sie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen und sich bei einer Aufsichtsbehörde zu beschweren. </source>
@@ -8070,7 +8070,7 @@
     </unit>
     <unit id="datenschutz.deletion.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:126,127</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:127,128</note>
       </notes>
       <segment>
         <source>9. Datenlöschung</source>
@@ -8078,7 +8078,7 @@
     </unit>
     <unit id="datenschutz.deletion.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:128,131</note>
+        <note category="location">web/src/app/marketing/legal/datenschutz-page.component.ts:129,132</note>
       </notes>
       <segment>
         <source> Sie können Ihr Nutzerkonto und alle damit verbundenen Daten jederzeit über die Einstellungsseite der Anwendung löschen. Nach der Löschung werden alle personenbezogenen Daten unverzüglich aus unseren Systemen entfernt. </source>
@@ -8086,7 +8086,7 @@
     </unit>
     <unit id="impressum.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:7,10</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:8,11</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -8094,7 +8094,7 @@
     </unit>
     <unit id="impressum.info.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:11,12</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:12,13</note>
       </notes>
       <segment>
         <source> Angaben gemäß § 5 TMG </source>
@@ -8102,7 +8102,7 @@
     </unit>
     <unit id="impressum.contact.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:21,23</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:22,24</note>
       </notes>
       <segment>
         <source>Kontakt</source>
@@ -8110,7 +8110,7 @@
     </unit>
     <unit id="impressum.contact.email">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:23,24</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:24,26</note>
       </notes>
       <segment>
         <source>E-Mail:</source>
@@ -8118,7 +8118,7 @@
     </unit>
     <unit id="impressum.liability.content.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:30,32</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:31,33</note>
       </notes>
       <segment>
         <source> Haftung für Inhalte </source>
@@ -8126,7 +8126,7 @@
     </unit>
     <unit id="impressum.liability.content.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:33,38</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:34,39</note>
       </notes>
       <segment>
         <source> Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. </source>
@@ -8134,7 +8134,7 @@
     </unit>
     <unit id="impressum.liability.links.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:44,45</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:45,46</note>
       </notes>
       <segment>
         <source>Haftung für Links</source>
@@ -8142,7 +8142,7 @@
     </unit>
     <unit id="impressum.liability.links.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:46,50</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:47,51</note>
       </notes>
       <segment>
         <source> Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. </source>
@@ -8150,7 +8150,7 @@
     </unit>
     <unit id="impressum.copyright.title">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:55,56</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:56,57</note>
       </notes>
       <segment>
         <source>Urheberrecht</source>
@@ -8158,7 +8158,7 @@
     </unit>
     <unit id="impressum.copyright.body">
       <notes>
-        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:57,61</note>
+        <note category="location">web/src/app/marketing/legal/impressum-page.component.ts:58,62</note>
       </notes>
       <segment>
         <source> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. </source>
@@ -8170,7 +8170,7 @@
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
       <segment>
-        <source>Pushup Tracker Logo</source>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
       </segment>
     </unit>
     <unit id="landing.eyebrow">
@@ -8178,7 +8178,7 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:19,20</note>
       </notes>
       <segment>
-        <source>Pushup Tracker</source>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
       </segment>
     </unit>
     <unit id="landing.free.badge">
@@ -8875,7 +8875,7 @@
     <unit id="notifications.filter.unread">
       <notes>
         <note category="location">web/src/app/notifications/notification-bell.component.ts:67,69</note>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:36,38</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:32,34</note>
       </notes>
       <segment>
         <source>Ungelesen</source>
@@ -8884,7 +8884,7 @@
     <unit id="notifications.filter.all">
       <notes>
         <note category="location">web/src/app/notifications/notification-bell.component.ts:70,72</note>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:39,41</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:35,37</note>
       </notes>
       <segment>
         <source>Alle</source>
@@ -9076,7 +9076,7 @@
     </unit>
     <unit id="notifications.page.title">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:21,22</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:17,18</note>
       </notes>
       <segment>
         <source>Nachrichten</source>
@@ -9084,7 +9084,7 @@
     </unit>
     <unit id="notifications.page.markAll">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:24,27</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:20,23</note>
       </notes>
       <segment>
         <source>Alle gelesen</source>
@@ -9092,7 +9092,7 @@
     </unit>
     <unit id="notifications.page.allRead">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:52,54</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:48,50</note>
       </notes>
       <segment>
         <source> Alles gelesen. Über „Alle“ siehst du auch ältere Nachrichten. </source>
@@ -9100,7 +9100,7 @@
     </unit>
     <unit id="notifications.page.empty">
       <notes>
-        <note category="location">web/src/app/notifications/notifications-page.component.ts:56,59</note>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:52,55</note>
       </notes>
       <segment>
         <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
@@ -9148,7 +9148,7 @@
     </unit>
     <unit id="publicProfile.private.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:12</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:13</note>
       </notes>
       <segment>
         <source>Dein Profil ist noch privat</source>
@@ -9156,7 +9156,7 @@
     </unit>
     <unit id="publicProfile.private.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:13</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:14</note>
       </notes>
       <segment>
         <source>Niemand außer dir kann es sehen. Tippe unten bei einem Element auf das Symbol und wähle „Für alle zeigen“, um dein Profil teilen zu können.</source>
@@ -9164,7 +9164,7 @@
     </unit>
     <unit id="publicProfile.week">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:14</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:15</note>
       </notes>
       <segment>
         <source>Diese Woche</source>
@@ -9172,7 +9172,7 @@
     </unit>
     <unit id="publicProfile.month">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:15</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:16</note>
       </notes>
       <segment>
         <source>Dieser Monat</source>
@@ -9180,7 +9180,7 @@
     </unit>
     <unit id="publicProfile.exercises">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:16</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:17</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -9188,7 +9188,7 @@
     </unit>
     <unit id="publicProfile.heatmap">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:17</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:18</note>
       </notes>
       <segment>
         <source>Wann trainiert wird</source>
@@ -9196,7 +9196,7 @@
     </unit>
     <unit id="publicProfile.recent">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:18</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:19</note>
       </notes>
       <segment>
         <source>Letzte Übungen</source>
@@ -9204,7 +9204,7 @@
     </unit>
     <unit id="publicProfile.plan">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:19</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:20</note>
       </notes>
       <segment>
         <source>Trainingsplan</source>
@@ -9212,7 +9212,7 @@
     </unit>
     <unit id="publicProfile.plan.paused">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:20</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:21</note>
       </notes>
       <segment>
         <source>Pausiert</source>
@@ -9220,7 +9220,7 @@
     </unit>
     <unit id="publicProfile.plan.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:21</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:22</note>
       </notes>
       <segment>
         <source>Plan ansehen</source>
@@ -9228,7 +9228,7 @@
     </unit>
     <unit id="publicProfile.workouts">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:22</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
       </notes>
       <segment>
         <source>Sessions</source>
@@ -9236,7 +9236,7 @@
     </unit>
     <unit id="publicProfile.workouts.copy">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:23</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
       </notes>
       <segment>
         <source>Übernehmen</source>
@@ -9244,7 +9244,7 @@
     </unit>
     <unit id="publicProfile.workouts.copied">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:24</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
       </notes>
       <segment>
         <source>Übernommen</source>
@@ -9252,7 +9252,7 @@
     </unit>
     <unit id="publicProfile.workouts.own">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:25</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
       </notes>
       <segment>
         <source>Zu meinen Sessions</source>
@@ -9260,7 +9260,7 @@
     </unit>
     <unit id="publicProfile.workouts.copiedNote">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:26</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
       </notes>
       <segment>
         <source>Gespeichert unter „Meine Sessions“.</source>
@@ -9268,7 +9268,7 @@
     </unit>
     <unit id="publicProfile.workouts.copyFailed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:27</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
       </notes>
       <segment>
         <source>Konnte nicht übernommen werden. Bitte später erneut versuchen.</source>
@@ -9276,7 +9276,7 @@
     </unit>
     <unit id="publicProfile.heatmap.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:28</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
       </notes>
       <segment>
         <source>Trainingsverteilung über Wochentage und Tageszeit</source>
@@ -9284,7 +9284,7 @@
     </unit>
     <unit id="publicProfile.memberSince">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:29</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
       </notes>
       <segment>
         <source>Dabei seit</source>
@@ -9292,7 +9292,7 @@
     </unit>
     <unit id="publicProfile.notFound.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:30</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
       </notes>
       <segment>
         <source>Profil nicht gefunden</source>
@@ -9300,7 +9300,7 @@
     </unit>
     <unit id="publicProfile.notFound.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:31</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
       </notes>
       <segment>
         <source>Dieses Profil existiert nicht oder wurde nicht öffentlich freigegeben.</source>
@@ -9308,7 +9308,7 @@
     </unit>
     <unit id="publicProfile.error.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:32</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
       </notes>
       <segment>
         <source>Profil konnte nicht geladen werden</source>
@@ -9316,7 +9316,7 @@
     </unit>
     <unit id="publicProfile.error.body">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:33</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
       </notes>
       <segment>
         <source>Bitte versuche es später erneut.</source>
@@ -9324,7 +9324,7 @@
     </unit>
     <unit id="publicProfile.retry">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:34</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
       </notes>
       <segment>
         <source>Erneut versuchen</source>
@@ -9332,7 +9332,7 @@
     </unit>
     <unit id="publicProfile.toHome">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:35</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
       </notes>
       <segment>
         <source>Zur Startseite</source>
@@ -9340,7 +9340,7 @@
     </unit>
     <unit id="publicProfile.stats">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:36</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
       </notes>
       <segment>
         <source>Statistik</source>
@@ -9348,7 +9348,7 @@
     </unit>
     <unit id="publicProfile.total">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:37</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
       </notes>
       <segment>
         <source>Gesamte Reps</source>
@@ -9356,7 +9356,7 @@
     </unit>
     <unit id="publicProfile.streak">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:38</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
       </notes>
       <segment>
         <source>Aktuelle Streak</source>
@@ -9364,7 +9364,7 @@
     </unit>
     <unit id="publicProfile.days">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:39</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
       </notes>
       <segment>
         <source>Aktive Tage</source>
@@ -9372,7 +9372,7 @@
     </unit>
     <unit id="publicProfile.entries">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:40</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
       </notes>
       <segment>
         <source>Einträge</source>
@@ -9380,7 +9380,7 @@
     </unit>
     <unit id="publicProfile.bestSet">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:41</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
       </notes>
       <segment>
         <source>Bester Einzel-Eintrag</source>
@@ -9388,7 +9388,7 @@
     </unit>
     <unit id="publicProfile.bestDay">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:42</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
       </notes>
       <segment>
         <source>Bester Tag</source>
@@ -9396,7 +9396,7 @@
     </unit>
     <unit id="publicProfile.share.aria">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:43</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
       </notes>
       <segment>
         <source>Profil teilen</source>
@@ -9404,7 +9404,7 @@
     </unit>
     <unit id="publicProfile.achievements">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:44</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
       </notes>
       <segment>
         <source>Trainingsplan-Erfolge</source>
@@ -9412,7 +9412,7 @@
     </unit>
     <unit id="publicProfile.share">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:45</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -9420,15 +9420,15 @@
     </unit>
     <unit id="publicProfile.cta">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:46</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
       </notes>
       <segment>
-        <source>Selbst tracken – pushup-stats.com</source>
+        <source>Selbst tracken – <ph id="0" equiv="domain" disp="BRAND_DOMAIN"/></source>
       </segment>
     </unit>
     <unit id="publicProfile.owner.title">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:47</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
       </notes>
       <segment>
         <source>Nur für dich sichtbar</source>
@@ -9436,7 +9436,7 @@
     </unit>
     <unit id="publicProfile.owner.hint">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:48</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
       </notes>
       <segment>
         <source>Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.</source>
@@ -9444,7 +9444,7 @@
     </unit>
     <unit id="publicProfile.owner.legend.public">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:49</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
       </notes>
       <segment>
         <source>Für alle sichtbar, die deinen Profil-Link haben.</source>
@@ -9452,7 +9452,7 @@
     </unit>
     <unit id="publicProfile.owner.legend.friends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:50</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
       </notes>
       <segment>
         <source>Nur für Freunde, die deine Anfrage bestätigt haben.</source>
@@ -9460,7 +9460,7 @@
     </unit>
     <unit id="publicProfile.owner.legend.off">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:51</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:52</note>
       </notes>
       <segment>
         <source>Für niemanden – nur du siehst es, hier abgeblendet dargestellt.</source>
@@ -9468,7 +9468,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.group">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:53</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
       </notes>
       <segment>
         <source>Ansicht wählen</source>
@@ -9476,7 +9476,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.owner">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:54</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:55</note>
       </notes>
       <segment>
         <source>Bearbeiten</source>
@@ -9484,7 +9484,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.friend">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:55</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:56</note>
       </notes>
       <segment>
         <source>Als Freund</source>
@@ -9492,7 +9492,7 @@
     </unit>
     <unit id="publicProfile.owner.preview">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:56</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:57</note>
       </notes>
       <segment>
         <source>Als Besucher</source>
@@ -9500,7 +9500,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.locked">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:57</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
       </notes>
       <segment>
         <source>Die Besucher-Ansicht gibt es erst, wenn dein Profil öffentlich ist.</source>
@@ -9508,7 +9508,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.noteFriend">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:58</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
       </notes>
       <segment>
         <source>So sieht dein Profil für Freunde aus, die deine Anfrage bestätigt haben.</source>
@@ -9516,7 +9516,7 @@
     </unit>
     <unit id="publicProfile.owner.preview.notePublic">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:59</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
       </notes>
       <segment>
         <source>So sieht dein Profil für alle aus, die deinen Profil-Link haben.</source>
@@ -9524,7 +9524,7 @@
     </unit>
     <unit id="publicProfile.owner.photoEdit">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:60</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:61</note>
       </notes>
       <segment>
         <source>Profilbild ändern</source>
@@ -9532,7 +9532,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.public">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:62</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:63</note>
       </notes>
       <segment>
         <source>Für alle sichtbar</source>
@@ -9540,7 +9540,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.friends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:63</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:64</note>
       </notes>
       <segment>
         <source>Nur für Freunde sichtbar</source>
@@ -9548,7 +9548,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.off">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:64</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:65</note>
       </notes>
       <segment>
         <source>Für niemanden sichtbar</source>
@@ -9556,7 +9556,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextFriends">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:66</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:67</note>
       </notes>
       <segment>
         <source>Tippen: nur Freunde</source>
@@ -9564,7 +9564,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextOff">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:67</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
       </notes>
       <segment>
         <source>Tippen: ausblenden</source>
@@ -9572,7 +9572,7 @@
     </unit>
     <unit id="publicProfile.owner.visibility.nextPublic">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:68</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:69</note>
       </notes>
       <segment>
         <source>Tippen: für alle zeigen</source>
@@ -9580,7 +9580,7 @@
     </unit>
     <unit id="publicProfile.exercises.reps">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:74</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:75</note>
       </notes>
       <segment>
         <source>Stückübungen</source>
@@ -9588,7 +9588,7 @@
     </unit>
     <unit id="publicProfile.exercises.time">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:75</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:76</note>
       </notes>
       <segment>
         <source>Zeitübungen</source>
@@ -9596,7 +9596,7 @@
     </unit>
     <unit id="publicProfile.exercises.distance">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:76</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:77</note>
       </notes>
       <segment>
         <source>Streckenübungen</source>
@@ -9604,7 +9604,7 @@
     </unit>
     <unit id="publicProfile.exercises.weight">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:77</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:78</note>
       </notes>
       <segment>
         <source>Gewichtsübungen</source>
@@ -9612,7 +9612,7 @@
     </unit>
     <unit id="weekday.short.mon">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:81</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:82</note>
       </notes>
       <segment>
         <source>Mo</source>
@@ -9620,7 +9620,7 @@
     </unit>
     <unit id="weekday.short.tue">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:82</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:83</note>
       </notes>
       <segment>
         <source>Di</source>
@@ -9628,7 +9628,7 @@
     </unit>
     <unit id="weekday.short.wed">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:83</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:84</note>
       </notes>
       <segment>
         <source>Mi</source>
@@ -9636,7 +9636,7 @@
     </unit>
     <unit id="weekday.short.thu">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:84</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:85</note>
       </notes>
       <segment>
         <source>Do</source>
@@ -9644,7 +9644,7 @@
     </unit>
     <unit id="weekday.short.fri">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:85</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:86</note>
       </notes>
       <segment>
         <source>Fr</source>
@@ -9652,7 +9652,7 @@
     </unit>
     <unit id="weekday.short.sat">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:86</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:87</note>
       </notes>
       <segment>
         <source>Sa</source>
@@ -9660,7 +9660,7 @@
     </unit>
     <unit id="weekday.short.sun">
       <notes>
-        <note category="location">web/src/app/public-profile/profile-labels.ts:87</note>
+        <note category="location">web/src/app/public-profile/profile-labels.ts:88</note>
       </notes>
       <segment>
         <source>So</source>
@@ -9711,7 +9711,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:57</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf <ph id="1" equiv="brand" disp="BRAND_NAME"/> 💪 Schau&apos;s dir an:</source>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
@@ -9719,7 +9719,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:58</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
@@ -9727,7 +9727,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:60</note>
       </notes>
       <segment>
-        <source>Pushup Tracker Profil</source>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
@@ -9735,7 +9735,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:84</note>
       </notes>
       <segment>
-        <source>Profil nicht verfügbar – Pushup Tracker</source>
+        <source>Profil nicht verfügbar – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.notFound.description">
@@ -9751,7 +9751,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:108</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · Pushup Tracker</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.titlePlain">
@@ -9759,7 +9759,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:109</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> · <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
@@ -9767,7 +9767,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:111</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
@@ -9775,7 +9775,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:112</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
@@ -9783,7 +9783,7 @@
         <note category="location">web/src/app/public-profile/public-profile-seo.ts:125</note>
       </notes>
       <segment>
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="push.section.title">
@@ -10509,7 +10509,7 @@
     <unit id="settings.delete.confirmPlaceholder">
       <notes>
         <note category="location">web/src/app/settings/settings-privacy.component.html:111,112</note>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:100</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:101</note>
       </notes>
       <segment>
         <source>löschen</source>
@@ -11417,7 +11417,7 @@
     </unit>
     <unit id="goalReached.snapAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:108</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
       </notes>
       <segment>
         <source>Erfolg vaporisieren</source>
@@ -11425,7 +11425,7 @@
     </unit>
     <unit id="goalReached.snap">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:109</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
       </notes>
       <segment>
         <source>Snap!</source>
@@ -11433,7 +11433,7 @@
     </unit>
     <unit id="goalReached.closeAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:110</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:112</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -11441,7 +11441,7 @@
     </unit>
     <unit id="goalReached.shareAria">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:111</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:113</note>
       </notes>
       <segment>
         <source>Erfolg teilen</source>
@@ -11449,7 +11449,7 @@
     </unit>
     <unit id="goalReached.share">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:112</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:114</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -11457,7 +11457,7 @@
     </unit>
     <unit id="goalReached.plan.heading">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:113</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:115</note>
       </notes>
       <segment>
         <source>Deine Planziele heute</source>
@@ -11465,7 +11465,7 @@
     </unit>
     <unit id="goalReached.plan.done">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:114</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:116</note>
       </notes>
       <segment>
         <source>erledigt</source>
@@ -11473,7 +11473,7 @@
     </unit>
     <unit id="goalReached.plan.open">
       <notes>
-        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:115</note>
+        <note category="location">web/src/app/stats/components/goal-reached-dialog/goal-reached-dialog.component.ts:117</note>
       </notes>
       <segment>
         <source>offen</source>
@@ -12458,7 +12458,7 @@
     </unit>
     <unit id="dashboard.share.day.profile.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:38</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:39</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Schau dir mein Profil an:</source>
@@ -12466,7 +12466,7 @@
     </unit>
     <unit id="dashboard.share.day.profile.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:39</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:40</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Schau dir mein Profil an:</source>
@@ -12474,7 +12474,7 @@
     </unit>
     <unit id="dashboard.share.day.streak">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:43</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:44</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Streak: <ph id="1" equiv="streak" disp="streak"/> Tage 🔥 Tracke deine Stats kostenlos:</source>
@@ -12482,7 +12482,7 @@
     </unit>
     <unit id="dashboard.share.day.simple">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:44</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:45</note>
       </notes>
       <segment>
         <source>Heute: <ph id="0" equiv="summary" disp="summary"/> 💪 Tracke deine Stats kostenlos:</source>
@@ -12490,10 +12490,10 @@
     </unit>
     <unit id="dashboard.share.title">
       <notes>
-        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:48</note>
+        <note category="location">web/src/app/stats/dashboard/dashboard-share.ts:49</note>
       </notes>
       <segment>
-        <source>Pushup Tracker</source>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="exercise.abs.situps.name">
@@ -13812,15 +13812,15 @@
     </unit>
     <unit id="settings.publicProfile.share.title">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:142</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:143</note>
       </notes>
       <segment>
-        <source>Mein Pushup Tracker Profil</source>
+        <source>Mein <ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
       </segment>
     </unit>
     <unit id="settings.publicProfile.share.text">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:143</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:144</note>
       </notes>
       <segment>
         <source>Schau dir mein Pushup-Profil an:</source>
@@ -13828,7 +13828,7 @@
     </unit>
     <unit id="settings.delete.error">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:171</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:172</note>
       </notes>
       <segment>
         <source>Bitte exakt „löschen“ eingeben.</source>
@@ -13836,7 +13836,7 @@
     </unit>
     <unit id="settings.anonymizedName">
       <notes>
-        <note category="location">web/src/app/stats/shell/settings.facade.ts:183</note>
+        <note category="location">web/src/app/stats/shell/settings.facade.ts:184</note>
       </notes>
       <segment>
         <source>Gelöschter Benutzer</source>
@@ -14174,7 +14174,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:137</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:139</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -14182,7 +14182,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:140</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:142</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -14190,7 +14190,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:141</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:143</note>
       </notes>
       <segment>
         <source>Teilen</source>
@@ -14370,7 +14370,7 @@
     </unit>
     <unit id="trainingPlans.share.plain">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-share.ts:31</note>
+        <note category="location">web/src/app/training-plans/plan-share.ts:32</note>
       </notes>
       <segment>
         <source>Ich trainiere mit dem Plan „<ph id="0" equiv="title" disp="title"/>“ 💪 Mach mit:</source>
@@ -14378,7 +14378,7 @@
     </unit>
     <unit id="trainingPlans.share.paused">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-share.ts:33</note>
+        <note category="location">web/src/app/training-plans/plan-share.ts:34</note>
       </notes>
       <segment>
         <source>Mein Plan „<ph id="0" equiv="title" disp="title"/>“ wartet bei Tag <ph id="1" equiv="day" disp="day"/> von <ph id="2" equiv="total" disp="totalDays"/> auf mich – ich steige wieder ein 💪</source>
@@ -14386,7 +14386,7 @@
     </unit>
     <unit id="trainingPlans.share.day">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-share.ts:35</note>
+        <note category="location">web/src/app/training-plans/plan-share.ts:36</note>
       </notes>
       <segment>
         <source>Tag <ph id="0" equiv="day" disp="day"/> von <ph id="1" equiv="total" disp="totalDays"/> im Plan „<ph id="2" equiv="title" disp="title"/>“ 💪 <ph id="3" equiv="percent" disp="done"/> % geschafft.</source>
@@ -14394,10 +14394,10 @@
     </unit>
     <unit id="trainingPlans.share.title">
       <notes>
-        <note category="location">web/src/app/training-plans/plan-share.ts:39</note>
+        <note category="location">web/src/app/training-plans/plan-share.ts:40</note>
       </notes>
       <segment>
-        <source>Pushup Tracker Trainingsplan</source>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Trainingsplan</source>
       </segment>
     </unit>
     <unit id="trainingPlans.started">
@@ -15479,7 +15479,7 @@
         <note category="location">web/src/app/wiki/exercise-detail.component.ts:284</note>
       </notes>
       <segment>
-        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <source>Anleitung &amp; Technik | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="wiki.exercises.back">
@@ -15599,7 +15599,7 @@
         <note category="location">web/src/app/wiki/pushup-type-detail.component.ts:266</note>
       </notes>
       <segment>
-        <source>Anleitung &amp; Technik | Pushup Tracker</source>
+        <source>Anleitung &amp; Technik | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       </segment>
     </unit>
     <unit id="wiki.pushupTypes.back">

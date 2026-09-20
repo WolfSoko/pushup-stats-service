@@ -24,6 +24,7 @@ import { ExerciseFirestoreService } from '@pu-stats/data-access';
 import { LiveDataStore } from '@pu-stats/data-access-state';
 import { UserContextService } from '@pu-auth/auth';
 import {
+  BRAND_NAME,
   findExerciseDefinition,
   formatEntryDisplay,
   isAutoCountQuickAddExerciseId,
@@ -96,6 +97,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsDashboardComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly exerciseService = inject(ExerciseFirestoreService);
   private readonly userContext = inject(UserContextService);
   private readonly dialog = inject(MatDialog);

@@ -10,41 +10,15 @@ const SCAN_ROOTS = ['web/src', 'libs'];
  * Keeps the product name and domain in `@pu-stats/models#brand` instead of
  * scattered across production sources, so a rebrand edits one file.
  *
- * Two escape hatches, both deliberate and both kept honest below:
- *
- * `TRANSLATABLE_COPY` lists files whose remaining mentions sit inside
- * `$localize` messages or `i18n`-marked template text. Those carry the brand
- * as part of a translated sentence; turning them into placeholders changes the
- * message source and re-seeds all eight locale targets, so it is its own step.
- * Until then the list is the inventory of what is left — and because a stale
- * entry fails the suite, it can only shrink.
- *
- * `NO_MODULE_SYSTEM` is for files that cannot import anything.
+ * One escape hatch: `NO_MODULE_SYSTEM`, for files that cannot import anything.
+ * `TRANSLATABLE_COPY` is empty — translatable text now carries the brand as an
+ * `$localize` placeholder or a template binding, so a rename no longer touches
+ * a single message source.
  *
  * `libs/sw-push` mirrors the name on purpose (the SW bundle takes no
  * cross-package imports); the drift test below pins the copy.
  */
-const TRANSLATABLE_COPY = [
-  'libs/auth/src/lib/ui/login/login.component.html',
-  'web/src/app/achievements/achievement-dialog.component.ts',
-  'web/src/app/ai/ai-assistant.routes.ts',
-  'web/src/app/app.routes.ts',
-  'web/src/app/app.ts',
-  'web/src/app/core/android-test-invite-dialog.component.ts',
-  'web/src/app/core/invite-banner.component.ts',
-  'web/src/app/core/invite.service.ts',
-  'web/src/app/core/page-header/page-header.component.ts',
-  'web/src/app/marketing/about/ueber-uns-page.component.ts',
-  'web/src/app/marketing/shell/landing-page.component.html',
-  'web/src/app/public-profile/profile-labels.ts',
-  'web/src/app/public-profile/public-profile-seo.ts',
-  'web/src/app/stats/dashboard/dashboard-share.ts',
-  'web/src/app/stats/shell/settings.facade.ts',
-  'web/src/app/stats/shell/stats-dashboard.component.html',
-  'web/src/app/training-plans/plan-share.ts',
-  'web/src/app/wiki/exercise-detail.component.ts',
-  'web/src/app/wiki/pushup-type-detail.component.ts',
-];
+const TRANSLATABLE_COPY = [];
 
 const NO_MODULE_SYSTEM = [
   // Served as-is before Angular boots; nothing to import a constant from.

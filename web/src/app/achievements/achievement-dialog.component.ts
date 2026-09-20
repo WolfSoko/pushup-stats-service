@@ -6,6 +6,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { BRAND_NAME } from '@pu-stats/models';
 
 import { ShareService } from '../core/share.service';
 import type { AchievementBadge } from '../public-profile/achievement-badge';
@@ -92,7 +93,7 @@ export class AchievementDialogComponent {
 
   protected async share(): Promise<void> {
     await this.shareService.share({
-      title: $localize`:@@achievement.share.title:Pushup Tracker`,
+      title: $localize`:@@achievement.share.title:${BRAND_NAME}:brand:`,
       text: $localize`:@@achievement.share.text:${this.data.badge.label}:badge: — geschafft! 💪`,
       url: this.data.shareUrl,
     });

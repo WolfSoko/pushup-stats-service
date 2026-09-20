@@ -233,8 +233,8 @@
         <note category="location">libs/auth/src/lib/ui/login/login.component.html:5,7</note>
       </notes>
       <segment state="translated">
-        <source>Willkommen bei Pushup Tracker</source>
-      <target>欢迎来到 Pushup Tracker</target></segment>
+        <source>Willkommen bei <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
+      <target>欢迎来到 <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target></segment>
     </unit>
     <unit id="auth.login.subtitle">
       <notes>
@@ -2388,8 +2388,8 @@
         <note category="location">web/src/app/app.routes.ts:27</note>
       </notes>
       <segment state="translated">
-        <source>Dashboard – Pushup Tracker</source>
-      <target>仪表盘 – Pushup Tracker</target></segment>
+        <source>Dashboard – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>仪表盘 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.dashboard.description">
       <notes>
@@ -2404,8 +2404,8 @@
         <note category="location">web/src/app/app.routes.ts:44</note>
       </notes>
       <segment state="translated">
-        <source>Login – Pushup Tracker</source>
-      <target>登录 – Pushup Tracker</target></segment>
+        <source>Login – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>登录 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.login.description">
       <notes>
@@ -2420,8 +2420,8 @@
         <note category="location">web/src/app/app.routes.ts:53</note>
       </notes>
       <segment state="translated">
-        <source>Registrierung – Pushup Tracker</source>
-      <target>注册 – Pushup Tracker</target></segment>
+        <source>Registrierung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>注册 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.register.description">
       <notes>
@@ -2436,8 +2436,8 @@
         <note category="location">web/src/app/app.routes.ts:62</note>
       </notes>
       <segment state="translated">
-        <source>Historie – Pushup Tracker</source>
-      <target>历史记录 – Pushup Tracker</target></segment>
+        <source>Historie – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>历史记录 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.history.description">
       <notes>
@@ -2452,8 +2452,8 @@
         <note category="location">web/src/app/app.routes.ts:74</note>
       </notes>
       <segment state="translated">
-        <source>Analyse – Pushup Tracker</source>
-      <target>分析 – Pushup Tracker</target></segment>
+        <source>Analyse – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>分析 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.analysis.description">
       <notes>
@@ -2468,8 +2468,8 @@
         <note category="location">web/src/app/app.routes.ts:86</note>
       </notes>
       <segment state="translated">
-        <source>Einstellungen – Pushup Tracker</source>
-      <target>设置 – Pushup Tracker</target></segment>
+        <source>Einstellungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>设置 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.settings.description">
       <notes>
@@ -2484,8 +2484,8 @@
         <note category="location">web/src/app/app.routes.ts:97</note>
       </notes>
       <segment state="translated">
-        <source>Trainingspläne – Pushup Tracker</source>
-      <target>训练计划 – Pushup Tracker</target></segment>
+        <source>Trainingspläne – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>训练计划 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.trainingPlans.description">
       <notes>
@@ -2500,8 +2500,8 @@
         <note category="location">web/src/app/app.routes.ts:115</note>
       </notes>
       <segment state="translated">
-        <source>Liegestütztypen erklärt – Pushup Tracker</source>
-      <target>俯卧撑类型详解 – Pushup Tracker</target></segment>
+        <source>Liegestütztypen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>俯卧撑类型详解 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
       <notes>
@@ -2516,8 +2516,8 @@
         <note category="location">web/src/app/app.routes.ts:127</note>
       </notes>
       <segment state="translated">
-        <source>Erinnerungen – Pushup Tracker</source>
-      <target>提醒 – Pushup Tracker</target></segment>
+        <source>Erinnerungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>提醒 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.reminders.description">
       <notes>
@@ -2532,8 +2532,8 @@
         <note category="location">web/src/app/app.routes.ts:138</note>
       </notes>
       <segment state="translated">
-        <source>Bestenliste – Pushup Tracker</source>
-      <target>排行榜 – Pushup Tracker</target></segment>
+        <source>Bestenliste – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>排行榜 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
@@ -2548,8 +2548,8 @@
         <note category="location">web/src/app/app.routes.ts:149</note>
       </notes>
       <segment state="translated">
-        <source>Profil – Pushup Tracker</source>
-      <target>个人资料 – Pushup Tracker</target></segment>
+        <source>Profil – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>个人资料 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
@@ -2564,8 +2564,8 @@
         <note category="location">web/src/app/app.routes.ts:164</note>
       </notes>
       <segment state="translated">
-        <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
-      <target>博客 – 俯卧撑技巧和指南 | Pushup Tracker</target></segment>
+        <source>Blog – Liegestütze Tipps &amp; Guides | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>博客 – 俯卧撑技巧和指南 | <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.blog.description">
       <notes>
@@ -2580,40 +2580,40 @@
         <note category="location">web/src/app/app.routes.ts:182</note>
       </notes>
       <segment state="translated">
-        <source>Impressum – Pushup Tracker</source>
-      <target>法律声明 – Pushup Tracker</target></segment>
+        <source>Impressum – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>法律声明 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.impressum.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:183</note>
       </notes>
       <segment state="translated">
-        <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
-      <target>Pushup Tracker的法律声明和提供商标识。</target></segment>
+        <source>Impressum und Anbieterkennzeichnung von <ph id="0" equiv="brand" disp="BRAND_NAME"/>.</source>
+      <target><ph id="0" equiv="brand" disp="BRAND_NAME"/>的法律声明和提供商标识。</target></segment>
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
         <note category="location">web/src/app/app.routes.ts:193</note>
       </notes>
       <segment state="translated">
-        <source>Datenschutzerklärung – Pushup Tracker</source>
-      <target>隐私政策 – Pushup Tracker</target></segment>
+        <source>Datenschutzerklärung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target>隐私政策 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
         <note category="location">web/src/app/app.routes.ts:194</note>
       </notes>
       <segment state="translated">
-        <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
-      <target>Pushup Tracker隐私政策 – 数据处理、Cookie 和您的权利信息。</target></segment>
+        <source>Datenschutzerklärung von <ph id="0" equiv="brand" disp="BRAND_NAME"/> – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
+      <target><ph id="0" equiv="brand" disp="BRAND_NAME"/>隐私政策 – 数据处理、Cookie 和您的权利信息。</target></segment>
     </unit>
     <unit id="seo.default.title">
       <notes>
         <note category="location">web/src/app/app.ts:284</note>
       </notes>
       <segment state="translated">
-        <source>Pushup Tracker</source>
-      <target>Pushup Tracker</target></segment>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+      <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target></segment>
     </unit>
     <unit id="seo.default.description">
       <notes>
@@ -3226,16 +3226,16 @@
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:6,7</note>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
-      <segment state="translated">
-        <source>Pushup Tracker Logo</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
       <target>俯卧撑追踪器标志</target></segment>
     </unit>
     <unit id="landing.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/shell/landing-page.component.html:10,11</note>
       </notes>
-      <segment state="translated">
-        <source>Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
       <target>俯卧撑追踪器</target></segment>
     </unit>
     <unit id="landing.free.badge">
@@ -3799,33 +3799,33 @@
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:96</note>
       </notes>
       <segment state="translated">
-        <source>Selbst tracken – pushup-stats.com</source>
-      <target>自己追踪 — pushup-stats.com</target></segment>
+        <source>Selbst tracken – <ph id="0" equiv="domain" disp="BRAND_DOMAIN"/></source>
+      <target>自己追踪 — <ph id="0" equiv="domain" disp="BRAND_DOMAIN"/></target></segment>
     </unit>
     <unit id="publicProfile.share.text">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:129</note>
       </notes>
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 Pushup Tracker 上完成了 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑！</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 <ph id="2" equiv="brand" disp="BRAND_NAME"/> 上完成了 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑！</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:131</note>
       </notes>
-      <segment state="translated">
-        <source>Pushup Tracker Profil</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
       <target>俯卧撑追踪器资料</target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:176</note>
       </notes>
-      <segment state="translated">
-        <source>Profil nicht verfügbar – Pushup Tracker</source>
+      <segment state="initial">
+        <source>Profil nicht verfügbar – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       <target>资料不可用 — 俯卧撑追踪器</target></segment>
     </unit>
     <unit id="publicProfile.seo.notFound.description">
@@ -3840,8 +3840,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:192</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak" /> · Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
 
         <target><ph id="0" equiv="name" disp="profile.displayName" /> – <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑 · 连续 <ph id="2" equiv="streak" disp="profile.currentStreak" /> 天 · Pushup Tracker</target>
       </segment>
@@ -3850,8 +3850,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:193</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName" /> hat <ph id="1" equiv="total" disp="profile.total" /> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays" /> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak" /> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
 
         <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 <ph id="2" equiv="days" disp="profile.totalDays" /> 个活跃天内已完成 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑 — 当前连续天数：<ph id="3" equiv="streak" disp="profile.currentStreak" /> 天。在 pushup-stats.com 免费追踪你的数据。</target>
       </segment>
@@ -3860,8 +3860,8 @@
       <notes>
         <note category="location">web/src/app/public-profile/public-profile-page.component.ts:206</note>
       </notes>
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName" /> auf Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
 
         <target><ph id="0" equiv="name" disp="profile.displayName" /> 的 Pushup Tracker 个人资料</target>
       </segment>
@@ -5545,8 +5545,8 @@
       <notes>
         <note category="location">web/src/app/stats/dashboard.store.ts:444</note>
       </notes>
-      <segment state="translated">
-        <source>Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
       <target>俯卧撑追踪器</target></segment>
     </unit>
     <unit id="analysis.weekTrendTitle">
@@ -6312,8 +6312,8 @@
         <note category="location">web/src/app/stats/shell/settings-page.component.ts:767</note>
       </notes>
       <segment state="translated">
-        <source>Mein Pushup Tracker Profil</source>
-      <target>我的 Pushup Tracker 资料</target></segment>
+        <source>Mein <ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
+      <target>我的 <ph id="0" equiv="brand" disp="BRAND_NAME"/> 资料</target></segment>
     </unit>
     <unit id="settings.publicProfile.share.text">
       <notes>
@@ -6327,8 +6327,8 @@
       <notes>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:12,13</note>
       </notes>
-      <segment state="translated">
-        <source>Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
       <target>俯卧撑统计</target></segment>
     </unit>
     <unit id="dashboardTitle">
@@ -7086,20 +7086,20 @@
     <!-- Exercises wiki page -->
     <unit id="seo.wiki.exercises.title">
       <segment state="translated">
-        <source>Übungen erklärt – Pushup Tracker</source>
-        <target>训练动作详解 – Pushup Tracker</target>
+        <source>Übungen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>训练动作详解 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.wiki.exercises.description">
       <segment state="translated">
-        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
-        <target>在 Pushup Tracker 中可记录的每个训练动作的标准执行 — 深蹲、引体向上、平板支撑、拉伸等。</target>
+        <source>Saubere Ausführung der Übungen, die du in <ph id="0" equiv="brand" disp="BRAND_NAME"/> mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <target>在 <ph id="0" equiv="brand" disp="BRAND_NAME"/> 中可记录的每个训练动作的标准执行 — 深蹲、引体向上、平板支撑、拉伸等。</target>
       </segment>
     </unit>
     <unit id="seo.wiki.exercise.titleSuffix">
       <segment state="translated">
-        <source>Anleitung &amp; Technik | Pushup Tracker</source>
-        <target>指南与技巧 | Pushup Tracker</target>
+        <source>Anleitung &amp; Technik | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>指南与技巧 | <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="wiki.exercises.back">
@@ -7270,8 +7270,8 @@
     </unit>
     <unit id="seo.wiki.pushupType.titleSuffix">
       <segment state="translated">
-        <source>Anleitung &amp; Technik | Pushup Tracker</source>
-        <target>教学与技巧 | Pushup Tracker</target>
+        <source>Anleitung &amp; Technik | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>教学与技巧 | <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="analysisHeaderTitle">
@@ -9023,8 +9023,8 @@
     </unit>
     <unit id="seo.goals.title">
       <segment state="translated">
-        <source>Tagesziele – Pushup Tracker</source>
-        <target>每日目标 – Pushup Tracker</target>
+        <source>Tagesziele – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>每日目标 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.goals.description">
@@ -9545,14 +9545,14 @@
     </unit>
     <unit id="seo.about.title">
       <segment state="translated">
-        <source>Über uns – Pushup Tracker</source>
-        <target>关于我们 – Pushup Tracker</target>
+        <source>Über uns – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>关于我们 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.about.description">
       <segment state="translated">
-        <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
-        <target>了解 Pushup Tracker 背后的团队、应用诞生的原因，以及我们训练内容的创作方式。</target>
+        <source>Wer hinter <ph id="0" equiv="brand" disp="BRAND_NAME"/> steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
+        <target>了解 <ph id="0" equiv="brand" disp="BRAND_NAME"/> 背后的团队、应用诞生的原因，以及我们训练内容的创作方式。</target>
       </segment>
     </unit>
     <unit id="about.title">
@@ -9563,14 +9563,14 @@
     </unit>
     <unit id="about.who.title">
       <segment state="translated">
-        <source>Wer hinter Pushup Tracker steckt</source>
-        <target>Pushup Tracker 背后的团队</target>
+        <source>Wer hinter <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> steckt</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> 背后的团队</target>
       </segment>
     </unit>
     <unit id="about.who.body1">
       <segment state="translated">
-        <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker 由 Wolfram Sokollek 开发和运营——他是一名来自汉堡附近的软件开发者,自己也每天坚持训练。这款应用源于一个个人需求:在没有纸笔记录的情况下追踪自己的训练,并让数周乃至数月的进步清晰可见。 </target>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> 由 Wolfram Sokollek 开发和运营——他是一名来自汉堡附近的软件开发者,自己也每天坚持训练。这款应用源于一个个人需求:在没有纸笔记录的情况下追踪自己的训练,并让数周乃至数月的进步清晰可见。 </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
@@ -9587,8 +9587,8 @@
     </unit>
     <unit id="about.mission.body">
       <segment state="translated">
-        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> 无论是俯卧撑、深蹲还是引体向上——大多数自重训练动作既不需要器械,也不需要健身房,更没有借口可找。大多数人缺少的不是练习本身,而是坚持。这正是 Pushup Tracker 的用武之地——可衡量的进步、小小的每日目标,以及一个让人舍不得中断的连续记录,能把寥寥几次重复变成持久的习惯。 </target>
+        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
+        <target> 无论是俯卧撑、深蹲还是引体向上——大多数自重训练动作既不需要器械,也不需要健身房,更没有借口可找。大多数人缺少的不是练习本身,而是坚持。这正是 <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> 的用武之地——可衡量的进步、小小的每日目标,以及一个让人舍不得中断的连续记录,能把寥寥几次重复变成持久的习惯。 </target>
       </segment>
     </unit>
     <unit id="about.content.title">
@@ -9923,8 +9923,8 @@
     </unit>
     <unit id="seo.assistant.title">
       <segment state="translated">
-        <source>KI-Coach – Pushup Tracker</source>
-        <target>AI教练 – Pushup Tracker</target>
+        <source>KI-Coach – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>AI教练 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
@@ -10229,8 +10229,8 @@
     </unit>
     <unit id="androidTest.invite.body">
       <segment state="translated">
-        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> 我们正在开发 Pushup Tracker 的 Android 应用，正在寻找测试人员。想在所有人之前抢先体验吗？ </target>
+        <source> Wir bauen gerade die <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> 我们正在开发 <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> 的 Android 应用，正在寻找测试人员。想在所有人之前抢先体验吗？ </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
@@ -11152,8 +11152,8 @@
       </segment>
     </unit>
     <unit id="achievement.share.title">
-      <segment state="translated">
-        <source>Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
         <target>俯卧撑追踪器</target>
       </segment>
     </unit>
@@ -11429,19 +11429,19 @@
     </unit>
     <unit id="publicProfile.share.textPlain">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> 正在 Pushup Tracker 上打卡 💪 来看看吧：</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf <ph id="1" equiv="brand" disp="BRAND_NAME"/> 💪 Schau&apos;s dir an:</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> 正在 <ph id="1" equiv="brand" disp="BRAND_NAME"/> 上打卡 💪 来看看吧：</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.titlePlain">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> · <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> · <ph id="1" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> 在 Pushup Tracker 上。在 pushup-stats.com 免费追踪你的数据。</target>
       </segment>
     </unit>
@@ -11795,14 +11795,14 @@
     </unit>
     <unit id="invite.banner.anonymous">
       <segment state="translated">
-        <source> Du wurdest zu Pushup Tracker eingeladen. </source>
-        <target>你已被邀请加入 Pushup Tracker。</target>
+        <source> Du wurdest zu <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> eingeladen. </source>
+        <target>你已被邀请加入 <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/>。</target>
       </segment>
     </unit>
     <unit id="invite.share.title">
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="invite.share.text">
@@ -11837,8 +11837,8 @@
     </unit>
     <unit id="seo.friends.title">
       <segment state="translated">
-        <source>Freunde – Pushup Tracker</source>
-        <target>好友 – Pushup Tracker</target>
+        <source>Freunde – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>好友 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.friends.description">
@@ -12071,8 +12071,8 @@
     </unit>
     <unit id="invite.banner.invitedBy">
       <segment state="translated">
-        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
-        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> 邀请你加入 Pushup Tracker。</target>
+        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu <ph id="2" equiv="INTERPOLATION_1" disp="{{ brandName }}"/> eingeladen.</source>
+        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> 邀请你加入 <ph id="2" equiv="INTERPOLATION_1" disp="{{ brandName }}"/>。</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.public">
@@ -12191,8 +12191,8 @@
     </unit>
     <unit id="trainingPlans.share.title">
       <segment state="translated">
-        <source>Pushup Tracker Trainingsplan</source>
-        <target>Pushup Tracker 训练计划</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Trainingsplan</source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/> 训练计划</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.2.desc">
@@ -12953,8 +12953,8 @@
     </unit>
     <unit id="seo.workouts.title">
       <segment state="translated">
-        <source>Meine Sessions – Pushup Tracker</source>
-        <target>我的训练 – Pushup Tracker</target>
+        <source>Meine Sessions – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>我的训练 – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.workouts.description">
@@ -14085,10 +14085,10 @@
         <target>Eingeladene Freunde</target>
       </segment>
     </unit>
-    <unit id="seo.achievements.title">
+        <unit id="seo.achievements.title">
       <segment state="initial">
-        <source>Abzeichen – Pushup Tracker</source>
-        <target>Abzeichen – Pushup Tracker</target>
+        <source>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.achievements.description">
@@ -14109,10 +14109,10 @@
         <target>Nachrichten</target>
       </segment>
     </unit>
-    <unit id="seo.notifications.title">
+        <unit id="seo.notifications.title">
       <segment state="initial">
-        <source>Nachrichten – Pushup Tracker</source>
-        <target>Nachrichten – Pushup Tracker</target>
+        <source>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.notifications.description">

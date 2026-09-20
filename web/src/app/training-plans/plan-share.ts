@@ -1,3 +1,4 @@
+import { BRAND_NAME } from '@pu-stats/models';
 import { buildPlanShareUrl } from '../core/profile-share-url';
 import type { SharePayload } from '../core/share.service';
 
@@ -36,7 +37,7 @@ export function buildSharePlanPayload(input: SharePlanInput): SharePayload {
   }
 
   return {
-    title: $localize`:@@trainingPlans.share.title:Pushup Tracker Trainingsplan`,
+    title: $localize`:@@trainingPlans.share.title:${BRAND_NAME}:brand: Trainingsplan`,
     text,
     url,
   };

@@ -690,8 +690,8 @@ Aktiv:         </target>
     </unit>
     <unit id="auth.login.title">
       <segment state="translated">
-        <source>Willkommen bei Pushup Tracker</source>
-        <target>Velkommen til Pushup Tracker</target>
+        <source>Willkommen bei <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
+        <target>Velkommen til <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="auth.next">
@@ -887,8 +887,8 @@ Aktiv:         </target>
         <note category="location">web/src/app/stats/shell/stats-dashboard.component.html:8,9</note>
       </notes>
       <segment state="translated">
-        <source>Pushup Tracker Logo</source>
-        <target>Pushup Tracker-logo</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Logo</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/>-logo</target>
 
             </segment>
 
@@ -1515,8 +1515,8 @@ Aktiv:         </target>
 
             </notes>
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
 
             </segment>
 
@@ -1596,8 +1596,8 @@ Aktiv:         </target>
 
             </notes>
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
 
             </segment>
 
@@ -3005,8 +3005,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.analysis.title">
       <segment state="translated">
-        <source>Analyse – Pushup Tracker</source>
-        <target>Analyse – Pushup Tracker</target>
+        <source>Analyse – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Analyse – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3021,8 +3021,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.dashboard.title">
       <segment state="translated">
-        <source>Dashboard – Pushup Tracker</source>
-        <target>Dashboard – Pushup Tracker</target>
+        <source>Dashboard – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Dashboard – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3037,8 +3037,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.history.title">
       <segment state="translated">
-        <source>Historie – Pushup Tracker</source>
-        <target>Historie – Pushup Tracker</target>
+        <source>Historie – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Historie – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3053,8 +3053,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.default.title">
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3085,8 +3085,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.leaderboard.title">
       <segment state="translated">
-        <source>Bestenliste – Pushup Tracker</source>
-        <target>Rangliste – Pushup Tracker</target>
+        <source>Bestenliste – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Rangliste – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3101,8 +3101,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.login.title">
       <segment state="translated">
-        <source>Login – Pushup Tracker</source>
-        <target>Logg inn – Pushup Tracker</target>
+        <source>Login – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Logg inn – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3117,8 +3117,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.register.title">
       <segment state="translated">
-        <source>Registrierung – Pushup Tracker</source>
-        <target>Registrer deg – Pushup Tracker</target>
+        <source>Registrierung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Registrer deg – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3133,8 +3133,8 @@ Aktiv:         </target>
         </unit>
     <unit id="seo.settings.title">
       <segment state="translated">
-        <source>Einstellungen – Pushup Tracker</source>
-        <target>Innstillinger – Pushup Tracker</target>
+        <source>Einstellungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Innstillinger – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
 
             </segment>
 
@@ -3975,8 +3975,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.reminders.title">
       <segment state="translated">
-        <source>Erinnerungen – Pushup Tracker</source>
-        <target>Påminnelser – Pushup Tracker</target>
+        <source>Erinnerungen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Påminnelser – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.reminders.description">
@@ -3987,8 +3987,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.blog.title">
       <segment state="translated">
-        <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
-        <target>Blog – Armhevingstips &amp; Guider | Pushup Tracker</target>
+        <source>Blog – Liegestütze Tipps &amp; Guides | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Blog – Armhevingstips &amp; Guider | <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.blog.description">
@@ -4835,26 +4835,26 @@ Aktiv:         </target>
     <!-- SEO: Legal pages -->
     <unit id="seo.impressum.title">
       <segment state="translated">
-        <source>Impressum – Pushup Tracker</source>
-        <target>Juridisk merknad – Pushup Tracker</target>
+        <source>Impressum – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Juridisk merknad – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.impressum.description">
       <segment state="translated">
-        <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
-        <target>Juridisk merknad og leverandøridentifikasjon for Pushup Tracker.</target>
+        <source>Impressum und Anbieterkennzeichnung von <ph id="0" equiv="brand" disp="BRAND_NAME"/>.</source>
+        <target>Juridisk merknad og leverandøridentifikasjon for <ph id="0" equiv="brand" disp="BRAND_NAME"/>.</target>
       </segment>
     </unit>
     <unit id="seo.datenschutz.title">
       <segment state="translated">
-        <source>Datenschutzerklärung – Pushup Tracker</source>
-        <target>Personvernpolicy – Pushup Tracker</target>
+        <source>Datenschutzerklärung – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Personvernpolicy – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.datenschutz.description">
       <segment state="translated">
-        <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
-        <target>Personvernpolicyen for Pushup Tracker – informasjon om databehandling, informasjonskapsler og dine rettigheter.</target>
+        <source>Datenschutzerklärung von <ph id="0" equiv="brand" disp="BRAND_NAME"/> – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
+        <target>Personvernpolicyen for <ph id="0" equiv="brand" disp="BRAND_NAME"/> – informasjon om databehandling, informasjonskapsler og dine rettigheter.</target>
       </segment>
     </unit>
 
@@ -5367,8 +5367,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.trainingPlans.title">
       <segment state="translated">
-        <source>Trainingspläne – Pushup Tracker</source>
-        <target>Treningsplaner – Pushup Tracker</target>
+        <source>Trainingspläne – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Treningsplaner – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.trainingPlans.description">
@@ -5733,8 +5733,8 @@ Aktiv:         </target>
     </unit>
     <unit id="dashboard.share.title">
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="dashboard.share.text.simple">
@@ -5799,8 +5799,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.publicProfile.title">
       <segment state="translated">
-        <source>Profil – Pushup Tracker</source>
-        <target>Profil – Pushup Tracker</target>
+        <source>Profil – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Profil – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.publicProfile.description">
@@ -5816,8 +5816,8 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.imageAlt">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> auf Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
         <target><ph id="0" equiv="name" disp="name"/> på Pushup Tracker</target>
       </segment>
     </unit>
@@ -5913,26 +5913,26 @@ Aktiv:         </target>
     </unit>
     <unit id="publicProfile.cta">
       <segment state="translated">
-        <source>Selbst tracken – pushup-stats.com</source>
-        <target>Spor selv – pushup-stats.com</target>
+        <source>Selbst tracken – <ph id="0" equiv="domain" disp="BRAND_DOMAIN"/></source>
+        <target>Spor selv – <ph id="0" equiv="domain" disp="BRAND_DOMAIN"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.share.text">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf Pushup Tracker geschafft 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="name"/> klarte <ph id="1" equiv="total" disp="total"/> armhevninger på Pushup Tracker 💪 Sjekk det ut:</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
+        <target><ph id="0" equiv="name" disp="name"/> klarte <ph id="1" equiv="total" disp="total"/> armhevninger på <ph id="2" equiv="brand" disp="BRAND_NAME"/> 💪 Sjekk det ut:</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
       <segment state="translated">
-        <source>Pushup Tracker Profil</source>
-        <target>Pushup Tracker-profil</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/>-profil</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.notFound.title">
       <segment state="translated">
-        <source>Profil nicht verfügbar – Pushup Tracker</source>
-        <target>Profil ikke tilgjengelig – Pushup Tracker</target>
+        <source>Profil nicht verfügbar – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Profil ikke tilgjengelig – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.notFound.description">
@@ -5942,14 +5942,14 @@ Aktiv:         </target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.title">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> – <ph id="1" equiv="total" disp="profile.total"/> Liegestütze · Streak <ph id="2" equiv="streak" disp="profile.currentStreak"/> · <ph id="3" equiv="brand" disp="BRAND_NAME"/></source>
         <target><ph id="0" equiv="name" disp="name"/> – <ph id="1" equiv="total" disp="total"/> armhevninger · streak <ph id="2" equiv="streak" disp="streak"/> · Pushup Tracker</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.description">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="name"/> hat <ph id="1" equiv="total" disp="total"/> Liegestütze in <ph id="2" equiv="days" disp="days"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="streak"/> Tage. Tracke selbst kostenlos auf pushup-stats.com.</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze in <ph id="2" equiv="days" disp="profile.totalDays"/> aktiven Tagen geschafft – aktuelle Streak: <ph id="3" equiv="streak" disp="profile.currentStreak"/> Tage. Tracke selbst kostenlos auf <ph id="4" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
         <target><ph id="0" equiv="name" disp="name"/> klarte <ph id="1" equiv="total" disp="total"/> armhevninger over <ph id="2" equiv="days" disp="days"/> aktive dager – nåværende streak: <ph id="3" equiv="streak" disp="streak"/> dager. Start med å spore gratis på pushup-stats.com.</target>
       </segment>
     </unit>
@@ -5973,8 +5973,8 @@ Aktiv:         </target>
     </unit>
     <unit id="settings.publicProfile.share.title">
       <segment state="translated">
-        <source>Mein Pushup Tracker Profil</source>
-        <target>Min Pushup Tracker-profil</target>
+        <source>Mein <ph id="0" equiv="brand" disp="BRAND_NAME"/> Profil</source>
+        <target>Min <ph id="0" equiv="brand" disp="BRAND_NAME"/>-profil</target>
       </segment>
     </unit>
     <unit id="settings.publicProfile.share.text">
@@ -5987,8 +5987,8 @@ Aktiv:         </target>
     <!-- Pushup-types wiki page -->
     <unit id="seo.wiki.pushupTypes.title">
       <segment state="translated">
-        <source>Liegestütztypen erklärt – Pushup Tracker</source>
-        <target>Armhevningsvariasjoner forklart – Pushup Tracker</target>
+        <source>Liegestütztypen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Armhevningsvariasjoner forklart – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.wiki.pushupTypes.description">
@@ -6055,20 +6055,20 @@ Aktiv:         </target>
     <!-- Exercises wiki page -->
     <unit id="seo.wiki.exercises.title">
       <segment state="translated">
-        <source>Übungen erklärt – Pushup Tracker</source>
-        <target>Øvelser forklart – Pushup Tracker</target>
+        <source>Übungen erklärt – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Øvelser forklart – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.wiki.exercises.description">
       <segment state="translated">
-        <source>Saubere Ausführung der Übungen, die du in Pushup Tracker mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
-        <target>Ren utførelse av hver øvelse du kan logge i Pushup Tracker — knebøy, pull-ups, planke, tøying og mer.</target>
+        <source>Saubere Ausführung der Übungen, die du in <ph id="0" equiv="brand" disp="BRAND_NAME"/> mitloggst – Kniebeugen, Klimmzüge, Plank, Dehnübungen und mehr.</source>
+        <target>Ren utførelse av hver øvelse du kan logge i <ph id="0" equiv="brand" disp="BRAND_NAME"/> — knebøy, pull-ups, planke, tøying og mer.</target>
       </segment>
     </unit>
     <unit id="seo.wiki.exercise.titleSuffix">
       <segment state="translated">
-        <source>Anleitung &amp; Technik | Pushup Tracker</source>
-        <target>Veiledning &amp; teknikk | Pushup Tracker</target>
+        <source>Anleitung &amp; Technik | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Veiledning &amp; teknikk | <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="wiki.exercises.back">
@@ -6937,8 +6937,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.wiki.pushupType.titleSuffix">
       <segment state="translated">
-        <source>Anleitung &amp; Technik | Pushup Tracker</source>
-        <target>Veiledning &amp; teknikk | Pushup Tracker</target>
+        <source>Anleitung &amp; Technik | <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Veiledning &amp; teknikk | <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="analysisHeaderTitle">
@@ -8807,8 +8807,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.goals.title">
       <segment state="translated">
-        <source>Tagesziele – Pushup Tracker</source>
-        <target>Daglige mål – Pushup Tracker</target>
+        <source>Tagesziele – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Daglige mål – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.goals.description">
@@ -9329,14 +9329,14 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.about.title">
       <segment state="translated">
-        <source>Über uns – Pushup Tracker</source>
-        <target>Om oss – Pushup Tracker</target>
+        <source>Über uns – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Om oss – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.about.description">
       <segment state="translated">
-        <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
-        <target>Hvem som står bak Pushup Tracker, hvorfor appen finnes, og hvordan treningsinnholdet vårt blir til.</target>
+        <source>Wer hinter <ph id="0" equiv="brand" disp="BRAND_NAME"/> steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
+        <target>Hvem som står bak <ph id="0" equiv="brand" disp="BRAND_NAME"/>, hvorfor appen finnes, og hvordan treningsinnholdet vårt blir til.</target>
       </segment>
     </unit>
     <unit id="about.title">
@@ -9347,14 +9347,14 @@ Aktiv:         </target>
     </unit>
     <unit id="about.who.title">
       <segment state="translated">
-        <source>Wer hinter Pushup Tracker steckt</source>
-        <target>Hvem som står bak Pushup Tracker</target>
+        <source>Wer hinter <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> steckt</source>
+        <target>Hvem som står bak <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/></target>
       </segment>
     </unit>
     <unit id="about.who.body1">
       <segment state="translated">
-        <source> Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
-        <target> Pushup Tracker utvikles og driftes av Wolfram Sokollek – programvareutvikler fra området rundt Hamburg som selv trener daglig. Appen oppsto fra et personlig behov: å holde styr på egen trening uten papirlapper og gjøre fremgangen synlig over uker og måneder. </target>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> wird von Wolfram Sokollek entwickelt und betrieben – Softwareentwickler aus der Nähe von Hamburg und selbst täglich im Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt über Wochen und Monate sichtbar zu machen. </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> utvikles og driftes av Wolfram Sokollek – programvareutvikler fra området rundt Hamburg som selv trener daglig. Appen oppsto fra et personlig behov: å holde styr på egen trening uten papirlapper og gjøre fremgangen synlig over uker og måneder. </target>
       </segment>
     </unit>
     <unit id="about.who.body2">
@@ -9371,8 +9371,8 @@ Aktiv:         </target>
     </unit>
     <unit id="about.mission.body">
       <segment state="translated">
-        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt Pushup Tracker an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
-        <target> Enten det er push-ups, knebøy eller pull-ups – de fleste kroppsvektøvelser krever ikke utstyr, ikke treningsstudio, og gir ingen unnskyldning. Det de fleste mangler, er ikke øvelsen, men kontinuiteten. Akkurat der kommer Pushup Tracker inn – målbar fremgang, små daglige mål og en streak man nødig vil bryte, gjør noen få repetisjoner til en varig vane. </target>
+        <source> Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern die Kontinuität. Genau da setzt <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> an – messbarer Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit. </source>
+        <target> Enten det er push-ups, knebøy eller pull-ups – de fleste kroppsvektøvelser krever ikke utstyr, ikke treningsstudio, og gir ingen unnskyldning. Det de fleste mangler, er ikke øvelsen, men kontinuiteten. Akkurat der kommer <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> inn – målbar fremgang, små daglige mål og en streak man nødig vil bryte, gjør noen få repetisjoner til en varig vane. </target>
       </segment>
     </unit>
     <unit id="about.content.title">
@@ -9707,8 +9707,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.assistant.title">
       <segment state="translated">
-        <source>KI-Coach – Pushup Tracker</source>
-        <target>AI-coach – Pushup Tracker</target>
+        <source>KI-Coach – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>AI-coach – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.assistant.description">
@@ -10013,8 +10013,8 @@ Aktiv:         </target>
     </unit>
     <unit id="androidTest.invite.body">
       <segment state="translated">
-        <source> Wir bauen gerade die Pushup Tracker Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
-        <target> Vi bygger for tiden Pushup Tracker Android-appen og ser etter testere. Har du lyst til å prøve den før alle andre? </target>
+        <source> Wir bauen gerade die <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Android-App und suchen Tester. Hast du Lust, sie vor allen anderen auszuprobieren? </source>
+        <target> Vi bygger for tiden <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> Android-appen og ser etter testere. Har du lyst til å prøve den før alle andre? </target>
       </segment>
     </unit>
     <unit id="androidTest.invite.notNow">
@@ -10937,8 +10937,8 @@ Aktiv:         </target>
     </unit>
     <unit id="achievement.share.title">
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="achievement.share.text">
@@ -11213,19 +11213,19 @@ Aktiv:         </target>
     </unit>
     <unit id="publicProfile.share.textPlain">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf Pushup Tracker 💪 Schau&apos;s dir an:</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> trener med Pushup Tracker 💪 Sjekk det ut:</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> trackt auf <ph id="1" equiv="brand" disp="BRAND_NAME"/> 💪 Schau&apos;s dir an:</source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> trener med <ph id="1" equiv="brand" disp="BRAND_NAME"/> 💪 Sjekk det ut:</target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.titlePlain">
       <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</source>
-        <target><ph id="0" equiv="name" disp="profile.displayName"/> · Pushup Tracker</target>
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> · <ph id="1" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="name" disp="profile.displayName"/> · <ph id="1" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="publicProfile.seo.descriptionPlain">
-      <segment state="translated">
-        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.</source>
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="profile.displayName"/> auf <ph id="1" equiv="brand" disp="BRAND_NAME"/>. Tracke selbst kostenlos auf <ph id="2" equiv="domain" disp="BRAND_DOMAIN"/>.</source>
         <target><ph id="0" equiv="name" disp="profile.displayName"/> på Pushup Tracker. Følg din egen fremgang gratis på pushup-stats.com.</target>
       </segment>
     </unit>
@@ -11579,14 +11579,14 @@ Aktiv:         </target>
     </unit>
     <unit id="invite.banner.anonymous">
       <segment state="translated">
-        <source> Du wurdest zu Pushup Tracker eingeladen. </source>
-        <target>Du er invitert til Pushup Tracker.</target>
+        <source> Du wurdest zu <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/> eingeladen. </source>
+        <target>Du er invitert til <ph id="0" equiv="INTERPOLATION" disp="{{ brandName }}"/>.</target>
       </segment>
     </unit>
     <unit id="invite.share.title">
       <segment state="translated">
-        <source>Pushup Tracker</source>
-        <target>Pushup Tracker</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="invite.share.text">
@@ -11621,8 +11621,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.friends.title">
       <segment state="translated">
-        <source>Freunde – Pushup Tracker</source>
-        <target>Venner – Pushup Tracker</target>
+        <source>Freunde – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Venner – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.friends.description">
@@ -11855,8 +11855,8 @@ Aktiv:         </target>
     </unit>
     <unit id="invite.banner.invitedBy">
       <segment state="translated">
-        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu Pushup Tracker eingeladen.</source>
-        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> har invitert deg til Pushup Tracker.</target>
+        <source><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> hat dich zu <ph id="2" equiv="INTERPOLATION_1" disp="{{ brandName }}"/> eingeladen.</source>
+        <target><pc id="0" equivStart="START_TAG_STRONG" equivEnd="CLOSE_TAG_STRONG" type="other" dispStart="&lt;strong&gt;" dispEnd="&lt;/strong&gt;"><ph id="1" equiv="INTERPOLATION" disp="{{ name }}"/></pc> har invitert deg til <ph id="2" equiv="INTERPOLATION_1" disp="{{ brandName }}"/>.</target>
       </segment>
     </unit>
     <unit id="publicProfile.owner.legend.public">
@@ -11975,8 +11975,8 @@ Aktiv:         </target>
     </unit>
     <unit id="trainingPlans.share.title">
       <segment state="translated">
-        <source>Pushup Tracker Trainingsplan</source>
-        <target>Pushup Tracker treningsplan</target>
+        <source><ph id="0" equiv="brand" disp="BRAND_NAME"/> Trainingsplan</source>
+        <target><ph id="0" equiv="brand" disp="BRAND_NAME"/> treningsplan</target>
       </segment>
     </unit>
     <unit id="plan.challenge-30d.day.2.desc">
@@ -12737,8 +12737,8 @@ Aktiv:         </target>
     </unit>
     <unit id="seo.workouts.title">
       <segment state="translated">
-        <source>Meine Sessions – Pushup Tracker</source>
-        <target>Mine økter – Pushup Tracker</target>
+        <source>Meine Sessions – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Mine økter – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.workouts.description">
@@ -13863,10 +13863,10 @@ Aktiv:         </target>
         <target>Eingeladene Freunde</target>
       </segment>
     </unit>
-    <unit id="seo.achievements.title">
+        <unit id="seo.achievements.title">
       <segment state="initial">
-        <source>Abzeichen – Pushup Tracker</source>
-        <target>Abzeichen – Pushup Tracker</target>
+        <source>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Abzeichen – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.achievements.description">
@@ -13887,10 +13887,10 @@ Aktiv:         </target>
         <target>Nachrichten</target>
       </segment>
     </unit>
-    <unit id="seo.notifications.title">
+        <unit id="seo.notifications.title">
       <segment state="initial">
-        <source>Nachrichten – Pushup Tracker</source>
-        <target>Nachrichten – Pushup Tracker</target>
+        <source>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></source>
+        <target>Nachrichten – <ph id="0" equiv="brand" disp="BRAND_NAME"/></target>
       </segment>
     </unit>
     <unit id="seo.notifications.description">

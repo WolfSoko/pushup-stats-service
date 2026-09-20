@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { AuthStore, UserContextService } from '@pu-auth/auth';
 import { PushSubscriptionService } from '@pu-push/push';
 import {
+  BRAND_NAME,
   DEFAULT_SNAP_QUALITY,
   DisplayNameViolation,
   isProfilePublic,
@@ -139,7 +140,7 @@ export class SettingsFacade implements OnDestroy {
     const url = this.profileUrl();
     if (!url) return;
     void this.shareService.share({
-      title: $localize`:@@settings.publicProfile.share.title:Mein Pushup Tracker Profil`,
+      title: $localize`:@@settings.publicProfile.share.title:Mein ${BRAND_NAME}:brand: Profil`,
       text: $localize`:@@settings.publicProfile.share.text:Schau dir mein Pushup-Profil an:`,
       url,
     });

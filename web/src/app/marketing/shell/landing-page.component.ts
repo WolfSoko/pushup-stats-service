@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
+import { BRAND_NAME } from '@pu-stats/models';
 import { AdSlotComponent, AdsStore } from '@pu-stats/ads';
 import { AuthService, AuthStore } from '@pu-auth/auth';
 import {
@@ -60,6 +61,7 @@ const HEATMAP_PATTERN: readonly string[] = [
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly analytics = inject(Analytics, { optional: true });
   private readonly adsStore = inject(AdsStore);
   private readonly authService = inject(AuthService);

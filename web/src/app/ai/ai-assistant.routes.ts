@@ -1,4 +1,5 @@
 import type { Routes } from '@angular/router';
+import { BRAND_NAME } from '@pu-stats/models';
 import {
   CopilotKit,
   CopilotkitAgentFactory,
@@ -27,7 +28,7 @@ export const aiAssistantRoutes: Routes = [
       CopilotkitAgentFactory,
     ],
     data: {
-      seoTitle: $localize`:@@seo.assistant.title:KI-Coach – Pushup Tracker`,
+      seoTitle: $localize`:@@seo.assistant.title:KI-Coach – ${BRAND_NAME}:brand:`,
       seoDescription: $localize`:@@seo.assistant.description:Sprich mit deinem KI-Coach: Fortschritt abfragen, Sätze eintragen und durch die App navigieren – über das offene AG-UI-Protokoll.`,
     },
     component: AiAssistantPageComponent,

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
+import { BRAND_CONTACT_EMAIL, BRAND_NAME } from '@pu-stats/models';
 
 @Component({
   selector: 'app-ueber-uns-page',
@@ -11,9 +11,9 @@ import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
       <h1 i18n="@@about.title">Über uns</h1>
 
       <section>
-        <h2 i18n="@@about.who.title">Wer hinter Pushup Tracker steckt</h2>
+        <h2 i18n="@@about.who.title">Wer hinter {{ brandName }} steckt</h2>
         <p i18n="@@about.who.body1">
-          Pushup Tracker wird von Wolfram Sokollek entwickelt und betrieben –
+          {{ brandName }} wird von Wolfram Sokollek entwickelt und betrieben –
           Softwareentwickler aus der Nähe von Hamburg und selbst täglich im
           Training. Die App ist aus einem persönlichen Bedürfnis entstanden: das
           eigene Training ohne Zettelwirtschaft festzuhalten und den Fortschritt
@@ -36,7 +36,7 @@ import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
           Ob Liegestütze, Kniebeugen oder Klimmzüge – die meisten
           Körpergewichtsübungen brauchen kein Gerät, kein Studio und lassen
           keine Ausrede zu. Was den meisten fehlt, ist nicht die Übung, sondern
-          die Kontinuität. Genau da setzt Pushup Tracker an – messbarer
+          die Kontinuität. Genau da setzt {{ brandName }} an – messbarer
           Fortschritt, kleine Tagesziele und eine Streak, die man ungern reißen
           lässt, machen aus ein paar Wiederholungen eine dauerhafte Gewohnheit.
         </p>
@@ -105,5 +105,6 @@ import { BRAND_CONTACT_EMAIL } from '@pu-stats/models';
   `,
 })
 export class UeberUnsPageComponent {
+  protected readonly brandName = BRAND_NAME;
   protected readonly contactEmail = BRAND_CONTACT_EMAIL;
 }
