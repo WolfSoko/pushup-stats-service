@@ -66,18 +66,34 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # `nx-set-shas` setzt NX_BASE/NX_HEAD normalerweise selbst. Liefert es
-      # nichts (beobachtet in Lauf 2710), fällt Nx auf sein Default
-      # `--base=main` zurück — und `main` existiert im PR-Checkout nicht als
-      # lokale Ref: `actions/checkout` holt nur die PR-Ref, `fetch-depth: 0`
-      # vertieft die Historie, legt aber keine zusätzliche Branch-Ref an.
-      # `git diff … main HEAD` bricht dann mit "unknown revision" ab, bevor
-      # ein einziges Target läuft. Dieser Fetch macht den Fallback benutzbar,
-      # statt sich darauf zu verlassen, dass die Action immer liefert.
-      - name: Base-Ref für den Nx-Fallback bereitstellen
+      # nichts (beobachtet in Lauf 2710), fällt Nx auf `defaultBase` zurück —
+      # mangels Eintrag in nx.json also auf sein eingebautes `main`. Das
+      # existiert im PR-Checkout nicht als lokale Ref: `actions/checkout` holt
+      # nur die PR-Ref, `fetch-depth: 0` vertieft die Historie, legt aber
+      # keine zusätzliche Branch-Ref an. `git diff … main HEAD` bricht dann
+      # mit "unknown revision" ab, bevor ein einziges Target läuft.
+      #
+      # Der Branchname geht über die Umgebung statt per `${{ }}` in die
+      # Shell: Git erlaubt in Ref-Namen unter anderem `$`, Backtick und `;`,
+      # eine direkte Interpolation wäre also eine Injection-Fläche.
+      - name: Base-Ref des Pull Requests holen
         if: github.event_name == 'pull_request'
-        run: git fetch --no-tags origin '+refs/heads/${{ github.base_ref }}:refs/heads/${{ github.base_ref }}'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/heads/${BASE_REF}"
 
       - uses: nrwl/nx-set-shas@v5
+
+      # Die Ref allein genügt nicht: Nx' Fallback zeigt auf `main`, nicht auf
+      # die Base dieses PRs. Bei einem PR gegen einen anderen Branch liefe er
+      # weiterhin ins Leere — und gegen `main` zu vergleichen wäre auch das
+      # falsche Ergebnis. Nur setzen, wenn `nx-set-shas` nichts geliefert hat;
+      # dessen SHA vom letzten grünen Lauf ist die bessere Basis.
+      - name: NX_BASE absichern, falls nx-set-shas nichts geliefert hat
+        if: github.event_name == 'pull_request' && env.NX_BASE == ''
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: echo "NX_BASE=${BASE_REF}" >> "$GITHUB_ENV"
       - name: Nx Cloud distributed run starten
         # Dynamic agent allocation: small PRs use 4 agents, large changesets
         # scale up. Config: .nx/workflows/distribution-config.yaml
@@ -174,18 +190,34 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # `nx-set-shas` setzt NX_BASE/NX_HEAD normalerweise selbst. Liefert es
-      # nichts (beobachtet in Lauf 2710), fällt Nx auf sein Default
-      # `--base=main` zurück — und `main` existiert im PR-Checkout nicht als
-      # lokale Ref: `actions/checkout` holt nur die PR-Ref, `fetch-depth: 0`
-      # vertieft die Historie, legt aber keine zusätzliche Branch-Ref an.
-      # `git diff … main HEAD` bricht dann mit "unknown revision" ab, bevor
-      # ein einziges Target läuft. Dieser Fetch macht den Fallback benutzbar,
-      # statt sich darauf zu verlassen, dass die Action immer liefert.
-      - name: Base-Ref für den Nx-Fallback bereitstellen
+      # nichts (beobachtet in Lauf 2710), fällt Nx auf `defaultBase` zurück —
+      # mangels Eintrag in nx.json also auf sein eingebautes `main`. Das
+      # existiert im PR-Checkout nicht als lokale Ref: `actions/checkout` holt
+      # nur die PR-Ref, `fetch-depth: 0` vertieft die Historie, legt aber
+      # keine zusätzliche Branch-Ref an. `git diff … main HEAD` bricht dann
+      # mit "unknown revision" ab, bevor ein einziges Target läuft.
+      #
+      # Der Branchname geht über die Umgebung statt per `${{ }}` in die
+      # Shell: Git erlaubt in Ref-Namen unter anderem `$`, Backtick und `;`,
+      # eine direkte Interpolation wäre also eine Injection-Fläche.
+      - name: Base-Ref des Pull Requests holen
         if: github.event_name == 'pull_request'
-        run: git fetch --no-tags origin '+refs/heads/${{ github.base_ref }}:refs/heads/${{ github.base_ref }}'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/heads/${BASE_REF}"
 
       - uses: nrwl/nx-set-shas@v5
+
+      # Die Ref allein genügt nicht: Nx' Fallback zeigt auf `main`, nicht auf
+      # die Base dieses PRs. Bei einem PR gegen einen anderen Branch liefe er
+      # weiterhin ins Leere — und gegen `main` zu vergleichen wäre auch das
+      # falsche Ergebnis. Nur setzen, wenn `nx-set-shas` nichts geliefert hat;
+      # dessen SHA vom letzten grünen Lauf ist die bessere Basis.
+      - name: NX_BASE absichern, falls nx-set-shas nichts geliefert hat
+        if: github.event_name == 'pull_request' && env.NX_BASE == ''
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: echo "NX_BASE=${BASE_REF}" >> "$GITHUB_ENV"
       - name: Nx Cloud distributed run starten
         run: pnpm exec nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci" --with-env-vars="NODE_OPTIONS"
 
