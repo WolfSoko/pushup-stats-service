@@ -60,7 +60,14 @@ export const NotificationStore = signalStore(
     );
     return {
       rows,
+      /** The page's list, which the filter drives. */
       visibleRows: computed(() => filterInboxRows(rows(), store.inboxFilter())),
+      /**
+       * The bell's dropdown, always unread-only. A peek at what is new
+       * has no use for an archive, and a filter in a popover is one
+       * control too many on a phone.
+       */
+      unreadRows: computed(() => filterInboxRows(rows(), 'unread')),
       unreadCount: computed(() => unreadCount(rows())),
       hasUnread: computed(() => unreadCount(rows()) > 0),
       hasAny: computed(() => rows().length > 0),

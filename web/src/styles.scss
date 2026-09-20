@@ -249,6 +249,15 @@ mat-card-header + mat-card-footer {
   overflow: visible;
 }
 
+// The notification bell's dropdown. Material caps a menu panel at 280px,
+// which cut the filter toggle and the message text off mid-word on a
+// phone. The panel renders in the CDK overlay, outside the component, so
+// the width has to be set here rather than in the component's styles.
+.mat-mdc-menu-panel.notification-panel {
+  max-width: min(94vw, 400px);
+  width: min(94vw, 400px);
+}
+
 // Full-viewport overlay for the admin-only auto-counter dialog. The
 // camera preview + live count must dominate the screen so the user can
 // monitor pose accuracy while exercising; the default Material dialog
