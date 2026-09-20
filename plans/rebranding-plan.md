@@ -160,7 +160,7 @@ Reihenfolge ist bewusst: erst das Refactoring, das den eigentlichen Rename klein
 
 **Der i18n-Schritt ist umgesetzt:** 52 Messages tragen die Marke jetzt als `$localize`-Platzhalter (`${BRAND_NAME}:brand:`) beziehungsweise als Template-Binding `{{ brandName }}`. `TRANSLATABLE_COPY` im Guard ist leer — die Marke steht in keiner übersetzbaren Zeichenkette mehr.
 
-Die Platzhalter wurden auch in die acht Ziel-Locales nachgezogen, statt 52 × 8 Units neu übersetzen zu lassen: Wo sich die deutsche Quelle ausschließlich durch Literal → Platzhalter unterschied, ist das `<ph>`-Element ins Target übernommen und der Status auf `translated` belassen. Das bewahrt insbesondere die italienische Keyword-Arbeit an `seo.wiki.pushupTypes.title` (siehe [`docs/gotchas/i18n.md`](gotchas/i18n.md)), die eine Neuübersetzung zerstört hätte.
+Die Platzhalter wurden auch in die acht Ziel-Locales nachgezogen, statt 52 × 8 Units neu übersetzen zu lassen: Wo sich die deutsche Quelle ausschließlich durch Literal → Platzhalter unterschied, ist das `<ph>`-Element ins Target übernommen und der Status auf `translated` belassen. Das bewahrt insbesondere die italienische Keyword-Arbeit an `seo.wiki.pushupTypes.title` (siehe [`docs/gotchas/i18n.md`](../docs/gotchas/i18n.md)), die eine Neuübersetzung zerstört hätte.
 
 **Zwei Befunde für Phase 2**, beide vorbestehend und nicht durch diesen Schritt entstanden:
 

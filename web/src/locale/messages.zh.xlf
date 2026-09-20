@@ -3809,7 +3809,7 @@
       <segment state="translated">
         <source><ph id="0" equiv="name" disp="profile.displayName"/> hat <ph id="1" equiv="total" disp="profile.total"/> Liegestütze auf <ph id="2" equiv="brand" disp="BRAND_NAME"/> geschafft 💪 Schau&apos;s dir an:</source>
 
-        <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 <ph id="2" equiv="brand" disp="BRAND_NAME"/> 上完成了 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑！</target>
+        <target><ph id="0" equiv="name" disp="profile.displayName" /> 在 <ph id="2" equiv="brand" disp="BRAND_NAME"/> 上完成了 <ph id="1" equiv="total" disp="profile.total" /> 个俯卧撑！💪 来看看吧：</target>
       </segment>
     </unit>
     <unit id="publicProfile.share.title">
