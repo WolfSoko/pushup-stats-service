@@ -12,17 +12,17 @@ Die Marke sagt „Liegestütze". Das Produkt ist längst etwas anderes.
 
 Was heute drinsteckt:
 
-| Bereich           | Umfang                                                                                          |
-| ----------------- | ----------------------------------------------------------------------------------------------- |
-| Übungskatalog     | 9 Kategorien: `pushup`, `push`, `pull`, `squat`, `hinge`, `lunge`, `core`, `cardio`, `mobility` |
-| Übungs-Wiki       | 40 Übungen × 9 Locales = 360 Content-Dateien (`content/wiki/exercises`)                         |
-| Liegestütz-Wiki   | 13 Varianten × 9 Locales = 117 Dateien — echter Teil-Bereich, kein Markenkern                   |
-| Trainingspläne    | 10 Pläne, fünf davon ohne Liegestütz-Bezug (Push/Pull, Ganzkörper, Rumpf, HIIT, Mobility)       |
-| Eigene Sessions   | `/workouts` — frei zusammenstellbare Workouts                                                   |
-| Kamera-Autozähler | Reps **und** Halte-Timer (Plank, Hollow-Hold), nicht nur Liegestütze                            |
-| Social            | Freunde, Bestenliste, öffentliche Profile, Nachrichten-Inbox, Abzeichen                         |
-| Content           | 21 Blog-Artikel in 9 Sprachen (Kniebeugen, Klimmzüge, HIIT/Zone 2, Schlaf, Rumpftraining …)     |
-| Weiteres          | KI-Coach, Push-Erinnerungen, Analyse-Views, Heatmap/Streaks                                     |
+| Bereich           | Umfang                                                                                                                                                            |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Übungskatalog     | 9 Kategorien: `pushup`, `push`, `pull`, `squat`, `hinge`, `lunge`, `core`, `cardio`, `mobility`                                                                   |
+| Übungs-Wiki       | 40 Übungen × 9 Locales = 360 Content-Dateien (`content/wiki/exercises`)                                                                                           |
+| Liegestütz-Wiki   | 13 Varianten × 9 Locales = 117 Dateien — echter Teil-Bereich, kein Markenkern                                                                                     |
+| Trainingspläne    | 10 Pläne, fünf mit anderem Ziel als dem Liegestütz (Push/Pull, Ganzkörper, Rumpf, HIIT, Mobility) — Liegestütze kommen dort als Baustein vor, 27–43 % der Übungen |
+| Eigene Sessions   | `/workouts` — frei zusammenstellbare Workouts                                                                                                                     |
+| Kamera-Autozähler | Reps **und** Halte-Timer (Plank, Hollow-Hold), nicht nur Liegestütze                                                                                              |
+| Social            | Freunde, Bestenliste, öffentliche Profile, Nachrichten-Inbox, Abzeichen                                                                                           |
+| Content           | 21 Blog-Artikel in 9 Sprachen (Kniebeugen, Klimmzüge, HIIT/Zone 2, Schlaf, Rumpftraining …)                                                                       |
+| Weiteres          | KI-Coach, Push-Erinnerungen, Analyse-Views, Heatmap/Streaks                                                                                                       |
 
 Der Mismatch wirkt auf drei Ebenen:
 

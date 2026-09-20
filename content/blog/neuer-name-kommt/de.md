@@ -1,7 +1,7 @@
 ---
 publishedAt: '2026-09-20'
 title: 'Diese App bekommt einen neuen Namen – und warum das überfällig ist'
-description: 'Pushup Tracker heißt so, weil die App mit Liegestützen angefangen hat. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, die Hälfte der Trainingspläne hat mit Liegestützen nichts zu tun, und im Übungs-Wiki stehen 40 Einträge. Warum der Name dem nicht mehr gerecht wird, was sich ändert – und was garantiert bleibt.'
+description: 'Pushup Tracker heißt so, weil die App mit Liegestützen angefangen hat. Inzwischen zählt die Kamera auch Kniebeugen und Klimmzüge, in der Hälfte der zehn Trainingspläne ist der Liegestütz nur eine Übung unter vielen, und im Übungs-Wiki stehen 40 Einträge. Warum der Name dem nicht mehr gerecht wird, was sich ändert – und was garantiert bleibt.'
 keywords:
   - Pushup Tracker neuer Name
   - App Umbenennung
@@ -19,13 +19,13 @@ keywords:
   Das stimmt nicht mehr. Wer heute die Kamera einschaltet, kann damit auch Kniebeugen, Klimmzüge
   und Sit-ups zählen lassen – und für Plank und Hollow-Hold läuft statt eines Zählers ein
   Haltetimer. Das Übungs-Wiki hat 40 Einträge, vom Ausfallschritt über das Kreuzheben-Muster bis
-  zur Mobility. Der Katalog, aus dem Ziele, Analyse und Pläne schöpfen, umfasst 41 Übungen in
+  zur Mobility. Der Katalog, aus dem Ziele, Analyse und Pläne schöpfen, umfasst 42 Übungen in
   neun Kategorien: Liegestütze, Drücken, Ziehen, Kniebeugen, Hüftbeugen, Ausfallschritte, Rumpf,
   Cardio und Mobilität.
 </p>
 <p>
-  Am deutlichsten wird es bei den Trainingsplänen. Es gibt zehn – und die Hälfte davon hat mit
-  Liegestützen nichts zu tun:
+  Am deutlichsten wird es bei den Trainingsplänen. Es gibt zehn – und in der Hälfte davon ist
+  der Liegestütz nur noch eine Übung unter vielen, nicht das Ziel:
 </p>
 <ul>
   <li><strong>Push &amp; Pull Balance</strong> – sechs Wochen gegen das Ungleichgewicht zwischen Drücken und Ziehen</li>
@@ -34,6 +34,11 @@ keywords:
   <li><strong>HIIT Burner</strong> – vier Wochen Kondition</li>
   <li><strong>Mobility &amp; Recovery</strong> – zwei Wochen Deload</li>
 </ul>
+<p>
+  Liegestütze kommen darin durchaus vor – aber als Baustein, nicht als Zweck. Full Body Strong
+  etwa schreibt über sechs Wochen 84 Übungseinheiten vor, 24 davon sind Liegestütze; die
+  übrigen 60 sind Rumpf, Hüftstreckung, Kniebeuge, Ausfallschritt und Mobility.
+</p>
 <p>
   Dazu kommen frei zusammenstellbare Sessions, Freundesliste und Bestenliste, Abzeichen, Streaks,
   Heatmap und Tagesziele – und das alles in neun Sprachen. Von all dem steht nichts im Namen.
@@ -85,8 +90,9 @@ keywords:
 <aside class="plan-cta">
   <h3>Full Body Strong – 6-Wochen-Ganzkörperplan</h3>
   <p>
-    Wenn du wissen willst, was mit „mehr als Liegestütze" gemeint ist: Dieser Plan deckt alle
-    sechs Grundbewegungsmuster in drei Einheiten pro Woche ab – ohne Geräte.
+    Wenn du wissen willst, was mit „mehr als Liegestütze" gemeint ist: Dieser Plan kombiniert
+    Liegestütze mit Kniebeuge, Hüftstreckung, Ausfallschritt, Rumpf und Mobility – drei
+    Einheiten pro Woche, ohne Geräte.
   </p>
   <p>
     <a href="/training-plans/full-body-6w">Ganzkörperplan starten &rarr;</a>
