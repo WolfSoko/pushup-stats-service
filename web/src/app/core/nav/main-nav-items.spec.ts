@@ -13,6 +13,7 @@ describe('mainNavItems', () => {
       '/freunde',
       '/training-plans',
       '/workouts',
+      '/abzeichen',
       '/blog',
       '/history',
       '/wiki/uebungen',

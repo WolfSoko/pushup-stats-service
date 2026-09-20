@@ -2812,6 +2812,110 @@
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
       </segment>
     </unit>
+    <unit id="achievements.label.planCompletedNamed">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:20</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planCompleted">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:21</note>
+      </notes>
+      <segment>
+        <source>Trainingsplan abgeschlossen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstInvite">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:27</note>
+      </notes>
+      <segment>
+        <source>Ersten Freund eingeladen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.invites">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:28</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstPlanDay">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:33</note>
+      </notes>
+      <segment>
+        <source>Erster Plantag</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planDays">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:34</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+      </segment>
+    </unit>
+    <unit id="achievements.tile.progress">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-tile.component.ts:25,27</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
+      </segment>
+    </unit>
+    <unit id="achievements.page.title">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:15,16</note>
+      </notes>
+      <segment>
+        <source>Deine Abzeichen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.page.count">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:17,20</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
+      </segment>
+    </unit>
+    <unit id="achievements.page.next">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:28,29</note>
+      </notes>
+      <segment>
+        <source>Als Nächstes</source>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planDays">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:97</note>
+      </notes>
+      <segment>
+        <source>Trainingstage</source>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planCompleted">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:100</note>
+      </notes>
+      <segment>
+        <source>Abgeschlossene Pläne</source>
+      </segment>
+    </unit>
+    <unit id="achievements.group.invites">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:102</note>
+      </notes>
+      <segment>
+        <source>Eingeladene Freunde</source>
+      </segment>
+    </unit>
     <unit id="admin.autoCount.title">
       <notes>
         <note category="location">web/src/app/admin/admin-auto-count-section.component.html:1,4</note>
@@ -4597,9 +4701,25 @@
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
       </segment>
     </unit>
+    <unit id="seo.achievements.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:280</note>
+      </notes>
+      <segment>
+        <source>Abzeichen – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:281</note>
+      </notes>
+      <segment>
+        <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
+      </segment>
+    </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:279</note>
+        <note category="location">web/src/app/app.routes.ts:292</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -4607,7 +4727,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:280</note>
+        <note category="location">web/src/app/app.routes.ts:293</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4615,7 +4735,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:290</note>
+        <note category="location">web/src/app/app.routes.ts:303</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -4623,7 +4743,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:291</note>
+        <note category="location">web/src/app/app.routes.ts:304</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4631,7 +4751,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:305</note>
+        <note category="location">web/src/app/app.routes.ts:318</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4639,7 +4759,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:306</note>
+        <note category="location">web/src/app/app.routes.ts:319</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4647,7 +4767,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:323</note>
+        <note category="location">web/src/app/app.routes.ts:336</note>
       </notes>
       <segment>
         <source>Über uns – Pushup Tracker</source>
@@ -4655,7 +4775,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:324</note>
+        <note category="location">web/src/app/app.routes.ts:337</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4663,7 +4783,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:334</note>
+        <note category="location">web/src/app/app.routes.ts:347</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -4671,7 +4791,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:335</note>
+        <note category="location">web/src/app/app.routes.ts:348</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -4679,7 +4799,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:345</note>
+        <note category="location">web/src/app/app.routes.ts:358</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -4687,7 +4807,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:346</note>
+        <note category="location">web/src/app/app.routes.ts:359</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -5858,9 +5978,17 @@
         <source>Sessions</source>
       </segment>
     </unit>
+    <unit id="nav.achievements">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:63</note>
+      </notes>
+      <segment>
+        <source>Abzeichen</source>
+      </segment>
+    </unit>
     <unit id="nav.blog">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:62</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:67</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -5868,7 +5996,7 @@
     </unit>
     <unit id="nav.history">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -5876,7 +6004,7 @@
     </unit>
     <unit id="nav.exercises">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -5884,7 +6012,7 @@
     </unit>
     <unit id="nav.pushupTypes">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:81</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>

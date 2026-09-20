@@ -14693,5 +14693,101 @@ Active:         </target>
         <target>Parameter-Regler anzeigen oder ausblenden</target>
       </segment>
     </unit>
+    <unit id="achievements.label.planCompletedNamed">
+      <segment state="initial">
+        <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
+        <target><ph id="0" equiv="plan" disp="title"/> abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planCompleted">
+      <segment state="initial">
+        <source>Trainingsplan abgeschlossen</source>
+        <target>Trainingsplan abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstInvite">
+      <segment state="initial">
+        <source>Ersten Freund eingeladen</source>
+        <target>Ersten Freund eingeladen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.invites">
+      <segment state="initial">
+        <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
+        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstPlanDay">
+      <segment state="initial">
+        <source>Erster Plantag</source>
+        <target>Erster Plantag</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planDays">
+      <segment state="initial">
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+      </segment>
+    </unit>
+    <unit id="achievements.tile.progress">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
+      </segment>
+    </unit>
+    <unit id="achievements.page.title">
+      <segment state="initial">
+        <source>Deine Abzeichen</source>
+        <target>Deine Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.page.count">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </target>
+      </segment>
+    </unit>
+    <unit id="achievements.page.next">
+      <segment state="initial">
+        <source>Als Nächstes</source>
+        <target>Als Nächstes</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planDays">
+      <segment state="initial">
+        <source>Trainingstage</source>
+        <target>Trainingstage</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planCompleted">
+      <segment state="initial">
+        <source>Abgeschlossene Pläne</source>
+        <target>Abgeschlossene Pläne</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.invites">
+      <segment state="initial">
+        <source>Eingeladene Freunde</source>
+        <target>Eingeladene Freunde</target>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.title">
+      <segment state="initial">
+        <source>Abzeichen – Pushup Tracker</source>
+        <target>Abzeichen – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.description">
+      <segment state="initial">
+        <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
+        <target>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</target>
+      </segment>
+    </unit>
+    <unit id="nav.achievements">
+      <segment state="initial">
+        <source>Abzeichen</source>
+        <target>Abzeichen</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

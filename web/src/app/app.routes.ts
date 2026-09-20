@@ -274,6 +274,19 @@ export const appRoutes: Routes = [
       ),
   },
   {
+    path: 'abzeichen',
+    canActivate: [authGuard],
+    data: {
+      seoTitle: $localize`:@@seo.achievements.title:Abzeichen – Pushup Tracker`,
+      seoDescription: $localize`:@@seo.achievements.description:Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.`,
+      noindex: true,
+    },
+    loadComponent: () =>
+      import('./achievements/achievements-page.component').then(
+        (m) => m.AchievementsPageComponent
+      ),
+  },
+  {
     path: 'leaderboard',
     data: {
       seoTitle: $localize`:@@seo.leaderboard.title:Bestenliste – Pushup Tracker`,
