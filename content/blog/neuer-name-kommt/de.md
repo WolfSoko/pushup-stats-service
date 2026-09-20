@@ -29,7 +29,7 @@ keywords:
 </p>
 <ul>
   <li><strong>Push &amp; Pull Balance</strong> – sechs Wochen gegen das Ungleichgewicht zwischen Drücken und Ziehen</li>
-  <li><strong>Full Body Strong</strong> – sechs Wochen über alle Grundbewegungsmuster</li>
+  <li><strong>Full Body Strong</strong> – sechs Wochen Kniebeuge, Hüftstreckung, Ausfallschritt, Rumpf und Mobility</li>
   <li><strong>Core Foundations</strong> – vier Wochen Rumpf</li>
   <li><strong>HIIT Burner</strong> – vier Wochen Kondition</li>
   <li><strong>Mobility &amp; Recovery</strong> – zwei Wochen Deload</li>
