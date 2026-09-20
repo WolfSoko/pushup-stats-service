@@ -174,14 +174,16 @@ Der Aufwand dafür ist nicht zusätzlich, sondern vorgezogen: Ohne Platzhalter m
 
 **Arbeit:**
 
-- `BRAND_NAME` in `core/brand.ts` auf den neuen Namen setzen → schlägt auf alle Prod-Quellen aus Phase 1 durch.
-- Deutsche i18n-Quelle anpassen: die verbliebenen Units mit Markenbezug in `messages.xlf` — **nur Deutsch**, laut `CLAUDE.md` schreiben Entwickler keine Fremdsprach-Targets.
+- `BRAND_NAME` in `libs/stats/src/lib/models/brand.ts` auf den neuen Namen setzen → schlägt über `@pu-stats/models` auf alle Prod-Quellen durch, die Phase 1 umgestellt hat. `BRAND_DOMAIN` bleibt hier unberührt; die daraus abgeleiteten URL- und Kontaktwerte wechseln erst mit der Domain in Phase 4.
+- `SW_BRAND_NAME` in `libs/sw-push/src/handlers.ts` mitziehen. Der Service Worker importiert bewusst nicht — ohne diesen Schritt schlägt der Drift-Test in `tools/src/brand-literal-guard.spec.js` fehl. Das ist genau seine Aufgabe.
+- Deutsche i18n-Quelle anpassen: die verbliebenen Units mit Markenbezug in `messages.xlf` — **nur Deutsch**, laut `CLAUDE.md` schreiben Entwickler keine Fremdsprach-Targets. Sind sie zuvor auf Platzhalter umgestellt (offener i18n-Schritt aus Phase 1), entfällt dieser Punkt ersatzlos.
 - `pnpm nx run web:extract-i18n && node tools/src/sync-xliff-locales.mjs` — die Seed-Fallbacks halten den Prod-Build grün, die tägliche Übersetzungs-Routine liefert die echten Targets nach.
-- `web/src/index.html`: `<title>`, `og:site_name`, `og:image:alt`, Feed-Link-Titel.
+- `web/src/index.html`: `<title>`, `og:site_name`, `og:image:alt`, Feed-Link-Titel. Die Datei steht auf der `NO_MODULE_SYSTEM`-Ausnahmeliste des Guards, weil sie nichts importieren kann — hier wird wirklich von Hand editiert.
 - `web/public/manifest.webmanifest`: `name`, `short_name`, `description`.
 - Landing-Page: Eyebrow, Logo-`alt`, Subtitle so umschreiben, dass die Übungsbreite die Botschaft trägt statt sie zu korrigieren.
-- Rechtstexte: neue Kontaktadresse in Impressum, Datenschutz, Über uns.
 - `tools/src/generate-feeds.js`: 9 Blog-Titel.
+
+**Nicht hier:** Die Kontaktadresse in Impressum, Datenschutz und Über uns ist seit Phase 1 an `BRAND_CONTACT_EMAIL` gebunden und folgt automatisch, sobald `BRAND_DOMAIN` in Phase 4 wechselt. Zu tun bleibt dort nur das, was kein Code erledigt: das Postfach einrichten und die alte Adresse weiterleiten.
 
 **Tests:** bestehende Specs laufen dank Phase 1 unverändert durch; Snapshot-/Text-Assertions, die die Marke prüfen, ziehen die Konstante.
 
@@ -213,7 +215,7 @@ Der Aufwand dafür ist nicht zusätzlich, sondern vorgezogen: Ohne Platzhalter m
 
 1. Neue Domain in Firebase Hosting **und** App Hosting als Custom Domain eintragen, Zertifikat abwarten.
 2. `apphosting.yaml` → `NG_ALLOWED_HOSTS` um die neue Domain **erweitern** (alte drin lassen). Ohne diesen Schritt weist der Angular-SSR-SSRF-Guard die neue Domain ab.
-3. `BRAND_URL` und die `BASE_URL`-Quelle (Phase 1) auf die neue Domain. Sitemap und Feeds neu generieren.
+3. `BRAND_DOMAIN` auf die neue Domain setzen — `BRAND_URL`, `BRAND_CONTACT_EMAIL` und `BRAND_LOGO_URL` leiten sich daraus ab und folgen. Die `BASE_URL` in `tools/src/generate-feeds.js` und `generate-sitemap.js` von Hand mitziehen: als Node-Skripte können sie die TS-Konstante nicht importieren, der Drift-Test hält sie nur nach. Danach Sitemap und Feeds neu generieren.
 4. Beide Domains parallel live, neue ist kanonisch: `rel=canonical`, `og:url` und alle hreflang-Einträge zeigen auf neu.
 5. **301** (nicht 302) von `pushup-stats.com/*` und `.de/*` auf pfadgleiche Ziele der neuen Domain. Pfade bleiben identisch — inklusive `/de`, `/en`, … Präfixe.
 6. Google Search Console: neue Property, Sitemap einreichen, **Adressänderung** für beide alten Domains melden.
