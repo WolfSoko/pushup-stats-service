@@ -11,6 +11,11 @@ describe('notificationCategory', () => {
     expect(notificationCategory('cheer')).toBe('motivation');
   });
 
+  it('should group a reached goal with motivation, next to the cheer', () => {
+    // then
+    expect(notificationCategory('goalReached')).toBe('motivation');
+  });
+
   it('should give an earned badge its own category', () => {
     // then
     expect(notificationCategory('achievement')).toBe('achievement');
@@ -89,6 +94,14 @@ describe('notificationDocId', () => {
 
     // then
     expect(id).toBe('achievement__plan-days-25');
+  });
+
+  it('should scope a reached goal to its day, so only the first one counts', () => {
+    // when
+    const id = notificationDocId({ type: 'goalReached', day: '2026-09-20' });
+
+    // then
+    expect(id).toBe('goalReached__2026-09-20');
   });
 
   it.each(['challenge', 'challengeAccepted', 'workoutShared'] as const)(

@@ -98,5 +98,6 @@ export { claimReferral } from './functions-referral';
 export { updateExerciseStatsOnEntryWrite } from './functions-user-stats';
 
 export { awardAchievementsOnPlanWrite } from './functions-achievements';
+export { notifyGoalReachedOnStatsWrite } from './functions-goal-reached';
 
 export { archiveDeletedExerciseEntry } from './functions-entry-trash';

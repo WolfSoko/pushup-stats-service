@@ -41,6 +41,8 @@ function text(notification: UserNotification): string {
       return $localize`:@@notifications.text.workoutShared:${name}:name: hat dir eine Session geschickt`;
     case 'achievement':
       return $localize`:@@notifications.text.achievement:Du hast ein neues Abzeichen verdient`;
+    case 'goalReached':
+      return $localize`:@@notifications.text.goalReached:Tagesziel geschafft`;
   }
 }
 

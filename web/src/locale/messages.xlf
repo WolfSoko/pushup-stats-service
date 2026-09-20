@@ -9032,6 +9032,14 @@
         <source>Du hast ein neues Abzeichen verdient</source>
       </segment>
     </unit>
+    <unit id="notifications.text.goalReached">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:45</note>
+      </notes>
+      <segment>
+        <source>Tagesziel geschafft</source>
+      </segment>
+    </unit>
     <unit id="notifications.page.title">
       <notes>
         <note category="location">web/src/app/notifications/notifications-page.component.ts:16,17</note>

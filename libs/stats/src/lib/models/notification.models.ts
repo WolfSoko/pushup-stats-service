@@ -22,7 +22,8 @@ export type NotificationType =
   | 'challenge'
   | 'challengeAccepted'
   | 'workoutShared'
-  | 'achievement';
+  | 'achievement'
+  | 'goalReached';
 
 /**
  * How an entry is presented. Derived from the type rather than stored:
@@ -42,7 +43,7 @@ export type NotificationCategory =
 export function notificationCategory(
   type: NotificationType
 ): NotificationCategory {
-  if (type === 'cheer') return 'motivation';
+  if (type === 'cheer' || type === 'goalReached') return 'motivation';
   if (type === 'achievement') return 'achievement';
   return 'social';
 }
@@ -115,6 +116,7 @@ export type NotificationIdInput =
       readonly actorUid: string;
     }
   | { readonly type: 'achievement'; readonly achievementId: string }
+  | { readonly type: 'goalReached'; readonly day: string }
   | { readonly type: 'challenge' | 'challengeAccepted' | 'workoutShared' };
 
 /**
@@ -132,6 +134,8 @@ export function notificationDocId(input: NotificationIdInput): string | null {
       return `${input.type}__${input.actorUid}`;
     case 'achievement':
       return `achievement__${input.achievementId}`;
+    case 'goalReached':
+      return `goalReached__${input.day}`;
     default:
       return null;
   }

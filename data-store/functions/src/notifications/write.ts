@@ -52,3 +52,31 @@ export async function writeNotification(
     });
   }
 }
+
+/**
+ * Like {@link writeNotification}, but leaves an existing entry alone.
+ *
+ * For events that keep firing after the fact: every further entry logged
+ * once the daily goal is met would otherwise rewrite the row and reset
+ * `readAt`, so a notification the user already dismissed would pop back
+ * up unread.
+ */
+export async function writeNotificationOnce(
+  uid: string,
+  idInput: NotificationIdInput,
+  notification: UserNotification
+): Promise<void> {
+  try {
+    await notificationRef(uid, idInput).create(
+      notificationDoc(notification, Date.now())
+    );
+  } catch (err: unknown) {
+    const code = (err as { code?: number | string }).code;
+    if (code === 6 || code === 'already-exists') return;
+    logger.error('writeNotificationOnce failed', {
+      uid,
+      type: notification.type,
+      err,
+    });
+  }
+}

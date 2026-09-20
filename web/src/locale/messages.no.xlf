@@ -14199,5 +14199,11 @@ Aktiv:         </target>
         <target>Geteilte Sessions</target>
       </segment>
     </unit>
+    <unit id="notifications.text.goalReached">
+      <segment state="initial">
+        <source>Tagesziel geschafft</source>
+        <target>Tagesziel geschafft</target>
+      </segment>
+    </unit>
 </file>
 </xliff>
