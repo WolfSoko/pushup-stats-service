@@ -7,6 +7,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BRAND_NAME } from '@pu-stats/models';
 import { CallableFunctionsService } from '../admin/callable-functions.service';
 import { UserConfigStore } from './user-config.store';
 
@@ -40,7 +41,7 @@ type InviteDialogState = 'ask' | 'thanks';
       </h2>
       <mat-dialog-content>
         <p i18n="@@androidTest.invite.body">
-          Wir bauen gerade die Pushup Tracker Android-App und suchen Tester.
+          Wir bauen gerade die {{ brandName }} Android-App und suchen Tester.
           Hast du Lust, sie vor allen anderen auszuprobieren?
         </p>
         @if (error()) {
@@ -93,6 +94,7 @@ type InviteDialogState = 'ask' | 'thanks';
   `,
 })
 export class AndroidTestInviteDialogComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly dialogRef = inject(
     MatDialogRef<AndroidTestInviteDialogComponent>
   );

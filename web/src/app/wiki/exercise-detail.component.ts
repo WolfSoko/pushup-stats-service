@@ -281,7 +281,7 @@ export class ExerciseDetailComponent implements OnInit {
     this.tips = localized.tips;
     this.article = localized.article ?? null;
 
-    const titleSuffix = $localize`:@@seo.wiki.exercise.titleSuffix:Anleitung & Technik | Pushup Tracker`;
+    const titleSuffix = $localize`:@@seo.wiki.exercise.titleSuffix:Anleitung & Technik | ${BRAND_NAME}:brand:`;
     const seoTitle = `${this.name} – ${titleSuffix}`;
 
     // Indexability follows the content: entries that carry a long-form

@@ -24,6 +24,7 @@ import { firstValueFrom } from 'rxjs';
 import { GoogleOnboardingDialogComponent } from './google-onboarding-dialog/google-onboarding-dialog.component';
 import { LoginUiStore } from './login-ui.store';
 import { FormsModule } from '@angular/forms';
+import { BRAND_NAME } from '@pu-stats/models';
 export { hasStrongPasswordPolicy } from '../password-policy';
 
 @Component({
@@ -44,6 +45,7 @@ export { hasStrongPasswordPolicy } from '../password-policy';
   providers: [LoginUiStore],
 })
 export class LoginComponent {
+  protected readonly brandName = BRAND_NAME;
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);

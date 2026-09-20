@@ -1,7 +1,7 @@
 import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import { ActivatedRoute } from '@angular/router';
-import { type PublicProfile } from '@pu-stats/models';
+import { BRAND_DOMAIN, BRAND_NAME, type PublicProfile } from '@pu-stats/models';
 
 import {
   buildProfileShareUrl,
@@ -54,10 +54,10 @@ export class PublicProfileSeo {
     // number — and interpolating null would literally read "null".
     const text =
       profile.total === null
-        ? $localize`:@@publicProfile.share.textPlain:${profile.displayName}:name: trackt auf Pushup Tracker 💪 Schau's dir an:`
-        : $localize`:@@publicProfile.share.text:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze auf Pushup Tracker geschafft 💪 Schau's dir an:`;
+        ? $localize`:@@publicProfile.share.textPlain:${profile.displayName}:name: trackt auf ${BRAND_NAME}:brand: 💪 Schau's dir an:`
+        : $localize`:@@publicProfile.share.text:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze auf ${BRAND_NAME}:brand: geschafft 💪 Schau's dir an:`;
     void this.shareService.share({
-      title: $localize`:@@publicProfile.share.title:Pushup Tracker Profil`,
+      title: $localize`:@@publicProfile.share.title:${BRAND_NAME}:brand: Profil`,
       text,
       // Locale-prefixed canonical share URL — see `buildProfileShareUrl`
       // for the rationale (locale-prefixed link survives 30x-stripping
@@ -81,7 +81,7 @@ export class PublicProfileSeo {
       // Use the actual requested path so canonical / og:url stay in sync
       // with the URL the visitor sees, even on the not-found state.
       this.seo.update(
-        $localize`:@@publicProfile.seo.notFound.title:Profil nicht verfügbar – Pushup Tracker`,
+        $localize`:@@publicProfile.seo.notFound.title:Profil nicht verfügbar – ${BRAND_NAME}:brand:`,
         $localize`:@@publicProfile.seo.notFound.description:Dieses Profil existiert nicht oder ist nicht öffentlich.`,
         this.currentPath()
       );
@@ -105,11 +105,11 @@ export class PublicProfileSeo {
       profile.totalDays !== null;
     this.seo.update(
       hasStats
-        ? $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Liegestütze · Streak ${profile.currentStreak}:streak: · Pushup Tracker`
-        : $localize`:@@publicProfile.seo.titlePlain:${profile.displayName}:name: · Pushup Tracker`,
+        ? $localize`:@@publicProfile.seo.title:${profile.displayName}:name: – ${profile.total}:total: Liegestütze · Streak ${profile.currentStreak}:streak: · ${BRAND_NAME}:brand:`
+        : $localize`:@@publicProfile.seo.titlePlain:${profile.displayName}:name: · ${BRAND_NAME}:brand:`,
       hasStats
-        ? $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf pushup-stats.com.`
-        : $localize`:@@publicProfile.seo.descriptionPlain:${profile.displayName}:name: auf Pushup Tracker. Tracke selbst kostenlos auf pushup-stats.com.`,
+        ? $localize`:@@publicProfile.seo.description:${profile.displayName}:name: hat ${profile.total}:total: Liegestütze in ${profile.totalDays}:days: aktiven Tagen geschafft – aktuelle Streak: ${profile.currentStreak}:streak: Tage. Tracke selbst kostenlos auf ${BRAND_DOMAIN}:domain:.`
+        : $localize`:@@publicProfile.seo.descriptionPlain:${profile.displayName}:name: auf ${BRAND_NAME}:brand:. Tracke selbst kostenlos auf ${BRAND_DOMAIN}:domain:.`,
       `/u/${encodedUid}`,
       {
         // Per-user dynamic OG card (1200×630 PNG rendered by satori + resvg
@@ -122,7 +122,7 @@ export class PublicProfileSeo {
           encodedUid,
           this.localeShortCode()
         ),
-        imageAlt: $localize`:@@publicProfile.seo.imageAlt:${profile.displayName}:name: auf Pushup Tracker`,
+        imageAlt: $localize`:@@publicProfile.seo.imageAlt:${profile.displayName}:name: auf ${BRAND_NAME}:brand:`,
       }
     );
   }

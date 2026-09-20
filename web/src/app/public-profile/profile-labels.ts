@@ -1,3 +1,4 @@
+import { BRAND_DOMAIN } from '@pu-stats/models';
 import type { ExerciseGroupKind } from './profile-view.model';
 
 /**
@@ -43,7 +44,7 @@ export const PROFILE_LABELS = {
   shareAria: $localize`:@@publicProfile.share.aria:Profil teilen`,
   achievements: $localize`:@@publicProfile.achievements:Trainingsplan-Erfolge`,
   share: $localize`:@@publicProfile.share:Teilen`,
-  cta: $localize`:@@publicProfile.cta:Selbst tracken – pushup-stats.com`,
+  cta: $localize`:@@publicProfile.cta:Selbst tracken – ${BRAND_DOMAIN}:domain:`,
   ownerTitle: $localize`:@@publicProfile.owner.title:Nur für dich sichtbar`,
   ownerHint: $localize`:@@publicProfile.owner.hint:Tippe bei einem Element auf das Symbol, um festzulegen, wer es sieht: alle, nur deine Freunde, oder niemand. Diesen Bereich und die Symbole sehen nur du.`,
   legendPublic: $localize`:@@publicProfile.owner.legend.public:Für alle sichtbar, die deinen Profil-Link haben.`,

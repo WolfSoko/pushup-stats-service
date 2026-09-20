@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { BRAND_NAME } from '@pu-stats/models';
 
 export type PageHeaderVariant =
   | 'default'
@@ -24,7 +25,7 @@ export type PageHeaderVariant =
         </span>
       }
       <div class="page-header-text">
-        <p class="page-header-eyebrow" i18n="@@eyebrowTitle">Pushup Tracker</p>
+        <p class="page-header-eyebrow" i18n="@@eyebrowTitle">{{ brandName }}</p>
         <ng-content select="[page-title]" />
         <ng-content select="[page-subtitle]" />
       </div>
@@ -367,6 +368,7 @@ export type PageHeaderVariant =
   `,
 })
 export class PageHeaderComponent {
+  protected readonly brandName = BRAND_NAME;
   readonly icon = input<string | null>(null);
   readonly variant = input<PageHeaderVariant>('default');
 }
