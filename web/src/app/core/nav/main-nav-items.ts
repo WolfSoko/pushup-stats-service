@@ -57,6 +57,11 @@ export function mainNavItems(loggedIn: boolean): MainNavItem[] {
             icon: 'playlist_add_check',
             label: $localize`:@@nav.workouts:Sessions`,
           },
+          {
+            path: '/abzeichen',
+            icon: 'military_tech',
+            label: $localize`:@@nav.achievements:Abzeichen`,
+          },
         ]
       : []),
     { path: '/blog', icon: 'article', label: $localize`:@@nav.blog:Blog` },

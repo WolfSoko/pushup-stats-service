@@ -14500,5 +14500,425 @@
         <target>Parameterregelaars weergeven of verbergen</target>
       </segment>
     </unit>
+    <unit id="achievements.label.planCompletedNamed">
+      <segment state="initial">
+        <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
+        <target><ph id="0" equiv="plan" disp="title"/> abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planCompleted">
+      <segment state="initial">
+        <source>Trainingsplan abgeschlossen</source>
+        <target>Trainingsplan abgeschlossen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstInvite">
+      <segment state="initial">
+        <source>Ersten Freund eingeladen</source>
+        <target>Ersten Freund eingeladen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.invites">
+      <segment state="initial">
+        <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
+        <target><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstPlanDay">
+      <segment state="initial">
+        <source>Erster Plantag</source>
+        <target>Erster Plantag</target>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planDays">
+      <segment state="initial">
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+        <target><ph id="0" equiv="days" disp="days"/> Plantage</target>
+      </segment>
+    </unit>
+    <unit id="achievements.tile.progress">
+      <segment state="initial">
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
+        <target><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</target>
+      </segment>
+    </unit>
+    <unit id="achievements.page.title">
+      <segment state="initial">
+        <source>Deine Abzeichen</source>
+        <target>Deine Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="achievements.page.count">
+      <segment state="initial">
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </target>
+      </segment>
+    </unit>
+    <unit id="achievements.page.next">
+      <segment state="initial">
+        <source>Als Nächstes</source>
+        <target>Als Nächstes</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planDays">
+      <segment state="initial">
+        <source>Trainingstage</source>
+        <target>Trainingstage</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planCompleted">
+      <segment state="initial">
+        <source>Abgeschlossene Pläne</source>
+        <target>Abgeschlossene Pläne</target>
+      </segment>
+    </unit>
+    <unit id="achievements.group.invites">
+      <segment state="initial">
+        <source>Eingeladene Freunde</source>
+        <target>Eingeladene Freunde</target>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.title">
+      <segment state="initial">
+        <source>Abzeichen – Pushup Tracker</source>
+        <target>Abzeichen – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.description">
+      <segment state="initial">
+        <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
+        <target>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</target>
+      </segment>
+    </unit>
+    <unit id="nav.achievements">
+      <segment state="initial">
+        <source>Abzeichen</source>
+        <target>Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="user.menu.notifications">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="seo.notifications.title">
+      <segment state="initial">
+        <source>Nachrichten – Pushup Tracker</source>
+        <target>Nachrichten – Pushup Tracker</target>
+      </segment>
+    </unit>
+    <unit id="seo.notifications.description">
+      <segment state="initial">
+        <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
+        <target>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</target>
+      </segment>
+    </unit>
+    <unit id="announcements.workouts">
+      <segment state="initial">
+        <source>Neu: eigene Sessions zusammenstellen</source>
+        <target>Neu: eigene Sessions zusammenstellen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.title">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.markAll">
+      <segment state="initial">
+        <source> Alle gelesen </source>
+        <target> Alle gelesen </target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.empty">
+      <segment state="initial">
+        <source> Noch keine Nachrichten. </source>
+        <target> Noch keine Nachrichten. </target>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.showAll">
+      <segment state="initial">
+        <source> Alle anzeigen </source>
+        <target> Alle anzeigen </target>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.none">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.unread">
+      <segment state="initial">
+        <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
+        <target>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.actor.anonymous">
+      <segment state="initial">
+        <source>Jemand</source>
+        <target>Jemand</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.cheer">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> feuert dich an</source>
+        <target><ph id="0" equiv="name" disp="name"/> feuert dich an</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendRequest">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</source>
+        <target><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendAccepted">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</source>
+        <target><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challenge">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> fordert dich heraus</source>
+        <target><ph id="0" equiv="name" disp="name"/> fordert dich heraus</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challengeAccepted">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</source>
+        <target><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.workoutShared">
+      <segment state="initial">
+        <source><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</source>
+        <target><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.achievement">
+      <segment state="initial">
+        <source>Du hast ein neues Abzeichen verdient</source>
+        <target>Du hast ein neues Abzeichen verdient</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.title">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.markAll">
+      <segment state="initial">
+        <source>Alle gelesen</source>
+        <target>Alle gelesen</target>
+      </segment>
+    </unit>
+    <unit id="notifications.page.empty">
+      <segment state="initial">
+        <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
+        <target> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </target>
+      </segment>
+    </unit>
+    <unit id="announcements.inbox">
+      <segment state="initial">
+        <source>Neu: Nachrichten und deine Abzeichen</source>
+        <target>Neu: Nachrichten und deine Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.eyebrow">
+      <segment state="initial">
+        <source> Neu · Nachrichten &amp; Abzeichen </source>
+        <target> Neu · Nachrichten &amp; Abzeichen </target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.headline">
+      <segment state="initial">
+        <source> Nichts geht verloren — und du siehst, was du geschafft hast. </source>
+        <target> Nichts geht verloren — und du siehst, was du geschafft hast. </target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.desc">
+      <segment state="initial">
+        <source> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </source>
+        <target> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.inbox">
+      <segment state="initial">
+        <source>Alles an einem Ort, auch ohne Push-Benachrichtigungen</source>
+        <target>Alles an einem Ort, auch ohne Push-Benachrichtigungen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.cheer">
+      <segment state="initial">
+        <source>Anfeuerungen von Freunden, jederzeit nachlesbar</source>
+        <target>Anfeuerungen von Freunden, jederzeit nachlesbar</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.badges">
+      <segment state="initial">
+        <source>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</source>
+        <target>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.cta">
+      <segment state="initial">
+        <source>Abzeichen ansehen</source>
+        <target>Abzeichen ansehen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.title">
+      <segment state="initial">
+        <source>Nachrichten</source>
+        <target>Nachrichten</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.subtitle">
+      <segment state="initial">
+        <source>3 ungelesen</source>
+        <target>3 ungelesen</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line1">
+      <segment state="initial">
+        <source>Anna feuert dich an</source>
+        <target>Anna feuert dich an</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line2">
+      <segment state="initial">
+        <source>Du hast ein neues Abzeichen verdient</source>
+        <target>Du hast ein neues Abzeichen verdient</target>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line3">
+      <segment state="initial">
+        <source>Ben möchte mit dir befreundet sein</source>
+        <target>Ben möchte mit dir befreundet sein</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.badge">
+      <segment state="initial">
+        <source>Neu</source>
+        <target>Neu</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.title">
+      <segment state="initial">
+        <source>Nachrichten und Abzeichen</source>
+        <target>Nachrichten und Abzeichen</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.stepCount">
+      <segment state="initial">
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+        <target> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.later">
+      <segment state="initial">
+        <source> Später </source>
+        <target> Später </target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.back">
+      <segment state="initial">
+        <source>Zurück</source>
+        <target>Zurück</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.start">
+      <segment state="initial">
+        <source>Abzeichen ansehen</source>
+        <target>Abzeichen ansehen</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.next">
+      <segment state="initial">
+        <source>Weiter</source>
+        <target>Weiter</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step1.title">
+      <segment state="initial">
+        <source>Nichts geht mehr verloren</source>
+        <target>Nichts geht mehr verloren</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step1.body">
+      <segment state="initial">
+        <source>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</source>
+        <target>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step2.title">
+      <segment state="initial">
+        <source>Deine Abzeichen an einem Ort</source>
+        <target>Deine Abzeichen an einem Ort</target>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step2.body">
+      <segment state="initial">
+        <source>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</source>
+        <target>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.label">
+      <segment state="initial">
+        <source> Push von Freunden </source>
+        <target> Push von Freunden </target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.desc">
+      <segment state="initial">
+        <source> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </source>
+        <target> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.cheer">
+      <segment state="initial">
+        <source>Anfeuerungen</source>
+        <target>Anfeuerungen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendRequest">
+      <segment state="initial">
+        <source>Freundschaftsanfragen</source>
+        <target>Freundschaftsanfragen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendAccepted">
+      <segment state="initial">
+        <source>Angenommene Anfragen</source>
+        <target>Angenommene Anfragen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challenge">
+      <segment state="initial">
+        <source>Challenge-Einladungen</source>
+        <target>Challenge-Einladungen</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challengeAccepted">
+      <segment state="initial">
+        <source>Zusagen zu deinen Challenges</source>
+        <target>Zusagen zu deinen Challenges</target>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.workoutShared">
+      <segment state="initial">
+        <source>Geteilte Sessions</source>
+        <target>Geteilte Sessions</target>
+      </segment>
+    </unit>
+    <unit id="notifications.text.goalReached">
+      <segment state="initial">
+        <source>Tagesziel geschafft</source>
+        <target>Tagesziel geschafft</target>
+      </segment>
+    </unit>
 </file>
 </xliff>

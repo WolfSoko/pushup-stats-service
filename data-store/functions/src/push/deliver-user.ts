@@ -1,5 +1,5 @@
 import { logger } from 'firebase-functions';
-import type { ReminderLocale } from '@pu-stats/models';
+import type { NotificationPushContext, ReminderLocale } from '@pu-stats/models';
 
 import { db } from '../firebase-app';
 import { displayNameOf, readUserConfigs } from '../user-config-read';
@@ -64,6 +64,8 @@ export function logFailedSends(
 export interface PushRecipient {
   readonly locale: ReminderLocale;
   readonly displayName: string | null;
+  /** What `shouldPushNotification` needs to decide if push may go out. */
+  readonly push: NotificationPushContext;
 }
 
 /** What a notification about or for this user needs from their config. */
@@ -75,6 +77,14 @@ export async function readPushRecipients(
     recipients.set(uid, {
       locale: pushLocaleFromConfig(config),
       displayName: displayNameOf(config),
+      push: {
+        notificationPrefs: config?.['notificationPrefs'] as
+          | NotificationPushContext['notificationPrefs']
+          | undefined,
+        reminder: config?.['reminder'] as
+          | NotificationPushContext['reminder']
+          | undefined,
+      },
     });
   }
   return recipients;

@@ -3,6 +3,7 @@ import { onCall } from 'firebase-functions/v2/https';
 import {
   copyWorkout,
   normalizeWorkout,
+  shouldPushNotification,
   type Workout,
   workoutShareRejection,
   type WorkoutSource,
@@ -12,6 +13,7 @@ import { requireUid } from './callable-auth';
 import { db } from './firebase-app';
 import { buildFriendPushPayload, friendPushOptions } from './friends';
 import { readFriendUids } from './friends/challenges-read';
+import { writeNotification } from './notifications';
 import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
 import { hasRoom } from './workouts/logic';
@@ -70,21 +72,50 @@ export const shareWorkout = onCall(
     const sent = recipients.filter((_, i) => outcomes[i]);
     const full = recipients.filter((_, i) => !outcomes[i]);
 
-    if (configureWebPush()) {
-      await Promise.all(
-        sent.map((friend) =>
-          deliverPushToUser(
-            friend,
-            buildFriendPushPayload({
-              kind: 'workout',
-              locale: pushRecipients.get(friend)?.locale ?? 'de',
-              actorName: sharedBy.displayName,
-              workout: { title: workout.title },
-            }),
-            friendPushOptions('workout'),
-            'shareWorkout'
-          )
+    // Only those who actually got a copy — a friend at the workout cap has
+    // nothing to open, so telling them about it would be a dead end.
+    await Promise.all(
+      sent.map((friend) =>
+        writeNotification(
+          friend,
+          { type: 'workoutShared' },
+          {
+            type: 'workoutShared',
+            createdAt: new Date().toISOString(),
+            readAt: null,
+            actorUid: uid,
+            actorName: sharedBy.displayName,
+            url: '/workouts',
+            payload: { title: workout.title },
+          }
         )
+      )
+    );
+
+    if (configureWebPush()) {
+      const now = new Date();
+      await Promise.all(
+        sent
+          .filter((friend) =>
+            shouldPushNotification(
+              pushRecipients.get(friend)?.push,
+              'workoutShared',
+              now
+            )
+          )
+          .map((friend) =>
+            deliverPushToUser(
+              friend,
+              buildFriendPushPayload({
+                kind: 'workout',
+                locale: pushRecipients.get(friend)?.locale ?? 'de',
+                actorName: sharedBy.displayName,
+                workout: { title: workout.title },
+              }),
+              friendPushOptions('workout'),
+              'shareWorkout'
+            )
+          )
       );
     }
 

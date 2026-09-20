@@ -15,9 +15,9 @@ import { db } from './firebase-app';
 import {
   activeChallengeCount,
   buildChallengeView,
-  buildFriendPushPayload,
-  friendPushOptions,
   invitedOf,
+  notifyChallengeAccepted,
+  notifyChallengeInvited,
   sanitizeExerciseName,
   visibleChallenges,
 } from './friends';
@@ -29,8 +29,7 @@ import {
   sumChallengeEntries,
   toChallengeDoc,
 } from './friends/challenges-read';
-import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
-import { configureWebPush, VAPID_SECRETS } from './push/vapid';
+import { VAPID_SECRETS } from './push/vapid';
 import { readDisplayNames } from './user-config-read';
 
 /**
@@ -96,33 +95,14 @@ export const createChallenge = onCall(
     });
     if (!result.ok) return result;
 
-    if (configureWebPush()) {
-      const recipients = await readPushRecipients([uid, ...result.invited]);
-      const actorName = recipients.get(uid)?.displayName ?? null;
-      const exerciseName = sanitizeExerciseName(
+    await notifyChallengeInvited(uid, result.invited, {
+      target: result.challenge.target,
+      exerciseName: sanitizeExerciseName(
         request.data?.exerciseName,
         result.challenge.exerciseId
-      );
-      await Promise.all(
-        result.invited.map((friend) =>
-          deliverPushToUser(
-            friend,
-            buildFriendPushPayload({
-              kind: 'challenge',
-              locale: recipients.get(friend)?.locale ?? 'de',
-              actorName,
-              challenge: {
-                target: result.challenge.target,
-                exerciseName,
-                days: days as number,
-              },
-            }),
-            friendPushOptions('challenge'),
-            'createChallenge'
-          )
-        )
-      );
-    }
+      ),
+      days: days as number,
+    });
 
     logger.info('createChallenge', {
       uid,
@@ -163,23 +143,8 @@ export const respondChallenge = onCall(
       return { ok: true as const, accepted: accept, others };
     });
 
-    if (result.ok && result.accepted && configureWebPush()) {
-      const recipients = await readPushRecipients([uid, ...result.others]);
-      const actorName = recipients.get(uid)?.displayName ?? null;
-      await Promise.all(
-        result.others.map((participant) =>
-          deliverPushToUser(
-            participant,
-            buildFriendPushPayload({
-              kind: 'challengeAccepted',
-              locale: recipients.get(participant)?.locale ?? 'de',
-              actorName,
-            }),
-            friendPushOptions('challengeAccepted'),
-            'respondChallenge'
-          )
-        )
-      );
+    if (result.ok && result.accepted) {
+      await notifyChallengeAccepted(uid, result.others);
     }
 
     logger.info('respondChallenge', {

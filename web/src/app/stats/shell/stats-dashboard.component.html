@@ -354,10 +354,10 @@
           [value]="monthlyGoalProgressPercent()"
         ></mat-progress-bar>
 
-        @if (todayQuote(); as quote) {
-          <p class="motivational-quote">
-            <mat-icon class="ai-icon">auto_awesome</mat-icon>
-            {{ quote }}
+        @if (motivationSlot(); as slot) {
+          <p class="motivational-quote" [class.personal]="slot.personal">
+            <mat-icon class="ai-icon">{{ slot.icon }}</mat-icon>
+            {{ slot.text }}
           </p>
         }
       </mat-card-content>

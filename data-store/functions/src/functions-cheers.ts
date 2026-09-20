@@ -6,6 +6,7 @@ import {
   cheerRejection,
   friendshipId,
   isValidFriendUid,
+  shouldPushNotification,
   type Cheer,
   type Friendship,
 } from '@pu-stats/models';
@@ -14,6 +15,7 @@ import { requireUid } from './callable-auth';
 import { berlinDateParts } from './datetime';
 import { db } from './firebase-app';
 import { buildFriendPushPayload, friendPushOptions } from './friends';
+import { notificationDoc, notificationRef } from './notifications';
 import { deliverPushToUser, readPushRecipients } from './push/deliver-user';
 import { configureWebPush, VAPID_SECRETS } from './push/vapid';
 
@@ -35,9 +37,12 @@ export const sendCheer = onCall(
 
     const day = berlinDateParts().isoDate;
     const id = cheerId(uid, target, day);
-    const [friendship, existing] = await Promise.all([
+    // Recipients ride along in the same round trip: the inbox entry needs
+    // the sender's name whether or not push is configured.
+    const [friendship, existing, recipients] = await Promise.all([
       db.collection('friendships').doc(friendshipId(uid, target)).get(),
       db.collection('cheers').doc(id).get(),
+      readPushRecipients([uid, target]),
     ]);
     const rejection = cheerRejection({
       from: uid,
@@ -72,6 +77,23 @@ export const sendCheer = onCall(
         from: uid,
         at: cheer.createdAt,
       });
+      // Third member of the same batch: the durable surface. A cheer that
+      // exists without its inbox entry would be invisible to a recipient
+      // whose push never arrives, which is the case this collection exists for.
+      batch.set(
+        notificationRef(target, { type: 'cheer', actorUid: uid, day }),
+        notificationDoc(
+          {
+            type: 'cheer',
+            createdAt: cheer.createdAt,
+            readAt: null,
+            actorUid: uid,
+            actorName: recipients.get(uid)?.displayName ?? null,
+            url: '/freunde',
+          },
+          nowMs
+        )
+      );
       await batch.commit();
     } catch (err: unknown) {
       const code = (err as { code?: number | string }).code;
@@ -81,8 +103,10 @@ export const sendCheer = onCall(
       throw err;
     }
 
-    if (configureWebPush()) {
-      const recipients = await readPushRecipients([uid, target]);
+    if (
+      configureWebPush() &&
+      shouldPushNotification(recipients.get(target)?.push, 'cheer', new Date())
+    ) {
       await deliverPushToUser(
         target,
         buildFriendPushPayload({

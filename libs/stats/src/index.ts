@@ -5,6 +5,7 @@ export * from './lib/models/profile-sections';
 export * from './lib/models/profile-visibility.models';
 export * from './lib/models/friendship.models';
 export * from './lib/models/cheer.models';
+export * from './lib/models/notification.models';
 export * from './lib/models/challenge.models';
 export * from './lib/models/android-test.models';
 export * from './lib/models/reminder-config.models';

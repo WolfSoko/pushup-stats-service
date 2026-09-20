@@ -124,7 +124,7 @@
     <unit id="user.guestName">
       <notes>
         <note category="location">libs/auth/src/lib/core/user-context.service.ts:17</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:57</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:64</note>
       </notes>
       <segment>
         <source>Gast</source>
@@ -515,9 +515,17 @@
         <source>Passwort braucht Groß-/Kleinbuchstaben, Zahl und Sonderzeichen.</source>
       </segment>
     </unit>
+    <unit id="user.menu.notifications">
+      <notes>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
     <unit id="user.menu.profile">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:34,36</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:47,49</note>
       </notes>
       <segment>
         <source>Mein Profil</source>
@@ -525,7 +533,7 @@
     </unit>
     <unit id="user.menu.settings">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:42,44</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:55,57</note>
       </notes>
       <segment>
         <source>Einstellungen</source>
@@ -533,7 +541,7 @@
     </unit>
     <unit id="user.menu.logout">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:46,48</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:59,61</note>
       </notes>
       <segment>
         <source>Abmelden</source>
@@ -541,7 +549,7 @@
     </unit>
     <unit id="user.menu.guestHint">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:60,63</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:73,76</note>
       </notes>
       <segment>
         <source>Du nutzt die App als Gast</source>
@@ -549,7 +557,7 @@
     </unit>
     <unit id="user.menu.convertAccount">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:66,68</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:79,81</note>
       </notes>
       <segment>
         <source>Umwandeln in Nutzerkonto</source>
@@ -557,8 +565,8 @@
     </unit>
     <unit id="user.menu.signIn">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:70,72</note>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:88,90</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:83,85</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:101,103</note>
       </notes>
       <segment>
         <source>Anmelden</source>
@@ -566,7 +574,7 @@
     </unit>
     <unit id="user.menu.tryAsGuest">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:84,86</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.html:97,99</note>
       </notes>
       <segment>
         <source>Als Gast ausprobieren</source>
@@ -574,7 +582,7 @@
     </unit>
     <unit id="user.menu.aria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:54</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:61</note>
       </notes>
       <segment>
         <source>Nutzerkonto-Menü</source>
@@ -582,7 +590,7 @@
     </unit>
     <unit id="user.menu.guestAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:55</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:62</note>
       </notes>
       <segment>
         <source>Gast-Menü</source>
@@ -590,7 +598,7 @@
     </unit>
     <unit id="user.menu.anonAria">
       <notes>
-        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:56</note>
+        <note category="location">libs/auth/src/lib/ui/user-menu/user-menu.component.ts:63</note>
       </notes>
       <segment>
         <source>Anmelde-Menü</source>
@@ -2812,6 +2820,110 @@
         <source><ph id="0" equiv="badge" disp="this.data.badge.label"/> — geschafft! 💪</source>
       </segment>
     </unit>
+    <unit id="achievements.label.planCompletedNamed">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:20</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="plan" disp="title"/> abgeschlossen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planCompleted">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:21</note>
+      </notes>
+      <segment>
+        <source>Trainingsplan abgeschlossen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstInvite">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:27</note>
+      </notes>
+      <segment>
+        <source>Ersten Freund eingeladen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.invites">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:28</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="invites" disp="invites"/> Freunde eingeladen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.firstPlanDay">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:33</note>
+      </notes>
+      <segment>
+        <source>Erster Plantag</source>
+      </segment>
+    </unit>
+    <unit id="achievements.label.planDays">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-label.ts:34</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="days" disp="days"/> Plantage</source>
+      </segment>
+    </unit>
+    <unit id="achievements.tile.progress">
+      <notes>
+        <note category="location">web/src/app/achievements/achievement-tile.component.ts:29,32</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ progress.current }}"/>:current: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ progress.target }}"/>:target:</source>
+      </segment>
+    </unit>
+    <unit id="achievements.page.title">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:15,16</note>
+      </notes>
+      <segment>
+        <source>Deine Abzeichen</source>
+      </segment>
+    </unit>
+    <unit id="achievements.page.count">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:17,20</note>
+      </notes>
+      <segment>
+        <source> <ph id="0" equiv="INTERPOLATION" disp="{{ store.collection().earnedCount }}"/>:earned: von <ph id="1" equiv="INTERPOLATION_1" disp="{{ store.collection().totalCount }}"/>:total: freigeschaltet </source>
+      </segment>
+    </unit>
+    <unit id="achievements.page.next">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:28,29</note>
+      </notes>
+      <segment>
+        <source>Als Nächstes</source>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planDays">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:97</note>
+      </notes>
+      <segment>
+        <source>Trainingstage</source>
+      </segment>
+    </unit>
+    <unit id="achievements.group.planCompleted">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:100</note>
+      </notes>
+      <segment>
+        <source>Abgeschlossene Pläne</source>
+      </segment>
+    </unit>
+    <unit id="achievements.group.invites">
+      <notes>
+        <note category="location">web/src/app/achievements/achievements-page.component.ts:102</note>
+      </notes>
+      <segment>
+        <source>Eingeladene Freunde</source>
+      </segment>
+    </unit>
     <unit id="admin.autoCount.title">
       <notes>
         <note category="location">web/src/app/admin/admin-auto-count-section.component.html:1,4</note>
@@ -4311,7 +4423,7 @@
     </unit>
     <unit id="nav.admin">
       <notes>
-        <note category="location">web/src/app/app.html:134,135</note>
+        <note category="location">web/src/app/app.html:136,137</note>
       </notes>
       <segment>
         <source>Admin-Bereich</source>
@@ -4319,7 +4431,7 @@
     </unit>
     <unit id="footer.aria">
       <notes>
-        <note category="location">web/src/app/app.html:148</note>
+        <note category="location">web/src/app/app.html:153</note>
       </notes>
       <segment>
         <source>Rechtliches</source>
@@ -4327,7 +4439,7 @@
     </unit>
     <unit id="footer.pushupTypes">
       <notes>
-        <note category="location">web/src/app/app.html:153,155</note>
+        <note category="location">web/src/app/app.html:158,160</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -4335,7 +4447,7 @@
     </unit>
     <unit id="footer.exercises">
       <notes>
-        <note category="location">web/src/app/app.html:156,158</note>
+        <note category="location">web/src/app/app.html:161,163</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -4343,7 +4455,7 @@
     </unit>
     <unit id="footer.about">
       <notes>
-        <note category="location">web/src/app/app.html:158,159</note>
+        <note category="location">web/src/app/app.html:163,164</note>
       </notes>
       <segment>
         <source>Über uns</source>
@@ -4351,7 +4463,7 @@
     </unit>
     <unit id="footer.impressum">
       <notes>
-        <note category="location">web/src/app/app.html:160,162</note>
+        <note category="location">web/src/app/app.html:165,167</note>
       </notes>
       <segment>
         <source>Impressum</source>
@@ -4359,7 +4471,7 @@
     </unit>
     <unit id="footer.datenschutz">
       <notes>
-        <note category="location">web/src/app/app.html:163,166</note>
+        <note category="location">web/src/app/app.html:168,171</note>
       </notes>
       <segment>
         <source>Datenschutz</source>
@@ -4367,7 +4479,7 @@
     </unit>
     <unit id="footer.cookies">
       <notes>
-        <note category="location">web/src/app/app.html:170,172</note>
+        <note category="location">web/src/app/app.html:175,177</note>
       </notes>
       <segment>
         <source> Cookie-Einstellungen </source>
@@ -4597,9 +4709,41 @@
         <source>Freunde bestätigen, Anfragen beantworten und gemeinsam trainieren.</source>
       </segment>
     </unit>
+    <unit id="seo.notifications.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:280</note>
+      </notes>
+      <segment>
+        <source>Nachrichten – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.notifications.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:281</note>
+      </notes>
+      <segment>
+        <source>Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen an einem Ort.</source>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.title">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:293</note>
+      </notes>
+      <segment>
+        <source>Abzeichen – Pushup Tracker</source>
+      </segment>
+    </unit>
+    <unit id="seo.achievements.description">
+      <notes>
+        <note category="location">web/src/app/app.routes.ts:294</note>
+      </notes>
+      <segment>
+        <source>Deine verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist.</source>
+      </segment>
+    </unit>
     <unit id="seo.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:279</note>
+        <note category="location">web/src/app/app.routes.ts:305</note>
       </notes>
       <segment>
         <source>Bestenliste – Pushup Tracker</source>
@@ -4607,7 +4751,7 @@
     </unit>
     <unit id="seo.leaderboard.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:280</note>
+        <note category="location">web/src/app/app.routes.ts:306</note>
       </notes>
       <segment>
         <source>Öffentliche Bestenliste mit Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage.</source>
@@ -4615,7 +4759,7 @@
     </unit>
     <unit id="seo.publicProfile.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:290</note>
+        <note category="location">web/src/app/app.routes.ts:316</note>
       </notes>
       <segment>
         <source>Profil – Pushup Tracker</source>
@@ -4623,7 +4767,7 @@
     </unit>
     <unit id="seo.publicProfile.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:291</note>
+        <note category="location">web/src/app/app.routes.ts:317</note>
       </notes>
       <segment>
         <source>Öffentliches Pushup-Profil mit Reps, Streak und Bestleistungen.</source>
@@ -4631,7 +4775,7 @@
     </unit>
     <unit id="seo.blog.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:305</note>
+        <note category="location">web/src/app/app.routes.ts:331</note>
       </notes>
       <segment>
         <source>Blog – Liegestütze Tipps &amp; Guides | Pushup Tracker</source>
@@ -4639,7 +4783,7 @@
     </unit>
     <unit id="seo.blog.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:306</note>
+        <note category="location">web/src/app/app.routes.ts:332</note>
       </notes>
       <segment>
         <source>Tipps, Trainingspläne und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten.</source>
@@ -4647,7 +4791,7 @@
     </unit>
     <unit id="seo.about.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:323</note>
+        <note category="location">web/src/app/app.routes.ts:349</note>
       </notes>
       <segment>
         <source>Über uns – Pushup Tracker</source>
@@ -4655,7 +4799,7 @@
     </unit>
     <unit id="seo.about.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:324</note>
+        <note category="location">web/src/app/app.routes.ts:350</note>
       </notes>
       <segment>
         <source>Wer hinter Pushup Tracker steckt, warum es die App gibt und wie unsere Trainings-Inhalte entstehen.</source>
@@ -4663,7 +4807,7 @@
     </unit>
     <unit id="seo.impressum.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:334</note>
+        <note category="location">web/src/app/app.routes.ts:360</note>
       </notes>
       <segment>
         <source>Impressum – Pushup Tracker</source>
@@ -4671,7 +4815,7 @@
     </unit>
     <unit id="seo.impressum.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:335</note>
+        <note category="location">web/src/app/app.routes.ts:361</note>
       </notes>
       <segment>
         <source>Impressum und Anbieterkennzeichnung von Pushup Tracker.</source>
@@ -4679,7 +4823,7 @@
     </unit>
     <unit id="seo.datenschutz.title">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:345</note>
+        <note category="location">web/src/app/app.routes.ts:371</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung – Pushup Tracker</source>
@@ -4687,7 +4831,7 @@
     </unit>
     <unit id="seo.datenschutz.description">
       <notes>
-        <note category="location">web/src/app/app.routes.ts:346</note>
+        <note category="location">web/src/app/app.routes.ts:372</note>
       </notes>
       <segment>
         <source>Datenschutzerklärung von Pushup Tracker – Informationen zu Datenverarbeitung, Cookies und Ihren Rechten.</source>
@@ -4695,7 +4839,7 @@
     </unit>
     <unit id="sw.update.buttonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:110</note>
+        <note category="location">web/src/app/app.ts:113</note>
       </notes>
       <segment>
         <source>Neue Version verfügbar – jetzt neu laden</source>
@@ -4703,7 +4847,7 @@
     </unit>
     <unit id="sw.update.recoverButtonAria">
       <notes>
-        <note category="location">web/src/app/app.ts:111</note>
+        <note category="location">web/src/app/app.ts:114</note>
       </notes>
       <segment>
         <source>App-Daten beschädigt – jetzt neu laden</source>
@@ -4711,7 +4855,7 @@
     </unit>
     <unit id="toolbarDailyGoal.detailsAria">
       <notes>
-        <note category="location">web/src/app/app.ts:248</note>
+        <note category="location">web/src/app/app.ts:255</note>
       </notes>
       <segment>
         <source>Tagesziel-Einzelpositionen anzeigen</source>
@@ -4719,7 +4863,7 @@
     </unit>
     <unit id="seo.default.title">
       <notes>
-        <note category="location">web/src/app/app.ts:317</note>
+        <note category="location">web/src/app/app.ts:324</note>
       </notes>
       <segment>
         <source>Pushup Tracker</source>
@@ -4727,7 +4871,7 @@
     </unit>
     <unit id="seo.default.description">
       <notes>
-        <note category="location">web/src/app/app.ts:320</note>
+        <note category="location">web/src/app/app.ts:327</note>
       </notes>
       <segment>
         <source>Wiederholungen per Kamera zählen, Trainingsplänen folgen, Streaks halten — kostenlos im Browser.</source>
@@ -4735,7 +4879,7 @@
     </unit>
     <unit id="toolbarDailyGoal.replayAria">
       <notes>
-        <note category="location">web/src/app/app.ts:388</note>
+        <note category="location">web/src/app/app.ts:395</note>
       </notes>
       <segment>
         <source>Tagesziel-Animation erneut abspielen</source>
@@ -4743,7 +4887,7 @@
     </unit>
     <unit id="feedback.success">
       <notes>
-        <note category="location">web/src/app/app.ts:417</note>
+        <note category="location">web/src/app/app.ts:424</note>
       </notes>
       <segment>
         <source>Danke für dein Feedback!</source>
@@ -4751,7 +4895,7 @@
     </unit>
     <unit id="feedback.error">
       <notes>
-        <note category="location">web/src/app/app.ts:424</note>
+        <note category="location">web/src/app/app.ts:431</note>
       </notes>
       <segment>
         <source>Feedback konnte nicht gesendet werden.</source>
@@ -5698,6 +5842,22 @@
         <source>Zum Wiki-Eintrag</source>
       </segment>
     </unit>
+    <unit id="announcements.workouts">
+      <notes>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:43</note>
+      </notes>
+      <segment>
+        <source>Neu: eigene Sessions zusammenstellen</source>
+      </segment>
+    </unit>
+    <unit id="announcements.inbox">
+      <notes>
+        <note category="location">web/src/app/core/feature-announcement.service.ts:52</note>
+      </notes>
+      <segment>
+        <source>Neu: Nachrichten und deine Abzeichen</source>
+      </segment>
+    </unit>
     <unit id="feedback.dialog.title">
       <notes>
         <note category="location">web/src/app/core/feedback/feedback-dialog.component.ts:44,47</note>
@@ -5858,9 +6018,17 @@
         <source>Sessions</source>
       </segment>
     </unit>
+    <unit id="nav.achievements">
+      <notes>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:63</note>
+      </notes>
+      <segment>
+        <source>Abzeichen</source>
+      </segment>
+    </unit>
     <unit id="nav.blog">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:62</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:67</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -5868,7 +6036,7 @@
     </unit>
     <unit id="nav.history">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:66</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
       </notes>
       <segment>
         <source>Historie</source>
@@ -5876,7 +6044,7 @@
     </unit>
     <unit id="nav.exercises">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:71</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
       </notes>
       <segment>
         <source>Übungen</source>
@@ -5884,7 +6052,7 @@
     </unit>
     <unit id="nav.pushupTypes">
       <notes>
-        <note category="location">web/src/app/core/nav/main-nav-items.ts:76</note>
+        <note category="location">web/src/app/core/nav/main-nav-items.ts:81</note>
       </notes>
       <segment>
         <source>Liegestütztypen</source>
@@ -7364,6 +7532,102 @@
         <source>Datenschutz</source>
       </segment>
     </unit>
+    <unit id="landing.inbox.eyebrow">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:4,6</note>
+      </notes>
+      <segment>
+        <source> Neu · Nachrichten &amp; Abzeichen </source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.headline">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:7,9</note>
+      </notes>
+      <segment>
+        <source> Nichts geht verloren — und du siehst, was du geschafft hast. </source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.desc">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:10,15</note>
+      </notes>
+      <segment>
+        <source> Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen landen in deinem Postfach. Auch dann, wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast. Und alle Abzeichen — verdiente wie offene — stehen an einem Ort. </source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.inbox">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:20,23</note>
+      </notes>
+      <segment>
+        <source>Alles an einem Ort, auch ohne Push-Benachrichtigungen</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.cheer">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:26,29</note>
+      </notes>
+      <segment>
+        <source>Anfeuerungen von Freunden, jederzeit nachlesbar</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.chip.badges">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:32,37</note>
+      </notes>
+      <segment>
+        <source>Abzeichen sammeln und sehen, wie weit es bis zum nächsten ist</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.cta">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:43,47</note>
+      </notes>
+      <segment>
+        <source>Abzeichen ansehen</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.title">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:51,53</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.subtitle">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:54,56</note>
+      </notes>
+      <segment>
+        <source>3 ungelesen</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line1">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:61,64</note>
+      </notes>
+      <segment>
+        <source>Anna feuert dich an</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line2">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:66,69</note>
+      </notes>
+      <segment>
+        <source>Du hast ein neues Abzeichen verdient</source>
+      </segment>
+    </unit>
+    <unit id="landing.inbox.mock.line3">
+      <notes>
+        <note category="location">web/src/app/marketing/components/inbox-feature-section/inbox-feature-section.component.html:72,75</note>
+      </notes>
+      <segment>
+        <source>Ben möchte mit dir befreundet sein</source>
+      </segment>
+    </unit>
     <unit id="reminder.feature.eyebrow">
       <notes>
         <note category="location">web/src/app/marketing/components/reminder-feature-section/reminder-feature-section.component.ts:13,14</note>
@@ -8170,7 +8434,7 @@
     </unit>
     <unit id="landing.trust.bar">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:299,303</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:306,310</note>
       </notes>
       <segment>
         <source> ✓ Kostenlos · ✓ Kein Abo · ✓ Keine Kreditkarte · ✓ Datenschutz first </source>
@@ -8178,7 +8442,7 @@
     </unit>
     <unit id="landing.features.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:304,305</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:311,312</note>
       </notes>
       <segment>
         <source>Funktionen</source>
@@ -8186,7 +8450,7 @@
     </unit>
     <unit id="landing.feature.autoCount.imageAlt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:311,312</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:318,319</note>
       </notes>
       <segment>
         <source>Sportlerin bei einer sauberen Liegestütze auf Holzboden</source>
@@ -8194,7 +8458,7 @@
     </unit>
     <unit id="landing.feature.autoCount.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:322,324</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:329,331</note>
       </notes>
       <segment>
         <source>Reps automatisch zählen</source>
@@ -8202,7 +8466,7 @@
     </unit>
     <unit id="landing.feature.autoCount.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:326,331</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:333,338</note>
       </notes>
       <segment>
         <source>Stell das Handy hin, öffne den Auto-Zähler und leg los: Die KI erkennt Liegestütze, Kniebeugen, Klimmzüge und Sit-ups in Echtzeit direkt im Browser und zählt jede saubere Wiederholung mit. Für Plank und Hollow-Hold läuft stattdessen ein automatischer Halte-Timer. Der Live-Form-Check zeigt Winkel, Phase und Erkennungs-Sicherheit – ohne Cloud, ganz ohne Daten-Upload.</source>
@@ -8210,7 +8474,7 @@
     </unit>
     <unit id="landing.feature.analytics.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:394,396</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:401,403</note>
       </notes>
       <segment>
         <source>Charts, Trends &amp; alle Übungen</source>
@@ -8218,7 +8482,7 @@
     </unit>
     <unit id="landing.feature.analytics.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:398,402</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:405,409</note>
       </notes>
       <segment>
         <source>Tabbed Analyse mit Verlaufsdiagrammen, KPI-Karten und Kategorie-Vergleich: Liegestütz-Varianten (Standard, Wide, Diamond), Klimmzüge, Sit-ups, Kniebeugen, Plank-Zeiten und Laufen inkl. Pace – jede Übung mit ihrer eigenen Maßeinheit, Zeitraum frei wählbar.</source>
@@ -8226,7 +8490,7 @@
     </unit>
     <unit id="landing.feature.goals.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:498,500</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:505,507</note>
       </notes>
       <segment>
         <source>Tages-, Wochen- &amp; Monatsziele</source>
@@ -8234,7 +8498,7 @@
     </unit>
     <unit id="landing.feature.goals.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:502,505</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:509,512</note>
       </notes>
       <segment>
         <source>Dreifacher Fortschrittsbalken hält dich auf Kurs – Tages-, Wochen- und Monatsziel auf einen Blick. Läuft gerade ein Trainingsplan, übernimmt der das Tagesziel automatisch. Die Streak-Anzeige belohnt Dranbleiben, Konfetti feiert dein erreichtes Ziel.</source>
@@ -8242,7 +8506,7 @@
     </unit>
     <unit id="landing.feature.heatmap.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:547,549</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:554,556</note>
       </notes>
       <segment>
         <source>Heatmap-Kalender</source>
@@ -8250,7 +8514,7 @@
     </unit>
     <unit id="landing.feature.heatmap.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:551,555</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:558,562</note>
       </notes>
       <segment>
         <source>Sieh auf einen Blick, an welchen Tagen du wie hart trainiert hast. Lücken werden sichtbar – Konsistenz wird zur Gewohnheit.</source>
@@ -8258,7 +8522,7 @@
     </unit>
     <unit id="landing.feature.multiset.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:642,644</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:649,651</note>
       </notes>
       <segment>
         <source>Sätze &amp; Intervalle</source>
@@ -8266,7 +8530,7 @@
     </unit>
     <unit id="landing.feature.multiset.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:646,649</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:653,656</note>
       </notes>
       <segment>
         <source>Erfasse jeden Satz einzeln – z. B. 12 + 10 + 8. Die App summiert automatisch, zeigt deine Set-Verteilung und vergleicht den Aufbau über Wochen. Für Lauf- und Ausdauer-Workouts trägst du genauso einfach Intervalle samt Pace ein.</source>
@@ -8274,7 +8538,7 @@
     </unit>
     <unit id="landing.feature.quick.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:658,660</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:665,667</note>
       </notes>
       <segment>
         <source>Quick Logging mit FAB</source>
@@ -8282,7 +8546,7 @@
     </unit>
     <unit id="landing.feature.quick.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:662,665</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:669,672</note>
       </notes>
       <segment>
         <source>Ein Tap auf den Floating Action Button oder eine Schnellaktion im Dashboard – Eintrag in zwei Sekunden, komplett ohne Dialog. Detaillierte Erfassung mit Sätzen, Intervallen, Dauer oder Distanz erreichst du auf Wunsch im selben Flow.</source>
@@ -8290,7 +8554,7 @@
     </unit>
     <unit id="landing.feature.adaptive.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:673,675</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:680,682</note>
       </notes>
       <segment>
         <source>Adaptive Vorschläge</source>
@@ -8298,7 +8562,7 @@
     </unit>
     <unit id="landing.feature.adaptive.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:677,681</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:684,688</note>
       </notes>
       <segment>
         <source>Die Schnellaktionen lernen aus deiner Historie und schlagen passende Wiederholungen vor. Du willst eigene Presets? Konfiguriere bis zu sechs Buttons pro Übung selbst – inklusive Standard-Variante für den FAB.</source>
@@ -8306,7 +8570,7 @@
     </unit>
     <unit id="landing.feature.pwa.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:688,690</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:695,697</note>
       </notes>
       <segment>
         <source>App-Installation, Live-Sync &amp; Teilen</source>
@@ -8314,7 +8578,7 @@
     </unit>
     <unit id="landing.feature.pwa.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:692,695</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:699,702</note>
       </notes>
       <segment>
         <source>Direkt aus dem Browser als App installieren – mit Echtzeit-Sync zwischen allen Geräten, Offline-Eintrag dank Service Worker und Tagesergebnis per Teilen-Button. Updates kommen automatisch.</source>
@@ -8322,7 +8586,7 @@
     </unit>
     <unit id="landing.feature.pwa.installed">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:700,702</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:707,709</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">check_circle</pc> Du nutzt bereits die installierte App </source>
@@ -8330,7 +8594,7 @@
     </unit>
     <unit id="landing.feature.pwa.install">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:713,715</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:720,722</note>
       </notes>
       <segment>
         <source><pc id="0" equivStart="START_TAG_MAT_ICON" equivEnd="CLOSE_TAG_MAT_ICON" type="other" dispStart="&lt;mat-icon aria-hidden=&quot;true&quot;&gt;" dispEnd="&lt;/mat-icon&gt;">download</pc> Jetzt als App installieren </source>
@@ -8338,7 +8602,7 @@
     </unit>
     <unit id="landing.feature.pwa.iosHint">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:720,723</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:727,730</note>
       </notes>
       <segment>
         <source> Auf iPhone &amp; iPad: Teilen-Symbol antippen und „Zum Home-Bildschirm“ wählen. </source>
@@ -8346,7 +8610,7 @@
     </unit>
     <unit id="landing.feature.privacy.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:731,733</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:738,740</note>
       </notes>
       <segment>
         <source>Privacy first &amp; 100 % kostenlos</source>
@@ -8354,7 +8618,7 @@
     </unit>
     <unit id="landing.feature.privacy.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:735,739</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:742,746</note>
       </notes>
       <segment>
         <source>DSGVO-konform mit anpassbarer Cookie-Zustimmung. Reps werden lokal im Browser ausgewertet – kein Video verlässt dein Gerät. Dein Name auf der Bestenliste? Nur wenn du es willst. Kein Abo, keine Kreditkarte.</source>
@@ -8362,7 +8626,7 @@
     </unit>
     <unit id="ads.landing.aria">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:742</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:749</note>
       </notes>
       <segment>
         <source>Werbung</source>
@@ -8370,7 +8634,7 @@
     </unit>
     <unit id="landing.ai.eyebrow">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:750,751</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:757,758</note>
       </notes>
       <segment>
         <source>AI ready</source>
@@ -8378,7 +8642,7 @@
     </unit>
     <unit id="landing.ai.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:752,754</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:759,761</note>
       </notes>
       <segment>
         <source> Bereit für deinen KI-Coach </source>
@@ -8386,7 +8650,7 @@
     </unit>
     <unit id="landing.ai.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:755,759</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:762,766</note>
       </notes>
       <segment>
         <source> Die App spricht das offene AG-UI-Protokoll: Ein KI-Agent kann deinen Tagesfortschritt abfragen, Sätze für dich eintragen und dich durch die App navigieren. Die Oberfläche baut auf CopilotKit für Angular auf – du verbindest einfach deinen eigenen Agenten. </source>
@@ -8394,7 +8658,7 @@
     </unit>
     <unit id="landing.ai.chip.protocol">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:763,766</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:770,773</note>
       </notes>
       <segment>
         <source>AG-UI-Protokoll</source>
@@ -8402,7 +8666,7 @@
     </unit>
     <unit id="landing.ai.chip.copilotkit">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:767,770</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:774,777</note>
       </notes>
       <segment>
         <source>CopilotKit für Angular</source>
@@ -8410,7 +8674,7 @@
     </unit>
     <unit id="landing.ai.chip.tools">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:772,775</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:779,782</note>
       </notes>
       <segment>
         <source>Eintragen &amp; Abfragen per Tool</source>
@@ -8418,7 +8682,7 @@
     </unit>
     <unit id="landing.ai.chip.onDevice">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:777,780</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:784,787</note>
       </notes>
       <segment>
         <source>Kamera-KI ohne Cloud</source>
@@ -8426,7 +8690,7 @@
     </unit>
     <unit id="landing.ai.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:788,791</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:795,798</note>
       </notes>
       <segment>
         <source>KI-Coach öffnen</source>
@@ -8434,7 +8698,7 @@
     </unit>
     <unit id="landing.preview.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:796,798</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,805</note>
       </notes>
       <segment>
         <source> Deine Statistik auf einen Blick </source>
@@ -8442,7 +8706,7 @@
     </unit>
     <unit id="landing.preview.alt">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:803,804</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:810,811</note>
       </notes>
       <segment>
         <source>Vorschau der Statistikansicht</source>
@@ -8450,7 +8714,7 @@
     </unit>
     <unit id="landing.discover.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:944,945</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:951,952</note>
       </notes>
       <segment>
         <source>Mehr entdecken</source>
@@ -8458,7 +8722,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:950,952</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:957,959</note>
       </notes>
       <segment>
         <source>Bestenliste</source>
@@ -8466,7 +8730,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:954,957</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:961,964</note>
       </notes>
       <segment>
         <source> Vergleiche dich mit der Community: Top-Reps für heute, die letzten 7 Tage und die letzten 30 Tage. Privacy first – dein Name erscheint nur, wenn du es willst. </source>
@@ -8474,7 +8738,7 @@
     </unit>
     <unit id="landing.discover.leaderboard.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:964,967</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:971,974</note>
       </notes>
       <segment>
         <source>Zur Bestenliste</source>
@@ -8482,7 +8746,7 @@
     </unit>
     <unit id="landing.discover.blog.title">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:973,975</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:980,982</note>
       </notes>
       <segment>
         <source>Blog</source>
@@ -8490,7 +8754,7 @@
     </unit>
     <unit id="landing.discover.blog.body">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:977,980</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:984,987</note>
       </notes>
       <segment>
         <source> Tipps, Hintergrundwissen und Motivation rund um Liegestütze – von Einsteiger bis Fortgeschritten. Viele Artikel verlinken direkt auf den passenden Trainingsplan. </source>
@@ -8498,10 +8762,306 @@
     </unit>
     <unit id="landing.discover.blog.cta">
       <notes>
-        <note category="location">web/src/app/marketing/shell/landing-page.component.html:987,989</note>
+        <note category="location">web/src/app/marketing/shell/landing-page.component.html:994,996</note>
       </notes>
       <segment>
         <source>Zum Blog</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.badge">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:33,34</note>
+      </notes>
+      <segment>
+        <source>Neu</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.title">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:34,36</note>
+      </notes>
+      <segment>
+        <source>Nachrichten und Abzeichen</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.stepCount">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:50,52</note>
+      </notes>
+      <segment>
+        <source> Schritt <ph id="0" equiv="INTERPOLATION" disp="{{ index() + 1 }}"/> von <ph id="1" equiv="INTERPOLATION_1" disp="{{ steps.length }}"/> </source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.later">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:61,63</note>
+      </notes>
+      <segment>
+        <source> Später </source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.back">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:70,72</note>
+      </notes>
+      <segment>
+        <source>Zurück</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.start">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:82,84</note>
+      </notes>
+      <segment>
+        <source>Abzeichen ansehen</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.next">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:92,93</note>
+      </notes>
+      <segment>
+        <source>Weiter</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step1.title">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:167</note>
+      </notes>
+      <segment>
+        <source>Nichts geht mehr verloren</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step1.body">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:168</note>
+      </notes>
+      <segment>
+        <source>Anfeuerungen, Freundschaftsanfragen und Challenges landen in der Glocke oben — auch wenn du offline warst oder keine Push-Benachrichtigungen erlaubt hast.</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step2.title">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:173</note>
+      </notes>
+      <segment>
+        <source>Deine Abzeichen an einem Ort</source>
+      </segment>
+    </unit>
+    <unit id="inboxIntro.step2.body">
+      <notes>
+        <note category="location">web/src/app/notifications/inbox-intro-dialog.component.ts:174</note>
+      </notes>
+      <segment>
+        <source>Alle verdienten Abzeichen, die noch offenen und wie weit es bis zum nächsten ist — unter „Abzeichen&quot; in der Navigation.</source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.title">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:45,46</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.markAll">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:53,55</note>
+      </notes>
+      <segment>
+        <source> Alle gelesen </source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.empty">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:62,66</note>
+      </notes>
+      <segment>
+        <source> Noch keine Nachrichten. </source>
+      </segment>
+    </unit>
+    <unit id="notifications.panel.showAll">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:73,76</note>
+      </notes>
+      <segment>
+        <source> Alle anzeigen </source>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.none">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:140</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="notifications.bell.unread">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-bell.component.ts:141</note>
+      </notes>
+      <segment>
+        <source>Nachrichten, <ph id="0" equiv="count" disp="count"/> ungelesen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.label">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:27,29</note>
+      </notes>
+      <segment>
+        <source> Push von Freunden </source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.desc">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:30,35</note>
+      </notes>
+      <segment>
+        <source> Was davon dein Handy klingeln lassen darf. Ausgeschaltet heißt nur: kein Push — in deinen Nachrichten steht es trotzdem. Deine Ruhezeiten oben gelten auch hier. </source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.cheer">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:69</note>
+      </notes>
+      <segment>
+        <source>Anfeuerungen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendRequest">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:73</note>
+      </notes>
+      <segment>
+        <source>Freundschaftsanfragen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.friendAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:77</note>
+      </notes>
+      <segment>
+        <source>Angenommene Anfragen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challenge">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:81</note>
+      </notes>
+      <segment>
+        <source>Challenge-Einladungen</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.challengeAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:85</note>
+      </notes>
+      <segment>
+        <source>Zusagen zu deinen Challenges</source>
+      </segment>
+    </unit>
+    <unit id="notificationPrefs.workoutShared">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-prefs-section.component.ts:89</note>
+      </notes>
+      <segment>
+        <source>Geteilte Sessions</source>
+      </segment>
+    </unit>
+    <unit id="notifications.actor.anonymous">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:23</note>
+      </notes>
+      <segment>
+        <source>Jemand</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.cheer">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:31</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> feuert dich an</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendRequest">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:33</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> möchte mit dir befreundet sein</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.friendAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:35</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> hat deine Anfrage angenommen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challenge">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:37</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> fordert dich heraus</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.challengeAccepted">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:39</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> macht bei deiner Challenge mit</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.workoutShared">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:41</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="name" disp="name"/> hat dir eine Session geschickt</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.achievement">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:43</note>
+      </notes>
+      <segment>
+        <source>Du hast ein neues Abzeichen verdient</source>
+      </segment>
+    </unit>
+    <unit id="notifications.text.goalReached">
+      <notes>
+        <note category="location">web/src/app/notifications/notification-text.ts:45</note>
+      </notes>
+      <segment>
+        <source>Tagesziel geschafft</source>
+      </segment>
+    </unit>
+    <unit id="notifications.page.title">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:16,17</note>
+      </notes>
+      <segment>
+        <source>Nachrichten</source>
+      </segment>
+    </unit>
+    <unit id="notifications.page.markAll">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:19,22</note>
+      </notes>
+      <segment>
+        <source>Alle gelesen</source>
+      </segment>
+    </unit>
+    <unit id="notifications.page.empty">
+      <notes>
+        <note category="location">web/src/app/notifications/notifications-page.component.ts:28,31</note>
+      </notes>
+      <segment>
+        <source> Hier landen Anfeuerungen, Freundschaftsanfragen, Challenges und neue Abzeichen. </source>
       </segment>
     </unit>
     <unit id="publicProfile.badge.planCompleted">
@@ -9570,7 +10130,7 @@
     </unit>
     <unit id="remindersHeaderTitle">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:44,45</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:46,47</note>
       </notes>
       <segment>
         <source>Erinnerungen</source>
@@ -9578,7 +10138,7 @@
     </unit>
     <unit id="remindersHeaderSubtitle">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:46,48</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:48,50</note>
       </notes>
       <segment>
         <source> Push-Benachrichtigungen, Zeiten und Geräte verwalten. </source>
@@ -9586,8 +10146,8 @@
     </unit>
     <unit id="push.subscribe.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:118</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:222</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:122</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:226</note>
       </notes>
       <segment>
         <source>Push konnte nicht aktiviert werden.</source>
@@ -9595,13 +10155,13 @@
     </unit>
     <unit id="snackbar.close">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:119</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:145</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:161</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:176</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:195</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:211</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:223</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:123</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:149</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:165</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:180</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:199</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:215</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:227</note>
       </notes>
       <segment>
         <source>Schließen</source>
@@ -9609,7 +10169,7 @@
     </unit>
     <unit id="unsubAll.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:144</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:148</note>
       </notes>
       <segment>
         <source>Entfernen der Push-Abos fehlgeschlagen.</source>
@@ -9617,7 +10177,7 @@
     </unit>
     <unit id="unsubAll.success">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:160</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:164</note>
       </notes>
       <segment>
         <source>Push-Abos aller Geräte entfernt.</source>
@@ -9625,7 +10185,7 @@
     </unit>
     <unit id="reminder.permission.snackbar">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:175</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:179</note>
       </notes>
       <segment>
         <source>Benachrichtigungen sind blockiert. Bitte in den Browser-Einstellungen erlauben.</source>
@@ -9633,8 +10193,8 @@
     </unit>
     <unit id="reminder.save.error">
       <notes>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:194</note>
-        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:210</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:198</note>
+        <note category="location">web/src/app/reminders/shell/reminders-page.component.ts:214</note>
       </notes>
       <segment>
         <source>Einstellungen konnten nicht gespeichert werden.</source>
@@ -13572,7 +14132,7 @@
     </unit>
     <unit id="dashboard.tile.openInHistoryAria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:135</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:137</note>
       </notes>
       <segment>
         <source><ph id="0" equiv="label" disp="label"/> in der Historie öffnen</source>
@@ -13580,7 +14140,7 @@
     </unit>
     <unit id="dashboard.share.aria">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:138</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:140</note>
       </notes>
       <segment>
         <source>Tagesleistung teilen</source>
@@ -13588,7 +14148,7 @@
     </unit>
     <unit id="dashboard.share">
       <notes>
-        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:139</note>
+        <note category="location">web/src/app/stats/shell/stats-dashboard.component.ts:141</note>
       </notes>
       <segment>
         <source>Teilen</source>

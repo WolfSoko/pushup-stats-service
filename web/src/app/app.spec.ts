@@ -870,6 +870,7 @@ describe('App (testing-library)', () => {
       '/freunde',
       '/training-plans',
       '/workouts',
+      '/abzeichen',
       '/blog',
       '/history',
       '/wiki/uebungen',
