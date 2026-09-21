@@ -16,9 +16,10 @@ on:
         required: true
         type: string
       comment_id:
-        description: ID of the request comment that receives the status line
-        required: true
+        description: ID of the request comment that receives the status line (empty for a manual run without status updates)
+        required: false
         type: string
+        default: ''
       requested_by:
         description: GitHub login of the requester (display only)
         required: false
@@ -61,9 +62,13 @@ jobs:
     # pulls the plug.
     timeout-minutes: 50
     steps:
+      # The status line is a courtesy: a missing or deleted comment must not
+      # cost the deploy, hence continue-on-error on both comment steps.
       - name: Mark run as started in the request comment
+        if: env.COMMENT_ID != ''
+        continue-on-error: true
         run: |
-          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed '/^_Status: /d')
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed -e 's/\r$//' -e '/^_Status: /d')
           by=""
           if [ -n "$REQUESTED_BY" ]; then by=", angefordert von @$REQUESTED_BY"; fi
           printf '%s\n\n_Status: ⏳ Deployment läuft ([Run](%s)%s)._\n' "$body" "$RUN_URL" "$by" > /tmp/comment-body.md
@@ -207,13 +212,14 @@ jobs:
           retention-days: 7
 
       - name: Write result into request comment
-        if: always()
+        if: always() && env.COMMENT_ID != ''
+        continue-on-error: true
         env:
           JOB_STATUS: ${{ job.status }}
           PREVIEW_URL: ${{ steps.preview.outputs.url }}
           HEAD_SHA: ${{ github.sha }}
         run: |
-          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed '/^_Status: /d')
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed -e 's/\r$//' -e '/^_Status: /d')
           short_sha=$(printf '%s' "$HEAD_SHA" | cut -c1-7)
           if [ "$JOB_STATUS" = "success" ]; then
             status="✅ Preview deployed: $PREVIEW_URL (läuft in 7 Tagen ab) – Commit \`$short_sha\`, E2E grün ([Run]($RUN_URL))"

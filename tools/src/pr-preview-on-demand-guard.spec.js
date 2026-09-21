@@ -95,9 +95,12 @@ describe('PR preview: on-demand handshake', () => {
     // then the body contains the marker and the checkbox the trigger job looks for
     expect(run).toContain('$PREVIEW_MARKER');
     expect(run).toContain('- [ ] $PREVIEW_CHECKBOX');
-    // and the step checks for an existing comment before posting
+    // and the step checks for an existing comment before posting, in a
+    // form that survives --paginate (ids, not a per-page count)
     expect(run).toContain('issues/$PR_NUMBER/comments');
     expect(run).toContain('contains(\\"$PREVIEW_MARKER\\")');
+    expect(run).toContain('| .id');
+    expect(run).toContain('if [ -n "$existing" ]');
   });
 
   it("should trigger only when the bot's own comment is edited with the box ticked", () => {
@@ -151,10 +154,17 @@ describe('PR preview: on-demand handshake', () => {
     expect(dispatch).toContain('-f ref="$head_ref"');
     expect(dispatch).toContain('inputs[pr_number]=$PR_NUMBER');
     expect(dispatch).toContain('inputs[comment_id]=$COMMENT_ID');
-    // and a failed start is reported back into the comment
+    // and a second tick while a run is active does not dispatch again
+    expect(dispatch).toContain('already_running=');
+    expect(dispatch.indexOf('already_running=')).toBeLessThan(
+      dispatch.indexOf('/dispatches')
+    );
+    // and a failed start is reported back into the comment with the actual reason
     const failureStep = triggerJob.steps.at(-1);
     expect(failureStep.if).toBe('failure()');
+    expect(failureStep.env.REASON).toContain('steps.dispatch.outputs.reason');
     expect(runOf(failureStep)).toContain('issues/comments/$COMMENT_ID');
+    expect(runOf(failureStep)).toContain('"$REASON"');
   });
 
   it('should run the deploy only via workflow_dispatch with the comment to update', () => {
@@ -163,9 +173,24 @@ describe('PR preview: on-demand handshake', () => {
 
     // then it is not started by any PR event
     expect(Object.keys(deploy.on)).toEqual(['workflow_dispatch']);
-    // and both handshake inputs are mandatory
+    // and the PR number is mandatory while the comment is optional (manual runs)
     expect(inputs.pr_number.required).toBe(true);
-    expect(inputs.comment_id.required).toBe(true);
+    expect(inputs.comment_id.required).toBe(false);
+  });
+
+  it('should never let a comment update fail the deploy', () => {
+    // given the steps that patch the request comment
+    const commentSteps = deployJob.steps.filter((s) =>
+      runOf(s).includes('issues/comments/$COMMENT_ID')
+    );
+
+    // then there are the start and the result step
+    expect(commentSteps).toHaveLength(2);
+    // and each is skipped without a comment id and tolerates API errors
+    for (const step of commentSteps) {
+      expect(step.if).toContain("env.COMMENT_ID != ''");
+      expect(step['continue-on-error']).toBe(true);
+    }
   });
 
   it('should check out the dispatched branch itself, not a PR-derived ref', () => {
@@ -182,7 +207,7 @@ describe('PR preview: on-demand handshake', () => {
     const last = deployJob.steps.at(-1);
 
     // then it runs regardless of the job outcome and patches the comment
-    expect(last.if).toBe('always()');
+    expect(last.if).toContain('always()');
     expect(runOf(last)).toContain('issues/comments/$COMMENT_ID');
     expect(runOf(last)).toContain('_Status: ');
   });

@@ -45,9 +45,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          # --paginate runs the jq filter per page, so emit matching ids
+          # instead of a per-page count and test for any output.
           existing=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
-            --jq "[.[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$PREVIEW_MARKER\")))] | length")
-          if [ "$existing" != "0" ]; then
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$PREVIEW_MARKER\"))) | .id")
+          if [ -n "$existing" ]; then
             echo "Request comment already present, nothing to do."
             exit 0
           fi
@@ -91,8 +93,10 @@ jobs:
       # events don't), and a still-ticked box could not be ticked again.
       - name: Untick checkbox and mark request as accepted
         run: |
-          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body)
-          body=$(printf '%s' "$body" | sed -e "s/- \[[xX]\] $PREVIEW_CHECKBOX/- [ ] $PREVIEW_CHECKBOX/" -e '/^_Status: /d')
+          # GitHub stores comment bodies with CRLF; drop the CR so the
+          # status line is replaced cleanly and no blank lines pile up.
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body \
+            | sed -e 's/\r$//' -e "s/- \[[xX]\] $PREVIEW_CHECKBOX/- [ ] $PREVIEW_CHECKBOX/" -e '/^_Status: /d')
           printf '%s\n\n_Status: ⏳ Deployment wird gestartet (angefordert von @%s)._\n' "$body" "$SENDER" > /tmp/comment-body.md
           gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent
 
@@ -101,29 +105,52 @@ jobs:
       # box has to have write access — GitHub already restricts checkbox
       # toggles that way, this keeps it explicit.
       - name: Resolve PR head and dispatch the preview workflow
+        id: dispatch
         run: |
+          refuse() { echo "reason=$1" >> "$GITHUB_OUTPUT"; echo "::error::$1"; exit 1; }
           pr=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json headRefName,isCrossRepository,state)
           if [ "$(printf '%s' "$pr" | jq -r .isCrossRepository)" != "false" ]; then
-            echo "::error::Preview deployments are limited to same-repo PRs"; exit 1
+            refuse "Preview-Deployments gibt es nur für PRs aus diesem Repository (kein Fork)"
           fi
           if [ "$(printf '%s' "$pr" | jq -r .state)" != "OPEN" ]; then
-            echo "::error::PR #$PR_NUMBER is not open"; exit 1
+            refuse "PR #$PR_NUMBER ist nicht offen"
           fi
           perm=$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$SENDER/permission" --jq .permission)
           case "$perm" in
             admin|write) ;;
-            *) echo "::error::@$SENDER has no write access ($perm)"; exit 1 ;;
+            *) refuse "@$SENDER hat kein Schreibrecht im Repository ($perm)" ;;
           esac
           head_ref=$(printf '%s' "$pr" | jq -r .headRefName)
+          # A run that is still queued or in progress for this branch will
+          # deploy the same head; a second one would only block staging.
+          active=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/workflows/$PREVIEW_WORKFLOW/runs" \
+            -f branch="$head_ref" -f per_page=20 \
+            --jq '[.workflow_runs[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting") | .html_url] | first // empty')
+          if [ -n "$active" ]; then
+            echo "already_running=$active" >> "$GITHUB_OUTPUT"
+            echo "A preview run is already active for $head_ref: $active"
+            exit 0
+          fi
           gh api -X POST "repos/$GITHUB_REPOSITORY/actions/workflows/$PREVIEW_WORKFLOW/dispatches" \
             -f ref="$head_ref" \
             -f "inputs[pr_number]=$PR_NUMBER" \
             -f "inputs[comment_id]=$COMMENT_ID" \
             -f "inputs[requested_by]=$SENDER"
 
+      - name: Point to the run that is already active
+        if: steps.dispatch.outputs.already_running != ''
+        env:
+          ACTIVE_RUN: ${{ steps.dispatch.outputs.already_running }}
+        run: |
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed -e 's/\r$//' -e '/^_Status: /d')
+          printf '%s\n\n_Status: ⏳ Ein Deployment für diesen Branch läuft bereits ([Run](%s)); es deployt den aktuellen Head._\n' "$body" "$ACTIVE_RUN" > /tmp/comment-body.md
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent
+
       - name: Report a failed start in the request comment
         if: failure()
+        env:
+          REASON: ${{ steps.dispatch.outputs.reason || format('Dispatch fehlgeschlagen – enthält der PR-Branch `.github/workflows/{0}`? (main mergen)', env.PREVIEW_WORKFLOW) }}
         run: |
-          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed '/^_Status: /d')
-          printf '%s\n\n_Status: ❌ Deployment konnte nicht gestartet werden ([Run](%s)) – der PR-Branch braucht `.github/workflows/%s` (main mergen?)._\n' "$body" "$RUN_URL" "$PREVIEW_WORKFLOW" > /tmp/comment-body.md
+          body=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq .body | sed -e 's/\r$//' -e '/^_Status: /d')
+          printf '%s\n\n_Status: ❌ Deployment nicht gestartet: %s ([Run](%s))._\n' "$body" "$REASON" "$RUN_URL" > /tmp/comment-body.md
           gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@/tmp/comment-body.md --silent
