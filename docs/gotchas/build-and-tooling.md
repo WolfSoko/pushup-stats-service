@@ -281,32 +281,42 @@ Linting is oxlint (`.oxlintrc.json` at the root, no per-project configs) and for
 
 ## GitHub Actions: comment-triggered workflows and `gh` pitfalls
 
-Learned while moving the staging preview to a checkbox in a PR comment
-(`.github/workflows/firebase-hosting-pull-request.yml`, see
-[`ci-cd.md`](../ci-cd.md#pr-previews-on-request)).
+Four generic rules; the concrete instance is the staging-preview checkbox
+in [`ci-cd.md`](../ci-cd.md#pr-previews-on-request).
 
-**CodeQL flags a PR-head checkout in `issue_comment` / `pull_request_target`
-jobs as `untrusted-checkout` (critical).** Those triggers run with secrets
-and the OIDC token, so `actions/checkout` with a `ref` derived from the PR
-is a critical alert even when the job verifies same-repo and write access
-first — CodeQL cannot see the guard. Keep the privileged job checkout-free
-(verify, then `POST …/actions/workflows/<file>/dispatches` with
-`ref=<head branch>`) and put the build into a `workflow_dispatch` workflow
-that checks out the branch it was dispatched on. Side effect: the deploy
-half then runs from the PR branch's copy of the file, while the
-`issue_comment` half always runs from `main`.
+**Never check out a PR-derived ref in a job that runs with secrets.**
+`issue_comment`, `pull_request_target` and `workflow_run` jobs get the
+repository's secrets and a `GITHUB_TOKEN` with write scopes, so
+`actions/checkout` with a `ref` taken from the PR is CodeQL
+`actions/untrusted-checkout/critical` — even when the job verifies
+same-repo and write access first, because CodeQL cannot see the guard.
+Keep the privileged job checkout-free (verify, then
+`POST …/actions/workflows/<file>/dispatches` with `ref=<head branch>`) and
+do the build in a `workflow_dispatch` workflow that checks out the branch
+it was dispatched on. Note that the `workflow_dispatch` half then runs the
+branch's copy of its file, while the `issue_comment` half always runs the
+copy on the default branch.
 
-**`gh api --paginate --jq` applies the filter per page.** A count like
-`--jq '[.[] | select(…)] | length'` prints one number per page, so
-`$existing` becomes `"0\n0"` after 100 comments and `!= "0"` is true. Emit
-matching ids and test for non-empty output instead.
+**`gh api --paginate --jq` applies the filter per page.** A count is one
+number per page, so the test breaks silently once the list exceeds one
+page:
 
-**Comment bodies come back with CRLF.** `gh api …/comments/<id> --jq .body`
-keeps the `\r`; a `sed '/^_Status: /d'` still matches, but the `\r`-only
-lines survive `$(…)` trimming and every rewrite adds a blank line. Strip
-`\r` first (`sed 's/\r$//'`).
+```bash
+# prints "0\n0" after 100 comments — [ "$n" != "0" ] is then true
+n=$(gh api …/comments --paginate --jq '[.[] | select(…)] | length')
+
+# emit matches, test for any output
+ids=$(gh api …/comments --paginate --jq '.[] | select(…) | .id')
+[ -n "$ids" ]
+```
+
+**Comment bodies edited in the web UI come back with CRLF.** A body the
+API created with `-f body=` stays LF; after the first web edit (a checkbox
+tick, a typo fix) `--jq .body` returns `\r\n`. Line-anchored `sed` still
+matches, but the `\r`-only lines survive `$(…)` trimming and every rewrite
+adds a blank line. Always strip first: `sed 's/\r$//'`.
 
 **Events created with `GITHUB_TOKEN` do not start workflows** — except
-`workflow_dispatch` and `repository_dispatch`. Editing the bot's own
-comment from the workflow therefore never re-fires `issue_comment`, which
-is what makes "untick the box first" safe.
+`workflow_dispatch` and `repository_dispatch`. A workflow editing the bot's
+own comment therefore never re-fires `issue_comment`, which is what makes
+"untick the box first, then act" safe.

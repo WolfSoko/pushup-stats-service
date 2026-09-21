@@ -156,17 +156,17 @@ Detailed reference material lives in [`docs/`](docs/). **Read the relevant doc b
 
 ### Gotchas & pitfalls
 
-| Area                                                         | File                                                                                   |
-| ------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| Angular signals (`toSignal`, same-reference emissions)       | [`docs/gotchas/signals.md`](docs/gotchas/signals.md)                                   |
-| Tests (mocks, spies, `resource.reload`, Jest/Vitest quirks)  | [`docs/gotchas/testing.md`](docs/gotchas/testing.md)                                   |
-| Cloud Functions (secrets IAM, delta aggregation, versioning) | [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md)                   |
-| Push notifications & Service Workers                         | [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md) |
-| i18n (XLIFF, locale switching, `LOCALE_ID`)                  | [`docs/gotchas/i18n.md`](./docs/gotchas/i18n.md)                                       |
-| Build & tooling (font flakes, pnpm dlx, Nx Cloud agents)     | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md)               |
-| Precomputed data (period-key staleness, timestamp formats)   | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md)                 |
-| Firestore client (`setDoc({merge:true})` nested-map clobber) | [`docs/gotchas/firestore.md`](docs/gotchas/firestore.md)                               |
-| UI interaction (scroll-snap vs scripted scroll, drag-click)  | [`docs/gotchas/ui-interaction.md`](docs/gotchas/ui-interaction.md)                     |
+| Area                                                                                       | File                                                                                   |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Angular signals (`toSignal`, same-reference emissions)                                     | [`docs/gotchas/signals.md`](docs/gotchas/signals.md)                                   |
+| Tests (mocks, spies, `resource.reload`, Jest/Vitest quirks)                                | [`docs/gotchas/testing.md`](docs/gotchas/testing.md)                                   |
+| Cloud Functions (secrets IAM, delta aggregation, versioning)                               | [`docs/gotchas/cloud-functions.md`](docs/gotchas/cloud-functions.md)                   |
+| Push notifications & Service Workers                                                       | [`docs/gotchas/push-and-service-workers.md`](docs/gotchas/push-and-service-workers.md) |
+| i18n (XLIFF, locale switching, `LOCALE_ID`)                                                | [`docs/gotchas/i18n.md`](./docs/gotchas/i18n.md)                                       |
+| Build & tooling (font flakes, pnpm dlx, Nx Cloud agents, comment-triggered Actions + `gh`) | [`docs/gotchas/build-and-tooling.md`](docs/gotchas/build-and-tooling.md)               |
+| Precomputed data (period-key staleness, timestamp formats)                                 | [`docs/gotchas/precomputed-data.md`](docs/gotchas/precomputed-data.md)                 |
+| Firestore client (`setDoc({merge:true})` nested-map clobber)                               | [`docs/gotchas/firestore.md`](docs/gotchas/firestore.md)                               |
+| UI interaction (scroll-snap vs scripted scroll, drag-click)                                | [`docs/gotchas/ui-interaction.md`](docs/gotchas/ui-interaction.md)                     |
 
 ## Workflow
 
