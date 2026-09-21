@@ -25,6 +25,7 @@ The general rule: a `web` spec must leave the shared world exactly as it found i
 ## Angular test patterns
 
 - **`resource()` reload is async:** After calling `resource.reload()`, use `await fixture.whenStable()` before asserting on the reloaded data.
+- **`whenStable()` does not wait for a busy flag to clear:** Resolving a mocked promise and asserting right after `await fixture.whenStable()` that `aria-busy` is gone is racy — in zoneless mode `whenStable` can resolve before the `finally` chain of `createBusyState().run()` has counted the promise down. It passes locally and fails on the slower CI agents. Await `nextMacrotask()` from `@pu-stats/testing` first, then `whenStable()` + `detectChanges()`.
 - **`MatDialog.open` spy:** Use `fixture.debugElement.injector.get(MatDialog)` (component injector) instead of `TestBed.inject(MatDialog)` to ensure you spy on the same instance the component uses.
 - **Dialog components in `imports`:** Components only opened via `MatDialog.open()` do NOT belong in the host component's `imports` array (causes NG8113 warning). Keep them as TypeScript imports only.
 - **Material disabled buttons + `user-event`:** Material adds `pointer-events: none` to disabled buttons, so `userEvent.click` throws. To assert "disabled button does not emit", set up the user once with the check disabled: `const user = userEvent.setup({ pointerEventsCheck: PointerEventsCheckLevel.Never })` and reuse `user` across the test.
