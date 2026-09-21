@@ -198,19 +198,19 @@ Ergebnis für die fünf Kandidaten, jeweils `.com` / `.de` / `.app`:
 
 ### 3.5 Was die Domainprüfung über das Verfahren lehrt
 
-Eine zweite Runde über 46 konstruierte Namen, direkt DNS-gefiltert: **35 vergeben, 11 ohne Auflösung.** Von diesen elf fielen im Store-Check weitere:
+Eine zweite Runde über 46 konstruierte Namen, direkt DNS-gefiltert: **35 vergeben, 11 ohne Auflösung.** Von diesen elf fielen bei ergänzenden Checks weitere — die Evidenz ist je Kandidat unterschiedlich:
 
 - **Vantra** — bereits ein „AI Fitness Companion“, direkte Kollision
 - **Talvio** — laufendes Geschäft auf `talvio.co`
 - **Vantio** — laufendes Geschäft auf `vantio.app`
-- **Ritmo** — gängiges spanisches Wort, mit Sicherheit registriert trotz fehlender Auflösung
+- **Ritmo** — Registrierungsstatus ungeklärt; ausgeschlossen aus einem anderen Grund: ein gängiges spanisches und italienisches Wörterbuchwort scheitert an Kriterium 5, weil Markenschutz Unterscheidungskraft voraussetzt
 - **Kepto** — Beiklang „Klepto“
 
 Übrig aus 46: **Tallyo**.
 
 Daraus zwei Regeln für die nächste Runde:
 
-1. **Die `.com`-Prüfung und die Markenprüfung sind unabhängig.** Talvio und Vantio haben freie `.com`-Auflösung und trotzdem ein laufendes Geschäft auf einer anderen TLD. Beides muss geprüft werden, keins ersetzt das andere.
+1. **Die `.com`-Prüfung und die Markenprüfung sind unabhängig.** Talvio und Vantio haben **keine** `.com`-Auflösung und trotzdem ein laufendes Geschäft auf einer anderen TLD. Beides muss geprüft werden, keins ersetzt das andere.
 2. **Die Trefferquote liegt bei etwa 2 %.** Aus 46 konstruierten Namen blieb einer. Wer fünf brauchbare Kandidaten will, muss mit einigen hundert starten — oder die Anforderung „freie `.com`“ aufgeben.
 
 **Damit steht eine Entscheidung an, die Gate 0 vorgelagert ist:**
@@ -265,7 +265,7 @@ Diese 54 erfüllen A und C gleichzeitig. Nach Lesbarkeit, Übungsneutralität un
 4. Entscheidung dokumentieren — dieser Plan wird mit dem gewählten Namen aktualisiert, danach werden die Phasen-Issues angelegt.
 5. Domain **vor** Phase 2 registrieren — das ist der Punkt, ab dem der Name nach außen geht. Ein Rename ohne gesicherte Domain ist ein Rückrufrisiko.
 
-**Ergebnis von Gate 0:** gewählter Name, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`).
+**Ergebnis von Gate 0:** gewählter Name, **Domain-Entscheidung (A, B oder C aus 3.5 — nicht zu verwechseln mit der Play-Strategie)**, registrierte Domain, Play-Strategie (A oder B), neue Kontaktadresse (`contact@<neue-domain>`).
 
 ---
 
